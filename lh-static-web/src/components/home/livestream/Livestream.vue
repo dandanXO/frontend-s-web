@@ -9,7 +9,7 @@
     </div>
     <div class="livestream-inner-wrapper">
       <LivestreamList
-        v-model="currentLive"
+        v-model="currentLiveId"
         class="livestream-list"
         :list="filteredLivestreamList"
         :is-livestream-list-loading
@@ -82,7 +82,7 @@ const latestWatchLivestreamId = useSessionStorage(LATEST_WATCH_LIVESTREAM_ID_KEY
 const messages = ref([]);
 const danmuList = ref([]);
 const list = ref([]);
-const currentLive = ref(null);
+const currentLiveId = ref(null);
 const messageTimer = ref(null);
 const livestreamTimer = ref(null);
 const lastSyncMessageTime = ref(Date.now());
@@ -120,8 +120,9 @@ const emit = defineEmits(["livestreamVisible"]);
 const userVipLevel = computed(() => extractVipLevelFromVipStr(store.vip));
 
 const currentLiveData = computed(() => {
-  if (!list.value.length || currentLive.value === null) return {};
-  return list.value[currentLive.value];
+  if (!list.value.length || currentLiveId.value === null) return {};
+  const targetLive = list.value.find((livestream) => livestream.streamId === currentLiveId.value);
+  return targetLive || {};
 });
 
 const isLivestreaming = computed(() => !!currentLiveData.value?.liveStatus);
@@ -205,23 +206,23 @@ const getData = () => {
         vipStatus.value = !!res.data.vipStatus;
         list.value.push(...parsedData);
         if (parsedData.length && livestreamListMeta.value.current === 1) {
-          const { earliestLivestreamIndex, latestWatchLivestreamIndex } = parsedData.reduce(
-            (result, livestream, index) => {
-              if (result.earliestLivestreamIndex === -1) {
-                result.earliestLivestreamIndex = index;
+          const { _earliestLivestreamId, _latestWatchLivestreamId } = parsedData.reduce(
+            (result, livestream) => {
+              if (!result._earliestLivestreamId) {
+                result._earliestLivestreamId = livestream.streamId;
               }
+
               if (latestWatchLivestreamId.value && livestream.streamId === latestWatchLivestreamId.value) {
-                result.latestWatchLivestreamIndex = index;
+                result._latestWatchLivestreamId = livestream.streamId;
               }
               return result;
             },
-            { earliestLivestreamIndex: -1, latestWatchLivestreamIndex: -1 }
+            { _earliestLivestreamId: "", _latestWatchLivestreamId: "" }
           );
-
-          if (latestWatchLivestreamIndex !== -1) {
-            currentLive.value = latestWatchLivestreamIndex;
-          } else if (earliestLivestreamIndex !== -1) {
-            currentLive.value = earliestLivestreamIndex;
+          if (_latestWatchLivestreamId) {
+            currentLiveId.value = _latestWatchLivestreamId;
+          } else if (_earliestLivestreamId) {
+            currentLiveId.value = _earliestLivestreamId;
           }
         }
         livestreamListMeta.value.current++;
@@ -363,7 +364,7 @@ const syncLivestreamInfo = async () => {
         });
       }
       const parsedData = parseLivestreamData(res.data);
-      list.value[currentLive.value] = {
+      list.value[currentLiveId.value] = {
         ...currentLiveData.value,
         roomMessage: parsedData?.roomMessage,
         streamerStatus: parsedData.streamerStatus,
@@ -407,7 +408,8 @@ const handleCategoryChange = (tabKey) => {
   activeTab.value = tabKey;
 };
 
-watch(currentLive, () => {
+watch(currentLiveId, (newVal, oldVal) => {
+  if (newVal === oldVal) return;
   messages.value = [];
   unsortMessages.value = [];
   danmuList.value = [];

@@ -47,6 +47,12 @@ function selectTab(tabKey) {
 }
 
 .livestream-tabs {
+  .el-tabs__nav-wrap {
+    &::after {
+      display: none;
+    }
+  }
+
   .el-tabs__header .el-tabs__nav-scroll .el-tabs__nav {
     gap: 16px;
     justify-content: center;

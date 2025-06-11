@@ -1,12 +1,12 @@
 <template>
   <swiper class="livestream-list-wrapper" v-bind="swiperConfig" @swiper="handleSwiper">
-    <swiper-slide v-for="(live, index) in list" :key="live.id">
+    <swiper-slide v-for="live in list" :key="live.streamId">
       <div
         class="livestream-list-item"
         :class="{
-          selected: model === index
+          selected: model === live.streamId
         }"
-        @click="handleLivestreamClick(index)"
+        @click="handleLivestreamClick(live.streamId)"
       >
         <div class="livestream-list-item__title">{{ live.title }}</div>
         <div class="livestream-list-item__match-info">
@@ -62,14 +62,15 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { computed, ref, watch } from "vue";
+import { computed, ref, toRefs, watch } from "vue";
 
 const props = defineProps({
   list: Array,
   isLivestreamListLoading: Boolean
 });
+const { list } = toRefs(props);
 
-const model = defineModel({ type: Number });
+const model = defineModel({ type: String });
 const emit = defineEmits(["scroll-reach-right"]);
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
@@ -112,7 +113,18 @@ const getDisplayDateTime = (date) => {
 
 watch(model, () => {
   if (!swiperInstance.value) return;
-  swiperInstance.value.slideTo(model.value, 0);
+  const currentIndex = list.value.findIndex((item) => item.streamId === model.value);
+  if (currentIndex === -1) return;
+  swiperInstance.value.slideTo(currentIndex, 0);
+});
+
+watch(list, () => {
+  const currentIndex = list.value.findIndex((item) => item.streamId === model.value);
+  if (currentIndex === -1) {
+    swiperInstance.value.slideTo(0, 0);
+  } else {
+    swiperInstance.value.slideTo(currentIndex, 0);
+  }
 });
 </script>
 <style lang="scss" scoped>
