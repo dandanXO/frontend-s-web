@@ -153,7 +153,7 @@ const slide = ref(0);
 const imgURL = process.env.IMAGE_CDN + "/promo/";
 const btm_banners = ref([
   {
-    mobileImageUrl: require("../assets/images/account/account-banner-2.png")
+    mobileImageUrl: require("../assets/images/promotion/tempo/promo-2.png")
   }
 ]);
 
@@ -184,7 +184,7 @@ const loadBanner = () => {
       response.data.forEach((item) => {
         item.mobileImageUrl = imgURL + item.mobileImageUrl;
       });
-      btm_banners.value = response.data;
+      // btm_banners.value = response.data;
     }
   });
 };
