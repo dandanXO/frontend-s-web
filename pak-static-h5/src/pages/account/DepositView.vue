@@ -515,7 +515,7 @@ const is2ndPrivilege = computed(
 );
 const is3rdPrivilege = computed(
   () =>
-    selectedPayType.value !== "USDTTRC" &&
+    selectedPayType.value !== "USDTTRC" && !secondTimeDepositBonusConfig.value.selected && 
     thirdTimeDepositBonusConfig.value.selected &&
     thirdTimeDepositBonusConfig.value.hasBonus
 );
@@ -620,6 +620,7 @@ const get2ndAmount = (amount) => {
   const rewardMap = {
     300: 100,
     500: 100,
+    800: 100,
     1000: 100,
     3000: 100,
     5000: 100,
@@ -636,6 +637,7 @@ const get3rdAmount = (amount) => {
   const rewardMap = {
     300: 150,
     500: 150,
+    800: 150,
     1000: 150,
     3000: 150,
     5000: 150,
@@ -906,6 +908,9 @@ async function confirmDeposit() {
 
           if (secondTimeDepositBonusConfig.value.selected && secondTimeDepositBonusConfig.value.hasBonus) {
             form.privilegeId = secondTimeDepositBonusConfig.value.privilegeId;
+          }
+          if (thirdTimeDepositBonusConfig.value.selected && thirdTimeDepositBonusConfig.value.hasBonus) {
+            form.privilegeId = thirdTimeDepositBonusConfig.value.privilegeId;
           }
 
           const copy = { ...form };

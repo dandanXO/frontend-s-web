@@ -418,7 +418,7 @@ export default {
     useFtdPrivilege: "Use Slot First Deposit Privilege",
     useFtdBonus: "First Deposit Bonus",
     use2ndBonus: "2nd Deposit Bonus",
-    use2ndBonus: "3rd Deposit Bonus",
+    use3rdBonus: "3rd Deposit Bonus",
     unlimited: "Unlimited",
     wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
     wagerRequirementEg: "Eg. Deposit 100 Rs, require 1,000 Rs wager",
