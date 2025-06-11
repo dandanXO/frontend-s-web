@@ -212,6 +212,7 @@ const mailboxNotifyState = reactive({
   ACTIVITY: [],
   ANNOUNCEMENT: [],
   PAYMENT: [],
+  MATCH: [],
   ALL: []
 });
 const hasMailSelected = computed(() => Object.values(selectedIds.value).includes(true));
@@ -458,6 +459,7 @@ const deleteAllMsg = (m) => {
     mailboxNotifyState.ACTIVITY = [];
     mailboxNotifyState.ANNOUNCEMENT = [];
     mailboxNotifyState.PAYMENT = [];
+    mailboxNotifyState.MATCH = [];
     mailboxNotifyState.ALL = [];
   } else {
     mailboxNotifyState[readType] = [];

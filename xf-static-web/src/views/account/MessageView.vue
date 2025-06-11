@@ -485,6 +485,7 @@ import { ElMessage } from "element-plus";
       mailboxNotifyState.ACTIVITY = [];
       mailboxNotifyState.ANNOUNCEMENT = [];
       mailboxNotifyState.PAYMENT = [];
+      mailboxNotifyState.MATCH = [];
       mailboxNotifyState.ALL = [];
     } else {
       mailboxNotifyState[readType] = [];
