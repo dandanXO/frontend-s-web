@@ -135,7 +135,7 @@ import NoInfoComponent from "@/components/NoInfoComponent.vue";
 const $q = useQuasar();
 const isLoading = reactive({ withdrawal: true, recharge: true });
 const isNoInfo = reactive({ withdrawal: true, recharge: true });
-const orderOptionTab = ref("recharge");
+const orderOptionTab = ref("withdrawal");
 const searchForm = reactive({ startDate: "", endDate: "" });
 const setTime = () => {
   searchForm.startDate = updateDate(7);
@@ -199,7 +199,7 @@ const onLoadWithdraw = (index, done) => {
         const data = response.data.records;
         withdrawalData.value.push(...data);
 
-        if (data.length >= withdrawPageSize) {
+        if (response.data.total / withdrawCurrentPage.value <= 0) {
           isWithdrawLastPage.value = false;
         }
       }
@@ -292,7 +292,7 @@ const onLoadDeposit = (index, done) => {
         const data = response.data.records;
         depositData.value.push(...data);
 
-        if (data.length < depositPageSize) {
+        if (response.data.total / depositCurrentPage.value <= depositPageSize) {
           isDepositLastPage.value = true;
         }
       }
