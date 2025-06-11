@@ -9,7 +9,7 @@
       indicator-color="yellow"
     >
       <q-tab name="DAILY" :label="$t('hotPromo.jackpotAviator.daily')"></q-tab>
-      <q-tab name="WEEKLY" :label="$t('hotPromo.jackpotAviator.weekly')"></q-tab>
+      <!-- <q-tab name="WEEKLY" :label="$t('hotPromo.jackpotAviator.weekly')"></q-tab> -->
     </q-tabs>
 
     <div class="jackpot">

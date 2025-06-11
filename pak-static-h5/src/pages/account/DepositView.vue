@@ -32,6 +32,9 @@
           <q-badge v-if="is2ndPrivilege" color="green" floating rounded>
             {{ get2ndAmount(item.amount) }}
           </q-badge>
+          <q-badge v-if="is3rdPrivilege" color="green" floating rounded>
+            {{ get3rdAmount(item.amount) }}
+          </q-badge>
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -96,6 +99,12 @@
               v-else-if="secondTimeDepositBonusConfig.hasBonus"
             >
               {{ $t("deposit.use2ndBonus") }}
+            </q-checkbox>
+            <q-checkbox
+              v-model="thirdTimeDepositBonusConfig.selected"
+              v-else-if="thirdTimeDepositBonusConfig.hasBonus"
+            >
+              {{ $t("deposit.use3rdBonus") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
@@ -484,6 +493,7 @@ const paytypeWithPrivilege = ref("");
 const isFtdPrivilegeEnable = ref(false);
 const ftdBonusConfig = ref(DEFAULT_BONUS_CONFIG);
 const secondTimeDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
+const thirdTimeDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
 const isFtdPrivilege = computed(
@@ -502,6 +512,12 @@ const is2ndPrivilege = computed(
     selectedPayType.value !== "USDTTRC" &&
     secondTimeDepositBonusConfig.value.selected &&
     secondTimeDepositBonusConfig.value.hasBonus
+);
+const is3rdPrivilege = computed(
+  () =>
+    selectedPayType.value !== "USDTTRC" &&
+    thirdTimeDepositBonusConfig.value.selected &&
+    thirdTimeDepositBonusConfig.value.hasBonus
 );
 
 const copyMessage = (position) => {
@@ -602,19 +618,34 @@ const getNewUserFtdAmount = (amount) => {
 
 const get2ndAmount = (amount) => {
   const rewardMap = {
-    300: 107,
-    500: 177,
-    1000: 277,
-    3000: 577,
-    5000: 777,
-    10000: 1377,
-    20000: 2777,
-    30000: 3777,
-    50000: 5777
+    300: 100,
+    500: 100,
+    1000: 100,
+    3000: 100,
+    5000: 100,
+    10000: 100,
+    20000: 100,
+    30000: 100,
+    50000: 100
   };
   return rewardMap[amount] || 0;
 };
 
+
+const get3rdAmount = (amount) => {
+  const rewardMap = {
+    300: 150,
+    500: 150,
+    1000: 150,
+    3000: 150,
+    5000: 150,
+    10000: 150,
+    20000: 150,
+    30000: 150,
+    50000: 150
+  };
+  return rewardMap[amount] || 0;
+};
 const handleDepositNodeClick = (item) => {
   activeMethod.value = item;
 };
@@ -748,6 +779,7 @@ async function loadPrivilege(val) {
   hasPrivilege.value = false;
   ftdBonusConfig.value = DEFAULT_BONUS_CONFIG;
   secondTimeDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
+  thirdTimeDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
     if (res.code === 0) {
       privilegeList.value = res.data.privileges;
@@ -767,6 +799,12 @@ async function loadPrivilege(val) {
               };
             } else if (p.code === "pak-second-time-deposit-bonus") {
               secondTimeDepositBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else if (p.code === "pak-third-time-deposit-bonus") {
+              thirdTimeDepositBonusConfig.value = {
                 selected: true,
                 hasBonus: true,
                 privilegeId: p.id

@@ -68,6 +68,8 @@ export const userStore = defineStore("userStore", {
       claimedSecondPrivilege: false,
       depositCount: 0,
       eligibleThirdPrivilege: false,
+      canClaimSecondPrivilege: false,
+      canClaimThirdPrivilege: false,
       isEnableBankCardOTP: false
     };
   },
@@ -247,7 +249,8 @@ export const userStore = defineStore("userStore", {
             claimedFtdPrivilege,
             claimedSecondPrivilege,
             depositCount,
-            eligibleThirdPrivilege
+            canClaimSecondPrivilege,
+            canClaimThirdPrivilege
           } = response.data;
 
           this.id = id;
@@ -269,7 +272,8 @@ export const userStore = defineStore("userStore", {
           this.claimedFtdPrivilege = claimedFtdPrivilege;
           this.claimedSecondPrivilege = claimedSecondPrivilege;
           this.depositCount = depositCount;
-          this.eligibleThirdPrivilege = eligibleThirdPrivilege;
+          this.canClaimThirdPrivilege = canClaimThirdPrivilege;
+          this.canClaimSecondPrivilege = canClaimSecondPrivilege;
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
             OneSignal.login(this.nickName);

@@ -91,7 +91,7 @@ defineExpose({
     position: absolute;
     z-index: 99999;
     width: 70px;
-    left: 53%;
+    left: 50%;
     top: 74%;
     pointer-events: none;
 }

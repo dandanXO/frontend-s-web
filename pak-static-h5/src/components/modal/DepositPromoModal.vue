@@ -81,7 +81,8 @@ const modalTriggerList = ref([
 const combinedStatus = computed(() => ({
   ...statusFromApi.value,
   claimedFtdPrivilege: store.claimedFtdPrivilege,
-  claimedSecondPrivilege: store.claimedSecondPrivilege,
+  canClaimSecondPrivilege: store.canClaimSecondPrivilege,
+  canClaimThirdPrivilege: store.canClaimThirdPrivilege,
   eligibleThirdPrivilege: store.eligibleThirdPrivilege
 }));
 
@@ -240,20 +241,17 @@ const checkModalType = async () => {
       }
       break;
     case 2:
-      if (!combinedStatus.value.claimedFtdPrivilege && shouldShowModalAgain(modalIndex.value)) {
-        modalType.value = "FIRST_DEPOSIT";
+      if (combinedStatus.value.canClaimSecondPrivilege && shouldShowModalAgain(modalIndex.value)) {
+        modalType.value = "SECOND_PRIVILEGE";
       } else {
         showNextModal();
       }
       break;
     case 3:
       if (
-        combinedStatus.value.claimedFtdPrivilege &&
-        !combinedStatus.value.claimedSecondPrivilege &&
-        store.balance <= 50 &&
-        shouldShowModalAgain(modalIndex.value)
+        combinedStatus.value.canClaimThirdPrivilege && shouldShowModalAgain(modalIndex.value)
       ) {
-        modalType.value = "FIRST_DEPOSIT_AMOUNT";
+        modalType.value = "THIRD_PRIVILEGE";
       } else {
         showNextModal();
       }
@@ -278,13 +276,17 @@ const recheckModalType = async () => {
     await getData(false);
     checkAppLogin();
   } else if (
-    combinedStatus.value.claimedFtdPrivilege &&
-    !store.claimedSecondPrivilege &&
-    store.balance <= 50 &&
+    combinedStatus.value.canClaimSecondPrivilege &&
+    shouldShowModalAgain(2)
+  ) {
+    modalIndex.value = 2;
+    modalType.value = "SECOND_PRIVILEGE";
+  } else if (
+    combinedStatus.value.canClaimThirdPrivilege &&
     shouldShowModalAgain(3)
   ) {
     modalIndex.value = 3;
-    modalType.value = "FIRST_DEPOSIT_AMOUNT";
+    modalType.value = "THIRD_PRIVILEGE";
   } else if (combinedStatus.value.eligibleThirdPrivilege && store.balance < 30 && shouldShowModalAgain(4)) {
     modalIndex.value = 4;
     modalType.value = "SECONDARY_DEPOSIT_AMOUNT";
@@ -397,6 +399,7 @@ onMounted(() => {
 
   .modal-checkbox {
     margin-bottom: 12px;
+    text-align: center;
   }
 
   .modal-countdown {
@@ -451,6 +454,7 @@ onMounted(() => {
     .modal-img {
       img {
         max-width: 240px;
+        width: 85%;
       }
     }
     .modal-countdown {
