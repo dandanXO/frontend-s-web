@@ -1,6 +1,12 @@
 <template>
   <div ref="pageContainer" class="page-style" :class="isDark ? 'dark' : 'white'">
-    <LiveStreamVideo :danmuList :livestream-data="currentLiveData" :extensionState :extensionToken />
+    <LiveStreamVideo
+      :danmuList
+      :livestream-data="currentLiveData"
+      :extensionState
+      :extensionToken
+      @share-click="handleShareClick"
+    />
 
     <div class="transfer-mid-div">
       <div class="station-notice-wrapper" @click="showAnnouncementDialog">
@@ -17,7 +23,7 @@
     </div>
 
     <div class="room-message-container">
-      <div class="container-box" @click="expandRoomMsg">
+      <div class="container-box">
         <div class="type-tags">
           <div class="profile-tag">
             <img
@@ -55,35 +61,7 @@
       :extensionToken
     />
   </div>
-
-  <q-dialog v-model="showShareDialog" persistent>
-    <q-card class="share-dialog-modal">
-      <template v-if="!isShareCopied">
-        <q-card-section class="row items-center justify-center">
-          <img src="../../assets/images/livestream/share-dialog-bg.png" width="100%" />
-          <div class="share-dialog-btn">
-            <q-btn class="common-large-btn" @click="copyUrl()" label="复制地址，分享给朋友" />
-          </div>
-        </q-card-section>
-
-        <div class="close-btn">
-          <img @click="closeShareDialog()" v-close-popup src="../../assets/images/livestream/share-dialog-close.png" />
-        </div>
-      </template>
-      <template v-else>
-        <q-card-section class="row items-center justify-center">
-          <img src="../../assets/images/livestream/share-dialog-bg-2.png" width="100%" />
-          <div class="share-dialog-btn">
-            <q-btn class="common-large-btn" @click="closeShareDialog()" label="我已知晓" />
-          </div>
-        </q-card-section>
-
-        <div class="close-btn">
-          <img @click="closeShareDialog()" v-close-popup src="../../assets/images/livestream/share-dialog-close.png" />
-        </div>
-      </template>
-    </q-card>
-  </q-dialog>
+  <ShareModal v-model="showShareModal" :url="selfTgurl" />
 </template>
 
 <script setup>
@@ -100,6 +78,7 @@ import { getChatHistory, getLivestreamList, sendChat, getLivestreamDetail } from
 import { extractVipLevelFromVipStr } from "src/boot/utils";
 import { useNotify } from "src/hooks/notify";
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
+import ShareModal from "../../components/livestream/ShareModal.vue";
 
 const MESSAGE_SYNC_INTERVAL = 1000 * 2; // 2 seconds
 const MESSAGE_HISTORY_DANMU_FIRE_GAP = 10;
@@ -126,7 +105,8 @@ const pageContainer = ref(null);
 const store = userStore();
 const livestreamTimer = ref(null);
 const livestreamSyncAbortController = ref(null);
-const isExpanded = ref(false);
+const isExpanded = ref(true);
+const showShareModal = ref(false);
 const totalCharLength = computed(() => displayAnnouncementList.value.reduce((sum, msg) => sum + msg.length, 0));
 
 const marqueeDuration = computed(() => {
@@ -548,7 +528,12 @@ const checkExtension = () => {
   }
 };
 
-watch(currentLiveData, () => {
+const handleShareClick = () => {
+  showShareModal.value = true;
+};
+
+watch(currentLiveData, (newVal, oldVal) => {
+  if (newVal?.id === oldVal?.id) return;
   messages.value = [];
   unsortMessages.value = [];
   danmuList.value = [];
@@ -556,7 +541,6 @@ watch(currentLiveData, () => {
   seenMessageIds.clear();
   latestProcessedMessageId.value = -1;
   lastSyncMessageTime.value = currentLiveData.value?.eventStartTime || Date.now();
-  latestProcessedMessageId.value = -1;
   liveStartTime.value = lastSyncMessageTime.value;
   syncMessages();
   resetSyncLivestreamInterval(true);
@@ -575,40 +559,18 @@ watch(currentLiveData, () => {
 // );
 const selfTgurl = ref();
 const refCode = ref();
-const showShareDialog = ref(false);
-const isShareCopied = ref(false);
-
-const copyUrl = async () => {
-  if (selfTgurl.value) {
-    try {
-      await navigator.clipboard.writeText(selfTgurl.value);
-      isShareCopied.value = true;
-      // notify({
-      //   message: "复制成功",
-      //   type: "info",
-      //   duration: 2000
-      // });
-    } catch (err) {
-      console.error("Failed to copy:", err);
-      isShareCopied.value = false;
-    }
-  }
-};
-
-const closeShareDialog = () => {
-  showShareDialog.value = false;
-  isShareCopied.value = false;
-};
 
 let tgDomain = location.origin;
 
 onActivated(() => {
   getData();
-  syncMessages();
+  // syncMessages();
   // syncLivestreamInfo();
   // resetSyncLivestreamInterval(true);
   checkExtension();
+});
 
+onMounted(() => {
   api.get("/session/member/referralCode").then((res) => {
     // console.log(reminderForm)
     if (res.code === 0) {
@@ -624,6 +586,10 @@ onDeactivated(() => {
     messageTimer.value = null;
   }
   resetSyncLivestreamInterval();
+  messagesHistoryMeta.value = {
+    current: 1,
+    max: 1
+  };
 });
 </script>
 
@@ -887,27 +853,6 @@ onDeactivated(() => {
           }
         }
       }
-    }
-  }
-}
-
-.share-dialog-modal {
-  background: transparent;
-  box-shadow: none;
-
-  .share-dialog-btn {
-    margin-top: -120px;
-  }
-
-  .close-btn {
-    display: flex;
-    justify-content: center;
-    padding-top: 20px;
-
-    img {
-      display: block;
-      width: 32px;
-      height: 32px;
     }
   }
 }

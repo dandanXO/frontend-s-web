@@ -10,6 +10,10 @@
         </div>
       </div>
     </q-btn>
+
+    <q-btn flat @click="$emit('share-click')">
+      <img class="share-icon" src="../../assets/images/livestream/icon-share.png" />
+    </q-btn>
   </div>
   <div
     ref="videoWrapperRef"
@@ -236,6 +240,8 @@ const notify = useNotify();
 
 const props = defineProps(["danmuList", "channels", "livestreamData", "extensionState", "extensionToken"]);
 const { danmuList, channels, livestreamData, extensionState, extensionToken } = toRefs(props);
+
+defineEmits(["share-click"]);
 
 const danmuJs = ref(null);
 
@@ -856,6 +862,7 @@ const backToPrev = () => {
   width: 100%;
   font-size: 12px;
   display: flex;
+  justify-content: space-between;
   margin-right: auto;
 
   &:before {
@@ -880,6 +887,10 @@ const backToPrev = () => {
       color: #fff;
       font-size: 11px;
     }
+  }
+
+  .share-icon {
+    width: 24px;
   }
 }
 
