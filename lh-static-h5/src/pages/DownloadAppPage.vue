@@ -201,6 +201,8 @@ export default defineComponent({
           // alert(res.data)
           var agentCode = res.data;
           sessionStorage.setItem("AFFILIATE_CODE", agentCode);
+
+          vv.value.agentCode = agentCode;
         }
       });
     };
@@ -215,7 +217,7 @@ export default defineComponent({
 
       axios.get('https://tfwkgol.076knee9cc.com/getDownData').then((res) => {
         let subTitle = ['高效 快捷',' 防失联 不掉签','长期 稳定',]
-        if (res.data.code == 0 ) {
+        if (res.data.code === 0 ) {
           androidDownloadUrlList.value = (res.data.data.android).map(
             item => {
               const [name, url] = Object.entries(item)[0];
@@ -277,7 +279,6 @@ export default defineComponent({
 
     return {
       vv,
-      postDownloadExtra,
       downloadFile,
       isAndroid,
       androidDownloadUrlList,
