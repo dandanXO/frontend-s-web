@@ -28,18 +28,16 @@
             <div :class="`vip-badge vip0`"></div>
 
             <div class="vip-level-header">
-              <svg viewBox="0 0 450 70">
-                <defs>
-                  <!-- Linear Gradient -->
-                  <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <!-- <svg viewBox="0 0 450 70"> -->
+              <!-- <defs> -->
+              <!-- Linear Gradient -->
+              <!-- <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" style="stop-color: #00b9a1; stop-opacity: 1" />
                     <stop offset="100%" style="stop-color: #0097b9; stop-opacity: 1" />
-                  </linearGradient>
-                </defs>
-                <text class="svgText" x="10" y="45" fill="url(#myGradient)">
-                  {{ $t("header.vip") }}{{ vip.vipLevel }}
-                </text>
-              </svg>
+                  </linearGradient> -->
+              <!-- </defs> -->
+              <!-- </svg> -->
+              <div class="headText">{{ $t("header.vip") }}{{ vip.vipLevel }}</div>
             </div>
 
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
@@ -976,31 +974,43 @@ const swipeRight = () => {
     font-family: sans-serif;
     font-size: 3.2em;
     font-weight: 800;
-    -webkit-text-stroke: 2px #fff;
+    // -webkit-text-stroke: 2px #fff;
     top: 28%;
-    right: 2%;
-    z-index: 1;
+    right: 10%;
+    // z-index: 1;
     position: absolute;
     // color: #8b36f8;
-    color: rgba(0, 151, 185, 1);
+    // color: rgba(0, 151, 185, 1);
 
-    svg {
-      font-family: Arial;
-      font-size: 10rem;
-      font-weight: bold;
-      position: absolute;
-      width: 125px;
-      height: 70px;
-      right: 0px;
-      top: 0px;
+    .headText {
+      // font-size: 26px;
+      // font-weight: 800;
+      // line-height: 32px;
+      // text-align: left;
+      // background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
+      background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .svgText {
-      stroke: white;
-      stroke-width: 10px;
-      stroke-linejoin: round;
-      paint-order: stroke;
-    }
+    // svg {
+    //   font-family: Arial;
+    //   font-size: 10rem;
+    //   font-weight: bold;
+    //   position: absolute;
+    //   width: 125px;
+    //   height: 70px;
+    //   right: 0px;
+    //   top: 0px;
+    // }
+
+    // .svgText {
+    //   stroke: white;
+    //   stroke-width: 10px;
+    //   stroke-linejoin: round;
+    //   paint-order: stroke;
+    // }
   }
 
   .vip-contents {
@@ -1084,6 +1094,7 @@ const swipeRight = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  // position: relative;
 }
 
 .carousel__slide {
