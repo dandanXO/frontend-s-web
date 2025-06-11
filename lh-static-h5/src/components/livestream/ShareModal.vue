@@ -31,6 +31,7 @@
         <img v-close-popup src="../../assets/images/livestream/share/icon-close.png" />
       </div>
     </div>
+    <div class="share-modal-decorator" />
   </q-dialog>
 </template>
 <script setup>
@@ -112,18 +113,6 @@ const handleModalClose = () => {
     background: url("../../assets/images/livestream/share/bg.png") no-repeat center center;
     background-size: 100% 100%;
     aspect-ratio: 300 / 467;
-    &::before {
-      content: "";
-      position: fixed;
-      background: url("../../assets/images/livestream/share/bg-decorator.png") no-repeat center center;
-      background-size: 100% 100%;
-      aspect-ratio: 476 / 629;
-      width: 100%;
-      max-width: 550px;
-      z-index: -1;
-      top: 60px;
-      left: -15%;
-    }
 
     .share-modal-content-wrapper {
       display: flex;
@@ -213,11 +202,42 @@ const handleModalClose = () => {
   }
 }
 
-@media screen and (min-width: 400px) {
-  .share-modal-wrapper {
-    &::before {
-      top: 0;
-      left: -10%;
+.share-modal-decorator {
+  position: fixed;
+  background: url("../../assets/images/livestream/share/bg-decorator.png") no-repeat center center;
+  background-size: 100% 100%;
+  aspect-ratio: 476 / 629;
+  width: 80vw;
+  max-width: 300px;
+  z-index: -1;
+  transform: translate(-33%, -50%);
+}
+
+.body--dark {
+  .share-modal-outer-wrapper {
+    .share-modal-wrapper {
+      background-image: url("../../assets/images/livestream/share/bg-dark.png");
+
+      .share-modal-content-wrapper {
+        .share-modal-step-button {
+          background-color: #323944;
+          box-shadow: none;
+          .share-modal-step-button__text {
+            filter: brightness(0) invert(1);
+          }
+        }
+
+        .share-modal-copy-success-text {
+          color: #7f8da1;
+          .title {
+            color: #fff;
+          }
+        }
+      }
+
+      .share-modal-bottom-button {
+        background-image: url("../../assets/images/livestream/share/button-bg-dark.png");
+      }
     }
   }
 }
