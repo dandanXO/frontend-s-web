@@ -2353,7 +2353,7 @@ function loadData() {
             desktopImageUrlDark: null,
             mobileImageUrl: "promo-1.png",
             mobileImageUrlDark: null,
-            redirectUrl: "/url/promo?name=EarnMoney",
+            redirectUrl: "/url/promo?name=spin-lucky-wheel",
             category: "HOME",
             displayStartTime: 1577847600000,
             displayEndTime: 1893553199000
