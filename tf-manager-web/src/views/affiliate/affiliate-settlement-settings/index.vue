@@ -232,12 +232,14 @@ import { getFinancialLevels } from '../../../api/financial-level'
 import { selectList } from '../../../api/risk-level'
 import {
   deleteById,
-  getConfigs,
   updateConfig,
-  updateBatch,
   createConfig,
   updateOrderBatch,
 } from '../../../api/config'
+import {
+  getConfigs,
+  updateBatch,
+} from '../../../api/affiliate-settlement'
 import { hasRole } from '../../../utils/util'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useI18n } from 'vue-i18n'
@@ -608,7 +610,6 @@ async function updateConfigs() {
   const configsWithoutDefaultData = [platformFee.value[0], paymentFee.value[0],
     settlementSetting.value[0], settlementBetRequired.value[0], settlementDepositRequired.value[0]];
 
-  console.log(configsWithoutDefaultData)
   await updateBatch(configsWithoutDefaultData)
   await loadConfigs()
   ElMessage({ message: t('message.updateSuccess'), type: 'success' })

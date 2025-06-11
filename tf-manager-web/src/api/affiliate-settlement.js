@@ -36,3 +36,11 @@ export const confirmPay = (id) => {
 export const cancelSettlement = (id, form) => {
   return https().request(`/affiliateSettlement/${id}/cancel?_method=PUT`, Method.POST, form, ContentType.form);
 };
+
+export const getConfigs = (config) => {
+  return https().request("/affiliateSettlement/config", Method.GET, config, ContentType.form);
+};
+
+export const updateBatch = async (configs) => {
+  await https().httpClient.post('/affiliateSettlement/config?_method=PUT', JSON.stringify(configs), { headers: { "Content-Type": "application/json" } });
+}
