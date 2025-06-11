@@ -2606,7 +2606,10 @@ export default {
     streamName: 'Stream Name',
     streamScore: 'Stream Score',
     screenShot: 'Screen Shot',
-    streamTag: 'Stream Tag'
+    streamTag: 'Stream Tag',
+    settlementSetting: 'Dividend Rate',
+    settlementBetRequired: 'Active Bet Amount',
+    settlementDepositRequired: 'Active Deposit Amount',
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3481,7 +3484,8 @@ export default {
     'Sport Live Block Member': 'Sport Live Block Member Setting',
     'Sport Live Chat Vip Status': 'Sport Live Vip Message Setting',
     'Sport Live History Block': 'Sport Live History Block Setting',
-    'Sport Live Monitor': 'Sport Live Monitor'
+    'Sport Live Monitor': 'Sport Live Monitor',
+    'Affiliate Settlement Setting': 'Affiliate Settlement Setting',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

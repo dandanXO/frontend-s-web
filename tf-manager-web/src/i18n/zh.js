@@ -2611,7 +2611,10 @@ export default {
     streamScore: '讯号强度',
     screenShot: '截图',
     streamTag: '流标签',
-    isCdnPush: '推送 CDN'
+    isCdnPush: '推送 CDN',
+    settlementSetting: '佣金比例',
+    settlementBetRequired: '活跃投注额',
+    settlementDepositRequired: '活跃存款额',
   },
   message: {
     adsStatusOpen: '开',
@@ -3434,7 +3437,8 @@ export default {
     'Sport Live Block Member': '聊天室会员禁言设定',
     'Sport Live Chat Vip Status': '聊天室VIP发言设定',
     'Sport Live History Block': '聊天室记录禁言设定',
-    'Sport Live Monitor': '体育直播监控'
+    'Sport Live Monitor': '体育直播监控',
+    'Affiliate Settlement Setting': '代理佣金设置',
   },
   google: {
     google_auth_menu: '谷歌验证',
