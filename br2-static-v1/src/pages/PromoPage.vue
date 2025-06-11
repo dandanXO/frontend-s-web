@@ -15,10 +15,8 @@
     </q-tabs>
   </div>
 
-  <!-- <pre>filteredArray--{{ filteredArray }}</pre> -->
   <div
     class="promo-container"
-    style="background: #090b19"
     v-touch-swipe.left="swipeLeft"
     v-touch-swipe.right="swipeRight"
   >
@@ -756,13 +754,14 @@ export default defineComponent({
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    background: rgba(43, 71, 74, 0.27);
+    // background: rgba(43, 71, 74, 0.27);
+    background:#2B474A;
     color: #01a1b2;
     font-weight: 400;
   }
 
   .vip-promo-tab-toggle {
-    background-color: #1b2232;
+    background-color: #2B474A;
     border-radius: 8px;
     margin-bottom: 4px;
     margin-top: 5px;
@@ -776,6 +775,7 @@ export default defineComponent({
       color: #fff;
       background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
       box-shadow: 0px 1px 2px 0px #0000000d;
+      // border: 2px solid rgba(43, 71, 74, 0.27);
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -846,6 +846,8 @@ export default defineComponent({
 .promo-container {
   color: #ffffff;
   min-height: calc(100vh - 160px);
+  // background: #101114;
+  // background: linear-gradient(180deg, rgba(0, 185, 161, 0.46) 0%, rgba(0, 185, 111, 0) 96.35%);
 
   .all-promotions {
     padding-bottom: 20px;
@@ -1345,6 +1347,7 @@ export default defineComponent({
     font-style: normal;
     font-weight: 400;
     line-height: 1;
+    max-width: calc(100% - 60px);
   }
 }
 

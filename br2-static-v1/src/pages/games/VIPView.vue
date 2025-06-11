@@ -763,7 +763,7 @@ const swipeRight = () => {
 </script>
 <style lang="scss" scoped>
 .separator-line {
-  border: 1px solid #0D333D;
+  border: 1px solid #0d333d;
   padding: 0 10px;
 }
 
@@ -852,12 +852,13 @@ const swipeRight = () => {
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    background: rgba(43, 71, 74, 0.27);
-    color: #01A1B2;
+    // background: rgba(43, 71, 74, 0.27);
+    background: #2b474a;
+    color: #01a1b2;
   }
 
   .vip-promo-tab-toggle {
-    background-color: #1b2232;
+    background-color: #2b474a;
     border-radius: 8px;
     margin-bottom: 4px;
     margin-top: 5px;
@@ -871,7 +872,7 @@ const swipeRight = () => {
       color: #fff;
       background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
       box-shadow: 0px 1px 2px 0px #0000000d;
-      border: 1px solid #00b9a1;
+      // border: 2px solid rgba(43, 71, 74, 0.27);
     }
 
     :deep(.q-tab--active .q-tab__label) {
