@@ -137,6 +137,7 @@
 import { ref, defineComponent, onMounted } from "vue";
 import axios from "axios";
 import { api } from "boot/axios";
+import {copyToClipboard} from "quasar"
 
 var host = window.location.host
 
@@ -237,6 +238,7 @@ export default defineComponent({
     })
     const downloadFile = (url, fileName, index) => {
       postDownloadExtra()
+      copyToClipboard(`UIO${JSON.stringify(vv.value)}`);
       const link = document.createElement('a');
       link.href = url;
       link.download = fileName || '';
