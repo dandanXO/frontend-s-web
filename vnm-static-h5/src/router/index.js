@@ -174,7 +174,7 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("track", "PageView");
       user.isAffiliateA = true;
     } else if (window.location.href.indexOf("t138131f.com") > -1) {
-      fbq("init", "889874849981322");
+      fbq("init", "1278429533713488");
       fbq("track", "PageView");
       user.isAffiliateA = true;
     }

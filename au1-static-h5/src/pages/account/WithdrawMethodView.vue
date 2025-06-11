@@ -458,7 +458,7 @@ const paymentMethodsItems = ref([]);
 const selectedMethodsItems = ref([]);
 const listItems = ref([]);
 
-const getWithdrawalMethods = () => {
+const getWithdrawalMethods = async () => {
   isLoadingWithdrawalMethod.value = true;
   let cbCount = 0;
 
@@ -466,7 +466,10 @@ const getWithdrawalMethods = () => {
     if (cbCount === 2) isLoadingWithdrawalMethod.value = false;
   };
 
-  api.get("/session/nga/withdraw/entrance").then((res) => {
+
+  try {
+    const res = await api.get("/session/nga/withdraw/entrance")
+
     if (res.code === 0) {
       let bankWithdraws = res.data.withdraws
         .map((withdraw) => {
@@ -515,13 +518,13 @@ const getWithdrawalMethods = () => {
     }
     cbCount++;
     checkCb();
-  });
+  } catch(e) {}
 
   if (bankCardList.value.length === 0) {
-    api
+    try {
+      api
       .get("/session/withdraw/card")
-      .then((res) => {
-        if (res.code === 0) {
+      if (res.code === 0) {
           res.data.forEach((e) => {
             bankCardField.bankId = e.id;
             bankCardField.withdrawPlatformId = e.code;
@@ -534,19 +537,17 @@ const getWithdrawalMethods = () => {
 
           selectBankType();
         }
-      })
-      .catch((e) => {
-        console.log("error", e);
-      })
-      .then(() => {
-        cbCount++;
-        checkCb();
-      });
+    } catch(e) {
+      console.log("error", e);
+    } finally {
+      cbCount++;
+      checkCb();
+    }
   } else {
     cbCount++;
     checkCb();
   }
-};
+}
 
 const selectedWithdraw = ref();
 const selectWithdrawCurrency = (item) => {
@@ -585,11 +586,9 @@ const filterCards = (type) => {
   isLoadingBankCard.value = true;
 
   if (selectedWithdraw.value) {
-    const activeItem = selectedWithdraw.value.find((item) => item.active === true);
-
     bankCardList.value = [];
     api
-      .get(`/session/ausBankCard?withdrawPlatformId=${activeItem.withdrawId}`)
+      .get(`/session/ausBankCard?withdrawPlatformId=${selectedMethodItem.value.withdrawId}`)
       .then((res) => {
         isLoadingBankCard.value = false;
 
@@ -622,10 +621,9 @@ const filterCards = (type) => {
 
 const loadCards = () => {
   isLoadingBankCard.value = true;
-  const activeItem = selectedWithdraw.value.find((item) => item.active === true);
 
   api
-    .get(`/session/ausBankCard?withdrawPlatformId=${activeItem.withdrawId}`)
+    .get(`/session/ausBankCard?withdrawPlatformId=${selectedMethodItem.value.withdrawId}`)
     .then((res) => {
       isLoadingBankCard.value = false;
       if (res.code === 0) {
@@ -846,6 +844,20 @@ const goSelectedMethod = (item) => {
 
   const selectedBank = filteredBankList.value.find((bank) => bank.id === bankCardField.bankId);
   filterCards(selectedBank);
+
+  if (selectedMethodItem.value.withdrawId === 613) {
+    // TOPPAY
+    api
+      .get(`/session/verifyAUTopPayKYC`)
+      .then((res) => {
+        if (res.data.url) {
+          window.open(res.data.url, `_blank`);
+        }
+      })
+      .catch((e) => {
+        console.error("KYC verification failed:", e);
+      });
+  }
 };
 
 const unbindBankAcc = (cardId) => {
@@ -854,13 +866,6 @@ const unbindBankAcc = (cardId) => {
     .then((res) => {
       if (res.code === 0) {
         loadCards();
-      } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: res.message,
-          icon: "report_problem"
-        });
       }
     })
     .catch(() => {});
@@ -899,11 +904,11 @@ onMounted(() => {
   loadInfo();
 });
 
-onActivated(() => {
-  getWithdrawalMethods();
+onActivated(async () => {
   checkNewUser();
-  loadCards();
   loadInfo();
+  await getWithdrawalMethods();
+  loadCards();
 });
 
 const isValidCardNumber = () => {

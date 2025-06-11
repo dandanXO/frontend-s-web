@@ -20,7 +20,7 @@
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/logo.png" @click="onClickLogo" />
+          <img src="../assets/logo.svg" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="store.token">
@@ -74,7 +74,15 @@
               </div>
             </div>
           </template>
-          <q-list style="background: #303954" dense unelevated flat class="dropdown-list">
+          <q-list dense unelevated flat class="dropdown-list">
+            <q-item clickable v-close-popup @click="router.push('/account/profile')">
+              <q-item-section avatar>
+                <q-avatar icon="phone_iphone" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ $t("header.information") }}</q-item-label>
+              </q-item-section>
+            </q-item>
             <q-item clickable v-close-popup @click="onVipClick">
               <q-item-section avatar>
                 <q-avatar icon="diamond" />
@@ -572,7 +580,7 @@ onMounted(() => {
     padding-top: 3px;
     padding-bottom: 4px;
     z-index: 3;
-    color: #334ad6;
+    color: #101616;
     font-weight: 700;
     font-style: italic;
   }
@@ -641,13 +649,13 @@ onMounted(() => {
 }
 
 .q-item__label {
-  color: #c5c7ff;
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 500;
 }
 
 .q-avatar {
   i.q-icon {
-    color: #7b80a9;
+    color: rgba(255, 255, 255, 0.6);
   }
 }
 
@@ -666,6 +674,9 @@ onMounted(() => {
 
 .dropdown-list {
   // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
+  // border-radius: 18px;
+  background: #0f2021;
+  // overflow: hidden;
 }
 
 .btn-lang {

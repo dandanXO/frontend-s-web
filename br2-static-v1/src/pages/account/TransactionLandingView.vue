@@ -53,8 +53,8 @@ watch(
     background: #1b2232;
 
     :deep(.q-tab) {
-      color: #5c6c86;
-      background: #101114;
+      color: #01A1B2;
+      background: rgba(43, 71, 74, 0.27);
       border-radius: 0.375rem;
       margin: 2.5px;
     }
