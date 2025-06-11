@@ -217,7 +217,7 @@ const onLoadWithdraw = (index, done) => {
         withdrawalData.value.push(...data);
 
         if (withdrawCurrentPage.value * withdrawPageSize >= response.data.total) {
-          isWithdrawLastPage.value = false;
+          isWithdrawLastPage.value = true;
         }
       }
 
@@ -272,7 +272,7 @@ const searchDepositRecord = () => {
         if (data.length === 0) isNoInfo.recharge = true;
         else isNoInfo.recharge = false;
 
-        if (response.data.total < depositPageSize) {
+        if (response.data.total > depositPageSize) {
           isDepositLastPage.value = false;
         }
       }
