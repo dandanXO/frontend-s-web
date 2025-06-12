@@ -1416,8 +1416,8 @@ export default defineComponent({
         const firstLinerImg = require('@/assets/images/login/lh-login-2.png');
         const secondLinerImg = require('@/assets/images/login/lh-login-3.png');
 
-        currentSite.value.firstLiner = `<img class="top-img" src="${firstLinerImg}" style="width: 100%;">`;
-        currentSite.value.secondLiner = `<img class="top-img" src="${secondLinerImg}" style="width: 100%;">`;
+        currentSite.value.firstLiner = `<img class="top-img" src="${firstLinerImg}" style="width: 80%;">`;
+        currentSite.value.secondLiner = `<img class="top-img" src="${secondLinerImg}" style="width: 80%;">`;
 
         currentSite.value.logo = lhLogo
         state.loginForm.site = 'LH1'
@@ -1701,8 +1701,13 @@ a {
         display: flex;
         flex-direction: column;
         align-items: center;
+        text-align: center;
         .first-liner {
           margin: 25px 0 !important;
+        }
+        .first-liner,
+        .second-liner {
+          max-width: unset !important;
         }
       }
 
