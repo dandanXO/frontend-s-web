@@ -5507,7 +5507,8 @@ const checkGoogleLoginSetPwd = () => {
 .q-carousel__slides-container {
   height: fit-content;
 }
-.swiper-slide {
+.swiper-slide,
+.swiper-wrapper {
   height: fit-content;
 }
 
