@@ -44,6 +44,7 @@
           autocomplete="off"
           type="textarea"
           :autosize="{ minRows: 1, maxRows: 6 }"
+          @keydown.enter="handleEnterClick"
         />
         <div class="livestream-chat-prefix-wrapper">
           <el-popover popper-class="livestream-chat-emoji-popper" trigger="click" placement="top">
@@ -119,8 +120,11 @@ const inputConfig = computed(() => {
 });
 
 const handleSendChatMessage = () => {
-  emit("sendChatMessage", messageToSend.value);
-  messageToSend.value = "";
+  const trimMessage = messageToSend.value.trim();
+  if (trimMessage) {
+    emit("sendChatMessage", messageToSend.value);
+    messageToSend.value = "";
+  }
 };
 
 const calculateMaxContentLength = () => {
@@ -135,6 +139,12 @@ const calculateMaxContentLength = () => {
 
 const handleEmojiSelect = (emoji) => {
   messageToSend.value += emoji.native;
+};
+
+const handleEnterClick = (e) => {
+  if (e.shiftKey) return;
+  e.preventDefault();
+  handleSendChatMessage();
 };
 
 watch(
@@ -233,6 +243,7 @@ onMounted(() => {
       .livestream-chat-item__message {
         color: #333333;
         vertical-align: super;
+        white-space: break-spaces;
       }
     }
   }
