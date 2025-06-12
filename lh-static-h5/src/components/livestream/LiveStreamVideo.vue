@@ -1,26 +1,26 @@
 <template>
-  <div class="back-section" style="z-index: 4900" v-if="showPlayerController">
-    <q-btn flat @click="backToPrev()">
-      <q-icon name="chevron_left" color="white" size="lg" />
-      <div class="item-content">
-        <div class="content-title">{{ livestreamData.title }}</div>
-        <div class="content-desc">
-          {{ livestreamData.homeNameZh ?? livestreamData.homeNameEn ?? livestreamData.homeName }} VS
-          {{ livestreamData.awayNameZh ?? livestreamData.awayNameEn ?? livestreamData.awayName }}
-        </div>
-      </div>
-    </q-btn>
-
-    <q-btn flat @click="$emit('share-click')">
-      <img class="share-icon" src="../../assets/images/livestream/icon-share.png" />
-    </q-btn>
-  </div>
   <div
     ref="videoWrapperRef"
     class="livestream-video-wrapper"
     @mouseenter="handleWrapperMouseEnter"
     @mouseleave="handleWrapperMouseLeave"
   >
+    <div class="back-section" style="z-index: 4900" v-if="showPlayerController">
+      <q-btn flat>
+        <q-icon name="chevron_left" color="white" size="lg" @click="backToPrev()" />
+        <div class="item-content">
+          <div class="content-title">{{ livestreamData.title }}</div>
+          <div class="content-desc">
+            {{ livestreamData.homeNameZh ?? livestreamData.homeNameEn ?? livestreamData.homeName }} VS
+            {{ livestreamData.awayNameZh ?? livestreamData.awayNameEn ?? livestreamData.awayName }}
+          </div>
+        </div>
+      </q-btn>
+
+      <q-btn flat @click="$emit('share-click')">
+        <img class="share-icon" src="../../assets/images/livestream/icon-share.png" />
+      </q-btn>
+    </div>
     <template v-if="isPlayerSupported">
       <video
         ref="videoRef"
@@ -650,7 +650,12 @@ onDeactivated(() => {
   player.value = null;
   isPlayerSupported.value = true;
   showUnmuteMask.value = true;
+  videoRef.value.muted = true;
   isActive.value = false;
+  if (canvasRef.value) {
+    const ctx = canvasRef.value.getContext("2d");
+    ctx.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height);
+  }
 });
 
 const copyMessage = () => {

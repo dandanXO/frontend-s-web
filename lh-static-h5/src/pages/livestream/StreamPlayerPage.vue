@@ -547,6 +547,7 @@ watch(currentLiveData, (newVal, oldVal) => {
   messageHistoryStartTime.value = lastSyncMessageTime.value;
   syncMessages();
   resetSyncLivestreamInterval(true);
+  syncLivestreamInfo();
 });
 
 // watch(

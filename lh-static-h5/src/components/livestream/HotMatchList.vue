@@ -135,6 +135,8 @@ const hotMatchesByType = computed(() => {
             color: rgba(69, 139, 255, 1);
             border: rgba(69, 139, 255, 1) 1px solid;
             border-radius: 100px;
+            white-space: unset;
+            height: unset;
             &:hover {
               filter: brightness(1.1);
             }

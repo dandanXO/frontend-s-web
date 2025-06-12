@@ -514,17 +514,24 @@ onDeactivated(() => {
 
   :deep(.list-enter-active),
   :deep(.list-leave-active) {
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition: opacity 0.25s ease, transform 0.25s ease;
   }
 
-  :deep(.list-enter-from),
   :deep(.list-leave-to) {
     opacity: 0;
     transform: scale(0.95);
   }
 
+  :deep(.list-enter-from) {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  :deep(.list-enter-active) {
+    transition-delay: 0.25s;
+  }
+
   :deep(.list-move) {
-    transition: transform 0.5s ease;
+    transition: transform 0.25s ease;
   }
 }
 
