@@ -16,6 +16,7 @@
           </div>
         </div>
       </div>
+      <LhFeedback v-if="siteId === '7'" />
     </el-card>
   </div>
 </template>
@@ -28,6 +29,7 @@ import { useStore } from "@/store"
 import { useRoute } from 'vue-router'
 
 import { i18nStore } from "@/store/language";
+import LhFeedback from '../../../components/customer-service/lh-feedback.vue';
 
 const store = useStore();
 const route = useRoute()

@@ -119,14 +119,14 @@
 
             <hr class="menu-line" />
 
-            <q-item clickable v-close-popup @click="router.push('/account/bank?from=' + route.path)">
+            <!-- <q-item clickable v-close-popup @click="router.push('/account/bank?from=' + route.path)">
               <q-item-section avatar>
                 <q-avatar icon="account_balance" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>Bank</q-item-label>
               </q-item-section>
-            </q-item>
+            </q-item> -->
 
             <q-item clickable v-close-popup @click="onLogout()">
               <q-item-section avatar>

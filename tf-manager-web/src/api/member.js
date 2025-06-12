@@ -188,6 +188,15 @@ export const getMemberPrivilegeRecordTotal = (id, query) => {
   )
 }
 
+export const getMemberPrivilegeRecordNameList = (id, query) => {
+  return https().request(
+    `/member/${id}/memberPrivilegeRecordNameList`,
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
 export const getMemberMoneyChangeList = (id, query) => {
   return https().request(
     `/member/${id}/memberMoneyChange`,
@@ -404,6 +413,15 @@ export const getDnW = (id, site) => {
 export const getClaimableRebate = (id, site) => {
   return https().request(
     `/member/claimableRebate/${id}/${site}`,
+    Method.GET,
+    {},
+    ContentType.form
+  )
+}
+
+export const getClaimableRedPacketRebate = (id, site) => {
+  return https().request(
+    `/member/claimableRedPacketRebate/${id}/${site}`,
     Method.GET,
     {},
     ContentType.form

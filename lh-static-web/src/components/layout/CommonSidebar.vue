@@ -225,7 +225,7 @@ export default defineComponent({
       promoPosition.value = { top: window.innerHeight - 300, left: window.innerWidth - 320 };
       domainPosition.value = { top: window.innerHeight - 300, left: window.innerWidth - 360 };
     };
-    const floatPromo = [];
+    const floatPromo = ref([]);
     const floatPromoRemainingTime = ref([]);
     const gamePromo = [];
     const floatDomain = [];
@@ -237,7 +237,7 @@ export default defineComponent({
         if (res.code === 0) {
           res.data.forEach((element) => {
             if (element.type === "PROMO") {
-              floatPromo.push(element);
+              floatPromo.value.push(element);
               showFloatPromo.value = true;
             }
             if (element.type === "GAME") {
@@ -333,11 +333,11 @@ export default defineComponent({
     };
 
     const updatePromo = () => {
-      currentPromo.value = floatPromo[currentPromoIndex.value];
-      currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
+      currentPromo.value = floatPromo.value[currentPromoIndex.value];
+      currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.value.length;
     };
     const updatePromoRemainingTime = () => {
-      floatPromoRemainingTime.value = floatPromo.map((promo) => {
+      floatPromoRemainingTime.value = floatPromo.value.map((promo) => {
         let result = "00:00:00";
         if (promo?.endTime) {
           // console.log(promo.endTime);

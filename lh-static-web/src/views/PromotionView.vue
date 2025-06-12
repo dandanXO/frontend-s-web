@@ -179,6 +179,9 @@
             <div v-if="selectedPromo.redirectUrl === 'lh1-yalla-compass'">
               <YallaCompass :promoCode="selectedPromo.promoCode" />
             </div>
+            <div v-if="selectedPromo.redirectUrl === 'lh1-valorant-masters-toronto-2025'">
+              <TorontoMasters :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-if="selectedPromo.redirectUrl === 'lh1-blast-tv-austin-major-2025'">
               <BlastAustin :promoCode="selectedPromo.promoCode" />
             </div>
@@ -206,11 +209,11 @@
 </template>
 
 <script lang="js">
+import { useNotify } from "@/hooks/notify";
 import { ref, defineComponent, onMounted, reactive, watch, computed, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo, loadPromoTypes } from "@/api/index/promo.js";
 import { userStore } from "@/store";
-import { ElMessageBox } from "element-plus";
 import moment from "moment";
 import { useDark } from "@vueuse/core";
 
@@ -219,6 +222,7 @@ import { useLocalStorage } from "@vueuse/core";
 import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 
+const TorontoMasters = defineAsyncComponent(() => import("@/components/hotpromo/toronto-masters/TorontoMasters.vue"));
 const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/yalla-compass/YallaCompass.vue"));
 const MesaPromo = defineAsyncComponent(() => import("@/components/hotpromo/mesa/MesaPromo.vue"));
 const BlastAustin = defineAsyncComponent(() => import("@/components/hotpromo/blast-austin/BlastAustin.vue"));
@@ -231,7 +235,8 @@ export default defineComponent({
     NBAWaterBattle,
     YallaCompass,
     MesaPromo,
-    BlastAustin
+    BlastAustin,
+    TorontoMasters
   },
   setup() {
     const isDark = useDark();
@@ -243,6 +248,7 @@ export default defineComponent({
       active: "ALL",
       promoList: []
     });
+    const isPromoFound= ref(false);
     const promoTypes = ref([
       { code: "ALL", img: "all", label: "全站优惠" },
       { code: "WELCOME", img: "welcome", label: "新人优惠" },
@@ -268,6 +274,8 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
 
+    const notify = useNotify();
+
     const countDay = ref(5);
     const euroCupStartDate = moment("2024-06-15");
     countDay.value = euroCupStartDate.diff(moment(), "days");
@@ -292,25 +300,16 @@ export default defineComponent({
     //   })
     // }
     const showPromoDetails = (promo) => {
-      // if (!store.token) {
-      //   ElMessageBox.alert("请登录后再操作", "系统提示", {
-      //     // if you want to disable its autofocus
-      //     // autofocus: false,sd
-      //     center: true,
-      //     confirmButtonText: "确认",
-      //     showClose: false,
-      //     buttonSize: "large"
-      //   }).then(() => {
-      //     // router.push('/login');
-      //     store.loginPageVisible = true;
-      //   });
-      //   return;
-      // } else {
-      // }
+      isPromoFound.value= true;
       if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
         } else if (promo.redirectUrl.includes("lh1-invite")) {
           router.push("/privilege/invite");
+        } else if (promo.redirectUrl.includes("lh1-livestream")) {
+          router.push({
+            path: '/home',
+            hash: '#livestream'
+          });
         } else {
           router.push({ name: "promotion", query: { name: promo.redirectUrl } });
           // if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3' || route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
@@ -367,9 +366,6 @@ export default defineComponent({
             }
 
             res.data.forEach((element) => {
-              // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-              // } else {
               if (route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") {
                 if (element.redirectUrl === "lh1-invite") {
                   showPromoDetails(element);
@@ -380,11 +376,19 @@ export default defineComponent({
                   showPromoDetails(element);
                 }
               }
+
               if (element.redirectUrl === route.query.name) {
                 showPromoDetails(element);
               }
-              // }
             });
+
+            if(route.query.name && !isPromoFound.value){
+              notify({
+                type: "error",
+                message: "活动已结束"
+              });
+              clearNameQuery();
+            }
           }
         })
         .catch((e) => {
@@ -392,6 +396,13 @@ export default defineComponent({
         });
       switchPromoType(promoState.active);
     };
+
+    const clearNameQuery = () => {
+      const newQuery = { ...route.query };
+      delete newQuery.name;
+
+      router.replace({ path: route.path, query: newQuery });
+    }
 
     const getPromoLabel = (labelType) => {
       switch (labelType) {

@@ -12,19 +12,18 @@
         @mouseover="customerHovered = true"
         @mouseleave="customerHovered = false"
       >
-      
         <div class="cs-outlined-icon" />
         <div style="margin-top: 15px">客服中心</div>
         <div class="customer-right-content">
-          <div class="customer-content">
+          <div class="customer-content" @click.stop.prevent="store.openLiveChat()">
             <div class="cs-icon" />
             <span>24小时在线客服</span>
           </div>
 
-          <div class="customer-line-div">
+          <!-- <div class="customer-line-div">
             <div class="line-div" id="cs-line-1" @click.stop.prevent="store.openLiveChat(1)">线路一</div>
             <div class="line-div" id="cs-line-2" @click.stop.prevent="store.openLiveChat(2)">线路二</div>
-          </div>
+          </div> -->
 
           <!--<div class="content-line"></div>
                 <div class="customer-qq">

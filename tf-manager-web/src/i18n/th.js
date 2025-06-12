@@ -1402,6 +1402,7 @@ export default {
     confirmToCheck: 'คุณต้องการอัปเดตหรือไม่?',
     confirmUpdate: 'คุณต้องการอัปเดตหรือไม่?',
     confirmUpdatePayment: 'คุณต้องการอัปเดตการชำระเงินหรือไม่?',
+    confirmToAction: 'คุณต้องการดำเนินการนี้หรือไม่?',
     copyToClipboard: ' ถูกคัดลอกไปยังคลิปบอร์ดแล้ว',
     copySuccess: 'คัดลอกสำเร็จ',
     deleteSuccess: 'ลบสำเร็จ',
@@ -1914,7 +1915,9 @@ export default {
     'Sport App Setting': 'การตั้งค่าสำหรับแอปพลิเคชันกีฬา',
     Sport: 'กีฬา',
     'Member Privilege Record Pak Export': 'บันทึกส่วนลดสมาชิกส่งออก - ปากีสถาน',
-    'Refer Friend Rebate Point record': 'บันทึกคะแนนคืนเงินจากการหมุนเวียนเดิมพันของเพื่อนที่แนะนำ'
+    'Refer Friend Rebate Point record': 'บันทึกคะแนนคืนเงินจากการหมุนเวียนเดิมพันของเพื่อนที่แนะนำ',
+    'Member Refer Stat Analysis': '- การวิเคราะห์ค่าคอมมิชชั่นจากการแนะนำสมาชิก',
+    'Member Refer Relation': '- การตรวจสอบความสัมพันธ์ของการแนะนำสมาชิก'
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',

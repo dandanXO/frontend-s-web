@@ -79,14 +79,20 @@
 
 <script setup>
 
-import { nextTick, onMounted, reactive, ref } from "vue";
+import { nextTick, onMounted, reactive, computed, ref } from "vue";
 import { hasRole, hasPermission } from "../../../utils/util";
 import { required } from "../../../utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { createIpLabel, updateIpLabel, getIpLabel, deleteIpLabel } from "../../../api/ip-label";
+import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from "vue-i18n";
+import { useStore } from '../../../store'
+import { TENANT } from '../../../store/modules/user/action-types'
 
 const { t } = useI18n();
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
 const ipLabelForm = ref(null);
 const uiControl = reactive({
   dialogVisible: false,
@@ -96,6 +102,10 @@ const uiControl = reactive({
   removeBtn: true
 });
 
+const siteList = reactive({
+  list: [],
+})
+
 const page = reactive({
   pages: 0,
   records: [],
@@ -104,7 +114,8 @@ const page = reactive({
 
 const request = reactive({
   size: 30,
-  current: 1
+  current: 1,
+  siteId: 0
 });
 
 const form = reactive({
@@ -112,6 +123,7 @@ const form = reactive({
   ip: null,
   color: null,
   remark: null,
+  siteId: null
 });
 
 const formRules = reactive({
@@ -161,6 +173,7 @@ function showDialog(type) {
     if (ipLabelForm.value) {
       ipLabelForm.value.resetFields();
     }
+    form.siteId = request.siteId;
     uiControl.dialogTitle = t('fields.addIpLabel');
   } else if (type === "EDIT") {
     uiControl.dialogTitle = t('fields.editIpLabel');
@@ -242,7 +255,20 @@ function submit() {
   }
 }
 
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+}
+
 onMounted(async() => {
+  await loadSites()
+  request.siteId = store.state.user.siteId
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+  }
   await loadIpLabel();
 });
 

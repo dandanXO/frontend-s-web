@@ -1,0 +1,11 @@
+{
+  "appId": "com.ind.appbr1",
+  "appName": "AKB188",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "showSpinner": true
+    }
+  }
+}

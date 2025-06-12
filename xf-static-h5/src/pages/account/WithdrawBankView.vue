@@ -832,7 +832,7 @@ export default defineComponent({
         } else if(selectedCode === 'OKPAY') {
           return (val.length > 15 && val.length < 17) || '长度应为16个字符'
         }  else if(selectedCode === 'BLBPAY') {
-          return (val.length > 31 && val.length < 33) || '长度应为32个字符'
+          return (val.length >= 32 && val.length <= 36) || '长度应为33个字符'
         } else if(selectedCode === 'JDPAY') {
           return (val.length > 33 && val.length < 35) || '长度应为34个字符'
         } else if(selectedCode === 'SZPAY') {

@@ -243,6 +243,7 @@ import {
 import { getSiteListSimple } from '@/api/site'
 import { useStore } from '@/store'
 import { TENANT } from '@/store/modules/user/action-types'
+import { useRoute } from 'vue-router'
 
 const { t } = useI18n()
 const shortcuts = getShortcuts(t)
@@ -260,6 +261,8 @@ const props = defineProps({
     default: () => {},
   },
 })
+const route = useRoute();
+
 watch(
   () => props.referrerQuery,
   ({ referrerName, recordTime }, oldVal) => {
@@ -317,7 +320,9 @@ function checkQuery() {
       query[key] = value
     }
   })
+
   timeZone = sites.list.find(e => e.id === request.siteId).timeZone
+
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
       query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
@@ -381,6 +386,24 @@ async function loadSites() {
   const { data: ret } = await getSiteListSimple()
   sites.list = ret
 }
+
+watch(
+  () => route.query,
+  (newQuery) => {
+    if (Object.keys(newQuery).length > 0) {
+      if (newQuery.referrerName) {
+        request.referrerName = newQuery.referrerName
+      }
+      if (newQuery.recordTime && newQuery.recordTime[0]) {
+        request.recordTime[0] = convertDateToStart(newQuery.recordTime[0])
+      }
+      if (newQuery.recordTime && newQuery.recordTime[1]) {
+        request.recordTime[1] = convertDateToEnd(newQuery.recordTime[1])
+      }
+    }
+  },
+  { immediate: true }
+)
 
 onMounted(async () => {
   await loadSites()

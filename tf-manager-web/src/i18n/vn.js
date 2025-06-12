@@ -2014,6 +2014,7 @@ export default {
     confirmUpdate: 'Bạn có muốn cập nhật không?',
     confirmUpdatePayment: 'Bạn có muốn cập nhật thanh toán không?',
     confirmUnbind: 'Bạn có muốn hủy kết nối thẻ ngân hàng không?',
+    confirmToAction: 'Bạn có muốn tiếp tục thao tác này không?',
     copyToClipboard: 'Đã sao chép vào Clipboard.',
     copySuccess: 'Sao chép thành công',
     deleteSuccess: 'Xóa thành công',
@@ -2732,7 +2733,9 @@ export default {
     Sport: 'Thể thao',
     'Game Jackpot Bonus Record': 'Hồ sơ thưởng Jackpot',
     'Member Privilege Record Pak Export': 'Xuất khẩu kỷ lục giảm giá thành viên - Pakistan',
-    'Refer Friend Rebate Point record': 'Hồ sơ điểm hoàn trả doanh số cược của bạn bè được giới thiệu'
+    'Refer Friend Rebate Point record': 'Hồ sơ điểm hoàn trả doanh số cược của bạn bè được giới thiệu',
+    'Member Refer Stat Analysis': 'Phân tích hoa hồng giới thiệu thành viên',
+    'Member Refer Relation': 'Tra cứu quan hệ giới thiệu thành viên'
   },
   google: {
     google_auth_menu: 'Google Xác thực',

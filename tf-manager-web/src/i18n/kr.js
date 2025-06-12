@@ -2057,6 +2057,7 @@ export default {
     confirmUpdate: '업데이트하시겠습니까?',
     confirmUpdatePayment: '결제를 업데이트하시겠습니까?',
     confirmUnbind: '은행 카드를 언바인드하시겠습니까?',
+    confirmToAction: '이 작업을 진행하시겠습니까?',
     copyToClipboard: '이 (가) 클립보드로 복사되었습니다.',
     copySuccess: '복사 성공',
     deleteSuccess: '삭제 성공',
@@ -2760,7 +2761,9 @@ export default {
     Sport: '스포츠',
     'Game Jackpot Bonus Record': '게임 잭팟 보너스 기록',
     'Member Privilege Record Pak Export': '회원 할인 기록 수출 - 파키스탄',
-    'Refer Friend Rebate Point record': '친구 초대 베팅 거래량 리베이트 포인트 기록'
+    'Refer Friend Rebate Point record': '친구 초대 베팅 거래량 리베이트 포인트 기록',
+    'Member Refer Stat Analysis': '- 회원 추천 리베이트 분석',
+    'Member Refer Relation': '- 회원 추천 관계 조회'
   },
   google: {
     google_auth_menu: 'Google 인증자',

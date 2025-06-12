@@ -3,21 +3,18 @@
     <div class="livepoker-rebate-section section-bg">
       <div class="livepoker-rebate-section-left">
         <div class="livepoker-rebate-section-title">
-          <div class="claim-title-icon">
-          </div>
+          <div class="claim-title-icon"></div>
           每日礼金
         </div>
         <div class="reward-info">
-          <div class="reward-info-icon claim-coin-icon">
-          </div>
+          <div class="reward-info-icon claim-coin-icon"></div>
           <div class="reward-info-content">
             每周期负盈利：
             <span class="amount">{{ thousandDigitNoDecimal(loss) }}元</span>
           </div>
         </div>
         <div class="reward-info">
-          <div class="reward-info-icon claim-gift-icon">
-          </div>
+          <div class="reward-info-icon claim-gift-icon"></div>
           <div class="reward-info-content">
             可领彩金：
             <span class="amount">{{ thousandDigitNoDecimal(bonus) }}元</span>
@@ -136,7 +133,8 @@
 
         <div class="item">
           <div class="item-num">3</div>
-          同一手机号、姓名、邮箱地址、银行卡号、IP 地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
+          同一手机号、姓名、邮箱地址、银行卡号、IP
+          地址等身份认证信息视为同一账号，仅限一个账号参与、任何团体或个人以非法方式套取优惠（如投注对冲等），平台保留在不提前通知情况下做出处理。
         </div>
 
         <div class="item">
@@ -169,9 +167,9 @@ const bonus = ref(0);
 function thousandDigitNoDecimal(value, options) {
   const defaultOptions = {
     minimumFractionDigits: 0
-  }
-  const optionsWithDefaults = { ...defaultOptions, ...(options || {}) }
-  return Number(value).toLocaleString('en-US', optionsWithDefaults)
+  };
+  const optionsWithDefaults = { ...defaultOptions, ...(options || {}) };
+  return Number(value).toLocaleString("en-US", optionsWithDefaults);
 }
 
 const handleClaimBonus = () => {
@@ -238,7 +236,8 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .challenge-comeback-container {
-  font-family: PingFang TC;
+  font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial, sans-serif;
+
   color: #000;
   > :not(:last-child) {
     margin-bottom: 12px;

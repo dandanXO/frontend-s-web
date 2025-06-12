@@ -40,10 +40,8 @@ default:
   script: 
     - sonar-scanner
   allow_failure: true
-  only:
-    - test
-    - staging
-    - production
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "production"'
 
 .build-projects:
   stage: code-check-and-build
@@ -1127,7 +1125,7 @@ deploy-mx1-download:
     SITE_CODE: P8S1-BR1
   tags:
     - p8s1-br1-runners
-    
+
 #===============================================================================================
 
 deploy-mx1-download-v2:
@@ -1250,6 +1248,20 @@ build-image-br1-static-v1:
     PROJECT: br1-static-v1
   needs:
     - build-br1-static-v1
+
+#===============================================================================================
+
+build-br2-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: br2-static-v1
+
+build-image-br2-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: br2-static-v1
+  needs:
+    - build-br2-static-v1
 
 #===============================================================================================
 

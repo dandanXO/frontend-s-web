@@ -304,12 +304,13 @@ import {
   getDuanWuclaimBonus
 } from "@/api/index/promo";
 import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
 
 const isOpenDialog = ref(false);
 const props = defineProps(["promoCode"]);
 const isOpenResultDialog = ref(false);
 const notify = useNotify();
-const todayToken = ref("");
+const todayToken = ref(0);
 const currentTokenAmount = ref("");
 const rewardsCanClaim = ref("");
 const rewardAmount = ref(0);
@@ -334,8 +335,12 @@ const flowMultiplier = "6倍流水";
 const handleToggleTab = () => {
   isTabLeft.value = !isTabLeft.value;
 };
+const store = userStore();
 
 const init = () => {
+  if (!store.token) {
+    return;
+  }
   getDuanWuRewardInit(props.promoCode).then((res) => {
     console.log(res);
 
@@ -351,6 +356,10 @@ const init = () => {
 };
 
 const postReceive = () => {
+  if(!store.token) {
+    notify.error("请先登录");
+    return;
+  }
   postDuanWuReceiveToken(props.promoCode).then((res) => {
     if (res.code === 0) {
       notify.success({
@@ -365,6 +374,10 @@ const postReceive = () => {
 };
 
 const postBonus = () => {
+  if(!store.token) {
+    notify.error("请先登录");
+    return;
+  }
   getDuanWuclaimBonus(props.promoCode).then((res) => {
     if (res.code === 0) {
       isOpenResultDialog.value = true;
@@ -381,6 +394,10 @@ const postBonus = () => {
 };
 
 const fetchRecordData = (action) => {
+  if(!store.token) {
+    notify.error("请先登录");
+    return;
+  }
   isOpenDialog.value = true;
   isTabLeft.value = action;
   getDuanWuTokenRecords(props.promoCode).then((res) => {

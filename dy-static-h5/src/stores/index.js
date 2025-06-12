@@ -3,6 +3,8 @@ import { api, cashier, eventapi } from "boot/axios";
 import { isAndroid } from "boot/utils";
 import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
+import { getVIPDetails, getVIPDetailsNotLoggedIn } from "../api/index/promo";
+
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
@@ -34,6 +36,9 @@ export const userStore = defineStore("userStore", {
       currency: { value: "￥", label: "RMB" },
       personalAddress: "",
       levelUpDeposit: 0,
+      currentBetAmt: "",
+      vipProgress: 0,
+      currentUpgradeBetAmt: "",
       currentDeposit: 0,
       unreadInboxMail: 0,
       phoneVerified: false,
@@ -43,6 +48,7 @@ export const userStore = defineStore("userStore", {
       appDownloadUrl: "",
       visitorId: "",
       withdrawType: "",
+      chatGuid: ""
     };
   },
   actions: {
@@ -221,6 +227,40 @@ export const userStore = defineStore("userStore", {
         }
       });
     },
+    getVIPInfo() {
+      if (this.token) {
+        return getVIPDetails().then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem("vipData", JSON.stringify(res)); // Update the stored data
+            this.handleVIPData(res);
+          }
+          return res;
+        });
+      } else {
+        return getVIPDetailsNotLoggedIn().then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem("vipData", JSON.stringify(res)); // Update the stored data
+            this.handleVIPData(res);
+          }
+          return res;
+        });
+      }
+    },
+    handleVIPData(res) {
+      this.currentBetAmt = res.data.currentBetAmount;
+      const _vip = this.vip || "VIP0";
+      const vipLevel = _vip.replace("VIP", "");
+      const currentVip = parseInt(_vip.match(/\d+/)[0]);
+      if (res.data.vipBonusVOList && res.data.vipBonusVOList[vipLevel]) {
+        this.currentUpgradeBetAmt = res.data.vipBonusVOList[vipLevel].upgradeBetAmount;
+      }
+
+      if (currentVip === 10) {
+        this.vipProgress = parseFloat(this.currentUpgradeBetAmt) / parseFloat(this.currentUpgradeBetAmt);
+      } else {
+        this.vipProgress = parseFloat(this.currentBetAmt) / parseFloat(this.currentUpgradeBetAmt);
+      }
+    },
     getBalance() {
       if (this.token) {
         return api
@@ -237,6 +277,9 @@ export const userStore = defineStore("userStore", {
             }
           });
       }
+    },
+    getCurrentDeposit() {
+      return this.currentDeposit;
     },
     getUnreadTotal() {
       if (this.token) {

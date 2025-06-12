@@ -28,7 +28,7 @@
         </el-form-item>
 
         <el-form-item
-          v-if="uiControl.dialogType === 'STREAMER_CREATE' || uiControl.dialogType === 'STREAMER_EDIT'"
+          v-if="uiControl.dialogType === 'STREAMER_CREATE'"
           :label="t('fields.streamer')"
           prop="streamerId"
         >
@@ -541,7 +541,7 @@ async function streamerSave() {
 async function streamerUpdate() {
   formRef.value.validate(async (valid) => {
     if (!valid) return;
-    await updateSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, id: form.id, roomMessage: form.roomMessage, roomTitle: form.roomTitle });
+    await updateSportLiveStream({ eventId: eventId.value, status: 0, id: form.id, roomMessage: form.roomMessage, roomTitle: form.roomTitle });
     ElMessage.success(t('message.updateSuccess'));
     uiControl.dialogVisible = false;
     await loadEvent();
@@ -605,8 +605,7 @@ const form = reactive({
 const streamerList = ref([]);
 
 const formRules = reactive({
-  sourceStreamUrl: [required(t('message.validateSupplierStreamRequired'))],
-  streamerId: [required(t('message.validateStreamerRequired'))]
+  sourceStreamUrl: [required(t('message.validateSupplierStreamRequired'))]
 });
 
 const request = reactive({

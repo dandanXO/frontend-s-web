@@ -200,6 +200,9 @@
             <div v-if="selectedPromo.redirectUrl === 'dy2-yalla-compass'">
               <YallaCompass :promoCode="selectedPromo.promoCode" />
             </div>
+            <div v-if="selectedPromo.redirectUrl === 'dy2-valorant-masters-toronto-2025'">
+              <TorontoMasters :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-if="selectedPromo.redirectUrl === 'dy2-blast-tv-austin-major-2025'">
               <BlastAustin :promoCode="selectedPromo.promoCode" />
             </div>
@@ -245,6 +248,7 @@ const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/ya
 const BbdachaBelgrade = defineAsyncComponent(() => import("@/components/hotpromo/bbdacha-belgrade/BbdachaBelgrade.vue"));
 const ValorantChampionTour2024 = defineAsyncComponent(() => import("@/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue"));
 const BlastAustin = defineAsyncComponent(() => import("@/components/hotpromo/blast-austin/BlastAustin.vue"));
+const TorontoMasters = defineAsyncComponent(() => import("@/components/hotpromo/toronto-masters/TorontoMasters.vue"));
 
 export default defineComponent({
   name: "PromoView",
@@ -256,7 +260,8 @@ export default defineComponent({
     BbdachaBelgrade,
     ValorantChampionTour2024,
     MesaPromo,
-    BlastAustin
+    BlastAustin,
+    TorontoMasters
   },
   setup() {
     const store = userStore();
@@ -727,7 +732,7 @@ export default defineComponent({
           }
 
           .promo-info {
-            text-align: right;
+            text-align: left;
             padding: 8px 16px;
             left: 0;
             bottom: 0;

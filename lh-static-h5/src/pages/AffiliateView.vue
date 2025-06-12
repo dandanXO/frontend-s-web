@@ -756,7 +756,8 @@ a {
   }
 }
 .agent-content-item ul {
-  font-family: PingFang SC;
+  font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial, sans-serif;
+
   font-size: 12px;
   font-weight: 400;
   line-height: 28px;

@@ -3,15 +3,21 @@
  */
 
 /**
- * @typedef {'FULL'|'ORIGIN'|'NONE'} SupportPlayer
+ * @typedef {'FULL'|'NATIVE'|'NONE'} SupportPlayer
  */
 
-import { initFlv } from "./flv";
+import { _flv, initFlv } from "./flv";
 import { _hls, initHls } from "./hls";
 
 /**
  * @typedef {Object} VideoPlayerConfig
  * @property {MediaType} mediaType - media source type
+ */
+
+/**
+ * custom event names
+ * @typedef {Object} CustomEvents
+ * @type {{ AUTO_PLAY_FAILED: string, STREAM_AVAILABLE: string, STREAM_BUFFERING: string, CUSTOM_ERROR: string, NATIVE_STREAM_BUFFERING: string }}
  */
 
 export class VideoPlayer {
@@ -28,15 +34,29 @@ export class VideoPlayer {
     this._url = url;
     this.qualitySupported = false;
     this._maxLatency = maxLiveLatency || 10;
-    /** @type { typeof import('hls.js').Events | import('flv.js').default.Events} */
+    /** @type { typeof import('hls.js').Events | import('flv.js').default.Events | CustomEvents} */
     this.Events = {};
+    this._customEvents = {
+      AUTO_PLAY_FAILED: "CUSTOM_AUTO_PLAY_FAILED",
+      STREAM_AVAILABLE: "CUSTOM_STREAM_AVAILABLE",
+      STREAM_BUFFERING: "CUSTOM_STREAM_BUFFERING",
+      NATIVE_STREAM_BUFFERING: "NATIVE_CUSTOM_STREAM_BUFFERING",
+      CUSTOM_ERROR: "CUSTOM_ERROR"
+    };
+    this._eventTarget = new EventTarget();
+    this._registeredEvents = [];
     /** @type {SupportPlayer} */
-    this.SupportPlayer = "NONE";
+    this.supportPlayer = "NONE";
 
     return new Proxy(this, {
       get(target, prop, receiver) {
         const originMethod = target[prop];
-        if (!(prop in target) && target._player && prop in target._player) {
+        if (
+          !(prop in target) &&
+          typeof target._player === "object" &&
+          target._player !== null &&
+          prop in target._player
+        ) {
           return target._player[prop];
         }
         if (typeof originMethod !== "function" || ["checkInitialization", "destroy", "init"].includes(prop)) {
@@ -51,45 +71,56 @@ export class VideoPlayer {
   }
 
   async init() {
+    if (this._player) this.destroy();
+
     if (this._mediaType === "hls") {
       this._player = await initHls(this._url, this._config, this.videoEl);
       if (!this._player) {
-        this.SupportPlayer = "NONE";
+        this.supportPlayer = "NONE";
         return;
       } else if (_hls.isSupported()) {
         this.qualitySupported = true;
-        this.Events = _hls.Events;
-        this.SupportPlayer = "FULL";
+        this.Events = Object.assign({}, _hls.Events, this._customEvents);
+        this.supportPlayer = "FULL";
       } else {
-        this.SupportPlayer = "ORIGIN";
+        this.Events = Object.assign({}, _hls.Events, this._customEvents);
+        this.supportPlayer = "NATIVE";
       }
     } else {
       this._player = await initFlv(this._url, this._config);
       if (!this._player) {
-        this.SupportPlayer = "NONE";
+        this.supportPlayer = "NONE";
       } else {
+        this.supportPlayer = "FULL";
         this.qualitySupported = false;
-        this.Events = this._player.Events;
+        this.Events = Object.assign({}, _flv.Events, this._customEvents);
       }
     }
+    this._bindEvents();
   }
 
   async load(startPlay = false) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        reject(new Error("Media source load Timeout"));
-      }, 5000);
-
+    return new Promise(async (resolve, reject) => {
       if (this._mediaType === "hls") {
-        this._player.on(this.Events.MANIFEST_PARSED, () => {
-          startPlay && this.play();
-          resolve();
-        });
-        this._player.loadSource(this._url);
-        this._player.attachMedia(this.videoEl);
+        if (this.supportPlayer === "FULL") {
+          this.on(this.Events.MANIFEST_PARSED, async () => {
+            startPlay && (await this.play());
+            resolve();
+          });
+          this._player.once(this.Events.ERROR, () => reject("Load error"));
+          this._player.loadSource(this._url);
+          this._player.attachMedia(this.videoEl);
+        } else if (this.supportPlayer === "NATIVE") {
+          this.on("error", () => reject("Load error"), { once: true });
+          this.on("loadedmetadata", async () => {
+            startPlay && (await this.play());
+            resolve();
+          });
+          this.videoEl.src = this._url;
+        }
       } else {
-        this._player.on(this.Events.LOADING_COMPLETE, () => {
-          startPlay && this.play();
+        this.on(this.Events.SCRIPTDATA_ARRIVED, async () => {
+          startPlay && (await this.play());
           resolve();
         });
         this._player.attachMediaElement(this.videoEl);
@@ -98,11 +129,16 @@ export class VideoPlayer {
     });
   }
 
-  play() {
-    if (this._mediaType === "hls") {
-      this.videoEl.play();
-    } else {
-      this._player.play();
+  async play() {
+    try {
+      if (this._mediaType === "hls") {
+        await this.videoEl.play();
+      } else {
+        await this._player.play();
+      }
+    } catch (e) {
+      console.error(e);
+      this._eventTarget.dispatchEvent(new Event(this._customEvents.AUTO_PLAY_FAILED));
     }
   }
 
@@ -136,7 +172,7 @@ export class VideoPlayer {
 
   syncLive() {
     let latestPosition;
-    if (this._mediaType === "hls") {
+    if (this._mediaType === "hls" && this.supportPlayer === "FULL") {
       latestPosition = this._player.liveSyncPosition;
     } else {
       latestPosition = this.videoEl.buffered.end(0);
@@ -149,16 +185,143 @@ export class VideoPlayer {
     }
   }
 
+  _bindEvents() {
+    if (this._mediaType === "hls") {
+      if (this.supportPlayer === "FULL") {
+        const hlsVideoResumeEvents = [
+          this.Events.FRAG_BUFFERED,
+          this.Events.FRAG_LOADED,
+          this.Events.BUFFER_APPENDED,
+          this.Events.LEVELS_UPDATED
+        ];
+        this.on(this.Events.ERROR, (event, data) => {
+          this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: data }));
+          // if (data.fatal) {
+          //   this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: data }));
+          // } else {
+          //   console.log(data);
+          //   this._eventTarget.dispatchEvent(new Event(this._customEvents.STREAM_BUFFERING));
+          // }
+          // TODO: Do we need more nuanced error handling?
+        });
+        hlsVideoResumeEvents.forEach((event) => {
+          this.on(event, () => {
+            this._eventTarget.dispatchEvent(new Event(this._customEvents.STREAM_AVAILABLE));
+          });
+        });
+      } else if (this.supportPlayer === "NATIVE") {
+        let isStartup = true;
+        this.on("error", () => {
+          const error = this.videoEl.error;
+          if (!error) return;
+          let fetal = false;
+          switch (error.code) {
+            case MediaError.MEDIA_ERR_DECODE:
+            case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+              fetal = true;
+              break;
+            case MediaError.MEDIA_ERR_ABORTED:
+            case MediaError.MEDIA_ERR_NETWORK:
+            default:
+              fetal = false;
+          }
+          const customError = {
+            type: "NATIVE",
+            code: error.code,
+            details: error.message,
+            message: error.message || "Unknown error",
+            fetal
+          };
+          this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: customError }));
+          // TODO: Add STREAM_AVAILABLE handling
+        });
+        this.on("waiting", () => {
+          if (isStartup) {
+            isStartup = false;
+            return;
+          }
+          this._eventTarget.dispatchEvent(new Event(this._customEvents.NATIVE_STREAM_BUFFERING));
+        });
+      }
+    } else {
+      this.on(this.Events.ERROR, (error) => {
+        console.error(error);
+        const fetalErrors = [
+          _flv.ErrorDetails.NETWORK_STATUS_CODE_INVALID,
+          _flv.ErrorDetails.NETWORK_UNRECOVERABLE_EARLY_EOF,
+          _flv.ErrorDetails.MEDIA_MSE_ERROR,
+          _flv.ErrorDetails.MEDIA_ERROR,
+          _flv.ErrorDetails.NETWORK_UNSUPPORTED,
+          _flv.ErrorDetails.MEDIA_CODEC_UNSUPPORTED
+        ];
+        const fetal = fetalErrors.includes(error);
+        const customError = {
+          type: "NATIVE",
+          code: error,
+          details: error,
+          message: error || "Unknown error",
+          fetal
+        };
+        this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: customError }));
+      });
+    }
+  }
+
+  on(event, handler, options) {
+    let type;
+    if (Object.values(this._customEvents).includes(event)) {
+      this._eventTarget.addEventListener(event, handler);
+      type = "CUSTOM";
+    } else {
+      type = "PLAYER";
+      if (this._mediaType === "hls") {
+        if (this.supportPlayer === "FULL") {
+          this._player.on(event, handler);
+        } else if (this.supportPlayer === "NATIVE") {
+          this.videoEl.addEventListener(event, handler, options);
+        }
+      } else if (this._mediaType === "flv") {
+        this._player.on(event, handler);
+      }
+    }
+    this._registeredEvents.push({ type, event, handler });
+  }
+
+  off() {
+    while (this._registeredEvents.length) {
+      const { type, event, handler } = this._registeredEvents.pop();
+      if (type === "CUSTOM") {
+        this._eventTarget.removeEventListener(event, handler);
+      } else {
+        if (this._mediaType === "hls") {
+          if (this.supportPlayer === "FULL") {
+            this._player.off(event, handler);
+          } else if (this.supportPlayer === "NATIVE") {
+            this.videoEl.removeEventListener(event, handler);
+          }
+        } else {
+          this._player.off(event, handler);
+        }
+      }
+    }
+  }
+
   destroy() {
     if (this._mediaType === "hls") {
-      this._player.detachMedia();
-      this._player.stopLoad();
-      this._player.destroy();
+      if (this.supportPlayer === "FULL") {
+        this._player.detachMedia();
+        this._player.stopLoad();
+        this._player.destroy();
+      } else if (this.supportPlayer === "NATIVE") {
+        this.videoEl.removeAttribute("src");
+        this.videoEl.load();
+      }
     } else {
       this._player.unload();
       this._player.detachMediaElement();
       this._player.destroy();
     }
+    this.off();
     this._player = null;
   }
 }

@@ -307,7 +307,7 @@ export default defineComponent({
           max = 16;
         }  else if(selectedCode === 'BLBPAY') {
           min = 32;
-          max = 32;
+          max = 36;
         }  else if(selectedCode === 'JDPAY') {
           min = 34;
           max = 34;

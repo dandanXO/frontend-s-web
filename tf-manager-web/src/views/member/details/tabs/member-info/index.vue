@@ -1111,6 +1111,25 @@
               @click="refreshClaimableRebate"
             />
           </el-descriptions-item>
+          <el-descriptions-item :label="t('fields.claimableRedPacketRebate')" v-if="parseInt(memberDetail.siteId) === 7 || parseInt(memberDetail.siteId) === 6">
+            <div style="display: inline-block;" v-loading="loading.redPacketRebate">
+              <div class="balance">
+                $
+                <span
+                  v-formatter="{
+                    data: memberDetail.claimableRedPacketRebate,
+                    type: 'money',
+                  }"
+                />
+              </div>
+            </div>
+            <el-button
+              class="refresh-btn"
+              icon="el-icon-refresh"
+              size="mini"
+              @click="refreshClaimableRedPacketRebate"
+            />
+          </el-descriptions-item>
         </el-descriptions>
         <el-descriptions size="small" class="margin-top" :column="4" border>
           <el-descriptions-item
@@ -1195,7 +1214,7 @@
               </div>
             </div>
           </el-descriptions-item>
-          <el-descriptions-item :label="t('fields.validBet')" v-if="parseInt(memberDetail.siteId) === 7">
+          <el-descriptions-item :label="t('fields.validBet')" v-if="parseInt(memberDetail.siteId) === 7 || parseInt(memberDetail.siteId) === 6">
             <div style="display: inline-block;" v-loading="loading.total">
               <div class="balance">
                 $
@@ -1773,6 +1792,7 @@ import {
   refreshBalance,
   getDnW,
   getClaimableRebate,
+  getClaimableRedPacketRebate,
   forceLogout,
   syncMemberDetail,
   getShareRatio,
@@ -1837,7 +1857,8 @@ export default defineComponent({
       total: false,
       dnw: false,
       balance: [],
-      rebate: false
+      rebate: false,
+      redPacketRebate: false,
     })
 
     const updatePasswordForm = ref(null)
@@ -1946,6 +1967,7 @@ export default defineComponent({
       dupName: '',
       dupIp: '',
       claimableRebate: 0,
+      claimableRedPacketRebate: 0,
       fiatBalance: null,
       usdtBalance: null,
       walletType: null,
@@ -2629,6 +2651,13 @@ export default defineComponent({
       loading.rebate = false
     }
 
+    const refreshClaimableRedPacketRebate = async () => {
+      loading.redPacketRebate = true
+      const { data: rebate } = await getClaimableRedPacketRebate(props.mbrId, site.id)
+      memberDetail.claimableRedPacketRebate = rebate
+      loading.redPacketRebate = false
+    }
+
     const refreshPlatformBalance = async key => {
       loading.balance[key] = true
       const { data: balance } = await getPlatformBalance(
@@ -2652,7 +2681,7 @@ export default defineComponent({
         store.state.app.ipLabels.length < 1 ||
         store.state.app.ipLabels === undefined
       ) {
-        const { data: labels } = await selectIpLabelAll()
+        const { data: labels } = await selectIpLabelAll(route.query.site)
         store.dispatch(AppActionTypes.ACTION_SET_IP_LABELS, labels)
       }
     }
@@ -2823,6 +2852,7 @@ export default defineComponent({
 
       await loadBalance()
       await refreshClaimableRebate()
+      await refreshClaimableRedPacketRebate()
       await loadWallet()
       loading.fundingInfo = false
       if (site.id === '3' || site.id === '8') {
@@ -2901,6 +2931,7 @@ export default defineComponent({
       refreshAllBalance,
       refreshDnW,
       refreshClaimableRebate,
+      refreshClaimableRedPacketRebate,
       refreshPlatformBalance,
       unmaskDetail,
       unmaskedValue,

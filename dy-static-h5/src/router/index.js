@@ -45,7 +45,9 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/deposit" ||
       to.path === "/invitefriend" ||
       to.path === "/privilege/invite" ||
-      to.path === "/vip"
+      to.path === "/vip" ||
+      to.path === "/live-chat" ||
+      to.path === "/live-chat/chat"
     ) {
       ui.hiddenFooter();
     } else {
@@ -70,9 +72,9 @@ export default route(function (/* { store, ssrContext } */) {
       console.log("user", user.token);
     }
 
-    if(!hasToken) {
-      if(to.path === "/promotion") next("/promo")
-      if(to.path === "/vip") next("/account/vip")
+    if (!hasToken) {
+      if (to.path === "/promotion") next("/promo");
+      if (to.path === "/vip") next("/account/vip");
     }
 
     if (to.name === "agentCode") {
