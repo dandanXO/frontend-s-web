@@ -8,7 +8,6 @@
         </q-tabs>
       </div>
     </div>
-
     <q-tab-panels v-model="moduleTab" class="content-panels" animated>
       <q-tab-panel class="content-panel" name="livestream">
         <livestreamList
@@ -256,49 +255,23 @@ onUnmounted(() => {
 .dark {
   background: url("../../assets/images/livestream/livestream-bg-dark.png") no-repeat top center;
   background-color: #1a2338;
-  .top-toggle-menu {
-    width: 100%;
-    padding: 0;
-    // padding: 6px;
-    // background: #ffffff;
-    background: transparent;
-    gap: 12px;
-    // box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
-    box-shadow: none;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    // box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
-
-    :deep(.q-btn-item) {
-      width: 100%;
-      padding: 0;
-      border-radius: 8px;
-      background: transparent !important;
-
-      img {
-        display: block;
-        width: 100%;
-      }
-      // white-space: nowrap;
-
-      // &.bg-primary {
-      //   border-radius: 50px;
-      //   background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
-      // }
-    }
-
-    .float-stream {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
 
   .livestream-page-header-wrapper {
     background-image: url("../../assets/images/livestream/header-bg-dark.png");
     .livestream-page-header-inner {
       box-shadow: 0px 4px 4px 0px #00000040;
+
+      .livestream-page-header__module-tabs {
+        .livestream-page-header__module-tab-item {
+          &.q-tab--active {
+            color: #fff;
+          }
+
+          :deep(.q-tab__indicator) {
+            background-color: #fff;
+          }
+        }
+      }
     }
   }
 }

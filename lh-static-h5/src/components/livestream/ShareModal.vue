@@ -4,13 +4,16 @@
       <div class="share-modal-wrapper">
         <div class="share-modal-content-wrapper">
           <template v-if="!isShareCopied">
-            <router-link v-for="(step, index) in steps" :key="index" :to="step.redirect">
-              <button class="share-modal-step-button" :data-step-ideographic="`第${stepIdeographic[index]}步`">
-                <div class="share-modal-step-button__placeholder" />
-                <img :src="step.text" alt="Step Text" class="share-modal-step-button__text" />
-                <img :src="step.icon" alt="Step Icon" class="share-modal-step-button__icon" />
-              </button>
-            </router-link>
+            <button
+              v-for="(step, index) in steps"
+              :key="index"
+              class="share-modal-step-button"
+              :data-step-ideographic="`第${stepIdeographic[index]}步`"
+            >
+              <div class="share-modal-step-button__placeholder" />
+              <img :src="step.text" alt="Step Text" class="share-modal-step-button__text" />
+              <img :src="step.icon" alt="Step Icon" class="share-modal-step-button__icon" />
+            </button>
           </template>
           <template v-else>
             <img class="share-modal-copy-success" src="../../assets/images/livestream/share/check.png" />

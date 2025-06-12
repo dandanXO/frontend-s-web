@@ -99,8 +99,6 @@ const getImg = (name) => {
     // box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
     box-shadow: none;
     overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
     // box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
 
     :deep(.q-btn-item) {

@@ -124,7 +124,7 @@
       <div v-if="isLoading" class="selection-container__loading-wrapper">
         <q-spinner size="3em" />
       </div>
-      <div v-else-if="!livestreamList.length" class="no-data">目前没有直播</div>
+      <div v-else-if="!filteredLivestreamList.length" class="no-data">目前没有直播</div>
     </div>
   </div>
 </template>
@@ -559,5 +559,11 @@ onDeactivated(() => {
       }
     }
   }
+}
+
+.no-data {
+  display: flex;
+  justify-content: center;
+  grid-column: 1 / span 2;
 }
 </style>

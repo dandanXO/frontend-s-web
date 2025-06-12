@@ -13,7 +13,7 @@
     <div v-if="!hotMatchesByType.length" class="no-data">目前没有赛程</div>
     <div class="hot-match-items">
       <TransitionGroup name="list">
-        <div :class="tab" class="hot-match-item" v-for="hotMatch in hotMatchesByType" :key="hotMatch.id">
+        <div :class="model" class="hot-match-item" v-for="hotMatch in hotMatchesByType" :key="hotMatch.id">
           <div class="hot-match-info">
             <div class="hot-match-name">
               {{ hotMatch.competitionName }}
@@ -197,6 +197,7 @@ const hotMatchesByType = computed(() => {
 .body--dark {
   .hot-match-items {
     .hot-match-item {
+      box-shadow: none;
       &.ESport {
         background: url("../../assets/images/hotmatch/hotmatch-item-bg-dark-esport.png") no-repeat center center;
         background-size: 100% 100%;
@@ -223,6 +224,7 @@ const hotMatchesByType = computed(() => {
             .bet-btn {
               background: linear-gradient(to bottom, #5d7dbf 0%, #242d6f 100%);
               cursor: pointer;
+              color: #fff;
 
               &:hover {
                 filter: brightness(1.1);
