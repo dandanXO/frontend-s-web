@@ -1,6 +1,6 @@
 <!-- /components/LivestreamCategories.vue -->
 <template>
-  <el-tabs v-model="activeTab" @tab-change="selectTab" class="livestream-tabs" :class="isDark && 'dark'">
+  <el-tabs v-model="model" class="livestream-tabs" :class="isDark && 'dark'">
     <el-tab-pane name="popular">
       <template #label>
         <img src="../../../assets/home/livestream/icon-popular.svg" />
@@ -32,13 +32,10 @@
 import { ref } from "vue";
 import { useDark } from "@vueuse/core";
 
-const isDark = useDark();
 const emit = defineEmits(["change"]);
-const activeTab = ref("popular");
+const model = defineModel();
 
-function selectTab(tabKey) {
-  emit("change", tabKey);
-}
+const isDark = useDark();
 </script>
 
 <style lang="scss">

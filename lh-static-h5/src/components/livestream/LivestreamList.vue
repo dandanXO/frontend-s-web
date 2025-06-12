@@ -15,7 +15,7 @@
       <TransitionGroup name="list">
         <button
           v-for="(item, index) in filteredLivestreamList"
-          :key="index"
+          :key="item.streamId"
           class="selection-item"
           @click="$emit('livestreamClick', item)"
         >
@@ -158,7 +158,7 @@ const tab = ref("popular");
 const filteredLivestreamList = computed(() => {
   switch (tab.value) {
     case "popular":
-      return livestreamList.value.filter((item) => !item.isPopular);
+      return livestreamList.value.filter((item) => item.isPopular);
     case "football":
       return livestreamList.value.filter((item) => [1].includes(item.sportId));
     case "basketball":

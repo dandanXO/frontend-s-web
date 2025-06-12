@@ -5,7 +5,7 @@
       style="display: flex; margin: 38px auto 50px; width: 100%"
     />
     <div class="livestream-tabs">
-      <LivestreamCategories @change="handleCategoryChange" />
+      <LivestreamCategories v-model="activeTab" />
     </div>
     <div class="livestream-inner-wrapper">
       <LivestreamList
@@ -80,6 +80,7 @@ const store = userStore();
 const notify = useNotify();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const latestWatchLivestreamId = useSessionStorage(LATEST_WATCH_LIVESTREAM_ID_KEY, null);
+const latestActivatedTab = useSessionStorage("LH_WEB_LIVESTREAM_ACTIVE_TAB", null);
 
 /**
  * chat message list
@@ -110,6 +111,7 @@ const messagesHistoryMeta = ref(DEFAULT_MESSAGES_HISTORY_META);
 const latestProcessedMessageId = ref(-1);
 const vipStatus = ref(false);
 const hideComponent = ref(true);
+const activeTab = ref(latestActivatedTab.value || "popular");
 
 const emit = defineEmits(["livestreamVisible"]);
 // const channels = ref([
@@ -209,23 +211,24 @@ const getData = () => {
         vipStatus.value = !!res.data.vipStatus;
         list.value.push(...parsedData);
         if (parsedData.length && livestreamListMeta.value.current === 1) {
-          const { _earliestLivestreamId, _latestWatchLivestreamId } = parsedData.reduce(
+          const { _earliestLivestream, _latestWatchLivestream } = parsedData.reduce(
             (result, livestream) => {
-              if (!result._earliestLivestreamId) {
-                result._earliestLivestreamId = livestream.streamId;
+              if (!result._earliestLivestream) {
+                result._earliestLivestream = livestream;
               }
 
               if (latestWatchLivestreamId.value && livestream.streamId === latestWatchLivestreamId.value) {
-                result._latestWatchLivestreamId = livestream.streamId;
+                result._latestWatchLivestream = livestream;
               }
               return result;
             },
-            { _earliestLivestreamId: "", _latestWatchLivestreamId: "" }
+            { _earliestLivestream: null, _latestWatchLivestream: null }
           );
-          if (_latestWatchLivestreamId) {
-            currentLiveId.value = _latestWatchLivestreamId;
-          } else if (_earliestLivestreamId) {
-            currentLiveId.value = _earliestLivestreamId;
+          if (_latestWatchLivestream) {
+            currentLiveId.value = _latestWatchLivestream.streamId;
+          } else if (_earliestLivestream) {
+            activeTab.value = getLivestreamType(_earliestLivestream);
+            currentLiveId.value = _earliestLivestream.streamId;
           }
         }
         livestreamListMeta.value.current++;
@@ -343,6 +346,7 @@ const handleBetClick = () => {
     case 3:
     case 4:
     case 5:
+    case 6:
       gameModalRef.value.open("雷火电竞", "TFGaming");
   }
 };
@@ -390,12 +394,10 @@ const resetSyncLivestreamInterval = (startNewInterval = false) => {
   }
 };
 
-// livestream categories
-const activeTab = ref("popular");
 const filteredLivestreamList = computed(() => {
   switch (activeTab.value) {
     case "popular":
-      return list.value.filter((item) => !item.isPopular);
+      return list.value.filter((item) => item.isPopular);
     case "football":
       return list.value.filter((item) => [1].includes(item.sportId));
     case "basketball":
@@ -407,8 +409,21 @@ const filteredLivestreamList = computed(() => {
   }
 });
 
-const handleCategoryChange = (tabKey) => {
-  activeTab.value = tabKey;
+const getLivestreamType = (livestream) => {
+  if (livestream.isPopular) return "popular";
+  switch (livestream.sportId) {
+    case 1:
+      return "football";
+    case 2:
+      return "basketball";
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+      return "esports";
+    default:
+      return "popular";
+  }
 };
 
 watch(currentLiveId, (newVal, oldVal) => {
@@ -430,6 +445,7 @@ watch(currentLiveId, (newVal, oldVal) => {
 watch(currentLiveData, (livestream) => {
   if (!livestream) return;
   latestWatchLivestreamId.value = livestream.streamId;
+  latestActivatedTab.value = activeTab.value;
 });
 
 onMounted(() => {
