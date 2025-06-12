@@ -12,3 +12,7 @@ export const getMemberReferRecordRelation = (form) => {
 export const getAnalysisRecordExport = (form) => {
   return https().request("/refer-friend-analysis/bulk-refer-friend-analysis-export", Method.GET, form, ContentType.form);
 };
+
+export const getFtdMembers = (form) => {
+  return https().request("/refer-friend-analysis/ftd-members", Method.GET, form, ContentType.form);
+};
