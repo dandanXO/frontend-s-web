@@ -512,8 +512,7 @@ onActivated(() => {
     }
     // show vip slide correspond to current vip level
     else {
-      // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
-      vipCarouselIndex.value = vipLevelNum - 1;
+      vipCarouselIndex.value = vipLevelNum;
     }
 
     vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
@@ -537,7 +536,7 @@ watch(
     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
 
     const levelUpPercentage = (() => {
-      if (vipLevel > +vipInfo.vipLevel) {
+      if (vipLevel >= +vipInfo.vipLevel) {
         return 100;
       }
 
@@ -552,7 +551,7 @@ watch(
       monthlyReward,
       dailyWithdrawalLimit,
       levelUpPercentage,
-      progressBarText: `${currentDeposit} / ${levelUpDeposit}`,
+      progressBarText: `${levelUpPercentage === 100 ? levelUpDeposit : currentDeposit} / ${levelUpDeposit}`,
       rewardUnlocked: vipLevel > vipCarouselIndex.value
     };
   }
