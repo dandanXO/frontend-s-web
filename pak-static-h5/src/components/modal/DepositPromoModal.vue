@@ -417,6 +417,7 @@ onMounted(() => {
       --countdown-text-shadow-color: #71090b;
 
       &.is-ftd {
+          color: #23B150;
         &::after {
           --countdown-text-shadow-color: #097109;
         }
