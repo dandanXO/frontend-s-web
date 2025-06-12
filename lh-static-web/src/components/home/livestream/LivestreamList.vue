@@ -98,9 +98,10 @@ const handleSwiper = (_swiperInstance) => {
 };
 
 const getDisplayDateTime = (date) => {
-  const now = moment();
+  const today = moment().startOf("day");
   const eventDate = moment(date);
-  const diffInDays = eventDate.diff(now, "days");
+  const eventDateStart = moment(date).startOf("day");
+  const diffInDays = eventDateStart.diff(today, "days");
 
   if (diffInDays === 0) {
     return eventDate.format("今日 HH:mm");

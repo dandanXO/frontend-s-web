@@ -14,7 +14,7 @@
     <div class="selection-container">
       <TransitionGroup name="list">
         <button
-          v-for="(item, index) in filteredLivestreamList"
+          v-for="item in filteredLivestreamList"
           :key="item.streamId"
           class="selection-item"
           @click="$emit('livestreamClick', item)"
@@ -37,7 +37,7 @@
                   <div class="vs-timer-title">直播倒计时</div>
                   <div class="vs-timer">
                     <span
-                      v-for="(char, cIndex) in countdowns[index]?.hours"
+                      v-for="(char, cIndex) in countdowns[item.streamId]?.hours"
                       class="vs-timer__time"
                       :key="`hour-${cIndex}`"
                     >
@@ -45,7 +45,7 @@
                     </span>
                     :
                     <span
-                      v-for="(char, cIndex) in countdowns[index]?.minutes"
+                      v-for="(char, cIndex) in countdowns[item.streamId]?.minutes"
                       class="vs-timer__time"
                       :key="`minute-${cIndex}`"
                     >
@@ -151,7 +151,7 @@ defineEmits(["livestreamClick"]);
 const imgURLLivePreview = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
 
 const previewImgLoadFailedSet = ref(new Set());
-const countdowns = ref([]);
+const countdowns = ref({});
 const timer = ref(null);
 const tab = ref("popular");
 
@@ -179,9 +179,10 @@ const getPreviewUrl = (livestream) => {
 };
 
 const getDisplayDateTime = (date) => {
-  const now = moment();
+  const today = moment().startOf("day");
   const eventDate = moment(date);
-  const diffInDays = eventDate.diff(now, "days");
+  const eventDateStart = moment(date).startOf("day");
+  const diffInDays = eventDateStart.diff(today, "days");
 
   if (diffInDays === 0) {
     return eventDate.format("今日 HH:mm");
@@ -207,7 +208,7 @@ const updateCountdowns = () => {
       const hours = String(Math.floor(duration.asHours())).padStart(2, "0");
       const minutes = String(duration.minutes()).padStart(2, "0");
 
-      countdowns.value[index] = {
+      countdowns.value[item.streamId] = {
         hours,
         minutes
       };
@@ -215,7 +216,7 @@ const updateCountdowns = () => {
   });
 };
 
-watch(livestreamList, () => updateCountdowns);
+watch(livestreamList, updateCountdowns);
 
 onActivated(() => {
   updateCountdowns();
