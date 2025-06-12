@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div class="room-message-container">
+    <div ref="roomMessageRef" class="room-message-container">
       <div class="container-box">
         <div class="type-tags">
           <div class="profile-tag">
@@ -56,9 +56,10 @@
       :messages
       :vip-status
       :livestream-data="currentLiveData"
-      @send-chat-message="handleSendChatMessage"
       :extensionState
       :extensionToken
+      :margin-top="chatMessageMarginTop"
+      @send-chat-message="handleSendChatMessage"
     />
   </div>
   <ShareModal v-model="showShareModal" :url="selfTgurl" />
@@ -77,7 +78,7 @@ import { useRoute, useRouter } from "vue-router";
 import { getChatHistory, getLivestreamList, sendChat, getLivestreamDetail } from "../../api/livestream";
 import { extractVipLevelFromVipStr } from "src/boot/utils";
 import { useNotify } from "src/hooks/notify";
-import { useLocalStorage, useSessionStorage } from "@vueuse/core";
+import { useElementBounding, useLocalStorage, useSessionStorage } from "@vueuse/core";
 import ShareModal from "../../components/livestream/ShareModal.vue";
 
 const MESSAGE_SYNC_INTERVAL = 1000 * 2; // 2 seconds
@@ -113,11 +114,24 @@ const livestreamTimer = ref(null);
 const livestreamSyncAbortController = ref(null);
 const isExpanded = ref(true);
 const showShareModal = ref(false);
+const roomMessageRef = ref(null);
+
+const { bottom: roomMessageBottom } = useElementBounding(roomMessageRef);
+
 const totalCharLength = computed(() => displayAnnouncementList.value.reduce((sum, msg) => sum + msg.length, 0));
 
 const marqueeDuration = computed(() => {
   const baseSpeed = 50;
   return Math.max(20, (totalCharLength.value * baseSpeed) / 100);
+});
+
+const chatMessageMarginTop = computed(() => {
+  const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+  if (isLandscape) {
+    return 0;
+  } else {
+    return roomMessageBottom.value;
+  }
 });
 
 let danmu = null;
@@ -645,7 +659,7 @@ onDeactivated(() => {
     background: #fcfdfe;
     color: #000000;
     width: 100%;
-    margin: 12px;
+    margin: 12px 12px 0;
     box-shadow: 0px -2.78px 2.78px 0px #c3d4e6 inset;
     border-radius: 12px;
     font-size: 10px;

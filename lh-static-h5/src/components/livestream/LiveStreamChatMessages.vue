@@ -1,6 +1,6 @@
 <template>
   <div class="livestream-chat-wrapper" :class="isDark ? 'dark' : 'white'">
-    <div ref="chatListRef" class="livestream-chat-list">
+    <div ref="chatListRef" class="livestream-chat-list" :style="{ marginTop: `${marginTop}px` }">
       <div v-for="(message, index) in messages" :key="index" class="livestream-chat-item">
         <img
           class="livestream-chat-item__vip-badge"
@@ -81,7 +81,7 @@ const store = userStore();
 const $q = useQuasar();
 const route = useRoute();
 const router = useRouter();
-const props = defineProps(["messages", "vipStatus", "livestreamData", "extensionState", "extensionToken"]);
+const props = defineProps(["messages", "vipStatus", "livestreamData", "extensionState", "extensionToken", "marginTop"]);
 const { messages, vipStatus, livestreamData, extensionState, extensionToken } = toRefs(props);
 const emit = defineEmits(["sendChatMessage"]);
 
@@ -278,6 +278,7 @@ onMounted(() => {
       }
 
       .livestream-chat-item__message {
+        white-space: break-spaces;
         color: #333333;
         vertical-align: super;
       }
@@ -320,6 +321,11 @@ onMounted(() => {
         :deep(textarea) {
           max-height: 90px;
           overflow-y: auto;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          &::-webkit-scrollbar {
+            display: none;
+          }
         }
 
         :deep(textarea::placeholder) {
