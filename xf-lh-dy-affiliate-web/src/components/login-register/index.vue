@@ -39,7 +39,9 @@
               <!--                </a>-->
               <!--              </div>-->
             </div>
+
             <div class="mid">
+              <img class="top-img" v-if="props.siteId === '7'" src="../../assets//images/login/lh-login-1.png">
               <el-form
                 v-if="!isReg"
                 ref="loginFormRef"
@@ -98,12 +100,12 @@
                     </template>
                   </el-input>
                 </el-form-item>
-                <div style="margin:20px 0px" v-if="props.siteId !== '8'">
+                <div class="forget-pw" v-if="props.siteId !== '8'">
                   <el-link type="primary" @click="forgetPasswordDialog">
                     {{ $t('common.forgetpass') }}
                   </el-link>
                 </div>
-                <div class="flex-c-center-div">
+                <div class="flex-c-center-div login-btn-grp">
                   <el-button
                     class="common-btn"
                     type="danger"
@@ -1688,6 +1690,52 @@ a {
   &.lh {
     background: url('../../assets/images/login/lh-bg.jpg') no-repeat center
       center;
+      .top {
+        background: #fff !important;
+        margin: 0 10px;
+        margin-bottom: -1px;
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+        @media (max-width: 768px) {
+          margin: 0 1.75%;
+          margin-bottom: -1px;
+        }
+      }
+
+      .mid {
+        position: relative;
+        .top-img {
+          width: 35%;
+          position: absolute;
+          right: 40px;
+          top: 0;
+          transform: translateY(-50%);
+        }
+      }
+      .right {
+        .forget-pw {
+          margin: 20px 0px;
+          place-self: end;
+        }
+        .login-btn-grp {
+          display: block;
+          width: 100%;
+          button {
+            width: 100% !important;
+            margin: 8px 0;
+            border-radius: 4px;
+          }
+        }
+        .contact-div {
+          margin-top: 0;
+          color: #3981FF;
+          text-decoration: underline;
+        }
+      }
+      .bot {
+        margin-top: -1px;
+        width: calc(100% - 1.1px);
+      }
   }
   &.vi,
   &.kaka {
