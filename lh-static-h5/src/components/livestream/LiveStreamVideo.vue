@@ -500,6 +500,9 @@ const handlePlayerProgress = () => {
 };
 
 const handlePlayerCanPlay = () => {
+  if (playerConfig.value.isPause) {
+    changePlayerConfig("isPause", false);
+  }
   isLatestScreenRecorded.value = false;
   isVideoLoading.value = false;
   isVideoLoadFailed.value = false;
