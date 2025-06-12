@@ -86,7 +86,7 @@ import { onActivated, onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { updateDate, convertToGMT8 } from "src/boot/utils";
+import { updateDate, convertToGMT10 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { convertToCommaAmount, displayPlatform } from "src/boot/utils";
@@ -231,8 +231,8 @@ const getGameBetRecordTotal = () => {
   const obj = {
     memberId: store.id,
     platform: searchForm.platform,
-    startDate: convertToGMT8(searchForm.startDate),
-    endDate: convertToGMT8(searchForm.endDate)
+    startDate: convertToGMT10(searchForm.startDate),
+    endDate: convertToGMT10(searchForm.endDate)
   };
   api.get("/session/member/gameBetRecordTotal", { params: obj }).then((res) => {
     if (res.code === 0) {

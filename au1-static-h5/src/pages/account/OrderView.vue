@@ -131,7 +131,7 @@
 import { onActivated, onDeactivated, onMounted, onUnmounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
-import { updateDate, convertToGMT8, convertToGMT55, convertToGMT7 } from "src/boot/utils";
+import { updateDate, convertToGMT10, convertToGMT55, convertToGMT7 } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
@@ -177,8 +177,8 @@ const searchWithdrawalRecord = () => {
 
   const { startDate, endDate } = searchForm;
 
-  const gmtStartDate = convertToGMT8(startDate);
-  const gmtEndDate = convertToGMT8(endDate);
+  const gmtStartDate = convertToGMT10(startDate);
+  const gmtEndDate = convertToGMT10(endDate);
   api
     .get("/session/member/withdraw", {
       params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: withdrawPageSize }
@@ -209,8 +209,8 @@ const scrollWithdrawRef = ref(null);
 
 const onLoadWithdraw = (index, done) => {
   const { startDate, endDate } = searchForm;
-  const gmtStartDate = convertToGMT8(startDate);
-  const gmtEndDate = convertToGMT8(endDate);
+  const gmtStartDate = convertToGMT10(startDate);
+  const gmtEndDate = convertToGMT10(endDate);
   withdrawCurrentPage.value++;
 
   api
@@ -269,8 +269,8 @@ const searchDepositRecord = () => {
   depositData.value = [];
 
   const { startDate, endDate } = searchForm;
-  const gmtStartDate = convertToGMT8(startDate);
-  const gmtEndDate = convertToGMT8(endDate);
+  const gmtStartDate = convertToGMT10(startDate);
+  const gmtEndDate = convertToGMT10(endDate);
   api
     .get("/session/member/deposit", {
       params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: depositPageSize }
@@ -301,8 +301,8 @@ const scrollDepositRef = ref(null);
 
 const onLoadDeposit = (index, done) => {
   const { startDate, endDate } = searchForm;
-  const gmtStartDate = convertToGMT8(startDate);
-  const gmtEndDate = convertToGMT8(endDate);
+  const gmtStartDate = convertToGMT10(startDate);
+  const gmtEndDate = convertToGMT10(endDate);
   depositCurrentPage.value++;
 
   api

@@ -99,6 +99,9 @@ export const convertToGMT55 = (dateTime) => {
   return moment(dateTime).utcOffset("+05:30").format("YYYY-MM-DD HH:mm:ss");
 };
 export const convertToGMT8 = (dateTime) => {
+  return moment(dateTime).utcOffset("+08:00").format("YYYY-MM-DD");
+};
+export const convertToGMT10 = (dateTime) => {
   return moment(dateTime).utcOffset("+10:00").format("YYYY-MM-DD");
 };
 export const convertToGMT7 = (dateTime) => {
