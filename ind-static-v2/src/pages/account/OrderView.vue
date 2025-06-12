@@ -23,74 +23,102 @@
       transition-next="fade"
     >
       <q-tab-panel name="withdrawal">
-        <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
-          <div class="order-row order-row--title">
-            <div class="order-col">Order NO.</div>
-            <div class="order-col flex-c-end gap-8">
-              {{ e.serialNumber }}
+        <div ref="scrollWithdrawRef" class="q-pa-md" style="max-height: 75vh; overflow: auto">
+          <q-infinite-scroll
+            @load="onLoadWithdraw"
+            :offset="250"
+            :scroll-target="scrollWithdrawRef"
+            :disable="isWithdrawLastPage"
+          >
+            <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
+              <div class="order-row order-row--title">
+                <div class="order-col">Order NO.</div>
+                <div class="order-col flex-c-end gap-8">
+                  {{ e.serialNumber }}
 
-              <div @click="copyText(e.serialNumber)">
-                <img
-                  class="copy-btn btn-pointer"
-                  src="../../assets/images/account/content-copy.svg"
-                  size="24px"
-                  fill="#fff"
-                />
+                  <div @click="copyText(e.serialNumber)">
+                    <img
+                      class="copy-btn btn-pointer"
+                      src="../../assets/images/account/content-copy.svg"
+                      size="24px"
+                      fill="#fff"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="order-row order-row--content">
+                <div class="order-subrow">
+                  <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
+                  <div class="order-col">BANK</div>
+                </div>
+                <div class="order-subrow">
+                  <div class="order-col">
+                    <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
+                  </div>
+                  <div class="order-col">
+                    <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
+                      {{ getWithdrawStatus(e.status) }}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="order-row order-row--content">
-            <div class="order-subrow">
-              <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
-              <div class="order-col">BANK</div>
-            </div>
-            <div class="order-subrow">
-              <div class="order-col">
-                <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
+            <template v-slot:loading>
+              <div class="row justify-center q-my-md">
+                <q-spinner-dots color="primary" size="40px" />
               </div>
-              <div class="order-col">
-                <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
-                  {{ getWithdrawStatus(e.status) }}
-                </span>
-              </div>
-            </div>
-          </div>
+            </template>
+          </q-infinite-scroll>
         </div>
       </q-tab-panel>
 
       <q-tab-panel name="recharge">
-        <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
-          <div class="order-row order-row--title">
-            <div class="order-col">Order NO.</div>
-            <div class="order-col flex-c-end gap-8">
-              {{ e.serialNumber }}
+        <div ref="scrollDepositRef" class="q-pa-md" style="max-height: 75vh; overflow: auto">
+          <q-infinite-scroll
+            @load="onLoadDeposit"
+            :offset="250"
+            :scroll-target="scrollDepositRef"
+            :disable="isDepositLastPage"
+          >
+            <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
+              <div class="order-row order-row--title">
+                <div class="order-col">Order NO.</div>
+                <div class="order-col flex-c-end gap-8">
+                  {{ e.serialNumber }}
 
-              <div @click="copyText(e.serialNumber)">
-                <img
-                  class="copy-btn btn-pointer"
-                  src="../../assets/images/account/content-copy.svg"
-                  size="24px"
-                  fill="#fff"
-                />
+                  <div @click="copyText(e.serialNumber)">
+                    <img
+                      class="copy-btn btn-pointer"
+                      src="../../assets/images/account/content-copy.svg"
+                      size="24px"
+                      fill="#fff"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="order-row order-row--content">
+                <div class="order-subrow">
+                  <div class="order-col">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
+                  <div class="order-col">{{ e.paymentType }}</div>
+                </div>
+                <div class="order-subrow">
+                  <div class="order-col">
+                    <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
+                  </div>
+                  <div class="order-col">
+                    <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
+                      {{ getDepositStatus(e.status) }}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="order-row order-row--content">
-            <div class="order-subrow">
-              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
-              <div class="order-col">{{ e.paymentType }}</div>
-            </div>
-            <div class="order-subrow">
-              <div class="order-col">
-                <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
+            <template v-slot:loading>
+              <div class="row justify-center q-my-md">
+                <q-spinner-dots color="primary" size="40px" />
               </div>
-              <div class="order-col">
-                <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
-                  {{ getDepositStatus(e.status) }}
-                </span>
-              </div>
-            </div>
-          </div>
+            </template>
+          </q-infinite-scroll>
         </div>
       </q-tab-panel>
     </q-tab-panels>
@@ -100,7 +128,7 @@
 </template>
 
 <script setup>
-import { onActivated, onMounted, reactive, ref } from "vue";
+import { onActivated, onDeactivated, onMounted, onUnmounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
@@ -144,15 +172,15 @@ const setTime = () => {
 const withdrawalData = ref([]);
 const searchWithdrawalRecord = () => {
   isLoading.withdrawal = true;
+  isWithdrawLastPage.value = true;
   withdrawalData.value = [];
 
   const { startDate, endDate } = searchForm;
-
   const gmtStartDate = convertToGMT8(startDate);
   const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/withdraw", {
-      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: withdrawPageSize }
     })
     .then((response) => {
       if (response.code === 0) {
@@ -161,11 +189,52 @@ const searchWithdrawalRecord = () => {
 
         if (data.length === 0) isNoInfo.withdrawal = true;
         else isNoInfo.withdrawal = false;
+
+        if (response.data.total > withdrawPageSize) {
+          isWithdrawLastPage.value = false;
+        }
       }
     })
     .catch((error) => {})
     .then(() => {
       isLoading.withdrawal = false;
+    });
+};
+
+const withdrawPageSize = 10;
+const withdrawCurrentPage = ref(1);
+const isWithdrawLastPage = ref(false);
+const scrollWithdrawRef = ref(null);
+
+const onLoadWithdraw = (index, done) => {
+  const { startDate, endDate } = searchForm;
+  const gmtStartDate = convertToGMT8(startDate);
+  const gmtEndDate = convertToGMT8(endDate);
+  withdrawCurrentPage.value++;
+
+  api
+    .get("/session/member/withdraw", {
+      params: {
+        startDate: gmtStartDate,
+        endDate: gmtEndDate,
+        current: withdrawCurrentPage.value,
+        size: withdrawPageSize
+      }
+    })
+    .then((response) => {
+      if (response.code === 0) {
+        const data = response.data.records;
+        withdrawalData.value.push(...data);
+
+        if (withdrawCurrentPage.value * withdrawPageSize >= response.data.total) {
+          isWithdrawLastPage.value = true;
+        }
+      }
+
+      done();
+    })
+    .catch((err) => {
+      done();
     });
 };
 
@@ -195,6 +264,7 @@ const copyText = (text) => {
 const depositData = ref([]);
 const searchDepositRecord = () => {
   isLoading.recharge = true;
+  isDepositLastPage.value = true;
   depositData.value = [];
 
   const { startDate, endDate } = searchForm;
@@ -202,7 +272,7 @@ const searchDepositRecord = () => {
   const gmtEndDate = convertToGMT8(endDate);
   api
     .get("/session/member/deposit", {
-      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: 10 }
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: 1, size: depositPageSize }
     })
     .then((response) => {
       if (response.code === 0) {
@@ -211,11 +281,47 @@ const searchDepositRecord = () => {
 
         if (data.length === 0) isNoInfo.recharge = true;
         else isNoInfo.recharge = false;
+
+        if (response.data.total > depositPageSize) {
+          isDepositLastPage.value = false;
+        }
       }
     })
     .catch((error) => {})
     .then(() => {
       isLoading.recharge = false;
+    });
+};
+
+const depositPageSize = 10;
+const depositCurrentPage = ref(1);
+const isDepositLastPage = ref(false);
+const scrollDepositRef = ref(null);
+
+const onLoadDeposit = (index, done) => {
+  const { startDate, endDate } = searchForm;
+  const gmtStartDate = convertToGMT8(startDate);
+  const gmtEndDate = convertToGMT8(endDate);
+  depositCurrentPage.value++;
+
+  api
+    .get("/session/member/deposit", {
+      params: { startDate: gmtStartDate, endDate: gmtEndDate, current: depositCurrentPage.value, size: depositPageSize }
+    })
+    .then((response) => {
+      if (response.code === 0) {
+        const data = response.data.records;
+        depositData.value.push(...data);
+
+        if (depositCurrentPage.value * depositPageSize >= response.data.total) {
+          isDepositLastPage.value = true;
+        }
+      }
+
+      done();
+    })
+    .catch((err) => {
+      done();
     });
 };
 
@@ -258,6 +364,19 @@ onActivated(() => {
   // NOTE: load both 1st, change if need implement search field
   searchWithdrawalRecord();
   searchDepositRecord();
+});
+
+onDeactivated(() => {
+  depositCurrentPage.value = 1;
+  withdrawCurrentPage.value = 1;
+});
+
+onMounted(() => {
+  document.body.style.overflow = "hidden";
+});
+
+onUnmounted(() => {
+  document.body.style.overflow = "";
 });
 </script>
 
