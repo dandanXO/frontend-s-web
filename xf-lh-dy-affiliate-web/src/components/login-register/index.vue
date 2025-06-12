@@ -1411,8 +1411,14 @@ export default defineComponent({
         setLanguage('en')
       }
       if (props.siteId === '7') {
-        currentSite.value.firstLiner = '从雷火开始'
-        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
+        // currentSite.value.firstLiner = '从雷火开始'
+        // currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
+        const firstLinerImg = require('@/assets/images/login/lh-login-2.png');
+        const secondLinerImg = require('@/assets/images/login/lh-login-3.png');
+
+        currentSite.value.firstLiner = `<img class="top-img" src="${firstLinerImg}" style="width: 100%;">`;
+        currentSite.value.secondLiner = `<img class="top-img" src="${secondLinerImg}" style="width: 100%;">`;
+
         currentSite.value.logo = lhLogo
         state.loginForm.site = 'LH1'
         setLanguage('zh')
@@ -1688,31 +1694,41 @@ a {
     center;
   background-size: cover;
   &.lh {
-    background: url('../../assets/images/login/lh-bg.jpg') no-repeat center
+    background: url('../../assets/images/login/lh-bg.png') no-repeat center
       center;
-      .top {
-        background: #fff !important;
-        margin: 0 10px;
-        margin-bottom: -1px;
-        border-top-left-radius: 25px;
-        border-top-right-radius: 25px;
-        @media (max-width: 768px) {
-          margin: 0 1.75%;
-          margin-bottom: -1px;
+      background-color: #19326D;
+      .left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .first-liner {
+          margin: 25px 0 !important;
         }
       }
 
-      .mid {
-        position: relative;
-        .top-img {
-          width: 35%;
-          position: absolute;
-          right: 40px;
-          top: 0;
-          transform: translateY(-50%);
-        }
-      }
       .right {
+        .top {
+          background: #fff !important;
+          margin: 0 10px;
+          margin-bottom: -1px;
+          border-top-left-radius: 25px;
+          border-top-right-radius: 25px;
+          @media (max-width: 768px) {
+            margin: 0 1.75%;
+            margin-bottom: -1px;
+          }
+        }
+
+        .mid {
+          position: relative;
+          .top-img {
+            width: 35%;
+            position: absolute;
+            right: 40px;
+            top: 0;
+            transform: translateY(-50%);
+          }
+        }
         .forget-pw {
           margin: 20px 0px;
           place-self: end;
@@ -1724,6 +1740,9 @@ a {
             width: 100% !important;
             margin: 8px 0;
             border-radius: 4px;
+          }
+          .el-button--danger {
+            background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%, #3981FF 100%);
           }
         }
         .contact-div {
