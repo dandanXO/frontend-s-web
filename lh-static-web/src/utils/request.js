@@ -83,7 +83,7 @@ function getInitApi(apiLinks, urlLsName) {
     axios
       .get(successRstUrl + "/ping")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.status !== 200) {
           localStorage.removeItem(urlLsName);
         }

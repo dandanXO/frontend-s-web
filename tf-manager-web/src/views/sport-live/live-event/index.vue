@@ -121,9 +121,9 @@
             @change="val => {
               if (typeof val === 'string') form.homeName = val;
               else form.homeName = '';
+              afterTeamSelectorChanged()
             }"
             @focus="loadEventWithSite(form.sportId, 'home')"
-            @blur="handleTeamSelectorBlur"
           >
             <el-option
               v-for="item in displayTeams"
@@ -155,12 +155,12 @@
             class="filter-item team-selector"
             style="width: 350px;"
             default-first-option
-            @focus="loadEventWithSite(form.sportId, 'away')"
             @change="val => {
               if (typeof val === 'string') form.awayName = val;
               else form.awayName = '';
+              afterTeamSelectorChanged()
             }"
-            @blur="handleTeamSelectorBlur"
+            @focus="loadEventWithSite(form.sportId, 'away')"
           >
             <el-option
               v-for="item in displayTeams"
@@ -518,8 +518,15 @@ const teamSelectorBottomRef = ref(null);
 const teamSelectorScrollObserver = ref(null);
 
 const displayTeams = computed(() => {
-  const allTeams = searchedTeams.value.concat(loadedTeams.value);
-  return [...new Set(allTeams)]
+  const _searchedTeams = searchedTeams.value.map(team => ({ ...team, _sid: `search-${team.id}` }))
+  const _loadedTeams = loadedTeams.value.map(team => ({ ...team, _sid: `loaded-${team.id}` }));
+  const allTeams = _searchedTeams.concat(_loadedTeams);
+  const result = new Map()
+  allTeams.forEach(team => {
+    if (result.has(team.id)) return;
+    result.set(team.id, team);
+  })
+  return Array.from(result.values());
 })
 
 function resetQuery() {
@@ -731,10 +738,12 @@ const handleTeamSelectorFocus = (target) => {
   })
 }
 
-const handleTeamSelectorBlur = () => {
-  loadedTeams.value = []
-  teamSelectorStatus.value = null;
-  teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value);
+const afterTeamSelectorChanged = () => {
+  nextTick(() => {
+    loadedTeams.value = []
+    teamSelectorStatus.value = null;
+    teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value);
+  })
 }
 
 const searchTeams = (query) => {

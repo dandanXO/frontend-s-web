@@ -46,7 +46,7 @@
         <el-popover popper-class="livestream-chat-emoji-popper" trigger="click" placement="top">
           <div ref="emojiPickerRef"></div>
           <template #reference>
-            <button class="livestream-chat-input-emoji-btn" type="button">
+            <button class="livestream-chat-input-emoji-btn" type="button" :disabled="inputConfig.disabled">
               <img :src="require(`@/assets/home/livestream/icon-emoji${isDark ? '-dark' : ''}.png`)" />
             </button>
           </template>
@@ -260,6 +260,12 @@ onMounted(() => {
         justify-content: center;
         background-color: transparent;
         border: none;
+
+        &:disabled {
+          cursor: not-allowed;
+          pointer-events: none;
+          filter: grayscale(100%);
+        }
 
         img {
           max-width: 20px;

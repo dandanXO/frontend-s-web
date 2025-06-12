@@ -24,21 +24,20 @@
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
-            <div :class="`vip-badge vip${vip.vipLevel}`"></div>
+            <!-- <div :class="`vip-badge vip${vip.vipLevel}`"></div> -->
+            <div :class="`vip-badge vip0`"></div>
 
             <div class="vip-level-header">
-              <svg viewBox="0 0 450 70">
-                <defs>
-                  <!-- Linear Gradient -->
-                  <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color: #8b36f8; stop-opacity: 1" />
-                    <stop offset="100%" style="stop-color: #334ad6; stop-opacity: 1" />
-                  </linearGradient>
-                </defs>
-                <text class="svgText" x="10" y="45" fill="url(#myGradient)">
-                  {{ $t("header.vip") }}{{ vip.vipLevel }}
-                </text>
-              </svg>
+              <!-- <svg viewBox="0 0 450 70"> -->
+              <!-- <defs> -->
+              <!-- Linear Gradient -->
+              <!-- <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color: #00b9a1; stop-opacity: 1" />
+                    <stop offset="100%" style="stop-color: #0097b9; stop-opacity: 1" />
+                  </linearGradient> -->
+              <!-- </defs> -->
+              <!-- </svg> -->
+              <div class="headText">{{ $t("header.vip") }}{{ vip.vipLevel }}</div>
             </div>
 
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
@@ -75,7 +74,7 @@
         <div class="vip-reward-item">
           <div class="reward-desc">
             <div class="icon">
-              <img src="../../assets/images/vip/level-upgrade-reward-icon.svg" />
+              <img src="../../assets/images/vip/level-upgrade-reward-icon.png" />
             </div>
             <div class="title">
               <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
@@ -97,7 +96,7 @@
         <div class="vip-reward-item">
           <div class="reward-desc">
             <div class="icon">
-              <img src="../../assets/images/vip/monthly-reward-icon.svg" />
+              <img src="../../assets/images/vip/monthly-reward-icon.png" />
             </div>
             <div class="title">
               <span class="bold">{{ $t("vip.monthly") }}</span>
@@ -119,7 +118,7 @@
         <div class="vip-reward-item">
           <div class="reward-desc">
             <div class="icon">
-              <img src="../../assets/images/vip/daily-withdrawal-limit-icon.svg" />
+              <img src="../../assets/images/vip/daily-withdrawal-limit-icon.png" />
             </div>
             <div class="title">
               <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>
@@ -762,7 +761,7 @@ const swipeRight = () => {
 </script>
 <style lang="scss" scoped>
 .separator-line {
-  border: 1px solid #49148f70;
+  border: 1px solid #0d333d;
   padding: 0 10px;
 }
 
@@ -799,17 +798,22 @@ const swipeRight = () => {
         border-radius: 100px;
         height: 35px;
         width: 35px;
+
+        img {
+          display: block;
+          width: 35px;
+        }
       }
 
       .title {
-        color: #5c46e7;
+        color: #00b9a1;
         font-size: 10px;
         height: 35px;
         line-height: 12px;
       }
 
       .reward-amt-wrapper {
-        background-color: #c9c8ff;
+        background-color: #d0f3ec;
         padding: 5px 15px;
         max-width: 100px;
         border-radius: 4px;
@@ -820,7 +824,7 @@ const swipeRight = () => {
           line-height: 12px;
           word-wrap: break-word;
           color: #8b36f8;
-          background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%), linear-gradient(0deg, #ffffff, #ffffff);
+          background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%), linear-gradient(0deg, #ffffff, #ffffff);
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -842,16 +846,17 @@ const swipeRight = () => {
 
 .vip-promo-tab-wrapper {
   width: 90%;
-  margin: 0 auto;
+  margin: 30px auto 0;
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    background: #101114;
-    color: #5c6c86;
+    // background: rgba(43, 71, 74, 0.27);
+    background: #2b474a;
+    color: #01a1b2;
   }
 
   .vip-promo-tab-toggle {
-    background-color: #1b2232;
+    background-color: #2b474a;
     border-radius: 8px;
     margin-bottom: 4px;
     margin-top: 5px;
@@ -863,9 +868,9 @@ const swipeRight = () => {
 
     :deep(.q-tab--active) {
       color: #fff;
-      background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+      background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
       box-shadow: 0px 1px 2px 0px #0000000d;
-      border: 1px solid #5c46e7;
+      // border: 2px solid rgba(43, 71, 74, 0.27);
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -902,6 +907,12 @@ const swipeRight = () => {
 
     background: url("../../assets/images/vip/badge/vip1.png") no-repeat top center;
     background-size: 100% 100%;
+
+    &.vip0 {
+      background: url("../../assets/images/vip/badge/vip0.png") no-repeat top center;
+      background-size: auto 100%;
+      margin-top: -5px;
+    }
 
     &.vip2 {
       background: url("../../assets/images/vip/badge/vip2.png") no-repeat top center;
@@ -963,30 +974,43 @@ const swipeRight = () => {
     font-family: sans-serif;
     font-size: 3.2em;
     font-weight: 800;
-    -webkit-text-stroke: 2px #fff;
+    // -webkit-text-stroke: 2px #fff;
     top: 28%;
-    right: 2%;
-    z-index: 1;
+    right: 10%;
+    // z-index: 1;
     position: absolute;
-    color: #8b36f8;
+    // color: #8b36f8;
+    // color: rgba(0, 151, 185, 1);
 
-    svg {
-      font-family: Arial;
-      font-size: 10rem;
-      font-weight: bold;
-      position: absolute;
-      width: 125px;
-      height: 70px;
-      right: 0px;
-      top: 0px;
+    .headText {
+      // font-size: 26px;
+      // font-weight: 800;
+      // line-height: 32px;
+      // text-align: left;
+      // background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
+      background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .svgText {
-      stroke: white;
-      stroke-width: 10px;
-      stroke-linejoin: round;
-      paint-order: stroke;
-    }
+    // svg {
+    //   font-family: Arial;
+    //   font-size: 10rem;
+    //   font-weight: bold;
+    //   position: absolute;
+    //   width: 125px;
+    //   height: 70px;
+    //   right: 0px;
+    //   top: 0px;
+    // }
+
+    // .svgText {
+    //   stroke: white;
+    //   stroke-width: 10px;
+    //   stroke-linejoin: round;
+    //   paint-order: stroke;
+    // }
   }
 
   .vip-contents {
@@ -1038,7 +1062,7 @@ const swipeRight = () => {
       .progress-bar-inner-bar {
         color: #fff;
         border-radius: 16px;
-        background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+        background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
         height: 12px;
       }
     }
@@ -1070,6 +1094,7 @@ const swipeRight = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  // position: relative;
 }
 
 .carousel__slide {
@@ -1100,7 +1125,9 @@ const swipeRight = () => {
 
   .top-header {
     color: #f1f1f1;
-    background: linear-gradient(180deg, #41206f 0%, #1f2862 100%);
+    // background: linear-gradient(180deg, #41206f 0%, #1f2862 100%);
+    // background: linear-gradient(180deg, #005348 0%, rgba(0, 83, 72, 0.2) 96.35%);
+    background: linear-gradient(180deg, #0a544c 0%, #0a4855 100%);
 
     td {
       padding-left: 0.5rem;
@@ -1135,15 +1162,16 @@ const swipeRight = () => {
     }
   }
   thead > :first-child {
-    background: linear-gradient(270deg, #5d01b9 -0.1%, #b11bff 50.22%, #6a069c 97.6%);
+    // background: linear-gradient(270deg, #5d01b9 -0.1%, #b11bff 50.22%, #6a069c 97.6%);
+    background: linear-gradient(180deg, #005348 0%, rgba(0, 83, 72, 0.2) 96.35%);
   }
   tbody > :nth-child(odd) {
     background: rgba(21, 0, 37, 0.2);
-    background: #652c93;
+    background: #016d5e;
   }
   tbody > :nth-child(even) {
     background: rgba(21, 0, 37, 0.5);
-    background: #502175;
+    background: #005348;
   }
 
   span.amt-text {
@@ -1177,7 +1205,9 @@ const swipeRight = () => {
 
   .hint-msg {
     border-radius: 8px;
-    background: linear-gradient(180deg, #2f1b4d 0%, #1a2045 100%);
+    // background: linear-gradient(180deg, #2f1b4d 0%, #1a2045 100%);
+    background: linear-gradient(180deg, #005348 0%, rgba(0, 83, 72, 0.2) 96.35%);
+
     padding: 10px;
     margin: 0 0 1.25rem 0;
     color: rgba(255, 255, 255, 0.7);

@@ -159,7 +159,8 @@ const updateNewUserState = () => {
     position: relative;
 
     :deep(.q-field__control) {
-      background: rgba(255, 255, 255, 0.15) !important;
+      // background: rgba(71, 178, 178, 0.16) !important;
+      background: #192B2D !important;
     }
 
     :deep(.q-field__native) {
@@ -242,16 +243,17 @@ const updateNewUserState = () => {
   border-radius: 8px;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   font-weight: 700;
   color: #150025;
   border-radius: 8px;
 }
 
 .style-btn-confirm {
-  color: #4a38b9;
+  color: #ffffff;
   border-radius: 8px;
-  background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+  // background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
   font-size: 16px;
   font-weight: 600;
   width: 100%;

@@ -62,7 +62,7 @@ export default defineComponent({
 .dialog-container {
   border: 0;
   border-radius: 6px;
-  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
   color: #ffffff;
   text-align: center;
   width: 100%;
@@ -122,8 +122,9 @@ export default defineComponent({
 }
 
 .btn-style-dialog-confirm {
-  background: linear-gradient(187.94deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
-  color: #4a38b9;
+  // background: linear-gradient(187.94deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+  color: #ffffff;
   font-weight: bold;
 }
 

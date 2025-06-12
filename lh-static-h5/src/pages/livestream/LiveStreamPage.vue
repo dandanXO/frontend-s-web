@@ -98,36 +98,38 @@
             <div class="item-img">
               <img v-if="item.cover" class="cover" :src="`${imgURLLivePreview}${item.cover}`" />
               <img
-                v-else-if="item.liveStatus"
+                v-else-if="item.liveStatus && getPreviewUrl(item)"
                 class="cover"
-                :src="`${imgURLLivePreview}${item.streamerStatus ? item.streamerPreviewUrl : item.supplierPreviewUrl}`"
+                :src="`${imgURLLivePreview}${getPreviewUrl(item)}`"
               />
 
               <template v-else>
                 <img src="../../assets/images/livestream/img-placeholder-bg.jpg" />
                 <div class="placeholder-vs">
                   <img src="../../assets/images/livestream/placeholder-vs.png" />
-
-                  <div class="vs-timer" v-if="!item.liveStatus">
-                    <span
-                      v-for="(char, cIndex) in countdowns[index].hours"
-                      class="vs-timer__time"
-                      :key="`hour-${cIndex}`"
-                    >
-                      {{ char }}
-                    </span>
-                    :
-                    <span
-                      v-for="(char, cIndex) in countdowns[index].minutes"
-                      class="vs-timer__time"
-                      :key="`minute-${cIndex}`"
-                    >
-                      {{ char }}
-                    </span>
-                    <span class="vs-timer__time-desc">小时</span>
-                    <div />
-                    <span class="vs-timer__time-desc">分钟</span>
-                  </div>
+                  <template v-if="!item.liveStatus">
+                    <div class="vs-timer-title">直播倒计时</div>
+                    <div class="vs-timer">
+                      <span
+                        v-for="(char, cIndex) in countdowns[index].hours"
+                        class="vs-timer__time"
+                        :key="`hour-${cIndex}`"
+                      >
+                        {{ char }}
+                      </span>
+                      :
+                      <span
+                        v-for="(char, cIndex) in countdowns[index].minutes"
+                        class="vs-timer__time"
+                        :key="`minute-${cIndex}`"
+                      >
+                        {{ char }}
+                      </span>
+                      <span class="vs-timer__time-desc">小时</span>
+                      <div />
+                      <span class="vs-timer__time-desc">分钟</span>
+                    </div>
+                  </template>
                 </div>
 
                 <div class="placeholder-left">
@@ -602,6 +604,14 @@ const showLivestreamDetails = () => {
     store.token = extensionToken.value;
   } else {
     // console.log("no extension");
+  }
+};
+
+const getPreviewUrl = (livestream) => {
+  if (livestream.streamerStatus) {
+    return livestream.streamerPreviewUrl ? livestream.streamerPreviewUrl : "";
+  } else {
+    return livestream.supplierPreviewUrl ? livestream.supplierPreviewUrl : "";
   }
 };
 
@@ -1164,6 +1174,13 @@ onUnmounted(() => {
         img {
           display: block;
           width: 100%;
+        }
+
+        .vs-timer-title {
+          margin-top: -7%;
+          font-size: 0.45rem;
+          font-weight: bold;
+          color: #fff;
         }
 
         .vs-timer {

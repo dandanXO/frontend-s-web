@@ -51,6 +51,8 @@
       :vip-status
       :livestream-data="currentLiveData"
       @send-chat-message="handleSendChatMessage"
+      :extensionState
+      :extensionToken
     />
   </div>
 </template>
@@ -150,6 +152,8 @@ const syncLivestreamInfo = async () => {
   livestreamSyncAbortController.value = new AbortController();
   getLivestreamDetail(currentLiveData.value.streamId, livestreamSyncAbortController).then((res) => {
     if (res.code === 0) {
+      if (currentLiveData.value.id !== res.data.id) return;
+
       vipStatus.value = !!res.data.vipStatus;
       if (currentLiveData.value.streamerStatus !== res.data.streamerStatus) {
         const notifyMessage = res.data.streamerStatus
@@ -269,7 +273,8 @@ const messages = ref([]);
 const danmuList = ref([]);
 
 const handleSendChatMessage = (message) => {
-  if (!store.hasToken()) {
+
+  if (!store.hasToken() && !extensionState.value) {
     // store.loginPageVisible = true;
     const currentPath = router.currentRoute.value.fullPath;
     $q.dialog({
@@ -672,7 +677,7 @@ onUnmounted(() => {
       transition: all 0.3s ease;
 
       &.expanded {
-        white-space: pre;
+        white-space: break-spaces;
       }
     }
   }

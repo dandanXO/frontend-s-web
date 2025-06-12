@@ -96,16 +96,29 @@ const downloadQRImg = async () => {
     } catch (error) {
       console.error("Error saving QR Code image:", error);
     }
-  } else {
-    const link = window.document.createElement("a");
-    const imgElement = document.querySelector('img[alt="Scan me!"]');
-    link.href = imgElement.src;
-    link.download = "myreferral";
+  }
+  {
+    try {
+      html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {
+        document.body.appendChild(canvas);
+        const dataUrl = canvas.toDataURL("image/jpeg");
+        // console.log(dataUrl);
 
-    document.body.appendChild(link);
+        const link = window.document.createElement("a");
+        link.href = dataUrl;
+        link.download = "myreferral";
 
-    link.click();
-    document.body.removeChild(link);
+        document.body.appendChild(link);
+
+        link.click();
+        document.body.removeChild(link);
+
+        canvas.style.display = "none";
+        document.body.removeChild(canvas);
+      });
+    } catch (error) {
+      console.error("Error saving QR Code image:", error);
+    }
   }
 };
 
@@ -166,12 +179,12 @@ onMounted(() => {
   }
 
   .earn-separator {
-    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
+    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #00b9a1 0.01%, rgba(92, 70, 231, 0) 100%);
     height: 2px;
   }
 
   .earn-title {
-    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
+    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #00b9a1 0.01%, rgba(92, 70, 231, 0) 100%);
     font-size: 2rem;
     font-weight: 700;
     text-align: center;
@@ -212,17 +225,17 @@ onMounted(() => {
 
   .table-container {
     :deep(thead) {
-      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+      background: linear-gradient(180deg, #0a534c 0%, #0a4855 100%);
     }
 
     :deep(tbody) {
-      background: #652c93;
+      background: #016d5e;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
       tr {
         &:nth-child(2n) {
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          background: #502175;
+          background: #005348;
         }
       }
     }
@@ -244,7 +257,9 @@ onMounted(() => {
     gap: 5px;
     margin: 10px 0 0 0;
     border-radius: 0.75rem 0.75rem 0rem 0rem;
-    background: #392e7b;
+    // background: #392e7b;
+    // background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+    background: #00b9a175;
     height: 50px;
     padding: 10px;
     justify-content: space-between;
@@ -266,7 +281,7 @@ onMounted(() => {
 
   .qr-wrapper {
     border-radius: 0rem 0rem 0.75rem 0.75rem;
-    background: #6759c0;
+    background: #131b1d;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -282,10 +297,12 @@ onMounted(() => {
 
     .save-btn {
       width: 50%;
-      color: #5c46e7;
+      color: #ffffff;
       font-weight: 700;
       border-radius: 0.5rem;
-      background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+      background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+
+      // background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
     }
   }
 }

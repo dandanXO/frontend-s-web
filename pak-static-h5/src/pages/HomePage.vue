@@ -5504,6 +5504,14 @@ const checkGoogleLoginSetPwd = () => {
 </style>
 
 <style lang="scss">
+.q-carousel__slides-container {
+  height: fit-content;
+}
+.swiper-slide,
+.swiper-wrapper {
+  height: fit-content;
+}
+
 .announcement-modal .q-dialog__inner {
   max-width: 500px;
   // max-height: 600px;

@@ -15,7 +15,7 @@
           :rules="[
             (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
             (val) => (val && val.length >= 8 && val.length <= 12) || $t('form.phone_rules_02'),
-            (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04'),
+            (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04')
           ]"
           outlined
           label-color="brand"
@@ -55,7 +55,7 @@
           />
         </div>
         <div class="forgot-password-form-logo-img" style="margin-top: 50px">
-          <img src="../assets/55-ace-logo.png" />
+          <img src="../assets/akb188-logo.png" />
         </div>
         <span class="forgot-password-form-desc">
           {{ $t("form.forgotPassword_desc") }}
@@ -368,7 +368,7 @@ onMounted(() => {
 }
 
 .submit-btn {
-  background-color: #8b00ff;
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   width: 100%;
   height: 56px;
   border-radius: 4px;
@@ -381,8 +381,8 @@ onMounted(() => {
     padding-right: 20px;
   }
   :deep(.q-field__control):before {
-    border-color: #1e1f24;
-    background-color: #1e1f24;
+    border-color: rgba(71, 178, 178, 0.16);
+    background-color: rgba(71, 178, 178, 0.16);
     border-width: 2px;
   }
   img {

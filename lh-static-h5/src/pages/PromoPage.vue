@@ -349,6 +349,7 @@ export default defineComponent({
       active: { value: "ALL", label: "ALL" },
       promoList: []
     });
+    const isPromoFound= ref(false);
     const showRuleDialog = ref(false)
     const isFetchingPromo = ref(false);
     const filteredArray = ref([]);
@@ -399,6 +400,7 @@ export default defineComponent({
 
     const isSpecialPromo = ref(false);
     const showPromoDetails = (promo) => {
+      isPromoFound.value= true;
       if (promo.promoCode === "lh1-game-steps") {
         isSpecialPromo.value = true;
       } else if (promo.promoCode === "lh1-livestream") {
@@ -468,6 +470,7 @@ export default defineComponent({
       const platformApiUrl = "/opt-session/promo/page";
 
       isFetchingPromo.value = window.location.pathname === "/promotion" || window.location.pathname === "/promo";
+      isPromoFound.value= false;
 
       api
         .get(platformApiUrl)
@@ -475,7 +478,6 @@ export default defineComponent({
           if (res.code === 0) {
             promoState.promoList = [];
             var promoItems = res.data;
-            // promoState.promoList.push(...res.data);
 
             promoItems.filter(promo => !($q.dark.isActive && ['lh1-dark-mode'].includes(promo.redirectUrl))).forEach((element) => {
               // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
@@ -500,7 +502,13 @@ export default defineComponent({
               // }
             });
 
-            // console.log("route.query.name", route.query.name);
+            if(route.query.name && !isPromoFound.value){
+              notify({
+                type: "error",
+                message: '活动已结束'
+              });
+              clearNameQuery()
+            }
 
             switchPromoType(promoState.active);
             isFetchingPromo.value = false;
@@ -511,6 +519,13 @@ export default defineComponent({
           isFetchingPromo.value = false;
         });
     };
+
+    const clearNameQuery = () => {
+      const newQuery = { ...route.query };
+      delete newQuery.name;
+
+      router.replace({ path: route.path, query: newQuery });
+    }
 
     // extension
     const currentPath = ref(route.path);

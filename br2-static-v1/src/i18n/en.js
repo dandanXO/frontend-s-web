@@ -70,7 +70,8 @@ export default {
     sports: "Sports",
     fishing: "Fishing",
     activitiesDetails: "Activities Details",
-    addCard: "Add Card"
+    addCard: "Add Card",
+    information: "Information",
   },
   bottomNav: {
     home: "Home",
@@ -457,7 +458,7 @@ export default {
         "If you have extraordinary channel promotion capabilities, please contact our customer service center for verification.",
       faq_05: "5. How to turn your friends into members?",
       faq_05_01:
-        "Log in to 55Ace, share your recommendation link with your friends on the recommendation page, guide them to register from the link, and they can become your direct members.",
+        "Log in to AKB188, share your recommendation link with your friends on the recommendation page, guide them to register from the link, and they can become your direct members.",
       faq_05_02:
         "Encourage your members to invite their friends to play games, and the friends they invite will become your indirect members.",
       faq_05_03:

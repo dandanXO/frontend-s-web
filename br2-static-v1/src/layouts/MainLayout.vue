@@ -67,32 +67,42 @@
         <q-route-tab to="/home" name="home" exact :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
           <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
-          {{ $t("bottomNav.home") }}
+          <!-- {{ $t("bottomNav.home") }} -->
+          Home
         </q-route-tab>
         <q-route-tab class="cs-web-id" to="/promo" id="cs-web-id" name="live" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
-          {{ $t("bottomNav.promo") }}
-        </q-route-tab>
-        <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" class="center-menu" :ripple="false">
-          <img src="../assets/images/index/menu/deposit-icon.png" />
-        </q-route-tab>
-        <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/earn-icon.png" />
           <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
-          {{ $t("bottomNav.earnMoney") }}
+          <!-- {{ $t("bottomNav.promo") }} -->
+          Bonus
+        </q-route-tab>
+        <!-- <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" class="center-menu" :ripple="false">
+          <img src="../assets/images/index/menu/deposit-icon.png" />
+        </q-route-tab> -->
+        <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
+          <img class="inactive" src="../assets/images/index/menu/deposit-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/deposit-icon-hover.png" />
+          <!-- {{ $t("bottomNav.earnMoney") }} -->
+          Deposit
+        </q-route-tab>
+        <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
+          <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
+          <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
+          <!-- {{ $t("bottomNav.earnMoney") }} -->
+          Earn Money
         </q-route-tab>
         <q-route-tab to="/account" name="account" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
-          {{ $t("bottomNav.me") }}
+          <!-- {{ $t("bottomNav.me") }} -->
+          Me
         </q-route-tab>
       </q-tabs>
     </q-footer>
   </q-layout>
 
   <div class="first-screen-loading" v-show="ui.firstScreenLoading">
-    <img src="../assets/55-ace-logo.png" alt="" />
+    <img src="../assets/akb188-logo.png" alt="" />
   </div>
 </template>
 

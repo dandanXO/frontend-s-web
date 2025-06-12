@@ -57,10 +57,10 @@
       class="pagination"
       background
       layout="prev, pager, next"
-      :current="request.current"
+      :current-page="request.current"
       :page-size="request.size"
       :total="page.total"
-      @update:current="changePage"
+      @current-change="changePage"
     />
   </div>
 </template>
@@ -108,7 +108,7 @@ async function loadList() {
   request.siteId = store.state.user.siteId
   await getSensitiveWord({ siteId: request.siteId, size: request.size, current: request.current }).then(res => {
     page.records = res.data.records;
-    page.total = res.total;
+    page.total = res.data.total;
     page.loading = false;
   });
 }

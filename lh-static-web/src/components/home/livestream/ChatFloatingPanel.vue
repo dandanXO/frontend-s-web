@@ -25,7 +25,7 @@ const props = defineProps(["livestreamData", "isSystemLivestream"]);
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
-const isExpanded = ref(false);
+const isExpanded = ref(true);
 
 const currentSportType = computed(() => {
   const target = SPORT_TYPE_LIST.find((item) => item.value === props.livestreamData?.sportId);
@@ -49,6 +49,7 @@ const avatarUrl = computed(() => {
 });
 
 const handleClick = () => {
+  return;
   isExpanded.value = !isExpanded.value;
 };
 </script>
@@ -105,11 +106,12 @@ const handleClick = () => {
     line-height: 18px;
     grid-column: 1 / span 2;
     text-overflow: ellipsis;
+    overflow: hidden;
     white-space: nowrap;
     transition: all 0.3s ease-in-out;
 
     &.expanded {
-      white-space: pre;
+      white-space: break-spaces;
     }
   }
 }

@@ -31,37 +31,37 @@
         <div class="acct-menu" id="id-acct-menu">
           <router-link to="/account/profile">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/personal-svg.svg" />
+              <img src="../assets/images/account/personal-svg.png" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.personalCentre") }}</div>
           </router-link>
           <router-link to="/account/discount">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/discount-svg.svg" />
+              <img src="../assets/images/account/discount-svg.png" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.discount") }}</div>
           </router-link>
           <router-link to="/account/record">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/record-svg.svg" />
+              <img src="../assets/images/account/record-svg.png" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.record") }}</div>
           </router-link>
           <router-link to="/account/order">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/order-svg.svg" />
+              <img src="../assets/images/account/order-svg.png" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.order") }}</div>
           </router-link>
           <router-link to="/account/bank">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/bank-svg.svg" />
+              <img src="../assets/images/account/bank-svg.png" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.bank") }}</div>
           </router-link>
           <router-link to="/account/message">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/message-svg.svg" />
+              <img src="../assets/images/account/message-svg.png" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.message") }}</div>
           </router-link>
@@ -153,7 +153,7 @@ const slide = ref(0);
 const imgURL = process.env.IMAGE_CDN + "/promo/";
 const btm_banners = ref([
   {
-    mobileImageUrl: require("../assets/images/account/account-banner-2.png")
+    mobileImageUrl: require("../assets/images/promotion/tempo/promo-2.png")
   }
 ]);
 
@@ -184,7 +184,7 @@ const loadBanner = () => {
       response.data.forEach((item) => {
         item.mobileImageUrl = imgURL + item.mobileImageUrl;
       });
-      btm_banners.value = response.data;
+      // btm_banners.value = response.data;
     }
   });
 };
@@ -207,10 +207,11 @@ const logout = () => {
 .top-setting-section {
   width: 100%;
   position: relative;
-  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   border-radius: 20px 20px 0px 0px;
   padding: 25px 0px 40px;
   margin-bottom: -30px;
+  margin-top: 18px;
 
   .top-section-inner {
     width: 95%;
@@ -277,7 +278,7 @@ const logout = () => {
 }
 
 .mid-setting-section {
-  background-color: #303954;
+  background-color: #101114;
   width: 100%;
   position: relative;
   border-radius: 20px 20px 0px 0px;
@@ -432,11 +433,11 @@ const logout = () => {
   height: 42px;
 }
 .btn-confirm {
-  background: linear-gradient(187.94deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   font-weight: 700;
   width: 140px;
   height: 42px;
-  color: #5c46e7;
+  color: #ffffff;
   border-radius: 8px;
 }
 </style>

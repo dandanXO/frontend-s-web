@@ -365,7 +365,7 @@ onActivated(() => {
     &.card-show {
       margin-bottom: -2rem;
       border: 2px solid #a73dff;
-      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+      background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
 
       .bank-card-add {
         gap: 0.5rem;
@@ -456,7 +456,7 @@ onActivated(() => {
     align-items: center;
     border-radius: 0.5rem;
     gap: 6px;
-    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
     display: flex;
     flex-direction: row;
     padding: 1rem 8px;
@@ -506,7 +506,7 @@ onActivated(() => {
   .q-dialog__inner > .q-card {
     padding: 2.4rem 1.5rem;
     border-radius: 12px;
-    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
     //background-image: url("../../assets/images/index/modal-bg.png");
     background-size: 100% 100%;
     width: 90%;
@@ -543,7 +543,7 @@ onActivated(() => {
       font-weight: bold;
     }
     .item-bind {
-      color: #5c46e7;
+      color: #00B9A1;
       font-weight: bold;
     }
 
@@ -557,7 +557,7 @@ onActivated(() => {
       }
 
       .item-copy {
-        color: #5c46e7;
+        color: #00B9A1;
         display: flex;
         gap: 6px;
         align-items: center;

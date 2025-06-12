@@ -1,6 +1,6 @@
 <template>
   <div style="height: 56px" v-if="topDownload"></div>
-  <div style="height: 80px"></div>
+  <div style="height: 78px"></div>
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
@@ -20,7 +20,7 @@
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/logo.png" @click="onClickLogo" />
+          <img src="../assets/logo.svg" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="store.token">
@@ -74,7 +74,15 @@
               </div>
             </div>
           </template>
-          <q-list style="background: #303954" dense unelevated flat class="dropdown-list">
+          <q-list dense unelevated flat class="dropdown-list">
+            <q-item clickable v-close-popup @click="router.push('/account/profile')">
+              <q-item-section avatar>
+                <q-avatar icon="phone_iphone" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ $t("header.information") }}</q-item-label>
+              </q-item-section>
+            </q-item>
             <q-item clickable v-close-popup @click="onVipClick">
               <q-item-section avatar>
                 <q-avatar icon="diamond" />
@@ -122,8 +130,8 @@
           </q-list>
         </q-btn-dropdown>
       </div>
-      <div class="profile-wrapper" v-else>
-        <q-btn no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
+      <div class="profile-wrapper non-login" v-else>
+        <q-btn class="btn-style-light" no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
         <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn>
       </div>
     </div>
@@ -270,8 +278,8 @@ onMounted(() => {
     sessionStorage.setItem("PROFILE_IMG", imgPath);
   }
 
-  getTopDownloadUrl();
-  checkTopDownloadAppear();
+  // getTopDownloadUrl();
+  // checkTopDownloadAppear();
 });
 </script>
 
@@ -286,7 +294,8 @@ onMounted(() => {
   width: 100%;
   height: 86px; /* adjust the height as needed */
   padding: 8px 16px 28px;
-  background: linear-gradient(180deg, #0c2962 0%, #01030d 100%);
+  // background: linear-gradient(180deg, #0c2962 0%, #01030d 100%);
+  background: linear-gradient(180deg, #00b9a1 0%, rgba(0, 185, 111, 0) 96.35%);
   z-index: 98;
 
   .download-container {
@@ -350,8 +359,12 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
-  box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
+  // background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
+  // background: linear-gradient(180deg, #00B9A1 0%, rgba(0, 185, 111, 0) 96.35%);
+  // background: linear-gradient(180deg, rgba(0, 185, 161, 0.46) 0%, rgba(0, 185, 111, 0) 96.35%);
+  // background: linear-gradient(180deg, #095e54 0%, #0d362d 100%);
+  background: linear-gradient(180deg, #095e54 0%, rgba(13, 54, 45, 0.2) 100%);
+  // box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow-x: hidden;
   position: fixed;
   top: 0;
@@ -384,6 +397,7 @@ onMounted(() => {
       justify-content: space-between;
       padding: 0 12px;
       // overflow-y: hidden;
+      height: 78px;
 
       .profile-pic {
         margin-top: -20px;
@@ -394,6 +408,11 @@ onMounted(() => {
 
   .profile-dropdown {
     margin-top: 15px;
+    box-shadow: none;
+
+    &:before {
+      box-shadow: none;
+    }
   }
   .profile-wrapper {
     display: flex;
@@ -407,11 +426,15 @@ onMounted(() => {
     padding-right: 10px;
     position: relative;
 
+    &.non-login {
+      padding-bottom: 15px;
+    }
+
     .unread-total {
       position: absolute;
       right: 0px;
       top: 0px;
-      background: #8952ff;
+      background: rgba(255, 0, 4, 1);
       border-radius: 100px;
       padding: 0px 3px;
       z-index: 1;
@@ -473,7 +496,7 @@ onMounted(() => {
     .profile-balance {
       position: relative;
       // background: rgba(255, 255, 255, 0.24);
-      background: rgba(103, 38, 154, 0.9);
+      background: #286866e5;
       border-radius: 24px;
       display: flex;
       align-items: center;
@@ -524,10 +547,10 @@ onMounted(() => {
 
   .logo-img {
     width: 100%;
-    margin: 0 auto;
+    margin: 12px auto;
 
     img {
-      max-width: 100px;
+      max-width: 106px;
       width: 100%;
       text-align: center;
     }
@@ -562,7 +585,7 @@ onMounted(() => {
     padding-top: 3px;
     padding-bottom: 4px;
     z-index: 3;
-    color: #334ad6;
+    color: #101616;
     font-weight: 700;
     font-style: italic;
   }
@@ -581,7 +604,8 @@ onMounted(() => {
 }
 
 .style-blue-btn {
-  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   border-radius: 5px;
 }
 
@@ -604,7 +628,7 @@ onMounted(() => {
 }
 
 .message-amt {
-  background-color: #8952ff;
+  background: rgba(255, 0, 4, 1);
   border-radius: 30px;
   width: 20px;
   height: 20px;
@@ -630,13 +654,13 @@ onMounted(() => {
 }
 
 .q-item__label {
-  color: #c5c7ff;
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 500;
 }
 
 .q-avatar {
   i.q-icon {
-    color: #7b80a9;
+    color: rgba(255, 255, 255, 0.6);
   }
 }
 
@@ -655,6 +679,9 @@ onMounted(() => {
 
 .dropdown-list {
   // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
+  // border-radius: 18px;
+  background: #0f2021;
+  // overflow: hidden;
 }
 
 .btn-lang {

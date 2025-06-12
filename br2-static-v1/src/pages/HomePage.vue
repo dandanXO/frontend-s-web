@@ -40,7 +40,7 @@
             min-height: 3px;
             width: 33px;
             padding: 0;
-            background-color: #661ebf;
+            background-color: #00b9a1;
           "
         />
         <q-btn
@@ -105,14 +105,14 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img
-            style="width: 24px; height: 24px"
-            class="filter-purple"
-            src="../assets/images/index/volume-up-line.svg"
-          />
+          <img style="width: 24px; height: 24px" class="filter-green" src="../assets/images/index/volume-up-line.svg" />
         </div>
         <div class="marquee-container">
-          <marquee-text :repeat="5" :duration="announcementList.length * 120">
+          <marquee-text :repeat="2" :duration="10">
+            <!-- <div>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to
+              AKB188&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div> -->
             <div v-if="announcementList">
               <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                 {{ a.content }}
@@ -162,6 +162,7 @@
       >
         <div class="games-selection-wrapper" id="hotgames">
           <div class="title-game">
+            <div><img src="../assets/images/index/title-icon-hot.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_hotgames") }}</span>
           </div>
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -309,6 +310,7 @@
       >
         <div class="games-selection-wrapper" id="slotsgames">
           <div class="title-game">
+            <div><img src="../assets/images/index/title-icon-slot.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_slotsgame") }}</span>
           </div>
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -418,6 +420,7 @@
       >
         <div class="games-selection-wrapper" id="live">
           <div class="title-game">
+            <div><img src="../assets/images/index/title-icon-live.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_livecasino") }}</span>
           </div>
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -518,6 +521,7 @@
       >
         <div class="games-selection-wrapper" id="fishing" v-if="category.title === 'Lobby' && category.active">
           <div class="title-game">
+            <div><img src="../assets/images/index/title-icon-fish.png" width="34" /></div>
             <span class="txt-style">{{ $t("home.cat_fishing") }}</span>
           </div>
           <div class="platform-game-wrapper">
@@ -718,6 +722,7 @@
       >
         <div class="games-selection-wrapper" id="sport">
           <div class="title-game">
+            <div><img src="../assets/images/index/title-icon-sport.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_sport") }}</span>
           </div>
           <div class="platform-game-container sport-platform">
@@ -2061,7 +2066,9 @@ const loadHotGameList = () => {
           gameLists = res;
 
           hotlists = hotlists.map((item1) => {
-            const matchingItem = gameLists.find((item2) => item1.type === "game" && item1.code === item2.code && item1.platform === item2.platformCode);
+            const matchingItem = gameLists.find(
+              (item2) => item1.type === "game" && item1.code === item2.code && item1.platform === item2.platformCode
+            );
             return { ...matchingItem, ...item1 };
           });
 
@@ -2338,7 +2345,31 @@ function loadData() {
     .get("/opt-session/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
-        banners.value = res.data;
+        // banners.value = res.data;
+        banners.value = [
+          {
+            promoPageId: null,
+            desktopImageUrl: "promo-1.png",
+            desktopImageUrlDark: null,
+            mobileImageUrl: "promo-1.png",
+            mobileImageUrlDark: null,
+            redirectUrl: "/url/promo",
+            category: "HOME",
+            displayStartTime: 1577847600000,
+            displayEndTime: 1893553199000
+          },
+          {
+            promoPageId: null,
+            desktopImageUrl: "promo-2.png",
+            desktopImageUrlDark: null,
+            mobileImageUrl: "promo-2.png",
+            mobileImageUrlDark: null,
+            redirectUrl: "/url/promo",
+            category: "HOME",
+            displayStartTime: 1577836800000,
+            displayEndTime: 1893542399000
+          }
+        ];
 
         setTimeout(() => {
           bannerLoading.value = false;
@@ -2437,7 +2468,16 @@ const loadAnnouncement = () => {
     if (res.code === 0) {
       if (res.data.announcements) {
         const d = res.data.announcements;
-        announcementList.value = d;
+        // announcementList.value = d;
+        announcementList.value = [
+          {
+            title: "Bem-vindo ao AKB148",
+            content: "Bem-vindo ao AKB148",
+            typeId: 72,
+            createTime: 1729150088000,
+            attachment: null
+          }
+        ];
       }
       if (res.data.type) {
         announcementTypes.value = res.data.type;
@@ -2516,7 +2556,8 @@ const returnBannerUrl = (banner) => {
     } else {
       bannerImg = bannerSplit[0];
     }
-    return require(`../assets/images/banners/${bannerImg}`);
+    // return require(`../assets/images/banners/${bannerImg}`);
+    return require(`../assets/images/promotion/tempo/${bannerImg}`);
   } catch (e) {
     return imgURLPromo + banner.mobileImageUrl;
   }
@@ -2759,20 +2800,20 @@ const hbSlide = ref(0);
 const hbPromo = ref([]);
 
 const checkSpinLuckyWheelPromo = async () => {
-  if(store.token) {
+  if (store.token) {
     const res = await eventapi.post("/refer-spin/check");
     store.spinWheelLuckyPromoInfo = { ...store.spinWheelLuckyPromoInfo, ...res.data };
   }
 
   if (sessionStorage.getItem("isReload")) {
     sessionStorage.removeItem("isReload");
-    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+    sessionStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
   }
 
-  if (!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
     spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
   }
-}
+};
 
 const checkHbPromo = () => {
   api
@@ -3009,7 +3050,7 @@ onBeforeUnmount(() => {
 
   .station-notice-wrapper {
     display: flex;
-    background: #2d0c5a;
+    background: #0d3230;
     gap: 10px;
     padding: 5px 10px;
     justify-content: center;
@@ -3023,9 +3064,9 @@ onBeforeUnmount(() => {
       width: 28px;
     }
 
-    .filter-purple {
-      filter: brightness(0) saturate(100%) invert(30%) sepia(17%) saturate(1379%) hue-rotate(223deg) brightness(98%)
-        contrast(96%);
+    .filter-green {
+      filter: brightness(0) saturate(100%) invert(62%) sepia(48%) saturate(380%) hue-rotate(142deg) brightness(95%)
+        contrast(90%);
     }
 
     .marquee-container {
@@ -3295,7 +3336,7 @@ onBeforeUnmount(() => {
 
 .announcement-card {
   height: 400px;
-  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   border-radius: 10px;
   overflow-y: auto;
 
@@ -3547,8 +3588,8 @@ onBeforeUnmount(() => {
 
 .cs-icon-wrapper {
   display: flex;
-  width: 70px;
-  height: 76px;
+  width: 60px;
+  height: 60px;
   background: url("../assets/images/index/icon-cs.png") no-repeat center center;
   background-size: contain;
 }
@@ -3637,10 +3678,6 @@ onBeforeUnmount(() => {
     display: flex;
     gap: 8px;
     align-items: center;
-    background-image: url("../assets/images/index/title-bg.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
 
     .txt-style {
       font-family: "Dongle", sans-serif;
@@ -3650,6 +3687,12 @@ onBeforeUnmount(() => {
       line-height: 1;
       text-transform: uppercase;
       color: #ffffff;
+      background-image: url("../assets/images/index/title-bg.png");
+      background-repeat: no-repeat;
+      background-size: 100% 24px;
+      background-position: center center;
+      width: 100%;
+      border-radius: 40px;
     }
   }
 }
@@ -3794,8 +3837,8 @@ onBeforeUnmount(() => {
   .swiper-scrollbar.swiper-scrollbar-horizontal {
     bottom: 0px;
     background: rgba(43, 55, 74, 0.6);
-    padding: 2px;
-    height: 10px;
+    padding: 1px;
+    height: 5px;
   }
 
   .swiper-scrollbar-drag {
@@ -3979,8 +4022,8 @@ onBeforeUnmount(() => {
   .swiper-scrollbar.swiper-scrollbar-horizontal {
     bottom: 0px;
     background: rgba(43, 55, 74, 0.6);
-    padding: 2px;
-    height: 10px;
+    padding: 1px;
+    height: 5px;
   }
 
   .swiper-scrollbar-drag {
@@ -4052,7 +4095,7 @@ onBeforeUnmount(() => {
 }
 
 .cat-selection-item {
-  background: #2b374a;
+  background: #171f22;
   // min-width: 80px;
   width: 80px;
   height: 50px;
@@ -4066,7 +4109,7 @@ onBeforeUnmount(() => {
   width: 100%;
 
   &.active {
-    background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+    background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
 
     .cat-title {
       color: #ffffff;
@@ -4102,7 +4145,7 @@ onBeforeUnmount(() => {
   background-size: cover;
   background-position: center center;
   position: relative;
-  background-image: url("../assets/images/index/mini-game-bg.png");
+  // background-image: url("../assets/images/index/mini-game-bg.png");
   // background-image: url("../assets/images/index/item-game-maintenance.png");
   border-radius: 8px;
 
@@ -4131,7 +4174,7 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: center;
   margin: auto;
-  border: 2px solid #8b36f8;
+  border: 2px solid rgba(0, 151, 185, 1);
   padding: 12px 16px;
   width: 160px;
   border-radius: 8px;

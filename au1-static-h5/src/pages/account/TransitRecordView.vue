@@ -402,7 +402,7 @@ import { defineComponent, onMounted, reactive, ref, watch } from "vue";
 import { api } from "boot/axios"
 import { useQuasar } from "quasar"
 import { userStore } from "stores/index"
-import { updateDate, convertToGMT8, convertToGMT55, convertToGMT7 } from "src/boot/utils";
+import { updateDate, convertToGMT10, convertToGMT55, convertToGMT7 } from "src/boot/utils";
 import moment from "moment"
 const store = userStore();
 const recordActive = ref("deposit");
@@ -756,8 +756,8 @@ export default defineComponent({
       const obj = {
         memberId: searchForm.gameBetRecord.memberId,
         platform: searchForm.gameBetRecord.platform,
-        startDate: convertToGMT8(searchForm.gameBetRecord.startDate),
-        endDate: convertToGMT8(searchForm.gameBetRecord.endDate),
+        startDate: convertToGMT10(searchForm.gameBetRecord.startDate),
+        endDate: convertToGMT10(searchForm.gameBetRecord.endDate),
       }
       api.get("/session/member/gameBetRecordTotal", {params: obj}).then((ret) => {
         if (ret.code === 0) {

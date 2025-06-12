@@ -551,7 +551,8 @@ onMounted(() => {
     .info-row {
       display: flex;
       gap: 15px;
-      background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
+      // background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
+      background: linear-gradient(180deg, #0a534c 0%, #0a4855 100%);
       border-radius: 12px;
     }
 
@@ -653,7 +654,7 @@ onMounted(() => {
 
 .content-wrapper {
   border-radius: 0.75rem;
-  background: #6759c0;
+  background: #00B9A175;
   padding: 15px;
   margin: 0;
 
@@ -805,7 +806,7 @@ onMounted(() => {
     .arrow {
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.8);
-      color: #5c46e7;
+      color: #00B9A1;
       text-align: center;
       width: 60px;
       height: 30px;
