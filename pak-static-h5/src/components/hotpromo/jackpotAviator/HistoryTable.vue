@@ -29,10 +29,14 @@ const props = defineProps(['historyList']);
 .history-list {
     display: flex;
     flex-direction: column;
-    margin: 0 10px;
+    // margin: 0 10px;
+    
+    // margin: 20px auto 75px;
     border-radius: 5px;
     overflow: hidden;
-    padding-bottom: 0px;
+    margin-bottom: 30px;
+    // padding-bottom: 0px;
+        // padding-bottom: 15px;
 
     .item {
         display: grid;

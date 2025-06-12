@@ -177,7 +177,7 @@ defineExpose({
   border-radius: 12px;
   .controller-wrapper {
     width: fit-content;
-    margin: 0 12px 12px;
+    margin: 0 auto 12px;
   }
 }
 </style>
