@@ -89,7 +89,7 @@ const combinedStatus = computed(() => ({
 const isLuckyDay = computed(() => moment().date() % 10 === 1);
 
 const modalImageIndex = computed(() => {
-  if (modalIndex.value === 1 && (isAndroid() || store.isFromGooglePackage)) return 6;
+  // if (modalIndex.value === 1 && (isAndroid() || store.isFromGooglePackage)) return 6;
   return modalIndex.value;
 });
 
@@ -190,18 +190,19 @@ const checkAppLogin = async () => {
     return;
   }
   try {
-    if (isAndroid() || store.isFromGooglePackage) {
-      const res = await eventapi.get("/session/app-login-bonus/popUp?promoCode=pak-app-login-phone-bonus");
-      if (res.code === 0 && res.data) {
-        modalType.value = "APP_LOGIN_APK";
-      } else {
-        showNextModal();
-      }
-    } else if (!combinedStatus.value.isAppLogin) {
-      modalType.value = "APP_LOGIN_H5";
-    } else {
-      showNextModal();
-    }
+    // if (isAndroid() || store.isFromGooglePackage) {
+    //   const res = await eventapi.get("/session/app-login-bonus/popUp?promoCode=pak-app-login-phone-bonus");
+    //   if (res.code === 0 && res.data) {
+    //     modalType.value = "APP_LOGIN_APK";
+    //   } else {
+    //     showNextModal();
+    //   }
+    // } else if (!combinedStatus.value.isAppLogin) {
+    //   modalType.value = "APP_LOGIN_H5";
+    // } else {
+    //   showNextModal();
+    // }
+    showNextModal();
   } catch (e) {
     console.error(e);
     showNextModal();

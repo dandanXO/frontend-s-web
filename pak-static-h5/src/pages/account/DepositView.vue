@@ -29,12 +29,12 @@
           <q-badge v-if="isNewUserFtdPrivilege" color="green" floating rounded>
             {{ getNewUserFtdAmount(item.amount) }}
           </q-badge>
-          <q-badge v-if="is2ndPrivilege" color="green" floating rounded>
+          <!-- <q-badge v-if="is2ndPrivilege" color="green" floating rounded>
             {{ get2ndAmount(item.amount) }}
           </q-badge>
           <q-badge v-if="is3rdPrivilege" color="green" floating rounded>
             {{ get3rdAmount(item.amount) }}
-          </q-badge>
+          </q-badge> -->
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -515,7 +515,7 @@ const is2ndPrivilege = computed(
 );
 const is3rdPrivilege = computed(
   () =>
-    selectedPayType.value !== "USDTTRC" && !secondTimeDepositBonusConfig.value.selected && 
+    selectedPayType.value !== "USDTTRC" &&
     thirdTimeDepositBonusConfig.value.selected &&
     thirdTimeDepositBonusConfig.value.hasBonus
 );

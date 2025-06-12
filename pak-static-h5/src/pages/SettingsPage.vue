@@ -58,7 +58,7 @@
               <img src="../assets/images/account/deposit-svg.svg" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
-            <div v-if="promoPercentage" class="promo-percentage">{{ promoPercentage }} {{ $t("records.bonus") }}</div>
+            <div v-if="promoPercentage !== ''" class="promo-percentage">{{ promoPercentage }} {{ $t("records.bonus") }}</div>
           </router-link>
           <router-link to="/withdraw">
             <div class="acct-nav-item">
@@ -335,8 +335,8 @@ const showTransferModal = ref(false);
 const confirmSignOutDialog = ref(false);
 
 const promoPercentage = computed(() => {
-  if (!store.claimedFtdPrivilege) return "53%";
-  if (!store.claimedSecondPrivilege) return "35%";
+  if (store.canClaimSecondPrivilege) return "100";
+  if (store.canClaimThirdPrivilege) return "150";
   return ""; // Optional: for other cases if needed
 });
 
