@@ -5,6 +5,7 @@
       :livestream-data="currentLiveData"
       :extensionState
       :extensionToken
+      :is-typing
       @share-click="handleShareClick"
     />
 
@@ -52,6 +53,7 @@
     </div>
 
     <LiveStreamChatMessages
+      v-model="isTyping"
       class="livestream-chat"
       :messages
       :vip-status

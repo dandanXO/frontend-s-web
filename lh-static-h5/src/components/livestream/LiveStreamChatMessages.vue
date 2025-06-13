@@ -42,6 +42,8 @@
           dense
           standout
           autogrow
+          @focus="handleInputFocus"
+          @blur="handleInputBlur"
         >
           <template v-slot:append>
             <q-btn icon="emoji_emotions" round flat dense @click="togglePopover"></q-btn>
@@ -84,6 +86,7 @@ const router = useRouter();
 const props = defineProps(["messages", "vipStatus", "livestreamData", "extensionState", "extensionToken", "marginTop"]);
 const { messages, vipStatus, livestreamData, extensionState, extensionToken } = toRefs(props);
 const emit = defineEmits(["sendChatMessage"]);
+const model = defineModel();
 
 const messageToSend = ref("");
 const chatListRef = ref(null);
@@ -206,6 +209,14 @@ const handleBetClick = () => {
 
 const handleAppBetClick = (platformName, platformId, platformCode, gameType) => {
   document.location.href = `app://to_platform?platformName=${platformName}&platformId=${platformId}&platformCode=${platformCode}&gameType=${gameType}`;
+};
+
+const handleInputFocus = () => {
+  model.value = true;
+};
+
+const handleInputBlur = () => {
+  model.value = false;
 };
 
 onMounted(() => {

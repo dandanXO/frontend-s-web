@@ -17,7 +17,7 @@
         </div>
       </q-btn>
 
-      <q-btn flat @click="$emit('share-click')">
+      <q-btn flat @click="handleShareClick">
         <img class="share-icon" src="../../assets/images/livestream/icon-share.png" />
       </q-btn>
     </div>
@@ -73,13 +73,7 @@
             thumb-color="primary"
             style="width: 90px"
           />  -->
-          <q-btn
-            flat
-            dense
-            @click="toggleMute"
-            :icon="playerConfig.volume ? 'volume_up' : 'volume_off'"
-            color="white"
-          />
+          <q-btn flat dense @click="toggleMute" :icon="playerConfig.muted ? 'volume_off' : 'volume_up'" color="white" />
         </div>
 
         <q-btn
@@ -238,10 +232,10 @@ const QUALITY_ALIAS = {
 
 const notify = useNotify();
 
-const props = defineProps(["danmuList", "channels", "livestreamData", "extensionState", "extensionToken"]);
-const { danmuList, channels, livestreamData, extensionState, extensionToken } = toRefs(props);
+const props = defineProps(["danmuList", "channels", "livestreamData", "extensionState", "extensionToken", "isTyping"]);
+const { danmuList, channels, livestreamData, extensionState, extensionToken, isTyping } = toRefs(props);
 
-defineEmits(["share-click"]);
+const emit = defineEmits(["share-click"]);
 
 const danmuJs = ref(null);
 
@@ -276,7 +270,8 @@ const playerConfig = ref({
   isFullScreen: false,
   isDanmuClose: false,
   quality: DEFAULT_QUALITY,
-  channel: 0
+  channel: 0,
+  muted: false
 });
 
 const videoSource = computed(() => getVideoSource(livestreamData.value));
@@ -406,9 +401,9 @@ const handleVolumeChange = (value) => {
 };
 
 const toggleMute = () => {
-  playerConfig.value.volume = !playerConfig.value.volume;
+  changePlayerConfig("muted", !playerConfig.value.muted);
   if (videoRef.value) {
-    videoRef.value.volume = playerConfig.value.volume ? 1 : 0;
+    videoRef.value.muted = playerConfig.value.muted;
   }
 };
 
@@ -456,11 +451,11 @@ const isAppleDevice =
 
 const handleFullScreenChange = (value) => {
   changePlayerConfig("isFullScreen", value);
+  const video = videoRef.value;
   if (value) {
     if (isAppleDevice) {
-      const video = videoRef.value;
-      if (video && typeof video.webkitEnterFullscreen === "function") {
-        video.webkitEnterFullscreen();
+      if (video && video.webkitSetPresentationMode) {
+        video.webkitSetPresentationMode("fullscreen");
       }
     } else {
       const wrapper = videoWrapperRef.value;
@@ -472,14 +467,20 @@ const handleFullScreenChange = (value) => {
       }
     }
   } else {
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-      screen.orientation?.lock?.("portrait").catch((err) => {
-        console.warn("Failed to lock orientation to portrait:", err);
-      });
+    if (isAppleDevice && video.webkitSetPresentationMode) {
+      video.webkitSetPresentationMode("inline");
+    } else {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+        screen.orientation?.lock?.("portrait").catch((err) => {
+          console.warn("Failed to lock orientation to portrait:", err);
+        });
+      }
     }
   }
 };
+
+const exitFullScreen = () => handleFullScreenChange(false);
 
 const handleWrapperMouseEnter = () => {
   showPlayerController.value = true;
@@ -613,6 +614,14 @@ watch(danmuList, () => {
   }
 });
 
+watch(isTyping, () => {
+  if (!isTyping.value || !videoRef.value || !isAppleDevice) return;
+  // keep inline presentationMode for ios
+  if (videoRef.value.webkitSetPresentationMode) {
+    videoRef.value.webkitSetPresentationMode("inline");
+  }
+});
+
 const mediaQuery = window.matchMedia("(orientation: landscape)");
 
 const handleOrientationChange = (e) => {
@@ -631,6 +640,16 @@ const handleOrientationChange = (e) => {
   canvasRef.value.height = videoRef.value.clientHeight;
 };
 
+const handleVideoPresentationChange = () => {
+  const mode = videoRef.value.webkitPresentationMode;
+  if (mode === "inline") {
+    changePlayerConfig("isFullScreen", false);
+    changePlayerConfig("isPause", true);
+  } else {
+    changePlayerConfig("isFullScreen", true);
+  }
+};
+
 onActivated(() => {
   // Promise.all([loadPlayer(), loadDanmu()]).then(() => {
   //   loadPlayerConfig();
@@ -640,6 +659,9 @@ onActivated(() => {
   handleOrientationChange(mediaQuery);
   // player.value.play();
   isActive.value = true;
+  if (videoRef.value) {
+    videoRef.value.addEventListener("webkitpresentationmodechanged", handleVideoPresentationChange);
+  }
 });
 
 onBeforeUnmount(() => {
@@ -658,6 +680,9 @@ onDeactivated(() => {
   if (canvasRef.value) {
     const ctx = canvasRef.value.getContext("2d");
     ctx.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height);
+  }
+  if (videoRef.value) {
+    videoRef.value.removeEventListener("webkitpresentationmodechanged", handleVideoPresentationChange);
   }
 });
 
@@ -693,6 +718,13 @@ const backToPrev = () => {
     router.push(`/livestream`);
   }
 };
+
+const handleShareClick = () => {
+  handleFullScreenChange(false);
+  emit("share-click");
+};
+
+defineExpose({ exitFullScreen });
 </script>
 
 <style lang="scss" scoped>
