@@ -58,7 +58,7 @@
               rounded
               outline
               color="primary"
-              label="发弹幕"
+              label="发送"
             ></q-btn>
           </template>
         </q-input>

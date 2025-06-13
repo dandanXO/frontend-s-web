@@ -3,14 +3,10 @@
     <div class="row justify-center q-py-md">
       <CategoryToggle
         v-model="tab"
-        :categories="[
-          { value: 'popular', slot: 'popular' },
-          { value: 'basketball', slot: 'basketball' },
-          { value: 'football', slot: 'football' },
-          { value: 'esport', slot: 'esport' }
-        ]"
+        :categories="availableCategories"
       />
     </div>
+
     <div class="selection-container">
       <TransitionGroup name="list">
         <button
@@ -217,6 +213,29 @@ const updateCountdowns = () => {
 };
 
 watch(livestreamList, updateCountdowns);
+
+const availableCategories = computed(() => {
+  const hasPopular = livestreamList.value.some(item => item.isPopular);
+  const hasFootball = livestreamList.value.some(item => [1].includes(item.sportId));
+  const hasBasketball = livestreamList.value.some(item => [2].includes(item.sportId));
+  const hasEsport = livestreamList.value.some(item => [3, 4, 5, 6].includes(item.sportId));
+
+  const categories = [];
+
+  if (hasPopular) categories.push({ value: 'popular', slot: 'popular' });
+  if (hasFootball) categories.push({ value: 'football', slot: 'football' });
+  if (hasBasketball) categories.push({ value: 'basketball', slot: 'basketball' });
+  if (hasEsport) categories.push({ value: 'esport', slot: 'esport' });
+
+  return categories;
+});
+
+watch(availableCategories, (newCategories) => {
+  const availableTabValues = newCategories.map(c => c.value);
+  if (!availableTabValues.includes(tab.value)) {
+    tab.value = availableTabValues[0] || '';
+  }
+});
 
 onActivated(() => {
   updateCountdowns();
