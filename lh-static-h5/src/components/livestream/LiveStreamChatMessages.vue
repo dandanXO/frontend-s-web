@@ -100,11 +100,14 @@ const isMessageSendable = computed(() => messageToSend.value.trim().length > 0);
 const inputConfig = computed(() => {
   let disabled = false;
   let placeholder = "请输入聊天内容";
-  if ((!store.token && !extensionState.value) || !vipStatus.value) {
+  let vipLevel = store.vip.split("VIP")[1];
+  if ((!store.token && !extensionState.value) || !vipStatus.value || vipLevel < 3) {
     disabled = true;
     if (!vipStatus.value) placeholder = "VIP特权不足，无法发言";
+    if (vipLevel < 3) placeholder = "VIP3等级或以上即可发言"
     // if (!store.token) placeholder = "请登录后发言";
   }
+
 
   return {
     disabled,
