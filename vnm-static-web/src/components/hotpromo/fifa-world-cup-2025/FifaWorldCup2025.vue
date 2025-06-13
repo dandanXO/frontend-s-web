@@ -1,15 +1,15 @@
 <template>
-  <div class="weekly-deposit-bonus">
+  <div class="fifa-world-cup-2025">
     <div class="claim-banner">
       <div class="claim-btn" @click="claimBonus">
         {{ $t("hotPromo.fifaWorldCup2025.claimNow") }}
       </div>
     </div>
     <div class="section-bg">
-      <div class="title-wrapper">
-        <img src="@/assets/images/promotion/hotpromo/weekly-deposit-bonus/title-img-left.png" />
+      <div class="title-wrapper mb-md">
+        <img src="@/assets/images/promotion/hotpromo/fifa-world-cup-2025/title-img-left.png" />
         <span>{{ $t("hotPromo.fifaWorldCup2025.promotionDetails") }}</span>
-        <img src="@/assets/images/promotion/hotpromo/weekly-deposit-bonus/title-img-right.png" />
+        <img src="@/assets/images/promotion/hotpromo/fifa-world-cup-2025/title-img-right.png" />
       </div>
       <div class="little-title">
         <div class="right bold">{{ $t("hotPromo.fifaWorldCup2025.promotionPeriod") }}</div>
@@ -29,7 +29,7 @@
         <div class="right bold">{{ $t("hotPromo.fifaWorldCup2025.promotionDetailsText") }}</div>
       </div>
       <div class="tasks-container">
-        <div>{{ $t("hotPromo.fifaWorldCup2025.dailyTask") }}:</div>
+        <h3>{{ $t("hotPromo.fifaWorldCup2025.dailyTask") }}:</h3>
         <ol class="task-list">
           <li>{{ $t("hotPromo.fifaWorldCup2025.dailyTaskPt1") }}</li>
           <li>{{ $t("hotPromo.fifaWorldCup2025.dailyTaskPt2") }}</li>
@@ -39,35 +39,10 @@
     </div>
     <div class="section-bg">
       <div class="title-wrapper">
-        <img src="@/assets/images/promotion/hotpromo/weekly-deposit-bonus/title-img-left.png" />
+        <img src="@/assets/images/promotion/hotpromo/fifa-world-cup-2025/title-img-left.png" />
         <span>{{ $t("hotPromo.fifaWorldCup2025.termsAndConditions") }}</span>
-        <img src="@/assets/images/promotion/hotpromo/weekly-deposit-bonus/title-img-right.png" />
+        <img src="@/assets/images/promotion/hotpromo/fifa-world-cup-2025/title-img-right.png" />
       </div>
-      <br />
-
-      <!-- <h3>{{ $t("hotPromo.weeklyDepositBonus.titlerule") }}</h3>
-      <div class="content">
-        <div class="item">
-          <div class="item-num">1</div>
-          <div class="item-desc">
-            <div class="hint">{{ $t("hotPromo.weeklyDepositBonus.rule1") }}</div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="item-num">2</div>
-          <div class="item-desc">
-            <div class="hint">{{ $t("hotPromo.weeklyDepositBonus.rule2") }}</div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="item-num">3</div>
-          <div class="item-desc">
-            <div class="hint">{{ $t("hotPromo.weeklyDepositBonus.rule3") }}</div>
-          </div>
-        </div>
-      </div> -->
 
       <h3>{{ $t("hotPromo.fifaWorldCup2025.titlecondition") }}</h3>
       <div class="content">
@@ -126,7 +101,7 @@
         </div> -->
   </div>
 
-  <el-dialog v-model="showPrizePopup" class="prizePopupContainer-weekly" @click="showPrizePopup = false">
+  <el-dialog v-model="showPrizePopup" class="prizePopupContainer-fifa" @click="showPrizePopup = false">
     <div class="wrapper">
       <!-- <div class="popup-header bold-text golden-text">恭喜!</div> -->
       <div class="content">
@@ -168,6 +143,7 @@ const initPage = () => {
   });
 };
 const claimBonus = () => {
+  showPrizePopup.value = true;
   // if (!store.token) {
   //   return;
   // }
@@ -188,14 +164,14 @@ onMounted(() => {
 });
 </script>
 <style lang="scss">
-.weekly-deposit-bonus {
+.fifa-world-cup-2025 {
   h3 {
     margin-bottom: 8px !important;
   }
   .claim-banner {
     max-width: 1200px;
     margin: 0 auto 10px;
-    background: url(../../../assets/images/promotion/hotpromo/weekly-deposit-bonus/claim-banner.png) no-repeat center
+    background: url(../../../assets/images/promotion/hotpromo/fifa-world-cup-2025/claim-banner.png) no-repeat center
       center;
     border-radius: 20px;
     background-size: cover;
@@ -205,13 +181,13 @@ onMounted(() => {
       margin-left: auto;
       height: 100px;
       padding-bottom: 10px;
-      background: url(../../../assets/images/promotion/hotpromo/weekly-deposit-bonus/claim-btn.png) no-repeat center
+      background: url(../../../assets/images/promotion/hotpromo/fifa-world-cup-2025/claim-btn.png) no-repeat center
         center;
       background-size: contain;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #b6091b;
+      color: #fff500;
       cursor: pointer;
 
       text-shadow: 0px 2.84px 2.84px #ffffff99;
@@ -270,7 +246,7 @@ onMounted(() => {
     gap: 10px;
     margin-bottom: 10px;
     .left {
-      background-image: url("../../../assets/images/promotion/hotpromo/weekly-deposit-bonus/info-little-title-bg.png");
+      background-image: url("../../../assets/images/promotion/hotpromo/fifa-world-cup-2025/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       width: 120px;
@@ -383,29 +359,31 @@ onMounted(() => {
     font-size: 20px;
     font-weight: 400;
     line-height: 28px;
+    h3 {
+      font-size: 1.17rem;
+    }
     .task-list {
       margin: 10px 0;
     }
   }
 }
 
-.prizePopupContainer-weekly {
-  width: 480px;
-  height: 620px;
-  background: url("../../../assets/images/promotion/hotpromo/weekly-deposit-bonus/popupp.png");
-  background-size: 100% 100%;
+.prizePopupContainer-fifa {
+  background: url("../../../assets/images/promotion/hotpromo/fifa-world-cup-2025/popupp.png");
   box-shadow: none;
+  background-size: contain !important;
+  width: 520px;
+  aspect-ratio: 520 / 480;
+  background-repeat: no-repeat;
 
   .wrapper {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    height: 585px;
     gap: 55px;
     .content {
       position: absolute;
-      top: 60%;
-      width: 200px;
+      top: 66%;
       text-align: center;
       margin: 0 auto;
       left: 0;
@@ -418,7 +396,7 @@ onMounted(() => {
       font-weight: 700;
       letter-spacing: 1px;
       text-align: center;
-      color: #ffffff;
+      color: #fff500;
     }
 
     .golden-text {
@@ -439,5 +417,9 @@ onMounted(() => {
       align-items: center;
     }
   }
+}
+
+.mb-md {
+  margin-bottom: 1.1rem;
 }
 </style>
