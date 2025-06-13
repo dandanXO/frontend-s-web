@@ -8,6 +8,7 @@
       <LivestreamCategories v-model="activeTab" :categories="availableCategories" />
     </div>
     <div class="livestream-inner-wrapper">
+      <!-- <template v-if="filteredLivestreamList.length === 0"><div>目前没有直播</div></template> -->
       <LivestreamList
         v-model="currentLiveId"
         class="livestream-list"
@@ -428,16 +429,16 @@ const getLivestreamType = (livestream) => {
 
 const availableCategories = computed(() => {
   const hasPopular = list.value.some((item) => item.isPopular);
-  const hasFootball = list.value.some((item) => [1].includes(item.sportId));
-  const hasBasketball = list.value.some((item) => [2].includes(item.sportId));
-  const hasEsport = list.value.some((item) => [3, 4, 5, 6].includes(item.sportId));
+  // const hasFootball = list.value.some((item) => item.sportId === 1);
+  // const hasBasketball = list.value.some((item) => item.sportId === 2);
+  // const hasEsports = list.value.some((item) => [3, 4, 5, 6].includes(item.sportId));
 
   const categories = [];
 
   if (hasPopular) categories.push({ value: "popular", slot: "popular" });
-  if (hasFootball) categories.push({ value: "football", slot: "football" });
-  if (hasBasketball) categories.push({ value: "basketball", slot: "basketball" });
-  if (hasEsport) categories.push({ value: "esport", slot: "esport" });
+  categories.push({ value: "football", slot: "football" });
+  categories.push({ value: "basketball", slot: "basketball" });
+  categories.push({ value: "esports", slot: "esports" });
 
   return categories;
 });

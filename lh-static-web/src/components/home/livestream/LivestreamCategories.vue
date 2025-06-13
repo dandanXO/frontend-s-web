@@ -29,14 +29,14 @@ const iconMap = {
   popular: require("../../../assets/home/livestream/icon-popular.svg"),
   football: require("../../../assets/home/livestream/icon-football.svg"),
   basketball: require("../../../assets/home/livestream/icon-basketball.svg"),
-  esport: require("../../../assets/home/livestream/icon-esports.svg")
+  esports: require("../../../assets/home/livestream/icon-esports.svg")
 };
 
 const labelMap = {
   popular: "热门",
   football: "足球",
   basketball: "篮球",
-  esport: "电竞"
+  esports: "电竞"
 };
 
 const getIcon = (value) => {
