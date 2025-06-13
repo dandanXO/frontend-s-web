@@ -368,6 +368,10 @@ onMounted(() => {
         :deep(.q-field__control .q-field__append) {
           margin-top: auto;
         }
+
+        :deep(.q-field__native):focus {
+          animation: blink-input-opacity-to-prevent-scrolling-when-focus 0.1s;
+        }
       }
       .livestream-chat-input-btn {
         background-color: transparent;
@@ -457,6 +461,15 @@ onMounted(() => {
     background-image: url(../../assets/images/livestream/button-active.png) !important;
     background-size: 100% 100% !important;
     background-position: center center;
+  }
+}
+
+@keyframes blink-input-opacity-to-prevent-scrolling-when-focus {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 </style>
