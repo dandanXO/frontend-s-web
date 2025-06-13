@@ -436,9 +436,9 @@ const availableCategories = computed(() => {
   const categories = [];
 
   if (hasPopular) categories.push({ value: "popular", slot: "popular" });
+  categories.push({ value: "esports", slot: "esports" });
   categories.push({ value: "football", slot: "football" });
   categories.push({ value: "basketball", slot: "basketball" });
-  categories.push({ value: "esports", slot: "esports" });
 
   return categories;
 });

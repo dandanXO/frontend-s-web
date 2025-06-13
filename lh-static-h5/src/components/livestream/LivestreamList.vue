@@ -1,10 +1,7 @@
 <template>
   <div class="livestream-list-wrapper">
     <div class="row justify-center q-py-md">
-      <CategoryToggle
-        v-model="tab"
-        :categories="availableCategories"
-      />
+      <CategoryToggle v-model="tab" :categories="availableCategories" />
     </div>
 
     <div class="selection-container">
@@ -149,7 +146,7 @@ const imgURLLivePreview = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).va
 const previewImgLoadFailedSet = ref(new Set());
 const countdowns = ref({});
 const timer = ref(null);
-const tab = ref("popular");
+const tab = ref("");
 
 const filteredLivestreamList = computed(() => {
   switch (tab.value) {
@@ -215,27 +212,31 @@ const updateCountdowns = () => {
 watch(livestreamList, updateCountdowns);
 
 const availableCategories = computed(() => {
-  const hasPopular = livestreamList.value.some(item => item.isPopular);
-  const hasFootball = livestreamList.value.some(item => [1].includes(item.sportId));
-  const hasBasketball = livestreamList.value.some(item => [2].includes(item.sportId));
-  const hasEsport = livestreamList.value.some(item => [3, 4, 5, 6].includes(item.sportId));
+  const hasPopular = livestreamList.value.some((item) => item.isPopular);
+  const hasFootball = livestreamList.value.some((item) => [1].includes(item.sportId));
+  const hasBasketball = livestreamList.value.some((item) => [2].includes(item.sportId));
+  const hasEsport = livestreamList.value.some((item) => [3, 4, 5, 6].includes(item.sportId));
 
   const categories = [];
 
-  if (hasPopular) categories.push({ value: 'popular', slot: 'popular' });
-  categories.push({ value: 'football', slot: 'football' });
-  categories.push({ value: 'basketball', slot: 'basketball' });
-  categories.push({ value: 'esport', slot: 'esport' });
+  if (hasPopular) categories.push({ value: "popular", slot: "popular" });
+  categories.push({ value: "esport", slot: "esport" });
+  categories.push({ value: "football", slot: "football" });
+  categories.push({ value: "basketball", slot: "basketball" });
 
   return categories;
 });
 
-watch(availableCategories, (newCategories) => {
-  const availableTabValues = newCategories.map(c => c.value);
-  if (!availableTabValues.includes(tab.value)) {
-    tab.value = availableTabValues[0] || '';
-  }
-});
+watch(
+  availableCategories,
+  (newCategories) => {
+    const availableTabValues = newCategories.map((c) => c.value);
+    if (!availableTabValues.includes(tab.value)) {
+      tab.value = availableTabValues[0] || ""; // Fallback to first available tab or empty
+    }
+  },
+  { immediate: true }
+);
 
 onActivated(() => {
   updateCountdowns();

@@ -34,9 +34,9 @@ const iconMap = {
 
 const labelMap = {
   popular: "热门",
+  esports: "电竞",
   football: "足球",
-  basketball: "篮球",
-  esports: "电竞"
+  basketball: "篮球"
 };
 
 const getIcon = (value) => {
