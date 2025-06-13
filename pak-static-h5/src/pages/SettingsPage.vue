@@ -335,8 +335,9 @@ const showTransferModal = ref(false);
 
 const confirmSignOutDialog = ref(false);
 
+const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
 const promoPercentage = computed(() => {
-  if (store.hasUnusedCoupon && isAndroid()) return "38";
+  if (!alreadyDeposited && store.hasUnusedCoupon && isAndroid()) return "38";
   if (store.canClaimSecondPrivilege) return "100";
   if (store.canClaimThirdPrivilege) return "150";
   return ""; // Optional: for other cases if needed
