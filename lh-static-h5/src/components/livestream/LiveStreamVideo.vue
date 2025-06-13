@@ -625,6 +625,7 @@ watch(isTyping, () => {
 const mediaQuery = window.matchMedia("(orientation: landscape)");
 
 const handleOrientationChange = (e) => {
+  if (isTyping.value) return;
   if (e.matches) {
     // Landscape mode
     if (!playerConfig.value.isFullScreen) {
