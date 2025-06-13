@@ -1,41 +1,51 @@
 <!-- /components/LivestreamCategories.vue -->
 <template>
   <el-tabs v-model="model" class="livestream-tabs" :class="isDark && 'dark'">
-    <el-tab-pane name="popular">
+    <el-tab-pane v-for="category in categories" :key="category.value" :name="category.value">
       <template #label>
-        <img src="../../../assets/home/livestream/icon-popular.svg" />
-        热门
-      </template>
-    </el-tab-pane>
-    <el-tab-pane name="football">
-      <template #label>
-        <img src="../../../assets/home/livestream/icon-football.svg" />
-        足球
-      </template>
-    </el-tab-pane>
-    <el-tab-pane name="basketball">
-      <template #label>
-        <img src="../../../assets/home/livestream/icon-basketball.svg" />
-        篮球
-      </template>
-    </el-tab-pane>
-    <el-tab-pane name="esports">
-      <template #label>
-        <img src="../../../assets/home/livestream/icon-esports.svg" />
-        电竞
+        <img :src="getIcon(category.value)" />
+        {{ getLabel(category.value) }}
       </template>
     </el-tab-pane>
   </el-tabs>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useDark } from "@vueuse/core";
 
-const emit = defineEmits(["change"]);
+const emit = defineEmits(["change", "categories"]);
 const model = defineModel();
 
+const props = defineProps({
+  categories: {
+    type: Array,
+    default: () => []
+  }
+});
+
 const isDark = useDark();
+const iconMap = {
+  popular: require("../../../assets/home/livestream/icon-popular.svg"),
+  football: require("../../../assets/home/livestream/icon-football.svg"),
+  basketball: require("../../../assets/home/livestream/icon-basketball.svg"),
+  esport: require("../../../assets/home/livestream/icon-esports.svg")
+};
+
+const labelMap = {
+  popular: "热门",
+  football: "足球",
+  basketball: "篮球",
+  esport: "电竞"
+};
+
+const getIcon = (value) => {
+  return iconMap[value] || "";
+};
+
+const getLabel = (value) => {
+  return labelMap[value] || value;
+};
 </script>
 
 <style lang="scss">

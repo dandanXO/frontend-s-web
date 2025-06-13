@@ -5,7 +5,7 @@
       style="display: flex; margin: 38px auto 50px; width: 100%"
     />
     <div class="livestream-tabs">
-      <LivestreamCategories v-model="activeTab" />
+      <LivestreamCategories v-model="activeTab" :categories="availableCategories" />
     </div>
     <div class="livestream-inner-wrapper">
       <LivestreamList
@@ -425,6 +425,29 @@ const getLivestreamType = (livestream) => {
       return "popular";
   }
 };
+
+const availableCategories = computed(() => {
+  const hasPopular = list.value.some((item) => item.isPopular);
+  const hasFootball = list.value.some((item) => [1].includes(item.sportId));
+  const hasBasketball = list.value.some((item) => [2].includes(item.sportId));
+  const hasEsport = list.value.some((item) => [3, 4, 5, 6].includes(item.sportId));
+
+  const categories = [];
+
+  if (hasPopular) categories.push({ value: "popular", slot: "popular" });
+  if (hasFootball) categories.push({ value: "football", slot: "football" });
+  if (hasBasketball) categories.push({ value: "basketball", slot: "basketball" });
+  if (hasEsport) categories.push({ value: "esport", slot: "esport" });
+
+  return categories;
+});
+
+watch(availableCategories, (newCategories) => {
+  const availableTabValues = newCategories.map((c) => c.value);
+  if (!availableTabValues.includes(activeTab.value)) {
+    activeTab.value = availableTabValues[0] || "";
+  }
+});
 
 watch(currentLiveId, (newVal, oldVal) => {
   if (newVal === oldVal) return;
