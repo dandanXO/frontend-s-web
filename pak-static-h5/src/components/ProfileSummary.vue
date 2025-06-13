@@ -231,6 +231,7 @@ const store = userStore();
 const ui = useUI();
 const i18nStoreLanguage = i18nStore();
 const promoPercentage = computed(() => {
+  if (store.hasUnusedCoupon && isAndroid()) return "38";
   if (store.canClaimSecondPrivilege) return "100";
   if (store.canClaimThirdPrivilege) return "150";
   return ""; // Optional: for other cases if needed

@@ -1557,7 +1557,7 @@
     @closeGuide="closePlayerGuide"
   />
 
-  <template v-if="isAndroid()">
+  <!-- <template v-if="isAndroid()">
     <q-dialog class="isCentreDialog" v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <div class="luckyspin-wrapper">
         <div class="luckyspin-header">
@@ -1609,7 +1609,7 @@
       (GCB).
     </div>
     <div class="copyright-txt">© 2024 b9.game ALL RIGHTS RESERVED</div>
-  </div>
+  </div> -->
 
   <CongratsReuseableModal
     :isShowDialog="isShowCodeBonusModal"
@@ -1621,21 +1621,6 @@
     @handleBtnClose="isShowCodeBonusModal = false"
   />
 
-  <q-dialog class="isCentreDialog" v-model="isShowPrizeModal">
-    <div class="congrats-container" :class="{ ur: languageVal === 'ur' }">
-      <q-btn icon="close" round dense v-close-popup class="congrats-close" />
-      <!-- <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div> -->
-      <!-- <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div> -->
-      <!-- <div class="congrats-title">You get a coupon，Recharge $300 Get</div> -->
-      <div class="congrats-highlight">Rs28</div>
-
-      <div class="congrats-button">
-        <q-btn no-caps unelevated class="recharge-btn" :loading="false" @click="router.push('/deposit?from=/home')">
-          {{ $t("btn.recharge") }}
-        </q-btn>
-      </div>
-    </div>
-  </q-dialog>
 
   <q-dialog class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
     <MoneyRainModal @closeModal="closeDialog">
@@ -1670,23 +1655,23 @@
   >
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
     <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">
-      <template #controller>
-        <PopupController v-model="popupPromo" :hasSpin="true" />
+      <template #controller v-if="isAndroid()">
+        <PopupController v-model="popupPromo" :hasSpin="true" :hasNewPlayer="true" />
       </template>
     </SpinLuckyWheelPromoHomePopup>
   </q-dialog>
   
   <q-dialog
-    v-if="popupPromo === 'newplayer-spin-wheel'"
+    v-if="popupPromo === 'newplayer-spin-wheel' && isAndroid()"
     full-width
     :model-value="isShownSpinLuckyWheel"
     class="isCentreDialog spin-lucky-wheel-dialog"
     persistent
   >
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
-    <NewPlayerPromoHomePopup :hasUnusedCoupons="isShowPrizeModal" @close-dialog="closeDialog" ref="newPlayerPromoHomePopupRef">
+    <NewPlayerPromoHomePopup :hasUnusedCoupon="isShowPrizeModal" @close-dialog="closeDialog" ref="newPlayerPromoHomePopupRef">
       <template #controller>
-        <PopupController v-model="popupPromo" :hasSpin="true" />
+        <PopupController v-model="popupPromo" :hasSpin="true" :hasNewPlayer="true" />
       </template>
     </NewPlayerPromoHomePopup>
   </q-dialog>
@@ -4331,6 +4316,7 @@ watch(() => isAdditionalWithdrawSteps.value, checkWithdrawStep, { immediate: fal
 const afterActivated = useCustomerTrigger(() => {
   checkShowImgTop();
   checkHbPromo();
+  showSpinWheel();
 });
 
 const downloadAppRef = ref();
@@ -4504,11 +4490,9 @@ const showSpinWheel = () => {
       if (res.code == 0) {
         if (res.data.hasUnusedCoupon === "YES") {
           isShowPrizeModal.value = true;
-        } else if (res.data.showRoulette === "YES") {
-          // isLuckyDrawModal.value = true;
-          if (!promoStore.isShownSpinLuckyWheel) {
-            popupPromo.value = "newplayer-spin-wheel";
-          }
+          store.hasUnusedCoupon = true;
+        } else {
+          store.hasUnusedCoupon = false;
         }
       }
     })
@@ -4523,9 +4507,12 @@ const showCongratsModal = () => {
       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
         // isCongratsModal.value = true;
         isShowPrizeModal.value = true;
+          store.hasUnusedCoupon = true;
         if (!promoStore.isShownSpinLuckyWheel) {
           popupPromo.value = "newplayer-spin-wheel";
         }
+      } else {
+          store.hasUnusedCoupon = false;
       }
     }
   });

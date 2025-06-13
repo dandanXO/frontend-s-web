@@ -306,6 +306,8 @@ export default {
     check: "چیک کریں"
   },
   notify: {
+    cancelPayment: "ادائیگی منسوخ کریں",
+    cancelPaymentWillLose: "ادائیگی منسوخ کرنے پر نقصان ہوگا",
     loggingIn: "لاگ ان ہو رہا ہے",
     loggingOut: "لاگ آؤٹ ہو رہا ہے",
     phoneVerifySuccessful: "فون کامیابی سے تصدیق ہو گئی",
@@ -414,6 +416,7 @@ export default {
     useFtdBonus: "پہلی جمع بونس",
     use2ndBonus: "دوسری جمع بونس",
     use3rdBonus: "تیسری جمع پر بونس",
+    useNewPlayerBonus: "نئے کھلاڑی کا بونس استعمال کریں",
     unlimited: "لامحدود",
     wagerRequirement: "واجر کی شرط (نکالنے کے لیے): آپ کی جمع رقم کا 10 گنا",
     wagerRequirementEg: "مثال کے طور پر: 100 روپے جمع کروائیں، 1,000 روپے واجرت درکار ہوگی",
@@ -969,7 +972,6 @@ export default {
       username: "صارف نام",
       betVolume: "شرط کی حجم",
       rank: "درجہ",
-      dailyOrWeekly: "روزانہ/ہفتہ وار",
       rankingBonusRatio: "درجہ بندی انعام کا تناسب",
       myBets: "میری شرطیں",
       myReward: "میرے انعامات",

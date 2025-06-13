@@ -244,6 +244,7 @@ import { useUI } from "stores/ui";
 import { Platform } from "quasar";
 import { t } from "src/boot/lang";
 import { i18nStore } from "src/router/language";
+import { isAndroid } from "boot/utils";
 
 const selfTgurl = ref("");
 const fallbackCopyTextToClipboard = (text) => {
@@ -335,6 +336,7 @@ const showTransferModal = ref(false);
 const confirmSignOutDialog = ref(false);
 
 const promoPercentage = computed(() => {
+  if (store.hasUnusedCoupon && isAndroid()) return "38";
   if (store.canClaimSecondPrivilege) return "100";
   if (store.canClaimThirdPrivilege) return "150";
   return ""; // Optional: for other cases if needed

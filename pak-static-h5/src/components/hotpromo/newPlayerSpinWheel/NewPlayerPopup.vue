@@ -5,7 +5,7 @@
     <slot name="controller" />
   </div>
   <img class="myhand hover-bounce" src="./img/myhand.png" style="position: absolute;">
-  <NewPlayerWheel :isHomePopup="true" :hasUnusedCoupons="props.hasUnusedCoupons"  />
+  <NewPlayerWheel :isHomePopup="true" :hasUnusedCoupon="props.hasUnusedCoupon"  />
   </div>
 </template>
 <script setup>
@@ -16,7 +16,7 @@ import { defineEmits } from "vue";
 import NewPlayerWheel from "./NewPlayerWheel.vue";
 import moment from "moment";
 const props = defineProps([
-  "hasUnusedCoupons"
+  "hasUnusedCoupon"
 ])
 const emits = defineEmits(["closeDialog"]);
 const store = userStore();

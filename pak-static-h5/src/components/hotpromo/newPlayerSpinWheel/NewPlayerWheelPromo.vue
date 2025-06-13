@@ -1,12 +1,12 @@
 <template>
   <img src="./img/prizewheel-title.png">
-  <NewPlayerWheel :hasUnusedCoupons="props.hasUnusedCoupons" />
+  <NewPlayerWheel :hasUnusedCoupon="props.hasUnusedCoupon" />
 </template>
 
 <script setup>
 import NewPlayerWheel from "./NewPlayerWheel.vue";
 const props = defineProps([
-  "hasUnusedCoupons"
+  "hasUnusedCoupon"
 ])
 </script>
 <style lang="scss" scoped>

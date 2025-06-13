@@ -202,7 +202,11 @@ const checkAppLogin = async () => {
     // } else {
     //   showNextModal();
     // }
-    showNextModal();
+    if (!combinedStatus.value.isAppLogin) {
+      modalType.value = "APP_LOGIN_H5";
+    } else {
+      showNextModal();
+    }
   } catch (e) {
     console.error(e);
     showNextModal();
