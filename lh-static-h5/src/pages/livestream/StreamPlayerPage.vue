@@ -6,7 +6,9 @@
       :extensionState
       :extensionToken
       :is-typing
+      :is-landscape
       @share-click="handleShareClick"
+      @landscape-change="handleLandscapeChange"
     />
 
     <div class="transfer-mid-div">
@@ -61,6 +63,7 @@
       :extensionState
       :extensionToken
       :margin-top="chatMessageMarginTop"
+      :is-landscape
       @send-chat-message="handleSendChatMessage"
     />
   </div>
@@ -117,6 +120,7 @@ const livestreamSyncAbortController = ref(null);
 const isExpanded = ref(true);
 const showShareModal = ref(false);
 const roomMessageRef = ref(null);
+const isLandscape = ref(false);
 
 const { bottom: roomMessageBottom } = useElementBounding(roomMessageRef);
 
@@ -365,6 +369,10 @@ const handleSendChatMessage = (message) => {
         }
       }
     });
+};
+
+const handleLandscapeChange = (value) => {
+  isLandscape.value = value;
 };
 
 const getData = () => {

@@ -2,6 +2,7 @@
   <div
     ref="videoWrapperRef"
     class="livestream-video-wrapper"
+    :class="{ landscape: isLandscape }"
     @mouseenter="handleWrapperMouseEnter"
     @mouseleave="handleWrapperMouseLeave"
   >
@@ -31,6 +32,7 @@
         muted
         @progress="handlePlayerProgress"
         @canplay="handlePlayerCanPlay"
+        @webkitendfullscreen="handleEndFullScreen"
       />
 
       <canvas v-show="showLatestScreenCanvas" ref="canvasRef" class="livestream-video-latest-screen" />
@@ -232,10 +234,18 @@ const QUALITY_ALIAS = {
 
 const notify = useNotify();
 
-const props = defineProps(["danmuList", "channels", "livestreamData", "extensionState", "extensionToken", "isTyping"]);
-const { danmuList, channels, livestreamData, extensionState, extensionToken, isTyping } = toRefs(props);
+const props = defineProps([
+  "danmuList",
+  "channels",
+  "livestreamData",
+  "extensionState",
+  "extensionToken",
+  "isTyping",
+  "isLandscape"
+]);
+const { danmuList, channels, livestreamData, extensionState, extensionToken, isTyping, isLandscape } = toRefs(props);
 
-const emit = defineEmits(["share-click"]);
+const emit = defineEmits(["share-click", "landscape-change"]);
 
 const danmuJs = ref(null);
 
@@ -259,6 +269,7 @@ const isErrorCaptured = ref(false);
 const errorMsg = ref("");
 const isActive = ref(false);
 const showUnmuteMask = ref(true);
+const orientationTimer = ref(null);
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
@@ -452,6 +463,7 @@ const isAppleDevice =
 const handleFullScreenChange = (value) => {
   changePlayerConfig("isFullScreen", value);
   const video = videoRef.value;
+  emit("landscape-change", value);
   if (value) {
     if (isAppleDevice) {
       if (video && video.webkitSetPresentationMode) {
@@ -649,6 +661,17 @@ const handleVideoPresentationChange = () => {
   }
 };
 
+const handleEndFullScreen = () => {
+  if (orientationTimer.value) {
+    clearInterval(orientationTimer.value);
+  }
+  const checkOrientationManually = () => {
+    const _isLandscape = window.matchMedia("(orientation: landscape)").matches;
+    emit("landscape-change", _isLandscape);
+  };
+  orientationTimer.value = setInterval(checkOrientationManually, 300);
+};
+
 onActivated(() => {
   // Promise.all([loadPlayer(), loadDanmu()]).then(() => {
   //   loadPlayerConfig();
@@ -666,6 +689,9 @@ onActivated(() => {
 onBeforeUnmount(() => {
   mediaQuery.removeEventListener("change", handleOrientationChange);
   player.value?.destroy();
+  if (orientationTimer.value) {
+    clearInterval(orientationTimer.value);
+  }
 });
 
 onDeactivated(() => {
@@ -943,8 +969,8 @@ const handleShareClick = () => {
 </style>
 
 <style lang="scss" scoped>
-@media (orientation: landscape) {
-  .livestream-video-wrapper {
+.landscape {
+  &.livestream-video-wrapper {
     width: 55%;
     height: calc(100%);
     // opacity: 0;

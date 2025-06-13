@@ -1,5 +1,12 @@
 <template>
-  <div class="livestream-chat-wrapper" :class="isDark ? 'dark' : 'white'">
+  <div
+    class="livestream-chat-wrapper"
+    :class="{
+      dark: isDark,
+      white: !isDark,
+      landscape: isLandscape
+    }"
+  >
     <div ref="chatListRef" class="livestream-chat-list" :style="{ marginTop: `${marginTop}px` }">
       <div v-for="(message, index) in messages" :key="index" class="livestream-chat-item">
         <img
@@ -83,8 +90,16 @@ const store = userStore();
 const $q = useQuasar();
 const route = useRoute();
 const router = useRouter();
-const props = defineProps(["messages", "vipStatus", "livestreamData", "extensionState", "extensionToken", "marginTop"]);
-const { messages, vipStatus, livestreamData, extensionState, extensionToken } = toRefs(props);
+const props = defineProps([
+  "messages",
+  "vipStatus",
+  "livestreamData",
+  "extensionState",
+  "extensionToken",
+  "marginTop",
+  "isLandscape"
+]);
+const { messages, vipStatus, livestreamData, extensionState, extensionToken, isLandscape } = toRefs(props);
 const emit = defineEmits(["sendChatMessage"]);
 const model = defineModel();
 
@@ -107,7 +122,6 @@ const inputConfig = computed(() => {
     // if (vipLevel < 3) placeholder = "VIP3等级或以上即可发言"
     // if (!store.token) placeholder = "请登录后发言";
   }
-
 
   return {
     disabled,
@@ -242,7 +256,6 @@ onMounted(() => {
     padding: 16px;
     overflow: auto;
     height: 100dvh;
-    margin-top: calc(56.25vw + 27px + 68px + 16px);
     max-height: calc(100dvh - 56.25vw - 27px - 60px - 68px - 16px);
     // Firefox
     scrollbar-width: thin;
@@ -449,8 +462,8 @@ onMounted(() => {
 </style>
 
 <style lang="scss" scoped>
-@media (orientation: landscape) {
-  .livestream-chat-wrapper {
+.landscape {
+  &.livestream-chat-wrapper {
     width: 45%;
     height: 100%;
     margin-left: auto;
@@ -474,7 +487,7 @@ onMounted(() => {
     left: auto !important;
   }
 
-  .livestream-chat-wrapper.dark {
+  &.livestream-chat-wrapper.dark {
     .livestream-chat-list {
       background: #0f182e !important;
     }
