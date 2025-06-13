@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="section-bg">
-      <div class="title-wrapper mb-md">
+      <div class="title-wrapper">
         <img src="@/assets/images/promotion/hotpromo/fifa-world-cup-2025/title-img-left.png" />
         <span>{{ $t("hotPromo.fifaWorldCup2025.promotionDetails") }}</span>
         <img src="@/assets/images/promotion/hotpromo/fifa-world-cup-2025/title-img-right.png" />
@@ -44,7 +44,7 @@
         <img src="@/assets/images/promotion/hotpromo/fifa-world-cup-2025/title-img-right.png" />
       </div>
 
-      <h3>{{ $t("hotPromo.fifaWorldCup2025.titlecondition") }}</h3>
+      <!-- <h3>{{ $t("hotPromo.fifaWorldCup2025.titlecondition") }}</h3> -->
       <div class="content">
         <div class="item">
           <div class="item-num">1</div>
@@ -211,6 +211,7 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-bottom: 1.1rem;
     }
     border: 1px solid rgba(172, 212, 246, 1);
     background: #f2f8fe;
@@ -306,54 +307,6 @@ onMounted(() => {
       }
     }
   }
-  table {
-    width: 100%;
-    height: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    table-layout: fixed;
-    text-align: center;
-    vertical-align: middle;
-    th {
-      height: 56px;
-      font-size: 20px;
-      font-weight: 400;
-      line-height: 28px;
-      color: #fff;
-      background: linear-gradient(180deg, #70cbfb 26.32%, #4aa5ff 62.42%, #4aa5ff 93.74%, #6ec7fd 100%);
-
-      &:first-child {
-        border-top-left-radius: 12px;
-      }
-      &:last-child {
-        border-top-right-radius: 12px;
-      }
-    }
-    tr {
-      &:last-child {
-        td {
-          &:first-child {
-            // border-bottom-left-radius: 12px;
-          }
-        }
-      }
-      &:nth-child(2) {
-        td {
-          &:last-child {
-            // border-bottom-right-radius: 12px;
-          }
-        }
-      }
-    }
-    td {
-      border: 1px solid #acd4f6;
-      height: 56px;
-      font-size: 20px;
-      font-weight: 400;
-      line-height: 28px;
-      color: #000000;
-    }
-  }
 
   .tasks-container {
     font-size: 20px;
@@ -417,9 +370,5 @@ onMounted(() => {
       align-items: center;
     }
   }
-}
-
-.mb-md {
-  margin-bottom: 1.1rem;
 }
 </style>
