@@ -62,7 +62,7 @@
             :disabled="!isMessageSendable"
             @click="handleSendChatMessage"
           >
-            发弹幕
+            发送
           </button>
         </div>
       </el-form>
@@ -109,7 +109,7 @@ const inputConfig = computed(() => {
   let placeholder = "请输入聊天内容";
   if (!store.token || !vipStatus.value || !isLivestreamExisted.value) {
     disabled = true;
-    if (!vipStatus.value) placeholder = "VIP特权不足，无法发言";
+    if (!vipStatus.value) placeholder = "VIP3等级或以上即可发言";
     if (!store.token) placeholder = "请登录后发言";
     if (!isLivestreamExisted.value) placeholder = "直播尚未开始";
   }
@@ -271,6 +271,7 @@ onMounted(() => {
         :deep(.el-textarea__inner) {
           resize: none;
           box-shadow: none;
+          padding-right: 0;
         }
       }
 

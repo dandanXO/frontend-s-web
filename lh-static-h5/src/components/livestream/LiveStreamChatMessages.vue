@@ -118,7 +118,7 @@ const inputConfig = computed(() => {
   let vipLevel = store.vip.split("VIP")[1];
   if ((!store.token && !extensionState.value) || !vipStatus.value || vipLevel < 3) {
     disabled = true;
-    if (!vipStatus.value || vipLevel < 3) placeholder = "VIP特权不足，无法发言";
+    if (!vipStatus.value || vipLevel < 3) placeholder = "VIP3等级或以上即可发言";
     // if (vipLevel < 3) placeholder = "VIP3等级或以上即可发言"
     // if (!store.token) placeholder = "请登录后发言";
   }
