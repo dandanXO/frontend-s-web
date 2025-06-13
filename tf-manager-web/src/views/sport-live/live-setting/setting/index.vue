@@ -91,6 +91,31 @@
             </div>
           </div>
         </el-form-item>
+        <el-form-item
+          v-if="uiControl.dialogType === 'STREAMER_CREATE' || uiControl.dialogType === 'STREAMER_EDIT'"
+          :label="t('fields.scheduledAnnouncement')"
+          prop="scheduledAnnouncement"
+        >
+          <div style="position: relative;">
+            <el-input
+              v-model="form.scheduledAnnouncement"
+              type="textarea"
+              rows="3"
+              maxlength="200"
+            />
+            <el-button
+              icon="el-icon-smile"
+              size="mini"
+              style="margin-top: 5px;"
+              @click="showEmojiPickerForScheduled = !showEmojiPickerForScheduled"
+            >
+              Emoji
+            </el-button>
+            <div v-if="showEmojiPickerForScheduled" style="position: absolute; z-index: 1000;">
+              <EmojiPicker @select="insertEmojiToScheduled" />
+            </div>
+          </div>
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -266,11 +291,17 @@
         </template>
       </el-table-column>
       <el-table-column prop="roomMessage" :label="t('fields.roomMessage')" />
+      <el-table-column prop="scheduledAnnouncement" :label="t('fields.scheduledAnnouncement')" />
+      <el-table-column
+        prop="subscribeCount"
+        :label="t('fields.subscribeCount')"
+        width="100"
+      />
       <el-table-column
         fixed="right"
         :label="t('fields.operate')"
         align="center"
-        width="300"
+        width="180"
       >
         <template #default="scope">
           <el-button
@@ -343,6 +374,12 @@ const showEmojiPickerForMessage = ref(false)
 
 function insertEmojiToMessage(emoji) {
   form.roomMessage += emoji.i
+}
+
+const showEmojiPickerForScheduled = ref(false);
+
+function insertEmojiToScheduled(emoji) {
+  form.scheduledAnnouncement += emoji.i;
 }
 
 let player = null;
@@ -531,7 +568,7 @@ async function supplierCreate() {
 async function streamerSave() {
   formRef.value.validate(async (valid) => {
     if (!valid) return;
-    await createSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, roomMessage: form.roomMessage });
+    await createSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, roomMessage: form.roomMessage, scheduledAnnouncement: form.scheduledAnnouncement });
     ElMessage.success(t('message.updateSuccess'));
     uiControl.dialogVisible = false;
     await loadEvent();
@@ -541,7 +578,7 @@ async function streamerSave() {
 async function streamerUpdate() {
   formRef.value.validate(async (valid) => {
     if (!valid) return;
-    await updateSportLiveStream({ eventId: eventId.value, status: 0, id: form.id, roomMessage: form.roomMessage, roomTitle: form.roomTitle });
+    await updateSportLiveStream({ eventId: eventId.value, status: 0, id: form.id, roomMessage: form.roomMessage, roomTitle: form.roomTitle, scheduledAnnouncement: form.scheduledAnnouncement });
     ElMessage.success(t('message.updateSuccess'));
     uiControl.dialogVisible = false;
     await loadEvent();
@@ -581,6 +618,9 @@ function showDialog(type, row) {
     fetchStreamers();
     form.streamerId = row.streamerId;
     form.id = row.id;
+    form.scheduledAnnouncement = row.scheduledAnnouncement;
+    form.roomMessage = row.roomMessage;
+    form.roomTitle = row.roomTitle;
   }
 
   if (type === 'SUPPLIER_CREATE') {
@@ -600,6 +640,7 @@ const form = reactive({
   roomMessage: '',
   roomTitle: '',
   isCdnPush: false,
+  scheduledAnnouncement: '',
 });
 
 const streamerList = ref([]);
