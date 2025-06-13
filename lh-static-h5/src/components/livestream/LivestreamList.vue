@@ -227,16 +227,12 @@ const availableCategories = computed(() => {
   return categories;
 });
 
-watch(
-  availableCategories,
-  (newCategories) => {
-    const availableTabValues = newCategories.map((c) => c.value);
-    if (!availableTabValues.includes(tab.value)) {
-      tab.value = availableTabValues[0] || ""; // Fallback to first available tab or empty
-    }
-  },
-  { immediate: true }
-);
+watch(availableCategories, (newCategories) => {
+  const availableTabValues = newCategories.map((c) => c.value);
+  if (!availableTabValues.includes(tab.value)) {
+    tab.value = availableTabValues[0] || "";
+  }
+});
 
 onActivated(() => {
   updateCountdowns();
