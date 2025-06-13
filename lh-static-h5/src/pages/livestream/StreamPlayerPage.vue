@@ -121,6 +121,7 @@ const isExpanded = ref(true);
 const showShareModal = ref(false);
 const roomMessageRef = ref(null);
 const isLandscape = ref(false);
+const isTyping = ref(false);
 
 const { bottom: roomMessageBottom } = useElementBounding(roomMessageRef);
 
