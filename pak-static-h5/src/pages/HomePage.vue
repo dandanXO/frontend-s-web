@@ -1787,6 +1787,7 @@ onDeactivated(() => {
 });
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
+  store.getMemberInfo();
 });
 
 onUnmounted(() => {

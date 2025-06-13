@@ -79,6 +79,8 @@ import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 const i18nStoreLanguage = i18nStore();
 
+import { isAndroid } from "boot/utils";
+
 const langVal = computed(() => i18nStoreLanguage.languageVal);
 
 import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.vue";
@@ -264,7 +266,7 @@ const initSpinWheel = () => {
   eventapi.get("/new-user-roulette/init").then((res) => {
     if (res.code == 0) {
       remainingDraws.value = res.data.spinChance;
-      showHasUnusedPopup.value = res.data.hasUnusedCoupon === 'YES' ? true : false
+      showHasUnusedPopup.value = isAndroid() && res.data.hasUnusedCoupon === 'YES' ? true : false
     }
   });
 

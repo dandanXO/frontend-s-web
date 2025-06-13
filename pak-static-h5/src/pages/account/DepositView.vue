@@ -1146,6 +1146,10 @@ async function pDepo(deposit) {
               }
             }
           }
+          if (isAndroid()) {
+            const onAppFirstDeposit = newPlayerDepositBonusConfig.value?.hasBonus
+            localStorage.setItem('onAppFirstDeposit', JSON.stringify(onAppFirstDeposit));
+          }
         }
       } else {
         $q.notify({
@@ -1308,6 +1312,8 @@ const cancelLeave = () => {
     pendingNext.value = null
   }
 }
+const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
+
 
 onBeforeRouteLeave((to, from, next) => {
   console.log(from)
@@ -1318,8 +1324,7 @@ onBeforeRouteLeave((to, from, next) => {
   const hasSecond = secondTimeDepositBonusConfig.value?.hasBonus
   const hasThird = thirdTimeDepositBonusConfig.value?.hasBonus
   const hasNewPlayerReward = newPlayerDepositBonusConfig.value?.hasBonus
-
-  if ((hasNewPlayerReward && isAndroid()) || hasThird || hasSecond) {
+  if ((hasNewPlayerReward && isAndroid() && !alreadyDeposited) || hasThird || hasSecond) {
     if (hasNewPlayerReward) {
       paymentCancellationAmtLoss.value = 38
     } else if (hasThird) {
