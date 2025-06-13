@@ -480,8 +480,6 @@ const handleFullScreenChange = (value) => {
   }
 };
 
-const exitFullScreen = () => handleFullScreenChange(false);
-
 const handleWrapperMouseEnter = () => {
   showPlayerController.value = true;
   videoWrapperMouseLeaveTimer.value && clearTimeout(videoWrapperMouseLeaveTimer.value);
@@ -724,8 +722,6 @@ const handleShareClick = () => {
   handleFullScreenChange(false);
   emit("share-click");
 };
-
-defineExpose({ exitFullScreen });
 </script>
 
 <style lang="scss" scoped>
