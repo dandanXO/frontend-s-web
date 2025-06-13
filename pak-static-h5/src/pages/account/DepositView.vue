@@ -113,7 +113,7 @@
               v-model="newPlayerDepositBonusConfig.selected"
               v-else-if="newPlayerDepositBonusConfig.hasBonus && !isUSDT && isAndroid()"
             >
-              {{ $t("deposit.useNewPlayerBonus") }}
+              {{ $t("deposit.appDepositBonus") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
@@ -862,11 +862,6 @@ async function loadPrivilege(val) {
         if (p.payTypes.indexOf(val.payType) >= 0) {
           if (p.triggerType == "FREE") {
             freePrivilege.value.push(p);
-            newPlayerDepositBonusConfig.value = {
-              selected: true,
-              hasBonus: true,
-              privilegeId: p.id
-            };
           } else {
             if (p.code === "pak-new-user-ftd-bonus") {
               ftdBonusConfig.value = {
@@ -882,6 +877,12 @@ async function loadPrivilege(val) {
               };
             } else if (p.code === "pak-third-time-deposit-bonus") {
               thirdTimeDepositBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else if (p.code === "pak-new-user-roulette") {
+              newPlayerDepositBonusConfig.value = {
                 selected: true,
                 hasBonus: true,
                 privilegeId: p.id
@@ -986,6 +987,9 @@ async function confirmDeposit() {
           }
           if (thirdTimeDepositBonusConfig.value.selected && thirdTimeDepositBonusConfig.value.hasBonus) {
             form.privilegeId = thirdTimeDepositBonusConfig.value.privilegeId;
+          }
+          if (newPlayerDepositBonusConfig.value.selected && newPlayerDepositBonusConfig.value.hasBonus) {
+            form.privilegeId = newPlayerDepositBonusConfig.value.privilegeId;
           }
 
           const copy = { ...form };

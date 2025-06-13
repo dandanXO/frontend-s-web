@@ -416,7 +416,7 @@ export default {
     useFtdBonus: "پہلی جمع بونس",
     use2ndBonus: "دوسری جمع بونس",
     use3rdBonus: "تیسری جمع پر بونس",
-    useNewPlayerBonus: "نئے کھلاڑی کا بونس استعمال کریں",
+    appDepositBonus: "نئے کھلاڑی کا بونس استعمال ایپ ڈپازٹ بونس",
     unlimited: "لامحدود",
     wagerRequirement: "واجر کی شرط (نکالنے کے لیے): آپ کی جمع رقم کا 10 گنا",
     wagerRequirementEg: "مثال کے طور پر: 100 روپے جمع کروائیں، 1,000 روپے واجرت درکار ہوگی",
