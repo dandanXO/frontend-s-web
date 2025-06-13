@@ -100,7 +100,10 @@
           </div>
         </marquee-text>
 
-        <router-link to="/livestream" class="notice-hot-match">热门赛事</router-link>
+        <router-link to="/livestream" class="notice-hot-match">
+          <!-- 热门赛事 -->
+          <img src="../assets/images/home/notice-live-icon.gif" />
+        </router-link>
       </div>
     </div>
 
@@ -2845,14 +2848,19 @@ export default defineComponent({
 }
 
 .notice-hot-match {
-  color: #ffffff;
-  background: linear-gradient(113.58deg, #5277e5 19.8%, #ed22ff 93.06%);
-  white-space: nowrap;
-  padding: 2px 8px;
+  // color: #ffffff;
+  // background: linear-gradient(113.58deg, #5277e5 19.8%, #ed22ff 93.06%);
+  // white-space: nowrap;
+  // padding: 2px 8px;
   position: absolute;
   right: 0;
   border-radius: 4px;
   display: flex;
   align-items: center;
+
+  img {
+    display: block;
+    width: 90px;
+  }
 }
 </style>
