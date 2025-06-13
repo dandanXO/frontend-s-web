@@ -2647,6 +2647,8 @@ export default {
     isPopularEvent: '是否为热门赛事',
     loginType: '登陆方法',
     otp: 'OTP',
+    scheduledAnnouncement: '预约公告',
+    subscribeCount: '当前订阅人数'
   },
   message: {
     adsStatusOpen: '开',

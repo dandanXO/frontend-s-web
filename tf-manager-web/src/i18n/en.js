@@ -2644,6 +2644,8 @@ export default {
     isPopularEvent: 'Popular Event',
     loginType: 'Login Type',
     otp: 'OTP',
+    scheduledAnnouncement: 'Scheduled Announcement',
+    subscribeCount: 'Subscribe Count'
   },
   message: {
     adsStatusOpen: 'Open',
