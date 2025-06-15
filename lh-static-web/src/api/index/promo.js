@@ -876,3 +876,12 @@ export function claimTorontoMastersBonus() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return server.EVENT.post(`/session/competition-loss/claim?promoCode=lh1-valorant-masters-toronto-2025&v=${randNum}`);
 }
+
+export function getFifa2025PromoInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=lh1-fifa-2025&v=${randNum}`);
+}
+export function claimFifa2025PromoBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=lh1-fifa-2025&v=${randNum}`);
+}

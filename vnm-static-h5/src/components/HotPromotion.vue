@@ -23,13 +23,14 @@
       :promo-id="list.id"
       :promo-code="list.promoCode"
     />
-    <xmasSpinWheel
-      v-if="list.redirectUrl === 'vnm-lucky-spin'"
+    <xmasSpinWheel v-if="list.redirectUrl === 'vnm-lucky-spin'" :promo-id="list.id" :promo-code="list.promoCode" />
+    <WeeklyDepositBonus
+      v-if="list.redirectUrl === 'vnm-weekly-deposit-bonus'"
       :promo-id="list.id"
       :promo-code="list.promoCode"
     />
-    <WeeklyDepositBonus
-      v-if="list.redirectUrl === 'vnm-weekly-deposit-bonus'"
+    <FifaWorldCup2025
+      v-if="list.redirectUrl === 'fifa-world-cup-2025'"
       :promo-id="list.id"
       :promo-code="list.promoCode"
     />
@@ -87,6 +88,7 @@ import AseanM2024 from "@/components/hotpromo/aseanM2024/AseanM2024.vue";
 import ChristmasNewYear from "@/components/hotpromo/christmas-new-year/ChristmasNewYear.vue";
 import xmasSpinWheel from "@/components/hotpromo/xmasSpinWheel/XmasSpinWheel.vue";
 import WeeklyDepositBonus from "@/components/hotpromo/weekly-deposit/WeeklyDepositBonus.vue";
+import FifaWorldCup2025 from "./hotpromo/fifa-world-cup-2025/FifaWorldCup2025.vue";
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -108,7 +110,8 @@ export default defineComponent({
     CnyLuckyDraw,
     AseanM2024,
     ChristmasNewYear,
-    WeeklyDepositBonus
+    WeeklyDepositBonus,
+    FifaWorldCup2025
     // CnyStepGame2024Promo
   },
   props: {

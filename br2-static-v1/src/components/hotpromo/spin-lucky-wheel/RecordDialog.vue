@@ -116,7 +116,8 @@ const getRecords = () => {
       text-align: center;
 
       &.selected {
-        background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
+        // background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
+        background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
         color: #fff;
       }
     }

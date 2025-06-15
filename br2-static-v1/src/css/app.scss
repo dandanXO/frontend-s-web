@@ -53,6 +53,10 @@ body {
 }
 .q-page-container {
   padding-top: 0 !important;
+  // background-image: url(../assets/images/index/page-upper.png);
+  // background-position:top center;
+  // background-size: 140% auto;
+  // background-repeat:no-repeat;
   /* Overwrite Quasars padding-top calculation by code to avoid wrong offset in iOS PWA when
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> is used. */
 
@@ -184,7 +188,7 @@ body.body--dark .q-footer {
   height: auto;
   padding-bottom: 20px;
   background: #101114;
-  padding-top:20px;
+  // padding-top: 20px;
 
   .q-panel > div {
     background-repeat: no-repeat;
@@ -571,6 +575,7 @@ body.body--dark .q-footer {
     top: 10px;
     background: #cfcfcf;
     color: #787878;
+    z-index:9;
   }
 
   .txt-title {
@@ -581,11 +586,14 @@ body.body--dark .q-footer {
 
   .popout-dialog-container {
     // background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
-    background: linear-gradient(180deg, #1b7473 0%, #163c3d 100%);
-
+    // background: linear-gradient(180deg, #1b7473 0%, #163c3d 100%);
+    box-shadow: 0px 2.24px 77.07px 6.72px #5eecff9c inset;
+    // background: linear-gradient(180deg, #004139 0%, rgba(0, 185, 111, 0) 100%);
+    background: linear-gradient(180deg, #004139 0%, rgba(0, 185, 111, 0) 100%);
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
+    backdrop-filter: blur(20px);
     padding: 30px 20px 30px;
     min-height: 200px;
     border-radius: 30px !important;

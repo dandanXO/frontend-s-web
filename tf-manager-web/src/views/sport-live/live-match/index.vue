@@ -193,19 +193,13 @@ import { defineComponent, onMounted, reactive, ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { getSportLiveMatch, copySportLiveMatch, batchDeleteSportLiveMatch } from "@/api/sport-live-match";
 import { ElMessage, ElMessageBox } from "element-plus";
+import { liveSportTyps } from "@/utils/live"
 
 export default defineComponent({
   setup() {
     const { t } = useI18n();
     const uiControl = reactive({
-      sport: [
-        { name: 'FOOTBALL', display: '足球', id: 1 },
-        { name: 'BASKETBALL', display: '篮球', id: 2 },
-        { name: 'LOL', display: 'LOL', id: 3 },
-        { name: 'CSGO', display: 'CSGO', id: 4 },
-        { name: 'DOTA2', display: 'DOTA2', id: 5 },
-        { name: 'KOG', display: '王者荣耀', id: 6 },
-      ],
+      sport: liveSportTyps,
       // 0:比赛异常, 说明：暂未判断具体原因的异常比赛，建议隐藏处理, 1:未开赛, 2:进行中, 3:完场, 11:中断, 12:取消, 13:延期, 14:腰斩, 15:待定
       liveStatus: [
         { name: '0', display: t('status.namiMatch.GAME_EXCEPTION'), id: 0 },

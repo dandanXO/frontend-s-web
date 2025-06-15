@@ -93,7 +93,7 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .discount-table {
-  background: #171e2b80;
+  background: rgba(99, 255, 246, 0.1);
   border-radius: 10px;
   padding: 6px 4px;
   margin-bottom: 10px;

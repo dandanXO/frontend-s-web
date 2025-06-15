@@ -1232,7 +1232,8 @@ const openConfirmSignOutDialog = () => {
     position: relative;
 
     :deep(.q-field__control) {
-      background: rgba(71, 178, 178, 0.16) !important;
+      // background: rgba(71, 178, 178, 0.16) !important;
+      background: #192b2d !important;
       border-radius: 4px;
     }
 
