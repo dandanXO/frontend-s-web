@@ -68,10 +68,11 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/privilege/invite" ||
       to.path === "/maintenance" ||
       to.path === "/affiliatepage" ||
+      to.path === "/livestreampage/streamplayer" ||
       to.path === "/livestream/streamplayer" ||
       to.path === "/livestreampage" ||
       to.path === "/live-chat" ||
-      to.path === "/live-chat/chat"||
+      to.path === "/live-chat/chat" ||
       to.path === "/downloadApp"
     ) {
       ui.hiddenFooter();
@@ -96,6 +97,7 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/viptest" ||
       to.path === "/privilege/invite" ||
       to.path === "/livestreampage" ||
+      to.path === "/livestreampage/streamplayer" ||
       to.path === "/affiliatepage"
     ) {
       if (isAndroid()) {

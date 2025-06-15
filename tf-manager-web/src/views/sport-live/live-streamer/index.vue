@@ -294,7 +294,7 @@ async function attachPhoto(event) {
 
   const formData = new FormData();
   formData.append('files', files);
-  formData.append('dir', 'temp');
+  formData.append('dir', 'streamer');
   formData.append('overwrite', false);
 
   try {

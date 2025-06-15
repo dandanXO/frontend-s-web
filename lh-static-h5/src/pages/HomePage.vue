@@ -94,9 +94,9 @@
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 120">
           <div v-if="announcementList">
-            <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-              {{ a.content }}
-            </span>
+            <template v-for="(a, i) in announcementList" :key="i">
+              <span @click="openPopup(a)" v-html="a.content"></span>
+            </template>
           </div>
         </marquee-text>
       </div>

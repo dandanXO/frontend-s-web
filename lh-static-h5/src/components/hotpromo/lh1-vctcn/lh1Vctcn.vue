@@ -26,11 +26,7 @@
         </div>
         <div class="reward-info">
           <div class="reward-info-icon">
-            <img
-              src="./img/coin.png"
-              alt=""
-              width="100%"
-            />
+            <img src="./img/coin.png" alt="" width="100%" />
           </div>
           <div class="reward-info-content">
             昨日LH有效投注：
@@ -128,10 +124,14 @@
       </div>
       <div>
         <div style="display: flex; align-items: center">
-          <div style="display: flex;align-items: center;"><img src="./img/arrow.png" alt="" width="16" style="padding-right: 8px" /></div>
+          <div style="display: flex; align-items: center">
+            <img src="./img/arrow.png" alt="" width="16" style="padding-right: 8px" />
+          </div>
           <span style="color: #ff0000">示例</span>
         </div>
-        <div  style="color: #ff0000">会员A：在小艾电竞场馆投注VCTCN联赛5,000元后又在雷火电竞投注VCTCN联赛投注5,000元，会员A在次日可获投注奖励38元和雷火助力金38元，共76元彩金。</div>
+        <div style="color: #ff0000">
+          会员A：在小艾电竞场馆投注VCTCN联赛5,000元后又在雷火电竞投注VCTCN联赛投注5,000元，会员A在次日可获投注奖励38元和雷火助力金38元，共76元彩金。
+        </div>
       </div>
     </div>
 
@@ -139,19 +139,24 @@
       <div class="challenge-comeback-block-title">活动规则</div>
       <ol class="rules-content">
         <li>
-          活动期间，在电竞场馆投注VCTCN联赛累计有效投注≥3,000元或以上可获的对应投注嘉奖，若在雷火电竞场馆进行投注VCTCN联赛可获更高奖励金额。      
+          活动期间，在电竞场馆投注VCTCN联赛累计有效投注≥3,000元或以上可获的对应投注嘉奖，若在雷火电竞场馆进行投注VCTCN联赛可获更高奖励金额。
         </li>
-        <div style="font-size: 0.75rem;font-weight: 400;line-height: 1.125rem;;margin-left: 26px;color: #ff0000;">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
+        <div style="font-size: 0.75rem; font-weight: 400; line-height: 1.125rem; margin-left: 26px; color: #ff0000">
+          注：奖金不叠加派发，奖金按最高档位每日派发一次。
+        </div>
+        <li>VCTCN联赛投注嘉奖在结算后24小时内有效，可登入优惠界面点击【领取】按钮获得，彩金6倍流水即可提款；</li>
         <li>
-          VCTCN联赛投注嘉奖在结算后24小时内有效，可登入优惠界面点击【领取】按钮获得，彩金6倍流水即可提款；
+          任何低于欧洲盘 1.7 或亚洲盘 0.7
+          水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
         </li>
         <li>
-          任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+          根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
         </li>
-        <li>根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；</li>
-        <li>此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；</li>
         <li>
-          为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
+          此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+          地址视为同一账户，若有违规者，将不享受此红利；
+        </li>
+        <li>为避免文字理解差异，雷火电竞保留此活动最终解释权；</li>
       </ol>
     </div>
   </div>
@@ -179,9 +184,9 @@ const bonus = ref(0);
 function thousandDigitNoDecimal(value, options) {
   const defaultOptions = {
     minimumFractionDigits: 0
-  }
-  const optionsWithDefaults = { ...defaultOptions, ...(options || {}) }
-  return Number(value).toLocaleString('en-US', optionsWithDefaults)
+  };
+  const optionsWithDefaults = { ...defaultOptions, ...(options || {}) };
+  return Number(value).toLocaleString("en-US", optionsWithDefaults);
 }
 
 const handleClaimBonus = () => {
@@ -248,7 +253,8 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .challenge-comeback-container {
-  font-family: PingFang TC;
+  font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial, sans-serif;
+
   color: #000;
   > :not(:last-child) {
     margin-bottom: 12px;

@@ -140,6 +140,12 @@
           min-width="90"
         />
         <el-table-column
+          :label="t('fields.affiliateCode')"
+          prop="affiliateCode"
+          align="center"
+          min-width="90"
+        />
+        <el-table-column
           :label="t('fields.accountStatus')"
           prop="accountStatus"
           align="center"

@@ -184,6 +184,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { uploadImage } from "@/api/image";
 import { useSessionStorage } from "@vueuse/core";
 import { createSiteImage } from '@/api/site-image'
+import { liveSportTyps } from "@/utils/live"
 
 const { t } = useI18n();
 const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
@@ -194,14 +195,7 @@ const uiControl = reactive({
   editBtn: true,
   removeBtn: true,
   dialogLoading: false,
-  sport: [
-    { name: 'FOOTBALL', display: '足球', id: 1 },
-    { name: 'BASKETBALL', display: '篮球', id: 2 },
-    { name: 'LOL', display: 'LOL', id: 3 },
-    { name: 'CSGO', display: 'CSGO', id: 4 },
-    { name: 'DOTA2', display: 'DOTA2', id: 5 },
-    { name: 'KOG', display: '王者荣耀', id: 6 },
-  ],
+  sport: liveSportTyps,
   eventStatus: computed(() => [
     { name: '1', display: t('fields.active') },
     { name: '2', display: t('fields.inactive') },

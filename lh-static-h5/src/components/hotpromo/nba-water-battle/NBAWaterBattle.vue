@@ -132,7 +132,8 @@ onMounted(() => {
 
 <style lang="scss">
 .nba-water-battle-claim-history-dialog {
-  font-family: "PingFang";
+  font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial, sans-serif;
+
   font-size: 15px;
   background-color: white;
   margin: 20px;
@@ -205,7 +206,8 @@ onMounted(() => {
   background-size: 100% 100%;
   aspect-ratio: 702 / 280;
   position: relative;
-  font-family: "PingFang SC";
+  font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial, sans-serif;
+
   font-weight: bold;
   margin-bottom: 30px;
 

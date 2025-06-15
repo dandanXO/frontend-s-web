@@ -189,7 +189,7 @@
                 <div class="desc">Withdrew Amount</div>
               </div>
               <div class="desc">
-                {{ store.currency.label}}:{{
+                {{ store.currency.label }}:{{
                   withdrawalMethods[withdrawalDialogTab].withdrawMax -
                   withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount
                 }}
@@ -200,14 +200,18 @@
                 <div class="yel-dot"></div>
                 <div class="desc">{{ store.vip }} Daily Limit</div>
               </div>
-              <div class="desc">{{ store.currency.label}}:{{ withdrawalMethods[withdrawalDialogTab].withdrawMax }}</div>
+              <div class="desc">
+                {{ store.currency.label }}:{{ withdrawalMethods[withdrawalDialogTab].withdrawMax }}
+              </div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
                 <div class="yel-dot"></div>
                 <div class="desc">Remain Wagers</div>
               </div>
-              <div class="desc">{{ store.currency.label}}:{{ withdrawalMethods[withdrawalDialogTab].remainWagers }}</div>
+              <div class="desc">
+                {{ store.currency.label }}:{{ withdrawalMethods[withdrawalDialogTab].remainWagers }}
+              </div>
             </div>
           </div>
         </q-card>
@@ -472,7 +476,7 @@ const submitWithdrawBank = async () => {
     // });
     // } else {
     api
-      .post("/session/withdrawAndBankCard", qs.stringify(bankCardField))
+      .post("/session/ausWithdrawAndBankCard", qs.stringify(bankCardField))
       .then((response) => {
         if (response.code === 0) {
           $q.notify({

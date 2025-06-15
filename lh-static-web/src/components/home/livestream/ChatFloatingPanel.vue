@@ -1,5 +1,5 @@
 <template>
-  <div class="chat-floating-panel-wrapper">
+  <div class="chat-floating-panel-wrapper" @click="handleClick">
     <div class="chat-floating-panel__avatar-wrapper">
       <img class="chat-floating-panel__avatar" :src="avatarUrl" loading="lazy" />
     </div>
@@ -11,23 +11,33 @@
         {{ currentSportType }}
       </div>
     </div>
-    <div v-if="livestreamData?.roomMessage" class="chat-floating-panel__room-message">
-      {{ livestreamData.roomMessage }}
+    <div v-if="roomMessage" class="chat-floating-panel__room-message" :class="{ expanded: isExpanded }">
+      {{ roomMessage }}
     </div>
   </div>
 </template>
 <script setup>
 import { SPORT_TYPE_LIST } from "@/constant/sportType";
 import { useLocalStorage } from "@vueuse/core";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps(["livestreamData", "isSystemLivestream"]);
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
+const isExpanded = ref(true);
+
 const currentSportType = computed(() => {
   const target = SPORT_TYPE_LIST.find((item) => item.value === props.livestreamData?.sportId);
   return target ? target.text : "";
+});
+
+const roomMessage = computed(() => {
+  if (isExpanded.value) {
+    return props.livestreamData?.roomMessage;
+  } else {
+    return props.livestreamData?.roomMessage?.split("\n")[0] || "";
+  }
 });
 
 const avatarUrl = computed(() => {
@@ -37,6 +47,11 @@ const avatarUrl = computed(() => {
     return imgURL + props.livestreamData?.avatar;
   }
 });
+
+const handleClick = () => {
+  return;
+  isExpanded.value = !isExpanded.value;
+};
 </script>
 <style lang="scss" scoped>
 @import "@/scss/pages/livestream.scss";
@@ -90,6 +105,14 @@ const avatarUrl = computed(() => {
     font-size: 12px;
     line-height: 18px;
     grid-column: 1 / span 2;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 0.3s ease-in-out;
+
+    &.expanded {
+      white-space: break-spaces;
+    }
   }
 }
 

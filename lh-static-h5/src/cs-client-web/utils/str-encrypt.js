@@ -1,9 +1,9 @@
-export default async function strEncrypt(params) {
-  const CryptoJS = await import("crypto-js");
+import CryptoJS from 'crypto-js';
 
-  const KEY = CryptoJS.enc.Utf8.parse(process.env.ENCRYPT_KEY);
-  const IV = CryptoJS.enc.Utf8.parse(process.env.ENCRYPT_IV);
+const KEY = CryptoJS.enc.Utf8.parse(process.env.ENCRYPT_KEY);
+const IV = CryptoJS.enc.Utf8.parse(process.env.ENCRYPT_IV);
 
+export default function strEncrypt(params) {
   let str = CryptoJS.enc.Utf8.parse(params);
   let encryptedData = CryptoJS.AES.encrypt(str, KEY, {
     iv: IV,

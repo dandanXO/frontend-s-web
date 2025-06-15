@@ -806,7 +806,7 @@ const page = reactive({
 })
 
 const request = reactive({
-  size: 30,
+  size: 150,
   current: 1,
   loginName: null,
   realName: null,

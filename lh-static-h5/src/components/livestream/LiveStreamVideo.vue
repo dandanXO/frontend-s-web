@@ -24,6 +24,7 @@
         crossorigin="anonymous"
         playsinline
         webkit-playsinline
+        muted
         @progress="handlePlayerProgress"
         @canplay="handlePlayerCanPlay"
       />
@@ -244,7 +245,7 @@ const isVideoLoadFailed = ref(false);
 const isVideoLoading = ref(false);
 const isErrorCaptured = ref(false);
 const errorMsg = ref("");
-const showUnmuteMask = ref(false);
+const showUnmuteMask = ref(true);
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
@@ -312,7 +313,7 @@ const initPlayer = async (play = false) => {
   await player.value.init();
   isPlayerSupported.value = player.value.supportPlayer !== "NONE";
   player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerError);
-  player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
+  // player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
   // emitting when hls.isSupported() is false
   player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
   isVideoLoading.value = true;

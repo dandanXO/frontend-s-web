@@ -250,13 +250,13 @@ function captchaHandler(captchaObj) {
   captchaObj
     .appendTo("#captchaContainer")
     .onReady(function () {
-      console.log("ready");
+      // console.log("ready");
     })
     .onNextReady(function () {
-      console.log("nextReady");
+      // console.log("nextReady");
     })
     .onBoxShow(function () {
-      console.log("boxShow");
+      // console.log("boxShow");
     })
     .onError(function (e) {
       console.log(e);

@@ -203,6 +203,9 @@
             <div v-if="selectedPromo.redirectUrl === 'dy2-valorant-masters-toronto-2025'">
               <TorontoMasters :promoCode="selectedPromo.promoCode" />
             </div>
+            <div v-if="selectedPromo.redirectUrl === 'dy2-fifa-2025'">
+              <Fifa2025Promo :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-if="selectedPromo.redirectUrl === 'dy2-blast-tv-austin-major-2025'">
               <BlastAustin :promoCode="selectedPromo.promoCode" />
             </div>
@@ -249,6 +252,7 @@ const BbdachaBelgrade = defineAsyncComponent(() => import("@/components/hotpromo
 const ValorantChampionTour2024 = defineAsyncComponent(() => import("@/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue"));
 const BlastAustin = defineAsyncComponent(() => import("@/components/hotpromo/blast-austin/BlastAustin.vue"));
 const TorontoMasters = defineAsyncComponent(() => import("@/components/hotpromo/toronto-masters/TorontoMasters.vue"));
+const Fifa2025Promo = defineAsyncComponent(() => import("@/components/hotpromo/fifa-2025/Fifa2025Promo.vue"));
 
 export default defineComponent({
   name: "PromoView",
@@ -261,7 +265,8 @@ export default defineComponent({
     ValorantChampionTour2024,
     MesaPromo,
     BlastAustin,
-    TorontoMasters
+    TorontoMasters,
+    Fifa2025Promo
   },
   setup() {
     const store = userStore();

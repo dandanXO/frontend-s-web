@@ -1,9 +1,9 @@
-export default async function strDecrypt(params) {
-  const CryptoJS = await import("crypto-js");
+import CryptoJS from 'crypto-js';
 
-  const KEY = CryptoJS.enc.Utf8.parse(process.env.ENCRYPT_KEY);
-  const IV = CryptoJS.enc.Utf8.parse(process.env.ENCRYPT_IV);
+const KEY = CryptoJS.enc.Utf8.parse(process.env.ENCRYPT_KEY);
+const IV = CryptoJS.enc.Utf8.parse(process.env.ENCRYPT_IV);
 
+export default function strDecrypt(params) {
   let base64 = CryptoJS.enc.Base64.parse(params);
   let str = CryptoJS.enc.Base64.stringify(base64);
   let decryptedData = CryptoJS.AES.decrypt(str, KEY, {
