@@ -1,9 +1,9 @@
 <template>
-  <div class="fifa-2025-promowrapper">
-    <div class="fifa-2025-promocontainer">
-      <div class="fifa-2025-promosection section-bg">
-        <div class="fifa-2025-promosection-left">
-          <div class="fifa-2025-promosection-title">
+  <div class="fifa-2025-promo-wrapper">
+    <div class="fifa-2025-promo-container">
+      <div class="fifa-2025-promo-section section-bg">
+        <div class="fifa-2025-promo-section-left">
+          <div class="fifa-2025-promo-section-title">
             <div class="claim-title-icon">
             </div>
             投注嘉奖
@@ -25,8 +25,8 @@
             </div>
           </div>
         </div>
-        <div class="fifa-2025-promosection-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 || isClaimed }">
+        <div class="fifa-2025-promo-section-right">
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 }">
             <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn3.png" alt="" width="100%" />
           </div>
         </div>
@@ -55,7 +55,7 @@ const router = useRouter();
 const totalValidBet = ref(0);
 const bonus = ref(0);
 const isClaiming = ref(false);
-const isClaimed = ref(false)
+
 const handleClaimBonus = () => {
   if (isClaiming.value === true) {
     return;
@@ -94,7 +94,6 @@ const handleClaimBonus = () => {
             redPacket: res.data
           }
         });
-        isClaimed.value = true;
         fetchData();
       } else {
         notify({
@@ -130,12 +129,12 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.fifa-2025-promowrapper {
+.fifa-2025-promo-wrapper {
   display: flex;
   justify-content: center;
 }
 
-.fifa-2025-promocontainer {
+.fifa-2025-promo-container {
   width: 100%;
   height: 100%;
   max-width: 1200px;
@@ -144,7 +143,7 @@ onMounted(() => {
   align-items: center;
 }
 
-.fifa-2025-promosection {
+.fifa-2025-promo-section {
   box-shadow: 0px 0px 4px 0px #01497b0f;
   padding: 20px 12px 40px;
   border-radius: 12px;
@@ -157,14 +156,14 @@ onMounted(() => {
   align-items: center;
   width: 100%;
 
-  .fifa-2025-promosection-left {
+  .fifa-2025-promo-section-left {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
   }
 
-  .fifa-2025-promosection-right {
+  .fifa-2025-promo-section-right {
     width: 180px;
     margin-top: 20px;
 
@@ -185,7 +184,7 @@ onMounted(() => {
     }
   }
 
-  .fifa-2025-promosection-title {
+  .fifa-2025-promo-section-title {
     font-size: 16px;
     line-height: 1;
     font-weight: 600;
@@ -196,7 +195,7 @@ onMounted(() => {
   }
 }
 
-.fifa-2025-promogame {
+.fifa-2025-promo-game {
   width: 100%;
   height: 302px;
   border-radius: 12px;
@@ -206,17 +205,17 @@ onMounted(() => {
   margin-bottom: 12px;
 }
 
-.fifa-2025-promogame-bottom {
+.fifa-2025-promo-game-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .fifa-2025-promogame-bottom-left-title {
+  .fifa-2025-promo-game-bottom-left-title {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
     color: #ff5d5d !important;
   }
-  .fifa-2025-promogame-bottom-left-btn {
+  .fifa-2025-promo-game-bottom-left-btn {
     font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
@@ -229,7 +228,7 @@ onMounted(() => {
   }
 }
 
-.fifa-2025-promogame-info {
+.fifa-2025-promo-game-info {
   width: 100%;
   height: 100%;
   margin-top: 40px;
