@@ -739,6 +739,31 @@
     "backToTop": "TOP"
   },
   "hotPromo": {
+    "fifaWorldCup2025": {
+      "claimNow": "NHẬN NGAY",
+      "promotionPeriod": "Chương trình khuyến mãi bắt đầu từ 00:00:00 ngày 15.06.2025 đến 23:59:59 ngày 14.07.2025",
+      "applicableFor": "Áp dụng",
+      "applicableForText": "Cho Thành Viên từ VIP 1",
+      "applicableProducts": "Sản phẩm",
+      "applicableProductsText": "Thể Thao",
+      "promotionDetails": "Chi tiết khuyến mãi",
+      "promotionDetailsText": "Trong thời gian diễn ra khuyến mãi, sau khi hoàn thành nhiệm vụ mỗi ngày, Thành Viên có thể đăng  nhập vào trang khuyến mãi này vào lúc 18:00 đến 23:59:59 để mở thưởng, tiền thưởng sẽ được phát  ngẫu nhiên từ 18 VNDP đến 3,888 VNDP.",
+
+      "dailyTask": "Nhiệm vụ mỗi ngày",
+      "dailyTaskPt1": "Mỗi ngày cần có tối thiểu 1 lệnh nạp tiền với mệnh giá 200 VNDP",
+      "dailyTaskPt2": "Trong ngày có tổng tiền cược hợp lệ tại Thể Thao là 3,000 VNDP",
+      "dailyTaskDescription": "Sau khi hoàn thành 2 nhiệm vụ trên, Thành Viên truy cập trang khuyến mãi trong khoảng thời gian từ 18:00 đến 23:59:59 cùng ngày và bấm vào hộp quà để mở thưởng.",
+
+      "termsAndConditions": "Điều khoản và điều kiện",
+      "titlecondition": "Điều khoản và điều kiện:",
+      "condition1": "Cơ hội mở thưởng chỉ có hiệu lực trong ngày.",
+      "condition2": "Tiền thưởng cần hoàn thành 3 vòng cược tại Thể Thao trước khi thực hiện rút tiền.",
+      "condition3": "Tất cả cược HÒA, cược HỦY, cược 2 BÊN, kiểu cược Europe Handicap tỷ lệ dưới 1.75, Asian Handicap dưới 0.75, Thể thao ảo, Đua ngựa, Number Game, sẽ không được áp dụng cho chương trình này.",
+      "condition4": "Các tài khoản có cùng IP hoặc thông tin dữ liệu tương tự sẽ không được tham gia chương trình khuyến mãi này.",
+      "condition5": "TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này bất cứ thời gian nào mà không cần báo trước.",
+      "condition6": "Chương trình khuyến mãi được áp dụng cùng các khuyến mãi khác tại TF88.",
+      "condition7": "Điều khoản & Điều kiện khuyến mãi chung được áp dụng."
+    },
     "weeklyDepositBonus": {
       "claimNow": "NHẬN NGAY",
       "depositRegularly": "Nạp tiền đều tay",
