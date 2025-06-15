@@ -1,5 +1,5 @@
 <template>
-  <template v-if="!$q.dark.isActive ">
+  <template v-if="!$q.dark.isActive">
     <div class="white">
       <div class="hot-match-container">
         <div class="competition-items">
@@ -10,14 +10,23 @@
             @click="selectedCompetitionType = competitionType"
             :key="competitionType"
           >
-          
-          <div class="competition-item-continer" :class="{ 'competition-item-continer-active': competitionType === selectedCompetitionType }">
-            <div class="competition-item-continer-name">
-              <img style="width: 24px; height: 24px; margin-right: 4px;"  :src="require(`../assets/images/hotmatch/game-w-${competitionType.toLowerCase()}-icon${competitionType === selectedCompetitionType ? '-active':''}.png`)" />
-              {{ competitionTypesNameMap[competitionType] }}
+            <div
+              class="competition-item-continer"
+              :class="{ 'competition-item-continer-active': competitionType === selectedCompetitionType }"
+            >
+              <div class="competition-item-continer-name">
+                <img
+                  style="width: 24px; height: 24px; margin-right: 4px"
+                  :src="
+                    require(`../assets/images/hotmatch/game-w-${competitionType.toLowerCase()}-icon${
+                      competitionType === selectedCompetitionType ? '-active' : ''
+                    }.png`)
+                  "
+                />
+                {{ competitionTypesNameMap[competitionType] }}
+              </div>
             </div>
-          </div>
-          <!-- <img
+            <!-- <img
             class="competition-item-img"
             :style="{
               position:competitionType === selectedCompetitionType? 'relative' : '',
@@ -31,40 +40,40 @@
                 : require(`../assets/images/hotmatch/${competitionType.toLowerCase()}-w.png`)
             "
           /> -->
+          </div>
         </div>
       </div>
-    </div>
-    <div class="hot-match-items">
-      <div
-        :class="selectedCompetitionType"
-        class="hot-match-item"
-        v-for="hotMatch in hotMatchesByType"
-        :key="hotMatch.id"
-      >
-        <div class="hot-match-info">
-          <div class="hot-match-name">
-            {{ hotMatch.competitionName }}
-          </div>
-          <div class="hot-match-scores">
-            <div class="hot-match-team">
-              <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamOneLogo}`" />
-              <span>{{ hotMatch.teamOneName }}</span>
+      <div class="hot-match-items">
+        <div
+          :class="selectedCompetitionType"
+          class="hot-match-item"
+          v-for="hotMatch in hotMatchesByType"
+          :key="hotMatch.id"
+        >
+          <div class="hot-match-info">
+            <div class="hot-match-name">
+              {{ hotMatch.competitionName }}
             </div>
-            <div class="hot-match-time">
-              {{ hotMatch.competitionTime }}
-              <div class="bet-btn" @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)">
-                立即投注
+            <div class="hot-match-scores">
+              <div class="hot-match-team">
+                <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamOneLogo}`" />
+                <span>{{ hotMatch.teamOneName }}</span>
+              </div>
+              <div class="hot-match-time">
+                {{ hotMatch.competitionTime }}
+                <div class="bet-btn" @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)">
+                  立即投注
+                </div>
+              </div>
+              <div class="hot-match-team">
+                <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamTwoLogo}`" />
+                <span>{{ hotMatch.teamTwoName }}</span>
               </div>
             </div>
-            <div class="hot-match-team">
-              <img class="hot-match-img" :src="`${imgUrl}/promo/${hotMatch.teamTwoLogo}`" />
-              <span>{{ hotMatch.teamTwoName }}</span>
-            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </template>
   <template v-else>
     <div class="hot-match-container">
@@ -76,10 +85,19 @@
           @click="selectedCompetitionType = competitionType"
           :key="competitionType"
         >
-
-        <div class="competition-item-continer" :class="{ 'competition-item-continer-active': competitionType === selectedCompetitionType }">
+          <div
+            class="competition-item-continer"
+            :class="{ 'competition-item-continer-active': competitionType === selectedCompetitionType }"
+          >
             <div class="competition-item-continer-name">
-              <img style="width: 24px; height: 24px; margin-right: 4px;"  :src="require(`../assets/images/hotmatch/game-${competitionType.toLowerCase()}-icon${competitionType === selectedCompetitionType ? '-active':''}.png`)" />
+              <img
+                style="width: 24px; height: 24px; margin-right: 4px"
+                :src="
+                  require(`../assets/images/hotmatch/game-${competitionType.toLowerCase()}-icon${
+                    competitionType === selectedCompetitionType ? '-active' : ''
+                  }.png`)
+                "
+              />
               {{ competitionTypesNameMap[competitionType] }}
             </div>
           </div>
@@ -145,9 +163,9 @@ import GameModal from "../components/modal/GameModal.vue";
 const hotMatches = ref([]);
 const competitionTypes = ref([]);
 const competitionTypesNameMap = ref({
-  Football : "足球",
-  Basketball : "篮球",  
-  ESport : "电竞",
+  Football: "足球",
+  Basketball: "篮球",
+  ESport: "电竞"
 });
 
 const selectedCompetitionType = ref();
@@ -176,7 +194,7 @@ onMounted(() => {
   api.get("/platform-competition").then((res) => {
     if (res.code === 0) {
       const uniqueCompetitionTypes = Array.from(new Set(res.data.map(({ competitionType }) => competitionType)));
-      competitionTypes.value = []
+      competitionTypes.value = [];
       if (uniqueCompetitionTypes.length > 0) {
         competitionTypes.value.push(uniqueCompetitionTypes[2]);
         competitionTypes.value.push(uniqueCompetitionTypes[0]);
@@ -190,68 +208,69 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.white{
-  .competition-item-continer-active{
+.white {
+  .competition-item-continer-active {
     background: url("../assets/images/hotmatch/game-w-active-bg.png") no-repeat center center !important;
     color: #fff !important;
     background-size: 100% 100%;
     width: 107px;
     height: 48px;
   }
-  .competition-item-continer{
+  .competition-item-continer {
     width: 107px;
     height: 48px;
-    color: #424F72;
+    color: #424f72;
     background: url("../assets/images/hotmatch/game-w-bg.png") no-repeat center center;
     background-size: 100% 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    .competition-item-continer-name{
+    .competition-item-continer-name {
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 6px;
     }
   }
-  .competition-item-img{
+  .competition-item-img {
     width: 107px;
     height: 48px;
   }
-  .hot-match-container{
+  .hot-match-container {
     box-shadow: 0px -2.78px 2.78px 0px rgba(195, 212, 230, 1) inset, 0px 1.39px 0px 0px rgba(167, 194, 221, 1);
     margin: 8px 10px;
     border-radius: 8px;
   }
   .competition-items {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 14px;
-
-  gap: 0px;
-
-  .competition-item {
     display: flex;
-    flex-direction: column;
-    text-align: center;
-    cursor: pointer;
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px;
 
-    img {
-      width: 100%;
-    }
+    gap: 0px;
 
-    .competition-item-name {
-      font-family: "PingFang SC";
-      font-size: 18px;
-      font-weight: 500;
-      line-height: 25.2px;
-      text-align: left;
-      color: #b7c1ff;
-      margin-top: -30px;
+    .competition-item {
+      display: flex;
+      flex-direction: column;
       text-align: center;
+      cursor: pointer;
+
+      img {
+        width: 100%;
+      }
+
+      .competition-item-name {
+        font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+          sans-serif;
+
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 25.2px;
+        color: #b7c1ff;
+        margin-top: -30px;
+        text-align: center;
+      }
     }
-  }
   }
 
   .hot-match-items {
@@ -299,7 +318,9 @@ onMounted(() => {
 
         .hot-match-name,
         .hot-match-time {
-          font-family: "PingFang";
+          font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+            sans-serif;
+
           font-size: 14px;
           font-weight: 400;
           line-height: 15px;
@@ -321,7 +342,7 @@ onMounted(() => {
               bottom: 0%;
               transform: translate(-50%, -50%);
               padding: 3px 8px;
-              background:#fff;
+              background: #fff;
               border-radius: 5px;
               cursor: pointer;
               color: rgba(69, 139, 255, 1);
@@ -337,8 +358,9 @@ onMounted(() => {
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            font-family: "PingFang";
+            font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+              sans-serif;
+
             font-size: 14px;
             font-weight: 400;
             line-height: 15px;
@@ -354,8 +376,8 @@ onMounted(() => {
             border-radius: 100px;
             padding: 5px;
             aspect-ratio: 1 / 1;
-            box-shadow: 0px 2.29px 2.29px 0px rgba(147, 199, 255, 1) inset, 0px -1.84px 1.84px 0px rgba(39, 94, 193, 1) inset;
-
+            box-shadow: 0px 2.29px 2.29px 0px rgba(147, 199, 255, 1) inset,
+              0px -1.84px 1.84px 0px rgba(39, 94, 193, 1) inset;
           }
         }
       }
@@ -363,29 +385,29 @@ onMounted(() => {
   }
 }
 
-.competition-item-continer-active{
-    background: url("../assets/images/hotmatch/game-active-bg.png") no-repeat center center !important;
-    color: #fff !important;
-    background-size: 100% 100%;
-    width: 107px;
-    height: 48px;
-  }
-  .competition-item-continer{
-    width: 107px;
-    height: 48px;
-    color: #fff;
-    background: url("../assets/images/hotmatch/game-bg.png") no-repeat center center;
-    background-size: 100% 100%;
+.competition-item-continer-active {
+  background: url("../assets/images/hotmatch/game-active-bg.png") no-repeat center center !important;
+  color: #fff !important;
+  background-size: 100% 100%;
+  width: 107px;
+  height: 48px;
+}
+.competition-item-continer {
+  width: 107px;
+  height: 48px;
+  color: #fff;
+  background: url("../assets/images/hotmatch/game-bg.png") no-repeat center center;
+  background-size: 100% 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .competition-item-continer-name {
     display: flex;
     align-items: center;
     justify-content: center;
-    .competition-item-continer-name{
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 6px;
-    }
+    margin-bottom: 6px;
   }
+}
 
 .competition-items {
   display: flex;
@@ -400,17 +422,18 @@ onMounted(() => {
     text-align: center;
     cursor: pointer;
 
-    .competition-item-img{
-    width: 107px;
-    height: 48px;
-  }
+    .competition-item-img {
+      width: 107px;
+      height: 48px;
+    }
 
     .competition-item-name {
-      font-family: "PingFang SC";
+      font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+        sans-serif;
+
       font-size: 18px;
       font-weight: 500;
       line-height: 25.2px;
-      text-align: left;
       color: #b7c1ff;
       margin-top: -30px;
       text-align: center;
@@ -461,7 +484,9 @@ onMounted(() => {
 
       .hot-match-name,
       .hot-match-time {
-        font-family: "PingFang";
+        font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+          sans-serif;
+
         font-size: 14px;
         font-weight: 400;
         line-height: 15px;
@@ -475,7 +500,6 @@ onMounted(() => {
         gap: 10px;
 
         .hot-match-time {
-          
           .bet-btn {
             width: 88px;
             height: 24px;
@@ -485,8 +509,8 @@ onMounted(() => {
             transform: translate(-50%, -50%);
             padding: 3px 8px;
             background: linear-gradient(to bottom, #5d7dbf 0%, #242d6f 100%);
-            border: 0.5px solid #369EFF;
-            box-shadow: 0px 2px 4px 0px #2C70B294;
+            border: 0.5px solid #369eff;
+            box-shadow: 0px 2px 4px 0px #2c70b294;
             border-radius: 3px;
             cursor: pointer;
 
@@ -500,8 +524,9 @@ onMounted(() => {
           display: flex;
           flex-direction: column;
           align-items: center;
-          text-align: center;
-          font-family: "PingFang";
+          font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+            sans-serif;
+
           font-size: 14px;
           font-weight: 400;
           line-height: 15px;

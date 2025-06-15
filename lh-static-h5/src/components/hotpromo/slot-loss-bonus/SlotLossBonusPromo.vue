@@ -40,12 +40,11 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" :class="{disabled: expectedBonus <= 0 || !isClaimable}" @click="handleClaimBonus">
+          <div class="bonus-image" :class="{ disabled: expectedBonus <= 0 || !isClaimable }" @click="handleClaimBonus">
             <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn3.png" alt="" width="100%" />
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -125,7 +124,7 @@ const fetchData = async () => {
     const res = await getWeeklySlotLossBonusInit(promoCode.value);
     profitAmount.value = res.data.profitAmount || 0;
     expectedBonus.value = res.data.expectedBonus || 0;
-    isClaimable.value = res.data.claimDay
+    isClaimable.value = res.data.claimDay;
   } catch (error) {
     console.log(error);
   }
@@ -166,7 +165,7 @@ onMounted(() => {
   background-size: 100% 100%;
   align-items: center;
   width: 100%;
-  font-family: 'PingFang SC', 'PingFang', sans-serif;
+  font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial, sans-serif;
 
   .livepoker-rebate-section-left {
     display: flex;

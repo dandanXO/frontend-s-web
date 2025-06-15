@@ -47,9 +47,19 @@
         >
           {{ t('fields.reset') }}
         </el-button>
+
+        <el-button
+          icon="el-icon-copy-document"
+          size="mini"
+          type="danger"
+          @click="handleDelete"
+        >
+          {{ t('fields.delete') }}
+        </el-button>
       </div>
     </div>
-    <el-table :data="page.records" v-loading="page.loading" row-key="matchId" size="small" highlight-current-row :empty-text="t('fields.noData')">
+    <el-table :data="page.records" v-loading="page.loading" row-key="matchId" size="small" highlight-current-row :empty-text="t('fields.noData')" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55" />
       <el-table-column prop="matchId" label="ID" width="100" />
       <el-table-column :label="t('fields.sportType')" width="100">
         <template #default="scope">
@@ -181,21 +191,15 @@
 <script>
 import { defineComponent, onMounted, reactive, ref, computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { getSportLiveMatch, copySportLiveMatch } from "@/api/sport-live-match";
-import { ElMessage } from "element-plus";
+import { getSportLiveMatch, copySportLiveMatch, batchDeleteSportLiveMatch } from "@/api/sport-live-match";
+import { ElMessage, ElMessageBox } from "element-plus";
+import { liveSportTyps } from "@/utils/live"
 
 export default defineComponent({
   setup() {
     const { t } = useI18n();
     const uiControl = reactive({
-      sport: [
-        { name: 'FOOTBALL', display: '足球', id: 1 },
-        { name: 'BASKETBALL', display: '篮球', id: 2 },
-        { name: 'LOL', display: 'LOL', id: 3 },
-        { name: 'CSGO', display: 'CSGO', id: 4 },
-        { name: 'DOTA2', display: 'DOTA2', id: 5 },
-        { name: 'KOG', display: '王者荣耀', id: 6 },
-      ],
+      sport: liveSportTyps,
       // 0:比赛异常, 说明：暂未判断具体原因的异常比赛，建议隐藏处理, 1:未开赛, 2:进行中, 3:完场, 11:中断, 12:取消, 13:延期, 14:腰斩, 15:待定
       liveStatus: [
         { name: '0', display: t('status.namiMatch.GAME_EXCEPTION'), id: 0 },
@@ -225,6 +229,7 @@ export default defineComponent({
     });
     const dialogVisible = ref(false);
     const currentRow = ref(null);
+    const selectedRows = ref([]);
 
     const canCopy = computed(() => {
       return currentRow.value && (currentRow.value.streamId);
@@ -268,11 +273,44 @@ export default defineComponent({
       // 調用 API
       const res = await copySportLiveMatch({ matchId: currentRow.value.matchId });
       if (res.code === 0) {
-        ElMessage.success('複製成功');
+        ElMessage.success(t('fields.copySuccess'));
         dialogVisible.value = false;
       } else {
-        ElMessage.error('複製失敗');
+        ElMessage.error(t('fields.copyFailed'));
       }
+    }
+
+    function handleSelectionChange(val) {
+      selectedRows.value = val;
+    }
+
+    async function handleDelete() {
+      if (!selectedRows.value.length) {
+        ElMessage.warning(t('fields.pleaseSelectMatch'));
+        return;
+      }
+      try {
+        await ElMessageBox.confirm(
+          `${t('fields.confirmDelete')}`,
+          t('fields.tips'),
+          {
+            confirmButtonText: t('fields.confirm'),
+            cancelButtonText: t('fields.cancel'),
+            type: 'warning',
+          }
+        );
+      } catch {
+        return;
+      }
+      // 批量刪除
+      const matchIds = selectedRows.value.map(row => row.matchId);
+      const res = await batchDeleteSportLiveMatch({ matchIds });
+      if (res.code === 0) {
+        ElMessage.success(t('fields.deleteSuccess'));
+      } else {
+        ElMessage.error(res.msg || t('fields.deleteFailed'));
+      }
+      loadMatch();
     }
 
     // 根據 sportId 取得運動 display 名稱
@@ -308,10 +346,13 @@ export default defineComponent({
       currentRow,
       showDialog,
       handleCopy,
+      handleDelete,
       getSportDisplayName,
       getLiveStatusDisplayName,
       canCopy,
       hasStreamId,
+      selectedRows,
+      handleSelectionChange,
     };
   }
 });

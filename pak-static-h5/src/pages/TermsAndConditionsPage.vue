@@ -1,7 +1,7 @@
 <template>
   <div class="terms-and-conditions-container" ref="cardContent" id="card-content">
-    <div class="tac-card">TERMS AND CONDITIONS</div>
-    <div class="tac-card card-content">
+    <div v-if="ui.siteType === 'CURACAO'" class="tac-card">TERMS AND CONDITIONS</div>
+    <div v-if="ui.siteType === 'CURACAO'" class="tac-card card-content">
       <div class="additional-buttons no-print">
         <q-btn flat @click="downloadPDF()"><img src="../assets/images/tnc/download.png" /></q-btn>
         <q-btn flat @click="printDiv('card-content')"><img src="../assets/images/tnc/print.png" /></q-btn>

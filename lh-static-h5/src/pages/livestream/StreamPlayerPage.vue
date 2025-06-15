@@ -40,7 +40,7 @@
         </div>
 
         <div class="room-message-txt" :class="{ expanded: isExpanded }" v-if="currentLiveData.roomMessage">
-          {{ currentLiveData.roomMessage }}
+          {{ roomMessage }}
         </div>
       </div>
     </div>
@@ -51,6 +51,8 @@
       :vip-status
       :livestream-data="currentLiveData"
       @send-chat-message="handleSendChatMessage"
+      :extensionState
+      :extensionToken
     />
   </div>
 </template>
@@ -137,11 +139,21 @@ const currentLiveData = computed(() => {
   return list.value.find((item) => item.streamId == streamIdFromQuery) || {};
 });
 
+const roomMessage = computed(() => {
+  if (isExpanded.value) {
+    return currentLiveData.value?.roomMessage;
+  } else {
+    return currentLiveData.value?.roomMessage?.split("\n")[0];
+  }
+});
+
 const syncLivestreamInfo = async () => {
   if (!currentLiveData.value?.streamId) return;
   livestreamSyncAbortController.value = new AbortController();
   getLivestreamDetail(currentLiveData.value.streamId, livestreamSyncAbortController).then((res) => {
     if (res.code === 0) {
+      if (currentLiveData.value.id !== res.data.id) return;
+
       vipStatus.value = !!res.data.vipStatus;
       if (currentLiveData.value.streamerStatus !== res.data.streamerStatus) {
         const notifyMessage = res.data.streamerStatus
@@ -182,6 +194,7 @@ const resetSyncLivestreamInterval = (startNewInterval = false) => {
 // });
 
 const displayAnnouncementList = computed(() => {
+  return [DEFAULT_ANNOUNCEMENT];
   const msg = currentLiveData.value.roomMessage?.trim();
   const validMsg = msg ? [msg] : [DEFAULT_ANNOUNCEMENT];
   return validMsg.filter(Boolean);
@@ -260,7 +273,8 @@ const messages = ref([]);
 const danmuList = ref([]);
 
 const handleSendChatMessage = (message) => {
-  if (!store.hasToken()) {
+
+  if (!store.hasToken() && !extensionState.value) {
     // store.loginPageVisible = true;
     const currentPath = router.currentRoute.value.fullPath;
     $q.dialog({
@@ -573,10 +587,10 @@ onUnmounted(() => {
   position: fixed;
   left: 0;
   top: calc(56.25vw + 32px);
-  width: calc(100%);
-  height: 80px;
+  width: 100%;
   display: flex;
   align-items: center;
+  background: #e8f2fe;
 
   .container-box {
     padding: 8px 12px;
@@ -663,7 +677,7 @@ onUnmounted(() => {
       transition: all 0.3s ease;
 
       &.expanded {
-        white-space: normal;
+        white-space: break-spaces;
       }
     }
   }
@@ -748,7 +762,7 @@ onUnmounted(() => {
       position: fixed;
       left: 0;
       top: calc(56.25vw + 32px);
-      width: calc(100% - 24px);
+      background: unset;
 
       .container-box {
         background: #1c42a3;

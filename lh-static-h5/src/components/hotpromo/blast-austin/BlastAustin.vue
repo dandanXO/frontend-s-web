@@ -1,7 +1,9 @@
 <template>
-  <div class="section-bg"
+  <div
+    class="section-bg"
     style="border: 1px solid rgba(172, 212, 246, 1); background: #f2f8fe; border-radius: 12px; padding: 30px"
-    bis_skin_checked="1">
+    bis_skin_checked="1"
+  >
     <div class="title-img" bis_skin_checked="1">活动内容</div>
     <br />
     <div style="display: flex; margin-bottom: 10px; justify-content: flex-start; gap: 5px" bis_skin_checked="1">
@@ -17,19 +19,22 @@
     </div>
     <table class="section-table" style="width: 100%">
       <tbody style="letter-spacing: -1px; font-size: 12px; line-height: 12px">
-        <tr style="
+        <tr
+          style="
             height: 56px;
             font-weight: 400;
             line-height: 12px;
             color: #fff;
             background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
             white-space: pre-wrap;
-          ">
+          "
+        >
           <th style="background-color: transparent" rowspan="2" width="70px">任务</th>
           <th style="background-color: transparent" rowspan="2">当日有效投注</th>
           <th style="background-color: transparent; border-bottom: 1px solid #dcdce8" colspan="5">冠冕金</th>
         </tr>
-        <tr style="
+        <tr
+          style="
             height: 56px;
             font-size: 1rem;
             font-weight: 400;
@@ -37,7 +42,8 @@
             color: #fff;
             background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
             white-space: pre-wrap;
-          ">
+          "
+        >
           <th style="border-radius: 0px">连续1天</th>
           <th style="">连续5天</th>
           <th style="">连续10天</th>
@@ -58,19 +64,22 @@
     <br />
     <table class="section-table" style="width: 100%">
       <tbody style="letter-spacing: -1px; font-size: 12px; line-height: 12px">
-        <tr style="
+        <tr
+          style="
             height: 56px;
             font-weight: 400;
             line-height: 12px;
             color: #fff;
             background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
             white-space: pre-wrap;
-          ">
+          "
+        >
           <th style="background-color: transparent" rowspan="2" width="70px">任务</th>
           <th style="background-color: transparent" rowspan="2">当日存款金额</th>
           <th style="background-color: transparent; border-bottom: 1px solid #dcdce8" colspan="5">加冕金</th>
         </tr>
-        <tr style="
+        <tr
+          style="
             height: 56px;
             font-size: 1rem;
             font-weight: 400;
@@ -78,7 +87,8 @@
             color: #fff;
             background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
             white-space: pre-wrap;
-          ">
+          "
+        >
           <th style="border-radius: 0px">连续1天</th>
           <th style="">连续5天</th>
           <th style="">连续10天</th>
@@ -100,7 +110,8 @@
       <div style="display: flex; align-items: center; gap: 5px; color: #ff3a3a" bis_skin_checked="1">
         <img
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHsSURBVHgBrVRLTtxAEK1qEbFkbhDnJFF2CDbDHglLSEiwmBxhhhtMsmKHO0JCYsWSXcxFYnOCBAmB5LRdvO52m7Y1fAamJPe36tV7VS3T/8lkaiaTPVqxKaqqazLm1BwdFebwcGUJ2A71wcEfIfqCjRDzDYlkSinNJyclvdOUAzbmJ1iTGMOYE6rrWV1VRb2/fyppmtA7zDFG8KgRKbDZwMzu0I/BMsWsOctyeqN10fXu7gwlmD7rKCK4v0ZAxufnmt4KLOPxSNbXCyw3AGAZx5TFYT8FlEg044sL/SqwY72zM2elvrcXtpGOaAwe7mxqjKVVQE2j+fKyfBYYrBOxtWYX2vK28dJL1AW1dy1Qhv1xSMBDCbK9/RvTV/HtE8dNKW7LEzmKV8ExultneFV6bQgMWTeOp6PWIjWNL0PTDF8Lu7vg55MnNGQsm5sJ2BXx0SJVfYkO7C/mX/jmfHVV2uM+Y6WmUYC0Zz54WAqf9BZnP+j+fs55/q8vJXihcfhvFPQCt84frwHjnB4e9BAw2BPjqtpbIFOi92wbk+M7htycXrG1CCT14ZHcsF4CsAcsW1spps8hBXnJVqJG17uGLGOB8TRieQt2CxuyFLAZj1OUMmHbELCjuzv9EcAOmEejBP/jb5/OznJaoT0C29AKyUB7edEAAAAASUVORK5CYII="
-          style="width: 22px; height: auto; margin: 0; padding: 0" />
+          style="width: 22px; height: auto; margin: 0; padding: 0"
+        />
         <div style="font-size: 1rem" bis_skin_checked="1">示例</div>
       </div>
       <div style="color: #ff3a3a; font-size: 1rem" bis_skin_checked="1">
@@ -110,34 +121,54 @@
     </div>
   </div>
 
- <br/>
- 
+  <br />
+
   <div class="blast-austin-wrapper">
     <div class="container">
       <Carousel v-bind="carouselConfig" ref="missionCarousel">
         <Slide v-for="(item, index) in Array.from(Array(5).keys())" :key="index">
           <template v-if="isInitLoading">
-            <img style="display: flex; margin: 0 auto !important; width: 100px; height: auto"
-              src="../../../assets/images/promo/hotpromo/blast-austin/loader.gif" />
+            <img
+              style="display: flex; margin: 0 auto !important; width: 100px; height: auto"
+              src="../../../assets/images/promo/hotpromo/blast-austin/loader.gif"
+            />
           </template>
-          <div class="chest-item" v-else :style="`filter:${claimedProgressData.mission === index + 1 || claimedProgressData.mission === null
-              ? 'grayscale(0)'
-              : 'grayscale(1)'
-            }`">
+          <div
+            class="chest-item"
+            v-else
+            :style="`filter:${
+              claimedProgressData.mission === index + 1 || claimedProgressData.mission === null
+                ? 'grayscale(0)'
+                : 'grayscale(1)'
+            }`"
+          >
             <div class="section-title">
-              <img style="width: 18px; height: 18px; border-radius: 0px"
-                src="../../../assets/images/promo/hotpromo/blast-austin/gift-icon.svg" />
+              <img
+                style="width: 18px; height: 18px; border-radius: 0px"
+                src="../../../assets/images/promo/hotpromo/blast-austin/gift-icon.svg"
+              />
               <span>任务选择</span>
             </div>
-            <img class="icon-img" style="width: 120px !important"
-              src="../../../assets/images/promo/hotpromo/blast-austin/treasure-chest.png" />
+            <img
+              class="icon-img"
+              style="width: 120px !important"
+              src="../../../assets/images/promo/hotpromo/blast-austin/treasure-chest.png"
+            />
             <div style="font-size: 15px">任务{{ index + 1 }}</div>
-            <img v-if="claimedProgressData.mission === index + 1"
-              style="width: 105px !important; height: auto !important" @click="onClickSelectMission(index + 1)" class="icon-img claim-chest-btn"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-claimed-btn.svg" />
-            <img v-else class="icon-img claim-chest-btn" style="width: 105px !important; height: auto !important"
+            <img
+              v-if="claimedProgressData.mission === index + 1"
+              style="width: 105px !important; height: auto !important"
+              @click="onClickSelectMission(index + 1)"
+              class="icon-img claim-chest-btn"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-claimed-btn.svg"
+            />
+            <img
+              v-else
+              class="icon-img claim-chest-btn"
+              style="width: 105px !important; height: auto !important"
               src="../../../assets/images/promo/hotpromo/blast-austin/chest-unclaimed-btn.svg"
-              @click="onClickSelectMission(index + 1)" />
+              @click="onClickSelectMission(index + 1)"
+            />
           </div>
         </Slide>
 
@@ -147,16 +178,25 @@
       </Carousel>
 
       <Carousel v-bind="carouselConfig" ref="betCarousel">
-        <Slide v-for="item, index in claimedProgressData.betRules" :key="index">
+        <Slide v-for="(item, index) in claimedProgressData.betRules" :key="index">
           <template v-if="isInitLoading">
-            <img style="display: flex; margin: 0 auto !important; width: 100px; height: auto"
-              src="../../../assets/images/promo/hotpromo/blast-austin/loader.gif" />
+            <img
+              style="display: flex; margin: 0 auto !important; width: 100px; height: auto"
+              src="../../../assets/images/promo/hotpromo/blast-austin/loader.gif"
+            />
           </template>
-          <div class="chest-item" v-else
-            :style="`filter:${claimedProgressData.bet.expiredBoxes.includes(item.boxNo) ? 'grayscale(1)' : 'grayscale(0)'}`">
+          <div
+            class="chest-item"
+            v-else
+            :style="`filter:${
+              claimedProgressData.bet.expiredBoxes.includes(item.boxNo) ? 'grayscale(1)' : 'grayscale(0)'
+            }`"
+          >
             <div class="section-title">
-              <img style="width: 18px; height: 18px; border-radius: 0px"
-                src="../../../assets/images/promo/hotpromo/blast-austin/gift-icon.svg" />
+              <img
+                style="width: 18px; height: 18px; border-radius: 0px"
+                src="../../../assets/images/promo/hotpromo/blast-austin/gift-icon.svg"
+              />
               <span>开启宝箱</span>
             </div>
 
@@ -164,20 +204,32 @@
               <!-- <div class="inner-section-title">冠冕任务：</div> -->
               <div class="inner-sub-section">
                 <div class="label">
-                  <img class="icon-img" width="20px" height="20px"
-                    src="../../../assets/images/promo/hotpromo/blast-austin/mission-icon.svg" />
+                  <img
+                    class="icon-img"
+                    width="20px"
+                    height="20px"
+                    src="../../../assets/images/promo/hotpromo/blast-austin/mission-icon.svg"
+                  />
                   <span>冠冕任务：</span>
                 </div>
                 <div class="status">
-                  <img class="icon-img" width="20px" height="20px"
-                    src="../../../assets/images/promo/hotpromo/blast-austin/green-check-icon.svg" />
+                  <img
+                    class="icon-img"
+                    width="20px"
+                    height="20px"
+                    src="../../../assets/images/promo/hotpromo/blast-austin/green-check-icon.svg"
+                  />
                   <div>已完成{{ claimedProgressData.bet.consecutiveDays }}天</div>
                 </div>
               </div>
               <div class="inner-sub-section">
                 <div class="label">
-                  <img class="icon-img" width="20px" height="20px"
-                    src="../../../assets/images/promo/hotpromo/blast-austin/money-icon.svg" />
+                  <img
+                    class="icon-img"
+                    width="20px"
+                    height="20px"
+                    src="../../../assets/images/promo/hotpromo/blast-austin/money-icon.svg"
+                  />
                   <span>冠冕金：</span>
                 </div>
                 <div class="amt">
@@ -186,29 +238,57 @@
               </div>
             </div>
 
-            <img v-if="item.boxNo === 1" class="claim-chest-img"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-1.png" />
-            <img v-if="item.boxNo === 2" class="claim-chest-img"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-5.png" />
-            <img v-if="item.boxNo === 3" class="claim-chest-img"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-10.png" />
-            <img v-if="item.boxNo === 4" class="claim-chest-img"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-15.png" />
-            <img v-if="item.boxNo === 5" class="claim-chest-img"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-20.png" />
+            <img
+              v-if="item.boxNo === 1"
+              class="claim-chest-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-1.png"
+            />
+            <img
+              v-if="item.boxNo === 2"
+              class="claim-chest-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-5.png"
+            />
+            <img
+              v-if="item.boxNo === 3"
+              class="claim-chest-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-10.png"
+            />
+            <img
+              v-if="item.boxNo === 4"
+              class="claim-chest-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-15.png"
+            />
+            <img
+              v-if="item.boxNo === 5"
+              class="claim-chest-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-20.png"
+            />
             <div style="font-size: 15px">连续{{ item.consecutiveDays }}天</div>
-            <img v-if="claimedProgressData.bet.claimedBoxes.includes(item.boxNo)" class="icon-img"
+            <img
+              v-if="claimedProgressData.bet.claimedBoxes.includes(item.boxNo)"
+              class="icon-img"
               style="width: 105px !important; height: auto !important"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-claimed-btn.svg" />
-            <img v-else-if="claimedProgressData.bet.expiredBoxes.includes(item.boxNo)" class="icon-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-claimed-btn.svg"
+            />
+            <img
+              v-else-if="claimedProgressData.bet.expiredBoxes.includes(item.boxNo)"
+              class="icon-img"
               style="width: 105px !important; height: auto !important"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-expired-btn.svg" />
-            <img v-else-if="claimedProgressData.bet.boxNo === item.boxNo && item.bonus > 0"
-              class="icon-img claim-chest-btn" style="width: 105px !important; height: auto !important"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-expired-btn.svg"
+            />
+            <img
+              v-else-if="claimedProgressData.bet.boxNo === item.boxNo && item.bonus > 0"
+              class="icon-img claim-chest-btn"
+              style="width: 105px !important; height: auto !important"
               src="../../../assets/images/promo/hotpromo/blast-austin/chest-claim-now-btn.png"
-              @click="onClickClaimChest('BET')" />
-            <img style="filter: grayscale(1); width: 105px !important; height: auto !important" v-else class="icon-img"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-claim-now-btn.png" />
+              @click="onClickClaimChest('BET')"
+            />
+            <img
+              style="filter: grayscale(1); width: 105px !important; height: auto !important"
+              v-else
+              class="icon-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-claim-now-btn.png"
+            />
           </div>
         </Slide>
 
@@ -218,16 +298,25 @@
       </Carousel>
 
       <Carousel v-bind="carouselConfig" ref="depositCarousel">
-        <Slide v-for="item, index in claimedProgressData.depositRules" :key="index">
+        <Slide v-for="(item, index) in claimedProgressData.depositRules" :key="index">
           <template v-if="isInitLoading">
-            <img style="display: flex; margin: 0 auto !important; width: 100px; height: auto"
-              src="../../../assets/images/promo/hotpromo/blast-austin/loader.gif" />
+            <img
+              style="display: flex; margin: 0 auto !important; width: 100px; height: auto"
+              src="../../../assets/images/promo/hotpromo/blast-austin/loader.gif"
+            />
           </template>
-          <div class="chest-item" v-else :style="`filter:${claimedProgressData.deposit.expiredBoxes.includes(item.boxNo) ? 'grayscale(1)' : 'grayscale(0)'
-            }`">
+          <div
+            class="chest-item"
+            v-else
+            :style="`filter:${
+              claimedProgressData.deposit.expiredBoxes.includes(item.boxNo) ? 'grayscale(1)' : 'grayscale(0)'
+            }`"
+          >
             <div class="section-title">
-              <img style="width: 18px; height: 18px; border-radius: 0px"
-                src="../../../assets/images/promo/hotpromo/blast-austin/gift-icon.svg" />
+              <img
+                style="width: 18px; height: 18px; border-radius: 0px"
+                src="../../../assets/images/promo/hotpromo/blast-austin/gift-icon.svg"
+              />
               <span>开启宝箱</span>
             </div>
 
@@ -235,20 +324,32 @@
               <!-- <div class="inner-section-title">冠冕任务：</div> -->
               <div class="inner-sub-section">
                 <div class="label">
-                  <img class="icon-img" width="20px" height="20px"
-                    src="../../../assets/images/promo/hotpromo/blast-austin/mission-icon.svg" />
+                  <img
+                    class="icon-img"
+                    width="20px"
+                    height="20px"
+                    src="../../../assets/images/promo/hotpromo/blast-austin/mission-icon.svg"
+                  />
                   <span>加冕任务：</span>
                 </div>
                 <div class="status">
-                  <img class="icon-img" width="20px" height="20px"
-                    src="../../../assets/images/promo/hotpromo/blast-austin/green-check-icon.svg" />
+                  <img
+                    class="icon-img"
+                    width="20px"
+                    height="20px"
+                    src="../../../assets/images/promo/hotpromo/blast-austin/green-check-icon.svg"
+                  />
                   <div>已完成{{ claimedProgressData.deposit.consecutiveDays }}天</div>
                 </div>
               </div>
               <div class="inner-sub-section">
                 <div class="label">
-                  <img class="icon-img" width="20px" height="20px"
-                    src="../../../assets/images/promo/hotpromo/blast-austin/money-icon.svg" />
+                  <img
+                    class="icon-img"
+                    width="20px"
+                    height="20px"
+                    src="../../../assets/images/promo/hotpromo/blast-austin/money-icon.svg"
+                  />
                   <span>加冕金：</span>
                 </div>
                 <div class="amt">
@@ -257,29 +358,57 @@
               </div>
             </div>
 
-            <img v-if="item.boxNo === 1" class="claim-chest-img"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-1.png" />
-            <img v-if="item.boxNo === 2" class="claim-chest-img"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-5.png" />
-            <img v-if="item.boxNo === 3" class="claim-chest-img"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-10.png" />
-            <img v-if="item.boxNo === 4" class="claim-chest-img"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-15.png" />
-            <img v-if="item.boxNo === 5" class="claim-chest-img"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-20.png" />
+            <img
+              v-if="item.boxNo === 1"
+              class="claim-chest-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-1.png"
+            />
+            <img
+              v-if="item.boxNo === 2"
+              class="claim-chest-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-5.png"
+            />
+            <img
+              v-if="item.boxNo === 3"
+              class="claim-chest-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-10.png"
+            />
+            <img
+              v-if="item.boxNo === 4"
+              class="claim-chest-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-15.png"
+            />
+            <img
+              v-if="item.boxNo === 5"
+              class="claim-chest-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-day-20.png"
+            />
             <div style="font-size: 15px">连续{{ item.consecutiveDays }}天</div>
-            <img v-if="claimedProgressData.deposit.claimedBoxes.includes(item.boxNo)" class="icon-img"
+            <img
+              v-if="claimedProgressData.deposit.claimedBoxes.includes(item.boxNo)"
+              class="icon-img"
               style="width: 105px !important; height: auto !important"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-claimed-btn.svg" />
-            <img v-else-if="claimedProgressData.deposit.expiredBoxes.includes(item.boxNo)" class="icon-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-claimed-btn.svg"
+            />
+            <img
+              v-else-if="claimedProgressData.deposit.expiredBoxes.includes(item.boxNo)"
+              class="icon-img"
               style="width: 105px !important; height: auto !important"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-expired-btn.svg" />
-            <img v-else-if="claimedProgressData.deposit.boxNo === item.boxNo && item.bonus > 0"
-              class="icon-img claim-chest-btn" style="width: 105px !important; height: auto !important"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-expired-btn.svg"
+            />
+            <img
+              v-else-if="claimedProgressData.deposit.boxNo === item.boxNo && item.bonus > 0"
+              class="icon-img claim-chest-btn"
+              style="width: 105px !important; height: auto !important"
               src="../../../assets/images/promo/hotpromo/blast-austin/chest-claim-now-btn.png"
-              @click="onClickClaimChest('DEPOSIT')" />
-            <img style="filter: grayscale(1); width: 105px !important; height: auto !important" v-else class="icon-img"
-              src="../../../assets/images/promo/hotpromo/blast-austin/chest-claim-now-btn.png" />
+              @click="onClickClaimChest('DEPOSIT')"
+            />
+            <img
+              style="filter: grayscale(1); width: 105px !important; height: auto !important"
+              v-else
+              class="icon-img"
+              src="../../../assets/images/promo/hotpromo/blast-austin/chest-claim-now-btn.png"
+            />
           </div>
         </Slide>
 
@@ -290,18 +419,27 @@
     </div>
   </div>
 
-
   <q-dialog v-model="isOpenMissionDialogVisible">
     <div class="blast-austin-dialog">
       <div class="dialog-header">开启宝箱</div>
       <div class="dialog-body">
-        <img src="../../../assets/images/promo/hotpromo/blast-austin/open-mission-decor.png" width="300px"
-          height="93px" />
-        <img src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png" width="48px"
-          height="48px" />
+        <img
+          src="../../../assets/images/promo/hotpromo/blast-austin/open-mission-decor.png"
+          width="300px"
+          height="93px"
+        />
+        <img
+          src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png"
+          width="48px"
+          height="48px"
+        />
         <div class="title">恭喜您任务领取成功</div>
         <div class="desc">
-          任务{{ curMission.missionNum }}领取成功，请按照任务要求进行闯关，连续二十天完成当日有效投注≥{{ convertToCommaAmount(curMission.bet.bonus) }}元总计可领取冠冕金{{ calculateTotalBonus(curMission.bet) }}元，若连续二十天完成当日存款金额≥{{ convertToCommaAmount(curMission.deposit.bonus) }}元总计可获得加冕金{{ calculateTotalBonus(curMission.deposit) }}元。
+          任务{{ curMission.missionNum }}领取成功，请按照任务要求进行闯关，连续二十天完成当日有效投注≥{{
+            convertToCommaAmount(curMission.bet.bonus)
+          }}元总计可领取冠冕金{{ calculateTotalBonus(curMission.bet) }}元，若连续二十天完成当日存款金额≥{{
+            convertToCommaAmount(curMission.deposit.bonus)
+          }}元总计可获得加冕金{{ calculateTotalBonus(curMission.deposit) }}元。
         </div>
         <div class="action-btn" @click="isOpenMissionDialogVisible = false">开始任务</div>
       </div>
@@ -312,15 +450,24 @@
     <div class="blast-austin-dialog">
       <div class="dialog-header">冠冕任务</div>
       <div class="dialog-body">
-        <img src="../../../assets/images/promo/hotpromo/blast-austin/claim-chest-decor.png" width="300px"
-          height="110px" />
-        <img src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png" width="48px"
-          height="48px" />
+        <img
+          src="../../../assets/images/promo/hotpromo/blast-austin/claim-chest-decor.png"
+          width="300px"
+          height="110px"
+        />
+        <img
+          src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png"
+          width="48px"
+          height="48px"
+        />
         <div class="title">恭喜您开启冠冕任务宝箱成功</div>
         <div class="desc" style="display: flex; align-items: center; color: #43b202">
           获得冠冕金{{ claimBetSuccessDialogBonus }}元
-          <img src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png" width="20px"
-            height="20px" />
+          <img
+            src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png"
+            width="20px"
+            height="20px"
+          />
         </div>
         <div class="action-btn" @click="isClaimBetSuccessDialogVisible = false">继续任务</div>
       </div>
@@ -331,15 +478,24 @@
     <div class="blast-austin-dialog">
       <div class="dialog-header">加冕任务</div>
       <div class="dialog-body">
-        <img src="../../../assets/images/promo/hotpromo/blast-austin/claim-chest-decor.png" width="300px"
-          height="110px" />
-        <img src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png" width="48px"
-          height="48px" />
+        <img
+          src="../../../assets/images/promo/hotpromo/blast-austin/claim-chest-decor.png"
+          width="300px"
+          height="110px"
+        />
+        <img
+          src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png"
+          width="48px"
+          height="48px"
+        />
         <div class="title">恭喜您开启加冕任务宝箱成功</div>
         <div class="desc" style="display: flex; align-items: center; color: #43b202">
           获得加冕金{{ claimDepositSuccessDialogBonus }}元
-          <img src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png" width="20px"
-            height="20px" />
+          <img
+            src="../../../assets/images/promo/hotpromo/blast-austin/dialog-success-icon.png"
+            width="20px"
+            height="20px"
+          />
         </div>
         <div class="action-btn" @click="isClaimDepositSuccessDialogVisible = false">继续任务</div>
       </div>
@@ -445,7 +601,8 @@ const claimedProgressData = ref({
   ]
 });
 
-const calculateTotalBonus = ({ day1, day5, day10, day15, day20 }) => [day1, day5, day10, day15, day20].reduce((acc, curr) => acc + curr, 0);
+const calculateTotalBonus = ({ day1, day5, day10, day15, day20 }) =>
+  [day1, day5, day10, day15, day20].reduce((acc, curr) => acc + curr, 0);
 const curMission = ref({});
 const missionArrays = [
   {
@@ -453,11 +610,19 @@ const missionArrays = [
     missionNum: 1,
     bet: {
       bonus: 2000,
-      "day1": 18, "day5": 28, "day10": 58, "day15": 88, "day20": 128,
+      day1: 18,
+      day5: 28,
+      day10: 58,
+      day15: 88,
+      day20: 128
     },
     deposit: {
       bonus: 500,
-      "day1": 28, "day5": 58, "day10": 88, "day15": 128, "day20": 188,
+      day1: 28,
+      day5: 58,
+      day10: 88,
+      day15: 128,
+      day20: 188
     }
   },
   {
@@ -465,11 +630,19 @@ const missionArrays = [
     missionNum: 2,
     bet: {
       bonus: 5000,
-      "day1": 28, "day5": 58, "day10": 88, "day15": 128, "day20": 168,
+      day1: 28,
+      day5: 58,
+      day10: 88,
+      day15: 128,
+      day20: 168
     },
     deposit: {
       bonus: 1000,
-      "day1": 58, "day5": 88, "day10": 128, "day15": 188, "day20": 288,
+      day1: 58,
+      day5: 88,
+      day10: 128,
+      day15: 188,
+      day20: 288
     }
   },
   {
@@ -477,11 +650,19 @@ const missionArrays = [
     missionNum: 3,
     bet: {
       bonus: 10000,
-      "day1": 58, "day5": 88, "day10": 128, "day15": 188, "day20": 228,
+      day1: 58,
+      day5: 88,
+      day10: 128,
+      day15: 188,
+      day20: 228
     },
     deposit: {
       bonus: 5000,
-      "day1": 88, "day5": 128, "day10": 188, "day15": 288, "day20": 588,
+      day1: 88,
+      day5: 128,
+      day10: 188,
+      day15: 288,
+      day20: 588
     }
   },
   {
@@ -489,11 +670,19 @@ const missionArrays = [
     missionNum: 4,
     bet: {
       bonus: 30000,
-      "day1": 88, "day5": 128, "day10": 188, "day15": 228, "day20": 358,
+      day1: 88,
+      day5: 128,
+      day10: 188,
+      day15: 228,
+      day20: 358
     },
     deposit: {
       bonus: 10000,
-      "day1": 128, "day5": 188, "day10": 288, "day15": 588, "day20": 888,
+      day1: 128,
+      day5: 188,
+      day10: 288,
+      day15: 588,
+      day20: 888
     }
   },
   {
@@ -501,11 +690,19 @@ const missionArrays = [
     missionNum: 5,
     bet: {
       bonus: 100000,
-      "day1": 128, "day5": 188, "day10": 228, "day15": 358, "day20": 588,
+      day1: 128,
+      day5: 188,
+      day10: 228,
+      day15: 358,
+      day20: 588
     },
     deposit: {
       bonus: 50000,
-      "day1": 188, "day5": 288, "day10": 588, "day15": 888, "day20": 1888,
+      day1: 188,
+      day5: 288,
+      day10: 588,
+      day15: 888,
+      day20: 1888
     }
   }
 ];
@@ -513,7 +710,7 @@ const missionArrays = [
 const onClickSelectMission = (missionNum) => {
   curMission.value = missionArrays[0];
 
-  if(claimedProgressData.value.mission === null) {
+  if (claimedProgressData.value.mission === null) {
     selectMissionBlastAustin(props.promoCode, missionNum).then((res) => {
       if (res.code === 0) {
         isOpenMissionDialogVisible.value = true;
@@ -526,13 +723,13 @@ const onClickSelectMission = (missionNum) => {
         });
       }
     });
-  } else if(missionNum === claimedProgressData.value.mission) {
+  } else if (missionNum === claimedProgressData.value.mission) {
     isOpenMissionDialogVisible.value = true;
     curMission.value = missionArrays[missionNum - 1];
     return;
-  } else if(missionNum !== claimedProgressData.value.mission) {
+  } else if (missionNum !== claimedProgressData.value.mission) {
     notify({
-      message: '您已有任务未完成',
+      message: "您已有任务未完成",
       type: "error"
     });
     return;
@@ -541,11 +738,11 @@ const onClickSelectMission = (missionNum) => {
 
 const onClickClaimChest = (type) => {
   claimChestBlastAustin(props.promoCode, type).then((res) => {
-    if (res.code === 0 && type === 'BET') {
+    if (res.code === 0 && type === "BET") {
       claimBetSuccessDialogBonus.value = res.data;
       isClaimBetSuccessDialogVisible.value = true;
       initData();
-    } else if (res.code === 0 && type === 'DEPOSIT') {
+    } else if (res.code === 0 && type === "DEPOSIT") {
       claimDepositSuccessDialogBonus.value = res.data;
       isClaimDepositSuccessDialogVisible.value = true;
       initData();
@@ -672,7 +869,7 @@ onMounted(() => {
 .wrapper {
   display: flex;
   justify-content: center;
-  font-family: "PingFang SC";
+  font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial, sans-serif;
 }
 
 .container {
@@ -856,7 +1053,7 @@ onMounted(() => {
     transform: rotateY(-30deg) scale(0.95);
   }
 
-  .carousel__slide--next~.carousel__slide {
+  .carousel__slide--next ~ .carousel__slide {
     opacity: var(--carousel-opacity-inactive);
     transform: translateX(-10px) rotateY(12deg) scale(0.9);
   }

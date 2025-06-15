@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="filters">
-            <InputField :isDark="true">
+            <InputField :isDark="true"> 
                 <template #input>
                     <div class="date-field">
                         <q-input filled :model-value="formattedDateRange" readonly>
@@ -143,9 +143,13 @@
 <script setup>
 import { api } from 'src/boot/axios';
 import InputField from 'src/components/auth/InputField.vue';
-import { ref, reactive, computed, onActivated, onMounted } from 'vue';
+import { ref, reactive, computed, onActivated, onMounted, onBeforeMount } from 'vue';
 import { t } from "src/boot/lang";
+import { useAffiliateStore } from "src/stores/affiliate";
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+const affiliateStore = useAffiliateStore();
 const isLoading = ref(false);
 const activeMemberDividendRateData = ref([]);
 const today = new Date();
@@ -156,7 +160,8 @@ const formatDate = (date) => date.toISOString().split("T")[0];
 
 const formattedDateRange = computed(() => {
     const range = searchForm.dateRange;
-    if (!range || typeof range === "string") return "";
+    if (!range) return "";
+    if(typeof range === "string") return range;
     const { from, to } = range;
     return `${formatDateToSlash(from)} ~ ${formatDateToSlash(to)}`;
 });
@@ -208,7 +213,13 @@ const getStatusLabel = (statusStr) => {
 
 const getMyDividendsInfo = () => {
     isLoading.value = true;
-    const recordDate = searchForm.dateRange.from + "," + searchForm.dateRange.to;
+    const recordDate = (() => {
+        if(searchForm.dateRange?.from) {
+            return searchForm.dateRange.from + "," + searchForm.dateRange.to;
+        } else {
+            return searchForm.dateRange + "," + searchForm.dateRange;
+        }
+    })();
 
     api.get('/session/affiliate/settlement?recordDates=' + recordDate).then((res) => {
         dividendInfo.value = res.data;
@@ -225,14 +236,21 @@ const getMyDividendsInfo = () => {
     })
 }
 
+onBeforeMount(async () => {
+    const showDividendPage = await affiliateStore.checkIsCanShowDividendPage();
+    if(!showDividendPage) {
+        router.push('/affiliate/agent');
+    }
+})
+
 onMounted(() => {
     getMyDividendsInfo();
+    
 })
 
 onActivated(() => {
     getMyDividendsInfo();
 })
-
 </script>
 
 <style lang="scss" scoped>

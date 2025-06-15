@@ -55,7 +55,6 @@
                           <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">
                             {{ getPromoLabel(promo.labelType) }}
                           </div>
-
                         </div>
                         <div
                           style="padding-left: 0; font-weight: 400"
@@ -64,10 +63,10 @@
                           v-html="parsedParam(promo.param).date"
                         />
                         <div
-                            class="promo-item-date"
-                            v-if="parsedParam(promo.param).date && !$q.dark.isActive"
-                            v-html="parsedParam(promo.param).date"
-                          />
+                          class="promo-item-date"
+                          v-if="parsedParam(promo.param).date && !$q.dark.isActive"
+                          v-html="parsedParam(promo.param).date"
+                        />
                         <div class="promo-item-title">{{ promo.title }}</div>
                         <div
                           class="promo-item-deal"
@@ -206,6 +205,9 @@
                   <div v-if="selectedPromo.redirectUrl === 'lh1-valorant-masters-toronto-2025'">
                     <TorontoMasters :promoCode="selectedPromo.promoCode" />
                   </div>
+                  <div v-if="selectedPromo.redirectUrl === 'lh1-fifa-2025'">
+                    <Fifa2025Promo :promoCode="selectedPromo.promoCode" />
+                  </div>
                   <div v-if="selectedPromo.redirectUrl === 'lh1-blast-tv-austin-major-2025'">
                     <BlastAustin :promoCode="selectedPromo.promoCode" />
                   </div>
@@ -325,6 +327,7 @@ import BlastAustin from "src/components/hotpromo/blast-austin/BlastAustin.vue";
 import MesaPromo from "src/components/hotpromo/mesa/MesaPromo.vue";
 import { useCloudWiseHelper } from "src/hooks/cloudWiseHelper";
 import TorontoMasters from "src/components/hotpromo/toronto-masters/TorontoMasters.vue";
+import Fifa2025Promo from "src/components/hotpromo/fifa-2025/Fifa2025Promo.vue";
 
 
 export default defineComponent({
@@ -335,7 +338,8 @@ export default defineComponent({
     BlastPremierMarquee,
     MesaPromo,
     BlastAustin,
-    TorontoMasters
+    TorontoMasters,
+    Fifa2025Promo
   },
   setup() {
     const notify = useNotify();
@@ -350,6 +354,7 @@ export default defineComponent({
       active: { value: "ALL", label: "ALL" },
       promoList: []
     });
+    const isPromoFound= ref(false);
     const showRuleDialog = ref(false)
     const isFetchingPromo = ref(false);
     const filteredArray = ref([]);
@@ -400,6 +405,7 @@ export default defineComponent({
 
     const isSpecialPromo = ref(false);
     const showPromoDetails = (promo) => {
+      isPromoFound.value= true;
       if (promo.promoCode === "lh1-game-steps") {
         isSpecialPromo.value = true;
       } else if (promo.promoCode === "lh1-livestream") {
@@ -469,6 +475,7 @@ export default defineComponent({
       const platformApiUrl = "/opt-session/promo/page";
 
       isFetchingPromo.value = window.location.pathname === "/promotion" || window.location.pathname === "/promo";
+      isPromoFound.value= false;
 
       api
         .get(platformApiUrl)
@@ -476,7 +483,6 @@ export default defineComponent({
           if (res.code === 0) {
             promoState.promoList = [];
             var promoItems = res.data;
-            // promoState.promoList.push(...res.data);
 
             promoItems.filter(promo => !($q.dark.isActive && ['lh1-dark-mode'].includes(promo.redirectUrl))).forEach((element) => {
               // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
@@ -501,7 +507,13 @@ export default defineComponent({
               // }
             });
 
-            // console.log("route.query.name", route.query.name);
+            if(route.query.name && !isPromoFound.value){
+              notify({
+                type: "error",
+                message: '活动已结束'
+              });
+              clearNameQuery()
+            }
 
             switchPromoType(promoState.active);
             isFetchingPromo.value = false;
@@ -512,6 +524,13 @@ export default defineComponent({
           isFetchingPromo.value = false;
         });
     };
+
+    const clearNameQuery = () => {
+      const newQuery = { ...route.query };
+      delete newQuery.name;
+
+      router.replace({ path: route.path, query: newQuery });
+    }
 
     // extension
     const currentPath = ref(route.path);
@@ -783,7 +802,7 @@ export default defineComponent({
           }
 
           .promo-item-date {
-            color: #A4AABB;
+            color: #a4aabb;
             font-size: 0.825rem;
             font-weight: lighter;
             // padding-left: 12px;
@@ -801,7 +820,8 @@ export default defineComponent({
             margin-bottom: 2px;
             margin-top: 2px;
             letter-spacing: 0.5px;
-            font-family: 'PingFang SC', 'PingFang', sans-serif;
+            font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+              sans-serif;
 
             @media (min-width: 500px) {
               max-width: calc(100% - 220px);
@@ -814,7 +834,8 @@ export default defineComponent({
             font-size: 0.875rem;
             max-width: 160px;
             letter-spacing: 0.5px;
-            font-family: 'PingFang SC', 'PingFang', sans-serif;
+            font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+              sans-serif;
 
             @media (min-width: 500px) {
               max-width: calc(100% - 220px);
@@ -831,8 +852,8 @@ export default defineComponent({
             border-radius: 4px;
             font-size: 0.75rem;
             margin-top: 6px;
-            background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
-            box-shadow: 0px -0.75px 0.75px 0px #275EC1 inset;
+            background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+            box-shadow: 0px -0.75px 0.75px 0px #275ec1 inset;
           }
 
           .promo-item-side-img {
@@ -1426,8 +1447,8 @@ export default defineComponent({
           .content-lh1-feedback-award {
             color: #fff;
             img {
-              filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(232deg) brightness(100%)
-                contrast(106%);
+              filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(232deg)
+                brightness(100%) contrast(106%);
             }
           }
         }

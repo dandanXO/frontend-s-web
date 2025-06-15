@@ -154,7 +154,8 @@
               @click="openPhoneVeriDialog()"
               type="submit"
               class="common-sm-btn bottom-btn get-otp-btn"
-              :disable="otpCountdownCount > 0" :label="otpCountdownCount <= 0 ? `获取验证码` : `已发送（倒数${otpCountdownCount}秒)`"
+              :disable="otpCountdownCount > 0"
+              :label="otpCountdownCount <= 0 ? `获取验证码` : `已发送（倒数${otpCountdownCount}秒)`"
               color="brightbtn"
               rounded
             />
@@ -183,9 +184,7 @@
         </template>
       </q-form>
 
-      <div class="note">
-        温馨提示：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！
-      </div>
+      <div class="note">温馨提示：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</div>
 
       <q-btn class="common-large-btn" label="提交" width="100%" style="width: 100%" @click="submitBankCard()" />
     </div>
@@ -198,7 +197,7 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import {useLocalStorage} from "@vueuse/core"
+import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "src/hooks/notify";
 
 // NOTE: temp mock
@@ -223,7 +222,7 @@ const store = userStore();
 const router = useRouter();
 const isSZPAY = ref(false);
 
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/payment/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/payment/";
 
 const bankCardRef = ref();
 const cardNumberRef = ref();
@@ -251,7 +250,7 @@ const validateBankLength = (val) => {
     case "OKPAY":
       return (val.length > 15 && val.length < 17) || "长度应为16个字符";
     case "BLBPAY":
-      return (val.length > 32 && val.length < 34) || "长度应为33个字符";
+      return (val.length >= 32 && val.length <= 36) || "长度应为32到36个字符";
     case "JDPAY":
       return (val.length > 33 && val.length < 35) || "长度应为34个字符";
     case "SZPAY":
@@ -355,13 +354,13 @@ const loadBankCards = () => {
     if (!store.realName) {
       notify({
         type: "error",
-        message: "请输入您的真实姓名",
+        message: "请输入您的真实姓名"
       });
       router.push("/account/personal");
     } else if (!store.phone) {
       notify({
         type: "error",
-        message: "请输入您的电话号码",
+        message: "请输入您的电话号码"
       });
       router.push("/account/verifyTelephone");
     } else {
@@ -395,7 +394,7 @@ const submitBankCard = () => {
   if (!isOtpSent.value) {
     notify({
       type: "error",
-      message: "请点击获取验证码，并输入您的注册手机验证",
+      message: "请点击获取验证码，并输入您的注册手机验证"
     });
   } else if (phoneVerificationRef.value) {
     phoneVerificationRef.value.validate();
@@ -415,7 +414,7 @@ const submitBankCard = () => {
         if (response.code === 0) {
           notify({
             type: "success",
-            message: "已添加电子钱包",
+            message: "已添加电子钱包"
           });
           router.push("/account/withdraw");
         }

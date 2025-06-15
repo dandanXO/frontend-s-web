@@ -633,7 +633,9 @@ onMounted(async () => {
   .reward-description {
     h3 {
       color: rgba(65, 185, 255, 1);
-      font-family: PingFang TC;
+      font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+        sans-serif;
+
       font-size: 16px;
       font-weight: 500;
       line-height: 22.4px;
@@ -970,7 +972,9 @@ onMounted(async () => {
 .reward-description {
   h3 {
     color: rgba(65, 185, 255, 1);
-    font-family: PingFang TC;
+    font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+      sans-serif;
+
     font-size: 16px;
     font-weight: 500;
     line-height: 22.4px;

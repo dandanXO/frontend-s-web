@@ -154,7 +154,8 @@
           :rules="[
             (val) => !!val || 'Please Enter Withdraw Amount',
             (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
-            (val) => val <= withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
+            (val) =>
+              val <= withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
             (val) =>
               (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
                 val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
@@ -170,21 +171,27 @@
           <div class="desc-wrapper">
             <div class="desc">Withdrew Amount</div>
           </div>
-          <div class="desc">{{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }}</div>
+          <div class="desc">
+            {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }}
+          </div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
             <div class="desc">{{ store.vip }} Daily Limit</div>
           </div>
           <div class="desc">
-            {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }}
+            {{ store.currency.label }}:{{
+              convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount)
+            }}
           </div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
             <div class="desc">Remain Wagers</div>
           </div>
-          <div class="desc">{{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }}</div>
+          <div class="desc">
+            {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }}
+          </div>
         </div>
       </div>
     </div>
@@ -213,8 +220,8 @@
     </template>
 
     <div class="bottom-tnc q-mt-md">
-      Note: 2% + 50{{ store.currency.label }} of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
-      information, if withdrawal failed or you have any other questions, please contact CS 24/7
+      Note: 2% + 50{{ store.currency.label }} of the withdrawal amount will be deducted as bank commission Please double
+      check the withdrawal information, if withdrawal failed or you have any other questions, please contact CS 24/7
     </div>
   </div>
 
@@ -448,7 +455,7 @@ const submitWithdrawBank = async () => {
     // });
     // } else {
     api
-      .post("/session/withdrawAndBankCard", qs.stringify(bankCardField))
+      .post("/session/ausWithdrawAndBankCard", qs.stringify(bankCardField))
       .then((response) => {
         if (response.code === 0) {
           $q.notify({

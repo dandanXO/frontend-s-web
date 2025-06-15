@@ -108,6 +108,10 @@
     </div>
 </div>
 
+<!--<button id="testCopy" data-clipboard-text="Hello from test">复制测试</button>-->
+
+
+
 <div class="modal-open" style="display:none;">
     <div class="modal-div">
         <div class="modal-inner">
@@ -182,6 +186,9 @@
         e.stopPropagation()
     })
 
+    // const clip = new ClipboardJS('#testCopy');
+    // clip.on('success', e => console.log('✅ 复制成功:', e.text));
+    // clip.on('error', e => console.error('❌ 复制失败', e));
 
     async function getApiUrl() {
         try {
@@ -298,24 +305,28 @@
         $('#android-lists').html(androidHtml)
 
         androidDownload.forEach((list, index) => {
-            $(`#download_${index}`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
+            const btn = $(`#download_${index}`);
+            btn.attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
 
-            new ClipboardJS(`#download_${index}`)
+            const clipboard = new ClipboardJS(`#download_${index}`);
 
-            $(`#download_and_${index} .sub1-btn-download`).on('click', function () {
+            clipboard.on('success', function(e) {
+
                 if (!list.isDownload) {
-                    downloadFile(list.url, list.name, index)
-                    list.isDownload = true
-                    $(this)
+                    downloadFile(list.url, list.name, index);
+                    list.isDownload = true;
+
+                    btn
                         .addClass('sub1-inactive')
                         .removeClass('sub1-active')
-                        .attr('disabled', true)
                         .text('已下载')
+                        .attr('disabled', true); // 放这里没问题
 
                     postDownloadExtra(type, host);
                 }
-            })
 
+                e.clearSelection(); // 清除高亮
+            });
         })
 
     }
@@ -376,7 +387,7 @@
                 <div class="sub1-title">${item.name || ''}</div>
                 <div class="sub1-subtitle">${item.subtitle || ''}</div>
             </div>
-            <button class="sub1-btn-download ${item.isDownload ? 'sub1-inactive' : 'sub1-active'}" id="download_${index}"
+            <button class="sub1-btn-download ${item.isDownload ? 'sub1-inactive' : 'sub1-active'}" id="downloadios_${index}"
                 data-clipboard-text='UIO${JSON.stringify(vv)}'
                 ${item.isDownload ? 'disabled' : ''}>
                 ${item.isDownload ? '已下载' : '下载'}
@@ -387,23 +398,28 @@
         $('#ios-lists').html(iosHtml)
 
         iosDownload.forEach((list, index) => {
-            $(`#download_${index}`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
+            const btn = $(`#downloadios_${index}`);
+            btn.attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
 
-            new ClipboardJS(`#download_${index}`);
+            const clipboard = new ClipboardJS(`#downloadios_${index}`);
 
-            $(`#download_ios_${index} .sub1-btn-download`).on('click', function () {
+            clipboard.on('success', function(e) {
+
                 if (!list.isDownload) {
-                    downloadFile(list.url, list.name, index)
-                    list.isDownload = true
-                    $(this)
+                    downloadFile(list.url, list.name, index);
+                    list.isDownload = true;
+
+                    btn
                         .addClass('sub1-inactive')
                         .removeClass('sub1-active')
-                        .attr('disabled', true)
                         .text('已下载')
+                        .attr('disabled', true); // 放这里没问题
 
                     postDownloadExtra(type, host);
                 }
-            })
+
+                e.clearSelection(); // 清除高亮
+            });
         })
 
         // $(`#download_kuaijie`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));

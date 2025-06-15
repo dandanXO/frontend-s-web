@@ -359,7 +359,8 @@ export default {
         description: "حکومت کیوراکاؤ کے ذریعہ"
       }
     },
-    termsAndConditions: "شرائط و ضوابط"
+    termsAndConditions: "شرائط و ضوابط",
+    legalLicense: "قانونی لائسنس"
   },
   home: {
     menu_all: "سب",
@@ -752,7 +753,7 @@ export default {
   bankCard: {
     bankAccountNum: "بینک اکاؤنٹ نمبر",
     pleaseEnterCardAccount: "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
-    bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 16 ہندسوں یا اس سے زیادہ ہونا چاہیے",
+    bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 13 سے 16 ہندسوں کے درمیان ہونا چاہیے۔",
     bankCardDisallowDecimal: "بینک اکاؤنٹ نمبر میں اعشاری نمبر نہیں ہو سکتے",
     nameofCardAcc: "کارڈ اکاؤنٹ کا نام",
     insertCardAccName: "براہ کرم کارڈ اکاؤنٹ کا نام درج کریں",

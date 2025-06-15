@@ -693,7 +693,8 @@ export default defineComponent({
   }
   .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
     color: #424f72;
-    font-family: "PingFang SC" !important;
+    font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+      sans-serif;
   }
 
   .geetest_captcha.geetest_dark.geetest_lock_success

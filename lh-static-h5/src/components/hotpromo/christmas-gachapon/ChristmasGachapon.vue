@@ -591,7 +591,9 @@ onMounted(() => {
     text-align: center;
     margin: 10px auto;
     color: #1f774c;
-    font-family: PingFang;
+    font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+      sans-serif;
+
     font-size: 20px;
     font-weight: 600;
     line-height: 44px;

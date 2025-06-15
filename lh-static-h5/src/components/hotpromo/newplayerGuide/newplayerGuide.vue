@@ -721,7 +721,9 @@ onMounted(async () => {
     }
 
     li {
-      font-family: PingFang TC;
+      font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+        sans-serif;
+
       font-size: 18px;
       font-weight: 400;
       line-height: 28.8px;
@@ -1014,7 +1016,9 @@ h1 {
   }
 
   li {
-    font-family: PingFang TC;
+    font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+      sans-serif;
+
     font-size: 18px;
     font-weight: 400;
     line-height: 28.8px;
