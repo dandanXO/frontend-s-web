@@ -1,35 +1,39 @@
 <template>
-  <div class="forum-card">
-    <div class="forum-card__header">
-      <div class="forum-card__title">
-        <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
-        <span>{{ $t('affiliate.account.memberReferralLink') }}</span>
-      </div>
-      <div class="forum-card__icons">
-        <!-- <img alt="forum" src="@/assets/images/agent/link-icon.png" width="16" height="16"
-          @click="onClickQRCode('member', 'short')" />
-        <div class="icon-divider"></div> -->
-        <img alt="scan-qr" src="@/assets/images/agent/scan-qr-icon.png" width="16" height="16"
-          @click="onClickQRCode('member')" />
+  <img width="20px" src="@/assets/images/agent/refresh-icon.svg" @click="getLinkList" style="display:flex;margin-left:auto;" />
+  
+  <template v-if="isLoading">
+    <div class="qr-loader" style="display:flex;margin:30px auto;">
+      <div class="qr-loader-scan">
       </div>
     </div>
-  </div>
+  </template>
+  <template v-else>
+    <div class="forum-card" v-if="affiliateStore.affiliateInfo.affiliateLevel !== 'MASTER_AFFILIATE'">
+      <div class="forum-card__header">
+        <div class="forum-card__title">
+          <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
+          <span>{{ $t('affiliate.account.memberReferralLink') }}</span>
+        </div>
+        <div class="forum-card__icons">
+          <img alt="scan-qr" src="@/assets/images/agent/scan-qr-icon.png" width="16" height="16"
+            @click="onClickQRCode('member')" />
+        </div>
+      </div>
+    </div>
 
-  <div class="forum-card">
-    <div class="forum-card__header">
-      <div class="forum-card__title">
-        <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
-        <span>{{ $t('affiliate.account.agentReferralLink') }}</span>
-      </div>
-      <div class="forum-card__icons">
-        <!-- <img alt="forum" src="@/assets/images/agent/link-icon.png" width="16" height="16"
-          @click="onClickQRCode('agent', 'short')" />
-        <div class="icon-divider"></div> -->
-        <img alt="scan-qr" src="@/assets/images/agent/scan-qr-icon.png" width="16" height="16"
-          @click="onClickQRCode('agent')" />
+    <div class="forum-card">
+      <div class="forum-card__header">
+        <div class="forum-card__title">
+          <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
+          <span>{{ $t('affiliate.account.agentReferralLink') }}</span>
+        </div>
+        <div class="forum-card__icons">
+          <img alt="scan-qr" src="@/assets/images/agent/scan-qr-icon.png" width="16" height="16"
+            @click="onClickQRCode('agent')" />
+        </div>
       </div>
     </div>
-  </div>
+  </template>
 
   <q-dialog class="scan-qr-dialog" v-model="isScanQrDialog">
     <div class="popout-dialog">
@@ -70,6 +74,7 @@ import { ref, onMounted } from "vue";
 import VueQRCodeComponent from "vue-qrcode-component";
 import { useQuasar, Platform } from "quasar";
 import { useI18n } from "vue-i18n";
+import { useAffiliateStore } from "src/stores/affiliate";
 
 const { t } = useI18n();
 var qs = require('qs');
@@ -80,30 +85,32 @@ const longUrl = ref('');
 const shortUrl = ref('');
 const affCode = ref('');
 const isScanQrDialog = ref(false);
+const isLoading = ref(false);
+const affiliateStore = useAffiliateStore();
 
 
 const generateShortCode = () => {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let code = '';
-    
-    for (let i = 0; i < 3; i++) {
-        code += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    
-    const timestamp = Date.now().toString(36).slice(-3); // Convert time to a base-36 string & take last 3 chars
-    return code + timestamp;
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let code = '';
+
+  for (let i = 0; i < 3; i++) {
+    code += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+
+  const timestamp = Date.now().toString(36).slice(-3); // Convert time to a base-36 string & take last 3 chars
+  return code + timestamp;
 }
 
 const onClickQRCode = (memberType, linkLengthType = 'long') => {
   referralLink.value = '';
   const baseUrl = linkLengthType === 'long' ? longUrl.value : shortUrl.value;
-  
+
   if (linkLengthType === 'long') {
     referralLink.value = baseUrl + memberType + `/${affCode.value}?reg=1`;
     isScanQrDialog.value = true;
   } else if (linkLengthType === 'short') {
     const shortCode = generateShortCode();
-    
+
     api.post('/session/affiliate/short-link', qs.stringify({
       linkType: 'WEB',
       urlType: 'WX',
@@ -122,24 +129,28 @@ const onClickQRCode = (memberType, linkLengthType = 'long') => {
 
 
 const getLinkList = () => {
-  api.get('/session/affiliate/referral-link').then((res) => {
-    const { longUrl: newLongUrl, shortUrl: newShortUrl } = res.data.reduce((acc, curr) => {
-      if (curr.code === 'affiliate_h5_link') {
-        return { ...acc, longUrl: curr.value }
-      }
+  isLoading.value = true;
 
-      if (curr.code === 'affiliate_short_url_platform') {
-        return { ...acc, shortUrl: curr.value }
-      }
-    }, { longUrl: '', shortUrl: '' });
+  Promise.all([api.get('/session/affiliate/referral-link'), affiliateStore.fetchAffiliateInfo()]).then(([res1, res2]) => {
+    if(res1.code === 0) {
+      const { longUrl: newLongUrl, shortUrl: newShortUrl } = res1.data.reduce((acc, curr) => {
+        if (curr.code === 'affiliate_h5_link') {
+          return { ...acc, longUrl: curr.value }
+        }
 
-    longUrl.value = newLongUrl;
-    shortUrl.value = newShortUrl;
+        if (curr.code === 'affiliate_short_url_platform') {
+          return { ...acc, shortUrl: curr.value }
+        }
+      }, { longUrl: '', shortUrl: '' });
+
+      longUrl.value = newLongUrl;
+      shortUrl.value = newShortUrl;
+    }
+
+    affCode.value = res2.affiliateCode;
+  }).finally(() => {
+    isLoading.value = false;
   });
-
-  api.get('/session/affiliate').then((res) => {
-    affCode.value = res.data.affiliateCode;
-  })
 }
 
 const copyText = (text) => {
@@ -156,9 +167,6 @@ const copyText = (text) => {
 }
 
 async function copyToClipboard(textToCopy) {
-  // alert(window.isSecureContext);
-  // alert(navigator.clipboard);
-  // alert(Platform.is.chrome);
   // Navigator clipboard api needs a secure context (https)
   if (store.getDeviceType() === 'ANDROID') {
     await Clipboard.write({
@@ -185,7 +193,6 @@ async function copyToClipboard(textToCopy) {
       console.error(error);
     } finally {
       document.body.removeChild(textArea);
-      // textArea.remove();
     }
   }
 }
@@ -197,17 +204,14 @@ onMounted(() => {
 <style lang="scss" scoped>
 .forum-card {
   background: linear-gradient(90deg, #1c273d 0%, #12192b 100%);
-  padding: 16px;
+  padding: 15px;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   color: #b2bdbf;
   display: flex;
   flex-direction: column;
-  gap: 12px;
   margin-top: 20px;
-  font-family: Microsoft YaHei UI;
   font-weight: 400;
-  font-size: 1rem;
 
   .forum-card__header {
     display: flex;
@@ -218,7 +222,7 @@ onMounted(() => {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 1.4rem;
+      font-size: 13px;
       font-weight: 600;
     }
 
@@ -304,24 +308,6 @@ onMounted(() => {
   }
 }
 
-.collapse-enter-active,
-.collapse-leave-active {
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
-
-.collapse-enter-from,
-.collapse-leave-to {
-  max-height: 0;
-  opacity: 0;
-}
-
-.collapse-enter-to,
-.collapse-leave-from {
-  max-height: 200px;
-  opacity: 1;
-}
-
 .scan-qr-dialog {
   .popout-dialog .popout-dialog-container {
     color: #b2bdbf;
@@ -377,7 +363,8 @@ onMounted(() => {
       margin-top: 8px;
     }
 
-    .qr-code {}
+    .qr-code {
+    }
   }
 
   .qr-link-row {

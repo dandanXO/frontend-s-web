@@ -132,7 +132,10 @@
               :value="item.id"
             >
               <div style="display: flex; align-items: center">
-                <img :src="(item.icon?.startsWith('http://') || item.icon?.startsWith('https://')) ? item.icon : promoDir + item.icon" style="width: 20px; height: 20px; margin-right: 10px">
+                <img
+                  :src="(item.icon?.startsWith('http://') || item.icon?.startsWith('https://')) ? item.icon : promoDir + item.icon"
+                  style="width: 20px; height: 20px; margin-right: 10px"
+                >
                 <span>{{ item.nameZh }}</span>
               </div>
             </el-option>
@@ -166,7 +169,10 @@
               :value="item.id"
             >
               <div style="display: flex; align-items: center">
-                <img :src="(item.icon?.startsWith('http://') || item.icon?.startsWith('https://')) ? item.icon : promoDir + item.icon" style="width: 20px; height: 20px; margin-right: 10px">
+                <img
+                  :src="(item.icon?.startsWith('http://') || item.icon?.startsWith('https://')) ? item.icon : promoDir + item.icon"
+                  style="width: 20px; height: 20px; margin-right: 10px"
+                >
                 <span>{{ item.nameZh }}</span>
               </div>
             </el-option>
@@ -248,7 +254,9 @@
         </div>
       </el-form>
     </el-dialog>
-    <el-table :data="page.records" v-loading="page.loading" ref="table" row-key="id" size="small" highlight-current-row :empty-text="t('fields.noData')">
+    <el-table :data="page.records" v-loading="page.loading" ref="table" row-key="id" size="small" highlight-current-row
+              :empty-text="t('fields.noData')"
+    >
       <el-table-column prop="id" :label="t('fields.platformMatchId')" width="50" />
       <el-table-column prop="sportId" :label="t('fields.sportType')" width="50" :formatter="formatSportType" />
       <el-table-column prop="title" :label="t('fields.title')" width="250" />
@@ -365,29 +373,30 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="120" />
-      <<el-table-column
-      fixed="right"
-      :label="t('fields.operate')"
-      align="center"
-      width="300"
-    >
-      <template #default="scope">
-        <el-button
-          icon="el-icon-delete"
-          size="mini"
-          type="danger"
-          @click="deleteTeam(scope.row.id)"
-        >
-          {{ t('fields.delete') }}
-        </el-button>
-        <router-link :to="{ path: '/live-sport/live-setting', query: { id: scope.row.id } }">
-          <el-button icon="el-icon-video-camera" size="mini" type="success">
-            {{ t('fields.manageStream') }}
+      <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="120"/>
+      <
+      <el-table-column
+        fixed="right"
+        :label="t('fields.operate')"
+        align="center"
+        width="300"
+      >
+        <template #default="scope">
+          <el-button
+            icon="el-icon-delete"
+            size="mini"
+            type="danger"
+            @click="deleteTeam(scope.row.id)"
+          >
+            {{ t('fields.delete') }}
           </el-button>
-        </router-link>
-      </template>
-    </el-table-column>
+          <router-link :to="{ path: '/live-sport/live-setting', query: { id: scope.row.id } }">
+            <el-button icon="el-icon-video-camera" size="mini" type="success">
+              {{ t('fields.manageStream') }}
+            </el-button>
+          </router-link>
+        </template>
+      </el-table-column>
 
     </el-table>
     <el-pagination class="pagination"
@@ -413,6 +422,7 @@ import { useSessionStorage } from "@vueuse/core";
 import { getShortcuts } from "@/utils/datetime";
 import moment from "moment/moment";
 import { uploadImage } from "@/api/image";
+import { liveSportTyps } from "@/utils/live"
 
 const TEAMS_PER_VIEW = 20
 
@@ -426,25 +436,34 @@ const uiControl = reactive({
   dialogType: "CREATE",
   removeBtn: true,
   dialogLoading: false,
-  sport: [
-    { name: 'FOOTBALL', display: '足球', id: 1 },
-    { name: 'BASKETBALL', display: '篮球', id: 2 },
-    { name: 'LOL', display: 'LOL', id: 3 },
-    { name: 'CSGO', display: 'CSGO', id: 4 },
-    { name: 'DOTA2', display: 'DOTA2', id: 5 },
-    { name: 'KOG', display: '王者荣耀', id: 6 },
-  ],
+  sport: liveSportTyps,
   liveStatus: [
-    { name: '1', display: t('status.uefaMatch.PENDING'), id: 0 },
-    { name: '2', display: t('status.uefaMatch.ONGOING'), id: 1 },
-    { name: '3', display: t('status.uefaMatch.ENDED'), id: 2 },
-    { name: '4', display: t('status.uefaMatch.CANCEL'), id: 3 },
+    {
+      name: '1',
+      display: t('status.uefaMatch.PENDING'),
+      id: 0,
+    },
+    {
+      name: '2',
+      display: t('status.uefaMatch.ONGOING'),
+      id: 1,
+    },
+    {
+      name: '3',
+      display: t('status.uefaMatch.ENDED'),
+      id: 2,
+    },
+    {
+      name: '4',
+      display: t('status.uefaMatch.CANCEL'),
+      id: 3,
+    },
   ],
 });
 const page = reactive({
   pages: 0,
   records: [],
-  loading: false
+  loading: false,
 });
 
 function formatSportType(row) {
@@ -478,12 +497,12 @@ const request = reactive({
   sportId: null,
   liveStatus: null,
   title: null,
-  eventStartTime: [convertStartDate(new Date()), convertDate(new Date())]
+  eventStartTime: [convertStartDate(new Date()), convertDate(new Date())],
 });
 
 const timezone = ref(null);
 const teams = reactive({
-  list: []
+  list: [],
 })
 const formRef = ref(null);
 const store = useStore()
@@ -557,10 +576,16 @@ async function deleteTeam(eventId) {
     try {
       console.log(eventId)
       await deleteSportLiveEvent(eventId);
-      ElMessage({ message: t("message.deleteSuccess"), type: "success" });
+      ElMessage({
+        message: t("message.deleteSuccess"),
+        type: "success",
+      });
       await loadEvent();
     } catch (error) {
-      ElMessage({ message: t("message.deleteFailed"), type: "error" });
+      ElMessage({
+        message: t("message.deleteFailed"),
+        type: "error",
+      });
     }
   }).catch(() => {
   });
@@ -575,7 +600,10 @@ async function attachImage(event) {
   if (data) {
     form.cover = data;
   } else {
-    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' });
+    ElMessage({
+      message: t('message.failedToUploadImage'),
+      type: 'error',
+    });
   }
 }
 
@@ -594,7 +622,10 @@ async function attachPhoto(event) {
 
   const allowFileType = ['image/jpeg', 'image/png', 'image/gif'];
   if (!allowFileType.includes(files.type)) {
-    ElMessage({ message: t('message.invalidFileType'), type: 'error' });
+    ElMessage({
+      message: t('message.invalidFileType'),
+      type: 'error',
+    });
     return null;
   }
 
@@ -607,7 +638,10 @@ async function attachPhoto(event) {
     const response = await uploadImage(formData);
     return response.code === 0 ? response.data : null;
   } catch (error) {
-    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+    ElMessage({
+      message: t('message.failedToUploadImage'),
+      type: 'error',
+    })
     return null;
   }
 }
@@ -637,7 +671,10 @@ function create() {
       await createSportLiveEvent(form);
       uiControl.dialogVisible = false;
       await loadEvent();
-      ElMessage({ message: t('message.addSuccess'), type: "success" });
+      ElMessage({
+        message: t('message.addSuccess'),
+        type: "success",
+      });
     }
   });
 }
@@ -663,7 +700,7 @@ function showDialog(type, row) {
     liveStatus: null,
     title: null,
     isTest: null,
-    isPopular: null
+    isPopular: null,
   });
 }
 
@@ -683,13 +720,13 @@ const form = reactive({
   awayName: '',
   isTest: false,
   cover: '',
-  isPopular: false
+  isPopular: false,
 });
 
 const formRules = reactive({
   title: [required(t('message.validateTeamNameRequired'))],
   nameEn: [required(t('message.validateTeamNameRequired'))],
-  icon: [required(t('message.validateTeamIconRequired'))]
+  icon: [required(t('message.validateTeamIconRequired'))],
 });
 
 const handleTeamSelectorFocus = (target) => {
@@ -732,7 +769,7 @@ const registerTeamSelectorScrollObserver = () => {
 onMounted(async () => {
   const store = useStore()
   const { data: timeZone } = getSiteTimeZoneById(
-    store.state.user.siteId
+    store.state.user.siteId,
   )
   timezone.value = timeZone
 
@@ -776,6 +813,7 @@ onUnmounted(() => {
       content: "\e6e1";
     }
   }
+
   :deep(.is-focus) {
     .el-select__caret {
       transform: rotateZ(0deg)

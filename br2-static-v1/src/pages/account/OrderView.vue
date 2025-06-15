@@ -262,24 +262,24 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .order-option-tab {
-  background-color: #101114;
+  background-color: #2b474a;
   border-radius: 8px;
   width: calc(100% - 20px);
   //margin-bottom: 10px;
   margin: 0px auto 10px;
-  border: 1px solid #00B9A1;
+  // border: 1px solid #00B9A1;
   aspect-ratio: 335/32;
+  color: rgba(1, 161, 178, 1);
 
   :deep(.q-tab__label) {
-    font-weight: 700;
+    // font-weight: 700;
   }
 
   :deep(.q-tab--active) {
     border-radius: 6px;
     color: #fff;
     margin: 1px;
-    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
-
+    background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
   }
 }
 
@@ -292,7 +292,7 @@ onActivated(() => {
     margin: auto;
   }
   .order-table {
-    background: #171e2b80;
+    background: rgba(99, 255, 246, 0.1);
     border-radius: 10px;
     padding: 6px 4px;
     margin-bottom: 10px;
