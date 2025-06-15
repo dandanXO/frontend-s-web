@@ -67,7 +67,8 @@ export const userStore = defineStore("userStore", {
       claimedFtdPrivilege: false,
       claimedSecondPrivilege: false,
       depositCount: 0,
-      eligibleThirdPrivilege: false
+      eligibleThirdPrivilege: false,
+      isEnableBankCardOTP: false
     };
   },
   actions: {

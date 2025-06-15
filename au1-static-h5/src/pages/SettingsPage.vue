@@ -53,12 +53,12 @@
             </div>
             <div class="acct-nav-label">Order</div>
           </router-link>
-          <router-link to="/account/bank">
+          <!-- <router-link to="/account/bank">
             <div class="acct-nav-item">
               <img src="../assets/images/account/bank-svg.svg" />
             </div>
             <div class="acct-nav-label">Bank</div>
-          </router-link>
+          </router-link> -->
           <router-link to="/account/message">
             <div class="acct-nav-item">
               <img src="../assets/images/account/message-svg.svg" />

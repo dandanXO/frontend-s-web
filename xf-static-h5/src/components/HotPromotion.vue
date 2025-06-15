@@ -1,5 +1,13 @@
 <template>
-  <div :class="list.redirectUrl === 'cny-spinwheel' ||  list.redirectUrl === 'xf1-ag-yuanxiaohongbao' || list.redirectUrl === 'xf1-lantern-festival-bonus' ? '' : 'hot-promo'">
+  <div
+    :class="
+      list.redirectUrl === 'cny-spinwheel' ||
+      list.redirectUrl === 'xf1-ag-yuanxiaohongbao' ||
+      list.redirectUrl === 'xf1-lantern-festival-bonus'
+        ? ''
+        : 'hot-promo'
+    "
+  >
     <ClaimPromo
       v-if="listParam.type === 'claimpromo' && store.hasToken()"
       :promo-id="list.id"
@@ -25,7 +33,6 @@
       :promo-param="list.param"
       v-if="list.redirectUrl === 'xf-eurocup-hongbao'"
     />
-
     <LanternFestival2025
       v-if="list.redirectUrl === 'xf1-lantern-festival-bonus'"
       :promo-param="listParam"
@@ -37,21 +44,14 @@
       :promo-param="list.param"
       v-if="listParam.type === 'hongbaoyu'"
     />
-
     <SlotsRebatePromo v-if="list.redirectUrl === 'xf1-slots-rebate'" :promo-code="list.promoCode" />
     <SlotsBonusPromo v-if="list.redirectUrl === 'xf1-slots-bet-bonus'" :promo-code="list.promoCode" />
-
     <div v-if="list.redirectUrl === 'fucaiiphone'" class="promo-4">
       <div class="tabs">
         <q-card-section>
           <q-tabs v-model="activeKey" dense color="black" indicator-color="black" align="justify" narrow-indicator>
             <q-tab name="1" label="选择幸运号码" />
             <q-tab name="2" label="记录" />
-            <!--            <q-tab-->
-            <!--              name="3"-->
-            <!--              label="获奖名单-->
-            <!--"-->
-            <!--            />-->
           </q-tabs>
 
           <q-separator />
@@ -127,59 +127,6 @@
                 :rows="dataSource"
               ></q-table>
             </q-tab-panel>
-
-            <!--            <q-tab-panel name="3">-->
-            <!--              <q-form>-->
-            <!--                <q-input-->
-            <!--                  filled-->
-            <!--                  v-model="formState.resultTime"-->
-            <!--                  label="选择日期"-->
-            <!--                  readonly-->
-            <!--                  color="white"-->
-            <!--                >-->
-            <!--                  <template v-slot:append>-->
-            <!--                    <q-icon name="event" class="cursor-pointer">-->
-            <!--                      <q-popup-proxy-->
-            <!--                        cover-->
-            <!--                        transition-show="scale"-->
-            <!--                        transition-hide="scale"-->
-            <!--                      >-->
-            <!--                        <q-date-->
-            <!--                          v-model="formState.resultTime"-->
-            <!--                          mask="YYYY-MM-DD"-->
-            <!--                        >-->
-            <!--                          <div class="row items-center justify-end">-->
-            <!--                            <q-btn-->
-            <!--                              v-close-popup-->
-            <!--                              label="关闭"-->
-            <!--                              color="white"-->
-            <!--                              flat-->
-            <!--                            />-->
-            <!--                          </div>-->
-            <!--                        </q-date>-->
-            <!--                      </q-popup-proxy>-->
-            <!--                    </q-icon>-->
-            <!--                  </template>-->
-            <!--                </q-input>-->
-            <!--                <q-btn-->
-            <!--                  @click="filterWinnerLists()"-->
-            <!--                  :loading="loading"-->
-            <!--                  class="full-width q-mt-md"-->
-            <!--                  color="brand"-->
-            <!--                  label="搜索"-->
-            <!--                />-->
-            <!--              </q-form>-->
-
-            <!--              <q-table-->
-            <!--                class="q-mt-md"-->
-            <!--                no-data-label="没有数据"-->
-            <!--                loading-label="加载中..."-->
-            <!--                rows-per-page-label=" "-->
-            <!--                :loading="loading"-->
-            <!--                :columns="winnerColumn"-->
-            <!--                :rows="winnerDataSource"-->
-            <!--              />-->
-            <!--            </q-tab-panel>-->
           </q-tab-panels>
         </q-card-section>
       </div>
@@ -209,26 +156,40 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import * as _ from "lodash";
 import moment from "moment";
-import ClaimPromo from "../components/hotpromo/claimPromo.vue";
-import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
-import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
-import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
-import HongBaoYu2024Promo from "../components/hotpromo/hongbaoyu/HongBaoYu2024.vue";
-import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
-import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
-import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
-import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
-import SlotLacky8 from "../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue";
-// import CnySpinWheelPromo from "../components/hotpromo/cnySpinWheel/CnySpinWheel.vue";
-import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
-import ReturnPromo from "../components/hotpromo/returnPromo/ReturnPromo.vue";
-import DepositAwardPromo from "../components/hotpromo/depositAward/DepositAwardPromo.vue";
-import SlotsRebatePromo from "../components/hotpromo/slotsrebate/SlotsRebatePromo.vue";
-import SlotsBonusPromo from "../components/hotpromo/slotsbonus/SlotsBonusPromo.vue";
-import OfficialGiftPromo from "./hotpromo/officialGift/OfficialGiftPromo.vue";
-import AgYuanxiaohongbao from "./hotpromo/ag-yuanxiaohongbao/AgYuanxiaohongbao.vue";
-import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
-
+const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
+const TigerCardPromo = defineAsyncComponent(() => import("../components/hotpromo/tigercard/tigerCardPromo.vue"));
+const GoldenEggPromo = defineAsyncComponent(() => import("../components/hotpromo/goldenegg/goldenEggPromo.vue"));
+const HongBaoYuPromo = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu/HongBaoYu.vue"));
+const HongBaoYu2024Promo = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu/HongBaoYu2024.vue"));
+const HongBaoYuEurocupPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue")
+);
+const HongBaoPreEurocupPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue")
+);
+const WelcomeTaskPromo = defineAsyncComponent(() => import("../components/hotpromo/welcometask/welcomeTaskPromo.vue"));
+const PrivilegeInvite = defineAsyncComponent(() =>
+  import("../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue")
+);
+const SlotLacky8 = defineAsyncComponent(() => import("../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue"));
+const BonusSpinWheelPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue")
+);
+const ReturnPromo = defineAsyncComponent(() => import("../components/hotpromo/returnPromo/ReturnPromo.vue"));
+const DepositAwardPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/depositAward/DepositAwardPromo.vue")
+);
+const SlotsRebatePromo = defineAsyncComponent(() => import("../components/hotpromo/slotsrebate/SlotsRebatePromo.vue"));
+const SlotsBonusPromo = defineAsyncComponent(() => import("../components/hotpromo/slotsbonus/SlotsBonusPromo.vue"));
+const OfficialGiftPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/officialGift/OfficialGiftPromo.vue")
+);
+const AgYuanxiaohongbao = defineAsyncComponent(() =>
+  import("../components/hotpromo/ag-yuanxiaohongbao/AgYuanxiaohongbao.vue")
+);
+const LanternFestival2025 = defineAsyncComponent(() =>
+  import("../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue")
+);
 const HongBaoYu2025 = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu2025/HongBaoYu2025.vue"));
 
 export default defineComponent({
@@ -427,28 +388,6 @@ export default defineComponent({
       });
     };
 
-    // const loadLNWinnerList = () => {
-    //   const winnerUrl = "/privi/winners";
-    //   winnerDataSource.value = [];
-    //   loading.value = true;
-    //   eventapi
-    //     .get(winnerUrl)
-    //     .then((res) => {
-    //       loading.value = false;
-    //       var data = res.data.data;
-
-    //       for (let i in data) {
-    //         _.each(data[i].winners, function (winner, index) {
-
-    //           winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
-    //           console.log(winner);
-
-    //           winnerDataSource.value.push(winner);
-    //         })
-    //       }
-    //     });
-    // }
-
     const filterLuckyNumber = () => {
       loading.value = true;
       dataSource.value = [];
@@ -494,23 +433,6 @@ export default defineComponent({
           // });
         });
     };
-    // const ClaimDailyRebate = (id) => {
-    //   if (!store.hasToken()) {
-    //   } else {
-    //     // var user_id = store.id;
-    //     var claim_id = '';
-    //     if (id == 27) {
-    //       claim_id = 'jolly88-daily-rebate';
-    //     } else if (id == 32) {
-    //       claim_id = 'jolly88-daily-slot';
-    //     } else if (id == 31) {
-    //       claim_id = 'jolly88-refund';
-    //     }
-
-    //     // console.log(eventapi);
-
-    // }
-    // }
 
     const submitLuckyNumber = () => {
       console.log(lucky_number.value);
@@ -885,15 +807,15 @@ export default defineComponent({
   border-radius: 12px;
   padding: 30px;
   font-family: "PingFang";
-  background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) ;
-  border: 1px solid #be9457 ;
+  background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+  border: 1px solid #be9457;
   color: #fff;
 
   &.cny {
     background: url("../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg.png") !important;
     background-size: 100% 100% !important;
     border: none !important;
-    color: #4C4C6C !important;
+    color: #4c4c6c !important;
   }
 
   .section-table {
@@ -904,8 +826,8 @@ export default defineComponent({
       line-height: 28px;
       color: #fff !important;
       box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
-        0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset ;
-      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) ;
+        0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
       white-space: pre-wrap;
 
       &:not(:last-child) {
@@ -921,12 +843,12 @@ export default defineComponent({
 
     &.cny {
       th {
-        background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%) !important;
+        background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%) !important;
         color: #894800 !important;
       }
 
       td {
-        color: #4C4C6C !important;
+        color: #4c4c6c !important;
       }
     }
   }
@@ -954,7 +876,7 @@ export default defineComponent({
     height: fit-content;
 
     &.cny {
-      background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%);
+      background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%);
       color: #894800;
     }
   }
@@ -992,10 +914,10 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
       margin-top: 2px;
-      color: #fff ;
+      color: #fff;
       box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
-        0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset ;
-      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) ;
+        0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
     }
 
     .item-num__pseudo {
@@ -1007,8 +929,9 @@ export default defineComponent({
   }
 
   &.cny {
-    .item, .title-img {
-      color: #4C4C6C;
+    .item,
+    .title-img {
+      color: #4c4c6c;
     }
   }
 }

@@ -96,70 +96,81 @@
           <button class="selection-item" @click="handleLivestreamClick(item)">
             <!-- // put item.supplierCdnPullUrl + item.streamerCdnPushUrl + streanerCdnPullUrl to the next page. -->
             <div class="item-img">
-              <img src="../../assets/images/livestream/img-placeholder-bg.jpg" />
-              <div class="placeholder-vs">
-                <img src="../../assets/images/livestream/placeholder-vs.png" />
+              <img v-if="item.cover" class="cover" :src="`${imgURLLivePreview}${item.cover}`" />
+              <img
+                v-else-if="item.liveStatus && getPreviewUrl(item)"
+                class="cover"
+                :src="`${imgURLLivePreview}${getPreviewUrl(item)}`"
+              />
 
-                <div class="vs-timer" v-if="!item.liveStatus">
-                  <span
-                    v-for="(char, cIndex) in countdowns[index].hours"
-                    class="vs-timer__time"
-                    :key="`hour-${cIndex}`"
-                  >
-                    {{ char }}
-                  </span>
-                  :
-                  <span
-                    v-for="(char, cIndex) in countdowns[index].minutes"
-                    class="vs-timer__time"
-                    :key="`minute-${cIndex}`"
-                  >
-                    {{ char }}
-                  </span>
-                  <span class="vs-timer__time-desc">小时</span>
-                  <div />
-                  <span class="vs-timer__time-desc">分钟</span>
+              <template v-else>
+                <img src="../../assets/images/livestream/img-placeholder-bg.jpg" />
+                <div class="placeholder-vs">
+                  <img src="../../assets/images/livestream/placeholder-vs.png" />
+                  <template v-if="!item.liveStatus">
+                    <div class="vs-timer-title">直播倒计时</div>
+                    <div class="vs-timer">
+                      <span
+                        v-for="(char, cIndex) in countdowns[index].hours"
+                        class="vs-timer__time"
+                        :key="`hour-${cIndex}`"
+                      >
+                        {{ char }}
+                      </span>
+                      :
+                      <span
+                        v-for="(char, cIndex) in countdowns[index].minutes"
+                        class="vs-timer__time"
+                        :key="`minute-${cIndex}`"
+                      >
+                        {{ char }}
+                      </span>
+                      <span class="vs-timer__time-desc">小时</span>
+                      <div />
+                      <span class="vs-timer__time-desc">分钟</span>
+                    </div>
+                  </template>
                 </div>
-              </div>
 
-              <div class="placeholder-left">
-                <div class="left-logo">
-                  <template v-if="item.homeIcon">
-                    <img :src="item.homeIcon" />
-                  </template>
-                  <template v-else>
-                    <img src="../../assets/images/livestream/system-avatar.png" />
-                  </template>
-                  <!-- <img :src="imgURL + item.homeIcon" /> -->
+                <div class="placeholder-left">
+                  <div class="left-logo">
+                    <template v-if="item.homeIcon">
+                      <img :src="item.homeIcon" />
+                    </template>
+                    <template v-else>
+                      <img src="../../assets/images/livestream/system-avatar.png" />
+                    </template>
+                    <!-- <img :src="imgURL + item.homeIcon" /> -->
+                  </div>
+                  <div class="left-title">{{ item.homeNameZh ?? item.homeNameEn ?? item.homeName }}</div>
                 </div>
-                <div class="left-title">{{ item.homeNameZh ?? item.homeNameEn ?? item.homeName }}</div>
-              </div>
-              <div class="placeholder-right">
-                <div class="right-logo">
-                  <template v-if="item.awayIcon">
-                    <img :src="item.awayIcon" />
-                  </template>
-                  <template v-else>
-                    <img src="../../assets/images/livestream/system-avatar.png" />
-                  </template>
-                  <!-- <img :src="imgURL + item.awayIcon" /> -->
+                <div class="placeholder-right">
+                  <div class="right-logo">
+                    <template v-if="item.awayIcon">
+                      <img :src="item.awayIcon" />
+                    </template>
+                    <template v-else>
+                      <img src="../../assets/images/livestream/system-avatar.png" />
+                    </template>
+                    <!-- <img :src="imgURL + item.awayIcon" /> -->
+                  </div>
+                  <div class="right-title">{{ item.awayNameZh ?? item.awayNameEn ?? item.awayName }}</div>
                 </div>
-                <div class="right-title">{{ item.awayNameZh ?? item.awayNameEn ?? item.awayName }}</div>
-              </div>
 
-              <!-- <img
+                <!-- <img
                 v-if="item.sportId === 1 || item.sportId === 2"
                 src="../../assets/images/livestream/img-placeholder-stream-sport.png"
                 alt=""
               />
               <img v-else src="../../assets/images/livestream/img-placeholder-stream-esport.png" alt="" /> -->
+              </template>
             </div>
             <div class="item-content">
-              <div class="content-title">
+              <div class="content-title ellipsis">
                 <!-- 德国甲级联赛 -->
                 {{ item.title }}
               </div>
-              <div class="content-desc">
+              <div class="content-desc ellipsis">
                 {{ item.homeNameZh ?? item.homeNameEn ?? item.homeName }}
                 VS
                 {{ item.awayNameZh ?? item.awayNameEn ?? item.awayName }}
@@ -215,12 +226,7 @@
                   </div>
                   <div class="hot-match-time">
                     {{ hotMatch.competitionTime }}
-                    <div
-                      class="bet-btn"
-                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
-                    >
-                      立即投注
-                    </div>
+                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
                   </div>
                   <div class="hot-match-team">
                     <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
@@ -253,12 +259,7 @@
                   </div>
                   <div class="hot-match-time">
                     {{ hotMatch.competitionTime }}
-                    <div
-                      class="bet-btn"
-                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
-                    >
-                      立即投注
-                    </div>
+                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
                   </div>
                   <div class="hot-match-team">
                     <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
@@ -294,12 +295,7 @@
                   </div>
                   <div class="hot-match-time">
                     {{ hotMatch.competitionTime }}
-                    <div
-                      class="bet-btn"
-                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
-                    >
-                      立即投注
-                    </div>
+                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
                   </div>
                   <div class="hot-match-team">
                     <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
@@ -332,12 +328,7 @@
                   </div>
                   <div class="hot-match-time">
                     {{ hotMatch.competitionTime }}
-                    <div
-                      class="bet-btn"
-                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
-                    >
-                      立即投注
-                    </div>
+                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
                   </div>
                   <div class="hot-match-team">
                     <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
@@ -373,12 +364,7 @@
                   </div>
                   <div class="hot-match-time">
                     {{ hotMatch.competitionTime }}
-                    <div
-                      class="bet-btn"
-                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
-                    >
-                      立即投注
-                    </div>
+                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
                   </div>
                   <div class="hot-match-team">
                     <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
@@ -411,12 +397,7 @@
                   </div>
                   <div class="hot-match-time">
                     {{ hotMatch.competitionTime }}
-                    <div
-                      class="bet-btn"
-                      @click="openGame(hotMatch.platformName, hotMatch.platformCode, hotMatch.gameCode)"
-                    >
-                      立即投注
-                    </div>
+                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
                   </div>
                   <div class="hot-match-team">
                     <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
@@ -458,6 +439,7 @@ const competitionTypesNameMap = ref({
 const selectedCompetitionType = ref();
 // const imgUrl = process.env.IMAGE_CDN;
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+const imgURLLivePreview = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
 const store = userStore();
 const route = useRoute();
 const router = useRouter();
@@ -581,6 +563,18 @@ const handleListScroll = () => {
   }
 };
 
+const handleBetClick = (match) => {
+  if (route.path === "/livestreampage") {
+    handleAppBetClick(match.platformName, match.platformId, match.platformCode);
+  } else {
+    openGame(match.platformName, match.platformCode, match.gameCode);
+  }
+};
+
+const handleAppBetClick = (platformName, platformId, platformCode) => {
+  document.location.href = `app://to_platform?platformName=${platformName}&platformId=${platformId}&platformCode=${platformCode}`;
+};
+
 watch(selectionContainerRef, (val) => {
   if (!val) return;
   // selectionContainerRef.value.addEventListener("scroll", handleListScroll);
@@ -610,6 +604,14 @@ const showLivestreamDetails = () => {
     store.token = extensionToken.value;
   } else {
     // console.log("no extension");
+  }
+};
+
+const getPreviewUrl = (livestream) => {
+  if (livestream.streamerStatus) {
+    return livestream.streamerPreviewUrl ? livestream.streamerPreviewUrl : "";
+  } else {
+    return livestream.supplierPreviewUrl ? livestream.supplierPreviewUrl : "";
   }
 };
 
@@ -742,7 +744,9 @@ onUnmounted(() => {
 
         .hot-match-name,
         .hot-match-time {
-          font-family: "PingFang";
+          font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+            sans-serif;
+
           font-size: 14px;
           font-weight: 400;
           line-height: 15px;
@@ -780,8 +784,9 @@ onUnmounted(() => {
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            font-family: "PingFang";
+            font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+              sans-serif;
+
             font-size: 14px;
             font-weight: 400;
             line-height: 15px;
@@ -901,7 +906,6 @@ onUnmounted(() => {
       .item-content {
         padding: 3px 6px;
         .content-title {
-          font-size: 18px;
           font-weight: bold;
           color: #ffffff;
         }
@@ -937,11 +941,12 @@ onUnmounted(() => {
     }
 
     .competition-item-name {
-      font-family: "PingFang SC";
+      font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+        sans-serif;
+
       font-size: 18px;
       font-weight: 500;
       line-height: 25.2px;
-      text-align: left;
       color: #b7c1ff;
       margin-top: -30px;
       text-align: center;
@@ -992,7 +997,9 @@ onUnmounted(() => {
 
       .hot-match-name,
       .hot-match-time {
-        font-family: "PingFang";
+        font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+          sans-serif;
+
         font-size: 14px;
         font-weight: 400;
         line-height: 15px;
@@ -1029,7 +1036,9 @@ onUnmounted(() => {
           flex-direction: column;
           align-items: center;
           text-align: center;
-          font-family: "PingFang";
+          font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+            sans-serif;
+
           font-size: 14px;
           font-weight: 400;
           line-height: 15px;
@@ -1143,11 +1152,16 @@ onUnmounted(() => {
 
     .item-img {
       position: relative;
+      aspect-ratio: 16/9;
 
       > img {
         display: block;
         width: 100%;
+        height: 100%;
         opacity: 0.9;
+        &.cover {
+          object-fit: cover;
+        }
       }
 
       .placeholder-vs {
@@ -1160,6 +1174,13 @@ onUnmounted(() => {
         img {
           display: block;
           width: 100%;
+        }
+
+        .vs-timer-title {
+          margin-top: -7%;
+          font-size: 0.45rem;
+          font-weight: bold;
+          color: #fff;
         }
 
         .vs-timer {
@@ -1330,12 +1351,15 @@ onUnmounted(() => {
     }
     .item-content {
       padding: 3px 6px;
+      text-align: left;
+
       .content-title {
-        font-size: 18px;
+        font-size: 0.9rem;
         font-weight: bold;
         color: #000000;
       }
       .content-desc {
+        font-size: 0.8rem;
         color: #7a80a1;
       }
     }

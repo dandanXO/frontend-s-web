@@ -192,7 +192,7 @@ const DEFAULT_DANMU_CONFIG = {
 
 const DANMU_STYLE = {
   color: "#fff",
-  fontSize: "11.32px",
+  fontSize: "13.32px",
   lineHeight: "15.85px",
   borderRadius: "37.74px",
   padding: "6px 10px",

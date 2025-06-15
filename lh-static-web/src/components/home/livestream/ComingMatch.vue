@@ -76,8 +76,9 @@ const handleCountdown = () => {
   const duration = moment.duration(end.diff(now));
   const hours = Math.floor(duration.asHours());
   const minutes = duration.minutes();
-  if (minutes < 0) {
+  if (end.isBefore(now) || hours < 0) {
     countdown.value = DEFAULT_COUNTDOWN;
+    clearInterval(timer.value);
   } else {
     countdown.value = {
       hours: String(hours).padStart(2, "0"),

@@ -254,13 +254,11 @@ const downloadQRImg = async () => {
   } else if (Platform.is.capacitor && Platform.is.android) {
     try {
       html2canvas(document.querySelector("#the-qrcode")).then(async function (canvas) {
-        document.body.appendChild(canvas);
-        const dataUrl = canvas.toDataURL("image/jpeg");
-        // console.log(dataUrl);
+        const dataUrl = canvas.toDataURL("image/jpeg").split(",")[1]; // 仅保留 base64
+        const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 
-        // Save the image to the photo gallery
         await Filesystem.writeFile({
-          path: `Pictures/myreferral.jpg`,
+          path: `myreferral-${timestamp}.jpg`,
           data: dataUrl,
           directory: Directory.Documents,
           recursive: true
@@ -275,10 +273,16 @@ const downloadQRImg = async () => {
           icon: "check_circle_outline"
         });
 
-        canvas.style.display = "none";
+        canvas.remove(); // 从 DOM 中移除
       });
     } catch (error) {
       console.error("Error saving QR Code image:", error);
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: "Failed to save image.",
+        icon: "error_outline"
+      });
     }
   } else {
     const link = window.document.createElement("a");

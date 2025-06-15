@@ -146,6 +146,17 @@ export const sportsPlatforms = [
       "Tôn chỉ phục vụ của chúng tôi là niềm vui của khách hàng. Bằng việc cung cấp hầu hết các lựa chọn trò chơi và thị trường tương ứng, CMD368 đặt mục tiêu cung cấp dịch vụ và trải nghiệm trò chơi hàng đầu và đưa ra tỷ lệ cược tốt nhất",
     caption: "专业品牌，尽享满贯",
     gameCode: ""
+  },
+  {
+    code: "BTI",
+    name: "BTI",
+    image: "bti",
+    message:
+      "At BTI, we strive to exceed expectations by delivering a wide range of games, diverse betting markets, and highly competitive odds — all designed to offer an exceptional gaming experience.",
+    vimessage:
+      "Tại BTI, chúng tôi luôn nỗ lực vượt qua mọi kỳ vọng bằng cách cung cấp đa dạng trò chơi, nhiều thị trường cá cược phong phú và tỷ lệ cược cạnh tranh — tất cả nhằm mang đến trải nghiệm giải trí đỉnh cao.",
+    caption: "",
+    gameCode: ""
   }
 ];
 

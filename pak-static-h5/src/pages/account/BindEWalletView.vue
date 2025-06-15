@@ -177,6 +177,7 @@
                 >
                   <template v-slot:append>
                     <q-btn
+                      v-if="store.isEnableBankCardOTP"
                       @click="openPhoneVeriDialog()"
                       type="submit"
                       size="sm"
@@ -576,11 +577,11 @@ const submitBankCard = () => {
     !(
       (bankCardRef.value && bankCardRef.value.hasError) ||
       (cardNumberRef.value && cardNumberRef.value.hasError) ||
-      (phoneVerificationRef.value && phoneVerificationRef.value.hasError) ||
+      (store.isEnableBankCardOTP && phoneVerificationRef.value && phoneVerificationRef.value.hasError) ||
       (selectedTypeToggleName.value === "JAZZCASH" && ifscRef.value && ifscRef.value.hasError)
     )
   ) {
-    if (!isOtpSent.value || !bankCardInfo.cardNumber) {
+    if (store.isEnableBankCardOTP && (!isOtpSent.value || !bankCardInfo.cardNumber)) {
       $q.notify({
         color: "negative",
         position: "top",
@@ -590,6 +591,13 @@ const submitBankCard = () => {
       return;
     } else {
       bankCardInfo.telephone = bankCardInfo.cardNumber;
+
+      if(store.isEnableBankCardOTP === false) {
+        bankCardInfo.telephone = undefined;
+        bankCardInfo.smsCode = undefined;
+        bankCardInfo.smsCodeId = undefined;
+      }
+
       // API call
       api
         .post("/session/bankCard", qs.stringify(bankCardInfo))
