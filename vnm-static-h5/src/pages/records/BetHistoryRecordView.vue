@@ -101,7 +101,6 @@ import moment from "moment/moment";
 import RecordComponent from "../../components/RecordComponent.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
-import * as _ from "lodash";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -297,7 +296,7 @@ const loadPlatformLists = () => {
         value: ""
       });
 
-      _.each(data, function (item, index) {
+      data.forEach(function (item, index) {
         var option = {
           label: getGameName(item.name),
           value: item.code
