@@ -349,6 +349,8 @@ export default boot(async ({ app, router }) => {
             window.location.pathname === "/deposit" ||
             window.location.pathname === "/invitefriend" ||
             window.location.pathname === "/vip" ||
+            window.location.pathname === "/livestreampage" ||
+            window.location.pathname === "/livestreampage/streamplayer" ||
             window.location.pathname === "/privilege/invite") &&
           (res.code === ResponseCode.ERROR_TOKEN_MISSED ||
             res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
