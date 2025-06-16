@@ -230,4 +230,84 @@ watch(checked, (val) => {
 ::v-deep(.el-checkbox__input.is-checked + .el-checkbox__label) {
   color: white !important;
 }
+
+
+</style>
+
+
+<style>
+.announcement-modal {
+
+  .el-dialog__body {
+    padding: 0 !important;
+    border-radius: 12px 12px 0 0!important;
+  overflow: hidden !important;
+  }
+  .el-carousel__item {
+    text-align: unset;
+  }
+  .el-carousel__item:nth-child(2n) {
+    background-color: unset;
+  }
+
+
+
+
+  .is-active {
+    .el-carousel__button {
+      color: #fff;
+      background: #518bf7;
+      border-radius: 10px;
+      box-shadow: 0 0 0 1px #518bf7;
+      border: 1px solid white;
+      width: 10px;
+    }
+  }
+  .el-carousel__arrow {
+    width: 36px;
+    height: 72px;
+    border-radius: 0;
+    font-size: 35px;
+    background: #a1a1a1;
+    &:hover {
+      background: #468cff;
+    }
+    &--left {
+      border-radius: 0 5px 5px 0;
+      left: 0;
+    }
+    &--right {
+      border-radius: 5px 0 0 5px;
+      right: 0;
+    }
+  }
+  .el-carousel__button {
+    width: 10px;
+    height: 10px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    color: #000;
+    opacity: 0.8;
+    background: #686c6f;
+    margin: 0 1.5px;
+    display: inline-block;
+    border-radius: 100%;
+  }
+
+  .el-carousel__indicators {
+    position: absolute;
+    bottom: 0px;
+    transform: translate(-50%);
+  }
+
+  .el-carousel__indicators--outside {
+    button {
+      background-color: #686c6f;
+      opacity: 1;
+    }
+  }
+
+
+}
 </style>
