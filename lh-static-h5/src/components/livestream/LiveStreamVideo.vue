@@ -464,6 +464,7 @@ const handleFullScreenChange = (value) => {
   changePlayerConfig("isFullScreen", value);
   const video = videoRef.value;
   emit("landscape-change", value);
+  videoRef.value.focus();
   if (value) {
     if (isAppleDevice) {
       if (video && video.webkitSetPresentationMode) {

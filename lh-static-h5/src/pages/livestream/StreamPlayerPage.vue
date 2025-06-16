@@ -120,16 +120,27 @@ const livestreamSyncAbortController = ref(null);
 const isExpanded = ref(true);
 const showShareModal = ref(false);
 const roomMessageRef = ref(null);
-const isLandscape = ref(false);
+const _isLandscape = ref(false);
 const isTyping = ref(false);
 
 const { bottom: roomMessageBottom } = useElementBounding(roomMessageRef);
 
+const isInApp = computed(() => {
+  return route.path === "/livestreampage/streamplayer" && route.query.token;
+});
 const totalCharLength = computed(() => displayAnnouncementList.value.reduce((sum, msg) => sum + msg.length, 0));
 
 const marqueeDuration = computed(() => {
   const baseSpeed = 50;
   return Math.max(20, (totalCharLength.value * baseSpeed) / 100);
+});
+
+const isLandscape = computed({
+  get: () => {
+    if (isInApp.value) return false;
+    return _isLandscape.value;
+  },
+  set: (value) => (_isLandscape.value = value)
 });
 
 const chatMessageMarginTop = computed(() => {
@@ -543,12 +554,11 @@ const expandRoomMsg = () => {
 };
 
 // extension
-const currentPath = ref(route.path);
 const extensionState = ref(false);
 const extensionToken = ref("");
 
 const checkExtension = () => {
-  if (currentPath.value === "/livestreampage/streamplayer") {
+  if (isInApp.value) {
     extensionToken.value = route.query.token;
     extensionState.value = true;
   } else {
