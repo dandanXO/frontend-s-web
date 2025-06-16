@@ -1655,21 +1655,21 @@
   >
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
     <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">
-      <template #controller v-if="isAndroid()">
+      <template #controller v-if="isShownNewPlayerWheel">
         <PopupController v-model="popupPromo" :hasSpin="true" :hasNewPlayer="true" />
       </template>
     </SpinLuckyWheelPromoHomePopup>
   </q-dialog>
   
   <q-dialog
-    v-if="popupPromo === 'newplayer-spin-wheel' && isAndroid()"
+    v-if="popupPromo === 'newplayer-spin-wheel'"
     full-width
-    :model-value="isShownSpinLuckyWheel"
+    :model-value="isShownNewPlayerWheel"
     class="isCentreDialog spin-lucky-wheel-dialog"
     persistent
   >
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
-    <NewPlayerPromoHomePopup :hasUnusedCoupon="isShowPrizeModal" @close-dialog="closeDialog" ref="newPlayerPromoHomePopupRef">
+    <NewPlayerPromoHomePopup :hasUnusedCoupon="isHasUnusedCoupon" @close-dialog="closeDialog" ref="newPlayerPromoHomePopupRef">
       <template #controller>
         <PopupController v-model="popupPromo" :hasSpin="true" :hasNewPlayer="true" />
       </template>
@@ -1799,10 +1799,12 @@ const gameModules = ref([Navigation, Pagination]);
 
 const { t } = useI18n();
 const promoStore = usePromoStore();
-const { isShownSpinLuckyWheel, isShowSticky } = storeToRefs(promoStore);
+const { isShownSpinLuckyWheel, isShownNewPlayerWheel, isShowSticky } = storeToRefs(promoStore);
 // const isLuckyDrawModal = ref(false);
 // const isCongratsModal = ref(true);
 const isShowPrizeModal = ref(false);
+
+const isHasUnusedCoupon = ref(false);
 // const isMoneyRainModal = ref(false);
 const isMediaSettingsModal = ref(false);
 const popupPromo = ref("");
@@ -4327,6 +4329,12 @@ const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
     spinLuckyWheelPromoHomePopupRef.value.checkIsCanShowPopup();
   }
 };
+
+const checkNewPlayerWheelPromoHomePopupCanShow = () => {
+  if (!sessionStorage.getItem("NEW_PLAYER_WHEEL_POPUP") && newPlayerPromoHomePopupRef.value) {
+    newPlayerPromoHomePopupRef.value.checkIsCanShowPopup();
+  }
+};
 onActivated(() => {
   nextTick(() => {
     if (
@@ -4445,6 +4453,13 @@ watch(
     if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
   }
 );
+watch (
+  () => promoStore.isShownNewPlayerWheel,
+  async (val) => {
+    await nextTick();
+    if (val) checkNewPlayerWheelPromoHomePopupCanShow();
+  }
+)
 
 watch(languageVal, loadData);
 // watch(
@@ -4490,10 +4505,13 @@ const showSpinWheel = () => {
     .then((res) => {
       if (res.code == 0) {
         if (res.data.hasUnusedCoupon === "YES") {
-          isShowPrizeModal.value = true;
+          isHasUnusedCoupon.value = true;
           store.hasUnusedCoupon = true;
         } else {
           store.hasUnusedCoupon = false;
+        }
+        if ((store.depositCount < 1) && isAndroid()) {
+          promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
         }
       }
     })
@@ -4502,22 +4520,22 @@ const showSpinWheel = () => {
     });
 };
 
-const showCongratsModal = () => {
-  eventapi.get("/new-user-roulette/init").then((res) => {
-    if (res.code === 0) {
-      if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
-        // isCongratsModal.value = true;
-        isShowPrizeModal.value = true;
-          store.hasUnusedCoupon = true;
-        if (!promoStore.isShownSpinLuckyWheel) {
-          popupPromo.value = "newplayer-spin-wheel";
-        }
-      } else {
-          store.hasUnusedCoupon = false;
-      }
-    }
-  });
-};
+// const showCongratsModal = () => {
+//   eventapi.get("/new-user-roulette/init").then((res) => {
+//     if (res.code === 0) {
+//       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
+//         // isCongratsModal.value = true;
+//         isShowPrizeModal.value = true;
+//           store.hasUnusedCoupon = true;
+//         if (!promoStore.isShownSpinLuckyWheel) {
+//           popupPromo.value = "newplayer-spin-wheel";
+//         }
+//       } else {
+//           store.hasUnusedCoupon = false;
+//       }
+//     }
+//   });
+// };
 
 const checkGoogleLoginSetPwd = () => {
   if (store.isGoogleLogin && store.isFirstLandOnHomePage) {

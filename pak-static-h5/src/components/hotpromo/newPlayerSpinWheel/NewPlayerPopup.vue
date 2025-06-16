@@ -22,44 +22,44 @@ const emits = defineEmits(["closeDialog"]);
 const store = userStore();
 const isDoNotShowAgain = ref(false);
 
-const isShowSpinLuckyWheelPromoPopup = ref(false);
+const isShowNewPlayerWheelPromoPopup = ref(false);
 const onCloseSpinLuckyWheelPromoPopup = () => {
   if (isDoNotShowAgain.value) {
-    localStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", Date.now());
-    isShowSpinLuckyWheelPromoPopup.value = false;
+    localStorage.setItem("NEW_PLAYER_WHEEL_POPUP", Date.now());
+    isShowNewPlayerWheelPromoPopup.value = false;
   }
 
-  sessionStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", "1");
+  sessionStorage.setItem("NEW_PLAYER_WHEEL_POPUP", "1");
 };
 
 const checkIsCanShowPopup = () => {
   console.log("Checking if can show popup...");
-  if (localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+  if (localStorage.getItem("NEW_PLAYER_WHEEL_POPUP")) {
     console.log("Do not show again status ongoing...");
     return;
   }
 
-  if (sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+  if (sessionStorage.getItem("NEW_PLAYER_WHEEL_POPUP")) {
     console.log("Do not show again status ongoing...");
     return;
   }
 
   if (store.hasToken()) {
     setTimeout(() => {
-      isShowSpinLuckyWheelPromoPopup.value = true;
+      isShowNewPlayerWheelPromoPopup.value = true;
     }, 750);
   }
 };
 
 const checkExpirationTime = () => {
-  const preTimeStr = localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP");
+  const preTimeStr = localStorage.getItem("NEW_PLAYER_WHEEL_POPUP");
   if (preTimeStr) {
     const currTime = moment().startOf("day");
     const prevTime = moment(Number(preTimeStr));
     const diff = currTime.diff(prevTime, "milliseconds");
 
     if (diff > 0) {
-      localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
+      localStorage.removeItem("NEW_PLAYER_WHEEL_POPUP");
       isDoNotShowAgain.value = false;
     }
   }

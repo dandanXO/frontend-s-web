@@ -39,7 +39,7 @@ const promoList = ref([
 if (props.hasWheel && !isAdded.value) {
   promoList.value.push({ code: "mega-sharing-wheel", name: t("home.MegaSharingRoulette") });
 }
-if (isAndroid() && props.hasNewPlayer && !isAddedSpin.value) {
+if (props.hasNewPlayer && !isAddedSpin.value) {
   promoList.value.push({ code: "newplayer-spin-wheel", name: t("home.welcomeNewPlayer") });
 }
 if (props.hasSpin && !isAddedSpin.value) {
@@ -55,7 +55,7 @@ watch(props, (newVal, oldVal) => {
     isAddedSpin.value = true;
     promoList.value.push({ code: "spin-lucky-wheel", name: t("home.spinLuckyWheel") });
   }
-  if (isAndroid() && newVal.hasNewPlayer === true) {
+  if (newVal.hasNewPlayer === true) {
     isAddedSpin.value = true;
     promoList.value.push({ code: "newplayer-spin-wheel", name: t("home.welcomeNewPlayer") });
   }

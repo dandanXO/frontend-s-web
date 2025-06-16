@@ -375,7 +375,7 @@
     </div>
   </q-dialog> -->
   <q-dialog width="100%" v-model="showPaymentCancellationDialog">
-  <div class="popout-dialog">
+  <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
     <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
     <div class="popout-dialog-container">
       <div class="txt-title">{{ $t("notify.cancelPayment") }}</div>
