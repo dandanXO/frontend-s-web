@@ -1591,7 +1591,7 @@
 
 <script>
 /* eslint-disable */
-import { defineComponent, onMounted, ref, reactive, computed } from "vue";
+import { defineComponent, onMounted, onActivated, ref, reactive, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached } from "boot/cache";
@@ -2642,7 +2642,7 @@ export default defineComponent({
 
     onMounted(() => {
       getPlatList();
-      store.getUnreadTotal();
+      //store.getUnreadTotal();
       loadAnnouncement();
       checkPlatform();
       loadData();
@@ -2660,6 +2660,10 @@ export default defineComponent({
         initFloating();
       }, 750);
     });
+    onActivated(() => {
+      store.getUnreadTotal();
+    });
+
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
 
