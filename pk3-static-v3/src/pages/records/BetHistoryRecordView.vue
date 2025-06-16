@@ -31,7 +31,6 @@ import {api} from "boot/axios";
 import moment from "moment/moment";
 import {userStore} from "src/stores";
 import {cached} from "boot/cache";
-import * as _ from "lodash"
 
 export default defineComponent({
   name: "BetHistoryRecordView",
@@ -125,13 +124,12 @@ export default defineComponent({
         return response
       })).then((data) => {
         console.log(data);
-        _.each(data, function (item, index) {
-          var option = {
+        data.forEach((item) => {
+          platformsList.value.push({
             label: item.name,
             value: item.code,
-          }
-          platformsList.value.push(option);
-        })
+          });
+        });
 
       });
     }
