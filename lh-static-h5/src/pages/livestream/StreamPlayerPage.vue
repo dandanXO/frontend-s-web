@@ -144,8 +144,7 @@ const isLandscape = computed({
 });
 
 const chatMessageMarginTop = computed(() => {
-  const isLandscape = window.matchMedia("(orientation: landscape)").matches;
-  if (isLandscape) {
+  if (isLandscape.value) {
     return 0;
   } else {
     return roomMessageBottom.value;

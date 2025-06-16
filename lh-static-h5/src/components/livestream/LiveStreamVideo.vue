@@ -666,6 +666,9 @@ const handleEndFullScreen = () => {
   if (orientationTimer.value) {
     clearInterval(orientationTimer.value);
   }
+  if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler) {
+    window.flutter_inappwebview.callHandler("FlutterChannel", "LH_FLUTTER");
+  }
   const checkOrientationManually = () => {
     const _isLandscape = window.matchMedia("(orientation: landscape)").matches;
     emit("landscape-change", _isLandscape);

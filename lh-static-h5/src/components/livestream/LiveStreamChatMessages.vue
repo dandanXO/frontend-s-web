@@ -7,7 +7,7 @@
       landscape: isLandscape
     }"
   >
-    <div ref="chatListRef" class="livestream-chat-list" :style="{ marginTop: `${marginTop}px` }">
+    <div ref="chatListRef" class="livestream-chat-list" :style="chatListStyle">
       <div v-for="(message, index) in messages" :key="index" class="livestream-chat-item">
         <img
           class="livestream-chat-item__vip-badge"
@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <div class="livestream-chat-input-wrapper" :style="chatBoxStyle">
+    <div ref="inputWrapperRef" class="livestream-chat-input-wrapper">
       <q-form class="livestream-chat-input-inner-wrapper q-px-md" @submit.enter.prevent>
         <q-btn class="bet-btn" rounded label="投一注" @click="handleBetClick" />
 
@@ -81,7 +81,7 @@ import GameModal from "components/modal/GameModal.vue";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import { useLocalStorage } from "@vueuse/core";
+import { useElementBounding, useLocalStorage } from "@vueuse/core";
 import { Picker } from "emoji-mart";
 
 const now = Date.now();
@@ -106,10 +106,13 @@ const model = defineModel();
 const messageToSend = ref("");
 const chatListRef = ref(null);
 const emojiPickerRef = ref(null);
+const inputWrapperRef = ref(null);
 const isPopoverVisible = ref(false);
 
-const isDark = computed(() => $q.dark.isActive);
 const profilePhotoDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/profile/";
+const { height: inputWrapperHeight } = useElementBounding(inputWrapperRef);
+
+const isDark = computed(() => $q.dark.isActive);
 const isMessageSendable = computed(() => messageToSend.value.trim().length > 0);
 
 const inputConfig = computed(() => {
@@ -128,6 +131,10 @@ const inputConfig = computed(() => {
     placeholder
   };
 });
+const chatListStyle = computed(() => ({
+  marginTop: `${props.marginTop}px`,
+  maxHeight: `calc(100dvh - ${props.marginTop}px - ${inputWrapperHeight.value}px)`
+}));
 
 const handleSendChatMessage = () => {
   emit("sendChatMessage", messageToSend.value);
@@ -256,7 +263,7 @@ onMounted(() => {
     padding: 16px;
     overflow: auto;
     height: 100dvh;
-    max-height: calc(100dvh - 56.25vw - 27px - 60px - 68px - 16px);
+    // max-height: calc(100dvh - 56.25vw - 27px - 60px - 68px - 16px);
     // Firefox
     scrollbar-width: thin;
     scrollbar-color: #c4c4c4 #b8d1ff;
