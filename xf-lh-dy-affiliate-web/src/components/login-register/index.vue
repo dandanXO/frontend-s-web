@@ -30,6 +30,7 @@
               <div class="log">
                 {{ isReg ? $t('common.signup') : $t('common.login') }}
               </div>
+              <LangToggle v-if="props.siteId === '8'" />
               <!--              <div class="topright" v-if="props.siteId !== '5'">-->
               <!--                <span class="noaccabs">-->
               <!--                  {{ isReg ? '已经有账号? ' : '没有帐户？' }}-->
@@ -629,6 +630,7 @@ import {
 import { useI18n } from 'vue-i18n'
 import { i18nStore } from '@/store/language'
 import LhFeedback from '../customer-service/lh-feedback.vue'
+import LangToggle from '../lang/LangToggle.vue'
 
 export default defineComponent({
   props: {
@@ -638,7 +640,8 @@ export default defineComponent({
     },
   },
   components: {
-    LhFeedback
+    LhFeedback,
+    LangToggle
   },
   setup(props) {
     const validatePass2 = async (r, v) => {
@@ -1429,7 +1432,13 @@ export default defineComponent({
           'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
         currentSite.value.logo = viLogo
         state.loginForm.site = 'VNM'
-        setLanguage('vi')
+
+        const hasPreferredLang = route?.query?.lang;
+        if (hasPreferredLang && ['en', 'vi'].includes(hasPreferredLang)) {
+          setLanguage(hasPreferredLang);
+        } else {
+          setLanguage('vi')
+        }
       }
       if (props.siteId === '15') {
         currentSite.value.firstLiner = 'Bắt đầu với KAKA'
