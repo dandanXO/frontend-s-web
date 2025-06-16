@@ -84,12 +84,14 @@ import { isAndroid } from "boot/utils";
 const langVal = computed(() => i18nStoreLanguage.languageVal);
 
 import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.vue";
+import { store } from "quasar/wrappers";
 
 const { t } = useI18n();
 const $q = useQuasar();
 const router = useRouter();
 const props = defineProps([
-  "isHomePopup"
+  "isHomePopup",
+  "hasUnusedCoupon"
 ])
 // spin wheel constants
 const TOTAL_ITEMS = 7;
@@ -267,7 +269,8 @@ const initSpinWheel = () => {
   eventapi.get("/new-user-roulette/init").then((res) => {
     if (res.code == 0) {
       remainingDraws.value = res.data.spinChance;
-      showHasUnusedPopup.value = !alreadyDeposited && isAndroid() && res.data.hasUnusedCoupon === 'YES' ? true : false
+      store.hasUnusedCoupon = res.data.hasUnusedCoupon;
+      showHasUnusedPopup.value = isAndroid() && res.data.hasUnusedCoupon === 'YES' ? true : false
     }
   });
 

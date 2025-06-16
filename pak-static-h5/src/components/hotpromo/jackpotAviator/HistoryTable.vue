@@ -32,9 +32,10 @@ const props = defineProps(['historyList']);
     // margin: 0 10px;
     
     // margin: 20px auto 75px;
+    
     border-radius: 5px;
     overflow: hidden;
-    margin-bottom: 30px;
+        margin: 0 5px 70px;
     // padding-bottom: 0px;
         // padding-bottom: 15px;
 
@@ -103,6 +104,7 @@ const props = defineProps(['historyList']);
 @media (max-width: 400px) {
     .history-list {
         margin: 0 5px;
+        margin: 0 5px 70px;
 
         .item {
             height: 30px;

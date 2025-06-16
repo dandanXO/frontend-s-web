@@ -68,6 +68,7 @@ export const userStore = defineStore("userStore", {
       claimedSecondPrivilege: false,
       depositCount: 0,
       eligibleThirdPrivilege: false,
+      canClaimFtdPrivilege: false,
       canClaimSecondPrivilege: false,
       canClaimThirdPrivilege: false,
       isEnableBankCardOTP: false,
@@ -250,6 +251,7 @@ export const userStore = defineStore("userStore", {
             claimedFtdPrivilege,
             claimedSecondPrivilege,
             depositCount,
+            canClaimFtdPrivilege,
             canClaimSecondPrivilege,
             canClaimThirdPrivilege
           } = response.data;
@@ -273,6 +275,7 @@ export const userStore = defineStore("userStore", {
           this.claimedFtdPrivilege = claimedFtdPrivilege;
           this.claimedSecondPrivilege = claimedSecondPrivilege;
           this.depositCount = depositCount;
+          this.canClaimFtdPrivilege = canClaimFtdPrivilege;
           this.canClaimThirdPrivilege = canClaimThirdPrivilege;
           this.canClaimSecondPrivilege = canClaimSecondPrivilege;
 

@@ -1146,10 +1146,11 @@ async function pDepo(deposit) {
               }
             }
           }
-          if (isAndroid()) {
-            const onAppFirstDeposit = newPlayerDepositBonusConfig.value?.hasBonus
-            localStorage.setItem('onAppFirstDeposit', JSON.stringify(onAppFirstDeposit));
-          }
+          // if (isAndroid()) {
+          // }
+          
+          const onAppFirstDeposit = newPlayerDepositBonusConfig.value?.hasBonus
+          localStorage.setItem('onAppFirstDeposit', JSON.stringify(onAppFirstDeposit));
         }
       } else {
         $q.notify({
@@ -1324,15 +1325,21 @@ onBeforeRouteLeave((to, from, next) => {
   const hasSecond = secondTimeDepositBonusConfig.value?.hasBonus
   const hasThird = thirdTimeDepositBonusConfig.value?.hasBonus
   const hasNewPlayerReward = newPlayerDepositBonusConfig.value?.hasBonus
-  if ((hasNewPlayerReward && isAndroid() && !alreadyDeposited) || hasThird || hasSecond) {
+  
+  const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
+
+  if (((hasNewPlayerReward) && isAndroid()) || hasThird || hasSecond) {
     if (hasNewPlayerReward) {
+      if (alreadyDeposited) {
+        next()
+        return
+      }
       paymentCancellationAmtLoss.value = 38
     } else if (hasThird) {
       paymentCancellationAmtLoss.value = 150
     } else if (hasSecond) {
       paymentCancellationAmtLoss.value = 100
     }
-
     pendingNext.value = next
     showPaymentCancellationDialog.value = true
   } else {
