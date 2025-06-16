@@ -1,56 +1,120 @@
 <template>
-  <q-dialog v-model="isAnnouncementModalVisible">
-    <div  class="announcement-modal">
-      <div class="header">
-        <img class="header-icon" src="../../assets/images/home/announcement/mail-icon.svg" />
-        <span class="header-title">站内信</span>
-        <img class="close-icon" src="../../assets/images/home/announcement/close-icon.svg" @click="isAnnouncementModalVisible = false" />
-      </div>
-      <div class="content">
-        <div class="item" :class="{'unread-status': !inboxItem.readTime}" v-for="inboxItem, index in inboxData" :key="index">
-          <input type="checkbox" :id="`toggle-${index}`">
-          <label :for="`toggle-${index}`" class="content-title">
-            <div class="title-label" v-html="inboxItem.title" />
-            <div class="read-status" v-if="inboxItem.readTime">已读</div>
-            <img class="collapse-arrow" src="../../assets/images/home/announcement/right-arrow.svg" @click.stop="goToMailDetail(inboxItem)" />
-          </label>
-          <div class="content-desc" v-html="inboxItem.content" />
+  <q-scroll-area>
+    <q-dialog v-model="visible">
+      <div style="overflow: unset; width: 90%">
+        <div class="dialog-wrapper">
+          <div class="dialog-header only-inbox">
+            <div
+              class="dialog-tab-item announcement"
+              :class="currentTab === 'announcement' ? 'active' : ''"
+              @click="changeTab('announcement')"
+              v-if="announceData.length > 0"
+            >
+              <div v-if="currentTab === 'announcement'">
+                <img class="bg-img" src="../../assets/images/home/announcement/tab-active-background-2.png" alt="" />
+                <p class="text">重要公告</p>
+              </div>
+              <p v-else>重要公告</p>
+            </div>
+            <div
+              class="dialog-tab-item inbox"
+              :class="currentTab === 'inbox' ? 'active' : ''"
+              @click="changeTab('inbox')"
+            >
+              <div v-if="currentTab === 'inbox'">
+                <img class="bg-img" src="../../assets/images/home/announcement/tab-active-background.png" alt="" />
+                <p class="text">
+                  <img
+                    src="../../assets/images/home/announcement/icon-mail.svg"
+                    alt=""
+                    style="width: 24px; height: 24px"
+                  />
+                  站内消息
+                </p>
+              </div>
+              <p v-else>站內信</p>
+            </div>
+          </div>
+          <div class="dialog-content">
+            <InboxComponent
+              @chageSlide="hChageSlide"
+              v-if="currentTab === 'inbox'"
+              ref="inboxComponentRef"
+              :slide="activeDot"
+              :mailData="mailData"
+            />
+            <AnnouncementComponent
+              @chageSlide="hChageSlide"
+              v-if="currentTab === 'announcement'"
+              ref="announcementComponentRef"
+              :slide="activeDot"
+              :announceData="announceData"
+            />
+          </div>
+          <div class="dialog-footer">
+            <div class="dot-wrapper">
+              <div
+                class="dot"
+                :class="{ active: index === activeDot }"
+                v-for="(item, index) in currentComponentData"
+                :key="index"
+                @click="handleDotClick(index)"
+              ></div>
+            </div>
+            <q-checkbox v-model="checked" label="今天不再提醒" color="blue" />
+          </div>
+        </div>
+        <div class="dialog-action">
+          <div class="dialog-action-row">
+            <q-btn
+              rounded
+              class="dialog-action-item close-icon"
+              icon="close"
+              size="12px"
+              @click="visible = false"
+            ></q-btn>
+          </div>
         </div>
       </div>
-
-      <div class="actions">
-        <div class="cs-btn"  @click="goToLiveChat">
-          <img src="../../assets/images/home/announcement/cs-icon.svg" />联系客服</div>
-      </div>
-      <div class="dialog-actions">
-        <q-checkbox class="do-not-remind" v-model="checked" style="color: white" text-color="white">今天不再提醒</q-checkbox>
-        <img class="close-icon-outlined" src="../../assets/images/home/announcement/close-icon-outlined.svg" @click="isAnnouncementModalVisible = false" />
-      </div>
-    </div>
-  </q-dialog>
+    </q-dialog>
+  </q-scroll-area>
 </template>
 
 <script setup>
-import { userStore } from "stores/index";
-import { ref, watch, onMounted } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
+import InboxComponent from "./InboxComponent.vue";
+import AnnouncementComponent from "./AnnouncementComponent.vue";
+import { userStore } from "src/stores";
+import { api } from "boot/axios";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
-import { useRouter } from "vue-router";
-import { api } from "src/boot/axios";
 
-const router = useRouter();
-const isAnnouncementModalVisible = ref(false);
-const inboxData = ref([]);
 const store = userStore();
-const lastAnnouncementDateStr = useLocalStorage("DY_LAST_ANNOUNCEMENT_DATE", null);
+const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", null);
+
+const visible = ref(false);
+const currentTab = ref("inbox");
 const checked = ref(false);
+const activeDot = ref(0);
 
-const goToLiveChat = () => {
-  router.push('/liveChat');
-}
+const mailData = ref([]);
+const announceData = ref([]);
 
-const goToMailDetail = (mail) => {
-  router.push(`/account/inbox?id=${mail.id}&type=${mail.type}`);
+const currentComponentData = computed(() => {
+  return currentTab.value === "inbox" ? mailData.value : announceData.value;
+});
+
+const changeTab = (name) => {
+  currentTab.value = name;
+  activeDot.value = 0;
+};
+
+const handleDotClick = (index) => {
+  activeDot.value = index;
+};
+
+const hChageSlide = (val) => {
+  activeDot.value = val;
 };
 
 const getInbox = () => {
@@ -68,19 +132,19 @@ onMounted(() => {
   }
 
   getInbox()
-    .then((res) => {
-      if (res.code === 0) {
-        inboxData.value = res.data;
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      if (inboxData.value.length > 0) {
-        isAnnouncementModalVisible.value = true;
-      }
-    });
+  .then((res) => {
+    if (res.code === 0) {
+      mailData.value = res.data;
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+  .finally(() => {
+    if (mailData.value.length > 0) {
+      visible.value = true;
+    }
+  });
 });
 
 watch(
@@ -89,7 +153,7 @@ watch(
     if (store.token) {
       getInbox().then((res) => {
         if (res.code === 0) {
-          inboxData.value = res.data;
+          mailData.value = res.data;
         }
       });
     }
@@ -106,206 +170,174 @@ watch(checked, (val) => {
 </script>
 
 <style lang="scss" scoped>
-.header {
-  background: linear-gradient(90deg, #32B8FD 0%, #DB70FF 100%);
-  color: #f8f8f8;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 320px;
-  height: 48px;
-
-  .header-icon {
-    margin-left: 20px;
-  }
-
-  .close-icon {
-    margin-left: auto;
-    margin-right: 20px;
-    cursor: pointer;
-  }
-
-  .header-title {
-    font-family: Inter;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 100%;
-    letter-spacing: 0%;
-  }
+.dialog-wrapper {
+  max-width: 90%;
+  margin: 0 auto;
 }
 
-.content {
-  background-color:#f2f2f2;
-  height: 350px;
+.dialog-header {
+  background: linear-gradient(0deg, #3480f9 0%, #6cadff 100%);
+  height: 42px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 20px;
-  overflow-y: scroll;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  cursor: pointer;
+  padding: 0 32px;
 
-  .item {
+  &.only-inbox {
+    height: 52px;
+    background: #fff;
+    border-bottom: 1px solid #999;
+
+    .dialog-tab-item {
+      justify-content: center !important;
+    }
+  }
+
+  .dialog-tab-item {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-bottom: 1px solid #d7d7d7;
-    justify-content: center;
+    align-items: center;
+    flex: 1;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+    height: 42px;
 
-    .content-title {
-      display: flex;
-      gap: 10px;
-      font-family: 'PingFang SC';
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 20px;
+    &.inbox {
+      justify-content: flex-end;
+    }
 
-      .title-label {
+    &.announcement {
+      justify-content: flex-start;
+    }
+
+    &.inbox.active {
+      .bg-img {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 50px;
+      }
+
+      .text {
+        position: relative;
+        z-index: 0;
+        color: #2792fd;
         display: flex;
         align-items: center;
-        color: #1c1c1c;
-        
-        :deep(p) {
-          margin: 0 !important;
-        }
+        gap: 8px;
       }
     }
 
-    .content-desc {
-      font-family: 'PingFang SC';
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      padding: 0 10px;
-      color: #1c1c1c;
-    }
+    &.announcement.active {
+      .bg-img {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 50px;
+      }
 
-    input {
-      display: none;
-    }
-
-    input:checked ~ .content-desc {
-      max-height: 500px; /* Set a larger max-height to ensure smooth expansion */
-      opacity: 1;
-      padding: 10px;
-    }
-
-    .collapse-arrow {
-      transition: transform 0.3s ease-in-out;
-      color: #d9d9d9;
-      font-size: 14px;
-      margin-left: auto;
-    }
-
-    input:checked ~ .content-title .collapse-arrow {
-      transform: rotate(90deg);
-    }
-
-    .read-status {
-      background: #D9D9D9;
-      color: #808080;
-      width: 40px;
-      height: 20px;
-      border-radius: 4px;
-      font-family: 'PingFang SC';
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      text-align: center;
-    }
-
-    &.unread-status {
-      .content-title {
-        .title-label {
-          color: #1c1c1c;
-          font-weight: 700;
-
-          &:after {
-            content: "";
-            width: 8px;
-            height: 8px;
-            background-color: red;
-            border-radius: 50%;
-            display: inline-block;
-            margin-left: 10px;
-          }
-        }
+      .text {
+        position: relative;
+        z-index: 0;
+        color: #2792fd;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
     }
   }
+
+  p {
+    margin: 0;
+    color: white;
+    font-size: 20px;
+    white-space: nowrap;
+  }
 }
 
-.dialog-actions {
+.dialog-footer {
+  background: #e8f0fd;
+  height: 48px;
+  border-radius: 0 0 12px 12px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-}
+  justify-content: space-between;
+  padding: 16px;
 
-.actions {
-  display: flex;
-  justify-content: center;
-  background-color:#f2f2f2;
-  padding: 20px;
-
-  .cs-btn, .redirect-btn {
-    cursor: pointer;
-
-    &:hover {
-      filter: brightness(0.9);
-    }
-
-    &:active {
-      transform: translateY(2px);
-    }
+  .dot-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
   }
 
-  .cs-btn {
-    background: linear-gradient(180deg, #52ACFF 0%, #3559DA 100%);
-    border: 1px solid #D1D5DB;
-    box-shadow: 0px 1px 2px 0px #0000000D;
-    width: 230px;
-    height: 40px;
-    border-radius: 100px;
-    gap: 6px;
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #bbcbdb;
+
+    &.active {
+      background: #2792fd;
+      width: 20px;
+      border-radius: 56px;
+    }
+  }
+}
+
+.dialog-action {
+  position: absolute;
+  right: 0;
+  width: 100%;
+
+  .dialog-action-row {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    color: #fff;
+    margin-top: 20px;
   }
 
-  .redirect-btn {
-    width: 480px;
-    height: 41px;
-    border-radius: 100px;
-    background: linear-gradient(180deg, #52ACFF 0%, #3559DA 100%);
-    width: 230px;
-    height: 40px;
-    border-radius: 100px;
-    gap: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    color: #fff;
+  .dialog-action-item {
+    &.close-icon {
+      justify-content: center;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ffffff99;
+      border: 1px solid #ffffffb2;
+      fill: black;
+    }
   }
 }
 
-.close-icon-outlined {
-  cursor: pointer;
+::v-deep(.q-dialog__inner > div) {
+  overflow: unset;
 }
 
-</style>
-<style lang="scss">
-.announcement-modal {
-  width: 320px;
-  background: transparent !important;
-  border-radius: 10px !important;
+.body--dark {
+  .dialog-header {
+    &.only-inbox {
+      background: #333;
+    }
 
-  .q-checkbox__inner {
+    .bg-img {
+      filter: brightness(0) saturate(100%) invert(16%) sepia(0%) saturate(107%) hue-rotate(231deg) brightness(93%)
+      contrast(87%);
+    }
+  }
+
+  .dialog-header .dialog-tab-item.inbox.active .text {
     color: #fff;
+  }
+  .dialog-header .dialog-tab-item.inbox.active .text img {
+    filter: brightness(0) invert(1);
+  }
+
+  .dialog-footer {
+    background: #444;
   }
 }
 </style>
