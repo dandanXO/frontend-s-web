@@ -1328,12 +1328,12 @@ onBeforeRouteLeave((to, from, next) => {
   
   const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
 
+  if (alreadyDeposited && isAndroid()) {
+    next()
+    return
+  }
   if (((hasNewPlayerReward) && isAndroid()) || hasThird || hasSecond) {
     if (hasNewPlayerReward) {
-      if (alreadyDeposited) {
-        next()
-        return
-      }
       paymentCancellationAmtLoss.value = 38
     } else if (hasThird) {
       paymentCancellationAmtLoss.value = 150
