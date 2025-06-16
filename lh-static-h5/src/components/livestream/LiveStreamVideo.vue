@@ -736,15 +736,19 @@ const copyMessage = () => {
 };
 
 const backToPrev = () => {
-  if (extensionState.value) {
-    // extensionToken = localStorage.getItem("TOKEN");
-    router.push({
-      path: `/livestreampage`,
-      query: { token: extensionToken.value }
-    });
-    // router.go(-1);
+  if (playerConfig.value.isFullScreen) {
+    handleFullScreenChange(false);
   } else {
-    router.push(`/livestream`);
+    if (extensionState.value) {
+      // extensionToken = localStorage.getItem("TOKEN");
+      router.push({
+        path: `/livestreampage`,
+        query: { token: extensionToken.value }
+      });
+      // router.go(-1);
+    } else {
+      router.push(`/livestream`);
+    }
   }
 };
 
