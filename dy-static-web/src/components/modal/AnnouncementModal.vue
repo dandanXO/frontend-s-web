@@ -238,10 +238,12 @@ watch(checked, (val) => {
 <style>
 .announcement-modal {
 
+  &.el-dialog {
+    --el-dialog-border-radius: 12px;;
+  }
+
   .el-dialog__body {
-    padding: 0 !important;
-    border-radius: 12px 12px 0 0!important;
-  overflow: hidden !important;
+    padding: 0;
   }
   .el-carousel__item {
     text-align: unset;
