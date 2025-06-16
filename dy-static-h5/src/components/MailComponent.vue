@@ -62,7 +62,7 @@
                       <img src="../assets/images/inbox/unread-mail.png" />
                     </div>
 
-                    <div class="title-text" :title="det.title">{{ det.title }}</div>
+                    <div class="title-text" :title="det.title" v-html="det.title"></div>
                     <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`">
                       <i>{{ formatSendTime(det.sendTime) }}</i>
                     </div>
@@ -571,6 +571,9 @@ export default defineComponent({
         overflow: hidden;
         white-space: nowrap;
         flex: 1;
+        * {
+          margin: unset;
+        }
       }
 
       .send-time {

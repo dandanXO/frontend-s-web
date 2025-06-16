@@ -76,7 +76,7 @@
                           </div>
 
                           <div v-if="isShowSelect" class="mailbox-checkbox">
-                            <el-checkbox v-model="selectedIds[m.id]" size="large" />
+                            <el-checkbox @click.stop v-model="selectedIds[m.id]" size="large" />
                           </div>
                         </div>
 
