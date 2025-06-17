@@ -183,7 +183,7 @@ const getDisplayDateTime = (date) => {
   } else if (diffInDays === 1) {
     return eventDate.format("明日 HH:mm");
   } else {
-    return eventDate.format("MM/DD");
+    return eventDate.format("MM/DD HH:mm");
   }
 };
 
