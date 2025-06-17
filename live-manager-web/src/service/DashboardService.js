@@ -349,7 +349,6 @@ export const DashboardService = {
       .get(`/session/live-sport/match?${request}`, {
         headers: {
           token: `${token}`,
-          'Content-Type': 'application/json',
         },
       })
       .then((response) => {
@@ -372,7 +371,6 @@ export const DashboardService = {
       .get(`/session/live-sport/team?${request}`, {
         headers: {
           token: `${token}`,
-          'Content-Type': 'application/json',
         },
       })
       .then((response) => {
@@ -384,6 +382,29 @@ export const DashboardService = {
       })
       .catch((error) => {
         console.error('獲取運動直播隊伍請求失敗:', error)
+        return null
+      })
+  },
+
+
+  //live-streamer
+  getSportLiveStreamer(request) {
+    const token = sessionStorage.getItem('token')
+    return api
+      .get(`/session/live-sport/streamer?${request}`, {
+        headers: {
+          token: `${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          return response.data
+        }
+        console.error('獲取運動直播主播失敗:', response.message || '未知錯誤')
+        return null
+      })
+      .catch((error) => {
+        console.error('獲取運動直播主播請求失敗:', error)
         return null
       })
   },
