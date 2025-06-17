@@ -348,6 +348,7 @@ const handleBetClick = () => {
     case 4:
     case 5:
     case 6:
+    case 7:
       gameModalRef.value.open("雷火电竞", "TFGaming");
   }
 };

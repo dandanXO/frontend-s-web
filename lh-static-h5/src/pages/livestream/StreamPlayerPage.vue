@@ -527,6 +527,8 @@ const sportType = computed(() => {
       return { val: "dota2", label: "DOTA2" };
     case 6:
       return { val: "kog", label: "王者荣耀" };
+    case 7:
+      return { val: "kog", label: "无畏契约" };
     default:
       return { val: "unknown", label: "未知" };
   }
