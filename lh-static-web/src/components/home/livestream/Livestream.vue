@@ -342,14 +342,14 @@ const handleBetClick = () => {
   switch (currentLiveData.value.sportId) {
     case 1:
     case 2:
-      gameModalRef.value.open("IM体育", "IM");
+      gameModalRef.value.open("IM体育", "IM", currentLiveData.value.eventCode || "");
       break;
     case 3:
     case 4:
     case 5:
     case 6:
     case 7:
-      gameModalRef.value.open("雷火电竞", "TFGaming");
+      gameModalRef.value.open("雷火电竞", "TFGaming", currentLiveData.value.eventCode || "");
   }
 };
 
