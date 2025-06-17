@@ -375,6 +375,14 @@ body.body--dark .q-footer {
     transform: translate(0, 1px);
   }
 }
+.bg-greenbtn {
+  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+  color: #000;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 4px;
+  font-family: Poppins;
+}
 .bg-brightbtn {
   background: #33bcd4;
   color: #ffffff;
@@ -578,7 +586,7 @@ body.body--dark .q-footer {
     top: 10px;
     background: #cfcfcf;
     color: #787878;
-    z-index:9;
+    z-index: 9;
   }
 
   .txt-title {
