@@ -94,7 +94,7 @@ import { defineComponent, reactive, onMounted, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { liveSportTyps } from '@/utils/live'
 import { DashboardService } from '@/service/DashboardService'
-const { getSportLiveMatch } = DashboardService
+const { getSportLiveTeam } = DashboardService
 const { t } = useI18n()
 
 const uiControl = reactive({
@@ -128,7 +128,7 @@ async function loadTeam() {
   const params = new URLSearchParams(request).toString()
 
   console.log(params)
-  const res = await getSportLiveMatch(params)
+  const res = await getSportLiveTeam(params)
   console.log(res)
 }
 
