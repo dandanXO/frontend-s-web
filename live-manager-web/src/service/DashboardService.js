@@ -173,10 +173,10 @@ export const DashboardService = {
       },
     })
   },
-  getBlockList() {
+  getBlockList(queryString) {
     const token = sessionStorage.getItem('token')
 
-    return api.get('/session/block/list', {
+    return api.get(`/session/live-sport/chat-block${queryString}`, {
       headers: {
         token: `${token}`,
       },
