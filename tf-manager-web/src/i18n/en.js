@@ -3531,6 +3531,7 @@ export default {
     'Sport Live Chat Vip Status': 'Sport Live Vip Message Setting',
     'Sport Live History Block': 'Sport Live History Block Setting',
     'Sport Live Monitor': 'Sport Live Monitor',
+    'Sport Live Admin': 'Sport Live Admin Setting',
     'Member Refer Stat Analysis': 'Refer Friend Analysis',
     'Member Refer Relation': 'Refer Relation Query'
   },
