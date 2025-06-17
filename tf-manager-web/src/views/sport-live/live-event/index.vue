@@ -451,6 +451,7 @@
           </el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="eventCode" :label="t('fields.eventCode')" width="120" />
       <el-table-column
         prop="createTime"
         :label="t('fields.createTime')"

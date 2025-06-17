@@ -2645,7 +2645,8 @@ export default {
     loginType: 'Login Type',
     otp: 'OTP',
     scheduledAnnouncement: 'Scheduled Announcement',
-    subscribeCount: 'Subscribe Count'
+    subscribeCount: 'Subscribe Count',
+    eventCode: 'Event Code'
   },
   message: {
     adsStatusOpen: 'Open',
