@@ -177,7 +177,7 @@
       >
         <div class="games-selection-wrapper" id="hotgames">
           <div class="title-game revamp">
-            <div><img src="../assets/images/index/hot-icon.svg" width="22" /></div>
+            <div><img src="../assets/images/index/hot-icon.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_hotgames") }}</span>
             <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div :class="`custom-hot-prev`"><img src="../assets/images/index/rgtarrow.svg" /></div>
