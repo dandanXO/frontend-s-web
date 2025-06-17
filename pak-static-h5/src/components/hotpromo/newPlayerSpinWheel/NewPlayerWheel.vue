@@ -84,10 +84,12 @@ import { isAndroid } from "boot/utils";
 const langVal = computed(() => i18nStoreLanguage.languageVal);
 
 import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.vue";
-import { store } from "quasar/wrappers";
+// import { store } from "quasar/wrappers";
 
+import { userStore } from "src/stores";
 const { t } = useI18n();
 const $q = useQuasar();
+const store = userStore();
 const router = useRouter();
 const props = defineProps([
   "isHomePopup",
@@ -272,7 +274,14 @@ const initSpinWheel = () => {
     if (res.code == 0) {
       remainingDraws.value = res.data.spinChance;
       store.hasUnusedCoupon = res.data.hasUnusedCoupon;
-      showHasUnusedPopup.value = (isAndroid() || !isNotInApp) && res.data.hasUnusedCoupon === 'YES' && store.canClaimFtdPrivilege ? true : false
+      if (props.isHomePopup) {
+        showHasUnusedPopup.value = store.canClaimFtdPrivilege ? true : false
+      }
+      else {
+        showHasUnusedPopup.value = (isAndroid() || !isNotInApp) && res.data.hasUnusedCoupon === 'YES' ? true : false
+      }
+
+      
     }
   });
 

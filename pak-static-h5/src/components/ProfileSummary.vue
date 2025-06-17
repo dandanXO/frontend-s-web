@@ -232,7 +232,7 @@ const ui = useUI();
 const i18nStoreLanguage = i18nStore();
 const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
 const promoPercentage = computed(() => {
-  if (store.hasUnusedCoupon && isAndroid() && store.canClaimFtdPrivilege) return "38";
+  if (isAndroid() && store.canClaimFtdPrivilege) return "38";
   if (store.canClaimSecondPrivilege) return "100";
   if (store.canClaimThirdPrivilege) return "150";
   return ""; // Optional: for other cases if needed

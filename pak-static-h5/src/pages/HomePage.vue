@@ -4504,13 +4504,13 @@ const showSpinWheel = () => {
     .get("/new-user-roulette/init")
     .then((res) => {
       if (res.code == 0) {
-        if (res.data.hasUnusedCoupon === "YES" && isAndroid()) {
+        if (store.canClaimFtdPrivilege && isAndroid()) {
           isHasUnusedCoupon.value = true;
           store.hasUnusedCoupon = true;
         } else {
           store.hasUnusedCoupon = false;
         }
-        if ((store.canSpinPrivilegeCoupon) && isAndroid()) {
+        if ((store.canSpinPrivilegeCoupon || store.canClaimFtdPrivilege) && isAndroid()) {
           promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
         }
       }
