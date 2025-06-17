@@ -15,20 +15,20 @@
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
-          <!-- <Select
+          <Select
             v-model="request.sportId"
             :options="uiControl.sport"
-            optionLabel="体育项目"
+            optionLabel="name"
             placeholder="体育项目"
             :size="'small'"
           />
           <Select
             v-model="request.liveStatus"
             :options="uiControl.liveStatus"
-            optionLabel="状态"
+            optionLabel="display"
             placeholder="状态"
             :size="'small'"
-          /> -->
+          />
           <InputText
             type="text"
             v-model="request.title"
@@ -107,25 +107,27 @@
 
 <script setup>
 import { defineComponent, reactive, onMounted, ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { liveSportTyps } from '@/utils/live'
 import { DashboardService } from '@/service/DashboardService'
 const { getSportLiveMatch } = DashboardService
+const { t } = useI18n()
 
-// const uiControl = reactive({
-//   sport: liveSportTyps,
-//   // 0:比赛异常, 说明：暂未判断具体原因的异常比赛，建议隐藏处理, 1:未开赛, 2:进行中, 3:完场, 11:中断, 12:取消, 13:延期, 14:腰斩, 15:待定
-//   liveStatus: [
-//     { name: '0', display: t('status.namiMatch.GAME_EXCEPTION'), id: 0 },
-//     { name: '1', display: t('status.namiMatch.NOT_STARTED'), id: 1 },
-//     { name: '2', display: t('status.namiMatch.ONGOING'), id: 2 },
-//     { name: '3', display: t('status.namiMatch.ENDED'), id: 3 },
-//     { name: '11', display: t('status.namiMatch.INTERRUPTED'), id: 11 },
-//     { name: '12', display: t('status.namiMatch.CANCEL'), id: 12 },
-//     { name: '13', display: t('status.namiMatch.DELAYED'), id: 13 },
-//     { name: '14', display: t('status.namiMatch.ABANDONED'), id: 14 },
-//     { name: '15', display: t('status.namiMatch.PENDING'), id: 15 },
-//   ],
-// })
+const uiControl = reactive({
+  sport: liveSportTyps,
+  // 0:比赛异常, 说明：暂未判断具体原因的异常比赛，建议隐藏处理, 1:未开赛, 2:进行中, 3:完场, 11:中断, 12:取消, 13:延期, 14:腰斩, 15:待定
+  liveStatus: [
+    { name: '0', display: t('status.namiMatch.GAME_EXCEPTION'), id: 0 },
+    { name: '1', display: t('status.namiMatch.NOT_STARTED'), id: 1 },
+    { name: '2', display: t('status.namiMatch.ONGOING'), id: 2 },
+    { name: '3', display: t('status.namiMatch.ENDED'), id: 3 },
+    { name: '11', display: t('status.namiMatch.INTERRUPTED'), id: 11 },
+    { name: '12', display: t('status.namiMatch.CANCEL'), id: 12 },
+    { name: '13', display: t('status.namiMatch.DELAYED'), id: 13 },
+    { name: '14', display: t('status.namiMatch.ABANDONED'), id: 14 },
+    { name: '15', display: t('status.namiMatch.PENDING'), id: 15 },
+  ],
+})
 const request = reactive({
   size: 30,
   current: 1,
@@ -142,13 +144,16 @@ function resetQuery() {
 
 async function loadMatch() {
   // page.loading = true
-  const res = await getSportLiveMatch({
+  const params = new URLSearchParams({
     sportId: request.sportId,
     status: request.liveStatus,
     title: request.title,
     page: request.current,
     limit: request.size,
-  })
+  }).toString()
+
+  console.log(params)
+  const res = await getSportLiveMatch(params)
   console.log(res)
 
   // page.records = res.data.records || []

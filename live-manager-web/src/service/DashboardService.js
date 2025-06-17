@@ -346,7 +346,7 @@ export const DashboardService = {
   getSportLiveMatch(request) {
     const token = sessionStorage.getItem('token')
     return api
-      .post('/session/live-sport/match', request, {
+      .get(`/session/live-sport/match?${request}`, {
         headers: {
           token: `${token}`,
           'Content-Type': 'application/json',
