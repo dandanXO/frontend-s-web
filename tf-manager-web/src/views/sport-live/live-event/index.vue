@@ -51,7 +51,13 @@
           :default-time="defaultTime"
         />
 
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadEvent">
+        <el-button
+          style="margin-left: 20px"
+          icon="el-icon-search"
+          size="mini"
+          type="success"
+          @click="loadEvent"
+        >
           {{ t('fields.search') }}
         </el-button>
 
@@ -65,7 +71,12 @@
         </el-button>
       </div>
       <div class="btn-group">
-        <el-button icon="el-icon-plus" size="mini" type="primary" @click="showDialog('CREATE')">
+        <el-button
+          icon="el-icon-plus"
+          size="mini"
+          type="primary"
+          @click="showDialog('CREATE')"
+        >
           {{ t('fields.add') }}
         </el-button>
       </div>
@@ -103,7 +114,11 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.title')" prop="title">
-          <el-input v-model="form.title" style="width: 350px;" maxlength="100" />
+          <el-input
+            v-model="form.title"
+            style="width: 350px;"
+            maxlength="100"
+          />
         </el-form-item>
         <el-form-item :label="t('fields.homeTeam')" prop="homeTeam">
           <el-select
@@ -118,11 +133,13 @@
             class="filter-item team-selector"
             style="width: 350px;"
             default-first-option
-            @change="val => {
-              if (typeof val === 'string') form.homeName = val;
-              else form.homeName = '';
-              afterTeamSelectorChanged()
-            }"
+            @change="
+              val => {
+                if (typeof val === 'string') form.homeName = val
+                else form.homeName = ''
+                afterTeamSelectorChanged()
+              }
+            "
             @focus="loadEventWithSite(form.sportId, 'home')"
           >
             <el-option
@@ -133,13 +150,21 @@
             >
               <div style="display: flex; align-items: center">
                 <img
-                  :src="(item.icon?.startsWith('http://') || item.icon?.startsWith('https://')) ? item.icon : promoDir + item.icon"
+                  :src="
+                    item.icon?.startsWith('http://') ||
+                      item.icon?.startsWith('https://')
+                      ? item.icon
+                      : promoDir + item.icon
+                  "
                   style="width: 20px; height: 20px; margin-right: 10px"
                 >
                 <span>{{ item.nameZh }}</span>
               </div>
             </el-option>
-            <div v-if="teamSelectorStatus === 'home'" ref="teamSelectorBottomRef" />
+            <div
+              v-if="teamSelectorStatus === 'home'"
+              ref="teamSelectorBottomRef"
+            />
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.awayTeam')" prop="awayTeam">
@@ -155,11 +180,13 @@
             class="filter-item team-selector"
             style="width: 350px;"
             default-first-option
-            @change="val => {
-              if (typeof val === 'string') form.awayName = val;
-              else form.awayName = '';
-              afterTeamSelectorChanged()
-            }"
+            @change="
+              val => {
+                if (typeof val === 'string') form.awayName = val
+                else form.awayName = ''
+                afterTeamSelectorChanged()
+              }
+            "
             @focus="loadEventWithSite(form.sportId, 'away')"
           >
             <el-option
@@ -170,13 +197,21 @@
             >
               <div style="display: flex; align-items: center">
                 <img
-                  :src="(item.icon?.startsWith('http://') || item.icon?.startsWith('https://')) ? item.icon : promoDir + item.icon"
+                  :src="
+                    item.icon?.startsWith('http://') ||
+                      item.icon?.startsWith('https://')
+                      ? item.icon
+                      : promoDir + item.icon
+                  "
                   style="width: 20px; height: 20px; margin-right: 10px"
                 >
                 <span>{{ item.nameZh }}</span>
               </div>
             </el-option>
-            <div v-if="teamSelectorStatus === 'away'" ref="teamSelectorBottomRef" />
+            <div
+              v-if="teamSelectorStatus === 'away'"
+              ref="teamSelectorBottomRef"
+            />
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.sequence')" prop="sequence">
@@ -241,33 +276,67 @@
           <div style="display: flex; flex-direction: column;">
             <el-image
               v-if="form.cover"
-              :src="`${promoDir2}/live/event/${store.state.user.siteId}/` + form.cover"
+              :src="
+                `${promoDir2}/live/event/${store.state.user.siteId}/` +
+                  form.cover
+              "
               style="width: 150px; height: 100px; border: 1px solid #ccc;"
               class="preview"
             />
-            <input type="file" accept="image/*" @change="attachImage" style="margin-top: 10px;">
+            <input
+              type="file"
+              accept="image/*"
+              @change="attachImage"
+              style="margin-top: 10px;"
+            >
           </div>
         </el-form-item>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="submit">
+            {{ t('fields.confirm') }}
+          </el-button>
         </div>
       </el-form>
     </el-dialog>
-    <el-table :data="page.records" v-loading="page.loading" ref="table" row-key="id" size="small" highlight-current-row
-              :empty-text="t('fields.noData')"
+    <el-table
+      :data="page.records"
+      v-loading="page.loading"
+      ref="table"
+      row-key="id"
+      size="small"
+      highlight-current-row
+      :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="id" :label="t('fields.platformMatchId')" width="50" />
-      <el-table-column prop="sportId" :label="t('fields.sportType')" width="50" :formatter="formatSportType" />
+      <el-table-column
+        prop="id"
+        :label="t('fields.platformMatchId')"
+        width="50"
+      />
+      <el-table-column
+        prop="sportId"
+        :label="t('fields.sportType')"
+        width="50"
+        :formatter="formatSportType"
+      />
       <el-table-column prop="title" :label="t('fields.title')" width="250" />
-      <el-table-column prop="homeNameZh" :label="t('fields.homeTeam')" width="120">
+      <el-table-column
+        prop="homeNameZh"
+        :label="t('fields.homeTeam')"
+        width="120"
+      >
         <template #default="scope">
           <div style="display: flex; align-items: center">
             <img
               v-if="scope.row.homeIcon"
-              :src="scope.row.homeIcon.startsWith('http:') || scope.row.homeIcon.startsWith('https:')
-                ? scope.row.homeIcon
-                : promoDir + scope.row.homeIcon"
+              :src="
+                scope.row.homeIcon.startsWith('http:') ||
+                  scope.row.homeIcon.startsWith('https:')
+                  ? scope.row.homeIcon
+                  : promoDir + scope.row.homeIcon
+              "
               style="width: 20px; height: 20px; margin-right: 10px"
             >
             <span>{{ scope.row.homeNameZh || scope.row.homeName }}</span>
@@ -275,14 +344,21 @@
         </template>
       </el-table-column>
 
-      <el-table-column prop="awayNameZh" :label="t('fields.awayTeam')" width="120">
+      <el-table-column
+        prop="awayNameZh"
+        :label="t('fields.awayTeam')"
+        width="120"
+      >
         <template #default="scope">
           <div style="display: flex; align-items: center">
             <img
               v-if="scope.row.awayIcon"
-              :src="scope.row.awayIcon.startsWith('http:') || scope.row.awayIcon.startsWith('https:')
-                ? scope.row.awayIcon
-                : promoDir + scope.row.awayIcon"
+              :src="
+                scope.row.awayIcon.startsWith('http:') ||
+                  scope.row.awayIcon.startsWith('https:')
+                  ? scope.row.awayIcon
+                  : promoDir + scope.row.awayIcon
+              "
               style="width: 20px; height: 20px; margin-right: 10px"
             >
             <span>{{ scope.row.awayNameZh || scope.row.awayName }}</span>
@@ -301,15 +377,31 @@
         </template>
       </el-table-column>
       <el-table-column prop="sort" :label="t('fields.sequence')" width="50" />
-      <el-table-column prop="liveStatus" :label="t('fields.status')" width="120">
+      <el-table-column
+        prop="liveStatus"
+        :label="t('fields.status')"
+        width="120"
+      >
         <template #default="scope">
-          <el-tag v-if="scope.row.liveStatus === 2" type="success">{{ t('status.uefaMatch.ENDED') }}</el-tag>
-          <el-tag v-else-if="scope.row.liveStatus === 1" type="warning">{{ t('status.uefaMatch.ONGOING') }}</el-tag>
-          <el-tag v-else-if="scope.row.liveStatus === 3" type="danger">{{ t('status.uefaMatch.CANCEL') }}</el-tag>
-          <el-tag v-else-if="scope.row.liveStatus === 0" type="info">{{ t('status.uefaMatch.PENDING') }}</el-tag>
+          <el-tag v-if="scope.row.liveStatus === 2" type="success">
+            {{ t('status.uefaMatch.ENDED') }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.liveStatus === 1" type="warning">
+            {{ t('status.uefaMatch.ONGOING') }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.liveStatus === 3" type="danger">
+            {{ t('status.uefaMatch.CANCEL') }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.liveStatus === 0" type="info">
+            {{ t('status.uefaMatch.PENDING') }}
+          </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="eventStartTime" :label="t('fields.matchTime')" width="150">
+      <el-table-column
+        prop="eventStartTime"
+        :label="t('fields.matchTime')"
+        width="150"
+      >
         <template #default="scope">
           <span v-if="scope.row.eventStartTime === null">-</span>
           <span
@@ -321,7 +413,11 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="eventEndTime" :label="t('fields.endTime')" width="150">
+      <el-table-column
+        prop="eventEndTime"
+        :label="t('fields.endTime')"
+        width="150"
+      >
         <template #default="scope">
           <span v-if="scope.row.eventEndTime === null">-</span>
           <span
@@ -333,21 +429,34 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="isTest" :label="t('fields.isTestEvent')" width="120">
+      <el-table-column
+        prop="isTest"
+        :label="t('fields.isTestEvent')"
+        width="120"
+      >
         <template #default="scope">
           <el-tag :type="scope.row.isTest ? 'success' : 'info'">
             {{ scope.row.isTest ? t('fields.yes') : t('fields.no') }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="isPopular" :label="t('fields.isPopularEvent')" width="120">
+      <el-table-column
+        prop="isPopular"
+        :label="t('fields.isPopularEvent')"
+        width="120"
+      >
         <template #default="scope">
           <el-tag :type="scope.row.isPopular ? 'success' : 'info'">
             {{ scope.row.isPopular ? t('fields.yes') : t('fields.no') }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" :label="t('fields.createTime')" width="180">
+      <el-table-column prop="eventCode" :label="t('fields.eventCode')" width="120" />
+      <el-table-column
+        prop="createTime"
+        :label="t('fields.createTime')"
+        width="180"
+      >
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>
           <span
@@ -359,8 +468,16 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="createBy" :label="t('fields.createBy')" width="120" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="180">
+      <el-table-column
+        prop="createBy"
+        :label="t('fields.createBy')"
+        width="120"
+      />
+      <el-table-column
+        prop="updateTime"
+        :label="t('fields.updateTime')"
+        width="180"
+      >
         <template #default="scope">
           <span v-if="scope.row.updateTime === null">-</span>
           <!-- eslint-disable -->
@@ -373,7 +490,11 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="120"/>
+      <el-table-column
+        prop="updateBy"
+        :label="t('fields.updateBy')"
+        width="120"
+      />
       <
       <el-table-column
         fixed="right"
@@ -390,50 +511,61 @@
           >
             {{ t('fields.delete') }}
           </el-button>
-          <router-link :to="{ path: '/live-sport/live-setting', query: { id: scope.row.id } }">
+          <router-link
+            :to="{
+              path: '/live-sport/live-setting',
+              query: { id: scope.row.id },
+            }"
+          >
             <el-button icon="el-icon-video-camera" size="mini" type="success">
               {{ t('fields.manageStream') }}
             </el-button>
           </router-link>
         </template>
       </el-table-column>
-
     </el-table>
-    <el-pagination class="pagination"
-                   @current-change="changePage"
-                   layout="prev, pager, next"
-                   :page-size="request.size"
-                   :page-count="page.pages"
-                   :current-page="request.current"
+    <el-pagination
+      class="pagination"
+      @current-change="changePage"
+      layout="prev, pager, next"
+      :page-size="request.size"
+      :page-count="page.pages"
+      :current-page="request.current"
     />
   </div>
 </template>
 
 <script setup>
-
-import { onMounted, reactive, ref, computed, nextTick, onUnmounted } from "vue";
-import { useI18n } from "vue-i18n";
-import { useStore } from "@/store";
-import { getSiteTimeZoneById } from "@/api/site";
-import { getTeamById, getEvents, createSportLiveEvent, deleteSportLiveEvent } from "@/api/sport-live";
-import { required } from "@/utils/validate";
-import { ElMessage, ElMessageBox } from "element-plus";
-import { useSessionStorage } from "@vueuse/core";
-import { getShortcuts } from "@/utils/datetime";
-import moment from "moment/moment";
-import { uploadImage } from "@/api/image";
-import { liveSportTyps } from "@/utils/live"
+import { onMounted, reactive, ref, computed, nextTick, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useStore } from '@/store'
+import { getSiteTimeZoneById } from '@/api/site'
+import {
+  getTeamById,
+  getEvents,
+  createSportLiveEvent,
+  deleteSportLiveEvent,
+} from '@/api/sport-live'
+import { required } from '@/utils/validate'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { useSessionStorage } from '@vueuse/core'
+import { getShortcuts } from '@/utils/datetime'
+import moment from 'moment/moment'
+import { uploadImage } from '@/api/image'
+import { liveSportTyps } from '@/utils/live'
 
 const TEAMS_PER_VIEW = 20
 
-const { t } = useI18n();
-const shortcuts = getShortcuts(t);
-const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
-const promoDir2 = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
+const { t } = useI18n()
+const shortcuts = getShortcuts(t)
+const promoDir =
+  useSessionStorage('IMAGE_CDN', process.env.VUE_APP_IMAGE).value + '/promo/'
+const promoDir2 = useSessionStorage('IMAGE_CDN', process.env.VUE_APP_IMAGE)
+  .value
 const uiControl = reactive({
   dialogVisible: false,
-  dialogTitle: "",
-  dialogType: "CREATE",
+  dialogTitle: '',
+  dialogType: 'CREATE',
   removeBtn: true,
   dialogLoading: false,
   sport: liveSportTyps,
@@ -459,36 +591,35 @@ const uiControl = reactive({
       id: 3,
     },
   ],
-});
+})
 const page = reactive({
   pages: 0,
   records: [],
   loading: false,
-});
+})
 
 function formatSportType(row) {
   switch (row.sportId) {
     case 1:
-      return t('fields.football');
+      return t('fields.football')
     case 2:
-      return t('fields.basketball');
-    case 3:
-      return 'LOL'
-    case 4:
-      return 'CSGO'
-    case 5:
-      return 'DOTA2'
+      return t('fields.basketball')
     default:
-      return '-';
+      const item = liveSportTyps.find(item => item.id === row.sportId)
+      return item ? item.display : '-'
   }
 }
 
 function convertStartDate(date) {
-  return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
+  return moment(date)
+    .startOf('day')
+    .format('YYYY-MM-DD HH:mm:ss')
 }
 
 function convertDate(date) {
-  return moment(date).endOf('day').format('YYYY-MM-DD HH:mm:ss');
+  return moment(date)
+    .endOf('day')
+    .format('YYYY-MM-DD HH:mm:ss')
 }
 
 const request = reactive({
@@ -498,45 +629,51 @@ const request = reactive({
   liveStatus: null,
   title: null,
   eventStartTime: [convertStartDate(new Date()), convertDate(new Date())],
-});
+})
 
-const timezone = ref(null);
+const timezone = ref(null)
 const teams = reactive({
   list: [],
 })
-const formRef = ref(null);
+const formRef = ref(null)
 const store = useStore()
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
-];
+]
 
-const loadedTeams = ref([]);
-const searchedTeams = ref([]);
+const loadedTeams = ref([])
+const searchedTeams = ref([])
 const teamSelectorStatus = ref(null)
-const teamSelectorBottomRef = ref(null);
-const teamSelectorScrollObserver = ref(null);
+const teamSelectorBottomRef = ref(null)
+const teamSelectorScrollObserver = ref(null)
 
 const displayTeams = computed(() => {
-  const _searchedTeams = searchedTeams.value.map(team => ({ ...team, _sid: `search-${team.id}` }))
-  const _loadedTeams = loadedTeams.value.map(team => ({ ...team, _sid: `loaded-${team.id}` }));
-  const allTeams = _searchedTeams.concat(_loadedTeams);
+  const _searchedTeams = searchedTeams.value.map(team => ({
+    ...team,
+    _sid: `search-${team.id}`,
+  }))
+  const _loadedTeams = loadedTeams.value.map(team => ({
+    ...team,
+    _sid: `loaded-${team.id}`,
+  }))
+  const allTeams = _searchedTeams.concat(_loadedTeams)
   const result = new Map()
   allTeams.forEach(team => {
-    if (result.has(team.id)) return;
-    result.set(team.id, team);
+    if (result.has(team.id)) return
+    result.set(team.id, team)
   })
-  return Array.from(result.values());
+  return Array.from(result.values())
 })
 
 function resetQuery() {
-  request.sportId = null;
-  request.nameEn = null;
-  request.title = null;
+  request.sportId = null
+  request.nameEn = null
+  request.title = null
 }
 
 function isInTeamList(value) {
-  return teams.list.some(t => t.id === value);
+  return teams.list.some(t => t.id === value)
 }
 
 function restrictInput(event) {
@@ -550,143 +687,145 @@ async function loadEventWithSite(sportId, target) {
   console.log(sportId)
   if (sportId) {
     console.log(sportId)
-    const { data: team } = await getTeamById(sportId);
-    teams.list = team;
+    const { data: team } = await getTeamById(sportId)
+    teams.list = team
   } else {
-    const { data: team } = await getTeamById(request.sportId);
-    teams.list = team;
+    const { data: team } = await getTeamById(request.sportId)
+    teams.list = team
   }
   handleTeamSelectorFocus(target)
 }
 
 async function loadEvent() {
-  page.loading = true;
-  const { data: ret } = await getEvents(request);
-  page.pages = ret.pages;
-  page.records = ret.records;
-  page.loading = false;
+  page.loading = true
+  const { data: ret } = await getEvents(request)
+  page.pages = ret.pages
+  page.records = ret.records
+  page.loading = false
 }
 
 async function deleteTeam(eventId) {
   ElMessageBox.confirm(t('message.confirmDelete'), {
     confirmButtonText: t('fields.confirm'),
     cancelButtonText: t('fields.cancel'),
-    type: "warning",
-  }).then(async () => {
-    try {
-      console.log(eventId)
-      await deleteSportLiveEvent(eventId);
-      ElMessage({
-        message: t("message.deleteSuccess"),
-        type: "success",
-      });
-      await loadEvent();
-    } catch (error) {
-      ElMessage({
-        message: t("message.deleteFailed"),
-        type: "error",
-      });
-    }
-  }).catch(() => {
-  });
+    type: 'warning',
+  })
+    .then(async () => {
+      try {
+        console.log(eventId)
+        await deleteSportLiveEvent(eventId)
+        ElMessage({
+          message: t('message.deleteSuccess'),
+          type: 'success',
+        })
+        await loadEvent()
+      } catch (error) {
+        ElMessage({
+          message: t('message.deleteFailed'),
+          type: 'error',
+        })
+      }
+    })
+    .catch(() => {})
 }
 
 async function attachImage(event) {
-  const file = event.target.files[0];
-  if (!file) return;
+  const file = event.target.files[0]
+  if (!file) return
 
-  const data = await attachPhoto(event);
-  console.log(data);
+  const data = await attachPhoto(event)
+  console.log(data)
   if (data) {
-    form.cover = data;
+    form.cover = data
   } else {
     ElMessage({
       message: t('message.failedToUploadImage'),
       type: 'error',
-    });
+    })
   }
 }
 
 async function attachPhoto(event) {
-  const files = event.target.files[0];
-  if (!files) return;
+  const files = event.target.files[0]
+  if (!files) return
 
-  const fr = new FileReader();
-  fr.onload = function () {
-    const img = new Image();
-    img.onload = function () {
-    };
-    img.src = fr.result;
-  };
-  fr.readAsDataURL(files);
+  const fr = new FileReader()
+  fr.onload = function() {
+    const img = new Image()
+    img.onload = function() {}
+    img.src = fr.result
+  }
+  fr.readAsDataURL(files)
 
-  const allowFileType = ['image/jpeg', 'image/png', 'image/gif'];
+  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
   if (!allowFileType.includes(files.type)) {
     ElMessage({
       message: t('message.invalidFileType'),
       type: 'error',
-    });
-    return null;
+    })
+    return null
   }
 
-  const formData = new FormData();
-  formData.append('files', files);
-  formData.append('dir', `live/event/${store.state.user.siteId}`);
-  formData.append('overwrite', false);
+  const formData = new FormData()
+  formData.append('files', files)
+  formData.append('dir', `live/event/${store.state.user.siteId}`)
+  formData.append('overwrite', false)
 
   try {
-    const response = await uploadImage(formData);
-    return response.code === 0 ? response.data : null;
+    const response = await uploadImage(formData)
+    return response.code === 0 ? response.data : null
   } catch (error) {
     ElMessage({
       message: t('message.failedToUploadImage'),
       type: 'error',
     })
-    return null;
+    return null
   }
 }
 
 function submit() {
-  create();
+  create()
 }
 
 function create() {
-  formRef.value.validate(async (valid) => {
+  formRef.value.validate(async valid => {
     if (valid) {
       if (!isInTeamList(form.homeId)) {
-        form.homeName = form.homeId;
-        form.homeId = null;
+        form.homeName = form.homeId
+        form.homeId = null
       }
       if (!isInTeamList(form.awayId)) {
-        form.awayName = form.awayId;
-        form.awayId = null;
+        form.awayName = form.awayId
+        form.awayId = null
       }
 
-      form.icon = form.icon?.startsWith("http") ? store.state.user.siteId + "/" + form.icon.split('/').pop() : form.icon;
+      form.icon = form.icon?.startsWith('http')
+        ? store.state.user.siteId + '/' + form.icon.split('/').pop()
+        : form.icon
       if (form.cover) {
         form.cover = form.cover.startsWith('/live/event/')
           ? form.cover
-          : `/live/event/${store.state.user.siteId}/${form.cover}`;
+          : `/live/event/${store.state.user.siteId}/${form.cover}`
       }
-      await createSportLiveEvent(form);
-      uiControl.dialogVisible = false;
-      await loadEvent();
+      await createSportLiveEvent(form)
+      uiControl.dialogVisible = false
+      await loadEvent()
       ElMessage({
         message: t('message.addSuccess'),
-        type: "success",
-      });
+        type: 'success',
+      })
     }
-  });
+  })
 }
 
 function changePage(page) {
-  request.current = page;
-  loadEvent();
+  request.current = page
+  loadEvent()
 }
 
 function showDialog(type, row) {
-  uiControl.dialogVisible = true;
-  uiControl.dialogType = type;
+  uiControl.dialogVisible = true
+  uiControl.dialogType = type
   Object.assign(form, {
     id: null,
     sportId: null,
@@ -701,7 +840,7 @@ function showDialog(type, row) {
     title: null,
     isTest: null,
     isPopular: null,
-  });
+  })
 }
 
 const form = reactive({
@@ -721,46 +860,52 @@ const form = reactive({
   isTest: false,
   cover: '',
   isPopular: false,
-});
+})
 
 const formRules = reactive({
   title: [required(t('message.validateTeamNameRequired'))],
   nameEn: [required(t('message.validateTeamNameRequired'))],
   icon: [required(t('message.validateTeamIconRequired'))],
-});
+})
 
-const handleTeamSelectorFocus = (target) => {
-  loadedTeams.value = teams.list.slice(0, TEAMS_PER_VIEW);
-  teamSelectorStatus.value = target;
+const handleTeamSelectorFocus = target => {
+  loadedTeams.value = teams.list.slice(0, TEAMS_PER_VIEW)
+  teamSelectorStatus.value = target
   nextTick(() => {
-    if (!teamSelectorBottomRef.value) return;
-    teamSelectorScrollObserver.value.observe(teamSelectorBottomRef.value);
+    if (!teamSelectorBottomRef.value) return
+    teamSelectorScrollObserver.value.observe(teamSelectorBottomRef.value)
   })
 }
 
 const afterTeamSelectorChanged = () => {
   nextTick(() => {
     loadedTeams.value = []
-    teamSelectorStatus.value = null;
-    teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value);
+    teamSelectorStatus.value = null
+    teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value)
   })
 }
 
-const searchTeams = (query) => {
+const searchTeams = query => {
   if (!query) {
-    searchedTeams.value = [];
+    searchedTeams.value = []
   } else {
     searchedTeams.value = teams.list.filter(team => {
-      return team.nameZh?.toLowerCase().includes(query.toLowerCase()) || team.nameEn?.toLowerCase().includes(query.toLowerCase())
+      return (
+        team.nameZh?.toLowerCase().includes(query.toLowerCase()) ||
+        team.nameEn?.toLowerCase().includes(query.toLowerCase())
+      )
     })
   }
 }
 
 const registerTeamSelectorScrollObserver = () => {
-  teamSelectorScrollObserver.value = new IntersectionObserver((entries) => {
+  teamSelectorScrollObserver.value = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        loadedTeams.value = teams.list.slice(0, loadedTeams.value.length + TEAMS_PER_VIEW);
+        loadedTeams.value = teams.list.slice(
+          0,
+          loadedTeams.value.length + TEAMS_PER_VIEW
+        )
       }
     })
   })
@@ -768,20 +913,18 @@ const registerTeamSelectorScrollObserver = () => {
 
 onMounted(async () => {
   const store = useStore()
-  const { data: timeZone } = getSiteTimeZoneById(
-    store.state.user.siteId,
-  )
+  const { data: timeZone } = getSiteTimeZoneById(store.state.user.siteId)
   timezone.value = timeZone
 
-  await loadEvent();
-  registerTeamSelectorScrollObserver();
-});
+  await loadEvent()
+  registerTeamSelectorScrollObserver()
+})
 
 onUnmounted(() => {
   if (teamSelectorScrollObserver.value) {
-    teamSelectorScrollObserver.value.disconnect();
+    teamSelectorScrollObserver.value.disconnect()
   }
-});
+})
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -810,13 +953,13 @@ onUnmounted(() => {
 .team-selector {
   :deep(.el-select__caret) {
     &::before {
-      content: "\e6e1";
+      content: '\e6e1';
     }
   }
 
   :deep(.is-focus) {
     .el-select__caret {
-      transform: rotateZ(0deg)
+      transform: rotateZ(0deg);
     }
   }
 }

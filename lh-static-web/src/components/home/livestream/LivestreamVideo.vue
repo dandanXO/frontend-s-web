@@ -166,6 +166,7 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, ref, toRefs, watch } from "vue";
 import { VideoPlayer } from "@/utils/videoPlayer";
+import { useDebounceFn } from "@vueuse/core";
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
@@ -181,6 +182,7 @@ const DEFAULT_HLS_CONFIG = {
 
 const PLAYER_CONFIG_KEY = "lh-livestream-player-config";
 const MAXIMUM_VIDEO_RELOAD_TIMEOUT = 30 * 1000; // 30 seconds
+const ERROR_HANDLER_DEBOUNCE_TIME = 5 * 1000; // 5 seconds
 
 const DEFAULT_DANMU_CONFIG = {
   area: {
@@ -307,7 +309,7 @@ const initPlayer = async (play = false) => {
   try {
     await player.value.init();
     isPlayerSupported.value = player.value.supportPlayer !== "NONE";
-    player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerError);
+    player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerErrorDebounce);
     player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
     // emitting when hls.isSupported() is false
     player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
@@ -464,6 +466,8 @@ const handlePlayerError = (data) => {
   }
 };
 
+const handlePlayerErrorDebounce = useDebounceFn(handlePlayerError, ERROR_HANDLER_DEBOUNCE_TIME);
+
 const handleNativeStreamBuffering = () => {
   isVideoLoading.value = true;
 };
@@ -559,6 +563,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   player.value && player.value.destroy();
+  player.value = null;
   danmu.value && danmu.value.stop();
   document.removeEventListener("click", handleUnmuteClick);
 });

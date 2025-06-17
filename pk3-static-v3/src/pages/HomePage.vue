@@ -1019,7 +1019,7 @@ const PushNotification = defineAsyncComponent(() => import('@/components/modal/P
 const WithdrawalModal = defineAsyncComponent(() => import('@/components/modal/WithdrawalModal.vue'));
 const ProfileSummary = defineAsyncComponent(() => import('@/components/ProfileSummary.vue'));
 
-const HomePopup = defineAsyncComponent(() => import('@/components/hotpromo/spin-lucky-wheel/HomePopup.vue'));
+import HomePopup from '@/components/hotpromo/spin-lucky-wheel/HomePopup.vue';
 const SpinLuckyWheelPromoSticky = defineAsyncComponent(() => import('@/components/hotpromo/spin-lucky-wheel/PromoSticky.vue'));
 
 import { userStore } from "@/stores/index";

@@ -4,8 +4,17 @@
       src="@/assets/home/livestream/livestream-title-light.png"
       style="display: flex; margin: 38px auto 50px; width: 100%"
     />
+    <div class="livestream-tabs">
+      <LivestreamCategories v-model="activeTab" :categories="availableCategories" />
+    </div>
     <div class="livestream-inner-wrapper">
-      <LivestreamList v-model="currentLive" class="livestream-list" :list :is-livestream-list-loading />
+      <!-- <template v-if="filteredLivestreamList.length === 0"><div>目前没有直播</div></template> -->
+      <LivestreamList
+        v-model="currentLiveId"
+        class="livestream-list"
+        :list="filteredLivestreamList"
+        :is-livestream-list-loading
+      />
       <div class="livestream-list__pseudo" />
       <CurrentLivestream :livestream-data="currentLiveData" :is-system-livestream @click="handleBetClick" />
       <LivestreamChat
@@ -29,6 +38,7 @@
   </div>
 </template>
 <script setup>
+import LivestreamCategories from "@/components/home/livestream/LivestreamCategories.vue";
 import LivestreamList from "@/components/home/livestream/LivestreamList.vue";
 import CurrentLivestream from "@/components/home/livestream/CurrentLivestream.vue";
 import LivestreamChat from "@/components/home/livestream/LivestreamChat.vue";
@@ -57,14 +67,21 @@ const LATEST_WATCH_LIVESTREAM_ID_KEY = "LH_WEB_LATEST_WATCH_LIVESTREAM";
 const MESSAGE_SYNC_INTERVAL = 1000 * 2; // 2 seconds
 const MESSAGE_HISTORY_DANMU_FIRE_GAP = 10;
 const MAXIMUM_MESSAGE_LENGTH = 5000;
+const MESSAGE_HISTORY_START_TIME = 1000 * 60 * 5; // 5 minutes
 
 const LIVESTREAM_SYNC_INTERVAL = 1000 * 10; // 10 seconds
 const MAXIMUM_MESSAGE_PROCESS_DELAY_COUNT = 5;
+
+const DEFAULT_MESSAGES_HISTORY_META = {
+  current: 1,
+  max: 1
+};
 
 const store = userStore();
 const notify = useNotify();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const latestWatchLivestreamId = useSessionStorage(LATEST_WATCH_LIVESTREAM_ID_KEY, null);
+const latestActivatedTab = useSessionStorage("LH_WEB_LIVESTREAM_ACTIVE_TAB", null);
 
 /**
  * chat message list
@@ -73,11 +90,11 @@ const latestWatchLivestreamId = useSessionStorage(LATEST_WATCH_LIVESTREAM_ID_KEY
 const messages = ref([]);
 const danmuList = ref([]);
 const list = ref([]);
-const currentLive = ref(null);
+const currentLiveId = ref(null);
 const messageTimer = ref(null);
 const livestreamTimer = ref(null);
 const lastSyncMessageTime = ref(Date.now());
-const liveStartTime = ref();
+const messageHistoryStartTime = ref();
 const unsortMessages = ref([]);
 const gameModalRef = ref(null);
 const livestreamVideoRef = ref(null);
@@ -91,13 +108,11 @@ const isLivestreamListLoading = ref(false);
 const isFirstMessageSync = ref(true);
 const processedUserName = ref();
 const isProcessingMessageHistory = ref(false);
-const messagesHistoryMeta = ref({
-  current: 1,
-  max: 1
-});
+const messagesHistoryMeta = ref(DEFAULT_MESSAGES_HISTORY_META);
 const latestProcessedMessageId = ref(-1);
 const vipStatus = ref(false);
 const hideComponent = ref(true);
+const activeTab = ref(latestActivatedTab.value || "popular");
 
 const emit = defineEmits(["livestreamVisible"]);
 // const channels = ref([
@@ -111,8 +126,9 @@ const emit = defineEmits(["livestreamVisible"]);
 const userVipLevel = computed(() => extractVipLevelFromVipStr(store.vip));
 
 const currentLiveData = computed(() => {
-  if (!list.value.length || currentLive.value === null) return {};
-  return list.value[currentLive.value];
+  if (!list.value.length || currentLiveId.value === null) return {};
+  const targetLive = list.value.find((livestream) => livestream.streamId === currentLiveId.value);
+  return targetLive || {};
 });
 
 const isLivestreaming = computed(() => !!currentLiveData.value?.liveStatus);
@@ -196,23 +212,24 @@ const getData = () => {
         vipStatus.value = !!res.data.vipStatus;
         list.value.push(...parsedData);
         if (parsedData.length && livestreamListMeta.value.current === 1) {
-          const { earliestLivestreamIndex, latestWatchLivestreamIndex } = parsedData.reduce(
-            (result, livestream, index) => {
-              if (result.earliestLivestreamIndex === -1) {
-                result.earliestLivestreamIndex = index;
+          const { _earliestLivestream, _latestWatchLivestream } = parsedData.reduce(
+            (result, livestream) => {
+              if (!result._earliestLivestream) {
+                result._earliestLivestream = livestream;
               }
+
               if (latestWatchLivestreamId.value && livestream.streamId === latestWatchLivestreamId.value) {
-                result.latestWatchLivestreamIndex = index;
+                result._latestWatchLivestream = livestream;
               }
               return result;
             },
-            { earliestLivestreamIndex: -1, latestWatchLivestreamIndex: -1 }
+            { _earliestLivestream: null, _latestWatchLivestream: null }
           );
-
-          if (latestWatchLivestreamIndex !== -1) {
-            currentLive.value = latestWatchLivestreamIndex;
-          } else if (earliestLivestreamIndex !== -1) {
-            currentLive.value = earliestLivestreamIndex;
+          if (_latestWatchLivestream) {
+            currentLiveId.value = _latestWatchLivestream.streamId;
+          } else if (_earliestLivestream) {
+            activeTab.value = getLivestreamType(_earliestLivestream);
+            currentLiveId.value = _earliestLivestream.streamId;
           }
         }
         livestreamListMeta.value.current++;
@@ -232,7 +249,7 @@ const syncMessages = () => {
   const params = {
     siteId: process.env.VUE_APP_SITEID,
     streamId: currentLiveData.value.id,
-    recordTime: [liveStartTime.value, now]
+    recordTime: [messageHistoryStartTime.value, now]
   };
   chatHistoryAbortController.value = new AbortController();
   if (pastTime > MESSAGE_SYNC_INTERVAL && !isProcessingMessageHistory.value) {
@@ -325,12 +342,14 @@ const handleBetClick = () => {
   switch (currentLiveData.value.sportId) {
     case 1:
     case 2:
-      gameModalRef.value.open("IM体育", "IM");
+      gameModalRef.value.open("IM体育", "IM", currentLiveData.value.eventCode || "");
       break;
     case 3:
     case 4:
     case 5:
-      gameModalRef.value.open("雷火电竞", "TFGaming");
+    case 6:
+    case 7:
+      gameModalRef.value.open("雷火电竞", "TFGaming", currentLiveData.value.eventCode || "");
   }
 };
 
@@ -354,7 +373,7 @@ const syncLivestreamInfo = async () => {
         });
       }
       const parsedData = parseLivestreamData(res.data);
-      list.value[currentLive.value] = {
+      list.value[currentLiveId.value] = {
         ...currentLiveData.value,
         roomMessage: parsedData?.roomMessage,
         streamerStatus: parsedData.streamerStatus,
@@ -377,12 +396,68 @@ const resetSyncLivestreamInterval = (startNewInterval = false) => {
   }
 };
 
-watch(currentLive, () => {
+const filteredLivestreamList = computed(() => {
+  switch (activeTab.value) {
+    case "popular":
+      return list.value.filter((item) => item.isPopular);
+    case "football":
+      return list.value.filter((item) => [1].includes(item.sportId));
+    case "basketball":
+      return list.value.filter((item) => [2].includes(item.sportId));
+    case "esports":
+      return list.value.filter((item) => [3, 4, 5, 6].includes(item.sportId));
+    default:
+      return list.value;
+  }
+});
+
+const getLivestreamType = (livestream) => {
+  if (livestream.isPopular) return "popular";
+  switch (livestream.sportId) {
+    case 1:
+      return "football";
+    case 2:
+      return "basketball";
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+      return "esports";
+    default:
+      return "popular";
+  }
+};
+
+const availableCategories = computed(() => {
+  const hasPopular = list.value.some((item) => item.isPopular);
+  // const hasFootball = list.value.some((item) => item.sportId === 1);
+  // const hasBasketball = list.value.some((item) => item.sportId === 2);
+  // const hasEsports = list.value.some((item) => [3, 4, 5, 6].includes(item.sportId));
+
+  const categories = [];
+
+  if (hasPopular) categories.push({ value: "popular", slot: "popular" });
+  categories.push({ value: "esports", slot: "esports" });
+  categories.push({ value: "football", slot: "football" });
+  categories.push({ value: "basketball", slot: "basketball" });
+
+  return categories;
+});
+
+watch(availableCategories, (newCategories) => {
+  const availableTabValues = newCategories.map((c) => c.value);
+  if (!availableTabValues.includes(activeTab.value)) {
+    activeTab.value = availableTabValues[0] || "";
+  }
+});
+
+watch(currentLiveId, (newVal, oldVal) => {
+  if (newVal === oldVal) return;
   messages.value = [];
   unsortMessages.value = [];
   danmuList.value = [];
-  lastSyncMessageTime.value = currentLiveData.value?.createTime || currentLiveData.value?.eventStartTime || Date.now();
-  liveStartTime.value = lastSyncMessageTime.value;
+  lastSyncMessageTime.value = Date.now() - MESSAGE_HISTORY_START_TIME;
+  messageHistoryStartTime.value = lastSyncMessageTime.value;
   latestProcessedMessageId.value = -1;
   livestreamSyncAbortController.value && livestreamSyncAbortController.value.abort();
   chatHistoryAbortController.value && chatHistoryAbortController.value.abort();
@@ -395,6 +470,7 @@ watch(currentLive, () => {
 watch(currentLiveData, (livestream) => {
   if (!livestream) return;
   latestWatchLivestreamId.value = livestream.streamId;
+  latestActivatedTab.value = activeTab.value;
 });
 
 onMounted(() => {
@@ -408,6 +484,7 @@ onUnmounted(() => {
     messageTimer.value = null;
   }
   resetSyncLivestreamInterval();
+  messagesHistoryMeta.value = DEFAULT_MESSAGES_HISTORY_META;
 });
 </script>
 <style lang="scss" scoped>

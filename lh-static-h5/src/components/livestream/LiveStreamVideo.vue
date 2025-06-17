@@ -1,22 +1,27 @@
 <template>
-  <div class="back-section" style="z-index: 4900" v-if="showPlayerController">
-    <q-btn flat @click="backToPrev()">
-      <q-icon name="chevron_left" color="white" size="lg" />
-      <div class="item-content">
-        <div class="content-title">{{ livestreamData.title }}</div>
-        <div class="content-desc">
-          {{ livestreamData.homeNameZh ?? livestreamData.homeNameEn ?? livestreamData.homeName }} VS
-          {{ livestreamData.awayNameZh ?? livestreamData.awayNameEn ?? livestreamData.awayName }}
-        </div>
-      </div>
-    </q-btn>
-  </div>
   <div
     ref="videoWrapperRef"
     class="livestream-video-wrapper"
+    :class="{ landscape: isLandscape }"
     @mouseenter="handleWrapperMouseEnter"
     @mouseleave="handleWrapperMouseLeave"
   >
+    <div class="back-section" style="z-index: 4900" v-if="showPlayerController">
+      <q-btn flat>
+        <q-icon name="chevron_left" color="white" size="lg" @click="backToPrev()" />
+        <div class="item-content">
+          <div class="content-title">{{ livestreamData.title }}</div>
+          <div class="content-desc">
+            {{ livestreamData.homeNameZh ?? livestreamData.homeNameEn ?? livestreamData.homeName }} VS
+            {{ livestreamData.awayNameZh ?? livestreamData.awayNameEn ?? livestreamData.awayName }}
+          </div>
+        </div>
+      </q-btn>
+
+      <q-btn flat @click="handleShareClick">
+        <img class="share-icon" src="../../assets/images/livestream/icon-share.png" />
+      </q-btn>
+    </div>
     <template v-if="isPlayerSupported">
       <video
         ref="videoRef"
@@ -27,6 +32,7 @@
         muted
         @progress="handlePlayerProgress"
         @canplay="handlePlayerCanPlay"
+        @webkitendfullscreen="handleEndFullScreen"
       />
 
       <canvas v-show="showLatestScreenCanvas" ref="canvasRef" class="livestream-video-latest-screen" />
@@ -69,13 +75,7 @@
             thumb-color="primary"
             style="width: 90px"
           />  -->
-          <q-btn
-            flat
-            dense
-            @click="toggleMute"
-            :icon="playerConfig.volume ? 'volume_up' : 'volume_off'"
-            color="white"
-          />
+          <q-btn flat dense @click="toggleMute" :icon="playerConfig.muted ? 'volume_off' : 'volume_up'" color="white" />
         </div>
 
         <q-btn
@@ -164,12 +164,23 @@
 </template>
 
 <script setup>
-import { onMounted, ref, toRefs, watch, onUnmounted, computed, onActivated, nextTick, onBeforeUnmount } from "vue";
+import {
+  onMounted,
+  ref,
+  toRefs,
+  watch,
+  onUnmounted,
+  computed,
+  onActivated,
+  nextTick,
+  onBeforeUnmount,
+  onDeactivated
+} from "vue";
 import { VideoPlayer } from "boot/videoPlayer";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import { useNotify } from "src/hooks/notify";
-import { useLocalStorage, useSessionStorage } from "@vueuse/core";
+import { useLocalStorage, useSessionStorage, useDebounceFn } from "@vueuse/core";
 import { isAndroid } from "boot/utils";
 
 const $q = useQuasar();
@@ -189,6 +200,7 @@ const DEFAULT_HLS_CONFIG = {
 
 const PLAYER_CONFIG_KEY = "lh-livestream-player-config";
 const MAXIMUM_VIDEO_RELOAD_TIMEOUT = 30 * 1000; // 30 seconds
+const ERROR_HANDLER_DEBOUNCE_TIME = 5 * 1000; // 5 seconds
 
 const DEFAULT_DANMU_CONFIG = {
   area: {
@@ -222,8 +234,18 @@ const QUALITY_ALIAS = {
 
 const notify = useNotify();
 
-const props = defineProps(["danmuList", "channels", "livestreamData", "extensionState", "extensionToken"]);
-const { danmuList, channels, livestreamData, extensionState, extensionToken } = toRefs(props);
+const props = defineProps([
+  "danmuList",
+  "channels",
+  "livestreamData",
+  "extensionState",
+  "extensionToken",
+  "isTyping",
+  "isLandscape"
+]);
+const { danmuList, channels, livestreamData, extensionState, extensionToken, isTyping, isLandscape } = toRefs(props);
+
+const emit = defineEmits(["share-click", "landscape-change"]);
 
 const danmuJs = ref(null);
 
@@ -245,7 +267,9 @@ const isVideoLoadFailed = ref(false);
 const isVideoLoading = ref(false);
 const isErrorCaptured = ref(false);
 const errorMsg = ref("");
+const isActive = ref(false);
 const showUnmuteMask = ref(true);
+const orientationTimer = ref(null);
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
@@ -257,7 +281,8 @@ const playerConfig = ref({
   isFullScreen: false,
   isDanmuClose: false,
   quality: DEFAULT_QUALITY,
-  channel: 0
+  channel: 0,
+  muted: false
 });
 
 const videoSource = computed(() => getVideoSource(livestreamData.value));
@@ -312,7 +337,7 @@ const initPlayer = async (play = false) => {
   if (!player.value) return;
   await player.value.init();
   isPlayerSupported.value = player.value.supportPlayer !== "NONE";
-  player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerError);
+  player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerErrorDebounce);
   // player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
   // emitting when hls.isSupported() is false
   player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
@@ -387,9 +412,9 @@ const handleVolumeChange = (value) => {
 };
 
 const toggleMute = () => {
-  playerConfig.value.volume = !playerConfig.value.volume;
+  changePlayerConfig("muted", !playerConfig.value.muted);
   if (videoRef.value) {
-    videoRef.value.volume = playerConfig.value.volume ? 1 : 0;
+    videoRef.value.muted = playerConfig.value.muted;
   }
 };
 
@@ -437,11 +462,13 @@ const isAppleDevice =
 
 const handleFullScreenChange = (value) => {
   changePlayerConfig("isFullScreen", value);
+  const video = videoRef.value;
+  emit("landscape-change", value);
+  videoRef.value.focus();
   if (value) {
     if (isAppleDevice) {
-      const video = videoRef.value;
-      if (video && typeof video.webkitEnterFullscreen === "function") {
-        video.webkitEnterFullscreen();
+      if (video && video.webkitSetPresentationMode) {
+        video.webkitSetPresentationMode("fullscreen");
       }
     } else {
       const wrapper = videoWrapperRef.value;
@@ -453,11 +480,15 @@ const handleFullScreenChange = (value) => {
       }
     }
   } else {
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-      screen.orientation?.lock?.("portrait").catch((err) => {
-        console.warn("Failed to lock orientation to portrait:", err);
-      });
+    if (isAppleDevice && video.webkitSetPresentationMode) {
+      video.webkitSetPresentationMode("inline");
+    } else {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+        screen.orientation?.lock?.("portrait").catch((err) => {
+          console.warn("Failed to lock orientation to portrait:", err);
+        });
+      }
     }
   }
 };
@@ -481,6 +512,9 @@ const handlePlayerProgress = () => {
 };
 
 const handlePlayerCanPlay = () => {
+  if (playerConfig.value.isPause) {
+    changePlayerConfig("isPause", false);
+  }
   isLatestScreenRecorded.value = false;
   isVideoLoading.value = false;
   isVideoLoadFailed.value = false;
@@ -524,6 +558,8 @@ const handlePlayerError = (data) => {
     initPlayer(true);
   }
 };
+
+const handlePlayerErrorDebounce = useDebounceFn(handlePlayerError, ERROR_HANDLER_DEBOUNCE_TIME);
 
 const handleNativeStreamBuffering = () => {
   isVideoLoading.value = true;
@@ -569,11 +605,12 @@ const loadData = () => {
 };
 
 watch(livestreamData, (val, oldVal) => {
+  if (!isActive.value) return;
   const newVideoSource = getVideoSource(val);
   const newVideoUrl = getVideoUrl(newVideoSource);
   const _currentVideoSource = getVideoSource(oldVal);
   const _currentVideoUrl = getVideoUrl(_currentVideoSource);
-  if (newVideoUrl === _currentVideoUrl) return;
+  if ((newVideoUrl === _currentVideoUrl && player.value) || !newVideoUrl) return;
   loadData();
 });
 
@@ -588,9 +625,18 @@ watch(danmuList, () => {
   }
 });
 
+watch(isTyping, () => {
+  if (!isTyping.value || !videoRef.value || !isAppleDevice) return;
+  // keep inline presentationMode for ios
+  if (videoRef.value.webkitSetPresentationMode) {
+    videoRef.value.webkitSetPresentationMode("inline");
+  }
+});
+
 const mediaQuery = window.matchMedia("(orientation: landscape)");
 
 const handleOrientationChange = (e) => {
+  if (isTyping.value) return;
   if (e.matches) {
     // Landscape mode
     if (!playerConfig.value.isFullScreen) {
@@ -606,6 +652,30 @@ const handleOrientationChange = (e) => {
   canvasRef.value.height = videoRef.value.clientHeight;
 };
 
+const handleVideoPresentationChange = () => {
+  const mode = videoRef.value.webkitPresentationMode;
+  if (mode === "inline") {
+    changePlayerConfig("isFullScreen", false);
+    changePlayerConfig("isPause", true);
+  } else {
+    changePlayerConfig("isFullScreen", true);
+  }
+};
+
+const handleEndFullScreen = () => {
+  if (orientationTimer.value) {
+    clearInterval(orientationTimer.value);
+  }
+  if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler) {
+    window.flutter_inappwebview.callHandler("FlutterChannel", "LH_FLUTTER");
+  }
+  const checkOrientationManually = () => {
+    const _isLandscape = window.matchMedia("(orientation: landscape)").matches;
+    emit("landscape-change", _isLandscape);
+  };
+  orientationTimer.value = setInterval(checkOrientationManually, 300);
+};
+
 onActivated(() => {
   // Promise.all([loadPlayer(), loadDanmu()]).then(() => {
   //   loadPlayerConfig();
@@ -614,10 +684,35 @@ onActivated(() => {
   // Run it once on mount
   handleOrientationChange(mediaQuery);
   // player.value.play();
+  isActive.value = true;
+  if (videoRef.value) {
+    videoRef.value.addEventListener("webkitpresentationmodechanged", handleVideoPresentationChange);
+  }
 });
 
 onBeforeUnmount(() => {
   mediaQuery.removeEventListener("change", handleOrientationChange);
+  player.value?.destroy();
+  if (orientationTimer.value) {
+    clearInterval(orientationTimer.value);
+  }
+});
+
+onDeactivated(() => {
+  mediaQuery.removeEventListener("change", handleOrientationChange);
+  player.value?.destroy();
+  player.value = null;
+  isPlayerSupported.value = true;
+  showUnmuteMask.value = true;
+  videoRef.value.muted = true;
+  isActive.value = false;
+  if (canvasRef.value) {
+    const ctx = canvasRef.value.getContext("2d");
+    ctx.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height);
+  }
+  if (videoRef.value) {
+    videoRef.value.removeEventListener("webkitpresentationmodechanged", handleVideoPresentationChange);
+  }
 });
 
 const copyMessage = () => {
@@ -641,16 +736,25 @@ const copyMessage = () => {
 };
 
 const backToPrev = () => {
-  if (extensionState.value) {
-    // extensionToken = localStorage.getItem("TOKEN");
-    router.push({
-      path: `/livestreampage`,
-      query: { token: extensionToken.value }
-    });
-    // router.go(-1);
+  if (playerConfig.value.isFullScreen) {
+    handleFullScreenChange(false);
   } else {
-    router.push(`/livestream`);
+    if (extensionState.value) {
+      // extensionToken = localStorage.getItem("TOKEN");
+      router.push({
+        path: `/livestreampage`,
+        query: { token: extensionToken.value }
+      });
+      // router.go(-1);
+    } else {
+      router.push(`/livestream`);
+    }
   }
+};
+
+const handleShareClick = () => {
+  handleFullScreenChange(false);
+  emit("share-click");
 };
 </script>
 
@@ -829,6 +933,7 @@ const backToPrev = () => {
   width: 100%;
   font-size: 12px;
   display: flex;
+  justify-content: space-between;
   margin-right: auto;
 
   &:before {
@@ -854,6 +959,10 @@ const backToPrev = () => {
       font-size: 11px;
     }
   }
+
+  .share-icon {
+    width: 24px;
+  }
 }
 
 .livestream-video-controller-url-btn {
@@ -868,8 +977,8 @@ const backToPrev = () => {
 </style>
 
 <style lang="scss" scoped>
-@media (orientation: landscape) {
-  .livestream-video-wrapper {
+.landscape {
+  &.livestream-video-wrapper {
     width: 55%;
     height: calc(100%);
     // opacity: 0;
