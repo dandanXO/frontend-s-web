@@ -55,5 +55,25 @@ const items = ref([
       },
     ],
   },
+  {
+    label: '体育直播',
+    icon: 'pi pi-home',
+    items: [
+      {
+        label: '體育直播間控',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          // router.push('/chat-block/block-list')
+        },
+      },
+      {
+        label: '賽事資訊',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          // router.push('/chat-block/block-list')
+        },
+      },
+    ],
+  },
 ])
 </script>

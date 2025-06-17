@@ -102,7 +102,7 @@ const router = createRouter({
         {
           name: 'Sport Live Match',
           path: 'live-match', // Relative path
-          component: '', // Component left empty
+          component: () => import('../components/live/liveMatch.vue'),
         },
       ],
     },
