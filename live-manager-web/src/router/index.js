@@ -49,62 +49,62 @@ const router = createRouter({
         },
       ],
     },
-     {
+    {
       path: '/live-sport',
       name: 'Live Sport',
-      component: '', // Component left empty as requested
+      component: '',
       children: [
         {
-          name: 'Sport Live Event Setting',
-          path: 'live-setting', // Relative path
-          component: '', // Component left empty
+          name: '体育直播赛事设定',
+          path: 'live-setting',
+          component: () => import('../components/live/LiveSetting.vue'),
         },
         {
-          name: 'Sport Live Monitor',
-          path: 'live-monitor', // Relative path
-          component: '', // Component left empty
+          name: '体育直播监控',
+          path: 'live-monitor',
+          component: () => import('../components/live/LiveMonitor.vue'),
         },
         {
-          name: 'Sport Live History Block',
-          path: 'live-history-block', // Relative path
-          component: '', // Component left empty
+          name: '聊天室记录禁言设定',
+          path: 'live-history-block',
+          component: () => import('../components/live/LiveHistoryBlock.vue'),
         },
         {
-          name: 'Sport Live Block Member',
-          path: 'live-block', // Relative path
-          component: '', // Component left empty
+          name: '聊天室会员禁言设定',
+          path: 'live-block',
+          component: () => import('../components/live/LiveBlock.vue'),
         },
         {
-          name: 'Sport Live Chat Vip Status',
-          path: 'chat-status', // Relative path
-          component: '', // Component left empty
+          name: '聊天室VIP发言设定',
+          path: 'chat-status',
+          component: () => import('../components/live/ChatStatus.vue'),
         },
         {
-          name: 'Sport Live Sensitive Word',
-          path: 'sensitive-wrod', // Relative path
-          component: '', // Component left empty
+          name: '体育直播敏感词设定',
+          path: 'sensitive-wrod',
+          component: () => import('../components/live/SensitiveWord.vue'),
         },
         {
-          name: 'Sport Live Event',
-          path: 'live-event', // Relative path
-          component: '', // Component left empty
+          name: '赛事管理',
+          path: 'live-event',
+          component: () => import('../components/live/LiveEvent.vue'),
         },
         {
-          name: 'Sport Live Streamer',
-          path: 'live-streamer', // Relative path
-          component: '', // Component left empty
+          name: '主播管理',
+          path: 'live-streamer',
+          component: () => import('../components/live/LiveStreamer.vue'),
         },
         {
-          name: 'Sport Live Team',
-          path: 'live-team', // Relative path
-          component: '', // Component left empty
+          name: '队伍管理',
+          path: 'live-team',
+          component: () => import('../components/live/LiveTeam.vue'),
         },
         {
-          name: 'Sport Live Match',
-          path: 'live-match', // Relative path
+          name: '赛事资讯',
+          path: 'live-match',
           component: () => import('../components/live/liveMatch.vue'),
         },
-      ],
+      ]
     },
   ],
 })

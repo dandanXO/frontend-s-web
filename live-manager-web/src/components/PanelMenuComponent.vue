@@ -60,20 +60,69 @@ const items = ref([
     icon: 'pi pi-home',
     items: [
       {
-        label: '體育直播間控',
+        label: '体育直播监控',
         icon: 'pi pi-info-circle',
         command: () => {
-          // router.push('/chat-block/block-list')
+          router.push('/live-sport/live-monitor')
         },
       },
       {
-        label: '賽事資訊',
+        label: '聊天室记录禁言设定',
         icon: 'pi pi-info-circle',
         command: () => {
-          // router.push('/chat-block/block-list')
+          router.push('/live-sport/live-history-block')
         },
       },
-    ],
+      {
+        label: '聊天室会员禁言设定',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-block')
+        },
+      },
+      {
+        label: '聊天室VIP发言设定',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/chat-status')
+        },
+      },
+      {
+        label: '体育直播敏感词设定',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/sensitive-wrod')
+        },
+      },
+      {
+        label: '赛事管理',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-event')
+        },
+      },
+      {
+        label: '主播管理',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-streamer')
+        },
+      },
+      {
+        label: '队伍管理',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-team')
+        },
+      },
+      {
+        label: '赛事资讯',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-match')
+        },
+      },
+    ]
   },
 ])
 </script>

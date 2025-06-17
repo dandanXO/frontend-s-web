@@ -55,4 +55,97 @@ export default {
     errorAddSensitiveWord: '新增敏感字失敗',
     errorUpdateSensitiveWord: '更新敏感字失敗',
   },
+  status: {
+    monthSummary: {
+      UNCLEAR: '未结算',
+      CLEARING: '结算中',
+      CLEARED: '已结算',
+    },
+    settlement: {
+      CHECKING: '审核中',
+      PAY: '结算中',
+      CLEARED: '已结算',
+      CANCEL: '已取消',
+    },
+    member: {
+      NORMAL: '正常',
+      FROZEN: '冻结',
+    },
+    gameMatch: {
+      ACTIVE: '进行中',
+      ENDED: '已结束',
+    },
+    gameMatchRecord: {
+      PENDING_MATCH: '待赛事结束',
+      PENDING_SETTLE: '待审核',
+      SETTLED: '已发放',
+      CANCEL: '已取消',
+    },
+    gameQuiz: {
+      ONGOING: '进行中',
+      CANCEL: '已取消',
+      ENDED: '已结束',
+    },
+    gameQuizAnswer: {
+      PENDING: '待结算',
+      CANCEL: '已取消',
+      WIN: '赢',
+      LOSE: '输',
+    },
+    gift: {
+      OPEN: '开启',
+      CLOSE: '关闭',
+    },
+    giftRecord: {
+      PENDING: '待审核',
+      PROCESSING: '审核中',
+      COMPLETE: '已发放',
+      EXPIRED: '已截止',
+      FAILED: '已取消',
+    },
+    giftOrderRecord: {
+      PROCESSING: '审核中',
+      DELIVERING: '运送中',
+      DELIVERED: '已送达',
+      CASH: '已折现',
+      CANCEL: '已取消',
+    },
+    piggyBank: {
+      SAVING: '存款中',
+      CLAIMED: '已领取',
+    },
+    uefaMatch: {
+      PENDING: '未开始',
+      ONGOING: '进行中',
+      CANCEL: '已取消',
+      ENDED: '已结束',
+    },
+    uefaMatchRecord: {
+      PENDING: '待结算',
+      LOSE: '输',
+      WIN_MATCH: '竞猜成功',
+      WIN_TEAM: '专属队伍获胜',
+      WIN_ALL: '全赢',
+      CANCEL: '已取消',
+    },
+    sportMatch: {
+      ACTIVE: '进行中',
+      ENDED: '已结束',
+      SETTLED: '已结算',
+    },
+    namiMatch: {
+      NOT_STARTED: '未开赛',
+      GAME_EXCEPTION: '比赛异常',
+      ONGOING: '进行中',
+      ENDED: '完场',
+      CANCEL: '已取消',
+      INTERRUPTED: '中断',
+      DELAYED: '延期',
+      ABANDONED: '腰斩',
+      PENDING: '待定',
+      OTHER: '其他',
+      ADD_TO_LIVE: '添加到直播',
+    },
+  },
+
 }
