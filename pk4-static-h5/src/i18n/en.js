@@ -960,6 +960,18 @@ export default {
       signIn: "Sign in",
       signedIn: "Signed in"
     },
+    monthBeginningDepositRebate: {
+      receive: "Receive",
+      vipLevel: "Vip Level",
+      rebate: "Rebate",
+      runningWater: "Running Water",
+      bigRebate: "Big Rebate",
+      rule_title: "Monthly recharge rebate event",
+      rule_01:
+        "Recharge 1000Rs or more from the 1st to the 7th of each month to get the following VIP level corresponding rebates.",
+      rule_02:
+        "Rebates can be obtained through the event page the next day. Manual collection.   Effective turnover 2 times."
+    },
     megaSharingWheel: {
       wheelTitle: "Mega Sharing Roulette",
       missionTitle: "Rewards",

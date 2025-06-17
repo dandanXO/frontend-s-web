@@ -28,18 +28,19 @@
         <span class="label">VIP2</span>
       </div>
     </div>
-    <div class="receive-btn">Receive</div>
+    <div class="receive-btn">{{ $t("hotPromo.monthBeginningDepositRebate.receive") }}</div>
     <div class="rebate-table-container">
-      <img
-        class="big-rebate-title-img"
-        src="./../../../assets/images/promotion/hotpromo/month-beginning-deposit-rebate/big-rebate-title.png"
-      />
+      <div class="big-rebate-title-container">
+        <img src="./../../../assets/images/promotion/hotpromo/month-beginning-deposit-rebate/title-bg.png" />
+        <div>{{ $t("hotPromo.monthBeginningDepositRebate.bigRebate") }}</div>
+      </div>
+
       <table class="rebate-table">
         <thead>
           <tr>
-            <th align="center">Vip Level</th>
-            <th align="center">Rebate</th>
-            <th align="center">Running Water</th>
+            <th align="center">{{ $t("hotPromo.monthBeginningDepositRebate.vipLevel") }}</th>
+            <th align="center">{{ $t("hotPromo.monthBeginningDepositRebate.rebate") }}</th>
+            <th align="center">{{ $t("hotPromo.monthBeginningDepositRebate.runningWater") }}</th>
           </tr>
         </thead>
         <tbody>
@@ -72,16 +73,18 @@
       </table>
     </div>
 
-    <img
-      src="./../../../assets/images/promotion/hotpromo/month-beginning-deposit-rebate/monthly-recharge-rebate-event-title.png"
-    />
-    <ul class="rebate-list">
+    <div class="rule-title-container">
+      <img src="./../../../assets/images/promotion/hotpromo/month-beginning-deposit-rebate/title-left.png" />
+      <div>{{ $t("hotPromo.monthBeginningDepositRebate.rule_title") }}</div>
+      <img src="./../../../assets/images/promotion/hotpromo/month-beginning-deposit-rebate/title-right.png" />
+    </div>
+
+    <ul class="rule_list">
       <li>
-        Recharge 1000Rs or more from the 1st to the 7th of each month to get the following VIP level corresponding
-        rebates.
+        {{ $t("hotPromo.monthBeginningDepositRebate.rule_01") }}
       </li>
       <li>
-        Rebates can be obtained through the event page the next day. Manual collection.   Effective turnover 2 times.
+        {{ $t("hotPromo.monthBeginningDepositRebate.rule_02") }}
       </li>
     </ul>
   </div>
@@ -112,13 +115,34 @@ const percent = 35;
   display: flex;
   justify-content: center;
   margin: 28px 0;
-  .big-rebate-title-img {
-    height: 34px;
-    width: auto !important;
+
+  .big-rebate-title-container {
     position: absolute;
-    z-index: 1;
-    align-self: center;
     top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      height: 34px;
+      width: auto !important;
+      margin-bottom: 0 !important;
+    }
+
+    div {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      z-index: 1;
+      color: white;
+      font-weight: bold;
+    }
   }
   .rebate-table {
     font-size: 14px;
@@ -135,7 +159,27 @@ const percent = 35;
     }
   }
 }
-.rebate-list {
+
+.rule-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Poppins;
+  font-weight: 700;
+  font-size: 1.25rem;
+  img {
+    width: 25% !important;
+    margin-bottom: 10px !important;
+  }
+  div {
+    width: 50% !important;
+    background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+  }
+}
+.rule_list {
   margin-top: 20px !important;
 }
 
