@@ -3,6 +3,9 @@
     <template v-slot:popular>
       <img :src="getImg('popular')" />
     </template>
+    <template v-slot:streamer>
+      <img :src="getImg('streamer')" />
+    </template>
     <template v-slot:esport>
       <img :src="getImg('esport')" />
     </template>

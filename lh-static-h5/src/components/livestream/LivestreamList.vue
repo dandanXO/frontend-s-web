@@ -151,6 +151,7 @@ const tab = ref("");
 const filteredLivestreamList = computed(() => {
   switch (tab.value) {
     case "popular":
+    case "streamer":
       return livestreamList.value.filter((item) => item.isPopular);
     case "football":
       return livestreamList.value.filter((item) => [1].includes(item.sportId));
@@ -219,7 +220,8 @@ const availableCategories = computed(() => {
 
   const categories = [];
 
-  if (hasPopular) categories.push({ value: "popular", slot: "popular" });
+  // if (hasPopular) categories.push({ value: "popular", slot: "popular" });
+  if (hasPopular) categories.push({ value: "streamer", slot: "streamer" });
   categories.push({ value: "esport", slot: "esport" });
   categories.push({ value: "football", slot: "football" });
   categories.push({ value: "basketball", slot: "basketball" });
