@@ -155,7 +155,7 @@ const dialog = reactive({
   }
 });
 
-const unitMaxMap = {
+const unitMaxMap = { 
   minute: 60,
   hour: 24,
   day: 30,
