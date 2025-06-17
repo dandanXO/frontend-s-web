@@ -26,14 +26,14 @@ const props = defineProps({
 
 const isDark = useDark();
 const iconMap = {
-  popular: require("../../../assets/home/livestream/icon-popular.svg"),
+  popular: require("../../../assets/home/livestream/icon-streamer.svg"),
   football: require("../../../assets/home/livestream/icon-football.svg"),
   basketball: require("../../../assets/home/livestream/icon-basketball.svg"),
   esports: require("../../../assets/home/livestream/icon-esports.svg")
 };
 
 const labelMap = {
-  popular: "热门",
+  popular: "主播",
   esports: "电竞",
   football: "足球",
   basketball: "篮球"
