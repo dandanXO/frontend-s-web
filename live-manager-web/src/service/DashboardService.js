@@ -211,5 +211,25 @@ export const DashboardService = {
           console.error('取得監控分數失敗:', error);
           return null;
         });
+  },
+  //sport-live
+  getLiveSportMonitorList(data) {
+    const token = sessionStorage.getItem('token');
+    return api.post('/session/live-sport/monitor/query', data, {
+      headers: {
+        'token': `${token}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.code === 0) {
+        return response.data;
+      }
+      return null;
+    })
+    .catch(error => {
+      console.error('獲取監控列表失敗:', error)
+      return null;
+    });
   }
 }
