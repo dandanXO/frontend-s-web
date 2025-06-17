@@ -150,13 +150,11 @@
     </div> -->
 
     <swiper
-      :slidesPerView="4.5"
+      :slidesPerView="4"
+      :slidesPerGroup="4"
       :spaceBetween="10"
-      :scrollbar="{
-        hide: true
-      }"
-      :modules="modules"
-      class="cat-selection-wrapper"
+      :modules="[Navigation, Grid]"
+      class="hometop-categories"
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
@@ -4219,15 +4217,15 @@ onBeforeUnmount(() => {
   background: url('../assets/images/index/cat-selection-bg.svg') center center no-repeat;
   background-size: 100% 100%;
   width: 80px;
-  height: 50px;
+  height: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 12px;
   padding-top: 3px;
   transition: 0.3s all;
-  width: 100%;
+  min-width: 100%;
 
   &.active {
     background: url('../assets/images/index/cat-selection-bg-active.svg') center center no-repeat;
@@ -4416,6 +4414,14 @@ onBeforeUnmount(() => {
       display: flex;
       justify-content: center;
     }
+  }
+}
+
+.hometop-categories {
+  margin-bottom: 15px;
+
+  .swiper-slide {
+    width: 80px !important;
   }
 }
 </style>
