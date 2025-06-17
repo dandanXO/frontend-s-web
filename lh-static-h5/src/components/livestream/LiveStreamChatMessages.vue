@@ -226,6 +226,7 @@ const handleBetClick = () => {
     case 4:
     case 5:
     case 6:
+    case 7:
       handler("雷火电竞", "TFGaming", "", "ESPORTS");
       break;
   }
