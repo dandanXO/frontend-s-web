@@ -181,10 +181,10 @@
           <div class="title-game revamp">
             <div><img src="../assets/images/index/hot-icon.svg" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_hotgames") }}</span>
-            <template v-if="category.title === 'Lobby' && category.active">
+            <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div :class="`custom-hot-prev`"><img src="../assets/images/index/rgtarrow.svg" /></div>
               <div :class="`custom-hot-next`"><img src="../assets/images/index/rgtarrow.svg" /></div>
-            </template>
+            </div>
           </div>
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
@@ -333,8 +333,10 @@
           <div class="title-game revamp">
             <div><img src="../assets/images/index/title-icon-slot.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_slotsgame") }}</span>
-            <div :class="`custom-slot-prev`"><img src="../assets/images/index/rgtarrow.svg" /></div>
-            <div :class="`custom-slot-next`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+            <div v-if="category.title === 'Lobby' && category.active" class="side">
+              <div :class="`custom-slot-prev`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+              <div :class="`custom-slot-next`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+            </div>
           </div>
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
@@ -441,19 +443,21 @@
         v-if="(category.title === 'Casino' && category.active) || (category.title === 'Lobby' && category.active)"
       >
         <div class="games-selection-wrapper" id="live">
-          <div class="title-game">
+          <div class="title-game revamp">
             <div><img src="../assets/images/index/title-icon-live.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_livecasino") }}</span>
+            <div v-if="category.title === 'Lobby' && category.active" class="side">
+              <div :class="`custom-live-prev`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+              <div :class="`custom-live-next`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+            </div>
           </div>
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="1.5"
-              :spaceBetween="0"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
-              class="platform-game-container live-casino"
+              :slidesPerView="2"
+              :spaceBetween="15"
+              :modules="[Navigation]"
+              :navigation="{ nextEl: '.custom-live-next', prevEl: '.custom-live-prev' }"
+              class="platform-game-container live-casino revamp"
             >
               <template v-for="(item, index) in livecasino" :key="index">
                 <swiper-slide
@@ -542,19 +546,22 @@
         v-if="(category.title === 'Fishing' && category.active) || (category.title === 'Lobby' && category.active)"
       >
         <div class="games-selection-wrapper" id="fishing" v-if="category.title === 'Lobby' && category.active">
-          <div class="title-game">
+          <div class="title-game revamp">
             <div><img src="../assets/images/index/title-icon-fish.png" width="34" /></div>
             <span class="txt-style">{{ $t("home.cat_fishing") }}</span>
+             <div v-if="category.title === 'Lobby' && category.active" class="side">
+              <div :class="`custom-fish-prev`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+              <div :class="`custom-fish-next`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+            </div>
           </div>
           <div class="platform-game-wrapper">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
-              class="platform-game-container"
+              :modules="[Navigation, Grid]"
+              :grid="{ rows: 1, fill: 'row' }"
+              :navigation="{ nextEl: '.custom-fish-next', prevEl: '.custom-fish-prev' }"
+              class="platform-game-container revamp"
             >
               <template v-for="(item, index) in fishGameTADAList" :key="index">
                 <swiper-slide
@@ -743,11 +750,11 @@
         v-if="(category.title === 'Sport' && category.active) || (category.title === 'Lobby' && category.active)"
       >
         <div class="games-selection-wrapper" id="sport">
-          <div class="title-game">
+          <div class="title-game revamp">
             <div><img src="../assets/images/index/title-icon-sport.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_sport") }}</span>
           </div>
-          <div class="platform-game-container sport-platform">
+          <div class="platform-game-container sport-platform revamp">
             <template v-if="isPlatLoading">
               <div class="skeleton-grid">
                 <q-skeleton class="sport-skeleton" />
@@ -3760,6 +3767,24 @@ onBeforeUnmount(() => {
 
       .txt-style {
         background-image: none;
+      }
+
+      .side {
+        display: flex;
+        // gap: 10px;
+        :not(:last-child) {
+          margin-right: 10px;
+        }
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        .all-btn {
+          background: #373c3d;
+          padding: 8px;
+          border-radius: 6px;
+          font-weight: 700;
+          cursor: pointer;
+        }
       }
     }
   }
