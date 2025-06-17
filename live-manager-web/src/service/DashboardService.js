@@ -231,5 +231,93 @@ export const DashboardService = {
       console.error('獲取監控列表失敗:', error)
       return null;
     });
-  }
+  },
+  // 獲取直播串流列表
+getStreamList (request)  {
+  const token = sessionStorage.getItem('token');
+  return api.get('/session/live-sport/stream/list', { // 注意：原始是 GET, ContentType.form，這裡假設後端接口改為 POST
+    headers: {
+      'token': `${token}`,
+      'Content-Type': 'application/json' // 根據原始 ContentType.form，可能需要確認後端實際預期的是什麼
+    }
+  })
+  .then(response => {
+    if (response.code === 0) {
+      return response.data;
+    }
+    // 如果 code 不為 0，可以拋出錯誤或返回 null
+    console.error('獲取串流列表失敗:', response.message || '未知錯誤');
+    return null;
+  })
+  .catch(error => {
+    console.error('獲取串流列表請求失敗:', error);
+    return null;
+  });
+},
+
+// 獲取聊天記錄
+getChatHistory (query, body) {
+  const token = sessionStorage.getItem('token');
+  return api.post(`/session/live-sport/chat/history${query}`, body, {
+    headers: {
+      'token': `${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (response.code === 0) {
+      return response.data;
+    }
+    console.error('獲取聊天記錄失敗:', response.message || '未知錯誤');
+    return null;
+  })
+  .catch(error => {
+    console.error('獲取聊天記錄請求失敗:', error);
+    return null;
+  });
+},
+
+// 封鎖用戶 API
+blockUserApi (request)  {
+  const token = sessionStorage.getItem('token');
+  return api.put('/session/live-sport/chat-block', request, { // PUT 請求
+    headers: {
+      'token': `${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (response.code === 0) {
+      return response.data; // 或直接返回 true/false 表示成功失敗
+    }
+    console.error('封鎖用戶失敗:', response.message || '未知錯誤');
+    return null;
+  })
+  .catch(error => {
+    console.error('封鎖用戶請求失敗:', error);
+    return null;
+  });
+},
+
+// 解除封鎖用戶 API
+unblockUserApi  (request) {
+  const token = sessionStorage.getItem('token');
+  return api.put('/session/live-sport/chat-block/unblock', request, { // PUT 請求
+    headers: {
+      'token': `${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (response.code === 0) {
+      return response.data; // 或直接返回 true/false 表示成功失敗
+    }
+    console.error('解除封鎖用戶失敗:', response.message || '未知錯誤');
+    return null;
+  })
+  .catch(error => {
+    console.error('解除封鎖用戶請求失敗:', error);
+    return null;
+  });
+}
 }
