@@ -49,6 +49,63 @@ const router = createRouter({
         },
       ],
     },
+     {
+      path: '/live-sport',
+      name: 'Live Sport',
+      component: '', // Component left empty as requested
+      children: [
+        {
+          name: 'Sport Live Event Setting',
+          path: 'live-setting', // Relative path
+          component: '', // Component left empty
+        },
+        {
+          name: 'Sport Live Monitor',
+          path: 'live-monitor', // Relative path
+          component: '', // Component left empty
+        },
+        {
+          name: 'Sport Live History Block',
+          path: 'live-history-block', // Relative path
+          component: '', // Component left empty
+        },
+        {
+          name: 'Sport Live Block Member',
+          path: 'live-block', // Relative path
+          component: '', // Component left empty
+        },
+        {
+          name: 'Sport Live Chat Vip Status',
+          path: 'chat-status', // Relative path
+          component: '', // Component left empty
+        },
+        {
+          name: 'Sport Live Sensitive Word',
+          path: 'sensitive-wrod', // Relative path
+          component: '', // Component left empty
+        },
+        {
+          name: 'Sport Live Event',
+          path: 'live-event', // Relative path
+          component: '', // Component left empty
+        },
+        {
+          name: 'Sport Live Streamer',
+          path: 'live-streamer', // Relative path
+          component: '', // Component left empty
+        },
+        {
+          name: 'Sport Live Team',
+          path: 'live-team', // Relative path
+          component: '', // Component left empty
+        },
+        {
+          name: 'Sport Live Match',
+          path: 'live-match', // Relative path
+          component: '', // Component left empty
+        },
+      ],
+    },
   ],
 })
 
