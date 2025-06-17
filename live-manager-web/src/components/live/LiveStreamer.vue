@@ -88,7 +88,7 @@ import { defineComponent, reactive, onMounted, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { liveSportTyps } from '@/utils/live'
 import { DashboardService } from '@/service/DashboardService'
-const { getSportLiveMatch } = DashboardService
+const { getSportLiveStreamer } = DashboardService
 const { t } = useI18n()
 
 const uiControl = reactive({
@@ -120,7 +120,7 @@ async function loadStreamer() {
 const params = new URLSearchParams(request).toString()
 
   console.log(params)
-  const res = await getSportLiveMatch(params)
+  const res = await getSportLiveStreamer(params)
   console.log(res)
 }
 

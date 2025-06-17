@@ -341,6 +341,7 @@ export const DashboardService = {
       })
   },
 
+
   //live-match
 
   getSportLiveMatch(request) {
@@ -390,8 +391,9 @@ export const DashboardService = {
   //live-streamer
   getSportLiveStreamer(request) {
     const token = sessionStorage.getItem('token')
+    const query = toQueryString(request)
     return api
-      .get(`/session/live-sport/streamer?${request}`, {
+      .get(`/session/live-sport/streamer?${query}`, {
         headers: {
           token: `${token}`,
         },
@@ -408,4 +410,16 @@ export const DashboardService = {
         return null
       })
   },
+}
+
+
+  function toQueryString(params) {
+  const filtered = Object.entries(params)
+    .filter(([_, value]) => value !== null && value !== undefined && value !== '')
+    .reduce((acc, [key, value]) => {
+      acc[key] = value
+      return acc
+    }, {})
+
+  return new URLSearchParams(filtered).toString()
 }
