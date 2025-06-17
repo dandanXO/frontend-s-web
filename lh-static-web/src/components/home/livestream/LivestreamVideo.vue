@@ -28,6 +28,7 @@
         <div class="livestream-video-controller-group">
           <button
             class="livestream-video-controller-pause-btn btn"
+            :class="{ disabled: isVideoStuck }"
             :title="playerConfig.isPause ? '播放' : '暂停'"
             @click="handlePauseChange(!playerConfig.isPause)"
           >
@@ -608,6 +609,7 @@ defineExpose({
     transform: translateY(100%);
     opacity: 0;
     transition: transform 0.5s ease, opacity 0.5s;
+    z-index: 1;
 
     &.show {
       transform: translateY(0);
@@ -647,6 +649,11 @@ defineExpose({
   .btn {
     background-color: transparent;
     -webkit-user-drag: none;
+    &.disabled {
+      pointer-events: none;
+      filter: grayscale(0.5);
+      opacity: 0.5;
+    }
   }
 
   .livestream-video {
