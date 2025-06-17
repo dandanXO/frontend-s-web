@@ -13,7 +13,14 @@
           <span style="font-size: 10px; margin-left: 5px; display: block">Deposit</span>
         </q-btn>
       </q-card-section>
-      <q-card-section class="page-title" v-if="hasPage">
+      <q-card-section
+        class="page-title"
+        :class="{
+          'page-title__empty': pageName === '',
+          absolute: route.path === '/account'
+        }"
+        v-if="hasPage"
+      >
         <a @click="goToPrevPage(prevPage)" class="q-mt-sm">
           <q-icon class="header-icon" name="arrow_back_ios"></q-icon>
           <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">
@@ -195,7 +202,7 @@ export default defineComponent({
           }
         } else if (route.path === "/account") {
           prevPage.value = "/";
-          hasPage.value = false;
+          hasPage.value = true;
           pageName.value = "";
         } else if (route.path === "/account/bank") {
           hasPage.value = true;
@@ -621,31 +628,36 @@ svg path {
   margin: 0.5rem 0 0 0;
 }
 
-.page-title-wrapper {
-  display: flex;
-  justify-content: space-between;
-  margin: 0;
-  padding: 1rem 0px;
-  height: 60px;
-
-  img {
-    width: 2.25rem;
+.page-title {
+  &.absolute {
+    position: absolute;
   }
-
-  .title-container {
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
+  .page-title-wrapper {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 14rem;
-    margin: 0 0.5rem;
-    font-size: 16px;
-  }
+    justify-content: space-between;
+    margin: 0;
+    padding: 1rem 0px;
+    height: 60px;
 
-  svg {
-    width: 250px;
+    img {
+      width: 2.25rem;
+    }
+
+    .title-container {
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 14rem;
+      margin: 0 0.5rem;
+      font-size: 16px;
+    }
+
+    svg {
+      width: 250px;
+    }
   }
 }
 

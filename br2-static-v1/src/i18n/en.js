@@ -71,7 +71,7 @@ export default {
     fishing: "Fishing",
     activitiesDetails: "Activities Details",
     addCard: "Add Card",
-    information: "Information",
+    information: "Information"
   },
   bottomNav: {
     home: "Home",
@@ -93,7 +93,8 @@ export default {
     password_rules_01: "Please insert password",
     password_rules_02: "The characters of password must be above 6",
     forgotPassword: "Forgot Password",
-    forgotPassword_desc: "Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.",
+    forgotPassword_desc:
+      "Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.",
     register_agree_01: "I have Agree To The ",
     register_agree_02: "Use Privacy Agreement",
     email: "Email",
@@ -315,7 +316,8 @@ export default {
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
     interestProfit: "Interest Profit",
-    version: "Version"
+    version: "Version",
+    balance: "Balance"
   },
   deposit: {
     selectAmount: "Select Amount",
