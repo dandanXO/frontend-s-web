@@ -1,6 +1,15 @@
 <template>
   <div ref="pageContainer" class="page-style" :class="isDark ? 'dark' : 'white'">
-    <LiveStreamVideo :danmuList :livestream-data="currentLiveData" :extensionState :extensionToken />
+    <LiveStreamVideo
+      :danmuList
+      :livestream-data="currentLiveData"
+      :extensionState
+      :extensionToken
+      :is-typing
+      :is-landscape
+      @share-click="handleShareClick"
+      @landscape-change="handleLandscapeChange"
+    />
 
     <div class="transfer-mid-div">
       <div class="station-notice-wrapper" @click="showAnnouncementDialog">
@@ -16,8 +25,8 @@
       </div>
     </div>
 
-    <div class="room-message-container">
-      <div class="container-box" @click="expandRoomMsg">
+    <div ref="roomMessageRef" class="room-message-container">
+      <div class="container-box">
         <div class="type-tags">
           <div class="profile-tag">
             <img
@@ -46,19 +55,23 @@
     </div>
 
     <LiveStreamChatMessages
+      v-model="isTyping"
       class="livestream-chat"
       :messages
       :vip-status
       :livestream-data="currentLiveData"
-      @send-chat-message="handleSendChatMessage"
       :extensionState
       :extensionToken
+      :margin-top="chatMessageMarginTop"
+      :is-landscape
+      @send-chat-message="handleSendChatMessage"
     />
   </div>
+  <ShareModal v-model="showShareModal" :url="selfTgurl" />
 </template>
 
 <script setup>
-import { ref, onActivated, onUnmounted, onMounted, nextTick, reactive, watch, computed } from "vue";
+import { ref, onActivated, onUnmounted, onMounted, nextTick, reactive, watch, computed, onDeactivated } from "vue";
 import Danmu from "danmu.js";
 import MarqueeText from "vue-marquee-text-component";
 import { userStore } from "stores/index";
@@ -70,11 +83,18 @@ import { useRoute, useRouter } from "vue-router";
 import { getChatHistory, getLivestreamList, sendChat, getLivestreamDetail } from "../../api/livestream";
 import { extractVipLevelFromVipStr } from "src/boot/utils";
 import { useNotify } from "src/hooks/notify";
-import { useLocalStorage, useSessionStorage } from "@vueuse/core";
+import { useElementBounding, useLocalStorage, useSessionStorage } from "@vueuse/core";
+import ShareModal from "../../components/livestream/ShareModal.vue";
 
 const MESSAGE_SYNC_INTERVAL = 1000 * 2; // 2 seconds
 const MESSAGE_HISTORY_DANMU_FIRE_GAP = 10;
 const MAXIMUM_MESSAGE_LENGTH = 2000;
+const MESSAGE_HISTORY_START_TIME = 1000 * 60 * 5; // 5 minutes
+
+const DEFAULT_MESSAGES_HISTORY_META = {
+  current: 1,
+  max: 1
+};
 
 const LIVESTREAM_SYNC_INTERVAL = 1000 * 10; // 10 seconds
 
@@ -97,12 +117,38 @@ const pageContainer = ref(null);
 const store = userStore();
 const livestreamTimer = ref(null);
 const livestreamSyncAbortController = ref(null);
-const isExpanded = ref(false);
+const isExpanded = ref(true);
+const showShareModal = ref(false);
+const roomMessageRef = ref(null);
+const _isLandscape = ref(false);
+const isTyping = ref(false);
+
+const { bottom: roomMessageBottom } = useElementBounding(roomMessageRef);
+
+const isInApp = computed(() => {
+  return route.path === "/livestreampage/streamplayer" && route.query.token;
+});
 const totalCharLength = computed(() => displayAnnouncementList.value.reduce((sum, msg) => sum + msg.length, 0));
 
 const marqueeDuration = computed(() => {
   const baseSpeed = 50;
   return Math.max(20, (totalCharLength.value * baseSpeed) / 100);
+});
+
+const isLandscape = computed({
+  get: () => {
+    if (isInApp.value) return false;
+    return _isLandscape.value;
+  },
+  set: (value) => (_isLandscape.value = value)
+});
+
+const chatMessageMarginTop = computed(() => {
+  if (isLandscape.value) {
+    return 0;
+  } else {
+    return roomMessageBottom.value;
+  }
 });
 
 let danmu = null;
@@ -115,11 +161,8 @@ const unsortMessages = ref([]);
 const userVipLevel = computed(() => extractVipLevelFromVipStr(store.vip));
 
 const current = ref(1);
-const liveStartTime = ref();
-const livestreamListMeta = ref({
-  current: 1,
-  max: 1
-});
+const messageHistoryStartTime = ref();
+const livestreamListMeta = ref(DEFAULT_MESSAGES_HISTORY_META);
 const processedUserName = ref();
 const isFirstMessageSync = ref(true);
 const isProcessingMessageHistory = ref(false);
@@ -147,6 +190,22 @@ const roomMessage = computed(() => {
   }
 });
 
+const parseLivestreamData = (data) => {
+  let parsedSupplierUrl = {};
+  let parsedStreamerUrl = {};
+  try {
+    parsedSupplierUrl = JSON.parse(data.supplierCdnPullUrl);
+    parsedStreamerUrl = JSON.parse(data.streamerCdnPullUrl);
+  } catch (e) {
+  } finally {
+    return {
+      ...data,
+      supplierCdnPullUrl: parsedSupplierUrl,
+      streamerCdnPullUrl: parsedStreamerUrl
+    };
+  }
+};
+
 const syncLivestreamInfo = async () => {
   if (!currentLiveData.value?.streamId) return;
   livestreamSyncAbortController.value = new AbortController();
@@ -165,14 +224,15 @@ const syncLivestreamInfo = async () => {
           duration: 2000
         });
       }
-      // const parsedData = parseLivestreamData(res.data);
-      // list.value[currentLive.value] = {
-      //   ...currentLiveData.value,
-      //   roomMessage: parsedData?.roomMessage,
-      //   streamerStatus: parsedData.streamerStatus,
-      //   streamerCdnPullUrl: parsedData.streamerCdnPullUrl,
-      //   supplierCdnPullUrl: parsedData.supplierCdnPullUrl
-      // };
+      const parsedData = parseLivestreamData(res.data);
+      const index = list.value.findIndex((item) => item.streamId === currentLiveData.value.streamId);
+      list.value[index] = {
+        ...currentLiveData.value,
+        roomMessage: parsedData?.roomMessage,
+        streamerStatus: parsedData.streamerStatus,
+        streamerCdnPullUrl: parsedData.streamerCdnPullUrl,
+        supplierCdnPullUrl: parsedData.supplierCdnPullUrl
+      };
     }
   });
 };
@@ -273,7 +333,6 @@ const messages = ref([]);
 const danmuList = ref([]);
 
 const handleSendChatMessage = (message) => {
-
   if (!store.hasToken() && !extensionState.value) {
     // store.loginPageVisible = true;
     const currentPath = router.currentRoute.value.fullPath;
@@ -323,6 +382,10 @@ const handleSendChatMessage = (message) => {
     });
 };
 
+const handleLandscapeChange = (value) => {
+  isLandscape.value = value;
+};
+
 const getData = () => {
   if (livestreamListMeta.value.current > livestreamListMeta.value.max) return;
   // isLivestreamListLoading.value = true;
@@ -357,7 +420,7 @@ const syncMessages = () => {
   const params = {
     siteId: process.env.SITEID,
     streamId: currentLiveData.value.id,
-    recordTime: [liveStartTime.value, now]
+    recordTime: [messageHistoryStartTime.value, now]
   };
 
   if (pastTime > MESSAGE_SYNC_INTERVAL && !isProcessingMessageHistory.value) {
@@ -490,12 +553,11 @@ const expandRoomMsg = () => {
 };
 
 // extension
-const currentPath = ref(route.path);
 const extensionState = ref(false);
 const extensionToken = ref("");
 
 const checkExtension = () => {
-  if (currentPath.value === "/livestreampage/streamplayer") {
+  if (isInApp.value) {
     extensionToken.value = route.query.token;
     extensionState.value = true;
   } else {
@@ -503,18 +565,23 @@ const checkExtension = () => {
   }
 };
 
-watch(currentLiveData, () => {
+const handleShareClick = () => {
+  showShareModal.value = true;
+};
+
+watch(currentLiveData, (newVal, oldVal) => {
+  if (newVal?.id === oldVal?.id) return;
   messages.value = [];
   unsortMessages.value = [];
   danmuList.value = [];
   processedUserName.value = "";
   seenMessageIds.clear();
   latestProcessedMessageId.value = -1;
-  lastSyncMessageTime.value = currentLiveData.value?.eventStartTime || Date.now();
-  latestProcessedMessageId.value = -1;
-  liveStartTime.value = lastSyncMessageTime.value;
+  lastSyncMessageTime.value = Date.now() - MESSAGE_HISTORY_START_TIME;
+  messageHistoryStartTime.value = lastSyncMessageTime.value;
   syncMessages();
   resetSyncLivestreamInterval(true);
+  syncLivestreamInfo();
 });
 
 // watch(
@@ -528,21 +595,36 @@ watch(currentLiveData, () => {
 //     }
 //   }
 // );
+const selfTgurl = ref();
+const refCode = ref();
 
-onMounted(() => {
+let tgDomain = location.origin;
+
+onActivated(() => {
   getData();
-  syncMessages();
+  // syncMessages();
   // syncLivestreamInfo();
-  resetSyncLivestreamInterval(true);
+  // resetSyncLivestreamInterval(true);
   checkExtension();
 });
 
-onUnmounted(() => {
+onMounted(() => {
+  api.get("/session/member/referralCode").then((res) => {
+    // console.log(reminderForm)
+    if (res.code === 0) {
+      refCode.value = res.data;
+      selfTgurl.value = tgDomain + "/refer/" + refCode.value;
+    }
+  });
+});
+
+onDeactivated(() => {
   if (messageTimer.value) {
     clearTimeout(messageTimer.value);
     messageTimer.value = null;
   }
   resetSyncLivestreamInterval();
+  messagesHistoryMeta.value = DEFAULT_MESSAGES_HISTORY_META;
 });
 </script>
 
@@ -597,7 +679,7 @@ onUnmounted(() => {
     background: #fcfdfe;
     color: #000000;
     width: 100%;
-    margin: 12px;
+    margin: 12px 12px 0;
     box-shadow: 0px -2.78px 2.78px 0px #c3d4e6 inset;
     border-radius: 12px;
     font-size: 10px;

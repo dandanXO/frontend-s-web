@@ -1,415 +1,25 @@
 <template>
   <div class="livestream-page-container" :class="$q.dark.isActive ? 'dark' : 'white'">
-    <div class="row justify-center q-pa-md">
-      <q-btn-toggle
-        v-model="tabValue"
-        class="top-toggle-menu"
-        no-caps
-        :options="[
-          { value: 'liveStream', slot: 'liveStream' },
-          { value: 'ESport', slot: 'esport' },
-          { value: 'Football', slot: 'sport' },
-          { value: 'Basketball', slot: 'basketball' }
-        ]"
-      >
-        <template v-slot:liveStream>
-          <img
-            v-if="tabValue === 'liveStream'"
-            :src="
-              require(`../../assets/images/livestream/btn-toggle-livestream-${
-                $q.dark.isActive ? 'dark' : 'white'
-              }-active.png`)
-            "
-            alt=""
-          />
-          <img
-            v-else
-            :src="
-              require(`../../assets/images/livestream/btn-toggle-livestream-${$q.dark.isActive ? 'dark' : 'white'}.png`)
-            "
-            alt=""
-          />
-        </template>
-        <template v-slot:esport>
-          <img
-            v-if="tabValue === 'ESport'"
-            :src="
-              require(`../../assets/images/livestream/btn-toggle-esport-${
-                $q.dark.isActive ? 'dark' : 'white'
-              }-active.png`)
-            "
-            alt=""
-          />
-          <img
-            v-else
-            :src="
-              require(`../../assets/images/livestream/btn-toggle-esport-${$q.dark.isActive ? 'dark' : 'white'}.png`)
-            "
-            alt=""
-          />
-        </template>
-
-        <template v-slot:sport>
-          <img
-            v-if="tabValue === 'Football'"
-            :src="
-              require(`../../assets/images/livestream/btn-toggle-football-${
-                $q.dark.isActive ? 'dark' : 'white'
-              }-active.png`)
-            "
-            alt=""
-          />
-          <img
-            v-else
-            :src="
-              require(`../../assets/images/livestream/btn-toggle-football-${$q.dark.isActive ? 'dark' : 'white'}.png`)
-            "
-            alt=""
-          />
-        </template>
-        <template v-slot:basketball>
-          <img
-            v-if="tabValue === 'Basketball'"
-            :src="
-              require(`../../assets/images/livestream/btn-toggle-basketball-${
-                $q.dark.isActive ? 'dark' : 'white'
-              }-active.png`)
-            "
-            alt=""
-          />
-          <img
-            v-else
-            :src="
-              require(`../../assets/images/livestream/btn-toggle-basketball-${$q.dark.isActive ? 'dark' : 'white'}.png`)
-            "
-            alt=""
-          />
-        </template>
-      </q-btn-toggle>
-    </div>
-
-    <template v-if="tabValue === 'liveStream'">
-      <!-- <pre>countdowns--{{ countdowns }}</pre> -->
-      <!-- <pre>sortedLiveStreamList--{{ sortedLiveStreamList }}</pre> -->
-      <div ref="selectionContainerRef" class="selection-container q-px-md">
-        <template v-for="(item, index) in sortedLiveStreamList" :key="index">
-          <button class="selection-item" @click="handleLivestreamClick(item)">
-            <!-- // put item.supplierCdnPullUrl + item.streamerCdnPushUrl + streanerCdnPullUrl to the next page. -->
-            <div class="item-img">
-              <img v-if="item.cover" class="cover" :src="`${imgURLLivePreview}${item.cover}`" />
-              <img
-                v-else-if="item.liveStatus && getPreviewUrl(item)"
-                class="cover"
-                :src="`${imgURLLivePreview}${getPreviewUrl(item)}`"
-              />
-
-              <template v-else>
-                <img src="../../assets/images/livestream/img-placeholder-bg.jpg" />
-                <div class="placeholder-vs">
-                  <img src="../../assets/images/livestream/placeholder-vs.png" />
-                  <template v-if="!item.liveStatus">
-                    <div class="vs-timer-title">直播倒计时</div>
-                    <div class="vs-timer">
-                      <span
-                        v-for="(char, cIndex) in countdowns[index].hours"
-                        class="vs-timer__time"
-                        :key="`hour-${cIndex}`"
-                      >
-                        {{ char }}
-                      </span>
-                      :
-                      <span
-                        v-for="(char, cIndex) in countdowns[index].minutes"
-                        class="vs-timer__time"
-                        :key="`minute-${cIndex}`"
-                      >
-                        {{ char }}
-                      </span>
-                      <span class="vs-timer__time-desc">小时</span>
-                      <div />
-                      <span class="vs-timer__time-desc">分钟</span>
-                    </div>
-                  </template>
-                </div>
-
-                <div class="placeholder-left">
-                  <div class="left-logo">
-                    <template v-if="item.homeIcon">
-                      <img :src="item.homeIcon" />
-                    </template>
-                    <template v-else>
-                      <img src="../../assets/images/livestream/system-avatar.png" />
-                    </template>
-                    <!-- <img :src="imgURL + item.homeIcon" /> -->
-                  </div>
-                  <div class="left-title">{{ item.homeNameZh ?? item.homeNameEn ?? item.homeName }}</div>
-                </div>
-                <div class="placeholder-right">
-                  <div class="right-logo">
-                    <template v-if="item.awayIcon">
-                      <img :src="item.awayIcon" />
-                    </template>
-                    <template v-else>
-                      <img src="../../assets/images/livestream/system-avatar.png" />
-                    </template>
-                    <!-- <img :src="imgURL + item.awayIcon" /> -->
-                  </div>
-                  <div class="right-title">{{ item.awayNameZh ?? item.awayNameEn ?? item.awayName }}</div>
-                </div>
-
-                <!-- <img
-                v-if="item.sportId === 1 || item.sportId === 2"
-                src="../../assets/images/livestream/img-placeholder-stream-sport.png"
-                alt=""
-              />
-              <img v-else src="../../assets/images/livestream/img-placeholder-stream-esport.png" alt="" /> -->
-              </template>
-            </div>
-            <div class="item-content">
-              <div class="content-title ellipsis">
-                <!-- 德国甲级联赛 -->
-                {{ item.title }}
-              </div>
-              <div class="content-desc ellipsis">
-                {{ item.homeNameZh ?? item.homeNameEn ?? item.homeName }}
-                VS
-                {{ item.awayNameZh ?? item.awayNameEn ?? item.awayName }}
-              </div>
-            </div>
-            <div class="item-float-content">
-              <div class="content-float float-user">
-                <div class="user-avatar">
-                  <img
-                    v-if="item.name === 'SYSTEM'"
-                    :src="require('../../assets/images/livestream/system-avatar.png')"
-                  />
-                  <img v-else-if="item.avatar" :src="imgURL + item.avatar" />
-                  <img v-else :src="require('../../assets/images/profile/default-1.png')" />
-                </div>
-                <div>{{ item.name === "SYSTEM" ? "雷火" : item.name }}</div>
-              </div>
-              <div class="content-float" :class="{ 'float-filled': item.liveStatus }">
-                <div v-if="item.liveStatus">正在直播</div>
-                <div v-else>
-                  {{ getDisplayDateTime(item.eventStartTime) }}
-                </div>
-              </div>
-            </div>
-          </button>
-        </template>
-        <div v-if="isLivestreamListLoading" class="selection-container__loading-wrapper">
-          <q-spinner size="3em" />
-        </div>
-        <div v-else-if="!liveStreamList.length" class="no-data">目前没有直播</div>
+    <div class="livestream-page-header-wrapper">
+      <div class="livestream-page-header-inner">
+        <q-tabs v-model="moduleTab" class="livestream-page-header__module-tabs">
+          <q-tab class="livestream-page-header__module-tab-item" name="livestream" label="赛事直播" />
+          <q-tab class="livestream-page-header__module-tab-item" name="competition" label="赛程" />
+        </q-tabs>
       </div>
-    </template>
-
-    <template v-if="tabValue === 'ESport'">
-      <div v-if="!hotMatchesByType.length" class="no-data">目前没有赛程</div>
-      <template v-if="!$q.dark.isActive">
-        <div class="white">
-          <div class="hot-match-items">
-            <div
-              :class="selectedCompetitionType"
-              class="hot-match-item"
-              v-for="hotMatch in hotMatchesByType"
-              :key="hotMatch.id"
-            >
-              <div class="hot-match-info">
-                <div class="hot-match-name">
-                  {{ hotMatch.competitionName }}
-                </div>
-                <div class="hot-match-scores">
-                  <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamOneLogo}`" />
-                    <span>{{ hotMatch.teamOneName }}</span>
-                  </div>
-                  <div class="hot-match-time">
-                    {{ hotMatch.competitionTime }}
-                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
-                  </div>
-                  <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
-                    <span>{{ hotMatch.teamTwoName }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template v-else>
-        <div class="dark">
-          <div class="hot-match-items">
-            <div
-              :class="selectedCompetitionType"
-              class="hot-match-item"
-              v-for="hotMatch in hotMatchesByType"
-              :key="hotMatch.id"
-            >
-              <div class="hot-match-info">
-                <div class="hot-match-name">
-                  {{ hotMatch.competitionName }}
-                </div>
-                <div class="hot-match-scores">
-                  <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamOneLogo}`" />
-                    <span>{{ hotMatch.teamOneName }}</span>
-                  </div>
-                  <div class="hot-match-time">
-                    {{ hotMatch.competitionTime }}
-                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
-                  </div>
-                  <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
-                    <span>{{ hotMatch.teamTwoName }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
-    </template>
-
-    <template v-if="tabValue === 'Basketball'">
-      <div v-if="!hotMatchesByType.length" class="no-data">目前没有赛程</div>
-      <template v-if="!$q.dark.isActive">
-        <div class="white">
-          <div class="hot-match-items">
-            <div
-              :class="selectedCompetitionType"
-              class="hot-match-item"
-              v-for="hotMatch in hotMatchesByType"
-              :key="hotMatch.id"
-            >
-              <div class="hot-match-info">
-                <div class="hot-match-name">
-                  {{ hotMatch.competitionName }}
-                </div>
-                <div class="hot-match-scores">
-                  <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamOneLogo}`" />
-                    <span>{{ hotMatch.teamOneName }}</span>
-                  </div>
-                  <div class="hot-match-time">
-                    {{ hotMatch.competitionTime }}
-                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
-                  </div>
-                  <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
-                    <span>{{ hotMatch.teamTwoName }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template v-else>
-        <div class="dark">
-          <div class="hot-match-items">
-            <div
-              :class="selectedCompetitionType"
-              class="hot-match-item"
-              v-for="hotMatch in hotMatchesByType"
-              :key="hotMatch.id"
-            >
-              <div class="hot-match-info">
-                <div class="hot-match-name">
-                  {{ hotMatch.competitionName }}
-                </div>
-                <div class="hot-match-scores">
-                  <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamOneLogo}`" />
-                    <span>{{ hotMatch.teamOneName }}</span>
-                  </div>
-                  <div class="hot-match-time">
-                    {{ hotMatch.competitionTime }}
-                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
-                  </div>
-                  <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
-                    <span>{{ hotMatch.teamTwoName }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
-    </template>
-
-    <template v-if="tabValue === 'Football'">
-      <div v-if="!hotMatchesByType.length" class="no-data">目前没有赛程</div>
-      <template v-if="!$q.dark.isActive">
-        <div class="white">
-          <div class="hot-match-items">
-            <div
-              :class="selectedCompetitionType"
-              class="hot-match-item"
-              v-for="hotMatch in hotMatchesByType"
-              :key="hotMatch.id"
-            >
-              <div class="hot-match-info">
-                <div class="hot-match-name">
-                  {{ hotMatch.competitionName }}
-                </div>
-                <div class="hot-match-scores">
-                  <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamOneLogo}`" />
-                    <span>{{ hotMatch.teamOneName }}</span>
-                  </div>
-                  <div class="hot-match-time">
-                    {{ hotMatch.competitionTime }}
-                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
-                  </div>
-                  <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
-                    <span>{{ hotMatch.teamTwoName }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
-
-      <template v-else>
-        <div class="dark">
-          <div class="hot-match-items">
-            <div
-              :class="selectedCompetitionType"
-              class="hot-match-item"
-              v-for="hotMatch in hotMatchesByType"
-              :key="hotMatch.id"
-            >
-              <div class="hot-match-info">
-                <div class="hot-match-name">
-                  {{ hotMatch.competitionName }}
-                </div>
-                <div class="hot-match-scores">
-                  <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamOneLogo}`" />
-                    <span>{{ hotMatch.teamOneName }}</span>
-                  </div>
-                  <div class="hot-match-time">
-                    {{ hotMatch.competitionTime }}
-                    <div class="bet-btn" @click="handleBetClick(hotMatch)">立即投注</div>
-                  </div>
-                  <div class="hot-match-team">
-                    <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
-                    <span>{{ hotMatch.teamTwoName }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
-    </template>
+    </div>
+    <q-tab-panels v-model="moduleTab" class="content-panels" animated>
+      <q-tab-panel class="content-panel" name="livestream">
+        <livestreamList
+          :livestream-list="sortedLiveStreamList"
+          :is-loading="isLivestreamListLoading"
+          @livestream-click="handleLivestreamClick"
+        />
+      </q-tab-panel>
+      <q-tab-panel class="content-panel" name="competition">
+        <hot-match-list v-model="selectedCompetitionType" :hot-matches @bet-click="handleBetClick" />
+      </q-tab-panel>
+    </q-tab-panels>
   </div>
 
   <GameModal ref="gameRef" />
@@ -425,38 +35,21 @@ import { isAndroid } from "boot/utils";
 import { useRoute, useRouter } from "vue-router";
 import { useNotify } from "src/hooks/notify";
 import { useLocalStorage, useSessionStorage } from "@vueuse/core";
-import { SessionStorage } from "quasar";
+import { LocalStorage, SessionStorage } from "quasar";
+import LivestreamList from "components/livestream/LivestreamList.vue";
+import HotMatchList from "components/livestream/HotMatchList.vue";
 
-const qs = require("qs");
 const tabValue = ref("liveStream");
 const hotMatches = ref([]);
 const competitionTypes = ref([]);
-const competitionTypesNameMap = ref({
-  Football: "足球",
-  Basketball: "篮球",
-  ESport: "电竞"
-});
 const selectedCompetitionType = ref();
-// const imgUrl = process.env.IMAGE_CDN;
-const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
-const imgURLLivePreview = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
+
+const moduleTab = ref("livestream");
+
 const store = userStore();
 const route = useRoute();
 const router = useRouter();
 const notify = useNotify();
-
-const now = moment().format("YYYY-MM-DD HH:mm:ss");
-
-const hotMatchesByType = computed(() => {
-  if (hotMatches.value.length > 0 && selectedCompetitionType.value) {
-    return hotMatches.value.filter(
-      ({ competitionType, displayStartTime, displayEndTime }) =>
-        competitionType === tabValue.value && now >= displayStartTime && now <= displayEndTime
-    );
-  }
-
-  return [];
-});
 
 const gameRef = ref();
 const selectionContainerRef = ref();
@@ -472,9 +65,6 @@ const liveStreamList = ref([]);
 const sortedLiveStreamList = computed(() => {
   return [...liveStreamList.value].sort((a, b) => a.sort - b.sort);
 });
-const liveStreamStatusInfo = reactive({
-  status: 1
-});
 
 const getLiveUrlList = () => {
   isLivestreamListLoading.value = true;
@@ -482,7 +72,6 @@ const getLiveUrlList = () => {
     .post(`/opt-session/live/list`)
     .then((res) => {
       if (res.code === 0) {
-        res.data.streamList.sort((a, b) => a.sort - b.sort);
         liveStreamList.value.push(...res.data.streamList);
         maxPage.value = res.data.pages;
         currentPage.value++;
@@ -491,40 +80,6 @@ const getLiveUrlList = () => {
     .finally(() => {
       isLivestreamListLoading.value = false;
     });
-};
-
-const getDisplayDateTime = (date) => {
-  const now = moment();
-  const eventDate = moment(date);
-  const diffInDays = eventDate.diff(now, "days");
-
-  if (diffInDays === 0) {
-    return eventDate.format("今日 HH:mm");
-  } else if (diffInDays === 1) {
-    return eventDate.format("明日 HH:mm");
-  } else {
-    return eventDate.format("MM/DD");
-  }
-};
-
-const countdowns = ref({});
-
-const updateCountdowns = () => {
-  const now = moment();
-  sortedLiveStreamList.value.forEach((item, index) => {
-    if (!item.liveStatus && item.eventStartTime) {
-      const eventTime = moment(item.eventStartTime);
-      const diffInMs = eventTime.diff(now);
-      const duration = moment.duration(diffInMs > 0 ? diffInMs : 0);
-      const hours = String(Math.floor(duration.asHours())).padStart(2, "0");
-      const minutes = String(duration.minutes()).padStart(2, "0");
-
-      countdowns.value[index] = {
-        hours,
-        minutes
-      };
-    }
-  });
 };
 
 const handleLivestreamClick = (livestream) => {
@@ -607,26 +162,11 @@ const showLivestreamDetails = () => {
   }
 };
 
-const getPreviewUrl = (livestream) => {
-  if (livestream.streamerStatus) {
-    return livestream.streamerPreviewUrl ? livestream.streamerPreviewUrl : "";
-  } else {
-    return livestream.supplierPreviewUrl ? livestream.supplierPreviewUrl : "";
-  }
-};
-
-watch(sortedLiveStreamList, () => {
-  updateCountdowns();
-});
-
-let intervalId;
-
 onMounted(() => {
   api.get("/platform-competition").then((res) => {
     if (res.code === 0) {
       const uniqueCompetitionTypes = Array.from(new Set(res.data.map(({ competitionType }) => competitionType)));
       competitionTypes.value = uniqueCompetitionTypes.reverse();
-
       if (uniqueCompetitionTypes.length > 0) {
         selectedCompetitionType.value = uniqueCompetitionTypes[1];
         // selectedCompetitionType.value = tabValue.value;
@@ -638,13 +178,6 @@ onMounted(() => {
   getLiveUrlList();
   checkExtension();
   showLivestreamDetails();
-
-  updateCountdowns();
-  intervalId = setInterval(updateCountdowns, 1000 * 60);
-});
-
-onBeforeUnmount(() => {
-  clearInterval(intervalId);
 });
 
 onUnmounted(() => {
@@ -656,8 +189,17 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .livestream-page-container {
-  min-height: calc(100vh - 64px);
-  padding-bottom: 20px;
+  height: calc(100vh - 64px);
+  // padding-bottom: 20px;
+}
+
+.content-panels {
+  background: transparent;
+  height: 100%;
+  padding-bottom: 64px;
+  .content-panel {
+    padding: 0 16px 20px;
+  }
 }
 .white {
   background: url("../../assets/images/livestream/livestream-bg-light.png") no-repeat center center;
@@ -667,184 +209,45 @@ onUnmounted(() => {
     margin: 8px 10px;
     border-radius: 8px;
   }
+}
 
-  .competition-items {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    padding: 14px;
+.livestream-page-header-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: url("../../assets/images/livestream/header-bg.png") no-repeat center center;
+  background-size: 100% 100%;
+  padding-top: env(safe-area-inset-top);
 
-    gap: 10px;
-
-    .competition-item {
-      display: flex;
-      flex-direction: column;
-      text-align: center;
-      cursor: pointer;
-
-      img {
-        width: 100%;
+  .livestream-page-header-inner {
+    padding-top: 20px;
+    box-shadow: 0px -2.78px 2.78px 0px #c3d4e6 inset, 0px 1.39px 0px 0px #a7c2dd;
+    .livestream-page-header__module-tabs {
+      :deep(.q-tabs__content) {
+        justify-content: center;
+        margin-bottom: 6px;
       }
+      .livestream-page-header__module-tab-item {
+        min-height: unset;
+        flex-grow: 0;
+        color: #95a3c8;
 
-      .competition-item-name {
-        font-family: "PingFang SC";
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 25.2px;
-        text-align: left;
-        color: #b7c1ff;
-        margin-top: -30px;
-        text-align: center;
-      }
-    }
-  }
-
-  .hot-match-items {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    height: 100%;
-    padding: 0 20px 80px 20px;
-
-    .hot-match-item {
-      background: unset;
-      background-size: 100% 100%;
-      aspect-ratio: 351 / 139;
-      width: 100%;
-      height: 150px;
-      color: rgba(76, 76, 108, 1);
-      box-shadow: 0px -3.71px 3.71px 0px rgba(195, 212, 230, 1) inset, 0px 1.85px 0px 0px rgba(167, 194, 221, 1);
-      border-radius: 10px;
-      &.ESport {
-        background: #fff;
-        background-size: 100% 100%;
-      }
-
-      &.Basketball {
-        background: #fff;
-        background-size: 100% 100%;
-      }
-
-      &.Football {
-        background: #fff;
-        background-size: 100% 100%;
-      }
-
-      .hot-match-info {
-        height: 100%;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 10px;
-        position: relative;
-
-        .hot-match-name,
-        .hot-match-time {
-          font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
-            sans-serif;
-
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 15px;
-          color: rgba(76, 76, 108, 1);
-          text-align: center;
+        &.q-tab--active {
+          color: #424f72;
         }
 
-        .hot-match-scores {
-          display: flex;
-          align-items: center;
-          gap: 10px;
+        :deep(.q-tab__label) {
+          font-size: 1.2rem;
+          font-weight: 600;
+        }
 
-          .hot-match-time {
-            width: 85px;
-
-            .bet-btn {
-              position: absolute;
-              left: 50%;
-              bottom: 0%;
-              transform: translate(-50%, -50%);
-              padding: 3px 8px;
-              background: #fff;
-              border-radius: 5px;
-              cursor: pointer;
-              color: rgba(69, 139, 255, 1);
-              border: rgba(69, 139, 255, 1) 1px solid;
-              border-radius: 100px;
-              &:hover {
-                filter: brightness(1.1);
-              }
-            }
-          }
-
-          .hot-match-team {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
-              sans-serif;
-
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 15px;
-            color: rgba(76, 76, 108, 1);
-            text-align: center;
-            gap: 5px;
-            width: 120px;
-          }
-
-          .hot-match-img {
-            width: 70px;
-            background-color: #fff;
-            border-radius: 100px;
-            padding: 5px;
-            aspect-ratio: 1 / 1;
-            box-shadow: 0px 2.29px 2.29px 0px rgba(147, 199, 255, 1) inset,
-              0px -1.84px 1.84px 0px rgba(39, 94, 193, 1) inset;
-          }
+        :deep(.q-tab__indicator) {
+          left: calc(50% - 15px);
+          right: unset;
+          width: 30px;
+          background-color: #329eff;
         }
       }
-    }
-  }
-
-  .top-toggle-menu {
-    width: 100%;
-    padding: 6px;
-    // background: #ffffff;
-    background: transparent;
-    gap: 12px;
-    // box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
-    box-shadow: none;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-
-    :deep(.q-btn-item) {
-      width: 100%;
-      padding: 0;
-      border-radius: 8px;
-      background: transparent !important;
-
-      img {
-        display: block;
-        width: 100%;
-      }
-
-      // white-space: nowrap;
-
-      // &.bg-primary {
-      //   border-radius: 50px;
-      //   background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
-      // }
-    }
-
-    .float-stream {
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
   }
 }
@@ -852,208 +255,21 @@ onUnmounted(() => {
 .dark {
   background: url("../../assets/images/livestream/livestream-bg-dark.png") no-repeat top center;
   background-color: #1a2338;
-  .top-toggle-menu {
-    width: 100%;
-    padding: 0;
-    // padding: 6px;
-    // background: #ffffff;
-    background: transparent;
-    gap: 12px;
-    // box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
-    box-shadow: none;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    // box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
 
-    :deep(.q-btn-item) {
-      width: 100%;
-      padding: 0;
-      border-radius: 8px;
-      background: transparent !important;
+  .livestream-page-header-wrapper {
+    background-image: url("../../assets/images/livestream/header-bg-dark.png");
+    .livestream-page-header-inner {
+      box-shadow: 0px 4px 4px 0px #00000040;
 
-      img {
-        display: block;
-        width: 100%;
-      }
-      // white-space: nowrap;
-
-      // &.bg-primary {
-      //   border-radius: 50px;
-      //   background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%) !important;
-      // }
-    }
-
-    .float-stream {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-
-  .selection-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    row-gap: 12px;
-    column-gap: 12px;
-    .selection-item {
-      width: 100%;
-      background: #273354;
-      box-shadow: 0px 4px 4px 0px #10264517;
-      border: none;
-      padding: 0;
-
-      .item-content {
-        padding: 3px 6px;
-        .content-title {
-          font-weight: bold;
-          color: #ffffff;
-        }
-        .content-desc {
-          color: #7a80a1;
-        }
-      }
-    }
-
-    .selection-container__loading-wrapper {
-      .q-spinner {
-        fill: #fff;
-      }
-    }
-  }
-}
-
-.competition-items {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  padding: 20px;
-  gap: 10px;
-
-  .competition-item {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    cursor: pointer;
-
-    img {
-      width: 100%;
-    }
-
-    .competition-item-name {
-      font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
-        sans-serif;
-
-      font-size: 18px;
-      font-weight: 500;
-      line-height: 25.2px;
-      color: #b7c1ff;
-      margin-top: -30px;
-      text-align: center;
-    }
-  }
-}
-
-.hot-match-items {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  height: 100%;
-  padding: 0 20px 80px 20px;
-
-  .hot-match-item {
-    background: url("../../assets/images/hotmatch/hotmatch-item-bg-dark.png") no-repeat center center;
-    background-size: 100% 100%;
-    aspect-ratio: 351 / 139;
-    width: 100%;
-    height: 150px;
-
-    &.ESport {
-      background: url("../../assets/images/hotmatch/hotmatch-item-bg-dark-esport.png") no-repeat center center;
-      background-size: 100% 100%;
-    }
-
-    &.Basketball {
-      background: url("../../assets/images/hotmatch/hotmatch-item-bg-dark-basketball.png") no-repeat center center;
-      background-size: 100% 100%;
-    }
-
-    &.Football {
-      background: url("../../assets/images/hotmatch/hotmatch-item-bg-dark-soccer.png") no-repeat center center;
-      background-size: 100% 100%;
-    }
-
-    .hot-match-info {
-      height: 100%;
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 10px;
-      position: relative;
-
-      .hot-match-name,
-      .hot-match-time {
-        font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
-          sans-serif;
-
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 15px;
-        color: #fff;
-        text-align: center;
-      }
-
-      .hot-match-scores {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
-        .hot-match-time {
-          width: 85px;
-
-          .bet-btn {
-            position: absolute;
-            left: 50%;
-            bottom: 0%;
-            transform: translate(-50%, -50%);
-            padding: 3px 8px;
-            background: linear-gradient(to bottom, #5d7dbf 0%, #242d6f 100%);
-            border-radius: 5px;
-            cursor: pointer;
-
-            &:hover {
-              filter: brightness(1.1);
-            }
+      .livestream-page-header__module-tabs {
+        .livestream-page-header__module-tab-item {
+          &.q-tab--active {
+            color: #fff;
           }
-        }
 
-        .hot-match-team {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
-            sans-serif;
-
-          font-size: 14px;
-          font-weight: 400;
-          line-height: 15px;
-          color: #fff;
-          text-align: center;
-          gap: 5px;
-          width: 120px;
-        }
-
-        .hot-match-img {
-          width: 70px;
-          background-color: #27385b;
-          border-radius: 100px;
-          padding: 5px;
-          aspect-ratio: 1 / 1;
+          :deep(.q-tab__indicator) {
+            background-color: #fff;
+          }
         }
       }
     }
@@ -1088,292 +304,6 @@ onUnmounted(() => {
 //     justify-content: center;
 //   }
 // }
-
-.selection-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  row-gap: 12px;
-  column-gap: 12px;
-  .selection-item {
-    width: 100%;
-    background: #ffffff;
-    box-shadow: 0px 4px 4px 0px #10264517;
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-    border: none;
-    padding: 0;
-    margin-bottom: auto;
-
-    .item-float-content {
-      position: absolute;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      top: 0;
-      left: 0;
-      padding: 8px;
-      gap: 8px;
-
-      .content-float {
-        background: rgba(0, 0, 0, 0.6);
-        color: #ffffff;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 2px 4px;
-        border-radius: 24px;
-        font-size: 10px;
-        min-height: 16px;
-        white-space: nowrap;
-
-        &.float-user {
-          padding: 0px 8px 0px 0px;
-          .user-avatar {
-            img {
-              display: block;
-              width: 100%;
-              max-width: 16px;
-              border-radius: 50%;
-            }
-          }
-        }
-        &.float-detail {
-        }
-        &.float-filled {
-          border-radius: 6px;
-          background: #1ac1a2;
-          margin-left: auto;
-        }
-      }
-    }
-
-    .item-img {
-      position: relative;
-      aspect-ratio: 16/9;
-
-      > img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        opacity: 0.9;
-        &.cover {
-          object-fit: cover;
-        }
-      }
-
-      .placeholder-vs {
-        position: absolute;
-        top: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 40%;
-
-        img {
-          display: block;
-          width: 100%;
-        }
-
-        .vs-timer-title {
-          margin-top: -7%;
-          font-size: 0.45rem;
-          font-weight: bold;
-          color: #fff;
-        }
-
-        .vs-timer {
-          display: grid;
-          grid-template-columns: repeat(5, max-content);
-          justify-self: center;
-          color: #ffffff;
-          font-size: 10px;
-          gap: 4px 2px;
-          line-height: 1;
-          margin-top: 10%;
-          font-size: 0.85rem;
-          font-weight: 600;
-
-          .vs-timer__time {
-            background-image: url("../../assets/images/livestream/placeholder-timer.png");
-            background-size: 100% 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 16px;
-            width: max-content;
-            padding: 0 2px;
-          }
-
-          .vs-timer__time-desc {
-            grid-column: span 2;
-            font-size: 0.4rem;
-          }
-        }
-      }
-
-      .placeholder-left {
-        // background-image: url("../../assets/images/livestream/placeholder-left-title.png");
-        background-size: 100% 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #ffffff;
-        position: absolute;
-        top: 40%;
-        left: 5%;
-        width: 30%;
-        height: 10%;
-        font-size: 0.5rem;
-        padding: 2px 0;
-        line-height: 1;
-        flex-direction: column;
-
-        img {
-          display: block;
-          width: 100%;
-          aspect-ratio: 1/1;
-          border-radius: 50%;
-          background: #ffffff;
-        }
-
-        .left-logo {
-          background-image: url("../../assets/images/livestream/placeholder-left-logo.png");
-          // background-color: salmon;
-          background-size: 100% 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 4px;
-          border-radius: 50%;
-          width: 50%;
-        }
-
-        .left-title {
-          background-image: url("../../assets/images/livestream/placeholder-left-title.png");
-          background-size: 100% 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          min-height: 12px;
-          margin-top: 20%;
-        }
-      }
-
-      .placeholder-right {
-        // background-image: url("../../assets/images/livestream/placeholder-left-title.png");
-        background-size: 100% 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #ffffff;
-        position: absolute;
-        top: 40%;
-        right: 5%;
-        width: 30%;
-        height: 10%;
-        font-size: 0.5rem;
-        padding: 2px 0;
-        line-height: 1;
-        flex-direction: column;
-
-        img {
-          display: block;
-          width: 100%;
-          aspect-ratio: 1/1;
-          border-radius: 50%;
-          background: #ffffff;
-        }
-
-        .right-logo {
-          background-image: url("../../assets/images/livestream/placeholder-right-logo.png");
-          // background-color: salmon;
-          background-size: 100% 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 4px;
-          border-radius: 50%;
-          width: 50%;
-        }
-
-        .right-title {
-          background-image: url("../../assets/images/livestream/placeholder-right-title.png");
-          background-size: 100% 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100%;
-          min-height: 12px;
-          margin-top: 20%;
-        }
-      }
-
-      // .placeholder-left-logo {
-      //   // background-image: url("../../assets/images/livestream/placeholder-left-title.png");
-      //   background-color: salmon;
-      //   background-size: 100% 100%;
-      //   display: flex;
-      //   justify-content: center;
-      //   align-items: center;
-      //   color: #ffffff;
-      //   position: absolute;
-      //   top: 65%;
-      //   left: 5%;
-      //   width: 30%;
-      //   height: 10%;
-      //   font-size: 6px;
-      //   line-height: 1;
-
-      //   img {
-      //     display: block;
-      //     width: 100%;
-      //   }
-      // }
-
-      // .placeholder-right-title {
-      //   background-image: url("../../assets/images/livestream/placeholder-right-title.png");
-      //   background-size: 100% 100%;
-      //   display: flex;
-      //   justify-content: center;
-      //   align-items: center;
-      //   color: #ffffff;
-      //   position: absolute;
-      //   top: 65%;
-      //   right: 5%;
-      //   width: 30%;
-      //   height: 10%;
-      //   font-size: 6px;
-      //   line-height: 1;
-      // }
-    }
-    .item-content {
-      padding: 3px 6px;
-      text-align: left;
-
-      .content-title {
-        font-size: 0.9rem;
-        font-weight: bold;
-        color: #000000;
-      }
-      .content-desc {
-        font-size: 0.8rem;
-        color: #7a80a1;
-      }
-    }
-  }
-
-  .selection-container__loading-wrapper {
-    display: flex;
-    justify-content: center;
-    grid-column: 1 / -1;
-    .q-spinner {
-      color: #4c88f8;
-    }
-  }
-}
 
 .no-data {
   display: flex;
