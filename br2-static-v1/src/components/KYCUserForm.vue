@@ -29,6 +29,20 @@
           />
         </div>
       </div>
+
+      <div class="pc-form-item">
+        <div class="pc-form-label">{{ $t("form.taxId") }}</div>
+        <div class="pc-form-input">
+          <q-input
+            filled
+            dense
+            clearable
+            :placeholder="$t('form.taxId_placeholder')"
+            v-model="formDetail.taxId"
+            :rules="[(_) => isValidCPF()]"
+          />
+        </div>
+      </div>
     </div>
 
     <q-btn
@@ -84,6 +98,19 @@ const isValidLastName = () => {
   return result;
 };
 
+const isValidCPF = () => {
+  const { taxId } = formDetail;
+
+  if (!taxId) {
+    return "Por favor, insira o número do CPF";
+  }
+
+  const phoneRegex = /^\d{11}$/;
+  const isValid = phoneRegex.test(taxId);
+
+  return isValid ? true : "O número do CPF deve ter 11 dígitos";
+};
+
 const isValidPhone = () => {
   const { phone } = formDetail;
 
@@ -112,6 +139,7 @@ const submitKYCNewUser = () => {
 const updateNewUserState = () => {
   const updateInfo = {};
   updateInfo.realName = `${formDetail.firstName},${formDetail.lastName}`;
+  updateInfo.taxId = `${formDetail.taxId}`;
 
   api
     .post("/session/account", qs.stringify(updateInfo))
@@ -149,7 +177,7 @@ const updateNewUserState = () => {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
   }
   .pc-form-label {
     color: rgba(255, 255, 255, 1);
