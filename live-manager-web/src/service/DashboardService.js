@@ -364,4 +364,27 @@ export const DashboardService = {
         return null
       })
   },
+
+  //live-team
+  getSportLiveTeam(request) {
+    const token = sessionStorage.getItem('token')
+    return api
+      .get(`/session/live-sport/team?${request}`, {
+        headers: {
+          token: `${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          return response.data
+        }
+        console.error('獲取運動直播隊伍失敗:', response.message || '未知錯誤')
+        return null
+      })
+      .catch((error) => {
+        console.error('獲取運動直播隊伍請求失敗:', error)
+        return null
+      })
+  },
 }
