@@ -2648,7 +2648,8 @@ export default {
     loginType: '登陆方法',
     otp: 'OTP',
     scheduledAnnouncement: '预约公告',
-    subscribeCount: '当前订阅人数'
+    subscribeCount: '当前订阅人数',
+    eventCode: '赛事代码'
   },
   message: {
     adsStatusOpen: '开',
