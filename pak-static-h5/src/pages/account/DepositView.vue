@@ -1150,13 +1150,18 @@ async function pDepo(deposit) {
           // }
           
           const onAppFirstDeposit = newPlayerDepositBonusConfig.value?.hasBonus
-          localStorage.setItem('onAppFirstDeposit', JSON.stringify(onAppFirstDeposit));
-          
+          if (onAppFirstDeposit) {
+            localStorage.setItem('onAppFirstDeposit', JSON.stringify(onAppFirstDeposit));
+          }
           const secondDeposit = secondTimeDepositBonusConfig.value?.hasBonus
-          localStorage.setItem('secondDeposit', JSON.stringify(secondDeposit));
+          if (secondDeposit) {
+            localStorage.setItem('secondDeposit', JSON.stringify(secondDeposit));
+          }
           
           const thirdDeposit = thirdTimeDepositBonusConfig.value?.hasBonus
-          localStorage.setItem('thirdDeposit', JSON.stringify(thirdDeposit));
+          if (thirdDeposit) {
+            localStorage.setItem('thirdDeposit', JSON.stringify(thirdDeposit));
+          }
         }
       } else {
         $q.notify({

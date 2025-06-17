@@ -272,7 +272,7 @@ const initSpinWheel = () => {
     if (res.code == 0) {
       remainingDraws.value = res.data.spinChance;
       store.hasUnusedCoupon = res.data.hasUnusedCoupon;
-      showHasUnusedPopup.value = (isAndroid() || !isNotInApp) && res.data.hasUnusedCoupon === 'YES' ? true : false
+      showHasUnusedPopup.value = (isAndroid() || !isNotInApp) && res.data.hasUnusedCoupon === 'YES' && store.canClaimFtdPrivilege ? true : false
     }
   });
 
