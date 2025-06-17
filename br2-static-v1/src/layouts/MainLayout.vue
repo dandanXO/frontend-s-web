@@ -122,7 +122,7 @@ import { useI18n } from "vue-i18n";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
 
-import LoginModal from "src/components/modal/LoginModal.vue";
+import LoginModal from "src/components/modal/login/LoginModal.vue";
 
 export default defineComponent({
   name: "MainLayout",
