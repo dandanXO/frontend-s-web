@@ -29,7 +29,10 @@
     />
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
     <NewPlayerAccDepositPromo v-if="list.redirectUrl === 'new-player-acc-deposit'" :params="list.param" />
-    <MonthBeginningDepositRate v-if="list.redirectUrl === 'pk4-month-beginning-deposit-rebate'" :params="list.param" />
+    <MonthBeginningDepositRebate
+      v-if="list.redirectUrl === 'pk4-month-beginning-deposit-rebate'"
+      :params="list.param"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -71,7 +74,7 @@ import DepositSpinnerRewards from "./hotpromo/deposit-spinner-rewards/DepositSpi
 import JackpotAviator from "./hotpromo/jackpotAviator/JackpotAviator.vue";
 import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
 import NewPlayerAccDepositPromo from "./hotpromo/new-player-acc-deposit/NewPlayerAccDepositPromo.vue";
-import MonthBeginningDepositRate from "./hotpromo/monthBeginningDepositRate/MonthBeginningDepositRate.vue";
+import MonthBeginningDepositRebate from "./hotpromo/monthBeginningDepositRebate/MonthBeginningDepositRebate.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -93,7 +96,7 @@ export default defineComponent({
     DepositSpinnerRewards,
     SpinLuckyWheelPromo,
     NewPlayerAccDepositPromo,
-    MonthBeginningDepositRate
+    MonthBeginningDepositRebate
   },
   props: {
     list: {
