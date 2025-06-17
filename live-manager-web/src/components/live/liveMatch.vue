@@ -1,3 +1,4 @@
+<!--TODO-->
 <template>
   <div class="card">
     <DataTable
@@ -8,369 +9,338 @@
       dataKey="eventId"
       :filters="filters"
       filterDisplay="menu"
-      :globalFilterFields="['eventTitle', 'streamStatus']"
+      :globalFilterFields="['title']"
       responsiveLayout="scroll"
+      v-model:selection="selectedRows"
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
-          <div style="display: flex; gap: 8px">
-            <Button
-              :size="'small'"
-              type="button"
-              icon="pi pi-filter-slash"
-              label="清除"
-              outlined
-              @click="clearFilter()"
-            />
-          </div>
-          <!-- 搜尋框 -->
-          <IconField class="search-container">
-            <InputIcon>
-              <i class="pi pi-search search-icon" />
-            </InputIcon>
-            <InputText
-              v-model="filters['global'].value"
-              placeholder="關鍵詞搜索"
-              :size="'small'"
-              class="search-input"
-            />
-          </IconField>
-          <!-- 重新載入按鈕 -->
-          <Button
+          <!-- <Select
+            v-model="request.sportId"
+            :options="uiControl.sport"
+            optionLabel="体育项目"
+            placeholder="体育项目"
             :size="'small'"
-            type="button"
-            icon="pi pi-refresh"
-            label="重新載入"
-            severity="info"
-            @click="fetchStreams"
-            :loading="loading"
           />
+          <Select
+            v-model="request.liveStatus"
+            :options="uiControl.liveStatus"
+            optionLabel="状态"
+            placeholder="状态"
+            :size="'small'"
+          /> -->
+          <InputText
+            type="text"
+            v-model="request.title"
+            optionLabel="赛事标题"
+            placeholder="赛事标题"
+          />
+          <Button label="搜索" :size="'small'" severity="success" icon="pi pi-search" />
+          <Button
+            label="重置"
+            :size="'small'"
+            severity="warn"
+            icon="pi pi-refresh"
+            @click="resetQuery"
+          />
+          <Button label="删除" :size="'small'" icon="pi pi-times" severity="danger" />
         </div>
       </template>
-
-      <Column field="eventTitle" header="標題" sortable>
+      <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+      <Column field="title" header="ID" sortable>
         <template #body="slotProps">
-          {{ slotProps.data.eventTitle }}
+          {{ slotProps.data.title }}
         </template>
       </Column>
 
-      <Column field="streamStatus" header="源流狀態" sortable>
+      <Column field="eventStartTime" header="体育项目" sortable>
         <template #body="slotProps">
-          <Tag
-            :severity="getStatusSeverity(slotProps.data.streamStatus)"
-            :value="getStatusLabel(slotProps.data.streamStatus)"
-          />
+          {{ formatTime(slotProps.data.eventStartTime) }}
         </template>
       </Column>
 
-      <Column field="createTime" header="創建時間" sortable>
+      <Column field="sportId" header="赛事名称(中文)" sortable>
         <template #body="slotProps">
-          {{ formatDateTime(slotProps.data.createTime) }}
+          {{ getSportDisplayName(slotProps.data.sportId) }}
         </template>
       </Column>
 
-      <Column field="updateTime" header="更新時間" sortable>
+      <Column field="liveStatus" header="赛事名称(英文)" sortable>
         <template #body="slotProps">
-          {{ formatDateTime(slotProps.data.updateTime) }}
+          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
         </template>
       </Column>
 
-      <Column field="streamerName" header="主播" sortable>
+      <Column field="liveStatus" header="主队" sortable>
         <template #body="slotProps">
-          {{ slotProps.data.streamerName || '未分配' }}
+          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
         </template>
       </Column>
-
-      <Column field="supplierStreamId" header="供應商串流ID" sortable>
+      <Column field="liveStatus" header="客队" sortable>
         <template #body="slotProps">
-          {{ slotProps.data.supplierStreamId }}
+          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
         </template>
       </Column>
-
-      <Column field="streamerStreamId" header="主播串流ID" sortable>
+      <Column field="liveStatus" header="赛事时间" sortable>
         <template #body="slotProps">
-          {{ slotProps.data.streamerStreamId }}
+          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
         </template>
       </Column>
-      <Column field="streamerStatus" header="直播主狀態" sortable>
+      <Column field="liveStatus" header="是否生产推留地址(是/否)" sortable>
         <template #body="slotProps">
-          <Tag
-            :severity="getStreamerStatusSeverity(slotProps.data.streamerStatus)"
-            :value="getStreamerStatusLabel(slotProps.data.streamerStatus)"
-          />
+          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
         </template>
       </Column>
-      <Column header="操作">
+      <Column field="liveStatus" header="状态" sortable>
         <template #body="slotProps">
-          <Button
-            icon="pi pi-eye"
-            class="p-button-rounded p-button-info mr-2"
-            @click="viewStream(slotProps.data)"
-            :disabled="!canPreview(slotProps.data.eventStatus)"
-            :tooltip="getPreviewTooltip(slotProps.data.eventStatus)"
-          />
+          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
+        </template>
+      </Column>
+      <Column field="liveStatus" header="操作" sortable>
+        <template #body="slotProps">
+          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
         </template>
       </Column>
     </DataTable>
   </div>
-
-  <Dialog
-    v-model:visible="editDialogVisible"
-    header="修改聊天室名称"
-    :style="{ width: '400px' }"
-    :modal="true"
-  >
-    <div class="p-fluid">
-      <div class="p-field">
-        <label for="title">新名称</label>
-        <InputText id="title" v-model="editedTitle" />
-      </div>
-    </div>
-    <template #footer>
-      <Button
-        label="取消"
-        icon="pi pi-times"
-        class="p-button-text"
-        @click="editDialogVisible = false"
-      />
-      <Button label="確認" icon="pi pi-check" class="p-button-text" @click="submitRoomTitleEdit" />
-    </template>
-  </Dialog>
-
-  
-
-  <Dialog v-model:visible="deleteDialog" :style="{ width: '450px' }" header="確認" :modal="true">
-    <div class="confirmation-content">
-      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-      <span>確定要刪除這個直播嗎？</span>
-    </div>
-    <template #footer>
-      <Button label="取消" icon="pi pi-times" class="p-button-text" @click="deleteDialog = false" />
-      <Button label="確定" icon="pi pi-check" class="p-button-danger" @click="confirmDelete" />
-    </template>
-  </Dialog>
 </template>
 
-<script>
-// 根據路由判斷獲取數據的方法
-import { DashboardService } from '@/service/DashboardService'
-
-export default {
-  props: {
-    fetchDataMethod: {
-      type: Function,
-      default: () => DashboardService.getStreamList,
-    },
-  },
-}
-</script>
-
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
-import DataTable from 'primevue/datatable'
-import Column from 'primevue/column'
-import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
-import Dialog from 'primevue/dialog'
-import Tag from 'primevue/tag'
-import { useToast } from 'primevue/usetoast'
-const toast = useToast()
+import { defineComponent, reactive, onMounted, ref, computed } from 'vue'
+import { liveSportTyps } from '@/utils/live'
+import { DashboardService } from '@/service/DashboardService'
+const { getSportLiveMatch } = DashboardService
 
-const route = useRoute()
-
-const streams = ref([])
-const loading = ref(false)
-const showPlayer = ref(false)
-const selectedStream = ref(null)
-const deleteDialog = ref(false)
-const streamToDelete = ref(null)
-const editDialogVisible = ref(false)
-const editedTitle = ref('')
-const editingStreamId = ref(null)
-
-const openEditDialog = (stream) => {
-  editingStreamId.value = stream.streamerStreamId
-  editedTitle.value = stream.roomTitle || ''
-  editDialogVisible.value = true
-}
-
-const submitRoomTitleEdit = async () => {
-  if (!editingStreamId.value || !editedTitle.value) return
-
-  try {
-    const res = await DashboardService.updateRoomTitle(editingStreamId.value, editedTitle.value)
-
-    if (res) {
-      toast.add({ severity: 'success', summary: '成功', detail: '标题已更新', life: 3000 })
-      editDialogVisible.value = false
-      await fetchStreams()
-    } else {
-      toast.add({
-        severity: 'error',
-        summary: '错误',
-        detail: response?.message || '更新失败',
-        life: 3000,
-      })
-    }
-  } catch (err) {
-    console.error('更新标题错误:', err)
-    toast.add({ severity: 'error', summary: '错误', detail: '无法更新标题', life: 3000 })
-  }
-}
-
-const filters = ref({
-  global: { value: null, matchMode: 'contains' },
+// const uiControl = reactive({
+//   sport: liveSportTyps,
+//   // 0:比赛异常, 说明：暂未判断具体原因的异常比赛，建议隐藏处理, 1:未开赛, 2:进行中, 3:完场, 11:中断, 12:取消, 13:延期, 14:腰斩, 15:待定
+//   liveStatus: [
+//     { name: '0', display: t('status.namiMatch.GAME_EXCEPTION'), id: 0 },
+//     { name: '1', display: t('status.namiMatch.NOT_STARTED'), id: 1 },
+//     { name: '2', display: t('status.namiMatch.ONGOING'), id: 2 },
+//     { name: '3', display: t('status.namiMatch.ENDED'), id: 3 },
+//     { name: '11', display: t('status.namiMatch.INTERRUPTED'), id: 11 },
+//     { name: '12', display: t('status.namiMatch.CANCEL'), id: 12 },
+//     { name: '13', display: t('status.namiMatch.DELAYED'), id: 13 },
+//     { name: '14', display: t('status.namiMatch.ABANDONED'), id: 14 },
+//     { name: '15', display: t('status.namiMatch.PENDING'), id: 15 },
+//   ],
+// })
+const request = reactive({
+  size: 30,
+  current: 1,
+  sportId: null,
+  liveStatus: null,
+  title: null,
 })
 
-// 清除數據
-const clearData = () => {
-  streams.value = []
-  loading.value = false
-  showPlayer.value = false
-  selectedStream.value = null
-  deleteDialog.value = false
-  streamToDelete.value = null
-  filters.value = {
-    global: { value: null, matchMode: 'contains' },
-  }
+function resetQuery() {
+  request.sportId = null
+  request.title = null
+  request.liveStatus = null
 }
 
-// 清除過濾器
-const clearFilter = () => {
-  filters.value = {
-    global: { value: null, matchMode: 'contains' },
-  }
-}
+async function loadMatch() {
+  // page.loading = true
+  const res = await getSportLiveMatch({
+    sportId: request.sportId,
+    status: request.liveStatus,
+    title: request.title,
+    page: request.current,
+    limit: request.size,
+  })
+  console.log(res)
 
-// 獲取直播列表
-const fetchStreams = async () => {
-  try {
-    clearData()
-    loading.value = true
-    // 根據當前路由設置數據獲取方法
-    const dataMethod = route.path.includes('/my-streams')
-      ? DashboardService.getMyStreams
-      : DashboardService.getStreamList
-    const response = await dataMethod()
-    streams.value = response
-  } catch (error) {
-    console.error('獲取直播列表失敗:', error)
-  } finally {
-    loading.value = false
-  }
-}
-
-// 監聽路由變化，重新獲取數據
-watch(
-  () => route.path,
-  () => {
-    fetchStreams()
-  },
-)
-
-// 格式化日期時間
-const formatDateTime = (timestamp) => {
-  if (!timestamp) return ''
-  return new Date(timestamp).toLocaleString('zh-TW')
-}
-
-// 獲取狀態標籤
-const getStatusLabel = (status) => {
-  const statusMap = {
-    0: '初始化',
-    1: '準備中',
-    2: '開始啟動',
-    3: '啟動完成',
-    4: '直播中',
-    5: '已結束',
-    6: '已停止',
-    7: '已結束',
-  }
-  return statusMap[status] || '未知狀態'
-}
-
-// 獲取狀態樣式
-const getStatusSeverity = (status) => {
-  const severityMap = {
-    0: 'info',
-    1: 'info',
-    2: 'warning',
-    3: 'success',
-    4: 'success',
-    5: 'danger',
-    6: 'danger',
-    7: 'danger',
-  }
-  return severityMap[status] || 'info'
-}
-
-// 獲取直播主狀態標籤
-const getStreamerStatusLabel = (status) => {
-  const statusMap = {
-    0: '停止直播',
-    1: '開始直播',
-  }
-  return statusMap[status] || '未知狀態'
-}
-
-// 獲取直播主狀態樣式
-const getStreamerStatusSeverity = (status) => {
-  const severityMap = {
-    0: 'danger',
-    1: 'success',
-  }
-  return severityMap[status] || 'info'
-}
-// 檢查是否可以預覽
-const canPreview = (status) => {
-  return [0, 1].includes(status)
-}
-
-// 獲取預覽按鈕提示
-const getPreviewTooltip = (status) => {
-  return canPreview(status) ? '點擊預覽' : '當前狀態無法預覽'
-}
-
-// 查看直播
-const viewStream = (stream) => {
-  if (!canPreview(stream.eventStatus)) {
-    return
-  }
-
-  if (stream.cdnPlayUrlsHls !== null) {
-    selectedStream.value = {
-      ...stream,
-      title: stream.eventTitle,
-      streamId: stream.streamerStreamId,
-      playUrls: {
-        hls: stream.cdnPlayUrlsHls,
-        flv: stream.cdnPlayUrlsFlv,
-      },
-    }
-  }
-  showPlayer.value = true
-}
-
-const editRoomTitle = async (stream) => {
-  try {
-    const { value } = await ElMessageBox.prompt('請輸入新的房間標題', '修改房間標題', {
-      confirmButtonText: '確認',
-      cancelButtonText: '取消',
-      inputValue: stream.roomTitle,
-    })
-    const result = await DashboardService.updateRoomTitle(stream.streamerStreamId, value)
-    if (result) {
-      ElMessage.success('房間標題更新成功')
-      fetchStreams()
-    }
-  } catch (err) {
-    console.log('取消修改房間標題')
-  }
+  // page.records = res.data.records || []
+  // page.total = res.data.total || 0
+  // page.pages = res.data.pages || 0
+  // page.current = res.data.current || 1
+  // page.loading = false
 }
 
 onMounted(() => {
-  fetchStreams()
+  loadMatch()
+})
+</script>
+
+<script>
+import { defineComponent, onMounted, reactive, ref, computed } from 'vue'
+// import { useI18n } from "vue-i18n";
+// import { getSportLiveMatch, copySportLiveMatch, batchDeleteSportLiveMatch } from "@/api/sport-live-match";
+// import { ElMessage, ElMessageBox } from "element-plus";
+// import { liveSportTyps } from "@/utils/live"
+
+// const selectedRows = ref([])
+// const request = reactive({
+//   size: 30,
+//   current: 1,
+//   sportId: null,
+//   liveStatus: null,
+//   title: null,
+// })
+
+export default defineComponent({
+  setup() {
+    const { t } = useI18n()
+    // const uiControl = reactive({
+    //   sport: liveSportTyps,
+    //   // 0:比赛异常, 说明：暂未判断具体原因的异常比赛，建议隐藏处理, 1:未开赛, 2:进行中, 3:完场, 11:中断, 12:取消, 13:延期, 14:腰斩, 15:待定
+    //   liveStatus: [
+    //     { name: '0', display: t('status.namiMatch.GAME_EXCEPTION'), id: 0 },
+    //     { name: '1', display: t('status.namiMatch.NOT_STARTED'), id: 1 },
+    //     { name: '2', display: t('status.namiMatch.ONGOING'), id: 2 },
+    //     { name: '3', display: t('status.namiMatch.ENDED'), id: 3 },
+    //     { name: '11', display: t('status.namiMatch.INTERRUPTED'), id: 11 },
+    //     { name: '12', display: t('status.namiMatch.CANCEL'), id: 12 },
+    //     { name: '13', display: t('status.namiMatch.DELAYED'), id: 13 },
+    //     { name: '14', display: t('status.namiMatch.ABANDONED'), id: 14 },
+    //     { name: '15', display: t('status.namiMatch.PENDING'), id: 15 },
+    //   ],
+    // })
+    const page = reactive({
+      pages: 0,
+      records: [],
+      total: 0,
+      current: 1,
+      loading: false,
+    })
+    // const request = reactive({
+    //   size: 30,
+    //   current: 1,
+    //   sportId: null,
+    //   liveStatus: null,
+    //   title: null,
+    // })
+    const dialogVisible = ref(false)
+    const currentRow = ref(null)
+    // const selectedRows = ref([])
+
+    const canCopy = computed(() => {
+      return currentRow.value && currentRow.value.streamId
+    })
+
+    function formatTime(ts) {
+      if (!ts) return '-'
+      const d = new Date(ts)
+      return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`
+    }
+
+    function resetQuery() {
+      request.sportId = null
+      request.title = null
+      request.liveStatus = null
+    }
+
+    async function loadMatch() {
+      page.loading = true
+      const res = await getSportLiveMatch({
+        sportId: request.sportId,
+        status: request.liveStatus,
+        title: request.title,
+        page: request.current,
+        limit: request.size,
+      })
+      console.log(res.data.records)
+
+      page.records = res.data.records || []
+      page.total = res.data.total || 0
+      page.pages = res.data.pages || 0
+      page.current = res.data.current || 1
+      page.loading = false
+    }
+
+    function changePage(pageNum) {
+      request.current = pageNum
+      loadMatch()
+    }
+
+    function showDialog(row) {
+      currentRow.value = row
+      dialogVisible.value = true
+    }
+
+    async function handleCopy() {
+      // 調用 API
+      const res = await copySportLiveMatch({ matchId: currentRow.value.matchId })
+      if (res.code === 0) {
+        ElMessage.success(t('fields.copySuccess'))
+        dialogVisible.value = false
+      } else {
+        ElMessage.error(t('fields.copyFailed'))
+      }
+    }
+
+    function handleSelectionChange(val) {
+      selectedRows.value = val
+    }
+
+    async function handleDelete() {
+      if (!selectedRows.value.length) {
+        ElMessage.warning(t('fields.pleaseSelectMatch'))
+        return
+      }
+      try {
+        await ElMessageBox.confirm(`${t('fields.confirmDelete')}`, t('fields.tips'), {
+          confirmButtonText: t('fields.confirm'),
+          cancelButtonText: t('fields.cancel'),
+          type: 'warning',
+        })
+      } catch {
+        return
+      }
+      // 批量刪除
+      const matchIds = selectedRows.value.map((row) => row.matchId)
+      const res = await batchDeleteSportLiveMatch({ matchIds })
+      if (res.code === 0) {
+        ElMessage.success(t('fields.deleteSuccess'))
+      } else {
+        ElMessage.error(res.msg || t('fields.deleteFailed'))
+      }
+      loadMatch()
+    }
+
+    // 根據 sportId 取得運動 display 名稱
+    function getSportDisplayName(sportId) {
+      const found = uiControl.sport.find((item) => item.id === sportId)
+      return found ? found.display : sportId
+    }
+
+    function getLiveStatusDisplayName(statusId) {
+      const found = uiControl.liveStatus.find((item) => item.id === statusId)
+      return found ? found.display : statusId
+    }
+
+    function hasStreamId(row) {
+      // 判斷 streamId 是否有值且非空
+      return !!(row && row.streamId)
+    }
+
+    onMounted(() => {
+      loadMatch()
+    })
+
+    return {
+      t,
+      uiControl,
+      page,
+      request,
+      formatTime,
+      loadMatch,
+      resetQuery,
+      changePage,
+      dialogVisible,
+      currentRow,
+      showDialog,
+      handleCopy,
+      handleDelete,
+      getSportDisplayName,
+      getLiveStatusDisplayName,
+      canCopy,
+      hasStreamId,
+      selectedRows,
+      handleSelectionChange,
+    }
+  },
 })
 </script>
 
