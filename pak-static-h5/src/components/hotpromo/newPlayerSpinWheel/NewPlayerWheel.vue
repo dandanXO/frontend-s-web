@@ -265,12 +265,14 @@ const spinWheel = () => {
 };
 
 const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
+
+const isNotInApp = window.location.pathname === "/promo";
 const initSpinWheel = () => {
   eventapi.get("/new-user-roulette/init").then((res) => {
     if (res.code == 0) {
       remainingDraws.value = res.data.spinChance;
       store.hasUnusedCoupon = res.data.hasUnusedCoupon;
-      showHasUnusedPopup.value = isAndroid() && res.data.hasUnusedCoupon === 'YES' ? true : false
+      showHasUnusedPopup.value = (isAndroid() || !isNotInApp) && res.data.hasUnusedCoupon === 'YES' ? true : false
     }
   });
 

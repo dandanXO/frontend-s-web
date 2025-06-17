@@ -1151,6 +1151,12 @@ async function pDepo(deposit) {
           
           const onAppFirstDeposit = newPlayerDepositBonusConfig.value?.hasBonus
           localStorage.setItem('onAppFirstDeposit', JSON.stringify(onAppFirstDeposit));
+          
+          const secondDeposit = secondTimeDepositBonusConfig.value?.hasBonus
+          localStorage.setItem('secondDeposit', JSON.stringify(secondDeposit));
+          
+          const thirdDeposit = thirdTimeDepositBonusConfig.value?.hasBonus
+          localStorage.setItem('thirdDeposit', JSON.stringify(thirdDeposit));
         }
       } else {
         $q.notify({
@@ -1327,8 +1333,10 @@ onBeforeRouteLeave((to, from, next) => {
   const hasNewPlayerReward = newPlayerDepositBonusConfig.value?.hasBonus
   
   const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
+  const secondDeposit = JSON.parse(localStorage.getItem('secondDeposit'));
+  const thirdDeposit = JSON.parse(localStorage.getItem('thirdDeposit'));
 
-  if (alreadyDeposited && isAndroid()) {
+  if (alreadyDeposited && isAndroid() || secondDeposit || thirdDeposit) {
     next()
     return
   }
