@@ -18,6 +18,7 @@
       data-aos="fade-in"
       data-aos-duration="1200"
       data-aos-once="true"
+      style="padding:15px;"
     >
       <q-carousel-slide
         v-for="(banner, i) in banners"
@@ -26,6 +27,7 @@
         class="column no-wrap flex-center"
         :img-src="returnBannerUrl(banner)"
         @click="gotoPromo(banner)"
+        style="background-color:#151D23;border-radius:16px;"
       ></q-carousel-slide>
 
       <template v-slot:navigation-icon="{ active, onClick }">
@@ -105,7 +107,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img style="width: 24px; height: 24px" class="filter-green" src="../assets/images/index/volume-up-line.svg" />
+          <img style="width: 24px; height: 24px" src="../assets/images/index/volume-up-line.svg" />
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="2" :duration="10">
@@ -120,6 +122,21 @@
             </div>
           </marquee-text>
         </div>
+      </div>
+    </div>
+
+    <div class="jackpot-banner">
+      <div class="jackpot-digit-grp">
+        <span class="jackpot-digit">2</span>
+        <span class="jackpot-digit">5</span>
+        <span class="jackpot-symbol">,</span>
+        <span class="jackpot-digit">9</span>
+        <span class="jackpot-digit">0</span>
+        <span class="jackpot-digit">9</span>
+        <span class="jackpot-symbol">,</span>
+        <span class="jackpot-digit">8</span>
+        <span class="jackpot-digit">7</span>
+        <span class="jackpot-digit">0</span>
       </div>
     </div>
 
@@ -3050,9 +3067,9 @@ onBeforeUnmount(() => {
 
   .station-notice-wrapper {
     display: flex;
-    background: #0d3230;
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.11) 50.48%, rgba(255, 255, 255, 0) 100%);
     gap: 10px;
-    padding: 5px 10px;
+    padding: 2px 10px;
     justify-content: center;
     align-items: center;
 
@@ -3064,11 +3081,6 @@ onBeforeUnmount(() => {
       width: 28px;
     }
 
-    .filter-green {
-      filter: brightness(0) saturate(100%) invert(62%) sepia(48%) saturate(380%) hue-rotate(142deg) brightness(95%)
-        contrast(90%);
-    }
-
     .marquee-container {
       width: calc(100% - 28px);
     }
@@ -3076,8 +3088,7 @@ onBeforeUnmount(() => {
     span {
       margin-right: 10px;
       cursor: pointer;
-      color: #bacef1;
-      font-weight: light;
+      color: #fff;
     }
   }
 
@@ -3089,6 +3100,40 @@ onBeforeUnmount(() => {
     justify-content: center;
     cursor: pointer;
     flex: 1;
+  }
+}
+
+.jackpot-banner {
+  background: url('../assets/images/index/jackpot-banner.svg') center center no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 355/42;
+  position: relative;
+  margin: 10px 0;
+
+  .jackpot-digit-grp {
+    display: flex;
+    gap: 3px;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translate(0%, -50%);
+
+    .jackpot-digit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #FFC27A 32.14%, #FFEA9C 60.71%, #FFEEAF 89.29%);
+      width: 15px;
+      height: 20px;
+      color: #0a4d13;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 140%;
+      letter-spacing: -0.08%;
+      border-radius: 4px;
+    }
   }
 }
 
@@ -4029,6 +4074,11 @@ onBeforeUnmount(() => {
   .swiper-scrollbar-drag {
     background: rgba(255, 255, 255, 0.4);
   }
+
+  .swiper-slide {
+    width: 52px !important;
+    height: 51px !important;
+  }
 }
 
 .menu-category-btn {
@@ -4095,8 +4145,8 @@ onBeforeUnmount(() => {
 }
 
 .cat-selection-item {
-  background: #171f22;
-  // min-width: 80px;
+  background: url('../assets/images/index/cat-selection-bg.svg') center center no-repeat;
+  background-size: 100% 100%;
   width: 80px;
   height: 50px;
   display: flex;
@@ -4109,10 +4159,11 @@ onBeforeUnmount(() => {
   width: 100%;
 
   &.active {
-    background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+    background: url('../assets/images/index/cat-selection-bg-active.svg') center center no-repeat;
+    background-size: 100% 100%;
 
     .cat-title {
-      color: #ffffff;
+      color: #10211F;
     }
   }
 
@@ -4132,9 +4183,12 @@ onBeforeUnmount(() => {
     font-size: 10px;
     font-weight: bold;
     color: #bfc3c9;
-    font-family: "Poppins", sans-serif;
     letter-spacing: 0.5px;
     white-space: nowrap;
+    font-family: 'Poppins';
+    font-weight: 500;
+    font-size: 12px;
+    text-align: center;
   }
 }
 

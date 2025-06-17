@@ -131,8 +131,8 @@
         </q-btn-dropdown>
       </div>
       <div class="profile-wrapper non-login" v-else>
-        <q-btn class="btn-style-light" no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
-        <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn>
+        <q-btn class="btn-style-butter" no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
+        <q-btn class="btn-style-pear" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn>
       </div>
     </div>
   </div>
@@ -363,7 +363,7 @@ onMounted(() => {
   // background: linear-gradient(180deg, #00B9A1 0%, rgba(0, 185, 111, 0) 96.35%);
   // background: linear-gradient(180deg, rgba(0, 185, 161, 0.46) 0%, rgba(0, 185, 111, 0) 96.35%);
   // background: linear-gradient(180deg, #095e54 0%, #0d362d 100%);
-  background: linear-gradient(180deg, #095e54 0%, rgba(13, 54, 45, 0.2) 100%);
+  background: #1F241F;
   // box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow-x: hidden;
   position: fixed;

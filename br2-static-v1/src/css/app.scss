@@ -8,7 +8,7 @@ html {
 }
 // app global css in SCSS form
 body {
-  font-family: "Manrope", sans-serif;
+  font-family: "Poppins", "Manrope", sans-serif;
   background: #ffffff;
   letter-spacing: 1px;
 }
@@ -259,7 +259,8 @@ body.body--dark .q-footer {
 .q-footer {
   // margin-top: 30px;
   // background: transparent !important;
-  background: #181a20d9;
+  background: url('../assets/images/index/footer-bg.png') center center no-repeat;
+  background-size: 100% 100%;
   backdrop-filter: blur(6px);
   bottom: 0px;
   height: 76px;
@@ -318,6 +319,8 @@ body.body--dark .q-footer {
       }
       &.hover {
         display: block;
+        background: url('../assets/images/index/footer-item-bg-active.png') center center no-repeat;
+        background-size: 100% auto;
       }
     }
   }
@@ -636,6 +639,24 @@ body.body--dark .q-footer {
 .btn-style-light {
   background: #ffffff30;
   border-radius: 40px;
+}
+
+.btn-style-butter {
+  background: linear-gradient(90deg, #FFF97F 0%, #FFA550 100%);
+  font-family: 'Poppins';
+  font-weight: 700;
+  letter-spacing: -0.08%;
+  text-align: center;
+  color: #2D2D2D;
+}
+
+.btn-style-pear {
+  background: linear-gradient(90deg, #4FFFA5 0%, #10D16F 100%);
+  font-family: 'Poppins';
+  font-weight: 700;
+  letter-spacing: -0.08%;
+  text-align: center;
+  color: #2D2D2D;
 }
 
 // lower android version
