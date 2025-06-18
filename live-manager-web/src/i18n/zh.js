@@ -2172,7 +2172,9 @@ export default {
     otp: 'OTP',
     scheduledAnnouncement: '预约公告',
     subscribeCount: '当前订阅人数',
-    eventCode: '赛事代码'
+    eventCode: '赛事代码',
+    addSensitiveWord:"新增敏感词",
+    editSensitiveWord:"修改敏感词"
   },
   message: {
     adsStatusOpen: '开',
