@@ -132,7 +132,10 @@
       </div>
       <div class="profile-wrapper non-login" v-else>
         <q-btn class="btn-style-butter" no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
-        <q-btn class="btn-style-pear" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn>
+        <!-- <q-btn class="btn-style-pear" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn> -->
+        <q-btn class="btn-style-pear" no-caps @click="uiStore.loginView = 'register'">
+          {{ $t("header.register") }}
+        </q-btn>
       </div>
     </div>
   </div>
@@ -142,6 +145,7 @@
 import { ref, onMounted, computed } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
+import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid, isInPwa } from "src/boot/utils";
 import { api } from "boot/axios";
@@ -153,6 +157,7 @@ const emits = defineEmits(["closeslot"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+const uiStore = useUI();
 
 // const balance = ref(19999999);
 
@@ -163,10 +168,11 @@ const profileImg = [
 ];
 
 const goLogin = () => {
-  if (props.homeProfile) {
-    emits("closeslot");
-  }
-  router.push("/login");
+  // if (props.homeProfile) {
+  //   emits("closeslot");
+  // }
+  // router.push("/login");
+  uiStore.loginView = "login";
 };
 
 const randomProfileImg = computed(() => {
@@ -363,7 +369,7 @@ onMounted(() => {
   // background: linear-gradient(180deg, #00B9A1 0%, rgba(0, 185, 111, 0) 96.35%);
   // background: linear-gradient(180deg, rgba(0, 185, 161, 0.46) 0%, rgba(0, 185, 111, 0) 96.35%);
   // background: linear-gradient(180deg, #095e54 0%, #0d362d 100%);
-  background: #1F241F;
+  background: #1f241f;
   // box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow-x: hidden;
   position: fixed;

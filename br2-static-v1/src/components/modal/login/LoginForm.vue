@@ -2,10 +2,10 @@
   <div v-if="uiStore.loginView === 'login'" class="login-container">
     <div class="login-panel">
       <h2 class="title">Log in</h2>
-      <p class="subtitle">
+      <div class="subtitle">
         Not a member?
-        <a href="#" class="link">Create account</a>
-      </p>
+        <div class="link" @click="uiStore.loginView = 'register'">Create account</div>
+      </div>
 
       <q-input
         ref="phoneRef"
@@ -21,8 +21,8 @@
         ]"
       >
         <template v-slot:prepend>
-          <img v-if="!phone" src="../../../assets/images/auth/email-icon.png" width="22px" />
-          <img v-else src="../../../assets/images/auth/email-icon-active.png" width="22px" />
+          <img v-if="!phone" src="../../../assets/images/auth/acc-icon.png" width="22px" />
+          <img v-else src="../../../assets/images/auth/acc-icon-active.png" width="22px" />
         </template>
       </q-input>
 
