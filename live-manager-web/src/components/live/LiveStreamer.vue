@@ -35,7 +35,7 @@
             size="small"
             severity="info"
             icon="pi pi-plus"
-            @click="resetQuery"
+            @click="showDialog('CREATE')"
           />
         </div>
       </template>
@@ -88,7 +88,7 @@
               size="small"
               severity="info"
               icon="pi pi-key"
-              @click="resetQuery"
+              @click="showDialog('EDIT', slotProps.data)"
             />
             <Button
               :label="t('fields.delete')"
@@ -102,6 +102,179 @@
       </Column>
     </DataTable>
 
+    <!-- 編輯新增dialog -->
+    <Dialog v-model:visible="uiControl.dialogVisible" modal :style="{ width: '700px' }">
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 650px;
+          margin-bottom: 16px;
+        "
+      >
+        <label for="newPassword" class="font-semibold w-24">{{ t('fields.name') }}</label>
+
+        <div style="width: 600px">
+          <InputText
+            id="newPassword"
+            :class="{ 'p-invalid': fieldErrors.newPassword }"
+            autocomplete="new-password"
+            type="password"
+            style="width: 100%"
+            v-model="changePasswordDialog.form.newPassword"
+            @blur="validateField('newPassword')"
+            @input="clearFieldError('newPassword')"
+          />
+          <Message
+            v-if="fieldErrors.newPassword"
+            severity="error"
+            size="small"
+            variant="simple"
+            class="mt-1"
+          >
+            {{ fieldErrors.newPassword }}
+          </Message>
+        </div>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 650px;
+          margin-bottom: 16px;
+        "
+      >
+        <label for="confirmPassword" class="font-semibold w-24">{{ t('fields.account') }}</label>
+        <div style="width: 600px">
+          <InputText
+            id="confirmPassword"
+            class="w-full"
+            :class="{ 'p-invalid': fieldErrors.confirmPassword }"
+            autocomplete="new-password"
+            type="password"
+            style="width: 100%"
+            v-model="changePasswordDialog.form.confirmPassword"
+            @blur="validateField('confirmPassword')"
+            @input="clearFieldError('confirmPassword')"
+          />
+          <Message
+            v-if="fieldErrors.confirmPassword"
+            severity="error"
+            size="small"
+            variant="simple"
+            class="mt-1"
+          >
+            {{ fieldErrors.confirmPassword }}
+          </Message>
+        </div>
+      </div>
+
+      <div
+        v-if="uiControl.dialogType === 'CREATE'"
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 650px;
+          margin-bottom: 16px;
+        "
+      >
+        <label for="confirmPassword" class="font-semibold w-24">{{ t('fields.password') }}</label>
+        <div style="width: 600px">
+          <InputText
+            id="confirmPassword"
+            class="w-full"
+            :class="{ 'p-invalid': fieldErrors.confirmPassword }"
+            autocomplete="new-password"
+            type="password"
+            style="width: 100%"
+            v-model="changePasswordDialog.form.confirmPassword"
+            @blur="validateField('confirmPassword')"
+            @input="clearFieldError('confirmPassword')"
+          />
+          <Message
+            v-if="fieldErrors.confirmPassword"
+            severity="error"
+            size="small"
+            variant="simple"
+            class="mt-1"
+          >
+            {{ fieldErrors.confirmPassword }}
+          </Message>
+        </div>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 650px;
+          margin-bottom: 16px;
+        "
+      >
+        <label for="confirmPassword" class="font-semibold w-24">{{ t('fields.photo') }}</label>
+        <div style="width: 600px">
+          <FileUpload
+            ref="fileupload"
+            mode="basic"
+            name="demo[]"
+            accept="image/*"
+            :maxFileSize="1000000"
+            @upload="onUpload"
+            :chooseLabel="t('fields.upload')"
+            :chooseIcon="'pi pi-cloud-upload'"
+            :auto="true"
+          />
+          <Message
+            v-if="fieldErrors.confirmPassword"
+            severity="error"
+            size="small"
+            variant="simple"
+            class="mt-1"
+          >
+            {{ fieldErrors.confirmPassword }}
+          </Message>
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 650px;
+          margin-bottom: 16px;
+        "
+      >
+        <Button
+          type="button"
+          :label="t('fields.cancel')"
+          severity="secondary"
+          @click="closeDialog"
+        />
+        <Button
+          type="button"
+          :label="t('fields.confirm')"
+          :loading="isSubmitting"
+          @click="submitChangePassword"
+        />
+      </div>
+    </Dialog>
+
+    <!-- 更改密碼dialog -->
     <Dialog
       v-model:visible="changePasswordDialog.visible"
       modal
@@ -236,6 +409,15 @@ const uiControl = reactive({
   ],
 })
 
+const request = reactive({
+  size: 30,
+  current: 1,
+  liveStatus: null,
+  name: null,
+})
+
+const liveStreamerList = ref([])
+
 const changePasswordDialog = reactive({
   visible: false,
   userId: null,
@@ -252,6 +434,7 @@ const fieldErrors = reactive({
 
 const isSubmitting = ref(false)
 
+//更改密碼
 const validateForm = () => {
   const newPasswordValid = validateField('newPassword')
   const confirmPasswordValid = validateField('confirmPassword')
@@ -297,6 +480,31 @@ const changePasswordRules = {
       trigger: 'blur',
     },
   ],
+}
+
+function showDialog(type, row = null) {
+  uiControl.dialogVisible = true
+  uiControl.dialogType = type
+  if (type === 'EDIT' && row) {
+    Object.assign(form, {
+      id: row.id,
+      name: row.name,
+      loginName: row.loginName,
+      avatar: row.avatar,
+    })
+    form.id = row.id
+    form.avatar = row.avatar ? promoDir + row.avatar : null
+    console.log(form.avatar)
+  } else {
+    Object.assign(form, {
+      id: null,
+      name: null,
+      liveStatus: 0,
+      loginName: null,
+      password: null,
+      avatar: null,
+    })
+  }
 }
 
 // 驗證方法
@@ -369,15 +577,6 @@ async function submitChangePassword() {
     isSubmitting.value = false
   }
 }
-
-const request = reactive({
-  size: 30,
-  current: 1,
-  liveStatus: null,
-  name: null,
-})
-
-const liveStreamerList = ref([])
 
 function resetQuery() {
   request.status = null
