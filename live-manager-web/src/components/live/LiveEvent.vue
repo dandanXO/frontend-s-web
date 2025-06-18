@@ -33,8 +33,8 @@
           />
 
           <DatePicker
-            id="eventTimeStart"
-            v-model="uiControl.eventTimeStart"
+            id="eventStartTime"
+            v-model="uiControl.eventStartTime"
             showTime
             :showSeconds="true"
             hourFormat="24"
@@ -42,8 +42,8 @@
             fluid
           />
           <DatePicker
-            id="eventTimeEnd"
-            v-model="uiControl.eventTimeEnd"
+            id="eventEndTime"
+            v-model="uiControl.eventEndTime"
             showTime
             :showSeconds="true"
             hourFormat="24"
@@ -205,29 +205,210 @@
       appendTo="body"
     >
       <form @submit.prevent="submit" class="p-fluid">
+        <!-- Sport Type -->
         <div class="p-field">
-          <label for="title">{{ t('fields.title') }}</label>
+          <label :for="t('fields.sportType')">{{ t('fields.sportType') }}</label>
+          <Dropdown
+            v-model="form.sportId"
+            :options="uiControl.sport"
+            optionLabel="name"
+            optionValue="id"
+            :placeholder="t('fields.sportType')"
+            class="w-full"
+            :class="{ 'p-invalid': validationErrors.sportId }"
+            filter
+          />
+          <small class="p-error" v-if="validationErrors.sportId">{{ validationErrors.sportId }}</small>
+        </div>
+
+        <!-- Title -->
+        <div class="p-field">
+          <label :for="t('fields.title')">{{ t('fields.title') }}</label>
           <InputText
             id="title"
             v-model="form.title"
             :class="{ 'p-invalid': validationErrors.title }"
-            maxlength="255"
+            maxlength="100"
           />
           <small class="p-error" v-if="validationErrors.title">{{ validationErrors.title }}</small>
         </div>
+
+        <!-- Home Team -->
         <div class="p-field">
-          <label for="sportId">Sport ID</label>
-          <InputText id="sportId" v-model="form.sportId" />
+          <label :for="t('fields.homeTeam')">{{ t('fields.homeTeam') }}</label>
+          <AutoComplete
+            v-model="form.homeId"
+            :suggestions="displayTeams"
+            @complete="searchTeams"
+            field="nameZh"
+            :placeholder="t('fields.homeTeam')"
+            :dropdown="true"
+            :forceSelection="false"
+            :allow-create="true"
+            @item-select="val => { form.homeId = val.value.id; form.homeName = val.value.nameZh; afterTeamSelectorChanged(); }"
+            @change="val => { if (typeof val.value === 'string') { form.homeId = null; form.homeName = val.value; } else if (val.value) { form.homeId = val.value.id; form.homeName = val.value.nameZh; } else { form.homeId = null; form.homeName = ''; } afterTeamSelectorChanged(); }"
+            @focus="loadEventWithSite(form.sportId, 'home')"
+            :class="{ 'p-invalid': validationErrors.homeId }"
+          >
+            <template #option="slotProps">
+              <div style="display: flex; align-items: center">
+                <img
+                  :src="
+                    slotProps.option.icon?.startsWith('http://') ||
+                      slotProps.option.icon?.startsWith('https://')
+                      ? slotProps.option.icon
+                      : promoDir + slotProps.option.icon
+                  "
+                  style="width: 20px; height: 20px; margin-right: 10px"
+                >
+                <span>{{ slotProps.option.nameZh }}</span>
+              </div>
+            </template>
+            <template #footer v-if="teamSelectorStatus === 'home'">
+              <div ref="teamSelectorBottomRef" />
+            </template>
+          </AutoComplete>
+          <small class="p-error" v-if="validationErrors.homeId">{{ validationErrors.homeId }}</small>
         </div>
+
+        <!-- Away Team -->
         <div class="p-field">
-          <label for="liveStatus">Live Status</label>
-          <InputText id="liveStatus" v-model="form.liveStatus" />
+          <label :for="t('fields.awayTeam')">{{ t('fields.awayTeam') }}</label>
+          <AutoComplete
+            v-model="form.awayId"
+            :suggestions="displayTeams"
+            @complete="searchTeams"
+            field="nameZh"
+            :placeholder="t('fields.awayTeam')"
+            :dropdown="true"
+            :forceSelection="false"
+            :allow-create="true"
+            @item-select="val => { form.awayId = val.value.id; form.awayName = val.value.nameZh; afterTeamSelectorChanged(); }"
+            @change="val => { if (typeof val.value === 'string') { form.awayId = null; form.awayName = val.value; } else if (val.value) { form.awayId = val.value.id; form.awayName = val.value.nameZh; } else { form.awayId = null; form.awayName = ''; } afterTeamSelectorChanged(); }"
+            @focus="loadEventWithSite(form.sportId, 'away')"
+            :class="{ 'p-invalid': validationErrors.awayId }"
+          >
+            <template #option="slotProps">
+              <div style="display: flex; align-items: center">
+                <img
+                  :src="
+                    slotProps.option.icon?.startsWith('http://') ||
+                      slotProps.option.icon?.startsWith('https://')
+                      ? slotProps.option.icon
+                      : promoDir + slotProps.option.icon
+                  "
+                  style="width: 20px; height: 20px; margin-right: 10px"
+                >
+                <span>{{ slotProps.option.nameZh }}</span>
+              </div>
+            </template>
+            <template #footer v-if="teamSelectorStatus === 'away'">
+              <div ref="teamSelectorBottomRef" />
+            </template>
+          </AutoComplete>
+          <small class="p-error" v-if="validationErrors.awayId">{{ validationErrors.awayId }}</small>
         </div>
+
+        <!-- Sequence -->
         <div class="p-field">
-          <label for="eventStartTime">Start Time</label>
-          <InputText id="eventStartTime" v-model="form.eventStartTime" />
+          <label :for="t('fields.sequence')">{{ t('fields.sequence') }}</label>
+          <InputNumber
+            id="sequence"
+            v-model.number="form.sort"
+            :min="0"
+            mode="decimal"
+            showButtons
+            buttonLayout="horizontal"
+            decrementButtonClassName="p-button-secondary"
+            incrementButtonClassName="p-button-secondary"
+            :class="{ 'p-invalid': validationErrors.sort }"
+            @keypress="restrictInput($event)"
+          />
+          <small class="p-error" v-if="validationErrors.sort">{{ validationErrors.sort }}</small>
         </div>
-        <!-- Add more fields as needed -->
+
+        <!-- Match Time -->
+        <div class="p-field">
+          <label :for="t('fields.matchTime')">{{ t('fields.matchTime') }}</label>
+          <Calendar
+            v-model="uiForm.eventStartTime"
+            showTime
+            hourFormat="24"
+            dateFormat="yy-mm-dd"
+            :showSeconds="true"
+            :class="{ 'p-invalid': validationErrors.eventStartTime }"
+          />
+          <small class="p-error" v-if="validationErrors.eventStartTime">{{ validationErrors.eventStartTime }}</small>
+        </div>
+
+        <!-- End Time -->
+        <div class="p-field">
+          <label :for="t('fields.endTime')">{{ t('fields.endTime') }}</label>
+          <Calendar
+            v-model="uiForm.eventEndTime"
+            showTime
+            hourFormat="24"
+            dateFormat="yy-mm-dd"
+            :showSeconds="true"
+            :class="{ 'p-invalid': validationErrors.eventEndTime }"
+          />
+          <small class="p-error" v-if="validationErrors.eventEndTime">{{ validationErrors.eventEndTime }}</small>
+        </div>
+
+        <!-- Status -->
+        <div class="p-field">
+          <label :for="t('fields.status')">{{ t('fields.status') }}</label>
+          <Dropdown
+            v-model="form.liveStatus"
+            :options="uiControl.liveStatus"
+            optionLabel="display"
+            optionValue="id"
+            :placeholder="t('fields.status')"
+            class="w-full"
+            :class="{ 'p-invalid': validationErrors.liveStatus }"
+          />
+          <small class="p-error" v-if="validationErrors.liveStatus">{{ validationErrors.liveStatus }}</small>
+        </div>
+
+        <!-- Is Test Event -->
+        <div class="p-field flex align-items-center">
+          <label :for="t('fields.isTestEvent')" class="mr-3">{{ t('fields.isTestEvent') }}</label>
+          <InputSwitch v-model="form.isTest" />
+          <span class="ml-2">{{ form.isTest ? t('fields.yes') : t('fields.no') }}</span>
+          <small class="p-error" v-if="validationErrors.isTest">{{ validationErrors.isTest }}</small>
+        </div>
+
+        <!-- Is Popular Event -->
+        <div class="p-field flex align-items-center">
+          <label :for="t('fields.isPopularEvent')" class="mr-3">{{ t('fields.isPopularEvent') }}</label>
+          <InputSwitch v-model="form.isPopular" />
+          <span class="ml-2">{{ form.isPopular ? t('fields.yes') : t('fields.no') }}</span>
+          <small class="p-error" v-if="validationErrors.isPopular">{{ validationErrors.isPopular }}</small>
+        </div>
+
+        <!-- Cover -->
+        <div class="p-field">
+          <label :for="t('fields.cover')">{{ t('fields.cover') }}</label>
+          <div class="flex flex-column">
+            <Image
+              v-if="form.cover"
+              :src="`${promoDir2}/live/event/${store.state.user.siteId}/` + form.cover"
+              alt="Cover Image"
+              width="150"
+              preview
+              class="border-1 border-round surface-border"
+              style="max-width: 150px; max-height: 100px; object-fit: contain;"
+            />
+            <input
+              type="file"
+              accept="image/*"
+              @change="attachImage"
+              class="mt-3"
+            >
+          </div>
+          <small class="p-error" v-if="validationErrors.cover">{{ validationErrors.cover }}</small>
+        </div>
+
       </form>
       <template #footer>
         <Button
@@ -283,8 +464,8 @@ const uiControl = reactive({
   //dialogType: 'CREATE',
   //removeBtn: true,
   //dialogLoading: false,
-  eventTimeStart:  getStartOfDayDate(new Date()),
-  eventTimeEnd: getEndOfDayDate(new Date()),
+  eventStartTime:  getStartOfDayDate(new Date()),
+  eventEndTime: getEndOfDayDate(new Date()),
   sport: liveSportTyps,
   liveStatus: [
     {
@@ -359,7 +540,14 @@ const form = reactive({
 const ui = reactive({
   dialogVisible: false,
   dialogTitle: '',
-  dialogType: 'CREATE'
+  dialogType: 'CREATE',
+  eventStartTime:  getStartOfDayDate(new Date()),
+  eventEndTime: getEndOfDayDate(new Date()),
+});
+
+const uiForm = reactive({
+  eventStartTime: null,
+  eventEndTime: null,
 });
 
 const validationErrors = reactive({
@@ -393,7 +581,7 @@ function showDialog(type, row = null) {
     ui.dialogTitle = t('fields.editEvent');
     Object.assign(form, row);
   } else {
-    ui.dialogTitle = t('fields.addEvent');
+    ui.dialogTitle = t('fields.addCompetition');
     Object.keys(form).forEach(key => form[key] = (typeof form[key] === 'boolean' ? false : null));
   }
 }
@@ -401,7 +589,7 @@ function showDialog(type, row = null) {
 async function submit() {
   validationErrors.title = null;
   if (!form.title) {
-    validationErrors.title = t('message.inputEventTitle');
+    validationErrors.title = t('message.validateTeamNameRequired');
     return;
   }
   try {
@@ -446,12 +634,20 @@ function changePage(event) {
   loadList();
 }
 
-watch(() => uiControl.eventTimeStart, (newValue) => {
+watch(() => uiControl.eventStartTime, (newValue) => {
   request.eventStartTime[0] = formatToStartOfDayString(newValue);
 }, { immediate: true });
 
-watch(() => uiControl.eventTimeEnd, (newValue) => {
+watch(() => uiControl.eventEndTime, (newValue) => {
   request.eventStartTime[1] = formatToStartOfDayString(newValue);
+}, { immediate: true });
+
+watch(() => uiForm.eventStartTime, (newValue) => {
+  form.eventStartTime = formatToStartOfDayString(newValue);
+}, { immediate: true });
+
+watch(() => uiForm.eventEndTime, (newValue) => {
+  form.eventStartTime = formatToStartOfDayString(newValue);
 }, { immediate: true });
 
 
