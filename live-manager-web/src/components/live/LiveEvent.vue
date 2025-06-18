@@ -442,10 +442,12 @@
 </template>
 
 <script setup>
+import { useSessionStorage } from '@vueuse/core'
 import { ref, reactive, onMounted, onUnmounted, watch, computed, nextTick } from 'vue';
 import { useI18n } from "vue-i18n";
 import { liveSportTyps } from '@/utils/live.js';
 import { DashboardService } from '@/service/DashboardService.js'
+import { uploadImage } from '@/service/image'
 import { SiteService } from '@/service/SiteService.js'
 import dayjs from 'dayjs'
 import { useUserStore } from '@/stores/userStore.js'
@@ -464,6 +466,10 @@ const TEAMS_PER_VIEW = 20
 const { t } = useI18n();
 const confirm = useConfirm();
 const toast = useToast();
+//const const imageUrl = useSessionStorage('IMAGE_CDN', process.env.VUE_APP_IMAGE).value
+const imageUrl = `https://file-admin.fwabm4gvc.com'`
+const promoDir = imageUrl + '/promo/'
+const promoDir2 = imageUrl
 
 const getStartOfDayDate = (date) => {
   return dayjs(date).startOf('day').toDate();
@@ -608,7 +614,8 @@ const uiForm = reactive({
 });
 
 const validationErrors = reactive({
-  title: null
+  title: null,
+  cover: null
 })
 
 const handleTeamSelectorFocus = target => {
@@ -655,6 +662,7 @@ function showDialog(type, row = null) {
   ui.dialogType = type;
   ui.dialogVisible = true;
   validationErrors.title = null;
+  validationErrors.cover = null;
   Object.assign(form, {
     id: null,
     sportId: null,
@@ -672,14 +680,54 @@ function showDialog(type, row = null) {
   })
 }
 
+async function attachImage(event) {
+  const file = event.target.files[0]
+  if (!file) return
+
+  const data = await attachPhoto(event)
+  console.log(data)
+  if (data) {
+    form.cover = data
+  } else {
+    validationErrors.cover = t('message.failedToUploadImage');
+  }
+}
+
+async function attachPhoto(event) {
+  const files = event.target.files[0]
+  if (!files) return
+
+  const fr = new FileReader()
+  fr.onload = function() {
+    const img = new Image()
+    img.onload = function() {}
+    img.src = fr.result
+  }
+  fr.readAsDataURL(files)
+
+  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+  if (!allowFileType.includes(files.type)) {
+    validationErrors.cover = t('message.invalidFileType');
+    return null
+  }
+
+  const formData = new FormData()
+  formData.append('files', files)
+  formData.append('dir', `live/event/${store.siteId}`)
+  formData.append('overwrite', false)
+
+  try {
+    const response = await uploadImage(formData)
+    return response.code === 0 ? response.data : null
+  } catch (error) {
+    validationErrors.cover = t('message.failedToUploadImage');
+    return null
+  }
+}
 async function submit() {
   
   validationErrors.title = null;
   if (!form.title) {
-    validationErrors.title = t('message.validateTeamNameRequired');
-    return;
-  }
-  if (!form.sportId) {
     validationErrors.title = t('message.validateTeamNameRequired');
     return;
   }
