@@ -87,7 +87,7 @@
     <DuanWuRewards v-else-if="list.redirectUrl === 'lh1-duan-wu-rewards'" :promo-code="list.promoCode" />
     <IemDallas2025 v-else-if="list.redirectUrl === 'lh1-iem-dallas-2025'" :promo-code="list.promoCode" />
     <DreamLeagueS26 v-else-if="list.redirectUrl === 'lh1-dream-league-s26'" :promo-code="list.promoCode" />
-    <WorldCup2025 v-else-if="list.redirectUrl === 'lh1-worldcup-2025'" :promo-code="list.promoCode" />
+    <WorldCup2025 v-else-if="list.redirectUrl === 'lh1-fifa-quiz-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>

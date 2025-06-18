@@ -35,8 +35,6 @@
 
             <div class="livestream-list-item__match-info__date">
               <span class="livestream-list-item__match-info__date__vs">VS</span>
-              <!-- <div v-if="live.status === 'ENDED'" class="livestream-list-item__match-info__date__on-air">正在直播</div> -->
-              <!-- <div v-if="live.status !== 'ENDED'" class="livestream-list-item__match-info__date__on-air">正在直播</div> -->
               <div class="livestream-list-item__match-info__date__date">
                 {{ live.matchTime }}
               </div>
@@ -46,7 +44,6 @@
                 <img :src="imgURL + live.awayTeamIcon || systemAvatarImg" loading="lazy" />
               </div>
               <span class="livestream-list-item__match-info__team-name">
-                <!-- {{ live.awayNameZh || live.awayNameEn || live.awayName }} -->
                 {{ live.awayTeam }}
               </span>
             </div>
@@ -61,7 +58,6 @@
           <img :src="imgURL + currentListItem.homeTeamIcon || systemAvatarImg" loading="lazy" />
         </div>
         <div class="info-txt">
-          <!-- {{ currentListItem.homeNameZh || currentListItem.homeNameEn || currentListItem.homeName }} -->
           {{ currentListItem.homeTeam }}
         </div>
       </div>
@@ -88,7 +84,6 @@
           <img :src="imgURL + currentListItem.awayTeamIcon || systemAvatarImg" loading="lazy" />
         </div>
         <div class="info-txt">
-          <!-- {{ currentListItem.awayNameZh || currentListItem.awayNameEn || currentListItem.awayName }} -->
           {{ currentListItem.awayTeam }}
         </div>
       </div>
@@ -261,18 +256,6 @@
             <td>{{ record.bonus }}</td>
             <td>{{ record.status }}</td>
           </tr>
-          <!-- <tr>
-                <td>2024-05-11 16:00</td>
-                <td>老鹰 vs 火箭</td>
-                <td>老鹰胜</td>
-                <td style="color: #ff5151">错误</td>
-              </tr>
-              <tr>
-                <td>2024-05-11 16:00</td>
-                <td>老鹰 vs 火箭</td>
-                <td>平局</td>
-                <td style="color: #7a8eb9">未出结果</td>
-              </tr> -->
         </tbody>
       </table>
 
@@ -303,196 +286,11 @@ import { useNotify } from "@/hooks/notify";
 
 const notify = useNotify();
 const list = ref([]);
-// const list = ref([
-//   {
-//     id: 1081,
-//     siteId: 7,
-//     quizTitle: "test",
-//     gameType: "FIFA",
-//     homeTeam: "test1",
-//     homeTeamIcon: "7/7c14babf-ba44-46e7-9050-5434cf6d8b66.png",
-//     awayTeam: "test2",
-//     awayTeamIcon: "7/873719ae-a6b2-40fc-a69f-db4e9b84a3c8.png",
-//     poolAmount: 0.0,
-//     questionOne: "哪方获胜？",
-//     choiceOne: '["test1","test2"]',
-//     answerOne: "test2",
-//     questionTwo: null,
-//     choiceTwo: "[]",
-//     answerTwo: null,
-//     questionThree: null,
-//     choiceThree: "[]",
-//     answerThree: null,
-//     status: "ENDED",
-//     matchTime: "2025-06-19 18:00:00",
-//     startTime: "2025-06-19 00:00:00",
-//     endTime: "2025-06-19 18:00:00",
-//     occasionsInMatch: '["出现红牌","点球得分","乌龙球"]',
-//     memberAnswerOne: "test1",
-//     memberAnswerTwo: null,
-//     memberAnswerThree: null,
-//     memberSelectedOccasion: "出现红牌",
-//     occasions: [
-//       {
-//         occasion: "全场零进球",
-//         bonus: 18
-//       },
-//       {
-//         occasion: "出现红牌",
-//         bonus: 28
-//       },
-//       {
-//         occasion: "补时进球",
-//         bonus: 38
-//       },
-//       {
-//         occasion: "点球得分",
-//         bonus: 58
-//       },
-//       {
-//         occasion: "梅开二度",
-//         bonus: 88
-//       },
-//       {
-//         occasion: "帽子戏法",
-//         bonus: 128
-//       },
-//       {
-//         occasion: "乌龙球",
-//         bonus: 288
-//       }
-//     ],
-//     canClaimBonus: false,
-//     hasClaimedBonus: false,
-//     canClaimOccasionBonus: false,
-//     hasClaimedOccasionBonus: false
-//   },
-//   {
-//     id: 1083,
-//     siteId: 7,
-//     quizTitle: "K27 vs NGX",
-//     gameType: "FIFA",
-//     homeTeam: "K27",
-//     homeTeamIcon: "7/7c14babf-ba44-46e7-9050-5434cf6d8b66.png",
-//     awayTeam: "NGX",
-//     awayTeamIcon: "7/fba28356-9467-4519-b711-7df63bd46e6c.png",
-//     poolAmount: 0.0,
-//     questionOne: "哪方获胜？",
-//     choiceOne: '["K27","NGX"]',
-//     answerOne: "NGX",
-//     questionTwo: null,
-//     choiceTwo: null,
-//     answerTwo: null,
-//     questionThree: null,
-//     choiceThree: null,
-//     answerThree: null,
-//     status: "ENDED",
-//     matchTime: "2025-06-17 18:00:00",
-//     startTime: "2025-06-17 00:00:00",
-//     endTime: "2025-06-17 18:00:00",
-//     occasionsInMatch: '["补时进球","梅开二度","帽子戏法","出现红牌"]',
-//     memberAnswerOne: "NGX",
-//     memberAnswerTwo: null,
-//     memberAnswerThree: null,
-//     memberSelectedOccasion: "梅开二度",
-//     occasions: [
-//       {
-//         occasion: "全场零进球",
-//         bonus: 18
-//       },
-//       {
-//         occasion: "出现红牌",
-//         bonus: 28
-//       },
-//       {
-//         occasion: "补时进球",
-//         bonus: 38
-//       },
-//       {
-//         occasion: "点球得分",
-//         bonus: 58
-//       },
-//       {
-//         occasion: "梅开二度",
-//         bonus: 88
-//       },
-//       {
-//         occasion: "帽子戏法",
-//         bonus: 128
-//       },
-//       {
-//         occasion: "乌龙球",
-//         bonus: 288
-//       }
-//     ],
-//     canClaimBonus: true,
-//     hasClaimedBonus: false,
-//     canClaimOccasionBonus: false,
-//     hasClaimedOccasionBonus: true
-//   }
-// ]);
-
 const store = userStore();
 const props = defineProps(["promoCode"]);
 const { promoCode } = toRefs(props);
-// const list = ref([]);
 const totalValidBet = ref();
-
 const tableData = ref();
-// const tableData = ref([
-//   {
-//     id: 2,
-//     siteId: 7,
-//     memberId: "1869212810776846338",
-//     loginName: "testlh098",
-//     quizId: 1083,
-//     quizTitle: "K27 vs NGX",
-//     answerOne: "无",
-//     selectedOccasion: "梅开二度",
-//     status: "赢",
-//     createTime: "2025-06-17 16:04:54",
-//     bonus: 88.0
-//   },
-//   {
-//     id: 107449,
-//     siteId: 7,
-//     memberId: "1869212810776846338",
-//     loginName: "testlh098",
-//     quizId: 1083,
-//     quizTitle: "K27 vs NGX",
-//     answerOne: "NGX",
-//     selectedOccasion: "独赢",
-//     status: "赢",
-//     createTime: "2025-06-17 16:04:02",
-//     bonus: 8.0
-//   },
-//   {
-//     id: 1,
-//     siteId: 7,
-//     memberId: "1869212810776846338",
-//     loginName: "testlh098",
-//     quizId: 1081,
-//     quizTitle: "test",
-//     answerOne: "无",
-//     selectedOccasion: "出现红牌",
-//     status: "已取消",
-//     createTime: "2025-06-17 14:39:57",
-//     bonus: 28.0
-//   },
-//   {
-//     id: 107447,
-//     siteId: 7,
-//     memberId: "1869212810776846338",
-//     loginName: "testlh098",
-//     quizId: 1081,
-//     quizTitle: "test",
-//     answerOne: "test1",
-//     selectedOccasion: "独赢",
-//     status: "已取消",
-//     createTime: "2025-06-17 14:22:14",
-//     bonus: 8.0
-//   }
-// ]);
 const fetchTableData = async () => {
   try {
     const res = await getFifaQuiz2025PromoRecord(promoCode.value);
@@ -510,10 +308,6 @@ const fetchData = async () => {
     const res = await getFifaQuiz2025PromoInit(promoCode.value);
     totalValidBet.value = res.data.totalValidBet;
     list.value = res.data.gameQuizList;
-
-    // if (res.data.memberAnswerOne) {
-    //   selectedTeam.value = res.data.memberAnswerOne;
-    // }
   } catch (error) {
     console.log(error);
   } finally {
@@ -648,7 +442,6 @@ const handleClaimOccasionFifaQuiz2025 = (quizId) => {
     });
 };
 
-// const model = defineModel({ type: Number });
 const model = ref(0);
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
@@ -676,20 +469,6 @@ const handleLivestreamClick = (index) => {
 const handleSwiper = (_swiperInstance) => {
   swiperInstance.value = _swiperInstance;
 };
-
-// const getDisplayDateTime = (date) => {
-//   const now = moment();
-//   const eventDate = moment(date);
-//   const diffInDays = eventDate.diff(now, "days");
-
-//   if (diffInDays === 0) {
-//     return eventDate.format("今日 HH:mm");
-//   } else if (diffInDays === 1) {
-//     return eventDate.format("明日 HH:mm");
-//   } else {
-//     return eventDate.format("MM/DD");
-//   }
-// };
 
 const getDisplayDateTime = (timestamp) => {
   const now = moment().startOf("day");
