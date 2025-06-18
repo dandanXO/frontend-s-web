@@ -32,9 +32,25 @@
             style="width: 180px"
           />
 
-          <DatePicker id="datepicker-24h" v-model="request.eventStartTime[0]" showTime :showSeconds="true"  hourFormat="24" fluid />
-          <DatePicker id="datepicker-24h" v-model="request.eventStartTime[1]" showTime :showSeconds="true"  hourFormat="24" fluid />
-
+          <DatePicker
+            id="eventTimeStart"
+            v-model="uiControl.eventTimeStart"
+            showTime
+            :showSeconds="true"
+            hourFormat="24"
+            dateFormat="yy-mm-dd"
+            fluid
+          />
+          <DatePicker
+            id="eventTimeEnd"
+            v-model="uiControl.eventTimeEnd"
+            showTime
+            :showSeconds="true"
+            hourFormat="24"
+            dateFormat="yy-mm-dd"
+            fluid
+            placeholder="請選擇結束時間" />
+          
           <Button
             :label="t('fields.search')"
             :size="'small'"
@@ -236,7 +252,7 @@ import { useI18n } from "vue-i18n";
 import { liveSportTyps } from '@/utils/live.js';
 import { DashboardService } from '@/service/DashboardService.js'
 import dayjs from 'dayjs'
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, watch } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import Button from 'primevue/button';
@@ -252,14 +268,23 @@ const { t } = useI18n();
 const confirm = useConfirm();
 const toast = useToast();
 
+const getStartOfDayDate = (date) => {
+  return dayjs(date).startOf('day').toDate();
+};
+const getEndOfDayDate = (date) => {
+  return dayjs(date).endOf('day').toDate();
+};
+const formatToStartOfDayString = (date) => {
+  return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
+};
 const uiControl = reactive({
   //dialogVisible: false,
   //dialogTitle: '',
   //dialogType: 'CREATE',
   //removeBtn: true,
   //dialogLoading: false,
-  eventTimeStart: '',
-  eventTimeEnd: '',
+  eventTimeStart:  getStartOfDayDate(new Date()),
+  eventTimeEnd: getEndOfDayDate(new Date()),
   sport: liveSportTyps,
   liveStatus: [
     {
@@ -285,25 +310,13 @@ const uiControl = reactive({
   ],
 })
 
-function convertStartDate(date) {
-  return dayjs(date)
-  .startOf('day')
-  .format('YYYY-MM-DD HH:mm:ss');
-}
-
-function convertDate(date) {
-  return dayjs(date)
-  .endOf('day')
-  .format('YYYY-MM-DD HH:mm:ss')
-}
-
 const request = reactive({
   size: 30,
   current: 1,
   sportId: null,
   liveStatus: null,
   title: null,
-  eventStartTime: [convertStartDate(new Date()), convertDate(new Date())],
+  eventStartTime: [],
 });
 
 const page = reactive({
@@ -432,6 +445,15 @@ function changePage(event) {
   request.size = event.rows;
   loadList();
 }
+
+watch(() => uiControl.eventTimeStart, (newValue) => {
+  request.eventStartTime[0] = formatToStartOfDayString(newValue);
+}, { immediate: true });
+
+watch(() => uiControl.eventTimeEnd, (newValue) => {
+  request.eventStartTime[1] = formatToStartOfDayString(newValue);
+}, { immediate: true });
+
 
 onMounted(loadList);
 </script>
