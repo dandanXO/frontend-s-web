@@ -398,7 +398,7 @@ import { uploadImage } from '@/service/image'
 import { useStorage } from '@vueuse/core'
 import { useConfirm } from 'primevue/useconfirm'
 const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/promo/'
-const { getSportLiveStreamer, updateSportLiveStreamer, deleteSportLiveStreamer,createSiteImage } = DashboardService
+const { getSportLiveStreamer, updateSportLiveStreamer, deleteSportLiveStreamer,createSiteImage,createSportLiveStreamer } = DashboardService
 const { t } = useI18n()
 const toast = useToast()
 const confirm = useConfirm()
@@ -571,13 +571,157 @@ const validateField = (fieldName) => {
   return true
 }
 
+// 完整的 create() 函數實現
+async function create() {
+  try {
+    isSubmitting.value = true
+    
+    // 基本驗證
+    if (!form.name || !form.loginName || !form.password) {
+      toast.add({
+        severity: 'error',
+        summary: t('message.validateParamRequired'),
+        life: 3000,
+      })
+      return
+    }
+
+    // 密碼長度驗證
+    if (form.password.length < 6 || form.password.length > 12) {
+      toast.add({
+        severity: 'error',
+        summary: t('message.validatePasswordSize'),
+        life: 3000,
+      })
+      return
+    }
+
+    // 處理頭像路徑
+    if (form.avatar && form.avatar.startsWith("http")) {
+      form.avatar = form.avatar.split('/').pop()
+    }
+
+    // 準備提交的數據
+    const submitData = {
+      name: form.name,
+      loginName: form.loginName,
+      password: form.password,
+      avatar: form.avatar,
+      liveStatus: 0 // 默認狀態為未開始
+    }
+
+    console.log('Creating streamer with data:', submitData)
+    
+    // 調用API創建主播
+    const response = await createSportLiveStreamer(submitData);
+     
+
+    // 檢查響應
+    if (response && (response.code === 0 || response.success)) {
+      // 成功處理
+      uiControl.dialogVisible = false
+      await loadStreamer()
+      
+      toast.add({
+        severity: 'success',
+        summary: t('message.addSuccess'),
+        life: 3000,
+      })
+      
+      // 重置表單
+      Object.assign(form, {
+        id: null,
+        name: null,
+        loginName: null,
+        password: null,
+        avatar: null,
+      })
+    } else {
+      throw new Error(response?.message || 'Create failed')
+    }
+
+  } catch (error) {
+    console.error('Error creating streamer:', error)
+    toast.add({
+      severity: 'error',
+      summary: t('message.addError') || 'Failed to create streamer',
+      detail: error.message,
+      life: 3000,
+    })
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+// 同時也完善 edit() 函數
+async function edit() {
+  try {
+    isSubmitting.value = true
+    
+    // 基本驗證
+    if (!form.name || !form.loginName) {
+      toast.add({
+        severity: 'error',
+        summary: t('message.validateParamRequired'),
+        life: 3000,
+      })
+      return
+    }
+
+    // 處理頭像路徑
+    if (form.avatar && form.avatar.startsWith("http")) {
+      form.avatar = form.avatar.split('/').pop()
+    }
+
+    // 準備提交的數據
+    const submitData = {
+      id: form.id,
+      name: form.name,
+      loginName: form.loginName,
+      avatar: form.avatar,
+    }
+
+    console.log('Updating streamer with data:', submitData)
+    
+    // 調用API更新主播
+    const response = await updateSportLiveStreamer(submitData)
+    console.log(response);
+    
+
+    // 檢查響應
+    if (response && (response.code === 0 || response.success)) {
+      // 成功處理
+      uiControl.dialogVisible = false
+      await loadStreamer()
+      
+      toast.add({
+        severity: 'success',
+        summary: t('message.updateSuccess'),
+        life: 3000,
+      })
+    } else {
+      throw new Error(response?.message || 'Update failed')
+    }
+
+  } catch (error) {
+    console.error('Error updating streamer:', error)
+    toast.add({
+      severity: 'error',
+      summary: t('message.updateError') || 'Failed to update streamer',
+      detail: error.message,
+      life: 3000,
+    })
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+// 同時需要修改 submit() 函數來正確調用這些方法
 function submit() {
   if (uiControl.dialogType === 'CREATE') {
-    alert('do some in crate')
-    // create();
+    create()
   } else if (uiControl.dialogType === 'EDIT') {
-    alert('do some edit')
-    // edit();
+    edit()
   }
 }
 

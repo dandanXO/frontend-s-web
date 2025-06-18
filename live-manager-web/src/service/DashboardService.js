@@ -470,7 +470,7 @@ export const DashboardService = {
       .then((response) => {
         if (response.code === 0) {
           // 檢查後端回傳的業務狀態碼
-          return response.data // 返回實際資料，或者可以返回 true 表示成功
+          return response // 返回實際資料，或者可以返回 true 表示成功
         }
         console.error('更新聊天室 VIP 狀態失敗:', response.message || '未知錯誤')
         return null // 失敗時返回 null
@@ -489,6 +489,27 @@ export const DashboardService = {
         token: `${token}`,
       },
     })
+  },
+
+  createSportLiveStreamer(data) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/live-sport/streamer', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }) .then((response) => {
+        if (response.code === 0) {
+          // 檢查後端回傳的業務狀態碼
+          return response // 返回實際資料，或者可以返回 true 表示成功
+        }
+        console.error('更新聊天室 VIP 狀態失敗:', response.message || '未知錯誤')
+        return null // 失敗時返回 null
+      })
+      .catch((error) => {
+        console.error('更新聊天室 VIP 狀態請求失敗:', error) // 捕捉網路或請求錯誤
+        return null // 失敗時返回 null
+      })
   },
 
   getSensitiveWordNew(request) {
