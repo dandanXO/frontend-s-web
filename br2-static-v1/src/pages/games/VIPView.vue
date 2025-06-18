@@ -69,7 +69,6 @@
       </template>
     </Carousel>
     <div v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
-      <hr class="separator-line" style="margin-bottom: 20px" />
       <div class="vip-rewards">
         <div class="vip-reward-item">
           <div class="reward-desc">
@@ -761,7 +760,7 @@ const swipeRight = () => {
 </script>
 <style lang="scss" scoped>
 .separator-line {
-  border: 1px solid #0d333d;
+  border: 1px solid #4b4943;
   padding: 0 10px;
 }
 
@@ -769,6 +768,7 @@ const swipeRight = () => {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-top: 20px;
 
   .vip-reward-item {
     width: 107px;
@@ -819,6 +819,7 @@ const swipeRight = () => {
         border-radius: 4px;
         font-family: sans-serif;
         font-size: 12px;
+        margin-top: 10px;
 
         .reward-amt {
           line-height: 12px;
