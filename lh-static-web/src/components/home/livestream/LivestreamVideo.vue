@@ -28,6 +28,7 @@
         <div class="livestream-video-controller-group">
           <button
             class="livestream-video-controller-pause-btn btn"
+            :class="{ disabled: isVideoStuck }"
             :title="playerConfig.isPause ? '播放' : '暂停'"
             @click="handlePauseChange(!playerConfig.isPause)"
           >
@@ -166,6 +167,8 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, ref, toRefs, watch } from "vue";
 import { VideoPlayer } from "@/utils/videoPlayer";
+import { useDebounceFn } from "@vueuse/core";
+import { uiStore } from "@/store/ui";
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
@@ -181,6 +184,7 @@ const DEFAULT_HLS_CONFIG = {
 
 const PLAYER_CONFIG_KEY = "lh-livestream-player-config";
 const MAXIMUM_VIDEO_RELOAD_TIMEOUT = 30 * 1000; // 30 seconds
+const ERROR_HANDLER_DEBOUNCE_TIME = 5 * 1000; // 5 seconds
 
 const DEFAULT_DANMU_CONFIG = {
   area: {
@@ -214,6 +218,8 @@ const QUALITY_ALIAS = {
 
 const props = defineProps(["danmuList", "channels", "livestreamData", "isLivestreaming"]);
 const { danmuList, channels, livestreamData, isLivestreaming } = toRefs(props);
+
+const ui = uiStore();
 
 const danmuJs = ref(null);
 
@@ -307,7 +313,7 @@ const initPlayer = async (play = false) => {
   try {
     await player.value.init();
     isPlayerSupported.value = player.value.supportPlayer !== "NONE";
-    player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerError);
+    player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerErrorDebounce);
     player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
     // emitting when hls.isSupported() is false
     player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
@@ -464,6 +470,8 @@ const handlePlayerError = (data) => {
   }
 };
 
+const handlePlayerErrorDebounce = useDebounceFn(handlePlayerError, ERROR_HANDLER_DEBOUNCE_TIME);
+
 const handleNativeStreamBuffering = () => {
   isVideoLoading.value = true;
 };
@@ -504,13 +512,9 @@ const getQualities = () => {
 };
 
 const handleUnmuteClick = () => {
-  if (!videoRef.value) return;
+  if (!videoRef.value || ui.isGameModalOpened) return;
   videoRef.value.muted = false;
   showUnmuteMask.value = false;
-};
-
-const pause = () => {
-  handlePauseChange(true);
 };
 
 const loadData = () => {
@@ -550,6 +554,16 @@ watch(
   { immediate: true }
 );
 
+watch(() => ui.isGameModalOpened, (val) => {
+  if(!videoRef.value) return;
+  if(val) {
+    videoRef.value.muted = true;
+  } else {
+    if(showUnmuteMask.value) return
+    videoRef.value.muted = false;
+  }
+})
+
 onMounted(() => {
   // loadData();
   canvasRef.value.width = videoRef.value.clientWidth;
@@ -559,12 +573,9 @@ onMounted(() => {
 
 onUnmounted(() => {
   player.value && player.value.destroy();
+  player.value = null;
   danmu.value && danmu.value.stop();
   document.removeEventListener("click", handleUnmuteClick);
-});
-
-defineExpose({
-  pause
 });
 </script>
 <style lang="scss" scoped>
@@ -603,6 +614,7 @@ defineExpose({
     transform: translateY(100%);
     opacity: 0;
     transition: transform 0.5s ease, opacity 0.5s;
+    z-index: 1;
 
     &.show {
       transform: translateY(0);
@@ -642,6 +654,11 @@ defineExpose({
   .btn {
     background-color: transparent;
     -webkit-user-drag: none;
+    &.disabled {
+      pointer-events: none;
+      filter: grayscale(0.5);
+      opacity: 0.5;
+    }
   }
 
   .livestream-video {

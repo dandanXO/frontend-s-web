@@ -104,6 +104,8 @@
   <div class="first-screen-loading" v-show="ui.firstScreenLoading">
     <img src="../assets/akb188-logo.png" alt="" />
   </div>
+
+  <LoginModal />
 </template>
 
 <script>
@@ -120,8 +122,14 @@ import { useI18n } from "vue-i18n";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
 
+import LoginModal from "src/components/modal/login/LoginModal.vue";
+
 export default defineComponent({
   name: "MainLayout",
+
+  components: {
+    LoginModal
+  },
 
   setup() {
     const { t } = useI18n();

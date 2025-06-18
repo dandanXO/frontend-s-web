@@ -2647,6 +2647,9 @@ export default {
     isPopularEvent: '是否为热门赛事',
     loginType: '登陆方法',
     otp: 'OTP',
+    scheduledAnnouncement: '预约公告',
+    subscribeCount: '当前订阅人数',
+    eventCode: '赛事代码'
   },
   message: {
     adsStatusOpen: '开',
@@ -3479,6 +3482,7 @@ export default {
     'Sport Live Chat Vip Status': '聊天室VIP发言设定',
     'Sport Live History Block': '聊天室记录禁言设定',
     'Sport Live Monitor': '体育直播监控',
+    'Sport Live Admin': '主播后台管理员设定',
     'Member Refer Stat Analysis': '邀请返佣分析',
     'Member Refer Relation': '邀请关系查询'
   },

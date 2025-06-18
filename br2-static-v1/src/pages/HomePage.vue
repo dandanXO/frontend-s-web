@@ -18,6 +18,7 @@
       data-aos="fade-in"
       data-aos-duration="1200"
       data-aos-once="true"
+      style="padding:15px;"
     >
       <q-carousel-slide
         v-for="(banner, i) in banners"
@@ -26,6 +27,7 @@
         class="column no-wrap flex-center"
         :img-src="returnBannerUrl(banner)"
         @click="gotoPromo(banner)"
+        style="background-color:#151D23;border-radius:16px;"
       ></q-carousel-slide>
 
       <template v-slot:navigation-icon="{ active, onClick }">
@@ -105,7 +107,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img style="width: 24px; height: 24px" class="filter-green" src="../assets/images/index/volume-up-line.svg" />
+          <img style="width: 24px; height: 24px" src="../assets/images/index/volume-up-line.svg" />
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="2" :duration="10">
@@ -123,6 +125,21 @@
       </div>
     </div>
 
+    <div class="jackpot-banner">
+      <div class="jackpot-digit-grp">
+        <span class="jackpot-digit">2</span>
+        <span class="jackpot-digit">5</span>
+        <span class="jackpot-symbol">,</span>
+        <span class="jackpot-digit">9</span>
+        <span class="jackpot-digit">0</span>
+        <span class="jackpot-digit">9</span>
+        <span class="jackpot-symbol">,</span>
+        <span class="jackpot-digit">8</span>
+        <span class="jackpot-digit">7</span>
+        <span class="jackpot-digit">0</span>
+      </div>
+    </div>
+
     <!-- <div class="top-action" v-if="store.hasToken()">
       <q-btn class="action-btn action-btn--withdrawal" @click="onWithdrawalClick()" no-caps label="Withdrawal"></q-btn>
       <q-btn class="action-btn action-btn--deposit" @click="openDepositDialog()" no-caps label="Deposit" />
@@ -133,13 +150,11 @@
     </div> -->
 
     <swiper
-      :slidesPerView="4.5"
+      :slidesPerView="4"
+      :slidesPerGroup="4"
       :spaceBetween="10"
-      :scrollbar="{
-        hide: true
-      }"
-      :modules="modules"
-      class="cat-selection-wrapper"
+      :modules="[Navigation, Grid]"
+      class="hometop-categories"
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
@@ -161,19 +176,23 @@
         "
       >
         <div class="games-selection-wrapper" id="hotgames">
-          <div class="title-game">
-            <div><img src="../assets/images/index/title-icon-hot.png" width="22" /></div>
+          <div class="title-game revamp">
+            <div><img src="../assets/images/index/hot-icon.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_hotgames") }}</span>
+            <div v-if="category.title === 'Lobby' && category.active" class="side">
+              <div :class="`custom-hot-prev`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+              <div :class="`custom-hot-next`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+            </div>
           </div>
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
+              :slidesPerGroup="3"
               :spaceBetween="10"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
-              class="platform-game-container"
+              :modules="[Navigation, Grid]"
+              :grid="{ rows: 2, fill: 'row' }"
+              :navigation="{ nextEl: '.custom-hot-next', prevEl: '.custom-hot-prev' }"
+              class="platform-game-container revamp two-row"
             >
               <!-- Add Evolution in Hot Game -->
               <template v-for="(item, index) in hotGameList" :key="index">
@@ -242,7 +261,7 @@
           </div>
 
           <div class="platform-game-wrapper" v-else>
-            <div class="platform-game-container grid-view-col-4">
+            <div class="platform-game-container grid-view-col-4 revamp">
               <template v-for="(item, index) in hotGameList" :key="index">
                 <template v-if="item.type && item.type === 'game'">
                   <div
@@ -309,19 +328,22 @@
         v-if="(category.title === 'Slot' && category.active) || (category.title === 'Lobby' && category.active)"
       >
         <div class="games-selection-wrapper" id="slotsgames">
-          <div class="title-game">
+          <div class="title-game revamp">
             <div><img src="../assets/images/index/title-icon-slot.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_slotsgame") }}</span>
+            <div v-if="category.title === 'Lobby' && category.active" class="side">
+              <div :class="`custom-slot-prev`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+              <div :class="`custom-slot-next`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+            </div>
           </div>
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
-              class="platform-game-container"
+              :modules="[Navigation, Grid]"
+              :grid="{ rows: 1, fill: 'row' }"
+              :navigation="{ nextEl: '.custom-slot-next', prevEl: '.custom-slot-prev' }"
+              class="platform-game-container revamp"
             >
               <template v-for="(item, index) in slot" :key="index">
                 <swiper-slide
@@ -379,7 +401,7 @@
                 hide: true
               }"
               :modules="gameModules"
-              class="platform-game-container grid-view"
+              class="platform-game-container grid-view revamp"
             >
               <template v-for="(item, index) in slot" :key="index">
                 <div
@@ -419,19 +441,21 @@
         v-if="(category.title === 'Casino' && category.active) || (category.title === 'Lobby' && category.active)"
       >
         <div class="games-selection-wrapper" id="live">
-          <div class="title-game">
+          <div class="title-game revamp">
             <div><img src="../assets/images/index/title-icon-live.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_livecasino") }}</span>
+            <div v-if="category.title === 'Lobby' && category.active" class="side">
+              <div :class="`custom-live-prev`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+              <div :class="`custom-live-next`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+            </div>
           </div>
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
-              :slidesPerView="1.5"
-              :spaceBetween="0"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
-              class="platform-game-container live-casino"
+              :slidesPerView="2"
+              :spaceBetween="15"
+              :modules="[Navigation]"
+              :navigation="{ nextEl: '.custom-live-next', prevEl: '.custom-live-prev' }"
+              class="platform-game-container live-casino revamp"
             >
               <template v-for="(item, index) in livecasino" :key="index">
                 <swiper-slide
@@ -477,7 +501,7 @@
               </div>
             </template>
 
-            <div class="platform-game-container">
+            <div class="platform-game-container revamp">
               <template v-for="(item, index) in livecasino" :key="index">
                 <div
                   class="platform-game-item btn-effect"
@@ -520,19 +544,22 @@
         v-if="(category.title === 'Fishing' && category.active) || (category.title === 'Lobby' && category.active)"
       >
         <div class="games-selection-wrapper" id="fishing" v-if="category.title === 'Lobby' && category.active">
-          <div class="title-game">
+          <div class="title-game revamp">
             <div><img src="../assets/images/index/title-icon-fish.png" width="34" /></div>
             <span class="txt-style">{{ $t("home.cat_fishing") }}</span>
+             <div v-if="category.title === 'Lobby' && category.active" class="side">
+              <div :class="`custom-fish-prev`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+              <div :class="`custom-fish-next`"><img src="../assets/images/index/rgtarrow.svg" /></div>
+            </div>
           </div>
           <div class="platform-game-wrapper">
             <swiper
-              :slidesPerView="3.5"
+              :slidesPerView="4"
               :spaceBetween="10"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
-              class="platform-game-container"
+              :modules="[Navigation, Grid]"
+              :grid="{ rows: 1, fill: 'row' }"
+              :navigation="{ nextEl: '.custom-fish-next', prevEl: '.custom-fish-prev' }"
+              class="platform-game-container revamp"
             >
               <template v-for="(item, index) in fishGameTADAList" :key="index">
                 <swiper-slide
@@ -633,87 +660,93 @@
           </div>
         </div>
 
-        <div class="platform-game-container grid-view" v-else>
-          <template v-for="(item, index) in fishGameTADAList" :key="index">
-            <div
-              class="platform-game-item btn-effect"
-              @click="playGame(item.name, 'TaDa', item.code, item.status, item.gameType, item.id)"
-            >
-              <div class="platform-game-img">
-                <div
-                  class="game--bg"
-                  :style="{
-                    backgroundImage: (() => {
-                      try {
-                        return `url(${require(`../assets/images/games/fish/tada-${item.code.toLowerCase()}.png`)})`;
-                      } catch (e) {
+        <div class="games-selection-wrapper" v-else>
+          <div class="title-game revamp">
+            <div><img src="../assets/images/index/title-icon-fish.png" width="34" /></div>
+            <span class="txt-style">{{ $t("home.cat_fishing") }}</span>
+          </div>
+          <div class="platform-game-container grid-view revamp">
+            <template v-for="(item, index) in fishGameTADAList" :key="index">
+              <div
+                class="platform-game-item btn-effect"
+                @click="playGame(item.name, 'TaDa', item.code, item.status, item.gameType, item.id)"
+              >
+                <div class="platform-game-img">
+                  <div
+                    class="game--bg"
+                    :style="{
+                      backgroundImage: (() => {
                         try {
-                          return `url(${imgURLGame}${item.icon})`;
+                          return `url(${require(`../assets/images/games/fish/tada-${item.code.toLowerCase()}.png`)})`;
                         } catch (e) {
-                          return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          try {
+                            return `url(${imgURLGame}${item.icon})`;
+                          } catch (e) {
+                            return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          }
                         }
-                      }
-                    })()
-                  }"
-                ></div>
+                      })()
+                    }"
+                  ></div>
+                </div>
+                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
-              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-            </div>
-          </template>
+            </template>
 
-          <template v-for="(item, index) in fishGameJILIList" :key="index">
-            <div
-              class="platform-game-item btn-effect"
-              @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
-            >
-              <div class="platform-game-img">
-                <div
-                  class="game--bg"
-                  :style="{
-                    backgroundImage: (() => {
-                      try {
-                        return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
-                      } catch (e) {
+            <template v-for="(item, index) in fishGameJILIList" :key="index">
+              <div
+                class="platform-game-item btn-effect"
+                @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
+              >
+                <div class="platform-game-img">
+                  <div
+                    class="game--bg"
+                    :style="{
+                      backgroundImage: (() => {
                         try {
-                          return `url(${imgURLGame}${item.icon})`;
+                          return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
                         } catch (e) {
-                          return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          try {
+                            return `url(${imgURLGame}${item.icon})`;
+                          } catch (e) {
+                            return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          }
                         }
-                      }
-                    })()
-                  }"
-                ></div>
+                      })()
+                    }"
+                  ></div>
+                </div>
+                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
-              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-            </div>
-          </template>
+            </template>
 
-          <template v-for="(item, index) in fishGameJDBList" :key="index">
-            <div
-              class="platform-game-item btn-effect"
-              @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
-            >
-              <div class="platform-game-img">
-                <div
-                  class="game--bg"
-                  :style="{
-                    backgroundImage: (() => {
-                      try {
-                        return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
-                      } catch (e) {
+            <template v-for="(item, index) in fishGameJDBList" :key="index">
+              <div
+                class="platform-game-item btn-effect"
+                @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
+              >
+                <div class="platform-game-img">
+                  <div
+                    class="game--bg"
+                    :style="{
+                      backgroundImage: (() => {
                         try {
-                          return `url(${imgURLGame}${item.icon})`;
+                          return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
                         } catch (e) {
-                          return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          try {
+                            return `url(${imgURLGame}${item.icon})`;
+                          } catch (e) {
+                            return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                          }
                         }
-                      }
-                    })()
-                  }"
-                ></div>
+                      })()
+                    }"
+                  ></div>
+                </div>
+                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
-              <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-            </div>
-          </template>
+            </template>
+          </div>
         </div>
       </template>
 
@@ -721,11 +754,11 @@
         v-if="(category.title === 'Sport' && category.active) || (category.title === 'Lobby' && category.active)"
       >
         <div class="games-selection-wrapper" id="sport">
-          <div class="title-game">
+          <div class="title-game revamp">
             <div><img src="../assets/images/index/title-icon-sport.png" width="22" /></div>
             <span class="txt-style">{{ $t("home.cat_sport") }}</span>
           </div>
-          <div class="platform-game-container sport-platform">
+          <div class="platform-game-container sport-platform revamp">
             <template v-if="isPlatLoading">
               <div class="skeleton-grid">
                 <q-skeleton class="sport-skeleton" />
@@ -1071,10 +1104,10 @@ import "swiper/css/effect-coverflow";
 import { useLocalStorage } from "@vueuse/core";
 import { t } from "../boot/lang";
 // Import Swiper modules
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Grid } from "swiper/core";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
-const modules = ref([Scrollbar, Navigation, Pagination]);
+const modules = ref([Grid, Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const categoriesList = ref([]);
@@ -2866,7 +2899,7 @@ onMounted(() => {
   loadCustomerAddress();
   checkHbPromo();
   checkSpinLuckyWheelPromo();
-  SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+  SwiperCore.use([Grid, Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
     initOneSignal();
@@ -3050,9 +3083,9 @@ onBeforeUnmount(() => {
 
   .station-notice-wrapper {
     display: flex;
-    background: #0d3230;
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.11) 50.48%, rgba(255, 255, 255, 0) 100%);
     gap: 10px;
-    padding: 5px 10px;
+    padding: 2px 10px;
     justify-content: center;
     align-items: center;
 
@@ -3064,11 +3097,6 @@ onBeforeUnmount(() => {
       width: 28px;
     }
 
-    .filter-green {
-      filter: brightness(0) saturate(100%) invert(62%) sepia(48%) saturate(380%) hue-rotate(142deg) brightness(95%)
-        contrast(90%);
-    }
-
     .marquee-container {
       width: calc(100% - 28px);
     }
@@ -3076,8 +3104,7 @@ onBeforeUnmount(() => {
     span {
       margin-right: 10px;
       cursor: pointer;
-      color: #bacef1;
-      font-weight: light;
+      color: #fff;
     }
   }
 
@@ -3089,6 +3116,40 @@ onBeforeUnmount(() => {
     justify-content: center;
     cursor: pointer;
     flex: 1;
+  }
+}
+
+.jackpot-banner {
+  background: url('../assets/images/index/jackpot-banner.svg') center center no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 355/42;
+  position: relative;
+  margin: 10px 0;
+
+  .jackpot-digit-grp {
+    display: flex;
+    gap: 3px;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translate(0%, -50%);
+
+    .jackpot-digit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #FFC27A 32.14%, #FFEA9C 60.71%, #FFEEAF 89.29%);
+      width: 15px;
+      height: 20px;
+      color: #0a4d13;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 140%;
+      letter-spacing: -0.08%;
+      border-radius: 4px;
+    }
   }
 }
 
@@ -3694,6 +3755,42 @@ onBeforeUnmount(() => {
       width: 100%;
       border-radius: 40px;
     }
+
+    &.revamp {
+      margin: 0;
+      padding: 10px;
+      background: url('../assets/images/index/game-cat-section-header.png') center center no-repeat;
+      background-size: 100% 100%;
+      min-height: 40px;
+      width: 100%;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+
+      .txt-style {
+        background-image: none;
+      }
+
+      .side {
+        display: flex;
+        // gap: 10px;
+        :not(:last-child) {
+          margin-right: 10px;
+        }
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        .all-btn {
+          background: #373c3d;
+          padding: 8px;
+          border-radius: 6px;
+          font-weight: 700;
+          cursor: pointer;
+        }
+      }
+    }
   }
 }
 
@@ -3828,6 +3925,23 @@ onBeforeUnmount(() => {
   column-gap: 8px;
   row-gap: 16px;
   padding-bottom: 10px;
+
+  &.revamp {
+    background-color: #1F241F;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    padding: 10px;
+
+    &.two-row {
+      .swiper-wrapper {
+        flex-wrap: wrap;
+      }
+
+      .swiper-slide {
+        height: auto;
+      }
+    }
+  }
 
   &.live-casino {
     padding-top: 8px;
@@ -4029,6 +4143,11 @@ onBeforeUnmount(() => {
   .swiper-scrollbar-drag {
     background: rgba(255, 255, 255, 0.4);
   }
+
+  .swiper-slide {
+    width: 52px !important;
+    height: 51px !important;
+  }
 }
 
 .menu-category-btn {
@@ -4095,24 +4214,25 @@ onBeforeUnmount(() => {
 }
 
 .cat-selection-item {
-  background: #171f22;
-  // min-width: 80px;
+  background: url('../assets/images/index/cat-selection-bg.svg') center center no-repeat;
+  background-size: 100% 100%;
   width: 80px;
-  height: 50px;
+  height: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 12px;
   padding-top: 3px;
   transition: 0.3s all;
-  width: 100%;
+  min-width: 100%;
 
   &.active {
-    background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+    background: url('../assets/images/index/cat-selection-bg-active.svg') center center no-repeat;
+    background-size: 100% 100%;
 
     .cat-title {
-      color: #ffffff;
+      color: #10211F;
     }
   }
 
@@ -4132,9 +4252,12 @@ onBeforeUnmount(() => {
     font-size: 10px;
     font-weight: bold;
     color: #bfc3c9;
-    font-family: "Poppins", sans-serif;
     letter-spacing: 0.5px;
     white-space: nowrap;
+    font-family: 'Poppins';
+    font-weight: 500;
+    font-size: 12px;
+    text-align: center;
   }
 }
 
@@ -4210,6 +4333,95 @@ onBeforeUnmount(() => {
 
   .q-item__label {
     color: #fff;
+  }
+}
+
+.games-selection-wrapper {
+  .custom-hot-prev,
+  .custom-live-prev,
+  .custom-slot-prev,
+  .custom-poker-prev,
+  .custom-fish-prev {
+    transform: rotateZ(180deg);
+  }
+  .custom-hot-prev,
+  .custom-hot-next,
+  .custom-live-prev,
+  .custom-live-next,
+  .custom-slot-prev,
+  .custom-slot-next,
+  .custom-poker-prev,
+  .custom-poker-next,
+  .custom-fish-prev,
+  .custom-fish-next {
+    background: #373c3d;
+    padding: 10px;
+    border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .custom-hot-prev.swiper-button-disabled,
+  .custom-hot-next.swiper-button-disabled,
+  .custom-live-prev.swiper-button-disabled,
+  .custom-live-next.swiper-button-disabled,
+  .custom-slot-prev.swiper-button-disabled,
+  .custom-slot-next.swiper-button-disabled,
+  .custom-poker-prev.swiper-button-disabled,
+  .custom-poker-next.swiper-button-disabled,
+  .custom-fish-prev.swiper-button-disabled,
+  .custom-fish-next.swiper-button-disabled,
+  .custom-hot-prev.swiper-button-lock,
+  .custom-hot-next.swiper-button-lock,
+  .custom-live-prev.swiper-button-lock,
+  .custom-live-next.swiper-button-lock,
+  .custom-slot-prev.swiper-button-lock,
+  .custom-slot-next.swiper-button-lock,
+  .custom-poker-prev.swiper-button-lock,
+  .custom-poker-next.swiper-button-lock,
+  .custom-fish-prev.swiper-button-lock,
+  .custom-fish-next.swiper-button-lock {
+    background: #ffffff0f;
+    cursor: not-allowed;
+  }
+  &#live {
+    margin-bottom: 10px;
+  }
+  .hot-games-pattern-top {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+    margin-top: 8px;
+  }
+
+  .hot-games-pattern-bottom {
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 50px;
+    background-position: center center;
+
+    &--filled {
+      height: 15px;
+      width: 15px;
+      margin: 20px auto 10px;
+      border-radius: 50%;
+      background-color: #fbe984;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+.hometop-categories {
+  margin-bottom: 15px;
+
+  .swiper-slide {
+    width: 80px !important;
   }
 }
 </style>

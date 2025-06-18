@@ -739,6 +739,31 @@
     "backToTop": "TOP"
   },
   "hotPromo": {
+    "fifaWorldCup2025": {
+      "claimNow": "CLAIM NOW",
+      "promotionPeriod": "Promotion runs from 00:00:00 on 15.06.2025 to 23:59:59 on 14.07.2025",
+      "applicableFor": "Applicable to",
+      "applicableForText": "Members from VIP 1",
+      "applicableProducts": "Products",
+      "applicableProductsText": "Sports",
+      "promotionDetails": "Promotion Details",
+      "promotionDetailsText": "During the promotion period, after completing the daily tasks, members can log in to this promotion page between 18:00 and 23:59:59 to claim a reward. The bonus will be awarded randomly from 18 VNDP to 3,888 VNDP.",
+
+      "dailyTask": "Daily Tasks",
+      "dailyTaskPt1": "Each day, a minimum of 1 deposit with a value of 200 VNDP is required",
+      "dailyTaskPt2": "A total of 3,000 VNDP in valid Sports bets must be placed on the same day",
+      "dailyTaskDescription": "After completing the two tasks above, members must visit the promotion page between 18:00 and 23:59:59 on the same day and click the gift box to claim the reward.",
+
+      "termsAndConditions": "Terms and Conditions",
+      "titlecondition": "Terms and Conditions:",
+      "condition1": "Reward opportunities are only valid for the same day.",
+      "condition2": "The bonus must be wagered 3 times on Sports before a withdrawal can be made.",
+      "condition3": "All Draw bets, Cancelled bets, Both-side bets, Europe Handicap bets with odds below 1.75, Asian Handicap bets below 0.75, Virtual Sports, Horse Racing, and Number Games are not eligible for this promotion.",
+      "condition4": "Accounts with the same IP or similar data information are not eligible for this promotion.",
+      "condition5": "TF88 reserves the right to modify, deny, or cancel this promotion at any time without prior notice.",
+      "condition6": "This promotion can be combined with other promotions at TF88.",
+      "condition7": "General promotion terms & conditions apply."
+    },
     "weeklyDepositBonus": {
       "claimNow": "CLAIM NOW",
       "depositRegularly": "Deposit Regularly",

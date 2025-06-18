@@ -21,7 +21,7 @@
         <div class="current-livestream__livestream-info__tag">
           {{ isSystemLivestream ? "官方直播间" : "主播" }}
         </div>
-        <div class="current-livestream__livestream-info__tag">
+        <div v-if="currentSportType" class="current-livestream__livestream-info__tag">
           {{ currentSportType }}
         </div>
       </div>

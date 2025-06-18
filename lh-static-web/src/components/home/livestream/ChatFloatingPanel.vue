@@ -7,7 +7,7 @@
       <div class="chat-floating-panel__tag streamer">
         {{ isSystemLivestream ? "官方直播间" : "主播" }}
       </div>
-      <div class="chat-floating-panel__tag sport-type">
+      <div v-if="currentSportType" class="chat-floating-panel__tag sport-type">
         {{ currentSportType }}
       </div>
     </div>

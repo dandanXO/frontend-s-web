@@ -1,12 +1,5 @@
-/* eslint-env node */
-
-/*
- * This file runs in a Node context (it's NOT transpiled by Babel), so use only
- * the ES6 features that are supported by your Node version. https://node.green/
- */
-
-// Configuration for your app
-// https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js
+const TerserPlugin = require("terser-webpack-plugin");
+const CompressionWebpackPlugin = require("compression-webpack-plugin");
 
 const ESLintPlugin = require("eslint-webpack-plugin");
 
@@ -14,7 +7,11 @@ const { configure } = require("quasar/wrappers");
 
 const SitemapPlugin = require("sitemap-webpack-plugin").default;
 
-const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const MomentLocalesPlugin = require("moment-locales-webpack-plugin");
+
+const isImageCompress = true;
+
+const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
 const { resolve } = require("path");
 
@@ -312,7 +309,13 @@ module.exports = configure(function (ctx) {
       // rtl: true, // https://quasar.dev/options/rtl-support
       // preloadChunks: true,
       // showProgress: false,
-      // gzip: true,
+      gzip: true,
+      minify: true,
+      uglifyOptions: {
+        compress: {
+          drop_console: true // Removes all console logs
+        }
+      },
       // analyze: true,
 
       // Options below are automatically set depending on the env, set them if you want to override
@@ -323,8 +326,33 @@ module.exports = configure(function (ctx) {
 
       chainWebpack(chain) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
+
+        if (process.env.NODE_ENV === "production" && isImageCompress) {
+          chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [
+            {
+              test: /\.(jpe?g|png|gif|svg)$/i,
+              pngquant: {
+                quality: "85"
+              }
+            }
+          ]);
+        }
       },
       extendWebpack(cfg) {
+        cfg.optimization.minimizer = [
+          new TerserPlugin({
+            terserOptions: {
+              ecma: 5,
+              compress: {
+                drop_console: true
+              },
+              output: {
+                comments: false
+              }
+            }
+          })
+        ];
+
         cfg.plugins.push(
           new SitemapPlugin({
             base: process.env.SERVER ? process.env.SERVER : "https://www.tkeochuan88.com",
@@ -334,11 +362,52 @@ module.exports = configure(function (ctx) {
             }
           })
         );
-        cfg.plugins.push(new MomentLocalesPlugin())
+        cfg.plugins.push(new MomentLocalesPlugin());
         cfg.resolve.alias = {
           ...cfg.resolve.alias,
           "@": resolve(__dirname, "./src")
         };
+
+        cfg.optimization = {
+          splitChunks: {
+            chunks: "all",
+            maxInitialRequests: Infinity,
+            minSize: 3000,
+            cacheGroups: {
+              vendor: {
+                test: /[\\/]node_modules[\\/]/,
+                name(module) {
+                  if (module.context) {
+                    const match = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+                    const packageName = match ? match[1] : null;
+                    return packageName ? `npm.${packageName.replace("@", "")}` : null;
+                  }
+                  return null;
+                }
+              },
+              images: {
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                name(module) {
+                  const relativePath = module.context.match(/[\\/]src[\\/](.+)[\\/]/);
+                  if (relativePath) {
+                    const nestedPath = relativePath[1].replace(/[\\/]/g, "-");
+                    return `img-${nestedPath}`;
+                  }
+                  return "img-ungrouped";
+                }
+              }
+            }
+          }
+        };
+
+        cfg.plugins.push(
+          new CompressionWebpackPlugin({
+            algorithm: "gzip",
+            test: /\.(js|css|html|svg)$/,
+            threshold: 10240,
+            minRatio: 0.8
+          })
+        );
       }
     },
 

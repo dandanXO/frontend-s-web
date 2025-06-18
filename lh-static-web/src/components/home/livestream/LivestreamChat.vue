@@ -42,24 +42,29 @@
           :placeholder="inputConfig.placeholder"
           :disabled="inputConfig.disabled"
           autocomplete="off"
+          type="textarea"
+          :autosize="{ minRows: 1, maxRows: 6 }"
+          @keydown.enter="handleEnterClick"
         />
-        <el-popover popper-class="livestream-chat-emoji-popper" trigger="click" placement="top">
-          <div ref="emojiPickerRef"></div>
-          <template #reference>
-            <button class="livestream-chat-input-emoji-btn" type="button" :disabled="inputConfig.disabled">
-              <img :src="require(`@/assets/home/livestream/icon-emoji${isDark ? '-dark' : ''}.png`)" />
-            </button>
-          </template>
-        </el-popover>
+        <div class="livestream-chat-prefix-wrapper">
+          <el-popover popper-class="livestream-chat-emoji-popper" trigger="click" placement="top">
+            <div ref="emojiPickerRef"></div>
+            <template #reference>
+              <button class="livestream-chat-input-emoji-btn" type="button" :disabled="inputConfig.disabled">
+                <img :src="require(`@/assets/home/livestream/icon-emoji${isDark ? '-dark' : ''}.png`)" />
+              </button>
+            </template>
+          </el-popover>
 
-        <button
-          class="livestream-chat-input-btn"
-          type="submit"
-          :disabled="!isMessageSendable"
-          @click="handleSendChatMessage"
-        >
-          发弹幕
-        </button>
+          <button
+            class="livestream-chat-input-btn"
+            type="submit"
+            :disabled="!isMessageSendable"
+            @click="handleSendChatMessage"
+          >
+            发送
+          </button>
+        </div>
       </el-form>
     </div>
   </div>
@@ -104,7 +109,7 @@ const inputConfig = computed(() => {
   let placeholder = "请输入聊天内容";
   if (!store.token || !vipStatus.value || !isLivestreamExisted.value) {
     disabled = true;
-    if (!vipStatus.value) placeholder = "VIP特权不足，无法发言";
+    if (!vipStatus.value) placeholder = "VIP3等级或以上即可发言";
     if (!store.token) placeholder = "请登录后发言";
     if (!isLivestreamExisted.value) placeholder = "直播尚未开始";
   }
@@ -115,8 +120,11 @@ const inputConfig = computed(() => {
 });
 
 const handleSendChatMessage = () => {
-  emit("sendChatMessage", messageToSend.value);
-  messageToSend.value = "";
+  const trimMessage = messageToSend.value.trim();
+  if (trimMessage) {
+    emit("sendChatMessage", messageToSend.value);
+    messageToSend.value = "";
+  }
 };
 
 const calculateMaxContentLength = () => {
@@ -131,6 +139,12 @@ const calculateMaxContentLength = () => {
 
 const handleEmojiSelect = (emoji) => {
   messageToSend.value += emoji.native;
+};
+
+const handleEnterClick = (e) => {
+  if (e.shiftKey) return;
+  e.preventDefault();
+  handleSendChatMessage();
 };
 
 watch(
@@ -229,6 +243,7 @@ onMounted(() => {
       .livestream-chat-item__message {
         color: #333333;
         vertical-align: super;
+        white-space: break-spaces;
       }
     }
   }
@@ -249,11 +264,23 @@ onMounted(() => {
         background: #f7f8fb;
         &.is-disabled {
           background-color: transparent;
-          :deep(.el-input__wrapper) {
+          :deep(.el-textarea__inner) {
             background-color: transparent;
           }
         }
+        :deep(.el-textarea__inner) {
+          resize: none;
+          box-shadow: none;
+          padding-right: 0;
+        }
       }
+
+      .livestream-chat-prefix-wrapper {
+        display: flex;
+        align-items: center;
+        align-self: flex-end;
+      }
+
       .livestream-chat-input-emoji-btn {
         display: flex;
         align-items: center;

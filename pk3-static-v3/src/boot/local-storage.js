@@ -1,6 +1,5 @@
 /* eslint-disable */
 import { LocalStorage as ls } from "quasar";
-import { isNull } from "lodash";
 
 const LocalStorage = {
   set(keyName, keyValue, ttl = 0) {
@@ -52,7 +51,7 @@ const LocalStorage = {
   has(keyName) {
     let data = this.get(keyName);
 
-    return !isNull(data);
+    return data !== null   ;
   },
   remove(keyName) {
     ls.remove(keyName);

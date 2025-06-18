@@ -136,6 +136,13 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.eventCode')" prop="eventCode">
+          <el-input
+            v-model="form.eventCode"
+            style="width: 300px"
+            maxlength="100"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.isTestEvent')" prop="isTest">
           <el-switch
             v-model="form.isTest"
@@ -190,6 +197,7 @@ import { ElMessage } from 'element-plus';
 import { useSessionStorage } from "@vueuse/core";
 import { uploadImage } from "@/api/image";
 import dayjs from "dayjs";
+import { liveSportTyps } from "@/utils/live"
 
 const TEAMS_PER_VIEW = 20
 
@@ -208,14 +216,7 @@ const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
 const promoDir2 = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value
 const store = useStore();
 const uiControl = reactive({
-  sport: [
-    { id: 1, name: 'FOOTBALL', display: '足球' },
-    { id: 2, name: 'BASKETBALL', display: '篮球' },
-    { name: 'LOL', display: 'LOL', id: 3 },
-    { name: 'CSGO', display: 'CSGO', id: 4 },
-    { name: 'DOTA2', display: 'DOTA2', id: 5 },
-    { name: 'KOG', display: '王者荣耀', id: 6 },
-  ],
+  sport: liveSportTyps,
   liveStatus: [
     { id: 0, display: t('status.uefaMatch.PENDING') },
     { id: 1, display: t('status.uefaMatch.ONGOING') },
@@ -236,7 +237,8 @@ const form = reactive({
   liveStatus: null,
   isTest: false,
   isPopular: false,
-  cover: ''
+  cover: '',
+  eventCode: ''
 });
 
 const formRules = reactive({
@@ -409,7 +411,8 @@ async function submit() {
       sort: form.sort,
       isTest: form.isTest,
       isPopular: form.isPopular,
-      cover: form.cover
+      cover: form.cover,
+      eventCode: form.eventCode
     };
 
     if (isInTeamList(form.homeId)) {

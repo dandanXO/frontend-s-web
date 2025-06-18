@@ -67,8 +67,9 @@
               <div
                 class="banner-container"
                 v-if="
-                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' ||
-                  selectedPromo.redirectUrl !== 'new-player-acc-deposit'
+                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
+                  selectedPromo.redirectUrl !== 'new-player-acc-deposit' &&
+                  selectedPromo.redirectUrl !== 'pk4-piggy-bank'
                 "
               >
                 <!-- <div
@@ -91,12 +92,20 @@
                 />
                 <!-- </div> -->
               </div>
+              <div class="banner-container" v-if="selectedPromo.redirectUrl === 'pk4-piggy-bank'">
+                <img
+                  class="promo-content"
+                  src="../assets/images/promotion/hotpromo/piggy-bank/header.png"
+                  style="width: 100%"
+                />
+              </div>
 
               <div
                 class="promo-content-inner"
                 v-if="
                   selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
-                  selectedPromo.redirectUrl !== 'spin-lucky-wheel'
+                  selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
+                  selectedPromo.redirectUrl !== 'pk4-piggy-bank'
                 "
                 :style="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border:0; padding: 0;' : ''"
               >
@@ -819,7 +828,7 @@ export default defineComponent({
 
   .vip-promo-tab-toggle {
     // background: url(../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
-    background: #3237384D;
+    background: #3237384d;
     background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
@@ -1224,7 +1233,7 @@ export default defineComponent({
                 border-right: 1px solid #ffffff1a;
               }
               tr:first-of-type td {
-                background: #3237384D;
+                background: #3237384d;
                 color: #ffffff80;
                 border: 0;
                 &:first-child {
@@ -1235,10 +1244,10 @@ export default defineComponent({
                 }
               }
               tr:nth-child(even) td {
-                background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+                background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
               }
               tr:nth-child(odd) td {
-                background: #3237384D;
+                background: #3237384d;
               }
               tr:not(:first-of-type) td:last-child {
                 color: #ffd400;
