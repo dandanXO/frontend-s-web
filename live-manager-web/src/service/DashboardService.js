@@ -563,6 +563,19 @@ export const DashboardService = {
     })
   },
   //sport-live-event
+  // 獲取隊伍列表
+  getSportLiveTeamById(sportId) {
+    const token = sessionStorage.getItem('token')
+    return api.get('/session/live-sport/team/list', {
+      params: {
+        sportId
+      },
+      headers: {
+        token: `${token}`,
+      },
+    })
+  },
+  //sport-live-event
   // 獲取運動賽事列表
   getSportLiveEvents(request) {
     const token = sessionStorage.getItem('token')
@@ -582,17 +595,16 @@ export const DashboardService = {
         token: `${token}`,
         'Content-Type': 'application/json',
       },
+    }).then((response) => {
+      if (response.code === 0) {
+        return response.data // 返回實際資料，或者可以返回 true 表示成功
+      }
+      console.log(response)
+      console.error('新增運動賽事失敗:', response.message || '未知錯誤')
+      reject(response.message)
     })
-  },
-
-  // 更新運動賽事
-  updateSportLiveEvent(data) {
-    const token = sessionStorage.getItem('token')
-    return api.put('/session/live-sport/event', data, {
-      headers: {
-        token: `${token}`,
-        'Content-Type': 'application/json',
-      },
+    .catch((error) => {
+      reject(false)
     })
   },
 

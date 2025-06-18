@@ -29,5 +29,5 @@ export const useUserStore = defineStore('user', () => {
     sessionStorage.setItem('theme', theme.value)
   }
 
-  return { isAuthLoading, theme, toggleDarkMode, loginName }
+  return { isAuthLoading, theme, toggleDarkMode, loginName, siteId }
 })

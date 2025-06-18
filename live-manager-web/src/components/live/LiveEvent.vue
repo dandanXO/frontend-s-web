@@ -246,8 +246,14 @@
             :forceSelection="false"
             :allow-create="true"
             @item-select="val => { form.homeId = val.value.id; form.homeName = val.value.nameZh; afterTeamSelectorChanged(); }"
-            @change="val => { if (typeof val.value === 'string') { form.homeId = null; form.homeName = val.value; } else if (val.value) { form.homeId = val.value.id; form.homeName = val.value.nameZh; } else { form.homeId = null; form.homeName = ''; } afterTeamSelectorChanged(); }"
-            @focus="loadEventWithSite(form.sportId, 'home')"
+            @change="
+              val => {
+                if (typeof val === 'string') form.homeName = val
+                else form.homeName = ''
+                afterTeamSelectorChanged()
+              }
+            "
+                        @focus="loadEventWithSite(form.sportId, 'home')"
             :class="{ 'p-invalid': validationErrors.homeId }"
           >
             <template #option="slotProps">
@@ -284,7 +290,14 @@
             :forceSelection="false"
             :allow-create="true"
             @item-select="val => { form.awayId = val.value.id; form.awayName = val.value.nameZh; afterTeamSelectorChanged(); }"
-            @change="val => { if (typeof val.value === 'string') { form.awayId = null; form.awayName = val.value; } else if (val.value) { form.awayId = val.value.id; form.awayName = val.value.nameZh; } else { form.awayId = null; form.awayName = ''; } afterTeamSelectorChanged(); }"
+            
+            @change="
+              val => {
+                if (typeof val === 'string') form.awayName = val
+                else form.awayName = ''
+                afterTeamSelectorChanged()
+              }
+            "
             @focus="loadEventWithSite(form.sportId, 'away')"
             :class="{ 'p-invalid': validationErrors.awayId }"
           >
@@ -392,7 +405,7 @@
           <div class="flex flex-column">
             <Image
               v-if="form.cover"
-              :src="`${promoDir2}/live/event/${store.state.user.siteId}/` + form.cover"
+              :src="`${promoDir2}/live/event/${store.siteId}/` + form.cover"
               alt="Cover Image"
               width="150"
               preview
@@ -429,11 +442,13 @@
 </template>
 
 <script setup>
+import { ref, reactive, onMounted, onUnmounted, watch, computed, nextTick } from 'vue';
 import { useI18n } from "vue-i18n";
 import { liveSportTyps } from '@/utils/live.js';
 import { DashboardService } from '@/service/DashboardService.js'
+import { SiteService } from '@/service/SiteService.js'
 import dayjs from 'dayjs'
-import { ref, reactive, onMounted, watch } from 'vue';
+import { useUserStore } from '@/stores/userStore.js'
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import Button from 'primevue/button';
@@ -444,7 +459,8 @@ import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
 import DatePicker from 'primevue/datepicker';
 
-
+const store = useUserStore()
+const TEAMS_PER_VIEW = 20
 const { t } = useI18n();
 const confirm = useConfirm();
 const toast = useToast();
@@ -500,6 +516,11 @@ const request = reactive({
   eventStartTime: [],
 });
 
+const timezone = ref(null)
+const teams = reactive({
+  list: [],
+})
+
 const page = reactive({
   total: 0,
   records: [],
@@ -537,6 +558,42 @@ const form = reactive({
   isPopular: false,
 });
 
+const loadedTeams = ref([])
+const searchedTeams = ref([])
+const teamSelectorStatus = ref(null)
+const teamSelectorBottomRef = ref(null)
+const teamSelectorScrollObserver = ref(null)
+
+
+const displayTeams = computed(() => {
+  const _searchedTeams = searchedTeams.value.map(team => ({
+    ...team,
+    _sid: `search-${team.id}`,
+  }))
+  const _loadedTeams = loadedTeams.value.map(team => ({
+    ...team,
+    _sid: `loaded-${team.id}`,
+  }))
+  const allTeams = _searchedTeams.concat(_loadedTeams)
+  const result = new Map()
+  allTeams.forEach(team => {
+    if (result.has(team.id)) return
+    result.set(team.id, team)
+  })
+  return Array.from(result.values())
+})
+
+
+function isInTeamList(value) {
+  return teams.list.some(t => t.id === value)
+}
+
+function restrictInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault()
+  }
+}
 const ui = reactive({
   dialogVisible: false,
   dialogTitle: '',
@@ -552,12 +609,33 @@ const uiForm = reactive({
 
 const validationErrors = reactive({
   title: null
-});
+})
+
+const handleTeamSelectorFocus = target => {
+  loadedTeams.value = teams.list.slice(0, TEAMS_PER_VIEW)
+  teamSelectorStatus.value = target
+  nextTick(() => {
+    if (!teamSelectorBottomRef.value) return
+    teamSelectorScrollObserver.value.observe(teamSelectorBottomRef.value)
+  })
+}
+async function loadEventWithSite(sportId, target) {
+  console.log(sportId)
+  if (sportId) {
+    console.log(sportId)
+    const { data: team } = await DashboardService.getSportLiveTeamById(sportId)
+    teams.list = team
+  } else {
+    const { data: team } = await DashboardService.getSportLiveTeamById(request.sportId)
+    teams.list = team
+  }
+  handleTeamSelectorFocus(target)
+}
+
 async function loadList() {
   page.loading = true;
   try {
     const res = await DashboardService.getSportLiveEvents({ ...request });
-    console.log(res)
     page.records = res.data.records || [];
     page.total = res.data.total || 0;
   } catch (error) {
@@ -577,32 +655,63 @@ function showDialog(type, row = null) {
   ui.dialogType = type;
   ui.dialogVisible = true;
   validationErrors.title = null;
-  if (type === 'EDIT' && row) {
-    ui.dialogTitle = t('fields.editEvent');
-    Object.assign(form, row);
-  } else {
-    ui.dialogTitle = t('fields.addCompetition');
-    Object.keys(form).forEach(key => form[key] = (typeof form[key] === 'boolean' ? false : null));
-  }
+  Object.assign(form, {
+    id: null,
+    sportId: null,
+    homeId: null,
+    homeNameZh: null,
+    awayId: null,
+    awayNameZh: null,
+    sort: null,
+    eventStartTime: null,
+    eventEndTime: null,
+    liveStatus: null,
+    title: null,
+    isTest: null,
+    isPopular: null,
+  })
 }
 
 async function submit() {
+  
   validationErrors.title = null;
   if (!form.title) {
     validationErrors.title = t('message.validateTeamNameRequired');
     return;
   }
+  if (!form.sportId) {
+    validationErrors.title = t('message.validateTeamNameRequired');
+    return;
+  }
+
+
+  if (!isInTeamList(form.homeId)) {
+    form.homeName = form.homeId
+    form.homeId = null
+  }
+  if (!isInTeamList(form.awayId)) {
+    form.awayName = form.awayId
+    form.awayId = null
+  }
+
+  form.icon = form.icon?.startsWith('http')
+    ? store.state.user.siteId + '/' + form.icon.split('/').pop()
+    : form.icon
+  if (form.cover) {
+    form.cover = form.cover.startsWith('/live/event/')
+      ? form.cover
+      : `/live/event/${store.state.user.siteId}/${form.cover}`
+  }
+  console.log(form)
+  
+  
   try {
-    if (ui.dialogType === 'EDIT') {
-      await DashboardService.updateSportLiveEvent(form);
-      toast.add({ severity: 'success', summary: 'Success', detail: t('message.updateSuccess'), life: 3000 });
-    } else {
-      await DashboardService.createSportLiveEvent(form);
-      toast.add({ severity: 'success', summary: 'Success', detail: t('message.addSuccess'), life: 3000 });
-    }
+    await DashboardService.createSportLiveEvent(form);
+    toast.add({ severity: 'success', summary: 'Success', detail: t('message.addSuccess'), life: 3000 });
     ui.dialogVisible = false;
     await loadList();
   } catch (error) {
+    console.log(error)
     toast.add({ severity: 'error', summary: 'Error', detail: t('message.operationFailed'), life: 3000 });
   }
 }
@@ -614,7 +723,7 @@ function formatTime(date) {
 function confirmDelete(id) {
   confirm.require({
     message: t('message.confirmDelete'),
-    header: t('fields.deleteConfirmation'),
+    header: t('fields.remove'),
     icon: 'pi pi-exclamation-triangle',
     accept: async () => {
       try {
@@ -651,7 +760,55 @@ watch(() => uiForm.eventEndTime, (newValue) => {
 }, { immediate: true });
 
 
-onMounted(loadList);
+const afterTeamSelectorChanged = () => {
+  nextTick(() => {
+    loadedTeams.value = []
+    teamSelectorStatus.value = null
+    teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value)
+  })
+}
+
+const searchTeams = query => {
+  if (!query) {
+    searchedTeams.value = []
+  } else {
+    searchedTeams.value = teams.list.filter(team => {
+      return (
+        team.nameZh?.toLowerCase().includes(query.toLowerCase()) ||
+        team.nameEn?.toLowerCase().includes(query.toLowerCase())
+      )
+    })
+  }
+}
+
+const registerTeamSelectorScrollObserver = () => {
+  teamSelectorScrollObserver.value = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        loadedTeams.value = teams.list.slice(
+          0,
+          loadedTeams.value.length + TEAMS_PER_VIEW
+        )
+      }
+    })
+  })
+}
+
+onMounted(async () => {
+  const { data: timeZone } = await SiteService.getSiteTimeZoneById(store.siteId) || "+08:00"
+  if (!timeZone) {
+    timezone.value = "+08:00"
+  }
+  timezone.value = timeZone
+
+  await loadList()
+  registerTeamSelectorScrollObserver()
+})
+onUnmounted(() => {
+  if (teamSelectorScrollObserver.value) {
+    teamSelectorScrollObserver.value.disconnect()
+  }
+})
 </script>
 
 <style scoped>
