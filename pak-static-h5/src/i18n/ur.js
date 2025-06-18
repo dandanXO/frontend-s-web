@@ -303,7 +303,8 @@ export default {
     goNow: "اب جائیں",
     playReal: "حقیقی کھیلیں",
     freeTrial: "مفت آزمائش",
-    check: "چیک کریں"
+    check: "چیک کریں",
+    payAgain: "دوبارہ ادائیگی کریں"
   },
   notify: {
     cancelPayment: "ادائیگی منسوخ کریں",
