@@ -36,8 +36,8 @@
             <div class="livestream-list-item__match-info__date">
               <span class="livestream-list-item__match-info__date__vs">VS</span>
               <!-- <div v-if="live.status === 'ENDED'" class="livestream-list-item__match-info__date__on-air">正在直播</div> -->
-              <div v-if="live.status !== 'ENDED'" class="livestream-list-item__match-info__date__on-air">正在直播</div>
-              <div v-else class="livestream-list-item__match-info__date__date">
+              <!-- <div v-if="live.status !== 'ENDED'" class="livestream-list-item__match-info__date__on-air">正在直播</div> -->
+              <div class="livestream-list-item__match-info__date__date">
                 {{ live.matchTime }}
               </div>
             </div>
