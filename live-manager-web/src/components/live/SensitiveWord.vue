@@ -157,7 +157,7 @@ const validationErrors = reactive({
 
 async function loadList() {
   page.loading = true;
-  request.siteId = 0; // Assuming siteId 0 for initial load
+  request.siteId = 7; // Assuming siteId 0 for initial load
   try {
     const res = await DashboardService.getSensitiveWordNew({ siteId: request.siteId, size: request.size, current: request.current + 1 }); // Adjust for 1-based API
     page.records = res.data.records;
@@ -222,7 +222,7 @@ function confirmDelete(id) {
     icon: 'pi pi-exclamation-triangle',
     accept: async () => {
       try {
-        await DashboardService.deleteSensitiveWordNew({ siteId: 1, id: id });
+        await DashboardService.deleteSensitiveWordNew({ siteId: 7, id: id });
         toast.add({ severity: 'success', summary: 'Success', detail: t('message.deleteSuccess'), life: 3000 });
         await loadList();
       } catch (error) {

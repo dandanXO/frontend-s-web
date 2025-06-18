@@ -483,9 +483,8 @@ export const DashboardService = {
 
   deleteSportLiveStreamer(request) {
     const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
-
-    return api.delete('/session/live-sport/streamer', {
-      params: request, // For GET requests, parameters are typically sent as `params`
+    return api.delete(`/session/live-sport/streamer/${request.teamId}`, {
+      // params: request, // For GET requests, parameters are typically sent as `params`
       headers: {
         token: `${token}`,
       },

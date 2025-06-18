@@ -103,7 +103,7 @@
     </DataTable>
 
     <!-- 編輯新增dialog -->
-    <Dialog v-model:visible="uiControl.dialogVisible" modal :style="{ width: '700px' }">
+    <Dialog v-model:visible="uiControl.dialogVisible" :header="t('fields.edit')"  modal :style="{ width: '700px' }">
       <div
         style="
           display: flex;
@@ -115,7 +115,7 @@
           margin-bottom: 16px;
         "
       >
-        <label for="name" class="font-semibold w-24">{{ t('fields.name') }}</label>
+        <label for="name" class="w-24 font-semibold">{{ t('fields.name') }}</label>
 
         <div style="width: 600px">
           <InputText
@@ -150,7 +150,7 @@
           margin-bottom: 16px;
         "
       >
-        <label for="loginName" class="font-semibold w-24">{{ t('fields.account') }}</label>
+        <label for="loginName" class="w-24 font-semibold">{{ t('fields.account') }}</label>
         <div style="width: 600px">
           <InputText
             id="loginName"
@@ -186,7 +186,7 @@
           margin-bottom: 16px;
         "
       >
-        <label for="password" class="font-semibold w-24">{{ t('fields.password') }}</label>
+        <label for="password" class="w-24 font-semibold">{{ t('fields.password') }}</label>
         <div style="width: 600px">
           <InputText
             id="password"
@@ -196,18 +196,8 @@
             type="password"
             style="width: 100%"
             v-model="form.password"
-            @blur="validateField('confirmPassword')"
             @input="clearFieldError('confirmPassword')"
           />
-          <Message
-            v-if="fieldErrors.confirmPassword"
-            severity="error"
-            size="small"
-            variant="simple"
-            class="mt-1"
-          >
-            {{ fieldErrors.confirmPassword }}
-          </Message>
         </div>
       </div>
 
@@ -222,7 +212,7 @@
           margin-bottom: 16px;
         "
       >
-        <label for="confirmPassword" class="font-semibold w-24">{{ t('fields.photo') }}</label>
+        <label for="confirmPassword" class="w-24 font-semibold">{{ t('fields.photo') }}</label>
         <div style="width: 600px">
           <Button
             type="button"
@@ -265,13 +255,13 @@
           type="button"
           :label="t('fields.cancel')"
           severity="secondary"
-          @click="closeDialog"
+          @click="closeEditDialog"
         />
         <Button
           type="button"
           :label="t('fields.confirm')"
           :loading="isSubmitting"
-          @click="submitChangePassword"
+          @click="submit"
         />
       </div>
     </Dialog>
@@ -294,7 +284,7 @@
           margin-bottom: 16px;
         "
       >
-        <label for="newPassword" class="font-semibold w-24">{{ t('fields.newPassword') }}</label>
+        <label for="newPassword" class="w-24 font-semibold">{{ t('fields.newPassword') }}</label>
 
         <div style="width: 350px">
           <InputText
@@ -330,7 +320,7 @@
           margin-bottom: 16px;
         "
       >
-        <label for="confirmPassword" class="font-semibold w-24">{{
+        <label for="confirmPassword" class="w-24 font-semibold">{{
           t('fields.confirmPassword')
         }}</label>
         <div style="width: 350px">
@@ -481,6 +471,9 @@ function showChangePasswordDialog(row) {
   changePasswordDialog.form.confirmPassword = ''
   changePasswordDialog.visible = true
 }
+function closeEditDialog() {
+  uiControl.dialogVisible = false
+}
 function closeDialog() {
   changePasswordDialog.visible = false
   changePasswordDialog.form.newPassword = ''
@@ -491,11 +484,11 @@ function closeDialog() {
 
 const changePasswordRules = {
   newPassword: [
-    required(t('message.validatePasswordRequired')),
+    required(t('message.validateParamRequired')),
     size(6, 12, t('message.validatePasswordSize')),
   ],
   confirmPassword: [
-    required(t('message.validatePasswordRequired')),
+    required(t('message.validateParamRequired')),
     size(6, 12, t('message.validatePasswordSize')),
     {
       validator: (rule, value, callback) => {
@@ -565,6 +558,16 @@ const validateField = (fieldName) => {
 
   fieldErrors[fieldName] = ''
   return true
+}
+
+function submit() {
+  if (uiControl.dialogType === 'CREATE') {
+    alert('do some in crate')
+    // create();
+  } else if (uiControl.dialogType === 'EDIT') {
+    alert('do some edit')
+    // edit();
+  }
 }
 
 async function submitChangePassword() {
@@ -693,7 +696,7 @@ async function submitImageUpload() {
   imageForm.name = generateRandomString(8)
   imageForm.path = form.avatar
   imageForm.category = 'PROMO'
-  imageForm.siteId = store.state.user.siteId
+  imageForm.siteId = 7
 
   try {
     const response = await createSiteImage(imageForm)
@@ -760,7 +763,7 @@ function autoSelectImage() {
   if (!form.avatar) {
     return
   }
-  form.avatar = store.state.user.siteId + '/' + form.avatar
+  form.avatar = '7' + '/' + form.avatar
 }
 </script>
 
