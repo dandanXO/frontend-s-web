@@ -134,7 +134,7 @@ const swipeRight = () => {
     :deep(.q-tabs__content) {
       background: #101115;
       // border-radius: 12px;
-      padding: 4px;
+      padding: 14px 4px;
       gap: 6px;
     }
 
@@ -173,7 +173,7 @@ const swipeRight = () => {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    padding-top: 30px;
+    // padding-top: 30px;
   }
 
   svg {
