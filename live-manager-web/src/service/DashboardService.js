@@ -542,4 +542,48 @@ export const DashboardService = {
       },
     })
   },
+  //sport-live-event
+  // 獲取運動賽事列表
+  getSportLiveEvents(request) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/live-sport/event', request, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+  },
+
+  // 新增運動賽事
+  createSportLiveEvent(data) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/live-sport/event/save', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+  },
+
+  // 更新運動賽事
+  updateSportLiveEvent(data) {
+    const token = sessionStorage.getItem('token')
+    return api.put('/session/live-sport/event', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+  },
+
+  // 刪除運動賽事
+  deleteSportLiveEvent(id) {
+    const token = sessionStorage.getItem('token')
+    return api.delete(`/session/live-sport/event/${id}`, {
+      headers: {
+        token: `${token}`,
+      },
+    })
+  },
+
 }
