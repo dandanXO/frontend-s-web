@@ -173,7 +173,7 @@ const swipeRight = () => {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    // padding-top: 30px;
+    padding-top: 30px;
   }
 
   svg {
