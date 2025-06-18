@@ -168,6 +168,7 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, toRefs, watch } from "vue";
 import { VideoPlayer } from "@/utils/videoPlayer";
 import { useDebounceFn } from "@vueuse/core";
+import { uiStore } from "@/store/ui";
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
@@ -217,6 +218,8 @@ const QUALITY_ALIAS = {
 
 const props = defineProps(["danmuList", "channels", "livestreamData", "isLivestreaming"]);
 const { danmuList, channels, livestreamData, isLivestreaming } = toRefs(props);
+
+const ui = uiStore();
 
 const danmuJs = ref(null);
 
@@ -509,13 +512,9 @@ const getQualities = () => {
 };
 
 const handleUnmuteClick = () => {
-  if (!videoRef.value) return;
+  if (!videoRef.value || ui.isGameModalOpened) return;
   videoRef.value.muted = false;
   showUnmuteMask.value = false;
-};
-
-const pause = () => {
-  handlePauseChange(true);
 };
 
 const loadData = () => {
@@ -555,6 +554,16 @@ watch(
   { immediate: true }
 );
 
+watch(() => ui.isGameModalOpened, (val) => {
+  if(!videoRef.value) return;
+  if(val) {
+    videoRef.value.muted = true;
+  } else {
+    if(showUnmuteMask.value) return
+    videoRef.value.muted = false;
+  }
+})
+
 onMounted(() => {
   // loadData();
   canvasRef.value.width = videoRef.value.clientWidth;
@@ -567,10 +576,6 @@ onUnmounted(() => {
   player.value = null;
   danmu.value && danmu.value.stop();
   document.removeEventListener("click", handleUnmuteClick);
-});
-
-defineExpose({
-  pause
 });
 </script>
 <style lang="scss" scoped>
