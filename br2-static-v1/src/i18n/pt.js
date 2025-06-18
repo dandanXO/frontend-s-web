@@ -97,6 +97,8 @@ export default {
       "Por favor, forneça seu nome de usuário e número de telefone, enviaremos um OTP para seu número registrado.",
     register_agree_01: "Eu concordo com o ",
     register_agree_02: "Acordo de Privacidade de Uso",
+    alreadyHaveAnAcc: "¿Ya tienes una cuenta?",
+    login: "Entrar",
     email: "Email",
     email_placeholder: "Por favor, insira o email",
     email_rules_01: "Por favor, insira o email",

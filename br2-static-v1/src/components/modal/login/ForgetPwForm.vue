@@ -3,11 +3,11 @@
     <div class="login-panel">
       <div class="title-container">
         <img src="../../../assets/images/auth/back-icon.png" width="22px" @click="uiStore.loginView = 'login'" />
-        <h2 class="title">Forgot Password</h2>
+        <h2 class="title">{{ $t("header.forgotPassword") }}</h2>
       </div>
 
       <p class="subtitle">
-        Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
+        {{ $t("form.forgotPassword_desc") }}
       </p>
       <div class="send-otp-container">
         <div v-if="!isOtpSent">
@@ -26,6 +26,7 @@
             outlined
             class="input"
             :class="{ 'white-txt': !!phone }"
+            :placeholder="$t('form.phone_placeholder')"
           >
             <template v-slot:prepend>
               <span class="prepend-phone">{{ $t("form.prependNumber") }}</span>
@@ -40,7 +41,7 @@
             lazy-rules
             :rules="[(val) => (val && val.length > 3) || $t('form.verificationCode_rules_01')]"
             outlined
-            placeholder="Enter Verification Code"
+            :placeholder="$t('form.verificationCode_placeholder')"
             label-color="brand"
             class="input"
             :class="{ 'white-txt': !!captchaCode }"
@@ -56,7 +57,7 @@
             ref="otpRef"
             outlined
             v-model="otp"
-            placeholder="Enter OTP"
+            :placeholder="$t('form.otp_placeholder')"
             class="input"
             :class="{ 'white-txt': !!otp }"
             :rules="[(val) => (val && val.length > 0) || $t('form.otp_rules_01')]"
@@ -65,7 +66,7 @@
             ref="passwordRef"
             outlined
             v-model="password"
-            placeholder="Enter your Password"
+            :placeholder="$t('form.password_placeholder')"
             :type="!isShowPassword ? 'password' : 'text'"
             class="input"
             :class="{ 'white-txt': !!password }"
@@ -97,7 +98,7 @@
             ref="confirmPasswordRef"
             outlined
             v-model="confirmPassword"
-            placeholder="Enter your New Password"
+            :placeholder="$t('form.newPassword_placeholder')"
             :type="!isShowConfirmPassword ? 'password' : 'text'"
             class="input"
             :class="{ 'white-txt': !!confirmPassword }"
@@ -140,10 +141,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated, onBeforeUnmount } from "vue";
+import { onMounted, ref } from "vue";
 import { useUI } from "stores/ui";
 import { api } from "boot/axios";
-import { useQuasar, Platform } from "quasar";
+import { useQuasar } from "quasar";
 import { SessionStorage } from "quasar";
 import { t } from "src/boot/lang";
 

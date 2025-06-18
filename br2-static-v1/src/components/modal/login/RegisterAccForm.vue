@@ -1,17 +1,17 @@
 <template>
   <div class="login-container">
     <div class="login-panel">
-      <h2 class="title">Register</h2>
+      <h2 class="title">{{ $t("header.register") }}</h2>
       <div class="subtitle">
-        Already have an account?
-        <div class="link" @click="uiStore.loginView = 'login'">Log in</div>
+        {{ $t("form.alreadyHaveAnAcc") }}
+        <div class="link" @click="uiStore.loginView = 'login'">{{ $t("form.login") }}</div>
       </div>
 
       <q-input
         ref="phoneRef"
         outlined
         v-model="phone"
-        :placeholder="$t('form.phone')"
+        :placeholder="$t('form.phone_placeholder')"
         class="input"
         :class="{ 'white-txt': !!phone }"
         :rules="[
@@ -30,7 +30,7 @@
         ref="passwordRef"
         outlined
         v-model="password"
-        placeholder="Enter your Password"
+        :placeholder="$t('form.password_placeholder')"
         :type="!isShowPassword ? 'password' : 'text'"
         class="input"
         :class="{ 'white-txt': !!password }"
@@ -65,12 +65,12 @@
         </q-checkbox>
       </div>
 
-      <q-btn unelevated class="bg-greenbtn" label="Register" no-caps padding="12px" @click="register" />
+      <q-btn unelevated class="bg-greenbtn" :label="$t('header.register')" no-caps padding="12px" @click="register" />
     </div>
   </div>
 </template>
 <script setup>
-import { ref, onMounted, onActivated } from "vue";
+import { ref, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useQuasar, Platform } from "quasar";
