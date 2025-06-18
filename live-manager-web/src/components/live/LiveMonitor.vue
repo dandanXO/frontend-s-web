@@ -1,7 +1,7 @@
-<!--TODO-->
 <template>
   <div class="card">
     <DataTable
+      v-model:expandedRows="expandedRows"
       :value="streams"
       :paginator="true"
       :rows="10"
@@ -13,132 +13,135 @@
       responsiveLayout="scroll"
     >
       <template #header>
-    <div class="flex justify-between" style="display: flex; gap: 8px">
-      <div style="display: flex; gap: 8px">
-        <Button
-          :size="'small'"
-          type="button"
-          icon="pi pi-filter-slash"
-          label="清除"
-          outlined
-          @click="clearFilter()"
-        />
-      </div>
-      <div style="display: flex; gap: 8px; align-items: center">
-        <span>日期区间：</span>
-        <Calendar
-          v-model="filters.startDate"
-          placeholder="开始日期"
-          :showIcon="true"
-          dateFormat="yy-mm-dd"
-        />
-        <span></span>
-        <Calendar
-          v-model="filters.endDate"
-          placeholder="结束日期"
-          :showIcon="true"
-          dateFormat="yy-mm-dd"
-        />
-      </div>
-      <Button
-        :size="'small'"
-        type="button"
-        icon="pi pi-refresh"
-        label="重新载入"
-        severity="info"
-        @click="fetchStreams"
-        :loading="loading"
-      />
-    </div>
-
+        <div class="flex justify-between" style="display: flex; gap: 8px">
+          <div style="display: flex; gap: 8px">
+            <Button
+              :size="'small'"
+              type="button"
+              icon="pi pi-filter-slash"
+              label="清除"
+              outlined
+              @click="clearFilter()"
+            />
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center">
+            <span>日期区间：</span>
+            <Calendar
+              v-model="filters.startDate"
+              placeholder="开始日期"
+              :showIcon="true"
+              dateFormat="yy-mm-dd"
+            />
+            <span></span>
+            <Calendar
+              v-model="filters.endDate"
+              placeholder="结束日期"
+              :showIcon="true"
+              dateFormat="yy-mm-dd"
+            />
+          </div>
+          <Button
+            :size="'small'"
+            type="button"
+            icon="pi pi-refresh"
+            label="重新载入"
+            severity="info"
+            @click="fetchStreams"
+            :loading="loading"
+          />
+        </div>
       </template>
-        <Column field="title" header="标题" sortable>
-          <template #body="slotProps">
-            {{ slotProps.data.title }}
-          </template>
-        </Column>
 
-        <Column field="eventStartTime" header="赛事时间" sortable>
-          <template #body="slotProps">
-            {{ formatTime(slotProps.data.eventStartTime) }}
-          </template>
-        </Column>
+      <Column :expander="true" headerStyle="width: 3rem" />
 
-        <Column field="sportId" header="体育项目" sortable>
-          <template #body="slotProps">
-            {{ getSportDisplayName(slotProps.data.sportId) }}
-          </template>
-        </Column>
+      <Column field="title" header="标题" sortable>
+        <template #body="slotProps">
+          {{ slotProps.data.title }}
+        </template>
+      </Column>
 
-        <Column field="liveStatus" header="状态" sortable>
-          <template #body="slotProps">
-            {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
-          </template>
-        </Column>
+      <Column field="eventStartTime" header="赛事时间" sortable>
+        <template #body="slotProps">
+          {{ formatTime(slotProps.data.eventStartTime) }}
+        </template>
+      </Column>
 
+      <Column field="sportId" header="体育项目" sortable>
+        <template #body="slotProps">
+          {{ getSportDisplayName(slotProps.data.sportId) }}
+        </template>
+      </Column>
 
-      <!--      <Column header="操作">-->
-<!--        <template #body="slotProps">-->
-<!--          <Button-->
-<!--            icon="pi pi-eye"-->
-<!--            class="p-button-rounded p-button-info mr-2"-->
-<!--            @click="viewStream(slotProps.data)"-->
-<!--            :disabled="!canPreview(slotProps.data.eventStatus)"-->
-<!--            :tooltip="getPreviewTooltip(slotProps.data.eventStatus)"-->
-<!--          />-->
-<!--        </template>-->
-<!--      </Column>-->
-    </DataTable>
+      <Column field="liveStatus" header="状态" sortable>
+        <template #body="slotProps">
+          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
+        </template>
+      </Column>
+
+      <template #expansion="slotProps">
+        <div class="p-3">
+          <DataTable :value="slotProps.data.monitors" :showGridlines="true" class="p-datatable-sm">
+            <Column header="串流標籤" style="width: 120px;">
+              <template #body="{data}">
+                {{ tagMap[data.tag] || data.tag || '-' }}
+              </template>
+            </Column>
+            <Column header="串流分數" style="width: 120px;">
+              <template #body="{ data }">
+                <div class="signal-bars">
+                  <span
+                    v-for="n in 5"
+                    :key="n"
+                    class="bar"
+                    :class="{ active: n <= data.score }"
+                  />
+                </div>
+              </template>
+            </Column>
+            <Column header="媒體網址" style="width: 350px;">
+              <template #body="{ data }">
+                <span style="word-break: break-all;">
+                  {{ data.tag === 'streamer' ? data.streamerUrl : data.supplierUrl }}
+                </span>
+              </template>
+            </Column>
+            <Column field="name" header="名稱" style="width: 100px;" />
+            <Column header="創建時間" style="width: 180px;">
+              <template #body="{ data }">
+                {{ formatDate(data.createdAt) }}
+              </template>
+            </Column>
+            <Column header="截圖">
+              <template #body="{ data }">
+                <img
+                  v-if="data.screenShot"
+                  :src="data.screenShot.startsWith('http') ? data.screenShot : promoDir + data.screenShot"
+                  alt="截圖"
+                  style="height: 50px; aspect-ratio: 1/1; cursor: pointer; object-fit: contain;"
+                  @click="previewImage(data.screenShot)"
+                />
+              </template>
+            </Column>
+          </DataTable>
+        </div>
+
+        <!-- <Dialog v-model:visible="imagePreviewDialogVisible" :modal="true" :style="{ width: '50vw' }">
+          <template #header><h3>截圖預覽</h3></template>
+          <img :src="currentImagePreviewUrl" alt="截圖預覽" style="width: 100%; display: block;" />
+        </Dialog> -->
+      </template>
+      
+      </DataTable>
   </div>
 
-<!--  <Dialog-->
-<!--    v-model:visible="editDialogVisible"-->
-<!--    header="修改聊天室名称"-->
-<!--    :style="{ width: '400px' }"-->
-<!--    :modal="true"-->
-<!--  >-->
-<!--    <div class="p-fluid">-->
-<!--      <div class="p-field">-->
-<!--        <label for="title">新名称</label>-->
-<!--        <InputText id="title" v-model="editedTitle" />-->
-<!--      </div>-->
-<!--  </div>-->
-<!--    <template #footer>-->
-<!--      <Button-->
-<!--        label="取消"-->
-<!--        icon="pi pi-times"-->
-<!--        class="p-button-text"-->
-<!--        @click="editDialogVisible = false"-->
-<!--      />-->
-<!--      <Button label="確認" icon="pi pi-check" class="p-button-text" @click="submitRoomTitleEdit" />-->
-<!--    </template>-->
-<!--  </Dialog>-->
-
-<!--  <StreamPlayer-->
-<!--    :visible="showPlayer"-->
-<!--    :stream="selectedStream"-->
-<!--    @update:visible="(val) => (showPlayer = val)"-->
-<!--    @reload="fetchStreams"-->
-<!--  />-->
-
-<!--  <Dialog v-model:visible="deleteDialog" :style="{ width: '450px' }" header="確認" :modal="true">-->
-<!--    <div class="confirmation-content">-->
-<!--      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />-->
-<!--      <span>確定要刪除這個直播嗎？</span>-->
-<!--    </div>-->
-<!--    <template #footer>-->
-<!--      <Button label="取消" icon="pi pi-times" class="p-button-text" @click="deleteDialog = false" />-->
-<!--      <Button label="確定" icon="pi pi-check" class="p-button-danger" @click="confirmDelete" />-->
-<!--    </template>-->
-<!--  </Dialog>-->
-</template>
+  </template>
 
 <script>
-
 import { reactive, computed } from 'vue';
 import { DashboardService } from '@/service/DashboardService'
 import { useI18n } from "vue-i18n";
 import { liveSportTyps } from '@/utils/live.js';
+import dayjs from 'dayjs';
 
 export default {
   props: {
@@ -176,6 +179,9 @@ const streamToDelete = ref(null)
 //const editDialogVisible = ref(false)
 //const editedTitle = ref('')
 //const editingStreamId = ref(null)
+
+// [新增] 定義 expandedRows 以追蹤展開的行
+const expandedRows = ref([]);
 
 //const openEditDialog = (stream) => {
 //  editingStreamId.value = stream.streamerStreamId
@@ -225,7 +231,9 @@ const uiControl = reactive({
   ],
 });
 
-
+function formatDate(date) {
+  return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
+}
 const formatTime = (ts) => {
   if (!ts) return '-';
   const d = new Date(ts);
@@ -274,10 +282,10 @@ const clearFilter = () => {
 const fetchStreams = async () => {
   console.log('fetchStreams')
   try {
-    clearData()
+    // clearData()
     loading.value = true
     const request = {
-      eventTime: [filters.value.startDate || defaultStartDate, filters.value.endDate || defaultEndDate],
+      eventTime: [formatDate(filters.value.startDate) || defaultStartDate, formatDate(filters.value.endDate) || defaultEndDate],
     }
 
     const dataMethod = DashboardService.getLiveSportMonitorList
@@ -289,7 +297,25 @@ const fetchStreams = async () => {
     loading.value = false
   }
 }
+const tagMap = {
+  streamer: '主播流',
+  source: '原厂流',
+  cdn: '原厂cdn流'
+};
+const sportMap = {
+  1: '足球',
+  2: '篮球',
+  3: 'LOL',
+  4: 'CSGO',
+  5: 'DOTA2'
+};
 
+const liveStatusMap = {
+  0: '未開始',
+  1: '進行中',
+  2: '已結束',
+  3: '失敗'
+};
 // 監聽路由變化，重新獲取數據
 watch(
   () => route.path,

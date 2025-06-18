@@ -1,445 +1,315 @@
-<!--TODO-->
 <template>
-  <div class="card">
-    <DataTable
-      :value="streams"
-      :paginator="true"
-      :rows="10"
-      :loading="loading"
-      dataKey="eventId"
-      :filters="filters"
-      filterDisplay="menu"
-      :globalFilterFields="['eventTitle', 'streamStatus']"
-      responsiveLayout="scroll"
-    >
-      <template #header>
-        <div class="flex justify-between" style="display: flex; gap: 8px">
-          <div style="display: flex; gap: 8px">
+  <div class="p-3 chat-history-page">
+    <div class="flex gap-3 mb-4 align-items-center">
+      <label for="stream-select" class="font-bold">直播流:</label>
+      <Dropdown
+        id="stream-select"
+        v-model="selectedStreamId"
+        :options="streamList"
+        optionLabel="titleWithId"
+        optionValue="id"
+        placeholder="選擇串流"
+        :filter="true"
+        class="w-full md:w-20rem"
+        @change="loadChatHistory"
+      />
+    </div>
+
+    <DataTable :value="chatList" :loading="loading" class="p-datatable-sm" style="margin-top: 20px">
+      <Column field="name" :header="'名稱'" style="width: 200px;" />
+      <Column field="content" :header="'內容'" />
+      <Column :header="'操作'" style="width: 220px;">
+        <template #body="slotProps">
+          <div class="p-button-group">
             <Button
-              :size="'small'"
-              type="button"
-              icon="pi pi-filter-slash"
-              label="清除"
-              outlined
-              @click="clearFilter()"
+              v-if="!slotProps.data.blocked"
+              label="封鎖"
+              icon="pi pi-ban"
+              severity="danger"
+              size="small"
+              @click="showBlockDialog(slotProps.data.name)"
             />
+            <template v-else>
+              <Button
+                label="延長封鎖"
+                icon="pi pi-clock"
+                severity="info"
+                size="small"
+                @click="showBlockDialog(slotProps.data.name)"
+              />
+              <Button
+                label="解除封鎖"
+                icon="pi pi-check"
+                severity="success"
+                size="small"
+                @click="unblockUser(slotProps.data.name)"
+              />
+            </template>
           </div>
-          <!-- 搜尋框 -->
-          <IconField class="search-container">
-            <InputIcon>
-              <i class="pi pi-search search-icon" />
-            </InputIcon>
-            <InputText
-              v-model="filters['global'].value"
-              placeholder="關鍵詞搜索"
-              :size="'small'"
-              class="search-input"
-            />
-          </IconField>
-          <!-- 重新載入按鈕 -->
-          <Button
-            :size="'small'"
-            type="button"
-            icon="pi pi-refresh"
-            label="重新載入"
-            severity="info"
-            @click="fetchStreams"
-            :loading="loading"
-          />
-        </div>
-      </template>
-
-      <Column field="eventTitle" header="標題" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.eventTitle }}
-        </template>
-      </Column>
-
-      <Column field="streamStatus" header="源流狀態" sortable>
-        <template #body="slotProps">
-          <Tag
-            :severity="getStatusSeverity(slotProps.data.streamStatus)"
-            :value="getStatusLabel(slotProps.data.streamStatus)"
-          />
-        </template>
-      </Column>
-
-      <Column field="createTime" header="創建時間" sortable>
-        <template #body="slotProps">
-          {{ formatDateTime(slotProps.data.createTime) }}
-        </template>
-      </Column>
-
-      <Column field="updateTime" header="更新時間" sortable>
-        <template #body="slotProps">
-          {{ formatDateTime(slotProps.data.updateTime) }}
-        </template>
-      </Column>
-
-      <Column field="streamerName" header="主播" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.streamerName || '未分配' }}
-        </template>
-      </Column>
-
-      <Column field="supplierStreamId" header="供應商串流ID" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.supplierStreamId }}
-        </template>
-      </Column>
-
-      <Column field="streamerStreamId" header="主播串流ID" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.streamerStreamId }}
-        </template>
-      </Column>
-      <Column field="streamerStatus" header="直播主狀態" sortable>
-        <template #body="slotProps">
-          <Tag
-            :severity="getStreamerStatusSeverity(slotProps.data.streamerStatus)"
-            :value="getStreamerStatusLabel(slotProps.data.streamerStatus)"
-          />
-        </template>
-      </Column>
-      <Column header="操作">
-        <template #body="slotProps">
-          <Button
-            icon="pi pi-eye"
-            class="p-button-rounded p-button-info mr-2"
-            @click="viewStream(slotProps.data)"
-            :disabled="!canPreview(slotProps.data.eventStatus)"
-            :tooltip="getPreviewTooltip(slotProps.data.eventStatus)"
-          />
         </template>
       </Column>
     </DataTable>
-  </div>
 
-  <Dialog
-    v-model:visible="editDialogVisible"
-    header="修改聊天室名称"
-    :style="{ width: '400px' }"
-    :modal="true"
-  >
-    <div class="p-fluid">
-      <div class="p-field">
-        <label for="title">新名称</label>
-        <InputText id="title" v-model="editedTitle" />
+    <Paginator
+      v-if="page.total > 0"
+      :rows="page.size"
+      :totalRecords="page.total"
+      :first="(page.current - 1) * page.size"
+      @page="onPageChange"
+      template="PrevPageLink CurrentPageReport NextPageLink"
+      currentPageReportTemplate="{currentPage} of {totalPages}"
+      class="mt-4 pagination"
+    />
+
+    <Dialog
+      v-model:visible="dialog.visible"
+      modal
+      :style="{ width: '400px' }"
+      :header="' '"
+    >
+      <div class="p-fluid">
+        <div class="field">
+          <label for="loginName" class="font-bold"> 登录名</label>
+          <InputText id="loginName" v-model="dialog.form.loginName" disabled />
+        </div>
+        <div class="field">
+          <label for="blockDuration" class="font-bold">封锁时间</label>
+          <div class="grid">
+            <div class="col-6">
+              <InputNumber
+                id="blockDuration"
+                v-model="dialog.form.duration"
+                :min="1"
+                :max="unitMaxMap[dialog.form.unit] || 60"
+                :useGrouping="false"
+              />
+            </div>
+            <div class="col-6">
+              <Dropdown
+                v-model="dialog.form.unit"
+                :options="durationUnits"
+                optionLabel="label"
+                optionValue="value"
+              />
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <template #footer>
-      <Button
-        label="取消"
-        icon="pi pi-times"
-        class="p-button-text"
-        @click="editDialogVisible = false"
-      />
-      <Button label="確認" icon="pi pi-check" class="p-button-text" @click="submitRoomTitleEdit" />
-    </template>
-  </Dialog>
-
-<!--  <StreamPlayer-->
-<!--    :visible="showPlayer"-->
-<!--    :stream="selectedStream"-->
-<!--    @update:visible="(val) => (showPlayer = val)"-->
-<!--    @reload="fetchStreams"-->
-<!--  />-->
-
-  <Dialog v-model:visible="deleteDialog" :style="{ width: '450px' }" header="確認" :modal="true">
-    <div class="confirmation-content">
-      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-      <span>確定要刪除這個直播嗎？</span>
-    </div>
-    <template #footer>
-      <Button label="取消" icon="pi pi-times" class="p-button-text" @click="deleteDialog = false" />
-      <Button label="確定" icon="pi pi-check" class="p-button-danger" @click="confirmDelete" />
-    </template>
-  </Dialog>
+      <template #footer>
+        <Button
+          label="取消"
+          icon="pi pi-times"
+          text
+          severity="danger"
+          @click="dialog.visible = false"
+        />
+        <Button
+          label="確認"
+          icon="pi pi-check"
+          severity="primary"
+          @click="submitBlock"
+        />
+      </template>
+    </Dialog>
+  </div>
 </template>
 
-<script>
-// 根據路由判斷獲取數據的方法
+<script setup>
+import { ref, reactive, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
+import dayjs from 'dayjs';
+
 import { DashboardService } from '@/service/DashboardService'
 
-export default {
-  props: {
-    fetchDataMethod: {
-      type: Function,
-      default: () => DashboardService.getStreamList,
-    },
-  },
-}
-</script>
+// PrimeVue Components
+import Dropdown from 'primevue/dropdown';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Button from 'primevue/button';
+import Paginator from 'primevue/paginator';
+import Dialog from 'primevue/dialog';
+import InputText from 'primevue/inputtext';
+import InputNumber from 'primevue/inputnumber';
+import { useToast } from 'primevue/usetoast'; // For notifications
 
-<script setup>
-import { ref, onMounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
-//import StreamPlayer from './StreamPlayer.vue'
-import DataTable from 'primevue/datatable'
-import Column from 'primevue/column'
-import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
-import Dialog from 'primevue/dialog'
-import Tag from 'primevue/tag'
-import { useToast } from 'primevue/usetoast'
-const toast = useToast()
+const { t } = useI18n();
+const toast = useToast(); // Initialize PrimeVue Toast
 
-const route = useRoute()
+const streamList = ref([]);
+const chatList = ref([]);
+const selectedStreamId = ref(null);
+const loading = ref(false);
 
-const streams = ref([])
-const loading = ref(false)
-const showPlayer = ref(false)
-const selectedStream = ref(null)
-const deleteDialog = ref(false)
-const streamToDelete = ref(null)
-const editDialogVisible = ref(false)
-const editedTitle = ref('')
-const editingStreamId = ref(null)
+const page = reactive({
+  total: 0,
+  current: 1, // PrimeVue Paginator uses 0-based first, but our logic here uses 1-based current page for `getChatHistory`
+  size: 20
+});
 
-const openEditDialog = (stream) => {
-  editingStreamId.value = stream.streamerStreamId
-  editedTitle.value = stream.roomTitle || ''
-  editDialogVisible.value = true
-}
+const dialog = reactive({
+  visible: false,
+  form: {
+    loginName: '',
+    duration: 10,
+    unit: 'minute'
+  }
+});
 
-const submitRoomTitleEdit = async () => {
-  if (!editingStreamId.value || !editedTitle.value) return
+const unitMaxMap = {
+  minute: 60,
+  hour: 24,
+  day: 30,
+  week: 4,
+  month: 6
+};
 
+// Dropdown options for block duration unit
+const durationUnits = ref([
+  { label: '分鐘', value: 'minute' },
+  { label: '小時', value: 'hour' },
+  { label: '天', value: 'day' },
+  { label: '週', value: 'week' },
+  { label: '月', value: 'month' }
+]);
+
+async function loadStreams() {
   try {
-    const res = await DashboardService.updateRoomTitle(editingStreamId.value, editedTitle.value)
-
-    if (res) {
-      toast.add({ severity: 'success', summary: '成功', detail: '标题已更新', life: 3000 })
-      editDialogVisible.value = false
-      await fetchStreams()
-    } else {
-      toast.add({
-        severity: 'error',
-        summary: '错误',
-        detail: response?.message || '更新失败',
-        life: 3000,
-      })
-    }
-  } catch (err) {
-    console.error('更新标题错误:', err)
-    toast.add({ severity: 'error', summary: '错误', detail: '无法更新标题', life: 3000 })
-  }
-}
-
-const filters = ref({
-  global: { value: null, matchMode: 'contains' },
-})
-
-// 清除數據
-const clearData = () => {
-  streams.value = []
-  loading.value = false
-  showPlayer.value = false
-  selectedStream.value = null
-  deleteDialog.value = false
-  streamToDelete.value = null
-  filters.value = {
-    global: { value: null, matchMode: 'contains' },
-  }
-}
-
-// 清除過濾器
-const clearFilter = () => {
-  filters.value = {
-    global: { value: null, matchMode: 'contains' },
-  }
-}
-
-// 獲取直播列表
-const fetchStreams = async () => {
-  try {
-    clearData()
-    loading.value = true
-    // 根據當前路由設置數據獲取方法
-    const dataMethod = route.path.includes('/my-streams')
-      ? DashboardService.getMyStreams
-      : DashboardService.getStreamList
-    const response = await dataMethod()
-    streams.value = response
+    const res = await DashboardService.getStreamList();
+    console.log(res)
+    streamList.value = res.map(s => ({
+      ...s,
+      titleWithId: `${s.title} (${s.streamId})` // Create a combined label for the dropdown
+    }));
+    
   } catch (error) {
-    console.error('獲取直播列表失敗:', error)
-  } finally {
-    loading.value = false
+    console.error('Failed to load streams:', error);
+    toast.add({ severity: 'error', summary: '錯誤', detail: '無法載入串流列表', life: 3000 });
   }
 }
 
-// 監聽路由變化，重新獲取數據
-watch(
-  () => route.path,
-  () => {
-    fetchStreams()
-  },
-)
-
-// 格式化日期時間
-const formatDateTime = (timestamp) => {
-  if (!timestamp) return ''
-  return new Date(timestamp).toLocaleString('zh-TW')
-}
-
-// 獲取狀態標籤
-const getStatusLabel = (status) => {
-  const statusMap = {
-    0: '初始化',
-    1: '準備中',
-    2: '開始啟動',
-    3: '啟動完成',
-    4: '直播中',
-    5: '已結束',
-    6: '已停止',
-    7: '已結束',
+async function loadChatHistory() {
+  if (!selectedStreamId.value) {
+    chatList.value = [];
+    page.total = 0;
+    return;
   }
-  return statusMap[status] || '未知狀態'
-}
+  loading.value = true;
 
-// 獲取狀態樣式
-const getStatusSeverity = (status) => {
-  const severityMap = {
-    0: 'info',
-    1: 'info',
-    2: 'warning',
-    3: 'success',
-    4: 'success',
-    5: 'danger',
-    6: 'danger',
-    7: 'danger',
-  }
-  return severityMap[status] || 'info'
-}
-
-// 獲取直播主狀態標籤
-const getStreamerStatusLabel = (status) => {
-  const statusMap = {
-    0: '停止直播',
-    1: '開始直播',
-  }
-  return statusMap[status] || '未知狀態'
-}
-
-// 獲取直播主狀態樣式
-const getStreamerStatusSeverity = (status) => {
-  const severityMap = {
-    0: 'danger',
-    1: 'success',
-  }
-  return severityMap[status] || 'info'
-}
-// 檢查是否可以預覽
-const canPreview = (status) => {
-  return [0, 1].includes(status)
-}
-
-// 獲取預覽按鈕提示
-const getPreviewTooltip = (status) => {
-  return canPreview(status) ? '點擊預覽' : '當前狀態無法預覽'
-}
-
-// 查看直播
-const viewStream = (stream) => {
-  if (!canPreview(stream.eventStatus)) {
-    return
-  }
-
-  if (stream.cdnPlayUrlsHls !== null) {
-    selectedStream.value = {
-      ...stream,
-      title: stream.eventTitle,
-      streamId: stream.streamerStreamId,
-      playUrls: {
-        hls: stream.cdnPlayUrlsHls,
-        flv: stream.cdnPlayUrlsFlv,
-      },
-    }
-  }
-  showPlayer.value = true
-}
-
-const editRoomTitle = async (stream) => {
   try {
-    const { value } = await ElMessageBox.prompt('請輸入新的房間標題', '修改房間標題', {
-      confirmButtonText: '確認',
-      cancelButtonText: '取消',
-      inputValue: stream.roomTitle,
-    })
-    const result = await DashboardService.updateRoomTitle(stream.streamerStreamId, value)
-    if (result) {
-      ElMessage.success('房間標題更新成功')
-      fetchStreams()
-    }
-  } catch (err) {
-    console.log('取消修改房間標題')
+    const query = new URLSearchParams({
+      current: page.current,
+      size: page.size
+    });
+
+    const res = await DashboardService.getChatHistory(`?${query.toString()}`, { streamId: selectedStreamId.value });
+    console.log(res,'dan2')
+    chatList.value = res.records;
+    page.total = res.total;
+  } catch (error) {
+    console.error('Failed to load chat history:', error);
+    toast.add({ severity: 'error', summary: '錯誤', detail: '無法載入聊天記錄', life: 3000 });
+    chatList.value = [];
+    page.total = 0;
+  } finally {
+    loading.value = false;
+  }
+}
+
+// PrimeVue Paginator uses an event object with `page` and `rows`
+function onPageChange(event) {
+  // `event.page` is 0-based, convert to 1-based for your API
+  page.current = event.page + 1;
+  page.size = event.rows; // Update page size if it changed (though not directly used here)
+  loadChatHistory();
+}
+
+function showBlockDialog(name) {
+  dialog.form.loginName = name;
+  dialog.form.duration = 10;
+  dialog.form.unit = 'minute';
+  dialog.visible = true;
+}
+
+async function submitBlock() {
+  const blockTime = dayjs().add(dialog.form.duration, dialog.form.unit).format('YYYY-MM-DD HH:mm:ss');
+  try {
+    await DashboardService.blockUserApi({ loginName: dialog.form.loginName, blockTime });
+    toast.add({ severity: 'success', summary: '成功', detail: t('成功'), life: 3000 });
+    dialog.visible = false;
+    loadChatHistory();
+  } catch (error) {
+    console.error('Block user failed:', error);
+    toast.add({ severity: 'error', summary: '错误', detail: '封锁用户失败', life: 3000 });
+  }
+}
+
+async function unblockUser(loginName) {
+  try {
+    await DashboardService.unblockUserApi({ loginName });
+    toast.add({ severity: 'success', summary: '成功', detail: t('成功'), life: 3000 });
+    loadChatHistory();
+  } catch (error) {
+    console.error('Unblock user failed:', error);
+    toast.add({ severity: 'error', summary: '錯誤', detail: '解除封鎖失敗', life: 3000 });
   }
 }
 
 onMounted(() => {
-  fetchStreams()
-})
+  loadStreams();
+});
 </script>
 
 <style scoped>
-.p-button.p-button-icon-only {
-  width: 2rem;
-  padding: 0.5rem 0;
+/* Basic styling for the page layout */
+.chat-history-page {
+  padding: 1rem;
 }
 
-.search-container {
-  width: 100%;
-  max-width: 230px;
-}
-
-/* 自定義圖標樣式 */
-:deep(.p-input-icon-left i) {
-  color: #666; /* 修改圖標顏色 */
-  font-size: 1.5rem; /* 修改圖標大小 */
-}
-
-/* 在懸停時改變圖標顏色 */
-:deep(.p-input-icon-left:hover i) {
-  color: #3b82f6;
-}
-
-/* 搜索圖標樣式 */
-:deep(.search-icon) {
-  color: #6b7280; /* 深灰色圖標 */
-  font-size: 0.7rem; /* 調整大小 */
-  transition: color 0.3s ease; /* 平滑過渡 */
-}
-
-/* 當搜索框獲得焦點時的圖標樣式 */
-:deep(.p-inputtext:focus ~ .p-input-icon-left i) {
-  color: #3b82f6; /* 藍色高亮 */
-}
-
-/* 搜索容器樣式 */
-.search-container {
-  min-width: 200px; /* 設置最小寬度 */
-  position: relative;
-}
-
-/* 搜索輸入框樣式 */
-:deep(.search-input) {
-  transition: all 0.3s ease;
-  border-radius: 4px; /* 圓角邊框 */
-}
-
-/* 搜索輸入框獲得焦點時的樣式 */
-:deep(.search-input:focus) {
-  border-color: #3b82f6; /* 藍色邊框 */
-  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.25); /* 輕微發光效果 */
-}
-
-/* 如果需要調整圖標位置 */
-:deep(.p-input-icon-left) {
+/* Flex utilities from PrimeFlex (if you have it) */
+.flex {
   display: flex;
+}
+.align-items-center {
   align-items: center;
 }
+.gap-3 {
+  gap: 1rem;
+}
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+.mt-4 {
+  margin-top: 1.5rem;
+}
+.w-full {
+  width: 100%;
+}
+.md\:w-20rem {
+  width: 20rem; /* Example width for medium screens */
+}
 
-:deep(.p-input-icon-left i) {
-  margin-left: 0.5rem; /* 調整左邊距 */
+/* PrimeVue specific overrides if needed (optional) */
+/* .p-datatable-sm applies compact styling */
+/* .p-button-group for grouping buttons */
+/* .p-fluid for form field spacing within dialog */
+
+/* Adjusting styles for the number input and dropdown within the grid */
+.p-fluid .p-inputnumber,
+.p-fluid .p-dropdown {
+  width: 100%; /* Ensure they fill their column */
+}
+
+/* Adjust button group spacing */
+.p-button-group .p-button {
+  margin-right: 0.5rem; /* Small gap between buttons in the group */
+}
+.p-button-group .p-button:last-child {
+  margin-right: 0;
+}
+
+/* Paginator alignment */
+.pagination {
+  display: flex;
+  justify-content: flex-end; /* Align to the right */
 }
 </style>
