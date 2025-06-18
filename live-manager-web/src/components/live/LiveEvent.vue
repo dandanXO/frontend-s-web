@@ -15,7 +15,6 @@
             :placeholder="t('fields.sportType')"
             :showClear="true"
             class="p-inputtext-sm"
-            style="width: 120px"
           />
           <Dropdown
             v-model="request.liveStatus"
@@ -25,7 +24,6 @@
             :placeholder="t('fields.tfEventStatusName')"
             :showClear="true"
             class="p-inputtext-sm"
-            style="width: 120px"
           />
           <InputText
             v-model="request.title"
