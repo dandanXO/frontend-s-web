@@ -4512,6 +4512,7 @@ const showSpinWheel = () => {
         }
         if ((store.canSpinPrivilegeCoupon || store.canClaimFtdPrivilege) && isAndroid()) {
           promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
+          popupPromo.value = "newplayer-spin-wheel"
         }
       }
     })
