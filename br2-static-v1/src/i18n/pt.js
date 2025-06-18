@@ -11,7 +11,7 @@ export default {
     personalCenter: "Centro Pessoal",
     deposit: "Depósito",
     bank: "Banco",
-    addCrypto: "Add crypto",
+    addCrypto: "Adicionar Criptomoeda",
     addVirtualWallet: "Add Virtual Wallet",
     addBankCard: "Adicionar cartão bancário",
     addBank: "Adicionar banco",
@@ -71,6 +71,7 @@ export default {
     fishing: "Pesca",
     activitiesDetails: "Detalhes das Atividades",
     addCard: "Adicionar Cartão",
+    addCrypto: "Adicionar Criptomoeda",
     information: "Information"
   },
   bottomNav: {
@@ -266,7 +267,8 @@ export default {
     createAccount: "Criar uma conta",
     profit: "Lucro",
     loss: "Perda",
-    withdrawing: "Retirando..."
+    withdrawing: "Retirando...",
+    unbinding: "Desvinculando"
   },
   notify: {
     noRecord: "Nenhum Registro",

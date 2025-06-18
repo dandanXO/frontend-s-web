@@ -71,6 +71,7 @@ export default {
     fishing: "Fishing",
     activitiesDetails: "Activities Details",
     addCard: "Add Card",
+    addCrypto: "Add Crypto",
     information: "Information"
   },
   bottomNav: {
@@ -254,7 +255,8 @@ export default {
     notAMember: "Not a member?",
     createAccount: "Create account",
     profit: "Profit",
-    loss: "Loss"
+    loss: "Loss",
+    unbinding: "Unbinding"
   },
   notify: {
     noRecord: "No Record",
