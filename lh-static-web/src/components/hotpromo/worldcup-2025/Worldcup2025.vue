@@ -1,12 +1,16 @@
 <template>
-  <div class="worldcup-2025-wrapper">
+  <div v-if="pageLoading">
+    <div class="loading-blue-icon"></div>
+  </div>
+
+  <div class="worldcup-2025-wrapper" v-else>
     <div class="toptitle-row">
       <div class="col-desc">
         活动期间，会员完成特殊事件竞猜或独赢竞猜，最高可获得
         <span>288</span>
         竞猜奖金。
       </div>
-      <div class="col-record">【竞猜记录】</div>
+      <div class="col-record" @click="openTableRecord">【竞猜记录】</div>
     </div>
 
     <swiper class="livestream-list-wrapper" v-bind="swiperConfig" @swiper="handleSwiper">
@@ -21,26 +25,29 @@
           <div class="livestream-list-item__match-info">
             <div class="livestream-list-item__match-info__team">
               <div class="livestream-list-item__match-info__team-emblem">
-                <img :src="live.homeIcon || systemAvatarImg" loading="lazy" />
+                <img :src="imgURL + live.homeTeamIcon || systemAvatarImg" loading="lazy" />
               </div>
               <span class="livestream-list-item__match-info__team-name">
-                {{ live.homeNameZh || live.homeNameEn || live.homeName }}
+                <!-- {{ live.homeNameZh || live.homeNameEn || live.homeName }} -->
+                {{ live.homeTeam }}
               </span>
             </div>
 
             <div class="livestream-list-item__match-info__date">
               <span class="livestream-list-item__match-info__date__vs">VS</span>
-              <div v-if="live.liveStatus" class="livestream-list-item__match-info__date__on-air">正在直播</div>
+              <!-- <div v-if="live.status === 'ENDED'" class="livestream-list-item__match-info__date__on-air">正在直播</div> -->
+              <div v-if="live.status !== 'ENDED'" class="livestream-list-item__match-info__date__on-air">正在直播</div>
               <div v-else class="livestream-list-item__match-info__date__date">
-                {{ getDisplayDateTime(live.eventStartTime) }}
+                {{ live.matchTime }}
               </div>
             </div>
             <div class="livestream-list-item__match-info__team">
               <div class="livestream-list-item__match-info__team-emblem">
-                <img :src="live.awayIcon || systemAvatarImg" loading="lazy" />
+                <img :src="imgURL + live.awayTeamIcon || systemAvatarImg" loading="lazy" />
               </div>
               <span class="livestream-list-item__match-info__team-name">
-                {{ live.awayNameZh || live.awayNameEn || live.awayName }}
+                <!-- {{ live.awayNameZh || live.awayNameEn || live.awayName }} -->
+                {{ live.awayTeam }}
               </span>
             </div>
           </div>
@@ -51,10 +58,11 @@
     <div class="current-match-container">
       <div class="match-info match-info--home">
         <div class="info-img">
-          <img :src="currentListItem.homeIcon || systemAvatarImg" loading="lazy" />
+          <img :src="imgURL + currentListItem.homeTeamIcon || systemAvatarImg" loading="lazy" />
         </div>
         <div class="info-txt">
-          {{ currentListItem.homeNameZh || currentListItem.homeNameEn || currentListItem.homeName }}
+          <!-- {{ currentListItem.homeNameZh || currentListItem.homeNameEn || currentListItem.homeName }} -->
+          {{ currentListItem.homeTeam }}
         </div>
       </div>
 
@@ -64,20 +72,24 @@
             <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-fifa.png" alt="" />
           </div>
           <div class="title-txt">世具杯</div>
-          <div class="title-status">未开始</div>
+          <div class="title-status" v-if="showNotStart">
+            <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-time.png" alt="" />
+            &nbsp; 未开始
+          </div>
         </div>
-        <div class="vs-time">{{ getDisplayDateTime(currentListItem.eventStartTime) }}</div>
+        <div class="vs-time">{{ getDisplayDateTime(currentListItem.matchTime) }}</div>
         <div class="vs-icon"><img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-vs.png" alt="" /></div>
         <div class="vs-win">独赢</div>
-        <div class="vs-notes">该场赛事竞猜截止时间 06.16 03:00</div>
+        <div class="vs-notes">该场赛事竞猜截止时间 {{ getDisplayDateTime(currentListItem.endTime) }}</div>
       </div>
 
       <div class="match-info match-info--away">
         <div class="info-img">
-          <img :src="currentListItem.awayIcon || systemAvatarImg" loading="lazy" />
+          <img :src="imgURL + currentListItem.awayTeamIcon || systemAvatarImg" loading="lazy" />
         </div>
         <div class="info-txt">
-          {{ currentListItem.awayNameZh || currentListItem.awayNameEn || currentListItem.awayName }}
+          <!-- {{ currentListItem.awayNameZh || currentListItem.awayNameEn || currentListItem.awayName }} -->
+          {{ currentListItem.awayTeam }}
         </div>
       </div>
     </div>
@@ -95,18 +107,49 @@
     </div>
 
     <div class="current-match-bet">
-      <div class="bet-select" :class="{ active: selectedTeam === 'home' }" @click="selectTeam('home')">
-        {{ currentListItem.homeNameZh || currentListItem.homeNameEn || currentListItem.homeName }} 赢
+      <div
+        class="bet-select"
+        :class="{
+          active: currentListItem.memberAnswerOne === choiceOneArray[0] || selectedTeam == choiceOneArray[0],
+          disabled: currentListItem.memberAnswerOne
+        }"
+        @click="selectTeam(choiceOneArray[0])"
+      >
+        {{ choiceOneArray[0] }} 赢
       </div>
-      <div class="bet-select" :class="{ active: selectedTeam === 'away' }" @click="selectTeam('away')">
-        {{ currentListItem.awayNameZh || currentListItem.awayNameEn || currentListItem.awayName }} 赢
+      <div
+        class="bet-select"
+        :class="{
+          active: currentListItem.memberAnswerOne === choiceOneArray[1] || selectedTeam == choiceOneArray[1],
+          disabled: currentListItem.memberAnswerOne
+        }"
+        @click="selectTeam(choiceOneArray[1])"
+      >
+        {{ choiceOneArray[1] }} 赢
       </div>
     </div>
 
-    <div class="match-btn active">确认竞猜</div>
-    <!-- <div class="match-btn">已参与竞猜</div> -->
-    <!-- <div class="match-btn">立即领取</div> -->
-    <!-- <div class="match-btn">已领取</div> -->
+    <!-- 独赢事件竞猜 -->
+    <template v-if="currentListItem.memberAnswerOne || selectedTeam">
+      <div class="match-btn disabled" v-if="currentListItem.hasClaimedBonus">已领取</div>
+      <div
+        class="match-btn"
+        v-else-if="currentListItem.canClaimBonus"
+        :class="{ disabled: loadingBtn }"
+        @click="handleClaimFifaQuiz2025(currentListItem.id)"
+      >
+        立即领取
+      </div>
+      <div class="match-btn disabled" v-else-if="currentListItem.memberAnswerOne">已参与竞猜</div>
+      <div
+        class="match-btn active"
+        v-else
+        :class="{ disabled: loadingBtn }"
+        @click="handleSubmitFifaQuiz2025(currentListItem.id, selectedTeam)"
+      >
+        确认竞猜
+      </div>
+    </template>
 
     <div class="title-match-row">
       <div class="col-txt">
@@ -117,24 +160,45 @@
 
     <div class="current-match-bet">
       <div
-        v-for="item in specialList"
-        :key="item.id"
+        v-for="(item, index) in filteredSpecialList"
+        :key="index"
         class="bet-select"
-        :class="{ active: selectedSpecial === item.id }"
-        @click="selectSpecial(item.id)"
+        :class="{
+          active: currentListItem.memberSelectedOccasion === item.occasion || selectedSpecial == item.occasion,
+          disabled: currentListItem.memberSelectedOccasion
+        }"
+        @click="selectSpecial(item.occasion)"
       >
-        {{ item.title }}
-        <img :src="require(`@/assets/images/promotion/hotpromo/worldcup-2025/${item.img}`)" alt="" />
+        {{ item.occasion }}
+        <img :src="require(`@/assets/images/promotion/hotpromo/worldcup-2025/special-${index}.png`)" alt="" />
         <div class="prize-amt">
-          <span>{{ item.prize }}</span>
+          <span>{{ item.bonus }}</span>
           彩金
         </div>
       </div>
     </div>
-    <div class="match-btn active">确认竞猜</div>
-    <!-- <div class="match-btn">已参与竞猜</div> -->
-    <!-- <div class="match-btn">立即领取</div> -->
-    <!-- <div class="match-btn">已领取</div> -->
+
+    <!-- 特殊事件竞猜 -->
+    <template v-if="currentListItem.memberSelectedOccasion || selectedSpecial">
+      <div class="match-btn disabled" v-if="currentListItem.hasClaimedOccasionBonus">已领取</div>
+      <div
+        class="match-btn"
+        v-else-if="currentListItem.canClaimOccasionBonus"
+        :class="{ disabled: loadingBtn }"
+        @click="handleClaimOccasionFifaQuiz2025(currentListItem.id)"
+      >
+        立即领取
+      </div>
+      <div class="match-btn disabled" v-else-if="currentListItem.memberSelectedOccasion">已参与竞猜</div>
+      <div
+        class="match-btn active"
+        v-else
+        :class="{ disabled: loadingBtn }"
+        @click="handleSubmitOccasionFifaQuiz2025(currentListItem.id, selectedSpecial)"
+      >
+        确认竞猜
+      </div>
+    </template>
   </div>
 
   <div class="tnc-wrapper">
@@ -166,6 +230,55 @@
       </ol>
     </div>
   </div>
+
+  <el-dialog
+    v-model="tableRecordDialog"
+    width="800px"
+    align-center
+    :close-on-click-modal="false"
+    class="table-record-dialog"
+  >
+    <template #header>
+      <div class="title"></div>
+    </template>
+    <div class="record-dialog-container">
+      <div class="record-title">竞猜记录</div>
+      <table class="record-table">
+        <thead>
+          <tr>
+            <th>赛事</th>
+            <th>竞猜队伍</th>
+            <th>竞猜事件</th>
+            <th>可获彩金</th>
+            <th>竞猜结果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(record, index) in tableData" :key="index">
+            <td>{{ record.quizTitle }}</td>
+            <td>{{ record.answerOne }}</td>
+            <td>{{ record.selectedOccasion }}</td>
+            <td>{{ record.bonus }}</td>
+            <td>{{ record.status }}</td>
+          </tr>
+          <!-- <tr>
+                <td>2024-05-11 16:00</td>
+                <td>老鹰 vs 火箭</td>
+                <td>老鹰胜</td>
+                <td style="color: #ff5151">错误</td>
+              </tr>
+              <tr>
+                <td>2024-05-11 16:00</td>
+                <td>老鹰 vs 火箭</td>
+                <td>平局</td>
+                <td style="color: #7a8eb9">未出结果</td>
+              </tr> -->
+        </tbody>
+      </table>
+
+      <div class="close-btn" @click="tableRecordDialog = false">关闭</div>
+    </div>
+  </el-dialog>
 </template>
 <script setup>
 import { useLocalStorage } from "@vueuse/core";
@@ -175,340 +288,368 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { computed, ref, watch, onMounted } from "vue";
+import { userStore } from "@/store";
+import { computed, ref, watch, onMounted, defineProps, toRefs } from "vue";
+import {
+  getFifaQuiz2025PromoInit,
+  getFifaQuiz2025PromoRecord,
+  submitFifaQuiz2025,
+  submitOccasionFifaQuiz2025,
+  claimFifaQuiz2025,
+  claimOccasionFifaQuiz2025
+} from "@/api/index/promo";
+import { ResponseCode } from "@/api/response";
+import { useNotify } from "@/hooks/notify";
 
-//   const props = defineProps({
-//     list: Array,
-//     isLivestreamListLoading: Boolean
-//   });
+const notify = useNotify();
+const list = ref([]);
+// const list = ref([
+//   {
+//     id: 1081,
+//     siteId: 7,
+//     quizTitle: "test",
+//     gameType: "FIFA",
+//     homeTeam: "test1",
+//     homeTeamIcon: "7/7c14babf-ba44-46e7-9050-5434cf6d8b66.png",
+//     awayTeam: "test2",
+//     awayTeamIcon: "7/873719ae-a6b2-40fc-a69f-db4e9b84a3c8.png",
+//     poolAmount: 0.0,
+//     questionOne: "哪方获胜？",
+//     choiceOne: '["test1","test2"]',
+//     answerOne: "test2",
+//     questionTwo: null,
+//     choiceTwo: "[]",
+//     answerTwo: null,
+//     questionThree: null,
+//     choiceThree: "[]",
+//     answerThree: null,
+//     status: "ENDED",
+//     matchTime: "2025-06-19 18:00:00",
+//     startTime: "2025-06-19 00:00:00",
+//     endTime: "2025-06-19 18:00:00",
+//     occasionsInMatch: '["出现红牌","点球得分","乌龙球"]',
+//     memberAnswerOne: "test1",
+//     memberAnswerTwo: null,
+//     memberAnswerThree: null,
+//     memberSelectedOccasion: "出现红牌",
+//     occasions: [
+//       {
+//         occasion: "全场零进球",
+//         bonus: 18
+//       },
+//       {
+//         occasion: "出现红牌",
+//         bonus: 28
+//       },
+//       {
+//         occasion: "补时进球",
+//         bonus: 38
+//       },
+//       {
+//         occasion: "点球得分",
+//         bonus: 58
+//       },
+//       {
+//         occasion: "梅开二度",
+//         bonus: 88
+//       },
+//       {
+//         occasion: "帽子戏法",
+//         bonus: 128
+//       },
+//       {
+//         occasion: "乌龙球",
+//         bonus: 288
+//       }
+//     ],
+//     canClaimBonus: false,
+//     hasClaimedBonus: false,
+//     canClaimOccasionBonus: false,
+//     hasClaimedOccasionBonus: false
+//   },
+//   {
+//     id: 1083,
+//     siteId: 7,
+//     quizTitle: "K27 vs NGX",
+//     gameType: "FIFA",
+//     homeTeam: "K27",
+//     homeTeamIcon: "7/7c14babf-ba44-46e7-9050-5434cf6d8b66.png",
+//     awayTeam: "NGX",
+//     awayTeamIcon: "7/fba28356-9467-4519-b711-7df63bd46e6c.png",
+//     poolAmount: 0.0,
+//     questionOne: "哪方获胜？",
+//     choiceOne: '["K27","NGX"]',
+//     answerOne: "NGX",
+//     questionTwo: null,
+//     choiceTwo: null,
+//     answerTwo: null,
+//     questionThree: null,
+//     choiceThree: null,
+//     answerThree: null,
+//     status: "ENDED",
+//     matchTime: "2025-06-17 18:00:00",
+//     startTime: "2025-06-17 00:00:00",
+//     endTime: "2025-06-17 18:00:00",
+//     occasionsInMatch: '["补时进球","梅开二度","帽子戏法","出现红牌"]',
+//     memberAnswerOne: "NGX",
+//     memberAnswerTwo: null,
+//     memberAnswerThree: null,
+//     memberSelectedOccasion: "梅开二度",
+//     occasions: [
+//       {
+//         occasion: "全场零进球",
+//         bonus: 18
+//       },
+//       {
+//         occasion: "出现红牌",
+//         bonus: 28
+//       },
+//       {
+//         occasion: "补时进球",
+//         bonus: 38
+//       },
+//       {
+//         occasion: "点球得分",
+//         bonus: 58
+//       },
+//       {
+//         occasion: "梅开二度",
+//         bonus: 88
+//       },
+//       {
+//         occasion: "帽子戏法",
+//         bonus: 128
+//       },
+//       {
+//         occasion: "乌龙球",
+//         bonus: 288
+//       }
+//     ],
+//     canClaimBonus: true,
+//     hasClaimedBonus: false,
+//     canClaimOccasionBonus: false,
+//     hasClaimedOccasionBonus: true
+//   }
+// ]);
 
-// livestream list data
-const list = ref([
-  {
-    id: 1057,
-    siteId: 7,
-    sportId: 5,
-    eventId: 1024,
-    awayName: "Team Nemesis",
-    homeName: "Talon Esports",
-    cover: "",
-    isPopular: false,
-    homeNameZh: "Talon Esports",
-    homeNameEn: "Talon Esports",
-    homeIcon: "https://esports-cdn.namitiyu.com/dota/team/FjWk6RaEOd3YAvNERphPDDpUJm9V",
-    awayNameZh: "Team Nemesis",
-    awayNameEn: "Team Nemesis",
-    awayIcon: "https://esports-cdn.namitiyu.com/dota/team/FqPGjDFivDerY1FYAdLIh8xj3KaP",
-    eventStartTime: 1750068000000,
-    liveStatus: 0,
-    streamId: "UA03B",
-    sort: 11,
-    title: "TI14国际邀请赛预选赛",
-    isTest: false,
-    streamerStatus: 0,
-    supplierCdnPullUrl: '{"original": {"hls_url": "12.m3u8"}}',
-    streamerCdnPullUrl:
-      '{"540p": {"flv_url": "https://www.gdmzzj.com/live/streamer/UA03B_540p.flv?txSecret=ec8308698812805f246191994e86c334&txTime=20250616175510", "hls_url": "https://www.gdmzzj.com/live/streamer/UA03B_540p.m3u8?txSecret=ec8308698812805f246191994e86c334&txTime=20250616175510"}, "720p": {"flv_url": "https://www.gdmzzj.com/live/streamer/UA03B_720p.flv?txSecret=ec8308698812805f246191994e86c334&txTime=20250616175510", "hls_url": "https://www.gdmzzj.com/live/streamer/UA03B_720p.m3u8?txSecret=ec8308698812805f246191994e86c334&txTime=20250616175510"}, "1080p": {"flv_url": "https://www.gdmzzj.com/live/streamer/UA03B_1080p.flv?txSecret=ec8308698812805f246191994e86c334&txTime=20250616175510", "hls_url": "https://www.gdmzzj.com/live/streamer/UA03B_1080p.m3u8?txSecret=ec8308698812805f246191994e86c334&txTime=20250616175510"}, "original": {"flv_url": "https://www.gdmzzj.com/live/streamer/UA03B.flv?txSecret=ec8308698812805f246191994e86c334&txTime=20250616175510", "hls_url": "https://www.gdmzzj.com/live/streamer/UA03B.m3u8?txSecret=ec8308698812805f246191994e86c334&txTime=20250616175510"}}',
-    name: "SYSTEM",
-    subscribed: false,
-    createTime: 1750046110000
-  },
-  {
-    id: 1056,
-    siteId: 7,
-    sportId: 6,
-    eventId: 1023,
-    awayName: "BOA",
-    homeName: "东莞WZ",
-    cover: "",
-    isPopular: false,
-    homeNameZh: "东莞WZ",
-    homeIcon: "https://esports-cdn.namitiyu.com/kog/team/8c0070eed968c177ec49d6424bdcc018.png",
-    awayNameZh: "BOA",
-    awayIcon: "https://esports-cdn.namitiyu.com/kog/team/12550df0e919378931d751b1e54ae91d.png",
-    eventStartTime: 1750068000000,
-    liveStatus: 0,
-    streamId: "4E5RY",
-    sort: 11,
-    title: "2025K甲夏季赛",
-    isTest: false,
-    streamerStatus: 0,
-    supplierCdnPullUrl: '{"original": {"hls_url": "23.m3u8"}}',
-    streamerCdnPullUrl:
-      '{"540p": {"flv_url": "https://www.gdmzzj.com/live/streamer/4E5RY_540p.flv?txSecret=cb393354539f461a916fca3cb3cb0541&txTime=20250616175507", "hls_url": "https://www.gdmzzj.com/live/streamer/4E5RY_540p.m3u8?txSecret=cb393354539f461a916fca3cb3cb0541&txTime=20250616175507"}, "720p": {"flv_url": "https://www.gdmzzj.com/live/streamer/4E5RY_720p.flv?txSecret=cb393354539f461a916fca3cb3cb0541&txTime=20250616175507", "hls_url": "https://www.gdmzzj.com/live/streamer/4E5RY_720p.m3u8?txSecret=cb393354539f461a916fca3cb3cb0541&txTime=20250616175507"}, "1080p": {"flv_url": "https://www.gdmzzj.com/live/streamer/4E5RY_1080p.flv?txSecret=cb393354539f461a916fca3cb3cb0541&txTime=20250616175507", "hls_url": "https://www.gdmzzj.com/live/streamer/4E5RY_1080p.m3u8?txSecret=cb393354539f461a916fca3cb3cb0541&txTime=20250616175507"}, "original": {"flv_url": "https://www.gdmzzj.com/live/streamer/4E5RY.flv?txSecret=cb393354539f461a916fca3cb3cb0541&txTime=20250616175507", "hls_url": "https://www.gdmzzj.com/live/streamer/4E5RY.m3u8?txSecret=cb393354539f461a916fca3cb3cb0541&txTime=20250616175507"}}',
-    name: "SYSTEM",
-    subscribed: false,
-    createTime: 1750046108000
-  },
-  {
-    id: 1045,
-    siteId: 7,
-    sportId: 2,
-    eventId: 1012,
-    awayName: "吉林",
-    homeName: "新疆",
-    cover: "",
-    isPopular: false,
-    eventStartTime: 1750066200000,
-    liveStatus: 0,
-    streamId: "55AOE",
-    sort: 10,
-    title: "全运男篮",
-    isTest: false,
-    streamerStatus: 0,
-    supplierCdnPullUrl: '{"original": {"hls_url": "111.m3u8"}}',
-    streamerCdnPullUrl:
-      '{"540p": {"flv_url": "https://www.gdmzzj.com/live/streamer/55AOE_540p.flv?txSecret=ffb486b3c277f58290ada1f0d40d9842&txTime=20250616120722", "hls_url": "https://www.gdmzzj.com/live/streamer/55AOE_540p.m3u8?txSecret=ffb486b3c277f58290ada1f0d40d9842&txTime=20250616120722"}, "720p": {"flv_url": "https://www.gdmzzj.com/live/streamer/55AOE_720p.flv?txSecret=ffb486b3c277f58290ada1f0d40d9842&txTime=20250616120722", "hls_url": "https://www.gdmzzj.com/live/streamer/55AOE_720p.m3u8?txSecret=ffb486b3c277f58290ada1f0d40d9842&txTime=20250616120722"}, "1080p": {"flv_url": "https://www.gdmzzj.com/live/streamer/55AOE_1080p.flv?txSecret=ffb486b3c277f58290ada1f0d40d9842&txTime=20250616120722", "hls_url": "https://www.gdmzzj.com/live/streamer/55AOE_1080p.m3u8?txSecret=ffb486b3c277f58290ada1f0d40d9842&txTime=20250616120722"}, "original": {"flv_url": "https://www.gdmzzj.com/live/streamer/55AOE.flv?txSecret=ffb486b3c277f58290ada1f0d40d9842&txTime=20250616120722", "hls_url": "https://www.gdmzzj.com/live/streamer/55AOE.m3u8?txSecret=ffb486b3c277f58290ada1f0d40d9842&txTime=20250616120722"}}',
-    name: "芊芊聊球",
-    avatar: "7/800e8176-81b4-4bf6-a650-49bedad1a096.jpeg",
-    roomMessage: "Amico下载链接：am165.cc 反馈专员ID：vip000 福利专员ID：gwh001",
-    scheduledAnnouncement: "",
-    subscribed: false,
-    createTime: 1750025189000
-  },
-  {
-    id: 1043,
-    siteId: 7,
-    sportId: 3,
-    eventId: 1011,
-    awayName: "Frank Esports",
-    homeName: "WPE.PH",
-    cover: "",
-    isPopular: false,
-    homeNameZh: "WPE.PH",
-    homeNameEn: "West Point Esports PH",
-    homeIcon: "https://esports-cdn.namitiyu.com/lol/team/FiOGPYRyxT9KCQ5R0PfSnKJdjN_k",
-    awayNameZh: "Frank Esports",
-    awayNameEn: "Frank Esports",
-    awayIcon: "https://esports-cdn.namitiyu.com/lol/team/FiiEcJCtph5DgMPT_pCXHkV1tF2d",
-    eventStartTime: 1750064400000,
-    liveStatus: 0,
-    streamId: "2AK7H",
-    sort: 9,
-    title: "2025PCS第二赛段",
-    isTest: false,
-    streamerStatus: 0,
-    supplierCdnPullUrl: '{"original": {"hls_url": "123.m3u8"}}',
-    streamerCdnPullUrl:
-      '{"540p": {"flv_url": "https://www.gdmzzj.com/live/streamer/2AK7H_540p.flv?txSecret=44d0bc2415b254834e5306a302ff5c6e&txTime=20250616120535", "hls_url": "https://www.gdmzzj.com/live/streamer/2AK7H_540p.m3u8?txSecret=44d0bc2415b254834e5306a302ff5c6e&txTime=20250616120535"}, "720p": {"flv_url": "https://www.gdmzzj.com/live/streamer/2AK7H_720p.flv?txSecret=44d0bc2415b254834e5306a302ff5c6e&txTime=20250616120535", "hls_url": "https://www.gdmzzj.com/live/streamer/2AK7H_720p.m3u8?txSecret=44d0bc2415b254834e5306a302ff5c6e&txTime=20250616120535"}, "1080p": {"flv_url": "https://www.gdmzzj.com/live/streamer/2AK7H_1080p.flv?txSecret=44d0bc2415b254834e5306a302ff5c6e&txTime=20250616120535", "hls_url": "https://www.gdmzzj.com/live/streamer/2AK7H_1080p.m3u8?txSecret=44d0bc2415b254834e5306a302ff5c6e&txTime=20250616120535"}, "original": {"flv_url": "https://www.gdmzzj.com/live/streamer/2AK7H.flv?txSecret=44d0bc2415b254834e5306a302ff5c6e&txTime=20250616120535", "hls_url": "https://www.gdmzzj.com/live/streamer/2AK7H.m3u8?txSecret=44d0bc2415b254834e5306a302ff5c6e&txTime=20250616120535"}}',
-    name: "电竞红魔渣渣辉",
-    avatar: "7/4c55fa55-3fad-4084-ae2b-86229fee5615.jpeg",
-    roomMessage: "Amico下载链接：am165.cc 反馈专员ID：vip000 福利专员ID：gwh001",
-    scheduledAnnouncement: "",
-    subscribed: false,
-    createTime: 1750025099000
-  },
-  {
-    id: 1055,
-    siteId: 7,
-    sportId: 4,
-    eventId: 1022,
-    awayName: "FAVBET",
-    homeName: "Nexus",
-    cover: "",
-    isPopular: false,
-    homeNameZh: "Nexus",
-    homeNameEn: "Nexus",
-    homeIcon: "https://esports-cdn.namitiyu.com/csgo/team/n52dbdba9adc8b883ff077b42a62f3a1d.png",
-    awayNameZh: "FAVBET",
-    awayNameEn: "FAVBET",
-    awayIcon: "https://esports-cdn.namitiyu.com/csgo/team/n09367f21cd13217a8f14175e29d3bc0d.png",
-    eventStartTime: 1750060800000,
-    liveStatus: 0,
-    streamId: "FN3BR",
-    sort: 8,
-    title: "银河之战 2025 第三阶段",
-    isTest: false,
-    streamerStatus: 0,
-    supplierCdnPullUrl: '{"original": {"hls_url": "12.m3u8"}}',
-    streamerCdnPullUrl:
-      '{"540p": {"flv_url": "https://www.gdmzzj.com/live/streamer/FN3BR_540p.flv?txSecret=91b21d215d9e6968bdab1ff5b35d2418&txTime=20250616175457", "hls_url": "https://www.gdmzzj.com/live/streamer/FN3BR_540p.m3u8?txSecret=91b21d215d9e6968bdab1ff5b35d2418&txTime=20250616175457"}, "720p": {"flv_url": "https://www.gdmzzj.com/live/streamer/FN3BR_720p.flv?txSecret=91b21d215d9e6968bdab1ff5b35d2418&txTime=20250616175457", "hls_url": "https://www.gdmzzj.com/live/streamer/FN3BR_720p.m3u8?txSecret=91b21d215d9e6968bdab1ff5b35d2418&txTime=20250616175457"}, "1080p": {"flv_url": "https://www.gdmzzj.com/live/streamer/FN3BR_1080p.flv?txSecret=91b21d215d9e6968bdab1ff5b35d2418&txTime=20250616175457", "hls_url": "https://www.gdmzzj.com/live/streamer/FN3BR_1080p.m3u8?txSecret=91b21d215d9e6968bdab1ff5b35d2418&txTime=20250616175457"}, "original": {"flv_url": "https://www.gdmzzj.com/live/streamer/FN3BR.flv?txSecret=91b21d215d9e6968bdab1ff5b35d2418&txTime=20250616175457", "hls_url": "https://www.gdmzzj.com/live/streamer/FN3BR.m3u8?txSecret=91b21d215d9e6968bdab1ff5b35d2418&txTime=20250616175457"}}',
-    name: "SYSTEM",
-    subscribed: false,
-    createTime: 1750046098000
-  },
-  {
-    id: 1054,
-    siteId: 7,
-    sportId: 4,
-    eventId: 1021,
-    awayName: "Sashi",
-    homeName: "CYBERSHOKE",
-    cover: "",
-    isPopular: false,
-    homeNameZh: "CYBERSHOKE",
-    homeNameEn: "CYBERSHOKE",
-    homeIcon: "https://esports-cdn.namitiyu.com/csgo/team/ne53667d6199da870530b0600ef08cb7d.png",
-    awayNameZh: "Sashi",
-    awayNameEn: "Sashi",
-    awayIcon: "https://esports-cdn.namitiyu.com/csgo/team/nfd783c5eb334814968e316200971c61c.png",
-    eventStartTime: 1750057200000,
-    liveStatus: 0,
-    streamId: "LF6W8",
-    sort: 7,
-    title: "Exort试验场 第1季",
-    isTest: false,
-    streamerStatus: 0,
-    supplierCdnPullUrl: '{"original": {"hls_url": "12.m3u8"}}',
-    streamerCdnPullUrl:
-      '{"540p": {"flv_url": "https://www.gdmzzj.com/live/streamer/LF6W8_540p.flv?txSecret=092cf6db8ad8965b03ddfa4cfb80bb01&txTime=20250616175454", "hls_url": "https://www.gdmzzj.com/live/streamer/LF6W8_540p.m3u8?txSecret=092cf6db8ad8965b03ddfa4cfb80bb01&txTime=20250616175454"}, "720p": {"flv_url": "https://www.gdmzzj.com/live/streamer/LF6W8_720p.flv?txSecret=092cf6db8ad8965b03ddfa4cfb80bb01&txTime=20250616175454", "hls_url": "https://www.gdmzzj.com/live/streamer/LF6W8_720p.m3u8?txSecret=092cf6db8ad8965b03ddfa4cfb80bb01&txTime=20250616175454"}, "1080p": {"flv_url": "https://www.gdmzzj.com/live/streamer/LF6W8_1080p.flv?txSecret=092cf6db8ad8965b03ddfa4cfb80bb01&txTime=20250616175454", "hls_url": "https://www.gdmzzj.com/live/streamer/LF6W8_1080p.m3u8?txSecret=092cf6db8ad8965b03ddfa4cfb80bb01&txTime=20250616175454"}, "original": {"flv_url": "https://www.gdmzzj.com/live/streamer/LF6W8.flv?txSecret=092cf6db8ad8965b03ddfa4cfb80bb01&txTime=20250616175454", "hls_url": "https://www.gdmzzj.com/live/streamer/LF6W8.m3u8?txSecret=092cf6db8ad8965b03ddfa4cfb80bb01&txTime=20250616175454"}}',
-    name: "SYSTEM",
-    subscribed: false,
-    createTime: 1750046095000
-  },
-  {
-    id: 1053,
-    siteId: 7,
-    sportId: 5,
-    eventId: 1020,
-    awayName: "Tech Free Gaming",
-    homeName: "Execration",
-    cover: "",
-    isPopular: false,
-    homeNameZh: "Execration",
-    homeNameEn: "Execration",
-    homeIcon: "https://esports-cdn.namitiyu.com/dota/team/Fq1ReZspKtHJdfKKr4qQ3dehJ4WC",
-    awayNameZh: "Tech Free Gaming",
-    awayNameEn: "Tech Free Gaming",
-    awayIcon: "https://esports-cdn.namitiyu.com/dota/team/Fgn4aktIqXysrKXrYpd7pwyNqltO",
-    eventStartTime: 1750057200000,
-    liveStatus: 0,
-    streamId: "7E0BA",
-    sort: 6,
-    title: "TI14国际邀请赛预选赛",
-    isTest: false,
-    streamerStatus: 0,
-    supplierCdnPullUrl: '{"original": {"hls_url": "12.m3u8"}}',
-    streamerCdnPullUrl:
-      '{"540p": {"flv_url": "https://www.gdmzzj.com/live/streamer/7E0BA_540p.flv?txSecret=ddf881aa10c1c065fd4b235fb92fc8df&txTime=20250616175451", "hls_url": "https://www.gdmzzj.com/live/streamer/7E0BA_540p.m3u8?txSecret=ddf881aa10c1c065fd4b235fb92fc8df&txTime=20250616175451"}, "720p": {"flv_url": "https://www.gdmzzj.com/live/streamer/7E0BA_720p.flv?txSecret=ddf881aa10c1c065fd4b235fb92fc8df&txTime=20250616175451", "hls_url": "https://www.gdmzzj.com/live/streamer/7E0BA_720p.m3u8?txSecret=ddf881aa10c1c065fd4b235fb92fc8df&txTime=20250616175451"}, "1080p": {"flv_url": "https://www.gdmzzj.com/live/streamer/7E0BA_1080p.flv?txSecret=ddf881aa10c1c065fd4b235fb92fc8df&txTime=20250616175451", "hls_url": "https://www.gdmzzj.com/live/streamer/7E0BA_1080p.m3u8?txSecret=ddf881aa10c1c065fd4b235fb92fc8df&txTime=20250616175451"}, "original": {"flv_url": "https://www.gdmzzj.com/live/streamer/7E0BA.flv?txSecret=ddf881aa10c1c065fd4b235fb92fc8df&txTime=20250616175451", "hls_url": "https://www.gdmzzj.com/live/streamer/7E0BA.m3u8?txSecret=ddf881aa10c1c065fd4b235fb92fc8df&txTime=20250616175451"}}',
-    name: "SYSTEM",
-    subscribed: false,
-    createTime: 1750046091000
-  },
-  {
-    id: 1052,
-    siteId: 7,
-    sportId: 6,
-    eventId: 1019,
-    awayName: "WST",
-    homeName: "深圳KLG",
-    cover: "",
-    isPopular: false,
-    homeNameZh: "深圳KLG",
-    homeNameEn: "深圳KLG",
-    homeIcon: "https://esports-cdn.namitiyu.com/kog/team/FpSe2CVwH3DBnLQiJznTiJIOL4sK",
-    awayNameZh: "WST",
-    awayNameEn: "WST",
-    awayIcon: "https://esports-cdn.namitiyu.com/kog/team/Fp8YaHQV-lHlavxJU1eRmo-pisu8",
-    eventStartTime: 1750057200000,
-    liveStatus: 0,
-    streamId: "490H6",
-    sort: 5,
-    title: "2025K甲夏季赛",
-    isTest: false,
-    streamerStatus: 0,
-    supplierCdnPullUrl: '{"original": {"hls_url": "请问.m3u8"}}',
-    streamerCdnPullUrl:
-      '{"540p": {"flv_url": "https://www.gdmzzj.com/live/streamer/490H6_540p.flv?txSecret=353f65bb0f2a46e0f07e8a3f7e422f91&txTime=20250616175449", "hls_url": "https://www.gdmzzj.com/live/streamer/490H6_540p.m3u8?txSecret=353f65bb0f2a46e0f07e8a3f7e422f91&txTime=20250616175449"}, "720p": {"flv_url": "https://www.gdmzzj.com/live/streamer/490H6_720p.flv?txSecret=353f65bb0f2a46e0f07e8a3f7e422f91&txTime=20250616175449", "hls_url": "https://www.gdmzzj.com/live/streamer/490H6_720p.m3u8?txSecret=353f65bb0f2a46e0f07e8a3f7e422f91&txTime=20250616175449"}, "1080p": {"flv_url": "https://www.gdmzzj.com/live/streamer/490H6_1080p.flv?txSecret=353f65bb0f2a46e0f07e8a3f7e422f91&txTime=20250616175449", "hls_url": "https://www.gdmzzj.com/live/streamer/490H6_1080p.m3u8?txSecret=353f65bb0f2a46e0f07e8a3f7e422f91&txTime=20250616175449"}, "original": {"flv_url": "https://www.gdmzzj.com/live/streamer/490H6.flv?txSecret=353f65bb0f2a46e0f07e8a3f7e422f91&txTime=20250616175449", "hls_url": "https://www.gdmzzj.com/live/streamer/490H6.m3u8?txSecret=353f65bb0f2a46e0f07e8a3f7e422f91&txTime=20250616175449"}}',
-    name: "SYSTEM",
-    subscribed: false,
-    createTime: 1750046089000
-  },
-  {
-    id: 1074,
-    siteId: 7,
-    sportId: 2,
-    eventId: 1040,
-    awayName: "圣塞巴斯蒂安学院金雄鹿",
-    homeName: "玛布亚学院红雀",
-    cover: "",
-    isPopular: false,
-    eventStartTime: 1750053600000,
-    eventEndTime: 1750062600000,
-    liveStatus: 1,
-    streamId: "3PL4A",
-    sort: 1,
-    title: "菲季前赛",
-    isTest: false,
-    streamerStatus: 0,
-    supplierCdnPullUrl:
-      '{"original": {"hls_url": "https://live1.jiatianxiazhuangshi.com/live/j374ws94jjrfgko_83db5fa5de150035d70d743112fdc52a_nsd.m3u8"}}',
-    streamerCdnPullUrl:
-      '{"540p": {"flv_url": "https://www.gdmzzj.com/live/streamer/3PL4A_540p.flv?txSecret=c2b14ec3463fe4506e4f0f312832833e&txTime=20250616201926", "hls_url": "https://www.gdmzzj.com/live/streamer/3PL4A_540p.m3u8?txSecret=c2b14ec3463fe4506e4f0f312832833e&txTime=20250616201926"}, "720p": {"flv_url": "https://www.gdmzzj.com/live/streamer/3PL4A_720p.flv?txSecret=c2b14ec3463fe4506e4f0f312832833e&txTime=20250616201926", "hls_url": "https://www.gdmzzj.com/live/streamer/3PL4A_720p.m3u8?txSecret=c2b14ec3463fe4506e4f0f312832833e&txTime=20250616201926"}, "1080p": {"flv_url": "https://www.gdmzzj.com/live/streamer/3PL4A_1080p.flv?txSecret=c2b14ec3463fe4506e4f0f312832833e&txTime=20250616201926", "hls_url": "https://www.gdmzzj.com/live/streamer/3PL4A_1080p.m3u8?txSecret=c2b14ec3463fe4506e4f0f312832833e&txTime=20250616201926"}, "original": {"flv_url": "https://www.gdmzzj.com/live/streamer/3PL4A.flv?txSecret=c2b14ec3463fe4506e4f0f312832833e&txTime=20250616201926", "hls_url": "https://www.gdmzzj.com/live/streamer/3PL4A.m3u8?txSecret=c2b14ec3463fe4506e4f0f312832833e&txTime=20250616201926"}}',
-    supplierPreviewUrl: "/live/cdn/2/7HZOK.jpg",
-    name: "SYSTEM",
-    subscribed: false,
-    createTime: 1750054766000
-  },
-  {
-    id: 1051,
-    siteId: 7,
-    sportId: 5,
-    eventId: 1018,
-    awayName: "BOOM Esports",
-    homeName: "Ivory",
-    cover: "",
-    isPopular: false,
-    homeNameZh: "Ivory",
-    homeNameEn: "Ivory",
-    homeIcon: "https://esports-cdn.namitiyu.com/dota/team/FoP00Mz6f5vgwM4vW9pNoy6LtLEP",
-    awayNameZh: "BOOM Esports",
-    awayNameEn: "BOOM Esports",
-    awayIcon: "https://esports-cdn.namitiyu.com/dota/team/945b468a26610d8a4288e49d01f255b5.png",
-    eventStartTime: 1750046400000,
-    liveStatus: 1,
-    streamId: "JIF93",
-    sort: 0,
-    title: "TI14国际邀请赛预选赛",
-    isTest: false,
-    streamerStatus: 0,
-    supplierCdnPullUrl:
-      '{"original": {"flv_url": "https://www.gdmzzj.com/live/U6I8M.flv?txSecret=c3de969eac344db322260bdfd70dc5ae&txTime=20250616095830", "hls_url": "https://www.gdmzzj.com/live/U6I8M.m3u8?txSecret=c3de969eac344db322260bdfd70dc5ae&txTime=20250616095830"}}',
-    streamerCdnPullUrl:
-      '{"540p": {"flv_url": "https://www.gdmzzj.com/live/streamer/JIF93_540p.flv?txSecret=1be20f0877b9764bb1a746f53af40e2f&txTime=20250616175444", "hls_url": "https://www.gdmzzj.com/live/streamer/JIF93_540p.m3u8?txSecret=1be20f0877b9764bb1a746f53af40e2f&txTime=20250616175444"}, "720p": {"flv_url": "https://www.gdmzzj.com/live/streamer/JIF93_720p.flv?txSecret=1be20f0877b9764bb1a746f53af40e2f&txTime=20250616175444", "hls_url": "https://www.gdmzzj.com/live/streamer/JIF93_720p.m3u8?txSecret=1be20f0877b9764bb1a746f53af40e2f&txTime=20250616175444"}, "1080p": {"flv_url": "https://www.gdmzzj.com/live/streamer/JIF93_1080p.flv?txSecret=1be20f0877b9764bb1a746f53af40e2f&txTime=20250616175444", "hls_url": "https://www.gdmzzj.com/live/streamer/JIF93_1080p.m3u8?txSecret=1be20f0877b9764bb1a746f53af40e2f&txTime=20250616175444"}, "original": {"flv_url": "https://www.gdmzzj.com/live/streamer/JIF93.flv?txSecret=1be20f0877b9764bb1a746f53af40e2f&txTime=20250616175444", "hls_url": "https://www.gdmzzj.com/live/streamer/JIF93.m3u8?txSecret=1be20f0877b9764bb1a746f53af40e2f&txTime=20250616175444"}}',
-    supplierPreviewUrl: "",
-    streamerPreviewUrl: "",
-    name: "SYSTEM",
-    subscribed: false,
-    createTime: 1750046084000
-  },
-  {
-    id: 1050,
-    siteId: 7,
-    sportId: 1,
-    eventId: 1017,
-    awayName: "苏里南",
-    homeName: "哥斯达黎加",
-    cover: "",
-    isPopular: false,
-    homeNameZh: "哥斯达黎加",
-    homeNameEn: "Costa Rica",
-    homeIcon: "https://cdn.sportnanoapi.com/football/team/3533f39e923319b3afa4f2d4d388c886.png",
-    awayNameZh: "苏里南",
-    awayNameEn: "Suriname",
-    awayIcon: "https://cdn.sportnanoapi.com/football/team/1036ec09039d9a5d63924ccff6adc2fe.png",
-    eventStartTime: 1750042800000,
-    liveStatus: 1,
-    streamId: "7XDU6",
-    sort: 17,
-    title: "美金杯",
-    isTest: false,
-    streamerStatus: 0,
-    supplierCdnPullUrl:
-      '{"original": {"hls_url": "https://live1.jiatianxiazhuangshi.com/live/59807830_f793b250a1172e0333d7247b30cd6bc5_nsd.m3u8"}}',
-    streamerCdnPullUrl:
-      '{"540p": {"flv_url": "https://www.gdmzzj.com/live/streamer/7XDU6_540p.flv?txSecret=beb2bc39b2fbc8408d7dec81613e1b89&txTime=20250616171203", "hls_url": "https://www.gdmzzj.com/live/streamer/7XDU6_540p.m3u8?txSecret=beb2bc39b2fbc8408d7dec81613e1b89&txTime=20250616171203"}, "720p": {"flv_url": "https://www.gdmzzj.com/live/streamer/7XDU6_720p.flv?txSecret=beb2bc39b2fbc8408d7dec81613e1b89&txTime=20250616171203", "hls_url": "https://www.gdmzzj.com/live/streamer/7XDU6_720p.m3u8?txSecret=beb2bc39b2fbc8408d7dec81613e1b89&txTime=20250616171203"}, "1080p": {"flv_url": "https://www.gdmzzj.com/live/streamer/7XDU6_1080p.flv?txSecret=beb2bc39b2fbc8408d7dec81613e1b89&txTime=20250616171203", "hls_url": "https://www.gdmzzj.com/live/streamer/7XDU6_1080p.m3u8?txSecret=beb2bc39b2fbc8408d7dec81613e1b89&txTime=20250616171203"}, "original": {"flv_url": "https://www.gdmzzj.com/live/streamer/7XDU6.flv?txSecret=beb2bc39b2fbc8408d7dec81613e1b89&txTime=20250616171203", "hls_url": "https://www.gdmzzj.com/live/streamer/7XDU6.m3u8?txSecret=beb2bc39b2fbc8408d7dec81613e1b89&txTime=20250616171203"}}',
-    supplierPreviewUrl: "",
-    streamerPreviewUrl: "",
-    name: "SYSTEM",
-    subscribed: false,
-    createTime: 1750043524000
+const store = userStore();
+const props = defineProps(["promoCode"]);
+const { promoCode } = toRefs(props);
+// const list = ref([]);
+const totalValidBet = ref();
+
+const tableData = ref();
+// const tableData = ref([
+//   {
+//     id: 2,
+//     siteId: 7,
+//     memberId: "1869212810776846338",
+//     loginName: "testlh098",
+//     quizId: 1083,
+//     quizTitle: "K27 vs NGX",
+//     answerOne: "无",
+//     selectedOccasion: "梅开二度",
+//     status: "赢",
+//     createTime: "2025-06-17 16:04:54",
+//     bonus: 88.0
+//   },
+//   {
+//     id: 107449,
+//     siteId: 7,
+//     memberId: "1869212810776846338",
+//     loginName: "testlh098",
+//     quizId: 1083,
+//     quizTitle: "K27 vs NGX",
+//     answerOne: "NGX",
+//     selectedOccasion: "独赢",
+//     status: "赢",
+//     createTime: "2025-06-17 16:04:02",
+//     bonus: 8.0
+//   },
+//   {
+//     id: 1,
+//     siteId: 7,
+//     memberId: "1869212810776846338",
+//     loginName: "testlh098",
+//     quizId: 1081,
+//     quizTitle: "test",
+//     answerOne: "无",
+//     selectedOccasion: "出现红牌",
+//     status: "已取消",
+//     createTime: "2025-06-17 14:39:57",
+//     bonus: 28.0
+//   },
+//   {
+//     id: 107447,
+//     siteId: 7,
+//     memberId: "1869212810776846338",
+//     loginName: "testlh098",
+//     quizId: 1081,
+//     quizTitle: "test",
+//     answerOne: "test1",
+//     selectedOccasion: "独赢",
+//     status: "已取消",
+//     createTime: "2025-06-17 14:22:14",
+//     bonus: 8.0
+//   }
+// ]);
+const fetchTableData = async () => {
+  try {
+    const res = await getFifaQuiz2025PromoRecord(promoCode.value);
+    tableData.value = res.data;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    pageLoading.value = false;
+    loadingBtn.value = false;
   }
-]);
+};
+
+const fetchData = async () => {
+  try {
+    const res = await getFifaQuiz2025PromoInit(promoCode.value);
+    totalValidBet.value = res.data.totalValidBet;
+    list.value = res.data.gameQuizList;
+
+    // if (res.data.memberAnswerOne) {
+    //   selectedTeam.value = res.data.memberAnswerOne;
+    // }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    pageLoading.value = false;
+    loadingBtn.value = false;
+  }
+};
+
+const handleSubmitFifaQuiz2025 = (quizId, answerOne) => {
+  loadingBtn.value = true;
+  submitFifaQuiz2025(promoCode.value, quizId, answerOne)
+    .then((res) => {
+      if (res.code === 0) {
+        notify({
+          type: "success",
+          message: "成功提交竞猜"
+        });
+        fetchData();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      loadingBtn.value = false;
+    });
+};
+
+const handleSubmitOccasionFifaQuiz2025 = (quizId, selectedOccasion) => {
+  loadingBtn.value = true;
+  submitOccasionFifaQuiz2025(promoCode.value, quizId, selectedOccasion)
+    .then((res) => {
+      if (res.code === 0) {
+        notify({
+          type: "success",
+          message: "成功提交竞猜"
+        });
+        fetchData();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      loadingBtn.value = false;
+    });
+};
+
+const handleClaimFifaQuiz2025 = (quizId) => {
+  loadingBtn.value = true;
+  claimFifaQuiz2025(promoCode.value, quizId)
+    .then((res) => {
+      if (res.code === 0) {
+        notify.redPacket("成功领取", res.data);
+        fetchData();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      loadingBtn.value = false;
+    });
+};
+
+const handleClaimOccasionFifaQuiz2025 = (quizId) => {
+  loadingBtn.value = true;
+  claimOccasionFifaQuiz2025(promoCode.value, quizId)
+    .then((res) => {
+      if (res.code === 0) {
+        notify.redPacket("成功领取", res.data);
+        fetchData();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      loadingBtn.value = false;
+    });
+};
 
 // const model = defineModel({ type: Number });
 const model = ref(0);
-const emit = defineEmits(["scroll-reach-right"]);
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
@@ -528,28 +669,54 @@ const swiperConfig = computed(() => {
 
 const handleLivestreamClick = (index) => {
   model.value = index;
+  selectedTeam.value = "";
+  selectedSpecial.value = "";
 };
 
 const handleSwiper = (_swiperInstance) => {
   swiperInstance.value = _swiperInstance;
 };
 
-const getDisplayDateTime = (date) => {
-  const now = moment();
-  const eventDate = moment(date);
-  const diffInDays = eventDate.diff(now, "days");
+// const getDisplayDateTime = (date) => {
+//   const now = moment();
+//   const eventDate = moment(date);
+//   const diffInDays = eventDate.diff(now, "days");
+
+//   if (diffInDays === 0) {
+//     return eventDate.format("今日 HH:mm");
+//   } else if (diffInDays === 1) {
+//     return eventDate.format("明日 HH:mm");
+//   } else {
+//     return eventDate.format("MM/DD");
+//   }
+// };
+
+const getDisplayDateTime = (timestamp) => {
+  const now = moment().startOf("day");
+  const eventDate = moment(timestamp);
+  const eventDay = moment(timestamp).startOf("day");
+
+  const diffInDays = eventDay.diff(now, "days");
 
   if (diffInDays === 0) {
     return eventDate.format("今日 HH:mm");
   } else if (diffInDays === 1) {
     return eventDate.format("明日 HH:mm");
   } else {
-    return eventDate.format("MM/DD");
+    return eventDate.format("MM/DD HH:mm");
   }
 };
 
 const currentListItem = computed(() => {
   return list.value[model.value];
+});
+
+const choiceOneArray = computed(() => {
+  try {
+    return JSON.parse(currentListItem.value.choiceOne || "[]");
+  } catch (e) {
+    return [];
+  }
 });
 
 const selectedTeam = ref("");
@@ -561,7 +728,7 @@ const selectedSpecial = ref("");
 const selectSpecial = (special) => {
   selectedSpecial.value = special;
 };
-const specialList = [
+const specialList = ref([
   { id: "1", title: "全场零进球", prize: "18", img: "special-01.png" },
   { id: "2", title: "出现红牌", prize: "28", img: "special-02.png" },
   { id: "3", title: "补时进球", prize: "38", img: "special-03.png" },
@@ -569,14 +736,39 @@ const specialList = [
   { id: "5", title: "梅开二度", prize: "88", img: "special-05.png" },
   { id: "6", title: "帽子戏法", prize: "128", img: "special-06.png" },
   { id: "7", title: "乌龙球", prize: "288", img: "special-07.png" }
-];
+]);
+
+const filteredSpecialList = computed(() => {
+  return currentListItem.value.occasions;
+});
 
 watch(model, () => {
   if (!swiperInstance.value) return;
   swiperInstance.value.slideTo(model.value, 0);
 });
 
-onMounted(() => {});
+const showNotStart = computed(() => {
+  return moment(currentListItem.value.matchTime).isAfter(moment());
+});
+
+const tableRecordDialog = ref(false);
+
+const openTableRecord = () => {
+  fetchTableData();
+  tableRecordDialog.value = true;
+};
+
+const pageLoading = ref(true);
+const loadingBtn = ref(false);
+
+onMounted(() => {
+  if (!store.token) {
+    return;
+  }
+
+  fetchData();
+  fetchTableData();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -710,6 +902,7 @@ onMounted(() => {});
         line-height: 15px;
         color: #7a80a1;
         margin-top: 12px;
+        text-align: center;
       }
       .livestream-list-item__match-info__date__vs {
         font-size: 16px;
@@ -871,6 +1064,7 @@ onMounted(() => {});
 
     .col-record {
       color: #00a1ff;
+      cursor: pointer;
     }
   }
 
@@ -1030,6 +1224,13 @@ onMounted(() => {});
     cursor: pointer;
     margin: 20px auto 20px;
 
+    &.disabled {
+      cursor: not-allowed;
+      pointer-events: none;
+      // filter: grayscale(100%);
+      // opacity: 0.6;
+    }
+
     &.active {
       background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
       color: white;
@@ -1123,6 +1324,11 @@ onMounted(() => {});
     cursor: pointer;
     position: relative;
     flex-direction: column;
+
+    &.disabled {
+      cursor: not-allowed;
+      pointer-events: none;
+    }
 
     img {
       display: block;
@@ -1264,6 +1470,171 @@ onMounted(() => {});
         &:after {
           background-image: url(@/assets/images/promotion/hotpromo/worldcup-2025/select-btn-active-dark.svg);
         }
+      }
+    }
+  }
+}
+
+.close-btn {
+  border: 1px solid #00a1ff;
+  border-radius: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 144px;
+  height: 44px;
+  color: #00a1ff;
+  margin: auto;
+  cursor: pointer;
+}
+
+.dark {
+  .close-btn {
+    border-color: #be9457;
+    color: #be9457;
+  }
+}
+
+.loading-blue-icon {
+  width: 200px;
+  height: 200px;
+  border: 2px solid #799df8; /* Light gold color */
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 4px auto;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.record-title {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: PingFang TC;
+  font-size: 32px;
+  line-height: 1;
+  white-space: nowrap;
+
+  &:before {
+    content: "";
+    background: url("@/assets/images/promotion/hotpromo/worldcup-2025/title-pattern-left.png") no-repeat center center;
+    background-size: cover;
+    width: 307px;
+    height: 44px;
+    display: block;
+    margin-right: 10px;
+  }
+  &:after {
+    content: "";
+    background: url("@/assets/images/promotion/hotpromo/worldcup-2025/title-pattern-right.png") no-repeat center center;
+    background-size: cover;
+    width: 307px;
+    height: 44px;
+    display: block;
+    margin-left: 10px;
+  }
+}
+
+.record-table {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 25px;
+  border-collapse: collapse;
+  th {
+    height: 56px;
+    font-size: 20px;
+    // font-weight: 600;
+    line-height: 28px;
+    color: #fff;
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    vertical-align: middle;
+    text-align: center;
+
+    &:first-child {
+      border-top-left-radius: 6px;
+    }
+    &:last-child {
+      border-top-right-radius: 6px;
+    }
+  }
+  tr {
+    height: 56px;
+    font-size: 20px;
+    // font-weight: 600;
+    line-height: 28px;
+    color: #333333;
+    vertical-align: middle;
+    text-align: center;
+    &:nth-child(odd) {
+      background: #f2f8fe;
+    }
+    &:nth-child(even) {
+      background: #fff;
+    }
+    th {
+      &:first-child {
+        padding-left: 20px;
+      }
+      &:last-child {
+        // text-align: right;
+        padding-right: 14px;
+      }
+    }
+
+    td {
+      border: 1px solid #acd4f6;
+      &:first-child {
+        padding-left: 20px;
+      }
+      &:last-child {
+        // text-align: right;
+        padding-right: 14px;
+      }
+    }
+
+    &:last-child {
+      td {
+        &:first-child {
+          border-bottom-left-radius: 6px;
+        }
+      }
+    }
+    &:last-child {
+      td {
+        &:last-child {
+          border-bottom-right-radius: 6px;
+        }
+      }
+    }
+  }
+}
+
+.dark {
+  .record-table {
+    th {
+      color: #653b00;
+      // background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      background: linear-gradient(180deg, #ffe2b9 0%, #be9457 100%);
+    }
+    tr {
+      color: #ffffff;
+      &:nth-child(odd) {
+        background: transparent;
+      }
+      &:nth-child(even) {
+        background: transparent;
+      }
+
+      td {
+        border: 1px solid #f2f6ac;
       }
     }
   }

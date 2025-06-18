@@ -116,7 +116,7 @@
       :params="list.param"/>
 
     <WorldCup2025
-      v-if="list.redirectUrl === 'lh1-worldcup-2025'"
+      v-if="list.redirectUrl === 'lh1-fifa-quiz-2025'"
       :promo-code="list.promoCode"
       :params="list.param"
     />
