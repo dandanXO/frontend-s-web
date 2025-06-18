@@ -74,7 +74,6 @@
         </div>
       </template>
 
-      <!-- 調整欄位寬度 -->
       <Column field="id" :header="t('fields.platformMatchId')" style="min-width: 120px" />
       <Column field="sportId" :header="t('fields.sportType')" style="min-width: 100px">
         <template #body="slotProps">
@@ -877,6 +876,10 @@ onUnmounted(() => {
 /* PrimeVue P-field for form items */
 .p-field {
   margin-bottom: 1rem;
+  label {
+    width: 150px;
+    display: inline-block;
+  }
 }
 
 .p-dialog-md {
