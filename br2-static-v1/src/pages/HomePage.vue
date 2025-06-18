@@ -3397,8 +3397,8 @@ onBeforeUnmount(() => {
 
 .announcement-card {
   height: 400px;
-  background: linear-gradient(90deg, #00FD7C 0%, #FFE83E 100%);
-  color: #000;
+  background: #1F241F;
+  color: #fff;
   border-radius: 10px;
   overflow-y: auto;
 
@@ -3407,7 +3407,7 @@ onBeforeUnmount(() => {
   }
 
   .q-tab{
-    color: #000;
+    color: #fff;
   }
 
   .q-card {
