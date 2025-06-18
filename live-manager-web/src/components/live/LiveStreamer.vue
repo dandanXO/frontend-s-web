@@ -22,7 +22,7 @@
             size="small"
           />
           <InputText type="text" v-model="request.name" optionLabel="名称" placeholder="名称" />
-          <Button :label="t('fields.search')" size="small" severity="success" icon="pi pi-search" />
+          <Button :label="t('fields.search')" size="small" severity="success" icon="pi pi-search"  @click="loadStreamer"/>
           <Button
             :label="t('fields.reset')"
             size="small"
@@ -400,8 +400,8 @@ const uiControl = reactive({
   removeBtn: true,
   dialogLoading: false,
   status: [
-    { name: t('fields.notStarted'), display: "t('fields.notStarted')", id: 0 },
-    { name: t('fields.inProgress'), display: "t('fields.inProgress')", id: 1 },
+    { name: t('fields.notStarted'), display: "t('fields.notStarted')", id: 0, value: 0 },
+    { name: t('fields.inProgress'), display: "t('fields.inProgress')", id: 1 , value: 1},
   ],
 })
 
@@ -620,7 +620,13 @@ function getStatusName(statusId) {
 }
 
 async function loadStreamer() {
-  const res = await getSportLiveStreamer(request)
+  console.log(request,'dan')
+  const _request = request
+  if(request.liveStatus){
+    _request.liveStatus = request.liveStatus.value
+  }
+  
+  const res = await getSportLiveStreamer(_request)
 
   liveStreamerList.value = res.records
 }
