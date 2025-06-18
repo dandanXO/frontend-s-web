@@ -604,9 +604,10 @@ function formatSportType(row) {
       return t('fields.football')
     case 2:
       return t('fields.basketball')
-    default:
+    default: {
       const item = liveSportTyps.find(item => item.id === row.sportId)
       return item ? item.display : '-'
+    }
   }
 }
 

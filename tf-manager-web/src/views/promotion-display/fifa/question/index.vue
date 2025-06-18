@@ -107,24 +107,6 @@
         <el-form-item :label="t('fields.quizTitle')" prop="quizTitle">
           <el-input v-model="form.quizTitle" style="width: 350px;" maxlength="50" />
         </el-form-item>
-        <el-form-item :label="t('fields.gameType')" prop="gameType">
-          <el-select
-            v-model="form.gameType"
-            size="small"
-            :placeholder="t('fields.gameType')"
-            class="filter-item"
-            style="width: 350px;"
-            default-first-option
-            @change="populateChoice"
-          >
-            <el-option
-              v-for="item in uiControl.gameType"
-              :key="item.key"
-              :label="item.displayName"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
         <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.homeTeam')" prop="homeTeam">
           <el-input v-model="form.homeTeam" style="width: 350px;" maxlength="50" @change="populateChoice" />
         </el-form-item>
@@ -193,64 +175,18 @@
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item
+        <!-- <el-form-item
           :label="t('fields.poolAmount')"
           prop="poolAmount"
           @keypress="restrictDecimalInput($event)"
         >
           <el-input v-model="form.poolAmount" style="width: 350px;" />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.questionOne')" prop="questionOne">
           <el-input v-model="form.questionOne" style="width: 350px;" maxlength="50" disabled />
         </el-form-item>
         <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.choiceOne')" prop="choiceOne">
           <div v-for="(item, index) in choiceOne" :key="index">
-            <el-input style="width: 350px; margin-top: 5px;" v-model="item.value" disabled />
-          </div>
-        </el-form-item>
-        <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.questionTwo')" prop="questionTwo">
-          <el-select
-            v-model="form.questionTwo"
-            size="small"
-            :placeholder="t('fields.questionTwo')"
-            class="filter-item"
-            style="width: 350px;"
-            default-first-option
-            @change="populateChoice"
-          >
-            <el-option
-              v-for="item in uiControl.questions"
-              :key="item.key"
-              :label="t(item.displayName)"
-              :value="t(item.value)"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.choiceTwo')" prop="choiceTwo">
-          <div v-for="(item, index) in choiceTwo" :key="index">
-            <el-input style="width: 350px; margin-top: 5px;" v-model="item.value" disabled />
-          </div>
-        </el-form-item>
-        <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.questionThree')" prop="questionThree">
-          <el-select
-            v-model="form.questionThree"
-            size="small"
-            :placeholder="t('fields.questionThree')"
-            class="filter-item"
-            style="width: 350px;"
-            default-first-option
-            @change="populateChoice"
-          >
-            <el-option
-              v-for="item in uiControl.questions"
-              :key="item.key"
-              :label="t(item.displayName)"
-              :value="t(item.value)"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item v-if="uiControl.dialogType === 'CREATE'" :label="t('fields.choiceThree')" prop="choiceThree">
-          <div v-for="(item, index) in choiceThree" :key="index">
             <el-input style="width: 350px; margin-top: 5px;" v-model="item.value" disabled />
           </div>
         </el-form-item>
@@ -320,11 +256,6 @@
           </el-form-item>
         </el-row>
         <el-row>
-          <el-form-item :label="t('fields.poolAmount')" prop="poolAmount">
-            $ <span v-formatter="{data: endForm.poolAmount, type: 'money'}" />
-          </el-form-item>
-        </el-row>
-        <el-row>
           <el-form-item :label="t('fields.questionOne')" prop="questionOne">
             <span>{{ endForm.questionOne }}</span>
           </el-form-item>
@@ -341,38 +272,17 @@
             </el-radio-group>
           </el-form-item>
         </el-row>
-        <el-row v-if="endForm.questionTwo">
-          <el-form-item :label="t('fields.questionTwo')" prop="questionTwo">
-            <span>{{ endForm.questionTwo }}</span>
-          </el-form-item>
-        </el-row>
-        <el-row v-if="endForm.questionTwo">
-          <el-form-item :label="t('fields.choiceTwo')" prop="answerTwo">
-            <el-radio-group v-model="endForm.answerTwo" size="mini" style="width: 300px">
-              <el-radio-button
-                v-for="(item, index) in JSON.parse(endForm.choiceTwo)"
-                :key="index"
+        <el-row v-if="uiControl.occasions.length > 0">
+          <el-form-item :label="t('fields.occasions')" prop="occasionsInMatch">
+            <el-checkbox-group v-model="endForm.occasionsInMatch" size="mini" style="width: 300px">
+              <el-checkbox-button
+                v-for="item in uiControl.occasions"
+                :value-key="item"
+                :key="item"
                 :label="item"
                 size="small"
-              >{{ item }}</el-radio-button>
-            </el-radio-group>
-          </el-form-item>
-        </el-row>
-        <el-row v-if="endForm.questionThree">
-          <el-form-item :label="t('fields.questionThree')" prop="questionThree">
-            <span>{{ endForm.questionThree }}</span>
-          </el-form-item>
-        </el-row>
-        <el-row v-if="endForm.questionThree">
-          <el-form-item :label="t('fields.choiceThree')" prop="answerThree">
-            <el-radio-group v-model="endForm.answerThree" size="mini" style="width: 300px">
-              <el-radio-button
-                v-for="(item, index) in JSON.parse(endForm.choiceThree)"
-                :key="index"
-                :label="item"
-                size="small"
-              >{{ item }}</el-radio-button>
-            </el-radio-group>
+              >{{ item }}</el-checkbox-button>
+            </el-checkbox-group>
           </el-form-item>
         </el-row>
         <el-row>
@@ -433,11 +343,6 @@
           </el-form-item>
         </el-row>
         <el-row>
-          <el-form-item :label="t('fields.poolAmount')" prop="poolAmount">
-            $ <span v-formatter="{data: viewForm.poolAmount, type: 'money'}" />
-          </el-form-item>
-        </el-row>
-        <el-row>
           <el-form-item :label="t('fields.questionOne')" prop="questionOne">
             <span>{{ viewForm.questionOne }}</span>
           </el-form-item>
@@ -452,34 +357,14 @@
             <el-tag type="primary">{{ viewForm.answerOne }}</el-tag>
           </el-form-item>
         </el-row>
-        <el-row v-if="viewForm.questionTwo">
-          <el-form-item :label="t('fields.questionTwo')" prop="questionTwo">
-            <span>{{ viewForm.questionTwo }}</span>
+        <el-row v-if="uiControl.occasions && viewForm.status !== 'ENDED'">
+          <el-form-item :label="t('fields.occasions')" prop="occasions">
+            <el-tag v-for="item in uiControl.occasions" :key="item" type="info" style="margin-right: 5px;">{{ item }}</el-tag>
           </el-form-item>
         </el-row>
-        <el-row v-if="viewForm.questionTwo && viewForm.status !== 'ENDED'">
-          <el-form-item :label="t('fields.choiceTwo')" prop="choiceTwo">
-            <el-tag v-for="item in JSON.parse(viewForm.choiceTwo)" :key="item" type="info" style="margin-right: 5px;">{{ item }}</el-tag>
-          </el-form-item>
-        </el-row>
-        <el-row v-else-if="viewForm.questionTwo && viewForm.status === 'ENDED'">
-          <el-form-item :label="t('fields.answerTwo')" prop="answerTwo">
-            <el-tag type="primary">{{ viewForm.answerTwo }}</el-tag>
-          </el-form-item>
-        </el-row>
-        <el-row v-if="viewForm.questionThree">
-          <el-form-item :label="t('fields.questionThree')" prop="questionThree">
-            <span>{{ viewForm.questionThree }}</span>
-          </el-form-item>
-        </el-row>
-        <el-row v-if="viewForm.questionThree && viewForm.status !== 'ENDED'">
-          <el-form-item :label="t('fields.choiceThree')" prop="answerThree">
-            <el-tag v-for="item in JSON.parse(viewForm.choiceThree)" :key="item" type="info" style="margin-right: 5px;">{{ item }}</el-tag>
-          </el-form-item>
-        </el-row>
-        <el-row v-else-if="viewForm.questionThree && viewForm.status === 'ENDED'">
-          <el-form-item :label="t('fields.answerThree')" prop="answerThree">
-            <el-tag type="primary">{{ viewForm.answerThree }}</el-tag>
+        <el-row v-else-if="viewForm.occasionsInMatch && viewForm.status === 'ENDED'">
+          <el-form-item :label="t('fields.occasions')" prop="occasionsInMatch">
+            <el-tag v-for="item in JSON.parse(viewForm.occasionsInMatch)" :key="item" type="primary" style="margin-right: 5px;">{{ item }}</el-tag>
           </el-form-item>
         </el-row>
         <el-row>
@@ -863,7 +748,7 @@ import { computed, reactive, ref } from "vue";
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { getSiteListSimple } from "@/api/site";
-import { getGameQuiz, createGameQuiz, updateGameQuiz, endGameQuiz, cancelGameQuiz } from "@/api/game-quiz";
+import { getGameQuiz, createGameQuiz, updateGameQuiz, endGameQuiz, cancelGameQuiz, getGameQuizOccasionsList } from "@/api/game-quiz";
 import { hasRole, hasPermission } from "@/utils/util";
 import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
@@ -881,8 +766,6 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
 const site = ref(null);
 const choiceOne = ref([]);
-const choiceTwo = ref([]);
-const choiceThree = ref([]);
 const inputImage = ref(null)
 const imageFormRef = ref(null)
 const imageList = reactive({
@@ -948,18 +831,7 @@ const uiControl = reactive({
     { key: 2, displayName: 'CANCEL', value: 'CANCEL' },
     { key: 3, displayName: 'ENDED', value: 'ENDED' }
   ],
-  gameType: [
-    { key: 1, displayName: 'CS:GO', value: 'CSGO' },
-    { key: 2, displayName: 'League Of Legends', value: 'LOL' },
-    { key: 1, displayName: 'DOTA 2', value: 'DOTA2' }
-  ],
-  questions: [
-    { key: 1, displayName: 'gameQuiz.questions.2', value: 'gameQuiz.questions.2' },
-    { key: 2, displayName: 'gameQuiz.questions.3', value: 'gameQuiz.questions.3' },
-    { key: 3, displayName: 'gameQuiz.questions.4', value: 'gameQuiz.questions.4' },
-    { key: 4, displayName: 'gameQuiz.questions.5', value: 'gameQuiz.questions.5' },
-    { key: 5, displayName: 'gameQuiz.questions.6', value: 'gameQuiz.questions.6' }
-  ],
+  occasions: [],
   imageSelectionTitle: '',
   imageSelectionType: '',
   imageSelectionVisible: false,
@@ -985,10 +857,6 @@ const form = reactive({
   poolAmount: 0,
   questionOne: null,
   choiceOne: null,
-  questionTwo: null,
-  choiceTwo: null,
-  questionThree: null,
-  choiceThree: null,
   matchTime: null,
   startTime: null,
   endTime: null
@@ -1006,15 +874,10 @@ const endForm = reactive({
   questionOne: null,
   choiceOne: null,
   answerOne: null,
-  questionTwo: null,
-  choiceTwo: null,
-  answerTwo: null,
-  questionThree: null,
-  choiceThree: null,
-  answerThree: null,
   matchTime: null,
   startTime: null,
-  endTime: null
+  endTime: null,
+  occasionsInMatch: []
 })
 
 const viewForm = reactive({
@@ -1029,15 +892,10 @@ const viewForm = reactive({
   questionOne: null,
   choiceOne: null,
   answerOne: null,
-  questionTwo: null,
-  choiceTwo: null,
-  answerTwo: null,
-  questionThree: null,
-  choiceThree: null,
-  answerThree: null,
   matchTime: null,
   startTime: null,
-  endTime: null
+  endTime: null,
+  occasionsInMatch: null
 })
 
 const imageForm = reactive({
@@ -1072,26 +930,6 @@ const validateChoiceOne = (rule, value, callback) => {
   }
 };
 
-const validateChoiceTwo = (rule, value, callback) => {
-  if (form.questionTwo && !form.gameType) {
-    callback(new Error(t('message.validateChoiceTwoRequired')));
-  } else if (form.questionTwo && JSON.parse(form.choiceTwo).length < 2) {
-    callback(new Error(t('message.validateAnswerTwoAtLeastTwoChoices')));
-  } else {
-    callback();
-  }
-};
-
-const validateChoiceThree = (rule, value, callback) => {
-  if (form.questionThree && !form.gameType) {
-    callback(new Error(t('message.validateChoiceThreeRequired')));
-  } else if (form.questionTwo && JSON.parse(form.choiceThree).length < 2) {
-    callback(new Error(t('message.validateAnswerThreeAtLeastTwoChoices')));
-  } else {
-    callback();
-  }
-};
-
 const validateStartTime = (rule, value, callback) => {
   if (form.endTime && form.endTime < form.startTime) {
     callback(new Error(t('message.startMustBeforeEnd')));
@@ -1116,18 +954,14 @@ const formRules = reactive({
   homeTeamIcon: [required(t('message.validateHomeTeamIconRequired'))],
   awayTeam: [required(t('message.validateAwayTeamRequired'))],
   awayTeamIcon: [required(t('message.validateAwayTeamIconRequired'))],
-  poolAmount: [required(t('message.validatePoolAmountRequired'))],
   questionOne: [required(t('message.validateQuestionOneRequired'))],
   choiceOne: [required(t('message.validateChoiceOneRequired')), { validator: validateChoiceOne, trigger: "blur" }],
-  choiceTwo: [{ validator: validateChoiceTwo, trigger: "blur" }],
-  choiceThree: [{ validator: validateChoiceThree, trigger: "blur" }],
   matchTime: [required(t('message.validateMatchTimeRequired'))],
   startTime: [required(t('message.validateStartTimeRequired')), { validator: validateStartTime, trigger: "blur" }],
   endTime: [required(t('message.validateEndTimeRequired')), { validator: validateEndTime, trigger: "blur" }]
 });
 
 const validateAnswerOne = (rule, value, callback) => {
-  console.log(endForm.answerOne)
   if (endForm.answerOne === null) {
     callback(new Error(t('message.validateAnswerOneRequired')));
   } else {
@@ -1135,45 +969,9 @@ const validateAnswerOne = (rule, value, callback) => {
   }
 };
 
-const validateAnswerTwo = (rule, value, callback) => {
-  console.log(endForm.answerTwo)
-  if (endForm.questionTwo && endForm.answerTwo === null) {
-    callback(new Error(t('message.validateAnswerTwoRequired')));
-  } else {
-    callback();
-  }
-};
-
-const validateAnswerThree = (rule, value, callback) => {
-  console.log(endForm.answerThree)
-  if (endForm.questionThree && endForm.answerThree === null) {
-    callback(new Error(t('message.validateAnswerThreeRequired')));
-  } else {
-    callback();
-  }
-};
-
 const endFormRules = reactive({
-  answerOne: [{ validator: validateAnswerOne, trigger: "blur" }],
-  answerTwo: [{ validator: validateAnswerTwo, trigger: "blur" }],
-  answerThree: [{ validator: validateAnswerThree, trigger: "blur" }]
+  answerOne: [{ validator: validateAnswerOne, trigger: "blur" }]
 })
-
-function restrictDecimalInput(event) {
-  var charCode = event.which ? event.which : event.keyCode
-  if ((charCode < 48 || charCode > 57) && charCode !== 46) {
-    event.preventDefault()
-  }
-
-  if (
-    form.poolAmount !== null &&
-    form.poolAmount.toString().indexOf('.') > -1
-  ) {
-    if (charCode === 46) {
-      event.preventDefault()
-    }
-  }
-}
 
 async function loadGameQuiz() {
   page.loading = true;
@@ -1189,10 +987,15 @@ async function loadGameQuiz() {
       query.startTime = request.startTime.join(",");
     }
   }
+  const siteCode = sites.list.find(e => e.id === request.siteId).siteCode
+  query.promoCode = siteCode.toLowerCase() + '-fifa-quiz-2025-occasion'
   const { data: ret } = await getGameQuiz(query);
   page.pages = ret.pages;
   page.records = ret.records;
   timeZone = sites.list.find(e => e.id === request.siteId).timeZone
+
+  const { data: occasions } = await getGameQuizOccasionsList(query.promoCode);
+  uiControl.occasions = occasions;
   page.total = ret.total;
   page.loading = false;
 }
@@ -1205,8 +1008,6 @@ function showDialog(type) {
     form.id = null;
     form.siteId = request.siteId;
     choiceOne.value = [];
-    choiceTwo.value = [];
-    choiceThree.value = [];
     addChoice();
     form.questionOne = t('gameQuiz.questions.1');
     uiControl.dialogTitle = t('fields.addGameQuiz');
@@ -1237,9 +1038,16 @@ function showEnd(quiz) {
   nextTick(() => {
     for (const key in quiz) {
       if (Object.keys(endForm).find(k => k === key)) {
-        endForm[key] = quiz[key];
         if (key === 'siteId') {
           endForm.siteName = sites.list.find(s => s.id === quiz[key]).siteName;
+        } else if (key === 'occasionsInMatch') {
+          if (quiz[key] !== null) {
+            endForm.occasionsInMatch = JSON.parse(quiz[key])
+          } else {
+            endForm.occasionsInMatch = []
+          }
+        } else {
+          endForm[key] = quiz[key];
         }
       }
     }
@@ -1270,8 +1078,7 @@ function submit() {
 
 function create() {
   form.choiceOne = constructChoice(1)
-  form.choiceTwo = constructChoice(2)
-  form.choiceThree = constructChoice(3)
+  form.gameType = 'FIFA'
   gameQuizForm.value.validate(async (valid) => {
     if (valid) {
       await createGameQuiz(form);
@@ -1284,8 +1091,6 @@ function create() {
 
 function edit() {
   form.choiceOne = constructChoice(1)
-  form.choiceTwo = constructChoice(2)
-  form.choiceThree = constructChoice(3)
   gameQuizForm.value.validate(async (valid) => {
     if (valid) {
       await updateGameQuiz(form.id, form);
@@ -1311,23 +1116,11 @@ function resetQuery() {
 function addChoice() {
   choiceOne.value.push({ value: '' })
   choiceOne.value.push({ value: '' })
-  choiceTwo.value.push({ value: '' })
-  choiceTwo.value.push({ value: '' })
-  choiceThree.value.push({ value: '' })
-  choiceThree.value.push({ value: '' })
 }
 
-function constructChoice(item) {
+function constructChoice() {
   const json = [];
-  let choice = {};
-  if (item === 1) {
-    choice = choiceOne.value;
-  } else if (item === 2) {
-    choice = choiceTwo.value;
-  } else if (item === 3) {
-    choice = choiceThree.value;
-  }
-  Object.values(choice).forEach((item) => {
+  Object.values(choiceOne.value).forEach((item) => {
     if (item.value) {
       json.push(item.value)
     }
@@ -1338,8 +1131,9 @@ function constructChoice(item) {
 async function endQuiz() {
   const answers = {};
   answers.answerOne = endForm.answerOne
-  answers.answerTwo = endForm.answerTwo
-  answers.answerThree = endForm.answerThree
+  if (endForm.occasionsInMatch) {
+    answers.occasionsInMatch = endForm.occasionsInMatch.join(",")
+  }
   endQuizForm.value.validate(async (valid) => {
     if (valid) {
       await endGameQuiz(endForm.id, answers);
@@ -1368,40 +1162,6 @@ async function cancelQuiz(id) {
 function populateChoice() {
   choiceOne.value[0].value = form.homeTeam
   choiceOne.value[1].value = form.awayTeam
-
-  if (form.gameType && form.questionTwo) {
-    const question = uiControl.questions.find(q => t(q.value) === form.questionTwo);
-    if (question.key === 1) {
-      choiceTwo.value[0].value = t('gameQuiz.answers.' + form.gameType + '.handicapAbove')
-      choiceTwo.value[1].value = t('gameQuiz.answers.' + form.gameType + '.handicapBelow')
-    } else if (question.key === 2) {
-      choiceTwo.value[0].value = t('gameQuiz.answers.' + form.gameType + '.killBig')
-      choiceTwo.value[1].value = t('gameQuiz.answers.' + form.gameType + '.killSmall')
-    } else if (question.key === 3) {
-      choiceTwo.value[0].value = t('gameQuiz.answers.' + form.gameType + '.killSignal')
-      choiceTwo.value[1].value = t('gameQuiz.answers.' + form.gameType + '.killDouble')
-    } else if (question.key === 4 || question.key === 5) {
-      choiceTwo.value[0].value = form.homeTeam
-      choiceTwo.value[1].value = form.awayTeam
-    }
-  }
-
-  if (form.gameType && form.questionThree) {
-    const question = uiControl.questions.find(q => t(q.value) === form.questionThree);
-    if (question.key === 1) {
-      choiceThree.value[0].value = t('gameQuiz.answers.' + form.gameType + '.handicapAbove')
-      choiceThree.value[1].value = t('gameQuiz.answers.' + form.gameType + '.handicapBelow')
-    } else if (question.key === 2) {
-      choiceThree.value[0].value = t('gameQuiz.answers.' + form.gameType + '.killBig')
-      choiceThree.value[1].value = t('gameQuiz.answers.' + form.gameType + '.killSmall')
-    } else if (question.key === 3) {
-      choiceThree.value[0].value = t('gameQuiz.answers.' + form.gameType + '.killSignal')
-      choiceThree.value[1].value = t('gameQuiz.answers.' + form.gameType + '.killDouble')
-    } else if (question.key === 4 || question.key === 5) {
-      choiceThree.value[0].value = form.homeTeam
-      choiceThree.value[1].value = form.awayTeam
-    }
-  }
 }
 
 function resetImageQuery() {
