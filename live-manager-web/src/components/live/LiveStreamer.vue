@@ -108,15 +108,26 @@
       :header="t('fields.updatePassword')"
       :style="{ width: '500px' }"
     >
-      <div style="display: flex; gap: 8px; flex-direction: row; align-items: center">
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 450px;
+          margin-bottom: 16px;
+        "
+      >
         <label for="newPassword" class="font-semibold w-24">{{ t('fields.newPassword') }}</label>
-        <div>
+
+        <div style="width: 350px">
           <InputText
             id="newPassword"
-            style="width: 100%"
             :class="{ 'p-invalid': fieldErrors.newPassword }"
             autocomplete="new-password"
             type="password"
+            style="width: 100%"
             v-model="changePasswordDialog.form.newPassword"
             @blur="validateField('newPassword')"
             @input="clearFieldError('newPassword')"
@@ -133,17 +144,28 @@
         </div>
       </div>
 
-      <div style="display: flex; gap: 8px; flex-direction: row; align-items: center">
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 450px;
+          margin-bottom: 16px;
+        "
+      >
         <label for="confirmPassword" class="font-semibold w-24">{{
           t('fields.confirmPassword')
         }}</label>
-        <div class="flex-auto">
+        <div style="width: 350px">
           <InputText
             id="confirmPassword"
             class="w-full"
             :class="{ 'p-invalid': fieldErrors.confirmPassword }"
             autocomplete="new-password"
             type="password"
+            style="width: 100%"
             v-model="changePasswordDialog.form.confirmPassword"
             @blur="validateField('confirmPassword')"
             @input="clearFieldError('confirmPassword')"
@@ -160,7 +182,17 @@
         </div>
       </div>
 
-      <div class="flex justify-end gap-2">
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 450px;
+          margin-bottom: 16px;
+        "
+      >
         <Button
           type="button"
           :label="t('fields.cancel')"
@@ -184,11 +216,12 @@ import { useI18n } from 'vue-i18n'
 import { liveSportTyps } from '@/utils/live'
 import { DashboardService } from '@/service/DashboardService'
 import { required, size } from '@/utils/validate'
-
+import { useToast } from 'primevue/usetoast'
 import { useStorage } from '@vueuse/core'
 const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/promo/'
-const { getSportLiveStreamer } = DashboardService
+const { getSportLiveStreamer, updateSportLiveStreamer } = DashboardService
 const { t } = useI18n()
+const toast = useToast()
 
 const uiControl = reactive({
   dialogVisible: false,
