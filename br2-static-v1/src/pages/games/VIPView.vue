@@ -164,7 +164,16 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <template v-if="colIndex === 1">
+              <template v-if="colIndex === 0">
+                <div class="vip-table-badge-container">
+                  <img
+                    class="vip_table_badge"
+                    :src="require(`../../assets/images/vip/badge/vip_${props.rowIndex + 1}.png`)"
+                  />
+                  {{ col.value }}
+                </div>
+              </template>
+              <template v-else-if="colIndex === 1">
                 <div style="text-align: center; font-size: 11px">
                   {{ $t("vip.deposit") }} {{ store.currency.value }}
                   <span class="amt-text">{{ col.value }}</span>
@@ -1082,6 +1091,18 @@ const swipeRight = () => {
   }
   tbody > :nth-child(even) {
     background: #1f241f;
+  }
+
+  .vip-table-badge-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+  }
+  .vip_table_badge {
+    width: 30px;
+    height: 30px;
+    margin-right: 4px;
   }
 
   span.amt-text {
