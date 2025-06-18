@@ -338,7 +338,6 @@ const formatHistoryMessages = (messages) => {
 
 const handleBetClick = () => {
   if (!gameModalRef.value || !currentLiveData.value) return;
-  livestreamVideoRef.value?.pause();
   switch (currentLiveData.value.sportId) {
     case 1:
     case 2:
