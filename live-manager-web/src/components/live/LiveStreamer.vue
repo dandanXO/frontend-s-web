@@ -95,7 +95,7 @@
               size="small"
               severity="danger"
               icon="pi pi-key"
-              @click="resetQuery"
+              @click="deleteStreamer(slotProps.data.id)"
             />
           </div>
         </template>
@@ -383,6 +383,7 @@
       </div>
     </Dialog>
   </div>
+  <ConfirmDialog></ConfirmDialog>
 </template>
 
 <script setup>
@@ -392,12 +393,14 @@ import { liveSportTyps } from '@/utils/live'
 import { DashboardService } from '@/service/DashboardService'
 import { required, size } from '@/utils/validate'
 import { useToast } from 'primevue/usetoast'
-import { uploadImage } from "@/service/image";
+//import { uploadImage } from '@/service/image'
 import { useStorage } from '@vueuse/core'
+import { useConfirm } from 'primevue/useconfirm'
 const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/promo/'
-const { getSportLiveStreamer, updateSportLiveStreamer } = DashboardService
+const { getSportLiveStreamer, updateSportLiveStreamer, deleteSportLiveStreamer } = DashboardService
 const { t } = useI18n()
 const toast = useToast()
+const confirm = useConfirm()
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -625,18 +628,17 @@ onMounted(() => {
 
 async function attachImage(event) {
   const file = event.target.files[0]
-  console.log(file);
-  
+  console.log(file)
+
   if (!file) return
 
   const data = await attachPhoto(event)
   if (data) {
     form.avatar = data
     await submitImageUpload()
-    console.log('here');
-    
+    console.log('here')
   } else {
-      toast.add({
+    toast.add({
       severity: 'error',
       summary: t('message.failedToUploadImage'),
       life: 3000,
@@ -646,8 +648,8 @@ async function attachImage(event) {
 
 async function attachPhoto(event) {
   const files = event.target.files[0]
-  console.log('attachPhoto',files);
-  
+  console.log('attachPhoto', files)
+
   if (!files) return
 
   var fr = new FileReader()
@@ -670,14 +672,13 @@ async function attachPhoto(event) {
   formData.append('files', files)
   formData.append('dir', 'streamer')
   formData.append('overwrite', false)
-console.log(formData);
+  console.log(formData)
 
   try {
     const response = await uploadImage(formData)
     return response.code === 0 ? response.data : null
 
-    console.log('here');
-    
+    console.log('here')
   } catch (error) {
     toast.add({
       severity: 'error',
@@ -696,8 +697,7 @@ async function submitImageUpload() {
 
   try {
     const response = await createSiteImage(imageForm)
-    console.log(response);
-    
+    console.log(response)
 
     if (response && response.code === 0) {
       toast.add({
@@ -720,6 +720,40 @@ async function submitImageUpload() {
       life: 3000,
     })
   }
+}
+
+function deleteStreamer(teamId) {
+  confirm.require({
+    message: t('message.confirmDelete'),
+    icon: 'pi pi-info-circle',
+    rejectLabel: t('fields.cancel'),
+    rejectProps: {
+      label: t('fields.cancel'),
+      severity: 'secondary',
+    },
+    acceptLabel: t('fields.confirm'),
+    acceptProps: {
+      label: t('fields.confirm'),
+      severity: 'danger',
+    },
+    accept: async () => {
+      try {
+        await deleteSportLiveStreamer({ teamId: teamId })
+        toast.add({
+          severity: 'success',
+          summary: t('message.deleteSuccess'),
+          life: 3000,
+        })
+        await loadStreamer()
+      } catch (err) {
+        toast.add({
+          severity: 'error',
+          summary: t('message.deleteFailed'),
+          detail: err.message,
+        })
+      }
+    },
+  })
 }
 
 function autoSelectImage() {
