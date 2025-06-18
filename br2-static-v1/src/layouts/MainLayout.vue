@@ -21,8 +21,8 @@
         }"
         v-if="hasPage"
       >
-        <a @click="goToPrevPage(prevPage)" class="q-mt-sm">
-          <q-icon class="header-icon" name="arrow_back_ios"></q-icon>
+        <a @click="goToPrevPage(prevPage)">
+          <q-icon class="header-icon" name="chevron_left"></q-icon>
           <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">
             {{ $t("btn.back") }}
           </span>
@@ -629,9 +629,23 @@ svg path {
 }
 
 .page-title {
+  background-color: #242624;
+
   &.absolute {
     position: absolute;
+    background-color: unset;
   }
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #2e3732;
+    border-radius: 6px;
+  }
+
   .page-title-wrapper {
     display: flex;
     justify-content: space-between;
@@ -653,6 +667,7 @@ svg path {
       width: 14rem;
       margin: 0 0.5rem;
       font-size: 16px;
+      font-weight: 700;
     }
 
     svg {

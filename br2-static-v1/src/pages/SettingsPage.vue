@@ -443,7 +443,6 @@ const logout = () => {
 
       .acct-nav-label {
         flex: 1;
-        padding-top: 6px;
         font-size: 14px;
         font-weight: bold;
         white-space: normal;
@@ -451,6 +450,9 @@ const logout = () => {
 
       .acct-nav-item {
         margin-right: 17.63px;
+        img {
+          display: block;
+        }
       }
     }
   }

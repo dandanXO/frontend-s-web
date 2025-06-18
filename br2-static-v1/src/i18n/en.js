@@ -249,7 +249,9 @@ export default {
     recharge: "Recharge",
     getInterestProfit: "Get Interest Profit",
     notAMember: "Not a member?",
-    createAccount: "Create account"
+    createAccount: "Create account",
+    profit: "Profit",
+    loss: "Loss"
   },
   notify: {
     noRecord: "No Record",

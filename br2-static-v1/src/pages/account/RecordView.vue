@@ -4,30 +4,28 @@
       <q-form layout="inline" :model="searchForm">
         <div class="date-field">
           <q-input filled v-model="searchForm.startDate" readonly>
-            <template v-slot:prepend>
-              <q-icon name="calendar_today" class="cursor-pointer text-teal">
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="white" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
+            <template v-slot:append>
+              <img src="../../assets/images/index/icon-calendar.svg" />
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="white" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
             </template>
           </q-input>
           <span>to</span>
           <q-input filled v-model="searchForm.endDate" readonly>
-            <template v-slot:prepend>
-              <q-icon name="calendar_today" class="cursor-pointer text-teal">
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="white" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
+            <template v-slot:append>
+              <img src="../../assets/images/index/icon-calendar.svg" />
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="white" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
             </template>
           </q-input>
         </div>
@@ -50,6 +48,7 @@
         <q-card-section class="top-wrapper">
           <div class="date">{{ e.betTime }}</div>
           <q-btn
+            class="bet-btn"
             :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
             :label="`${e.payout > 0 ? $t('btn.profit') : $t('btn.loss')}`"
           ></q-btn>
@@ -60,13 +59,16 @@
           <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ convertToCommaAmount(e.payout, true) }}</span>
         </q-card-section>
 
+        <q-card-section class="mid-wrapper-2">
+          <div class="bet">Bet</div>
+          <div class="bet-val">{{ convertToCommaAmount(e.bet, true) }}</div>
+        </q-card-section>
+
         <q-card-section class="bot-wrapper">
           <div class="origin">
-            <div class="bet">Bet</div>
             <div class="game-platform">{{ $t("records.gamePlatform") }}</div>
           </div>
           <div class="origin-val">
-            <div class="bet-val">{{ convertToCommaAmount(e.bet, true) }}</div>
             <div class="game-platform-val">{{ displayPlatform(e.platform) }}</div>
           </div>
         </q-card-section>
@@ -252,9 +254,12 @@ onActivated(() => {
 
 <style lang="scss">
 .search-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   border-radius: 0.5rem;
   background: rgba(21, 0, 37, 0.2);
-  padding: 1rem;
+  padding: 30px 0 0;
   margin-top: 0;
 
   .date-field {
@@ -262,7 +267,7 @@ onActivated(() => {
     align-items: center;
 
     span {
-      color: #ffffff99;
+      color: #4b4943;
       padding: 0px 12px;
     }
 
@@ -273,15 +278,15 @@ onActivated(() => {
     }
 
     .q-field {
-      border: 1px solid #164533;
-      background: #28292b;
+      border: 1px solid #4b4943;
+      background: transparent;
       padding: 4px 3px;
       border-radius: 8px;
     }
 
     .q-field__native {
       padding: 0;
-      color: #b0b0b0;
+      color: #4b4943;
     }
   }
 
@@ -312,7 +317,8 @@ onActivated(() => {
 .record-container {
   border-radius: 0.5rem;
   // background: rgba(21, 0, 37, 0.2);
-  background: linear-gradient(90deg, rgba(10, 91, 81, 0.2) 0%, rgba(18, 61, 38, 0.2) 100%);
+  background: #1f241f;
+  box-shadow: none;
   padding: 1rem;
   margin-top: 0;
   margin-bottom: 1rem;
@@ -320,34 +326,44 @@ onActivated(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 14px 0;
     .date {
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 0.825rem;
-      font-weight: 700;
+      color: #ffffff4d;
+      font-size: 12px;
     }
 
-    .bet-btn {
-      color: #fae576;
-      font-size: 0.825rem;
-      font-weight: 700;
-      text-transform: capitalize;
+    .q-btn {
+      border: 1px solid transparent;
       border-radius: 4px;
-      background: rgba(250, 229, 118, 0.2);
-      padding: 0 1rem;
-      min-height: unset;
+      padding: 6px 8px;
+      background: url("../../assets/images/index/btn-bg.png") no-repeat center;
+      background-size: 100% 100%;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
     }
 
-    .loss-btn {
-      color: rgba(0, 177, 167, 1);
-      font-size: 0.825rem;
-      font-weight: 700;
-      text-transform: capitalize;
-      border-radius: 4px;
-      background: rgba(0, 177, 167, 0.2);
-      padding: 0 1rem;
-      min-height: unset;
-    }
+    // .bet-btn {
+    //   color: #ffffff;
+    //   font-size: 0.825rem;
+    //   font-weight: 700;
+    //   text-transform: capitalize;
+    //   border-radius: 4px;
+    //   background: rgba(250, 229, 118, 0.2);
+    //   padding: 0 1rem;
+    //   min-height: unset;
+    // }
+
+    // .loss-btn {
+    //   color: #ffffff;
+    //   font-size: 0.825rem;
+    //   font-weight: 700;
+    //   text-transform: capitalize;
+    //   border-radius: 4px;
+    //   background: rgba(0, 177, 167, 0.2);
+    //   padding: 0 1rem;
+    //   min-height: unset;
+    // }
   }
 
   .win-amt {
@@ -359,19 +375,26 @@ onActivated(() => {
   }
 
   .mid-wrapper {
-    font-size: 1rem;
     font-weight: 700;
-    line-height: 2.25rem;
-    // background: rgba(21, 0, 37, 0.5);
-    // background: rgba(255, 255, 255, 0.06)
-    margin: 0 -1rem;
-    padding: 0 1rem;
+    margin-bottom: 14px;
 
     span {
-      background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #ffc107;
+    }
+  }
+
+  .mid-wrapper-2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+
+    .bet {
+      color: #ffffffb2;
+    }
+
+    .bet-val {
+      font-weight: 700;
     }
   }
 
@@ -380,7 +403,7 @@ onActivated(() => {
     align-items: center;
     justify-content: space-between;
     margin: 0.5rem -1rem -1rem -1rem;
-    background: rgba(255, 255, 255, 0.06);
+    background: #ffffff1a;
     padding: 0.5rem 1rem;
     width: calc(100% + 2rem);
     border-left: 0;
@@ -390,7 +413,7 @@ onActivated(() => {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      color: rgba(255, 255, 255, 0.5);
+      color: #ffffffb2;
 
       .bet {
         font-size: 0.825rem;
@@ -399,7 +422,6 @@ onActivated(() => {
 
       .game-platform {
         font-size: 0.825rem;
-        font-weight: 700;
       }
     }
 
@@ -429,7 +451,7 @@ onActivated(() => {
   border-bottom: 0;
 
   .pagination-btn {
-    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+    background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
     font-size: 20px;
     width: 40px;
     height: 40px;
