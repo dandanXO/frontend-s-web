@@ -2,10 +2,9 @@
   <div class="roles-main">
     <ConfirmDialog></ConfirmDialog>
 
-    <DataTable :value="page.records" :loading="page.loading" responsiveLayout="scroll">
+    <DataTable :value="page.records" :loading="page.loading" responsiveLayout="scroll" scrollable>
 
-
-     <template #header>
+      <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
           <Dropdown
             v-model="request.sportId"
@@ -50,7 +49,7 @@
             dateFormat="yy-mm-dd"
             fluid
             placeholder="請選擇結束時間" />
-          
+
           <Button
             :label="t('fields.search')"
             :size="'small'"
@@ -75,15 +74,15 @@
         </div>
       </template>
 
-
-      <Column field="id" :header="t('fields.platformMatchId')" />
-      <Column field="sportId" :header="t('fields.sportType')" >
+      <!-- 調整欄位寬度 -->
+      <Column field="id" :header="t('fields.platformMatchId')" style="min-width: 120px" />
+      <Column field="sportId" :header="t('fields.sportType')" style="min-width: 100px">
         <template #body="slotProps">
           {{ formatSportType(slotProps.data) }}
         </template>
       </Column>
-      <Column field="title" :header="t('fields.title')" />
-      <Column field="homeNameZh" :header="t('fields.homeTeam')" >
+      <Column field="title" :header="t('fields.title')" style="min-width: 250px" />
+      <Column field="homeNameZh" :header="t('fields.homeTeam')" style="min-width: 200px">
         <template #body="slotProps">
           <div style="display: flex; align-items: center">
             <img
@@ -95,7 +94,7 @@
           </div>
         </template>
       </Column>
-      <Column field="awayNameZh" :header="t('fields.awayTeam')" >
+      <Column field="awayNameZh" :header="t('fields.awayTeam')" style="min-width: 200px">
         <template #body="slotProps">
           <div style="display: flex; align-items: center">
             <img
@@ -107,7 +106,7 @@
           </div>
         </template>
       </Column>
-      <Column field="cover" :header="t('fields.cover')" >
+      <Column field="cover" :header="t('fields.cover')" style="min-width: 80px">
         <template #body="slotProps">
           <div style="display: flex; align-items: center">
             <img
@@ -118,8 +117,8 @@
           </div>
         </template>
       </Column>
-      <Column field="sort" :header="t('fields.sequence')" />
-      <Column field="liveStatus" :header="t('fields.status')" >
+      <Column field="sort" :header="t('fields.sequence')" style="min-width: 80px" />
+      <Column field="liveStatus" :header="t('fields.status')" style="min-width: 120px">
         <template #body="slotProps">
           <Tag v-if="slotProps.data.liveStatus === 2" severity="success">{{ t('status.uefaMatch.ENDED') }}</Tag>
           <Tag v-else-if="slotProps.data.liveStatus === 1" severity="warning">{{ t('status.uefaMatch.ONGOING') }}</Tag>
@@ -127,62 +126,63 @@
           <Tag v-else severity="info">{{ t('status.uefaMatch.PENDING') }}</Tag>
         </template>
       </Column>
-      <Column field="eventStartTime" :header="t('fields.matchTime')" >
+      <Column field="eventStartTime" :header="t('fields.matchTime')" style="min-width: 160px">
         <template #body="slotProps">
           <span v-if="!slotProps.data.eventStartTime">-</span>
           <span v-else>{{ formatTime(slotProps.data.eventStartTime) }}</span>
         </template>
       </Column>
-      <Column field="eventEndTime" :header="t('fields.endTime')" >
+      <Column field="eventEndTime" :header="t('fields.endTime')" style="min-width: 160px">
         <template #body="slotProps">
           <span v-if="!slotProps.data.eventEndTime">-</span>
           <span v-else>{{ formatTime(slotProps.data.eventEndTime) }}</span>
         </template>
       </Column>
-      <Column field="isTest" :header="t('fields.isTestEvent')" >
+      <Column field="isTest" :header="t('fields.isTestEvent')" style="min-width: 120px">
         <template #body="slotProps">
           <Tag :severity="slotProps.data.isTest ? 'success' : 'info'">
             {{ slotProps.data.isTest ? t('fields.yes') : t('fields.no') }}
           </Tag>
         </template>
       </Column>
-      <Column field="isPopular" :header="t('fields.isPopularEvent')" >
+      <Column field="isPopular" :header="t('fields.isPopularEvent')" style="min-width: 120px">
         <template #body="slotProps">
           <Tag :severity="slotProps.data.isPopular ? 'success' : 'info'">
             {{ slotProps.data.isPopular ? t('fields.yes') : t('fields.no') }}
           </Tag>
         </template>
       </Column>
-      <Column field="eventCode" :header="t('fields.eventCode')"  />
-      <Column field="createTime" :header="t('fields.createTime')">
+      <Column field="eventCode" :header="t('fields.eventCode')" style="min-width: 120px" />
+      <Column field="createTime" :header="t('fields.createTime')" style="min-width: 160px">
         <template #body="slotProps">
           <span v-if="!slotProps.data.createTime">-</span>
           <span v-else>{{ formatTime(slotProps.data.createTime) }}</span>
         </template>
       </Column>
-      <Column field="createBy" :header="t('fields.createBy')"  />
-      <Column field="updateTime" :header="t('fields.updateTime')">
+      <Column field="createBy" :header="t('fields.createBy')" style="min-width: 120px" />
+      <Column field="updateTime" :header="t('fields.updateTime')" style="min-width: 160px">
         <template #body="slotProps">
           <span v-if="!slotProps.data.updateTime">-</span>
           <span v-else>{{ formatTime(slotProps.data.updateTime) }}</span>
         </template>
       </Column>
-      <Column field="updateBy" :header="t('fields.updateBy')"  />
-      <Column :header="t('fields.operate')">
+      <Column field="updateBy" :header="t('fields.updateBy')" style="min-width: 120px" /><Column :header="t('fields.operate')" frozen alignFrozen="right">
         <template #body="slotProps">
-          <Button icon="pi pi-trash" class="p-button-text p-button-sm p-button-danger" @click="confirmDelete(slotProps.data.id)">
-            {{ t('fields.delete') }}
-          </Button>
-          <router-link
-            :to="{
-          path: '/live-sport/live-setting',
-          query: { id: slotProps.data.id },
-        }"
-          >
-            <Button icon="pi pi-video" class="p-button-text p-button-sm p-button-success">
-              {{ t('fields.manageStream') }}
+          <div style="display: flex; gap: 8px; flex-wrap: nowrap;">
+            <Button icon="pi pi-trash" class="p-button-text p-button-sm p-button-danger" style="width: 50px"  @click="confirmDelete(slotProps.data.id)">
+              {{ t('fields.delete') }}
             </Button>
-          </router-link>
+            <router-link
+              :to="{
+                path: '/live-sport/live-setting',
+                query: { id: slotProps.data.id },
+              }"
+            >
+              <Button icon="pi pi-video" class="p-button-text p-button-sm p-button-success" style="width: 100px">
+                {{ t('fields.manageStream') }}
+              </Button>
+            </router-link>
+          </div>
         </template>
       </Column>
     </DataTable>
@@ -201,7 +201,7 @@
       :header="ui.dialogTitle"
       v-model:visible="ui.dialogVisible"
       modal
-      class="p-dialog-md"
+      class="p-dialog-md live-event-dialog"
       appendTo="body"
     >
       <form @submit.prevent="submit" class="p-fluid">
