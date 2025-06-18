@@ -585,4 +585,12 @@ export const DashboardService = {
     })
   },
 
+  createSiteImage(data) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/siteImage', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+  },
 }

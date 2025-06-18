@@ -22,7 +22,13 @@
             size="small"
           />
           <InputText type="text" v-model="request.name" optionLabel="名称" placeholder="名称" />
-          <Button :label="t('fields.search')" size="small" severity="success" icon="pi pi-search"  @click="loadStreamer"/>
+          <Button
+            :label="t('fields.search')"
+            size="small"
+            severity="success"
+            icon="pi pi-search"
+            @click="loadStreamer"
+          />
           <Button
             :label="t('fields.reset')"
             size="small"
@@ -103,7 +109,12 @@
     </DataTable>
 
     <!-- 編輯新增dialog -->
-    <Dialog v-model:visible="uiControl.dialogVisible" :header="t('fields.edit')"  modal :style="{ width: '700px' }">
+    <Dialog
+      v-model:visible="uiControl.dialogVisible"
+      :header="t('fields.edit')"
+      modal
+      :style="{ width: '700px' }"
+    >
       <div
         style="
           display: flex;
@@ -383,11 +394,11 @@ import { liveSportTyps } from '@/utils/live'
 import { DashboardService } from '@/service/DashboardService'
 import { required, size } from '@/utils/validate'
 import { useToast } from 'primevue/usetoast'
-//import { uploadImage } from '@/service/image'
+import { uploadImage } from '@/service/image'
 import { useStorage } from '@vueuse/core'
 import { useConfirm } from 'primevue/useconfirm'
 const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/promo/'
-const { getSportLiveStreamer, updateSportLiveStreamer, deleteSportLiveStreamer } = DashboardService
+const { getSportLiveStreamer, updateSportLiveStreamer, deleteSportLiveStreamer,createSiteImage } = DashboardService
 const { t } = useI18n()
 const toast = useToast()
 const confirm = useConfirm()
@@ -401,7 +412,7 @@ const uiControl = reactive({
   dialogLoading: false,
   status: [
     { name: t('fields.notStarted'), display: "t('fields.notStarted')", id: 0, value: 0 },
-    { name: t('fields.inProgress'), display: "t('fields.inProgress')", id: 1 , value: 1},
+    { name: t('fields.inProgress'), display: "t('fields.inProgress')", id: 1, value: 1 },
   ],
 })
 
@@ -620,12 +631,12 @@ function getStatusName(statusId) {
 }
 
 async function loadStreamer() {
-  console.log(request,'dan')
+  console.log(request, 'dan')
   const _request = request
-  if(request.liveStatus){
+  if (request.liveStatus) {
     _request.liveStatus = request.liveStatus.value
   }
-  
+
   const res = await getSportLiveStreamer(_request)
 
   liveStreamerList.value = res.records
@@ -645,7 +656,6 @@ async function attachImage(event) {
   if (data) {
     form.avatar = data
     await submitImageUpload()
-    console.log('here')
   } else {
     toast.add({
       severity: 'error',
@@ -686,8 +696,6 @@ async function attachPhoto(event) {
   try {
     const response = await uploadImage(formData)
     return response.code === 0 ? response.data : null
-
-    console.log('here')
   } catch (error) {
     toast.add({
       severity: 'error',
@@ -703,6 +711,8 @@ async function submitImageUpload() {
   imageForm.path = form.avatar
   imageForm.category = 'PROMO'
   imageForm.siteId = 7
+  console.log('submitImageUpload');
+  
 
   try {
     const response = await createSiteImage(imageForm)
@@ -729,6 +739,16 @@ async function submitImageUpload() {
       life: 3000,
     })
   }
+}
+
+function generateRandomString(charSize) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < charSize; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters[randomIndex];
+  }
+  return result;
 }
 
 function deleteStreamer(teamId) {

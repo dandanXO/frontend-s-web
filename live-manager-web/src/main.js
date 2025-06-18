@@ -34,3 +34,6 @@ app.use(PrimeVue, {
 app.component('Toast', Toast)
 
 app.mount('#app')
+
+const globals = import.meta.env.VITE_APP_BASE_API;
+export { globals }

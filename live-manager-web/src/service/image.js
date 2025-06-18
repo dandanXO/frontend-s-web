@@ -6,7 +6,8 @@ export const uploadImage = (formData) => {
     method: 'POST',
     body: formData,
   }
-  const baseApi = globals.$baseApi
+  const baseApi = globals
+  
 
   return fetch(baseApi + '/image/uploadBanner', requestOptions)
     .then((response) => {
