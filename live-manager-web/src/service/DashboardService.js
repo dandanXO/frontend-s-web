@@ -520,4 +520,15 @@ export const DashboardService = {
       },
     })
   },
+
+  //上傳圖片
+  createSiteImage() {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/siteImage', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+  },
 }
