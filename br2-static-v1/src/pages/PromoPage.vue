@@ -15,11 +15,7 @@
     </q-tabs>
   </div>
 
-  <div
-    class="promo-container"
-    v-touch-swipe.left="swipeLeft"
-    v-touch-swipe.right="swipeRight"
-  >
+  <div class="promo-container" v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
         <!-- <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" /> -->
@@ -45,7 +41,10 @@
                       </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img class="promo-content" :src="require(`../assets/images/promotion/tempo/` + promo.mobileImgUrl)" />
+                          <img
+                            class="promo-content"
+                            :src="require(`../assets/images/promotion/tempo/` + promo.mobileImgUrl)"
+                          />
                           <!-- <img class="promo-content" src="../assets/images/promotion/tempo/promo-1.png" /> -->
                         </div>
                       </div>
@@ -59,7 +58,10 @@
                       </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img class="promo-content" :src="require(`../assets/images/promotion/tempo/` + promo.mobileImgUrl)" />
+                          <img
+                            class="promo-content"
+                            :src="require(`../assets/images/promotion/tempo/` + promo.mobileImgUrl)"
+                          />
                           <!-- <img class="promo-content" src="../assets/images/promotion/tempo/promo-1.png" /> -->
                         </div>
                       </div>
@@ -755,13 +757,15 @@ export default defineComponent({
     min-height: 45px;
     border-radius: 8px;
     // background: rgba(43, 71, 74, 0.27);
-    background:#2B474A;
-    color: #01a1b2;
+    // background:#2B474A;
+    border: 1px solid #4b4943;
+    color: #4b4943;
     font-weight: 400;
+    margin: 0 8px;
   }
 
   .vip-promo-tab-toggle {
-    background-color: #2B474A;
+    // background-color: #2b474a;
     border-radius: 8px;
     margin-bottom: 4px;
     margin-top: 5px;
@@ -772,8 +776,8 @@ export default defineComponent({
     }
 
     :deep(.q-tab--active) {
-      color: #fff;
-      background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+      color: #000;
+      background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
       box-shadow: 0px 1px 2px 0px #0000000d;
       // border: 2px solid rgba(43, 71, 74, 0.27);
     }
@@ -1385,7 +1389,7 @@ export default defineComponent({
   }
 
   .date-timer {
-    color: #9AFEE4;
+    color: #9afee4;
     display: flex;
     align-items: center;
     line-height: 1 !important;
