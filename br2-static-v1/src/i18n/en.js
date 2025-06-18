@@ -240,6 +240,7 @@ export default {
     post: "Post",
     loading: "Loading",
     loading_plsWait: "Loading... Please wait...",
+    loading_data: "Loading data… Please wait…",
     cancel: "Cancel",
     signOut: "Sign Out",
     back: "Back",

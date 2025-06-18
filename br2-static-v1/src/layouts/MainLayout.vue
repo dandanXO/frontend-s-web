@@ -23,9 +23,9 @@
       >
         <a @click="goToPrevPage(prevPage)">
           <q-icon class="header-icon" name="chevron_left"></q-icon>
-          <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">
+          <!-- <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">
             {{ $t("btn.back") }}
-          </span>
+          </span> -->
         </a>
         <div class="page-title-wrapper">
           <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
@@ -454,14 +454,14 @@ export default defineComponent({
         } else if (route.path === "/deposit") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "";
+          pageName.value = t("header.deposit");
           if (route.query.from) {
             prevPage.value = route.query.from;
           }
         } else if (route.path === "/withdraw") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "";
+          pageName.value = t("header.withdraw");
         }
       }
     };
