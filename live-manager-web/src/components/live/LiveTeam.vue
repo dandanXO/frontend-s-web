@@ -125,10 +125,10 @@ function resetQuery() {
 }
 
 async function loadTeam() {
-  const params = new URLSearchParams(request).toString()
+  // const params = new URLSearchParams(request).toString()
 
-  console.log(params)
-  const res = await getSportLiveTeam(params)
+  // console.log(params)
+  const res = await getSportLiveTeam(request)
   console.log(res)
 }
 
