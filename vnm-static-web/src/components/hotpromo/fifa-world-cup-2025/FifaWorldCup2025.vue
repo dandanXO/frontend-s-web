@@ -122,6 +122,7 @@ import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import { claimWeeklyBonus, weeklyBonusInit } from "@/api/promotion/weeklyBonus";
 import { useI18n } from "vue-i18n";
+import { claimDailyRainItem } from "@/api/index/promo";
 
 const { t } = useI18n();
 const store = userStore();
@@ -143,18 +144,18 @@ const initPage = () => {
   });
 };
 const claimBonus = () => {
-  showPrizePopup.value = true;
-  // if (!store.token) {
-  //   return;
-  // }
-  // claimWeeklyBonus(props.promoCode).then((res) => {
-  //   if (res.code === 0) {
-  //     prizePopupBonusAmt.value = res.data;
-  //     showPrizePopup.value = true;
-  //   } else {
-  //     ElMessage.error(t(`response.${res.code}`));
-  //   }
-  // });
+  // showPrizePopup.value = true;
+  if (!store.token) {
+    return;
+  }
+  claimDailyRainItem(props.promoCode).then((res) => {
+    if (res.code === 0) {
+      prizePopupBonusAmt.value = res.data.lastDigitAmount + res.data.vipAmount;
+      showPrizePopup.value = true;
+    } else {
+      ElMessage.error(t(`response.${res.code}`));
+    }
+  });
 };
 onMounted(() => {
   if (!store.token) {
@@ -197,6 +198,14 @@ onMounted(() => {
       font-size: 36px;
       line-height: 26.97px;
       letter-spacing: -2%;
+
+      &:hover {
+        opacity: 0.9;
+      }
+      &:active {
+        filter: brightness(0.9);
+        transform: translate(0px, 1px);
+      }
 
       img {
         width: 100%;
