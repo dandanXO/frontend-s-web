@@ -1440,13 +1440,15 @@ onMounted(() => {
     }
 
     .match-btn {
-      background: linear-gradient(180deg, #cbcbcb 0%, #757575 100%);
-      color: #ffffff;
+      background: linear-gradient(180deg, #ffe2b9 0%, #be9457 100%);
+      color: #653b00;
       border: 1px solid #ffffff;
 
-      &.active {
-        background: linear-gradient(180deg, #ffe2b9 0%, #be9457 100%);
-        color: #653b00;
+      &.disabled {
+        background: linear-gradient(180deg, #cbcbcb 0%, #757575 100%);
+        color: #ffffff;
+        cursor: not-allowed;
+        pointer-events: none;
       }
     }
   }
