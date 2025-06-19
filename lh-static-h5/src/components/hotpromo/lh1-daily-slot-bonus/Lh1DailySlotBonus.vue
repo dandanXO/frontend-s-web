@@ -12,7 +12,7 @@
             <div class="reward-info-icon claim-coin-icon">
             </div>
             <div class="reward-info-content">
-              昨日累计负盈利：
+              昨日累计有效投注：
               <span class="amount">{{ totalLoss }}元</span>
             </div>
           </div>
@@ -20,7 +20,7 @@
             <div class="reward-info-icon claim-gift-icon">
             </div>
             <div class="reward-info-content">
-              今日可领取荣耀金：
+              今日可领投注金：
               <span class="amount">{{ bonus }}元</span>
             </div>
           </div>

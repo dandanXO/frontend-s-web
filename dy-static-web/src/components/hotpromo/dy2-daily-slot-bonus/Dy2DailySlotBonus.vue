@@ -10,14 +10,14 @@
             <div class="reward-info">
               <div class="reward-info-icon claim-coin-icon"></div>
               <div class="reward-info-content">
-                昨日累计负盈利：
+                昨日累计有效投注：
                 <span class="amount">{{ formatNumber(totalLoss) }}元</span>
               </div>
             </div>
             <div class="reward-info">
               <div class="reward-info-icon claim-gift-icon"></div>
               <div class="reward-info-content">
-                今日可领取荣耀金：
+                今日可领投注金：
                 <span class="amount">{{ formatNumber(bonus) }}元</span>
               </div>
             </div>
@@ -34,7 +34,7 @@
     </div>
     <br/>
   </template>
-  
+
   <script setup>
   import { getDailySlotBonusInit, claimDailySlotBonus } from "@/api/index/promo";
   import { onMounted, ref, defineProps, toRefs } from "vue";
@@ -44,29 +44,29 @@
   import { ResponseCode } from "@/api/response";
   const props = defineProps(["promoCode"]);
   const { promoCode } = toRefs(props);
-  
+
   const notify = useNotify();
-  
+
   const store = userStore();
   const totalLoss = ref(0);
   const bonus = ref(0);
   const isClaiming = ref(false);
-  
+
   const formatNumber = (value, type) => {
     if (value === undefined) {
       return "-";
     }
     value = value.toString().replace(/,/g, "");
-  
+
     const number = parseFloat(value);
-  
+
     if (number % 1 !== 0 || type === "redPacket") {
       return number.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     } else {
       return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   }
-  
+
   const handleClaimBonus = () => {
     if (isClaiming.value) return;
     isClaiming.value = true;
@@ -83,7 +83,7 @@
       });
       return;
     }
-  
+
     claimDailySlotBonus(promoCode.value)
       .then((res) => {
         if (res.code === 0) {
@@ -111,7 +111,7 @@
         isClaiming.value = false;
       });
   };
-  
+
   const fetchData = async () => {
     try {
       const res = await getDailySlotBonusInit(promoCode.value);
@@ -121,7 +121,7 @@
       console.log(error);
     }
   };
-  
+
   onMounted(() => {
     if (!store.token) {
       return;
@@ -129,7 +129,7 @@
     fetchData();
   });
   </script>
-  
+
   <style scoped lang="scss">
   .dailyslotbonus-wrapper {
     display: flex;
@@ -139,7 +139,7 @@
     width: 100%;
     height: 100%;
   }
-  
+
   .dailyslotbonus-section {
     box-shadow: 0px 0px 4px 0px #01497b0f;
     padding: 30px 40px;
@@ -150,7 +150,7 @@
     justify-content: space-between;
     background: url("@/assets/promo/lh-livepoker-rebate/section-bg.png");
     background-size: 100% 100%;
-  
+
     .dailyslotbonus-section-left {
       display: flex;
       flex-direction: column;
@@ -158,16 +158,16 @@
       justify-content: flex-start;
       gap: 25px;
     }
-  
+
     .dailyslotbonus-section-right {
       margin-top: auto;
       margin-bottom: auto;
       width: 220px;
-  
+
       .bonus-image {
         cursor: pointer;
         width: 100%;
-  
+
         &:hover {
           filter: brightness(0.9);
         }
@@ -175,14 +175,14 @@
           transform: translate(0px, 1px);
           opacity: 0.9;
         }
-  
+
         &.disabled {
           cursor: not-allowed;
           pointer-events: none;
         }
       }
     }
-  
+
     .dailyslotbonus-section-title {
       font-size: 24px;
       line-height: 1;
@@ -193,7 +193,7 @@
       margin-bottom: 20px;
     }
   }
-  
+
   .dailyslotbonus-game {
     width: 100%;
     height: 302px;
@@ -203,7 +203,7 @@
     position: relative;
     margin-bottom: 12px;
   }
-  
+
   .dailyslotbonus-game-bottom {
     display: flex;
     justify-content: space-between;
@@ -226,7 +226,7 @@
       gap: 4px;
     }
   }
-  
+
   .dailyslotbonus-game-info {
     width: 100%;
     height: 100%;
@@ -240,7 +240,7 @@
     flex-direction: column;
     // align-items: center;
     gap: 20px;
-  
+
     .title {
       background-image: url("@/assets/promo/lh-livepoker-rebate/info-title.png");
       background-repeat: no-repeat;
@@ -276,7 +276,7 @@
       }
     }
   }
-  
+
   .reward-info {
     border: 1px solid rgba(215, 235, 255, 1);
     padding: 8px;
@@ -285,18 +285,18 @@
     align-items: center;
     margin-bottom: 16px;
   }
-  
+
   .reward-info-icon {
     width: 24px;
     height: 24px;
     margin-right: 10px;
   }
-  
+
   .icon-img {
     padding: 0 !important;
     margin: 0 !important;
   }
-  
+
   .reward-info-content {
     flex: 1;
     display: flex;
@@ -304,7 +304,7 @@
     align-items: center;
     font-size: 20px;
     gap: 24px;
-  
+
     .amount {
       color: #00a1ff;
       font-weight: 600;
