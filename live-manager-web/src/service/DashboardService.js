@@ -341,6 +341,7 @@ export const DashboardService = {
       })
   },
 
+
   //live-match
 
   getSportLiveMatch(request) {
@@ -349,7 +350,6 @@ export const DashboardService = {
       .get(`/session/live-sport/match?${request}`, {
         headers: {
           token: `${token}`,
-          'Content-Type': 'application/json',
         },
       })
       .then((response) => {
@@ -372,7 +372,6 @@ export const DashboardService = {
       .get(`/session/live-sport/team?${request}`, {
         headers: {
           token: `${token}`,
-          'Content-Type': 'application/json',
         },
       })
       .then((response) => {
@@ -427,4 +426,81 @@ export const DashboardService = {
     return null; // 失敗時返回 null
   });
 },
+
+
+  //live-streamer
+  getSportLiveStreamer(request) {
+    const token = sessionStorage.getItem('token')
+    const query = toQueryString(request)
+    return api
+      .get(`/session/live-sport/streamer?${query}`, {
+        headers: {
+          token: `${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          return response.data
+        }
+        console.error('獲取運動直播主播失敗:', response.message || '未知錯誤')
+        return null
+      })
+      .catch((error) => {
+        console.error('獲取運動直播主播請求失敗:', error)
+        return null
+      })
+  },
+
+
+  getSensitiveWordNew  (request)  {
+    const token = sessionStorage.getItem('token')
+    return api.get('/session/live-sport/sensitive-word', {
+      params: request, // For GET requests, parameters are typically sent as `params`
+      headers: {
+        token: `${token}`,
+      },
+    });
+  },
+  addSensitiveWordNew (data) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/live-sport/sensitive-word/add', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+  },
+  updateSensitiveWordNew (data) {
+  const token = sessionStorage.getItem('token')
+  return api.post('/session/live-sport/sensitive-word/update', data, {
+    headers: {
+      token: `${token}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+},
+
+  deleteSensitiveWordNew (data) {
+    const token = sessionStorage.getItem('token')
+    // For DELETE with a body, you might use 'data' property.
+    // Some APIs prefer DELETE with params, so confirm your backend's expectation.
+    return api.post('/session/live-sport/sensitive-word/delete', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+  },
+}
+
+
+  function toQueryString(params) {
+  const filtered = Object.entries(params)
+    .filter(([_, value]) => value !== null && value !== undefined && value !== '')
+    .reduce((acc, [key, value]) => {
+      acc[key] = value
+      return acc
+    }, {})
+
+  return new URLSearchParams(filtered).toString()
 }
