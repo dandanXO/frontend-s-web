@@ -96,7 +96,7 @@
       </div>
       <div class="col-record">
         满足存款≥100可参与(
-        <span>当前存款100元</span>
+        <span>当前存款{{ totalDeposit }}元</span>
         )
       </div>
     </div>
@@ -290,6 +290,7 @@ const store = userStore();
 const props = defineProps(["promoCode"]);
 const { promoCode } = toRefs(props);
 const totalValidBet = ref();
+const totalDeposit = ref();
 const tableData = ref();
 const fetchTableData = async () => {
   try {
@@ -307,6 +308,7 @@ const fetchData = async () => {
   try {
     const res = await getFifaQuiz2025PromoInit(promoCode.value);
     totalValidBet.value = res.data.totalValidBet;
+    totalDeposit.value = res.data.totalDeposit;
     list.value = res.data.gameQuizList;
   } catch (error) {
     console.log(error);
