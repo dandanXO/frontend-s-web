@@ -919,7 +919,7 @@ export function getDailySlotBonusInit() {
 }
 export function claimDailySlotBonus() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return server.EVENT.post(`session/game-type-bonus/claim?promoCode=lh1-daily-slot-bonus&v=${randNum}`);
+  return server.EVENT.post(`/session/game-type-bonus/claim?promoCode=lh1-daily-slot-bonus&v=${randNum}`);
 }
 export function getNewUserSportBonus2025Bonus(promoCode) {
   return server.EVENT.get(`/session/game-type-bonus/init?promoCode=${promoCode}`);
