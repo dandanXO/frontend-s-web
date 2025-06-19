@@ -72,13 +72,14 @@ import InterestProfitPromo from "../components/hotpromo/interestProfit/InterestP
 import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.vue";
 import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
 import GoldenEggPromo from "./hotpromo/goldenEgg/GoldenEggPromo.vue";
-
 import VideoAmbassador from "./hotpromo/video-ambassador/VideoAmbassador.vue";
 import DepositSpinnerRewards from "./hotpromo/deposit-spinner-rewards/DepositSpinnerRewards.vue";
 import JackpotAviator from "./hotpromo/jackpotAviator/JackpotAviator.vue";
 import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
 import NewPlayerAccDepositPromo from "./hotpromo/new-player-acc-deposit/NewPlayerAccDepositPromo.vue"
 import NewPlayerWelcome from "../components/hotpromo/newPlayerSpinWheel/NewPlayerWheelPromo.vue"
+import PiggyBankPromo from "../components/hotpromo/piggyBank/PiggyBankPromo.vue";
+import MonthBeginningDepositRebate from "../components/hotpromo/monthBeginningDepositRebate/MonthBeginningDepositRebate.vue"
 
 export default defineComponent({
   name: "HotPromo",
@@ -100,7 +101,9 @@ export default defineComponent({
     DepositSpinnerRewards,
     SpinLuckyWheelPromo,
     NewPlayerAccDepositPromo,
-    NewPlayerWelcome
+    NewPlayerWelcome,
+    PiggyBankPromo,
+    MonthBeginningDepositRebate
   },
   props: {
     list: {
