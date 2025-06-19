@@ -627,7 +627,8 @@ export const DashboardService = {
     const token = sessionStorage.getItem('token')
     return api.post('/session/siteImage', data, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        token: `${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
     })
   },
