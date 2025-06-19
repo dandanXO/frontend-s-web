@@ -1184,10 +1184,13 @@ onMounted(() => {
             color: #ffffff;
           }
           .title-status {
-            // background: #be9457;
+            color: #ffffff;
+            &.ended {
+              background: #ff5e00;
+            }
 
-            img {
-              filter: invert(1);
+            &.ongoing {
+              background: #be9457;
             }
           }
         }
