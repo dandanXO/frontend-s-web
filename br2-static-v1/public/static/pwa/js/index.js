@@ -48,8 +48,18 @@ installBtn.addEventListener("click", async () => {
       // Get the current URL
       const urlParams = new URLSearchParams(window.location.search);
       const fbclid = urlParams.get("fbclid");
+      const referral = urlParams.get("refer");
+      const click_id = urlParams.get("click_id");
+      // const referralSpin = urlParams.get("referSpin");
+      // if (referralSpin) {
+      //   localStorage.setItem("SPIN_REFERRAL_CODE", referralSpin);
+      // }
+      if (referral) {
+        localStorage.setItem("PWA_REFERRAL_CODE", referral);
+      }
       if (fbclid) {
         localStorage.setItem("fbclid", fbclid);
+        localStorage.setItem("click_id", click_id);
 
         // Retrieve _fbp directly
         const getCookie = (name) => {
@@ -65,7 +75,7 @@ installBtn.addEventListener("click", async () => {
         })();
 
         const fbc = fbclid;
-        const siteCode = "IND";
+        const siteCode = "BR1";
 
         // Create payload in form format
         const payload = new URLSearchParams({
@@ -75,7 +85,7 @@ installBtn.addEventListener("click", async () => {
         });
 
         // Make the POST request
-        fetch("https://tljwn.plan2wtion.com/app/facebookInfo", {
+        fetch("https://ap1d5gcci.4kcjx19nzj8.com/app/facebookInfo", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -97,7 +107,7 @@ installBtn.addEventListener("click", async () => {
         if (isIos) {
           document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "flex"));
         } else {
-          window.open("https://ind.55ace.com/register", "_blank");
+          window.open("https://bra.55ace.com/register", "_blank");
         }
       } else {
         const { outcome } = await deferredPrompt.prompt();
@@ -105,9 +115,9 @@ installBtn.addEventListener("click", async () => {
           // const redirectUrl = getAdjustUrl();
 
           // console.log("REd Url");
-          // console.log(redirectUrl)
+          // console.log(redirectUrl);
 
-          // // alert(redirectUrl);
+          // alert(redirectUrl);
           // const iframeTag = document.createElement("iframe");
           // iframeTag.classList.add("blank-iframe");
           // iframeTag.src = redirectUrl;
@@ -134,6 +144,32 @@ installBtn.addEventListener("click", async () => {
       break;
   }
 });
+
+function isQRCodeScannerWebView() {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+  // Detect known QR Scanner App patterns
+  if (/QRScanner|QRCode|FreeScanner/i.test(ua)) {
+    return true;
+  }
+
+  // Detect Generic WebView (iOS & Android)
+  const isIOSWebView = /iPhone|iPod|iPad/i.test(ua) && !/Safari/i.test(ua);
+  const isAndroidWebView = /Android/i.test(ua) && /Version\/\d+\.\d+/i.test(ua) && !/Chrome/i.test(ua);
+
+  if (isIOSWebView || isAndroidWebView) {
+    return true;
+  }
+
+  // Feature detection for blocked popups
+  const testWindow = window.open("about:blank");
+  if (!testWindow || testWindow.closed) {
+    return true;
+  }
+  testWindow.close();
+
+  return false;
+}
 
 function handleInstallationProgress() {
   if (installationProgressNumber < 100) {
@@ -175,8 +211,21 @@ window.addEventListener("beforeinstallprompt", (e) => {
   deferredPrompt = e;
 });
 
+function getDomainWithoutSubdomain() {
+  let hostname = window.location.hostname;
+  let parts = hostname.split(".");
+
+  // 处理 localhost 和 IP
+  if (parts.length <= 2 || /^\d+\.\d+\.\d+\.\d+$/.test(hostname) || hostname === "localhost") {
+    return hostname; // 直接返回 IP 或 localhost
+  }
+
+  return parts.slice(1).join("."); // 去掉第一个 subdomain
+}
+
 window.addEventListener("load", () => {
   const hostname = window.location.hostname.replace("www.", "");
+  sessionStorage.setItem("IS_PWA", "1");
 
   const fbqId = fbqLists[hostname]?.id;
   if (fbqId) {
@@ -187,7 +236,8 @@ window.addEventListener("load", () => {
 
   if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
     const fbclid = localStorage.getItem("fbclid");
-    redirectToGame(fbclid);
+    const click_id = localStorage.getItem("click_id");
+    redirectToGame(fbclid, click_id);
   }
 
   const installationStatus = localStorage.getItem(INSTALLATION_STATUS_KEY);
@@ -210,6 +260,16 @@ window.addEventListener("load", () => {
       const currentDomain = window.location.origin;
       window.location.href = `${currentDomain}/home`;
       // window.location.href = `https://ind.55ace.com/home`;
+    } else {
+      // const isTest = window.location.hostname.includes("localhost") || window.location.hostname.includes("di1yf4");
+      // if (isTest) {
+      //   alert("IN WebView:" + isInWebView());
+      //   alert("Is Support Pwa:" + supportsPWA());
+      //   alert("Defer: " + deferredPrompt);
+      // }
+      // if (isInWebView() || !supportsPWA() || !deferredPrompt) {
+      //   redirectToChromeIfUnsupported();
+      // }
     }
   }, 2500);
 
@@ -229,6 +289,72 @@ window.addEventListener("load", () => {
 /** browser detect **/
 document.getElementById("id-url-input").textContent = window.location.href;
 document.getElementById("id-url-install").textContent = window.location.origin;
+
+function supportsPWA() {
+  return (
+    "serviceWorker" in navigator || window.matchMedia("(display-mode: standalone)").matches || "standalone" in navigator
+  );
+}
+
+function isInWebView() {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+
+  // Log User-Agent for debugging
+  console.log("User-Agent:", ua);
+
+  // Common WebView indicators
+  const webViewPatterns = [
+    /FBAN|FBAV|Instagram/i, // Facebook, Instagram
+    /MicroMessenger/i, // WeChat
+    /QQ\//i, // QQ
+    /Line/i, // LINE
+    /Weibo/i, // Weibo
+    /AlipayClient/i, // Alipay
+    /UBrowser|Quark|2345Explorer|baidubrowser/i, // Other Chinese browsers
+    /QRScanner|QRCode|FreeScanner/i // Possible QR Code scanners
+  ];
+
+  // User-Agent matching
+  if (webViewPatterns.some((pattern) => pattern.test(ua))) {
+    return true;
+  }
+
+  // WebView environments often do not match "display-mode: browser"
+  if (!window.matchMedia("(display-mode: browser)").matches) {
+    return true;
+  }
+
+  // WebView may lack full navigator properties
+  if (typeof navigator.standalone !== "undefined" && navigator.standalone === false) {
+    return true;
+  }
+
+  // Try opening a new window (many WebViews block this)
+  const testWindow = window.open("about:blank");
+  if (!testWindow || testWindow.closed) {
+    return true;
+  }
+  testWindow.close();
+
+  return false;
+}
+
+function redirectToChromeIfUnsupported() {
+  const url = window.location.href;
+
+  // Android 使用 `intent://` 跳转到 Chrome
+  if (/Android/i.test(navigator.userAgent)) {
+    window.location.href = `intent://${url.replace(
+      /^https?:\/\//,
+      ""
+    )}#Intent;scheme=https;package=com.android.chrome;end;`;
+  }
+  // iOS 提示用户手动打开
+  else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    // alert("请使用 Safari 浏览器打开，以获得更好的体验。");
+    window.location.href = url; // 仍然跳转
+  }
+}
 
 function isChromeInstalled() {
   const userAgent = navigator.userAgent.toLowerCase();
@@ -353,7 +479,7 @@ function openLinkInPreferredBrowser(url) {
       // alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
       // window.open(newLink, "_self");
       window.open(
-        `https://cab50.cc/?p0=${affiliateCodePwa}&p1={{campaign.name}}&p2={{campaign.id}}&p3={{adset.name}}&p4={{adset.id}}&p5={{ad.name}}&p6={{ad.id}}`,
+        `https://bra.55ace.com/?p0=${affiliateCodePwa}&p1={{campaign.name}}&p2={{campaign.id}}&p3={{adset.name}}&p4={{adset.id}}&p5={{ad.name}}&p6={{ad.id}}`,
         "_self"
       );
     }, 1500);
@@ -368,7 +494,7 @@ function openLinkInPreferredBrowser(url) {
     // alert("Nenhum navegador suportado encontrado. O aplicativo será baixado em formato apk");
     // window.open(newLink, "_self");
     window.open(
-      `https://cab50.cc/?p0=${affiliateCodePwa}&p1={{campaign.name}}&p2={{campaign.id}}&p3={{adset.name}}&p4={{adset.id}}&p5={{ad.name}}&p6={{ad.id}}`,
+      `https://bra.55ace.com/?p0=${affiliateCodePwa}&p1={{campaign.name}}&p2={{campaign.id}}&p3={{adset.name}}&p4={{adset.id}}&p5={{ad.name}}&p6={{ad.id}}`,
       "_self"
     );
   } else {
