@@ -67,7 +67,7 @@
           <div class="title-icon">
             <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-fifa.png" alt="" />
           </div>
-          <div class="title-txt">世具杯</div>
+          <div class="title-txt">世俱杯</div>
 
           <div class="title-status ongoing" v-if="currentListItem.status === 'ONGOING'">
             <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-ongoing.svg" alt="" />
@@ -101,7 +101,7 @@
         竞猜独赢事件
       </div>
       <div class="col-record">
-        满足存款≥100可参与(
+        当日首存≥100可参与(
         <span>当前存款{{ totalDeposit }}元</span>
         )
       </div>
@@ -112,7 +112,7 @@
         class="bet-select"
         :class="{
           active: currentListItem.memberAnswerOne === choiceOneArray[0] || selectedTeam == choiceOneArray[0],
-          disabled: currentListItem.memberAnswerOne
+          disabled: currentListItem.memberAnswerOne || currentListItem.status === 'ENDED'
         }"
         @click="selectTeam(choiceOneArray[0])"
       >
@@ -122,7 +122,7 @@
         class="bet-select"
         :class="{
           active: currentListItem.memberAnswerOne === choiceOneArray[1] || selectedTeam == choiceOneArray[1],
-          disabled: currentListItem.memberAnswerOne
+          disabled: currentListItem.memberAnswerOne || currentListItem.status === 'ENDED'
         }"
         @click="selectTeam(choiceOneArray[1])"
       >
@@ -131,11 +131,11 @@
     </div>
 
     <!-- 独赢事件竞猜 -->
-    <template v-if="currentListItem.memberAnswerOne || selectedTeam">
+    <template v-if="currentListItem.memberAnswerOne || selectedTeam || currentListItem.status === 'ENDED'">
       <div class="match-btn disabled" v-if="currentListItem.hasClaimedBonus">已领取</div>
       <div
         class="match-btn"
-        v-else-if="currentListItem.status === 'ENDED' && currentListItem.canClaimBonus"
+        v-else-if="currentListItem.status === 'ENDED'"
         :class="{ disabled: loadingBtn }"
         @click="handleClaimFifaQuiz2025(currentListItem.id)"
       >
@@ -166,7 +166,7 @@
         class="bet-select"
         :class="{
           active: currentListItem.memberSelectedOccasion === item.occasion || selectedSpecial == item.occasion,
-          disabled: currentListItem.memberSelectedOccasion
+          disabled: currentListItem.memberSelectedOccasion || currentListItem.status === 'ENDED'
         }"
         @click="selectSpecial(item.occasion)"
       >
@@ -180,11 +180,11 @@
     </div>
 
     <!-- 特殊事件竞猜 -->
-    <template v-if="currentListItem.memberSelectedOccasion || selectedSpecial">
+    <template v-if="currentListItem.memberSelectedOccasion || selectedSpecial || currentListItem.status === 'ENDED'">
       <div class="match-btn disabled" v-if="currentListItem.hasClaimedOccasionBonus">已领取</div>
       <div
         class="match-btn"
-        v-else-if="currentListItem.canClaimOccasionBonus"
+        v-else-if="currentListItem.status === 'ENDED'"
         :class="{ disabled: loadingBtn }"
         @click="handleClaimFifaQuiz2025(currentListItem.id)"
       >

@@ -22,6 +22,7 @@
       <Swiper
         class="livestream-list-wrapper"
         :slides-per-view="computedSlidesPerView"
+        :centered-slides="true"
         :space-between="16"
         :loop="false"
         :pagination="false"
@@ -93,7 +94,7 @@
           <div class="title-icon">
             <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-fifa.png" alt="" />
           </div>
-          <div class="title-txt">世具杯</div>
+          <div class="title-txt">世俱杯</div>
           <div class="title-status ongoing" v-if="currentListItem.status === 'ONGOING'">
             <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-match-ongoing.svg" alt="" />
             &nbsp; 进行中
@@ -127,7 +128,7 @@
         竞猜独赢事件
       </div>
       <div class="col-record">
-        满足存款≥100可参与(
+        当日首存≥100可参与(
         <span>当前存款{{ totalDeposit }}元</span>
         )
       </div>
@@ -138,7 +139,7 @@
         class="bet-select"
         :class="{
           active: currentListItem.memberAnswerOne === choiceOneArray[0] || selectedTeam == choiceOneArray[0],
-          disabled: currentListItem.memberAnswerOne
+          disabled: currentListItem.memberAnswerOne || currentListItem.status === 'ENDED'
         }"
         @click="selectTeam(choiceOneArray[0])"
       >
@@ -148,7 +149,7 @@
         class="bet-select"
         :class="{
           active: currentListItem.memberAnswerOne === choiceOneArray[1] || selectedTeam == choiceOneArray[1],
-          disabled: currentListItem.memberAnswerOne
+          disabled: currentListItem.memberAnswerOne || currentListItem.status === 'ENDED'
         }"
         @click="selectTeam(choiceOneArray[1])"
       >
@@ -157,11 +158,11 @@
     </div>
 
     <!-- 独赢事件竞猜 -->
-    <template v-if="currentListItem.memberAnswerOne || selectedTeam">
+    <template v-if="currentListItem.memberAnswerOne || selectedTeam || currentListItem.status === 'ENDED'">
       <div class="match-btn disabled" v-if="currentListItem.hasClaimedBonus">已领取</div>
       <div
         class="match-btn"
-        v-else-if="currentListItem.status === 'ENDED' && currentListItem.canClaimBonus"
+        v-else-if="currentListItem.status === 'ENDED'"
         :class="{ disabled: loadingBtn }"
         @click="handleClaimFifaQuiz2025(currentListItem.id)"
       >
@@ -193,7 +194,7 @@
         :class="{
           'long-select': index === specialList.length - 1,
           active: currentListItem.memberSelectedOccasion === item.occasion || selectedSpecial == item.occasion,
-          disabled: currentListItem.memberSelectedOccasion
+          disabled: currentListItem.memberSelectedOccasion || currentListItem.status === 'ENDED'
         }"
         @click="selectSpecial(item.occasion)"
       >
@@ -207,11 +208,11 @@
     </div>
 
     <!-- 特殊事件竞猜 -->
-    <template v-if="currentListItem.memberSelectedOccasion || selectedSpecial">
+    <template v-if="currentListItem.memberSelectedOccasion || selectedSpecial || currentListItem.status === 'ENDED'">
       <div class="match-btn disabled" v-if="currentListItem.hasClaimedOccasionBonus">已领取</div>
       <div
         class="match-btn"
-        v-else-if="currentListItem.canClaimOccasionBonus"
+        v-else-if="currentListItem.status === 'ENDED'"
         :class="{ disabled: loadingBtn }"
         @click="handleClaimFifaQuiz2025(currentListItem.id)"
       >
@@ -678,6 +679,8 @@ onMounted(() => {
         gap: 7px;
         flex-basis: 33%;
         max-width: 33%;
+        padding: 6px;
+
         .livestream-list-item__match-info__team-emblem {
           // @include livestream-team-emblem;
           background-color: #fff;
@@ -720,7 +723,7 @@ onMounted(() => {
         // @include livestream-on-air;
       }
       .livestream-list-item__match-info__date__date {
-        font-size: 11px;
+        font-size: 9px;
         line-height: 15px;
         color: #7a80a1;
         margin-top: 12px;
@@ -1200,6 +1203,12 @@ onMounted(() => {
     cursor: pointer;
     position: relative;
     flex-direction: column;
+
+    &.disabled {
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 1 !important;
+    }
 
     img {
       display: block;
