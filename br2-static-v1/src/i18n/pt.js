@@ -268,7 +268,8 @@ export default {
     profit: "Lucro",
     loss: "Perda",
     withdrawing: "Retirando...",
-    unbinding: "Desvinculando"
+    unbinding: "Desvinculando",
+    deposit: "Depositar"
   },
   notify: {
     noRecord: "Nenhum Registro",
@@ -302,7 +303,9 @@ export default {
     telegram: "Telegram",
     whatsapp: "WhatsApp",
     language: "Language",
-    downloadApp: "Download APP"
+    downloadApp: "Download APP",
+    showing16Of100Games: "Mostrando 16 de 100 jogos",
+    balance: "Saldo"
   },
   home: {
     menu_lobby: "Lobby",

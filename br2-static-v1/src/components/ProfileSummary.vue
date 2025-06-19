@@ -16,8 +16,20 @@
     </div>
   </div>
 
+  <div class="menu-open" :class="{ open: menuOpen }" @click="toggleMenuOpen()">
+    <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
+    <div class="menu-open-inner">
+      <SideMenu @closeMenu="toggleMenuOpen()" />
+    </div>
+  </div>
+
   <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload }">
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
+      <div class="profile-menu">
+        <q-btn dense flat @click="toggleMenuOpen()">
+          <q-icon name="density_medium" />
+        </q-btn>
+      </div>
       <div class="profile-wrapper-extra">
         <div class="logo-img">
           <img src="../assets/logo.svg" @click="onClickLogo" />
@@ -151,6 +163,7 @@ import { convertToCommaAmount, isAndroid, isInPwa } from "src/boot/utils";
 import { api } from "boot/axios";
 import { useI18n } from "vue-i18n";
 import LangOptions from "components/LangOptions";
+import SideMenu from "./SideMenu.vue";
 
 const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot"]);
@@ -159,6 +172,8 @@ const router = useRouter();
 const store = userStore();
 const uiStore = useUI();
 
+const menuOpen = ref(false);
+
 // const balance = ref(19999999);
 
 const profileImg = [
@@ -166,6 +181,22 @@ const profileImg = [
     imgPath: ["profile-pic"]
   }
 ];
+
+const activateSlide = (item) => {
+  router
+    .push(`/home#${item}`)
+    .then(() => {
+      if (props.homeProfile) {
+        emits("closeslot");
+      }
+      emits("activateSlide", item);
+      menuOpen.value = false;
+    })
+    .catch((error) => {
+      console.error("Navigation error:", error);
+    });
+  menuOpen.value = false;
+};
 
 const goLogin = () => {
   // if (props.homeProfile) {
@@ -257,6 +288,10 @@ const checkTopDownloadAppear = () => {
       }, 11000);
     }
   }
+};
+
+const toggleMenuOpen = () => {
+  menuOpen.value = !menuOpen.value;
 };
 
 const topDownloadUrl = ref("");
@@ -360,6 +395,27 @@ onMounted(() => {
   }
 }
 
+.menu-open {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000000cc;
+  backdrop-filter: blur(4px);
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 2002;
+  transition: 0.3s all;
+  margin-left: -100%;
+  &.open {
+    margin-left: 0;
+  }
+  .menu-open-inner {
+    width: 75vw;
+    max-width: 375px;
+  }
+}
+
 .infoboard-container {
   display: flex;
   align-items: center;
@@ -389,7 +445,7 @@ onMounted(() => {
   .infoboard-wrapper {
     position: absolute;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
     // width: 22rem;
@@ -547,13 +603,14 @@ onMounted(() => {
     display: flex;
     align-items: center;
     padding-top: 10px;
-    margin-bottom: auto;
+    padding-left: 6px;
+    // margin-bottom: auto;
     width: 100%;
   }
 
   .logo-img {
     width: 100%;
-    margin: 12px auto;
+    // margin: 12px auto;
 
     img {
       max-width: 106px;

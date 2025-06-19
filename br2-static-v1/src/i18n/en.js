@@ -256,7 +256,8 @@ export default {
     createAccount: "Create account",
     profit: "Profit",
     loss: "Loss",
-    unbinding: "Unbinding"
+    unbinding: "Unbinding",
+    deposit: "Deposit"
   },
   notify: {
     noRecord: "No Record",
@@ -289,7 +290,9 @@ export default {
     telegram: "Telegram",
     whatsapp: "WhatsApp",
     language: "Language",
-    downloadApp: "Download APP"
+    downloadApp: "Download APP",
+    showing16Of100Games: "Showing 16 of 100 games",
+    balance: "Balance"
   },
   home: {
     menu_lobby: "Lobby",
