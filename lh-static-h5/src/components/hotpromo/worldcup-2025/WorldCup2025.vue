@@ -97,7 +97,8 @@
           <div class="title-txt">世俱杯</div>
           <div class="title-status ongoing" v-if="currentListItem.status === 'ONGOING'">
             <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-match-ongoing.svg" alt="" />
-            &nbsp; 进行中
+            &nbsp;
+            {{ showNotStart ? "未开始" : "进行中" }}
           </div>
 
           <div class="title-status ended" v-if="currentListItem.status === 'ENDED'">
