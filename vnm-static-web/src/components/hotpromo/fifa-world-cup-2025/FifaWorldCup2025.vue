@@ -334,7 +334,7 @@ onMounted(() => {
   background: url("../../../assets/images/promotion/hotpromo/fifa-world-cup-2025/popupp.png");
   box-shadow: none;
   background-size: contain !important;
-  width: 520px;
+  width: 420px;
   aspect-ratio: 520 / 480;
   background-repeat: no-repeat;
 
