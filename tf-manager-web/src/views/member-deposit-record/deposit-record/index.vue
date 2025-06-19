@@ -464,6 +464,12 @@
             </span>
           </template>
         </el-table-column>
+        <el-table-column
+          prop="clientIp"
+          :label="t('fields.clientIp')"
+          align="center"
+          min-width="110"
+        />
       </el-table>
       <el-pagination
         :total="page.total"
