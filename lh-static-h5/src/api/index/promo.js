@@ -757,3 +757,13 @@ export function claimFifaQuiz2025(promoCode, quizId) {
 export function claimOccasionFifaQuiz2025(promoCode, quizId) {
   return eventapi.post(`/session/quiz-promo/claimOccasion?promoCode=${promoCode}&quizId=${quizId}`);
 }
+
+export function getDailySlotBonusInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition-loss/init?promoCode=lh1-daily-slot-bonus&v=${randNum}`);
+}
+
+export function claimDailySlotBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition-loss/claim?promoCode=lh1-daily-slot-bonus&v=${randNum}`);
+}
