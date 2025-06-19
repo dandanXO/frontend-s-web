@@ -764,11 +764,11 @@ export function claimFifa2025PromoBonus() {
 
 export function getDailySlotBonusInit() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return server.EVENT.get(`/session/competition-loss/init?promoCode=dy2-daily-slot-bonus&v=${randNum}`);
+  return server.EVENT.get(`/session/game-type-bonus/init?promoCode=dy2-daily-slot-bonus&v=${randNum}`);
 }
 export function claimDailySlotBonus() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
-  return server.EVENT.post(`/session/competition-loss/claim?promoCode=dy2-daily-slot-bonus&v=${randNum}`);
+  return server.EVENT.post(`/session/game-type-bonus/claim?promoCode=dy2-daily-slot-bonus&v=${randNum}`);
 }
 export function getNewUserSportBonus2025Bonus(promoCode) {
   return server.EVENT.get(`/session/game-type-bonus/init?promoCode=${promoCode}`);
