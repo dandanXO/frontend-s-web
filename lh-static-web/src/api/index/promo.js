@@ -867,7 +867,6 @@ export function claimChestBlastAustin(promoCode, type) {
   return server.EVENT.post(`/session/mission/claim?promoCode=${promoCode}&type=${type}`);
 }
 
-
 export function getTorontoMastersInit() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return server.EVENT.get(`/session/competition-loss/init?promoCode=lh1-valorant-masters-toronto-2025&v=${randNum}`);
@@ -891,7 +890,7 @@ export function getFifaQuiz2025PromoInit() {
   return server.EVENT.get(`/session/quiz-promo/init?promoCode=lh1-fifa-quiz-2025&v=${randNum}`);
 }
 
-export function getFifaQuiz2025PromoRecord() { 
+export function getFifaQuiz2025PromoRecord() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return server.EVENT.get(`/session/quiz-promo/records?promoCode=lh1-fifa-quiz-2025&v=${randNum}`);
 }
@@ -901,7 +900,9 @@ export function submitFifaQuiz2025(promoCode, quizId, answerOne) {
 }
 
 export function submitOccasionFifaQuiz2025(promoCode, quizId, selectedOccasion) {
-  return server.EVENT.post(`/session/quiz-promo/submitOccasion?promoCode=${promoCode}&quizId=${quizId}&selectedOccasion=${selectedOccasion}`);
+  return server.EVENT.post(
+    `/session/quiz-promo/submitOccasion?promoCode=${promoCode}&quizId=${quizId}&selectedOccasion=${selectedOccasion}`
+  );
 }
 
 export function claimFifaQuiz2025(promoCode, quizId) {
@@ -919,4 +920,10 @@ export function getDailySlotBonusInit() {
 export function claimDailySlotBonus() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return server.EVENT.post(`/session/competition-loss/claim?promoCode=lh1-daily-slot-bonus&v=${randNum}`);
+}
+export function getNewUserSportBonus2025Bonus(promoCode) {
+  return server.EVENT.get(`/session/game-type-bonus/init?promoCode=${promoCode}`);
+}
+export function claimNewUserSportBonus2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/game-type-bonus/claim?promoCode=${promoCode}`);
 }
