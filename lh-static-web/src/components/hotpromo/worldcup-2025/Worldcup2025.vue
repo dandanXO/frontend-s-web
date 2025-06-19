@@ -186,7 +186,7 @@
         class="match-btn"
         v-else-if="currentListItem.status === 'ENDED'"
         :class="{ disabled: loadingBtn }"
-        @click="handleClaimFifaQuiz2025(currentListItem.id)"
+        @click="handleClaimOccasionFifaQuiz2025(currentListItem.id)"
       >
         立即领取
       </div>
@@ -195,7 +195,7 @@
         class="match-btn"
         v-else
         :class="{ disabled: loadingBtn }"
-        @click="handleSubmitFifaQuiz2025(currentListItem.id, selectedSpecial)"
+        @click="handleSubmitOccasionFifaQuiz2025(currentListItem.id, selectedSpecial)"
       >
         确认竞猜
       </div>
