@@ -13,6 +13,9 @@
     <NewPlayerSpinWheelPromo
       v-if="list.redirectUrl === 'pak-newplayer-welcome-spin' && !isCommonPromo && store.token"
     />
+    <NewPlayerWelcome
+      v-if="list.redirectUrl === 'pak-welcome-new-players' && !isCommonPromo && store.token"
+    />
     <RedPacketRainPromo v-if="list.redirectUrl === 'pak-redpacketrain' && !isCommonPromo && store.token" />
     <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
     <NewPlayersPromo v-if="list.redirectUrl === 'pak-new-players' && !isCommonPromo && store.token" :list="list" />
@@ -29,11 +32,6 @@
     />
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
     <NewPlayerAccDepositPromo v-if="list.redirectUrl === 'new-player-acc-deposit'" :params="list.param" />
-    <PiggyBankPromo v-if="list.redirectUrl === 'pk4-piggy-bank' && store.token" />
-    <MonthBeginningDepositRebate
-      v-if="list.redirectUrl === 'pk4-month-beginning-deposit-rebate'"
-      :params="list.param"
-    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -53,7 +51,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref, defineAsyncComponent } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -74,9 +72,8 @@ import VideoAmbassador from "./hotpromo/video-ambassador/VideoAmbassador.vue";
 import DepositSpinnerRewards from "./hotpromo/deposit-spinner-rewards/DepositSpinnerRewards.vue";
 import JackpotAviator from "./hotpromo/jackpotAviator/JackpotAviator.vue";
 import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
-import NewPlayerAccDepositPromo from "./hotpromo/new-player-acc-deposit/NewPlayerAccDepositPromo.vue";
-const PiggyBankPromo = defineAsyncComponent(() => import("../components/hotpromo/piggyBank/PiggyBankPromo.vue"));
-import MonthBeginningDepositRebate from "./hotpromo/monthBeginningDepositRebate/MonthBeginningDepositRebate.vue";
+import NewPlayerAccDepositPromo from "./hotpromo/new-player-acc-deposit/NewPlayerAccDepositPromo.vue"
+import NewPlayerWelcome from "../components/hotpromo/newPlayerSpinWheel/NewPlayerWheelPromo.vue"
 
 export default defineComponent({
   name: "HotPromo",
@@ -98,8 +95,7 @@ export default defineComponent({
     DepositSpinnerRewards,
     SpinLuckyWheelPromo,
     NewPlayerAccDepositPromo,
-    PiggyBankPromo,
-    MonthBeginningDepositRebate
+    NewPlayerWelcome
   },
   props: {
     list: {
@@ -164,9 +160,8 @@ export default defineComponent({
       this.list.redirectUrl === "pak-deposit-spinner-rewards" ||
       this.list.redirectUrl === "spin-lucky-wheel" ||
       this.list.redirectUrl === "new-player-acc-deposit" ||
-      this.list.redirectUrl === "pk4-month-beginning-deposit-rebate" ||
-      this.list.id === 40 ||
-      this.list.redirectUrl === "pk4-piggy-bank"
+      this.list.redirectUrl === "pak-welcome-new-players" ||
+      this.list.id === 40
     ) {
       this.isCommonPromo = false;
     } else {

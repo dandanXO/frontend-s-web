@@ -294,9 +294,12 @@ export default {
     signinWithGoogle: "Google",
     goNow: "اب جائیں",
     playReal: "حقیقی کھیلیں",
-    freeTrial: "مفت آزمائش"
+    freeTrial: "مفت آزمائش",
+    payAgain: "دوبارہ ادائیگی کریں"
   },
   notify: {
+    cancelPayment: "ادائیگی منسوخ کریں",
+    cancelPaymentWillLose: "ادائیگی منسوخ کرنے پر نقصان ہوگا",
     loggingIn: "لاگ ان ہو رہا ہے",
     loggingOut: "لاگ آؤٹ ہو رہا ہے",
     phoneVerifySuccessful: "فون کامیابی سے تصدیق ہو گئی",
@@ -445,6 +448,7 @@ export default {
     select_privilege: "خصوصی اختیار منتخب کریں",
     incorrectPrivilege: "آپ کی جمع کروائی گئی ڈپازٹ پروموشن غلط ہے۔ براہ کرم دوبارہ ڈپازٹ جمع کرنے کی کوشش کریں۔",
     useFtdPrivilege: "سلاٹ پہلی جمع کی مراعات کا استعمال کریں",
+    appDepositBonus: "نئے کھلاڑی کا بونس استعمال ایپ ڈپازٹ بونس",
     unlimited: "لامحدود",
     wagerRequirement: "واجر کی شرط (نکالنے کے لیے): آپ کی جمع رقم کا 10 گنا",
     wagerRequirementEg: "مثال کے طور پر: 100 روپے جمع کروائیں، 1,000 روپے واجرت درکار ہوگی",
@@ -860,6 +864,7 @@ export default {
     digitalCurrencyWithdrawal: "ڈیجیٹل کرنسی سے نکاسی"
   },
   hotPromo: {
+    unusedCoupons: "آپ کے پاس پچھلی بار کے کچھ غیر استعمال شدہ کوپن ابھی بھی موجود ہیں، کیا آپ ان کا استعمال جاری رکھنا چاہتے ہیں؟",
     name: "نام",
     date: "تاریخ",
     amount: "رقم",
@@ -946,17 +951,6 @@ export default {
       days: "دن",
       signIn: "سائن ان",
       signedIn: "سائن ان کیا ہوا"
-    },
-    monthBeginningDepositRebate: {
-      receive: "وصول کریں",
-      vipLevel: "وی آئی پی سطح",
-      rebate: "ری بیٹ",
-      runningWater: "چلتا پانی",
-      bigRebate: "بڑی ری بیٹ",
-      rule_title: "ماہانہ ری چارج ری بیٹ ایونٹ",
-      rule_01:
-        "ماہ کی 1 سے 7 تاریخ تک 1000 روپے یا اس سے زیادہ ری چارج کریں تاکہ درج ذیل وی آئی پی سطح کے مطابق ری بیٹ حاصل کریں۔",
-      rule_02: "ری بیٹ اگلے دن ایونٹ کے صفحے سے حاصل کی جا سکتی ہے۔ دستی وصولی۔ مؤثر ٹرن اوور 2 بار۔"
     },
     megaSharingWheel: {
       wheelTitle: "میگا شیئرنگ رولیٹی",
