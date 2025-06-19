@@ -211,6 +211,9 @@
                   <div v-if="selectedPromo.redirectUrl === 'lh1-blast-tv-austin-major-2025'">
                     <BlastAustin :promoCode="selectedPromo.promoCode" />
                   </div>
+                  <div v-if="selectedPromo.redirectUrl === 'laohuji'">
+                    <Lh1DailySlotBonus :promoCode="selectedPromo.promoCode" />
+                  </div>
                   <div
                     v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'"
                     :class="`content-` + selectedPromo.redirectUrl"
@@ -328,7 +331,7 @@ import MesaPromo from "src/components/hotpromo/mesa/MesaPromo.vue";
 import { useCloudWiseHelper } from "src/hooks/cloudWiseHelper";
 import TorontoMasters from "src/components/hotpromo/toronto-masters/TorontoMasters.vue";
 import Fifa2025Promo from "src/components/hotpromo/fifa-2025/Fifa2025Promo.vue";
-
+import Lh1DailySlotBonus from "src/components/hotpromo/lh1-daily-slot-bonus/Lh1DailySlotBonus.vue";
 
 export default defineComponent({
   name: "PromoView",
@@ -339,7 +342,8 @@ export default defineComponent({
     MesaPromo,
     BlastAustin,
     TorontoMasters,
-    Fifa2025Promo
+    Fifa2025Promo,
+    Lh1DailySlotBonus
   },
   setup() {
     const notify = useNotify();

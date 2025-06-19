@@ -147,6 +147,9 @@
                   <div v-if="selectedPromo.redirectUrl === 'dy2-blast-tv-austin-major-2025'">
                     <BlastAustin :promoCode="selectedPromo.promoCode" />
                   </div>
+                  <div v-if="selectedPromo.redirectUrl === 'dy2laohuji'">
+                    <Dy2DailySlotBonus :promoCode="selectedPromo.promoCode" />
+                  </div>
                   <div
                     v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
                     v-html="selectedPromo.pageContent"
@@ -293,6 +296,7 @@ import MesaPromo from "src/components/hotpromo/mesa/MesaPromo.vue";
 import BlastAustin from "src/components/hotpromo/blast-austin/BlastAustin.vue";
 import TorontoMasters from "src/components/hotpromo/toronto-masters/TorontoMasters.vue";
 import Fifa2025Promo from "src/components/hotpromo/fifa-2025/Fifa2025Promo.vue";
+import Dy2DailySlotBonus from "src/components/hotpromo/dy2-daily-slot-bonus/Dy2DailySlotBonus.vue";
 
 export default defineComponent({
   name: "PromoView",
@@ -303,7 +307,8 @@ export default defineComponent({
     MesaPromo,
     BlastAustin,
     TorontoMasters,
-    Fifa2025Promo
+    Fifa2025Promo,
+    Dy2DailySlotBonus
   },
   setup() {
     const store = userStore();
