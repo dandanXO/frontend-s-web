@@ -132,7 +132,7 @@ const swipeRight = () => {
     max-width: 500px;
 
     :deep(.q-tabs__content) {
-      background: #101115;
+      background: #171616;
       // border-radius: 12px;
       padding: 14px 4px;
       gap: 6px;
@@ -165,10 +165,13 @@ const swipeRight = () => {
     }
   }
 
+  .q-tab-panels {
+    background: #171616;
+  }
   .earn-money-panels {
     // background: radial-gradient(25% 50% at 50% 50%, #e01b84 0%, rgba(27, 28, 36, 0) 100%);
-    // background-image: url("../assets/images/earn-money/earn-money-bg.jpg");
-    background: #101114;
+    background-image: url("../assets/images/earn-money/earn-money-bg.png");
+    // background: #101114;
     min-height: 80vh;
     background-repeat: no-repeat;
     background-size: cover;
