@@ -46,12 +46,12 @@
         </div>
         <div class="little-title">
           <div class="ribbon">活动平台</div>
-          <div class="right">IM体育、熊猫体育、FB体育、沙巴体育、AP体育</div>
+          <div class="right">IM体育、熊猫体育、FB体育、沙巴体育</div>
         </div>
         <div class="little-title col">
           <div class="ribbon">活动内容</div>
           <div class="right">
-            活动期间，2025年注册且首次在平台投注任意体育赛事，每日体育场馆累计有效投注≥2,000元次日即可获得18元迎新红包！ 
+            活动期间，2025年注册且首次在平台投注任意体育赛事，每日体育场馆累计有效投注≥2,000元次日即可获得18元迎新红包！
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@
           <div class="item">
             <div class="item-num">5</div>
             此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
-            地址视为同一账户，若有违规者，将不享受此红利； 
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">6</div>
