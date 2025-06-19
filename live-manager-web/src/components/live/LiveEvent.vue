@@ -742,7 +742,7 @@ async function submit() {
   
   validationErrors.title = null;
   if (!form.title) {
-    validationErrors.title = t('message.validateTeamNameRequired');
+    validationErrors.title = t('message.validateTitleRequired');
     return;
   }
 
