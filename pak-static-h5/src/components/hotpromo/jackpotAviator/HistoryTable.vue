@@ -1,6 +1,6 @@
 <template>
     <div class="history-list" v-if="props?.historyList">
-        <div class="item">
+        <div class="item firstheader">
             <div class="header">{{ $t('hotPromo.jackpotAviator.ranking') }}</div>
             <div class="header">{{ $t('hotPromo.jackpotAviator.username') }}</div>
             <div class="header">{{ $t('hotPromo.jackpotAviator.betVolume') }}</div>
@@ -35,7 +35,7 @@ const props = defineProps(['historyList']);
     
     border-radius: 5px;
     overflow: hidden;
-        margin: 0 5px 70px;
+        margin: 0 0 70px;
         
     // padding-bottom: 0px;
         // padding-bottom: 15px;
@@ -51,15 +51,22 @@ const props = defineProps(['historyList']);
         text-align: center;
         color: #FFFFFF80;
         height: 45px;
-
+        &.firstheader {
+            color: #FFFFFF;
+            background-color: #730319 !important;
+            &:hover {
+                    color: unset;
+                .betVolume {
+                    color: unset;
+                }
+            }
+        }
         .header {
             font-family: Poppins;
             font-size: 14px;
             font-weight: 600;
             line-height: 40px;
             text-align: center;
-            color: #FFFFFF;
-background-color: #730319;
         }
 
         &.isOwn {

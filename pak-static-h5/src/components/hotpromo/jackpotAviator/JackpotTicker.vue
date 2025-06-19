@@ -4,9 +4,9 @@
   v-if="jackpotAmt > 0" 
   class="jackpot-number" 
   xmlns="http://www.w3.org/2000/svg" 
-  width="150" 
+  width="200" 
   height="35" 
-  viewBox="0 0 150 35"
+  viewBox="0 0 200 35"
 >
   <!-- Define Gradient -->
   <defs>
@@ -102,10 +102,23 @@ onMounted(() => {
         text {
             font-family: 'Poppins';
             font-weight: 900;
-            font-size: 18px;
-            line-height: 22px;
+            // font-size: 18px;
+            
+            font-size: 21px;
+            line-height: 24px;
             letter-spacing: 0px;
             text-align: center;
+        }
+    }
+}
+@media (min-width: 500px) {
+    .jackpot-plate {
+        top: 41%;
+        .jackpot-number {
+            text {
+                font-size: 28px;
+                line-height: 32px;
+            }
         }
     }
 }

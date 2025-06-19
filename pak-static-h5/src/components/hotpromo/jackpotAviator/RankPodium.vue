@@ -277,4 +277,12 @@ $duration: 3000;
     }
   }
 }
+
+@media (min-width: 500px) {
+  .podium {
+    .podium-silver, .podium-bronze, .podium-gold {
+      font-size: 16px;
+    }
+  }
+}
 </style>
