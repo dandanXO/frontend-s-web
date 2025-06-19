@@ -22,7 +22,7 @@
 import { computed, ref, toRefs, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
-const props = defineProps(["modelValue", "hasWheel", "hasSpin"]);
+const props = defineProps(["modelValue", "hasWheel", "hasSpin", "hasNewPlayer"]);
 const { modelValue } = toRefs(props);
 
 const emit = defineEmits("update:modelValue");
@@ -32,11 +32,14 @@ const isAdded = ref(false);
 const isAddedSpin = ref(false);
 
 const promoList = ref([
-  { code: "money-rain", name: t("home.cashGift") },
-  { code: "lucky-spin-wheel", name: t("home.welcomeNewPlayer") }
+  // { code: "money-rain", name: t("home.cashGift") },
+  // { code: "lucky-spin-wheel", name: t("home.welcomeNewPlayer") }
 ]);
 if (props.hasWheel && !isAdded.value) {
   promoList.value.push({ code: "mega-sharing-wheel", name: t("home.MegaSharingRoulette") });
+}
+if (props.hasNewPlayer && !isAddedSpin.value) {
+  promoList.value.push({ code: "newplayer-spin-wheel", name: t("home.welcomeNewPlayer") });
 }
 if (props.hasSpin && !isAddedSpin.value) {
   promoList.value.push({ code: "spin-lucky-wheel", name: t("home.spinLuckyWheel") });
@@ -50,6 +53,10 @@ watch(props, (newVal, oldVal) => {
   if (newVal.hasSpin === true && isAddedSpin.value === false) {
     isAddedSpin.value = true;
     promoList.value.push({ code: "spin-lucky-wheel", name: t("home.spinLuckyWheel") });
+  }
+  if (newVal.hasNewPlayer === true) {
+    isAddedSpin.value = true;
+    promoList.value.push({ code: "newplayer-spin-wheel", name: t("home.welcomeNewPlayer") });
   }
 });
 

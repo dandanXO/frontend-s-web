@@ -63,7 +63,14 @@ export const userStore = defineStore("userStore", {
       isFirstLandOnHomePage: true,
       isReferralReady: false,
       isFromGooglePackage: false,
-      isCheckGaid: false
+      isCheckGaid: false,
+      depositCount: 0,
+      canClaimFtdPrivilege: false,
+      canClaimSecondPrivilege: false,
+      canClaimThirdPrivilege: false,
+      canSpinPrivilegeCoupon: false,
+      isEnableBankCardOTP: false,
+      hasUnusedCoupon: false
     };
   },
   actions: {
@@ -238,7 +245,12 @@ export const userStore = defineStore("userStore", {
             currentDeposit,
             levelUpDeposit,
             guest,
-            memberId
+            memberId,
+            depositCount,
+            canClaimFtdPrivilege,
+            canClaimSecondPrivilege,
+            canClaimThirdPrivilege,
+            canSpinPrivilegeCoupon
           } = response.data;
 
           this.id = id;
@@ -258,6 +270,11 @@ export const userStore = defineStore("userStore", {
           this.hasDeposit = hasDeposit;
           this.guest = guest;
           this.memberId = memberId;
+          this.depositCount = depositCount;
+          this.canClaimFtdPrivilege = true;
+          this.canClaimThirdPrivilege = true;
+          this.canClaimSecondPrivilege = true;
+          this.canSpinPrivilegeCoupon = true;
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
             OneSignal.login(this.nickName);

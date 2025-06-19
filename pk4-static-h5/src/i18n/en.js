@@ -298,9 +298,12 @@ export default {
     signinWithGoogle: "Google",
     goNow: "Go Now",
     playReal: "Play real",
-    freeTrial: "Free trial"
+    freeTrial: "Free trial",
+    payAgain: "Pay again",
   },
   notify: {
+    cancelPayment: "Cancel Payment",
+    cancelPaymentWillLose: "Cancel of payment will lose",
     loggingIn: "Logging in...",
     loggingOut: "Logging out...",
     phoneVerifySuccessful: "Phone verified successfully",
@@ -454,6 +457,7 @@ export default {
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
     useFtdPrivilege: "Use Slot First Deposit Privilege",
+    appDepositBonus: "App Deposit Bonus",
     unlimited: "Unlimited",
     wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
     wagerRequirementEg: "Eg. Deposit 100 Rs, require 1,000 Rs wager",
@@ -873,6 +877,7 @@ export default {
     digitalCurrencyWithdrawal: "digital currency withdrawal"
   },
   hotPromo: {
+    unusedCoupons: "You still have unused coupons from last time, continue to use them?",
     name: "Name",
     date: "Date",
     amount: "Amount",
@@ -959,18 +964,6 @@ export default {
       days: "days",
       signIn: "Sign in",
       signedIn: "Signed in"
-    },
-    monthBeginningDepositRebate: {
-      receive: "Receive",
-      vipLevel: "Vip Level",
-      rebate: "Rebate",
-      runningWater: "Running Water",
-      bigRebate: "Big Rebate",
-      rule_title: "Monthly recharge rebate event",
-      rule_01:
-        "Recharge 1000Rs or more from the 1st to the 7th of each month to get the following VIP level corresponding rebates.",
-      rule_02:
-        "Rebates can be obtained through the event page the next day. Manual collection.   Effective turnover 2 times."
     },
     megaSharingWheel: {
       wheelTitle: "Mega Sharing Roulette",
