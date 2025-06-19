@@ -398,6 +398,9 @@ export default defineComponent({
     watch(
       () => route.query,
       () => {
+        if (route.query.name === "page-vip") {
+          router.push("/account/vip")
+        }
         if (route.query === null) {
           isPromoDetail.value = false;
         } else {
@@ -503,10 +506,6 @@ export default defineComponent({
 
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element);
-              }
-
-              if (route.query.name === "/vip") {
-                router.push("/account/vip");
               }
               // }
             });
