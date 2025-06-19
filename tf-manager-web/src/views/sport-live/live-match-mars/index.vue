@@ -68,28 +68,28 @@
         size="small"
         label-width="150px"
       >
-        <el-form-item :label="t('fields.match_id')" prop="match_id">
+        <el-form-item :label="t('fields.id')" prop="match_id">
           {{ currentRow.match_id }}
         </el-form-item>
-        <el-form-item :label="t('fields.sport_id')" prop="sport_id">
-          {{ currentRow.sport_id }}
+        <el-form-item :label="t('fields.sportType')" prop="sport_id">
+          {{ getSportDisplayName(currentRow.sport_id) }}
         </el-form-item>
-        <el-form-item :label="t('fields.match_title')" prop="match_title">
+        <el-form-item :label="t('fields.matchTitle')" prop="match_title">
           {{ currentRow.match_title }}
         </el-form-item>
-        <el-form-item :label="t('fields.home_team')" prop="home_team">
+        <el-form-item :label="t('fields.homeTeam')" prop="home_team">
           {{ currentRow.home_team }}
         </el-form-item>
-        <el-form-item :label="t('fields.home_team_id')" prop="home_team_id">
+        <el-form-item :label="t('fields.homeTeam')" prop="home_team_id">
           {{ currentRow.home_team_id }}
         </el-form-item>
-        <el-form-item :label="t('fields.away_team')" prop="away_team">
+        <el-form-item :label="t('fields.awayTeam')" prop="away_team">
           {{ currentRow.away_team }}
         </el-form-item>
-        <el-form-item :label="t('fields.away_team_id')" prop="away_team_id">
+        <el-form-item :label="t('fields.awayTeam')" prop="away_team_id">
           {{ currentRow.away_team_id }}
         </el-form-item>
-        <el-form-item :label="t('fields.match_time')" prop="match_time">
+        <el-form-item :label="t('fields.matchTime')" prop="match_time">
           {{ currentRow.match_time }}
         </el-form-item>
         <el-form-item :label="t('fields.status')" prop="status">
@@ -225,7 +225,8 @@ const uiControl = reactive({
     { key: 'past', displayName: t('status.marsMatch.ENDED'), value: 'past' },
     { key: 'pending', displayName: t('status.marsMatch.PENDING'), value: 'pending' },
     { key: 'cancel', displayName: t('status.marsMatch.CANCEL'), value: 'cancel' }
-  ]
+  ],
+  removeBtn: true,
 });
 
 const formLive = reactive({
