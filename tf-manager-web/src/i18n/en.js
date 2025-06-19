@@ -260,6 +260,13 @@ export default {
       PENDING: 'Pending',
       OTHER: 'Other',
     },
+    marsMatch: {
+      NOT_STARTED: 'Not Started',
+      ONGOING: 'Ongoing',
+      ENDED: 'Ended',
+      CANCEL: 'Cancel',
+      PENDING: 'Pending',
+    },
   },
   betStatus: {
     BET: 'BET',

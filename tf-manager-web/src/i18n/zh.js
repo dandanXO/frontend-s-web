@@ -267,6 +267,13 @@ export default {
       OTHER: '其他',
       ADD_TO_LIVE: '添加到直播',
     },
+    marsMatch: {
+      NOT_STARTED: '未开赛',
+      ONGOING: '进行中',
+      ENDED: '完场',
+      CANCEL: '已取消',
+      PENDING: '待定',
+    },
   },
   betStatus: {
     BET: '下注',

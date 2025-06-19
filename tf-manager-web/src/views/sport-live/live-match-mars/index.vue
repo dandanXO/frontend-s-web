@@ -109,21 +109,21 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column type="selection" width="55" />
-      <el-table-column prop="matchId" :label="t('fields.matchId')" width="100" />
+      <el-table-column prop="matchId" :label="t('fields.id')" width="100" />
       <el-table-column prop="sportId" :label="t('fields.sportType')" width="100">
         <template #default="scope">
           <span>{{ getSportDisplayName(scope.row.sportId) }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="nameZh" :label="t('fields.nameZh')" width="250" />
-      <el-table-column prop="nameEn" :label="t('fields.nameEn')" width="250" />
-      <el-table-column prop="homeTeamId" :label="t('fields.homeTeamId')" width="180">
+      <el-table-column prop="nameZh" :label="t('fields.competitionNameZh')" width="250" />
+      <el-table-column prop="nameEn" :label="t('fields.competitionNameEn')" width="250" />
+      <el-table-column prop="homeTeamId" :label="t('fields.homeTeam')" width="250">
         <template #default="scope">
           <img v-if="scope.row.homeTeamLogo" :src="scope.row.homeTeamLogo" style="width: 24px; height: 24px; margin-right: 8px;">
           <span>{{ scope.row.homeTeamNameZh || scope.row.homeTeamNameEn }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="awayTeamId" :label="t('fields.awayTeamId')" width="180">
+      <el-table-column prop="awayTeamId" :label="t('fields.awayTeam')" width="250">
         <template #default="scope">
           <img v-if="scope.row.awayTeamLogo" :src="scope.row.awayTeamLogo" style="width: 24px; height: 24px; margin-right: 8px;">
           <span>{{ scope.row.awayTeamNameZh || scope.row.awayTeamNameEn }}</span>
@@ -141,7 +141,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="supplierStreamUrl" :label="t('fields.supplierStreamUrl')" width="100">
+      <el-table-column prop="supplierStreamUrl" :label="t('fields.isCreateLiveUrl')" width="100">
         <template #default="scope">
           <el-tag v-if="scope.row.supplierStreamUrl !== null" type="success">{{ t('fields.yes') }}</el-tag>
           <el-tag v-else type="danger">{{ t('fields.no') }}</el-tag>
@@ -153,12 +153,12 @@
         </template> -->
 
         <template #default="scope">
-          <el-tag v-if="scope.row.status === 'live'" type="success">{{ t('status.namiMatch.ONGOING') }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'past'" type="danger">{{ t('status.namiMatch.ENDED') }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'cancel'" type="warning">{{ t('status.namiMatch.CANCEL') }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'pending'" type="danger">{{ t('status.namiMatch.PENDING') }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'upcoming'" type="warning">{{ t('status.namiMatch.NOT_STARTED') }}</el-tag>
-          <el-tag v-else type="default">{{ t('status.namiMatch.OTHER') }}</el-tag>
+          <el-tag v-if="scope.row.status === 'live'" type="success">{{ t('status.marsMatch.ONGOING') }}</el-tag>
+          <el-tag v-else-if="scope.row.status === 'past'" type="danger">{{ t('status.marsMatch.ENDED') }}</el-tag>
+          <el-tag v-else-if="scope.row.status === 'cancel'" type="warning">{{ t('status.marsMatch.CANCEL') }}</el-tag>
+          <el-tag v-else-if="scope.row.status === 'pending'" type="danger">{{ t('status.marsMatch.PENDING') }}</el-tag>
+          <el-tag v-else-if="scope.row.status === 'upcoming'" type="warning">{{ t('status.marsMatch.NOT_STARTED') }}</el-tag>
+          <el-tag v-else type="default">{{ t('status.marsMatch.OTHER') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="t('fields.operate')" align="right" fixed="right">
@@ -206,11 +206,11 @@ const uiControl = reactive({
   dialogVisible: false,
   sport: [{ key: 1, displayName: "FOOTBALL", value: 1 }, { key: 2, displayName: 'BASKETBALL', value: 2 }],
   status: [
-    { key: 'upcoming', displayName: 'status.namiMatch.NOT_STARTED', value: 'upcoming' },
-    { key: 'live', displayName: 'status.namiMatch.ONGOING', value: 'live' },
-    { key: 'past', displayName: 'status.namiMatch.ENDED', value: 'past' },
-    { key: 'pending', displayName: 'status.namiMatch.PENDING', value: 'pending' },
-    { key: 'cancel', displayName: 'status.namiMatch.CANCEL', value: 'cancel' }
+    { key: 'upcoming', displayName: t('status.marsMatch.NOT_STARTED'), value: 'upcoming' },
+    { key: 'live', displayName: t('status.marsMatch.ONGOING'), value: 'live' },
+    { key: 'past', displayName: t('status.marsMatch.ENDED'), value: 'past' },
+    { key: 'pending', displayName: t('status.marsMatch.PENDING'), value: 'pending' },
+    { key: 'cancel', displayName: t('status.marsMatch.CANCEL'), value: 'cancel' }
   ]
 });
 
