@@ -59,6 +59,9 @@ export default defineComponent({
       const isPwa = process.env.IS_PWA;
       // alert(isPwa);
       if (isPwa === "1") {
+        const click_id = localStorage.getItem("click_id");
+        store.googleadid = click_id;
+
         sessionStorage.setItem("IS_PWA", "1");
       }
     };
