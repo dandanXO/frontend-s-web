@@ -2649,7 +2649,8 @@ export default {
     otp: 'OTP',
     scheduledAnnouncement: 'Scheduled Announcement',
     subscribeCount: 'Subscribe Count',
-    eventCode: 'Event Code'
+    eventCode: 'Event Code',
+    roleConfig: 'Role Config',
   },
   message: {
     adsStatusOpen: 'Open',
