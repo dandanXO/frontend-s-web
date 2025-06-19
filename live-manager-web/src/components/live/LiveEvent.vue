@@ -427,7 +427,7 @@
           :label="t('fields.cancel')"
           icon="pi pi-times"
           class="p-button-text"
-          @click="ui.dialogVisible = false"
+          @click="closeDialog"
         />
         <Button
           :label="t('fields.confirm')"
@@ -480,11 +480,6 @@ const formatToStartOfDayString = (date) => {
   return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
 };
 const uiControl = reactive({
-  //dialogVisible: false,
-  //dialogTitle: '',
-  //dialogType: 'CREATE',
-  //removeBtn: true,
-  //dialogLoading: false,
   eventStartTime:  getStartOfDayDate(new Date()),
   eventEndTime: getEndOfDayDate(new Date()),
   sport: liveSportTyps,
@@ -603,8 +598,6 @@ const ui = reactive({
   dialogVisible: false,
   dialogTitle: '',
   dialogType: 'CREATE',
-  eventStartTime:  getStartOfDayDate(new Date()),
-  eventEndTime: getEndOfDayDate(new Date()),
 });
 
 const uiForm = reactive({
@@ -672,26 +665,39 @@ function resetQuery() {
   request.title = null
 }
 
-function showDialog(type, row = null) {
-  ui.dialogType = type;
-  ui.dialogVisible = true;
+
+function resetDialogContent() {
   validationErrors.title = null;
   validationErrors.cover = null;
+  uiForm.eventStartTime = null
+  uiForm.eventEndTime = null
   Object.assign(form, {
     id: null,
-    sportId: null,
     homeId: null,
     homeNameZh: null,
     awayId: null,
     awayNameZh: null,
+    sportId: null,
+    liveStatus: null,
     sort: null,
+    title: null,
     eventStartTime: null,
     eventEndTime: null,
-    liveStatus: null,
-    title: null,
-    isTest: null,
-    isPopular: null,
+    homeName: '',
+    awayName: '',
+    isTest: false,
+    cover: '',
+    isPopular: false,
   })
+}
+
+function showDialog() {
+  ui.dialogVisible = true;
+  resetDialogContent()
+}
+function closeDialog() {
+  ui.dialogVisible = false;
+  resetDialogContent()
 }
 
 async function attachImage(event) {
@@ -770,7 +776,7 @@ async function submit() {
   try {
     await DashboardService.createSportLiveEvent(form);
     toast.add({ severity: 'success', summary: 'Success', detail: t('message.addSuccess'), life: 3000 });
-    ui.dialogVisible = false;
+    closeDialog()
     await loadList();
   } catch (error) {
     console.log(error)
