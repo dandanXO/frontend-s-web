@@ -236,7 +236,7 @@
         <div class="p-field">
           <label :for="t('fields.homeTeam')">{{ t('fields.homeTeam') }}</label>
           <AutoComplete
-            v-model="form.homeId"
+            v-model="form.homeName"
             :suggestions="displayTeams"
             @complete="searchTeams"
             field="nameZh"
@@ -252,7 +252,7 @@
                 afterTeamSelectorChanged()
               }
             "
-                        @focus="loadEventWithSite(form.sportId, 'home')"
+            @focus="loadEventWithSite(form.sportId, 'home')"
             :class="{ 'p-invalid': validationErrors.homeId }"
           >
             <template #option="slotProps">
@@ -280,7 +280,7 @@
         <div class="p-field">
           <label :for="t('fields.awayTeam')">{{ t('fields.awayTeam') }}</label>
           <AutoComplete
-            v-model="form.awayId"
+            v-model="form.awayName"
             :suggestions="displayTeams"
             @complete="searchTeams"
             field="nameZh"
@@ -630,9 +630,7 @@ const registerTeamSelectorScrollObserver = () => {
   })
 }
 async function loadEventWithSite(sportId, target) {
-  console.log(sportId)
   if (sportId) {
-    console.log(sportId)
     const { data: team } = await DashboardService.getSportLiveTeamById(sportId)
     teams.list = team
   } else {
@@ -807,7 +805,10 @@ const afterTeamSelectorChanged = () => {
   nextTick(() => {
     loadedTeams.value = []
     teamSelectorStatus.value = null
-    teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value)
+
+    if (teamSelectorScrollObserver.value && teamSelectorBottomRef.value) {
+      teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value)
+    }
   })
 }
 
@@ -817,7 +818,6 @@ const searchTeams = (obj) => {
     searchedTeams.value = []
   } else {
     searchedTeams.value = teams.list.filter(team => {
-      console.log(query)
       return (
         team.nameZh?.toLowerCase().includes(query.toLowerCase()) ||
         team.nameEn?.toLowerCase().includes(query.toLowerCase())
