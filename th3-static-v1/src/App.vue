@@ -292,7 +292,7 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      console.log("TH3 0212");
+      console.log("TH3 0619");
       checkServerStatus();
       getAppInfo();
       initOrientation();
