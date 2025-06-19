@@ -900,6 +900,7 @@ export default {
     claimableRebate: '可领取返水金额',
     className: '类别名',
     clearingSum: '结算总和',
+    clientIp: '客户IP',
     clientType: '客户类型',
     close: '关闭',
     code: '代码',

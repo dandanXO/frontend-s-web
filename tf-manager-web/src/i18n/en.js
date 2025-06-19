@@ -897,6 +897,7 @@ export default {
     claimableRebate: 'Claimable Rebate',
     className: 'Class Name',
     clearingSum: 'Clearing Sum',
+    clientIp: 'Client Ip',
     clientType: 'Client Type',
     close: 'Close',
     code: 'Code',

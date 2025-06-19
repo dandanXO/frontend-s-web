@@ -449,6 +449,12 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="clientIp"
+          :label="t('fields.clientIp')"
+          align="center"
+          min-width="120"
+        />
+        <el-table-column
           :label="t('fields.operate')"
           align="center"
           min-width="280"
