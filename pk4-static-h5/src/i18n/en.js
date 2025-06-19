@@ -17,6 +17,7 @@ export default {
     addVirtualWallet: "Add Virtual Wallet",
     addBankCard: "Add Bank Card",
     message: "Message",
+    sucessClaimed: "Successfully Claimed ",
     feedback: "Feedback",
     feedbackDetail: "Feedback Detail",
     postComment: "Post Comment",
@@ -318,6 +319,7 @@ export default {
     updatedSuccessfully: "Updated successfully",
     emailVerificationSent: "Email verification sent",
     messageSent: "Message Sent",
+
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
@@ -436,7 +438,6 @@ export default {
     dividendRate: 'Dividend Rate',
     netAmountReceives: 'Net amount receives',
     status: 'Status',
-    activeMember: 'Active member',
     periodValidBet: 'Period valid bet',
     periodPnL: 'Period P&L',
     periodSettledPnL: 'Period settled P&L',
@@ -1239,7 +1240,8 @@ export default {
     58002: "Event haven't start",
     58003: "Event have expired",
     58004: "Cannot Participate. Previous Tasks Has Failed to Accomplish.",
-    58005: "Congrats, You have Completed All Tasks"
+    58005: "Congrats, You have Completed All Tasks",
+    58103: "VIP0 Cannot Participate."
   },
   content: {
     title1: "The registration time starts from the time the registration is completed.",

@@ -28,7 +28,7 @@
         <span class="label">VIP2</span>
       </div>
     </div>
-    <div class="receive-btn">{{ $t("hotPromo.monthBeginningDepositRebate.receive") }}</div>
+    <div class="receive-btn" @click="claimApi">{{ $t("hotPromo.monthBeginningDepositRebate.receive") }}</div>
     <div class="rebate-table-container">
       <div class="big-rebate-title-container">
         <img src="./../../../assets/images/promotion/hotpromo/month-beginning-deposit-rebate/title-bg.png" />
@@ -91,7 +91,75 @@
 </template>
 
 <script setup>
-const percent = 35;
+import { eventapi } from "boot/axios";
+import { useQuasar } from "quasar";
+import { userStore } from "src/stores";
+import { onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
+
+const props= defineProps(["promocode"])
+
+
+const $q = useQuasar();
+const { t } = useI18n();
+const store= userStore()
+const totalDeposit= ref(0);
+const rebate= ref(0)
+
+const percent = ref(0);
+const vipDepositCount = ref({
+  "vip0" : 0,
+  "vip1" : 1000,
+  "vip2" : 3000,
+  "vip3" : 5000,
+  "vip4" : 10000,
+  "vip5" : 30000,
+  "vip6" : 50000,
+  "vip7" : 100000,
+  "vip8" : 300000,
+  "vip9" : 500000,
+  "vip10" : 1000000,
+  "vip11" : 3000000,
+  "vip12" : 5000000,
+});
+
+const claimApi = () => {
+  eventapi.post(`/session/month-beginning-deposit-rebate/claim-rebate?promoCode=${props.promocode}`).then((res) => {
+    if (res.code === 0) {
+      $q.notify({
+        message: t("header.sucessClaimed") + res.data,
+        color: "positive",
+        position: "top",
+        timeout: 2000
+      });
+    }
+  });
+}
+
+const initApi = () => {
+  eventapi.get(`/session/month-beginning-deposit-rebate/calculate-rebate?promoCode=${props.promocode}`).then((res) => {
+    if (res.code === 0) {
+      console.log(res);
+      const {  rebate: rebate1 , totalDeposit: totalDeposit1 } = res;
+
+      totalDeposit.value= totalDeposit1;
+      rebate.value= rebate1;
+
+      console.log(store.vip)
+      if(store.vip==="VIP0"){
+        percent.value= 0;
+      }else{
+        percent.value= totalDeposit.value / vipDepositCount.value[store.vip]
+      }
+
+
+    }
+  });
+}
+
+onMounted(() => {
+  initApi();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -109,6 +177,10 @@ const percent = 35;
   place-self: center;
   font-size: 14px;
   margin-top: 30px;
+
+  &:active{
+    filter: brightness(90%);
+  }
 }
 .rebate-table-container {
   position: relative;

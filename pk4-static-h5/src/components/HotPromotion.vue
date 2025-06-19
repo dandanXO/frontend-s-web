@@ -36,6 +36,7 @@
     <MonthBeginningDepositRebate
       v-if="list.redirectUrl === 'pk4-month-beginning-deposit-rebate'"
       :params="list.param"
+      :promocode="list.promoCode"
     />
   </div>
 
