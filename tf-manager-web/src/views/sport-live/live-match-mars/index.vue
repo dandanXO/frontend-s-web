@@ -45,6 +45,13 @@
         >{{ t('fields.search') }}
         </el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
+        <el-button
+          icon="el-icon-remove"
+          size="mini"
+          type="danger"
+          @click="removeMatchMars()"
+          :disabled="uiControl.removeBtn"
+        >{{ t('fields.delete') }}</el-button>
       </div>
     </div>
 
@@ -105,6 +112,7 @@
       row-key="id"
       size="small"
       highlight-current-row
+      @selection-change="handleSelectionChange"
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
     >
@@ -194,9 +202,9 @@
 <script setup>
 
 import { onMounted, reactive, watch } from "vue";
-import { getLiveMatchMars, addToLive, refreshToGetLiveUrl } from "../../../api/live-match-mars";
+import { getLiveMatchMars, addToLive, refreshToGetLiveUrl, deleteLiveMatchMars } from "../../../api/live-match-mars";
 import { useI18n } from "vue-i18n";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 const { t } = useI18n();
 
@@ -306,6 +314,36 @@ function showDialog(type, row) {
 
   uiControl.dialogType = type
   uiControl.dialogVisible = true
+}
+
+let choseMatchMars = []
+
+function handleSelectionChange(val) {
+  choseMatchMars = val;
+  if (choseMatchMars.length === 0) {
+    uiControl.removeBtn = true;
+  } else if (choseMatchMars.length === 1) {
+    uiControl.removeBtn = false;
+  } else {
+    uiControl.removeBtn = false;
+  }
+  console.log("choseMatchMars", choseMatchMars)
+}
+
+function removeMatchMars(matchMars) {
+  console.log("matchMars", matchMars)
+  ElMessageBox.confirm(
+    t('message.confirmDelete'),
+    {
+      confirmButtonText: t('fields.confirm'),
+      cancelButtonText: t('fields.cancel'),
+      type: "warning"
+    }
+  ).then(async () => {
+    await deleteLiveMatchMars(choseMatchMars.map(a => a.id));
+    await loadLiveMatchMars()
+    ElMessage({ message: t('message.deleteSuccess'), type: "success" });
+  });
 }
 
 function resetQuery() {
