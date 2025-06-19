@@ -140,7 +140,7 @@ const initApi = () => {
   eventapi.get(`/session/month-beginning-deposit-rebate/calculate-rebate?promoCode=${props.promocode}`).then((res) => {
     if (res.code === 0) {
       console.log(res);
-      const { rebate1 , totalDeposit1 } = res;
+      const {  rebate: rebate1 , totalDeposit: totalDeposit1 } = res;
 
       totalDeposit.value= totalDeposit1;
       rebate.value= rebate1;
