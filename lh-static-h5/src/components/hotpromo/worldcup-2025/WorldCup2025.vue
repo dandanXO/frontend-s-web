@@ -1535,4 +1535,15 @@ onMounted(() => {
     color: #be9457;
   }
 }
+
+@media (max-width: 420px) {
+  .current-match-bet {
+    &.special-grid {
+      grid-template-columns: repeat(3, 1fr);
+      .bet-select.long-select {
+        grid-column: span 3;
+      }
+    }
+  }
+}
 </style>
