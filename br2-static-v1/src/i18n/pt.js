@@ -269,7 +269,8 @@ export default {
     loss: "Perda",
     withdrawing: "Retirando...",
     unbinding: "Desvinculando",
-    deposit: "Depositar"
+    deposit: "Depositar",
+    updated: "Atualizado"
   },
   notify: {
     noRecord: "Nenhum Registro",
