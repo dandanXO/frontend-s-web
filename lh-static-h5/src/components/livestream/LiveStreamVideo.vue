@@ -51,6 +51,7 @@
             class="livestream-video-controller-pause-btn btn"
             flat
             :title="playerConfig.isPause ? '播放' : '暂停'"
+            :disable="isVideoStuck"
             @click="handlePauseChange(!playerConfig.isPause)"
           >
             <img v-if="playerConfig.isPause" src="../../assets/images/livestream/icon-play.png" />
@@ -335,20 +336,24 @@ const loadPlayer = async () => {
 
 const initPlayer = async (play = false) => {
   if (!player.value) return;
-  await player.value.init();
-  isPlayerSupported.value = player.value.supportPlayer !== "NONE";
-  player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerErrorDebounce);
-  // player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
-  // emitting when hls.isSupported() is false
-  player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
-  isVideoLoading.value = true;
-  await player.value.load(play);
-  isVideoLoading.value = false;
-  showLatestScreenCanvas.value = false;
-  isLatestScreenRecorded.value = false;
-  isErrorCaptured.value = false;
-  errorMsg.value = "";
-  isVideoLoadFailed.value = false;
+  try {
+    await player.value.init();
+    isPlayerSupported.value = player.value.supportPlayer !== "NONE";
+    player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerErrorDebounce);
+    // player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
+    // emitting when hls.isSupported() is false
+    player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
+    isVideoLoading.value = true;
+    await player.value.load(play);
+    isVideoLoading.value = false;
+    showLatestScreenCanvas.value = false;
+    isLatestScreenRecorded.value = false;
+    isErrorCaptured.value = false;
+    errorMsg.value = "";
+    isVideoLoadFailed.value = false;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 const loadDanmu = async () => {
@@ -787,6 +792,7 @@ const handleShareClick = () => {
     transform: translateY(100%);
     opacity: 0;
     transition: transform 0.5s ease, opacity 0.5s;
+    z-index: 1;
 
     &.show {
       transform: translateY(0);

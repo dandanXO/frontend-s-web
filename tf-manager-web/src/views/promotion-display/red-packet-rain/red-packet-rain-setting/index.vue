@@ -459,6 +459,35 @@
             @keypress="restrictInput($event)"
           />
         </el-form-item>
+        <el-form-item :label="t('gameTypeRolloverSetting.specifyTypes')" prop="specifyTypes" style="width: 600px;">
+          <el-radio-group v-model="form.checkBetGameType" style="width: 300px;">
+            <el-radio
+              v-for="s in uiControl.checkBetGameTypeStatus"
+              :key="s.key"
+              :label="s.value"
+              size="small"
+            >
+              {{ s.displayName }}
+            </el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item :label="t('fields.gameType')" prop="betGameType" style="width: 600px;" v-if="form.checkBetGameType === true">
+          <el-select
+            v-model="form.betGameType"
+            size="small"
+            :placeholder="t('fields.gameType')"
+            class="filter-item"
+            style="margin-left: 5px; width: 150px;"
+            clearable
+          >
+            <el-option
+              v-for="item in uiControl.gameType"
+              :key="item.key"
+              :label="t('gameType.' + item.displayName)"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.redPacketMinDayDeposit')" prop="redPacketMinDayDeposit" style="width: 600px;">
           $
           <el-input-number
@@ -909,7 +938,20 @@ const uiControl = reactive({
   rules: [
     { key: 1, displayName: 'VIP', value: 'VIP' },
     { key: 2, displayName: 'DEPOSIT', value: 'DEPOSIT' }
-  ]
+  ],
+  checkBetGameTypeStatus: [
+    { key: 1, displayName: t('common.status.OPEN'), value: true },
+    { key: 2, displayName: t('common.status.CLOSE'), value: false },
+  ],
+  gameType: [
+    { key: 1, displayName: "SLOT", value: "SLOT" },
+    { key: 2, displayName: "LIVE", value: "LIVE" },
+    { key: 3, displayName: "FISH", value: "FISH" },
+    { key: 4, displayName: "SPORT", value: "SPORT" },
+    { key: 5, displayName: "ESPORT", value: "ESPORT" },
+    { key: 6, displayName: "POKER", value: "POKER" },
+    { key: 7, displayName: "LOTTERY", value: "LOTTERY" }
+  ],
 })
 
 const request = reactive({
@@ -946,7 +988,9 @@ const form = reactive({
   status: null,
   minDayBetAmount: 0,
   totalDepositDaysEndDate: null,
-  depositRules: []
+  depositRules: [],
+  checkBetGameType: false,
+  betGameType: null
 })
 
 const vipRuleForm = reactive({

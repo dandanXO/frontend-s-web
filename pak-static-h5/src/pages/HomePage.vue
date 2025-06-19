@@ -505,7 +505,7 @@
             <!-- <span class="txt-style">Live Casino</span> -->
             <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
             <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
-            <div v-if="category.title === 'Lobby' && category.active" class="side">
+            <div v-if="category.title === 'Lobby' && category.active">
               <div class="all-btn" @click="handleActivateSlide('Live')">
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />

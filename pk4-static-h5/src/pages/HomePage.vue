@@ -161,7 +161,8 @@
             <marquee-text :repeat="5" :duration="announcementList.length * 500">
               <div v-if="announcementList">
                 <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-                  {{ a.content }}
+                  <!-- {{ a.content }} -->
+                  <span v-html="a.content"></span>
                 </span>
               </div>
             </marquee-text>
@@ -1247,8 +1248,8 @@
           <q-tab-panels v-model="activeKey" animated>
             <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
               <q-list style="min-height: auto">
-                <div v-for="(ann, idx) in announcementList" :key="idx" style="min-height: 50px">
-                  <span v-if="ann.typeId === tab.id">
+                <div v-for="(ann, idx) in announcementList" :key="idx">
+                  <span v-if="ann.typeId === tab.id" style="min-height: 50px">
                     <q-expansion-item
                       style="max-height: 75vh; overflow: auto"
                       group="somegroup"
@@ -1528,7 +1529,7 @@
     @closeGuide="closePlayerGuide"
   />
 
-  <template v-if="isAndroid()">
+  <!-- <template v-if="isAndroid()">
     <q-dialog class="isCentreDialog" v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <div class="luckyspin-wrapper">
         <div class="luckyspin-header">
@@ -1556,7 +1557,7 @@
         </template>
       </CongratsModal>
     </q-dialog>
-  </template>
+  </template> -->
 
   <CongratsReuseableModal
     :isShowDialog="isShowCodeBonusModal"
@@ -1568,12 +1569,12 @@
     @handleBtnClose="isShowCodeBonusModal = false"
   />
 
-  <q-dialog class="isCentreDialog" v-model="isShowPrizeModal">
+  <!-- <q-dialog class="isCentreDialog" v-model="isShowPrizeModal">
     <div class="congrats-container" :class="{ ur: languageVal === 'ur' }">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
-      <!-- <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div> -->
+      <!- <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div> -->
       <!-- <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div> -->
-      <!-- <div class="congrats-title">You get a coupon，Recharge $300 Get</div> -->
+      <!-- <div class="congrats-title">You get a coupon，Recharge $300 Get</div> ->
       <div class="congrats-highlight">Rs28</div>
 
       <div class="congrats-button">
@@ -1582,7 +1583,7 @@
         </q-btn>
       </div>
     </div>
-  </q-dialog>
+  </q-dialog> -->
 
   <q-dialog class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
     <MoneyRainModal @closeModal="closeDialog">
@@ -1621,6 +1622,21 @@
         <PopupController v-model="popupPromo" :hasSpin="true" />
       </template>
     </SpinLuckyWheelPromoHomePopup>
+  </q-dialog>
+  
+  <q-dialog
+    v-if="popupPromo === 'newplayer-spin-wheel'"
+    full-width
+    :model-value="isShownNewPlayerWheel"
+    class="isCentreDialog spin-lucky-wheel-dialog"
+    persistent
+  >
+    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
+    <NewPlayerPromoHomePopup @close-dialog="closeDialog" ref="newPlayerPromoHomePopupRef">
+      <template #controller>
+        <PopupController v-model="popupPromo" :hasWheel="false" :hasSpin="false" :hasNewPlayer="true" />
+      </template>
+    </NewPlayerPromoHomePopup>
   </q-dialog>
   <q-dialog v-model="isMediaSettingsModal">
     <MediaSettingsComponent :media="mediaCode" />
@@ -1695,6 +1711,8 @@ import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vu
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
 import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
 import SpinLuckyWheelPromoHomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import NewPlayerPromoHomePopup from "src/components/hotpromo/newPlayerSpinWheel/NewPlayerPopup.vue";
+
 import { usePromoStore } from "src/stores/promo";
 import { storeToRefs } from "pinia";
 
@@ -1723,6 +1741,7 @@ const handleScroll = () => {
 };
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
+  store.getMemberInfo();
 });
 
 onUnmounted(() => {
@@ -1734,10 +1753,12 @@ const gameModules = ref([Navigation, Pagination]);
 
 const { t } = useI18n();
 const promoStore = usePromoStore();
-const { isShownSpinLuckyWheel } = storeToRefs(promoStore);
+const { isShownSpinLuckyWheel, isShownNewPlayerWheel } = storeToRefs(promoStore);
 // const isLuckyDrawModal = ref(false);
 // const isCongratsModal = ref(true);
 const isShowPrizeModal = ref(false);
+
+const isHasUnusedCoupon = ref(false);
 // const isMoneyRainModal = ref(false);
 const isMediaSettingsModal = ref(false);
 const popupPromo = ref("");
@@ -1911,6 +1932,8 @@ const isLiveTabVisible = ref(false);
 const liveTabRef = ref();
 
 const spinLuckyWheelPromoHomePopupRef = ref();
+const newPlayerPromoHomePopupRef = ref();
+
 
 const translatedCategoriesList = computed(() => {
   return categoriesList.value.map((category) => ({
@@ -4234,6 +4257,7 @@ watch(() => isAdditionalWithdrawSteps.value, checkWithdrawStep, { immediate: fal
 const afterActivated = useCustomerTrigger(() => {
   checkShowImgTop();
   checkHbPromo();
+  showSpinWheel();
 });
 
 const downloadAppRef = ref();
@@ -4241,6 +4265,11 @@ const downloadAppRef = ref();
 const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
   if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP") && spinLuckyWheelPromoHomePopupRef.value) {
     spinLuckyWheelPromoHomePopupRef.value.checkIsCanShowPopup();
+  }
+};
+const checkNewPlayerWheelPromoHomePopupCanShow = () => {
+  if (!sessionStorage.getItem("NEW_PLAYER_WHEEL_POPUP") && newPlayerPromoHomePopupRef.value) {
+    newPlayerPromoHomePopupRef.value.checkIsCanShowPopup();
   }
 };
 
@@ -4362,6 +4391,13 @@ watch(
     if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
   }
 );
+watch (
+  () => promoStore.isShownNewPlayerWheel,
+  async (val) => {
+    await nextTick();
+    if (val) checkNewPlayerWheelPromoHomePopupCanShow();
+  }
+)
 // watch(
 //   () => route.query.register,
 //   (newValue) => {
@@ -4400,18 +4436,21 @@ const checkSpinWheel = () => {
   }
 };
 
+
 const showSpinWheel = () => {
   eventapi
     .get("/new-user-roulette/init")
     .then((res) => {
       if (res.code == 0) {
-        if (res.data.hasUnusedCoupon === "YES") {
-          isShowPrizeModal.value = true;
-        } else if (res.data.showRoulette === "YES") {
-          // isLuckyDrawModal.value = true;
-          if (!promoStore.isShownSpinLuckyWheel) {
-            popupPromo.value = "lucky-spin-wheel";
-          }
+        if (store.canClaimFtdPrivilege) {
+          isHasUnusedCoupon.value = true;
+          store.hasUnusedCoupon = true;
+        } else {
+          store.hasUnusedCoupon = false;
+        }
+      if ((store.canSpinPrivilegeCoupon)) {
+          promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
+          popupPromo.value = "newplayer-spin-wheel"
         }
       }
     })
@@ -4420,18 +4459,22 @@ const showSpinWheel = () => {
     });
 };
 
-const showCongratsModal = () => {
-  eventapi.get("/new-user-roulette/init").then((res) => {
-    if (res.code === 0) {
-      if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
-        // isCongratsModal.value = true;
-        if (!promoStore.isShownSpinLuckyWheel) {
-          popupPromo.value = "lucky-spin-wheel";
-        }
-      }
-    }
-  });
-};
+// const showCongratsModal = () => {
+//   eventapi.get("/new-user-roulette/init").then((res) => {
+//     if (res.code === 0) {
+//       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
+//         // isCongratsModal.value = true;
+//         isShowPrizeModal.value = true;
+//           store.hasUnusedCoupon = true;
+//         if (!promoStore.isShownSpinLuckyWheel) {
+//           popupPromo.value = "newplayer-spin-wheel";
+//         }
+//       } else {
+//           store.hasUnusedCoupon = false;
+//       }
+//     }
+//   });
+// };
 
 const checkGoogleLoginSetPwd = () => {
   if (store.isGoogleLogin && store.isFirstLandOnHomePage) {
@@ -4850,7 +4893,6 @@ const checkGoogleLoginSetPwd = () => {
     //   rgba(255, 255, 255, 0) 98.21%
     // );
     // background: #ffffff0f;
-
     gap: 10px;
     padding: 5px 10px;
     justify-content: center;
@@ -4891,6 +4933,9 @@ const checkGoogleLoginSetPwd = () => {
       font-weight: 400;
       line-height: 18px;
       text-align: left;
+      float: left;
+      height: 20px;
+      padding: 1px;
     }
   }
 

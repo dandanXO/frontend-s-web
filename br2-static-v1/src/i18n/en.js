@@ -71,7 +71,8 @@ export default {
     fishing: "Fishing",
     activitiesDetails: "Activities Details",
     addCard: "Add Card",
-    information: "Information",
+    addCrypto: "Add Crypto",
+    information: "Information"
   },
   bottomNav: {
     home: "Home",
@@ -93,9 +94,12 @@ export default {
     password_rules_01: "Please insert password",
     password_rules_02: "The characters of password must be above 6",
     forgotPassword: "Forgot Password",
-    forgotPassword_desc: "Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.",
+    forgotPassword_desc:
+      "Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.",
     register_agree_01: "I have Agree To The ",
     register_agree_02: "Use Privacy Agreement",
+    alreadyHaveAnAcc: "Already have an account?",
+    login: "Log in",
     email: "Email",
     email_placeholder: "Please enter email",
     email_rules_01: "Please insert email",
@@ -237,6 +241,7 @@ export default {
     post: "Post",
     loading: "Loading",
     loading_plsWait: "Loading... Please wait...",
+    loading_data: "Loading data… Please wait…",
     cancel: "Cancel",
     signOut: "Sign Out",
     back: "Back",
@@ -248,7 +253,10 @@ export default {
     recharge: "Recharge",
     getInterestProfit: "Get Interest Profit",
     notAMember: "Not a member?",
-    createAccount: "Create account"
+    createAccount: "Create account",
+    profit: "Profit",
+    loss: "Loss",
+    unbinding: "Unbinding"
   },
   notify: {
     noRecord: "No Record",
@@ -315,7 +323,8 @@ export default {
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
     interestProfit: "Interest Profit",
-    version: "Version"
+    version: "Version",
+    balance: "Balance"
   },
   deposit: {
     selectAmount: "Select Amount",

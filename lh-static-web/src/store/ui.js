@@ -20,7 +20,8 @@ export const uiStore = defineStore("ui-store", {
       notificationQueue: [],
       notificationZIndex: 2000,
       maintenanceStartTime: "",
-      maintenanceEndTime: ""
+      maintenanceEndTime: "",
+      isGameModalOpened: false,
     };
   },
   actions: {
