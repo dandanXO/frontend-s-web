@@ -349,6 +349,7 @@ export const DashboardService = {
       .get(`/session/live-sport/match?${request}`, {
         headers: {
           token: `${token}`,
+          'Content-Type': 'application/json',
         },
       })
       .then((response) => {
@@ -371,6 +372,7 @@ export const DashboardService = {
       .get(`/session/live-sport/team?${request}`, {
         headers: {
           token: `${token}`,
+          'Content-Type': 'application/json',
         },
       })
       .then((response) => {
@@ -385,27 +387,44 @@ export const DashboardService = {
         return null
       })
   },
-
-
-  //live-streamer
-  getSportLiveStreamer(request) {
-    const token = sessionStorage.getItem('token')
-    return api
-      .get(`/session/live-sport/streamer?${request}`, {
-        headers: {
-          token: `${token}`,
-        },
-      })
-      .then((response) => {
-        if (response.code === 0) {
-          return response.data
-        }
-        console.error('獲取運動直播主播失敗:', response.message || '未知錯誤')
-        return null
-      })
-      .catch((error) => {
-        console.error('獲取運動直播主播請求失敗:', error)
-        return null
-      })
+  getChatVipStatus(request) {
+  const token = sessionStorage.getItem('token'); // 從 sessionStorage 拿取 token
+  return api.get('/session/live-sport/chat', { // GET 請求
+    params: request, // GET 請求的參數通常放在 params 裡
+    headers: {
+      'token': `${token}`,
+    }
+  })
+  .then(response => {
+    if (response.code === 0) { // 檢查後端回傳的業務狀態碼
+      return response.data; // 返回實際資料
+    }
+    console.error('獲取聊天室 VIP 狀態失敗:', response.message || '未知錯誤');
+    return null; // 失敗時返回 null
+  })
+  .catch(error => {
+    console.error('獲取聊天室 VIP 狀態請求失敗:', error); // 捕捉網路或請求錯誤
+    return null; // 失敗時返回 null
+  });
   },
+  updateChatVipStatus(request) {
+  const token = sessionStorage.getItem('token'); // 從 sessionStorage 拿取 token
+  return api.put('/session/live-sport/chat', request, { // PUT 請求，request 作為請求體
+    headers: {
+      'token': `${token}`,
+      'Content-Type': 'application/json' // 根據原始設定，使用 JSON 格式
+    }
+  })
+  .then(response => {
+    if (response.code === 0) { // 檢查後端回傳的業務狀態碼
+      return response.data; // 返回實際資料，或者可以返回 true 表示成功
+    }
+    console.error('更新聊天室 VIP 狀態失敗:', response.message || '未知錯誤');
+    return null; // 失敗時返回 null
+  })
+  .catch(error => {
+    console.error('更新聊天室 VIP 狀態請求失敗:', error); // 捕捉網路或請求錯誤
+    return null; // 失敗時返回 null
+  });
+},
 }
