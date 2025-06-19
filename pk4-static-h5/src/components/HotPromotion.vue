@@ -29,7 +29,7 @@
     />
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
     <NewPlayerAccDepositPromo v-if="list.redirectUrl === 'new-player-acc-deposit'" :params="list.param" />
-    <PiggyBankPromo v-if="list.redirectUrl === 'pk4-piggy-bank' && store.token" />
+    <PiggyBankPromo v-if="list.redirectUrl === 'pk4-piggy-bank' && store.token" :promocode="list.promoCode" />
     <MonthBeginningDepositRebate
       v-if="list.redirectUrl === 'pk4-month-beginning-deposit-rebate'"
       :params="list.param"
