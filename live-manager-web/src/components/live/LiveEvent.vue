@@ -466,7 +466,7 @@ const { t } = useI18n();
 const confirm = useConfirm();
 const toast = useToast();
 //const const imageUrl = useSessionStorage('IMAGE_CDN', process.env.VUE_APP_IMAGE).value
-const imageUrl = `https://file-admin.fwabm4gvc.com'`
+const imageUrl = `https://file-admin.fwabm4gvc.com`
 const promoDir = imageUrl + '/promo/'
 const promoDir2 = imageUrl
 
@@ -757,12 +757,12 @@ async function submit() {
   }
 
   form.icon = form.icon?.startsWith('http')
-    ? store.state.user.siteId + '/' + form.icon.split('/').pop()
+    ? store.siteId + '/' + form.icon.split('/').pop()
     : form.icon
   if (form.cover) {
     form.cover = form.cover.startsWith('/live/event/')
       ? form.cover
-      : `/live/event/${store.state.user.siteId}/${form.cover}`
+      : `/live/event/${store.siteId}/${form.cover}`
   }
   console.log(form)
   
@@ -774,7 +774,7 @@ async function submit() {
     await loadList();
   } catch (error) {
     console.log(error)
-    toast.add({ severity: 'error', summary: 'Error', detail: t('message.operationFailed'), life: 3000 });
+    toast.add({ severity: 'error', summary: 'Error', detail: t('fields.fail'), life: 3000 });
   }
 }
 
