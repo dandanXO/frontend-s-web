@@ -1406,11 +1406,15 @@ onMounted(() => {
             color: #ffffff;
           }
           .title-status {
-            background: #be9457;
-
-            img {
-              filter: invert(1);
+            color: #ffffff;
+            &.ended {
+              background: #ff5e00;
             }
+
+            &.ongoing {
+              background: #be9457;
+            }
+
           }
         }
         .vs-time {
