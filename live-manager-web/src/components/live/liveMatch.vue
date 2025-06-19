@@ -35,7 +35,13 @@
             optionLabel="赛事标题"
             placeholder="赛事标题"
           />
-          <Button label="搜索" :size="'small'" severity="success" icon="pi pi-search" />
+          <Button
+            label="搜索"
+            :size="'small'"
+            severity="success"
+            icon="pi pi-search"
+            @click="loadMatch"
+          />
           <Button
             label="重置"
             :size="'small'"
@@ -143,17 +149,10 @@ function resetQuery() {
 }
 
 async function loadMatch() {
-  // page.loading = true
-  const params = new URLSearchParams({
-    sportId: request.sportId,
-    status: request.liveStatus,
-    title: request.title,
-    page: request.current,
-    limit: request.size,
-  }).toString()
 
-  console.log(params)
-  const res = await getSportLiveMatch(params)
+
+
+  const res = await getSportLiveMatch(request)
   console.log(res)
 
   // page.records = res.data.records || []

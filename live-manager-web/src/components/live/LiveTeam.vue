@@ -2,7 +2,7 @@
 <template>
   <div class="card">
     <DataTable
-      :value="streams"
+      :value="page.records"
       :paginator="true"
       :rows="10"
       :loading="loading"
@@ -18,6 +18,7 @@
             v-model="request.sportType"
             :options="uiControl.sport"
             optionLabel="name"
+            optionValue="name"
             placeholder="体育项目"
             :size="'small'"
           />
@@ -33,7 +34,13 @@
             optionLabel="队伍名称(中文)"
             placeholder="队伍名称(中文)"
           />
-          <Button label="搜索" :size="'small'" severity="success" icon="pi pi-search" />
+          <Button
+            label="搜索"
+            :size="'small'"
+            severity="success"
+            icon="pi pi-search"
+            @click="loadTeam"
+          />
           <Button
             label="重置"
             :size="'small'"
@@ -46,47 +53,184 @@
             :size="'small'"
             severity="info"
             icon="pi pi-plus"
-            @click="resetQuery"
+            @click="showDialog('CREATE')"
           />
         </div>
       </template>
       <Column field="title" header="ID" sortable>
         <template #body="slotProps">
-          {{ slotProps.data.title }}
+          {{ slotProps.data.id }}
         </template>
       </Column>
 
       <Column field="eventStartTime" header="体育项目" sortable>
         <template #body="slotProps">
-          {{ formatTime(slotProps.data.eventStartTime) }}
+          {{ getSportName(slotProps.data.sportId) }}
         </template>
       </Column>
 
       <Column field="liveStatus" header="赛事名称(英文)" sortable>
         <template #body="slotProps">
-          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
+          {{ slotProps.data.nameEn }}
         </template>
       </Column>
 
-      
       <Column field="sportId" header="赛事名称(中文)" sortable>
         <template #body="slotProps">
-          {{ getSportDisplayName(slotProps.data.sportId) }}
+          {{ slotProps.data.nameZh }}
         </template>
       </Column>
 
       <Column field="liveStatus" header="队伍图标" sortable>
         <template #body="slotProps">
-          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
+          <Image
+            v-if="slotProps.data.icon"
+            :src="
+              slotProps.data.icon.startsWith('http:') || slotProps.data.icon.startsWith('https:')
+                ? slotProps.data.icon
+                : promoDir + slotProps.data.icon
+            "
+            alt="Image"
+            width="250"
+          />
         </template>
       </Column>
       <Column field="liveStatus" header="操作" sortable>
         <template #body="slotProps">
-          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
+          <div class="flex justify-between" style="display: flex; gap: 8px">
+            <Button
+              :label="t('fields.edit')"
+              size="small"
+              severity="info"
+              icon="pi pi-key"
+              @click="showDialog('EDIT', slotProps.data)"
+            />
+            <Button
+              :label="t('fields.delete')"
+              size="small"
+              severity="danger"
+              icon="pi pi-key"
+              @click="deleteTeam(slotProps.data.id)"
+            />
+          </div>
         </template>
       </Column>
     </DataTable>
   </div>
+  <Dialog
+    v-model:visible="uiControl.dialogVisible"
+    :header="t('fields.edit')"
+    modal
+    :style="{ width: '700px' }"
+  >
+    <div
+      style="
+        display: flex;
+        gap: 8px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: end;
+        width: 650px;
+        margin-bottom: 16px;
+      "
+    >
+      <label for="name" class="w-24 font-semibold">{{ t('fields.sportType') }}</label>
+
+      <div style="width: 450px">
+        <Select
+          v-model="form.sportId"
+          style="width: 100%"
+          :options="uiControl.sport"
+          optionLabel="name"
+          optionValue="id"
+          placeholder="体育项目"
+        />
+      </div>
+    </div>
+    <div
+      style="
+        display: flex;
+        gap: 8px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: end;
+        width: 650px;
+        margin-bottom: 16px;
+      "
+    >
+      <label for="loginName" class="w-24 font-semibold">{{ t('fields.teamNameEn') }}</label>
+      <div style="width: 450px">
+        <InputText id="loginName" class="w-full" style="width: 100%" v-model="form.nameEn" />
+      </div>
+    </div>
+    <div
+      style="
+        display: flex;
+        gap: 8px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: end;
+        width: 650px;
+        margin-bottom: 16px;
+      "
+    >
+      <label for="password" class="w-24 font-semibold">{{ t('fields.teamNameZh') }}</label>
+      <div style="width: 450px">
+        <InputText id="password" class="w-full" style="width: 100%" v-model="form.nameZh" />
+      </div>
+    </div>
+
+    <div
+      style="
+        display: flex;
+        gap: 8px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: end;
+        width: 650px;
+        margin-bottom: 16px;
+      "
+    >
+      <label for="confirmPassword" class="w-24 font-semibold">{{ t('fields.teamIcon') }}</label>
+      <div style="width: 450px">
+        <Button
+          type="button"
+          :label="t('fields.upload')"
+          icon="pi pi-cloud-upload"
+          :loading="isSubmitting"
+          @click="$refs.inputImage.click()"
+        />
+        <input
+          id="uploadFile"
+          type="file"
+          ref="inputImage"
+          style="display: none"
+          accept="image/*"
+          @change="attachImage"
+        />
+      </div>
+    </div>
+    <div
+      style="
+        display: flex;
+        gap: 8px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: end;
+        width: 650px;
+        margin-bottom: 16px;
+      "
+    >
+      <Button
+        type="button"
+        :label="t('fields.cancel')"
+        severity="secondary"
+        @click="closeEditDialog"
+      />
+      <Button type="button" :label="t('fields.confirm')" :loading="isSubmitting" @click="submit" />
+    </div>
+  </Dialog>
+  <ConfirmDialog></ConfirmDialog>
 </template>
 
 <script setup>
@@ -94,13 +238,21 @@ import { defineComponent, reactive, onMounted, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { liveSportTyps } from '@/utils/live'
 import { DashboardService } from '@/service/DashboardService'
-const { getSportLiveTeam } = DashboardService
+import { useStorage } from '@vueuse/core'
+import { useConfirm } from 'primevue/useconfirm'
+import { uploadImage } from '@/service/image'
+import { useToast } from 'primevue/usetoast'
+const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/promo/'
+const { getSportLiveTeam, createSportLiveTeam, updateSportLiveTeam, deleteSportLiveTeam } =
+  DashboardService
 const { t } = useI18n()
+const confirm = useConfirm()
+const toast = useToast()
 
 const uiControl = reactive({
   dialogVisible: false,
-  dialogTitle: "",
-  dialogType: "CREATE",
+  dialogTitle: '',
+  dialogType: 'CREATE',
   editBtn: true,
   removeBtn: true,
   dialogLoading: false,
@@ -109,29 +261,248 @@ const uiControl = reactive({
     { name: '1', display: t('fields.active') },
     { name: '2', display: t('fields.inactive') },
   ]),
-});
+})
 const request = reactive({
   size: 30,
   current: 1,
   sportType: null,
   nameZh: null,
   nameEn: null,
-});
+})
+
+const page = reactive({
+  pages: 0,
+  records: [],
+  loading: false,
+})
 
 function resetQuery() {
-  request.sportType = null;
-  request.nameEn = null;
-  request.nameZh = null;
+  request.sportType = null
+  request.nameEn = null
+  request.nameZh = null
 }
 
 async function loadTeam() {
-  // const params = new URLSearchParams(request).toString()
-
-  // console.log(params)
-  const res = await getSportLiveTeam(request)
-  console.log(res)
+  const { records, pages } = await getSportLiveTeam(request)
+  page.pages = pages
+  page.records = records
+  page.loading = false
 }
 
+function getSportName(id) {
+  const sport = uiControl.sport.find((s) => s.id === id)
+  return sport ? sport.display : '-'
+}
+
+const form = reactive({
+  id: null,
+  sportId: null,
+  nameZh: null,
+  nameEn: null,
+  icon: null,
+})
+
+function showDialog(type, row = null) {
+  uiControl.dialogVisible = true
+  uiControl.dialogType = type
+  if (type === 'EDIT' && row) {
+    Object.assign(form, {
+      id: row.id,
+      sportId: row.sportId,
+      nameZh: row.nameZh,
+      nameEn: row.nameEn,
+      icon: row.icon,
+    })
+    form.id = row.id
+    form.icon = row.icon ? promoDir + row.icon : null
+    console.log(form.icon)
+  } else {
+    Object.assign(form, {
+      id: null,
+      sportId: null,
+      nameZh: null,
+      nameEn: null,
+      icon: null,
+    })
+  }
+}
+function submit() {
+  if (uiControl.dialogType === 'CREATE') {
+    create()
+  } else if (uiControl.dialogType === 'EDIT') {
+    edit()
+  }
+}
+
+async function create() {
+  await createSportLiveTeam(form)
+  uiControl.dialogVisible = false
+  await loadTeam()
+  toast.add({
+    severity: 'success',
+    summary: t('message.addSuccess'),
+    life: 3000,
+  })
+}
+
+async function edit() {
+  await updateSportLiveTeam(form)
+  uiControl.dialogVisible = false
+  toast.add({
+    severity: 'success',
+    summary: t('message.updateSuccess'),
+    life: 3000,
+  })
+  await loadTeam()
+}
+
+async function deleteTeam(teamId) {
+  confirm.require({
+    message: t('message.confirmDelete'),
+    icon: 'pi pi-info-circle',
+    rejectLabel: t('fields.cancel'),
+    rejectProps: {
+      label: t('fields.cancel'),
+      severity: 'secondary',
+    },
+    acceptLabel: t('fields.confirm'),
+    acceptProps: {
+      label: t('fields.confirm'),
+      severity: 'danger',
+    },
+    accept: async () => {
+      try {
+        await deleteSportLiveTeam({ teamId: teamId })
+        toast.add({
+          severity: 'success',
+          summary: t('message.deleteSuccess'),
+          life: 3000,
+        })
+        await loadTeam()
+      } catch (err) {
+        toast.add({
+          severity: 'error',
+          summary: t('message.deleteFailed'),
+          detail: err.message,
+        })
+      }
+    },
+  })
+}
+
+async function attachImage(event) {
+  const file = event.target.files[0]
+  console.log(file)
+
+  if (!file) return
+
+  const data = await attachPhoto(event)
+  if (data) {
+    form.avatar = data
+    await submitImageUpload()
+  } else {
+    toast.add({
+      severity: 'error',
+      summary: t('message.failedToUploadImage'),
+      life: 3000,
+    })
+  }
+}
+
+async function attachPhoto(event) {
+  const files = event.target.files[0]
+  console.log('attachPhoto', files)
+
+  if (!files) return
+
+  var fr = new FileReader()
+  fr.onload = function () {
+    var img = new Image()
+    img.onload = function () {
+      imageForm.imageDimension = img.width + ' * ' + img.height
+    }
+    img.src = fr.result
+  }
+  fr.readAsDataURL(files)
+
+  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+  if (!allowFileType.includes(files.type)) {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
+    return null
+  }
+
+  const formData = new FormData()
+  formData.append('files', files)
+  formData.append('dir', 'streamer')
+  formData.append('overwrite', false)
+  console.log(formData)
+
+  try {
+    const response = await uploadImage(formData)
+    return response.code === 0 ? response.data : null
+  } catch (error) {
+    toast.add({
+      severity: 'error',
+      summary: t('message.failedToUploadImage'),
+      life: 3000,
+    })
+    return null
+  }
+}
+
+async function submitImageUpload() {
+  imageForm.name = generateRandomString(8)
+  imageForm.path = form.avatar
+  imageForm.category = 'PROMO'
+  imageForm.siteId = 7
+  console.log('submitImageUpload')
+
+  try {
+    const response = await createSiteImage(imageForm)
+    console.log(response)
+
+    if (response && response.code === 0) {
+      toast.add({
+        severity: 'success',
+        summary: t('message.addSuccess'),
+        life: 3000,
+      })
+      autoSelectImage()
+    } else {
+      toast.add({
+        severity: 'error',
+        summary: t('message.failedToUploadImage'),
+        life: 3000,
+      })
+    }
+  } catch (error) {
+    toast.add({
+      severity: 'error',
+      summary: t('message.failedToUploadImage'),
+      life: 3000,
+    })
+  }
+}
+const imageForm = reactive({
+  id: null,
+  name: null,
+  path: null,
+  displayPath: null,
+  category: null,
+  siteId: null,
+  remark: null,
+  imageDimension: null,
+  promoType: null,
+})
+function generateRandomString(charSize) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  let result = ''
+  for (let i = 0; i < charSize; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length)
+    result += characters[randomIndex]
+  }
+  return result
+}
 
 onMounted(() => {
   loadTeam()

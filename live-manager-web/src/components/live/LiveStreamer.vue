@@ -431,8 +431,6 @@ const form = reactive({
   avatar: null,
 })
 
-const fileupload = ref()
-
 const liveStreamerList = ref([])
 
 const changePasswordDialog = reactive({
