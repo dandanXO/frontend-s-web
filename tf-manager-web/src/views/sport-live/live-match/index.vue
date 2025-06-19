@@ -282,6 +282,7 @@ export default defineComponent({
 
     function handleSelectionChange(val) {
       selectedRows.value = val;
+      console.log(selectedRows.value);
     }
 
     async function handleDelete() {

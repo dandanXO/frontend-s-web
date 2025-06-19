@@ -1,17 +1,17 @@
 <!--TODO-->
 <template>
-  <div class="card">
+  <div class="card" style="width: 98%">
     <DataTable
-      :value="streams"
+      :value="page.records"
       :paginator="true"
       :rows="10"
       :loading="loading"
-      dataKey="eventId"
+      dataKey="matchId"
       :filters="filters"
       filterDisplay="menu"
       :globalFilterFields="['title']"
-      responsiveLayout="scroll"
       v-model:selection="selectedRows"
+      scrollable
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
@@ -19,6 +19,7 @@
             v-model="request.sportId"
             :options="uiControl.sport"
             optionLabel="name"
+            optionValue="id"
             placeholder="体育项目"
             :size="'small'"
           />
@@ -49,75 +50,260 @@
             icon="pi pi-refresh"
             @click="resetQuery"
           />
-          <Button label="删除" :size="'small'" icon="pi pi-times" severity="danger" />
+          <Button
+            label="删除"
+            :size="'small'"
+            icon="pi pi-times"
+            severity="danger"
+            @click="handleDelete"
+          />
         </div>
       </template>
       <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-      <Column field="title" header="ID" sortable>
+      <Column field="title" header="ID" sortable style="min-width: 2rem">
         <template #body="slotProps">
-          {{ slotProps.data.title }}
+          {{ slotProps.data.matchId }}
         </template>
       </Column>
-
-      <Column field="eventStartTime" header="体育项目" sortable>
-        <template #body="slotProps">
-          {{ formatTime(slotProps.data.eventStartTime) }}
-        </template>
-      </Column>
-
-      <Column field="sportId" header="赛事名称(中文)" sortable>
+      <Column field="liveStatus" :header="t('fields.sportType')" sortable style="min-width: 2rem">
         <template #body="slotProps">
           {{ getSportDisplayName(slotProps.data.sportId) }}
         </template>
       </Column>
 
-      <Column field="liveStatus" header="赛事名称(英文)" sortable>
+      <Column
+        field="eventStartTime"
+        :header="t('fields.competitionNameZh')"
+        sortable
+        style="min-width: 2rem"
+      >
         <template #body="slotProps">
-          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
+          {{ slotProps.data.competitionNameZh }}
         </template>
       </Column>
 
-      <Column field="liveStatus" header="主队" sortable>
+      <Column
+        field="sportId"
+        :header="t('fields.competitionNameEn')"
+        sortable
+        style="min-width: 2rem"
+      >
         <template #body="slotProps">
-          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
+          {{ slotProps.data.competitionNameEn }}
         </template>
       </Column>
-      <Column field="liveStatus" header="客队" sortable>
+
+      <Column field="liveStatus" :header="t('fields.homeTeam')" sortable style="min-width: 2rem">
         <template #body="slotProps">
-          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
+          <img
+            v-if="slotProps.data.home && slotProps.data.home.icon"
+            :src="slotProps.data.home.icon"
+            style="width: 24px; height: 24px; margin-right: 8px"
+          />
+          {{ slotProps.data.home?.nameZh || slotProps.data.home?.nameEn }}
         </template>
       </Column>
-      <Column field="liveStatus" header="赛事时间" sortable>
+
+      <Column field="liveStatus" :header="t('fields.awayTeam')" sortable style="min-width: 2rem">
         <template #body="slotProps">
-          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
+          <img
+            v-if="slotProps.data.away && slotProps.data.away.icon"
+            :src="slotProps.data.away.icon"
+            style="width: 24px; height: 24px; margin-right: 8px"
+          />
+          {{ slotProps.data.away?.nameZh || slotProps.data.away?.nameEn }}
         </template>
       </Column>
-      <Column field="liveStatus" header="是否生产推留地址(是/否)" sortable>
+      <Column field="liveStatus" :header="t('fields.matchTime')" sortable style="min-width: 2rem">
         <template #body="slotProps">
-          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
+          {{ formatTime(slotProps.data.matchTime) }}
         </template>
       </Column>
-      <Column field="liveStatus" header="状态" sortable>
+      <Column
+        field="liveStatus"
+        :header="t('fields.isCreateLiveUrl')"
+        sortable
+        style="min-width: 2rem"
+      >
         <template #body="slotProps">
-          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
+          {{ slotProps.data.isCreateLiveUrl }}
+          <Tag v-if="hasStreamId(slotProps.data)" severity="success" :value="t('fields.yes')"></Tag>
+          <Tag v-else severity="danger" :value="t('fields.no')"></Tag>
         </template>
       </Column>
-      <Column field="liveStatus" header="操作" sortable>
+      <Column field="liveStatus" :header="t('fields.status')" sortable style="min-width: 2rem">
         <template #body="slotProps">
-          {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
+          <Tag
+            v-if="slotProps.data.statusId === 0"
+            severity="danger"
+            :value="t('status.namiMatch.GAME_EXCEPTION')"
+          />
+          <Tag
+            v-else-if="slotProps.data.statusId === 1"
+            severity="warning"
+            :value="t('status.namiMatch.NOT_STARTED')"
+          />
+          <Tag
+            v-else-if="slotProps.data.statusId === 2"
+            severity="success"
+            :value="t('status.namiMatch.ONGOING')"
+          />
+          <Tag
+            v-else-if="slotProps.data.statusId === 3"
+            severity="danger"
+            :value="t('status.namiMatch.ENDED')"
+          />
+          <Tag
+            v-else-if="slotProps.data.statusId === 11"
+            severity="danger"
+            :value="t('status.namiMatch.INTERRUPTED')"
+          />
+          <Tag
+            v-else-if="slotProps.data.statusId === 12"
+            severity="warning"
+            :value="t('status.namiMatch.CANCEL')"
+          />
+          <Tag
+            v-else-if="slotProps.data.statusId === 13"
+            severity="danger"
+            :value="t('status.namiMatch.DELAYED')"
+          />
+          <Tag
+            v-else-if="slotProps.data.statusId === 14"
+            severity="danger"
+            :value="t('status.namiMatch.ABANDONED')"
+          />
+          <Tag
+            v-else-if="slotProps.data.statusId === 15"
+            severity="danger"
+            :value="t('status.namiMatch.PENDING')"
+          />
+          <Tag v-else severity="default" :value="t('status.namiMatch.OTHER')" />
+        </template>
+      </Column>
+      <Column field="liveStatus" :header="t('fields.operate')" sortable style="min-width: 2rem">
+        <template #body="slotProps">
+          <Button
+            :label="t('fields.addToLive')"
+            :size="'small'"
+            icon="pi pi-pencil"
+            severity="info"
+            @click="showDialog(slotProps.data)"
+          />
         </template>
       </Column>
     </DataTable>
   </div>
+
+  <Dialog
+    v-model:visible="dialogVisible"
+    :header="t('fields.addToLive')"
+    modal
+    :style="{ width: '400px' }"
+  >
+    <div v-if="currentRow" class="match-info-list">
+      <div class="match-info-row">
+        <span class="label">ID：</span>
+        <span class="value">{{ currentRow.matchId }}</span>
+      </div>
+      <div class="match-info-row">
+        <span class="label">{{ t('fields.sportType') }}：</span>
+        <span class="value">{{ getSportDisplayName(currentRow.sportId) }}</span>
+      </div>
+      <div class="match-info-row">
+        <span class="label">{{ t('fields.matchTitle') }}：</span>
+        <span class="value">{{ currentRow.title || currentRow.competitionNameZh }}</span>
+      </div>
+      <div class="match-info-row">
+        <span class="label">{{ t('fields.homeTeam') }}：</span>
+        <span class="value">{{ currentRow.home?.nameZh || currentRow.home?.nameEn }}</span>
+      </div>
+      <div class="match-info-row">
+        <span class="label">{{ t('fields.homeTeam') }}ID：</span>
+        <span class="value">{{ currentRow.home?.namiId }}</span>
+      </div>
+      <div class="match-info-row">
+        <span class="label">{{ t('fields.awayTeam') }}：</span>
+        <span class="value">{{ currentRow.away?.nameZh || currentRow.away?.nameEn }}</span>
+      </div>
+      <div class="match-info-row">
+        <span class="label">{{ t('fields.awayTeam') }}ID：</span>
+        <span class="value">{{ currentRow.away?.namiId }}</span>
+      </div>
+      <div class="match-info-row">
+        <span class="label">{{ t('fields.matchTime') }}：</span>
+        <span class="value">{{ formatTime(currentRow.matchTime) }}</span>
+      </div>
+      <div class="match-info-row">
+        <span class="label">{{ t('fields.status') }}：</span>
+        <el-tag v-if="currentRow.statusId === 0" type="danger">{{
+          t('status.namiMatch.GAME_EXCEPTION')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.statusId === 1" type="warning">{{
+          t('status.namiMatch.NOT_STARTED')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.statusId === 2" type="success">{{
+          t('status.namiMatch.ONGOING')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.statusId === 3" type="danger">{{
+          t('status.namiMatch.ENDED')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.statusId === 11" type="danger">{{
+          t('status.namiMatch.INTERRUPTED')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.statusId === 12" type="warning">{{
+          t('status.namiMatch.CANCEL')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.statusId === 13" type="danger">{{
+          t('status.namiMatch.DELAYED')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.statusId === 14" type="danger">{{
+          t('status.namiMatch.ABANDONED')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.statusId === 15" type="danger">{{
+          t('status.namiMatch.PENDING')
+        }}</el-tag>
+        <el-tag v-else type="default">{{ t('status.namiMatch.OTHER') }}</el-tag>
+      </div>
+    </div>
+    <div
+      style="
+        display: flex;
+        gap: 8px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: end;
+        margin-bottom: 16px;
+      "
+    >
+      <Button
+        type="button"
+        :label="t('fields.cancel')"
+        severity="secondary"
+        @click="dialogVisible = false"
+      />
+      <Button
+        type="button"
+        :label="t('fields.addToLive')"
+        :loading="isSubmitting"
+        @click="handleCopy"
+      />
+    </div>
+  </Dialog>
+    <ConfirmDialog></ConfirmDialog>
 </template>
 
 <script setup>
 import { defineComponent, reactive, onMounted, ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { liveSportTyps } from '@/utils/live'
+import { useToast } from 'primevue/usetoast'
 import { DashboardService } from '@/service/DashboardService'
-const { getSportLiveMatch } = DashboardService
+import { useConfirm } from 'primevue/useconfirm'
+const { getSportLiveMatch, copySportLiveMatch, batchDeleteSportLiveMatch } = DashboardService
 const { t } = useI18n()
+const toast = useToast()
+const confirm = useConfirm()
 
 const uiControl = reactive({
   sport: liveSportTyps,
@@ -142,6 +328,19 @@ const request = reactive({
   title: null,
 })
 
+const page = reactive({
+  pages: 0,
+  records: [],
+  total: 0,
+  current: 1,
+  loading: false,
+})
+
+const dialogVisible = ref(false)
+const currentRow = ref(null)
+
+const selectedRows = ref()
+
 function resetQuery() {
   request.sportId = null
   request.title = null
@@ -149,202 +348,133 @@ function resetQuery() {
 }
 
 async function loadMatch() {
+  const rawParams = {
+    page: request.current,
+    limit: request.size,
+    sportId: request.sportId,
+    title: request.title,
+    status: request.liveStatus,
+  }
 
+  // 過濾掉 null 或 undefined 的參數
+  const filteredParams = {}
+  for (const key in rawParams) {
+    if (rawParams[key] !== null && rawParams[key] !== undefined) {
+      filteredParams[key] = rawParams[key]
+    }
+  }
 
+  const params = new URLSearchParams(filteredParams).toString()
+  console.log(params)
 
-  const res = await getSportLiveMatch(request)
+  const res = await getSportLiveMatch(params)
   console.log(res)
 
-  // page.records = res.data.records || []
-  // page.total = res.data.total || 0
-  // page.pages = res.data.pages || 0
-  // page.current = res.data.current || 1
-  // page.loading = false
+  page.records = res.records || []
+  page.total = res.total || 0
+  page.pages = res.pages || 0
+  page.current = res.current || 1
+  page.loading = false
+}
+
+function getSportDisplayName(sportId) {
+  const found = uiControl.sport.find((item) => item.id === sportId)
+  return found ? found.display : sportId
+}
+
+function hasStreamId(row) {
+  // 判斷 streamId 是否有值且非空
+  return !!(row && row.streamId)
+}
+
+function showDialog(row) {
+  currentRow.value = row
+  dialogVisible.value = true
+}
+
+function formatTime(ts) {
+  if (!ts) return '-'
+  const d = new Date(ts)
+  return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`
+}
+
+async function handleCopy() {
+  // 調用 API
+  const res = await copySportLiveMatch({ matchId: currentRow.value.matchId })
+
+  if (res.code === 0) {
+    toast.add({
+      severity: 'success',
+      summary: t('fields.copySuccess'),
+      life: 3000,
+    })
+    dialogVisible.value = false
+  } else {
+    toast.add({
+      severity: 'error',
+      summary: t('fields.copyFailed'),
+    })
+  }
+}
+
+async function handleDelete() {
+  console.log(selectedRows)
+
+  if (!selectedRows.value.length) {
+    toast.add({
+      severity: 'error',
+      summary: t('fields.pleaseSelectMatch'),
+    })
+    return
+  }
+  try {
+    await confirm.require({
+      message: t('message.confirmDelete'),
+      icon: 'pi pi-info-circle',
+      rejectLabel: t('fields.cancel'),
+      rejectProps: {
+        label: t('fields.cancel'),
+        severity: 'secondary',
+      },
+      acceptLabel: t('fields.confirm'),
+      acceptProps: {
+        label: t('fields.confirm'),
+        severity: 'danger',
+      },
+      accept: async () => {
+        try {
+          const matchIds = selectedRows.value.map((row) => row.matchId)
+          const res = await batchDeleteSportLiveMatch({ matchIds: matchIds })
+          if (res.code === 0) {
+            toast.add({
+              severity: 'success',
+              summary: t('fields.deleteSuccess'),
+              life: 3000,
+            })
+          } else {
+            toast.add({
+              severity: 'success',
+              summary: t('fields.deleteFailed'),
+              life: 3000,
+            })
+          }
+          loadMatch()
+        } catch (err) {
+          toast.add({
+            severity: 'error',
+            summary: t('message.deleteFailed'),
+            detail: err.message,
+          })
+        }
+      },
+    })
+  } catch {
+    return
+  }
 }
 
 onMounted(() => {
   loadMatch()
-})
-</script>
-
-<script>
-import { defineComponent, onMounted, reactive, ref, computed } from 'vue'
-// import { useI18n } from "vue-i18n";
-// import { getSportLiveMatch, copySportLiveMatch, batchDeleteSportLiveMatch } from "@/api/sport-live-match";
-// import { ElMessage, ElMessageBox } from "element-plus";
-// import { liveSportTyps } from "@/utils/live"
-
-// const selectedRows = ref([])
-// const request = reactive({
-//   size: 30,
-//   current: 1,
-//   sportId: null,
-//   liveStatus: null,
-//   title: null,
-// })
-
-export default defineComponent({
-  setup() {
-    const { t } = useI18n()
-    // const uiControl = reactive({
-    //   sport: liveSportTyps,
-    //   // 0:比赛异常, 说明：暂未判断具体原因的异常比赛，建议隐藏处理, 1:未开赛, 2:进行中, 3:完场, 11:中断, 12:取消, 13:延期, 14:腰斩, 15:待定
-    //   liveStatus: [
-    //     { name: '0', display: t('status.namiMatch.GAME_EXCEPTION'), id: 0 },
-    //     { name: '1', display: t('status.namiMatch.NOT_STARTED'), id: 1 },
-    //     { name: '2', display: t('status.namiMatch.ONGOING'), id: 2 },
-    //     { name: '3', display: t('status.namiMatch.ENDED'), id: 3 },
-    //     { name: '11', display: t('status.namiMatch.INTERRUPTED'), id: 11 },
-    //     { name: '12', display: t('status.namiMatch.CANCEL'), id: 12 },
-    //     { name: '13', display: t('status.namiMatch.DELAYED'), id: 13 },
-    //     { name: '14', display: t('status.namiMatch.ABANDONED'), id: 14 },
-    //     { name: '15', display: t('status.namiMatch.PENDING'), id: 15 },
-    //   ],
-    // })
-    const page = reactive({
-      pages: 0,
-      records: [],
-      total: 0,
-      current: 1,
-      loading: false,
-    })
-    // const request = reactive({
-    //   size: 30,
-    //   current: 1,
-    //   sportId: null,
-    //   liveStatus: null,
-    //   title: null,
-    // })
-    const dialogVisible = ref(false)
-    const currentRow = ref(null)
-    // const selectedRows = ref([])
-
-    const canCopy = computed(() => {
-      return currentRow.value && currentRow.value.streamId
-    })
-
-    function formatTime(ts) {
-      if (!ts) return '-'
-      const d = new Date(ts)
-      return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`
-    }
-
-    function resetQuery() {
-      request.sportId = null
-      request.title = null
-      request.liveStatus = null
-    }
-
-    async function loadMatch() {
-      page.loading = true
-      const res = await getSportLiveMatch({
-        sportId: request.sportId,
-        status: request.liveStatus,
-        title: request.title,
-        page: request.current,
-        limit: request.size,
-      })
-      console.log(res.data.records)
-
-      page.records = res.data.records || []
-      page.total = res.data.total || 0
-      page.pages = res.data.pages || 0
-      page.current = res.data.current || 1
-      page.loading = false
-    }
-
-    function changePage(pageNum) {
-      request.current = pageNum
-      loadMatch()
-    }
-
-    function showDialog(row) {
-      currentRow.value = row
-      dialogVisible.value = true
-    }
-
-    async function handleCopy() {
-      // 調用 API
-      const res = await copySportLiveMatch({ matchId: currentRow.value.matchId })
-      if (res.code === 0) {
-        ElMessage.success(t('fields.copySuccess'))
-        dialogVisible.value = false
-      } else {
-        ElMessage.error(t('fields.copyFailed'))
-      }
-    }
-
-    function handleSelectionChange(val) {
-      selectedRows.value = val
-    }
-
-    async function handleDelete() {
-      if (!selectedRows.value.length) {
-        ElMessage.warning(t('fields.pleaseSelectMatch'))
-        return
-      }
-      try {
-        await ElMessageBox.confirm(`${t('fields.confirmDelete')}`, t('fields.tips'), {
-          confirmButtonText: t('fields.confirm'),
-          cancelButtonText: t('fields.cancel'),
-          type: 'warning',
-        })
-      } catch {
-        return
-      }
-      // 批量刪除
-      const matchIds = selectedRows.value.map((row) => row.matchId)
-      const res = await batchDeleteSportLiveMatch({ matchIds })
-      if (res.code === 0) {
-        ElMessage.success(t('fields.deleteSuccess'))
-      } else {
-        ElMessage.error(res.msg || t('fields.deleteFailed'))
-      }
-      loadMatch()
-    }
-
-    // 根據 sportId 取得運動 display 名稱
-    function getSportDisplayName(sportId) {
-      const found = uiControl.sport.find((item) => item.id === sportId)
-      return found ? found.display : sportId
-    }
-
-    function getLiveStatusDisplayName(statusId) {
-      const found = uiControl.liveStatus.find((item) => item.id === statusId)
-      return found ? found.display : statusId
-    }
-
-    function hasStreamId(row) {
-      // 判斷 streamId 是否有值且非空
-      return !!(row && row.streamId)
-    }
-
-    onMounted(() => {
-      loadMatch()
-    })
-
-    return {
-      t,
-      uiControl,
-      page,
-      request,
-      formatTime,
-      loadMatch,
-      resetQuery,
-      changePage,
-      dialogVisible,
-      currentRow,
-      showDialog,
-      handleCopy,
-      handleDelete,
-      getSportDisplayName,
-      getLiveStatusDisplayName,
-      canCopy,
-      hasStreamId,
-      selectedRows,
-      handleSelectionChange,
-    }
-  },
 })
 </script>
 
@@ -408,5 +538,38 @@ export default defineComponent({
 
 :deep(.p-input-icon-left i) {
   margin-left: 0.5rem; /* 調整左邊距 */
+}
+
+.header-container {
+  margin-bottom: 10px;
+}
+
+.search {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.match-info-list {
+  margin-bottom: 10px;
+}
+.match-info-row {
+  display: flex;
+  margin-bottom: 4px;
+}
+.match-info-row .label {
+  min-width: 90px;
+  color: #888;
+  text-align: right;
+  flex-shrink: 0;
+}
+.match-info-row .value {
+  flex: 1;
+  padding-left: 8px;
+  word-break: break-all;
 }
 </style>

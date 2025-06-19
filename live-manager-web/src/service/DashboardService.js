@@ -346,8 +346,7 @@ export const DashboardService = {
   getSportLiveMatch(request) {
     const token = sessionStorage.getItem('token')
     return api
-      .get(`/session/live-sport/match`, {
-        params: request,
+      .get(`/session/live-sport/match?${request}`, {
         headers: {
           // For GET requests, parameters are typically sent as `params`
           token: `${token}`,
@@ -685,6 +684,27 @@ export const DashboardService = {
       // params: request, // For GET requests, parameters are typically sent as `params`
       headers: {
         token: `${token}`,
+      },
+    })
+  },
+
+  copySportLiveMatch(data) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/live-sport/match', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+  },
+
+  batchDeleteSportLiveMatch(matchIds) {
+    const token = sessionStorage.getItem('token')
+    return api.delete('/session/live-sport/match/batch-delete', {
+      data: matchIds,
+      headers: {
+        token: token,
+        'Content-Type': 'application/json',
       },
     })
   },
