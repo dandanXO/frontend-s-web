@@ -348,12 +348,17 @@ function resetQuery() {
 }
 
 async function loadMatch() {
+  
   const rawParams = {
     page: request.current,
     limit: request.size,
     sportId: request.sportId,
     title: request.title,
     status: request.liveStatus,
+  }
+  
+  if (rawParams.status) {
+    rawParams.status = rawParams.status.id
   }
 
   // 過濾掉 null 或 undefined 的參數
@@ -365,10 +370,10 @@ async function loadMatch() {
   }
 
   const params = new URLSearchParams(filteredParams).toString()
-  console.log(params)
+  
 
   const res = await getSportLiveMatch(params)
-  console.log(res)
+  
 
   page.records = res.records || []
   page.total = res.total || 0
