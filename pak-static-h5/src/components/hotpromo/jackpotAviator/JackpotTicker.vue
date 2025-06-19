@@ -22,11 +22,9 @@
     y="60%" 
     dominant-baseline="middle" 
     text-anchor="middle" 
-    font-size="16" 
+    font-size="24" 
     font-weight="bold" 
     fill="url(#textGradient)" 
-    stroke="black" 
-    stroke-width="1"
   >
     {{ convertToCommaAmount(jackpotAmt) }}
   </text>
@@ -92,7 +90,7 @@ onMounted(() => {
     width: 100%;
     height: 80px;
     position: absolute;
-    top: 40%;
+    top: 37%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;

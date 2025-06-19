@@ -1212,6 +1212,10 @@ export default defineComponent({
         }
         &.isJackpotAviator {
           width: 100%;
+          background: url("../assets/images/promotion/hotpromo/jackpot-aviator/main-bg.jpg") no-repeat top center;
+          background-size: contain;
+          margin-top: -20px;
+          padding-top: 20px;
         }
         &.isDepositSpinnerRewards {
           border-radius: 0;

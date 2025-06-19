@@ -1,6 +1,6 @@
 <template>
     <div class="ranking">
-        <div class="item">
+        <div class="item" style="background: #730319;">
             <div>{{ $t('hotPromo.jackpotAviator.rank') }}</div>
             <div>{{ $t('hotPromo.jackpotAviator.daily') }}</div>
         </div>
@@ -74,7 +74,7 @@ const props = defineProps(['rankingBonusRatioList']);
             background-color: #394142;
         }
         .bonus {
-            color: #DE4B48;
+            color: #DAC385;
         }
         &:hover {
             background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);

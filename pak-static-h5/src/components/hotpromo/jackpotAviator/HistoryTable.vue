@@ -36,22 +36,21 @@ const props = defineProps(['historyList']);
     border-radius: 5px;
     overflow: hidden;
         margin: 0 5px 70px;
+        
     // padding-bottom: 0px;
         // padding-bottom: 15px;
-
     .item {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         justify-content: center;
         align-items: center;
-        text-align: center;
-        height: 40px;
         font-family: Poppins;
         font-size: 14px;
         font-weight: 600;
         line-height: 40px;
         text-align: center;
         color: #FFFFFF80;
+        height: 45px;
 
         .header {
             font-family: Poppins;
@@ -60,6 +59,7 @@ const props = defineProps(['historyList']);
             line-height: 40px;
             text-align: center;
             color: #FFFFFF;
+background-color: #730319;
         }
 
         &.isOwn {
@@ -79,19 +79,24 @@ const props = defineProps(['historyList']);
         }
         
         &:nth-child(odd) {
-            background-color: #323738;
+            background-color: #1c1716;
             
         }
 
         &:nth-child(even) {
-            background: #394142;
+            background: #332e2d;
         }
         &:hover {
-            background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);
-            color: #ffffff;
+            background: linear-gradient(180deg, #730319 0%, #DA093A 100%);
+            
+                color: #3c0e10;
+            background: #CBA46B;
+            .betVolume {
+                color: #3c0e10;
+            }
         }
         .betVolume {
-            color: #DE4B48;
+            color: #DAC385;
         }
     }
 }
@@ -103,11 +108,10 @@ const props = defineProps(['historyList']);
 
 @media (max-width: 400px) {
     .history-list {
-        margin: 0 5px;
-        margin: 0 5px 70px;
+        margin: 10px 0px 70px;
 
         .item {
-            height: 30px;
+            height: 40px;
 
             .rank {
                 .crown-icon {
