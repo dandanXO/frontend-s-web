@@ -74,17 +74,28 @@
         </q-card-section>
       </q-card>
 
-      <q-card class="pagination-container">
-        <q-btn class="pagination-btn" @click="onPrevPageClick()">&lt;</q-btn>
-        <!-- <div>{{ pagination.current }} / {{ pagination.pages }}</div> -->
-        <q-btn class="pagination-btn" :disable="isNextBtnDisable" @click="onNextPageClick()">></q-btn>
-      </q-card>
+      <div class="pagination-container-wrapper">
+        <q-btn-group class="pagination-container">
+          <q-btn class="pagination-btn" :disable="pagination.current === 1" @click="onPrevPageClick()">&lt;</q-btn>
+          <q-btn
+            v-for="(page, index) in displayPaginationButtons"
+            :key="index"
+            class="pagination-btn"
+            :class="{ active: pagination.current === page }"
+            @click="onPageClick(page)"
+          >
+            {{ page }}
+          </q-btn>
+
+          <q-btn class="pagination-btn" :disable="isNextBtnDisable" @click="onNextPageClick()">></q-btn>
+        </q-btn-group>
+      </div>
     </template>
   </q-page>
 </template>
 
 <script setup>
-import { onActivated, onMounted, reactive, ref } from "vue";
+import { computed, onActivated, onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
@@ -137,6 +148,16 @@ const pagination = reactive({
   pagingState: null
 });
 
+const MAX_PAGINATION_BUTTONS = 5;
+
+const displayPaginationButtons = computed(() => {
+  const delta = Math.floor(MAX_PAGINATION_BUTTONS / 2);
+  const start = Math.max(1, pagination.current - delta);
+  const end = Math.min(pagination.pages, pagination.current + delta);
+
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+});
+
 const onPrevPageClick = () => {
   if (pagination.current === 1) return;
   pagination.current--;
@@ -147,6 +168,20 @@ const onNextPageClick = () => {
   if (!isNextBtnDisable.value) {
     if (pagination.current === pagination.pages) return;
     pagination.current++;
+    searchRecord();
+  } else {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: "You have reached end of the page",
+      icon: "report_problem"
+    });
+  }
+};
+
+const onPageClick = (index) => {
+  if (index < pagination.total && index > 0) {
+    pagination.current = index;
     searchRecord();
   } else {
     $q.notify({
@@ -443,18 +478,36 @@ onActivated(() => {
   }
 }
 
-.pagination-container {
+.pagination-container-wrapper {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: transparent;
-  border-bottom: 0;
+  justify-content: center;
+  margin: 24px 0;
 
-  .pagination-btn {
-    background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
-    font-size: 20px;
-    width: 40px;
-    height: 40px;
+  .pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1f241f;
+    border: 1px solid #35383f;
+
+    .pagination-btn {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+
+      &.active {
+        background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+        color: #2d2d2d;
+      }
+
+      &:not(:last-child) {
+        border-right: 1px solid #35383f;
+      }
+
+      &:disabled {
+        color: #ffffff6b;
+      }
+    }
   }
 }
 </style>
