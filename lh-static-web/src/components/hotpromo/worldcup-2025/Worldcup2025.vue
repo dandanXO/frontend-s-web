@@ -68,9 +68,15 @@
             <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-fifa.png" alt="" />
           </div>
           <div class="title-txt">世具杯</div>
-          <div class="title-status" v-if="showNotStart">
-            <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-time.png" alt="" />
-            &nbsp; 未开始
+
+          <div class="title-status ongoing" v-if="currentListItem.status === 'ONGOING'">
+            <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-ongoing.svg" alt="" />
+            &nbsp; 进行中
+          </div>
+
+          <div class="title-status ended" v-if="currentListItem.status === 'ENDED'">
+            <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-ended.svg" alt="" />
+            &nbsp; 已结束
           </div>
         </div>
         <div class="vs-time">{{ getDisplayDateTime(currentListItem.matchTime) }}</div>
@@ -129,7 +135,7 @@
       <div class="match-btn disabled" v-if="currentListItem.hasClaimedBonus">已领取</div>
       <div
         class="match-btn"
-        v-else-if="currentListItem.canClaimBonus"
+        v-else-if="currentListItem.status === 'ENDED' && currentListItem.canClaimBonus"
         :class="{ disabled: loadingBtn }"
         @click="handleClaimFifaQuiz2025(currentListItem.id)"
       >
@@ -137,7 +143,7 @@
       </div>
       <div class="match-btn disabled" v-else-if="currentListItem.memberAnswerOne">已参与竞猜</div>
       <div
-        class="match-btn active"
+        class="match-btn"
         v-else
         :class="{ disabled: loadingBtn }"
         @click="handleSubmitFifaQuiz2025(currentListItem.id, selectedTeam)"
@@ -180,16 +186,16 @@
         class="match-btn"
         v-else-if="currentListItem.canClaimOccasionBonus"
         :class="{ disabled: loadingBtn }"
-        @click="handleClaimOccasionFifaQuiz2025(currentListItem.id)"
+        @click="handleClaimFifaQuiz2025(currentListItem.id)"
       >
         立即领取
       </div>
       <div class="match-btn disabled" v-else-if="currentListItem.memberSelectedOccasion">已参与竞猜</div>
       <div
-        class="match-btn active"
+        class="match-btn"
         v-else
         :class="{ disabled: loadingBtn }"
-        @click="handleSubmitOccasionFifaQuiz2025(currentListItem.id, selectedSpecial)"
+        @click="handleSubmitFifaQuiz2025(currentListItem.id, selectedSpecial)"
       >
         确认竞猜
       </div>
@@ -926,6 +932,14 @@ onMounted(() => {
           align-items: center;
           padding: 6px 12px;
 
+          &.ended {
+            background: #ff5e00;
+          }
+
+          &.ongoing {
+            background: #00a1ff;
+          }
+
           img {
             display: block;
             width: 16px;
@@ -998,8 +1012,8 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     border-radius: 60px;
-    background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
-    color: #818181;
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+    color: white;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
@@ -1008,13 +1022,8 @@ onMounted(() => {
     &.disabled {
       cursor: not-allowed;
       pointer-events: none;
-      // filter: grayscale(100%);
-      // opacity: 0.6;
-    }
-
-    &.active {
-      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-      color: white;
+      background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
+      color: #818181;
     }
   }
 }
@@ -1175,7 +1184,7 @@ onMounted(() => {
             color: #ffffff;
           }
           .title-status {
-            background: #be9457;
+            // background: #be9457;
 
             img {
               filter: invert(1);
