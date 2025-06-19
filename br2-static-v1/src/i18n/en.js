@@ -224,7 +224,17 @@ export default {
     evp: "EVP",
     evp_placeholder: "Please enter EVP",
     evp_rules_01: "Please insert EVP",
-    evp_rules_02: "Please insert valid EVP"
+    evp_rules_02: "Please insert valid EVP",
+    firstName: "First Name",
+    firstName_placeholder: "Enter your first name",
+    firstName_rules_01: "Please insert your first name",
+    firstName_rules_02: "Please enter a valid first name",
+    lastName: "Last Name",
+    lastName_placeholder: "Enter your last name",
+    lastName_rules_01: "Please insert your last name",
+    lastName_rules_02: "Please enter a valid last name",
+    taxId: "Tax ID",
+    taxId_placeholder: "Please enter your Tax ID"
   },
   btn: {
     confirm: "Confirm",
@@ -257,7 +267,8 @@ export default {
     profit: "Profit",
     loss: "Loss",
     unbinding: "Unbinding",
-    deposit: "Deposit"
+    deposit: "Deposit",
+    updated: "Updated"
   },
   notify: {
     noRecord: "No Record",

@@ -583,10 +583,9 @@ body.body--dark .q-footer {
 
   .popout-close {
     position: absolute;
-    right: 0px;
-    top: 10px;
-    background: #cfcfcf;
-    color: #787878;
+    right: 30px;
+    top: 40px;
+    color: #fff;
     z-index: 9;
   }
 
@@ -599,16 +598,12 @@ body.body--dark .q-footer {
   .popout-dialog-container {
     // background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
     // background: linear-gradient(180deg, #1b7473 0%, #163c3d 100%);
-    box-shadow: 0px 2.24px 77.07px 6.72px #5eecff9c inset;
     // background: linear-gradient(180deg, #004139 0%, rgba(0, 185, 111, 0) 100%);
-    background: linear-gradient(180deg, #004139 0%, rgba(0, 185, 111, 0) 100%);
-    background-position: top center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    backdrop-filter: blur(20px);
-    padding: 30px 20px 30px;
+    background: #1f2420;
+    padding: 39px 36px 24px;
     min-height: 200px;
-    border-radius: 30px !important;
+    border: 1px solid #4b4943;
+    border-radius: 4px;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -211,11 +211,16 @@ const updateNewGuestState = () => {
 
     :deep(.q-field__control) {
       // background: rgba(71, 178, 178, 0.16) !important;
-      background: #192b2d !important;
+      background: #131313;
+      border-radius: 4px;
+      &::before {
+        border-style: solid;
+        border-color: #35383f;
+      }
     }
 
     :deep(.q-field__native) {
-      color: #ffffff;
+      color: #fff;
     }
   }
 
@@ -301,13 +306,11 @@ const updateNewGuestState = () => {
 }
 
 .style-btn-confirm {
-  color: #ffffff;
+  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+  font-weight: 700;
+  width: 140px;
+  height: 42px;
+  color: #2d2d2d;
   border-radius: 8px;
-  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
-  // background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
-  font-size: 16px;
-  font-weight: 600;
-  width: 100%;
-  margin-top: 16px;
 }
 </style>
