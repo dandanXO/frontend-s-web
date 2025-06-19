@@ -11,7 +11,7 @@
               <div class="reward-info-icon claim-coin-icon"></div>
               <div class="reward-info-content">
                 昨日累计有效投注：
-                <span class="amount">{{ formatNumber(totalLoss) }}元</span>
+                <span class="amount">{{ formatNumber(totalValidBet) }}元</span>
               </div>
             </div>
             <div class="reward-info">
@@ -48,7 +48,7 @@
   const notify = useNotify();
 
   const store = userStore();
-  const totalLoss = ref(0);
+  const totalValidBet = ref(0);
   const bonus = ref(0);
   const isClaiming = ref(false);
   const isClaimed = ref(false)
@@ -116,7 +116,7 @@
   const fetchData = async () => {
     try {
       const res = await getDailySlotBonusInit(promoCode.value);
-      totalLoss.value = res.data.totalLoss;
+      totalValidBet.value = res.data.totalValidBet;
       bonus.value = res.data.bonus;
     } catch (error) {
       console.log(error);
