@@ -3540,7 +3540,8 @@ export default {
     'Sport Live Monitor': 'Sport Live Monitor',
     'Sport Live Admin': 'Sport Live Admin Setting',
     'Member Refer Stat Analysis': 'Refer Friend Analysis',
-    'Member Refer Relation': 'Refer Relation Query'
+    'Member Refer Relation': 'Refer Relation Query',
+    'Sport Live Match Mars': 'Sport Live Match Mars',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

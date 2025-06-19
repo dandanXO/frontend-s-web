@@ -3491,7 +3491,8 @@ export default {
     'Sport Live Monitor': '体育直播监控',
     'Sport Live Admin': '主播后台管理员设定',
     'Member Refer Stat Analysis': '邀请返佣分析',
-    'Member Refer Relation': '邀请关系查询'
+    'Member Refer Relation': '邀请关系查询',
+    'Sport Live Match Mars': '赛事资讯 - Mars',
   },
   google: {
     google_auth_menu: '谷歌验证',
