@@ -67,6 +67,8 @@ const currentPromo = computed(() => {
 
 const controllerStyle = computed(() => {
   switch (modelValue.value) {
+    case "newplayer-spin-wheel":
+      return "style-3";
     case "mega-sharing-wheel":
       return "style-2";
     case "money-rain":
@@ -170,6 +172,30 @@ const handleNextClick = () => {
       background-clip: border-box;
       &.selected {
         border: 1px solid #FFFFFF;
+      }
+    }
+  }
+  
+  &.style-3 {
+    --bg-color: #fff;
+    --selected-bg-color: #8FDAFF;
+    --border-color: #ffffffcc;
+    --selected-border-color: #fff;
+    --text-color: #0664D2;
+    --selected-text-color: #0664D2;
+
+    .swiper-btn-prev,
+    .swiper-btn-next {
+      background-clip: border-box;
+      background: #0664D2;
+    }
+
+    .promo-list-item {
+      background-clip: border-box;
+      &.selected {
+        border: 1px solid #1E74FF;
+        box-shadow: 0px 4px 4px 0px #15B1FF40 inset;
+        box-shadow: 0px 2px 0px 0px #65B4DF;
       }
     }
   }

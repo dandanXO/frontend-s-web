@@ -634,7 +634,9 @@ onMounted(() => {
   // margin-bottom: 8px;
   // padding: 2px;
   margin: 10px auto;
-  background: linear-gradient(90deg, rgba(75, 125, 65, 0) 0%, rgba(75, 125, 65, 0.4) 52.5%, rgba(75, 125, 65, 0) 93.5%);
+  background: linear-gradient(90deg, rgba(6, 102, 211, 0) 0%, rgba(6, 102, 211, 0.4) 52.5%, rgba(6, 102, 211, 0) 93.5%);
+
+  // background: linear-gradient(90deg, rgba(75, 125, 65, 0) 0%, rgba(75, 125, 65, 0.4) 52.5%, rgba(75, 125, 65, 0) 93.5%);
   padding: 5px 0;
   width: 80%;
     max-width: 240px;
@@ -848,7 +850,7 @@ onMounted(() => {
     font-size: 45px;
     text-align: center;
     // background: linear-gradient(90deg, transparent, #fff96f29, transparent);
-    background-image: url(../../../assets/images/index/modal/green-congrats-highlight-bg.png);
+    background-image: url(../../../assets/images/index/modal/blue-congrats-highlight-bg.png);
     padding: 0 12px;
     background-repeat: no-repeat;
     background-size: 70% 100%;

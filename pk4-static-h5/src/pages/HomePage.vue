@@ -1623,7 +1623,22 @@
       </template>
     </SpinLuckyWheelPromoHomePopup>
   </q-dialog>
-  
+  <q-dialog class="isCentreDialog" v-model="isHasUnusedCoupon" @hide="isHasUnusedCoupon = false">
+    <div class="congrats-container">
+      <q-btn icon="close" round dense v-close-popup class="congrats-close" />
+      <div class="congrats-heading">COUPON</div>
+      <div class="congrats-coupons">
+        <img :src="require('../assets/images/index/modal/congrats-coupons.png')" />
+      </div>
+      <div class="congrats-title">{{ $t('hotPromo.unusedCoupons') }}</div>
+
+      <div class="congrats-button-container">
+        <q-btn no-caps unelevated class="congrats-btn" @click="handleNewPlayerDeposit">
+          {{ $t('btn.goNow') }}
+        </q-btn>
+      </div>
+    </div>
+  </q-dialog>
   <q-dialog
     v-if="popupPromo === 'newplayer-spin-wheel'"
     full-width
@@ -4414,6 +4429,11 @@ const hasInviteWheelPromo = ref(false);
 const handleReceiveCodeBonus = () => {
   router.push({ path: "/account", query: { openCodeModal: "true" } });
 };
+
+const handleNewPlayerDeposit = () => {
+  router.push({ path: '/deposit?from=home' })
+}
+
 const isShowRedemptionInPopup = ref(false);
 const checkCodeBonusModal = () => {
   eventapi.get("/session/promo-code-bonus/checkBonus").then((res) => {
@@ -4438,6 +4458,17 @@ const checkSpinWheel = () => {
 
 
 const showSpinWheel = () => {
+  
+  if (store.canClaimFtdPrivilege) {
+    isHasUnusedCoupon.value = true;
+    store.hasUnusedCoupon = true;
+  } else {
+    store.hasUnusedCoupon = false;
+  }
+  if ((store.canSpinPrivilegeCoupon)) {
+    promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
+    popupPromo.value = "newplayer-spin-wheel"
+  }
   eventapi
     .get("/new-user-roulette/init")
     .then((res) => {
@@ -4448,7 +4479,7 @@ const showSpinWheel = () => {
         } else {
           store.hasUnusedCoupon = false;
         }
-      if ((store.canSpinPrivilegeCoupon)) {
+        if ((store.canSpinPrivilegeCoupon)) {
           promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
           popupPromo.value = "newplayer-spin-wheel"
         }
@@ -6384,44 +6415,54 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .congrats-container {
-  background: url(../assets/images/index/modal/prize-modal-bg.png) center center no-repeat;
-  background-size: 100% 100%;
-  aspect-ratio: 738/923;
-  width: 375px;
-  height: 469px;
+  background-image: unset;
+  background-color: #090F1E;
+  border: 1px solid #0666D3;
+  
+  border-radius: 10px !important;
+  max-width: 350px;
+  width: 100%;
   padding: 16px;
   position: relative;
   overflow: visible;
+  border-radius: 12px;
+  height: unset;
+  aspect-ratio: unset;
 
-  &.ur {
-    background: url(../assets/images/index/modal/prize-modal-bg-ur.png) center center no-repeat;
+  &:before {
+    content: "";
+    background-image: url(../assets/images/index/modal/congrats-container-light.png);
     background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    top: -158px;
   }
 
-  // &:before {
-  //   content: "";
-  //   background-image: url(../assets/images/index/modal/congrats-container-light.png);
-  //   background-size: 100% 100%;
-  //   background-position: center center;
-  //   background-repeat: no-repeat;
-  //   width: 100%;
-  //   height: 150px;
-  //   position: absolute;
-  //   left: 0;
-  //   top: -150px;
+  // .congrats-header {
+  //   display: flex;
+  //   justify-content: center;
+  //   margin-top: -26px;
+  //   z-index: 2;
+
+  //   img {
+  //     display: block;
+  //     width: 100%;
+  //     max-width: 320px;
+  //   }
   // }
 
-  .congrats-header {
-    display: flex;
-    justify-content: center;
-    margin-top: -18px;
-    z-index: 2;
-
-    img {
-      display: block;
-      width: 100%;
-      max-width: 320px;
-    }
+  .congrats-heading {
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    text-transform: uppercase;
   }
 
   .congrats-coupons {
@@ -6437,35 +6478,59 @@ const checkGoogleLoginSetPwd = () => {
     color: #ffffff;
     display: flex;
     justify-content: center;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     text-align: center;
   }
 
+  .congrats-highlight-txt,
   .congrats-highlight {
-    position: absolute;
-    bottom: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    color: #cf3aff;
-    font-size: 26px;
-    font-weight: bold;
+    color: #fff96f;
+    font-size: 45px;
     text-align: center;
-    background-image: url(../assets/images/index/modal/congrats-highlight-bg.png);
-    padding: 2px 12px;
+    // background: linear-gradient(90deg, transparent, #fff96f29, transparent);
+    background-image: url(../assets/images/index/modal/green-congrats-highlight-bg.png);
+    padding: 0 12px;
     background-repeat: no-repeat;
     background-size: 70% 100%;
     background-position: center;
     margin-top: 16px;
+    position: relative;
+    text-align: center;
+    top: unset;
+    left: 0;
+    transform: unset;
+    bottom: unset;
+    margin: 16px auto;
   }
 
-  .recharge-btn {
-    background: url(../assets/images/index/modal/download-now-btn-bg.png) center center no-repeat;
-    background-size: 100% 100%;
-    aspect-ratio: 389/139;
-    width: 130px;
-    height: 45px;
+  .congrats-highlight-txt {
+    font-size: 14px;
+  }
+}
+
+.congrats-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.congrats-button-container {
+  // position: absolute;
+  // bottom: -60px;
+  // left: 50%;
+  // transform: translateX(-50%);
+  // white-space: nowrap;
+    margin: 20px auto 0;
+    text-align: center;
+  .congrats-btn {
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+    color: #ffffff;
   }
 }
 
