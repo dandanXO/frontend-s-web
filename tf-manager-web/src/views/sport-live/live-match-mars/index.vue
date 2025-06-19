@@ -93,7 +93,13 @@
           {{ currentRow.match_time }}
         </el-form-item>
         <el-form-item :label="t('fields.status')" prop="status">
-          {{ currentRow.status }}
+          <!-- {{ currentRow.status }} -->
+          <el-tag v-if="currentRow.status === 'live'" type="success">{{ t('status.marsMatch.ONGOING') }}</el-tag>
+          <el-tag v-else-if="currentRow.status === 'past'" type="danger">{{ t('status.marsMatch.ENDED') }}</el-tag>
+          <el-tag v-else-if="currentRow.status === 'cancel'" type="warning">{{ t('status.marsMatch.CANCEL') }}</el-tag>
+          <el-tag v-else-if="currentRow.status === 'pending'" type="danger">{{ t('status.marsMatch.PENDING') }}</el-tag>
+          <el-tag v-else-if="currentRow.status === 'upcoming'" type="warning">{{ t('status.marsMatch.NOT_STARTED') }}</el-tag>
+          <el-tag v-else type="default">{{ t('status.marsMatch.OTHER') }}</el-tag>
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
