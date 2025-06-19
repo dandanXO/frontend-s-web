@@ -953,6 +953,17 @@ export default {
       signIn: "سائن ان",
       signedIn: "سائن ان کیا ہوا"
     },
+    monthBeginningDepositRebate: {
+      receive: "وصول کریں",
+      vipLevel: "وی آئی پی سطح",
+      rebate: "ری بیٹ",
+      runningWater: "چلتا پانی",
+      bigRebate: "بڑی ری بیٹ",
+      rule_title: "ماہانہ ری چارج ری بیٹ ایونٹ",
+      rule_01:
+        "ماہ کی 1 سے 7 تاریخ تک 1000 روپے یا اس سے زیادہ ری چارج کریں تاکہ درج ذیل وی آئی پی سطح کے مطابق ری بیٹ حاصل کریں۔",
+      rule_02: "ری بیٹ اگلے دن ایونٹ کے صفحے سے حاصل کی جا سکتی ہے۔ دستی وصولی۔ مؤثر ٹرن اوور 2 بار۔"
+    },
     megaSharingWheel: {
       wheelTitle: "میگا شیئرنگ رولیٹی",
       missionTitle: "انعامات",
