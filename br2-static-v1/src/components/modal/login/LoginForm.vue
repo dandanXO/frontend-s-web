@@ -1,17 +1,17 @@
 <template>
   <div v-if="uiStore.loginView === 'login'" class="login-container">
     <div class="login-panel">
-      <h2 class="title">Log in</h2>
-      <p class="subtitle">
-        Not a member?
-        <a href="#" class="link">Create account</a>
-      </p>
+      <h2 class="title">{{ $t("header.login") }}</h2>
+      <div class="subtitle">
+        {{ $t("btn.notAMember") }}
+        <div class="link" @click="uiStore.loginView = 'register'">{{ $t("btn.createAccount") }}</div>
+      </div>
 
       <q-input
         ref="phoneRef"
         outlined
         v-model="phone"
-        placeholder="Enter your Phone Number"
+        :placeholder="$t('form.phone_placeholder')"
         class="input"
         :class="{ 'white-txt': !!phone }"
         :rules="[
@@ -21,8 +21,8 @@
         ]"
       >
         <template v-slot:prepend>
-          <img v-if="!phone" src="../../../assets/images/auth/email-icon.png" width="22px" />
-          <img v-else src="../../../assets/images/auth/email-icon-active.png" width="22px" />
+          <img v-if="!phone" src="../../../assets/images/auth/acc-icon.png" width="22px" />
+          <img v-else src="../../../assets/images/auth/acc-icon-active.png" width="22px" />
         </template>
       </q-input>
 
@@ -30,7 +30,7 @@
         ref="passwordRef"
         outlined
         v-model="password"
-        placeholder="Enter your Password"
+        :placeholder="$t('form.password_placeholder')"
         :type="!isShowPassword ? 'password' : 'text'"
         class="input"
         :class="{ 'white-txt': !!password }"
@@ -58,9 +58,9 @@
         </template>
       </q-input>
 
-      <div class="forgot" @click="uiStore.loginView = 'forgetPw'">Forgot password</div>
+      <div class="forgot" @click="uiStore.loginView = 'forgetPw'">{{ $t("form.forgotPassword") }}</div>
 
-      <q-btn unelevated class="bg-greenbtn" label="Login" no-caps padding="12px" @click="login" />
+      <q-btn unelevated class="bg-greenbtn" :label="$t('btn.createAccount')" no-caps padding="12px" @click="login" />
     </div>
   </div>
 </template>

@@ -1,9 +1,32 @@
 <template>
-  <ProfileSummary :homeProfile="true" />
-
   <q-page>
     <div class="top-setting-section">
-      <div class="top-section-inner">
+      <div class="top-profile">
+        <div class="profile">
+          <div class="profile-pic">
+            <q-avatar size="56px">
+              <img :src="profileImagePath" />
+            </q-avatar>
+          </div>
+          <div class="top-name">
+            <div class="top-name-details">
+              <div>{{ store.realName }}</div>
+            </div>
+            <div class="top-copy-id">
+              <p>
+                {{ $t("settings.balance") }}:
+                <span class="top-balance-amount">
+                  {{ store.balance.toFixed(2) }}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <RouterLink to="/account/profile" class="right">
+          <q-icon name="chevron_right" color="white" />
+        </RouterLink>
+      </div>
+      <!-- <div class="top-section-inner">
         <router-link to="/withdraw">
           <div class="acct-nav-item">
             <img src="../assets/images/account/withdraw-svg.svg" />
@@ -22,48 +45,64 @@
           </div>
           <div class="acct-nav-label">{{ $t("settings.promo") }}</div>
         </router-link>
-      </div>
+      </div> -->
     </div>
 
     <div class="mid-setting-section">
       <q-item-section class="acct-nav">
-        <h2>{{ $t("settings.otherServices") }}</h2>
+        <div class="acct-menu-finance">
+          <router-link to="/withdraw">
+            <img src="../assets/images/account/withdraw-bg.png" />
+            <span class="acct-menu-finance-text">{{ $t("settings.withdraw") }}</span>
+          </router-link>
+          <router-link to="/deposit">
+            <img src="../assets/images/account/deposit-bg.png" />
+            <span class="acct-menu-finance-text">{{ $t("settings.deposit") }}</span>
+          </router-link>
+        </div>
+        <!-- <h2>{{ $t("settings.otherServices") }}</h2> -->
         <div class="acct-menu" id="id-acct-menu">
           <router-link to="/account/profile">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/personal-svg.png" />
+              <img src="../assets/images/account/personal-svg.svg" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.personalCentre") }}</div>
+            <q-icon name="chevron_right" />
           </router-link>
           <router-link to="/account/discount">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/discount-svg.png" />
+              <img src="../assets/images/account/discount-svg.svg" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.discount") }}</div>
+            <q-icon name="chevron_right" />
           </router-link>
           <router-link to="/account/record">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/record-svg.png" />
+              <img src="../assets/images/account/record-svg.svg" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.record") }}</div>
+            <q-icon name="chevron_right" />
           </router-link>
           <router-link to="/account/order">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/order-svg.png" />
+              <img src="../assets/images/account/order-svg.svg" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.order") }}</div>
+            <q-icon name="chevron_right" />
           </router-link>
           <router-link to="/account/bank">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/bank-svg.png" />
+              <img src="../assets/images/account/bank-svg.svg" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.bank") }}</div>
+            <q-icon name="chevron_right" />
           </router-link>
           <router-link to="/account/message">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/message-svg.png" />
+              <img src="../assets/images/account/message-svg.svg" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.message") }}</div>
+            <q-icon name="chevron_right" />
           </router-link>
         </div>
       </q-item-section>
@@ -111,8 +150,16 @@
           </q-carousel>
         </q-card-section>
       </q-card>
+
+      <div class="super-promo">
+        <img class="super-promo-img" src="../assets/images/account/super-promo.png" />
+        <router-link class="super-promo-chevron" to="">
+          <q-icon name="chevron_right" color="white" />
+        </router-link>
+      </div>
       <a @click="openConfirmSignOutDialog">
         <div class="acct-logout">
+          <img src="../assets/images/account/logout-svg.svg" />
           <div class="acct-nav-label">{{ $t("settings.logout") }}</div>
         </div>
       </a>
@@ -139,7 +186,7 @@
 <script setup>
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
-import { onActivated, onMounted, ref } from "vue";
+import { computed, onActivated, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "src/stores";
 import ProfileSummary from "../components/ProfileSummary.vue";
@@ -160,6 +207,24 @@ const btm_banners = ref([
 const loadingLogout = ref(false);
 
 const confirmSignOutDialog = ref(false);
+
+const randomProfileImg = computed(() => {
+  const storedImg = sessionStorage.getItem("PROFILE_IMG");
+  if (storedImg) {
+    return storedImg;
+  } else {
+    const randomProfile = profileImg[0];
+    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
+    const imgPath = randomProfile.imgPath[randomIndex];
+    sessionStorage.setItem("PROFILE_IMG", imgPath);
+    return imgPath;
+  }
+});
+
+const profileImagePath = computed(() => {
+  return require(`../assets/images/account/${randomProfileImg.value}.png`);
+});
+
 const openConfirmSignOutDialog = () => {
   confirmSignOutDialog.value = !confirmSignOutDialog.value;
 };
@@ -205,72 +270,79 @@ const logout = () => {
 
 <style scoped lang="scss">
 .top-setting-section {
-  width: 100%;
+  background: url(../assets/images/account/setting-bg.png) no-repeat center center;
+  padding-top: 60px;
+  background-size: cover;
   position: relative;
-  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
-  border-radius: 20px 20px 0px 0px;
-  padding: 25px 0px 40px;
-  margin-bottom: -30px;
-  margin-top: 18px;
+  margin-bottom: 22px;
 
-  .top-section-inner {
-    width: 95%;
-    margin: 0px auto;
-    padding: 0px 5px;
-
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-    grid-gap: 30px;
-    gap: 10px;
-    row-gap: 20px;
-    height: auto;
-    margin-bottom: 10px;
-
-    a {
-      text-decoration: none;
-      font-size: 14px;
+  .top-profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    .profile {
       display: flex;
-      flex-direction: column;
-      gap: 5px;
-      text-align: center;
-      width: 100px;
-      align-items: center;
+      width: 90%;
+      :not(:last-child) {
+        margin-right: 10px;
+      }
+      margin: 10px auto 0;
       justify-content: flex-start;
-      margin: 0 auto;
-      border-radius: 8px;
-      padding: 8px;
-
-      &:active {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-      }
-
-      .acct-nav-label {
-        color: #fff;
-
-        font-size: 14px;
-        white-space: normal;
-      }
-
-      .acct-nav-item {
-        border-radius: 50%;
-        aspect-ratio: 1/1;
-        padding: 12px;
-        height: 50px;
-        width: 80px;
-        cursor: pointer;
+      align-items: center;
+      .top-name {
         display: flex;
-        text-align: center;
-        align-items: center;
         justify-content: center;
-        color: #000;
-        text-decoration: none;
-
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        .top-name-details {
+          font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 120%;
+          letter-spacing: 0px;
+          color: #ffffff;
+        }
+      }
+      .top-copy-id {
+        display: flex;
+        align-items: center;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 700;
+        font-size: 12.17px;
+        line-height: 120%;
+        letter-spacing: 0px;
+        color: #b3bec0;
         img {
-          width: 70%;
-          fill: white;
-          padding: 0;
+          width: 30px;
+          height: 30px;
+          margin-right: 8px;
+        }
+        p {
+          margin-bottom: unset;
+          font-size: 14px;
+          .top-balance-amount {
+            color: #00fd7c;
+          }
+        }
+      }
+      .profile-pic {
+        position: relative;
+        .vip-details {
+          position: relative;
+          margin-left: 20px;
+          margin-bottom: 5px;
+          margin-top: -15px;
+
+          img.bg {
+            display: block;
+            width: 55px;
+            position: absolute;
+            top: -2px;
+            left: -25px;
+          }
         }
       }
     }
@@ -278,11 +350,13 @@ const logout = () => {
 }
 
 .mid-setting-section {
-  background-color: #101114;
+  background-color: #1f241f;
   width: 100%;
   position: relative;
   border-radius: 20px 20px 0px 0px;
-  padding: 20px 0px;
+  box-shadow: 0px -2px 0px 0px #00fd7c, 0px 0px 109px 0px #00fd7c80;
+
+  padding: 29px 20px 48px;
 
   h2 {
     line-height: 26px;
@@ -295,14 +369,35 @@ const logout = () => {
 }
 
 .acct-nav {
-  width: 95%;
-  margin: 10px auto;
-  padding: 5px;
-  gap: 10px;
+  margin-bottom: 24px;
 
   a {
     padding: 5px;
     display: block;
+  }
+
+  .acct-menu-finance {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+
+    a {
+      position: relative;
+      padding: 0;
+
+      .acct-menu-finance-text {
+        position: absolute;
+        top: 7px;
+        left: 11px;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      img {
+        width: 100%;
+      }
+    }
   }
 
   .acct-title {
@@ -324,32 +419,22 @@ const logout = () => {
   }
 
   .acct-menu {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-gap: 30px;
-    gap: 10px;
-    row-gap: 10px;
-    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
     width: 100%;
-    margin-bottom: 0px;
 
     &.shorter-menu {
       grid-template-rows: repeat(2, 1fr);
     }
 
     a {
-      text-decoration: none;
-      font-size: 14px;
       display: flex;
-      flex-direction: column;
-      gap: 5px;
-      padding: 8px 3px;
-      width: 100px;
-      text-align: center;
       align-items: center;
-      justify-content: flex-start;
-      margin: 0 auto;
+      justify-content: space-between;
+      color: #fff;
+      font-size: 14px;
+      text-decoration: none;
 
       &:active {
         background-color: rgba(255, 255, 255, 0.1);
@@ -357,31 +442,16 @@ const logout = () => {
       }
 
       .acct-nav-label {
-        padding-top: 6px;
-        color: #ffffff90;
+        flex: 1;
         font-size: 14px;
+        font-weight: bold;
         white-space: normal;
       }
 
       .acct-nav-item {
-        background-color: #b9c8ff26;
-        border-radius: 50%;
-        aspect-ratio: 1/1;
-        padding: 12px;
-        height: 56px;
-        width: 56px;
-        cursor: pointer;
-        display: flex;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-        color: #000;
-        text-decoration: none;
-
+        margin-right: 17.63px;
         img {
-          width: 90%;
-          fill: white;
-          padding: 0;
+          display: block;
         }
       }
     }
@@ -389,9 +459,8 @@ const logout = () => {
 }
 
 .card-account-banner {
-  width: calc(95% - 20px);
-  margin: 0px auto 10px;
-  border-radius: 10px 10px 0px 0px;
+  margin: 0px auto 13px;
+  border-radius: 4;
   border-color: transparent;
   box-shadow: none;
 
@@ -402,18 +471,13 @@ const logout = () => {
 }
 
 .acct-logout {
-  background-image: url("../assets/images/account/logout-btn.png");
-  background-repeat: no-repeat;
-  width: calc(95% - 20px);
-  margin: 20px auto;
-  aspect-ratio: 335/40;
-  background-size: 100% 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 7px;
 
   .acct-nav-label {
-    color: rgba(206, 206, 206, 0.8);
+    color: #00fd7c;
     font-size: 16px;
   }
 
@@ -439,6 +503,30 @@ const logout = () => {
   height: 42px;
   color: #ffffff;
   border-radius: 8px;
+}
+
+.super-promo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #085a3e;
+  border-radius: 4px;
+  margin-bottom: 24px;
+
+  .super-promo-img {
+    height: 11vw;
+    max-height: 40px;
+  }
+  .super-promo-chevron {
+    display: flex;
+    align-items: center;
+    max-height: 30px;
+    margin: 5px 9px;
+    padding: 8px;
+    background: #ffffff1c;
+    border-radius: 6px;
+    text-decoration: none;
+  }
 }
 </style>
 

@@ -3397,12 +3397,17 @@ onBeforeUnmount(() => {
 
 .announcement-card {
   height: 400px;
-  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+  background: #1F241F;
+  color: #fff;
   border-radius: 10px;
   overflow-y: auto;
 
   .q-tab__label {
     font-size: 18px;
+  }
+
+  .q-tab{
+    color: #fff;
   }
 
   .q-card {

@@ -11,7 +11,7 @@ export default {
     personalCenter: "Centro Pessoal",
     deposit: "Depósito",
     bank: "Banco",
-    addCrypto: "Add crypto",
+    addCrypto: "Adicionar Criptomoeda",
     addVirtualWallet: "Add Virtual Wallet",
     addBankCard: "Adicionar cartão bancário",
     addBank: "Adicionar banco",
@@ -71,7 +71,8 @@ export default {
     fishing: "Pesca",
     activitiesDetails: "Detalhes das Atividades",
     addCard: "Adicionar Cartão",
-    information: "Information",
+    addCrypto: "Adicionar Criptomoeda",
+    information: "Information"
   },
   bottomNav: {
     home: "Início",
@@ -93,9 +94,12 @@ export default {
     password_rules_01: "Por favor, insira a senha",
     password_rules_02: "Os caracteres da senha devem ser maiores que 6",
     forgotPassword: "Esqueceu sua senha",
-    forgotPassword_desc: "Por favor, forneça seu nome de usuário e número de telefone, enviaremos um OTP para seu número registrado.",
+    forgotPassword_desc:
+      "Por favor, forneça seu nome de usuário e número de telefone, enviaremos um OTP para seu número registrado.",
     register_agree_01: "Eu concordo com o ",
     register_agree_02: "Acordo de Privacidade de Uso",
+    alreadyHaveAnAcc: "¿Ya tienes una cuenta?",
+    login: "Entrar",
     email: "Email",
     email_placeholder: "Por favor, insira o email",
     email_rules_01: "Por favor, insira o email",
@@ -143,7 +147,7 @@ export default {
     firstName_rules_01: "Por favor, insira seu primeiro nome",
     firstName_rules_02: "Por favor, insira um primeiro nome válido",
     lastName: "Último Nome",
-    taxId : "CPF",
+    taxId: "CPF",
     lastName_placeholder: "Digite seu último nome",
     taxId_placeholder: "Por favor, insira seu CPF",
     lastName_rules_01: "Por favor, insira seu último nome",
@@ -263,7 +267,8 @@ export default {
     createAccount: "Criar uma conta",
     profit: "Lucro",
     loss: "Perda",
-    withdrawing: "Retirando..."
+    withdrawing: "Retirando...",
+    unbinding: "Desvinculando"
   },
   notify: {
     noRecord: "Nenhum Registro",
@@ -331,7 +336,8 @@ export default {
     logout: "Sair",
     depositMonthlytoWinGifts: "Deposite Mensalmente Para Ganhar Prêmios",
     interestProfit: "Lucro de Juros",
-    version: "Versão"
+    version: "Versão",
+    balance: "Saldo"
   },
   deposit: {
     selectAmount: "Selecionar Valor",
@@ -362,7 +368,7 @@ export default {
     paymentChannels: "Canais de Pagamento",
     channelUnderMaintenance: "Este canal está em manutenção",
     accountNumber: "Número da Conta",
-    available: "Disponível",
+    available: "Disponível"
   },
   bank: {
     virtualWallet: "eWallet",
@@ -707,7 +713,7 @@ export default {
     all: "Todos",
     turnover_requi: "TurnOver Requirement",
     reachTheEnd: "You have reached the end of the page.",
-    noMember: "Nenhum membro",
+    noMember: "Nenhum membro"
   },
   appUpdate: {
     updateHeader: "Update Announcement",
