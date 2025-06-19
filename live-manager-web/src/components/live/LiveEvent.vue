@@ -630,6 +630,11 @@ const registerTeamSelectorScrollObserver = () => {
   })
 }
 async function loadEventWithSite(sportId, target) {
+
+  teams.list = [];
+  loadedTeams.value = [];
+  searchedTeams.value = [];
+  
   if (sportId) {
     const { data: team } = await DashboardService.getSportLiveTeamById(sportId)
     teams.list = team
