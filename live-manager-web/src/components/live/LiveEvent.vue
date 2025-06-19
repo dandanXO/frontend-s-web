@@ -617,12 +617,16 @@ const validationErrors = reactive({
   cover: null
 })
 
-const handleTeamSelectorFocus = target => {
-  loadedTeams.value = teams.list.slice(0, TEAMS_PER_VIEW)
-  teamSelectorStatus.value = target
-  nextTick(() => {
-    if (!teamSelectorBottomRef.value) return
-    teamSelectorScrollObserver.value.observe(teamSelectorBottomRef.value)
+const registerTeamSelectorScrollObserver = () => {
+  teamSelectorScrollObserver.value = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        loadedTeams.value = teams.list.slice(
+          0,
+          loadedTeams.value.length + TEAMS_PER_VIEW
+        )
+      }
+    })
   })
 }
 async function loadEventWithSite(sportId, target) {
@@ -649,6 +653,14 @@ async function loadList() {
   } finally {
     page.loading = false;
   }
+}
+const handleTeamSelectorFocus = target => {
+  loadedTeams.value = teams.list.slice(0, TEAMS_PER_VIEW)
+  teamSelectorStatus.value = target
+  nextTick(() => {
+    if (!teamSelectorBottomRef.value) return
+    teamSelectorScrollObserver.value.observe(teamSelectorBottomRef.value)
+  })
 }
 
 function resetQuery() {
@@ -790,6 +802,30 @@ function changePage(event) {
   loadList();
 }
 
+
+const afterTeamSelectorChanged = () => {
+  nextTick(() => {
+    loadedTeams.value = []
+    teamSelectorStatus.value = null
+    teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value)
+  })
+}
+
+const searchTeams = (obj) => {
+  const query = obj.query || ''
+  if (!query) {
+    searchedTeams.value = []
+  } else {
+    searchedTeams.value = teams.list.filter(team => {
+      console.log(query)
+      return (
+        team.nameZh?.toLowerCase().includes(query.toLowerCase()) ||
+        team.nameEn?.toLowerCase().includes(query.toLowerCase())
+      )
+    })
+  }
+}
+
 watch(() => uiControl.eventStartTime, (newValue) => {
   request.eventStartTime[0] = formatToStartOfDayString(newValue);
 }, { immediate: true });
@@ -807,45 +843,8 @@ watch(() => uiForm.eventEndTime, (newValue) => {
 }, { immediate: true });
 
 
-const afterTeamSelectorChanged = () => {
-  nextTick(() => {
-    loadedTeams.value = []
-    teamSelectorStatus.value = null
-    teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value)
-  })
-}
-
-const searchTeams = query => {
-  if (!query) {
-    searchedTeams.value = []
-  } else {
-    searchedTeams.value = teams.list.filter(team => {
-      return (
-        team.nameZh?.toLowerCase().includes(query.toLowerCase()) ||
-        team.nameEn?.toLowerCase().includes(query.toLowerCase())
-      )
-    })
-  }
-}
-
-const registerTeamSelectorScrollObserver = () => {
-  teamSelectorScrollObserver.value = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        loadedTeams.value = teams.list.slice(
-          0,
-          loadedTeams.value.length + TEAMS_PER_VIEW
-        )
-      }
-    })
-  })
-}
-
 onMounted(async () => {
   const { data: timeZone } = await SiteService.getSiteTimeZoneById(store.siteId) || "+08:00"
-  if (!timeZone) {
-    timezone.value = "+08:00"
-  }
   timezone.value = timeZone
 
   await loadList()
