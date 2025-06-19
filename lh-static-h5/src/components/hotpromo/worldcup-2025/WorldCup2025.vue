@@ -1050,6 +1050,7 @@ onMounted(() => {
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+    flex-wrap: wrap;
     .col-txt {
       display: flex;
       gap: 6px;
@@ -1414,7 +1415,6 @@ onMounted(() => {
             &.ongoing {
               background: #be9457;
             }
-
           }
         }
         .vs-time {
