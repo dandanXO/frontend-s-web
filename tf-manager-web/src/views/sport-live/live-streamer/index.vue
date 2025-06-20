@@ -361,7 +361,7 @@ function getStatusName(statusId) {
 async function submitImageUpload() {
   imageForm.name = generateRandomString(8);
   imageForm.path = form.avatar;
-  imageForm.category = 'streamer';
+  imageForm.category = 'STREAMER';
   imageForm.siteId = store.state.user.siteId;
 
   try {
