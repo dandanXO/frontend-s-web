@@ -15,8 +15,11 @@
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'br1-slot-ftd' && store.token" :params="list.param" />
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
     <ReceiveEarnPromo v-if="list.redirectUrl === 'receive-earn'" :params="list.param" />
+
     <MoneyRainPromo v-if="list.redirectUrl === 'money-rain'" :params="list.param" />
     <RedepositBonusPromo v-if="list.redirectUrl === 'redeposit-bonus'" :params="list.param" />
+
+    <VipPlanBettingUpgrade v-if="list.redirectUrl === 'br2-vip-plan'" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -53,6 +56,7 @@ import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo
 import ReceiveEarnPromo from "./hotpromo/receive-earn/ReceiveEarnPromo.vue";
 import MoneyRainPromo from "./hotpromo/money-rain/MoneyRainPromo.vue";
 import RedepositBonusPromo from "./hotpromo/redeposit-bonus/RedepositBonusPromo.vue";
+import VipPlanBettingUpgrade from "./hotpromo/vip-plan-betting-upgrade/VipPlanBettingUpgrade.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -69,7 +73,8 @@ export default defineComponent({
     SpinLuckyWheelPromo,
     ReceiveEarnPromo,
     MoneyRainPromo,
-    RedepositBonusPromo
+    RedepositBonusPromo,
+    VipPlanBettingUpgrade
   },
   props: {
     list: {
@@ -131,6 +136,7 @@ export default defineComponent({
       this.list.redirectUrl === "receive-earn" ||
       this.list.redirectUrl === "money-rain" ||
       this.list.redirectUrl === "redeposit-bonus" ||
+      this.list.redirectUrl === "br2-vip-plan" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
