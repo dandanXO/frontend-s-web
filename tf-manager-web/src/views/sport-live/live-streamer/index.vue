@@ -200,7 +200,7 @@ import { useSessionStorage } from "@vueuse/core";
 import { createSiteImage } from '@/api/site-image'
 
 const { t } = useI18n();
-const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
+const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/streamer/'
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: "",
