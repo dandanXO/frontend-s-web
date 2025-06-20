@@ -3482,7 +3482,7 @@ export default {
     'Sport Live Team': '队伍管理',
     'Sport Live Streamer': '主播管理',
     'Sport Live Event': '赛事管理',
-    'Sport Live Match': '赛事资讯',
+    'Sport Live Match': '电竞赛事',
     'Sport Live Event Setting': '体育直播设定',
     'Sport Live Sensitive Word': '体育直播敏感词设定',
     'Sport Live Block Member': '聊天室会员禁言设定',
@@ -3492,7 +3492,7 @@ export default {
     'Sport Live Admin': '主播后台管理员设定',
     'Member Refer Stat Analysis': '邀请返佣分析',
     'Member Refer Relation': '邀请关系查询',
-    'Sport Live Match Mars': '赛事资讯 - Mars',
+    'Sport Live Match Mars': '体育赛事',
   },
   google: {
     google_auth_menu: '谷歌验证',

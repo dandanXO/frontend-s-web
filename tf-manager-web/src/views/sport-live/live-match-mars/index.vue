@@ -121,6 +121,7 @@
       @selection-change="handleSelectionChange"
       v-loading="page.loading"
       :empty-text="t('fields.noData')"
+      :resizable="true"
     >
       <el-table-column type="selection" width="55" />
       <el-table-column prop="matchId" :label="t('fields.id')" width="100" />
@@ -129,15 +130,15 @@
           <span>{{ getSportDisplayName(scope.row.sportId) }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="nameZh" :label="t('fields.competitionNameZh')" width="250" />
-      <el-table-column prop="nameEn" :label="t('fields.competitionNameEn')" width="250" />
-      <el-table-column prop="homeTeamId" :label="t('fields.homeTeam')" width="250">
+      <el-table-column prop="nameZh" :label="t('fields.competitionNameZh')" width="230" />
+      <el-table-column prop="nameEn" :label="t('fields.competitionNameEn')" width="230" />
+      <el-table-column prop="homeTeamId" :label="t('fields.homeTeam')" width="200">
         <template #default="scope">
           <img v-if="scope.row.homeTeamLogo" :src="scope.row.homeTeamLogo" style="width: 24px; height: 24px; margin-right: 8px;">
           <span>{{ scope.row.homeTeamNameZh || scope.row.homeTeamNameEn }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="awayTeamId" :label="t('fields.awayTeam')" width="250">
+      <el-table-column prop="awayTeamId" :label="t('fields.awayTeam')" width="200">
         <template #default="scope">
           <img v-if="scope.row.awayTeamLogo" :src="scope.row.awayTeamLogo" style="width: 24px; height: 24px; margin-right: 8px;">
           <span>{{ scope.row.awayTeamNameZh || scope.row.awayTeamNameEn }}</span>

@@ -3531,7 +3531,7 @@ export default {
     'Sport Live Team': 'Live Team Manage',
     'Sport Live Streamer': 'Live Streamer Manage',
     'Sport Live Event': 'Sport Live Event',
-    'Sport Live Match': 'Sport Live Match',
+    'Sport Live Match': 'Esport Live Match',
     'Sport Live Event Setting': 'Sport Live Event Setting',
     'Sport Live Sensitive Word': 'Sport Live Sensitive Word',
     'Sport Live Block Member': 'Sport Live Block Member Setting',
@@ -3541,7 +3541,7 @@ export default {
     'Sport Live Admin': 'Sport Live Admin Setting',
     'Member Refer Stat Analysis': 'Refer Friend Analysis',
     'Member Refer Relation': 'Refer Relation Query',
-    'Sport Live Match Mars': 'Sport Live Match Mars',
+    'Sport Live Match Mars': 'Sport Live Match',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
