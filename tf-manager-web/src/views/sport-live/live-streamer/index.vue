@@ -83,7 +83,7 @@
             <el-col :span="10">
               <el-image
                 v-if="form.avatar && uiControl.dialogType === 'EDIT'"
-                :src="form.avatar.startsWith('http:') ? form.avatar : promoDir + form.avatar"
+                :src="form.avatar.startsWith('http') ? form.avatar : promoDir + form.avatar"
                 fit="contain"
                 style="aspect-ratio: 1/1"
                 class="preview"
@@ -262,7 +262,7 @@ function resetQuery() {
 async function attachImage(event) {
   const file = event.target.files[0];
   if (!file) return;
-
+  await attachPhoto(event);
   const data = await attachPhoto(event);
   if (data) {
     form.avatar = data;
@@ -294,7 +294,7 @@ async function attachPhoto(event) {
 
   const formData = new FormData();
   formData.append('files', files);
-  formData.append('dir', 'STREAMER');
+  formData.append('dir', 'temp');
   formData.append('overwrite', false);
 
   try {
