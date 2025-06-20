@@ -73,6 +73,7 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { Device } from "@capacitor/device";
 import { t } from "src/boot/lang";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 const uiStore = useUI();
 const store = userStore();
@@ -94,34 +95,46 @@ const login = () => {
   $q.loading.show({
     message: t("btn.logging_in")
   });
-  if (phoneRef.value.hasError || passwordRef.value.hasError) {
-    $q.loading.hide();
-  } else {
-    store
-      .memberLogin({
-        loginName: phone.value,
-        password: password.value,
-        sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
-        ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVersionNo.value } : {})
-      })
-      .then((res) => {
-        sessionStorage.removeItem("REFERRAL_CODE");
+  const fpPromise = FingerprintJS.load();
+  (async () => {
+    const fp = await fpPromise;
+    const result = await fp.get();
+    const excludes = { value: ["timezone", "timeZoneOffset"] };
+    const allComponents = { ...result.components };
+    excludes.value.forEach((element) => {
+      delete allComponents[element];
+    });
+    const sidParam = "fp-" + FingerprintJS.hashComponents(allComponents);
 
-        phone.value = "";
-        password.value = "";
+    if (phoneRef.value.hasError || passwordRef.value.hasError) {
+      $q.loading.hide();
+    } else {
+      store
+        .memberLogin({
+          loginName: phone.value,
+          password: password.value,
+          sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
+          ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVersionNo.value } : {})
+        })
+        .then((res) => {
+          sessionStorage.removeItem("REFERRAL_CODE");
 
-        if (store.hasToken()) {
-          const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
-          router.go(jumpUrl);
-        }
+          phone.value = "";
+          password.value = "";
 
-        uiStore.loginView = "";
-      })
-      .catch((e) => {})
-      .finally(() => {
-        $q.loading.hide();
-      });
-  }
+          if (store.hasToken()) {
+            const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
+            router.go(jumpUrl);
+          }
+
+          uiStore.loginView = "";
+        })
+        .catch((e) => {})
+        .finally(() => {
+          $q.loading.hide();
+        });
+    }
+  })();
 };
 
 const appVersionNo = ref("");
