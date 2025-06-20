@@ -7,12 +7,12 @@
         </div>
 
         <div class="scrollable">
-            <div class="item" v-for="historyListItem, historyListItemIndex in props?.historyList" :key="historyListItemIndex" :class="{ isOwn: historyListItem?.currentMember }">
+            <div class="item" v-for="historyListItem, historyListItemIndex in props?.historyList?.slice(3)" :key="historyListItemIndex" :class="{ isOwn: historyListItem?.currentMember }">
                 <div class="rank">
-                    <img class="crown-icon" v-if="historyListItemIndex + 1 === 1" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/1st-place-crown.png" />
+                    <!-- <img class="crown-icon" v-if="historyListItemIndex + 1 === 1" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/1st-place-crown.png" />
                     <img class="crown-icon" v-else-if="historyListItemIndex + 1 === 2"  src="../../../assets/images/promotion/hotpromo/jackpot-aviator/2nd-place-crown.png" />
-                    <img class="crown-icon" v-else-if="historyListItemIndex + 1 === 3" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/3rd-place-crown.png" />
-                    <span v-else>{{ historyListItemIndex + 1 }}</span>
+                    <img class="crown-icon" v-else-if="historyListItemIndex + 1 === 3" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/3rd-place-crown.png" /> -->
+                    <span>{{ historyListItemIndex + 4 }}</span>
                 </div>
                 <div>{{ historyListItem.loginName }}</div>
                 <div class="betVolume">{{ historyListItem.amount?.toFixed(2) }}</div>
@@ -22,7 +22,6 @@
 </template>
 <script setup>
 const props = defineProps(['historyList']);
-
 </script>
 <style lang="scss" scoped>
 
@@ -50,9 +49,11 @@ const props = defineProps(['historyList']);
         line-height: 40px;
         text-align: center;
         color: #FFFFFF80;
-        height: 45px;
+        height: 30px;
         &.firstheader {
             color: #FFFFFF;
+            height: 22px;
+            font-size: 12px;
             background-color: #730319 !important;
             &:hover {
                     color: unset;
@@ -65,7 +66,7 @@ const props = defineProps(['historyList']);
             font-family: Poppins;
             font-size: 14px;
             font-weight: 600;
-            line-height: 40px;
+            line-height: 20px;
             text-align: center;
         }
 
@@ -115,10 +116,10 @@ const props = defineProps(['historyList']);
 
 @media (max-width: 400px) {
     .history-list {
-        margin: 10px 0px 70px;
 
+        margin: 0 0 70px;
         .item {
-            height: 40px;
+            height: 30px;
 
             .rank {
                 .crown-icon {

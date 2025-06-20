@@ -284,7 +284,7 @@ onMounted(() => {
   transition: transform 0.1s ease, box-shadow 0.1s ease;
   position: absolute;
   left: 50%;
-  top: 58%;
+  top: 52%;
   transform: translate(-50%, -50%);
   text-transform: uppercase;
   font-weight: bold;
