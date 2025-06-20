@@ -71,14 +71,12 @@
 
           <div class="title-status ongoing" v-if="currentListItem.status === 'ONGOING' && !showNotStart">
             <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-ongoing.svg" alt="" />
-            &nbsp;
-           进行中
+            &nbsp; 进行中
           </div>
 
           <div class="title-status notstart" v-if="currentListItem.status === 'ONGOING' && showNotStart">
             <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-notstart.svg" alt="" />
-            &nbsp;
-           未开始
+            &nbsp; 未开始
           </div>
 
           <div class="title-status ended" v-if="currentListItem.status === 'ENDED'">
@@ -285,7 +283,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { userStore } from "@/store";
-import { computed, ref, watch, onMounted, defineProps, toRefs } from "vue";
+import { computed, ref, watch, onMounted, defineProps, toRefs, nextTick } from "vue";
 import {
   getFifaQuiz2025PromoInit,
   getFifaQuiz2025PromoRecord,
@@ -467,7 +465,8 @@ const swiperConfig = computed(() => {
   const SLIDE_PER_VIEW = 4;
   return {
     slidesPerView: SLIDE_PER_VIEW,
-    slidesPerGroup: SLIDE_PER_VIEW,
+    // slidesPerGroup: SLIDE_PER_VIEW,
+    slidesPerGroup: 1,
     spaceBetween: 20,
     modules: [Navigation],
     navigation: list.value.length > SLIDE_PER_VIEW,
@@ -477,6 +476,28 @@ const swiperConfig = computed(() => {
 
 const handleLivestreamClick = (index) => {
   model.value = index;
+
+  const SLIDE_PER_VIEW = 4;
+  const total = list.value.length;
+
+  let targetIndex;
+
+  if (index <= 1) {
+    targetIndex = 0;
+  } else if (index >= total - 2) {
+    targetIndex = total - SLIDE_PER_VIEW;
+  } else {
+    targetIndex = index - 1;
+  }
+
+  targetIndex = Math.min(Math.max(0, targetIndex), total - SLIDE_PER_VIEW);
+
+  if (swiperInstance.value) {
+  swiperInstance.value.slideTo(0, 0); 
+  setTimeout(() => {
+    swiperInstance.value.slideTo(targetIndex, 300); 
+  }, 10);
+}
   selectedTeam.value = "";
   selectedSpecial.value = "";
 };
@@ -546,14 +567,40 @@ const findInitialIndex = () => {
   return 0;
 };
 
-// watch(model, () => {
-//   if (!swiperInstance.value) return;
-//   swiperInstance.value.slideTo(model.value, 0);
-// });
+watch(model, () => {
+  if (!swiperInstance.value) return;
+  swiperInstance.value.slideTo(model.value, 0);
+});
 
-watch(list, () => {
-  model.value = findInitialIndex();
-}, { immediate: true });
+watch(
+  list,
+  () => {
+    model.value = findInitialIndex();
+
+    nextTick(() => {
+      const SLIDE_PER_VIEW = 4;
+      const total = list.value.length;
+      const index = model.value;
+
+      let targetIndex;
+
+      if (index <= 1) {
+        targetIndex = 0;
+      } else if (index >= total - 2) {
+        targetIndex = total - SLIDE_PER_VIEW;
+      } else {
+        targetIndex = index - 1;
+      }
+
+      targetIndex = Math.min(Math.max(0, targetIndex), total - SLIDE_PER_VIEW);
+
+      if (swiperInstance.value) {
+        swiperInstance.value.slideTo(targetIndex, 0);
+      }
+    });
+  },
+  { immediate: true }
+);
 
 const showNotStart = computed(() => {
   return moment(currentListItem.value.startTime).isAfter(moment());
