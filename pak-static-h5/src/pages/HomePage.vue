@@ -1802,7 +1802,9 @@ onDeactivated(() => {
 });
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
-  store.getMemberInfo();
+  if (store.hasToken()) {
+    store.getMemberInfo();
+  }
 });
 
 onUnmounted(() => {
