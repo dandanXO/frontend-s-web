@@ -1,18 +1,18 @@
 <template>
-    <span class="form-field-label">{{ props.label }}</span>
-    <div class="landing-input">
-        <slot name="input"></slot>
-    </div>
+  <span class="form-field-label">{{ props.label }}</span>
+  <div class="landing-input">
+    <slot name="input"></slot>
+  </div>
 </template>
 
 <script setup>
-    const props = defineProps(['label']);
+const props = defineProps(["label"]);
 </script>
 
 <style lang="scss" scoped>
 .form-field-label {
-    margin-top: 15px;
-    color: #98A6B4;
+  margin-top: 15px;
+  color: #98a6b4;
 }
 
 .landing-input {
@@ -22,8 +22,9 @@
     border-radius: 10px;
   }
   :deep(.q-field__control):before {
-    border-color: #2C323B;
-    background-color: #1a1e289e;
+    border-color: #2c323b;
+    // background-color: #1a1e289e;
+    background: #192b2d;
     border-width: 2px;
     border-radius: 10px;
   }

@@ -227,7 +227,6 @@ import FileUpload from "components/FileUpload.vue";
 import { api } from "boot/axios";
 import { SessionStorage, useQuasar } from "quasar";
 import { translateRecord } from "../directives/translate.js";
-import * as _ from "lodash";
 import { useI18n } from "vue-i18n";
 import { useLocalStorage } from "@vueuse/core";
 
@@ -477,8 +476,7 @@ export default defineComponent({
 
     const removeSessionKeys = (prefix) => {
       var keys = SessionStorage.getAllKeys();
-      _.each(keys, function (key, item) {
-        // console.log(key);
+      keys.forEach(function (key) {
         if (key.indexOf(prefix) > -1) {
           SessionStorage.remove(key);
         }

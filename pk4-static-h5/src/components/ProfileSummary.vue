@@ -69,6 +69,9 @@
                   {{ isLoadingBalance ? `${$t("btn.loading")}...` : convertToCommaAmount(store.balance, false) }}
                 </span>
 
+                <div v-if="promoPercentage" class="promo-percentage">
+                  {{ promoPercentage }} {{ $t("records.bonus") }}
+                </div>
                 <q-btn square class="style-blue-btn" icon="wallet" dense @click="handleBackBtn()" />
                 <!-- <div class="btn-refresh">
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
@@ -143,7 +146,10 @@ const route = useRoute();
 const router = useRouter();
 const store = userStore();
 const ui = useUI();
-
+const promoPercentage = computed(() => {
+  if (isAndroid() && store.canClaimFtdPrivilege) return "38";
+  return ""; // Optional: for other cases if needed
+});
 const isScrolled = ref(false);
 
 const handleScroll = () => {
@@ -861,6 +867,20 @@ onUnmounted(() => {
       color: #fff;
       font-weight: bold;
       // border: 1px solid #2c323b;
+      .promo-percentage {
+        position: absolute;
+        // background: #ff0000;
+        padding: 2px 2px 7px;
+        border-radius: 5px;
+        font-size: 8px;
+        right: -10px;
+        top: -10px;
+        z-index: 2000;
+        background: url(../assets/images/index/redpromo-bg.png) no-repeat center center;
+        background-size: contain;
+        width: 70px;
+        text-align: center;
+      }
       .q-btn {
         max-width: 40px;
       }

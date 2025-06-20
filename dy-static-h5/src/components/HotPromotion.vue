@@ -14,53 +14,38 @@
         list.redirectUrl === 'dy2-refer-bonus'
       "
     />
-
     <GoldenEggPromo v-if="list.redirectUrl === 'goldenegg'" />
-
     <HongBaoPreEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promo-param="list.param"
       v-if="listParam.type === 'hongbaoyu'"
     />
-
     <OuZuLianPromo v-if="list.redirectUrl === 'ouzulian'" />
-
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend'" />
     <EsportQuiz2 v-if="list.redirectUrl === 'dy2-quiz'"></EsportQuiz2>
-
     <AsiaCup2024Promo
       v-if="list.redirectUrl === 'asian-cup-2024' || list.redirectUrl === 'dy-promo-application-A'"
     ></AsiaCup2024Promo>
-
     <SlotLacky8 v-if="list.redirectUrl === 'dy-lucky-slot'" :promo-code="list.promoCode" />
-
     <ChallengeComebackPromo v-if="list.redirectUrl === 'dy2-cycle-loss-refund'" :promo-code="list.promoCode" />
-
     <BountyBlastPremier v-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
     <BlastPremierPromo v-if="list.redirectUrl === 'dy2-cs2-blast-2024'" :promo-code="list.promoCode" />
-
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao'" />
-
     <LivepokerRebate v-if="list.redirectUrl === 'dy2-livepoker-rebate'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img style="width: 100%; margin: 10px auto 0px" src="../assets/images/promotion/hotpromo/h5feedback.png" />
     </div>
-
     <SubmitClaimPromo v-if="list.redirectUrl === 'dy2-UCL'" :promo-code="list.promoCode" />
-
     <PglS32025 v-if="list.redirectUrl === 'dy1-2025-pgl-s3'" :promo-code="list.promoCode" />
-
     <PullbackTide v-if="list.redirectUrl === 'dy2-pullback-tide'" :promo-code="list.promoCode" />
     <Cba30Dream v-if="list.redirectUrl === 'dy2-cba30-dream'" :promo-code="list.promoCode" />
     <Lh1Enc2025 v-else-if="list.redirectUrl === 'dy2-enc-2025'" :promo-code="list.promoCode" />
     <Lh1LplLck2025loss v-else-if="list.redirectUrl === 'dy2-lpl-lck-2025'" :promo-param="listParam" />
     <Blast2025S3 v-else-if="list.redirectUrl === 'dy2-blast-open-lisbon-2025'" :promo-code="list.promoCode" />
-
     <SkyesportsSouvenir2025 v-if="list.redirectUrl === 'dy2-skyesports-souvenir-2025'" :promo-code="list.promoCode" />
     <VctBangkok v-if="list.redirectUrl === 'dy2-vct-masters-bangkok-2025'" :promo-code="list.promoCode" />
     <elsOne2025 v-if="list.redirectUrl === 'dy2-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
-
     <Monthly20HongBaoYu v-if="list.redirectUrl === 'dy2-monthly-20th-red-envelope'" :promo-code="list.promoCode" />
     <OfficialGiftPromo v-if="list.redirectUrl === 'dy-official-gift'" :params="list.param" />
     <PGLBucharest2025 v-if="list.redirectUrl === 'dy2-pgl-bucharest-2025'" :promo-code="list.promoCode" />
@@ -79,6 +64,10 @@
     <sport-refer-bet-bonus v-else-if="list.redirectUrl === 'dy2-sport-refer-bet-bonus'" :promo-code="list.promoCode" />
     <DreamLeagueS26 v-else-if="list.redirectUrl === 'dy2-dream-league-s26'" :promo-code="list.promoCode" />
     <DuanWuRewards v-else-if="list.redirectUrl === 'dy2-duan-wu-rewards'" :promo-code="list.promoCode" />
+    <NewUserSportBonus2025
+      v-else-if="list.redirectUrl === 'dy2-new-user-sport-bonus-2025'"
+      :promo-code="list.promoCode"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -98,14 +87,15 @@
 </template>
 
 <script>
-import BlastPremierPromo from "components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
 import { defineAsyncComponent, defineComponent, ref } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
 import { useRouter } from "vue-router";
-import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
+import NewUserSportBonus2025 from "./hotpromo/new-user-sport-bonus-2025/NewUserSportBonus2025.vue";
+const BlastPremierPromo = defineAsyncComponent(() => import("./hotpromo/BlastPremierPromo/BlastPremierPromo.vue"));
+const YaLLa2025 = defineAsyncComponent(() => import("./hotpromo/YaLLa2025/YaLLa2025.vue"));
 const Monthly20HongBaoYu = defineAsyncComponent(() => import("./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue"));
 const OfficialGiftPromo = defineAsyncComponent(() =>
   import("../components/hotpromo/officialGift/OfficialGiftPromo.vue")
@@ -156,14 +146,16 @@ const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/Ne
 const VctBangkok = defineAsyncComponent(() => import("./hotpromo/vct-bangkok/VctBangkok.vue"));
 const elsOne2025 = defineAsyncComponent(() => import("./hotpromo/elsOne2025/elsOne2025.vue"));
 const DreamLeagueS26 = defineAsyncComponent(() => import("./hotpromo/dream-league-s26/DreamLeagueS26.vue"));
-import PglastanaAc2025 from "./hotpromo/lh1-pgl-astana-2025/pglastanaAc2025.vue";
-import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
-import newVip2025 from "./hotpromo/2025-new-vip/2025-new-vip.vue";
-import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
+const PglastanaAc2025 = defineAsyncComponent(() => import("./hotpromo/lh1-pgl-astana-2025/pglastanaAc2025.vue"));
+const Cct2025 = defineAsyncComponent(() => import("./hotpromo/Cct-2025/Cct-2025.vue"));
+const newVip2025 = defineAsyncComponent(() => import("./hotpromo/2025-new-vip/2025-new-vip.vue"));
+const IemDallas2025 = defineAsyncComponent(() => import("./hotpromo/iem-dallas-2025/IemDallas2025.vue"));
 const BlastRival2025 = defineAsyncComponent(() => import("./hotpromo/BlastRival2025/BlastRival2025.vue"));
-import Lh1Enc2025 from "./hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue";
-import sportReferBetBonus from "./hotpromo/sport-refer-bet-bonus/sport-refer-bet-bonus.vue";
-import DuanWuRewards from "components/hotpromo/duan-wu-rewards/DuanWuRewards.vue";
+const Lh1Enc2025 = defineAsyncComponent(() => import("./hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue"));
+const sportReferBetBonus = defineAsyncComponent(() =>
+  import("./hotpromo/sport-refer-bet-bonus/sport-refer-bet-bonus.vue")
+);
+const DuanWuRewards = defineAsyncComponent(() => import("./hotpromo/duan-wu-rewards/DuanWuRewards.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -211,7 +203,8 @@ export default defineComponent({
     BlastRival2025,
     NewFootball,
     IemDallas2025,
-    DreamLeagueS26
+    DreamLeagueS26,
+    NewUserSportBonus2025
   },
   props: {
     list: {
@@ -654,34 +647,34 @@ export default defineComponent({
 }
 
 .claim-title-icon,
-  .claim-coin-icon,
-  .claim-gift-icon,
-  .claim-stacked-coins-icon {
-    width: 28px;
-    height: 28px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.claim-coin-icon,
+.claim-gift-icon,
+.claim-stacked-coins-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .claim-title-icon {
-    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png") no-repeat center
-      center;
-    background-size: 100% 100%;
-  }
+.claim-title-icon {
+  background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png") no-repeat center
+    center;
+  background-size: 100% 100%;
+}
 
-  .claim-coin-icon {
-    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png") no-repeat center center;
-    background-size: 100% 100%;
-  }
+.claim-coin-icon {
+  background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png") no-repeat center center;
+  background-size: 100% 100%;
+}
 
-  .claim-gift-icon {
-    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png") no-repeat center center;
-    background-size: 100% 100%;
-  }
+.claim-gift-icon {
+  background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png") no-repeat center center;
+  background-size: 100% 100%;
+}
 
-  .claim-stacked-coins-icon {
-    background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon3.png") no-repeat center center;
-    background-size: 100% 100%;
-  }
+.claim-stacked-coins-icon {
+  background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon3.png") no-repeat center center;
+  background-size: 100% 100%;
+}
 </style>

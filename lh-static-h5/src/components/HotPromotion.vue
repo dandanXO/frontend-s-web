@@ -87,6 +87,11 @@
     <DuanWuRewards v-else-if="list.redirectUrl === 'lh1-duan-wu-rewards'" :promo-code="list.promoCode" />
     <IemDallas2025 v-else-if="list.redirectUrl === 'lh1-iem-dallas-2025'" :promo-code="list.promoCode" />
     <DreamLeagueS26 v-else-if="list.redirectUrl === 'lh1-dream-league-s26'" :promo-code="list.promoCode" />
+    <WorldCup2025 v-else-if="list.redirectUrl === 'lh1-fifa-quiz-2025'" :promo-code="list.promoCode" />
+    <NewUserSportBonus2025
+      v-else-if="list.redirectUrl === 'lh1-new-user-sport-bonus-2025'"
+      :promo-code="list.promoCode"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -224,6 +229,10 @@ const FpSlotPromo = defineAsyncComponent(() => import("./hotpromo/fp-slot-promo/
 const elsOne2025 = defineAsyncComponent(() => import("./hotpromo/elsOne2025/elsOne2025.vue"));
 const YuEBaoPromo = defineAsyncComponent(() => import("./hotpromo/yu-e-bao/YuEBaoPromo.vue"));
 const DreamLeagueS26 = defineAsyncComponent(() => import("./hotpromo/dream-league-s26/DreamLeagueS26.vue"));
+const WorldCup2025 = defineAsyncComponent(() => import("./hotpromo/worldcup-2025/WorldCup2025.vue"));
+const NewUserSportBonus2025 = defineAsyncComponent(() =>
+  import("./hotpromo/new-user-sport-bonus-2025/NewUserSportBonus2025.vue")
+);
 
 export default defineComponent({
   name: "HotPromo",
@@ -295,7 +304,9 @@ export default defineComponent({
     YuEBaoPromo,
     BlastRival2025,
     IemDallas2025,
-    DreamLeagueS26
+    DreamLeagueS26,
+    WorldCup2025,
+    NewUserSportBonus2025
   },
   props: {
     list: {

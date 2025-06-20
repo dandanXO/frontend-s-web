@@ -505,7 +505,7 @@
             <!-- <span class="txt-style">Live Casino</span> -->
             <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
             <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
-            <div v-if="category.title === 'Lobby' && category.active" class="side">
+            <div v-if="category.title === 'Lobby' && category.active">
               <div class="all-btn" @click="handleActivateSlide('Live')">
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
@@ -5504,6 +5504,14 @@ const checkGoogleLoginSetPwd = () => {
 </style>
 
 <style lang="scss">
+.q-carousel__slides-container {
+  height: fit-content;
+}
+.swiper-slide,
+.swiper-wrapper {
+  height: fit-content;
+}
+
 .announcement-modal .q-dialog__inner {
   max-width: 500px;
   // max-height: 600px;

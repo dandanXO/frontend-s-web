@@ -1,7 +1,7 @@
 {
-  "name": "br1-project",
-  "version": "1.0.4",
-  "description": "BR1 App",
+  "name": "br2-project",
+  "version": "1.0.1",
+  "description": "BR2 App",
   "productName": "AKB188",
   "author": "KengHong <kenghongho@eagrp.net>",
   "private": true,

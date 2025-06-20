@@ -13,7 +13,7 @@
     >
       <template v-slot:append>
         <div>
-          <q-btn @click="sendDanmu" rounded outline color="primary" label="发弹幕" />
+          <q-btn @click="sendDanmu" rounded outline color="primary" label="发送" />
         </div>
       </template>
     </q-input>

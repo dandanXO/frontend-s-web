@@ -10,7 +10,7 @@
         <DepositView></DepositView>
       </q-tab-panel>
       <q-tab-panel name="withdraw">
-        <WithdrawMethodView ref="withdrawViewRef"></WithdrawMethodView>
+        <WithdrawView ref="withdrawViewRef"></WithdrawView>
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -43,31 +43,33 @@ watch(
 
 <style scoped lang="scss">
 .transaction-landing {
-  background: #101114;
+  // background-color: #2b474a;
   .deposit-tabs {
     font-family: "Manrope", sans-serif;
+    margin: 30px 16px;
 
-    width: 90%;
-    margin: 0 auto;
-    border-radius: 0.5rem;
-    background: #1b2232;
+    :deep(.q-tabs__content) {
+      gap: 16px;
+    }
 
     :deep(.q-tab) {
-      color: #01A1B2;
-      background: rgba(43, 71, 74, 0.27);
-      border-radius: 0.375rem;
-      margin: 2.5px;
+      background-color: transparent;
+      border-radius: 4px;
+      border: 1px solid #4b4943;
+      .q-tab__label {
+        font-size: 14px;
+        font-weight: 700;
+        color: #4b4943;
+      }
     }
 
     :deep(.q-tab--active) {
-      color: white;
-      background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
-
-
-      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+      color: #fff;
+      background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+      border: none;
 
       .q-tab__label {
-        font-weight: bold;
+        color: #2d2d2d;
       }
     }
   }

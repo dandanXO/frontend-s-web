@@ -8,7 +8,7 @@ html {
 }
 // app global css in SCSS form
 body {
-  font-family: "Manrope", sans-serif;
+  font-family: "Poppins", "Manrope", sans-serif;
   background: #ffffff;
   letter-spacing: 1px;
 }
@@ -53,6 +53,10 @@ body {
 }
 .q-page-container {
   padding-top: 0 !important;
+  // background-image: url(../assets/images/index/page-upper.png);
+  // background-position:top center;
+  // background-size: 140% auto;
+  // background-repeat:no-repeat;
   /* Overwrite Quasars padding-top calculation by code to avoid wrong offset in iOS PWA when
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"> is used. */
 
@@ -184,7 +188,7 @@ body.body--dark .q-footer {
   height: auto;
   padding-bottom: 20px;
   background: #101114;
-  padding-top:20px;
+  // padding-top: 20px;
 
   .q-panel > div {
     background-repeat: no-repeat;
@@ -255,7 +259,8 @@ body.body--dark .q-footer {
 .q-footer {
   // margin-top: 30px;
   // background: transparent !important;
-  background: #181a20d9;
+  background: url("../assets/images/index/footer-bg.png") center center no-repeat;
+  background-size: 100% 100%;
   backdrop-filter: blur(6px);
   bottom: 0px;
   height: 76px;
@@ -314,6 +319,8 @@ body.body--dark .q-footer {
       }
       &.hover {
         display: block;
+        background: url("../assets/images/index/footer-item-bg-active.png") center center no-repeat;
+        background-size: 100% auto;
       }
     }
   }
@@ -367,6 +374,14 @@ body.body--dark .q-footer {
     filter: brightness(0.86);
     transform: translate(0, 1px);
   }
+}
+.bg-greenbtn {
+  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+  color: #000;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 4px;
+  font-family: Poppins;
 }
 .bg-brightbtn {
   background: #33bcd4;
@@ -544,16 +559,17 @@ body.body--dark .q-footer {
   width: 90%;
   max-width: 500px;
   position: relative;
-  padding-top: 10px;
-  padding-right: 10px;
-  padding-left: 10px;
-  padding-bottom: 20px;
+  padding-top: 22px;
+  margin-right: 10px;
+  margin-left: 10px;
+  border: 1px solid #4b4943;
+  background-color: #1f241f;
+  border-radius: 4px;
 
   .popout-close {
     position: absolute;
     right: 0px;
     top: 80px;
-    background: #cfcfcf;
     color: #787878;
   }
 }
@@ -567,10 +583,10 @@ body.body--dark .q-footer {
 
   .popout-close {
     position: absolute;
-    right: 0px;
-    top: 10px;
-    background: #cfcfcf;
-    color: #787878;
+    right: 30px;
+    top: 40px;
+    color: #fff;
+    z-index: 9;
   }
 
   .txt-title {
@@ -581,14 +597,13 @@ body.body--dark .q-footer {
 
   .popout-dialog-container {
     // background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
-    background: linear-gradient(180deg, #1b7473 0%, #163c3d 100%);
-
-    background-position: top center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 30px 20px 30px;
+    // background: linear-gradient(180deg, #1b7473 0%, #163c3d 100%);
+    // background: linear-gradient(180deg, #004139 0%, rgba(0, 185, 111, 0) 100%);
+    background: #1f2420;
+    padding: 39px 36px 24px;
     min-height: 200px;
-    border-radius: 30px !important;
+    border: 1px solid #4b4943;
+    border-radius: 4px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -630,6 +645,24 @@ body.body--dark .q-footer {
   border-radius: 40px;
 }
 
+.btn-style-butter {
+  background: linear-gradient(90deg, #fff97f 0%, #ffa550 100%);
+  font-family: "Poppins";
+  font-weight: 700;
+  letter-spacing: -0.08%;
+  text-align: center;
+  color: #2d2d2d;
+}
+
+.btn-style-pear {
+  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+  font-family: "Poppins";
+  font-weight: 700;
+  letter-spacing: -0.08%;
+  text-align: center;
+  color: #2d2d2d;
+}
+
 // lower android version
 .android-low {
   .cat-selection-wrapper {
@@ -657,4 +690,24 @@ body.body--dark .q-footer {
 
 .input:-webkit-autofill {
   transition: background-color 5000s ease-in-out 0s;
+}
+
+.btn-primary {
+  background: transparent;
+  height: 34px;
+  font-weight: 600;
+  border-radius: 4px;
+  color: #21ef89;
+  border: 1px solid #21ef89;
+  padding: 5px;
+  min-width: 68px;
+  &__full {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+    color: #2d2d2d;
+    box-shadow: 0px 2px 0px 0px #1cca6a;
+    text-transform: uppercase;
+  }
 }

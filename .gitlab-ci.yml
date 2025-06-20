@@ -484,6 +484,21 @@ build-image-th2-static-v1:
     - build-th2-static-v1
 
 #===============================================================================================
+
+build-th3-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: th3-static-v1
+
+build-image-th3-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: th3-static-v1
+  needs:
+    - build-th3-static-v1
+
+#===============================================================================================
+
 build-ind-static-h5:
   extends: .build-projects
   variables:

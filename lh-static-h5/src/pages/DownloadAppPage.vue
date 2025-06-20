@@ -201,6 +201,8 @@ export default defineComponent({
           // alert(res.data)
           var agentCode = res.data;
           sessionStorage.setItem("AFFILIATE_CODE", agentCode);
+
+          vv.value.agentCode = agentCode;
         }
       });
     };
@@ -215,7 +217,7 @@ export default defineComponent({
 
       axios.get('https://tfwkgol.076knee9cc.com/getDownData').then((res) => {
         let subTitle = ['高效 快捷',' 防失联 不掉签','长期 稳定',]
-        if (res.data.code == 0 ) {
+        if (res.data.code === 0 ) {
           androidDownloadUrlList.value = (res.data.data.android).map(
             item => {
               const [name, url] = Object.entries(item)[0];
@@ -238,7 +240,7 @@ export default defineComponent({
     })
     const downloadFile = (url, fileName, index) => {
       postDownloadExtra()
-      copyToClipboard(`UIO${JSON.stringify(vv.value)}`);
+      saveCopy(`UIO${JSON.stringify(vv.value)}`);
       const link = document.createElement('a');
       link.href = url;
       link.download = fileName || '';
@@ -253,9 +255,30 @@ export default defineComponent({
         list[index].isDownload = true;
       }
     };
+
+    const saveCopy = (text) => {
+        if (navigator.clipboard) {
+          copyToClipboard(text).then(() => {
+            console.log('✅ 复制成功');
+          }).catch((err) => {
+            fallbackCopy(text);
+          });
+        } else {
+          fallbackCopy(text);
+        }
+    }
+
+    const fallbackCopy = (text) => {
+      const input = document.createElement('textarea');
+      input.value = text;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+    };
+
     return {
       vv,
-      postDownloadExtra,
       downloadFile,
       isAndroid,
       androidDownloadUrlList,
@@ -296,7 +319,7 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 7px;
+  gap: 10px;
 }
 .main-container {
   overflow-x: hidden;
@@ -306,7 +329,7 @@ export default defineComponent({
   min-height: 100dvh;
 }
 .logo-img {
-  width: 130px;
+  width: 150px;
 }
 .carousel {
   background: transparent;

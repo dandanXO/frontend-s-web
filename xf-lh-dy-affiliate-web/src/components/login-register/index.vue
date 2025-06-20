@@ -30,6 +30,7 @@
               <div class="log">
                 {{ isReg ? $t('common.signup') : $t('common.login') }}
               </div>
+              <LangToggle v-if="props.siteId === '8'" />
               <!--              <div class="topright" v-if="props.siteId !== '5'">-->
               <!--                <span class="noaccabs">-->
               <!--                  {{ isReg ? '已经有账号? ' : '没有帐户？' }}-->
@@ -39,7 +40,9 @@
               <!--                </a>-->
               <!--              </div>-->
             </div>
+
             <div class="mid">
+              <img class="top-img" v-if="props.siteId === '7'" src="../../assets//images/login/lh-login-1.png">
               <el-form
                 v-if="!isReg"
                 ref="loginFormRef"
@@ -98,12 +101,12 @@
                     </template>
                   </el-input>
                 </el-form-item>
-                <div style="margin:20px 0px" v-if="props.siteId !== '8'">
+                <div class="forget-pw" v-if="props.siteId !== '8'">
                   <el-link type="primary" @click="forgetPasswordDialog">
                     {{ $t('common.forgetpass') }}
                   </el-link>
                 </div>
-                <div class="flex-c-center-div">
+                <div class="flex-c-center-div login-btn-grp">
                   <el-button
                     class="common-btn"
                     type="danger"
@@ -627,6 +630,7 @@ import {
 import { useI18n } from 'vue-i18n'
 import { i18nStore } from '@/store/language'
 import LhFeedback from '../customer-service/lh-feedback.vue'
+import LangToggle from '../lang/LangToggle.vue'
 
 export default defineComponent({
   props: {
@@ -636,7 +640,8 @@ export default defineComponent({
     },
   },
   components: {
-    LhFeedback
+    LhFeedback,
+    LangToggle
   },
   setup(props) {
     const validatePass2 = async (r, v) => {
@@ -1409,8 +1414,14 @@ export default defineComponent({
         setLanguage('en')
       }
       if (props.siteId === '7') {
-        currentSite.value.firstLiner = '从雷火开始'
-        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
+        // currentSite.value.firstLiner = '从雷火开始'
+        // currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
+        const firstLinerImg = require('@/assets/images/login/lh-login-2.png');
+        const secondLinerImg = require('@/assets/images/login/lh-login-3.png');
+
+        currentSite.value.firstLiner = `<img class="top-img" src="${firstLinerImg}" style="width: 95%;">`;
+        currentSite.value.secondLiner = `<img class="top-img" src="${secondLinerImg}" style="width: 95%;">`;
+
         currentSite.value.logo = lhLogo
         state.loginForm.site = 'LH1'
         setLanguage('zh')
@@ -1421,7 +1432,13 @@ export default defineComponent({
           'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
         currentSite.value.logo = viLogo
         state.loginForm.site = 'VNM'
-        setLanguage('vi')
+
+        const hasPreferredLang = route?.query?.lang;
+        if (hasPreferredLang && ['en', 'vi'].includes(hasPreferredLang)) {
+          setLanguage(hasPreferredLang);
+        } else {
+          setLanguage('vi')
+        }
       }
       if (props.siteId === '15') {
         currentSite.value.firstLiner = 'Bắt đầu với KAKA'
@@ -1686,8 +1703,81 @@ a {
     center;
   background-size: cover;
   &.lh {
-    background: url('../../assets/images/login/lh-bg.jpg') no-repeat center
+    .inner{
+      height: unset;
+    }
+    background: url('../../assets/images/login/lh-bg.png') no-repeat center
       center;
+      background-color: #19326D;
+      .left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        .first-liner {
+          margin: 25px 0 !important;
+
+        }
+        .first-liner,
+        .second-liner {
+          max-width: unset !important;
+          @media (max-width: 1100px) {
+            max-width: 400px !important;
+          }
+        }
+      }
+
+      .right {
+        display: flex;
+        justify-content: center;
+        .top {
+          background: #fff !important;
+          margin: 0 10px;
+          margin-bottom: -1px;
+          border-top-left-radius: 25px;
+          border-top-right-radius: 25px;
+          @media (max-width: 768px) {
+            margin: 0 1.75%;
+            margin-bottom: -1px;
+          }
+        }
+
+        .mid {
+          position: relative;
+          .top-img {
+            width: 35%;
+            position: absolute;
+            right: 40px;
+            top: 0;
+            transform: translateY(-50%);
+          }
+        }
+        .forget-pw {
+          margin: 20px 0px;
+          place-self: end;
+        }
+        .login-btn-grp {
+          display: block;
+          width: 100%;
+          button {
+            width: 100% !important;
+            margin: 8px 0;
+            border-radius: 4px;
+          }
+          .el-button--danger {
+            background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%, #3981FF 100%);
+          }
+        }
+        .contact-div {
+          margin-top: 0;
+          color: #3981FF;
+          text-decoration: underline;
+        }
+      }
+      .bot {
+        margin-top: -1px;
+        width: calc(100% - 1.1px);
+      }
   }
   &.vi,
   &.kaka {

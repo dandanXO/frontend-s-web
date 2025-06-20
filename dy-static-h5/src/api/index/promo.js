@@ -237,7 +237,6 @@ export function getVIPDetailsNotLoggedIn() {
   return eventapi.get(`/get-vip-bonus-detail?siteId=6&v=${randNum}`);
 }
 
-
 export function getLivePoker() {
   return eventapi.get("/live-poker");
 }
@@ -564,4 +563,31 @@ export function getTorontoMastersInit() {
 export function claimTorontoMastersBonus() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return eventapi.post(`/session/competition-loss/claim?promoCode=dy2-valorant-masters-toronto-2025&v=${randNum}`);
+}
+
+export function getFifa2025PromoInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/competition/yesterday?promoCode=dy2-fifa-2025&v=${randNum}`);
+}
+
+export function claimFifa2025PromoBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/competition/claimBonus?promoCode=dy2-fifa-2025&v=${randNum}`);
+}
+
+export function getDailySlotBonusInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/game-type-bonus/init?promoCode=dy2-daily-slot-bonus&v=${randNum}`);
+}
+
+export function claimDailySlotBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.post(`/session/game-type-bonus/claim?promoCode=dy2-daily-slot-bonus&v=${randNum}`);
+}
+
+export function getNewUserSportBonus2025Bonus(promoCode) {
+  return eventapi.get(`/session/game-type-bonus/init?promoCode=${promoCode}`);
+}
+export function claimNewUserSportBonus2025Bonus(promoCode) {
+  return eventapi.post(`/session/game-type-bonus/claim?promoCode=${promoCode}`);
 }

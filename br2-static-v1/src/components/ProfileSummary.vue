@@ -1,6 +1,6 @@
 <template>
   <div style="height: 56px" v-if="topDownload"></div>
-  <div style="height: 60px"></div>
+  <div style="height: 78px"></div>
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
@@ -16,8 +16,20 @@
     </div>
   </div>
 
+  <div class="menu-open" :class="{ open: menuOpen }" @click="toggleMenuOpen()">
+    <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
+    <div class="menu-open-inner">
+      <SideMenu @closeMenu="toggleMenuOpen()" />
+    </div>
+  </div>
+
   <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload }">
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
+      <div class="profile-menu">
+        <q-btn dense flat @click="toggleMenuOpen()">
+          <q-icon name="density_medium" />
+        </q-btn>
+      </div>
       <div class="profile-wrapper-extra">
         <div class="logo-img">
           <img src="../assets/logo.svg" @click="onClickLogo" />
@@ -130,9 +142,12 @@
           </q-list>
         </q-btn-dropdown>
       </div>
-      <div class="profile-wrapper" v-else>
-        <q-btn class="btn-style-light" no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
-        <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn>
+      <div class="profile-wrapper non-login" v-else>
+        <q-btn class="btn-style-butter" no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
+        <!-- <q-btn class="btn-style-pear" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn> -->
+        <q-btn class="btn-style-pear" no-caps @click="uiStore.loginView = 'register'">
+          {{ $t("header.register") }}
+        </q-btn>
       </div>
     </div>
   </div>
@@ -142,17 +157,22 @@
 import { ref, onMounted, computed } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
+import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid, isInPwa } from "src/boot/utils";
 import { api } from "boot/axios";
 import { useI18n } from "vue-i18n";
 import LangOptions from "components/LangOptions";
+import SideMenu from "./SideMenu.vue";
 
 const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+const uiStore = useUI();
+
+const menuOpen = ref(false);
 
 // const balance = ref(19999999);
 
@@ -162,11 +182,28 @@ const profileImg = [
   }
 ];
 
+const activateSlide = (item) => {
+  router
+    .push(`/home#${item}`)
+    .then(() => {
+      if (props.homeProfile) {
+        emits("closeslot");
+      }
+      emits("activateSlide", item);
+      menuOpen.value = false;
+    })
+    .catch((error) => {
+      console.error("Navigation error:", error);
+    });
+  menuOpen.value = false;
+};
+
 const goLogin = () => {
-  if (props.homeProfile) {
-    emits("closeslot");
-  }
-  router.push("/login");
+  // if (props.homeProfile) {
+  //   emits("closeslot");
+  // }
+  // router.push("/login");
+  uiStore.loginView = "login";
 };
 
 const randomProfileImg = computed(() => {
@@ -253,6 +290,10 @@ const checkTopDownloadAppear = () => {
   }
 };
 
+const toggleMenuOpen = () => {
+  menuOpen.value = !menuOpen.value;
+};
+
 const topDownloadUrl = ref("");
 
 const getTopDownloadUrl = () => {
@@ -278,8 +319,8 @@ onMounted(() => {
     sessionStorage.setItem("PROFILE_IMG", imgPath);
   }
 
-  getTopDownloadUrl();
-  checkTopDownloadAppear();
+  // getTopDownloadUrl();
+  // checkTopDownloadAppear();
 });
 </script>
 
@@ -354,6 +395,27 @@ onMounted(() => {
   }
 }
 
+.menu-open {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000000cc;
+  backdrop-filter: blur(4px);
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 2002;
+  transition: 0.3s all;
+  margin-left: -100%;
+  &.open {
+    margin-left: 0;
+  }
+  .menu-open-inner {
+    width: 75vw;
+    max-width: 375px;
+  }
+}
+
 .infoboard-container {
   display: flex;
   align-items: center;
@@ -363,7 +425,7 @@ onMounted(() => {
   // background: linear-gradient(180deg, #00B9A1 0%, rgba(0, 185, 111, 0) 96.35%);
   // background: linear-gradient(180deg, rgba(0, 185, 161, 0.46) 0%, rgba(0, 185, 111, 0) 96.35%);
   // background: linear-gradient(180deg, #095e54 0%, #0d362d 100%);
-  background: linear-gradient(180deg, #095e54 0%, rgba(13, 54, 45, 0.2) 100%);
+  background: #1f241f;
   // box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
   overflow-x: hidden;
   position: fixed;
@@ -383,7 +445,7 @@ onMounted(() => {
   .infoboard-wrapper {
     position: absolute;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
     // width: 22rem;
@@ -397,6 +459,7 @@ onMounted(() => {
       justify-content: space-between;
       padding: 0 12px;
       // overflow-y: hidden;
+      height: 78px;
 
       .profile-pic {
         margin-top: -20px;
@@ -425,11 +488,15 @@ onMounted(() => {
     padding-right: 10px;
     position: relative;
 
+    &.non-login {
+      padding-bottom: 15px;
+    }
+
     .unread-total {
       position: absolute;
       right: 0px;
       top: 0px;
-      background: #8952ff;
+      background: rgba(255, 0, 4, 1);
       border-radius: 100px;
       padding: 0px 3px;
       z-index: 1;
@@ -536,13 +603,14 @@ onMounted(() => {
     display: flex;
     align-items: center;
     padding-top: 10px;
-    margin-bottom: auto;
+    padding-left: 6px;
+    // margin-bottom: auto;
     width: 100%;
   }
 
   .logo-img {
     width: 100%;
-    margin: 12px auto;
+    // margin: 12px auto;
 
     img {
       max-width: 106px;
@@ -623,7 +691,7 @@ onMounted(() => {
 }
 
 .message-amt {
-  background-color: #8952ff;
+  background: rgba(255, 0, 4, 1);
   border-radius: 30px;
   width: 20px;
   height: 20px;

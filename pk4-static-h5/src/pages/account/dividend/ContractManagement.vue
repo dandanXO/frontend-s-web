@@ -13,7 +13,8 @@
         </div>
 
         <div class="info panel bordered">
-            <table class="card-table" border="0" cellpadding="0" cellspacing="0" width="100%"
+            <div v-if="isLoading" class="stacks-loader" style="margin:30px auto;"></div>
+            <table v-else class="card-table" border="0" cellpadding="0" cellspacing="0" width="100%"
                 style="text-align: center">
                 <tbody>
                     <tr v-for="downline, index in downlineInfo" :key="index">

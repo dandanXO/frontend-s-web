@@ -99,6 +99,11 @@
             </template>
           </div>
         </marquee-text>
+
+        <router-link to="/livestream" class="notice-hot-match">
+          <!-- 热门赛事 -->
+          <img src="../assets/images/home/notice-live-icon.gif" />
+        </router-link>
       </div>
     </div>
 
@@ -1883,9 +1888,7 @@ export default defineComponent({
     onMounted(() => {
       try {
         popupExpiryMap.value = JSON.parse(localStorage.getItem("POPUP"));
-      } catch {
-
-      }
+      } catch {}
 
       if (sessionStorage.getItem("regSuccessGuideVisible")) {
         store.regSuccessGuideVisible = true;
@@ -2078,7 +2081,6 @@ export default defineComponent({
     // text-shadow: 2px 2px 0px #00000040;
     font-size: 14px;
   }
-
 }
 
 .q-page-container {
@@ -2842,6 +2844,23 @@ export default defineComponent({
         }
       }
     }
+  }
+}
+
+.notice-hot-match {
+  // color: #ffffff;
+  // background: linear-gradient(113.58deg, #5277e5 19.8%, #ed22ff 93.06%);
+  // white-space: nowrap;
+  // padding: 2px 8px;
+  position: absolute;
+  right: 0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+
+  img {
+    display: block;
+    width: 90px;
   }
 }
 </style>

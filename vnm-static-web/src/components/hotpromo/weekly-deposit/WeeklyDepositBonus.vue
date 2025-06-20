@@ -238,7 +238,7 @@ const initPage = () => {
 };
 const claimBonus = () => {
   if (!store.token) {
-    return
+    return;
   }
   claimWeeklyBonus(props.promoCode).then((res) => {
     if (res.code === 0) {
@@ -251,7 +251,7 @@ const claimBonus = () => {
 };
 onMounted(() => {
   if (!store.token) {
-    return
+    return;
   }
   initPage();
 });
@@ -450,56 +450,56 @@ onMounted(() => {
 }
 
 .prizePopupContainer-weekly {
-    width: 480px;
-    height: 620px;
-    background: url("../../../assets/images/promotion/hotpromo/weekly-deposit-bonus/popupp.png");
-    background-size: 100% 100%;
-    box-shadow: none;
+  width: 480px;
+  height: auto;
+  background: url("../../../assets/images/promotion/hotpromo/weekly-deposit-bonus/popupp.png");
+  background-size: 100% auto;
+  background-position: center center;
+  background-repeat: no-repeat;
+  box-shadow: none;
 
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        height: 585px;
-        gap: 55px;
-        .content {
-          position: absolute;
-          top: 60%;
-          width: 200px;
-          text-align: center;
-          margin: 0 auto;
-          left: 0;
-          right: 0;
-        }
-
-        .bold-text {
-            font-family: sans-serif;
-            font-size: 46px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-align: center;
-            color: #FFFFFF;
-        }
-
-        .golden-text {
-            font-size: 55px;
-            letter-spacing: 2px;
-            background: linear-gradient(94.81deg, #F6FF8C 7.45%, #FFBA88 95.9%),
-                linear-gradient(360deg, #FF932F 9.54%, #FFFCA9 86.08%);
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .popup-header {
-            letter-spacing: normal;
-            font-size: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 585px;
+    gap: 55px;
+    .content {
+      position: absolute;
+      top: 57%;
+      width: 200px;
+      text-align: center;
+      margin: 0 auto;
+      left: 0;
+      right: 0;
     }
+
+    .bold-text {
+      font-family: sans-serif;
+      font-size: 46px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .golden-text {
+      font-size: 55px;
+      letter-spacing: 2px;
+      background: linear-gradient(94.81deg, #f6ff8c 7.45%, #ffba88 95.9%),
+        linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .popup-header {
+      letter-spacing: normal;
+      font-size: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
 </style>

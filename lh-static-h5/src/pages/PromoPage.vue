@@ -205,8 +205,14 @@
                   <div v-if="selectedPromo.redirectUrl === 'lh1-valorant-masters-toronto-2025'">
                     <TorontoMasters :promoCode="selectedPromo.promoCode" />
                   </div>
+                  <div v-if="selectedPromo.redirectUrl === 'lh1-fifa-2025'">
+                    <Fifa2025Promo :promoCode="selectedPromo.promoCode" />
+                  </div>
                   <div v-if="selectedPromo.redirectUrl === 'lh1-blast-tv-austin-major-2025'">
                     <BlastAustin :promoCode="selectedPromo.promoCode" />
+                  </div>
+                  <div v-if="selectedPromo.redirectUrl === 'laohuji'">
+                    <Lh1DailySlotBonus :promoCode="selectedPromo.promoCode" />
                   </div>
                   <div
                     v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'"
@@ -324,7 +330,8 @@ import BlastAustin from "src/components/hotpromo/blast-austin/BlastAustin.vue";
 import MesaPromo from "src/components/hotpromo/mesa/MesaPromo.vue";
 import { useCloudWiseHelper } from "src/hooks/cloudWiseHelper";
 import TorontoMasters from "src/components/hotpromo/toronto-masters/TorontoMasters.vue";
-
+import Fifa2025Promo from "src/components/hotpromo/fifa-2025/Fifa2025Promo.vue";
+import Lh1DailySlotBonus from "src/components/hotpromo/lh1-daily-slot-bonus/Lh1DailySlotBonus.vue";
 
 export default defineComponent({
   name: "PromoView",
@@ -334,7 +341,9 @@ export default defineComponent({
     BlastPremierMarquee,
     MesaPromo,
     BlastAustin,
-    TorontoMasters
+    TorontoMasters,
+    Fifa2025Promo,
+    Lh1DailySlotBonus
   },
   setup() {
     const notify = useNotify();
@@ -389,6 +398,9 @@ export default defineComponent({
     watch(
       () => route.query,
       () => {
+        if (route.query.name === "page-vip") {
+          router.push("/account/vip")
+        }
         if (route.query === null) {
           isPromoDetail.value = false;
         } else {
@@ -494,10 +506,6 @@ export default defineComponent({
 
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element);
-              }
-
-              if (route.query.name === "/vip") {
-                router.push("/account/vip");
               }
               // }
             });

@@ -4,5 +4,6 @@ export const SPORT_TYPE_LIST = [
   { text: "LOL", value: 3 },
   { text: "CSGO", value: 4 },
   { text: "DOTA", value: 5 },
-  { text: "王者荣耀", value: 6 }
+  { text: "王者荣耀", value: 6 },
+  { text: "无畏契约", value: 7 }
 ];

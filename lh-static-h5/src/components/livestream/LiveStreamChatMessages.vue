@@ -1,6 +1,13 @@
 <template>
-  <div class="livestream-chat-wrapper" :class="isDark ? 'dark' : 'white'">
-    <div ref="chatListRef" class="livestream-chat-list">
+  <div
+    class="livestream-chat-wrapper"
+    :class="{
+      dark: isDark,
+      white: !isDark,
+      landscape: isLandscape
+    }"
+  >
+    <div ref="chatListRef" class="livestream-chat-list" :style="chatListStyle">
       <div v-for="(message, index) in messages" :key="index" class="livestream-chat-item">
         <img
           class="livestream-chat-item__vip-badge"
@@ -27,7 +34,7 @@
       </div>
     </div>
 
-    <div class="livestream-chat-input-wrapper" :style="chatBoxStyle">
+    <div ref="inputWrapperRef" class="livestream-chat-input-wrapper">
       <q-form class="livestream-chat-input-inner-wrapper q-px-md" @submit.enter.prevent>
         <q-btn class="bet-btn" rounded label="投一注" @click="handleBetClick" />
 
@@ -36,10 +43,14 @@
           class="livestream-chat-input"
           :placeholder="inputConfig.placeholder"
           :disable="inputConfig.disabled"
+          type="textarea"
           autocomplete="off"
           rounded
           dense
           standout
+          autogrow
+          @focus="handleInputFocus"
+          @blur="handleInputBlur"
         >
           <template v-slot:append>
             <q-btn icon="emoji_emotions" round flat dense @click="togglePopover"></q-btn>
@@ -54,7 +65,7 @@
               rounded
               outline
               color="primary"
-              label="发弹幕"
+              label="发送"
             ></q-btn>
           </template>
         </q-input>
@@ -70,7 +81,7 @@ import GameModal from "components/modal/GameModal.vue";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import { useLocalStorage } from "@vueuse/core";
+import { useElementBounding, useLocalStorage } from "@vueuse/core";
 import { Picker } from "emoji-mart";
 
 const now = Date.now();
@@ -79,25 +90,39 @@ const store = userStore();
 const $q = useQuasar();
 const route = useRoute();
 const router = useRouter();
-const props = defineProps(["messages", "vipStatus", "livestreamData", "extensionState", "extensionToken"]);
-const { messages, vipStatus, livestreamData, extensionState, extensionToken } = toRefs(props);
+const props = defineProps([
+  "messages",
+  "vipStatus",
+  "livestreamData",
+  "extensionState",
+  "extensionToken",
+  "marginTop",
+  "isLandscape"
+]);
+const { messages, vipStatus, livestreamData, extensionState, extensionToken, isLandscape } = toRefs(props);
 const emit = defineEmits(["sendChatMessage"]);
+const model = defineModel();
 
 const messageToSend = ref("");
 const chatListRef = ref(null);
 const emojiPickerRef = ref(null);
+const inputWrapperRef = ref(null);
 const isPopoverVisible = ref(false);
 
-const isDark = computed(() => $q.dark.isActive);
 const profilePhotoDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/profile/";
+const { height: inputWrapperHeight } = useElementBounding(inputWrapperRef);
+
+const isDark = computed(() => $q.dark.isActive);
 const isMessageSendable = computed(() => messageToSend.value.trim().length > 0);
 
 const inputConfig = computed(() => {
   let disabled = false;
   let placeholder = "请输入聊天内容";
-  if ((!store.token && !extensionState.value) || !vipStatus.value) {
+  let vipLevel = store.vip.split("VIP")[1];
+  if ((!store.token && !extensionState.value) || !vipStatus.value || vipLevel < 3) {
     disabled = true;
-    if (!vipStatus.value) placeholder = "VIP特权不足，无法发言";
+    if (!vipStatus.value || vipLevel < 3) placeholder = "VIP3等级或以上即可发言";
+    // if (vipLevel < 3) placeholder = "VIP3等级或以上即可发言"
     // if (!store.token) placeholder = "请登录后发言";
   }
 
@@ -106,6 +131,10 @@ const inputConfig = computed(() => {
     placeholder
   };
 });
+const chatListStyle = computed(() => ({
+  marginTop: `${props.marginTop}px`,
+  maxHeight: `calc(100dvh - ${props.marginTop}px - ${inputWrapperHeight.value}px)`
+}));
 
 const handleSendChatMessage = () => {
   emit("sendChatMessage", messageToSend.value);
@@ -191,18 +220,28 @@ const handleBetClick = () => {
   switch (livestreamData.value.sportId) {
     case 1:
     case 2:
-      handler("IM体育", "IM", "", "SPORTS");
+      handler("IM体育", "IM", livestreamData.value.eventCode || "", "SPORTS");
       break;
     case 3:
     case 4:
     case 5:
-      handler("雷火电竞", "TFGaming", "", "ESPORTS");
+    case 6:
+    case 7:
+      handler("雷火电竞", "TFGaming", livestreamData.value.eventCode || "", "ESPORTS");
       break;
   }
 };
 
 const handleAppBetClick = (platformName, platformId, platformCode, gameType) => {
   document.location.href = `app://to_platform?platformName=${platformName}&platformId=${platformId}&platformCode=${platformCode}&gameType=${gameType}`;
+};
+
+const handleInputFocus = () => {
+  model.value = true;
+};
+
+const handleInputBlur = () => {
+  model.value = false;
 };
 
 onMounted(() => {
@@ -225,8 +264,7 @@ onMounted(() => {
     padding: 16px;
     overflow: auto;
     height: 100dvh;
-    margin-top: calc(56.25vw + 27px + 68px + 16px);
-    max-height: calc(100dvh - 56.25vw - 27px - 60px - 68px - 16px);
+    // max-height: calc(100dvh - 56.25vw - 27px - 60px - 68px - 16px);
     // Firefox
     scrollbar-width: thin;
     scrollbar-color: #c4c4c4 #b8d1ff;
@@ -275,6 +313,7 @@ onMounted(() => {
       }
 
       .livestream-chat-item__message {
+        white-space: break-spaces;
         color: #333333;
         vertical-align: super;
       }
@@ -290,14 +329,15 @@ onMounted(() => {
     left: 0;
     width: 100%;
     z-index: 2001;
-    height: 70px;
+    min-height: 70px;
+    padding: 6px 0;
     display: flex;
     align-items: center;
     transition: 0.3s all;
 
     .livestream-chat-input-inner-wrapper {
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: space-between;
       // padding: 7.55px;
       // box-shadow: 0px 0px 7.55px 0px #a9c9ea inset;
@@ -309,10 +349,36 @@ onMounted(() => {
         // background: #f7f8fb;
         box-shadow: 0px 0px 8px 0px #a9c9ea inset;
         width: 100%;
-        overflow: hidden;
-        border-radius: 50px;
+        border-radius: 20px;
+        overflow-y: auto;
+        white-space: nowrap;
+
+        :deep(textarea) {
+          max-height: 90px;
+          overflow-y: auto;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+
+        :deep(textarea::placeholder) {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
         :deep(.q-field__control) {
           padding-right: 2px;
+        }
+
+        :deep(.q-field__control .q-field__append) {
+          margin-top: auto;
+        }
+
+        :deep(.q-field__native):focus {
+          animation: blink-input-opacity-to-prevent-scrolling-when-focus 0.1s;
         }
       }
       .livestream-chat-input-btn {
@@ -365,6 +431,7 @@ onMounted(() => {
   color: #fff;
   white-space: nowrap;
   border: 2px solid transparent;
+  height: 40px;
 }
 
 .livestream-chat-wrapper.dark {
@@ -404,11 +471,20 @@ onMounted(() => {
     background-position: center center;
   }
 }
+
+@keyframes blink-input-opacity-to-prevent-scrolling-when-focus {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 </style>
 
 <style lang="scss" scoped>
-@media (orientation: landscape) {
-  .livestream-chat-wrapper {
+.landscape {
+  &.livestream-chat-wrapper {
     width: 45%;
     height: 100%;
     margin-left: auto;
@@ -432,7 +508,7 @@ onMounted(() => {
     left: auto !important;
   }
 
-  .livestream-chat-wrapper.dark {
+  &.livestream-chat-wrapper.dark {
     .livestream-chat-list {
       background: #0f182e !important;
     }
