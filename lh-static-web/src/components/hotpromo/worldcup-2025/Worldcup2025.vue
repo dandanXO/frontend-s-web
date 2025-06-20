@@ -69,10 +69,16 @@
           </div>
           <div class="title-txt">世俱杯</div>
 
-          <div class="title-status ongoing" v-if="currentListItem.status === 'ONGOING'">
+          <div class="title-status ongoing" v-if="currentListItem.status === 'ONGOING' && !showNotStart">
             <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-ongoing.svg" alt="" />
             &nbsp;
-            {{ showNotStart ? "未开始" : "进行中" }}
+           进行中
+          </div>
+
+          <div class="title-status notstart" v-if="currentListItem.status === 'ONGOING' && showNotStart">
+            <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-notstart.svg" alt="" />
+            &nbsp;
+           未开始
           </div>
 
           <div class="title-status ended" v-if="currentListItem.status === 'ENDED'">
@@ -530,10 +536,24 @@ const filteredSpecialList = computed(() => {
   return currentListItem.value.occasions;
 });
 
-watch(model, () => {
-  if (!swiperInstance.value) return;
-  swiperInstance.value.slideTo(model.value, 0);
-});
+const findInitialIndex = () => {
+  const priority = ["ONGOING", "ENDED"];
+
+  for (const status of priority) {
+    const idx = list.value.findIndex((item) => item.status === status);
+    if (idx !== -1) return idx;
+  }
+  return 0;
+};
+
+// watch(model, () => {
+//   if (!swiperInstance.value) return;
+//   swiperInstance.value.slideTo(model.value, 0);
+// });
+
+watch(list, () => {
+  model.value = findInitialIndex();
+}, { immediate: true });
 
 const showNotStart = computed(() => {
   return moment(currentListItem.value.matchTime).isAfter(moment());
@@ -941,6 +961,10 @@ onMounted(() => {
             background: #00a1ff;
           }
 
+          &.notstart {
+            background: #737373;
+          }
+
           img {
             display: block;
             width: 16px;
@@ -1192,6 +1216,10 @@ onMounted(() => {
 
             &.ongoing {
               background: #be9457;
+            }
+
+            &.notstart {
+              background: #737373;
             }
           }
         }
