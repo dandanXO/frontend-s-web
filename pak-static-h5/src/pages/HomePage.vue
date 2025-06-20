@@ -4365,7 +4365,7 @@ const checkNewPlayerWheelPromoHomePopupCanShow = () => {
     newPlayerPromoHomePopupRef.value.checkIsCanShowPopup();
   }
 };
-onActivated(() => {
+onActivated(async () => {
   nextTick(() => {
     if (
       LocalStorage.getItem("completeddepositguide") === "true" &&
@@ -4406,10 +4406,10 @@ onActivated(() => {
   checkHash();
 
   if (store.hasToken()) {
-    store.getMemberInfo();
+    await store.getMemberInfo();
   }
   if (store.hasToken()) {
-    showSpinWheel();
+    await showSpinWheel();
   }
   checkGoogleLoginSetPwd();
 
@@ -4542,7 +4542,7 @@ const showSpinWheel = () => {
   eventapi
     .get("/new-user-roulette/init")
     .then((res) => {
-      if (res.code == 0) {
+      if (res.code === 0) {
         if (store.canClaimFtdPrivilege && isAndroid()) {
           isHasUnusedCoupon.value = true;
           store.hasUnusedCoupon = true;
