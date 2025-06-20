@@ -2643,6 +2643,7 @@ export default {
     isCdnPush: 'Push CDN',
     box: 'Box',
     isCreateLiveUrl: 'Is Create Live Url (Yes/No)',
+    isLiveUrlExist: 'Live Url Exist',
     addToLive: 'Add to Live',
     initialSupplierStreamStatus: 'Initial Supplier Stream Status',
     isTestEvent: 'Test Event',
