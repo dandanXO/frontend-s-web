@@ -57,11 +57,12 @@ export default defineComponent({
       // console.log(info);
       // console.log(info.identifier);
       const isPwa = process.env.IS_PWA;
+      const click_id = localStorage.getItem("click_id");
+      if (click_id) {
+        store.googleadid = click_id;
+      }
       // alert(isPwa);
       if (isPwa === "1") {
-        const click_id = localStorage.getItem("click_id");
-        store.googleadid = click_id;
-
         sessionStorage.setItem("IS_PWA", "1");
       }
     };
