@@ -246,7 +246,7 @@ export const DashboardService = {
       })
   },
   // 獲取直播串流列表
-  getStreamList(request) {
+  getStreamListv1(request) {
     const token = sessionStorage.getItem('token')
     return api
       .get('/session/live-sport/stream/list', {
@@ -271,7 +271,7 @@ export const DashboardService = {
   },
 
   // 獲取聊天記錄
-  getChatHistory(query, body) {
+  getChatHistoryv2(query, body) {
     const token = sessionStorage.getItem('token')
     return api
       .post(`/session/live-sport/chat/history${query}`, body, {
@@ -294,7 +294,7 @@ export const DashboardService = {
   },
 
   // 封鎖用戶 API
-  blockUserApi(request) {
+  blockUserApiV1(request) {
     const token = sessionStorage.getItem('token')
     return api
       .put('/session/live-sport/chat-block', request, {
@@ -318,7 +318,7 @@ export const DashboardService = {
   },
 
   // 解除封鎖用戶 API
-  unblockUserApi(request) {
+  unblockUserApiV2(request) {
     const token = sessionStorage.getItem('token')
     return api
       .put('/session/live-sport/chat-block/unblock', request, {
@@ -623,16 +623,6 @@ export const DashboardService = {
     })
   },
 
-  createSiteImage(data) {
-    const token = sessionStorage.getItem('token')
-    return api.post('/session/siteImage', data, {
-      headers: {
-        token: `${token}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    })
-  },
-
   createSportLiveTeam(data) {
     const token = sessionStorage.getItem('token')
     return api
@@ -678,6 +668,16 @@ export const DashboardService = {
         console.error('更新聊天室 VIP 狀態請求失敗:', error) // 捕捉網路或請求錯誤
         return null // 失敗時返回 null
       })
+  },
+  editSportLiveTeam(request) {
+    const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
+    return api.put('/session/live-sport/team', request, {
+      // params: request, // For GET requests, parameters are typically sent as `params`
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
   },
   deleteSportLiveTeam(request) {
     const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token

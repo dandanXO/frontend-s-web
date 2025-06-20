@@ -174,7 +174,7 @@ const durationUnits = ref([
 
 async function loadStreams() {
   try {
-    const res = await DashboardService.getStreamList();
+    const res = await DashboardService.getStreamListv1();
     console.log(res)
     streamList.value = res.map(s => ({
       ...s,
@@ -201,7 +201,7 @@ async function loadChatHistory() {
       size: page.size
     });
 
-    const res = await DashboardService.getChatHistory(`?${query.toString()}`, { streamId: selectedStreamId.value });
+    const res = await DashboardService.getChatHistoryv2(`?${query.toString()}`, { streamId: selectedStreamId.value });
     console.log(res,'dan2')
     chatList.value = res.records;
     page.total = res.total;
@@ -245,7 +245,7 @@ async function submitBlock() {
 
 async function unblockUser(loginName) {
   try {
-    await DashboardService.unblockUserApi({ loginName });
+    await DashboardService.unblockUserApiV2({ loginName });
     toast.add({ severity: 'success', summary: '成功', detail: t('成功'), life: 3000 });
     loadChatHistory();
   } catch (error) {

@@ -243,7 +243,7 @@ import { useConfirm } from 'primevue/useconfirm'
 import { uploadImage } from '@/service/image'
 import { useToast } from 'primevue/usetoast'
 const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/promo/'
-const { getSportLiveTeam, createSportLiveTeam, updateSportLiveTeam, deleteSportLiveTeam,createSiteImage } =
+const { getSportLiveTeam, createSportLiveTeam, editSportLiveTeam, deleteSportLiveTeam,createSiteImage } =
   DashboardService
 const { t } = useI18n()
 const confirm = useConfirm()
@@ -300,6 +300,7 @@ const form = reactive({
   nameZh: null,
   nameEn: null,
   icon: null,
+  siteId: 7
 })
 
 function showDialog(type, row = null) {
@@ -346,7 +347,7 @@ async function create() {
 }
 
 async function edit() {
-  await updateSportLiveTeam(form)
+  await editSportLiveTeam(form)
   uiControl.dialogVisible = false
   toast.add({
     severity: 'success',
