@@ -41,10 +41,7 @@
                       </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img
-                            class="promo-content"
-                            :src="(imgURL + promo.mobileImgUrl)"
-                          />
+                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                           <!-- <img class="promo-content" src="../assets/images/promotion/tempo/promo-1.png" /> -->
                         </div>
                       </div>
@@ -58,10 +55,7 @@
                       </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
-                          <img
-                            class="promo-content"
-                            :src="(imgURL + promo.mobileImgUrl)"
-                          />
+                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                           <!-- <img class="promo-content" src="../assets/images/promotion/tempo/promo-1.png" /> -->
                         </div>
                       </div>
@@ -71,20 +65,28 @@
               </div>
             </div>
           </div>
-          <div v-else class="selected-promo">
+          <div v-else class="selected-promo" :class="{ 'no-padding': selectedParam.hidetitle }">
             <div v-if="isFetchingPromo" class="spinner-container">
               <q-spinner color="yellow" size="70px" :thickness="5" />
             </div>
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
-              <div class="banner-container">
+              <div v-if="selectedPromo.redirectUrl !== 'spin-lucky-wheel'" class="banner-container">
                 <img
                   class="promo-content"
-                  :src="(imgURL + selectedPromo.mobileBannerUrl)"
+                  :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
                 />
               </div>
-              <div class="inner">
+              <div
+                class="inner"
+                :class="{
+                  isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel',
+                  envelope:
+                    selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope',
+                  wheel: selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel'
+                }"
+              >
                 <div
                   v-if="selectedPromo.promoType"
                   :class="{
@@ -104,10 +106,18 @@
                     <div class="content-title">{{ selectedPromo.title }}</div>
                   </div>
 
-                  <div class="hot-promo-div" v-if="selectedPromo.hasPromo">
+                  <div
+                    class="hot-promo-div"
+                    :class="{
+                      isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel'
+                    }"
+                    v-if="selectedPromo.hasPromo"
+                  >
                     <HotPromotion :list="selectedPromo" />
                   </div>
-                  <div v-html="selectedPromo.pageContent"></div>
+                  <div v-if="selectedPromo.redirectUrl !== 'spin-lucky-wheel'">
+                    <div v-html="selectedPromo.pageContent"></div>
+                  </div>
 
                   <div
                     class="join-container"
@@ -1164,12 +1174,20 @@ export default defineComponent({
         font-size: 12px;
         padding-bottom: 40px;
 
-        &.spin-lucky-wheel-envelope {
-          background: url("../assets/images/promotion/spin-lucky-wheel/envelope-stage/bg.png") no-repeat top center;
-          background-size: cover;
+        &.isSpinLuckyWheel {
           width: 100%;
           margin-top: 0;
           padding-bottom: 0;
+
+          &.envelope {
+            background: url("../assets/images/promotion/spin-lucky-wheel/envelope-stage/bg.png") no-repeat top center;
+            background-size: cover;
+          }
+
+          &.wheel {
+            background: url("../assets/images/promotion/spin-lucky-wheel/wheel-stage/promo-bg.png") no-repeat;
+            background-size: 100% auto;
+          }
         }
 
         p {
@@ -1214,7 +1232,7 @@ export default defineComponent({
           display: block;
         }
 
-        .hot-promo-div img {
+        .hot-promo-div:not(.isSpinLuckyWheel) img {
           width: initial;
           display: initial;
           margin-bottom: initial;

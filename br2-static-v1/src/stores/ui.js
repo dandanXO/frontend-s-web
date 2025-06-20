@@ -15,7 +15,8 @@ export const useUI = defineStore("ui-store", {
       maintenanceStartTime: "",
       maintenanceEndTime: "",
       firstScreenLoading: !!sessionStorage.getItem("FIRST_SCREEN_CACHE") || true,
-      loginView: ""
+      loginView: "",
+      promoBg: ""
     };
   },
   actions: {

@@ -14,7 +14,7 @@
   border: none;
   font-size: 20px;
   font-weight: 700;
-  color: #8a2c05;
+  color: #f9f9f9;
 }
 
 @media screen and (max-width: 375px) {

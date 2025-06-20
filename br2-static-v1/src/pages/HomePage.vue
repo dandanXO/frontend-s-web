@@ -18,7 +18,7 @@
       data-aos="fade-in"
       data-aos-duration="1200"
       data-aos-once="true"
-      style="padding:15px;"
+      style="padding: 15px"
     >
       <q-carousel-slide
         v-for="(banner, i) in banners"
@@ -27,7 +27,7 @@
         class="column no-wrap flex-center"
         :img-src="returnBannerUrl(banner)"
         @click="gotoPromo(banner)"
-        style="background-color:#151D23;border-radius:16px;"
+        style="background-color: #151d23; border-radius: 16px"
       ></q-carousel-slide>
 
       <template v-slot:navigation-icon="{ active, onClick }">
@@ -87,13 +87,17 @@
             infinite
             :autoplay="3000"
           >
-            <q-carousel-slide
-              v-for="(promo, i) in hbPromo"
-              :key="i"
-              :name="i"
-              @click="gotoFloatPromo(promo)"
-              :img-src="`${imgURL}/promo/${promo.icon}`"
-            ></q-carousel-slide>
+            <q-carousel-slide v-for="(promo, i) in hbPromo" :key="i" :name="i" @click="gotoFloatPromo(promo)" style="padding: 0">
+              <template v-if="promo.code === 'spin-lucky-wheel' && !isShowSticky">
+                <SpinLuckyWheelPromoSticky style="width: 100%" />
+              </template>
+              <template v-else-if="promo.code === 'spin-lucky-wheel' && isShowSticky">
+                <img :src="promo.icon" />
+              </template>
+              <template v-else>
+                <img :src="promo.icon" />
+              </template>
+            </q-carousel-slide>
           </q-carousel>
         </div>
       </div>
@@ -547,7 +551,7 @@
           <div class="title-game revamp">
             <div><img src="../assets/images/index/title-icon-fish.png" width="34" /></div>
             <span class="txt-style">{{ $t("home.cat_fishing") }}</span>
-             <div v-if="category.title === 'Lobby' && category.active" class="side">
+            <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div :class="`custom-fish-prev`"><img src="../assets/images/index/rgtarrow.svg" /></div>
               <div :class="`custom-fish-next`"><img src="../assets/images/index/rgtarrow.svg" /></div>
             </div>
@@ -682,7 +686,9 @@
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${
+                              store.h5Url
+                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         }
                       })()
@@ -709,7 +715,9 @@
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${
+                              store.h5Url
+                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         }
                       })()
@@ -736,7 +744,9 @@
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(${store.h5Url}static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(${
+                              store.h5Url
+                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         }
                       })()
@@ -1069,8 +1079,20 @@
   </q-dialog>
 
   <!-- Spin Lucky Wheel promo start -->
-  <HomePopup ref="spinLuckyWheelPromoPopupRef" />
-  <SpinLuckyWheelPromoSticky v-if="store.spinWheelLuckyPromoInfo?.status === 'IN_PROGRESS'" />
+  <q-dialog
+    v-if="popupPromo === 'spin-lucky-wheel' && isShownSpinLuckyWheel"
+    full-width
+    :model-value="isShownSpinLuckyWheel"
+    class="isCentreDialog spin-lucky-wheel-dialog"
+    persistent
+  >
+    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
+    <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">
+      <!-- <template #controller>
+        <PopupController v-model="popupPromo" :hasSpin="true" />
+      </template> -->
+    </SpinLuckyWheelPromoHomePopup>
+  </q-dialog>
   <!-- Spin Lucky Wheel promo end -->
 </template>
 
@@ -1087,12 +1109,13 @@ import { App } from "@capacitor/app";
 import OneSignal from "onesignal-cordova-plugin";
 import PushNotification from "../components/modal/PushNotification.vue";
 import { useUI } from "stores/ui";
+import { usePromoStore } from "stores/promo";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
-import HomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import SpinLuckyWheelPromoHomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
 import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
@@ -1105,6 +1128,8 @@ import { useLocalStorage } from "@vueuse/core";
 import { t } from "../boot/lang";
 // Import Swiper modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Grid } from "swiper/core";
+import { isAndroid } from "src/boot/utils";
+import { storeToRefs } from "pinia";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Grid, Scrollbar, Navigation, Pagination]);
@@ -1124,6 +1149,10 @@ const isDraggingCsIcon = ref(false);
 const slide = ref(0);
 
 const isFirstView = ref(false);
+
+const promoStore = usePromoStore();
+const { isShownSpinLuckyWheel, isShowSticky } = storeToRefs(promoStore);
+
 const closeAlert = () => {
   // Create a new date object in GMT+5.5
   const currentTimeInGMT55 = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
@@ -2604,7 +2633,7 @@ const gotoSignUp = () => {
   router.push("/register");
 };
 
-const spinLuckyWheelPromoPopupRef = ref();
+const spinLuckyWheelPromoHomePopupRef = ref();
 const download_url = ref("");
 const isAppUpdateModal = ref(false);
 const isOutdatedApp = ref(false);
@@ -2830,7 +2859,12 @@ const loadAppTabs = () => {
 const hbDragPos = ref([10, 120]);
 const isHbShow = ref(true);
 const hbSlide = ref(0);
-const hbPromo = ref([]);
+
+const floatPromo = ref([]);
+const hbPromo = computed(() => {
+  const result = [...floatPromo.value];
+  return result;
+});
 
 const checkSpinLuckyWheelPromo = async () => {
   if (store.token) {
@@ -2843,8 +2877,8 @@ const checkSpinLuckyWheelPromo = async () => {
     sessionStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
   }
 
-  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
-    spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP") && spinLuckyWheelPromoHomePopupRef.value) {
+    spinLuckyWheelPromoHomePopupRef.value.checkIsCanShowPopup();
   }
 };
 
@@ -2855,7 +2889,18 @@ const checkHbPromo = () => {
       return res;
     })
     .then((data) => {
-      hbPromo.value = data.data;
+      floatPromo.value = data.data.reduce((result, promo) => {
+        if (
+          promo.code !== "pak-mega-sharing-wheel" ||
+          (promo.code === "pak-mega-sharing-wheel" && store.token && ui.promo_megaspin === "1")
+        ) {
+          result.push({
+            ...promo,
+            icon: `${imgURL}/promo/${promo.icon}`
+          });
+        }
+        return result;
+      }, []);
     });
 };
 
@@ -2867,6 +2912,9 @@ const gotoFloatPromo = (val) => {
         router.push(page);
       } else if (val.code === "/activity-details") {
         router.push(`/activity-details`);
+      } else if (val.code === "spin-lucky-wheel") {
+        popupPromo.value = "spin-lucky-wheel";
+        isShownSpinLuckyWheel.value = true;
       } else {
         router.push(`/promo?name=${val.code}`);
       }
@@ -2882,8 +2930,58 @@ const gotoFloatPromo = (val) => {
 
 let intervalId;
 
+watch(
+  () => promoStore.isShownSpinLuckyWheel,
+  async (val) => {
+    await nextTick();
+    if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
+  }
+);
+
+const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP") && spinLuckyWheelPromoHomePopupRef.value) {
+    spinLuckyWheelPromoHomePopupRef.value.checkIsCanShowPopup();
+  }
+};
+
+const isShowPrizeModal = ref(false);
+const popupPromo = ref("");
+
+const checkSpinWheel = () => {
+  if (store.hasToken() && isAndroid()) {
+    setTimeout(() => {
+      showSpinWheel();
+    }, 750);
+  }
+};
+
+const showSpinWheel = () => {
+  eventapi
+    .get("/new-user-roulette/init")
+    .then((res) => {
+      if (res.code == 0) {
+        if (res.data.hasUnusedCoupon === "YES") {
+          isShowPrizeModal.value = true;
+        } else if (res.data.showRoulette === "YES") {
+          // isLuckyDrawModal.value = true;
+          if (!promoStore.isShownSpinLuckyWheel) {
+            popupPromo.value = "lucky-spin-wheel";
+          }
+        }
+      }
+    })
+    .catch((err) => {
+      console.log("error", err);
+    });
+};
+
 onActivated(() => {
   store.getUnreadTotal();
+  if (route.query.login === "true" || route.query.register === "true") {
+    //TODO: change back.
+    // popupPromo.value = "money-rain";
+    popupPromo.value = "spin-lucky-wheel";
+  }
 });
 
 onMounted(() => {
@@ -3083,7 +3181,12 @@ onBeforeUnmount(() => {
 
   .station-notice-wrapper {
     display: flex;
-    background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.11) 50.48%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(
+      270deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.11) 50.48%,
+      rgba(255, 255, 255, 0) 100%
+    );
     gap: 10px;
     padding: 2px 10px;
     justify-content: center;
@@ -3120,7 +3223,7 @@ onBeforeUnmount(() => {
 }
 
 .jackpot-banner {
-  background: url('../assets/images/index/jackpot-banner.svg') center center no-repeat;
+  background: url("../assets/images/index/jackpot-banner.svg") center center no-repeat;
   background-size: 100% 100%;
   aspect-ratio: 355/42;
   position: relative;
@@ -3140,7 +3243,7 @@ onBeforeUnmount(() => {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(180deg, #FFC27A 32.14%, #FFEA9C 60.71%, #FFEEAF 89.29%);
+      background: linear-gradient(180deg, #ffc27a 32.14%, #ffea9c 60.71%, #ffeeaf 89.29%);
       width: 15px;
       height: 20px;
       color: #0a4d13;
@@ -3397,7 +3500,7 @@ onBeforeUnmount(() => {
 
 .announcement-card {
   height: 400px;
-  background: #1F241F;
+  background: #1f241f;
   color: #fff;
   border-radius: 10px;
   overflow-y: auto;
@@ -3406,7 +3509,7 @@ onBeforeUnmount(() => {
     font-size: 18px;
   }
 
-  .q-tab{
+  .q-tab {
     color: #fff;
   }
 
@@ -3764,7 +3867,7 @@ onBeforeUnmount(() => {
     &.revamp {
       margin: 0;
       padding: 10px;
-      background: url('../assets/images/index/game-cat-section-header.png') center center no-repeat;
+      background: url("../assets/images/index/game-cat-section-header.png") center center no-repeat;
       background-size: 100% 100%;
       min-height: 40px;
       width: 100%;
@@ -3932,7 +4035,7 @@ onBeforeUnmount(() => {
   padding-bottom: 10px;
 
   &.revamp {
-    background-color: #1F241F;
+    background-color: #1f241f;
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
     padding: 10px;
@@ -4050,11 +4153,6 @@ onBeforeUnmount(() => {
   background: transparent;
   overflow: hidden;
 
-  .q-carousel__slide {
-    height: 100px !important;
-    width: 100px;
-    padding: 0px;
-  }
 
   img {
     height: 100px !important;
@@ -4070,7 +4168,6 @@ onBeforeUnmount(() => {
 
   img {
     width: 100%;
-    max-width: 70px;
   }
 }
 
@@ -4219,7 +4316,7 @@ onBeforeUnmount(() => {
 }
 
 .cat-selection-item {
-  background: url('../assets/images/index/cat-selection-bg.svg') center center no-repeat;
+  background: url("../assets/images/index/cat-selection-bg.svg") center center no-repeat;
   background-size: 100% 100%;
   width: 80px;
   height: 70px;
@@ -4233,11 +4330,11 @@ onBeforeUnmount(() => {
   min-width: 100%;
 
   &.active {
-    background: url('../assets/images/index/cat-selection-bg-active.svg') center center no-repeat;
+    background: url("../assets/images/index/cat-selection-bg-active.svg") center center no-repeat;
     background-size: 100% 100%;
 
     .cat-title {
-      color: #10211F;
+      color: #10211f;
     }
   }
 
@@ -4259,7 +4356,7 @@ onBeforeUnmount(() => {
     color: #bfc3c9;
     letter-spacing: 0.5px;
     white-space: nowrap;
-    font-family: 'Poppins';
+    font-family: "Poppins";
     font-weight: 500;
     font-size: 12px;
     text-align: center;
