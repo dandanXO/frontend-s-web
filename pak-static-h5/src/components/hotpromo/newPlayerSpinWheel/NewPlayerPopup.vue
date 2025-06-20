@@ -2,22 +2,10 @@
 
 <div class="spin-lucky-container">
   <div class="controller-wrapper">
-      <slot name="controller" />
-    </div>
-    <div class="spin-lucky-wheel-promo-popup-wrapper">
-      <div class="banner-wrapper">
-        <div class="pulse1"></div>
-        <div class="pulse2"></div>
-        <div class="pulse3"></div>
-        <div class="pulse4"></div>
-        <div class="pulse5"></div>
-        <img
-          @click="goToPromo"
-          class="banner"
-          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/home-popup.gif"
-        />
-      </div>
-    </div>
+    <slot name="controller" />
+  </div>
+  <img class="myhand hover-bounce" src="./img/myhand.png" style="position: absolute;">
+  <NewPlayerWheel :isHomePopup="true" :hasUnusedCoupon="props.hasUnusedCoupon"  />
   </div>
 </template>
 <script setup>
@@ -25,49 +13,53 @@ import { ref, onMounted, onActivated } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { defineEmits } from "vue";
+import NewPlayerWheel from "./NewPlayerWheel.vue";
 import moment from "moment";
+const props = defineProps([
+  "hasUnusedCoupon"
+])
 const emits = defineEmits(["closeDialog"]);
 const store = userStore();
 const isDoNotShowAgain = ref(false);
 
-const isShowSpinLuckyWheelPromoPopup = ref(false);
+const isShowNewPlayerWheelPromoPopup = ref(false);
 const onCloseSpinLuckyWheelPromoPopup = () => {
   if (isDoNotShowAgain.value) {
-    localStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", Date.now());
-    isShowSpinLuckyWheelPromoPopup.value = false;
+    localStorage.setItem("NEW_PLAYER_WHEEL_POPUP", Date.now());
+    isShowNewPlayerWheelPromoPopup.value = false;
   }
 
-  sessionStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", "1");
+  sessionStorage.setItem("NEW_PLAYER_WHEEL_POPUP", "1");
 };
 
 const checkIsCanShowPopup = () => {
   console.log("Checking if can show popup...");
-  if (localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+  if (localStorage.getItem("NEW_PLAYER_WHEEL_POPUP")) {
     console.log("Do not show again status ongoing...");
     return;
   }
 
-  if (sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+  if (sessionStorage.getItem("NEW_PLAYER_WHEEL_POPUP")) {
     console.log("Do not show again status ongoing...");
     return;
   }
 
   if (store.hasToken()) {
     setTimeout(() => {
-      isShowSpinLuckyWheelPromoPopup.value = true;
+      isShowNewPlayerWheelPromoPopup.value = true;
     }, 750);
   }
 };
 
 const checkExpirationTime = () => {
-  const preTimeStr = localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP");
+  const preTimeStr = localStorage.getItem("NEW_PLAYER_WHEEL_POPUP");
   if (preTimeStr) {
     const currTime = moment().startOf("day");
     const prevTime = moment(Number(preTimeStr));
     const diff = currTime.diff(prevTime, "milliseconds");
 
     if (diff > 0) {
-      localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
+      localStorage.removeItem("NEW_PLAYER_WHEEL_POPUP");
       isDoNotShowAgain.value = false;
     }
   }
@@ -94,6 +86,33 @@ defineExpose({
 });
 </script>
 <style lang="scss" scoped>
+.myhand {
+  
+    position: absolute;
+    z-index: 99999;
+    width: 70px;
+    left: 50%;
+    top: 74%;
+    pointer-events: none;
+}
+  .hover-bounce {
+    animation: bounce 1.5s infinite;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .hover-bounce:hover {
+    transform: scale(1.05);
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
 .spin-lucky-wheel-promo-popup-wrapper {
   position: relative;
   display: flex;
@@ -169,15 +188,21 @@ defineExpose({
 
 
 .spin-lucky-container {
+  background: url(../../../assets/images/promotion/hotpromo/bonus-spinwheel/frame-bg.png)no-repeat center center;
+  background-size: contain;
   max-width: 400px;
   width: 100%;
   padding: 16px;
   position: relative;
   overflow: visible;
   border-radius: 12px;
-  .controller-wrapper {
-    width: fit-content;
-    margin: 0 auto 12px;
+  min-height: 640px;
+  margin-top: -75px;
+  .controller-wrapper { 
+    width: fit-content;   
+    margin: 190px auto 100px;
+    max-width: 280px;
+    
   }
 }
 </style>

@@ -13,6 +13,9 @@
     <NewPlayerSpinWheelPromo
       v-if="list.redirectUrl === 'pak-newplayer-welcome-spin' && !isCommonPromo && store.token"
     />
+    <NewPlayerWelcome
+      v-if="list.redirectUrl === 'pak-welcome-new-players' && !isCommonPromo && store.token"
+    />
     <RedPacketRainPromo v-if="list.redirectUrl === 'pak-redpacketrain' && !isCommonPromo && store.token" />
     <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
     <NewPlayersPromo v-if="list.redirectUrl === 'pak-new-players' && !isCommonPromo && store.token" :list="list" />
@@ -72,6 +75,8 @@ import JackpotAviator from "./hotpromo/jackpotAviator/JackpotAviator.vue";
 import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
 import NewPlayerAccDepositPromo from "./hotpromo/new-player-acc-deposit/NewPlayerAccDepositPromo.vue"
 import Lucky9DayRewardsCarnival from "./hotpromo/lucky9day/Lucky9DayRewardsCarnival.vue"
+import NewPlayerWelcome from "../components/hotpromo/newPlayerSpinWheel/NewPlayerWheelPromo.vue"
+
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -92,7 +97,8 @@ export default defineComponent({
     DepositSpinnerRewards,
     SpinLuckyWheelPromo,
     NewPlayerAccDepositPromo,
-    Lucky9DayRewardsCarnival
+    Lucky9DayRewardsCarnival,
+    NewPlayerWelcome
   },
   props: {
     list: {
@@ -158,6 +164,7 @@ export default defineComponent({
       this.list.redirectUrl === "spin-lucky-wheel" ||
       this.list.redirectUrl === "new-player-acc-deposit" ||
       this.list.redirectUrl === "pak-lucky-10-day-bonus" ||
+      this.list.redirectUrl === "pak-welcome-new-players" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
