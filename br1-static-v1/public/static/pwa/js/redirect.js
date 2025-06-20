@@ -1,11 +1,10 @@
 import { PWA_DATA_KEY, domainLists } from "./const.js";
 
 export function getRedirectInfo() {
-
   const origin = window.location.origin;
   const searchParams = new URLSearchParams(window.location.search);
   const savedAffiliateCode = localStorage.getItem("PWA_AFFILIATE_CODE");
-  const affiliateCode = searchParams.get("p0") || searchParams.get("id") || savedAffiliateCode || "77A4DF";
+  const affiliateCode = searchParams.get("p0") || searchParams.get("id") || savedAffiliateCode || "C402D4";
   try {
     const savedRedirectInfo = JSON.parse(localStorage.getItem(PWA_DATA_KEY));
     if (!savedRedirectInfo) throw new Error();
