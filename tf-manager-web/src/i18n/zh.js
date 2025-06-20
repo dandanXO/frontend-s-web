@@ -274,6 +274,8 @@ export default {
       CANCEL: '已取消',
       PENDING: '待定',
       DELAYED: '延期',
+      DELETE: '已删除',
+      ABANDONED: '腰斩',
       OTHER: '其他',
     },
   },

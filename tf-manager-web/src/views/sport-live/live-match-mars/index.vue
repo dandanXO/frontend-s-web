@@ -114,6 +114,8 @@
           <el-tag v-else-if="currentRow.status === 'pending'" type="danger">{{ t('status.marsMatch.PENDING') }}</el-tag>
           <el-tag v-else-if="currentRow.status === 'upcoming'" type="warning">{{ t('status.marsMatch.NOT_STARTED') }}</el-tag>
           <el-tag v-else-if="currentRow.status === 'delayed'" type="danger">{{ t('status.marsMatch.DELAYED') }}</el-tag>
+          <el-tag v-else-if="currentRow.status === 'delete'" type="danger">{{ t('status.marsMatch.DELETE') }}</el-tag>
+          <el-tag v-else-if="currentRow.status === 'abandoned'" type="danger">{{ t('status.marsMatch.ABANDONED') }}</el-tag>
           <el-tag v-else type="default">{{ t('status.marsMatch.OTHER') }}</el-tag>
         </el-form-item>
         <div class="dialog-footer">
@@ -189,6 +191,8 @@
           <el-tag v-else-if="scope.row.status === 'pending'" type="danger">{{ t('status.marsMatch.PENDING') }}</el-tag>
           <el-tag v-else-if="scope.row.status === 'upcoming'" type="warning">{{ t('status.marsMatch.NOT_STARTED') }}</el-tag>
           <el-tag v-else-if="scope.row.status === 'delayed'" type="danger">{{ t('status.marsMatch.DELAYED') }}</el-tag>
+          <el-tag v-else-if="scope.row.status === 'delete'" type="danger">{{ t('status.marsMatch.DELETE') }}</el-tag>
+          <el-tag v-else-if="scope.row.status === 'abandoned'" type="danger">{{ t('status.marsMatch.ABANDONED') }}</el-tag>
           <el-tag v-else type="default">{{ t('status.marsMatch.OTHER') }}</el-tag>
         </template>
       </el-table-column>
@@ -242,7 +246,9 @@ const uiControl = reactive({
     { key: 'past', displayName: t('status.marsMatch.ENDED'), value: 'past' },
     { key: 'pending', displayName: t('status.marsMatch.PENDING'), value: 'pending' },
     { key: 'cancel', displayName: t('status.marsMatch.CANCEL'), value: 'cancel' },
-    { key: 'delayed', displayName: t('status.marsMatch.DELAYED'), value: 'delayed' }
+    { key: 'delayed', displayName: t('status.marsMatch.DELAYED'), value: 'delayed' },
+    { key: 'delete', displayName: t('status.marsMatch.DELETE'), value: 'delete' },
+    { key: 'abandoned', displayName: t('status.marsMatch.ABANDONED'), value: 'abandoned' }
   ],
   isSupplierStreamUrlExist: [
     { key: true, displayName: t('fields.yes'), value: true },
