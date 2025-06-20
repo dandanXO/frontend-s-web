@@ -4336,9 +4336,6 @@ watch(() => isAdditionalWithdrawSteps.value, checkWithdrawStep, { immediate: fal
 const afterActivated = useCustomerTrigger(() => {
   checkShowImgTop();
   checkHbPromo();
-  if (store.hasToken()) {
-    showSpinWheel();
-  }
 });
 
 const downloadAppRef = ref();
@@ -4394,6 +4391,9 @@ onActivated(() => {
   store.getUnreadTotal();
   checkHash();
 
+  if (store.hasToken()) {
+    showSpinWheel();
+  }
   // checkSpinWheel();
   checkGoogleLoginSetPwd();
 
