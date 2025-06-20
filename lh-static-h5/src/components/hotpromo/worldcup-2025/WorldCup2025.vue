@@ -569,7 +569,7 @@ watch(list, () => {
 }, { immediate: true });
 
 const showNotStart = computed(() => {
-  return moment(currentListItem.value.matchTime).isAfter(moment());
+  return moment(currentListItem.value.startTime).isAfter(moment());
 });
 
 const tableRecordDialog = ref(false);
