@@ -313,12 +313,12 @@
       <el-table-column
         prop="id"
         :label="t('fields.platformMatchId')"
-        width="50"
+        width="150"
       />
       <el-table-column
         prop="sportId"
         :label="t('fields.sportType')"
-        width="50"
+        width="150"
         :formatter="formatSportType"
       />
       <el-table-column prop="title" :label="t('fields.title')" width="250" />

@@ -2650,6 +2650,7 @@ export default {
     isCdnPush: '推送 CDN',
     box: '回合',
     isCreateLiveUrl: '是否生产推流地址  (是/否)',
+    isLiveUrlExist: '是否推流',
     addToLive: '添加到直播',
     initialSupplierStreamStatus: '初始厂商流状态',
     isTestEvent: '是否为测试赛事',

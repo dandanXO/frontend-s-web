@@ -36,6 +36,20 @@
           style="width: 200px; margin-left: 10px"
           :placeholder="t('fields.name')"
         />
+        <el-select
+          v-model="request.supplierStreamUrl"
+          size="small"
+          :placeholder="t('fields.isLiveUrlExist')"
+          class="filter-item"
+          style="width: 120px; margin-left: 10px"
+        >
+          <el-option
+            v-for="item in uiControl.isSupplierStreamUrlExist"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -227,6 +241,10 @@ const uiControl = reactive({
     { key: 'pending', displayName: t('status.marsMatch.PENDING'), value: 'pending' },
     { key: 'cancel', displayName: t('status.marsMatch.CANCEL'), value: 'cancel' }
   ],
+  isSupplierStreamUrlExist: [
+    { key: true, displayName: t('fields.yes'), value: true },
+    { key: false, displayName: t('fields.no'), value: false }
+  ],
   removeBtn: true,
 });
 
@@ -254,7 +272,8 @@ const request = reactive({
   size: 30,
   sportId: null,
   status: null,
-  matchName: null
+  matchName: null,
+  supplierStreamUrl: null
 });
 
 const page = reactive({
@@ -358,6 +377,7 @@ function resetQuery() {
   request.sportId = null
   request.status = null
   request.matchName = null
+  request.supplierStreamUrl = null
 }
 
 function changePage(page) {
