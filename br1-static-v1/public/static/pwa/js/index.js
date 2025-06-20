@@ -54,12 +54,14 @@ installBtn.addEventListener("click", async () => {
       // if (referralSpin) {
       //   localStorage.setItem("SPIN_REFERRAL_CODE", referralSpin);
       // }
+      if (click_id) {
+        localStorage.setItem("click_id", click_id);
+      }
       if (referral) {
         localStorage.setItem("PWA_REFERRAL_CODE", referral);
       }
       if (fbclid) {
         localStorage.setItem("fbclid", fbclid);
-        localStorage.setItem("click_id", click_id);
 
         // Retrieve _fbp directly
         const getCookie = (name) => {
