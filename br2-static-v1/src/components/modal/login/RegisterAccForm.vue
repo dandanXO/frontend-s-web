@@ -70,7 +70,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onActivated } from "vue";
+import { ref, onActivated, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useQuasar, Platform } from "quasar";
@@ -90,7 +90,7 @@ const passwordRef = ref();
 const phone = ref("");
 const password = ref("");
 const isShowPassword = ref(false);
-const isAgreeReg = ref(false);
+const isAgreeReg = ref(true);
 
 const codeAffiliate = ref("");
 const referrer = ref("");
@@ -237,7 +237,7 @@ const getCode = () => {
 
 const getAffiliateCode = () => {
   const affCode = sessionStorage.getItem("AFFILIATE_CODE");
-  if (affCode.value) {
+  if (affCode) {
     codeAffiliate.value = affCode;
   }
 };
@@ -248,7 +248,7 @@ const getReferralCode = () => {
   }
 };
 
-onActivated(() => {
+onMounted(() => {
   getCode();
   getReferralCode();
   getAffiliateCode();
