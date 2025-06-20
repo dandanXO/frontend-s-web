@@ -267,6 +267,13 @@ export default {
       OTHER: '其他',
       ADD_TO_LIVE: '添加到直播',
     },
+    marsMatch: {
+      NOT_STARTED: '未开赛',
+      ONGOING: '进行中',
+      ENDED: '完场',
+      CANCEL: '已取消',
+      PENDING: '待定',
+    },
   },
   betStatus: {
     BET: '下注',
@@ -3490,7 +3497,8 @@ export default {
     'Sport Live Monitor': '体育直播监控',
     'Sport Live Admin': '主播后台管理员设定',
     'Member Refer Stat Analysis': '邀请返佣分析',
-    'Member Refer Relation': '邀请关系查询'
+    'Member Refer Relation': '邀请关系查询',
+    'Sport Live Match Mars': '赛事资讯 - Mars',
   },
   google: {
     google_auth_menu: '谷歌验证',

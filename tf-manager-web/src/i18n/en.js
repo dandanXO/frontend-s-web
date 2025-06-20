@@ -260,6 +260,13 @@ export default {
       PENDING: 'Pending',
       OTHER: 'Other',
     },
+    marsMatch: {
+      NOT_STARTED: 'Not Started',
+      ONGOING: 'Ongoing',
+      ENDED: 'Ended',
+      CANCEL: 'Cancel',
+      PENDING: 'Pending',
+    },
   },
   betStatus: {
     BET: 'BET',
@@ -3539,7 +3546,8 @@ export default {
     'Sport Live Monitor': 'Sport Live Monitor',
     'Sport Live Admin': 'Sport Live Admin Setting',
     'Member Refer Stat Analysis': 'Refer Friend Analysis',
-    'Member Refer Relation': 'Refer Relation Query'
+    'Member Refer Relation': 'Refer Relation Query',
+    'Sport Live Match Mars': 'Sport Live Match Mars',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
