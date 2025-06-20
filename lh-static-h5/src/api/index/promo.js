@@ -639,7 +639,7 @@ export function claimIemMelbourne2025Bonus(promoCode) {
 }
 
 export function getPglWallachiaS4Bonus(promoCode) {
-  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+  return eventapi.get(`/session/competition/today?promoCode=${promoCode}`);
 }
 export function claimPglWallachiaS4Bonus(promoCode) {
   return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
