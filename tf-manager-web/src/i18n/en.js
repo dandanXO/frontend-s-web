@@ -266,6 +266,10 @@ export default {
       ENDED: 'Ended',
       CANCEL: 'Cancel',
       PENDING: 'Pending',
+      DELAYED: 'Delayed',
+      DELETE: 'Delete',
+      ABANDONED: 'Abandoned',
+      OTHER: 'Other',
     },
   },
   betStatus: {
