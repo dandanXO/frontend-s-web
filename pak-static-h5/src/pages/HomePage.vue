@@ -1210,22 +1210,33 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" class="flex-end announcement-modal" v-model="isStationNotice">
-    <div class="announcement-top-img"><img src="../assets/images/index/notice-icon.png" /></div>
-    <div class="popout-dialog announcement-popout">
+  <q-dialog width="100%" class="announcement-modal" v-model="isStationNotice">
+    <div class="popout-dialog announcement-popout" style="width:375px;height:559px;">
+      <!-- <div class="announcement-top-img"><img src="../assets/images/index/notice-icon.png" /></div> -->
+
       <q-btn flat dense icon="close" class="text-black announcement-close" v-close-popup />
-      <q-card :class="{ wPage: maxPage > 1 }" style="width: calc(100% - 0px); margin: auto" class="announcement-card">
+      <q-card :class="{ wPage: maxPage > 1 }" style="width: 90%; margin: auto" class="announcement-card">
         <q-card-section style="max-height: 100%; overflow: auto">
           <!--     -->
           <q-card
             v-for="(item, index) in paginatedAnnouncements"
-            :key="index"
+            :key="`${page}` - `${index}`"
             class="q-mb-md announcement-item-card"
+            :class="{ isExpanded: item.expanded }"
             flat
             bordered
           >
+            <q-card-section v-if="!item.expanded" class="row items-center justify-between q-pb-none">
+              <div class="announcement-icon" style="color: #000000">
+                <!-- <img :src="`../assets/images/index/type-${item.typeId}.png`"> -->
+                <img
+                  :src="require(`../assets/images/index/type-${item.typeId}.png`)"
+                  onerror="this.onerror=null;this.src='../assets/images/index/type-56.png';"
+                />
+              </div>
+            </q-card-section>
             <q-card-section class="row items-center justify-between q-pb-none">
-              <div class="text-title" style="color: #15c55d" v-html="item.title"></div>
+              <div class="text-title" style="color: #000000" v-html="item.title"></div>
             </q-card-section>
 
             <q-card-section class="text-caption">
@@ -1245,26 +1256,36 @@
               </div>
             </q-card-section>
 
-            <div class="text-date">{{ moment(item.createTime).format("DD/MM/YYYY") }}</div>
-            <q-card-actions style="margin: 0px 5px 0 0; padding: 0" align="right">
-              <div
-                class="announcement-new"
-                :class="{ show: checkTime(item.createTime) && !item.hasBeenExpanded }"
-              ></div>
-              <q-btn
-                dense
-                size="sm"
-                flat
-                style="
-                  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-                  color: #ffffff;
-                  padding-right: 2px;
-                  border-radius: 6px;
-                "
-                :label="item.expanded ? 'close' : 'more'"
-                :icon-right="item.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
-                @click="toggleExpanded(index)"
-              />
+            <q-card-actions class="lastitem" align="right">
+              <div class="closemore-btns">
+                <div
+                  class="announcement-new"
+                  :class="{ show: checkTime(item.createTime) && !item.hasBeenExpanded }"
+                ></div>
+                <!-- <q-btn
+                  dense
+                  size="sm"
+                  flat
+                  style="
+                    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+                    color: #ffffff;
+                    padding-right: 2px;
+                    border-radius: 6px;
+                  "
+                  :label="item.expanded ? 'close' : 'more'"
+                  :icon-right="item.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
+                  @click="toggleExpanded(index)"
+                /> -->
+                <img
+                  @click="toggleExpanded(index)"
+                  :src="
+                    require(item.expanded
+                      ? `../assets/images/index/btn-close.png`
+                      : `../assets/images/index/btn-more.png`)
+                  "
+                />
+              </div>
+              <div class="text-date">{{ moment(item.createTime).format("DD/MM/YYYY") }}</div>
             </q-card-actions>
           </q-card>
           <!-- <q-tab-panels v-model="activeKey" animated>
@@ -1294,10 +1315,8 @@
         </q-card-section>
       </q-card>
 
-      <q-separator />
-
-      <q-card-actions v-if="maxPage > 1" class="q-px-lg" align="right">
-        <q-pagination v-model="page" :max="maxPage" :max-pages="7" boundary-numbers />
+      <q-card-actions v-if="maxPage > 1" class="q-px-lg" align="center" style="padding:0;">
+        <q-pagination class="pagiantion" v-model="page" :max="maxPage" :max-pages="7" boundary-numbers />
       </q-card-actions>
     </div>
   </q-dialog>
@@ -3769,8 +3788,8 @@ function checkTime(time) {
   const givenDate = new Date(time);
   const today = new Date();
   today.setDate(today.getDate() - 1);
-  console.log("Given:", givenDate);
-  console.log("Today:", today);
+  // console.log("Given:", givenDate);
+  // console.log("Today:", today);
   return (
     givenDate.getFullYear() === today.getFullYear() &&
     givenDate.getMonth() === today.getMonth() &&
@@ -3820,8 +3839,10 @@ const paginatedAnnouncements = computed(() => {
 
 const maxPage = computed(() => Math.ceil(announcementList.value.length / pageSize));
 function toggleExpanded(index) {
-  announcementList.value[index].hasBeenExpanded = true;
-  announcementList.value[index].expanded = !announcementList.value[index].expanded;
+  const indexWithPagination = (page.value - 1) * pageSize + index;
+  const targetAnouncement = announcementList.value[indexWithPagination];
+  targetAnouncement.hasBeenExpanded = true;
+  targetAnouncement.expanded = !targetAnouncement.expanded;
   checkForNewAnnouncements();
   saveToLocalStorage();
 }
@@ -4914,7 +4935,16 @@ const checkGoogleLoginSetPwd = () => {
     flex: 1;
   }
 }
-
+.pagiantion {
+  :deep(.q-btn) {
+    background-color: #85c498;
+  }
+  :deep(.q-btn__content) {
+    color: #000;
+    font-size: 16px;
+    font-weight: 900;
+  }
+}
 .welcome-bar {
   display: flex;
   padding: 10px;
@@ -5147,8 +5177,10 @@ const checkGoogleLoginSetPwd = () => {
 }
 .announcement-close {
   position: absolute;
-  right: 20px;
-  top: 20px;
+  // right: 20px;
+  // top: 20px;
+  right: 40px;
+    top: 110px;
   z-index: 3;
   background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
 
@@ -5160,39 +5192,37 @@ const checkGoogleLoginSetPwd = () => {
   height: calc(100vh - 108px);
 }
 .announcement-top-img {
-  // margin-bottom: -120px;
-  // width: 200px;
-  //   width: 150px;
-  //   // margin: 0 auto -100px;
-  //   margin: 0px 0 -100px 12px;
-  // z-index: 1;
-  z-index: 1;
-  width: 150px;
-  position: absolute;
-  bottom: 390px;
+  width: 210px;
+  top: -18px;
   left: 0;
-  right: -10px;
+  right: 0;
   margin: auto;
+  position: absolute;
   img {
     width: 100%;
   }
 }
 
 .announcement-popout {
-  height: 450px;
-  background: url(../assets/images/index/notfice-bg.png) no-repeat center top;
+  // height: 470px;
+  background: url(../assets/images/index/notice-bg.png) no-repeat center bottom;
   border-radius: 30px 30px 0 0;
+  height: 580px;
+  background-size: 100% 100%;
+  padding-top: 40px;
 }
 .announcement-card {
   height: 100%;
   &.wPage {
-    height: 90%;
+    height: 85%;
   }
   // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   background: transparent;
   // padding: 120px 20px 20px 20px;
 
-  padding: 65px 10px 0px;
+  // padding: 32% 10px 0px;
+  
+    padding: 33% 10px 5px;
   // overflow-y: auto;
   // background: transparent;
   // background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
@@ -5212,41 +5242,75 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .announcement-card .q-card.announcement-item-card {
-  background: linear-gradient(90deg, rgba(220, 241, 105, 0.7) 0%, rgba(156, 242, 39, 0.7) 100%);
-  border-radius: 6px;
-  padding: 10px 5px;
-  margin: 0 0 10px;
+  // background: linear-gradient(90deg, rgba(220, 241, 105, 0.7) 0%, rgba(156, 242, 39, 0.7) 100%);
+  background: #a7e0b8;
+
+  border-radius: 24px;
+  padding: 4px 12px;
+  margin: 0 0 4px;
+  display: flex;
+  gap: 5px;
+  &:last-child {
+    margin: 0;
+  }
+  .lastitem {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  &.isExpanded {
+    display: block;
+    .lastitem {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row-reverse;
+    }
+  }
   .announcement-new {
     // position: absolute;
     // top: 0;
     // left: 0;
     display: none;
-    padding: 5px;
+    padding: 4px;
     background: #ff0000;
     border-radius: 10px;
-    margin-right: 10px;
+    margin-right: 5px;
     &.show {
       display: block;
     }
   }
+  .closemore-btns {
+    max-width: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 70px;
+    }
+  }
+  .announcement-icon {
+    width: 40px;
+    img {
+      width: 100%;
+    }
+  }
   .text-title {
-    font-weight: bold;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    // width: 70%;
-    width: 100%;
-    height: 20px;
+    font-weight: 900;
+    font-family: "Inter";
+    line-height: 19px;
+    font-size: 16px;
   }
   .text-date {
-    color: #33333399;
+    color: #6e6e6e;
+    font-size: 10px;
     font-weight: bold;
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
+    // position: absolute;
+    // bottom: 10px;
+    // left: 10px;
   }
   .text-caption {
-    color: #333333;
+    color: #312c2c;
     font-size: 14px;
     margin: 5px auto;
   }
