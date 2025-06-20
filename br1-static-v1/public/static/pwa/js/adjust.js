@@ -5,7 +5,7 @@ export const getAdjustUrl = () => {
   const hostname = window.location.hostname.replace("www.", "");
   const affiliateCodeFromDomain = domainLists[hostname]?.affiliateCode;
 
-  const affidValue = searchParams.get("p0") || searchParams.get("id") || affiliateCodeFromDomain || "6805B0";
+  const affidValue = searchParams.get("p0") || searchParams.get("id") || affiliateCodeFromDomain || "";
   const campaignname = searchParams.get("p1") || searchParams.get("campaignname");
   const campaignid = searchParams.get("p2") || searchParams.get("campaignid");
   const adsetname = searchParams.get("p4") || searchParams.get("adsetname");
@@ -19,5 +19,3 @@ export const getAdjustUrl = () => {
 
   return `https://app.adjust.com/${adjustUrlCode}?campaign=${campaignname}%20%28${campaignid}%29&adgroup=${adsetname}%20%28${adsetid}%29&creative=${adname}%20%28${adid}%29&fbclid=${fbclid}&redirect=${apiUrl}?v=${date}`;
 };
-
-
