@@ -266,6 +266,8 @@ export default {
       ENDED: 'Ended',
       CANCEL: 'Cancel',
       PENDING: 'Pending',
+      DELAYED: 'Delayed',
+      OTHER: 'Other',
     },
   },
   betStatus: {

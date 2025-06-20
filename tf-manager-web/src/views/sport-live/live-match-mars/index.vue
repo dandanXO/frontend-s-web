@@ -113,6 +113,7 @@
           <el-tag v-else-if="currentRow.status === 'cancel'" type="warning">{{ t('status.marsMatch.CANCEL') }}</el-tag>
           <el-tag v-else-if="currentRow.status === 'pending'" type="danger">{{ t('status.marsMatch.PENDING') }}</el-tag>
           <el-tag v-else-if="currentRow.status === 'upcoming'" type="warning">{{ t('status.marsMatch.NOT_STARTED') }}</el-tag>
+          <el-tag v-else-if="currentRow.status === 'delayed'" type="danger">{{ t('status.marsMatch.DELAYED') }}</el-tag>
           <el-tag v-else type="default">{{ t('status.marsMatch.OTHER') }}</el-tag>
         </el-form-item>
         <div class="dialog-footer">
@@ -187,6 +188,7 @@
           <el-tag v-else-if="scope.row.status === 'cancel'" type="warning">{{ t('status.marsMatch.CANCEL') }}</el-tag>
           <el-tag v-else-if="scope.row.status === 'pending'" type="danger">{{ t('status.marsMatch.PENDING') }}</el-tag>
           <el-tag v-else-if="scope.row.status === 'upcoming'" type="warning">{{ t('status.marsMatch.NOT_STARTED') }}</el-tag>
+          <el-tag v-else-if="scope.row.status === 'delayed'" type="danger">{{ t('status.marsMatch.DELAYED') }}</el-tag>
           <el-tag v-else type="default">{{ t('status.marsMatch.OTHER') }}</el-tag>
         </template>
       </el-table-column>
@@ -239,7 +241,8 @@ const uiControl = reactive({
     { key: 'live', displayName: t('status.marsMatch.ONGOING'), value: 'live' },
     { key: 'past', displayName: t('status.marsMatch.ENDED'), value: 'past' },
     { key: 'pending', displayName: t('status.marsMatch.PENDING'), value: 'pending' },
-    { key: 'cancel', displayName: t('status.marsMatch.CANCEL'), value: 'cancel' }
+    { key: 'cancel', displayName: t('status.marsMatch.CANCEL'), value: 'cancel' },
+    { key: 'delayed', displayName: t('status.marsMatch.DELAYED'), value: 'delayed' }
   ],
   isSupplierStreamUrlExist: [
     { key: true, displayName: t('fields.yes'), value: true },
