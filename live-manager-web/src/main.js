@@ -5,6 +5,7 @@ import Aura from '@primeuix/themes/aura'
 import './assets/main.scss'
 import 'primeicons/primeicons.css'
 import Toast from 'primevue/toast'
+import ConfirmDialog from 'primevue/confirmdialog';
 import ToastService from 'primevue/toastservice'
 import App from './App.vue'
 import router from './router'

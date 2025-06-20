@@ -481,6 +481,16 @@ export const DashboardService = {
       })
   },
 
+  deleteSportLiveStreamer(request) {
+    const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
+    return api.delete(`/session/live-sport/streamer/${request.teamId}`, {
+      // params: request, // For GET requests, parameters are typically sent as `params`
+      headers: {
+        token: `${token}`,
+      },
+    })
+  },
+
   getSensitiveWordNew(request) {
     const token = sessionStorage.getItem('token')
     return api.get('/session/live-sport/sensitive-word', {
@@ -520,4 +530,59 @@ export const DashboardService = {
       },
     })
   },
+
+  //上傳圖片
+  createSiteImage() {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/siteImage', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+  },
+  //sport-live-event
+  // 獲取運動賽事列表
+  getSportLiveEvents(request) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/live-sport/event', request, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+  },
+
+  // 新增運動賽事
+  createSportLiveEvent(data) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/live-sport/event/save', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+  },
+
+  // 更新運動賽事
+  updateSportLiveEvent(data) {
+    const token = sessionStorage.getItem('token')
+    return api.put('/session/live-sport/event', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+  },
+
+  // 刪除運動賽事
+  deleteSportLiveEvent(id) {
+    const token = sessionStorage.getItem('token')
+    return api.delete(`/session/live-sport/event/${id}`, {
+      headers: {
+        token: `${token}`,
+      },
+    })
+  },
+
 }

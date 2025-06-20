@@ -5,6 +5,7 @@ export const useUserStore = defineStore('user', () => {
   const isAuthLoading = ref(false)
   const loginName = ref('')
   const theme = ref('light')
+  const siteId = ref(7)
 
   onBeforeMount(() => {
     const theme = sessionStorage.getItem('theme')

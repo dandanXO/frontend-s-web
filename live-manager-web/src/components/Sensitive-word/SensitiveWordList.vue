@@ -73,7 +73,7 @@
           <template #body="slotProps">
             <Button 
               icon="pi pi-pencil" 
-              class="p-button-rounded p-button-success mr-2"
+              class="mr-2 p-button-rounded p-button-success"
               @click="editWord(slotProps.data)"
             />
             <Button 
@@ -111,7 +111,7 @@
         :modal="true"
       >
         <div class="confirmation-content">
-          <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+          <i class="mr-3 pi pi-exclamation-triangle" style="font-size: 2rem" />
           <span>確定要刪除此敏感字嗎？</span>
         </div>
         <template #footer>
@@ -137,7 +137,7 @@
   const dialogMode = ref('add') // 'add' 或 'edit'
   const editingWord = ref({
     id: null,
-    siteId: 1,
+    siteId: 7,
     word: ''
   })
   
@@ -178,7 +178,7 @@
     loading.value = false;
     dialogVisible.value = false;
     deleteDialogVisible.value = false;
-    editingWord.value = { id: null, word: '', siteId: 1 };
+    editingWord.value = { id: null, word: '', siteId: 7 };
     filters.value = {
       global: { value: null, matchMode: FilterMatchMode.CONTAINS }
     };

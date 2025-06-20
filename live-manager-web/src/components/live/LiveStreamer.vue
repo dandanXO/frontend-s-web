@@ -95,7 +95,7 @@
               size="small"
               severity="danger"
               icon="pi pi-key"
-              @click="resetQuery"
+              @click="deleteStreamer(slotProps.data.id)"
             />
           </div>
         </template>
@@ -103,7 +103,7 @@
     </DataTable>
 
     <!-- 編輯新增dialog -->
-    <Dialog v-model:visible="uiControl.dialogVisible" modal :style="{ width: '700px' }">
+    <Dialog v-model:visible="uiControl.dialogVisible" :header="t('fields.edit')"  modal :style="{ width: '700px' }">
       <div
         style="
           display: flex;
@@ -115,16 +115,15 @@
           margin-bottom: 16px;
         "
       >
-        <label for="newPassword" class="font-semibold w-24">{{ t('fields.name') }}</label>
+        <label for="name" class="w-24 font-semibold">{{ t('fields.name') }}</label>
 
         <div style="width: 600px">
           <InputText
-            id="newPassword"
+            id="name"
             :class="{ 'p-invalid': fieldErrors.newPassword }"
             autocomplete="new-password"
-            type="password"
             style="width: 100%"
-            v-model="changePasswordDialog.form.newPassword"
+            v-model="form.name"
             @blur="validateField('newPassword')"
             @input="clearFieldError('newPassword')"
           />
@@ -151,16 +150,15 @@
           margin-bottom: 16px;
         "
       >
-        <label for="confirmPassword" class="font-semibold w-24">{{ t('fields.account') }}</label>
+        <label for="loginName" class="w-24 font-semibold">{{ t('fields.account') }}</label>
         <div style="width: 600px">
           <InputText
-            id="confirmPassword"
+            id="loginName"
             class="w-full"
             :class="{ 'p-invalid': fieldErrors.confirmPassword }"
             autocomplete="new-password"
-            type="password"
             style="width: 100%"
-            v-model="changePasswordDialog.form.confirmPassword"
+            v-model="form.loginName"
             @blur="validateField('confirmPassword')"
             @input="clearFieldError('confirmPassword')"
           />
@@ -188,28 +186,18 @@
           margin-bottom: 16px;
         "
       >
-        <label for="confirmPassword" class="font-semibold w-24">{{ t('fields.password') }}</label>
+        <label for="password" class="w-24 font-semibold">{{ t('fields.password') }}</label>
         <div style="width: 600px">
           <InputText
-            id="confirmPassword"
+            id="password"
             class="w-full"
             :class="{ 'p-invalid': fieldErrors.confirmPassword }"
             autocomplete="new-password"
             type="password"
             style="width: 100%"
-            v-model="changePasswordDialog.form.confirmPassword"
-            @blur="validateField('confirmPassword')"
+            v-model="form.password"
             @input="clearFieldError('confirmPassword')"
           />
-          <Message
-            v-if="fieldErrors.confirmPassword"
-            severity="error"
-            size="small"
-            variant="simple"
-            class="mt-1"
-          >
-            {{ fieldErrors.confirmPassword }}
-          </Message>
         </div>
       </div>
 
@@ -224,18 +212,22 @@
           margin-bottom: 16px;
         "
       >
-        <label for="confirmPassword" class="font-semibold w-24">{{ t('fields.photo') }}</label>
+        <label for="confirmPassword" class="w-24 font-semibold">{{ t('fields.photo') }}</label>
         <div style="width: 600px">
-          <FileUpload
-            ref="fileupload"
-            mode="basic"
-            name="demo[]"
+          <Button
+            type="button"
+            :label="t('fields.upload')"
+            icon="pi pi-cloud-upload"
+            :loading="isSubmitting"
+            @click="$refs.inputImage.click()"
+          />
+          <input
+            id="uploadFile"
+            type="file"
+            ref="inputImage"
+            style="display: none"
             accept="image/*"
-            :maxFileSize="1000000"
-            @upload="onUpload"
-            :chooseLabel="t('fields.upload')"
-            :chooseIcon="'pi pi-cloud-upload'"
-            :auto="true"
+            @change="attachImage"
           />
           <Message
             v-if="fieldErrors.confirmPassword"
@@ -263,13 +255,13 @@
           type="button"
           :label="t('fields.cancel')"
           severity="secondary"
-          @click="closeDialog"
+          @click="closeEditDialog"
         />
         <Button
           type="button"
           :label="t('fields.confirm')"
           :loading="isSubmitting"
-          @click="submitChangePassword"
+          @click="submit"
         />
       </div>
     </Dialog>
@@ -292,7 +284,7 @@
           margin-bottom: 16px;
         "
       >
-        <label for="newPassword" class="font-semibold w-24">{{ t('fields.newPassword') }}</label>
+        <label for="newPassword" class="w-24 font-semibold">{{ t('fields.newPassword') }}</label>
 
         <div style="width: 350px">
           <InputText
@@ -328,7 +320,7 @@
           margin-bottom: 16px;
         "
       >
-        <label for="confirmPassword" class="font-semibold w-24">{{
+        <label for="confirmPassword" class="w-24 font-semibold">{{
           t('fields.confirmPassword')
         }}</label>
         <div style="width: 350px">
@@ -381,6 +373,7 @@
       </div>
     </Dialog>
   </div>
+  <ConfirmDialog></ConfirmDialog>
 </template>
 
 <script setup>
@@ -390,11 +383,14 @@ import { liveSportTyps } from '@/utils/live'
 import { DashboardService } from '@/service/DashboardService'
 import { required, size } from '@/utils/validate'
 import { useToast } from 'primevue/usetoast'
+//import { uploadImage } from '@/service/image'
 import { useStorage } from '@vueuse/core'
+import { useConfirm } from 'primevue/useconfirm'
 const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/promo/'
-const { getSportLiveStreamer, updateSportLiveStreamer } = DashboardService
+const { getSportLiveStreamer, updateSportLiveStreamer, deleteSportLiveStreamer } = DashboardService
 const { t } = useI18n()
 const toast = useToast()
+const confirm = useConfirm()
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -416,6 +412,16 @@ const request = reactive({
   name: null,
 })
 
+const form = reactive({
+  id: null,
+  name: null,
+  loginName: null,
+  password: null,
+  avatar: null,
+})
+
+const fileupload = ref()
+
 const liveStreamerList = ref([])
 
 const changePasswordDialog = reactive({
@@ -433,6 +439,18 @@ const fieldErrors = reactive({
 })
 
 const isSubmitting = ref(false)
+
+const imageForm = reactive({
+  id: null,
+  name: null,
+  path: null,
+  displayPath: null,
+  category: null,
+  siteId: null,
+  remark: null,
+  imageDimension: null,
+  promoType: null,
+})
 
 //更改密碼
 const validateForm = () => {
@@ -453,6 +471,9 @@ function showChangePasswordDialog(row) {
   changePasswordDialog.form.confirmPassword = ''
   changePasswordDialog.visible = true
 }
+function closeEditDialog() {
+  uiControl.dialogVisible = false
+}
 function closeDialog() {
   changePasswordDialog.visible = false
   changePasswordDialog.form.newPassword = ''
@@ -463,11 +484,11 @@ function closeDialog() {
 
 const changePasswordRules = {
   newPassword: [
-    required(t('message.validatePasswordRequired')),
+    required(t('message.validateParamRequired')),
     size(6, 12, t('message.validatePasswordSize')),
   ],
   confirmPassword: [
-    required(t('message.validatePasswordRequired')),
+    required(t('message.validateParamRequired')),
     size(6, 12, t('message.validatePasswordSize')),
     {
       validator: (rule, value, callback) => {
@@ -539,6 +560,16 @@ const validateField = (fieldName) => {
   return true
 }
 
+function submit() {
+  if (uiControl.dialogType === 'CREATE') {
+    alert('do some in crate')
+    // create();
+  } else if (uiControl.dialogType === 'EDIT') {
+    alert('do some edit')
+    // edit();
+  }
+}
+
 async function submitChangePassword() {
   // 模擬原本的 validate 方法結構
   const validate = (callback) => {
@@ -597,6 +628,143 @@ async function loadStreamer() {
 onMounted(() => {
   loadStreamer()
 })
+
+async function attachImage(event) {
+  const file = event.target.files[0]
+  console.log(file)
+
+  if (!file) return
+
+  const data = await attachPhoto(event)
+  if (data) {
+    form.avatar = data
+    await submitImageUpload()
+    console.log('here')
+  } else {
+    toast.add({
+      severity: 'error',
+      summary: t('message.failedToUploadImage'),
+      life: 3000,
+    })
+  }
+}
+
+async function attachPhoto(event) {
+  const files = event.target.files[0]
+  console.log('attachPhoto', files)
+
+  if (!files) return
+
+  var fr = new FileReader()
+  fr.onload = function () {
+    var img = new Image()
+    img.onload = function () {
+      imageForm.imageDimension = img.width + ' * ' + img.height
+    }
+    img.src = fr.result
+  }
+  fr.readAsDataURL(files)
+
+  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+  if (!allowFileType.includes(files.type)) {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
+    return null
+  }
+
+  const formData = new FormData()
+  formData.append('files', files)
+  formData.append('dir', 'streamer')
+  formData.append('overwrite', false)
+  console.log(formData)
+
+  try {
+    const response = await uploadImage(formData)
+    return response.code === 0 ? response.data : null
+
+    console.log('here')
+  } catch (error) {
+    toast.add({
+      severity: 'error',
+      summary: t('message.failedToUploadImage'),
+      life: 3000,
+    })
+    return null
+  }
+}
+
+async function submitImageUpload() {
+  imageForm.name = generateRandomString(8)
+  imageForm.path = form.avatar
+  imageForm.category = 'PROMO'
+  imageForm.siteId = 7
+
+  try {
+    const response = await createSiteImage(imageForm)
+    console.log(response)
+
+    if (response && response.code === 0) {
+      toast.add({
+        severity: 'success',
+        summary: t('message.addSuccess'),
+        life: 3000,
+      })
+      autoSelectImage()
+    } else {
+      toast.add({
+        severity: 'error',
+        summary: t('message.failedToUploadImage'),
+        life: 3000,
+      })
+    }
+  } catch (error) {
+    toast.add({
+      severity: 'error',
+      summary: t('message.failedToUploadImage'),
+      life: 3000,
+    })
+  }
+}
+
+function deleteStreamer(teamId) {
+  confirm.require({
+    message: t('message.confirmDelete'),
+    icon: 'pi pi-info-circle',
+    rejectLabel: t('fields.cancel'),
+    rejectProps: {
+      label: t('fields.cancel'),
+      severity: 'secondary',
+    },
+    acceptLabel: t('fields.confirm'),
+    acceptProps: {
+      label: t('fields.confirm'),
+      severity: 'danger',
+    },
+    accept: async () => {
+      try {
+        await deleteSportLiveStreamer({ teamId: teamId })
+        toast.add({
+          severity: 'success',
+          summary: t('message.deleteSuccess'),
+          life: 3000,
+        })
+        await loadStreamer()
+      } catch (err) {
+        toast.add({
+          severity: 'error',
+          summary: t('message.deleteFailed'),
+          detail: err.message,
+        })
+      }
+    },
+  })
+}
+
+function autoSelectImage() {
+  if (!form.avatar) {
+    return
+  }
+  form.avatar = '7' + '/' + form.avatar
+}
 </script>
 
 <style scoped>
