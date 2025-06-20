@@ -341,7 +341,6 @@ export const DashboardService = {
       })
   },
 
-
   //live-match
 
   getSportLiveMatch(request) {
@@ -369,8 +368,9 @@ export const DashboardService = {
   getSportLiveTeam(request) {
     const token = sessionStorage.getItem('token')
     return api
-      .get(`/session/live-sport/team?${request}`, {
+      .get(`/session/live-sport/team`, {
         headers: {
+          params: request, // For GET requests, parameters are typically sent as `params`
           token: `${token}`,
         },
       })
@@ -387,53 +387,59 @@ export const DashboardService = {
       })
   },
   getChatVipStatus(request) {
-  const token = sessionStorage.getItem('token'); // 從 sessionStorage 拿取 token
-  return api.get('/session/live-sport/chat', { // GET 請求
-    params: request, // GET 請求的參數通常放在 params 裡
-    headers: {
-      'token': `${token}`,
-    }
-  })
-  .then(response => {
-    if (response.code === 0) { // 檢查後端回傳的業務狀態碼
-      return response.data; // 返回實際資料
-    }
-    console.error('獲取聊天室 VIP 狀態失敗:', response.message || '未知錯誤');
-    return null; // 失敗時返回 null
-  })
-  .catch(error => {
-    console.error('獲取聊天室 VIP 狀態請求失敗:', error); // 捕捉網路或請求錯誤
-    return null; // 失敗時返回 null
-  });
+    const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
+    return api
+      .get('/session/live-sport/chat', {
+        // GET 請求
+        params: request, // GET 請求的參數通常放在 params 裡
+        headers: {
+          token: `${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          // 檢查後端回傳的業務狀態碼
+          return response.data // 返回實際資料
+        }
+        console.error('獲取聊天室 VIP 狀態失敗:', response.message || '未知錯誤')
+        return null // 失敗時返回 null
+      })
+      .catch((error) => {
+        console.error('獲取聊天室 VIP 狀態請求失敗:', error) // 捕捉網路或請求錯誤
+        return null // 失敗時返回 null
+      })
   },
   updateChatVipStatus(request) {
-  const token = sessionStorage.getItem('token'); // 從 sessionStorage 拿取 token
-  return api.put('/session/live-sport/chat', request, { // PUT 請求，request 作為請求體
-    headers: {
-      'token': `${token}`,
-      'Content-Type': 'application/json' // 根據原始設定，使用 JSON 格式
-    }
-  })
-  .then(response => {
-    if (response.code === 0) { // 檢查後端回傳的業務狀態碼
-      return response.data; // 返回實際資料，或者可以返回 true 表示成功
-    }
-    console.error('更新聊天室 VIP 狀態失敗:', response.message || '未知錯誤');
-    return null; // 失敗時返回 null
-  })
-  .catch(error => {
-    console.error('更新聊天室 VIP 狀態請求失敗:', error); // 捕捉網路或請求錯誤
-    return null; // 失敗時返回 null
-  });
-},
-
+    const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
+    return api
+      .put('/session/live-sport/chat', request, {
+        // PUT 請求，request 作為請求體
+        headers: {
+          token: `${token}`,
+          'Content-Type': 'application/json', // 根據原始設定，使用 JSON 格式
+        },
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          // 檢查後端回傳的業務狀態碼
+          return response.data // 返回實際資料，或者可以返回 true 表示成功
+        }
+        console.error('更新聊天室 VIP 狀態失敗:', response.message || '未知錯誤')
+        return null // 失敗時返回 null
+      })
+      .catch((error) => {
+        console.error('更新聊天室 VIP 狀態請求失敗:', error) // 捕捉網路或請求錯誤
+        return null // 失敗時返回 null
+      })
+  },
 
   //live-streamer
   getSportLiveStreamer(request) {
     const token = sessionStorage.getItem('token')
-    const query = toQueryString(request)
+    // const query = toQueryString(request)
     return api
-      .get(`/session/live-sport/streamer?${query}`, {
+      .get(`/session/live-sport/streamer`, {
+        params: request, // For GET requests, parameters are typically sent as `params`
         headers: {
           token: `${token}`,
         },
@@ -451,36 +457,59 @@ export const DashboardService = {
       })
   },
 
+  updateSportLiveStreamer(request) {
+    const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
+    return api
+      .put('/session/live-sport/streamer', request, {
+        // PUT 請求，request 作為請求體
+        headers: {
+          token: `${token}`,
+          'Content-Type': 'application/json', // 根據原始設定，使用 JSON 格式
+        },
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          // 檢查後端回傳的業務狀態碼
+          return response.data // 返回實際資料，或者可以返回 true 表示成功
+        }
+        console.error('更新聊天室 VIP 狀態失敗:', response.message || '未知錯誤')
+        return null // 失敗時返回 null
+      })
+      .catch((error) => {
+        console.error('更新聊天室 VIP 狀態請求失敗:', error) // 捕捉網路或請求錯誤
+        return null // 失敗時返回 null
+      })
+  },
 
-  getSensitiveWordNew  (request)  {
+  getSensitiveWordNew(request) {
     const token = sessionStorage.getItem('token')
     return api.get('/session/live-sport/sensitive-word', {
       params: request, // For GET requests, parameters are typically sent as `params`
       headers: {
         token: `${token}`,
       },
-    });
+    })
   },
-  addSensitiveWordNew (data) {
+  addSensitiveWordNew(data) {
     const token = sessionStorage.getItem('token')
     return api.post('/session/live-sport/sensitive-word/add', data, {
       headers: {
         token: `${token}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-    });
+    })
   },
-  updateSensitiveWordNew (data) {
-  const token = sessionStorage.getItem('token')
-  return api.post('/session/live-sport/sensitive-word/update', data, {
-    headers: {
-      token: `${token}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  });
-},
+  updateSensitiveWordNew(data) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/live-sport/sensitive-word/update', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+  },
 
-  deleteSensitiveWordNew (data) {
+  deleteSensitiveWordNew(data) {
     const token = sessionStorage.getItem('token')
     // For DELETE with a body, you might use 'data' property.
     // Some APIs prefer DELETE with params, so confirm your backend's expectation.
@@ -489,18 +518,6 @@ export const DashboardService = {
         token: `${token}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-    });
+    })
   },
-}
-
-
-  function toQueryString(params) {
-  const filtered = Object.entries(params)
-    .filter(([_, value]) => value !== null && value !== undefined && value !== '')
-    .reduce((acc, [key, value]) => {
-      acc[key] = value
-      return acc
-    }, {})
-
-  return new URLSearchParams(filtered).toString()
 }

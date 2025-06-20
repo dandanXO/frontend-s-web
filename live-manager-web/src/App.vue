@@ -29,9 +29,13 @@ import { useToast } from 'primevue/usetoast'
 import { useUserStore } from '@/stores/userStore'
 import router from './router'
 import { eventBus } from './utils/eventBus'
+import { useStorage } from '@vueuse/core'
 
 const store = useUserStore()
 const toast = useToast()
+
+// 一啟動 app 就設定 IMAGE_CDN 到 sessionStorage
+const imageCDN = useStorage('IMAGE_CDN', 'https://file-admin.fwabm4gvc.com', sessionStorage)
 
 let toastTimeout = ref(null)
 
@@ -56,6 +60,7 @@ watch(
     }
   },
 )
+
 </script>
 
 <style lang="scss" scoped>

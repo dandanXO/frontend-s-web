@@ -2,382 +2,600 @@
 <template>
   <div class="card">
     <DataTable
-      :value="streams"
+      :value="liveStreamerList"
       :paginator="true"
       :rows="10"
       :loading="loading"
       dataKey="eventId"
       :filters="filters"
       filterDisplay="menu"
-      :globalFilterFields="['eventTitle', 'streamStatus']"
+      :globalFilterFields="['title']"
       responsiveLayout="scroll"
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
-          <div style="display: flex; gap: 8px">
-            <Button
-              :size="'small'"
-              type="button"
-              icon="pi pi-filter-slash"
-              label="清除"
-              outlined
-              @click="clearFilter()"
-            />
-          </div>
-          <!-- 搜尋框 -->
-          <IconField class="search-container">
-            <InputIcon>
-              <i class="pi pi-search search-icon" />
-            </InputIcon>
-            <InputText
-              v-model="filters['global'].value"
-              placeholder="關鍵詞搜索"
-              :size="'small'"
-              class="search-input"
-            />
-          </IconField>
-          <!-- 重新載入按鈕 -->
+          <Select
+            v-model="request.liveStatus"
+            :options="uiControl.status"
+            optionLabel="name"
+            :placeholder="t('fields.status')"
+            size="small"
+          />
+          <InputText type="text" v-model="request.name" optionLabel="名称" placeholder="名称" />
+          <Button :label="t('fields.search')" size="small" severity="success" icon="pi pi-search" />
           <Button
-            :size="'small'"
-            type="button"
+            :label="t('fields.reset')"
+            size="small"
+            severity="warn"
             icon="pi pi-refresh"
-            label="重新載入"
+            @click="resetQuery"
+          />
+          <Button
+            :label="t('fields.add')"
+            size="small"
             severity="info"
-            @click="fetchStreams"
-            :loading="loading"
+            icon="pi pi-plus"
+            @click="showDialog('CREATE')"
           />
         </div>
       </template>
-
-      <Column field="eventTitle" header="標題" sortable>
+      <Column field="title" header="ID" sortable>
         <template #body="slotProps">
-          {{ slotProps.data.eventTitle }}
+          {{ slotProps.data.id }}
         </template>
       </Column>
 
-      <Column field="streamStatus" header="源流狀態" sortable>
+      <Column field="eventStartTime" :header="t('fields.name')" sortable>
         <template #body="slotProps">
-          <Tag
-            :severity="getStatusSeverity(slotProps.data.streamStatus)"
-            :value="getStatusLabel(slotProps.data.streamStatus)"
+          {{ slotProps.data.name }}
+        </template>
+      </Column>
+
+      <Column field="liveStatus" :header="t('fields.status')" sortable>
+        <template #body="slotProps">
+          {{ getStatusName(slotProps.data.liveStatus) }}
+        </template>
+      </Column>
+
+      <Column field="sportId" :header="t('fields.account')" sortable>
+        <template #body="slotProps">
+          {{ slotProps.data.loginName }}
+        </template>
+      </Column>
+
+      <Column field="liveStatus" :header="t('fields.photo')" sortable>
+        <template #body="slotProps">
+          <Image
+            v-if="slotProps.data.avatar"
+            :src="promoDir + slotProps.data.avatar"
+            alt="Image"
+            width="250"
           />
         </template>
       </Column>
-
-      <Column field="createTime" header="創建時間" sortable>
+      <Column field="liveStatus" :header="t('fields.operate')" sortable>
         <template #body="slotProps">
-          {{ formatDateTime(slotProps.data.createTime) }}
-        </template>
-      </Column>
-
-      <Column field="updateTime" header="更新時間" sortable>
-        <template #body="slotProps">
-          {{ formatDateTime(slotProps.data.updateTime) }}
-        </template>
-      </Column>
-
-      <Column field="streamerName" header="主播" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.streamerName || '未分配' }}
-        </template>
-      </Column>
-
-      <Column field="supplierStreamId" header="供應商串流ID" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.supplierStreamId }}
-        </template>
-      </Column>
-
-      <Column field="streamerStreamId" header="主播串流ID" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.streamerStreamId }}
-        </template>
-      </Column>
-      <Column field="streamerStatus" header="直播主狀態" sortable>
-        <template #body="slotProps">
-          <Tag
-            :severity="getStreamerStatusSeverity(slotProps.data.streamerStatus)"
-            :value="getStreamerStatusLabel(slotProps.data.streamerStatus)"
-          />
-        </template>
-      </Column>
-      <Column header="操作">
-        <template #body="slotProps">
-          <Button
-            icon="pi pi-eye"
-            class="p-button-rounded p-button-info mr-2"
-            @click="viewStream(slotProps.data)"
-            :disabled="!canPreview(slotProps.data.eventStatus)"
-            :tooltip="getPreviewTooltip(slotProps.data.eventStatus)"
-          />
+          <div class="flex justify-between" style="display: flex; gap: 8px">
+            <Button
+              :label="t('fields.updatePassword')"
+              size="small"
+              severity="secondary"
+              icon="pi pi-key"
+              @click="showChangePasswordDialog(slotProps.data)"
+            />
+            <Button
+              :label="t('fields.edit')"
+              size="small"
+              severity="info"
+              icon="pi pi-key"
+              @click="showDialog('EDIT', slotProps.data)"
+            />
+            <Button
+              :label="t('fields.delete')"
+              size="small"
+              severity="danger"
+              icon="pi pi-key"
+              @click="resetQuery"
+            />
+          </div>
         </template>
       </Column>
     </DataTable>
-  </div>
 
-  <Dialog
-    v-model:visible="editDialogVisible"
-    header="修改聊天室名称"
-    :style="{ width: '400px' }"
-    :modal="true"
-  >
-    <div class="p-fluid">
-      <div class="p-field">
-        <label for="title">新名称</label>
-        <InputText id="title" v-model="editedTitle" />
+    <!-- 編輯新增dialog -->
+    <Dialog v-model:visible="uiControl.dialogVisible" modal :style="{ width: '700px' }">
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 650px;
+          margin-bottom: 16px;
+        "
+      >
+        <label for="newPassword" class="font-semibold w-24">{{ t('fields.name') }}</label>
+
+        <div style="width: 600px">
+          <InputText
+            id="newPassword"
+            :class="{ 'p-invalid': fieldErrors.newPassword }"
+            autocomplete="new-password"
+            type="password"
+            style="width: 100%"
+            v-model="changePasswordDialog.form.newPassword"
+            @blur="validateField('newPassword')"
+            @input="clearFieldError('newPassword')"
+          />
+          <Message
+            v-if="fieldErrors.newPassword"
+            severity="error"
+            size="small"
+            variant="simple"
+            class="mt-1"
+          >
+            {{ fieldErrors.newPassword }}
+          </Message>
+        </div>
       </div>
-    </div>
-    <template #footer>
-      <Button
-        label="取消"
-        icon="pi pi-times"
-        class="p-button-text"
-        @click="editDialogVisible = false"
-      />
-      <Button label="確認" icon="pi pi-check" class="p-button-text" @click="submitRoomTitleEdit" />
-    </template>
-  </Dialog>
 
-<!--  <StreamPlayer-->
-<!--    :visible="showPlayer"-->
-<!--    :stream="selectedStream"-->
-<!--    @update:visible="(val) => (showPlayer = val)"-->
-<!--    @reload="fetchStreams"-->
-<!--  />-->
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 650px;
+          margin-bottom: 16px;
+        "
+      >
+        <label for="confirmPassword" class="font-semibold w-24">{{ t('fields.account') }}</label>
+        <div style="width: 600px">
+          <InputText
+            id="confirmPassword"
+            class="w-full"
+            :class="{ 'p-invalid': fieldErrors.confirmPassword }"
+            autocomplete="new-password"
+            type="password"
+            style="width: 100%"
+            v-model="changePasswordDialog.form.confirmPassword"
+            @blur="validateField('confirmPassword')"
+            @input="clearFieldError('confirmPassword')"
+          />
+          <Message
+            v-if="fieldErrors.confirmPassword"
+            severity="error"
+            size="small"
+            variant="simple"
+            class="mt-1"
+          >
+            {{ fieldErrors.confirmPassword }}
+          </Message>
+        </div>
+      </div>
 
-  <Dialog v-model:visible="deleteDialog" :style="{ width: '450px' }" header="確認" :modal="true">
-    <div class="confirmation-content">
-      <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-      <span>確定要刪除這個直播嗎？</span>
-    </div>
-    <template #footer>
-      <Button label="取消" icon="pi pi-times" class="p-button-text" @click="deleteDialog = false" />
-      <Button label="確定" icon="pi pi-check" class="p-button-danger" @click="confirmDelete" />
-    </template>
-  </Dialog>
+      <div
+        v-if="uiControl.dialogType === 'CREATE'"
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 650px;
+          margin-bottom: 16px;
+        "
+      >
+        <label for="confirmPassword" class="font-semibold w-24">{{ t('fields.password') }}</label>
+        <div style="width: 600px">
+          <InputText
+            id="confirmPassword"
+            class="w-full"
+            :class="{ 'p-invalid': fieldErrors.confirmPassword }"
+            autocomplete="new-password"
+            type="password"
+            style="width: 100%"
+            v-model="changePasswordDialog.form.confirmPassword"
+            @blur="validateField('confirmPassword')"
+            @input="clearFieldError('confirmPassword')"
+          />
+          <Message
+            v-if="fieldErrors.confirmPassword"
+            severity="error"
+            size="small"
+            variant="simple"
+            class="mt-1"
+          >
+            {{ fieldErrors.confirmPassword }}
+          </Message>
+        </div>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 650px;
+          margin-bottom: 16px;
+        "
+      >
+        <label for="confirmPassword" class="font-semibold w-24">{{ t('fields.photo') }}</label>
+        <div style="width: 600px">
+          <FileUpload
+            ref="fileupload"
+            mode="basic"
+            name="demo[]"
+            accept="image/*"
+            :maxFileSize="1000000"
+            @upload="onUpload"
+            :chooseLabel="t('fields.upload')"
+            :chooseIcon="'pi pi-cloud-upload'"
+            :auto="true"
+          />
+          <Message
+            v-if="fieldErrors.confirmPassword"
+            severity="error"
+            size="small"
+            variant="simple"
+            class="mt-1"
+          >
+            {{ fieldErrors.confirmPassword }}
+          </Message>
+        </div>
+      </div>
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 650px;
+          margin-bottom: 16px;
+        "
+      >
+        <Button
+          type="button"
+          :label="t('fields.cancel')"
+          severity="secondary"
+          @click="closeDialog"
+        />
+        <Button
+          type="button"
+          :label="t('fields.confirm')"
+          :loading="isSubmitting"
+          @click="submitChangePassword"
+        />
+      </div>
+    </Dialog>
+
+    <!-- 更改密碼dialog -->
+    <Dialog
+      v-model:visible="changePasswordDialog.visible"
+      modal
+      :header="t('fields.updatePassword')"
+      :style="{ width: '500px' }"
+    >
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 450px;
+          margin-bottom: 16px;
+        "
+      >
+        <label for="newPassword" class="font-semibold w-24">{{ t('fields.newPassword') }}</label>
+
+        <div style="width: 350px">
+          <InputText
+            id="newPassword"
+            :class="{ 'p-invalid': fieldErrors.newPassword }"
+            autocomplete="new-password"
+            type="password"
+            style="width: 100%"
+            v-model="changePasswordDialog.form.newPassword"
+            @blur="validateField('newPassword')"
+            @input="clearFieldError('newPassword')"
+          />
+          <Message
+            v-if="fieldErrors.newPassword"
+            severity="error"
+            size="small"
+            variant="simple"
+            class="mt-1"
+          >
+            {{ fieldErrors.newPassword }}
+          </Message>
+        </div>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 450px;
+          margin-bottom: 16px;
+        "
+      >
+        <label for="confirmPassword" class="font-semibold w-24">{{
+          t('fields.confirmPassword')
+        }}</label>
+        <div style="width: 350px">
+          <InputText
+            id="confirmPassword"
+            class="w-full"
+            :class="{ 'p-invalid': fieldErrors.confirmPassword }"
+            autocomplete="new-password"
+            type="password"
+            style="width: 100%"
+            v-model="changePasswordDialog.form.confirmPassword"
+            @blur="validateField('confirmPassword')"
+            @input="clearFieldError('confirmPassword')"
+          />
+          <Message
+            v-if="fieldErrors.confirmPassword"
+            severity="error"
+            size="small"
+            variant="simple"
+            class="mt-1"
+          >
+            {{ fieldErrors.confirmPassword }}
+          </Message>
+        </div>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          gap: 8px;
+          flex-direction: row;
+          align-items: center;
+          justify-content: end;
+          width: 450px;
+          margin-bottom: 16px;
+        "
+      >
+        <Button
+          type="button"
+          :label="t('fields.cancel')"
+          severity="secondary"
+          @click="closeDialog"
+        />
+        <Button
+          type="button"
+          :label="t('fields.confirm')"
+          :loading="isSubmitting"
+          @click="submitChangePassword"
+        />
+      </div>
+    </Dialog>
+  </div>
 </template>
 
-<script>
-// 根據路由判斷獲取數據的方法
-import { DashboardService } from '@/service/DashboardService'
-
-export default {
-  props: {
-    fetchDataMethod: {
-      type: Function,
-      default: () => DashboardService.getStreamList,
-    },
-  },
-}
-</script>
-
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
-//import StreamPlayer from './StreamPlayer.vue'
-import DataTable from 'primevue/datatable'
-import Column from 'primevue/column'
-import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
-import Dialog from 'primevue/dialog'
-import Tag from 'primevue/tag'
+import { defineComponent, reactive, onMounted, ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { liveSportTyps } from '@/utils/live'
+import { DashboardService } from '@/service/DashboardService'
+import { required, size } from '@/utils/validate'
 import { useToast } from 'primevue/usetoast'
+import { useStorage } from '@vueuse/core'
+const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/promo/'
+const { getSportLiveStreamer, updateSportLiveStreamer } = DashboardService
+const { t } = useI18n()
 const toast = useToast()
 
-const route = useRoute()
-
-const streams = ref([])
-const loading = ref(false)
-const showPlayer = ref(false)
-const selectedStream = ref(null)
-const deleteDialog = ref(false)
-const streamToDelete = ref(null)
-const editDialogVisible = ref(false)
-const editedTitle = ref('')
-const editingStreamId = ref(null)
-
-const openEditDialog = (stream) => {
-  editingStreamId.value = stream.streamerStreamId
-  editedTitle.value = stream.roomTitle || ''
-  editDialogVisible.value = true
-}
-
-const submitRoomTitleEdit = async () => {
-  if (!editingStreamId.value || !editedTitle.value) return
-
-  try {
-    const res = await DashboardService.updateRoomTitle(editingStreamId.value, editedTitle.value)
-
-    if (res) {
-      toast.add({ severity: 'success', summary: '成功', detail: '标题已更新', life: 3000 })
-      editDialogVisible.value = false
-      await fetchStreams()
-    } else {
-      toast.add({
-        severity: 'error',
-        summary: '错误',
-        detail: response?.message || '更新失败',
-        life: 3000,
-      })
-    }
-  } catch (err) {
-    console.error('更新标题错误:', err)
-    toast.add({ severity: 'error', summary: '错误', detail: '无法更新标题', life: 3000 })
-  }
-}
-
-const filters = ref({
-  global: { value: null, matchMode: 'contains' },
+const uiControl = reactive({
+  dialogVisible: false,
+  dialogTitle: '',
+  dialogType: 'CREATE',
+  editBtn: true,
+  removeBtn: true,
+  dialogLoading: false,
+  status: [
+    { name: t('fields.notStarted'), display: "t('fields.notStarted')", id: 0 },
+    { name: t('fields.inProgress'), display: "t('fields.inProgress')", id: 1 },
+  ],
 })
 
-// 清除數據
-const clearData = () => {
-  streams.value = []
-  loading.value = false
-  showPlayer.value = false
-  selectedStream.value = null
-  deleteDialog.value = false
-  streamToDelete.value = null
-  filters.value = {
-    global: { value: null, matchMode: 'contains' },
-  }
-}
+const request = reactive({
+  size: 30,
+  current: 1,
+  liveStatus: null,
+  name: null,
+})
 
-// 清除過濾器
-const clearFilter = () => {
-  filters.value = {
-    global: { value: null, matchMode: 'contains' },
-  }
-}
+const liveStreamerList = ref([])
 
-// 獲取直播列表
-const fetchStreams = async () => {
-  try {
-    clearData()
-    loading.value = true
-    // 根據當前路由設置數據獲取方法
-    const dataMethod = route.path.includes('/my-streams')
-      ? DashboardService.getMyStreams
-      : DashboardService.getStreamList
-    const response = await dataMethod()
-    streams.value = response
-  } catch (error) {
-    console.error('獲取直播列表失敗:', error)
-  } finally {
-    loading.value = false
-  }
-}
-
-// 監聽路由變化，重新獲取數據
-watch(
-  () => route.path,
-  () => {
-    fetchStreams()
+const changePasswordDialog = reactive({
+  visible: false,
+  userId: null,
+  form: {
+    newPassword: '',
+    confirmPassword: '',
   },
-)
+})
 
-// 格式化日期時間
-const formatDateTime = (timestamp) => {
-  if (!timestamp) return ''
-  return new Date(timestamp).toLocaleString('zh-TW')
+const fieldErrors = reactive({
+  newPassword: '',
+  confirmPassword: '',
+})
+
+const isSubmitting = ref(false)
+
+//更改密碼
+const validateForm = () => {
+  const newPasswordValid = validateField('newPassword')
+  const confirmPasswordValid = validateField('confirmPassword')
+  return newPasswordValid && confirmPasswordValid
 }
 
-// 獲取狀態標籤
-const getStatusLabel = (status) => {
-  const statusMap = {
-    0: '初始化',
-    1: '準備中',
-    2: '開始啟動',
-    3: '啟動完成',
-    4: '直播中',
-    5: '已結束',
-    6: '已停止',
-    7: '已結束',
+const clearFieldError = (fieldName) => {
+  if (fieldErrors[fieldName]) {
+    fieldErrors[fieldName] = ''
   }
-  return statusMap[status] || '未知狀態'
 }
 
-// 獲取狀態樣式
-const getStatusSeverity = (status) => {
-  const severityMap = {
-    0: 'info',
-    1: 'info',
-    2: 'warning',
-    3: 'success',
-    4: 'success',
-    5: 'danger',
-    6: 'danger',
-    7: 'danger',
-  }
-  return severityMap[status] || 'info'
+function showChangePasswordDialog(row) {
+  changePasswordDialog.userId = row.id
+  changePasswordDialog.form.newPassword = ''
+  changePasswordDialog.form.confirmPassword = ''
+  changePasswordDialog.visible = true
+}
+function closeDialog() {
+  changePasswordDialog.visible = false
+  changePasswordDialog.form.newPassword = ''
+  changePasswordDialog.form.confirmPassword = ''
+  fieldErrors.newPassword = ''
+  fieldErrors.confirmPassword = ''
 }
 
-// 獲取直播主狀態標籤
-const getStreamerStatusLabel = (status) => {
-  const statusMap = {
-    0: '停止直播',
-    1: '開始直播',
-  }
-  return statusMap[status] || '未知狀態'
-}
-
-// 獲取直播主狀態樣式
-const getStreamerStatusSeverity = (status) => {
-  const severityMap = {
-    0: 'danger',
-    1: 'success',
-  }
-  return severityMap[status] || 'info'
-}
-// 檢查是否可以預覽
-const canPreview = (status) => {
-  return [0, 1].includes(status)
-}
-
-// 獲取預覽按鈕提示
-const getPreviewTooltip = (status) => {
-  return canPreview(status) ? '點擊預覽' : '當前狀態無法預覽'
-}
-
-// 查看直播
-const viewStream = (stream) => {
-  if (!canPreview(stream.eventStatus)) {
-    return
-  }
-
-  if (stream.cdnPlayUrlsHls !== null) {
-    selectedStream.value = {
-      ...stream,
-      title: stream.eventTitle,
-      streamId: stream.streamerStreamId,
-      playUrls: {
-        hls: stream.cdnPlayUrlsHls,
-        flv: stream.cdnPlayUrlsFlv,
+const changePasswordRules = {
+  newPassword: [
+    required(t('message.validatePasswordRequired')),
+    size(6, 12, t('message.validatePasswordSize')),
+  ],
+  confirmPassword: [
+    required(t('message.validatePasswordRequired')),
+    size(6, 12, t('message.validatePasswordSize')),
+    {
+      validator: (rule, value, callback) => {
+        if (value !== changePasswordDialog.form.newPassword) {
+          callback(new Error(t('message.passwordNotMatch')))
+        } else {
+          callback()
+        }
       },
-    }
-  }
-  showPlayer.value = true
+      trigger: 'blur',
+    },
+  ],
 }
 
-const editRoomTitle = async (stream) => {
-  try {
-    const { value } = await ElMessageBox.prompt('請輸入新的房間標題', '修改房間標題', {
-      confirmButtonText: '確認',
-      cancelButtonText: '取消',
-      inputValue: stream.roomTitle,
+function showDialog(type, row = null) {
+  uiControl.dialogVisible = true
+  uiControl.dialogType = type
+  if (type === 'EDIT' && row) {
+    Object.assign(form, {
+      id: row.id,
+      name: row.name,
+      loginName: row.loginName,
+      avatar: row.avatar,
     })
-    const result = await DashboardService.updateRoomTitle(stream.streamerStreamId, value)
-    if (result) {
-      ElMessage.success('房間標題更新成功')
-      fetchStreams()
-    }
-  } catch (err) {
-    console.log('取消修改房間標題')
+    form.id = row.id
+    form.avatar = row.avatar ? promoDir + row.avatar : null
+    console.log(form.avatar)
+  } else {
+    Object.assign(form, {
+      id: null,
+      name: null,
+      liveStatus: 0,
+      loginName: null,
+      password: null,
+      avatar: null,
+    })
   }
+}
+
+// 驗證方法
+const validateField = (fieldName) => {
+  const rules = changePasswordRules[fieldName]
+  const value = changePasswordDialog.form[fieldName]
+
+  for (const rule of rules) {
+    if (rule.required && (!value || value.trim() === '')) {
+      fieldErrors[fieldName] = rule.message
+      return false
+    }
+
+    if (rule.min && rule.max && value && (value.length < rule.min || value.length > rule.max)) {
+      fieldErrors[fieldName] = rule.message
+      return false
+    }
+
+    if (rule.validator) {
+      rule.validator(rule, value, (error) => {
+        if (error) {
+          fieldErrors[fieldName] = error.message
+        } else {
+          fieldErrors[fieldName] = ''
+        }
+      })
+      return !fieldErrors[fieldName]
+    }
+  }
+
+  fieldErrors[fieldName] = ''
+  return true
+}
+
+async function submitChangePassword() {
+  // 模擬原本的 validate 方法結構
+  const validate = (callback) => {
+    const isValid = validateForm()
+    callback(isValid)
+  }
+
+  try {
+    isSubmitting.value = true
+
+    await validate(async (valid) => {
+      if (!valid) return
+
+      await updateSportLiveStreamer({
+        id: changePasswordDialog.userId,
+        password: changePasswordDialog.form.newPassword,
+      })
+
+      toast.add({
+        severity: 'success',
+        summary: t('message.updateSuccess'),
+        life: 3000,
+      })
+
+      closeDialog()
+      await loadStreamer()
+    })
+  } catch (error) {
+    console.error('Error updating password:', error)
+    toast.add({
+      severity: 'error',
+      summary: t('message.updateError') || 'Failed to update password',
+      life: 3000,
+    })
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+function resetQuery() {
+  request.status = null
+  request.name = null
+}
+
+function getStatusName(statusId) {
+  const status = uiControl.status.find((item) => item.id === statusId)
+  return status.name
+}
+
+async function loadStreamer() {
+  const res = await getSportLiveStreamer(request)
+
+  liveStreamerList.value = res.records
 }
 
 onMounted(() => {
-  fetchStreams()
+  loadStreamer()
 })
 </script>
 
