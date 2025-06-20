@@ -15,6 +15,7 @@
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'br1-slot-ftd' && store.token" :params="list.param" />
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
     <ReceiveEarnPromo v-if="list.redirectUrl === 'receive-earn'" :params="list.param" />
+    <MoneyRainPromo v-if="list.redirectUrl === 'money-rain'" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -49,6 +50,7 @@ import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendP
 import SlotFtdPromo from "../components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
 import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
 import ReceiveEarnPromo from "./hotpromo/receive-earn/ReceiveEarnPromo.vue";
+import MoneyRainPromo from "./hotpromo/money-rain/MoneyRainPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -63,7 +65,8 @@ export default defineComponent({
     InviteFriendPromo,
     SlotFtdPromo,
     SpinLuckyWheelPromo,
-    ReceiveEarnPromo
+    ReceiveEarnPromo,
+    MoneyRainPromo
   },
   props: {
     list: {
@@ -122,9 +125,8 @@ export default defineComponent({
       this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "br1-slot-ftd" ||
       this.list.redirectUrl === "spin-lucky-wheel" ||
-      this.list.redirectUrl === "promo1" ||
-      this.list.redirectUrl === "promo2" ||
       this.list.redirectUrl === "receive-earn" ||
+      this.list.redirectUrl === "money-rain" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
