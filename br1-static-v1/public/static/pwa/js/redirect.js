@@ -4,14 +4,14 @@ export function getRedirectInfo() {
   const origin = window.location.origin;
   const searchParams = new URLSearchParams(window.location.search);
   const savedAffiliateCode = localStorage.getItem("PWA_AFFILIATE_CODE");
-  const affiliateCode = searchParams.get("p0") || searchParams.get("id") || savedAffiliateCode || "C402D4";
+  const affiliateCode = searchParams.get("p0") || searchParams.get("id") || savedAffiliateCode || "";
   try {
     const savedRedirectInfo = JSON.parse(localStorage.getItem(PWA_DATA_KEY));
     if (!savedRedirectInfo) throw new Error();
     return savedRedirectInfo;
   } catch (e) {
     return {
-      url: `${origin}/agent/${affiliateCode}`
+      url: `${origin}/register`
     };
   }
 }
