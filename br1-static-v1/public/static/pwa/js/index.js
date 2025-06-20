@@ -7,6 +7,8 @@ let currentInstallCountdown = INSTALL_COUNTDOWN;
 let installationProgressNumber = 0;
 let deferredPrompt;
 
+console.log("PWA 0620 -1");
+
 const header = document.getElementById("header");
 const container = document.getElementById("container");
 const countdown = document.getElementById("countdown");
