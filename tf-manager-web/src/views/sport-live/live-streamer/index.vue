@@ -262,7 +262,6 @@ function resetQuery() {
 async function attachImage(event) {
   const file = event.target.files[0];
   if (!file) return;
-  await attachPhoto(event);
   const data = await attachPhoto(event);
   if (data) {
     form.avatar = data;
