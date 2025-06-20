@@ -52,14 +52,14 @@ installBtn.addEventListener("click", async () => {
       const fbclid = urlParams.get("fbclid");
       const referral = urlParams.get("refer");
       const click_id = urlParams.get("click_id");
-      alert("HEre");
-      alert(click_id);
+      // alert("HEre");
+      // alert(click_id);
       // const referralSpin = urlParams.get("referSpin");
       // if (referralSpin) {
       //   localStorage.setItem("SPIN_REFERRAL_CODE", referralSpin);
       // }
       if (click_id) {
-        alert("111");
+        // alert("111");
         localStorage.setItem("click_id", click_id);
       }
       if (referral) {
