@@ -1211,7 +1211,7 @@
   </q-dialog>
 
   <q-dialog width="100%" class="announcement-modal" v-model="isStationNotice">
-    <div class="popout-dialog announcement-popout" style="width:375px;height:559px;">
+    <div class="popout-dialog announcement-popout" style="width: 375px; height: 559px">
       <!-- <div class="announcement-top-img"><img src="../assets/images/index/notice-icon.png" /></div> -->
 
       <q-btn flat dense icon="close" class="text-black announcement-close" v-close-popup />
@@ -1315,7 +1315,7 @@
         </q-card-section>
       </q-card>
 
-      <q-card-actions v-if="maxPage > 1" class="q-px-lg" align="center" style="padding:0;">
+      <q-card-actions v-if="maxPage > 1" class="q-px-lg" align="center" style="padding: 0">
         <q-pagination class="pagiantion" v-model="page" :max="maxPage" :max-pages="7" boundary-numbers />
       </q-card-actions>
     </div>
@@ -1640,7 +1640,6 @@
     @handleBtnClose="isShowCodeBonusModal = false"
   />
 
-
   <q-dialog class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
     <MoneyRainModal @closeModal="closeDialog">
       <template #controller>
@@ -1686,11 +1685,11 @@
       <div class="congrats-coupons">
         <img :src="require('../assets/images/index/modal/congrats-coupons.png')" />
       </div>
-      <div class="congrats-title">{{ $t('hotPromo.unusedCoupons') }}</div>
+      <div class="congrats-title">{{ $t("hotPromo.unusedCoupons") }}</div>
 
       <div class="congrats-button-container">
         <q-btn no-caps unelevated class="congrats-btn" @click="handleNewPlayerDeposit">
-          {{ $t('btn.goNow') }}
+          {{ $t("btn.goNow") }}
         </q-btn>
       </div>
     </div>
@@ -1818,12 +1817,6 @@ const handleScroll = () => {
 
 onDeactivated(() => {
   popupPromo.value = "";
-});
-onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
-  if (store.hasToken()) {
-    store.getMemberInfo();
-  }
 });
 
 onUnmounted(() => {
@@ -4372,7 +4365,7 @@ const checkNewPlayerWheelPromoHomePopupCanShow = () => {
     newPlayerPromoHomePopupRef.value.checkIsCanShowPopup();
   }
 };
-onActivated(() => {
+onActivated(async () => {
   nextTick(() => {
     if (
       LocalStorage.getItem("completeddepositguide") === "true" &&
@@ -4413,9 +4406,11 @@ onActivated(() => {
   checkHash();
 
   if (store.hasToken()) {
-    showSpinWheel();
+    await store.getMemberInfo();
   }
-  // checkSpinWheel();
+  if (store.hasToken()) {
+    await showSpinWheel();
+  }
   checkGoogleLoginSetPwd();
 
   if ((route.query.login === "true" || route.query.register === "true") && ui.annoyingType !== "NONE") {
@@ -4475,6 +4470,8 @@ onMounted(() => {
   if (Platform.is.android && Platform.is.capacitor) {
     initOneSignal();
   }
+
+  window.addEventListener("scroll", handleScroll);
 });
 
 watch(
@@ -4493,13 +4490,13 @@ watch(
     if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
   }
 );
-watch (
+watch(
   () => promoStore.isShownNewPlayerWheel,
   async (val) => {
     await nextTick();
     if (val) checkNewPlayerWheelPromoHomePopupCanShow();
   }
-)
+);
 
 watch(languageVal, loadData);
 // watch(
@@ -4519,7 +4516,7 @@ const handleReceiveCodeBonus = () => {
   router.push({ path: "/account", query: { openCodeModal: "true" } });
 };
 const handleNewPlayerDeposit = () => {
-  router.push('/deposit?from=/home')
+  router.push("/deposit?from=/home");
 };
 const checkCodeBonusModal = () => {
   eventapi.get("/session/promo-code-bonus/checkBonus").then((res) => {
@@ -4545,16 +4542,16 @@ const showSpinWheel = () => {
   eventapi
     .get("/new-user-roulette/init")
     .then((res) => {
-      if (res.code == 0) {
+      if (res.code === 0) {
         if (store.canClaimFtdPrivilege && isAndroid()) {
           isHasUnusedCoupon.value = true;
           store.hasUnusedCoupon = true;
         } else {
           store.hasUnusedCoupon = false;
         }
-        if ((store.canSpinPrivilegeCoupon) && isAndroid()) {
+        if (store.canSpinPrivilegeCoupon && isAndroid()) {
           promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
-          popupPromo.value = "newplayer-spin-wheel"
+          popupPromo.value = "newplayer-spin-wheel";
         }
       }
     })
@@ -5227,7 +5224,7 @@ const checkGoogleLoginSetPwd = () => {
   // right: 20px;
   // top: 20px;
   right: 40px;
-    top: 110px;
+  top: 110px;
   z-index: 3;
   background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
 
@@ -5268,8 +5265,8 @@ const checkGoogleLoginSetPwd = () => {
   // padding: 120px 20px 20px 20px;
 
   // padding: 32% 10px 0px;
-  
-    padding: 33% 10px 5px;
+
+  padding: 33% 10px 5px;
   // overflow-y: auto;
   // background: transparent;
   // background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
@@ -6652,8 +6649,8 @@ const checkGoogleLoginSetPwd = () => {
   // left: 50%;
   // transform: translateX(-50%);
   // white-space: nowrap;
-    margin: 20px auto 0;
-    text-align: center;
+  margin: 20px auto 0;
+  text-align: center;
   .congrats-btn {
     background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
     border-radius: 10px;
