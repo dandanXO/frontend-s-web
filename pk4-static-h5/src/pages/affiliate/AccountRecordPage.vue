@@ -99,7 +99,7 @@
           <div class="bet">Login Name</div><div class="bet">Record Date</div>
         </div>
         <div class="origin-val">
-          <div class="bet-val">{{ e.loginName || '-' }}</div><div class="bet-val">{{ e.recordTime }}</div>
+          <div class="bet-val">{{ displayName || '-' }}</div><div class="bet-val">{{ e.recordTime }}</div>
         </div>
       </q-card-section>
       <q-card-section class="bot-wrapper">
@@ -200,6 +200,7 @@ const today = new Date();
 const dayBefore = new Date();
 dayBefore.setDate(today.getDate() - 30); // 30days before
 const formatDate = (date) => date.toISOString().split("T")[0];
+let displayName = null;
 
 const searchForm = reactive({
   startDate: {
@@ -290,6 +291,7 @@ const getDownlineMemberDetails = () => {
   } else {
     params.type = moneyChangeByType.type;
   }
+  displayName = moneyChangeByType.loginName;
 
   api
     .get(`/session/member/moneyChangeByType`, { params })

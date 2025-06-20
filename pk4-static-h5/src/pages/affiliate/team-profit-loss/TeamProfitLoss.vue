@@ -12,9 +12,9 @@
         <div class="filter">
             <InputField :isDark="true">
                 <template #input>
-                    <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
+                    <q-input class="input" v-model="request.loginName" outlined clearable hide-bottom-space>
                         <template v-slot:append>
-                            <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
+                            <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="initData" />
                         </template>
                     </q-input>
                 </template>
@@ -31,7 +31,7 @@
                 <img src="../../../assets/images/affiliate/team-management/username-icon.png" />
                 <div>{{ store.nickName }}</div>
             </div>
-            <div style="color: #21EF89;">Total: {{ page.total }}</div>
+            <div style="color: #21EF89;">Total: {{ page.total === null ? 0 : page.total }}</div>
         </div>
 
 
@@ -135,7 +135,8 @@ const page = reactive({
 
 const request = reactive({
     size: 20,
-    current: 1
+    current: 1,
+    siteId: 26,
 });
 
 const store = userStore();
@@ -194,6 +195,8 @@ const initData = () => {
         params: {
             current: request.current,
             size: request.size,
+            loginName: request.loginName,
+            siteId: request.siteId,
             recordTime
         }
     }).then((res) => {

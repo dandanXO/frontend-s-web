@@ -2,20 +2,20 @@
     <div class="my-dividend-container">
 
         <div class="tabs">
-            <div class="tab-item" :class="{ active: typesSelection.label === 'All' }" @click="typesSelection.label = 'All'">All</div>
-            <div class="tab-item" :class="{ active: typesSelection.label === 'Slot' }" @click="typesSelection.label = 'Slot'">Slot</div>
-            <div class="tab-item" :class="{ active: typesSelection.label === 'Live' }" @click="typesSelection.label = 'Live'">Live</div>
-            <div class="tab-item" :class="{ active: typesSelection.label === 'Fish' }" @click="typesSelection.label = 'Fish'">Fish</div>
-            <div class="tab-item" :class="{ active: typesSelection.label === 'Poker' }" @click="typesSelection.label = 'Poker'">Poker
-            </div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'ALL' }" @click="typesSelection.label = 'ALL'">ALL</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'SLOT' }" @click="typesSelection.label = 'SLOT'">SLOT</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'LIVE' }" @click="typesSelection.label = 'LIVE'">LIVE</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'SPORT' }" @click="typesSelection.label = 'SPORT'">SPORT</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'FISH' }" @click="typesSelection.label = 'FISH'">FISH</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'POKER' }" @click="typesSelection.label = 'POKER'">POKER</div>
         </div>
 
         <div class="filter">
             <InputField :isDark="true">
                 <template #input>
-                    <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
+                    <q-input class="input" v-model="request.loginName" outlined clearable hide-bottom-space>
                         <template v-slot:append>
-                            <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
+                            <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="loadBetRecords" />
                         </template>
                     </q-input>
                 </template>
@@ -103,12 +103,18 @@
 
             <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
             <div class="filter-grid">
-                <div class="filter-item" :class="{ active: typesSelection.label === 'Slot' }"
-                @click="changeTypeSelection('Slot')">Slot</div>
-                <div class="filter-item" :class="{ active: typesSelection.label === 'Fish' }"
-                @click="changeTypeSelection('Fish')">Fish</div>
-                <div class="filter-item" :class="{ active: typesSelection.label === 'Live' }"
-                @click="changeTypeSelection('Live')">Live</div>
+                <div class="filter-item" :class="{ active: typesSelection.label === 'ALL' }"
+                @click="changeTypeSelection('ALL')">ALL</div>
+                <div class="filter-item" :class="{ active: typesSelection.label === 'SLOT' }"
+                @click="changeTypeSelection('SLOT')">SLOT</div>
+                <div class="filter-item" :class="{ active: typesSelection.label === 'LIVE' }"
+                @click="changeTypeSelection('LIVE')">LIVE</div>
+                <div class="filter-item" :class="{ active: typesSelection.label === 'SPORT' }"
+                @click="changeTypeSelection('SPORT')">SPORT</div>
+                <div class="filter-item" :class="{ active: typesSelection.label === 'FISH' }"
+                @click="changeTypeSelection('FISH')">FISH</div>
+                <div class="filter-item" :class="{ active: typesSelection.label === 'POKER' }"
+                @click="changeTypeSelection('POKER')">POKER</div>
             </div>
 
             <div style="display:flex;">
@@ -158,7 +164,7 @@ const confirmDaySelection = () => {
 }
 
 const isTypeSelectionDialog = ref(false)
-const typesSelection = ref({ label: 'Slot', value: 'Slot' });
+const typesSelection = ref({ label: 'ALL', value: 'ALL' });
 const openTypeSelectionDialog = () => {
   isTypeSelectionDialog.value = true
 }
@@ -216,13 +222,16 @@ const loadBetRecords = async () => {
     }
   }
   query.siteId = 26;
-  if (query.gameType === 'SPORT') {
-    query.gameType = 'SPORT,ESPORT';
-  } else if (query.gameType === 'FISH') {
-    query.gameType = 'FISH,CASUAL';
-  } else if (query.gameType === 'LIVE') {
-    query.gameType = 'LIVE,POKER';
-  }
+  if (typesSelection.value.label !== 'ALL') {
+    query.gameType = typesSelection.value.label;
+  } 
+//   if (query.gameType === 'SPORT') {
+//     query.gameType = 'SPORT,ESPORT';
+//   } else if (query.gameType === 'FISH') {
+//     query.gameType = 'FISH,CASUAL';
+//   } else if (query.gameType === 'LIVE') {
+//     query.gameType = 'LIVE,POKER';
+//   }
   const { data: ret } = await api.get('/session/affiliate/bet-records', {
     params: query
   });
