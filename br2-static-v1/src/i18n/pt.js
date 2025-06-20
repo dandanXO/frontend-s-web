@@ -744,17 +744,158 @@ export default {
     vip: "VIP"
   },
   hotPromo: {
+    name: "Nome",
+    date: "Data",
+    amount: "Quantidade",
+    list_of_winners: "Lista de Vencedores",
+    terms_and_Conditions: "Termos e Condições",
+    on_other_days_three_times_daily: "Nos outros dias, três vezes ao dia",
+    every_friday_saturday_and_sunday: "Todas as sextas, sábados e domingos",
+    starts_now: "Começa agora",
+    starts_at: "Começa às",
+    rewind_time: "Rebobinar tempo",
+    events: "Eventos",
+    ranking_and_bonus: "Classificação e Bónus",
+    activities: "Atividades",
+    current_valid_bets: "Apostas válidas atuais",
+    remainingTimes: "Tempos restantes",
+    promoExclusionNotice: "Aviso: Esta promoção não é contabilizada para apostas de CASINO e DESPORTOS!",
+    deposit: "Depósito",
+    dailyWagerCount: "Número de apostas diárias",
+    deposits_of_the_day: "Depósitos do dia",
+    currentSignIn: "Entrada atual",
+    consecutiveDepositBonus: "Quanto mais dias consecutivos de depósito cumprir, mais bónus extra receberá.",
+    save_image: "Guardar imagem",
+    share: "Partilhar",
+    CASH_OUT_COSTS: "CUSTOS DE LEVANTAMENTO",
+    invitation_wins: "Vitórias por convite",
+    next_round: "Próxima ronda",
+    countdown: "Contagem decrescente",
+    invitationRecords: "Registos de convites",
+    lotteryRecords: "Registos da lotaria",
+    noRecords: "Sem registos",
+    activityRules: "Regras da atividade",
+    record: "Registo",
+    rules: "Regras",
+    countdown_to_next_free_spins: "Contagem decrescente para as próximas rodadas grátis",
+    this_round_has_ended: "Esta ronda terminou.",
+    invite_to_earn_spin: "Convite para ganhar uma rotação",
+    time: "tempo",
+    rotate: "rodar",
+    no_records: "Sem registos",
+    receive: "Receber",
+    received: "Recebido",
+    time_left: "tempo restante",
+    go_withdraw_now: "Levantar agora",
+    rs: "RS",
+    withdraw_money_over_rs: "Levantar dinheiro acima de Rs",
+    claim_now: "Reivindicar agora",
+    claimed: "Reivindicado",
+    bonus_claim_time: "Tempo de reivindicação do bónus",
+    promoEndsOn: "A promoção termina em",
+    earnMoney: {
+      earnMoney: "Ganhar dinheiro",
+      congratsOnGetting: "Parabéns por receber"
+    },
     aviatorWheel: {
-      remainingDrawTimes: "Remaining draw times",
-      congratulations: "Congratulations"
+      remainingDrawTimes: "Nº de sorteios restantes",
+      congratulations: "Parabéns"
+    },
+    ftdDepositBonus: "Bónus de primeiro depósito",
+    redemptionCode: "Código de resgate",
+    newplayerGuide: "Guia para novos jogadores",
+    depositSpinWheel: {
+      instruction: "Complete a tarefa de depósito para participar na roda e receber um bónus de até ",
+      depositNow: "Depositar agora",
+      upto: "Até",
+      remainingTimes: "Tempos restantes",
+      depositSpin: "Deposite Rs {min} para obter 1 rotação.",
+      spin: "Rodar",
+      rules: "Regras",
+      activityRules: "Regras da atividade",
+      rule_01:
+        "A atividade inclui quatro tipos de carrosséis: prata, ouro, diamante e especial. Pode desbloquear diferentes níveis de carrossel ao recarregar. Quanto maior o nível, maiores os prémios.",
+      rule_02: "Cada sorteio tem 100% de chance de ganhar um prémio.",
+      rule_03: "Todas as recompensas serão depositadas diretamente na sua carteira.",
+      rule_04: "O bónus requer uma faturação para levantamento.",
+      rule_05:
+        "O direito de interpretação deste evento pertence à B9.game. Se tiver alguma dúvida, contacte o apoio ao cliente.",
+      silver: "Prata",
+      gold: "Ouro",
+      diamond: "Diamante",
+      supreme: "Supremo"
     },
     signIn7Days: {
-      continuousSignIn: "Continuous sign-in:",
-      expired: "Expired",
-      day: "day",
-      days: "days",
-      signIn: "Sign in",
-      signedIn: "Signed in"
+      continuousSignIn: "Assinatura contínua:",
+      expired: "Expirado",
+      day: "dia",
+      days: "dias",
+      signIn: "Assinar",
+      signedIn: "Assinado"
+    },
+    megaSharingWheel: {
+      wheelTitle: "Roleta Mega Compartilhada",
+      missionTitle: "Recompensas",
+      invitersUsersDeposit: "Depósito de convidantes ≥ ",
+      invitersUsersValidBet: "Aposta válida de convidantes ≥ ",
+      EligibleInvitedUsers: "Utilizadores convidados elegíveis ≥ ",
+      missionDescription: "Conclua a tarefa para reivindicar seu bilhete",
+      timeLimited: "Tempo limitado",
+      day: "Dias",
+      hour: "Horas",
+      minute: "Min",
+      second: "Seg",
+      rewardClaimed: "Recompensa já reivindicada"
+    },
+    jackpotAviator: {
+      daily: "Diário",
+      weekly: "Semanal",
+      rules: "Regras",
+      history: "Histórico",
+      receive: "Receber",
+      ranking: "Classificação",
+      username: "Nome de utilizador",
+      betVolume: "Volume de aposta",
+      rank: "Classificação",
+      dailyOrWeekly: "Diário/Semanal",
+      rankingBonusRatio: "Proporção de bónus de classificação",
+      myBets: "As minhas apostas",
+      myReward: "As minhas recompensas",
+      ranksLeft: "Classificações restantes",
+      jackpot: "Jackpot",
+      noRank: "Sem classificação",
+      activityRules: "Regras da atividade",
+      termsConditions: "Termos & Condições",
+      rules1:
+        "Recompensas de classificação diária: 1,5% da receita diária total de pilotos da plataforma será incluída no prémio diário.",
+      rules2: "Recompensas de classificação semanal: 0,6% da receita semanal total contribuirá para o prémio semanal.",
+      activityRules1:
+        "As classificações dos jogadores nas tabelas diárias, semanais e gerais baseiam-se no valor total apostado.",
+      activityRules2: "As recompensas serão exibidas na página de evento de classificação.",
+      activityRules3:
+        "A classificação diária é calculada das 00:00 às 24:00 (hora local). As recompensas serão emitidas dentro de meia hora após o final da classificação e podem ser reivindicadas manualmente na página de promoções.",
+      activityRules4:
+        "A classificação semanal é calculada das 00:00 de segunda-feira às 24:00 de domingo (hora local). As recompensas serão emitidas dentro de meia hora após o ciclo semanal e podem ser reivindicadas manualmente na página de promoções.",
+      termsCondition1:
+        "Antes de solicitar recompensas, os jogadores devem fornecer número de telefone e dados bancários. Estes devem corresponder à região e dados pessoais. Qualquer comportamento anormal resultará no cancelamento dos bónus e ganhos.",
+      termsCondition2:
+        "Jogadores com múltiplas contas ou contas fraudulentas perderão a elegibilidade e as respetivas contas serão congeladas.",
+      termsCondition3: "Leia estes termos e condições com atenção antes de participar deste evento."
+    },
+    goldenEgg: {
+      ranking: "Classificação",
+      userName: "Nome de utilizador",
+      betVolume: "Volume de aposta"
+    },
+    spinReferWheel: {
+      paymentRequestSubmitted: "Pedido de pagamento submetido",
+      stillNeedToMakeWithdrawal: "Ainda precisa fazer levantamento",
+      willBePaidToYourRsAccount: "será pago à sua conta RS",
+      inviteFriendsToHelp: "Convide amigos para ajudar",
+      referFriendToRegister:
+        "Indique um amigo para se registar, depositar e verificar o telefone para ganhar rodadas grátis",
+      only: "Apenas",
+      toGo: "para ir"
     }
   },
   maintenance: {
@@ -888,5 +1029,30 @@ export default {
     35010: "35010 Membro não pode receber este privilégio",
     35011: "35011 Membro não pode receber este privilégio.",
     37001: "O horário de coleta é fora do período do evento"
+  },
+  content: {
+    nospinleft: "Sem rodadas restantes",
+    title1: "O tempo de registo começa a contar a partir do momento em que o registo é concluído.",
+    message1: "Assim que o seu montante acumulado atingir 1000 PKR, poderá levantar.",
+    message2:
+      "Quando não tiver mais rodadas, convide novos jogadores a registarem-se e depositarem para ganhar rodadas grátis adicionais.",
+    message3:
+      "O evento dura 3 dias. Após o término do evento, as recompensas acumuladas serão redefinidas e o evento recomeçará.",
+    message4: "Cada utilizador pode usufruir de uma rodada grátis por dia, que será adicionada às 00:00 diariamente.",
+    message5:
+      "O convidado deve verificar o número de telefone e não pode ter endereço IP duplicado para se qualificar para a recompensa de indicação.",
+    aviatorPromoIntro:
+      "Desfrute da emoção das apostas com o Aviator! O seu Aviator pode ganhar incríveis 3.216x com apenas um clique! O prémio para os 50 melhores é de 1.250.000 PKR!",
+    aviatorGoldenEgg:
+      "Ao apostar no Aviator todos os dias, quando o montante efetivo das apostas atingir 888 PKR, pode ter a chance de quebrar o ovo dourado (SUNEHRI ANDY). Recompensa máxima: 88.888 PKR, probabilidade de vitória: 3,6%",
+    aviatorTopTurnover:
+      "Ao apostar no Aviator, o jogador com o maior volume de apostas acumuladas qualifica-se para o primeiro lugar.",
+    cashRainIntro: "Cada rodada de chuva de dinheiro distribui gratuitamente 666.666 PKR.",
+    cashRainMaxPerRound: "Montante máximo de reembolso por rodada: 66.666 PKR.",
+    cashRainFreeDistribution: "Cada rodada distribui reembolso gratuitamente.",
+    cashRainClaimCondition:
+      "Deposite ≥ 300 PKR no mesmo dia e complete apostas diárias totais ≥ 350 PKR para reivindicar o seu bónus grátis.",
+    cashRainUsage: "O dinheiro recebido pode ser usado diretamente para jogar ou ser levantado.",
+    cashRainVIP: "Quanto maior o nível de membro VIP, maior o valor recebido."
   }
 };
