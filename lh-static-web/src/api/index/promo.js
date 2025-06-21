@@ -800,7 +800,7 @@ export function claimIemMelbourne2025Bonus(promoCode) {
 }
 
 export function getPglWallachiaS4Bonus(promoCode) {
-  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+  return server.EVENT.get(`/session/competition/today?promoCode=${promoCode}`);
 }
 export function claimPglWallachiaS4Bonus(promoCode) {
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
@@ -867,7 +867,6 @@ export function claimChestBlastAustin(promoCode, type) {
   return server.EVENT.post(`/session/mission/claim?promoCode=${promoCode}&type=${type}`);
 }
 
-
 export function getTorontoMastersInit() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return server.EVENT.get(`/session/competition-loss/init?promoCode=lh1-valorant-masters-toronto-2025&v=${randNum}`);
@@ -884,4 +883,47 @@ export function getFifa2025PromoInit() {
 export function claimFifa2025PromoBonus() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=lh1-fifa-2025&v=${randNum}`);
+}
+
+export function getFifaQuiz2025PromoInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/quiz-promo/init?promoCode=lh1-fifa-quiz-2025&v=${randNum}`);
+}
+
+export function getFifaQuiz2025PromoRecord() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/quiz-promo/records?promoCode=lh1-fifa-quiz-2025&v=${randNum}`);
+}
+
+export function submitFifaQuiz2025(promoCode, quizId, answerOne) {
+  return server.EVENT.post(`/session/quiz-promo/submit?promoCode=${promoCode}&quizId=${quizId}&answerOne=${answerOne}`);
+}
+
+export function submitOccasionFifaQuiz2025(promoCode, quizId, selectedOccasion) {
+  return server.EVENT.post(
+    `/session/quiz-promo/submitOccasion?promoCode=${promoCode}&quizId=${quizId}&selectedOccasion=${selectedOccasion}`
+  );
+}
+
+export function claimFifaQuiz2025(promoCode, quizId) {
+  return server.EVENT.post(`/session/quiz-promo/claim?promoCode=${promoCode}&quizId=${quizId}`);
+}
+
+export function claimOccasionFifaQuiz2025(promoCode, quizId) {
+  return server.EVENT.post(`/session/quiz-promo/claimOccasion?promoCode=${promoCode}&quizId=${quizId}`);
+}
+
+export function getDailySlotBonusInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/game-type-bonus/init?promoCode=lh1-daily-slot-bonus&v=${randNum}`);
+}
+export function claimDailySlotBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(`/session/game-type-bonus/claim?promoCode=lh1-daily-slot-bonus&v=${randNum}`);
+}
+export function getNewUserSportBonus2025Bonus(promoCode) {
+  return server.EVENT.get(`/session/game-type-bonus/init?promoCode=${promoCode}`);
+}
+export function claimNewUserSportBonus2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/game-type-bonus/claim?promoCode=${promoCode}`);
 }

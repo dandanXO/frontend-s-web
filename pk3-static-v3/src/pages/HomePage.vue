@@ -1006,17 +1006,22 @@
 
 <script setup>
 import { Platform, useQuasar } from "quasar";
-import { computed, onActivated, onBeforeUnmount, onMounted, reactive, ref, provide } from "vue";
+import { computed, onActivated, onBeforeUnmount, onMounted, reactive, ref, provide, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import { api, eventapi } from "@/boot/axios";
 import { cached } from "@/boot/cache";
 import { t } from "@/boot/lang";
-import KYCUserForm from "@/components/KYCUserForm.vue";
-import GameModal from "@/components/modal/GameModal";
-import PushNotification from "@/components/modal/PushNotification.vue";
-import WithdrawalModal from "@/components/modal/WithdrawalModal.vue";
-import ProfileSummary from "@/components/ProfileSummary.vue";
+const KYCUserForm = defineAsyncComponent(() => import('@/components/KYCUserForm.vue'));
+const GameModal = defineAsyncComponent(() => import('@/components/modal/GameModal'))
+const PushNotification = defineAsyncComponent(() => import('@/components/modal/PushNotification.vue'));
+
+const WithdrawalModal = defineAsyncComponent(() => import('@/components/modal/WithdrawalModal.vue'));
+const ProfileSummary = defineAsyncComponent(() => import('@/components/ProfileSummary.vue'));
+
+import HomePopup from '@/components/hotpromo/spin-lucky-wheel/HomePopup.vue';
+const SpinLuckyWheelPromoSticky = defineAsyncComponent(() => import('@/components/hotpromo/spin-lucky-wheel/PromoSticky.vue'));
+
 import { userStore } from "@/stores/index";
 import { useUI } from "@/stores/ui";
 import { App } from "@capacitor/app";
@@ -1029,8 +1034,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import MarqueeText from "vue-marquee-text-component";
-import HomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
-import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
+
 import { storeToRefs } from 'pinia';
 import { i18nStore } from "src/router/language";
 

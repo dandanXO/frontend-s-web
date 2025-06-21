@@ -50,6 +50,9 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
+      env: {
+        IS_PWA: "0"
+      },
       vueRouterMode: "history", // available values: 'hash', 'history'
 
       // transpile: false,
@@ -69,8 +72,8 @@ module.exports = configure(function (ctx) {
       minify: true,
       uglifyOptions: {
         compress: {
-          drop_console: true, // Removes all console logs
-        },
+          drop_console: true // Removes all console logs
+        }
       },
 
       // Options below are automatically set depending on the env, set them if you want to override

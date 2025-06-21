@@ -7,7 +7,7 @@
       <div class="chat-floating-panel__tag streamer">
         {{ isSystemLivestream ? "官方直播间" : "主播" }}
       </div>
-      <div class="chat-floating-panel__tag sport-type">
+      <div v-if="currentSportType" class="chat-floating-panel__tag sport-type">
         {{ currentSportType }}
       </div>
     </div>
@@ -24,6 +24,7 @@ import { computed, ref } from "vue";
 const props = defineProps(["livestreamData", "isSystemLivestream"]);
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+const imgStreamerURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/streamer/";
 
 const isExpanded = ref(true);
 
@@ -44,7 +45,7 @@ const avatarUrl = computed(() => {
   if (props.isSystemLivestream) {
     return require("@/assets/home/livestream/system-avatar.png");
   } else {
-    return imgURL + props.livestreamData?.avatar;
+    return imgStreamerURL + props.livestreamData?.avatar;
   }
 });
 

@@ -6,8 +6,7 @@
         <div class="pc-form-label">{{ $t("form.firstName") }}</div>
         <div class="pc-form-input">
           <q-input
-            filled
-            dense
+            outlined
             clearable
             :placeholder="$t('form.firstName_placeholder')"
             v-model="formDetail.firstName"
@@ -20,12 +19,24 @@
         <div class="pc-form-label">{{ $t("form.lastName") }}</div>
         <div class="pc-form-input">
           <q-input
-            filled
-            dense
+            outlined
             clearable
             :placeholder="$t('form.lastName_placeholder')"
             v-model="formDetail.lastName"
             :rules="[(_) => isValidLastName()]"
+          />
+        </div>
+      </div>
+
+      <div class="pc-form-item">
+        <div class="pc-form-label">{{ $t("form.taxId") }}</div>
+        <div class="pc-form-input">
+          <q-input
+            outlined
+            clearable
+            :placeholder="$t('form.taxId_placeholder')"
+            v-model="formDetail.taxId"
+            :rules="[(_) => isValidCPF()]"
           />
         </div>
       </div>
@@ -84,6 +95,19 @@ const isValidLastName = () => {
   return result;
 };
 
+const isValidCPF = () => {
+  const { taxId } = formDetail;
+
+  if (!taxId) {
+    return "Por favor, insira o número do CPF";
+  }
+
+  const phoneRegex = /^\d{11}$/;
+  const isValid = phoneRegex.test(taxId);
+
+  return isValid ? true : "O número do CPF deve ter 11 dígitos";
+};
+
 const isValidPhone = () => {
   const { phone } = formDetail;
 
@@ -112,6 +136,7 @@ const submitKYCNewUser = () => {
 const updateNewUserState = () => {
   const updateInfo = {};
   updateInfo.realName = `${formDetail.firstName},${formDetail.lastName}`;
+  updateInfo.taxId = `${formDetail.taxId}`;
 
   api
     .post("/session/account", qs.stringify(updateInfo))
@@ -149,7 +174,7 @@ const updateNewUserState = () => {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
   }
   .pc-form-label {
     color: rgba(255, 255, 255, 1);
@@ -160,11 +185,16 @@ const updateNewUserState = () => {
 
     :deep(.q-field__control) {
       // background: rgba(71, 178, 178, 0.16) !important;
-      background: #192B2D !important;
+      background: #131313;
+      border-radius: 4px;
+      &::before {
+        border-style: solid;
+        border-color: #35383f;
+      }
     }
 
     :deep(.q-field__native) {
-      color: #ffffff;
+      color: #fff;
     }
   }
 
@@ -250,13 +280,11 @@ const updateNewUserState = () => {
 }
 
 .style-btn-confirm {
-  color: #ffffff;
+  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+  font-weight: 700;
+  width: 140px;
+  height: 42px;
+  color: #2d2d2d;
   border-radius: 8px;
-  // background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
-  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
-  font-size: 16px;
-  font-weight: 600;
-  width: 100%;
-  margin-top: 16px;
 }
 </style>

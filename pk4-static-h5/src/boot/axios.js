@@ -258,7 +258,7 @@ export default boot(({ app, router }) => {
 
         const isLoginRegPage = window.location.pathname === "/login" || window.location.pathname === "/register";
         const timeoutTime = isLoginRegPage ? 3000 : 1000;
-        const notifyClass = isLoginRegPage ? "login-register-notify-div" : "";
+        const notifyClass = isLoginRegPage ? "" : "";
 
         Notify.create({
           type: "negative",

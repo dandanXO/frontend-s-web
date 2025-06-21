@@ -118,6 +118,12 @@ switch (currentHost) {
     imageCDNUrl = process.env.VUE_APP_BR1_IMAGE;
     siteId = 'br1';
     break;
+  case process.env.VUE_APP_BR2_HOST:
+    baseApi = process.env.VUE_APP_BR1_API;
+    baseWss = process.env.VUE_APP_BR1_SOCKET;
+    imageCDNUrl = process.env.VUE_APP_BR1_IMAGE;
+    siteId = 'br2';
+    break;
   case process.env.VUE_APP_MX1_HOST:
     baseApi = process.env.VUE_APP_BR1_API;
     baseWss = process.env.VUE_APP_BR1_SOCKET;

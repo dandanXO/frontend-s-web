@@ -405,6 +405,7 @@ const submitRegisterForm = async (elForm) => {
                 // FB tracking :: signup-success
                 if (store.isAffiliateA) {
                   fbq("track", "signup-success");
+                  fbq("track", "CompleteRegistration");
                 }
                 if (store.isOperaPixelB) {
                   otag("event", "registration");

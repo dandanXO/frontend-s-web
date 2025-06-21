@@ -104,6 +104,9 @@ export const convertToGMT8 = (dateTime) => {
 export const convertToGMT7 = (dateTime) => {
   return moment(dateTime).utcOffset("+07:00").format("YYYY-MM-DD");
 };
+export const convertToGMT7Time = (dateTime) => {
+  return moment(dateTime).utcOffset("+07:00").format("YYYY-MM-DD HH:mm:ss");
+};
 
 export const convertToCommaAmount = (amount, isForceDecimal) => {
   if (amount === null) {

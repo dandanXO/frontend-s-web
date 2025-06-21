@@ -2,7 +2,9 @@
   <q-card-section class="row items-center q-pb-none dialog-header">
     <div class="text-h5 dialog-title">{{ title }}</div>
     <q-space></q-space>
-    <img class="close-btn" src="../assets/images/index/close-btn.png" alt="" v-close-popup />
+    <q-btn v-close-popup class="close-btn" flat round unelevated>
+      <q-icon name="close"></q-icon>
+    </q-btn>
   </q-card-section>
 </template>
 

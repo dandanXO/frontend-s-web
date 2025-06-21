@@ -11,9 +11,9 @@
         <img src="../assets/images/affiliate/official-partner.png" height="55">
       </div>
       <div class="buttons">
-        <a :href="affiliateUrl + 'vi/login?isreg=1&agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
-        <a class="outline" :href="affiliateUrl + 'vi/login?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.login') }}</a>
-        <a class="outline" :href="affiliateUrl + 'vi/login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
+        <a :href="affiliateUrl + 'vi/login?isreg=1&lang='+ languageVal +'&agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
+        <a class="outline" :href="affiliateUrl + 'vi/login?lang='+ languageVal +'&agent=' + (affCode ? affCode : '')">{{ $t('affiliate.login') }}</a>
+        <a class="outline" :href="affiliateUrl + 'vi/login?view=2&lang=' + languageVal + '&agent=' + (affCode ? affCode : '')" target="_blank">
           {{ $t('affiliate.contactus') }}
         </a>
       </div>
@@ -214,11 +214,11 @@
           </ul>
         </div></div>
       <div>
-        <a :href="affiliateUrl + 'vi/login?isreg=1&agent=' +
+        <a :href="affiliateUrl + 'vi/login?isreg=1&lang=' + languageVal + '&agent=' +
           (affCode ? affCode : '')
           " class="agent-reg-btn">{{ $t('affiliate.applyAgentNow') }}</a>
 
-        <a style="text-align: center; width:100%;margin:16px auto 0px;display:block;" class="outline" :href="affiliateUrl + 'vi/login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
+        <a style="text-align: center; width:100%;margin:16px auto 0px;display:block;" class="outline" :href="affiliateUrl + 'vi/login?view=2&lang=' + languageVal + '&agent=' + (affCode ? affCode : '')" target="_blank">
           {{ $t('affiliate.contactus') }}
         </a>
       </div>

@@ -65,30 +65,42 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, defineAsyncComponent, ref } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
-import * as _ from "lodash";
 import moment from "moment";
-import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
-import DailyLoginPromo from "../components/hotpromo/dailylogin/dailyLoginPromo.vue";
-import ViPokerCashbackPromo from "../components/hotpromo/vipokercashback/viPokerCashbackPromo.vue";
-import tf88Baohiemvon from "../components/hotpromo/tf88Baohiemvon/tf88Baohiemvon.vue";
-import ViSlotNetLossPromo from "../components/hotpromo/vislotnetloss/viSlotNetLossPromo.vue";
-import ViPennyBankPromo from "../components/hotpromo/vipennybank/viPennyBankPromo.vue";
-import upgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongBaoPromo.vue";
-import EuroCup2024 from "./hotpromo/EuroCup2024/EuroCup2024.vue";
-import EuroCup2024BetReward from "./hotpromo/euro2024BetReward/Euro2024BetReward.vue";
-import EurocupLuckyDraw from "./hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue";
-import olympicClaim from "../components/hotpromo/olympic-claim/olympicClaim.vue";
-import NewPlayerPromo from "@/components/hotpromo/newPlayer/NewPlayerPromo.vue";
-import CnyLuckyDraw from "@/components/hotpromo/2025-cny-lucky-draw/2025CnyLuckyDraw.vue";
-import AseanM2024 from "@/components/hotpromo/aseanM2024/AseanM2024.vue";
-import ChristmasNewYear from "@/components/hotpromo/christmas-new-year/ChristmasNewYear.vue";
-import xmasSpinWheel from "@/components/hotpromo/xmasSpinWheel/XmasSpinWheel.vue";
-import WeeklyDepositBonus from "@/components/hotpromo/weekly-deposit/WeeklyDepositBonus.vue";
-import FifaWorldCup2025 from "./hotpromo/fifa-world-cup-2025/FifaWorldCup2025.vue";
+
+const LotteryPromo = defineAsyncComponent(() => import("../components/hotpromo/lottery/LotteryPromo.vue"));
+const DailyLoginPromo = defineAsyncComponent(() => import("../components/hotpromo/dailylogin/dailyLoginPromo.vue"));
+const ViPokerCashbackPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/vipokercashback/viPokerCashbackPromo.vue")
+);
+const tf88Baohiemvon = defineAsyncComponent(() => import("../components/hotpromo/tf88Baohiemvon/tf88Baohiemvon.vue"));
+const ViSlotNetLossPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/vislotnetloss/viSlotNetLossPromo.vue")
+);
+const ViPennyBankPromo = defineAsyncComponent(() => import("../components/hotpromo/vipennybank/viPennyBankPromo.vue"));
+const upgradeHongBaoPromo = defineAsyncComponent(() =>
+  import("../components/hotpromo/upgradehongbao/upgradeHongBaoPromo.vue")
+);
+const EuroCup2024 = defineAsyncComponent(() => import("./hotpromo/EuroCup2024/EuroCup2024.vue"));
+const EuroCup2024BetReward = defineAsyncComponent(() => import("./hotpromo/euro2024BetReward/Euro2024BetReward.vue"));
+const EurocupLuckyDraw = defineAsyncComponent(() => import("./hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue"));
+const olympicClaim = defineAsyncComponent(() => import("../components/hotpromo/olympic-claim/olympicClaim.vue"));
+const NewPlayerPromo = defineAsyncComponent(() => import("@/components/hotpromo/newPlayer/NewPlayerPromo.vue"));
+const CnyLuckyDraw = defineAsyncComponent(() =>
+  import("@/components/hotpromo/2025-cny-lucky-draw/2025CnyLuckyDraw.vue")
+);
+const AseanM2024 = defineAsyncComponent(() => import("@/components/hotpromo/aseanM2024/AseanM2024.vue"));
+const ChristmasNewYear = defineAsyncComponent(() =>
+  import("@/components/hotpromo/christmas-new-year/ChristmasNewYear.vue")
+);
+const xmasSpinWheel = defineAsyncComponent(() => import("@/components/hotpromo/xmasSpinWheel/XmasSpinWheel.vue"));
+const WeeklyDepositBonus = defineAsyncComponent(() =>
+  import("@/components/hotpromo/weekly-deposit/WeeklyDepositBonus.vue")
+);
+const FifaWorldCup2025 = defineAsyncComponent(() => import("./hotpromo/fifa-world-cup-2025/FifaWorldCup2025.vue"));
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -213,7 +225,7 @@ export default defineComponent({
         var data = res.data.data;
 
         for (let i in data) {
-          _.each(data[i].winners, function (winner, index) {
+          data[i].winners.forEach(function (winner, index) {
             winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
 
             winnerDataSource.value.push(winner);

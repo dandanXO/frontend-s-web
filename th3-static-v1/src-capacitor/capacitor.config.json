@@ -1,0 +1,11 @@
+{
+  "appId": "com.ind.appth2",
+  "appName": "55Ace",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "showSpinner": true
+    }
+  }
+}

@@ -147,7 +147,7 @@
 import { userStore } from "@/store";
 import { launchSessionGame } from "@/api/platform/platform";
 import { isMobile } from "@/utils/utils";
-import { ref, defineExpose, computed } from "vue";
+import { ref, defineExpose, computed, watch } from "vue";
 import ComingSoon from "@/components/loading/ComingSoon";
 import TFLoading from "@/components/loading/TFLoading";
 import { transfer } from "@/api/personal/transfer";
@@ -344,6 +344,10 @@ const loadGame = () => {
     logoShow.value = false;
   }
 };
+
+watch(visible,()=>{
+  UI.isGameModalOpened = visible.value;
+})
 
 defineExpose({
   open

@@ -460,7 +460,7 @@
       ref="configForm"
       :model="form"
       :rules="formRules"
-      label-width="150px"
+      label-width="200px"
       label-position="left"
       @submit.prevent
     >
@@ -496,6 +496,9 @@
             :value="item.id"
           />
         </el-select>
+      </el-form-item>
+      <el-form-item :label="t('fields.roleConfig')" prop="hasRoles">
+        <el-switch v-model="form.hasRoles" @change="roleConfigChange" />
       </el-form-item>
       <el-form-item :label="t('fields.configValue')" prop="value">
         <div v-if="selectedRule === null">
@@ -542,6 +545,105 @@
           <el-input v-if="selectedRule.type === 'INPUT'" v-model="form.value" :placeholder="t('fields.configValue')" />
         </div>
       </el-form-item>
+      <el-form-item v-for="(roleConfig, index) in rolesConfig" :key="roleConfig.role">
+        <template #label>
+          <el-select
+            v-model="roleConfig.role"
+            :placeholder="t('fields.role')"
+          >
+            <el-option
+              v-for="role in roles"
+              :key="role.id"
+              :label="role.name"
+              :value="role.id"
+            />
+          </el-select>
+        </template>
+        <div v-if="selectedRule === null">
+          <el-input v-model="roleConfig.value" :placeholder="t('fields.configValue')" style="width: 70% " />
+          <el-button
+            v-if="index === 0"
+            icon="el-icon-plus"
+            type="primary"
+            style="margin-left: 20px"
+            @click="addFeedbackType()"
+            plain
+          >
+            {{ t('fields.add') }}
+          </el-button>
+          <el-button
+            v-else
+            icon="el-icon-remove"
+            type="danger"
+            style="margin-left: 20px"
+            @click="delConfig(item.id)"
+            plain
+          >
+            {{ t('fields.delete') }}
+          </el-button>
+        </div>
+        <div v-else>
+          <el-radio-group v-if="selectedRule.type === 'RADIO'" size="small" style="width: 70% " v-model="roleConfig.value">
+            <el-radio-button :value-key="rule.value" v-for="rule in JSON.parse(selectedRule.value)" :label="rule.value" :key="rule.key">{{ rule.label }}</el-radio-button>
+          </el-radio-group>
+          <el-select
+            v-if="selectedRule.type === 'SELECT'"
+            v-model="roleConfig.value"
+            size="small"
+            :placeholder="t('fields.status')"
+            class="filter-item"
+            style="width: 70% ;margin-left: 5px"
+          >
+            <el-option
+              v-for="rule in JSON.parse(selectedRule.value)"
+              :key="rule.key"
+              :label="rule.label"
+              :value="rule.value"
+            />
+          </el-select>
+          <el-switch
+            v-if="selectedRule.type === 'SWITCH'"
+            v-model="roleConfig.value"
+            style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949; width: 70%"
+            size="small"
+            :active-text="switchText(selectedRule.value, 'ACTIVE')"
+            :inactive-text="switchText(selectedRule.value, 'INACTIVE')"
+          />
+          <el-checkbox
+            v-if="selectedRule.type === 'CHECKBOX'"
+            v-model="checkAll"
+            :indeterminate="isIndeterminate"
+            @change="handleCheckAllChange"
+            style="width: 70% "
+          >
+            Check all
+          </el-checkbox>
+          <el-checkbox-group v-if="selectedRule.type === 'CHECKBOX'" v-model="checkedSelection" @change="handleCheckedSelectionChange">
+            <el-checkbox v-for="rule in JSON.parse(selectedRule.value)" :label="rule.label" :key="rule.value" :value="rule.value" />
+          </el-checkbox-group>
+          <el-input v-if="selectedRule.type === 'INPUT'" v-model="roleConfig.value" :placeholder="t('fields.configValue')" style="width: 70% " />
+          <el-button
+            v-if="index === 0"
+            icon="el-icon-plus"
+            type="primary"
+            style="margin-left: 20px"
+            @click="addRolesConfig()"
+            plain
+          >
+            {{ t('fields.add') }}
+          </el-button>
+          <el-button
+            v-else
+            icon="el-icon-remove"
+            type="danger"
+            style="margin-left: 20px"
+            @click="delRolesConfig(roleConfig.role)"
+            plain
+          >
+            {{ t('fields.delete') }}
+          </el-button>
+        </div>
+      </el-form-item>
     </el-form>
 
     <div class="dialog-footer">
@@ -569,6 +671,7 @@ import {
   updateBatch,
   createConfig,
   updateOrderBatch,
+  getGroup
 } from '../../../../api/config'
 import { hasRole } from '../../../../utils/util'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -578,6 +681,7 @@ import JsonEditor from 'json-editor-vue3'
 import { getValueRulesList } from '../../../../api/value-rules'
 import { Plus } from "@element-plus/icons-vue";
 import bus from '../../../../utils/bus'
+import { getSimpleRoles } from '../../../../api/roles'
 
 const { t } = useI18n()
 const siteId = ref()
@@ -620,6 +724,8 @@ const checkedSelection = ref([])
 const checkBoxSelections = reactive([])
 const checkAll = ref(false)
 const isIndeterminate = ref(true)
+const roles = ref([]);
+const rolesConfig = ref([]);
 
 const form = reactive({
   id: null,
@@ -628,6 +734,7 @@ const form = reactive({
   code: null,
   value: null,
   rulesId: null,
+  roles: [],
 })
 
 const formRules = reactive({
@@ -678,6 +785,7 @@ watch(
     await loadFinancialLevelInfos()
     await loadRiskLevels()
     await loadValueRules()
+    await loadRoles()
   }
 )
 
@@ -943,8 +1051,8 @@ async function loadConfigs() {
   removeJsonEditorElement()
 }
 
-function loadConfig(customConfig) {
-  nextTick(() => {
+async function loadConfig(customConfig) {
+  nextTick(async () => {
     for (const key in customConfig) {
       if (Object.keys(form).find(k => k === key)) {
         form[key] = customConfig[key]
@@ -969,6 +1077,18 @@ function loadConfig(customConfig) {
         isIndeterminate.value = checkedCount > 0 && checkedCount < checkBoxSelections.length
       } else if (selectedRule.value.type === 'SWITCH') {
         form.value = form.value.toLowerCase() === 'true';
+      }
+    }
+    rolesConfig.value = [];
+    form.hasRoles = false;
+    const { data: ret } = await getGroup(customConfig.id)
+    if (ret.length > 0) {
+      form.hasRoles = true;
+      for (let i = 0; i < ret.length; i++) {
+        rolesConfig.value.push({
+          role: ret[i].rolesId,
+          value: ret[i].value,
+        })
       }
     }
   })
@@ -1059,6 +1179,8 @@ function showDialog(type) {
       form.code = null
       form.value = null
     }
+    form.hasRoles = false
+    rolesConfig.value = []
     uiControl.dialogTitle = t('fields.createConfig')
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editConfig')
@@ -1074,6 +1196,7 @@ async function submit() {
       form.configGroup = form.configGroup.trim();
       form.code = form.code.trim();
       form.value = form.value + "".trim();
+      form.roles = JSON.stringify(rolesConfig.value);
       if (dialogMode.value === 'CREATE') {
         form.siteId = siteId.value
         await createConfig(form)
@@ -1243,11 +1366,47 @@ function searchCode(searchTerm) {
   });
 }
 
+async function loadRoles() {
+  const { data: ret } = await getSimpleRoles(siteId.value)
+  roles.value = ret;
+}
+
+const roleConfigChange = (val) => {
+  if (val) {
+    rolesConfig.value = [
+      {
+        role: null,
+        value: null,
+      }
+    ]
+  } else {
+    rolesConfig.value = []
+  }
+}
+
+function addRolesConfig() {
+  rolesConfig.value.push({
+    role: null,
+    value: null,
+  })
+}
+
+function delRolesConfig(roleId) {
+  for (let index = 0; index < rolesConfig.value.length; index++) {
+    const item = rolesConfig.value;
+    if (item[index].role === roleId) {
+      rolesConfig.value.splice(index, 1)
+      break
+    }
+  }
+}
+
 onMounted(() => {
   loadSites()
   loadFinancialLevelInfos()
   loadRiskLevels()
   loadValueRules()
+  loadRoles()
   bus.on('search', searchCode)
   bus.on('add', () => showDialog('CREATE'))
 })

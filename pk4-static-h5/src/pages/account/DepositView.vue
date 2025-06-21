@@ -26,6 +26,9 @@
           <q-badge v-if="isFtdPrivilegePayType" color="green" floating rounded>
             +{{ getFtdCommaAmount(item.amount) }}
           </q-badge>
+          <q-badge v-if="isNewPlayerPrivilege" color="blue" floating rounded>
+            {{ getNewPlayerAmount(item.amount) }}
+          </q-badge>
           <div :class="['deposit-amt', item.isActive && 'active', 'panel']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -81,6 +84,12 @@
               v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1"
             >
               {{ $t("deposit.useFtdPrivilege") }}
+            </q-checkbox>
+            <q-checkbox
+              v-model="newPlayerDepositBonusConfig.selected"
+              v-else-if="newPlayerDepositBonusConfig.hasBonus && !isUSDT && isAndroid()"
+            >
+              {{ $t("deposit.appDepositBonus") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
@@ -332,6 +341,23 @@
     </div>
   </q-dialog>
 
+  <q-dialog width="100%" v-model="showPaymentCancellationDialog">
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
+      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("notify.cancelPayment") }}</div>
+        <div class="txt-content q-mt-md text-center">
+          {{ $t("notify.cancelPaymentWillLose") }}
+          <br />
+          <div class="bonusAmt">PKR {{ paymentCancellationAmtLoss }}</div>
+        </div>
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
+          <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup @click="confirmLeave" />
+          <q-btn :label="$t('btn.payAgain')" no-caps class="btn-confirm" @click="cancelLeave" v-close-popup />
+        </div>
+      </div>
+    </div>
+  </q-dialog>
   <AdditionalSteps
     v-if="isAdditionalDepositSteps"
     :currentAdditionalStep="currentDepStep"
@@ -348,7 +374,7 @@ import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { userStore } from "stores/index";
-import { useRoute, useRouter } from "vue-router";
+import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, generateEventID, trackNewUserFtd } from "src/boot/utils";
 // import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
@@ -357,9 +383,17 @@ import KYCUserForm from "../../components/KYCUserForm.vue";
 import { t } from "src/boot/lang";
 import { useCheckKYC } from "src/hooks/checkKYC";
 import { storeToRefs } from "pinia";
+import { isAndroid } from "src/boot/utils";
 // import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 import AdditionalSteps from "../../components/modal/AdditionalSteps.vue";
+
+const DEFAULT_BONUS_CONFIG = {
+  selected: true,
+  hasBonus: true,
+  privilegeId: null
+};
+
 const closePlayerGuide = () => {
   isAdditionalDepositSteps.value = false;
   if (currentDepStep.value === 4) {
@@ -465,6 +499,7 @@ const copybtntxt3 = ref("复制");
 const extraPrivilegeId = ref();
 const paytypeWithPrivilege = ref("");
 const isFtdPrivilegeEnable = ref(false);
+const newPlayerDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG)
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
 const isFtdPrivilege = computed(
@@ -474,6 +509,14 @@ const isFtdPrivilege = computed(
 const isFtdPrivilegePayType = computed(
   () => isFtdPrivilege.value && paytypeWithPrivilege.value.indexOf(activeMethod.value.payType) > -1
 );
+const isNewPlayerPrivilege = computed(
+  () => 
+    selectedPayType.value !== "USDTTRC" &&
+    newPlayerDepositBonusConfig.value.selected &&
+    newPlayerDepositBonusConfig.value.hasBonus && 
+    isAndroid()
+)
+
 
 const copyMessage = (position) => {
   let copyText = null;
@@ -554,6 +597,23 @@ const getFtdCommaAmount = (amount) => {
   } else {
     return "999Pkr";
   }
+};
+
+
+const getNewPlayerAmount = (amount) => {
+  const rewardMap = {
+    300: 38,
+    500: 38,
+    800: 38,
+    1000: 38,
+    3000: 38,
+    5000: 38,
+    10000: 38,
+    20000: 38,
+    30000: 38,
+    50000: 38
+  };
+  return rewardMap[amount] || 0;
 };
 
 const handleDepositNodeClick = (item) => {
@@ -697,6 +757,12 @@ async function loadPrivilege(val) {
         if (p.payTypes.indexOf(val.payType) >= 0) {
           if (p.triggerType == "FREE") {
             freePrivilege.value.push(p);
+          } else if (p.code === "pak-new-user-roulette") {
+            newPlayerDepositBonusConfig.value = {
+              selected: true,
+              hasBonus: true,
+              privilegeId: p.id
+            };
           } else {
             unselectedPrivileges.value.push(p);
           }
@@ -941,6 +1007,10 @@ async function pDepo(deposit) {
               }
             }
           }
+          const onAppFirstDeposit = newPlayerDepositBonusConfig.value?.hasBonus
+          if (onAppFirstDeposit) {
+            localStorage.setItem('onAppFirstDeposit', JSON.stringify(onAppFirstDeposit));
+          }
         }
       } else {
         $q.notify({
@@ -1070,9 +1140,60 @@ onMounted(() => {
     isAdditionalDepositSteps.value = true;
   }
 });
+const showPaymentCancellationDialog = ref();
+const paymentCancellationAmtLoss = ref(0);
+const pendingNext = ref(null)
+
+const confirmLeave = () => {
+  showPaymentCancellationDialog.value = false
+  if (pendingNext.value) {
+    pendingNext.value()
+    pendingNext.value = null
+  }
+}
+
+const cancelLeave = () => {
+  showPaymentCancellationDialog.value = false
+  if (pendingNext.value) {
+    pendingNext.value(false)
+    pendingNext.value = null
+  }
+}
+const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
+
+
+onBeforeRouteLeave((to, from, next) => {
+  console.log(from)
+  if (from.path !== '/deposit') {
+    next()
+    return
+  }
+  const hasNewPlayerReward = newPlayerDepositBonusConfig.value?.hasBonus
+  
+  const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
+
+  if (alreadyDeposited && isAndroid()) {
+    next()
+    return
+  }
+  if (((hasNewPlayerReward) && isAndroid())) {
+    if (hasNewPlayerReward) {
+      paymentCancellationAmtLoss.value = 38
+    }
+    pendingNext.value = next
+    showPaymentCancellationDialog.value = true
+  } else {
+    next()
+  }
+})
 </script>
 
 <style scoped lang="scss">
+.bonusAmt {
+    font-weight: bold;
+    color: gold;
+    font-size: 25px;
+}
 .deposit-tabs {
   width: 100%;
   margin: 0 16px;
@@ -1424,6 +1545,30 @@ onMounted(() => {
   img {
     width: 100%;
   }
+}
+.popout-btns {
+  width: 100%;
+}
+.btn-cancel {
+  // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+  // border: 1px solid #5d8956;
+  // font-weight: 700;
+  // color: #ffffff;
+  // border-radius: 12px;
+  font-weight: 700;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 16px;
+  text-align: center !important;
+}
+
+.btn-confirm {
+  font-weight: 700;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 16px;
+  height: unset;
+  text-align: center !important;
 }
 </style>
 <style scoped>

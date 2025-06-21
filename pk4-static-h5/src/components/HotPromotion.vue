@@ -13,6 +13,9 @@
     <NewPlayerSpinWheelPromo
       v-if="list.redirectUrl === 'pak-newplayer-welcome-spin' && !isCommonPromo && store.token"
     />
+    <NewPlayerWelcome
+      v-if="list.redirectUrl === 'pak-welcome-new-players' && !isCommonPromo && store.token"
+    />
     <RedPacketRainPromo v-if="list.redirectUrl === 'pak-redpacketrain' && !isCommonPromo && store.token" />
     <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
     <NewPlayersPromo v-if="list.redirectUrl === 'pak-new-players' && !isCommonPromo && store.token" :list="list" />
@@ -29,6 +32,12 @@
     />
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
     <NewPlayerAccDepositPromo v-if="list.redirectUrl === 'new-player-acc-deposit'" :params="list.param" />
+    <PiggyBankPromo v-if="list.redirectUrl === 'pk4-piggy-bank' && store.token" :promocode="list.promoCode" />
+    <MonthBeginningDepositRebate
+      v-if="list.redirectUrl === 'pk4-month-beginning-deposit-rebate'"
+      :params="list.param"
+      :promocode="list.promoCode"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -64,12 +73,14 @@ import InterestProfitPromo from "../components/hotpromo/interestProfit/InterestP
 import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.vue";
 import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
 import GoldenEggPromo from "./hotpromo/goldenEgg/GoldenEggPromo.vue";
-
 import VideoAmbassador from "./hotpromo/video-ambassador/VideoAmbassador.vue";
 import DepositSpinnerRewards from "./hotpromo/deposit-spinner-rewards/DepositSpinnerRewards.vue";
 import JackpotAviator from "./hotpromo/jackpotAviator/JackpotAviator.vue";
 import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
 import NewPlayerAccDepositPromo from "./hotpromo/new-player-acc-deposit/NewPlayerAccDepositPromo.vue"
+import NewPlayerWelcome from "../components/hotpromo/newPlayerSpinWheel/NewPlayerWheelPromo.vue"
+import PiggyBankPromo from "../components/hotpromo/piggyBank/PiggyBankPromo.vue";
+import MonthBeginningDepositRebate from "../components/hotpromo/monthBeginningDepositRebate/MonthBeginningDepositRebate.vue"
 
 export default defineComponent({
   name: "HotPromo",
@@ -90,7 +101,10 @@ export default defineComponent({
     JackpotAviator,
     DepositSpinnerRewards,
     SpinLuckyWheelPromo,
-    NewPlayerAccDepositPromo
+    NewPlayerAccDepositPromo,
+    NewPlayerWelcome,
+    PiggyBankPromo,
+    MonthBeginningDepositRebate
   },
   props: {
     list: {
@@ -155,6 +169,7 @@ export default defineComponent({
       this.list.redirectUrl === "pak-deposit-spinner-rewards" ||
       this.list.redirectUrl === "spin-lucky-wheel" ||
       this.list.redirectUrl === "new-player-acc-deposit" ||
+      this.list.redirectUrl === "pak-welcome-new-players" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

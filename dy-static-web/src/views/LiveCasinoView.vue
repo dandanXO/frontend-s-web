@@ -117,6 +117,14 @@ export default defineComponent({
 
     const platforms = ref([
       {
+        code: "AR",
+        name: "AR",
+        image: "ar",
+        message:
+          "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
+        gameCode: ""
+      },
+      {
         code: "PMLIVE",
         name: "DB",
         image: "db",
@@ -162,13 +170,13 @@ export default defineComponent({
         message: ""
       },
       {
-        code: "AR",
-        name: "AR",
-        image: "ar",
+        code: "EEAI",
+        name: "EEAI",
+        image: "eeai",
         message:
           "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
         gameCode: ""
-      },
+      }
     ]);
 
     const filteredPlatforms = ref([]);
