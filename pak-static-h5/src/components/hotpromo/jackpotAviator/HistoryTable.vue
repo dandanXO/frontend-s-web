@@ -131,7 +131,8 @@ const isNotInApp = window.location.pathname === "/promo";
     .history-list {       
         margin: 0;
         
-        max-height: calc(100dvh - 425px);
+        max-height: calc(100dvh - 605px);
+        padding-bottom: 15px;
         &.isNotInApp {
             max-height: calc(100dvh - 570px);
         }
