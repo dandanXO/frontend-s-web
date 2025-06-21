@@ -33,7 +33,7 @@
               v-if="currentLiveData.name === 'SYSTEM'"
               :src="require('../../assets/images/livestream/system-avatar.png')"
             />
-            <img v-else-if="currentLiveData.avatar" :src="imgURL + currentLiveData.avatar" />
+            <img v-else-if="currentLiveData.avatar" :src="imgStreamerURL + currentLiveData.avatar" />
             <img v-else :src="require('../../assets/images/profile/default-1.png')" />
 
             <!-- <img :src="imgURL + currentLiveData.avatar" /> -->
@@ -535,6 +535,8 @@ const sportType = computed(() => {
 });
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+
+const imgStreamerURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/streamer/";
 
 let collapseTimeout = null;
 const expandRoomMsg = () => {
