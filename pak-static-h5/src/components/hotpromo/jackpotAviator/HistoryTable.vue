@@ -115,9 +115,10 @@ const props = defineProps(['historyList']);
 }
 
 @media (max-width: 400px) {
-    .history-list {
-
-        margin: 0 0 70px;
+    .history-list {       
+        margin: 0;
+        
+        max-height: calc(100vh - 570px);
         .item {
             height: 30px;
 
