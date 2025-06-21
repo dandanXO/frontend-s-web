@@ -24,6 +24,11 @@
 const props = defineProps(['historyList']);
 </script>
 <style lang="scss" scoped>
+@supports (-webkit-overflow-scrolling: touch) and (not (overflow: -webkit-marquee)) {
+  .history-list {
+    max-height: calc(100dvh - 600px);
+  }
+}
 .history-list {
     display: flex;
     flex-direction: column;
@@ -36,7 +41,7 @@ const props = defineProps(['historyList']);
         // margin: 0 0 70px;
     margin: 0;
         
-    max-height: calc(100vh - 600px);
+    max-height: calc(100dvh - 460px);
     // padding-bottom: 0px;
         // padding-bottom: 15px;
     .item {
