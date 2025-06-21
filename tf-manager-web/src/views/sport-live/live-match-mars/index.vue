@@ -36,6 +36,12 @@
           style="width: 200px; margin-left: 10px"
           :placeholder="t('fields.name')"
         />
+        <el-input
+          v-model="request.matchId"
+          size="small"
+          style="width: 200px; margin-left: 10px"
+          :placeholder="t('fields.id')"
+        />
         <el-select
           v-model="request.supplierStreamUrl"
           size="small"
@@ -282,6 +288,7 @@ const request = reactive({
   sportId: null,
   status: null,
   matchName: null,
+  matchId: null,
   supplierStreamUrl: null
 });
 
@@ -387,6 +394,7 @@ function resetQuery() {
   request.status = null
   request.matchName = null
   request.supplierStreamUrl = null
+  request.matchId = null
 }
 
 function changePage(page) {
