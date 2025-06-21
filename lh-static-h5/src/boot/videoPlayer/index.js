@@ -43,6 +43,16 @@ export class VideoPlayer {
       NATIVE_STREAM_BUFFERING: "NATIVE_CUSTOM_STREAM_BUFFERING",
       CUSTOM_ERROR: "CUSTOM_ERROR"
     };
+    this._elEvents = {
+      EL_WAITING: "waiting",
+      EL_LOADSTART: "loadstart",
+      EL_STALLED: "stalled",
+      EL_SEEKING: "seeking",
+      EL_CANPLAY: "canplay",
+      EL_PLAYING: "playing",
+      EL_LOADEDDATA: "loadeddata",
+      EL_LOADEDMETADATA: "loadedmetadata"
+    };
     this._eventTarget = new EventTarget();
     this._registeredEvents = [];
     /** @type {SupportPlayer} */
@@ -80,10 +90,10 @@ export class VideoPlayer {
         return;
       } else if (_hls.isSupported()) {
         this.qualitySupported = true;
-        this.Events = Object.assign({}, _hls.Events, this._customEvents);
+        this.Events = Object.assign({}, _hls.Events, this._customEvents, this._elEvents);
         this.supportPlayer = "FULL";
       } else {
-        this.Events = Object.assign({}, _hls.Events, this._customEvents);
+        this.Events = Object.assign({}, _hls.Events, this._customEvents, this._elEvents);
         this.supportPlayer = "NATIVE";
       }
     } else {
@@ -93,10 +103,10 @@ export class VideoPlayer {
       } else {
         this.supportPlayer = "FULL";
         this.qualitySupported = false;
-        this.Events = Object.assign({}, _flv.Events, this._customEvents);
+        this.Events = Object.assign({}, _flv.Events, this._customEvents, this._elEvents);
       }
     }
-    this._bindEvents();
+    this._bindEventsV2();
   }
 
   async load(startPlay = false) {
@@ -188,12 +198,7 @@ export class VideoPlayer {
   _bindEvents() {
     if (this._mediaType === "hls") {
       if (this.supportPlayer === "FULL") {
-        const hlsVideoResumeEvents = [
-          this.Events.FRAG_BUFFERED,
-          this.Events.FRAG_LOADED,
-          this.Events.BUFFER_APPENDED,
-          this.Events.LEVELS_UPDATED
-        ];
+        const hlsVideoResumeEvents = [this.Events.FRAG_BUFFERED, this.Events.FRAG_LOADED];
         this.on(this.Events.ERROR, (event, data) => {
           this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: data }));
           // if (data.fatal) {
@@ -267,11 +272,66 @@ export class VideoPlayer {
     }
   }
 
+  _bindEventsV2() {
+    const errorEvents = [
+      this._elEvents.EL_WAITING,
+      this._elEvents.EL_LOADSTART,
+      this._elEvents.EL_STALLED,
+      this._elEvents.EL_SEEKING
+    ];
+    const resumeEvents = [this._elEvents.EL_CANPLAY, this._elEvents.EL_LOADEDDATA, this._elEvents.EL_LOADEDMETADATA];
+    const VIDEO_PLAY_BUFFER = 10 * 1000; // 10 seconds
+    let videoPlayTimer = null;
+    let hasStartedPlayback = false;
+
+    const _dispatchError = (event, error) => {
+      const customError = {
+        type: "NATIVE",
+        code: event,
+        details: error,
+        message: "video element error"
+      };
+      this._eventTarget.dispatchEvent(new CustomEvent(this._customEvents.CUSTOM_ERROR, { detail: customError }));
+    };
+
+    const _dispatchStreamAvailable = (event) => {
+      if (videoPlayTimer) {
+        clearTimeout(videoPlayTimer);
+        videoPlayTimer = null;
+      }
+      this._eventTarget.dispatchEvent(new Event(this._customEvents.STREAM_AVAILABLE));
+    };
+
+    errorEvents.forEach((event) => {
+      this.on(event, (e) => {
+        if (!hasStartedPlayback) return;
+        _dispatchError(event, e);
+      });
+    });
+
+    resumeEvents.forEach((event) => {
+      this.on(event, () => {
+        if (event === this._elEvents.EL_PLAYING || event === this._elEvents.EL_CANPLAY) {
+          hasStartedPlayback = true;
+        }
+        _dispatchStreamAvailable(event);
+      });
+    });
+
+    videoPlayTimer = setTimeout(() => {
+      if (hasStartedPlayback) return;
+      _dispatchError(this._elEvents.EL_WAITING, {});
+    }, VIDEO_PLAY_BUFFER);
+  }
+
   on(event, handler, options) {
     let type;
     if (Object.values(this._customEvents).includes(event)) {
       this._eventTarget.addEventListener(event, handler);
       type = "CUSTOM";
+    } else if (Object.values(this._elEvents).includes(event)) {
+      this.videoEl.addEventListener(event, handler, options);
+      type = "ELEMENT";
     } else {
       type = "PLAYER";
       if (this._mediaType === "hls") {
@@ -292,6 +352,8 @@ export class VideoPlayer {
       const { type, event, handler } = this._registeredEvents.pop();
       if (type === "CUSTOM") {
         this._eventTarget.removeEventListener(event, handler);
+      } else if (type === "ELEMENT") {
+        this.videoEl.removeEventListener(event, handler);
       } else {
         if (this._mediaType === "hls") {
           if (this.supportPlayer === "FULL") {

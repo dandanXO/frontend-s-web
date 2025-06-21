@@ -31,7 +31,6 @@
         webkit-playsinline
         muted
         @progress="handlePlayerProgress"
-        @canplay="handlePlayerCanPlay"
         @webkitendfullscreen="handleEndFullScreen"
       />
 
@@ -340,6 +339,7 @@ const initPlayer = async (play = false) => {
     await player.value.init();
     isPlayerSupported.value = player.value.supportPlayer !== "NONE";
     player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerErrorDebounce);
+    player.value.on(player.value.Events.STREAM_AVAILABLE, handlePlayerCanPlay);
     // player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
     // emitting when hls.isSupported() is false
     player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
@@ -523,6 +523,7 @@ const handlePlayerCanPlay = () => {
   isLatestScreenRecorded.value = false;
   isVideoLoading.value = false;
   isVideoLoadFailed.value = false;
+  videoLoadErrorStartTime.value = null;
 };
 
 const handlePlayerError = (data) => {
