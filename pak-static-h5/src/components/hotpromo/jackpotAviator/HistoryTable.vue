@@ -28,7 +28,8 @@ const isNotInApp = window.location.pathname === "/promo";
 <style lang="scss" scoped>
 @supports (-webkit-overflow-scrolling: touch) and (not (overflow: -webkit-marquee)) {
   .history-list {
-    max-height: calc(100dvh - 625px);
+    max-height: calc(100dvh - 410px);
+    padding-bottom: 5px;
   }
 }
 .history-list {
