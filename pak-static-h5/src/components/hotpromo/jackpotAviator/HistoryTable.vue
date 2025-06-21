@@ -118,13 +118,20 @@ const isNotInApp = window.location.pathname === "/promo";
     max-height: 500px;
     overflow: auto;
 }
-@media (min-width: 500px) {
+@media (min-width: 400px) {
     .history-list {
         &.isNotInApp {
-            max-height: calc(100vh - 625px);
+            max-height: calc(100vh - 600px);
+            padding-bottom: 0;
         }
         
-        max-height: calc(100vh - 410px);
+        // max-height: calc(100vh - 410px);
+        
+        padding-bottom: 25px;
+        max-height: calc(100vh - 600px);
+        
+    // max-height: 325px;
+    // padding-bottom: 15px;
     }
 }
 @media (max-width: 400px) {
@@ -132,8 +139,10 @@ const isNotInApp = window.location.pathname === "/promo";
         margin: 0;
         
         max-height: calc(100dvh - 605px);
-        padding-bottom: 15px;
+        
+            padding-bottom: 15px;
         &.isNotInApp {
+            padding-bottom: 0;
             max-height: calc(100dvh - 570px);
         }
         .item {
