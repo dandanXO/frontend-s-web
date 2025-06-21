@@ -26,7 +26,11 @@ const props = defineProps(['historyList']);
 const isNotInApp = window.location.pathname === "/promo";
 </script>
 <style lang="scss" scoped>
-
+@supports (-webkit-overflow-scrolling: touch) and (not (overflow: -webkit-marquee)) {
+  .history-list {
+    max-height: calc(100dvh - 625px);
+  }
+}
 .history-list {
     display: flex;
     flex-direction: column;
