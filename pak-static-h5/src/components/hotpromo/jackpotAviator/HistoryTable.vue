@@ -1,5 +1,5 @@
 <template>
-    <div class="history-list" v-if="props?.historyList">
+    <div class="history-list" :class="{ isNotInApp : isNotInApp }" v-if="props?.historyList">
         <div class="item firstheader">
             <div class="header">{{ $t('hotPromo.jackpotAviator.ranking') }}</div>
             <div class="header">{{ $t('hotPromo.jackpotAviator.username') }}</div>
@@ -22,11 +22,13 @@
 </template>
 <script setup>
 const props = defineProps(['historyList']);
+
+const isNotInApp = window.location.pathname === "/promo";
 </script>
 <style lang="scss" scoped>
 @supports (-webkit-overflow-scrolling: touch) and (not (overflow: -webkit-marquee)) {
   .history-list {
-    max-height: calc(100dvh - 600px);
+    max-height: calc(100dvh - 625px);
   }
 }
 .history-list {
@@ -35,13 +37,9 @@ const props = defineProps(['historyList']);
     // margin: 0 10px;
     
     // margin: 20px auto 75px;
-    
     border-radius: 5px;
     overflow: hidden;
-        // margin: 0 0 70px;
-    margin: 0;
-        
-    max-height: calc(100dvh - 460px);
+    margin: 0;     
     // padding-bottom: 0px;
         // padding-bottom: 15px;
     .item {
@@ -119,12 +117,23 @@ const props = defineProps(['historyList']);
     max-height: 500px;
     overflow: auto;
 }
-
+@media (min-width: 500px) {
+    .history-list {
+        &.isNotInApp {
+            max-height: calc(100vh - 625px);
+        }
+        
+        max-height: calc(100vh - 410px);
+    }
+}
 @media (max-width: 400px) {
     .history-list {       
         margin: 0;
         
-        max-height: calc(100vh - 570px);
+        max-height: calc(100dvh - 425px);
+        &.isNotInApp {
+            max-height: calc(100dvh - 570px);
+        }
         .item {
             height: 30px;
 
@@ -148,11 +157,5 @@ const props = defineProps(['historyList']);
             }
         }
     }
-}
-
-@supports (-webkit-overflow-scrolling: touch) and (not (overflow: -webkit-marquee)) {
-  .history-list {
-    max-height: calc(100dvh - 460px);
-  }
 }
 </style>
