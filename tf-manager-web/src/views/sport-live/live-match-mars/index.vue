@@ -316,6 +316,7 @@ async function refreshLiveUrl(row) {
   } else {
     ElMessage.error(t('fields.failed'));
   }
+  loadLiveMatchMars()
 }
 
 function showDialog(type, row) {
