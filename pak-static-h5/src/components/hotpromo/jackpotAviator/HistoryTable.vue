@@ -24,7 +24,6 @@
 const props = defineProps(['historyList']);
 </script>
 <style lang="scss" scoped>
-
 .history-list {
     display: flex;
     flex-direction: column;
@@ -34,8 +33,10 @@ const props = defineProps(['historyList']);
     
     border-radius: 5px;
     overflow: hidden;
-        margin: 0 0 70px;
+        // margin: 0 0 70px;
+    margin: 0;
         
+    max-height: calc(100vh - 600px);
     // padding-bottom: 0px;
         // padding-bottom: 15px;
     .item {
@@ -46,7 +47,7 @@ const props = defineProps(['historyList']);
         font-family: Poppins;
         font-size: 14px;
         font-weight: 600;
-        line-height: 40px;
+        line-height: 20px;
         text-align: center;
         color: #FFFFFF80;
         height: 30px;
@@ -115,9 +116,10 @@ const props = defineProps(['historyList']);
 }
 
 @media (max-width: 400px) {
-    .history-list {
-
-        margin: 0 0 70px;
+    .history-list {       
+        margin: 0;
+        
+        max-height: calc(100vh - 570px);
         .item {
             height: 30px;
 
@@ -141,5 +143,11 @@ const props = defineProps(['historyList']);
             }
         }
     }
+}
+
+@supports (-webkit-overflow-scrolling: touch) and (not (overflow: -webkit-marquee)) {
+  .history-list {
+    max-height: calc(100dvh - 460px);
+  }
 }
 </style>
