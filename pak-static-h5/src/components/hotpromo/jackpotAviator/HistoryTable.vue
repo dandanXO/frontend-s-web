@@ -120,15 +120,15 @@ const isNotInApp = window.location.pathname === "/promo";
 }
 @media (min-width: 400px) {
     .history-list {
+        
+        padding-bottom: 25px;
+        max-height: calc(100vh - 450px);
         &.isNotInApp {
             max-height: calc(100vh - 600px);
             padding-bottom: 0;
         }
         
         // max-height: calc(100vh - 410px);
-        
-        padding-bottom: 25px;
-        max-height: calc(100vh - 600px);
         
     // max-height: 325px;
     // padding-bottom: 15px;
@@ -138,7 +138,7 @@ const isNotInApp = window.location.pathname === "/promo";
     .history-list {       
         margin: 0;
         
-        max-height: calc(100dvh - 605px);
+        max-height: calc(100dvh - 455px);
         
             padding-bottom: 15px;
         &.isNotInApp {
