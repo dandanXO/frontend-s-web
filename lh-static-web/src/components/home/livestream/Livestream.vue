@@ -112,7 +112,7 @@ const messagesHistoryMeta = ref(DEFAULT_MESSAGES_HISTORY_META);
 const latestProcessedMessageId = ref(-1);
 const vipStatus = ref(false);
 const hideComponent = ref(true);
-const activeTab = ref(latestActivatedTab.value || "popular");
+const activeTab = ref("popular");
 
 const emit = defineEmits(["livestreamVisible"]);
 // const channels = ref([
@@ -228,7 +228,7 @@ const getData = () => {
           if (_latestWatchLivestream) {
             currentLiveId.value = _latestWatchLivestream.streamId;
           } else if (_earliestLivestream) {
-            activeTab.value = getLivestreamType(_earliestLivestream);
+            // activeTab.value = getLivestreamType(_earliestLivestream);
             currentLiveId.value = _earliestLivestream.streamId;
           }
         }
@@ -338,7 +338,6 @@ const formatHistoryMessages = (messages) => {
 
 const handleBetClick = () => {
   if (!gameModalRef.value || !currentLiveData.value) return;
-  livestreamVideoRef.value?.pause();
   switch (currentLiveData.value.sportId) {
     case 1:
     case 2:

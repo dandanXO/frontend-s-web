@@ -49,6 +49,7 @@
           size="mini"
           type="success"
           @click="loadMembers()"
+          :disabled="!request.siteId"
         >
           {{ t('fields.search') }}
         </el-button>

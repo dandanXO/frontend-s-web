@@ -73,7 +73,7 @@
     <FissureUniverseS4 v-else-if="list.redirectUrl === 'lh1-fissure-universe-s4'" :promo-code="list.promoCode" />
     <YaLLa2025 v-else-if="list.redirectUrl === 'lh1-yalla-compass-qatar-2025'" :promo-code="list.promoCode" />
     <IemMelbourne2025 v-else-if="list.redirectUrl === 'lh1-iem-melbourne-2025'" :promo-code="list.promoCode" />
-    <PglWallachiaS4 v-else-if="list.redirectUrl === 'lh1-pgl-wallachia-s4'" :promo-code="list.promoCode" />
+    <PglWallachiaS5 v-else-if="list.redirectUrl === 'lh1-pgl-wallachia-s5'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'lh1-blast-slam-3-2025'" :promo-code="list.promoCode" />
     <sport-refer-bet-bonus v-else-if="list.redirectUrl === 'lh1-sport-refer-bet-bonus'" :promo-code="list.promoCode" />
     <Lh1Enc2025 v-else-if="list.redirectUrl === 'lh1-enc-2025'" :promo-code="list.promoCode" />
@@ -87,6 +87,11 @@
     <DuanWuRewards v-else-if="list.redirectUrl === 'lh1-duan-wu-rewards'" :promo-code="list.promoCode" />
     <IemDallas2025 v-else-if="list.redirectUrl === 'lh1-iem-dallas-2025'" :promo-code="list.promoCode" />
     <DreamLeagueS26 v-else-if="list.redirectUrl === 'lh1-dream-league-s26'" :promo-code="list.promoCode" />
+    <WorldCup2025 v-else-if="list.redirectUrl === 'lh1-fifa-quiz-2025'" :promo-code="list.promoCode" />
+    <NewUserSportBonus2025
+      v-else-if="list.redirectUrl === 'lh1-new-user-sport-bonus-2025'"
+      :promo-code="list.promoCode"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -137,7 +142,7 @@ const YaLLa2025 = defineAsyncComponent(() => import("../components/hotpromo/YaLL
 const IemMelbourne2025 = defineAsyncComponent(() =>
   import("../components/hotpromo/iem-melbourne-2025/IemMelbourne2025.vue")
 );
-const PglWallachiaS4 = defineAsyncComponent(() => import("../components/hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue"));
+const PglWallachiaS5 = defineAsyncComponent(() => import("../components/hotpromo/pgl-wallachia-s5/PglWallachiaS5.vue"));
 const BlastSlam32025 = defineAsyncComponent(() =>
   import("../components/hotpromo/blast-slam-3-2025/BlastSlam32025.vue")
 );
@@ -224,6 +229,10 @@ const FpSlotPromo = defineAsyncComponent(() => import("./hotpromo/fp-slot-promo/
 const elsOne2025 = defineAsyncComponent(() => import("./hotpromo/elsOne2025/elsOne2025.vue"));
 const YuEBaoPromo = defineAsyncComponent(() => import("./hotpromo/yu-e-bao/YuEBaoPromo.vue"));
 const DreamLeagueS26 = defineAsyncComponent(() => import("./hotpromo/dream-league-s26/DreamLeagueS26.vue"));
+const WorldCup2025 = defineAsyncComponent(() => import("./hotpromo/worldcup-2025/WorldCup2025.vue"));
+const NewUserSportBonus2025 = defineAsyncComponent(() =>
+  import("./hotpromo/new-user-sport-bonus-2025/NewUserSportBonus2025.vue")
+);
 
 export default defineComponent({
   name: "HotPromo",
@@ -287,7 +296,7 @@ export default defineComponent({
     EslProLeagueS21,
     FissureUniverseS4,
     IemMelbourne2025,
-    PglWallachiaS4,
+    PglWallachiaS5,
     BlastSlam32025,
     sportReferBetBonus,
     PglastanaAc2025,
@@ -295,7 +304,9 @@ export default defineComponent({
     YuEBaoPromo,
     BlastRival2025,
     IemDallas2025,
-    DreamLeagueS26
+    DreamLeagueS26,
+    WorldCup2025,
+    NewUserSportBonus2025
   },
   props: {
     list: {

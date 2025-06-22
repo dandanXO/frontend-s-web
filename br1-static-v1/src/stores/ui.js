@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
-import { useRoute } from "vue-router";
+import { isInPwa } from "src/boot/utils";
+import { userStore } from ".";
 
 export const useUI = defineStore("ui-store", {
   state: () => {
@@ -33,6 +34,15 @@ export const useUI = defineStore("ui-store", {
     },
     changePromoName(name) {
       this.pageName = name;
+    }
+  },
+  getters: {
+    hideDownload() {
+      const store = userStore();
+      const hasReferralCode = !!sessionStorage.getItem("REFERRAL_CODE");
+      if (isInPwa()) return true;
+      if (!store.token && hasReferralCode) return true;
+      return false;
     }
   }
 });

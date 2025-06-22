@@ -47,6 +47,8 @@ defineEmits(["click"]);
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
+const imgStreamerURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/streamer/";
+
 const currentSportType = computed(() => {
   const target = SPORT_TYPE_LIST.find((item) => item.value === props.livestreamData?.sportId);
   return target ? target.text : "";
@@ -56,7 +58,7 @@ const avatarUrl = computed(() => {
   if (props.isSystemLivestream) {
     return require("@/assets/home/livestream/system-avatar.png");
   } else if (props.livestreamData?.avatar) {
-    return imgURL + props.livestreamData?.avatar;
+    return imgStreamerURL + props.livestreamData?.avatar;
   } else {
     return require("@/assets/images/profile/default-1.png");
   }

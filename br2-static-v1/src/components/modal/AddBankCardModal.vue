@@ -1,14 +1,14 @@
 <template>
   <q-dialog align-center v-model="isAddCardDialogOpen" width="500" ref="refBankCardModal" class="modal-container">
     <div class="bankcard-dialog">
-      <q-btn rounded class="close-btn-div popout-close" v-close-popup>
+      <q-btn rounded class="close-btn-div popout-close" v-close-popup unelevated>
         <q-icon name="close"></q-icon>
       </q-btn>
       <q-card>
         <DialogHeader :title="dialogDisplays.title"></DialogHeader>
         <q-card-section>
           <q-form>
-            <div class="q-my-sm" v-if="currentCardType === 'Bank' || currentCardType === 'EWallet'">
+            <div v-if="displayFields.includes('bankId')" class="input-wrapper">
               <div class="input-title">{{ dialogDisplays.selectionTitle }}</div>
               <q-select
                 standout
@@ -27,7 +27,7 @@
                 @update:model-value="updateBankType"
               />
             </div>
-            <div class="q-my-sm">
+            <div v-if="displayFields.includes('firstName')" class="input-wrapper">
               <div class="input-title">{{ $t("form.firstName") }}</div>
               <q-input
                 standout
@@ -40,7 +40,7 @@
                 label-color="secondary"
               />
             </div>
-            <div class="q-my-sm">
+            <div v-if="displayFields.includes('lastName')" class="input-wrapper">
               <div class="input-title">{{ $t("form.lastName") }}</div>
               <q-input
                 standout
@@ -53,7 +53,7 @@
                 label-color="secondary"
               />
             </div>
-            <!-- <div class="q-my-sm">
+            <!-- <div class="input-wrapper">
               <div class="input-options">
                 <div
                   v-for="option in options"
@@ -66,43 +66,65 @@
                 </div>
               </div>
             </div> -->
-            <div class="q-my-sm">
-              <div class="input-title">{{ accountTypeStr }}</div>
-              <!-- :type="['phone', 'cpf', 'cnpj'].includes(selectedOption) ? 'number' : 'text'" -->
-              <q-input
-                type="number"
-                standout
-                ref="refBankCardNum"
-                class="q-pb-xs dialog-input"
-                hide-bottom-space
-                filled
-                v-model="bankCardField.cardNumber"
-                :placeholder="t('form.phone_placeholder')"
-                :rules="[(_) => isValidCardNumber()]"
-                label-color="secondary"
-              >
-                <template v-slot:prepend>
-                  <!-- <template v-if="selectedOption === 'phone'"> -->
-                  <img class="white-svg" src="../../assets/images/account/input-icon-phone-white.png" />
-                  <span class="prepend-number q-ml-sm">{{ $t("form.prependNumber") }}</span>
-                  <!-- </template> -->
-                  <!-- <template v-if="selectedOption === 'email'">
-                    <img class="white-svg" src="../../assets/images/account/input-icon-email-white.png" />
+            <template v-if="displayFields.includes('cardNumber')">
+              <div v-if="currentCardType === 'Bank'" class="input-wrapper">
+                <div class="input-title">{{ accountTypeStr }}</div>
+                <!-- :type="['phone', 'cpf', 'cnpj'].includes(selectedOption) ? 'number' : 'text'" -->
+                <q-input
+                  type="number"
+                  standout
+                  ref="refBankCardNum"
+                  class="q-pb-xs dialog-input"
+                  hide-bottom-space
+                  filled
+                  v-model="bankCardField.cardNumber"
+                  :placeholder="t('form.phone_placeholder')"
+                  :rules="[(_) => isValidCardNumber()]"
+                  label-color="secondary"
+                >
+                  <template v-slot:prepend>
+                    <!-- <template v-if="selectedOption === 'phone'"> -->
+                    <img class="white-svg" src="../../assets/images/account/input-icon-phone-white.png" />
+                    <span class="prepend-number q-ml-sm">{{ $t("form.prependNumber") }}</span>
+                    <!-- </template> -->
+                    <!-- <template v-if="selectedOption === 'email'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-email-white.png" />
+                    </template>
+                    <template v-if="selectedOption === 'cpf'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-cpf-white.png" />
+                    </template>
+                    <template v-if="selectedOption === 'cnpj'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-cnpj-white.png" />
+                    </template>
+                    <template v-if="selectedOption === 'evp'">
+                      <img class="white-svg" src="../../assets/images/account/input-icon-evp-white.png" />
+                    </template> -->
                   </template>
-                  <template v-if="selectedOption === 'cpf'">
-                    <img class="white-svg" src="../../assets/images/account/input-icon-cpf-white.png" />
-                  </template>
-                  <template v-if="selectedOption === 'cnpj'">
-                    <img class="white-svg" src="../../assets/images/account/input-icon-cnpj-white.png" />
-                  </template>
-                  <template v-if="selectedOption === 'evp'">
-                    <img class="white-svg" src="../../assets/images/account/input-icon-evp-white.png" />
-                  </template> -->
-                </template>
-              </q-input>
-            </div>
+                </q-input>
+              </div>
+              <div v-else-if="currentCardType === 'Crypto'" class="input-wrapper">
+                <div class="input-title">{{ accountTypeStr }}</div>
+                <!-- :type="['phone', 'cpf', 'cnpj'].includes(selectedOption) ? 'number' : 'text'" -->
+                <q-input
+                  standout
+                  ref="refBankCardNum"
+                  class="q-pb-xs dialog-input"
+                  hide-bottom-space
+                  filled
+                  v-model="bankCardField.cardNumber"
+                  :placeholder="t('form.cryptoAccount_placeholder')"
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('form.cryptoAccount_rules_01'),
+                    (val) => (val && !val.includes('.')) || $t('form.virtualWallet_rules_04'),
+                    validateCryptoNumber,
+                    validateCryptoLength
+                  ]"
+                  label-color="secondary"
+                />
+              </div>
+            </template>
 
-            <div class="q-my-sm">
+            <div v-if="displayFields.includes('cardAddress')" class="input-wrapper">
               <div class="input-title">{{ $t("form.cpf") }}</div>
               <!-- :type="['phone', 'cpf', 'cnpj'].includes(selectedOption) ? 'number' : 'text'" -->
               <q-input
@@ -123,7 +145,7 @@
               </q-input>
             </div>
 
-            <div class="q-my-sm">
+            <div v-if="displayFields.includes('email')" class="input-wrapper">
               <div class="input-title">{{ $t("form.email") }}</div>
               <!-- :type="['phone', 'cpf', 'cnpj'].includes(selectedOption) ? 'number' : 'text'" -->
               <q-input
@@ -167,7 +189,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, watch, computed } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
@@ -202,8 +224,8 @@ const ewalletList = [];
 const bankCardField = reactive({
   bankId: undefined,
   cardAccount: store.realName,
-  firstName: store.realName ? store.realName.split(",")[0]?.trim() : '',
-  lastName: store.realName ? store.realName.split(",")[1]?.trim() : '',
+  firstName: store.realName ? store.realName.split(",")[0]?.trim() : "",
+  lastName: store.realName ? store.realName.split(",")[1]?.trim() : "",
   cardNumber: "",
   cardAddress: "",
   email: ""
@@ -278,6 +300,17 @@ const dialogDisplays = reactive({
   selectionPlaceholder: t("form.selectABank"),
   selectionError: t("form.pleaseSelectABank")
 });
+
+const displayFields = computed(() => {
+  if (currentCardType.value === "Bank") {
+    return ["bankId", "firstName", "lastName", "cardNumber", "cardAddress", "email"];
+  } else if (currentCardType.value === "Crypto") {
+    return ["bankId", "cardNumber"];
+  } else {
+    return ["bankId", "firstName", "lastName", "cardNumber", "cardAddress", "email"];
+  }
+});
+
 const selectBankType = () => {
   currBankList.value = [];
   bankCardField.bankId = undefined;
@@ -316,8 +349,8 @@ const clearField = () => {
   bankCardField.bankId = undefined;
   bankCardField.cardNumber = "";
   bankCardField.cardAccount = store.realName;
-  bankCardField.firstName = store.realName ? store.realName.split(",")[0]?.trim() : '';
-  bankCardField.lastName = store.realName ? store.realName.split(",")[1]?.trim() : '';
+  bankCardField.firstName = store.realName ? store.realName.split(",")[0]?.trim() : "";
+  bankCardField.lastName = store.realName ? store.realName.split(",")[1]?.trim() : "";
   bankCardField.cardAddress = "";
   bankCardField.email = "";
 };
@@ -397,6 +430,26 @@ const isValidEmail = () => {
   return result;
 };
 
+const validateCryptoLength = (val) => {
+  if (selectedTypeToggleName.value === "USDTERC") {
+    return val.length === 42 || t("form.cryptoAccount_rules_05");
+  } else if (selectedTypeToggleName.value === "USDTTRC") {
+    return val.length === 34 || t("form.cryptoAccount_rules_03");
+  } else {
+    return true;
+  }
+};
+
+const validateCryptoNumber = (val) => {
+  if (selectedTypeToggleName.value === "USDTERC") {
+    return val.startsWith("0x") || t("form.cryptoAccount_rules_04");
+  } else if (selectedTypeToggleName.value === "USDTTRC") {
+    return val.startsWith("T") || t("form.cryptoAccount_rules_02");
+  } else {
+    return true;
+  }
+};
+
 const addCard = () => {
   isDisableBtn.value = true;
 
@@ -470,9 +523,8 @@ defineExpose({
 
   .close-btn-div {
     position: absolute;
-    background: #cfcfcf;
     border-radius: 50%;
-    color: #787878;
+    color: #fff;
     padding: 8px;
     width: 40px;
     height: 40px;
@@ -480,14 +532,14 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 0px;
-    right: 0;
+    top: 10px;
+    right: 10px;
     z-index: 10;
   }
 
   .input-title {
+    margin-bottom: 12px;
     color: #fff;
-
     font-family: Helvetica;
     font-size: 1rem;
     font-style: normal;
@@ -509,8 +561,10 @@ defineExpose({
   .q-card {
     padding: 1.5rem;
     border-radius: 8px;
-    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
-    width: calc(100% - 16px);
+    width: 100%;
+    height: max-content;
+    max-height: 60vh;
+    overflow: auto;
   }
 
   .q-card__section {
@@ -519,6 +573,10 @@ defineExpose({
 
   .q-dialog__inner > div {
     overflow: hidden;
+  }
+
+  .input-wrapper {
+    margin-bottom: 16px;
   }
 }
 

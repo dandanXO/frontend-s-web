@@ -68,7 +68,12 @@ export const userStore = defineStore("userStore", {
       claimedSecondPrivilege: false,
       depositCount: 0,
       eligibleThirdPrivilege: false,
-      isEnableBankCardOTP: false
+      canClaimFtdPrivilege: false,
+      canClaimSecondPrivilege: false,
+      canClaimThirdPrivilege: false,
+      canSpinPrivilegeCoupon: false,
+      isEnableBankCardOTP: false,
+      hasUnusedCoupon: false
     };
   },
   actions: {
@@ -247,7 +252,10 @@ export const userStore = defineStore("userStore", {
             claimedFtdPrivilege,
             claimedSecondPrivilege,
             depositCount,
-            eligibleThirdPrivilege
+            canClaimFtdPrivilege,
+            canClaimSecondPrivilege,
+            canClaimThirdPrivilege,
+            canSpinPrivilegeCoupon
           } = response.data;
 
           this.id = id;
@@ -269,7 +277,10 @@ export const userStore = defineStore("userStore", {
           this.claimedFtdPrivilege = claimedFtdPrivilege;
           this.claimedSecondPrivilege = claimedSecondPrivilege;
           this.depositCount = depositCount;
-          this.eligibleThirdPrivilege = eligibleThirdPrivilege;
+          this.canClaimFtdPrivilege = canClaimFtdPrivilege;
+          this.canClaimThirdPrivilege = canClaimThirdPrivilege;
+          this.canClaimSecondPrivilege = canClaimSecondPrivilege;
+          this.canSpinPrivilegeCoupon = canSpinPrivilegeCoupon;
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
             OneSignal.login(this.nickName);
@@ -354,7 +365,9 @@ export const userStore = defineStore("userStore", {
       return api.post("/session/logout").then(() => {
         LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
-        LocalStorage.remove("newPlayerGuide");
+        LocalStorage.remove("onAppFirstDeposit");
+        LocalStorage.remove("secondDeposit");
+        LocalStorage.remove("thirdDeposit");
 
         this.hasUpdatedOneSignal = false;
 
