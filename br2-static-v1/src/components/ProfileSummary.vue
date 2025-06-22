@@ -51,96 +51,98 @@
 
           <template v-else>
             <div class="flex-c-start">
+              <div class="balance-front">
+                <img src="../assets/images/index/deposit-icon.png" />
+              </div>
               <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
                 <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
-                  <span style="font-family: Times New Roman, Times, serif">
+                  <span v-if="!isLoadingBalance">
                     {{ store.currency.value }}
                   </span>
                   {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
                 </span>
-                <div class="btn-refresh">
-                  <q-icon name="sync" size="16px" color="white-7"></q-icon>
-                </div>
+                <span class="balance-txt">Balance</span>
               </div>
             </div>
           </template>
         </div>
 
-        <div style="z-index: 1">
-          <q-btn square class="style-blue-btn" icon="add" dense @click="handleBackBtn" />
-        </div>
-        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">
-          <template v-slot:label>
-            <div class="profile-pic">
-              <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
-              <q-avatar size="50px">
-                <img :src="profileImagePath" />
-              </q-avatar>
-              <div class="profile-pic-frame" v-if="!homeProfile"></div>
+<!--        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">-->
+<!--          <template v-slot:label>-->
+<!--            <div class="profile-pic">-->
+<!--              <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>-->
+<!--              <q-avatar size="50px">-->
+<!--                <img :src="profileImagePath" />-->
+<!--              </q-avatar>-->
+<!--              <div class="profile-pic-frame" v-if="!homeProfile"></div>-->
 
-              <div class="vip-details">
-                <img src="../assets/images/index/vip-row.png" alt="" />
-                <div class="vip-level">
-                  {{ store.vip }}
-                </div>
-              </div>
-            </div>
-          </template>
-          <q-list dense unelevated flat class="dropdown-list">
-            <q-item clickable v-close-popup @click="router.push('/account/profile')">
-              <q-item-section avatar>
-                <q-avatar icon="phone_iphone" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("header.information") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onVipClick">
-              <q-item-section avatar>
-                <q-avatar icon="diamond" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("header.vip") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="router.push('/account/message?from=' + route.path)">
-              <q-item-section avatar>
-                <q-avatar icon="mail" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>
-                  <span class="message-amt" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</span>
-                  {{ $t("header.message") }}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="router.push('/account/order?from=' + route.path)">
-              <q-item-section avatar>
-                <q-avatar icon="receipt" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("header.order") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <hr class="menu-line" />
-            <q-item clickable v-close-popup @click="router.push('/account/bank?from=' + route.path)">
-              <q-item-section avatar>
-                <q-avatar icon="account_balance" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("header.bank") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onLogout()">
-              <q-item-section avatar>
-                <q-avatar icon="logout" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("btn.signOut") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown>
+<!--              <div class="vip-details">-->
+<!--                <img src="../assets/images/index/vip-row.png" alt="" />-->
+<!--                <div class="vip-level">-->
+<!--                  {{ store.vip }}-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </template>-->
+<!--          <q-list dense unelevated flat class="dropdown-list">-->
+<!--            <q-item clickable v-close-popup @click="router.push('/account/profile')">-->
+<!--              <q-item-section avatar>-->
+<!--                <q-avatar icon="phone_iphone" />-->
+<!--              </q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label>{{ $t("header.information") }}</q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
+<!--            <q-item clickable v-close-popup @click="onVipClick">-->
+<!--              <q-item-section avatar>-->
+<!--                <q-avatar icon="diamond" />-->
+<!--              </q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label>{{ $t("header.vip") }}</q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
+<!--            <q-item clickable v-close-popup @click="router.push('/account/message?from=' + route.path)">-->
+<!--              <q-item-section avatar>-->
+<!--                <q-avatar icon="mail" />-->
+<!--              </q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label>-->
+<!--                  <span class="message-amt" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</span>-->
+<!--                  {{ $t("header.message") }}-->
+<!--                </q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
+<!--            <q-item clickable v-close-popup @click="router.push('/account/order?from=' + route.path)">-->
+<!--              <q-item-section avatar>-->
+<!--                <q-avatar icon="receipt" />-->
+<!--              </q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label>{{ $t("header.order") }}</q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
+<!--            <hr class="menu-line" />-->
+<!--            <q-item clickable v-close-popup @click="router.push('/account/bank?from=' + route.path)">-->
+<!--              <q-item-section avatar>-->
+<!--                <q-avatar icon="account_balance" />-->
+<!--              </q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label>{{ $t("header.bank") }}</q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
+<!--            <q-item clickable v-close-popup @click="onLogout()">-->
+<!--              <q-item-section avatar>-->
+<!--                <q-avatar icon="logout" />-->
+<!--              </q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label>{{ $t("btn.signOut") }}</q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
+<!--          </q-list>-->
+<!--        </q-btn-dropdown>-->
+
+        <div @click="handleBackBtn" class="deposit-btn">
+          Deposit
+        </div>
       </div>
       <div class="profile-wrapper non-login" v-else>
         <q-btn class="btn-style-butter" no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
@@ -149,6 +151,9 @@
           {{ $t("header.register") }}
         </q-btn>
       </div>
+
+
+
     </div>
   </div>
 </template>
@@ -416,6 +421,20 @@ onMounted(() => {
   }
 }
 
+.deposit-btn{
+  background: linear-gradient(90deg, #4FFFA5 0%, #10D16F 100%);
+  border-radius: 8px;
+  height: 44px;
+  width: 80px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #000;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .infoboard-container {
   display: flex;
   align-items: center;
@@ -485,7 +504,7 @@ onMounted(() => {
     padding-bottom: 10px;
     margin-bottom: 4px;
     width: 100%;
-    padding-right: 10px;
+    padding-right: 5px;
     position: relative;
 
     &.non-login {
@@ -527,6 +546,16 @@ onMounted(() => {
       display: flex;
       flex-direction: column;
       font-size: 16px;
+
+      .balance-front{
+        //width: 48px;
+        //height: 48px;
+
+        img{
+          width: 48px;
+          height: 48px;
+        }
+      }
     }
 
     .profile-name {
@@ -557,20 +586,15 @@ onMounted(() => {
 
     .profile-balance {
       position: relative;
-      // background: rgba(255, 255, 255, 0.24);
-      background: #286866e5;
       border-radius: 24px;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      // margin-bottom: 10px;
-      padding-top: 2px;
-      padding-bottom: 2px;
-      min-width: 130px;
+      flex-direction: column;
+      min-width: 80px;
       width: 100%;
-      height: 28px;
-      padding-left: 12px;
-      padding-right: 8px;
+      height: 48px;
+      padding: 2px 5px;
 
       font-size: 14px;
       color: rgba(255, 255, 255, 0.7);
@@ -580,9 +604,14 @@ onMounted(() => {
         filter: brightness(0.75);
       }
 
+      .balance-txt{
+        color: #10D16F;
+      }
+
       .balance-amount {
         padding-right: 18px;
-        padding-left: 8px;
+        padding-left: 0px;
+        color:#fff;
         white-space: nowrap;
       }
     }
