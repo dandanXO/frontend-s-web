@@ -87,7 +87,13 @@
             infinite
             :autoplay="3000"
           >
-            <q-carousel-slide v-for="(promo, i) in hbPromo" :key="i" :name="i" @click="gotoFloatPromo(promo)" style="padding: 0">
+            <q-carousel-slide
+              v-for="(promo, i) in hbPromo"
+              :key="i"
+              :name="i"
+              @click="gotoFloatPromo(promo)"
+              style="padding: 0"
+            >
               <template v-if="promo.code === 'spin-lucky-wheel' && !isShowSticky">
                 <SpinLuckyWheelPromoSticky style="width: 100%" />
               </template>
@@ -266,6 +272,7 @@
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                   >
+                    <!-- <pre>{{ `/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png` }}</pre> -->
                     <div class="platform-game-img">
                       <div
                         class="game--bg"
@@ -1169,10 +1176,19 @@
     </SpinLuckyWheelPromoHomePopup>
   </q-dialog>
   <!-- Spin Lucky Wheel promo end -->
+
+  <q-dialog class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true" >
+    <MoneyRainModal @closeModal="closeDialog">
+      <template #controller>
+        <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
+      </template>
+    </MoneyRainModal>
+    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
+  </q-dialog>
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated, onBeforeUnmount } from "vue";
+import { onMounted, ref, reactive, computed, watch, onActivated, onBeforeUnmount, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api, eventapi } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
@@ -1202,6 +1218,10 @@ import { t } from "../boot/lang";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Grid } from "swiper/core";
 import { isAndroid } from "src/boot/utils";
 import { storeToRefs } from "pinia";
+
+import PopupController from "src/components/PopupController.vue";
+import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
+
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Grid, Scrollbar, Navigation, Pagination]);
@@ -3005,7 +3025,11 @@ const checkHbPromo = () => {
 };
 
 const gotoFloatPromo = (val) => {
-  if (val.type === "PROMO") {
+  if (val.type === "PROMO" && val.code === "br2-redpacketrain") {
+    // isMoneyRainModal.value = true;
+    popupPromo.value = "money-rain";
+  }
+  else if (val.type === "PROMO") {
     if (store.hasToken()) {
       if (val.code.indexOf("url|") > -1) {
         const page = val.code.replace("url|", "");
@@ -3082,6 +3106,7 @@ onActivated(() => {
     // popupPromo.value = "money-rain";
     popupPromo.value = "spin-lucky-wheel";
   }
+  // popupPromo.value = "money-rain";
 });
 
 onMounted(() => {
@@ -4369,7 +4394,6 @@ button.android {
   width: 100px;
   background: transparent;
   overflow: hidden;
-
 
   img {
     height: 100px !important;

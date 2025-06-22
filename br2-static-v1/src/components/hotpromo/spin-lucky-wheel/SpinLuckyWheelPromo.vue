@@ -54,7 +54,8 @@ provide("targetWithdrawAmount", targetWithdrawAmount);
 
 const loadData = async () => {
   // isDuringInit.value = true;
-  const res = await eventapi.get("/session/refer-wheel-spin/init?promoCode=pak-refer-wheel-spin");
+  // const res = await eventapi.get("/session/refer-wheel-spin/init?promoCode=br2-refer-wheel");
+  const res = await eventapi.get("/session/refer-wheel/init?promoCode=br2-refer-wheel");
   if (res.code === 0) {
     switch (res.data.currentBonusType) {
       case "REDPACKET":

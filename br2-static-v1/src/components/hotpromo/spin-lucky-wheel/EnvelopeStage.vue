@@ -77,7 +77,8 @@ const handleEnvelopeClick = (index) => {
   isClaiming.value = true;
   selectedIndex.value = index;
   eventapi
-    .post("/session/refer-wheel-spin/red-packet?promoCode=pak-refer-wheel-spin")
+    // .post("/session/refer-wheel-spin/red-packet?promoCode=pak-refer-wheel-spin")
+    .post("/session/refer-wheel/spin?promoCode=br2-refer-wheel")
     .then(async (res) => {
       let otherPrizeCounter = 0;
 
@@ -108,7 +109,8 @@ const handleEnvelopeClick = (index) => {
       });
 
       const [initRes] = await Promise.all([
-        eventapi.get("/session/refer-wheel-spin/init?promoCode=pak-refer-wheel-spin"),
+        // eventapi.get("/session/refer-wheel-spin/init?promoCode=pak-refer-wheel-spin"),
+        eventapi.get(" /session/refer-wheel/init?promoCode=br2-refer-wheel"),
         delay(1000)
       ]);
 
