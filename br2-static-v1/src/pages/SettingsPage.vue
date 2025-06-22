@@ -497,12 +497,13 @@ const logout = () => {
   height: 42px;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
   font-weight: 700;
   width: 140px;
   height: 42px;
-  color: #ffffff;
+  //color: #ffffff;
   border-radius: 8px;
+  color:#2D2D2D;
 }
 
 .super-promo {
