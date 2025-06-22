@@ -405,11 +405,12 @@
                 </div>
               </template>
               <template v-else>
+<!--                <pre>{{filteredSubGameList}}</pre>-->
                 <template v-for="(item, index) in filteredSubGameList" :key="index">
                   <template v-if="index < showValue">
                     <div
                       class="game-platform-item"
-                      @click="playGame(item.name, subGameCode, item.code, item.status, item.gameType, item.id)"
+                      @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                       data-aos="zoom-in"
                       data-aos-duration="1200"
                       data-aos-once="true"
@@ -1785,6 +1786,7 @@ const store = userStore();
 
 const allGames = ref(null);
 const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
+  // debugger;
   allGames.value.open(gameName, platformCode, gameCode, gameType);
 };
 
