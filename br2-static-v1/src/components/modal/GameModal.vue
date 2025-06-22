@@ -283,6 +283,7 @@ const goToDeposit = () => {
   // router.push("/deposit?from=" + route.path);
   // }, 500);
 };
+const uiStore= useUI();
 
 const platformCodeImg = ref();
 const open = (gameName, platformCode, gameCode, gameType) => {
@@ -403,7 +404,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         });
     } else {
       props.closeFullGameDialog();
-      router.push({ path: "/login", query: { redirect: route.path } });
+      uiStore.loginView = "login";
+      // router.push({ path: "/login", query: { redirect: route.path } });
     }
   }
 };

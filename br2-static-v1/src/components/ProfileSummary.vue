@@ -27,12 +27,13 @@
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-menu">
         <q-btn dense flat @click="toggleMenuOpen()">
-          <q-icon name="density_medium" />
+<!--          <q-icon name="density_medium" />-->
+          <img style="width: 32px;height: 32px;" src="../assets/images/index/left-menu-icon.png" />
         </q-btn>
       </div>
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/logo.svg" @click="onClickLogo" />
+          <img src="../assets/akb-logo.png" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="store.token">
@@ -500,15 +501,15 @@ onMounted(() => {
     align-items: center;
     justify-content: flex-end;
     gap: 12px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     margin-bottom: 4px;
     width: 100%;
     padding-right: 5px;
     position: relative;
 
     &.non-login {
-      padding-bottom: 15px;
+      padding-bottom: 0px;
     }
 
     .unread-total {
@@ -631,7 +632,7 @@ onMounted(() => {
   .profile-wrapper-extra {
     display: flex;
     align-items: center;
-    padding-top: 10px;
+    padding-top: 5px;
     padding-left: 6px;
     // margin-bottom: auto;
     width: 100%;
@@ -642,7 +643,7 @@ onMounted(() => {
     // margin: 12px auto;
 
     img {
-      max-width: 106px;
+      max-width: 120px;
       width: 100%;
       text-align: center;
     }

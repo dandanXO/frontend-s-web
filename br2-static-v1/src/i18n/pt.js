@@ -308,7 +308,7 @@ export default {
   },
   home: {
     menu_lobby: "Lobby",
-    menu_hot: "Popular",
+    menu_hot: "Hot",
     menu_live: "Live",
     menu_fish: "Pesca",
     menu_slot: "Slot",
