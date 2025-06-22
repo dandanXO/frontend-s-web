@@ -466,11 +466,11 @@ const swiperConfig = computed(() => {
   return {
     slidesPerView: SLIDE_PER_VIEW,
     // slidesPerGroup: SLIDE_PER_VIEW,
-    slidesPerGroup: 1,
+    slidesPerGroup: 4,
     spaceBetween: 20,
     modules: [Navigation],
     navigation: list.value.length > SLIDE_PER_VIEW,
-    allowTouchMove: false
+    // allowTouchMove: false
   };
 });
 
@@ -480,24 +480,24 @@ const handleLivestreamClick = (index) => {
   const SLIDE_PER_VIEW = 4;
   const total = list.value.length;
 
-  let targetIndex;
+//   let targetIndex;
 
-  if (index <= 1) {
-    targetIndex = 0;
-  } else if (index >= total - 2) {
-    targetIndex = total - SLIDE_PER_VIEW;
-  } else {
-    targetIndex = index - 1;
-  }
+//   if (index <= 1) {
+//     targetIndex = 0;
+//   } else if (index >= total - 2) {
+//     targetIndex = total - SLIDE_PER_VIEW;
+//   } else {
+//     targetIndex = index - 1;
+//   }
 
-  targetIndex = Math.min(Math.max(0, targetIndex), total - SLIDE_PER_VIEW);
+//   targetIndex = Math.min(Math.max(0, targetIndex), total - SLIDE_PER_VIEW);
 
-  if (swiperInstance.value) {
-  swiperInstance.value.slideTo(0, 0); 
-  setTimeout(() => {
-    swiperInstance.value.slideTo(targetIndex, 300); 
-  }, 10);
-}
+//   if (swiperInstance.value) {
+//   swiperInstance.value.slideTo(0, 0); 
+//   setTimeout(() => {
+//     swiperInstance.value.slideTo(targetIndex, 300); 
+//   }, 10);
+// }
   selectedTeam.value = "";
   selectedSpecial.value = "";
 };

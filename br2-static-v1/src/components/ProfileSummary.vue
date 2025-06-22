@@ -1,23 +1,35 @@
 <template>
-  <div style="height: 56px" v-if="topDownload"></div>
+  <div style="height: 66px" v-if="topDownload"></div>
   <div style="height: 78px"></div>
-
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
       <div class="download-btn">
-        <a :href="topDownloadUrl">
-          <img src="../assets/images/index/download/top-download-btn.png" />
-        </a>
+          <img src="../assets/images/index/download/square-logo.png" />
       </div>
-      <div class="download-count">({{ topDownloadCount }}s)</div>
+      <div class="download-text">
+        {{ $t("sideNav.downloadAppText") }}
+      </div>
+
+      <div class="download-money-icon">
+        <img src="../assets/images/index/download/download-money.png" />
+      </div>
+
+      <a :href="topDownloadUrl">
+        <div class="download-gobtn" >
+          Download
+        </div>
+      </a>
+
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
-        <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
+        <q-icon name="close" size="36px" style="color: #fff" @click="closeTopdownload()" />
       </div>
     </div>
   </div>
 
+
+
   <div class="menu-open" :class="{ open: menuOpen }" @click="toggleMenuOpen()">
-    <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
+    <div style="height: 56px" v-if="topDownload && !uiStore.hideDownload"></div>
     <div class="menu-open-inner">
       <SideMenu @closeMenu="toggleMenuOpen()" />
     </div>
@@ -27,12 +39,13 @@
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-menu">
         <q-btn dense flat @click="toggleMenuOpen()">
-          <q-icon name="density_medium" />
+<!--          <q-icon name="density_medium" />-->
+          <img style="width: 32px;height: 32px;" src="../assets/images/index/left-menu-icon.png" />
         </q-btn>
       </div>
       <div class="profile-wrapper-extra">
         <div class="logo-img">
-          <img src="../assets/logo.svg" @click="onClickLogo" />
+          <img src="../assets/akb-logo.png" @click="onClickLogo" />
         </div>
       </div>
       <div class="profile-wrapper" v-if="store.token">
@@ -51,104 +64,107 @@
 
           <template v-else>
             <div class="flex-c-start">
+              <div class="balance-front">
+                <img src="../assets/images/index/deposit-icon.png" />
+              </div>
               <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
                 <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
-                  <span style="font-family: Times New Roman, Times, serif">
+                  <span v-if="!isLoadingBalance">
                     {{ store.currency.value }}
                   </span>
                   {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
                 </span>
-                <div class="btn-refresh">
-                  <q-icon name="sync" size="16px" color="white-7"></q-icon>
-                </div>
+                <span class="balance-txt">{{ $t("sideNav.balance") }}</span>
               </div>
             </div>
           </template>
         </div>
 
-        <div style="z-index: 1">
-          <q-btn square class="style-blue-btn" icon="add" dense @click="handleBackBtn" />
-        </div>
-        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">
-          <template v-slot:label>
-            <div class="profile-pic">
-              <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
-              <q-avatar size="50px">
-                <img :src="profileImagePath" />
-              </q-avatar>
-              <div class="profile-pic-frame" v-if="!homeProfile"></div>
+<!--        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">-->
+<!--          <template v-slot:label>-->
+<!--            <div class="profile-pic">-->
+<!--              <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>-->
+<!--              <q-avatar size="50px">-->
+<!--                <img :src="profileImagePath" />-->
+<!--              </q-avatar>-->
+<!--              <div class="profile-pic-frame" v-if="!homeProfile"></div>-->
 
-              <div class="vip-details">
-                <img src="../assets/images/index/vip-row.png" alt="" />
-                <div class="vip-level">
-                  {{ store.vip }}
-                </div>
-              </div>
-            </div>
-          </template>
-          <q-list dense unelevated flat class="dropdown-list">
-            <q-item clickable v-close-popup @click="router.push('/account/profile')">
-              <q-item-section avatar>
-                <q-avatar icon="phone_iphone" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("header.information") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onVipClick">
-              <q-item-section avatar>
-                <q-avatar icon="diamond" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("header.vip") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="router.push('/account/message?from=' + route.path)">
-              <q-item-section avatar>
-                <q-avatar icon="mail" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>
-                  <span class="message-amt" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</span>
-                  {{ $t("header.message") }}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="router.push('/account/order?from=' + route.path)">
-              <q-item-section avatar>
-                <q-avatar icon="receipt" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("header.order") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <hr class="menu-line" />
-            <q-item clickable v-close-popup @click="router.push('/account/bank?from=' + route.path)">
-              <q-item-section avatar>
-                <q-avatar icon="account_balance" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("header.bank") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="onLogout()">
-              <q-item-section avatar>
-                <q-avatar icon="logout" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>{{ $t("btn.signOut") }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown>
+<!--              <div class="vip-details">-->
+<!--                <img src="../assets/images/index/vip-row.png" alt="" />-->
+<!--                <div class="vip-level">-->
+<!--                  {{ store.vip }}-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </template>-->
+<!--          <q-list dense unelevated flat class="dropdown-list">-->
+<!--            <q-item clickable v-close-popup @click="router.push('/account/profile')">-->
+<!--              <q-item-section avatar>-->
+<!--                <q-avatar icon="phone_iphone" />-->
+<!--              </q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label>{{ $t("header.information") }}</q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
+<!--            <q-item clickable v-close-popup @click="onVipClick">-->
+<!--              <q-item-section avatar>-->
+<!--                <q-avatar icon="diamond" />-->
+<!--              </q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label>{{ $t("header.vip") }}</q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
+<!--            <q-item clickable v-close-popup @click="router.push('/account/message?from=' + route.path)">-->
+<!--              <q-item-section avatar>-->
+<!--                <q-avatar icon="mail" />-->
+<!--              </q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label>-->
+<!--                  <span class="message-amt" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</span>-->
+<!--                  {{ $t("header.message") }}-->
+<!--                </q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
+<!--            <q-item clickable v-close-popup @click="router.push('/account/order?from=' + route.path)">-->
+<!--              <q-item-section avatar>-->
+<!--                <q-avatar icon="receipt" />-->
+<!--              </q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label>{{ $t("header.order") }}</q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
+<!--            <hr class="menu-line" />-->
+<!--            <q-item clickable v-close-popup @click="router.push('/account/bank?from=' + route.path)">-->
+<!--              <q-item-section avatar>-->
+<!--                <q-avatar icon="account_balance" />-->
+<!--              </q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label>{{ $t("header.bank") }}</q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
+<!--            <q-item clickable v-close-popup @click="onLogout()">-->
+<!--              <q-item-section avatar>-->
+<!--                <q-avatar icon="logout" />-->
+<!--              </q-item-section>-->
+<!--              <q-item-section>-->
+<!--                <q-item-label>{{ $t("btn.signOut") }}</q-item-label>-->
+<!--              </q-item-section>-->
+<!--            </q-item>-->
+<!--          </q-list>-->
+<!--        </q-btn-dropdown>-->
+
+        <div @click="handleBackBtn" class="deposit-btn">
+          {{ $t("settings.deposit") }}
+        </div>
       </div>
       <div class="profile-wrapper non-login" v-else>
         <q-btn class="btn-style-butter" no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
-        <!-- <q-btn class="btn-style-pear" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn> -->
         <q-btn class="btn-style-pear" no-caps @click="uiStore.loginView = 'register'">
           {{ $t("header.register") }}
         </q-btn>
       </div>
+
+
     </div>
   </div>
 </template>
@@ -161,8 +177,6 @@ import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid, isInPwa } from "src/boot/utils";
 import { api } from "boot/axios";
-import { useI18n } from "vue-i18n";
-import LangOptions from "components/LangOptions";
 import SideMenu from "./SideMenu.vue";
 
 const props = defineProps(["homeProfile"]);
@@ -270,22 +284,20 @@ const countdown = () => {
 };
 
 const checkTopDownloadAppear = () => {
-  const omitSites = ["bw3.genoortisy.com"];
 
   if (!store.token && route.path === "/home") {
     if (
       ("standalone" in window.navigator && window.navigator.standalone) ||
       (Platform.is.capacitor && Platform.is.android) ||
-      omitSites.includes(location.host) ||
       isInPwa()
     ) {
       topDownload.value = false;
     } else {
       topDownload.value = true;
-      countdown();
-      setTimeout(() => {
-        topDownload.value = false;
-      }, 11000);
+      // countdown();
+      // setTimeout(() => {
+      //   topDownload.value = false;
+      // }, 11000);
     }
   }
 };
@@ -319,8 +331,8 @@ onMounted(() => {
     sessionStorage.setItem("PROFILE_IMG", imgPath);
   }
 
-  // getTopDownloadUrl();
-  // checkTopDownloadAppear();
+  getTopDownloadUrl();
+  checkTopDownloadAppear();
 });
 </script>
 
@@ -329,26 +341,50 @@ onMounted(() => {
   position: fixed;
   top: 0;
   left: 50%;
+  z-index:9999;
   transform: translateX(-50%);
+  display: flex;
   max-width: 500px;
   margin: auto;
   width: 100%;
-  height: 86px; /* adjust the height as needed */
-  padding: 8px 16px 28px;
-  // background: linear-gradient(180deg, #0c2962 0%, #01030d 100%);
-  background: linear-gradient(180deg, #00b9a1 0%, rgba(0, 185, 111, 0) 96.35%);
-  z-index: 98;
+  padding: 6px 10px;
+  height: 66px; /* adjust the height as needed */
+  background: linear-gradient(90deg, #0A526C 0%, #523E0A 100%);
+
+
+
 
   .download-container {
     display: flex;
-    gap: 16px;
+    gap: 5px;
     width: 100%;
     align-items: center;
     transition: 0.3s all;
 
-    .download-icon {
-      width: 50px;
-      min-width: 50px;
+    .download-text{
+      width: 40%;
+      margin-right: auto;
+      font-size: 12px;
+      line-height: 16px;
+
+      @media (max-width: 390px) {
+        width: 50%;
+      }
+    }
+
+    .download-money-icon{
+      img{
+        width: 40px;
+        height: auto;
+      }
+      @media (max-width: 390px) {
+        display:none;
+      }
+    }
+
+    .download-btn {
+      width: 48px;
+      min-width: 48px;
 
       img {
         width: 100%;
@@ -376,21 +412,43 @@ onMounted(() => {
       font-size: 20px;
     }
 
-    .download-btn {
-      // margin-left: auto;
-      margin-right: auto;
+    a{
+      text-decoration: none;
+    }
 
-      img {
-        width: 100%;
-        display: block;
+    .download-gobtn{
+      background: linear-gradient(90deg, #4FFFA5 0%, #10D16F 100%);
+      border-radius: 8px;
+      height: 44px;
+      width: 88px;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #000;
+      font-size: 14px;
+      font-weight: 600;
+
+      &:active{
+        filter: brightness(0.86);
+        transform: translate(0px, 1px)
       }
     }
 
     .download-close {
-      margin-top: 4px;
-      margin-bottom: auto;
       opacity: 1;
       transition: 1s all;
+
+      &:active{
+        filter: brightness(0.86);
+        transform: translate(0px, 1px)
+      }
+
+      i{
+        font-size: 36px;
+        color: #fff;
+        fill: #fff;
+      }
     }
   }
 }
@@ -416,6 +474,20 @@ onMounted(() => {
   }
 }
 
+.deposit-btn{
+  background: linear-gradient(90deg, #4FFFA5 0%, #10D16F 100%);
+  border-radius: 8px;
+  height: 44px;
+  width: 80px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #000;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .infoboard-container {
   display: flex;
   align-items: center;
@@ -437,9 +509,9 @@ onMounted(() => {
   transition: 0.3s all;
 
   &.with-top-download {
-    border-top-right-radius: 25px;
-    border-top-left-radius: 25px;
-    top: 56px;
+    //border-top-right-radius: 25px;
+    //border-top-left-radius: 25px;
+    top: 66px;
   }
 
   .infoboard-wrapper {
@@ -481,15 +553,15 @@ onMounted(() => {
     align-items: center;
     justify-content: flex-end;
     gap: 12px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     margin-bottom: 4px;
     width: 100%;
-    padding-right: 10px;
+    padding-right: 5px;
     position: relative;
 
     &.non-login {
-      padding-bottom: 15px;
+      padding-bottom: 0px;
     }
 
     .unread-total {
@@ -527,6 +599,19 @@ onMounted(() => {
       display: flex;
       flex-direction: column;
       font-size: 16px;
+
+      .balance-front{
+
+        img{
+          width: 48px;
+          height: 48px;
+
+          @media(max-width: 380px){
+            width: 38px;
+            height: 38px;
+          }
+        }
+      }
     }
 
     .profile-name {
@@ -557,20 +642,15 @@ onMounted(() => {
 
     .profile-balance {
       position: relative;
-      // background: rgba(255, 255, 255, 0.24);
-      background: #286866e5;
       border-radius: 24px;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      // margin-bottom: 10px;
-      padding-top: 2px;
-      padding-bottom: 2px;
-      min-width: 130px;
+      flex-direction: column;
+      min-width: 80px;
       width: 100%;
-      height: 28px;
-      padding-left: 12px;
-      padding-right: 8px;
+      height: 48px;
+      padding: 2px 5px;
 
       font-size: 14px;
       color: rgba(255, 255, 255, 0.7);
@@ -580,9 +660,14 @@ onMounted(() => {
         filter: brightness(0.75);
       }
 
+      .balance-txt{
+        color: #10D16F;
+      }
+
       .balance-amount {
         padding-right: 18px;
-        padding-left: 8px;
+        padding-left: 0px;
+        color:#fff;
         white-space: nowrap;
       }
     }
@@ -602,7 +687,7 @@ onMounted(() => {
   .profile-wrapper-extra {
     display: flex;
     align-items: center;
-    padding-top: 10px;
+    padding-top: 5px;
     padding-left: 6px;
     // margin-bottom: auto;
     width: 100%;
@@ -613,7 +698,7 @@ onMounted(() => {
     // margin: 12px auto;
 
     img {
-      max-width: 106px;
+      max-width: 120px;
       width: 100%;
       text-align: center;
     }

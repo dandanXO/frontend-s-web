@@ -51,8 +51,8 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
     letter-spacing: -1px;
     min-height: 152px;
 
-    margin-top: -120px;
     
+    margin-top: -190px;
     .prize {
       color: #f9cf3a;
       font-weight: 600;

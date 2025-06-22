@@ -298,8 +298,9 @@ onMounted(() => {
   spinBoardRef.value = document.getElementById("spin-wheel-bg");
   spinNumRef.value = document.getElementById("spin-wheel-number");
   drawBtnRef.value = document.querySelector(".draw-btn");
-
-  initSpinWheel();
+  if (store.hasToken()) {
+    initSpinWheel();
+  }
 });
 </script>
 

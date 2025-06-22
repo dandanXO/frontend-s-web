@@ -1,10 +1,10 @@
 <template>
   <q-page class="account-message-page">
     <div class="bank-add-lists">
-      <div class="bank-card-add" @click="onAddUSDTClick()">
+      <!-- <div class="bank-card-add" @click="onAddUSDTClick()">
         <q-icon name="add" size="20px" />
         <div class="card-label">{{ $t("header.addCrypto") }}</div>
-      </div>
+      </div> -->
       <div class="bank-card-add" @click="onAddCardClick()">
         <q-icon name="add" size="20px" />
         <div class="card-label">{{ $t("header.addCard") }}</div>

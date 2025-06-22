@@ -4372,7 +4372,6 @@ watch(() => isAdditionalWithdrawSteps.value, checkWithdrawStep, { immediate: fal
 const afterActivated = useCustomerTrigger(() => {
   checkShowImgTop();
   checkHbPromo();
-  showSpinWheel();
 });
 
 const downloadAppRef = ref();
@@ -4388,7 +4387,7 @@ const checkNewPlayerWheelPromoHomePopupCanShow = () => {
     newPlayerPromoHomePopupRef.value.checkIsCanShowPopup();
   }
 };
-onActivated(() => {
+onActivated(async () => {
   nextTick(() => {
     if (
       LocalStorage.getItem("completeddepositguide") === "true" &&
@@ -4428,7 +4427,12 @@ onActivated(() => {
   store.getUnreadTotal();
   checkHash();
 
-  // checkSpinWheel();
+  if (store.hasToken()) {
+    await store.getMemberInfo();
+  }
+  if (store.hasToken()) {
+    await showSpinWheel();
+  }
   checkGoogleLoginSetPwd();
 
   if ((route.query.login === "true" || route.query.register === "true") && ui.annoyingType !== "NONE") {
@@ -4488,6 +4492,8 @@ onMounted(() => {
   if (Platform.is.android && Platform.is.capacitor) {
     initOneSignal();
   }
+
+  window.addEventListener("scroll", handleScroll);
 });
 
 watch(
@@ -4558,7 +4564,7 @@ const showSpinWheel = () => {
   eventapi
     .get("/new-user-roulette/init")
     .then((res) => {
-      if (res.code == 0) {
+      if (res.code === 0) {
         if (store.canClaimFtdPrivilege && isAndroid()) {
           isHasUnusedCoupon.value = true;
           store.hasUnusedCoupon = true;
