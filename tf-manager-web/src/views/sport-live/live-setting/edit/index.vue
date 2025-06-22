@@ -136,6 +136,13 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.eventCode')" prop="eventCode">
+          <el-input
+            v-model="form.eventCode"
+            style="width: 300px"
+            maxlength="100"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.isTestEvent')" prop="isTest">
           <el-switch
             v-model="form.isTest"
@@ -230,7 +237,8 @@ const form = reactive({
   liveStatus: null,
   isTest: false,
   isPopular: false,
-  cover: ''
+  cover: '',
+  eventCode: ''
 });
 
 const formRules = reactive({
@@ -403,7 +411,8 @@ async function submit() {
       sort: form.sort,
       isTest: form.isTest,
       isPopular: form.isPopular,
-      cover: form.cover
+      cover: form.cover,
+      eventCode: form.eventCode
     };
 
     if (isInTeamList(form.homeId)) {

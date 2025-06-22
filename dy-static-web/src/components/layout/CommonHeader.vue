@@ -3082,6 +3082,10 @@ body {
       background-image: url("../../assets/live/live_pm.png");
     }
 
+    &.live-eeai {
+      background-image: url("../../assets/live/live_eeai.png");
+    }
+
     &.live-bg {
       background-image: url("../../assets/live/live_bg.png");
     }

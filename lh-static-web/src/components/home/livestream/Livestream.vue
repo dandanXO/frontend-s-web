@@ -112,7 +112,7 @@ const messagesHistoryMeta = ref(DEFAULT_MESSAGES_HISTORY_META);
 const latestProcessedMessageId = ref(-1);
 const vipStatus = ref(false);
 const hideComponent = ref(true);
-const activeTab = ref(latestActivatedTab.value || "popular");
+const activeTab = ref("popular");
 
 const emit = defineEmits(["livestreamVisible"]);
 // const channels = ref([
@@ -228,7 +228,7 @@ const getData = () => {
           if (_latestWatchLivestream) {
             currentLiveId.value = _latestWatchLivestream.streamId;
           } else if (_earliestLivestream) {
-            activeTab.value = getLivestreamType(_earliestLivestream);
+            // activeTab.value = getLivestreamType(_earliestLivestream);
             currentLiveId.value = _earliestLivestream.streamId;
           }
         }
@@ -338,17 +338,17 @@ const formatHistoryMessages = (messages) => {
 
 const handleBetClick = () => {
   if (!gameModalRef.value || !currentLiveData.value) return;
-  livestreamVideoRef.value?.pause();
   switch (currentLiveData.value.sportId) {
     case 1:
     case 2:
-      gameModalRef.value.open("IM体育", "IM");
+      gameModalRef.value.open("IM体育", "IM", currentLiveData.value.eventCode || "");
       break;
     case 3:
     case 4:
     case 5:
     case 6:
-      gameModalRef.value.open("雷火电竞", "TFGaming");
+    case 7:
+      gameModalRef.value.open("雷火电竞", "TFGaming", currentLiveData.value.eventCode || "");
   }
 };
 

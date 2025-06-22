@@ -41,7 +41,7 @@
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules1") }}</li>
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules2") }}</li>
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules3") }}</li>
-      <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules4") }}</li>
+      <!-- <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules4") }}</li> -->
     </ol>
 
     <br />

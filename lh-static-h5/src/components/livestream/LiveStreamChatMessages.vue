@@ -220,13 +220,14 @@ const handleBetClick = () => {
   switch (livestreamData.value.sportId) {
     case 1:
     case 2:
-      handler("IM体育", "IM", "", "SPORTS");
+      handler("IM体育", "IM", livestreamData.value.eventCode || "", "SPORTS");
       break;
     case 3:
     case 4:
     case 5:
     case 6:
-      handler("雷火电竞", "TFGaming", "", "ESPORTS");
+    case 7:
+      handler("雷火电竞", "TFGaming", livestreamData.value.eventCode || "", "ESPORTS");
       break;
   }
 };

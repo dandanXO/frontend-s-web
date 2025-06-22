@@ -32,6 +32,12 @@
           <q-badge v-if="is2ndPrivilege" color="green" floating rounded>
             {{ get2ndAmount(item.amount) }}
           </q-badge>
+          <q-badge v-if="is3rdPrivilege" color="green" floating rounded>
+            {{ get3rdAmount(item.amount) }}
+          </q-badge>
+          <q-badge v-if="isNewPlayerPrivilege" color="green" floating rounded>
+            {{ getNewPlayerAmount(item.amount) }}
+          </q-badge>
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -93,9 +99,21 @@
             </q-checkbox>
             <q-checkbox
               v-model="secondTimeDepositBonusConfig.selected"
-              v-else-if="secondTimeDepositBonusConfig.hasBonus"
+              v-else-if="secondTimeDepositBonusConfig.hasBonus && !isUSDT"
             >
               {{ $t("deposit.use2ndBonus") }}
+            </q-checkbox>
+            <q-checkbox
+              v-model="thirdTimeDepositBonusConfig.selected"
+              v-else-if="thirdTimeDepositBonusConfig.hasBonus && !isUSDT"
+            >
+              {{ $t("deposit.use3rdBonus") }}
+            </q-checkbox>
+            <q-checkbox
+              v-model="newPlayerDepositBonusConfig.selected"
+              v-else-if="newPlayerDepositBonusConfig.hasBonus && !isUSDT && isAndroid()"
+            >
+              {{ $t("deposit.appDepositBonus") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
@@ -340,6 +358,39 @@
       <KYCUserForm @closeUserKYCDialog="checkCloseUserKYCDialog" />
     </div>
   </q-dialog>
+  <!-- <q-dialog width="100%" v-model="showPaymentCancellationDialog">
+    <div class="popout-dialog">
+
+      <q-card-section style="padding: 10px 20px" class="q-pa-md bg-primary text-white">Cancel of Payment</q-card-section>
+      <div style="padding: 20px">
+         Will Lose
+        <q-card-section class="q-mb-md q-pa-md">
+          <div class="bonusAmt">PKR {{ paymentCancellationAmtLoss }}</div>
+          <br />
+          <br />
+        </q-card-section>
+        <q-btn @click="cancelLeave" :label="$t('btn.cancel')" class="bg-yellow text-black" />
+        <q-btn @click="confirmLeave" :label="$t('btn.payAgain')" class="bg-yellow text-black" />
+      </div>
+    </div>
+  </q-dialog> -->
+  <q-dialog width="100%" v-model="showPaymentCancellationDialog">
+  <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
+    <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
+    <div class="popout-dialog-container">
+      <div class="txt-title">{{ $t("notify.cancelPayment") }}</div>
+      <div class="txt-content q-mt-md text-center">
+        {{ $t("notify.cancelPaymentWillLose") }}
+        <br />
+        <div class="bonusAmt">PKR {{ paymentCancellationAmtLoss }}</div>
+      </div>
+      <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
+        <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup @click="confirmLeave" />
+        <q-btn :label="$t('btn.payAgain')" no-caps class="btn-confirm" @click="cancelLeave" v-close-popup />
+      </div>
+    </div>
+  </div>
+  </q-dialog>
 
   <AdditionalSteps
     v-if="isAdditionalDepositSteps"
@@ -357,7 +408,7 @@ import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { userStore } from "stores/index";
-import { useRoute, useRouter } from "vue-router";
+import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, generateEventID, trackNewUserFtd } from "src/boot/utils";
 // import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
@@ -366,6 +417,7 @@ import KYCUserForm from "../../components/KYCUserForm.vue";
 import { t } from "src/boot/lang";
 import { useCheckKYC } from "src/hooks/checkKYC";
 import { storeToRefs } from "pinia";
+import { isAndroid } from "src/boot/utils";
 // import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
 import AdditionalSteps from "../../components/modal/AdditionalSteps.vue";
@@ -484,6 +536,8 @@ const paytypeWithPrivilege = ref("");
 const isFtdPrivilegeEnable = ref(false);
 const ftdBonusConfig = ref(DEFAULT_BONUS_CONFIG);
 const secondTimeDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
+const thirdTimeDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
+const newPlayerDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG)
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
 const isFtdPrivilege = computed(
@@ -503,6 +557,19 @@ const is2ndPrivilege = computed(
     secondTimeDepositBonusConfig.value.selected &&
     secondTimeDepositBonusConfig.value.hasBonus
 );
+const is3rdPrivilege = computed(
+  () =>
+    selectedPayType.value !== "USDTTRC" &&
+    thirdTimeDepositBonusConfig.value.selected &&
+    thirdTimeDepositBonusConfig.value.hasBonus
+);
+const isNewPlayerPrivilege = computed(
+  () => 
+    selectedPayType.value !== "USDTTRC" &&
+    newPlayerDepositBonusConfig.value.selected &&
+    newPlayerDepositBonusConfig.value.hasBonus && 
+    isAndroid()
+)
 
 const copyMessage = (position) => {
   let copyText = null;
@@ -602,15 +669,50 @@ const getNewUserFtdAmount = (amount) => {
 
 const get2ndAmount = (amount) => {
   const rewardMap = {
-    300: 107,
-    500: 177,
-    1000: 277,
-    3000: 577,
-    5000: 777,
-    10000: 1377,
-    20000: 2777,
-    30000: 3777,
-    50000: 5777
+    300: 100,
+    500: 100,
+    800: 100,
+    1000: 100,
+    3000: 100,
+    5000: 100,
+    10000: 100,
+    20000: 100,
+    30000: 100,
+    50000: 100
+  };
+  return rewardMap[amount] || 0;
+};
+
+
+const get3rdAmount = (amount) => {
+  const rewardMap = {
+    300: 150,
+    500: 150,
+    800: 150,
+    1000: 150,
+    3000: 150,
+    5000: 150,
+    10000: 150,
+    20000: 150,
+    30000: 150,
+    50000: 150
+  };
+  return rewardMap[amount] || 0;
+};
+
+
+const getNewPlayerAmount = (amount) => {
+  const rewardMap = {
+    300: 38,
+    500: 38,
+    800: 38,
+    1000: 38,
+    3000: 38,
+    5000: 38,
+    10000: 38,
+    20000: 38,
+    30000: 38,
+    50000: 38
   };
   return rewardMap[amount] || 0;
 };
@@ -748,6 +850,8 @@ async function loadPrivilege(val) {
   hasPrivilege.value = false;
   ftdBonusConfig.value = DEFAULT_BONUS_CONFIG;
   secondTimeDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
+  thirdTimeDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
+  newPlayerDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
     if (res.code === 0) {
       privilegeList.value = res.data.privileges;
@@ -767,6 +871,18 @@ async function loadPrivilege(val) {
               };
             } else if (p.code === "pak-second-time-deposit-bonus") {
               secondTimeDepositBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else if (p.code === "pak-third-time-deposit-bonus") {
+              thirdTimeDepositBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else if (p.code === "pak-new-user-roulette") {
+              newPlayerDepositBonusConfig.value = {
                 selected: true,
                 hasBonus: true,
                 privilegeId: p.id
@@ -868,6 +984,12 @@ async function confirmDeposit() {
 
           if (secondTimeDepositBonusConfig.value.selected && secondTimeDepositBonusConfig.value.hasBonus) {
             form.privilegeId = secondTimeDepositBonusConfig.value.privilegeId;
+          }
+          if (thirdTimeDepositBonusConfig.value.selected && thirdTimeDepositBonusConfig.value.hasBonus) {
+            form.privilegeId = thirdTimeDepositBonusConfig.value.privilegeId;
+          }
+          if (newPlayerDepositBonusConfig.value.selected && newPlayerDepositBonusConfig.value.hasBonus) {
+            form.privilegeId = newPlayerDepositBonusConfig.value.privilegeId;
           }
 
           const copy = { ...form };
@@ -1024,6 +1146,22 @@ async function pDepo(deposit) {
               }
             }
           }
+          // if (isAndroid()) {
+          // }
+          
+          const onAppFirstDeposit = newPlayerDepositBonusConfig.value?.hasBonus
+          if (onAppFirstDeposit) {
+            localStorage.setItem('onAppFirstDeposit', JSON.stringify(onAppFirstDeposit));
+          }
+          const secondDeposit = secondTimeDepositBonusConfig.value?.hasBonus
+          if (secondDeposit) {
+            localStorage.setItem('secondDeposit', JSON.stringify(secondDeposit));
+          }
+          
+          const thirdDeposit = thirdTimeDepositBonusConfig.value?.hasBonus
+          if (thirdDeposit) {
+            localStorage.setItem('thirdDeposit', JSON.stringify(thirdDeposit));
+          }
         }
       } else {
         $q.notify({
@@ -1167,9 +1305,68 @@ onMounted(() => {
   }
   isInitialized.value = true;
 });
+const showPaymentCancellationDialog = ref();
+const paymentCancellationAmtLoss = ref(0);
+const pendingNext = ref(null)
+
+const confirmLeave = () => {
+  showPaymentCancellationDialog.value = false
+  if (pendingNext.value) {
+    pendingNext.value()
+    pendingNext.value = null
+  }
+}
+
+const cancelLeave = () => {
+  showPaymentCancellationDialog.value = false
+  if (pendingNext.value) {
+    pendingNext.value(false)
+    pendingNext.value = null
+  }
+}
+const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
+
+
+onBeforeRouteLeave((to, from, next) => {
+  console.log(from)
+  if (from.path !== '/deposit') {
+    next()
+    return
+  }
+  const hasSecond = secondTimeDepositBonusConfig.value?.hasBonus
+  const hasThird = thirdTimeDepositBonusConfig.value?.hasBonus
+  const hasNewPlayerReward = newPlayerDepositBonusConfig.value?.hasBonus
+  
+  const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
+  const secondDeposit = JSON.parse(localStorage.getItem('secondDeposit'));
+  const thirdDeposit = JSON.parse(localStorage.getItem('thirdDeposit'));
+
+  if (alreadyDeposited && isAndroid() || secondDeposit || thirdDeposit) {
+    next()
+    return
+  }
+  if (((hasNewPlayerReward) && isAndroid()) || hasThird || hasSecond) {
+    if (hasNewPlayerReward) {
+      paymentCancellationAmtLoss.value = 38
+    } else if (hasThird) {
+      paymentCancellationAmtLoss.value = 150
+    } else if (hasSecond) {
+      paymentCancellationAmtLoss.value = 100
+    }
+    pendingNext.value = next
+    showPaymentCancellationDialog.value = true
+  } else {
+    next()
+  }
+})
 </script>
 
 <style scoped lang="scss">
+.bonusAmt {
+    font-weight: bold;
+    color: gold;
+    font-size: 25px;
+}
 .deposit-tabs {
   width: 100%;
   margin: 0 16px;
@@ -1519,6 +1716,38 @@ onMounted(() => {
   img {
     width: 100%;
   }
+}
+.popout-btns {
+  width: 100%;
+}
+.btn-cancel {
+  // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+  // border: 1px solid #5d8956;
+  // font-weight: 700;
+  // color: #ffffff;
+  // border-radius: 12px;
+  font-weight: 700;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 16px;
+  background: #455152;
+  color: #ffffff;
+
+  box-shadow: 0px 2px 0px 0px #2a3637;
+  text-align: center !important;
+}
+
+.btn-confirm {
+  font-weight: 700;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 16px;
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  color: #000000;
+  box-shadow: 0px 2px 0px 0px #1cca6a;
+  border-radius: 4px;
+  height: unset;
+  text-align: center !important;
 }
 </style>
 <style scoped>

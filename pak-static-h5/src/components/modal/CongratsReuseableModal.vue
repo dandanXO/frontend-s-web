@@ -8,9 +8,9 @@
       <div class="congrats-coupons">
         <img :src="computedContentImg" />
       </div>
-      <div class="congrats-title">{{ bonusTitle || $t("modal.congrats.congratsUnlockedBonus") }}</div>
+      <div v-if="bonusTitle" class="congrats-title">{{ bonusTitle || $t("modal.congrats.congratsUnlockedBonus") }}</div>
       <div v-if="bonusTxt" class="congrats-highlight-txt">{{ bonusTxt }}</div>
-      <div v-else class="congrats-highlight">{{ !!bonusAmount ? convertToCommaAmount(bonusAmount) : 0 }}BDT</div>
+      <div v-if="bonusAmount" class="congrats-highlight">{{store.currency.label}}{{ !!bonusAmount ? convertToCommaAmount(bonusAmount) : 0 }}</div>
 
       <div class="congrats-button-container">
         <q-btn no-caps unelevated class="congrats-btn" @click="handleBtnClick">
@@ -23,7 +23,8 @@
 <script setup>
 import { ref, watch, computed } from "vue";
 import { convertToCommaAmount } from "src/boot/utils";
-
+import { userStore } from "stores/index";
+const store = userStore();
 const props = defineProps([
   "isShowDialog",
   "bonusAmount",
@@ -39,7 +40,7 @@ const localIsShowDialog = ref(props.isShowDialog);
 
 const computedHeaderImg = computed(() => {
   return props.headerImg
-    ? require(`${props.headerImg}`)
+    ? props.headerImg
     : require(`../../assets/images/index/modal/congrats-header.png`);
 });
 
@@ -86,13 +87,13 @@ watch(
     height: 150px;
     position: absolute;
     left: 0;
-    top: -150px;
+    top: -158px;
   }
 
   .congrats-header {
     display: flex;
     justify-content: center;
-    margin-top: -18px;
+    margin-top: -26px;
     z-index: 2;
 
     img {
@@ -124,13 +125,20 @@ watch(
     color: #fff96f;
     font-size: 45px;
     text-align: center;
-    background: linear-gradient(90deg, transparent, #fff96f29, transparent);
-    // background-image: url(../../assets/images/index/modal/congrats-highlight-bg.png);
+    // background: linear-gradient(90deg, transparent, #fff96f29, transparent);
+    background-image: url(../../assets/images/index/modal/green-congrats-highlight-bg.png);
     padding: 0 12px;
     background-repeat: no-repeat;
     background-size: 70% 100%;
     background-position: center;
     margin-top: 16px;
+    position: relative;
+    text-align: center;
+    top: unset;
+    left: 0;
+    transform: unset;
+    bottom: unset;
+    margin: 16px auto;
   }
 
   .congrats-highlight-txt {

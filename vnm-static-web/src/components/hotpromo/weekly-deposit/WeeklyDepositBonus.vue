@@ -451,9 +451,11 @@ onMounted(() => {
 
 .prizePopupContainer-weekly {
   width: 480px;
-  height: 620px;
+  height: auto;
   background: url("../../../assets/images/promotion/hotpromo/weekly-deposit-bonus/popupp.png");
-  background-size: 100% 100%;
+  background-size: 100% auto;
+  background-position: center center;
+  background-repeat: no-repeat;
   box-shadow: none;
 
   .wrapper {
@@ -464,7 +466,7 @@ onMounted(() => {
     gap: 55px;
     .content {
       position: absolute;
-      top: 60%;
+      top: 57%;
       width: 200px;
       text-align: center;
       margin: 0 auto;

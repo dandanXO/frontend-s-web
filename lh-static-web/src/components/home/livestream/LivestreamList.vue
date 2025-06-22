@@ -39,7 +39,7 @@
         <div class="livestream-list-item__badge-wrapper">
           <div class="livestream-list-item__badge">
             <img v-if="live.name === 'SYSTEM'" src="@/assets/home/livestream/system-avatar.png" loading="lazy" />
-            <img v-else-if="live.avatar" :src="imgURL + live.avatar" loading="lazy" />
+            <img v-else-if="live.avatar" :src="imgStreamerURL + live.avatar" loading="lazy" />
             <img v-else src="@/assets/images/profile/default-1.png" loading="lazy" />
             {{ live.name === "SYSTEM" ? "雷火" : live.name }}
           </div>
@@ -75,6 +75,8 @@ const emit = defineEmits(["scroll-reach-right"]);
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
+const imgStreamerURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/streamer/";
+
 const swiperInstance = ref(null);
 
 const swiperConfig = computed(() => {
@@ -108,7 +110,7 @@ const getDisplayDateTime = (date) => {
   } else if (diffInDays === 1) {
     return eventDate.format("明日 HH:mm");
   } else {
-    return eventDate.format("MM/DD");
+    return eventDate.format("MM/DD HH:mm");
   }
 };
 
@@ -144,10 +146,12 @@ watch(list, () => {
   }
 
   .livestream-list-item {
+    --livestream-badge-gap: 6px;
+    --livestream-img-size: 60px;
     @include livestream-content-block;
     position: relative;
     padding: 11px 0;
-    margin: 18px 0 0;
+    margin: calc(var(--livestream-img-size) / 2 + var(--livestream-badge-gap)) 0 0;
     cursor: pointer;
 
     &.selected {
@@ -222,9 +226,10 @@ watch(list, () => {
 
     .livestream-list-item__badge-wrapper {
       position: absolute;
-      top: 4px;
-      left: 14px;
-      transform: translateY(-100%);
+      top: calc(-1 * var(--livestream-badge-gap));
+      left: 0;
+      margin-left: calc(var(--livestream-img-size) / 2 + var(--livestream-badge-gap));
+      transform: translateY(-50%);
       background: linear-gradient(
         259.14deg,
         #ffecce 11.64%,
@@ -239,17 +244,28 @@ watch(list, () => {
       border-bottom-left-radius: 12px;
 
       .livestream-list-item__badge {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding-right: 7px;
+        position: relative;
+        padding: 4px 14px 4px 28px;
         font-size: 11px;
         line-height: 15px;
         color: #000000;
         img {
           @include img-pseudo;
+          position: absolute;
+          top: 50%;
+          left: -6px;
+          transform: translate(-50%, -50%);
+          border: 1px solid #d3aa69;
           border-radius: 50%;
-          width: 22px;
+          background: linear-gradient(
+            259.14deg,
+            #ffecce 11.64%,
+            #f3cd92 27.82%,
+            #fff2ca 52.4%,
+            #efd190 72.12%,
+            #e4bd80 99.13%
+          );
+          width: var(--livestream-img-size);
           aspect-ratio: 1;
         }
       }

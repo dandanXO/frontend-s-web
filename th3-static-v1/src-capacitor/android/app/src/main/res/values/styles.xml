@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <!-- styles.xml -->
+    <style name="Theme.App.Splash" parent="Theme.SplashScreen">
+      <!-- Set the splash screen background color -->
+      <item name="windowSplashScreenBackground">@color/colorBgPrimary</item>
+      <!-- Set the splash screen icon to display in the center -->
+      <item name="windowSplashScreenAnimatedIcon">@drawable/icon_splash</item>
+      <!-- Optional: Set the icon background color -->
+      <item name="windowSplashScreenIconBackgroundColor">@color/colorBgPrimary</item>
+    </style>
+</resources>

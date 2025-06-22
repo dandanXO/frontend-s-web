@@ -124,6 +124,7 @@ import { claimWeeklyBonus, weeklyBonusInit } from "@/api/promo/weeklyBonus";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { userStore } from "src/stores";
+import { eventapi } from "boot/axios";
 
 const { t } = useI18n();
 const $q = useQuasar();
@@ -146,20 +147,26 @@ const initPage = () => {
   });
 };
 const claimBonus = () => {
-  showPrizePopup.value = true;
-  // claimWeeklyBonus(props.promoCode).then((res) => {
-  //   if (res.code === 0) {
-  //     prizePopupBonusAmt.value = res.data;
-  //     showPrizePopup.value = true;
-  //   } else {
-  //     $q.notify({
-  //       color: "negative",
-  //       position: "top",
-  //       // message: res.message
-  //       message: t("error." + data.code)
-  //     });
-  //   }
-  // });
+  // showPrizePopup.value = true;
+  eventapi
+    .get(`/redPacketVip/claim?promoCode=${props.promoCode}`)
+    .then((res) => {
+      if (res.code === 0) {
+        prizePopupBonusAmt.value = res.data.lastDigitAmount + res.data.vipAmount;
+        showPrizePopup.value = true;
+        store.getBalance();
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          // message: res.message
+          message: t("error." + data.code)
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 onMounted(() => {
   // initPage();
@@ -201,6 +208,11 @@ onMounted(() => {
       font-size: 18px;
       line-height: 26.97px;
       letter-spacing: -2%;
+
+      &:active {
+        filter: brightness(0.9);
+        transform: translate(0px, 1px);
+      }
 
       img {
         width: 100%;

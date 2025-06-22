@@ -114,3 +114,24 @@ export const getSportLiveStream = (request) => {
     ContentType.form
   )
 };
+
+export const getAdmins = (request) => {
+  return https().request(
+    '/live-sport/admin',
+    Method.GET,
+    request,
+    ContentType.form
+  )
+};
+
+export const createAdmin = (streamer) => {
+  return https().request("/live-sport/admin", Method.POST, streamer, ContentType.form);
+};
+
+export const updateAdmin = (streamer) => {
+  return https().request(`/live-sport/admin`, Method.PUT, streamer, ContentType.json);
+};
+
+export const deleteAdminById = (id) => {
+  return https().request(`/live-sport/admin/${id}`, Method.DELETE);
+};

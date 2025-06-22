@@ -313,12 +313,12 @@
       <el-table-column
         prop="id"
         :label="t('fields.platformMatchId')"
-        width="50"
+        width="150"
       />
       <el-table-column
         prop="sportId"
         :label="t('fields.sportType')"
-        width="50"
+        width="150"
         :formatter="formatSportType"
       />
       <el-table-column prop="title" :label="t('fields.title')" width="250" />
@@ -451,6 +451,7 @@
           </el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="eventCode" :label="t('fields.eventCode')" width="120" />
       <el-table-column
         prop="createTime"
         :label="t('fields.createTime')"
@@ -603,9 +604,10 @@ function formatSportType(row) {
       return t('fields.football')
     case 2:
       return t('fields.basketball')
-    default:
+    default: {
       const item = liveSportTyps.find(item => item.id === row.sportId)
       return item ? item.display : '-'
+    }
   }
 }
 
