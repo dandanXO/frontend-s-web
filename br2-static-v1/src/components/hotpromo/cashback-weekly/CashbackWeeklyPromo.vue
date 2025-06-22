@@ -1,0 +1,259 @@
+<template>
+  <div>
+    <div class="bet-wrapper">
+      <div class="bet-info">
+        <img class="bet-info__icon" src="../../../assets/images/promotion/cashback-weekly/icon-cash.png" />
+        <div class="bet-info-title">
+          <span class="bet-info-title__current-cashback">
+            {{ $t("hotPromo.cashbackWeekly.cashback", { num: currentCashbackRate }) }}
+          </span>
+          <span class="bet-info-title__max-cashback">
+            {{ $t("hotPromo.cashbackWeekly.cashback", { num: currentCashbackRate }) }}
+          </span>
+        </div>
+        <div class="bet-info-vip">
+          <img class="bet-info-vip__icon" src="../../../assets/images/promotion/cashback-weekly/icon-crown.png" />
+          <div class="bet-info-vip__vip-level">V{{ vipLevel }}</div>
+        </div>
+      </div>
+      <div class="bet-progressbar">
+        <div class="bet-progressbar__inner" :style="{ width: `${(remainingBet / nextLevelBet) * 100}%` }" />
+      </div>
+      <div class="bet-next-level">
+        {{ $t("hotPromo.cashbackWeekly.upgradeDifference", { amount: remainingBet, vip: vipLevel }) }}
+      </div>
+    </div>
+
+    <q-btn class="receive-earn-btn" no-caps>
+      <img src="../../../assets/images/promotion/receive-earn/receive-earn-icon.png" />
+      &nbsp;&nbsp;{{ $t("hotPromo.receive") }}
+    </q-btn>
+
+    <div class="receive-bar-container">
+      <div class="receive-bar">
+        <div class="bar-ribbon">
+          <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
+          {{ $t("hotPromo.duration") }}
+        </div>
+        <div class="bar-desc">{{ $t("hotPromo.longTerm") }}</div>
+      </div>
+
+      <div class="receive-bar">
+        <div class="bar-ribbon">
+          <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
+          {{ $t("hotPromo.eligibility") }}
+        </div>
+        <div class="bar-desc">{{ $t("hotPromo.successfulDepositMember") }}</div>
+      </div>
+
+      <div class="receive-bar">
+        <div class="bar-ribbon">
+          <img src="../../../assets/images/promotion/receive-earn/icon-description.svg" />
+          {{ $t("hotPromo.desc") }}
+        </div>
+        <div class="bar-desc">{{ $t("hotPromo.cashbackWeekly.description") }}</div>
+      </div>
+    </div>
+
+    <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
+
+    <div class="tnc-content">
+      <ol>
+        <li v-for="index in 10" :key="index">
+          {{ $t(`hotPromo.cashbackWeekly.tnc${`${index}`.padStart(2, "0")}`) }}
+        </li>
+      </ol>
+    </div>
+  </div>
+</template>
+<script setup>
+import { userStore } from "src/stores";
+import { computed, ref } from "vue";
+
+const store = userStore();
+
+const currentCashbackRate = ref(6);
+const maximumCashbackRate = ref(25);
+const currentBet = ref(500);
+const nextLevelBet = ref(1000);
+
+const vipLevel = computed(() => store.vip.replace("VIP", ""));
+const remainingBet = computed(() => nextLevelBet.value - currentBet.value);
+</script>
+<style lang="scss" scoped>
+.bet-wrapper {
+  position: relative;
+  padding: 15px 34px 40px;
+  margin: 4px 0 16px;
+  background: #1d1e22;
+  border: 1px solid #4b4943;
+  border-radius: 4px;
+
+  .bet-info {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 16px;
+
+    .bet-info__icon {
+      max-width: 44px;
+    }
+    .bet-info-title {
+      display: flex;
+      flex-direction: column;
+      font-weight: 500;
+
+      .bet-info-title__current-cashback {
+        font-size: 22px;
+        color: #00fd7c;
+      }
+
+      .bet-info-title__max-cashback {
+        font-size: 10px;
+        color: #4b4943;
+      }
+    }
+    .bet-info-vip {
+      display: flex;
+      align-items: center;
+      align-self: center;
+      .bet-info-vip__icon {
+        max-width: 20px;
+        margin-right: 4px;
+      }
+      .bet-info-vip__vip-level {
+        background: #1ead72;
+        border-radius: 4px;
+        padding: 0 4px;
+        font-size: 15px;
+        line-height: 1.5;
+        color: #fff;
+        text-shadow: 0px 1px 0px #00000040;
+      }
+    }
+  }
+
+  .bet-progressbar {
+    --bet-progressbar-border-radius: 10px;
+    --bet-progressbar-height: 3px;
+    position: relative;
+    height: var(--bet-progressbar-height);
+    background: #ffffff1a;
+    border-radius: var(--bet-progressbar-border-radius);
+    overflow: hidden;
+
+    .bet-progressbar__inner {
+      height: var(--bet-progressbar-height);
+      border-radius: var(--bet-progressbar-border-radius);
+      background-color: #000;
+      transition: width 0.3s ease-in-out;
+    }
+  }
+
+  .bet-next-level {
+    position: absolute;
+    right: 34px;
+    bottom: 10px;
+    font-size: 10px;
+    font-weight: 500;
+    color: #4b4943;
+  }
+}
+
+.receive-earn-btn {
+  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+  width: 100%;
+  color: #2d2d2d;
+  font-weight: bold;
+
+  img {
+    width: 34px !important;
+  }
+}
+
+.receive-bar-container {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .receive-bar {
+    background: #1f241f;
+    border: 1px solid #4b4943;
+    padding: 48px 12px 8px;
+    position: relative;
+    border-radius: 6px;
+
+    .bar-ribbon {
+      background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+      display: inline-flex;
+      padding: 8px;
+      height: 34px;
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+      color: #2d2d2d;
+      font-weight: bold;
+      align-items: center;
+      position: absolute;
+      top: 12px;
+      left: 0;
+      img {
+        display: block;
+        margin-right: 8px;
+      }
+    }
+
+    .bar-desc {
+      padding: 8px;
+    }
+  }
+}
+
+.promo-subtitle {
+  // padding: 0 24px;
+  margin-top: 24px;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 1;
+  font-style: italic;
+  text-align: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  &:before {
+    content: "";
+    background: url(../../../assets/images/promotion/receive-earn/promo-subtitle-icon.png);
+    width: 25px;
+    height: 9px;
+    display: block;
+    background-size: 100% 100%;
+    margin-right: 8px;
+    margin-top: 4px;
+  }
+
+  &:after {
+    content: "";
+    background: url(../../../assets/images/promotion/receive-earn/promo-subtitle-icon.png);
+    width: 25px;
+    height: 9px;
+    display: block;
+    background-size: 100% 100%;
+    transform: scaleX(-1);
+    margin-left: 8px;
+    margin-top: 4px;
+  }
+}
+
+.tnc-content {
+  ol li {
+    margin-bottom: 8px !important;
+  }
+
+  ol {
+    padding-left: 24px !important;
+  }
+}
+</style>
