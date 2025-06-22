@@ -789,6 +789,7 @@ export default {
     time_left: "tempo restante",
     go_withdraw_now: "Levantar agora",
     rs: "RS",
+    youGet: "Você obtém",
     withdraw_money_over_rs: "Levantar dinheiro acima de Rs",
     claim_now: "Reivindicar agora",
     claimed: "Reivindicado",

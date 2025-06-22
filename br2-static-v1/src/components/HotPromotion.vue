@@ -21,6 +21,7 @@
 
     <VipPlanBettingUpgrade v-if="list.redirectUrl === 'br2-vip-plan'" :params="list.param" />
     <CashbackWeeklyPromo v-if="list.redirectUrl === 'cashback-weekly'" :params="list.param" />
+    <RedPacketRainPromo v-if="list.redirectUrl === 'br2-red-packet-rain'" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -59,6 +60,7 @@ import MoneyRainPromo from "./hotpromo/money-rain/MoneyRainPromo.vue";
 import RedepositBonusPromo from "./hotpromo/redeposit-bonus/RedepositBonusPromo.vue";
 import VipPlanBettingUpgrade from "./hotpromo/vip-plan-betting-upgrade/VipPlanBettingUpgrade.vue";
 import CashbackWeeklyPromo from "./hotpromo/cashback-weekly/CashbackWeeklyPromo.vue";
+import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRainPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -77,7 +79,8 @@ export default defineComponent({
     MoneyRainPromo,
     RedepositBonusPromo,
     VipPlanBettingUpgrade,
-    CashbackWeeklyPromo
+    CashbackWeeklyPromo,
+    RedPacketRainPromo
   },
   props: {
     list: {
