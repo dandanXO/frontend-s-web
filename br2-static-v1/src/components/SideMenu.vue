@@ -12,9 +12,9 @@
       <template v-if="store.token">
         <div class="side-menu-account-info__balance-wrapper">
           <img src="../assets/images/sideMenu/icon-balance.png" />
-          <div class="side-menu-account-info__balance-inner">
+          <div class="side-menu-account-info__balance-inner" @click="refreshBalance()">
             <span class="side-menu-account-info__balance-amount">
-              {{ store.currency.value }} {{ convertToCommaAmount(store.balance, true) }}
+              {{ isLoadingBalance ? "Loading..." : store.currency.value + " " + convertToCommaAmount(store.balance, true) }}
             </span>
             <span class="side-menu-account-info__balance-desc">
               {{ $t("sideNav.balance") }}
@@ -92,7 +92,7 @@
   </div>
 </template>
 <script setup>
-import { defineEmits, inject } from "vue";
+import { defineEmits, inject, ref } from "vue";
 import { convertToCommaAmount, isAndroid } from "boot/utils";
 import { useRouter } from "vue-router";
 import ProfileSummary from "../components/ProfileSummary.vue";
@@ -127,6 +127,16 @@ const socialMediaLinks = [
   { icon: "youtube", url: "" },
   { icon: "x", url: "" }
 ];
+
+const isLoadingBalance = ref(false);
+const refreshBalance = () => {
+  if (store.token) {
+    isLoadingBalance.value = true;
+    store.getBalance().then((res) => {
+      isLoadingBalance.value = false;
+    });
+  }
+};
 
 const activateSlide = (item) => {
   emits("closeMenu");
@@ -188,6 +198,10 @@ const openCSInNewTab = (url) => {
     .side-menu-account-info {
       gap: 18px;
       margin-bottom: 12px;
+
+      > button{
+        flex: 1;
+      }
 
       .side-menu-account-info__balance-wrapper {
         display: flex;

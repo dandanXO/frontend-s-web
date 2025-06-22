@@ -304,11 +304,12 @@ export default {
     language: "Language",
     downloadApp: "Download APP",
     showing16Of100Games: "Mostrando 16 de 100 jogos",
-    balance: "Saldo"
+    balance: "Saldo",
+    downloadAppText: "Baixe nosso aplicativo e ganhe super prêmios!",
   },
   home: {
     menu_lobby: "Lobby",
-    menu_hot: "Popular",
+    menu_hot: "Hot",
     menu_live: "Live",
     menu_fish: "Pesca",
     menu_slot: "Slot",
@@ -788,6 +789,7 @@ export default {
     time_left: "tempo restante",
     go_withdraw_now: "Levantar agora",
     rs: "RS",
+    youGet: "Você obtém",
     withdraw_money_over_rs: "Levantar dinheiro acima de Rs",
     claim_now: "Reivindicar agora",
     claimed: "Reivindicado",
@@ -896,6 +898,45 @@ export default {
         "Indique um amigo para se registar, depositar e verificar o telefone para ganhar rodadas grátis",
       only: "Apenas",
       toGo: "para ir"
+    },
+    duration: "Duração",
+    longTerm: "Válida por tempo indeterminado",
+    eligibility: "Elegíveis",
+    successfulDepositMember: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
+    newMember: "Todos os novos membros registrados",
+    desc: "Descrição",
+    tnc: "Regras da Promoção",
+    cashbackWeekly: {
+      description: "Cashback semanal com base na sua atividade de apostas e na porcentagem correspondente.",
+      maxCashback: "Máx. {num}%",
+      cashback: "{num}% Cashback",
+      upgradeDifference: "{amount} apostas para VIP{vip}",
+      tnc01: "O cashback semanal é concedido como recompensa toda semana.",
+      tnc02: "O período de cálculo do cashback semanal vai de segunda-feira às 00:00 até domingo às 23:59.",
+      tnc03:
+        "Período para resgatar o cashback: da segunda-feira da semana seguinte às 06:00 até sexta-feira às 23:59. Após esse prazo, o bônus expirará.",
+      tnc04: "O valor das perdas reais multiplicado pela porcentagem de reembolso corresponde ao cashback da semana.",
+      tnc05:
+        "Se você não fez apostas durante o período ativo do cashback ou se seus ganhos na última semana (ou no total) forem maiores que suas perdas, não receberá cashback.",
+      tnc06:
+        "Quanto maior o seu nível VIP (consulte o plano de upgrade VIP), maior será a porcentagem de cashback, com um máximo de 25%.",
+      tnc07: "Limite máximo de cashback por pessoa por semana R$10.000.",
+      tnc08: "O valor do cashback pode ser sacado diretamente ou utilizado para continuar jogando.",
+      tnc09:
+        "Jogadores que, no histórico da nossa plataforma, apresentem lucro não participam do reembolso de perdas. Esta atividade é limitada aos benefícios para jogadores que tiveram prejuízo na plataforma.",
+      tnc10: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
+    },
+    receiveEarn: {
+      description: "Receive up to 100 BRL in free bet bonus",
+      tnc01: "Você pode iniciar um saque quando o valor acumulado atingir 100 BRL.",
+      tnc02: "Convidar amigos para se registrarem irá ajudá- lo a sacar dinheiro rapidamente.",
+      tnc03: "Cada usuário receberá uma única rodada grátis por dia.",
+      tnc04:
+        "Cada usuário tem um período de validade de 3 dias para cada atividade e pode participar da atividade várias vezes.",
+      tnc05:
+        "Se você receber um pontos de dinheiro extra, pode jogar jogos de graça e ganhar ainda mais dinheiro real.",
+      tnc06: "Se voce nao retirar o dinheiro dentro de 3 dias,ele ser perdido.",
+      tnc07: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
     }
   },
   maintenance: {

@@ -777,6 +777,7 @@ export default {
     time_left: "time left",
     go_withdraw_now: "Go withdraw now",
     rs: "RS",
+    youGet: "You get",
     withdraw_money_over_rs: "Withdraw money over Rs",
     claim_now: "Claim now",
     claimed: "Claimed",
@@ -885,6 +886,43 @@ export default {
       referFriendToRegister: "Refer a friend to register, deposit and verify your phone to win free spins",
       only: "Only",
       toGo: "to go"
+    },
+    duration: "Duration",
+    longTerm: "Long-term (ongoing)",
+    eligibility: "Eligibility",
+    successfulDepositMember: "All members who have made at least one successful deposit",
+    newMember: "All new registered member",
+    desc: "Description",
+    tnc: "Terms and Conditions",
+    cashbackWeekly: {
+      description: "Weekly cashback based on your betting activity and the corresponding percentage",
+      maxCashback: "Max {num}%",
+      cashback: "{num}% Cashback",
+      upgradeDifference: "{amount} bets to VIP{vip}",
+      tnc01: "Weekly cashback is given as a reward every week.",
+      tnc02: "The period over which the weekly cashback is calculated runs from Monday at 00:00 to Sunday at 23:59.",
+      tnc03: "Cashback claim time: From Monday of next week 06:00 to Friday 23:59, will expire if not redeemed.",
+      tnc04: "The number of Real Money Losses multiplied by the Refund % is the Refund/Cashback for the week.",
+      tnc05:
+        "If you have not placed any bets during the period when the cashback was active or if your winnings for the last week or total winnings are greater than your losses, you will not receive cashback.",
+      tnc06:
+        "The higher your VIP level (please refer to the VIP upgrade program), the higher the cashback percentage, up to a maximum of 25%.",
+      tnc07: "Maximum cashback reward limit per person per week is R$10000.",
+      tnc08: "The cashback amount can be withdrawn directly or used to continue playing.",
+      tnc09:
+        "Players who are winners in the history of the our platform do not participate in the loss return settlement. This activity is limited to the benefits of players who have lost to the platform.",
+      tnc10: "To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion."
+    },
+    receiveEarn: {
+      description: "Receive up to 100 BRL in free bet bonus",
+      tnc01: "You can initiate a withdrawal when the accumulated amount reaches 100 BRL.",
+      tnc02: "Inviting friends to register will help you withdraw money quickly.",
+      tnc03: "Each user will receive a single free spin per day.",
+      tnc04:
+        "SEach user has a 3-day validity period for each activity and can participate in the activity multiple times.",
+      tnc05: "If you get extra cash points, you can play games for free and win even more real money.",
+      tnc06: "If you do not withdraw the money within 3 days, it will be lost.",
+      tnc07: "To avoid any misunderstandings, AKB188 reserves the final right of interpretation for this promotion."
     }
   },
   maintenance: {

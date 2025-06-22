@@ -2,32 +2,32 @@
   <div>
     <q-btn class="receive-earn-btn" no-caps>
       <img src="../../../assets/images/promotion/receive-earn/receive-earn-icon.png" />
-      &nbsp;&nbsp;receive
+      &nbsp;&nbsp;{{ $t("hotPromo.receive") }}
     </q-btn>
 
     <div class="receive-bar-container">
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
-          Duration
+          {{ $t("hotPromo.duration") }}
         </div>
-        <div class="bar-desc">Long-term (ongoing)</div>
+        <div class="bar-desc">{{ $t("hotPromo.longTerm") }}</div>
       </div>
 
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
-          Eligibility
+          {{ $t("hotPromo.eligibility") }}
         </div>
-        <div class="bar-desc">All new registered member</div>
+        <div class="bar-desc">{{ $t("hotPromo.newMember") }}</div>
       </div>
 
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-description.svg" />
-          Description
+          {{ $t("hotPromo.desc") }}
         </div>
-        <div class="bar-desc">Receive up to 100 BRL in free bet bonus</div>
+        <div class="bar-desc">{{ $t("hotPromo.receiveEarn.description") }}</div>
       </div>
     </div>
 
@@ -35,15 +35,9 @@
 
     <div class="tnc-content">
       <ol>
-        <li>You can initiate a withdrawal when the accumulated amount reaches 100 BRL.</li>
-        <li>Inviting friends to register will help you withdraw money quickly.</li>
-        <li>Each user will receive a single free spin per day.</li>
-        <li>
-          SEach user has a 3-day validity period for each activity and can participate in the activity multiple times.
+        <li v-for="index in 7" :key="index">
+          {{ $t(`hotPromo.receiveEarn.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
-        <li>If you get extra cash points, you can play games for free and win even more real money.</li>
-        <li>If you do not withdraw the money within 3 days, it will be lost.</li>
-        <li>To avoid any misunderstandings, AKB188 reserves the final right of interpretation for this promotion.</li>
       </ol>
     </div>
   </div>

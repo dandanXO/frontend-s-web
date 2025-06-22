@@ -214,7 +214,10 @@ if (siteId === 'dy') {
 } else if (siteId === 'lh') {
   link.href = '/favicon.ico';
   title.innerText = '雷火后台';
-} else if (siteId === 'vnm') {
+} else if (siteId === 'br2') {
+  link.href = '/akb-favicon.ico';
+  title.innerText = 'AKB188';
+}else if (siteId === 'vnm') {
   link.href = '/favicon.ico';
   title.innerText = 'TF88';
 } else if (siteId === 'ka1') {

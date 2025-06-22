@@ -510,6 +510,11 @@ export default defineComponent({
               // }
             });
 
+            if (route.query.name === "page-vip") {
+              router.push("/account/vip")
+              return;
+            }
+
             if(route.query.name && !isPromoFound.value){
               notify({
                 type: "error",

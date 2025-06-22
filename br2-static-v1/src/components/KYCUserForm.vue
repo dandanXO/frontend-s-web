@@ -48,7 +48,7 @@
       flat
       no-caps
       class="style-btn-confirm"
-      :disable="!(isValidFirstName() === true && isValidLastName() === true)"
+      :disable="!(isValidFirstName() === true && isValidLastName() === true && isValidCPF() === true)"
       @click="submitKYCNewUser"
     >
       {{ $t("btn.submit") }}
@@ -273,7 +273,7 @@ const updateNewUserState = () => {
   border-radius: 8px;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
   font-weight: 700;
   color: #150025;
   border-radius: 8px;

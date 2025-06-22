@@ -260,14 +260,14 @@
           </q-tr>
           <q-tr class="top-header">
             <q-td>{{ $t("vip.level") }}</q-td>
-            <q-td style="text-align: right">{{ $t("vip.amount") }}</q-td>
+            <q-td style="text-align: center">{{ $t("vip.amount") }}</q-td>
           </q-tr>
         </template>
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
-                <div style="text-align: right">
+                <div style="text-align: center">
                   {{ store.currency.value }}
                   <span class="amt-text">{{ col.value }}</span>
                 </div>
@@ -305,7 +305,7 @@
           </q-tr>
           <q-tr class="top-header">
             <q-td>{{ $t("vip.level") }}</q-td>
-            <q-td style="text-align: right">{{ $t("vip.amount") }}</q-td>
+            <q-td style="text-align: center">{{ $t("vip.amount") }}</q-td>
           </q-tr>
         </template>
         <template v-slot:body="props">
@@ -539,7 +539,7 @@ const columns2 = [
     align: "center",
     field: (row) => row.name
   },
-  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" }
+  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "center" }
 ];
 const rows2 = [
   {
@@ -692,7 +692,7 @@ const columns4 = [
     align: "center",
     field: (row) => row.name
   },
-  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" }
+  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "center" }
 ];
 //row4 : Monthly Reward.
 const rows4 = [
@@ -860,7 +860,7 @@ const swipeRight = () => {
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    // background: rgba(43, 71, 74, 0.27);
+    flex: 1;
     border: 1px solid #4b4943;
     color: #4b4943;
     margin: 0 8px;
@@ -926,11 +926,11 @@ const swipeRight = () => {
       position: absolute;
       left: 20px;
       top: 20px;
-      font-family: YouSheBiaoTiHei;
+      font-family: YouSheBiaoTiHei, 'Noto Sans SC', sans-serif;
       font-weight: bolder;
       font-size: 2.5rem;
       line-height: 100%;
-      letter-spacing: 0%;
+      letter-spacing: 0;
     }
     .progress-bar-container {
       display: flex;
