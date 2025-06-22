@@ -802,6 +802,40 @@
     </template>
   </div>
 
+  <section class="app-download-section">
+
+
+    <div class="app-board">
+      <div class="character">
+        <img src="../assets/images/index/download-app-left.png" alt="Mascot" />
+      </div>
+      <div class="app-info">
+        <h3><img src="../assets/images/index/tick-icon.png"/> DOWNLOAD THE APP</h3>
+        <p>Download And Install The Application<br>On Your Desktop For A Smoother<br>Gaming Experience.</p>
+
+        <div class="download-buttons">
+          <button class="android"><img src="../assets/images/index/android-icon.png"/><span>Android</span></button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="logos">
+
+      <div class="providers">
+        <img src="../assets/images/index/logo-lists.png" />
+      </div>
+
+      <div class="payment-icons">
+        <img src="../assets/images/index/payment-lists.png" />
+      </div>
+    </div>
+
+    <footer class="footer">
+      ©{{currentYear}} AKB188.COM Todos os direitos reservados
+    </footer>
+  </section>
+
   <GameModal
     v-if="route.path !== '/account/profile'"
     ref="allGames"
@@ -2378,6 +2412,7 @@ const homePopupType = ref("");
 const homePopupId = ref(0);
 const homePopupFrequency = ref(0);
 const homePopupFrequencyNum = ref(0);
+const currentYear = ref(new Date().getFullYear());
 
 const setExpiryBanner = () => {
   if (homePopupFrequencyNum.value !== 0) {
@@ -3724,6 +3759,112 @@ onBeforeUnmount(() => {
     width: auto;
   }
 }
+
+
+.app-download-section {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.character{
+  position:absolute;
+  left:0px;
+  top:0px;
+  bottom: 0px;
+  z-index: 2;
+  width: 24%;
+
+  img {
+    height:100%;
+  }
+
+  @media(max-width: 400px){
+    width: 18%;
+
+    img {
+      height:75%;
+    }
+  }
+}
+
+
+.app-board{
+  position:relative;
+}
+
+.app-info{
+  margin-left: auto;
+  width: 80%;
+  border: 1px solid #4B4943;
+  border-radius: 10px;
+  padding: 5px 12px;
+
+  @media(max-width: 400px){
+    width: 65%;
+  }
+}
+
+.app-info h3 {
+  color: #00ff99;
+  font-size: 20px;
+  margin: 0 0 10px;
+}
+
+.app-info p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  padding: 5px ;
+}
+
+.download-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.download-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button.ios {
+  background-color: #fff;
+  color: #000;
+}
+
+button.android {
+  background-color: rgba(255,255,255,0.25);
+  color: #fff;
+}
+
+.logos {
+  margin-top: 40px;
+}
+
+.providers,
+.payment-icons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 0px 0 20px;
+}
+
+.providers img,
+.payment-icons img {
+  width: 100%;
+  height: auto;
+}
+
+.footer {
+  font-size: 12px;
+  color: #ccc;
+  margin-top: 30px;
+}
 </style>
 
 <style lang="scss">
@@ -4526,4 +4667,6 @@ onBeforeUnmount(() => {
     width: 80px !important;
   }
 }
+
+
 </style>
