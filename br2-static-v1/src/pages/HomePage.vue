@@ -399,7 +399,7 @@
               <template v-if="isGameLoading">
                 <div class="loader-container">
                   <div>
-                    <q-spinner color="yellow" size="10em" :thickness="10" />
+                    <q-spinner color="green-14" size="10em" :thickness="10" />
                   </div>
                   <div>{{ $t("btn.loading_plsWait") }}</div>
                 </div>
@@ -2906,12 +2906,12 @@ const translateTitle = (title) => {
 const loadAppTabs = () => {
   const localStorageKey = "appTabs";
   const savedTabs = JSON.parse(localStorage.getItem(localStorageKey));
-  if (savedTabs && savedTabs.length > 0) {
-    categoriesList.value = savedTabs;
-    categoriesList.value.forEach((tab, index) => {
-      tab.active = index === 0;
-    });
-  } else {
+  // if (savedTabs && savedTabs.length > 0) {
+  //   categoriesList.value = savedTabs;
+  //   categoriesList.value.forEach((tab, index) => {
+  //     tab.active = index === 0;
+  //   });
+  // } else {
     categoriesList.value = [
       { title: "Hot", icon: "hot", active: true },
       // { title: "Lobby", icon: "lobby", active: false },
@@ -2920,7 +2920,7 @@ const loadAppTabs = () => {
       { title: "Fishing", icon: "fishing", active: false },
       { title: "Sport", icon: "sport", active: false }
     ];
-  }
+  // }
 
   api
     .get("/opt-session/getAppTabs")
@@ -4543,6 +4543,7 @@ button.android {
   justify-content: center;
   border-radius: 12px;
   padding-top: 3px;
+  padding-bottom: 3px;
   transition: 0.3s all;
   min-width: 100%;
 
@@ -4574,12 +4575,16 @@ button.android {
 
   .cat-title {
     flex: 2;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     color: #bfc3c9;
     letter-spacing: 0px;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 11px;
     text-align: center;
-    line-height: 14px;
+    line-height: 13px;
     white-space:normal;
   }
 }

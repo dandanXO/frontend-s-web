@@ -304,7 +304,8 @@ export default {
     language: "Language",
     downloadApp: "Download APP",
     showing16Of100Games: "Mostrando 16 de 100 jogos",
-    balance: "Saldo"
+    balance: "Saldo",
+    downloadAppText: "Baixe nosso aplicativo e ganhe super prêmios!",
   },
   home: {
     menu_lobby: "Lobby",

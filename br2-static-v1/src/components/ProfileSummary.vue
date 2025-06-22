@@ -7,7 +7,7 @@
           <img src="../assets/images/index/download/square-logo.png" />
       </div>
       <div class="download-text">
-        Download Our APP, Win Super Prizes!
+        {{ $t("sideNav.downloadAppText") }}
       </div>
 
       <div class="download-money-icon">
@@ -74,7 +74,7 @@
                   </span>
                   {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
                 </span>
-                <span class="balance-txt">Balance</span>
+                <span class="balance-txt">{{ $t("sideNav.balance") }}</span>
               </div>
             </div>
           </template>
@@ -154,17 +154,15 @@
 <!--        </q-btn-dropdown>-->
 
         <div @click="handleBackBtn" class="deposit-btn">
-          Deposit
+          {{ $t("settings.deposit") }}
         </div>
       </div>
       <div class="profile-wrapper non-login" v-else>
         <q-btn class="btn-style-butter" no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
-        <!-- <q-btn class="btn-style-pear" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn> -->
         <q-btn class="btn-style-pear" no-caps @click="uiStore.loginView = 'register'">
           {{ $t("header.register") }}
         </q-btn>
       </div>
-
 
 
     </div>
@@ -603,12 +601,15 @@ onMounted(() => {
       font-size: 16px;
 
       .balance-front{
-        //width: 48px;
-        //height: 48px;
 
         img{
           width: 48px;
           height: 48px;
+
+          @media(max-width: 380px){
+            width: 38px;
+            height: 38px;
+          }
         }
       }
     }
