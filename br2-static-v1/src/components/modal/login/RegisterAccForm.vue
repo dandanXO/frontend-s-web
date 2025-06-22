@@ -188,6 +188,7 @@ const register = () => {
             }
             uiStore.loginView = "";
             isAgreeReg.value = false;
+            location.href = "/";
           } else {
             $q.notify({
               color: "negative",
