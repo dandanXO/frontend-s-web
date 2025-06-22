@@ -48,7 +48,7 @@
       flat
       no-caps
       class="style-btn-confirm"
-      :disable="!(isValidFirstName() === true && isValidLastName() === true)"
+      :disable="!(isValidFirstName() === true && isValidLastName() === true && isValidCPF() === true)"
       @click="submitKYCNewUser"
     >
       {{ $t("btn.submit") }}
