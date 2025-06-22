@@ -809,6 +809,7 @@ export default defineComponent({
     color: #4b4943;
     font-weight: 400;
     margin: 0 8px;
+    flex: 1;
   }
 
   .vip-promo-tab-toggle {
