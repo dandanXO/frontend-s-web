@@ -3057,7 +3057,7 @@ const showSpinWheel = () => {
   eventapi
     .get("/new-user-roulette/init")
     .then((res) => {
-      if (res.code == 0) {
+      if (res.code === 0) {
         if (res.data.hasUnusedCoupon === "YES") {
           isShowPrizeModal.value = true;
         } else if (res.data.showRoulette === "YES") {
@@ -3871,6 +3871,7 @@ onBeforeUnmount(() => {
   color: #00ff99;
   font-size: 20px;
   margin: 0 0 10px;
+  line-height: 24px;
 }
 
 .app-info p {
@@ -3902,6 +3903,10 @@ button.ios {
 button.android {
   background-color: rgba(255,255,255,0.25);
   color: #fff;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .logos {
@@ -3963,8 +3968,10 @@ button.android {
   display: flex;
   width: 60px;
   height: 60px;
-  background: url("../assets/images/index/icon-cs.png") no-repeat center center;
+  background: url("../assets/images/index/csicon.png") no-repeat center center;
   background-size: contain;
+  border-radius: 50%;
+  border: 1px solid #000;
 }
 
 .home-divider {
@@ -4228,6 +4235,10 @@ button.android {
     width: 100%;
     border-radius: 12px;
   }
+}
+
+.swiper-wrapper{
+  width:100%;
 }
 
 .platform-game-container {

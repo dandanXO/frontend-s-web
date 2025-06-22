@@ -189,6 +189,10 @@ const openCSInNewTab = (url) => {
       gap: 18px;
       margin-bottom: 12px;
 
+      > button{
+        flex: 1;
+      }
+
       .side-menu-account-info__balance-wrapper {
         display: flex;
         align-items: center;

@@ -1,23 +1,35 @@
 <template>
-  <div style="height: 56px" v-if="topDownload"></div>
+  <div style="height: 66px" v-if="topDownload"></div>
   <div style="height: 78px"></div>
-
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
       <div class="download-btn">
-        <a :href="topDownloadUrl">
-          <img src="../assets/images/index/download/top-download-btn.png" />
-        </a>
+          <img src="../assets/images/index/download/square-logo.png" />
       </div>
-      <div class="download-count">({{ topDownloadCount }}s)</div>
+      <div class="download-text">
+        Download Our APP, Win Super Prizes!
+      </div>
+
+      <div class="download-money-icon">
+        <img src="../assets/images/index/download/download-money.png" />
+      </div>
+
+      <a :href="topDownloadUrl">
+        <div class="download-gobtn" >
+          Download
+        </div>
+      </a>
+
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
-        <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
+        <q-icon name="close" size="36px" style="color: #fff" @click="closeTopdownload()" />
       </div>
     </div>
   </div>
 
+
+
   <div class="menu-open" :class="{ open: menuOpen }" @click="toggleMenuOpen()">
-    <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
+    <div style="height: 56px" v-if="topDownload && !uiStore.hideDownload"></div>
     <div class="menu-open-inner">
       <SideMenu @closeMenu="toggleMenuOpen()" />
     </div>
@@ -167,8 +179,6 @@ import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid, isInPwa } from "src/boot/utils";
 import { api } from "boot/axios";
-import { useI18n } from "vue-i18n";
-import LangOptions from "components/LangOptions";
 import SideMenu from "./SideMenu.vue";
 
 const props = defineProps(["homeProfile"]);
@@ -276,22 +286,20 @@ const countdown = () => {
 };
 
 const checkTopDownloadAppear = () => {
-  const omitSites = ["bw3.genoortisy.com"];
 
   if (!store.token && route.path === "/home") {
     if (
       ("standalone" in window.navigator && window.navigator.standalone) ||
       (Platform.is.capacitor && Platform.is.android) ||
-      omitSites.includes(location.host) ||
       isInPwa()
     ) {
       topDownload.value = false;
     } else {
       topDownload.value = true;
-      countdown();
-      setTimeout(() => {
-        topDownload.value = false;
-      }, 11000);
+      // countdown();
+      // setTimeout(() => {
+      //   topDownload.value = false;
+      // }, 11000);
     }
   }
 };
@@ -325,8 +333,8 @@ onMounted(() => {
     sessionStorage.setItem("PROFILE_IMG", imgPath);
   }
 
-  // getTopDownloadUrl();
-  // checkTopDownloadAppear();
+  getTopDownloadUrl();
+  checkTopDownloadAppear();
 });
 </script>
 
@@ -335,26 +343,50 @@ onMounted(() => {
   position: fixed;
   top: 0;
   left: 50%;
+  z-index:9999;
   transform: translateX(-50%);
+  display: flex;
   max-width: 500px;
   margin: auto;
   width: 100%;
-  height: 86px; /* adjust the height as needed */
-  padding: 8px 16px 28px;
-  // background: linear-gradient(180deg, #0c2962 0%, #01030d 100%);
-  background: linear-gradient(180deg, #00b9a1 0%, rgba(0, 185, 111, 0) 96.35%);
-  z-index: 98;
+  padding: 6px 10px;
+  height: 66px; /* adjust the height as needed */
+  background: linear-gradient(90deg, #0A526C 0%, #523E0A 100%);
+
+
+
 
   .download-container {
     display: flex;
-    gap: 16px;
+    gap: 5px;
     width: 100%;
     align-items: center;
     transition: 0.3s all;
 
-    .download-icon {
-      width: 50px;
-      min-width: 50px;
+    .download-text{
+      width: 40%;
+      margin-right: auto;
+      font-size: 12px;
+      line-height: 16px;
+
+      @media (max-width: 390px) {
+        width: 50%;
+      }
+    }
+
+    .download-money-icon{
+      img{
+        width: 40px;
+        height: auto;
+      }
+      @media (max-width: 390px) {
+        display:none;
+      }
+    }
+
+    .download-btn {
+      width: 48px;
+      min-width: 48px;
 
       img {
         width: 100%;
@@ -382,21 +414,43 @@ onMounted(() => {
       font-size: 20px;
     }
 
-    .download-btn {
-      // margin-left: auto;
-      margin-right: auto;
+    a{
+      text-decoration: none;
+    }
 
-      img {
-        width: 100%;
-        display: block;
+    .download-gobtn{
+      background: linear-gradient(90deg, #4FFFA5 0%, #10D16F 100%);
+      border-radius: 8px;
+      height: 44px;
+      width: 88px;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #000;
+      font-size: 14px;
+      font-weight: 600;
+
+      &:active{
+        filter: brightness(0.86);
+        transform: translate(0px, 1px)
       }
     }
 
     .download-close {
-      margin-top: 4px;
-      margin-bottom: auto;
       opacity: 1;
       transition: 1s all;
+
+      &:active{
+        filter: brightness(0.86);
+        transform: translate(0px, 1px)
+      }
+
+      i{
+        font-size: 36px;
+        color: #fff;
+        fill: #fff;
+      }
     }
   }
 }
@@ -457,9 +511,9 @@ onMounted(() => {
   transition: 0.3s all;
 
   &.with-top-download {
-    border-top-right-radius: 25px;
-    border-top-left-radius: 25px;
-    top: 56px;
+    //border-top-right-radius: 25px;
+    //border-top-left-radius: 25px;
+    top: 66px;
   }
 
   .infoboard-wrapper {
