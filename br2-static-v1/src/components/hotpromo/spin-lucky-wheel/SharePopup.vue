@@ -36,8 +36,8 @@
       <Carousel v-bind="carouselSettings" class="custom-carousel sharepopupslider" v-model="activeSlide">
         <Slide v-for="i in 6" :key="i">
           <div class="slide-content">
-            <img class="slide-img" :src="require(`../spin-lucky-wheel/img/share-${i}.png`)" alt="Slide Image" />
-            <VueQRCodeComponent class="qr-code" size="200" :text="qrCode" />
+            <img class="slide-img" :src="require(`../spin-lucky-wheel/img/share-${i}.jpg`)" alt="Slide Image" />
+            <VueQRCodeComponent class="qr-code" size="150" :text="qrCode" />
           </div>
         </Slide>
 
@@ -466,12 +466,12 @@ onMounted(() => {
     // right: 50px;
     // bottom: 68px;
     width: 28vw;
-    max-width: 123px;
+    max-width: 100px;
 
     // right: 13%;
     // bottom: 12%;
-    right: 10%;
-    bottom: 4%;
+    right: 6%;
+    bottom: 2.5%;
 
     :deep(img) {
       max-width: 100%;
