@@ -922,6 +922,21 @@ export default {
         "Players who are winners in the history of the our platform do not participate in the loss return settlement. This activity is limited to the benefits of players who have lost to the platform.",
       tnc10: "To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion."
     },
+    vipPlanBettingUpgrade: {
+      eligibility: "All members who have made at least one successful deposit",
+      description:
+        "Upgrade to the corresponding VIP level based on the accumulated betting amount in the member's account.",
+      termsAndConditions: "Terms and Conditions",
+      bet: "BET",
+      vipLevel: "VIP Level",
+      tnc01:
+        "Starting from the member’s first valid bet after completing their first successful deposit, accumulated valid betting amounts will be used to determine VIP level upgrades according to the thresholds below:",
+      tnc02:
+        "Only bets that result in a win or loss on the website are counted as valid betting amounts; cancelled bets or those with refunded stakes will not be included.",
+      tnc03:
+        "VIP members can enjoy other exclusive benefits related to their VIP level on the website, such as higher weekly cashback percentages for higher VIP tiers.",
+      tnc04: "To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion."
+    },
     receiveEarn: {
       description: "Receive up to 100 BRL in free bet bonus",
       tnc01: "You can initiate a withdrawal when the accumulated amount reaches 100 BRL.",
@@ -1041,13 +1056,19 @@ export default {
   content: {
     nospinleft: "No spins left",
     title1: "The registration time starts from the time the registration is completed.",
-    message1: "Once your accumulated amount reaches 1000 PKR, you can withdraw.",
-    message2: "When you have no spins left, invite new players to register and deposit to earn additional free spins.",
+    message1:
+      "When the accumulated amount reaches R$100, you can apply for withdrawal (withdrawal is to the game wallet)",
+    message2: "When there are no spins available, re-refer a new player to get a free spin.",
     message3:
-      "The event lasts for 3 days. After the event ends, accumulated rewards will be reset and the event will restart.",
-    message4: "Each user can enjoy one free spin per day, which will be added at 00:00 daily.",
-    message5:
-      "The invitee must verify their phone number and must not have a duplicate IP address to qualify for the referral reward.",
+      "The event lasts for 3 days. After the event, the accumulated bonus will be reset and the event will start again",
+    message4:
+      "Each user can enjoy one free spin opportunity per day, and the number of spins is reset at 24:00 every day.",
+    message5: "After the application is approved, the bonus is deposited directly into your wallet.",
+    message6: "The bonus needs to be rolled over twice before it can be withdrawn.",
+    message7:
+      "The invitee needs to bind his or her phone number and link it with the inviter's invitation code in order to be considered for recommendation.",
+    message8:
+      "The right to interpret the event belongs to AKB188. If you have any questions, please contact customer service",
     aviatorPromoIntro:
       "Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! The prize pool for the top 50 is 1,250,000 PKR!",
     aviatorGoldenEgg:

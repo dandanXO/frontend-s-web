@@ -27,7 +27,7 @@
           <div class="order-row order-row--content">
             <div class="order-subrow">
               <div class="order-col">
-                <span class="date">{{ e.withdrawDate }}</span>
+                <span class="date">{{  convertToGMTMinus3(e.withdrawDate) }}</span>
               </div>
               <div class="order-col">
                 <span class="yellow">-{{ convertToCommaAmount(e.withdrawAmount, true) }}</span>
@@ -83,7 +83,7 @@
           <div class="order-row order-row--content">
             <div class="order-subrow">
               <div class="order-col">
-                <span class="date">{{ e.depositDate }}</span>
+                <span class="date">{{  convertToGMTMinus3(e.depositDate) }}</span>
               </div>
               <div class="order-col">
                 <span class="green">+{{ convertToCommaAmount(e.depositAmount, true) }}</span>
@@ -128,7 +128,7 @@
 import { onActivated, onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
-import { updateDate, convertToGMT8, convertToGMT55, convertToGMT7 } from "src/boot/utils";
+import { updateDate, convertToGMT8, convertToGMT55, convertToGMT7, convertToGMTMinus3 } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";

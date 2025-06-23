@@ -934,6 +934,22 @@ export default {
         "Jogadores que, no histórico da nossa plataforma, apresentem lucro não participam do reembolso de perdas. Esta atividade é limitada aos benefícios para jogadores que tiveram prejuízo na plataforma.",
       tnc10: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
     },
+    vipPlanBettingUpgrade: {
+      eligibility: "Todos los miembros que hayan realizado al menos un depósito exitoso",
+      description:
+        "Actualiza al nivel VIP correspondiente según la cantidad acumulada de apuestas en la cuenta del miembro.",
+      termsAndConditions: "Términos y Condiciones",
+      bet: "APUESTA",
+      vipLevel: "Nivel VIP",
+      tnc01:
+        "A partir de la primera apuesta válida del miembro después de completar su primer depósito exitoso, los montos acumulados de apuestas válidas se utilizarán para determinar las mejoras de nivel VIP según los umbrales a continuación:",
+      tnc02:
+        "Solo se cuentan como montos de apuestas válidas aquellas que resulten en una ganancia o pérdida en el sitio web; las apuestas canceladas o con reembolsos no serán incluidas.",
+      tnc03:
+        "Los miembros VIP pueden disfrutar de otros beneficios exclusivos relacionados con su nivel VIP en el sitio web, como porcentajes más altos de reembolso semanal para niveles VIP más altos.",
+      tnc04:
+        "Para evitar cualquier malentendido, AKB188 se reserva el derecho final de interpretación de esta promoción."
+    },
     receiveEarn: {
       description: "Receive up to 100 BRL in free bet bonus",
       tnc01: "Você pode iniciar um saque quando o valor acumulado atingir 100 BRL.",
@@ -1082,14 +1098,18 @@ export default {
   content: {
     nospinleft: "Sem rodadas restantes",
     title1: "O tempo de registo começa a contar a partir do momento em que o registo é concluído.",
-    message1: "Assim que o seu montante acumulado atingir 1000 PKR, poderá levantar.",
-    message2:
-      "Quando não tiver mais rodadas, convide novos jogadores a registarem-se e depositarem para ganhar rodadas grátis adicionais.",
-    message3:
-      "O evento dura 3 dias. Após o término do evento, as recompensas acumuladas serão redefinidas e o evento recomeçará.",
-    message4: "Cada utilizador pode usufruir de uma rodada grátis por dia, que será adicionada às 00:00 diariamente.",
-    message5:
-      "O convidado deve verificar o número de telefone e não pode ter endereço IP duplicado para se qualificar para a recompensa de indicação.",
+    message1:
+      "Quando o valor acumulado atingir R$100, você poderá solicitar o saque (o saque será feito para a carteira do jogo).",
+    message2: "Quando não houver giros disponíveis, indique um novo jogador para ganhar um giro grátis.",
+    message3: "O evento dura 3 dias. Após o término, o bônus acumulado será reiniciado e o evento começará novamente.",
+    message4:
+      "Cada usuário pode aproveitar uma chance de giro grátis por dia, e o número de giros é reiniciado às 24:00 todos os dias.",
+    message5: "Após a aprovação da solicitação, o bônus será depositado diretamente na sua carteira.",
+    message6: "O bônus precisa ser apostado duas vezes antes que possa ser sacado.",
+    message7:
+      "O indicado precisa vincular seu número de telefone e conectá-lo ao código de convite do convidador para ser considerado válido.",
+    message8:
+      "O direito de interpretação do evento pertence à AKB188. Em caso de dúvidas, entre em contato com o atendimento ao cliente.",
     aviatorPromoIntro:
       "Desfrute da emoção das apostas com o Aviator! O seu Aviator pode ganhar incríveis 3.216x com apenas um clique! O prémio para os 50 melhores é de 1.250.000 PKR!",
     aviatorGoldenEgg:
