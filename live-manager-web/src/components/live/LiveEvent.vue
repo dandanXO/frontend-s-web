@@ -235,7 +235,7 @@
 import { useI18n } from "vue-i18n";
 import { liveSportTyps } from '@/utils/live.js';
 import { DashboardService } from '@/service/DashboardService.js'
-import moment from 'moment/moment'
+import dayjs from 'dayjs'
 import { ref, reactive, onMounted } from 'vue';
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
@@ -286,13 +286,13 @@ const uiControl = reactive({
 })
 
 function convertStartDate(date) {
-  return moment(date)
+  return dayjs(date)
   .startOf('day')
-  .format('YYYY-MM-DD HH:mm:ss')
+  .format('YYYY-MM-DD HH:mm:ss');
 }
 
 function convertDate(date) {
-  return moment(date)
+  return dayjs(date)
   .endOf('day')
   .format('YYYY-MM-DD HH:mm:ss')
 }
@@ -407,7 +407,7 @@ async function submit() {
 }
 
 function formatTime(date) {
-  return moment(date).format('YYYY-MM-DD HH:mm:ss');
+  return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
 }
 
 function confirmDelete(id) {
