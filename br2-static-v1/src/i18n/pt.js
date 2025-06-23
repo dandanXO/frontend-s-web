@@ -266,6 +266,7 @@ export default {
     getInterestProfit: "Obter Lucro com Juros",
     notAMember: "Não é um membro?",
     createAccount: "Criar uma conta",
+    login: "Entrar",
     profit: "Lucro",
     loss: "Perda",
     withdrawing: "Retirando...",
@@ -293,6 +294,7 @@ export default {
     withdrawalSubmitSucceed: "Retirada Enviar com sucesso",
     copiedToClipboard: "Copiado para a área de transferência",
     addBankCardFirst: "Por favor, adicione um cartão bancário primeiro",
+    unbindSucceed: "Desvinculação realizada com sucesso"
   },
   sideNav: {
     inviteToEarn: "Convidar para Ganhar",

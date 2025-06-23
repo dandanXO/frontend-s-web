@@ -60,7 +60,7 @@
 
       <div class="forgot" @click="uiStore.loginView = 'forgetPw'">{{ $t("form.forgotPassword") }}</div>
 
-      <q-btn unelevated class="bg-greenbtn" :label="$t('btn.createAccount')" no-caps padding="12px" @click="login" />
+      <q-btn unelevated class="bg-greenbtn" :label="$t('btn.login')" no-caps padding="12px" @click="login" />
     </div>
   </div>
 </template>
@@ -166,6 +166,7 @@ onMounted(() => {
   font-size: 13px;
   color: #bbb;
   text-align: right;
-  margin: 0 0 54px;
+  display: inline-flex;
+  margin: 0 0 54px auto;
 }
 </style>

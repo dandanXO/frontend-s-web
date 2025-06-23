@@ -151,7 +151,7 @@
         </q-card-section>
       </q-card>
 
-      <div class="super-promo">
+      <div class="super-promo" @click="goToPromo('/promo?name=redeposit-bonus')">
         <img class="super-promo-img" src="../assets/images/account/super-promo.png" />
         <router-link class="super-promo-chevron" to="">
           <q-icon name="chevron_right" color="white" />
@@ -244,6 +244,10 @@ const goToPage = (promo) => {
     router.push(promo.redirectUrl);
   }
 };
+
+const goToPromo = (page) => {
+  router.push(page);
+}
 
 const loadBanner = () => {
   api.get("/opt-session/promo/banner?category=CENTERPROMO").then((response) => {
