@@ -1238,7 +1238,12 @@ const activateSlide = (clickedItem) => {
   isSlotLoading.value = true;
   isGameLoading.value = true;
 
-  loadGameList("SLOT", clickedItem.id);
+  // debugger;
+
+  if(clickedItem.title === 'slot'){
+    loadGameList("SLOT", clickedItem.id);
+  }
+
 };
 
 const gameClickFromMenu = (menuGameSelected) => {
