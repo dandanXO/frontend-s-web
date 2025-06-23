@@ -79,7 +79,7 @@ export default {
     earnMoney: "Earn Money",
     wallet: "Wallet",
     me: "Me",
-    deposit: "Deposit",
+    deposit: "Deposit"
   },
   form: {
     prependNumber: "+55",
@@ -292,7 +292,7 @@ export default {
     withdrawalSubmitSucceed: "Withdrawal Submit Succeed",
     copiedToClipboard: "copied to clipboard",
     addBankCardFirst: "Please add a bank card first",
-    unbindSucceed: "Unbind succeed",
+    unbindSucceed: "Unbind succeed"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -324,7 +324,8 @@ export default {
     cat_slotsgame: "Slots Game",
     cat_fishing: "Fishing",
     cat_poker: "Poker",
-    cat_sport: "Sport"
+    cat_sport: "Sport",
+    showAll: "Show all"
   },
   settings: {
     totalScore: "Total Score",

@@ -327,7 +327,8 @@ export default {
     cat_slotsgame: "Jogos de Caça-Níqueis",
     cat_fishing: "Pesca",
     cat_poker: "Poker",
-    cat_sport: "Esporte"
+    cat_sport: "Esporte",
+    showAll: "Mostrar todos"
   },
   settings: {
     totalScore: "Pontuação Total",
