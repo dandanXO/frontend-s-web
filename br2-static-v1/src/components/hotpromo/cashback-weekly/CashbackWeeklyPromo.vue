@@ -94,7 +94,7 @@ import { api, eventapi } from "boot/axios";
 
 const store = userStore();
 
-const currentCashbackRate = ref(6);
+const currentCashbackRate = ref(12);
 const maximumCashbackRate = ref(25);
 const currentBet = ref(500);
 const nextLevelBet = ref(1000);
