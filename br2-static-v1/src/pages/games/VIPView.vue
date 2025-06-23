@@ -69,7 +69,7 @@
       </template>
     </Carousel>
     <div v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
-      <!-- <div class="vip-rewards">
+      <div class="vip-rewards">
         <div class="vip-reward-item">
           <div class="reward-desc">
             <div class="icon">
@@ -133,7 +133,7 @@
             <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
           </div>
         </div>
-      </div> -->
+      </div>
       <hr class="separator-line" style="margin-top: 20px" />
       <div class="header-wrapper">
         <div class="header">{{ $t("vip.monthlyCumulativeDeposit") }}</div>
@@ -774,7 +774,7 @@ const swipeRight = () => {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 10px;
 
   .vip-reward-item {
     width: 107px;
@@ -821,7 +821,7 @@ const swipeRight = () => {
       .reward-amt-wrapper {
         background-color: #ffffff4d;
         padding: 5px 15px;
-        max-width: 100px;
+        max-width: 130px;
         border-radius: 4px;
         font-family: sans-serif;
         font-size: 12px;
@@ -958,11 +958,12 @@ const swipeRight = () => {
         transform: translateX(-50%);
         top: 0;
         font-size: 0.9rem;
+        margin-left: 10px;
       }
       .progress-bar-outer-bar {
-        border: 1px solid #fff;
+        // border: 1px solid #fff;
         border-radius: 16px;
-        background: #fff;
+        background: rgba(0, 0, 0, 0.19);
         width: 100%;
         overflow: hidden;
         position: relative;

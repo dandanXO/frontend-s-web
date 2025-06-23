@@ -1,15 +1,31 @@
 <template>
   <q-page>
     <div class="top-setting-section">
+      <div class="profile-menu">
+        <!-- <q-btn dense flat @click="toggleMenuOpen()">
+          <img style="width: 32px; height: 32px" src="../assets/images/index/left-menu-icon.png" />
+        </q-btn> -->
+        <ProfileSummary :settingsPage="true" />
+      </div>
+
       <div class="top-profile">
         <div class="profile">
           <div class="profile-pic">
             <q-avatar size="56px">
               <img :src="profileImagePath" />
             </q-avatar>
+            <div class="vip-details">
+              <img
+                class="bg"
+                :src="require(`../assets/images/vip/badge/withLevel/vip-badge-${store.vip.replace('VIP', '')}.png`)"
+                alt=""
+              />
+              <!-- C:\Users\caspe\dev\Fork\frontend\br2-static-v1\src\assets\images\vip\badge\withLevel -->
+            </div>
           </div>
           <div class="top-name">
             <div class="top-name-details">
+              <div>{{ store.phone }}</div>
               <div>{{ store.realName }}</div>
             </div>
             <div class="top-copy-id">
@@ -247,7 +263,7 @@ const goToPage = (promo) => {
 
 const goToPromo = (page) => {
   router.push(page);
-}
+};
 
 const loadBanner = () => {
   api.get("/opt-session/promo/banner?category=CENTERPROMO").then((response) => {
@@ -255,7 +271,7 @@ const loadBanner = () => {
       response.data.forEach((item) => {
         item.mobileImageUrl = imgURL + item.mobileImageUrl;
       });
-      // btm_banners.value = response.data;
+      btm_banners.value = response.data;
     }
   });
 };
@@ -278,10 +294,14 @@ const logout = () => {
 <style scoped lang="scss">
 .top-setting-section {
   background: url(../assets/images/account/setting-bg.png) no-repeat center center;
-  padding-top: 60px;
+  padding-top: 20px;
   background-size: cover;
   position: relative;
   margin-bottom: 22px;
+
+  .profile-menu {
+    margin-left: 12px;
+  }
 
   .top-profile {
     display: flex;
@@ -510,7 +530,7 @@ const logout = () => {
   height: 42px;
   //color: #ffffff;
   border-radius: 8px;
-  color:#2D2D2D;
+  color: #2d2d2d;
 }
 
 .super-promo {
