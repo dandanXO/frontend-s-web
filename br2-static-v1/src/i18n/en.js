@@ -265,6 +265,7 @@ export default {
     getInterestProfit: "Get Interest Profit",
     notAMember: "Not a member?",
     createAccount: "Create account",
+    login: "Login",
     profit: "Profit",
     loss: "Loss",
     unbinding: "Unbinding",
@@ -291,6 +292,7 @@ export default {
     withdrawalSubmitSucceed: "Withdrawal Submit Succeed",
     copiedToClipboard: "copied to clipboard",
     addBankCardFirst: "Please add a bank card first",
+    unbindSucceed: "Unbind succeed",
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",

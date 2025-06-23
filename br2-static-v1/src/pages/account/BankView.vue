@@ -240,7 +240,7 @@ const unbind = () => {
       $q.notify({
         color: "positive",
         position: "top",
-        message: "Unbind succeed",
+        message: t('notify.unbindSucceed'),
         icon: "check_circle_outline"
       });
       loadCards();
