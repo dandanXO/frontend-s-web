@@ -305,6 +305,14 @@
       >
         <template #default="scope">
           <el-button
+            icon="el-icon-chat-line-round"
+            size="mini"
+            type="info"
+            @click="openChatHistory(scope.row.id)"
+          >
+            {{ t('fields.chatHistory') }}
+          </el-button>
+          <el-button
             icon="el-icon-edit"
             size="mini"
             type="primary"
@@ -324,6 +332,30 @@
       </el-table-column>
     </el-table>
   </div>
+  <el-dialog
+    v-model="chatHistoryDialog.visible"
+    width="850px"
+    :title="t('fields.chatHistory')"
+  >
+    <el-table :data="chatHistoryDialog.chatList" v-loading="chatHistoryDialog.loading">
+      <el-table-column prop="name" :label="t('fields.name')" width="200" />
+      <el-table-column prop="content" :label="t('fields.content')" />
+      <el-table-column :label="t('fields.createTime')" width="180">
+        <template #default="scope">
+          {{ formatTime(scope.row.createTime) }}
+        </template>
+      </el-table-column>
+
+    </el-table>
+    <el-pagination
+      style="margin-top: 10px; text-align: right"
+      layout="prev, pager, next"
+      :page-size="chatHistoryDialog.page.size"
+      :total="chatHistoryDialog.page.total"
+      :current-page="chatHistoryDialog.page.current"
+      @current-change="handleChatPageChange"
+    />
+  </el-dialog>
 </template>
 <script setup>
 
@@ -353,6 +385,8 @@ import EmojiPicker from 'vue3-emoji-picker'
 import 'vue3-emoji-picker/dist/style.css'
 import 'videojs-flvjs';
 import flvjs from 'flv.js';
+import { getChatHistory } from "@/api/sport-live-chat";
+import dayjs from "dayjs";
 
 const showEmojiPicker = ref(false)
 const { t } = useI18n();
@@ -453,6 +487,11 @@ async function deleteSupplierStream(streamId) {
     }
   }).catch(() => {
   });
+}
+
+function formatTime(timestamp) {
+  if (!timestamp) return '-';
+  return dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss');
 }
 
 function submit() {
@@ -652,6 +691,48 @@ const formRules = reactive({
 const request = reactive({
   id: null
 });
+
+const chatHistoryDialog = reactive({
+  visible: false,
+  streamerId: null,
+  chatList: [],
+  loading: false,
+  page: {
+    total: 0,
+    size: 30,
+    current: 1
+  }
+});
+
+function openChatHistory(streamerId) {
+  chatHistoryDialog.streamerId = streamerId;
+  chatHistoryDialog.visible = true;
+  chatHistoryDialog.page.current = 1;
+  loadChatHistory();
+}
+
+function loadChatHistory() {
+  chatHistoryDialog.loading = true;
+  const query = new URLSearchParams({
+    current: chatHistoryDialog.page.current,
+    size: chatHistoryDialog.page.size
+  });
+  const store = useStore();
+  const siteId = store.state.user.siteId;
+  getChatHistory(`?${query.toString()}`, { streamId: chatHistoryDialog.streamerId, siteId: siteId })
+    .then(res => {
+      chatHistoryDialog.chatList = res.data.records;
+      chatHistoryDialog.page.total = res.data.total;
+    })
+    .finally(() => {
+      chatHistoryDialog.loading = false;
+    });
+}
+
+function handleChatPageChange(page) {
+  chatHistoryDialog.page.current = page;
+  loadChatHistory();
+}
 
 onMounted(async () => {
   const store = useStore()
