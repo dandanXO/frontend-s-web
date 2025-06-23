@@ -40,15 +40,14 @@ const uiStore = useUI();
 }
 
 .close-btn {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(200px);
+  position: absolute;
+  transform: translateX(214px);
   color: white;
-  z-index: 1;
+  z-index: 2;
+  margin-top: 14px;
   width: fit-content !important;
   @media (max-width: 500px) {
-    right: 20px;
+    right: 0.75rem;
     left: unset;
     transform: unset;
   }
