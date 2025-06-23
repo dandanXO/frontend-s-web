@@ -1,5 +1,6 @@
 <template>
   <div class="spin-lucky-container">
+    <q-btn class="money-rain-close" icon="close" round dense @click="goToPromo" />
     <div class="controller-wrapper">
       <slot name="controller" />
     </div>
@@ -177,5 +178,11 @@ defineExpose({
     width: fit-content;
     margin: 0 12px 12px;
   }
+}
+
+.money-rain-close {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 </style>

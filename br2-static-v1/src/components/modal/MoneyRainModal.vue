@@ -60,10 +60,11 @@
         <div class="content-timing">
           <div class="timing-head">{{ $t("hotPromo.every_friday_saturday_and_sunday") }}</div>
           <div class="timing-body">
-            <span>00:00-00:59</span>
             <span>12:00-12:59</span>
             <span>14:00-14:59</span>
+            <span>16:00-16:59</span>
             <span>18:00-18:59</span>
+            <span>20:00-20:59</span>
             <span>21:00-21:59</span>
           </div>
 
@@ -71,9 +72,9 @@
 
           <div class="timing-head">{{ $t("hotPromo.on_other_days_three_times_daily") }}</div>
           <div class="timing-body">
-            <span>00:00-00:59</span>
             <span>12:00-12:59</span>
-            <span>20:00-20:59</span>
+            <span>18:00-18:59</span>
+            <span>21:00-21:59</span>
           </div>
         </div>
 
