@@ -271,7 +271,8 @@ const checkNewUser = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "Please fill in your personal details",
+      // message: "Please fill in your personal details",
+      message: t('notify.fillInPersonalDetails'),
       icon: "report_problem"
     });
     // router.push(`/account/profile`);

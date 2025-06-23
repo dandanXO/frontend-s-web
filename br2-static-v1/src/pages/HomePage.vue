@@ -1238,7 +1238,12 @@ const activateSlide = (clickedItem) => {
   isSlotLoading.value = true;
   isGameLoading.value = true;
 
-  loadGameList("SLOT", clickedItem.id);
+  // debugger;
+
+  if(clickedItem.title === 'slot'){
+    loadGameList("SLOT", clickedItem.id);
+  }
+
 };
 
 const gameClickFromMenu = (menuGameSelected) => {
@@ -3101,6 +3106,10 @@ const checkSpinWheel = () => {
   }
 };
 
+const getJackpotAmt = () => {
+  ui.jackpotAmt = 25909870;
+}
+
 const showSpinWheel = () => {
   eventapi
     .get("/new-user-roulette/init")
@@ -3131,6 +3140,7 @@ onActivated(() => {
   // popupPromo.value = "money-rain";
 });
 
+
 onMounted(() => {
   isPlatLoading.value = true;
   loadAppTabs();
@@ -3144,6 +3154,7 @@ onMounted(() => {
   loadCustomerAddress();
   checkHbPromo();
   checkSpinLuckyWheelPromo();
+  getJackpotAmt();
   SwiperCore.use([Grid, Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {

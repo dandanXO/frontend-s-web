@@ -474,7 +474,8 @@ export default defineComponent({
           message: 'Please login to continue',
           icon: "report_problem"
         });
-        router.push(`/login`)
+        // router.push(`/login`)
+        ui.loginView = 'login'
       } else {
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});

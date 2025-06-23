@@ -52,7 +52,14 @@
 
     <div class="side-menu-promo-wrapper divider">
       <router-link to="">
-        <img class="jackpot-promo" src="../assets/images/sideMenu/jackpot-promo.png" />
+        <div class="jackpot-container">
+          <img src="../assets/images/sideMenu/jackpot-icon-1.png" alt="jackpot icon" class="jackpot-icon" />
+          <div class="jackpot-text">
+            <div class="jackpot-amount">R$ {{getDotAmt(ui.jackpotAmt)}}</div>
+            <div class="jackpot-label">JACKPOT</div>
+          </div>
+        </div>
+<!--        <img class="jackpot-promo" src="../assets/images/sideMenu/jackpot-promo.png" />-->
       </router-link>
       <div class="side-menu-promo-hot-game">
         <div class="side-menu-promo-hot-game__title">
@@ -132,6 +139,10 @@ const socialMediaLinks = [
   { icon: "youtube", url: "" },
   { icon: "x", url: "" }
 ];
+
+const getDotAmt = (amt) => {
+  return convertToCommaAmount(amt);
+}
 
 const isLoadingBalance = ref(false);
 const refreshBalance = () => {
@@ -293,11 +304,41 @@ const goToLink = (url) => {
     }
 
     .side-menu-promo-wrapper {
-      .jackpot-promo {
-        width: 100%;
-        max-width: 179px;
-        margin-bottom: 16px;
+      .jackpot-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #0d0d0d; /* 背景可选 */
+        padding: 0px 10px 10px;
+        margin-bottom: 8px;
       }
+
+      .jackpot-icon {
+        width: 40px;
+        height: 40px;
+      }
+
+      .jackpot-text {
+        display: flex;
+        flex-direction: column;
+        color: #ccffcc;
+        font-family: Arial, sans-serif;
+      }
+
+      .jackpot-amount {
+        font-size: 20px;
+        font-weight: bold;
+        color: #c0ffb7;
+        text-shadow: 0 0 3px #9fff9f, 0 0 2px #9fff9f;
+      }
+
+      .jackpot-label {
+        font-size: 12px;
+        color: #66ff99;
+        margin-top: 2px;
+        text-transform: uppercase;
+      }
+
       .side-menu-promo-hot-game {
         background-color: #1f2420;
         border: 1px solid #ffffff33;
