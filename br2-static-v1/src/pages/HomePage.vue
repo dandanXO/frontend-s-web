@@ -3106,6 +3106,10 @@ const checkSpinWheel = () => {
   }
 };
 
+const getJackpotAmt = () => {
+  ui.jackpotAmt = 25909870;
+}
+
 const showSpinWheel = () => {
   eventapi
     .get("/new-user-roulette/init")
@@ -3136,6 +3140,7 @@ onActivated(() => {
   // popupPromo.value = "money-rain";
 });
 
+
 onMounted(() => {
   isPlatLoading.value = true;
   loadAppTabs();
@@ -3149,6 +3154,7 @@ onMounted(() => {
   loadCustomerAddress();
   checkHbPromo();
   checkSpinLuckyWheelPromo();
+  getJackpotAmt();
   SwiperCore.use([Grid, Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
