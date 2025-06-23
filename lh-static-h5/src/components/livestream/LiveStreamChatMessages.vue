@@ -76,7 +76,7 @@
 </template>
 
 <script setup>
-import { computed, nextTick, ref, toRefs, watch, onMounted, onBeforeUnmount, onUnmounted } from "vue";
+import { computed, nextTick, ref, toRefs, watch, onMounted, onBeforeUnmount, onUnmounted, onDeactivated } from "vue";
 import GameModal from "components/modal/GameModal.vue";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
@@ -246,6 +246,11 @@ const handleInputBlur = () => {
 
 onMounted(() => {
   // emojiPick();
+});
+
+onDeactivated(() => {
+  popoverRef.value = false;
+  messageToSend.value = "";
 });
 
 // onBeforeUnmount(() => {
