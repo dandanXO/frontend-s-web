@@ -142,7 +142,7 @@ const { livestreamList } = toRefs(props);
 defineEmits(["livestreamClick"]);
 
 const imgURLLivePreview = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
-const imgStreamerUrl = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + '/streamer/';
+const imgStreamerUrl = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/streamer/";
 
 const previewImgLoadFailedSet = ref(new Set());
 const countdowns = ref({});
