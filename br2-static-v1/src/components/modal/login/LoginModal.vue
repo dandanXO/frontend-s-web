@@ -39,6 +39,12 @@ const uiStore = useUI();
   box-shadow: 0 -30px 20px -10px #00fd7a5e;
 }
 
+:deep(.q-field__bottom){
+  @media (max-width: 390px) {
+    font-size: 9px;
+  }
+}
+
 .close-btn {
   position: absolute;
   transform: translateX(214px);
