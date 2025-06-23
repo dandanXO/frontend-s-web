@@ -55,13 +55,13 @@
         <div class="jackpot-container">
           <img src="../assets/images/sideMenu/jackpot-icon-1.png" alt="jackpot icon" class="jackpot-icon" />
           <div class="jackpot-text">
-            <div class="jackpot-amount">R$ {{getDotAmt(ui.jackpotAmt)}}</div>
+            <div class="jackpot-amount">R$ {{ getDotAmt(ui.jackpotAmt) }}</div>
             <div class="jackpot-label">JACKPOT</div>
           </div>
         </div>
-<!--        <img class="jackpot-promo" src="../assets/images/sideMenu/jackpot-promo.png" />-->
+        <!--        <img class="jackpot-promo" src="../assets/images/sideMenu/jackpot-promo.png" />-->
       </router-link>
-      <div class="side-menu-promo-hot-game">
+      <div class="side-menu-promo-hot-game" @click="emits('gameClick')">
         <div class="side-menu-promo-hot-game__title">
           <img src="../assets/images/index/category/cat-hot.png" />
           <span>{{ $t("home.menu_hot") }}</span>

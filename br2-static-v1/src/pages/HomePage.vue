@@ -3114,9 +3114,9 @@ watch(
 );
 
 watch(
-  () => route.query.game,
-  (newGameCode) => {
-    gameClickFromMenu(newGameCode);
+  () => route.path,
+  () => {
+    gameClickFromMenu(route.query.game);
   }
 );
 
