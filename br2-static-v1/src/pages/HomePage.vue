@@ -133,16 +133,13 @@
 
     <div class="jackpot-banner">
       <div class="jackpot-digit-grp">
-        <span class="jackpot-digit">2</span>
-        <span class="jackpot-digit">5</span>
-        <span class="jackpot-symbol">,</span>
-        <span class="jackpot-digit">9</span>
-        <span class="jackpot-digit">0</span>
-        <span class="jackpot-digit">9</span>
-        <span class="jackpot-symbol">,</span>
-        <span class="jackpot-digit">8</span>
-        <span class="jackpot-digit">7</span>
-        <span class="jackpot-digit">0</span>
+        <span
+          v-for="(char, index) in convertToCommaAmount(ui.jackpotAmt, false)"
+          :class="{ 'jackpot-symbol': char === ',', 'jackpot-digit': char !== ',' }"
+          :key="index"
+        >
+          <span>{{ char }}</span>
+        </span>
       </div>
     </div>
 
@@ -1215,7 +1212,7 @@ import "swiper/css/effect-coverflow";
 import { t } from "../boot/lang";
 // Import Swiper modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Grid } from "swiper/core";
-import { isAndroid } from "src/boot/utils";
+import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { storeToRefs } from "pinia";
 
 import PopupController from "src/components/PopupController.vue";
@@ -3138,14 +3135,12 @@ const checkSpinWheel = () => {
 };
 
 const getJackpotAmt = () => {
-  api
-    .get("/app/jackpot")
-    .then((res) => {
-      // debugger;
-      if (res.code === 0) {
-        ui.jackpotAmt = res.data.value;
-      }
-    })
+  api.get("/app/jackpot").then((res) => {
+    // debugger;
+    if (res.code === 0) {
+      ui.jackpotAmt = res.data.value;
+    }
+  });
 };
 
 const showSpinWheel = () => {
