@@ -62,7 +62,7 @@
             </div>
           </div>
           <div class="order-row order-num">
-            <div class="order-col ellipsis">{{ $t("records.orderNo") }}</div>
+            <div class="order-col order-number-col">{{ $t("records.orderNo") }}</div>
             <div class="order-col flex-c-end gap-8">
               {{ e.serialNumber }}
               <div @click="copyText(e.serialNumber)">
@@ -105,7 +105,7 @@
             </div>
           </div>
           <div class="order-row order-num">
-            <div class="order-col ellipsis">{{ $t("records.orderNo") }} {{ e.serialNumber }}</div>
+            <div class="order-col order-number-col">{{ $t("records.orderNo") }} {{ e.serialNumber }}</div>
             <div class="order-col flex-c-end gap-8">
               <div @click="copyText(e.serialNumber)">
                 <img
@@ -291,7 +291,6 @@ onActivated(() => {
 <style lang="scss" scoped>
 .order-option-tab {
   width: calc(100% - 20px);
-  margin: 0 10px;
   margin: 30px auto 10px;
   // border: 1px solid #00B9A1;
   aspect-ratio: 335/32;
@@ -306,6 +305,7 @@ onActivated(() => {
   }
 
   .q-tab {
+    flex: 1;
     border-radius: 4px;
     border: 1px solid #4b4943;
   }
@@ -352,6 +352,10 @@ onActivated(() => {
 
       &.order-num {
         background-color: #ffffff1a;
+      }
+
+      .order-number-col{
+        white-space: normal
       }
     }
 
