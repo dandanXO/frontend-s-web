@@ -166,6 +166,7 @@ onMounted(() => {
   font-size: 13px;
   color: #bbb;
   text-align: right;
-  margin: 0 0 54px;
+  display: inline-flex;
+  margin: 0 0 54px auto;
 }
 </style>
