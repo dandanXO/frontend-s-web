@@ -2,43 +2,42 @@
   <div>
     <q-btn class="receive-earn-btn" no-caps @click="openMoneyRainDialog">
       <img src="../../../assets/images/promotion/receive-earn/receive-earn-icon.png" />
-      &nbsp;&nbsp;receive
+      &nbsp;&nbsp;Participar Agora
     </q-btn>
 
     <div class="receive-bar-container">
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
-          Duration
+          Duração
         </div>
-        <div class="bar-desc">Long-term (ongoing)</div>
+        <div class="bar-desc">Longo prazo (contínuo)</div>
       </div>
 
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
-          Eligibility
+          Elegibilidade
         </div>
-        <div class="bar-desc">All members who have made at least one successful deposit</div>
+        <div class="bar-desc">Todos os membros que fizeram pelo menos um depósito com sucesso</div>
       </div>
 
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-description.svg" />
-          Description
+          Descrição
         </div>
-        <div class="bar-desc">Red envelope (cash rain) giveaways at scheduled times</div>
+        <div class="bar-desc">Distribuição de envelopes vermelhos (chuva de dinheiro) em horários programados</div>
       </div>
     </div>
 
-    <div class="promo-subtitle">Terms and Conditions</div>
+    <div class="promo-subtitle">Termos e Condições</div>
 
     <div class="tnc-content">
       <ol>
-        <li>All members who have successfully deposited can participate.</li>
+        <li>Todos os membros que fizeram um depósito com sucesso podem participar.</li>
         <li>
-          From the 1st to the 7th of each month, on Monday to Thursday, three rounds of money rain will be distributed
-          daily at the following time:
+          De 1 a 7 de cada mês, de segunda a quinta-feira, três rodadas de chuva de dinheiro serão distribuídas diariamente nos seguintes horários:
         </li>
         <div class="tnc-time-container">
           <div class="tnc-time">12:00 - 12:59</div>
@@ -47,8 +46,7 @@
         </div>
 
         <li>
-          From the 1st to the 7th of each month, on Friday to Sunday, six rounds of money rain will be distributed daily
-          at the following times:
+          De 1 a 7 de cada mês, de sexta a domingo, seis rodadas de chuva de dinheiro serão distribuídas diariamente nos seguintes horários:
         </li>
         <div class="tnc-time-container">
           <div class="tnc-time">12:00 - 12:59</div>
@@ -60,16 +58,16 @@
           <div class="tnc-time">21:00 - 21:59</div>
         </div>
 
-        <li>Each Money Rain session is distributed free of charge with R$100,000.</li>
-        <li>The maximum amount of a single drop is R$7,777.</li>
-        <li>The money received can be used to play or withdrawn directly.</li>
-        <li>The higher your VIP membership level (refer to the VIP upgrade program), the higher value received.</li>
-        <li>To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion.</li>
+        <li>Cada sessão de Chuva de Dinheiro é distribuída gratuitamente com R$100.000.</li>
+        <li>O valor máximo de uma única queda é de R$7.777.</li>
+        <li>O dinheiro recebido pode ser usado para jogar ou retirado diretamente.</li>
+        <li>Quanto maior o seu nível de membro VIP (consulte o programa de upgrade VIP), maior o valor recebido.</li>
+        <li>Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção.</li>
       </ol>
     </div>
   </div>
 
-  <q-dialog v-model="moneyRainDialog" presistent>
+  <q-dialog v-model="moneyRainDialog" persistent>
     <div class="money-rain-dialog">
       <div class="money-rain-bg"><img src="../../../assets/images/promotion/receive-earn/money-rain-img-bg.png" /></div>
       <div class="money-rain-box">
@@ -77,9 +75,9 @@
         <div class="money-rain-content">
           <div><img src="../../../assets/images/promotion/receive-earn/money-rain-congratulations.png" /></div>
 
-          <div class="content-reward">+Rs 100</div>
+          <div class="content-reward">+R$ 100</div>
 
-          <div class="content-reward-txt">You get Rs100</div>
+          <div class="content-reward-txt">Você recebeu R$100</div>
         </div>
       </div>
 
@@ -88,6 +86,7 @@
       </div>
     </div>
   </q-dialog>
+
 </template>
 
 <script setup>
