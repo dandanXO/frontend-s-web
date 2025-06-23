@@ -319,7 +319,7 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 7px;
+  gap: 10px;
 }
 .main-container {
   overflow-x: hidden;
@@ -329,7 +329,7 @@ export default defineComponent({
   min-height: 100dvh;
 }
 .logo-img {
-  width: 130px;
+  width: 150px;
 }
 .carousel {
   background: transparent;

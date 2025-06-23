@@ -5,14 +5,16 @@
     </q-card-actions>
     <LoginForm v-if="uiStore.loginView === 'login'" />
     <ForgetPwForm v-else-if="uiStore.loginView === 'forgetPw'" />
+    <RegisterAccForm v-else />
   </q-dialog>
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, computed, watch, onActivated, onBeforeUnmount } from "vue";
+import { computed } from "vue";
 import { useUI } from "stores/ui";
 import LoginForm from "./LoginForm.vue";
 import ForgetPwForm from "./ForgetPwForm.vue";
+import RegisterAccForm from "./RegisterAccForm.vue";
 
 const isShowLoginDialog = computed(() => {
   return !!uiStore.loginView;
@@ -38,15 +40,14 @@ const uiStore = useUI();
 }
 
 .close-btn {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(200px);
+  position: absolute;
+  transform: translateX(214px);
   color: white;
-  z-index: 1;
+  z-index: 2;
+  margin-top: 14px;
   width: fit-content !important;
   @media (max-width: 500px) {
-    right: 20px;
+    right: 0.75rem;
     left: unset;
     transform: unset;
   }
@@ -73,11 +74,13 @@ const uiStore = useUI();
   }
 
   .subtitle {
+    display: flex;
     font-size: 14px;
     color: #ffffff80;
     margin-bottom: 40px;
 
     .link {
+      margin-left: 6px;
       color: #00fd7c;
       text-decoration: none;
     }

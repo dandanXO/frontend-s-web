@@ -44,3 +44,7 @@ export const getSupportDarkMode = (siteId) => {
 export const getOpenForMember = (siteId, code, memberId) => {
   return https().request(`/config/openForMember/${memberId}`, Method.GET, { siteId: siteId, code: code }, ContentType.form);
 };
+
+export const getGroup = (id) => {
+  return https().request("/config/group", Method.GET, { id }, ContentType.form);
+};

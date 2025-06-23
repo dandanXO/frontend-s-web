@@ -6,8 +6,7 @@
         <div class="pc-form-label">{{ $t("form.firstName") }}</div>
         <div class="pc-form-input">
           <q-input
-            filled
-            dense
+            outlined
             clearable
             :placeholder="$t('form.firstName_placeholder')"
             v-model="formDetail.firstName"
@@ -20,8 +19,7 @@
         <div class="pc-form-label">{{ $t("form.lastName") }}</div>
         <div class="pc-form-input">
           <q-input
-            filled
-            dense
+            outlined
             clearable
             :placeholder="$t('form.lastName_placeholder')"
             v-model="formDetail.lastName"
@@ -34,8 +32,7 @@
         <div class="pc-form-label">{{ $t("form.taxId") }}</div>
         <div class="pc-form-input">
           <q-input
-            filled
-            dense
+            outlined
             clearable
             :placeholder="$t('form.taxId_placeholder')"
             v-model="formDetail.taxId"
@@ -51,7 +48,7 @@
       flat
       no-caps
       class="style-btn-confirm"
-      :disable="!(isValidFirstName() === true && isValidLastName() === true)"
+      :disable="!(isValidFirstName() === true && isValidLastName() === true && isValidCPF() === true)"
       @click="submitKYCNewUser"
     >
       {{ $t("btn.submit") }}
@@ -188,11 +185,16 @@ const updateNewUserState = () => {
 
     :deep(.q-field__control) {
       // background: rgba(71, 178, 178, 0.16) !important;
-      background: #192B2D !important;
+      background: #131313;
+      border-radius: 4px;
+      &::before {
+        border-style: solid;
+        border-color: #35383f;
+      }
     }
 
     :deep(.q-field__native) {
-      color: #ffffff;
+      color: #fff;
     }
   }
 
@@ -271,20 +273,18 @@ const updateNewUserState = () => {
   border-radius: 8px;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
   font-weight: 700;
   color: #150025;
   border-radius: 8px;
 }
 
 .style-btn-confirm {
-  color: #ffffff;
+  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+  font-weight: 700;
+  width: 140px;
+  height: 42px;
+  color: #2d2d2d;
   border-radius: 8px;
-  // background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
-  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
-  font-size: 16px;
-  font-weight: 600;
-  width: 100%;
-  margin-top: 16px;
 }
 </style>

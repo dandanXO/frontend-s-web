@@ -911,6 +911,7 @@ export default {
     claimableRebate: '可领取返水金额',
     className: '类别名',
     clearingSum: '结算总和',
+    clientIp: '客户IP',
     clientType: '客户类型',
     close: '关闭',
     code: '代码',
@@ -1222,6 +1223,7 @@ export default {
     gameName: '游戏名称',
     gameQuiz: '竞猜设置',
     gameQuizAnswer: '玩家竞猜记录',
+    gameQuizOccasions: '玩家特殊事件竞猜记录',
     gameStepsRecords: '闯关记录',
     gameStepsSettings: '闯关配置',
     gameType: '游戏类型',
@@ -1445,6 +1447,7 @@ export default {
     notRegister: '未注册',
     notVerified: '未验证',
     number: '数字',
+    occasions: '特殊事件',
     oldMemberDepositAmount: '老用户存款金额',
     oldMemberDepositCount: '老用户存款次数',
     oldMemberDepositMemberCount: '老用户存款人数',
@@ -1703,6 +1706,7 @@ export default {
     selectNodeAddTo: '选择节点添加至',
     selected: '已选择',
     selectedNumber: '已选号码',
+    selectedOccasion: '已选特殊事件',
     selectedTeam: '竞猜队伍',
     send: '发送',
     separateByComma: '以逗号来区分',
@@ -2662,7 +2666,8 @@ export default {
     otp: 'OTP',
     scheduledAnnouncement: '预约公告',
     subscribeCount: '当前订阅人数',
-    eventCode: '赛事代码'
+    eventCode: '赛事代码',
+    roleConfig: '角色设置',
   },
   message: {
     adsStatusOpen: '开',
@@ -3339,6 +3344,7 @@ export default {
     'Sport Match': '中超角逐',
     'Nba Match': 'NBA 季后赛',
     'Nba Match Preseason': 'NBA 季前赛',
+    'FIFA Quiz': '世俱杯竞猜',
     Redirect: '浮窗管理',
     Permission: '权限',
     Menu: '菜单',
@@ -3964,6 +3970,7 @@ export default {
     53001: '推荐人或会员名其中一个必须要有',
     54000: '注册黑名单记录不存在',
     54001: '注册黑名单记录已存在',
-    55001: '获取推流失败'
+    55001: '获取推流失败',
+    55000: '会员游戏排行榜记录已存在'
   },
 }

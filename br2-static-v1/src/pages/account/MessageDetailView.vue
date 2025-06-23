@@ -1,10 +1,4 @@
 <template>
-  <!--  <div class="dialog-header">-->
-  <!--    <div></div>-->
-  <!--    <div class="text-h5 dialog-title">Message Detail</div>-->
-  <!--    <img class="close-btn" src="../../assets/images/index/close-btn.png" alt="" @click="onCloseBtnClick()" />-->
-  <!--  </div>-->
-
   <div class="msg-detail-container">
     <div class="header">
       <div class="title">{{ mailDataRef.title }}</div>
@@ -19,7 +13,6 @@ import { onActivated, ref } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
-import moment from "moment";
 import { convertToGMT55, convertToGMT7 } from "src/boot/utils";
 
 const router = useRouter();
@@ -76,32 +69,37 @@ onActivated(() => {
 }
 
 .msg-detail-container {
-  padding: 20px;
+  margin: 1rem;
+  padding: 1rem 1.5rem;
+  background-color: #1F241F;
+  border-radius: 6px;
 
   .header {
     display: grid;
-    grid-template-columns: 1fr 120px;
-    justify-content: space-between;
-    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #35383F;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
 
     .title {
       font-size: 16px;
       font-weight: 700;
-      margin: 1rem 0;
+      margin: 0rem 0 0.8rem;
     }
 
     .send-time {
       font-size: 12px;
       // font-weight: 700;
       color: rgba(255, 255, 255, 0.5);
-      margin: 0.75rem 0;
-      text-align: right;
+      margin: 0rem 0 0.4rem;
+      text-align: left;
     }
   }
 
   .content {
     font-size: 14px;
-    // font-weight: 700;
+    margin-top: 10px;
     color: rgba(255, 255, 255, 0.5);
   }
 }

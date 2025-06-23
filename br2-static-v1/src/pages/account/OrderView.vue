@@ -24,8 +24,45 @@
     >
       <q-tab-panel name="withdrawal">
         <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
-          <div class="order-row order-row--title">
-            <div class="order-col">{{ $t("records.orderNo") }}</div>
+          <div class="order-row order-row--content">
+            <div class="order-subrow">
+              <div class="order-col">
+                <span class="date">{{ e.withdrawDate }}</span>
+              </div>
+              <div class="order-col">
+                <span class="yellow">-{{ convertToCommaAmount(e.withdrawAmount, true) }}</span>
+              </div>
+            </div>
+            <div class="order-subrow">
+              <div class="order-col">{{ $t("records.bank") }}</div>
+              <div class="order-col">
+                <span
+                  :class="{
+                    'btn--green': ['SUCCESS'].includes(e.status),
+                    'btn--red': ['FAIL', 'STEP_5', 'FAIL_REVIEW'].includes(e.status),
+                    'btn--orange': [
+                      'APPLY',
+                      'STEP_1',
+                      'STEP_2',
+                      'STEP_3',
+                      'STEP_4',
+                      'AUTOPAY',
+                      'PENDING',
+                      'SENDING',
+                      'WAITING_CALLBACK',
+                      'PAYING',
+                      'WAITING_AUTO_PAY',
+                      'WAITING_RETRY'
+                    ].includes(e.status)
+                  }"
+                >
+                  {{ getWithdrawStatus(e.status) }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="order-row order-num">
+            <div class="order-col ellipsis">{{ $t("records.orderNo") }}</div>
             <div class="order-col flex-c-end gap-8">
               {{ e.serialNumber }}
               <div @click="copyText(e.serialNumber)">
@@ -35,22 +72,6 @@
                   size="24px"
                   fill="#fff"
                 />
-              </div>
-            </div>
-          </div>
-          <div class="order-row order-row--content">
-            <div class="order-subrow">
-              <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
-              <div class="order-col">{{ $t("records.bank") }}</div>
-            </div>
-            <div class="order-subrow">
-              <div class="order-col">
-                <span class="txt-gray">{{ e.withdrawDate }}</span>
-              </div>
-              <div class="order-col">
-                <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
-                  {{ getWithdrawStatus(e.status) }}
-                </span>
               </div>
             </div>
           </div>
@@ -59,10 +80,33 @@
 
       <q-tab-panel name="recharge">
         <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
-          <div class="order-row order-row--title">
-            <div class="order-col">{{ $t("records.orderNo") }}</div>
+          <div class="order-row order-row--content">
+            <div class="order-subrow">
+              <div class="order-col">
+                <span class="date">{{ e.depositDate }}</span>
+              </div>
+              <div class="order-col">
+                <span class="green">+{{ convertToCommaAmount(e.depositAmount, true) }}</span>
+              </div>
+            </div>
+            <div class="order-subrow">
+              <div class="order-col">{{ e.paymentType }}</div>
+              <div class="order-col">
+                <span
+                  :class="{
+                    'btn--green': ['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status),
+                    'btn--red': ['CLOSED'].includes(e.status),
+                    'btn--orange': e.status === 'PENDING'
+                  }"
+                >
+                  {{ getDepositStatus(e.status) }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="order-row order-num">
+            <div class="order-col ellipsis">{{ $t("records.orderNo") }} {{ e.serialNumber }}</div>
             <div class="order-col flex-c-end gap-8">
-              {{ e.serialNumber }}
               <div @click="copyText(e.serialNumber)">
                 <img
                   class="copy-btn btn-pointer"
@@ -70,22 +114,6 @@
                   size="24px"
                   fill="#fff"
                 />
-              </div>
-            </div>
-          </div>
-          <div class="order-row order-row--content">
-            <div class="order-subrow">
-              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
-              <div class="order-col">{{ e.paymentType }}</div>
-            </div>
-            <div class="order-subrow">
-              <div class="order-col">
-                <span class="txt-gray">{{ e.depositDate }}</span>
-              </div>
-              <div class="order-col">
-                <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
-                  {{ getDepositStatus(e.status) }}
-                </span>
               </div>
             </div>
           </div>
@@ -262,24 +290,30 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .order-option-tab {
-  background-color: #2b474a;
-  border-radius: 8px;
   width: calc(100% - 20px);
-  //margin-bottom: 10px;
-  margin: 0px auto 10px;
+  margin: 0 10px;
+  margin: 30px auto 10px;
   // border: 1px solid #00B9A1;
   aspect-ratio: 335/32;
-  color: rgba(1, 161, 178, 1);
+
+  :deep(.q-tabs__content) {
+    gap: 16px;
+  }
 
   :deep(.q-tab__label) {
-    // font-weight: 700;
+    color: #4b4943;
+    font-weight: 700;
+  }
+
+  .q-tab {
+    border-radius: 4px;
+    border: 1px solid #4b4943;
   }
 
   :deep(.q-tab--active) {
-    border-radius: 6px;
-    color: #fff;
-    margin: 1px;
-    background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+    border: none;
+    background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+    color: #2d2d2d;
   }
 }
 
@@ -292,22 +326,21 @@ onActivated(() => {
     margin: auto;
   }
   .order-table {
-    background: rgba(99, 255, 246, 0.1);
-    border-radius: 10px;
-    padding: 6px 4px;
-    margin-bottom: 10px;
+    background: #1f241f;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    overflow: hidden;
+
     .order-row {
       display: flex;
       justify-content: space-between;
       padding: 8px 12px;
-      flex-wrap: wrap;
-
-      &--title {
-        border-top-right-radius: 16px;
-        border-top-left-radius: 16px;
-      }
+      gap: 10px;
+      flex-wrap: no-wrap;
 
       &--content {
+        padding: 16px 10px;
+        gap: 15px;
         flex-wrap: wrap;
         flex-direction: column;
       }
@@ -315,6 +348,10 @@ onActivated(() => {
       .order-subrow {
         display: flex;
         justify-content: space-between;
+      }
+
+      &.order-num {
+        background-color: #ffffff1a;
       }
     }
 
@@ -327,16 +364,41 @@ onActivated(() => {
         text-align: right;
       }
 
-      span.txt-gray {
-        color: #888888;
+      span.date {
+        color: #ffffff4d;
       }
 
-      span.txt-green {
-        color: #5bf25c;
+      span.green {
+        color: #00fd7c;
       }
 
-      span.txt-red {
-        color: #f24c5a;
+      span.yellow {
+        color: #fbab1b;
+      }
+
+      img {
+        display: block;
+      }
+
+      .btn--green {
+        padding: 6px 12px;
+        color: #00ff11;
+        background-color: #00ff1133;
+        border-radius: 4px;
+      }
+
+      .btn--red {
+        padding: 6px 12px;
+        color: #ff3434;
+        background-color: #ff343433;
+        border-radius: 4px;
+      }
+
+      .btn--orange {
+        padding: 6px 12px;
+        color: #fbab1b;
+        background-color: #fbab1b33;
+        border-radius: 4px;
       }
     }
   }

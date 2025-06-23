@@ -2,8 +2,8 @@
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
       <div class="tab-wrapper">
-        <div class="tab" :class="{ active: tabValue === 1 }" @click="tabValue = 1">一掷千元</div>
-        <div class="tab" :class="{ active: tabValue === 2 }" @click="tabValue = 2">扭亏为盈</div>
+        <div class="tab" :class="{ active: tabValue === 1 }" @click="tabValue = 1">VIP 权益</div>
+        <div class="tab" :class="{ active: tabValue === 2 }" @click="tabValue = 2">VIP 返水</div>
       </div>
 
       <template v-if="tabValue === 1">
@@ -247,8 +247,8 @@
                   <td>VIP0</td>
                   <td>0.45%</td>
                   <td>0.40%</td>
-                  <td>0.45%</td>
-                  <td>0.45%</td>
+                  <td>0.40%</td>
+                  <td>0.40%</td>
                   <td>0.60%</td>
                   <td>8,888</td>
                 </tr>

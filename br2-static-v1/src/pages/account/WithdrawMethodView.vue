@@ -858,7 +858,7 @@ const submitWithdrawBank = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: t("notify.withdrawSuceed"),
+          message: t("notify.withdrawalSubmitSucceed"),
           icon: "check_circle_outline"
         });
         refreshBalance();
@@ -892,7 +892,7 @@ const withdrawGo = (callback) => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: t("notify.withdrawSuceed"),
+          message: t("notify.withdrawalSubmitSucceed"),
           icon: "check_circle_outline"
         });
         refreshBalance();

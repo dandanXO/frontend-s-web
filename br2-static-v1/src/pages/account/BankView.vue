@@ -1,19 +1,19 @@
 <template>
   <q-page class="account-message-page">
     <div class="bank-add-lists">
+      <!-- <div class="bank-card-add" @click="onAddUSDTClick()">
+        <q-icon name="add" size="20px" />
+        <div class="card-label">{{ $t("header.addCrypto") }}</div>
+      </div> -->
       <div class="bank-card-add" @click="onAddCardClick()">
         <q-icon name="add" size="20px" />
         <div class="card-label">{{ $t("header.addCard") }}</div>
       </div>
-      <!-- <div class="bank-card-add" @click="onAddUSDTClick()">
-        <q-icon name="add" size="20px" />
-        <div class="card-label">{{ $t("header.addEWallet") }}</div>
-      </div> -->
     </div>
 
     <!-- unbind dialog -->
     <q-dialog align-center v-model="isUnbindDialogOpen" width="500" class="modal-container">
-      <q-card>
+      <q-card class="unbind-dialog">
         <DialogHeader :title="$t('notify.areYouSureUnbind')"></DialogHeader>
         <q-card-section>
           <q-form>
@@ -61,11 +61,14 @@
                 <img :src="imgURL + item.bankIcon" alt="Bank Icon" style="width: 30px" />
               </div>
               <div class="item-title">{{ item.bankName }}</div>
-              <div class="item-bind" @click.stop.prevent="onUnbindClick(item.cardNumber, item.id)">
+              <q-btn class="item-bind" flat dense @click.stop.prevent="onUnbindClick(item.cardNumber, item.id)">
+                {{ $t("btn.unbinding") }}
+              </q-btn>
+              <!-- <div class="item-bind" @click.stop.prevent="onUnbindClick(item.cardNumber, item.id)">
                 <div class="card-unlink">
                   <q-icon size="sm" name="link_off" />
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="item-content">
               <div class="item-acc">
@@ -163,6 +166,7 @@ import ConfirmButton from "../../atoms//ConfirmButton.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import AddBankCardModal from "../../components/modal/AddBankCardModal.vue";
 import UpdateBankCardModal from "../../components/modal/UpdateBankCardModal.vue";
+import { t } from "src/boot/lang";
 
 const router = useRouter();
 const store = userStore();
@@ -202,7 +206,7 @@ const copy = (val) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${val} copied to clipboard`,
+        message: `${val} ${t('notify.copiedToClipboard')}`,
         icon: "check_circle_outline"
       });
     })
@@ -253,7 +257,7 @@ const onAddCardClick = () => {
   addBankCardModalRef.value.onAddCardClick("Bank");
 };
 const onAddUSDTClick = () => {
-  addBankCardModalRef.value.onAddCardClick("EWallet");
+  addBankCardModalRef.value.onAddCardClick("Crypto");
 };
 const onUpdateCardClick = (bankCard, bankType) => {
   updateBankCardModalRef.value.onUpdateCardClick(bankCard, bankType);
@@ -365,7 +369,7 @@ onActivated(() => {
     &.card-show {
       margin-bottom: -2rem;
       border: 2px solid #a73dff;
-      background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+      background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
 
       .bank-card-add {
         gap: 0.5rem;
@@ -447,16 +451,16 @@ onActivated(() => {
   gap: 12px;
   justify-content: center;
   width: calc(100% - 20px);
-  margin: 0 auto 12px;
+  margin: 30px auto 12px;
 
   .bank-card-add {
     flex: 1;
-    color: #fff;
+    color: #2d2d2d;
     font-weight: 700;
     align-items: center;
-    border-radius: 0.5rem;
+    border-radius: 4px;
     gap: 6px;
-    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+    background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
     display: flex;
     flex-direction: row;
     padding: 1rem 8px;
@@ -503,17 +507,24 @@ onActivated(() => {
     color: #ffffff90;
   }
 
-  .q-dialog__inner > .q-card {
+  .q-card {
     padding: 2.4rem 1.5rem;
     border-radius: 12px;
-    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+    background: unset;
     //background-image: url("../../assets/images/index/modal-bg.png");
     background-size: 100% 100%;
-    width: 90%;
+    width: calc(100% - 18px);
+    height: max-content;
+    max-height: 60vh;
+    overflow: auto;
   }
 
   .q-card__section {
     background: transparent;
+  }
+
+  .unbind-dialog {
+    background: #1f241f;
   }
 }
 
@@ -521,34 +532,46 @@ onActivated(() => {
   margin-bottom: 16px;
 
   .q-item.q-item-type {
-    background-color: #263349;
+    background-color: #1f241f;
     border-radius: 8px;
+    .q-item__label,
+    .q-item__section {
+      font-weight: 600;
+      color: #ffffff;
+    }
   }
 
   .list-item {
-    background: #161f2d;
-    padding: 12px;
-    margin-top: 16px;
-    border-radius: 8px;
+    background: #1f241f;
+    padding: 8px 3px 17px 9px;
+    margin-top: 14px;
+    border-radius: 4px;
+    border: 1px solid #35383f;
 
     .item-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 36px;
+      position: relative;
     }
     .item-icon {
+      img {
+        display: block;
+      }
     }
     .item-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       font-weight: bold;
     }
     .item-bind {
-      color: #00B9A1;
+      color: #ff5840;
       font-weight: bold;
     }
 
     .item-content {
-      padding-top: 6px;
+      padding-top: 22px;
       display: flex;
       justify-content: space-between;
 
@@ -557,7 +580,7 @@ onActivated(() => {
       }
 
       .item-copy {
-        color: #00B9A1;
+        color: #fff;
         display: flex;
         gap: 6px;
         align-items: center;

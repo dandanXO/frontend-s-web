@@ -120,34 +120,34 @@ const swipeRight = () => {
   padding-top: 50px;
   .earn-money-tabs {
     position: fixed;
-    padding-left: 16px;
-    padding-right: 16px;
+    // padding-left: 16px;
+    // padding-right: 16px;
     top: 68px;
-    left: 0;
+    right: auto;
     z-index: 999;
     // background: #101115;
     width: 100%;
     padding-bottom: 6px;
-    padding-top: 12px;
+    padding-top: 10px;
+    max-width: 500px;
 
     :deep(.q-tabs__content) {
-      // background: #101115;
-      border-radius: 12px;
-      padding: 4px;
+      background: #171616;
+      // border-radius: 12px;
+      padding: 14px 4px;
       gap: 6px;
     }
 
     :deep(.q-tab) {
-      // margin: 0 15px;
-      margin: 0;
-      color: rgba(255, 255, 255, 0.5);
+      margin: 0 15px;
+      color: #4b4943;
       border-radius: 8px;
       height: 55px;
       width: 25%;
-      background: #1b554c;
+      // background: #4b4943;
       font-size: 12px;
       font-weight: 500;
-      // border: 4px solid #101115;
+      border: 1px solid #4b4943;
     }
 
     :deep(.q-tab__content) {
@@ -155,20 +155,23 @@ const swipeRight = () => {
     }
 
     :deep(.q-tab--active) {
-      color: white;
-      background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+      color: #2d2d2d;
+      background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
       // border: 2px solid #422171;
 
       svg {
-        fill: white;
+        fill: #2d2d2d;
       }
     }
   }
 
+  .q-tab-panels {
+    background: #171616;
+  }
   .earn-money-panels {
     // background: radial-gradient(25% 50% at 50% 50%, #e01b84 0%, rgba(27, 28, 36, 0) 100%);
-    // background-image: url("../assets/images/earn-money/earn-money-bg.jpg");
-    background: #101114;
+    background-image: url("../assets/images/earn-money/earn-money-bg.png");
+    // background: #101114;
     min-height: 80vh;
     background-repeat: no-repeat;
     background-size: cover;

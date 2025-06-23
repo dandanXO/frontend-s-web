@@ -5,7 +5,7 @@
         <div class="topActions">
           <q-icon name="chevron_left" size="30px" @click="onExitClick" />
           <div class="game-logo-img">
-            <img src="../../assets/logo.png" />
+            <img src="../../assets/akb-logo.png" />
             <!-- <div
               class="game-logo"
               :style="{
@@ -23,7 +23,7 @@
           </div>
 
           <div v-if="!drawerVisible" class="wallet-container" @click="goToDeposit()">
-            {{ $t("btn.addCash") }} &nbsp;
+            <span style="text-align:right;margin-right: 5px;">{{ $t("btn.addCash") }}</span>
             <q-btn dense rounded class="wallet-btn">
               <img src="../../assets/images/index/icon-wallet.png" />
             </q-btn>
@@ -283,6 +283,7 @@ const goToDeposit = () => {
   // router.push("/deposit?from=" + route.path);
   // }, 500);
 };
+const uiStore= useUI();
 
 const platformCodeImg = ref();
 const open = (gameName, platformCode, gameCode, gameType) => {
@@ -403,7 +404,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         });
     } else {
       props.closeFullGameDialog();
-      router.push({ path: "/login", query: { redirect: route.path } });
+      uiStore.loginView = "login";
+      // router.push({ path: "/login", query: { redirect: route.path } });
     }
   }
 };
@@ -523,8 +525,9 @@ defineExpose({
 
   .topActions {
     // background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
-    background: linear-gradient(180deg, rgba(0, 185, 161, 0.46) 0%, rgba(0, 185, 111, 0) 96.35%);
-    box-shadow: 0px 3 7px 0px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(90deg, #0A526C 0%, #523E0A 100%);
+
+
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -532,10 +535,9 @@ defineExpose({
     align-items: center;
 
     .game-logo-img {
-      // height: 50px;
-      position: absolute;
-      top: 16px;
-      left: 45px;
+      margin-right: auto;
+      margin-left: 4px;
+      height: 30px;
       .game-logo {
         width: 30vw;
         background-position: center;
@@ -546,7 +548,8 @@ defineExpose({
 
       img {
         display: block;
-        height: 100%;
+        max-width: 130px;
+        height: auto;
         width: auto;
       }
     }
@@ -772,7 +775,7 @@ defineExpose({
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     row-gap: 12px;
-    column-gap: 8x;
+    column-gap: 8px;
 
     .deposit-item {
       .deposit-icon {
@@ -894,7 +897,7 @@ defineExpose({
   }
 
   .btn-confirm {
-    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+    background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
     font-weight: 700;
     color: #150025;
     border-radius: 8px;

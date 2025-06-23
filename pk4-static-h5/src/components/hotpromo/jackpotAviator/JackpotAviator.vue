@@ -1,40 +1,40 @@
 <template>
   <template v-if="mode === 'MAIN'">
-    <q-tabs
-      v-model="timeframe"
-      class="timeframe-tabs q-mb-lg"
-      color="yellow"
-      no-caps
-      narrow-indicator
-      indicator-color="yellow"
-    >
-      <q-tab name="DAILY" :label="$t('hotPromo.jackpotAviator.daily')"></q-tab>
-      <q-tab name="WEEKLY" :label="$t('hotPromo.jackpotAviator.weekly')"></q-tab>
-    </q-tabs>
+      <q-tabs
+        v-model="timeframe"
+        class="timeframe-tabs q-mb-lg"
+        color="yellow"
+        no-caps
+        narrow-indicator
+        indicator-color="yellow"
+      >
+        <q-tab name="DAILY" :label="$t('hotPromo.jackpotAviator.daily')"></q-tab>
+        <q-tab name="WEEKLY" :label="$t('hotPromo.jackpotAviator.weekly')"></q-tab>
+      </q-tabs>
 
-    <div class="jackpot">
-      <JackpotTicker :timeframe="timeframe" />
+      <div class="jackpot">
+        <JackpotTicker :timeframe="timeframe" />
 
-      <div class="rules-ribbon" @click="mode = 'RULES'">{{ $t("hotPromo.jackpotAviator.rules") }}</div>
-      <div class="history-ribbon" @click="isShowHistoryPopup = true">{{ $t("hotPromo.jackpotAviator.history") }}</div>
-    </div>
+        <div class="rules-ribbon" @click="mode = 'RULES'">{{ $t("hotPromo.jackpotAviator.rules") }}</div>
+        <div class="history-ribbon" @click="isShowHistoryPopup = true">{{ $t("hotPromo.jackpotAviator.history") }}</div>
+      </div>
 
-    <div class="receive-btn" @click="onClickReceive">
-      {{ $t("hotPromo.jackpotAviator.receive") }}
-    </div>
+      <div class="receive-btn" @click="onClickReceive">
+        {{ $t("hotPromo.jackpotAviator.receive") }}
+      </div>
 
-    <template v-if="isLoadingRanking">
-      <img
-        style="width: 100px; margin: 100px auto"
-        src="../../../assets/images/promotion/hotpromo/jackpot-aviator/podium-loader.gif"
-      />
-    </template>
-    <template v-else>
-      <RankPodium :rankingList="rankingList" />
-      <HistoryTable :historyList="rankingList" />
-    </template>
+      <template v-if="isLoadingRanking">
+        <img
+          style="width: 100px; margin: 100px auto"
+          src="../../../assets/images/promotion/hotpromo/jackpot-aviator/podium-loader.gif"
+        />
+      </template>
+      <template v-else>
+        <RankPodium :rankingList="rankingList" />
+        <HistoryTable :historyList="rankingList" />
+      </template>
 
-    <RankDetails :rankDetails="rankDetails" :isLoadingRanking="isLoadingRanking" />
+      <RankDetails :rankDetails="rankDetails" :isLoadingRanking="isLoadingRanking" />
   </template>
   <template v-else-if="mode === 'RULES'">
     <JackpotAviatorRules :onClickBackBtn="() => (mode = 'MAIN')" :rankingBonusRatioList="rankingBonusRatioList" />
