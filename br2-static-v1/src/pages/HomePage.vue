@@ -517,7 +517,6 @@
                 @click="scrollDownFullGames"
               >
                 {{ $t("home.showAll") }}
-                {{ filteredSubGameList.length }}
                 <q-icon name="chevron_right" size="xs" />
               </q-btn>
             </div>
@@ -754,92 +753,49 @@
             <span class="txt-style">{{ $t("home.cat_fishing") }}</span>
           </div>
           <div class="platform-game-container grid-view revamp">
-            <template v-for="(item, index) in fishGameTADAList" :key="index">
-              <div
-                class="platform-game-item btn-effect"
-                @click="playGame(item.name, 'TaDa', item.code, item.status, item.gameType, item.id)"
-              >
-                <div class="platform-game-img">
-                  <div
-                    class="game--bg"
-                    :style="{
-                      backgroundImage: (() => {
-                        try {
-                          return `url(${require(`../assets/images/games/fish/tada-${item.code.toLowerCase()}.png`)})`;
-                        } catch (e) {
+            <template v-for="(item, index) in fishGameList" :key="index">
+              <template v-if="index < showValue">
+                <div
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                >
+                  <div class="platform-game-img">
+                    <div
+                      class="game--bg"
+                      :style="{
+                        backgroundImage: (() => {
                           try {
-                            return `url(${imgURLGame}${item.icon})`;
+                            return `url(${require(`../assets/images/games/fish/${
+                              item._iconPrefix
+                            }-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(${
-                              store.h5Url
-                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(${
+                                store.h5Url
+                              }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            }
                           }
-                        }
-                      })()
-                    }"
-                  ></div>
+                        })()
+                      }"
+                    ></div>
+                  </div>
+                  <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                 </div>
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-              </div>
+              </template>
             </template>
-
-            <template v-for="(item, index) in fishGameJILIList" :key="index">
-              <div
-                class="platform-game-item btn-effect"
-                @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
-              >
-                <div class="platform-game-img">
-                  <div
-                    class="game--bg"
-                    :style="{
-                      backgroundImage: (() => {
-                        try {
-                          return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
-                        } catch (e) {
-                          try {
-                            return `url(${imgURLGame}${item.icon})`;
-                          } catch (e) {
-                            return `url(${
-                              store.h5Url
-                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        }
-                      })()
-                    }"
-                  ></div>
-                </div>
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-              </div>
-            </template>
-
-            <template v-for="(item, index) in fishGameJDBList" :key="index">
-              <div
-                class="platform-game-item btn-effect"
-                @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
-              >
-                <div class="platform-game-img">
-                  <div
-                    class="game--bg"
-                    :style="{
-                      backgroundImage: (() => {
-                        try {
-                          return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
-                        } catch (e) {
-                          try {
-                            return `url(${imgURLGame}${item.icon})`;
-                          } catch (e) {
-                            return `url(${
-                              store.h5Url
-                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        }
-                      })()
-                    }"
-                  ></div>
-                </div>
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-              </div>
-            </template>
+            <q-btn
+              v-if="fishGameList.length > 12"
+              class="show-all-btn"
+              :class="{ expanded: isShowAllFullGames }"
+              flat
+              no-caps
+              @click="scrollDownFullGames"
+            >
+              {{ $t("home.showAll") }}
+              <q-icon name="chevron_right" size="xs" />
+            </q-btn>
           </div>
         </div>
       </template>
@@ -891,7 +847,7 @@
       <div class="character">
         <img src="../assets/images/index/download-app-left.png" alt="Mascot" />
       </div>
-      <div class="app-info" style="display:none;">
+      <div class="app-info" style="display: none">
         <h3>
           <img src="../assets/images/index/tick-icon.png" />
           DOWNLOAD THE APP
@@ -2335,6 +2291,29 @@ const loadHotGameList = () => {
         });
     });
 };
+
+const fishGameList = computed(() => {
+  const result = [];
+  for (const game of fishGameTADAList.value) {
+    result.push({
+      ...game,
+      _iconPrefix: "tada"
+    });
+  }
+  for (const game of fishGameJILIList.value) {
+    result.push({
+      ...game,
+      _iconPrefix: "jili"
+    });
+  }
+  for (const game of fishGameJDBList.value) {
+    result.push({
+      ...game,
+      _iconPrefix: "jdb"
+    });
+  }
+  return result;
+});
 
 const fishGameTADAList = ref([]);
 
