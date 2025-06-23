@@ -27,6 +27,31 @@ export const DashboardService = {
         })
     })
   },
+  logInV2(username, password) {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData()
+
+      formData.append('loginName', username)
+      formData.append('password', password)
+
+      api
+        .post('/member/mktLogin', formData)
+        .then((response) => {
+          if (response.code == 0) {
+            const token = response.data.token
+            const userId = response.data.id
+            sessionStorage.setItem('token', token)
+            sessionStorage.setItem('userId', userId)
+            resolve(true)
+          } else {
+            resolve(false)
+          }
+        })
+        .catch((error) => {
+          reject(false)
+        })
+    })
+  },
 
   // 獲取流媒體列表
   getStreamList() {

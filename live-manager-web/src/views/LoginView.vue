@@ -1,17 +1,25 @@
 <template>
   <BlockUI :blocked="store.isAuthLoading" style="width: 100vw; height: 100vh">
-    <!-- <LangToggle style="position: absolute; top: 20px; right: 20px; z-index: 1" /> -->
     <ThemeToggle style="position: absolute; top: 20px; left: 20px; z-index: 1" />
-
     <canvas class="background"></canvas>
     <Card class="login-form">
       <template #content>
         <LoadingSpinner v-if="store.isAuthLoading" />
-
         <template v-else>
           <img src="../assets/logo.png" height="80px;" style="display: flex; margin: 0 auto 20px" />
+          <!-- 新增登入API選擇 -->
+          <RadioButtonGroup v-model="loginMode" name="loginMode" class="login-radio-button" style="margin-bottom: 16px;">
+            <div class="flex items-center gap-2">
+              <RadioButton inputId="login-v1" value="v1" />
+              <label for="login-v1">直播主登入</label>
+            </div>
+            <div class="flex items-center gap-2">
+              <RadioButton inputId="login-v2" value="v2" />
+              <label for="login-v2">管理员登入</label>
+            </div>
+          </RadioButtonGroup>
           <Form
-            class="flex flex-col gap-4 w-full sm:w-56"
+            class="flex flex-col w-full gap-4 sm:w-56"
             style="display: flex; flex-direction: column; gap: 15px"
           >
             <FormField
@@ -64,7 +72,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, onUnmounted } from 'vue'
+import { ref, onMounted, reactive, onUnmounted } from 'vue'
 import { Form } from '@primevue/forms'
 import { useToast } from 'primevue/usetoast'
 import { DashboardService } from '@/service/DashboardService'
@@ -73,6 +81,8 @@ import { useUserStore } from '@/stores/userStore'
 import ThemeToggle from '@/components/Header/ThemeToggle.vue'
 import { useI18n } from 'vue-i18n'
 import router from '@/router'
+import RadioButton from 'primevue/radiobutton'
+import RadioButtonGroup from 'primevue/radiobuttongroup'
 
 const { t } = useI18n()
 
@@ -84,11 +94,16 @@ const loginForm = reactive({
 })
 
 const toast = useToast()
+const loginMode = ref('v1') // 預設選 v1
 
 const onFormSubmit = () => {
   store.isAuthLoading = true
   sessionStorage.setItem('loginName', loginForm.loginName)
-  DashboardService.logIn(loginForm.loginName, loginForm.password)
+  const loginFn =
+    loginMode.value === 'v2'
+      ? DashboardService.logInV2
+      : DashboardService.logIn
+  loginFn(loginForm.loginName, loginForm.password)
     .then((result) => {
       if (result) {
         router.push({ path: '/' })
@@ -107,7 +122,6 @@ const onFormSubmit = () => {
 }
 
 onMounted(() => {})
-
 onUnmounted(() => {})
 </script>
 
@@ -132,5 +146,10 @@ onUnmounted(() => {})
   gap: 15px;
   justify-content: center;
   align-items: center;
+}
+.login-radio-button{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 </style>
