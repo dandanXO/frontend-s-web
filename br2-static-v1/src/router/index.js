@@ -43,9 +43,9 @@ export default route(function (/* { store, ssrContext } */) {
     }
 
     if (
-      to.path === "/login" ||
-      to.path === "/register" ||
-      to.path === "/forgot-password" ||
+      // to.path === "/login" ||
+      // to.path === "/register" ||
+      // to.path === "/forgot-password" ||
       to.path === "/withdraw" ||
       to.path === "/deposit" ||
       to.path === "/promotion"
@@ -86,18 +86,21 @@ export default route(function (/* { store, ssrContext } */) {
         document.dispatchEvent(pwaEvent);
       }
       if (to.query.reg) {
-        next(`/register`);
+        // next(`/register`);
+        ui.loginView = "register";
       } else {
         next(`/`);
       }
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
-      next(`/register`);
+      // next(`/register`);
+      ui.loginView = "register";
     }
 
     if (to.name === "RegisterPage") {
-      next(`/register`);
+      // next(`/register`);
+      ui.loginView = "register";
     }
 
     if (user.hasToken()) {
@@ -112,7 +115,8 @@ export default route(function (/* { store, ssrContext } */) {
       }
     } else {
       if (to.meta.requiresAuth) {
-        next(`/login`);
+        // next(`/login`);
+        ui.loginView = "login";
       } else {
         next();
       }

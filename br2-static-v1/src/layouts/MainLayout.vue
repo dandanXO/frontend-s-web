@@ -257,23 +257,25 @@ export default defineComponent({
           pageName.value = t("header.vipPrivileges");
           if (route.query.redirect) prevPage.value = route.query.redirect;
           else prevPage.value = "/";
-        } else if (route.path === "/login") {
-          prevPage.value = "home";
-          hasPage.value = true;
-          pageName.value = t("header.login");
-        } else if (route.path === "/register") {
-          prevPage.value = "home";
-          hasPage.value = true;
-          pageName.value = t("header.register");
-        } else if (route.path === "/forgot-account") {
-          prevPage.value = "login";
-          hasPage.value = true;
-          pageName.value = t("header.forgotAccount");
-        } else if (route.path === "/forgot-password") {
-          prevPage.value = "login";
-          hasPage.value = true;
-          pageName.value = t("header.forgotPassword");
-        } else if (route.path === "/live-casino") {
+        }
+        // else if (route.path === "/login") {
+        //   prevPage.value = "home";
+        //   hasPage.value = true;
+        //   pageName.value = t("header.login");
+        // } else if (route.path === "/register") {
+        //   prevPage.value = "home";
+        //   hasPage.value = true;
+        //   pageName.value = t("header.register");
+        // } else if (route.path === "/forgot-account") {
+        //   prevPage.value = "login";
+        //   hasPage.value = true;
+        //   pageName.value = t("header.forgotAccount");
+        // } else if (route.path === "/forgot-password") {
+        //   prevPage.value = "login";
+        //   hasPage.value = true;
+        //   pageName.value = t("header.forgotPassword");
+        // }
+        else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = t("header.liveCasino");
         } else if (route.path === "/poker") {
