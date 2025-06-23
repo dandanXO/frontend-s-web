@@ -93,9 +93,10 @@ export default route(function (/* { store, ssrContext } */) {
       }
     }
     if (to.name === "referCodeSpin") {
-      sessionStorage.setItem("REFERRAL_SPIN_CODE", to.params.referralSpinCode);
+      sessionStorage.setItem("REFERRAL_CODE", to.params.referralSpinCode);
       localStorage.removeItem("REG_REFERRAL_CODE");
-      next(`/register`);
+      next(`/`);
+      ui.loginView = "register";
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
