@@ -3138,7 +3138,14 @@ const checkSpinWheel = () => {
 };
 
 const getJackpotAmt = () => {
-  ui.jackpotAmt = 25909870;
+  api
+    .get("/app/jackpot")
+    .then((res) => {
+      // debugger;
+      if (res.code === 0) {
+        ui.jackpotAmt = res.data.value;
+      }
+    })
 };
 
 const showSpinWheel = () => {
