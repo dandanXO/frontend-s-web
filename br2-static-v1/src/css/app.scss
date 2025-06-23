@@ -259,11 +259,15 @@ body.body--dark .q-footer {
 .q-footer {
   // margin-top: 30px;
   // background: transparent !important;
-  background: url("../assets/images/index/footer-bg.png") center center no-repeat;
+  // background: url("../assets/images/index/footer-bg.png") center center no-repeat;
+  background-color: rgba(3, 5, 8, 0.7);
   background-size: 100% 100%;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(16px);
   bottom: 0px;
   height: 76px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  border-top: rgba(151, 151, 151, 1) 1px solid;
 
   .q-tabs__content {
     // background-image: url(../assets/images/index/bottom-nav-bg.png);
@@ -463,7 +467,7 @@ body.body--dark .q-footer {
 
 .wallet-container {
   color: rgba(255, 255, 255, 0.5);
-  display:flex;
+  display: flex;
   flex-wrap: nowrap;
   align-items: center;
 
