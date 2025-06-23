@@ -31,8 +31,8 @@
             </InputField>
             <InputField :isDark="true">
                 <template #input>
-                    <q-select class="dropdown" outlined v-model="model" :options="vendorsList" dense
-                        :display-value="'Vendors'" />
+                    <q-select class="dropdown" outlined v-model="request.platform" :options="vendorsList" option-label="name" option-value="code" dense 
+                        label="Vendors" emit-value map-options/>
                 </template>
             </InputField>
             <InputField :isDark="true">
@@ -103,17 +103,17 @@
 
             <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
             <div class="filter-grid">
-                <div class="filter-item" :class="{ active: typesSelection.label === 'ALL' }"
+                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'ALL' }"
                 @click="changeTypeSelection('ALL')">ALL</div>
-                <div class="filter-item" :class="{ active: typesSelection.label === 'SLOT' }"
+                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'SLOT' }"
                 @click="changeTypeSelection('SLOT')">SLOT</div>
-                <div class="filter-item" :class="{ active: typesSelection.label === 'LIVE' }"
+                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'LIVE' }"
                 @click="changeTypeSelection('LIVE')">LIVE</div>
-                <div class="filter-item" :class="{ active: typesSelection.label === 'SPORT' }"
+                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'SPORT' }"
                 @click="changeTypeSelection('SPORT')">SPORT</div>
-                <div class="filter-item" :class="{ active: typesSelection.label === 'FISH' }"
+                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'FISH' }"
                 @click="changeTypeSelection('FISH')">FISH</div>
-                <div class="filter-item" :class="{ active: typesSelection.label === 'POKER' }"
+                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'POKER' }"
                 @click="changeTypeSelection('POKER')">POKER</div>
             </div>
 
@@ -165,16 +165,21 @@ const confirmDaySelection = () => {
 
 const isTypeSelectionDialog = ref(false)
 const typesSelection = ref({ label: 'ALL', value: 'ALL' });
+const dialogTypesSelection = ref({ label: 'ALL', value: 'ALL' });
+
 const openTypeSelectionDialog = () => {
-  isTypeSelectionDialog.value = true
+  dialogTypesSelection.value = typesSelection.value;
+  isTypeSelectionDialog.value = true;
 }
 
 const changeTypeSelection = (type) => {
-    typesSelection.value = { label: type, value: type };
+  dialogTypesSelection.value = { label: type, value: type };
 }
 
 const confirmTypeSelection = () => {
+  typesSelection.value = dialogTypesSelection.value;
   isTypeSelectionDialog.value = false;
+  loadBetRecords();
 }
 
 const page = reactive({
