@@ -55,7 +55,7 @@
 <script setup>
 import systemAvatarImg from "@/assets/home/livestream/system-avatar.png";
 import moment from "moment";
-import { toRefs, watch, ref, onUnmounted } from "vue";
+import { toRefs, watch, ref, onUnmounted, onMounted } from "vue";
 
 const DEFAULT_COUNTDOWN = {
   hours: "00",
@@ -99,6 +99,8 @@ const startCountdown = () => {
 watch(livestreamData, () => {
   startCountdown();
 });
+
+onMounted(startCountdown);
 
 onUnmounted(() => {
   if (timer.value) {

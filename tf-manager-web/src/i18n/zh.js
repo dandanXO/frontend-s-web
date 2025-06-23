@@ -2632,6 +2632,7 @@ export default {
     deleteSuccess: '删除成功',
     copyFailed: '复制失败',
     copySuccess: '复制成功',
+    successGetUrl: '获取推流成功',
     match: '赛事',
     confirmDelete: '此操作不可撤销，确定要删除这些数据吗？',
     sensitiveWord: '敏感词',
@@ -2653,7 +2654,7 @@ export default {
     streamTag: '流标签',
     isCdnPush: '推送 CDN',
     box: '回合',
-    isCreateLiveUrl: '是否生产推流地址  (是/否)',
+    isCreateLiveUrl: '推流',
     isLiveUrlExist: '是否推流',
     addToLive: '添加到直播',
     initialSupplierStreamStatus: '初始厂商流状态',
@@ -3969,6 +3970,7 @@ export default {
     53001: '推荐人或会员名其中一个必须要有',
     54000: '注册黑名单记录不存在',
     54001: '注册黑名单记录已存在',
+    55001: '没有获取到流',
     55000: '会员游戏排行榜记录已存在'
   },
 }

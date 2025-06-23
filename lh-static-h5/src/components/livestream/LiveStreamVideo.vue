@@ -31,7 +31,6 @@
         webkit-playsinline
         muted
         @progress="handlePlayerProgress"
-        @canplay="handlePlayerCanPlay"
         @webkitendfullscreen="handleEndFullScreen"
       />
 
@@ -278,7 +277,7 @@ const danmu = ref(null);
 const qualities = ref([]);
 const playerConfig = ref({
   isPause: false,
-  volume: true,
+  volume: 1,
   isFullScreen: false,
   isDanmuClose: false,
   quality: DEFAULT_QUALITY,
@@ -340,6 +339,7 @@ const initPlayer = async (play = false) => {
     await player.value.init();
     isPlayerSupported.value = player.value.supportPlayer !== "NONE";
     player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerErrorDebounce);
+    player.value.on(player.value.Events.STREAM_AVAILABLE, handlePlayerCanPlay);
     // player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
     // emitting when hls.isSupported() is false
     player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
@@ -384,10 +384,10 @@ const loadPlayerConfig = () => {
   } finally {
     Object.entries(finalPlayerConfig).forEach(([key, value]) => {
       switch (key) {
-        case "volume":
-          videoRef.value.volume = value / 100;
-          playerConfig.value[key] = value;
-          break;
+        // case "volume":
+        //   videoRef.value.volume = value / 100;
+        //   playerConfig.value[key] = value;
+        //   break;
         case "isDanmuClose":
           handleDanmuChange(value);
           break;
@@ -523,6 +523,7 @@ const handlePlayerCanPlay = () => {
   isLatestScreenRecorded.value = false;
   isVideoLoading.value = false;
   isVideoLoadFailed.value = false;
+  videoLoadErrorStartTime.value = null;
 };
 
 const handlePlayerError = (data) => {

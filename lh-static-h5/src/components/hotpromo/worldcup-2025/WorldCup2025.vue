@@ -95,19 +95,21 @@
             <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-fifa.png" alt="" />
           </div>
           <div class="title-txt">世俱杯</div>
-          <div class="title-status ongoing" v-if="currentListItem.status === 'ONGOING' && !showNotStart">
-            <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-match-ongoing.svg" alt="" />
-            &nbsp; 进行中
-          </div>
 
-          <div class="title-status notstart" v-if="currentListItem.status === 'ONGOING' && showNotStart">
+          <div class="title-status notstart" v-if="currentListItem.startTime > currentTime">
             <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-match-notstart.svg" alt="" />
             &nbsp; 未开始
           </div>
-
-          <div class="title-status ended" v-if="currentListItem.status === 'ENDED'">
+          <div class="title-status ended" v-else-if="currentListItem.endTime <= currentTime">
             <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-match-ended.svg" alt="" />
             &nbsp; 已结束
+          </div>
+          <div
+            class="title-status ongoing"
+            v-else-if="currentListItem.endTime > currentTime && currentTime >= currentListItem.startTime"
+          >
+            <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-match-ongoing.svg" alt="" />
+            &nbsp; 进行中
           </div>
         </div>
         <div class="vs-time">{{ getDisplayDateTime(currentListItem.matchTime) }}</div>
@@ -322,6 +324,9 @@ const { promoCode } = toRefs(props);
 const totalValidBet = ref();
 const totalDeposit = ref();
 const tableData = ref();
+
+const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
+
 const fetchTableData = async () => {
   try {
     const res = await getFifaQuiz2025PromoRecord(promoCode.value);
@@ -564,9 +569,13 @@ const filteredSpecialList = computed(() => {
   return currentListItem.value.occasions;
 });
 
-watch(list, () => {
-  model.value = findInitialIndex();
-}, { immediate: true });
+watch(
+  list,
+  () => {
+    model.value = findInitialIndex();
+  },
+  { immediate: true }
+);
 
 const showNotStart = computed(() => {
   return moment(currentListItem.value.startTime).isAfter(moment());
