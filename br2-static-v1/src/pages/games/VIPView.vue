@@ -172,7 +172,7 @@
               </template>
               <template v-else-if="colIndex === 1">
                 <div style="text-align: center; font-size: 11px">
-                  {{ $t("vip.deposit") }} {{ store.currency.value }}
+                  {{ $t("vip.bet") }} {{ store.currency.value }}
                   <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>

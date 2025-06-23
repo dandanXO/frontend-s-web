@@ -472,8 +472,8 @@ onUnmounted(() => {
     background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/countdown-bg.png) no-repeat;
     background-size: 100% 100%;
     aspect-ratio: 295 / 24;
-    margin: 14px 24px 16px;
-    font-size: 16px;
+    margin: 14px 0 16px;
+    font-size: 13px;
     font-weight: 700;
     color: #fff;
   }
