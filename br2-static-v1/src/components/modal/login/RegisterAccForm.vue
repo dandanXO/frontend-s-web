@@ -186,9 +186,10 @@ const register = () => {
             if (store.hasToken()) {
               router.push("/");
             }
-            uiStore.loginView = "";
+            // uiStore.loginView = "";
             isAgreeReg.value = false;
-            location.href = "/";
+            // location.href = "/";
+            uiStore.loginView = "regSuccess";
           } else {
             $q.notify({
               color: "negative",

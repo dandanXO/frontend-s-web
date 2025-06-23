@@ -113,6 +113,7 @@
   </div>
 
   <LoginModal />
+  <RegisterSuccessModal />
 </template>
 
 <script>
@@ -130,12 +131,14 @@ import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
 
 import LoginModal from "src/components/modal/login/LoginModal.vue";
+import RegisterSuccessModal from "src/components/modal/login/RegisterSuccessModal.vue";
 
 export default defineComponent({
   name: "MainLayout",
 
   components: {
-    LoginModal
+    LoginModal,
+    RegisterSuccessModal
   },
 
   setup() {
