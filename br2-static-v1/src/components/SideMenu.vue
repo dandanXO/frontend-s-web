@@ -88,7 +88,7 @@
         v-for="(link, index) in socialMediaLinks"
         :key="index"
         class="side-menu-social-media-item"
-        :href="link.url"
+        @click="goToLink(link.url)"
         target="_blank"
       >
         <img :src="require(`../assets/images/sideMenu/socialMedia/icon-${link.icon}.png`)" />
@@ -152,6 +152,11 @@ const openCSInNewTab = (url) => {
   const absoluteUrl = url;
   window.open(absoluteUrl, "_blank");
 };
+const goToLink = (url) => {
+  //TODO: NO PUT 1st
+  // window.open(url, "_blank");
+}
+
 </script>
 <style lang="scss" scoped>
 .menu-open {
@@ -344,7 +349,7 @@ const openCSInNewTab = (url) => {
           padding: 7px 0;
           max-width: 98px;
           background: linear-gradient(#404040, #404040) padding-box,
-            linear-gradient(360deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%) border-box;
+          linear-gradient(360deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%) border-box;
           border: 0.5px solid transparent;
           border-radius: 6px;
 
@@ -372,6 +377,12 @@ const openCSInNewTab = (url) => {
         background: #4b49434d;
         border-radius: 50%;
         padding: 8px;
+
+        &:active{
+          filter: brightness(1.2);
+          transform: translate(0px ,1px)
+        }
+
         img {
           max-width: 24px;
         }
