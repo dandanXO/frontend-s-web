@@ -36,7 +36,7 @@ export default {
     personalInformation: "Personal Information",
     verifyMobileNumber: "Verify Mobile Number",
     email: "E-mail",
-    changePassword: "Change Password",
+    changePassword: "Alterar senha",
     referral: "Referral",
     announcement: "Announcement",
     mail: "Mail",
