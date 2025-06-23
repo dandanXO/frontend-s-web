@@ -517,7 +517,6 @@
                 @click="scrollDownFullGames"
               >
                 {{ $t("home.showAll") }}
-                {{ filteredSubGameList.length }}
                 <q-icon name="chevron_right" size="xs" />
               </q-btn>
             </div>
@@ -754,92 +753,49 @@
             <span class="txt-style">{{ $t("home.cat_fishing") }}</span>
           </div>
           <div class="platform-game-container grid-view revamp">
-            <template v-for="(item, index) in fishGameTADAList" :key="index">
-              <div
-                class="platform-game-item btn-effect"
-                @click="playGame(item.name, 'TaDa', item.code, item.status, item.gameType, item.id)"
-              >
-                <div class="platform-game-img">
-                  <div
-                    class="game--bg"
-                    :style="{
-                      backgroundImage: (() => {
-                        try {
-                          return `url(${require(`../assets/images/games/fish/tada-${item.code.toLowerCase()}.png`)})`;
-                        } catch (e) {
+            <template v-for="(item, index) in fishGameList" :key="index">
+              <template v-if="index < showValue">
+                <div
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                >
+                  <div class="platform-game-img">
+                    <div
+                      class="game--bg"
+                      :style="{
+                        backgroundImage: (() => {
                           try {
-                            return `url(${imgURLGame}${item.icon})`;
+                            return `url(${require(`../assets/images/games/fish/${
+                              item._iconPrefix
+                            }-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(${
-                              store.h5Url
-                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(${
+                                store.h5Url
+                              }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            }
                           }
-                        }
-                      })()
-                    }"
-                  ></div>
+                        })()
+                      }"
+                    ></div>
+                  </div>
+                  <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                 </div>
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-              </div>
+              </template>
             </template>
-
-            <template v-for="(item, index) in fishGameJILIList" :key="index">
-              <div
-                class="platform-game-item btn-effect"
-                @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
-              >
-                <div class="platform-game-img">
-                  <div
-                    class="game--bg"
-                    :style="{
-                      backgroundImage: (() => {
-                        try {
-                          return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
-                        } catch (e) {
-                          try {
-                            return `url(${imgURLGame}${item.icon})`;
-                          } catch (e) {
-                            return `url(${
-                              store.h5Url
-                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        }
-                      })()
-                    }"
-                  ></div>
-                </div>
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-              </div>
-            </template>
-
-            <template v-for="(item, index) in fishGameJDBList" :key="index">
-              <div
-                class="platform-game-item btn-effect"
-                @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
-              >
-                <div class="platform-game-img">
-                  <div
-                    class="game--bg"
-                    :style="{
-                      backgroundImage: (() => {
-                        try {
-                          return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
-                        } catch (e) {
-                          try {
-                            return `url(${imgURLGame}${item.icon})`;
-                          } catch (e) {
-                            return `url(${
-                              store.h5Url
-                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        }
-                      })()
-                    }"
-                  ></div>
-                </div>
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-              </div>
-            </template>
+            <q-btn
+              v-if="fishGameList.length > 12"
+              class="show-all-btn"
+              :class="{ expanded: isShowAllFullGames }"
+              flat
+              no-caps
+              @click="scrollDownFullGames"
+            >
+              {{ $t("home.showAll") }}
+              <q-icon name="chevron_right" size="xs" />
+            </q-btn>
           </div>
         </div>
       </template>
@@ -891,7 +847,7 @@
       <div class="character">
         <img src="../assets/images/index/download-app-left.png" alt="Mascot" />
       </div>
-      <div class="app-info" style="display:none;">
+      <div class="app-info" style="display: none">
         <h3>
           <img src="../assets/images/index/tick-icon.png" />
           DOWNLOAD THE APP
@@ -1292,15 +1248,16 @@ const activateSlide = (clickedItem) => {
   }
 };
 
-const gameClickFromMenu = (menuGameSelected) => {
+const gameClickFromMenu = (gameCode) => {
   let catSelected = null;
   let index = 0;
-  if (!menuGameSelected.code) {
+  if (!gameCode) {
     catSelected = categoriesList.value.find((cat) => cat.title === "Hot");
   } else {
-    index = categoriesList.value.findIndex((cat) => cat.code === menuGameSelected.code);
+    index = categoriesList.value.findIndex((cat) => cat.code === gameCode);
     catSelected = categoriesList.value[index];
   }
+  console.log("hit 1", catSelected);
   activateSlide(catSelected);
   slideToIndex(index);
 };
@@ -2336,6 +2293,29 @@ const loadHotGameList = () => {
     });
 };
 
+const fishGameList = computed(() => {
+  const result = [];
+  for (const game of fishGameTADAList.value) {
+    result.push({
+      ...game,
+      _iconPrefix: "tada"
+    });
+  }
+  for (const game of fishGameJILIList.value) {
+    result.push({
+      ...game,
+      _iconPrefix: "jili"
+    });
+  }
+  for (const game of fishGameJDBList.value) {
+    result.push({
+      ...game,
+      _iconPrefix: "jdb"
+    });
+  }
+  return result;
+});
+
 const fishGameTADAList = ref([]);
 
 const loadTADAFishGameList = () => {
@@ -2591,31 +2571,31 @@ function loadData() {
     .get("/opt-session/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
-        // banners.value = res.data;
-        banners.value = [
-          {
-            promoPageId: null,
-            desktopImageUrl: "promo-1.png",
-            desktopImageUrlDark: null,
-            mobileImageUrl: "promo-1.png",
-            mobileImageUrlDark: null,
-            redirectUrl: "/url/promo",
-            category: "HOME",
-            displayStartTime: 1577847600000,
-            displayEndTime: 1893553199000
-          },
-          {
-            promoPageId: null,
-            desktopImageUrl: "promo-2.png",
-            desktopImageUrlDark: null,
-            mobileImageUrl: "promo-2.png",
-            mobileImageUrlDark: null,
-            redirectUrl: "/url/promo",
-            category: "HOME",
-            displayStartTime: 1577836800000,
-            displayEndTime: 1893542399000
-          }
-        ];
+        banners.value = res.data;
+        // banners.value = [
+        //   {
+        //     promoPageId: null,
+        //     desktopImageUrl: "promo-1.png",
+        //     desktopImageUrlDark: null,
+        //     mobileImageUrl: "promo-1.png",
+        //     mobileImageUrlDark: null,
+        //     redirectUrl: "/url/promo",
+        //     category: "HOME",
+        //     displayStartTime: 1577847600000,
+        //     displayEndTime: 1893553199000
+        //   },
+        //   {
+        //     promoPageId: null,
+        //     desktopImageUrl: "promo-2.png",
+        //     desktopImageUrlDark: null,
+        //     mobileImageUrl: "promo-2.png",
+        //     mobileImageUrlDark: null,
+        //     redirectUrl: "/url/promo",
+        //     category: "HOME",
+        //     displayStartTime: 1577836800000,
+        //     displayEndTime: 1893542399000
+        //   }
+        // ];
 
         setTimeout(() => {
           bannerLoading.value = false;
@@ -2704,6 +2684,12 @@ const getPlatList = () => {
       loadHotGameList();
 
       loadCategoryLists();
+
+      setTimeout(() => {
+        if (route.query.game) {
+          gameClickFromMenu(route.query.game);
+        }
+      }, 100);
     })
     .catch((err) => {});
 };
@@ -2742,54 +2728,44 @@ const openPopup = (noticeType) => {
     isStationNotice.value = true;
   }
 };
+
 const gotoPromo = (banner) => {
-  const urlPattern = /^\/url\/(.*)/;
-  const platformPattern = /^\/platform\/(.*)/;
-  const gamePattern = /^\/game\/(.*)/;
-  const openPattern = /^\/open\/(.*)/;
-  const openGamePattern = /^\/openGame\/(.*)/;
+  const urlSplit = banner.redirectUrl.split("|");
+  const gameSplit = urlSplit.map((part) => part.split("/"));
 
-  if (banner.redirectUrl.match(urlPattern)) {
-    const extractedUrl = banner.redirectUrl.match(urlPattern)[1];
-    router.push(`${extractedUrl}`);
-  } else if (banner.redirectUrl.match(platformPattern)) {
-    const extractedUrl = banner.redirectUrl.match(platformPattern)[1];
-
-    if (extractedUrl === "SABA") {
-      // gameName: SABA platformCode: SABA gameCode:  gameStatus: OPEN gameType: SPORT gameId: 50
-      playGame(extractedUrl, extractedUrl, "", "OPEN", "SPORT", "50");
-    } else if (extractedUrl === "Evo") {
-      // gameName: Evo platformCode: Evo gameCode:  gameStatus: OPEN gameType: LIVE gameId: 2
-      playGame(extractedUrl, extractedUrl, "", "OPEN", "LIVE", "2");
-    } else if (extractedUrl === "JILI") {
-      // gameName: JiliGames platformCode: JILI gameCode:  gameStatus: OPEN gameType: SLOT gameId: 8
-      openGame(extractedUrl, extractedUrl, "", "OPEN", "SLOT", "8");
+  if (urlSplit.length >= 2) {
+    const type = urlSplit[0];
+    if (type === "open") {
+      if (gameSplit[1][1] === "LuckySport") {
+        playGame(
+          gameSplit[1][0],
+          gameSplit[1][1],
+          "#/special/uefaeuro",
+          gameSplit[1][3],
+          gameSplit[1][4],
+          gameSplit[1][5]
+        );
+      } else {
+        playGame(gameSplit[1][0], gameSplit[1][1], gameSplit[1][2], gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
+      }
+    } else if (type === "page") {
+      router.push(`/${urlSplit[1]}`);
+    } else {
+      router.push(`/promo?name=${banner.redirectUrl}`);
     }
-  } else if (banner.redirectUrl.match(gamePattern)) {
-    const extractedUrl = banner.redirectUrl.match(gamePattern)[1];
-    switch (extractedUrl) {
-      case "spribe/aviator":
-        // gameName: Aviator platformCode: Spribe gameCode: aviator gameStatus: OPEN gameType: CASUAL gameId: 9568
-        playGame("Aviator", "Spribe", "aviator", "CASUAL", "LIVE", "9568");
-      default:
-        return null;
+  } else {
+    if (banner.redirectUrl.includes("https://")) {
+      window.open(banner.redirectUrl, "_blank");
+    } else if (banner.redirectUrl === "app_login") {
+      if (isH5.value && downloadAppRef.value) downloadAppRef.value.click();
+    } else {
+      if (banner.redirectUrl === "redpacketrain") {
+        // isMoneyRainModal.value = true;
+        popupPromo.value = "money-rain";
+      } else {
+        router.push(`/promo?name=${banner.redirectUrl}`);
+      }
     }
-  } else if (banner.redirectUrl.match(openPattern)) {
-    const extractedUrl = banner.redirectUrl.match(openPattern)[1];
-    const [gameName, platformCode, gameCode, gameStatus, gameType, gameId] = extractedUrl.split("/");
-    playGame(gameName, platformCode, gameCode, gameStatus, gameType, gameId);
-  } else if (banner.redirectUrl.match(openGamePattern)) {
-    const extractedUrl = banner.redirectUrl.match(openGamePattern)[1];
-    const queryString = extractedUrl.replace("/openGame/", "");
-    const params = new URLSearchParams(queryString);
-    const gameName = params.get("gameName");
-    const platformCode = params.get("platformCode");
-    const gameStatus = params.get("gameStatus");
-    const gameType = params.get("gameType");
-    const gameId = params.get("gameId");
-    openGame(gameName, platformCode, "", gameStatus, gameType, gameId);
-  } else if (banner.redirectUrl.slice(0, 4) === "http") {
-    window.open(banner.redirectUrl, "_blank");
   }
 };
 
@@ -3137,6 +3113,13 @@ watch(
   }
 );
 
+watch(
+  () => route.query.game,
+  (newGameCode) => {
+    gameClickFromMenu(newGameCode);
+  }
+);
+
 const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
   if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP") && spinLuckyWheelPromoHomePopupRef.value) {
     spinLuckyWheelPromoHomePopupRef.value.checkIsCanShowPopup();
@@ -3155,7 +3138,14 @@ const checkSpinWheel = () => {
 };
 
 const getJackpotAmt = () => {
-  ui.jackpotAmt = 25909870;
+  api
+    .get("/app/jackpot")
+    .then((res) => {
+      // debugger;
+      if (res.code === 0) {
+        ui.jackpotAmt = res.data.value;
+      }
+    })
 };
 
 const showSpinWheel = () => {

@@ -304,13 +304,14 @@ const toggleMenuOpen = () => {
   menuOpen.value = !menuOpen.value;
 };
 
-const gameClick = (game) => {
+const gameClick = (gameCode) => {
   if (route.path === "/home") {
-    emits("gameClick", game);
-    menuOpen.value = false;
+    emits("gameClick", gameCode);
   } else {
-    router.push("/home");
+    // router.push("/home");
+    router.push({ path: "/home", query: { game: gameCode } });
   }
+  menuOpen.value = false;
 };
 
 const topDownloadUrl = ref("");
