@@ -39,7 +39,7 @@
         <div class="livestream-list-item__badge-wrapper">
           <div class="livestream-list-item__badge">
             <img v-if="live.name === 'SYSTEM'" src="@/assets/home/livestream/system-avatar.png" loading="lazy" />
-            <img v-else-if="live.avatar" :src="imgURL + live.avatar" loading="lazy" />
+            <img v-else-if="live.avatar" :src="imgStreamerURL + live.avatar" loading="lazy" />
             <img v-else src="@/assets/images/profile/default-1.png" loading="lazy" />
             {{ live.name === "SYSTEM" ? "雷火" : live.name }}
           </div>
@@ -75,6 +75,8 @@ const emit = defineEmits(["scroll-reach-right"]);
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
+const imgStreamerURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/streamer/";
+
 const swiperInstance = ref(null);
 
 const swiperConfig = computed(() => {
@@ -108,7 +110,7 @@ const getDisplayDateTime = (date) => {
   } else if (diffInDays === 1) {
     return eventDate.format("明日 HH:mm");
   } else {
-    return eventDate.format("MM/DD");
+    return eventDate.format("MM/DD HH:mm");
   }
 };
 

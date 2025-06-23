@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= productName %></title>
+
+    <meta charset="utf-8" />
+    <meta name="description" content="<%= productDescription %>" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>"
+    />
+    <meta property="og:title" content="Thai real money games" />
+    <meta property="og:description" content="Thai real money games" />
+    <meta property="og:image" content="https://tha.55ace.com/static/images/index/logo.png" />
+    <meta property="og:image:secure_url" content="https://tha.55ace.com/static/images/index/logo.png" />
+    <meta property="og:url" content="https://tha.55ace.com/" />
+
+    <link rel="apple-touch-icon" sizes="64x64" href="favicon.ico" />
+    <link rel="shortcut icon" type="image/png" href="favicon.ico" />
+    <link rel="icon" type="image/ico" href="favicon.ico" />
+
+    <!-- PolyFill Script To Support Lower Version of Browser/Device -->
+    <script type="text/javascript">
+      // Polyfill for globalThis
+      if (typeof globalThis === "undefined") {
+        Object.defineProperty(Object.prototype, "__magic__", {
+          get: function () {
+            return this;
+          },
+          configurable: true
+        });
+        __magic__.globalThis = __magic__;
+        delete Object.prototype.__magic__;
+
+        if (typeof window !== "undefined") {
+          // Browser environment
+          window.globalThis = window;
+        } else if (typeof global !== "undefined") {
+          // Node.js environment
+          global.globalThis = global;
+        } else if (typeof self !== "undefined") {
+          // Web workers
+          self.globalThis = self;
+        }
+      }
+
+      // Polyfill for replaceAll
+      if (!String.prototype.replaceAll) {
+        String.prototype.replaceAll = function (search, replacement) {
+          return this.split(search).join(replacement);
+        };
+      }
+      // Now you can use globalThis safely
+      // console.log(globalThis);
+    </script>
+  </head>
+  <body id="th3-static-v1">
+    <!-- DO NOT touch the following DIV -->
+    <div id="q-app"></div>
+  </body>
+</html>

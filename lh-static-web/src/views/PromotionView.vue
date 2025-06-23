@@ -188,6 +188,9 @@
             <div v-if="selectedPromo.redirectUrl === 'lh1-blast-tv-austin-major-2025'">
               <BlastAustin :promoCode="selectedPromo.promoCode" />
             </div>
+            <div v-if="selectedPromo.redirectUrl === 'laohuji'">
+              <Lh1DailySlotBonus :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'" v-html="selectedPromo.pageContent"></div>
           </div>
           <div
@@ -230,6 +233,7 @@ const Fifa2025Promo = defineAsyncComponent(() => import("@/components/hotpromo/f
 const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/yalla-compass/YallaCompass.vue"));
 const MesaPromo = defineAsyncComponent(() => import("@/components/hotpromo/mesa/MesaPromo.vue"));
 const BlastAustin = defineAsyncComponent(() => import("@/components/hotpromo/blast-austin/BlastAustin.vue"));
+const Lh1DailySlotBonus = defineAsyncComponent(() => import("@/components/hotpromo/lh1-daily-slot-bonus/Lh1DailySlotBonus.vue"));
 
 export default defineComponent({
   name: "PromoView",
@@ -241,7 +245,8 @@ export default defineComponent({
     MesaPromo,
     BlastAustin,
     TorontoMasters,
-    Fifa2025Promo
+    Fifa2025Promo,
+    Lh1DailySlotBonus
   },
   setup() {
     const isDark = useDark();

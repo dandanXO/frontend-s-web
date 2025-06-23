@@ -58,7 +58,7 @@
               <img src="../assets/images/account/deposit-svg.svg" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
-            <div v-if="promoPercentage" class="promo-percentage">{{ promoPercentage }} {{ $t("records.bonus") }}</div>
+            <div v-if="promoPercentage !== ''" class="promo-percentage">{{ promoPercentage }} {{ $t("records.bonus") }}</div>
           </router-link>
           <router-link to="/withdraw">
             <div class="acct-nav-item">
@@ -244,6 +244,7 @@ import { useUI } from "stores/ui";
 import { Platform } from "quasar";
 import { t } from "src/boot/lang";
 import { i18nStore } from "src/router/language";
+import { isAndroid } from "boot/utils";
 
 const selfTgurl = ref("");
 const fallbackCopyTextToClipboard = (text) => {
@@ -334,9 +335,11 @@ const showTransferModal = ref(false);
 
 const confirmSignOutDialog = ref(false);
 
+const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
 const promoPercentage = computed(() => {
-  if (!store.claimedFtdPrivilege) return "53%";
-  if (!store.claimedSecondPrivilege) return "35%";
+  if (isAndroid() && store.canClaimFtdPrivilege) return "38";
+  if (store.canClaimSecondPrivilege) return "100";
+  if (store.canClaimThirdPrivilege) return "150";
   return ""; // Optional: for other cases if needed
 });
 

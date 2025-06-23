@@ -308,9 +308,12 @@ export default {
     playReal: "Play real",
     freeTrial: "Free trial",
     sendOtp: "Send OTP",
-    check: "Check"
+    check: "Check",
+    payAgain: "Pay again",
   },
   notify: {
+    cancelPayment: "Cancel Payment",
+    cancelPaymentWillLose: "Cancel of payment will lose",
     loggingIn: "Logging in...",
     loggingOut: "Logging out...",
     phoneVerifySuccessful: "Phone verified successfully",
@@ -418,6 +421,8 @@ export default {
     useFtdPrivilege: "Use Slot First Deposit Privilege",
     useFtdBonus: "First Deposit Bonus",
     use2ndBonus: "2nd Deposit Bonus",
+    use3rdBonus: "3rd Deposit Bonus",
+    appDepositBonus: "App Deposit Bonus",
     unlimited: "Unlimited",
     wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
     wagerRequirementEg: "Eg. Deposit 100 Rs, require 1,000 Rs wager",
@@ -864,6 +869,7 @@ export default {
     digitalCurrencyWithdrawal: "digital currency withdrawal"
   },
   hotPromo: {
+    unusedCoupons: "You still have unused coupons from last time, continue to use them?",
     name: "Name",
     date: "Date",
     amount: "Amount",
@@ -978,7 +984,6 @@ export default {
       username: "Username",
       betVolume: "Bet Volume",
       rank: "Rank",
-      dailyOrWeekly: "Daily/Weekly",
       rankingBonusRatio: "Ranking Bonus Ratio",
       myBets: "My Bets",
       myReward: "My Rewards",
@@ -992,7 +997,7 @@ export default {
       rules2:
         "Weekly Ranking Rewards: 0.6% of the platform's total weekly revenue will contribute to the weekly prize pool. This pool will be automatically distributed to players weekly based on their positions in the weekly rankings.",
       activityRules1:
-        "Players' rankings on the daily leaderboard, weekly leaderboard, and overall ranking are based on their corresponding total bet amount.",
+        "Players' rankings on the daily leaderboard, and overall ranking are based on their corresponding total bet amount.",
       activityRules2: "Rewards will be displayed on the leaderboard event page.",
       activityRules3:
         "The daily leaderboard is calculated from 00:00 to 24:00 local time. Daily rewards will be issued within half an hour after the end of the daily leaderboard and can be claimed manually on the promotions page.",

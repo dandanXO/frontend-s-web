@@ -25,6 +25,10 @@ export const getGameQuizTitle = (siteId) => {
   return https().request("/game-quiz/title", Method.GET, { siteId: siteId }, ContentType.form);
 };
 
+export const getGameQuizOccasionsList = (promoCode) => {
+  return https().request("/game-quiz/occasions", Method.GET, { promoCode: promoCode }, ContentType.form);
+};
+
 export const getGameQuizAnswers = (query) => {
   return https().request("/game-quiz-answer", Method.GET, query, ContentType.form);
 };
@@ -35,4 +39,16 @@ export const updateGameQuizAnswer = (id, status) => {
 
 export const getGameQuizAnswersForExport = (query) => {
   return https().request("/game-quiz-answer/export", Method.GET, query, ContentType.form);
+};
+
+export const getGameQuizOccasions = (query) => {
+  return https().request("/game-quiz-occasion", Method.GET, query, ContentType.form);
+};
+
+export const updateGameQuizOccasions = (id, status) => {
+  return https().request(`/game-quiz-occasion/${id}?_method=PUT`, Method.POST, { status: status }, ContentType.form);
+};
+
+export const getGameQuizOccasionsForExport = (query) => {
+  return https().request("/game-quiz-occasion/export", Method.GET, query, ContentType.form);
 };

@@ -11,7 +11,6 @@ export default {
     personalCenter: "Personal Center",
     deposit: "Deposit",
     bank: "Bank",
-    addCrypto: "Add crypto",
     addVirtualWallet: "Add Virtual Wallet",
     addBankCard: "Add Bank Card",
     addBank: "Add Bank",
@@ -71,7 +70,8 @@ export default {
     fishing: "Fishing",
     activitiesDetails: "Activities Details",
     addCard: "Add Card",
-    information: "Information",
+    addCrypto: "Add Crypto",
+    information: "Information"
   },
   bottomNav: {
     home: "Home",
@@ -93,9 +93,12 @@ export default {
     password_rules_01: "Please insert password",
     password_rules_02: "The characters of password must be above 6",
     forgotPassword: "Forgot Password",
-    forgotPassword_desc: "Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.",
+    forgotPassword_desc:
+      "Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.",
     register_agree_01: "I have Agree To The ",
     register_agree_02: "Use Privacy Agreement",
+    alreadyHaveAnAcc: "Already have an account?",
+    login: "Log in",
     email: "Email",
     email_placeholder: "Please enter email",
     email_rules_01: "Please insert email",
@@ -220,13 +223,22 @@ export default {
     evp: "EVP",
     evp_placeholder: "Please enter EVP",
     evp_rules_01: "Please insert EVP",
-    evp_rules_02: "Please insert valid EVP"
+    evp_rules_02: "Please insert valid EVP",
+    firstName: "First Name",
+    firstName_placeholder: "Enter your first name",
+    firstName_rules_01: "Please insert your first name",
+    firstName_rules_02: "Please enter a valid first name",
+    lastName: "Last Name",
+    lastName_placeholder: "Enter your last name",
+    lastName_rules_01: "Please insert your last name",
+    lastName_rules_02: "Please enter a valid last name",
+    taxId: "Tax ID",
+    taxId_placeholder: "Please enter your Tax ID"
   },
   btn: {
     confirm: "Confirm",
     submit: "Submit",
     addNewAccount: "Add New Account",
-    updated: "Updated",
     updating: "Updating...",
     addCrypto: "Add crypto",
     addVirtualWallet: "Add virtual wallet",
@@ -237,6 +249,7 @@ export default {
     post: "Post",
     loading: "Loading",
     loading_plsWait: "Loading... Please wait...",
+    loading_data: "Loading data… Please wait…",
     cancel: "Cancel",
     signOut: "Sign Out",
     back: "Back",
@@ -248,7 +261,12 @@ export default {
     recharge: "Recharge",
     getInterestProfit: "Get Interest Profit",
     notAMember: "Not a member?",
-    createAccount: "Create account"
+    createAccount: "Create account",
+    profit: "Profit",
+    loss: "Loss",
+    unbinding: "Unbinding",
+    deposit: "Deposit",
+    updated: "Updated"
   },
   notify: {
     noRecord: "No Record",
@@ -281,7 +299,9 @@ export default {
     telegram: "Telegram",
     whatsapp: "WhatsApp",
     language: "Language",
-    downloadApp: "Download APP"
+    downloadApp: "Download APP",
+    showing16Of100Games: "Showing 16 of 100 games",
+    balance: "Balance"
   },
   home: {
     menu_lobby: "Lobby",
@@ -315,7 +335,8 @@ export default {
     logout: "LOG OUT",
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
     interestProfit: "Interest Profit",
-    version: "Version"
+    version: "Version",
+    balance: "Balance"
   },
   deposit: {
     selectAmount: "Select Amount",
@@ -711,9 +732,88 @@ export default {
     vip: "VIP"
   },
   hotPromo: {
+    name: "Name",
+    date: "Date",
+    amount: "Amount",
+    list_of_winners: "List of Winners",
+    terms_and_Conditions: "Terms and Conditions",
+    on_other_days_three_times_daily: "On Other Days, Three Times Daily",
+    every_friday_saturday_and_sunday: "Every Friday, Saturday, and Sunday",
+    starts_now: "Starts now",
+    starts_at: "Starts at",
+    rewind_time: "Rewind time",
+    events: "Events",
+    ranking_and_bonus: "Ranking and Bonus",
+    activities: "Activities",
+    current_valid_bets: "Current Valid Bets",
+    remainingTimes: "Remaining times",
+    promoExclusionNotice: "Notice: This promotion is not counted towards CASINO and SPORTS wager!",
+    deposit: "Deposit",
+    dailyWagerCount: "Number of daily wager",
+    deposits_of_the_day: "Deposits of the day",
+    currentSignIn: "Current Sign-in",
+    consecutiveDepositBonus:
+      "The more consecutive days of deposit requirements you complete, the more extra bonus you will get.",
+    save_image: "Save Image",
+    share: "Share",
+    CASH_OUT_COSTS: "CASH OUT COSTS",
+    invitation_wins: "Invitation wins",
+    next_round: "Next Round",
+    countdown: "Countdown",
+    invitationRecords: "Invitation records",
+    lotteryRecords: "Lottery records",
+    noRecords: "No Records",
+    activityRules: "Activity rules",
+    record: "Record",
+    rules: "Rules",
+    countdown_to_next_free_spins: "Countdown to next free spins",
+    this_round_has_ended: "This round has ended.",
+    invite_to_earn_spin: "Invite to earn spin",
+    time: "time",
+    rotate: "rotate",
+    no_records: "No records",
+    receive: "Receive",
+    received: "Received",
+    time_left: "time left",
+    go_withdraw_now: "Go withdraw now",
+    rs: "RS",
+    youGet: "You get",
+    withdraw_money_over_rs: "Withdraw money over Rs",
+    claim_now: "Claim now",
+    claimed: "Claimed",
+    bonus_claim_time: "Bonus claim time",
+    promoEndsOn: "Promo Ends On",
+    earnMoney: {
+      earnMoney: "Earn Money",
+      congratsOnGetting: "Congratulations on getting"
+    },
     aviatorWheel: {
       remainingDrawTimes: "Remaining draw times",
       congratulations: "Congratulations"
+    },
+    ftdDepositBonus: "First Time Deposit Bonus",
+    redemptionCode: "Redemption Code",
+    newplayerGuide: "New Player Guide",
+    depositSpinWheel: {
+      instruction: "Complete the deposit task to participate in the wheel activity and get a bonus of up to ",
+      depositNow: "Deposit Now",
+      upto: "UP to",
+      remainingTimes: "Remaining times",
+      depositSpin: "Deposit Rs {min} to get 1 spin.",
+      spin: "Spin",
+      rules: "Rules",
+      activityRules: "Activity rules",
+      rule_01:
+        "The activity includes four types of carousels: Silver, Gold, Diamond, and Special. You can unlock different levels of carousels by recharging. The higher the level, the more generous the rewards will be.",
+      rule_02: "Every draw has a 100% chance of winning a prize.",
+      rule_03: "All rewards will be deposited directly into your wallet.",
+      rule_04: "The bonus requires one turnover to withdraw.",
+      rule_05:
+        "The right to interpret this event belongs to B9.game. If you have any questions, please contact customer service.",
+      silver: "Silver",
+      gold: "Gold",
+      diamond: "Diamond",
+      supreme: "Supreme"
     },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",
@@ -722,6 +822,107 @@ export default {
       days: "days",
       signIn: "Sign in",
       signedIn: "Signed in"
+    },
+    megaSharingWheel: {
+      wheelTitle: "Mega Sharing Roulette",
+      missionTitle: "Rewards",
+      invitersUsersDeposit: "Inviter's Deposit Count ≥ ",
+      invitersUsersValidBet: "Inviter's Valid Bet ≥ ",
+      EligibleInvitedUsers: "Eligible Invited Users ≥ ",
+      missionDescription: "Finish the task to claim your ticket",
+      timeLimited: "Time-limited",
+      day: "Days",
+      hour: "Hours",
+      minute: "Min",
+      second: "Sec",
+      rewardClaimed: "Reward has already been claimed"
+    },
+    jackpotAviator: {
+      daily: "Daily",
+      weekly: "Weekly",
+      rules: "Rules",
+      history: "History",
+      receive: "Receive",
+      ranking: "Ranking",
+      username: "Username",
+      betVolume: "Bet Volume",
+      rank: "Rank",
+      dailyOrWeekly: "Daily/Weekly",
+      rankingBonusRatio: "Ranking Bonus Ratio",
+      myBets: "My Bets",
+      myReward: "My Rewards",
+      ranksLeft: "Ranks Left",
+      jackpot: "Jackpot",
+      noRank: "No Rank",
+      activityRules: "Activity rules",
+      termsConditions: "Terms & Conditions",
+      rules1:
+        "Daily Ranking Rewards: 1.5% of the platform's total daily pilot revenue will be included in the daily prize pool. This pool will be automatically distributed to players daily based on their positions in the daily rankings.",
+      rules2:
+        "Weekly Ranking Rewards: 0.6% of the platform's total weekly revenue will contribute to the weekly prize pool. This pool will be automatically distributed to players weekly based on their positions in the weekly rankings.",
+      activityRules1:
+        "Players' rankings on the daily leaderboard, weekly leaderboard, and overall ranking are based on their corresponding total bet amount.",
+      activityRules2: "Rewards will be displayed on the leaderboard event page.",
+      activityRules3:
+        "The daily leaderboard is calculated from 00:00 to 24:00 local time. Daily rewards will be issued within half an hour after the end of the daily leaderboard and can be claimed manually on the promotions page.",
+      activityRules4:
+        "The weekly ranking is calculated from 00:00 local time on Monday to 24:00 local time on Sunday. Weekly rewards will be issued within half an hour after the end of the weekly cycle and can be claimed manually on the promotions page.",
+      termsCondition1:
+        "Before applying for rewards, players must provide their phone number and bank account information. The phone number, IP address, and bank account information must match the region and personal data. Any abnormal behavior by the player will result in the cancellation of their bonuses or earnings.",
+      termsCondition2:
+        "Players who open multiple accounts or fraudulent accounts will lose their eligibility to participate in events due to improper behavior on the platform, and the related accounts will be frozen.",
+      termsCondition3: "Please be sure to read these terms and conditions carefully before participating in this event."
+    },
+    goldenEgg: {
+      ranking: "Ranking",
+      userName: "Username",
+      betVolume: "Bet Volume"
+    },
+    spinReferWheel: {
+      paymentRequestSubmitted: "Payment request submitted",
+      stillNeedToMakeWithdrawal: "Still need to make withdrawal",
+      willBePaidToYourRsAccount: "will be paid to your RS account",
+      inviteFriendsToHelp: "Invite Friends To Help",
+      referFriendToRegister: "Refer a friend to register, deposit and verify your phone to win free spins",
+      only: "Only",
+      toGo: "to go"
+    },
+    duration: "Duration",
+    longTerm: "Long-term (ongoing)",
+    eligibility: "Eligibility",
+    successfulDepositMember: "All members who have made at least one successful deposit",
+    newMember: "All new registered member",
+    desc: "Description",
+    tnc: "Terms and Conditions",
+    cashbackWeekly: {
+      description: "Weekly cashback based on your betting activity and the corresponding percentage",
+      maxCashback: "Max {num}%",
+      cashback: "{num}% Cashback",
+      upgradeDifference: "{amount} bets to VIP{vip}",
+      tnc01: "Weekly cashback is given as a reward every week.",
+      tnc02: "The period over which the weekly cashback is calculated runs from Monday at 00:00 to Sunday at 23:59.",
+      tnc03: "Cashback claim time: From Monday of next week 06:00 to Friday 23:59, will expire if not redeemed.",
+      tnc04: "The number of Real Money Losses multiplied by the Refund % is the Refund/Cashback for the week.",
+      tnc05:
+        "If you have not placed any bets during the period when the cashback was active or if your winnings for the last week or total winnings are greater than your losses, you will not receive cashback.",
+      tnc06:
+        "The higher your VIP level (please refer to the VIP upgrade program), the higher the cashback percentage, up to a maximum of 25%.",
+      tnc07: "Maximum cashback reward limit per person per week is R$10000.",
+      tnc08: "The cashback amount can be withdrawn directly or used to continue playing.",
+      tnc09:
+        "Players who are winners in the history of the our platform do not participate in the loss return settlement. This activity is limited to the benefits of players who have lost to the platform.",
+      tnc10: "To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion."
+    },
+    receiveEarn: {
+      description: "Receive up to 100 BRL in free bet bonus",
+      tnc01: "You can initiate a withdrawal when the accumulated amount reaches 100 BRL.",
+      tnc02: "Inviting friends to register will help you withdraw money quickly.",
+      tnc03: "Each user will receive a single free spin per day.",
+      tnc04:
+        "SEach user has a 3-day validity period for each activity and can participate in the activity multiple times.",
+      tnc05: "If you get extra cash points, you can play games for free and win even more real money.",
+      tnc06: "If you do not withdraw the money within 3 days, it will be lost.",
+      tnc07: "To avoid any misunderstandings, AKB188 reserves the final right of interpretation for this promotion."
     }
   },
   maintenance: {
@@ -827,5 +1028,29 @@ export default {
     35009: "The privilege will take effect soon",
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege."
+  },
+  content: {
+    nospinleft: "No spins left",
+    title1: "The registration time starts from the time the registration is completed.",
+    message1: "Once your accumulated amount reaches 1000 PKR, you can withdraw.",
+    message2: "When you have no spins left, invite new players to register and deposit to earn additional free spins.",
+    message3:
+      "The event lasts for 3 days. After the event ends, accumulated rewards will be reset and the event will restart.",
+    message4: "Each user can enjoy one free spin per day, which will be added at 00:00 daily.",
+    message5:
+      "The invitee must verify their phone number and must not have a duplicate IP address to qualify for the referral reward.",
+    aviatorPromoIntro:
+      "Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! The prize pool for the top 50 is 1,250,000 PKR!",
+    aviatorGoldenEgg:
+      "When betting in Aviator every day, when the effective betting amount reaches 888 PKR, you can get the chance to smash the golden egg (SUNEHRI ANDY). Maximum reward: 88,888 PKR, the probability of winning is 3.6%",
+    aviatorTopTurnover:
+      "When betting on Aviator, the player with the highest cumulative turnover will qualify for first place.",
+    cashRainIntro: "Each round of cash rain freely distributes 666,666 PKR.",
+    cashRainMaxPerRound: "Maximum cashback amount per round: 66,666 PKR.",
+    cashRainFreeDistribution: "Each round freely distributes cashback.",
+    cashRainClaimCondition:
+      "Deposit ≥ PKR 300 on the same day and complete daily bets totaling ≥ PKR 350 to claim your free bonus.",
+    cashRainUsage: "The received money can be directly used for playing games or withdrawing.",
+    cashRainVIP: "The higher the VIP membership level, the greater the amount received."
   }
 };

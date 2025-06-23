@@ -81,14 +81,15 @@ const modalTriggerList = ref([
 const combinedStatus = computed(() => ({
   ...statusFromApi.value,
   claimedFtdPrivilege: store.claimedFtdPrivilege,
-  claimedSecondPrivilege: store.claimedSecondPrivilege,
+  canClaimSecondPrivilege: store.canClaimSecondPrivilege,
+  canClaimThirdPrivilege: store.canClaimThirdPrivilege,
   eligibleThirdPrivilege: store.eligibleThirdPrivilege
 }));
 
 const isLuckyDay = computed(() => moment().date() % 10 === 1);
 
 const modalImageIndex = computed(() => {
-  if (modalIndex.value === 1 && (isAndroid() || store.isFromGooglePackage)) return 6;
+  // if (modalIndex.value === 1 && (isAndroid() || store.isFromGooglePackage)) return 6;
   return modalIndex.value;
 });
 
@@ -189,14 +190,19 @@ const checkAppLogin = async () => {
     return;
   }
   try {
-    if (isAndroid() || store.isFromGooglePackage) {
-      const res = await eventapi.get("/session/app-login-bonus/popUp?promoCode=pak-app-login-phone-bonus");
-      if (res.code === 0 && res.data) {
-        modalType.value = "APP_LOGIN_APK";
-      } else {
-        showNextModal();
-      }
-    } else if (!combinedStatus.value.isAppLogin) {
+    // if (isAndroid() || store.isFromGooglePackage) {
+    //   const res = await eventapi.get("/session/app-login-bonus/popUp?promoCode=pak-app-login-phone-bonus");
+    //   if (res.code === 0 && res.data) {
+    //     modalType.value = "APP_LOGIN_APK";
+    //   } else {
+    //     showNextModal();
+    //   }
+    // } else if (!combinedStatus.value.isAppLogin) {
+    //   modalType.value = "APP_LOGIN_H5";
+    // } else {
+    //   showNextModal();
+    // }
+    if (!combinedStatus.value.isAppLogin) {
       modalType.value = "APP_LOGIN_H5";
     } else {
       showNextModal();
@@ -240,20 +246,17 @@ const checkModalType = async () => {
       }
       break;
     case 2:
-      if (!combinedStatus.value.claimedFtdPrivilege && shouldShowModalAgain(modalIndex.value)) {
-        modalType.value = "FIRST_DEPOSIT";
+      if (combinedStatus.value.canClaimSecondPrivilege && shouldShowModalAgain(modalIndex.value)) {
+        modalType.value = "SECOND_PRIVILEGE";
       } else {
         showNextModal();
       }
       break;
     case 3:
       if (
-        combinedStatus.value.claimedFtdPrivilege &&
-        !combinedStatus.value.claimedSecondPrivilege &&
-        store.balance <= 50 &&
-        shouldShowModalAgain(modalIndex.value)
+        combinedStatus.value.canClaimThirdPrivilege && shouldShowModalAgain(modalIndex.value)
       ) {
-        modalType.value = "FIRST_DEPOSIT_AMOUNT";
+        modalType.value = "THIRD_PRIVILEGE";
       } else {
         showNextModal();
       }
@@ -278,13 +281,17 @@ const recheckModalType = async () => {
     await getData(false);
     checkAppLogin();
   } else if (
-    combinedStatus.value.claimedFtdPrivilege &&
-    !store.claimedSecondPrivilege &&
-    store.balance <= 50 &&
+    combinedStatus.value.canClaimSecondPrivilege &&
+    shouldShowModalAgain(2)
+  ) {
+    modalIndex.value = 2;
+    modalType.value = "SECOND_PRIVILEGE";
+  } else if (
+    combinedStatus.value.canClaimThirdPrivilege &&
     shouldShowModalAgain(3)
   ) {
     modalIndex.value = 3;
-    modalType.value = "FIRST_DEPOSIT_AMOUNT";
+    modalType.value = "THIRD_PRIVILEGE";
   } else if (combinedStatus.value.eligibleThirdPrivilege && store.balance < 30 && shouldShowModalAgain(4)) {
     modalIndex.value = 4;
     modalType.value = "SECONDARY_DEPOSIT_AMOUNT";
@@ -397,6 +404,7 @@ onMounted(() => {
 
   .modal-checkbox {
     margin-bottom: 12px;
+    text-align: center;
   }
 
   .modal-countdown {
@@ -414,6 +422,7 @@ onMounted(() => {
       --countdown-text-shadow-color: #71090b;
 
       &.is-ftd {
+          color: #23B150;
         &::after {
           --countdown-text-shadow-color: #097109;
         }
@@ -451,6 +460,7 @@ onMounted(() => {
     .modal-img {
       img {
         max-width: 240px;
+        width: 85%;
       }
     }
     .modal-countdown {

@@ -1,12 +1,12 @@
 <template>
-  <q-dialog v-model="_modelValue" @show="getRecords">
+  <q-dialog v-model="_modelValue">
     <div class="record-dialog-inner-wrapper">
       <div class="tab-wrapper">
         <div class="tab" :class="{ selected: currentTab === 'invitation' }" @click="handleTabClick('invitation')">
-          Registros de Convites
+          {{ $t("hotPromo.invitationRecords") }}
         </div>
         <div class="tab" :class="{ selected: currentTab === 'lottery' }" @click="handleTabClick('lottery')">
-          Registros de Loteria
+          {{ $t("hotPromo.lotteryRecords") }}
         </div>
       </div>
 
@@ -14,25 +14,29 @@
         <q-tab-panels v-model="currentTab" animated>
           <q-tab-panel name="invitation">
             <div class="record-wrapper invitation">
-              <template v-if="invitationRecords.length">
-                <div v-for="(record, index) in invitationRecords" :key="index" class="record">
-                  <span>{{ moment(record.referTime).format("MM-DD HH:mm:ss") }}</span>
+              <template v-if="info.invitedList.length">
+                <div v-for="(record, index) in info.invitedList" :key="index" class="record">
+                  <span>{{ moment(record.depositDate).format("MM-DD HH:mm:ss") }}</span>
                   <span class="name">{{ record.loginName }}</span>
-<!--                  <span>Invitation successful</span>-->
+                  <!-- <span>Invitation successful</span> -->
                 </div>
               </template>
-              <span v-else class="no-record-text">Sem Registros</span>
+              <span v-else class="no-record-text">
+                {{ $t("hotPromo.noRecords") }}
+              </span>
             </div>
           </q-tab-panel>
           <q-tab-panel name="lottery">
             <div class="record-wrapper lottery">
-              <template v-if="lotteryRecords.length">
-                <div v-for="(record, index) in lotteryRecords" :key="index" class="record">
-                  <span>{{ moment(record.time).format("MM-DD HH:mm:ss") }}</span>
-                  <span class="amount">{{ `${store.currency.value} ${record.amount}` }}</span>
+              <template v-if="info.records.length">
+                <div v-for="(record, index) in info.records" :key="index" class="record">
+                  <span>{{ moment(record.recordTime).format("MM-DD HH:mm:ss") }}</span>
+                  <span class="amount"> {{$t("hotPromo.rs")}} {{ record.bonus }}</span>
                 </div>
               </template>
-              <span v-else class="no-record-text">Sem Registros</span>
+              <span v-else class="no-record-text">
+                {{ $t("hotPromo.noRecords") }}
+              </span>
             </div>
           </q-tab-panel>
         </q-tab-panels>
@@ -43,18 +47,17 @@
 </template>
 <script setup>
 import moment from "moment";
-import { eventapi } from "src/boot/axios";
-import { computed, ref } from "vue";
-import { userStore } from "stores/index";
+import { computed, inject, ref } from "vue";
 
-const store = userStore();
-const props = defineProps(["modelValue", "prize"]);
+const props = defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue"]);
 
 const currentTab = ref("invitation");
 const invitationRecords = ref([]);
 const lotteryRecords = ref([]);
 const isLoading = ref(false);
+
+const info = inject("info");
 
 const _modelValue = computed({
   get: () => props.modelValue,
@@ -64,60 +67,42 @@ const _modelValue = computed({
 const handleTabClick = (tab) => {
   currentTab.value = tab;
 };
-
-const getRecords = () => {
-  const invitationRecordApi = eventapi.get("/refer-spin/invitation-record");
-  const lotteryRecordApi = eventapi.get("/refer-spin/amount-record");
-  isLoading.value = true;
-
-  Promise.allSettled([invitationRecordApi, lotteryRecordApi])
-    .then(([invitationRes, lotteryRes]) => {
-      console.log(invitationRes, lotteryRes);
-      if (invitationRes?.value.code === 0) {
-        invitationRecords.value = invitationRes?.value.data;
-      }
-      if (lotteryRes?.value.code === 0) {
-        lotteryRecords.value = lotteryRes?.value.data;
-      }
-    })
-    .finally(() => {
-      isLoading.value = false;
-    });
-};
 </script>
 <style lang="scss" scoped>
 .record-dialog-inner-wrapper {
   width: 90%;
   max-width: 450px;
-  background-color: #917ca1;
+  background-color: #860000;
   border-radius: 14px;
-  border: 1px solid #e8c4ff99;
   padding: 12px;
 
   .tab-wrapper {
     display: flex;
-    align-items:stretch;
+    align-items: center;
     justify-content: space-between;
-    gap: 12px;
     margin-bottom: 12px;
+    > * {
+      &:first-child {
+        margin-right: 6px;
+      }
+
+      &:nth-child(2) {
+        margin-left: 6px;
+      }
+    }
 
     .tab {
       flex: 1;
       background-color: #d9d9d9;
       border-radius: 12px;
-      padding: 10px 8px;
+      padding: 10px 12px;
       font-size: 16px;
-      display:flex;
-      line-height: 16px;
-      align-items: center;
-      justify-content: center;
       font-weight: 700;
       color: #666666;
       text-align: center;
 
       &.selected {
-        // background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
-        background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+        background: linear-gradient(356.25deg, #FF3A3E -0.21%, #CC1111 93.65%);
         color: #fff;
       }
     }
@@ -134,10 +119,10 @@ const getRecords = () => {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background-color: #5817aa99;
-    border: 1px solid #e8c4ff99;
+    background: #9B111399;
+    border: 1px solid #c4fff799;
     border-radius: 8px;
-    padding: 12px 8px;
+    padding: 12px;
     height: 30vh;
     overflow: auto;
     scrollbar-width: none;
@@ -164,27 +149,25 @@ const getRecords = () => {
       gap: 8px;
 
       > span {
-        white-space: wrap;
         font-size: 12px;
         color: #fff;
         &:last-child {
           text-align: right;
           text-overflow: ellipsis;
-          white-space: wrap;
-          //overflow: hidden;
+          white-space: nowrap;
+          overflow: hidden;
         }
       }
 
       .name {
         text-overflow: ellipsis;
-        white-space: wrap;
-        //white-space: nowrap;
-        //overflow: hidden;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
       .amount {
         font-weight: 900;
-        color: #cd91ff;
+        color: #EC9823;
       }
     }
 
@@ -210,6 +193,7 @@ const getRecords = () => {
     .tab-wrapper {
       .tab {
         font-size: 12px;
+        padding: 10px 30px;
       }
     }
   }
