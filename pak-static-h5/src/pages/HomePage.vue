@@ -2066,7 +2066,7 @@ const checkHash = () => {
     handleActivateSlide(hash);
   } else {
     if (route.path === "/home") {
-      router.replace({ hash: `Lobby` });
+      router.replace({ hash: `#Lobby` });
     }
   }
 };
