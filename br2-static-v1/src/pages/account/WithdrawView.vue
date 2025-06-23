@@ -244,10 +244,12 @@
       </div>
     </template>
 
-    <div class="bottom-tnc q-mt-md">
-      Note: 2% + 50{{ store.currency.label }} of the withdrawal amount will be deducted as bank commission Please double
-      check the withdrawal information, if withdrawal failed or you have any other questions, please contact CS 24/7
-    </div>
+    <template v-if="withdrawalMethods.tips">
+      <div class="bottom-tnc q-mt-md" v-html="withdrawalMethods.tips">
+
+      </div>
+    </template>
+
   </div>
 
   <q-dialog width="100%" v-model="isShowRedirectAddBankModal">
@@ -454,7 +456,7 @@ const submitWithdraw = () => {
     amountRef.value.validate();
 
     $q.loading.show({
-      message: "Withdrawing..."
+      message: t("btn.withdrawing")
     });
 
     // cardRef.value.hasError ||
@@ -529,7 +531,7 @@ const submitWithdrawBank = async () => {
     amountRef.value.validate();
 
     $q.loading.show({
-      message: "Withdrawing..."
+      message: t("btn.withdrawing")
     });
 
     // cardRef.value.hasError ||
