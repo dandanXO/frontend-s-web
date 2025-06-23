@@ -798,7 +798,7 @@ export default {
     go_withdraw_now: "Levantar agora",
     rs: "RS",
     youGet: "Você obtém",
-    withdraw_money_over_rs: "Levantar dinheiro acima de Rs",
+    withdraw_money_over_rs: "Levantar dinheiro acima de R$",
     claim_now: "Reivindicar agora",
     claimed: "Reivindicado",
     bonus_claim_time: "Tempo de reivindicação do bónus",
@@ -1121,7 +1121,8 @@ export default {
     cashRainFreeDistribution: "O valor recebido pode ser usado em jogos ou sacado diretamente.",
     cashRainClaimCondition:
       "Quanto maior o seu nível VIP (consulte o plano de upgrade VIP), maior o valor do envelope recebido.",
-    cashRainUsage: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção.",
+    cashRainUsage:
+      "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção.",
     cashRainVIP: "Quanto maior o nível de membro VIP, maior o valor recebido."
   }
 };

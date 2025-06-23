@@ -331,8 +331,8 @@ const reset = () => {
 
 const handleWheelClick = () => {
   if (spinButtonDisable.value || !info.value.availableSpin) return;
-  // eventapi.post("/session/refer-wheel-spin/spin?promoCode=pak-refer-wheel-spin").then((res) => {
-  eventapi.post("/session/refer-wheel/spin?promoCode=br2-refer-wheel").then((res) => {
+  eventapi.post("/session/refer-wheel-spin/spin?promoCode=br2-refer-wheel").then((res) => {
+    // eventapi.post("/session/refer-wheel/spin?promoCode=br2-refer-wheel").then((res) => {
     if (res.code === 0) {
       prize.value = res.data;
       const prizeIndex = Math.floor(Math.random() * TOTAL_ITEMS);
@@ -372,8 +372,8 @@ const getRemainingTime = (endTime) => {
 };
 
 const handleReceiveClick = () => {
-  // eventapi.post("/session/refer-wheel-spin/claimBonus?promoCode=pak-refer-wheel-spin").then((res) => {
-  eventapi.post("/session/refer-wheel/claimBonus?promoCode=br2-refer-wheel").then((res) => {
+  eventapi.post("/session/refer-wheel-spin/claimBonus?promoCode=br2-refer-wheel").then((res) => {
+    // eventapi.post("/session/refer-wheel/claimBonus?promoCode=br2-refer-wheel").then((res) => {
     if (res.code === 0) {
       $q.notify({
         message: "Receive successfully",
@@ -425,8 +425,8 @@ const updateCountdownTime = () => {
 };
 
 const getRecords = () => {
-  // eventapi.get("/session/refer-wheel-spin/getRecords?promoCode=pak-refer-wheel-spin").then((res) => {
-  eventapi.get("/session/refer-wheel/getRecords?promoCode=br2-refer-wheel").then((res) => {
+  eventapi.get("/session/refer-wheel-spin/getRecords?promoCode=br2-refer-wheel").then((res) => {
+    // eventapi.get("/session/refer-wheel/getRecords?promoCode=br2-refer-wheel").then((res) => {
     if (res.code === 0) {
       winningRecord.value = res.data;
     }

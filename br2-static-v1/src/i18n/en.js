@@ -787,7 +787,7 @@ export default {
     go_withdraw_now: "Go withdraw now",
     rs: "RS",
     youGet: "You get",
-    withdraw_money_over_rs: "Withdraw money over Rs",
+    withdraw_money_over_rs: "Withdraw money over R$",
     claim_now: "Claim now",
     claimed: "Claimed",
     bonus_claim_time: "Bonus claim time",
