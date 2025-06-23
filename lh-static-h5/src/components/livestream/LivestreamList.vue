@@ -99,7 +99,7 @@
             <div class="content-float float-user">
               <div class="user-avatar">
                 <img v-if="item.name === 'SYSTEM'" :src="require('../../assets/images/livestream/system-avatar.png')" />
-                <img v-else-if="item.avatar" :src="imgStreamerURL + item.avatar" />
+                <img v-else-if="item.avatar" :src="imgStreamerUrl + item.avatar" />
                 <img v-else :src="require('../../assets/images/profile/default-1.png')" />
               </div>
               <div>{{ item.name === "SYSTEM" ? "雷火" : item.name }}</div>
