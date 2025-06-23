@@ -328,6 +328,10 @@ onMounted(() => {
   margin-left: -16px;
   margin-right: -16px;
 
+  img{
+    margin-top: -100px;
+  }
+
   &:after {
     content: "";
     // background: linear-gradient(to bottom, rgba(17, 19, 31, 0.9), rgba(255, 255, 255, 0));
