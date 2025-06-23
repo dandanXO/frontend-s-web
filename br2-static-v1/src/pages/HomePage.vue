@@ -160,8 +160,8 @@
             <div class="cat-icon" v-if="item.title !== 'slot'">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
-            <div class="cat-icon"  v-else>
-              <img :src="getSlotImage(item.code)"  alt="" />
+            <div class="cat-icon" v-else>
+              <img :src="getSlotImage(item.code)" alt="" />
             </div>
             <div class="cat-title">{{ translateTitle(item.icon) }}</div>
           </div>
@@ -264,62 +264,75 @@
           <div class="platform-game-wrapper" v-else>
             <div class="platform-game-container grid-view-col-4 revamp">
               <template v-for="(item, index) in hotGameList" :key="index">
-                <template v-if="item.type && item.type === 'game'">
-                  <div
-                    class="platform-game-item btn-effect"
-                    @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
-                  >
-                    <div class="platform-game-img">
-                      <div
-                        class="game--bg"
-                        :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
-                            } catch (e) {
+                <template v-if="index < showValue">
+                  <template v-if="item.type && item.type === 'game' && index < showValue">
+                    <div
+                      class="platform-game-item btn-effect"
+                      @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                    >
+                      <div class="platform-game-img">
+                        <div
+                          class="game--bg"
+                          :style="{
+                            backgroundImage: (() => {
                               try {
-                                return `url(${imgURLGame}${item.icon})`;
+                                return `url(${require(`../assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                              } catch (e) {
+                                try {
+                                  return `url(${imgURLGame}${item.icon})`;
+                                } catch (e) {
+                                  return `url(${
+                                    store.h5Url
+                                  }static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                }
+                              }
+                            })()
+                          }"
+                        ></div>
+                      </div>
+                      <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                    </div>
+                  </template>
+
+                  <template v-else>
+                    <div
+                      class="platform-game-item btn-effect"
+                      @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                    >
+                      <div class="platform-game-img">
+                        <div
+                          class="game--bg"
+                          :style="{
+                            backgroundImage: (() => {
+                              try {
+                                return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                               } catch (e) {
                                 return `url(${
                                   store.h5Url
-                                }static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                }static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                               }
-                            }
-                          })()
-                        }"
-                      ></div>
+                            })()
+                          }"
+                        ></div>
+                      </div>
+                      <div class="platform-game-title">
+                        {{ truncateText(item.alias ? item.alias : item.name, 22) }}
+                      </div>
                     </div>
-                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-                  </div>
-                </template>
-
-                <template v-else>
-                  <div
-                    class="platform-game-item btn-effect"
-                    @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                  >
-                    <div class="platform-game-img">
-                      <div
-                        class="game--bg"
-                        :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
-                            } catch (e) {
-                              return `url(${
-                                store.h5Url
-                              }static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
-                            }
-                          })()
-                        }"
-                      ></div>
-                    </div>
-                    <div class="platform-game-title">
-                      {{ truncateText(item.alias ? item.alias : item.name, 22) }}
-                    </div>
-                  </div>
+                  </template>
                 </template>
               </template>
+              <q-btn
+                v-if="hotGameList.length > 12"
+                class="show-all-btn"
+                :class="{ expanded: isShowAllFullGames }"
+                flat
+                no-caps
+                @click="scrollDownFullGames"
+              >
+                {{ $t("home.showAll") }}
+                <q-icon name="chevron_right" size="xs" />
+              </q-btn>
             </div>
           </div>
         </div>
@@ -395,10 +408,7 @@
               </div>
             </template>
 
-            <div
-              class="platform-game-container grid-view revamp"
-            >
-
+            <div class="platform-game-container grid-view revamp">
               <template v-if="isGameLoading">
                 <div class="loader-container">
                   <div>
@@ -408,7 +418,7 @@
                 </div>
               </template>
               <template v-else>
-<!--                <pre>{{filteredSubGameList}}</pre>-->
+                <!--                <pre>{{filteredSubGameList}}</pre>-->
                 <template v-for="(item, index) in filteredSubGameList" :key="index">
                   <template v-if="index < showValue">
                     <div
@@ -423,8 +433,8 @@
                         <div
                           class="game--bg"
                           :style="{
-                              backgroundImage: `url(${imgURLGame}${item.icon})`
-                            }"
+                            backgroundImage: `url(${imgURLGame}${item.icon})`
+                          }"
                         ></div>
                       </div>
                       <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
@@ -432,9 +442,9 @@
                       <div
                         class="game-platform-label game-platform-label--hot"
                         v-if="
-                            (item.gameLabel && item.gameLabel.includes('LIST')) ||
-                            (item.gameLabel && item.gameLabel.includes('HOT'))
-                          "
+                          (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                          (item.gameLabel && item.gameLabel.includes('HOT'))
+                        "
                       >
                         <img src="../assets/images/index/platform-label-hot.png" alt="" />
                       </div>
@@ -448,8 +458,6 @@
                   </template>
                 </template>
               </template>
-
-
 
               <!--              <template v-for="(item, index) in slot" :key="index">-->
               <!--                <div-->
@@ -480,6 +488,18 @@
               <!--                  <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>-->
               <!--                </div>-->
               <!--              </template>-->
+              <q-btn
+                v-if="filteredSubGameList.length > 12"
+                class="show-all-btn"
+                :class="{ expanded: isShowAllFullGames }"
+                flat
+                no-caps
+                @click="scrollDownFullGames"
+              >
+                {{ $t("home.showAll") }}
+                {{ filteredSubGameList.length }}
+                <q-icon name="chevron_right" size="xs" />
+              </q-btn>
             </div>
           </div>
         </div>
@@ -847,25 +867,33 @@
   </div>
 
   <section class="app-download-section">
-
-
     <div class="app-board">
       <div class="character">
         <img src="../assets/images/index/download-app-left.png" alt="Mascot" />
       </div>
       <div class="app-info">
-        <h3><img src="../assets/images/index/tick-icon.png"/> DOWNLOAD THE APP</h3>
-        <p>Download And Install The Application<br>On Your Desktop For A Smoother<br>Gaming Experience.</p>
+        <h3>
+          <img src="../assets/images/index/tick-icon.png" />
+          DOWNLOAD THE APP
+        </h3>
+        <p>
+          Download And Install The Application
+          <br />
+          On Your Desktop For A Smoother
+          <br />
+          Gaming Experience.
+        </p>
 
         <div class="download-buttons">
-          <button class="android"><img src="../assets/images/index/android-icon.png"/><span>Android</span></button>
+          <button class="android">
+            <img src="../assets/images/index/android-icon.png" />
+            <span>Android</span>
+          </button>
         </div>
       </div>
     </div>
 
-
     <div class="logos">
-
       <div class="providers">
         <img src="../assets/images/index/logo-lists.png" />
       </div>
@@ -875,9 +903,7 @@
       </div>
     </div>
 
-    <footer class="footer">
-      ©{{currentYear}} AKB188.COM Todos os direitos reservados
-    </footer>
+    <footer class="footer">©{{ currentYear }} AKB188.COM Todos os direitos reservados</footer>
   </section>
 
   <GameModal
@@ -1174,7 +1200,7 @@
   </q-dialog>
   <!-- Spin Lucky Wheel promo end -->
 
-  <q-dialog class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true" >
+  <q-dialog class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true">
     <MoneyRainModal @closeModal="closeDialog">
       <template #controller>
         <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
@@ -1237,6 +1263,7 @@ const activateSlide = (clickedItem) => {
 
   isSlotLoading.value = true;
   isGameLoading.value = true;
+  isShowAllFullGames.value = false;
 
   // debugger;
 
@@ -2460,7 +2487,7 @@ const scrollDownHotGames = () => {
 
 const isShowAllFullGames = ref(false);
 const scrollDownFullGames = () => {
-  isShowAllFullGames.value = true;
+  isShowAllFullGames.value = !isShowAllFullGames.value;
 };
 
 const showValue = computed(() => {
@@ -2959,14 +2986,14 @@ const loadAppTabs = () => {
   //     tab.active = index === 0;
   //   });
   // } else {
-    categoriesList.value = [
-      { title: "Hot", icon: "hot", active: true },
-      // { title: "Lobby", icon: "lobby", active: false },
-      // { title: "Slot", icon: "slot", active: false },
-      { title: "Casino", icon: "casino", active: false },
-      { title: "Fishing", icon: "fishing", active: false },
-      { title: "Sport", icon: "sport", active: false }
-    ];
+  categoriesList.value = [
+    { title: "Hot", icon: "hot", active: true },
+    // { title: "Lobby", icon: "lobby", active: false },
+    // { title: "Slot", icon: "slot", active: false },
+    { title: "Casino", icon: "casino", active: false },
+    { title: "Fishing", icon: "fishing", active: false },
+    { title: "Sport", icon: "sport", active: false }
+  ];
   // }
 
   api
@@ -2998,10 +3025,16 @@ const loadAppTabs = () => {
 const loadCategoryLists = () => {
   // console.log(slot.value);
   slot.value.forEach((slotitem, ind1) => {
-    categoriesList.value.splice(1, 0, { title: "slot", code: slotitem.code, icon: slotitem.name, active: false, id: slotitem.id });
-  })
+    categoriesList.value.splice(1, 0, {
+      title: "slot",
+      code: slotitem.code,
+      icon: slotitem.name,
+      active: false,
+      id: slotitem.id
+    });
+  });
   // console.log(categoriesList.value)
-}
+};
 
 const hbDragPos = ref([10, 120]);
 const isHbShow = ref(true);
@@ -3055,8 +3088,7 @@ const gotoFloatPromo = (val) => {
   if (val.type === "PROMO" && val.code === "money-rain") {
     // isMoneyRainModal.value = true;
     popupPromo.value = "money-rain";
-  }
-  else if (val.type === "PROMO") {
+  } else if (val.type === "PROMO") {
     if (store.hasToken()) {
       if (val.code.indexOf("url|") > -1) {
         const page = val.code.replace("url|", "");
@@ -3340,10 +3372,10 @@ onBeforeUnmount(() => {
   .station-notice-wrapper {
     display: flex;
     background: linear-gradient(
-        270deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.11) 50.48%,
-        rgba(255, 255, 255, 0) 100%
+      270deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.11) 50.48%,
+      rgba(255, 255, 255, 0) 100%
     );
     gap: 10px;
     padding: 2px 10px;
@@ -3883,46 +3915,44 @@ onBeforeUnmount(() => {
   }
 }
 
-
 .app-download-section {
   text-align: center;
   padding: 40px 20px;
 }
 
-.character{
-  position:absolute;
-  left:0px;
-  top:0px;
+.character {
+  position: absolute;
+  left: 0px;
+  top: 0px;
   bottom: 0px;
   z-index: 2;
   width: 24%;
 
   img {
-    height:100%;
+    height: 100%;
   }
 
-  @media(max-width: 400px){
+  @media (max-width: 400px) {
     width: 18%;
 
     img {
-      height:75%;
+      height: 75%;
     }
   }
 }
 
-
-.app-board{
-  position:relative;
+.app-board {
+  position: relative;
 }
 
-.app-info{
+.app-info {
   margin-left: auto;
   width: 80%;
-  border: 1px solid #4B4943;
+  border: 1px solid #4b4943;
   border-radius: 10px;
   padding: 5px 12px;
 
-  @media(max-width: 400px){
+  @media (max-width: 400px) {
     width: 65%;
   }
 }
@@ -3938,7 +3968,7 @@ onBeforeUnmount(() => {
   font-size: 14px;
   line-height: 1.5;
   margin-bottom: 15px;
-  padding: 5px ;
+  padding: 5px;
 }
 
 .download-buttons {
@@ -3961,9 +3991,9 @@ button.ios {
 }
 
 button.android {
-  background-color: rgba(255,255,255,0.25);
+  background-color: rgba(255, 255, 255, 0.25);
   color: #fff;
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
@@ -4297,8 +4327,8 @@ button.android {
   }
 }
 
-.swiper-wrapper{
-  width:100%;
+.swiper-wrapper {
+  width: 100%;
 }
 
 .platform-game-container {
@@ -4620,7 +4650,7 @@ button.android {
 
   .cat-icon {
     flex: 3;
-    display:flex;
+    display: flex;
     align-items: center;
 
     img {
@@ -4632,7 +4662,7 @@ button.android {
 
   .cat-title {
     flex: 2;
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -4642,7 +4672,7 @@ button.android {
     font-size: 11px;
     text-align: center;
     line-height: 13px;
-    white-space:normal;
+    white-space: normal;
   }
 }
 
@@ -4814,5 +4844,24 @@ button.android {
   }
 }
 
+.show-all-btn {
+  grid-column: span 4;
+  font-size: 18px;
+  font-weight: 600;
+  color: #00fd7c;
 
+  &.expanded {
+    .q-icon {
+      transform: rotate(-90deg);
+    }
+  }
+
+  .q-icon {
+    background: #00fd7c;
+    margin-left: 10px;
+    border-radius: 50%;
+    color: #1f241f;
+    transform: rotate(90deg);
+  }
+}
 </style>
