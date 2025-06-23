@@ -17,10 +17,10 @@
         </div>
       </div>
       <div class="bet-progressbar">
-        <div class="bet-progressbar__inner" :style="{ width: `${(remainingBet / nextLevelBet) * 100}%` }" />
+        <div class="bet-progressbar__inner" :style="{ width: `${promoInfo.bonusPercentage * 100}%` }" />
       </div>
       <div class="bet-next-level">
-        {{ $t("hotPromo.cashbackWeekly.upgradeDifference", { amount: remainingBet, vip: vipLevel }) }}
+        {{ $t("hotPromo.cashbackWeekly.upgradeDifference", { amount: promoInfo.totalLoss, vip: vipLevel }) }}
       </div>
     </div>
 
@@ -66,6 +66,8 @@
     </div>
   </div>
 
+  <pre>promoInfo--{{ promoInfo }}</pre>
+
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
     <div class="congrats-wrapper">
@@ -102,6 +104,7 @@ const nextLevelBet = ref(1000);
 const vipLevel = computed(() => store.vip.replace("VIP", ""));
 const remainingBet = computed(() => nextLevelBet.value - currentBet.value);
 
+const promoInfo = ref([]);
 const loadPromoInit = () => {
   eventapi
     .get("/session/loss-bonus/init?promoCode=br2-weekly-loss-cashback")
@@ -109,7 +112,7 @@ const loadPromoInit = () => {
       // debugger;
       if (res.code === 0) {
         const { data } = res;
-        console.log(data);
+        promoInfo.value = data;
       }
     })
     .catch((e) => {});
