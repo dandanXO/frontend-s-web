@@ -4018,7 +4018,7 @@ export default {
     53001: 'Referrer cannot be empty',
     54000: 'Register blacklist record not exist',
     54001: 'Register blacklist record already exist',
-    55001: 'Get Live Url Failed',
+    55001: 'Do not get the live url',
     55000: 'The member already exist in the top ranking list'
   },
 }
