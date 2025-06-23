@@ -94,10 +94,10 @@
               @click="gotoFloatPromo(promo)"
               style="padding: 0"
             >
-              <template v-if="promo.code === 'spin-lucky-wheel' && !isShowSticky">
+              <template v-if="promo.code === 'spin-lucky-wheel' && isShowSticky">
                 <SpinLuckyWheelPromoSticky style="width: 100%" />
               </template>
-              <template v-else-if="promo.code === 'spin-lucky-wheel' && isShowSticky">
+              <template v-else-if="promo.code === 'spin-lucky-wheel' && !isShowSticky">
                 <img :src="promo.icon" />
               </template>
               <template v-else>
@@ -891,7 +891,7 @@
       <div class="character">
         <img src="../assets/images/index/download-app-left.png" alt="Mascot" />
       </div>
-      <div class="app-info">
+      <div class="app-info" style="display:none;">
         <h3>
           <img src="../assets/images/index/tick-icon.png" />
           DOWNLOAD THE APP

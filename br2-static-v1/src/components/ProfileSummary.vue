@@ -339,7 +339,8 @@ onMounted(() => {
   }
 
   getTopDownloadUrl();
-  checkTopDownloadAppear();
+  //TODO:: HIDE APP DOWNLOAD 1st.
+  // checkTopDownloadAppear();
 });
 </script>
 

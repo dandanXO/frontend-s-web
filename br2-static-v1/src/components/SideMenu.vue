@@ -78,16 +78,13 @@
         </div>
       </div>
 
-      <div class="side-menu-promo-download-wrapper">
-        <!-- <q-btn class="side-menu-promo-download-item" no-caps flat>
-          <img src="../assets/images/sideMenu/icon-ios.png" />
-          <span>ios</span>
-        </q-btn> -->
-        <q-btn class="side-menu-promo-download-item" no-caps flat>
-          <img src="../assets/images/sideMenu/icon-android.png" />
-          <span>android</span>
-        </q-btn>
-      </div>
+      <!-- TODO:: HIDE it 1st-->
+<!--      <div class="side-menu-promo-download-wrapper">-->
+<!--        <q-btn class="side-menu-promo-download-item" no-caps flat>-->
+<!--          <img src="../assets/images/sideMenu/icon-android.png" />-->
+<!--          <span>android</span>-->
+<!--        </q-btn>-->
+<!--      </div>-->
     </div>
 
     <div class="side-menu-social-media-wrapper">
