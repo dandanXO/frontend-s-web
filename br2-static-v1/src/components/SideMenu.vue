@@ -43,7 +43,7 @@
         v-for="(link, index) in categoryList"
         :key="index"
         class="side-menu-plat-link"
-        @click="emits('gameClick', link)"
+        @click="emits('gameClick', link.code)"
       >
         <img :src="require(`../assets/images/index/category/cat-${link.icon}.png`)" />
         <span>{{ link.name }}</span>

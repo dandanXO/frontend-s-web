@@ -1248,15 +1248,16 @@ const activateSlide = (clickedItem) => {
   }
 };
 
-const gameClickFromMenu = (menuGameSelected) => {
+const gameClickFromMenu = (gameCode) => {
   let catSelected = null;
   let index = 0;
-  if (!menuGameSelected.code) {
+  if (!gameCode) {
     catSelected = categoriesList.value.find((cat) => cat.title === "Hot");
   } else {
-    index = categoriesList.value.findIndex((cat) => cat.code === menuGameSelected.code);
+    index = categoriesList.value.findIndex((cat) => cat.code === gameCode);
     catSelected = categoriesList.value[index];
   }
+  console.log("hit 1", catSelected);
   activateSlide(catSelected);
   slideToIndex(index);
 };
@@ -2683,6 +2684,12 @@ const getPlatList = () => {
       loadHotGameList();
 
       loadCategoryLists();
+
+      setTimeout(() => {
+        if (route.query.game) {
+          gameClickFromMenu(route.query.game);
+        }
+      }, 100);
     })
     .catch((err) => {});
 };
@@ -3103,6 +3110,13 @@ watch(
   async (val) => {
     await nextTick();
     if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
+  }
+);
+
+watch(
+  () => route.query.game,
+  (newGameCode) => {
+    gameClickFromMenu(newGameCode);
   }
 );
 
