@@ -56,6 +56,7 @@ watch(
       background-color: transparent;
       border-radius: 4px;
       border: 1px solid #4b4943;
+      flex: 1;
       .q-tab__label {
         font-size: 14px;
         font-weight: 700;

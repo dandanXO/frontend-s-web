@@ -68,11 +68,9 @@
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
-            <!--            {{ $t("form.depositAmount") }}-->
-            <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
-            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
-              {{ $t("deposit.depositTutorial") }}
-            </div>
+<!--            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">-->
+<!--              {{ $t("deposit.depositTutorial") }}-->
+<!--            </div>-->
           </div>
 
           <div v-if="isBank2" class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
@@ -207,7 +205,6 @@
       >
         {{ $t("btn.submit") }}
       </q-btn>
-      <!--      <div class="tutorial-link q-mt-sm" @click="openDepositPage">{{ $t("deposit.depositTutorial") }}</div>-->
     </div>
 
     <div class="step-desc-div">
@@ -578,7 +575,7 @@ async function confirmDeposit() {
           $q.notify({
             color: "negative",
             position: "top",
-            message: d.message,
+            message: t("error." + d.code),
             icon: "report_problem"
           });
 
@@ -910,16 +907,17 @@ watch(
 );
 
 onActivated(() => {
+
+  loadAppTabs();
   initPay();
-  // checkNewUser();
   loadInfo();
-  resetSelectedMethod();
+  // resetSelectedMethod();
 });
 
 onMounted(() => {
+  // alert("Tis")
   loadAppTabs();
   initPay();
-  // checkNewUser();
   loadInfo();
 });
 </script>
