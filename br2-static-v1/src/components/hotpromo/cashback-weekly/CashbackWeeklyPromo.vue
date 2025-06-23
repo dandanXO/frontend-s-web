@@ -166,7 +166,7 @@ onMounted(() => {
 
       .bet-info-title__max-cashback {
         font-size: 10px;
-        color: #4b4943;
+        color: #fff;
       }
     }
     .bet-info-vip {
@@ -201,7 +201,7 @@ onMounted(() => {
     .bet-progressbar__inner {
       height: var(--bet-progressbar-height);
       border-radius: var(--bet-progressbar-border-radius);
-      background-color: #000;
+      background-color: #fff;
       transition: width 0.3s ease-in-out;
     }
   }
@@ -212,7 +212,7 @@ onMounted(() => {
     bottom: 10px;
     font-size: 10px;
     font-weight: 500;
-    color: #4b4943;
+    color: #fff;
   }
 }
 
