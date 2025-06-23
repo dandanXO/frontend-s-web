@@ -69,19 +69,21 @@
           </div>
           <div class="title-txt">世俱杯</div>
 
-          <div class="title-status ongoing" v-if="currentListItem.status === 'ONGOING' && !showNotStart">
-            <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-ongoing.svg" alt="" />
-            &nbsp; 进行中
-          </div>
-
-          <div class="title-status notstart" v-if="currentListItem.status === 'ONGOING' && showNotStart">
+          <!--          <pre>{{ currentListItem }}</pre>-->
+          <div class="title-status notstart" v-if="currentListItem.startTime > currentTime">
             <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-notstart.svg" alt="" />
             &nbsp; 未开始
           </div>
-
-          <div class="title-status ended" v-if="currentListItem.status === 'ENDED'">
+          <div class="title-status ended" v-else-if="currentListItem.endTime <= currentTime">
             <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-ended.svg" alt="" />
             &nbsp; 已结束
+          </div>
+          <div
+            class="title-status ongoing"
+            v-else-if="currentListItem.endTime > currentTime && currentTime >= currentListItem.startTime"
+          >
+            <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-ongoing.svg" alt="" />
+            &nbsp; 进行中
           </div>
         </div>
         <div class="vs-time">{{ getDisplayDateTime(currentListItem.matchTime) }}</div>
@@ -303,6 +305,9 @@ const { promoCode } = toRefs(props);
 const totalValidBet = ref();
 const totalDeposit = ref();
 const tableData = ref();
+
+const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
+
 const fetchTableData = async () => {
   try {
     const res = await getFifaQuiz2025PromoRecord(promoCode.value);
@@ -469,7 +474,7 @@ const swiperConfig = computed(() => {
     slidesPerGroup: 4,
     spaceBetween: 20,
     modules: [Navigation],
-    navigation: list.value.length > SLIDE_PER_VIEW,
+    navigation: list.value.length > SLIDE_PER_VIEW
     // allowTouchMove: false
   };
 });
@@ -480,24 +485,24 @@ const handleLivestreamClick = (index) => {
   const SLIDE_PER_VIEW = 4;
   const total = list.value.length;
 
-//   let targetIndex;
+  //   let targetIndex;
 
-//   if (index <= 1) {
-//     targetIndex = 0;
-//   } else if (index >= total - 2) {
-//     targetIndex = total - SLIDE_PER_VIEW;
-//   } else {
-//     targetIndex = index - 1;
-//   }
+  //   if (index <= 1) {
+  //     targetIndex = 0;
+  //   } else if (index >= total - 2) {
+  //     targetIndex = total - SLIDE_PER_VIEW;
+  //   } else {
+  //     targetIndex = index - 1;
+  //   }
 
-//   targetIndex = Math.min(Math.max(0, targetIndex), total - SLIDE_PER_VIEW);
+  //   targetIndex = Math.min(Math.max(0, targetIndex), total - SLIDE_PER_VIEW);
 
-//   if (swiperInstance.value) {
-//   swiperInstance.value.slideTo(0, 0); 
-//   setTimeout(() => {
-//     swiperInstance.value.slideTo(targetIndex, 300); 
-//   }, 10);
-// }
+  //   if (swiperInstance.value) {
+  //   swiperInstance.value.slideTo(0, 0);
+  //   setTimeout(() => {
+  //     swiperInstance.value.slideTo(targetIndex, 300);
+  //   }, 10);
+  // }
   selectedTeam.value = "";
   selectedSpecial.value = "";
 };
