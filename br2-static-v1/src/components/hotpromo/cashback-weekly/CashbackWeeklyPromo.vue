@@ -2,13 +2,13 @@
   <div>
     <div class="bet-wrapper">
       <div class="bet-info">
-        <img class="bet-info__icon" src="../../../assets/images/promotion/cashback-weekly/icon-cash.png" />
+        <img class="bet-info__icon" src="../../../assets/images/promotion/cashback-weekly/icon-cash.svg" />
         <div class="bet-info-title">
           <span class="bet-info-title__current-cashback">
             {{ $t("hotPromo.cashbackWeekly.cashback", { num: currentCashbackRate }) }}
           </span>
           <span class="bet-info-title__max-cashback">
-            {{ $t("hotPromo.cashbackWeekly.cashback", { num: currentCashbackRate }) }}
+            {{ $t("hotPromo.cashbackWeekly.maxCashback", { num: maximumCashbackRate }) }}
           </span>
         </div>
         <div class="bet-info-vip">
@@ -149,15 +149,16 @@ onMounted(() => {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: 36px;
 
     .bet-info__icon {
-      max-width: 44px;
+      max-width: 54px;
     }
     .bet-info-title {
       display: flex;
       flex-direction: column;
       font-weight: 500;
+      position: relative;
 
       .bet-info-title__current-cashback {
         font-size: 22px;
@@ -166,7 +167,9 @@ onMounted(() => {
 
       .bet-info-title__max-cashback {
         font-size: 10px;
-        color: #fff;
+        color: #7b7b7b;
+        position: absolute;
+        bottom: -20px;
       }
     }
     .bet-info-vip {
@@ -201,7 +204,7 @@ onMounted(() => {
     .bet-progressbar__inner {
       height: var(--bet-progressbar-height);
       border-radius: var(--bet-progressbar-border-radius);
-      background-color: #fff;
+      background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
       transition: width 0.3s ease-in-out;
     }
   }
@@ -212,7 +215,7 @@ onMounted(() => {
     bottom: 10px;
     font-size: 10px;
     font-weight: 500;
-    color: #fff;
+    color: #7b7b7b;
   }
 }
 

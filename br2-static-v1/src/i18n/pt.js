@@ -916,7 +916,7 @@ export default {
     tnc: "Regras da Promoção",
     cashbackWeekly: {
       description: "Cashback semanal com base na sua atividade de apostas e na porcentagem correspondente.",
-      maxCashback: "Máx. {num}%",
+      maxCashback: "Máx : {num}%",
       cashback: "{num}% Cashback",
       upgradeDifference: "{amount} apostas para VIP{vip}",
       tnc01: "O cashback semanal é concedido como recompensa toda semana.",
