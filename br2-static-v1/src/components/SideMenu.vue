@@ -39,10 +39,15 @@
     </div>
 
     <div class="side-menu-plat-link-wrapper divider">
-      <router-link v-for="(link, index) in categoryList" :key="index" class="side-menu-plat-link" :to="link.url">
+      <div
+        v-for="(link, index) in categoryList"
+        :key="index"
+        class="side-menu-plat-link"
+        @click="emits('gameClick', link)"
+      >
         <img :src="require(`../assets/images/index/category/cat-${link.icon}.png`)" />
         <span>{{ link.name }}</span>
-      </router-link>
+      </div>
     </div>
 
     <div class="side-menu-promo-wrapper divider">
@@ -99,7 +104,7 @@ import ProfileSummary from "../components/ProfileSummary.vue";
 import { useUI } from "stores/ui";
 import { userStore } from "src/stores";
 
-const emits = defineEmits(["closeMenu", "goLogin"]);
+const emits = defineEmits(["closeMenu", "goLogin", "gameClick"]);
 
 const router = useRouter();
 const ui = useUI();
@@ -108,11 +113,11 @@ const topDownload = inject("topDownload");
 
 const categoryList = [
   { icon: "hot", name: "HOT", url: "" },
-  { icon: "pg", name: "PG", url: "" },
-  { icon: "jili", name: "JILI", url: "" },
-  { icon: "pp", name: "PP", url: "" },
-  { icon: "jdb", name: "JDB", url: "" },
-  { icon: "mic", name: "MIC", url: "" }
+  { icon: "pg", name: "PG", url: "", code: "PGF" },
+  { icon: "wcots", name: "One Touch", url: "", code: "WCOTS" },
+  { icon: "tfgaming", name: "TFGaming", url: "", code: "TFGaming" },
+  { icon: "jdb", name: "JDB", url: "", code: "JDB" },
+  { icon: "wcrt", name: "Red tiger", url: "", code: "WCRT" }
 ];
 
 const socialMediaLinks = [

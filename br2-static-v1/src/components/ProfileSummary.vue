@@ -26,12 +26,10 @@
     </div>
   </div>
 
-
-
   <div class="menu-open" :class="{ open: menuOpen }" @click="toggleMenuOpen()">
     <div style="height: 56px" v-if="topDownload && !uiStore.hideDownload"></div>
     <div class="menu-open-inner">
-      <SideMenu @closeMenu="toggleMenuOpen()" />
+      <SideMenu @closeMenu="toggleMenuOpen()" @gameClick="gameClick" />
     </div>
   </div>
 
@@ -180,7 +178,7 @@ import { api } from "boot/axios";
 import SideMenu from "./SideMenu.vue";
 
 const props = defineProps(["homeProfile"]);
-const emits = defineEmits(["closeslot"]);
+const emits = defineEmits(["closeslot", "gameClick"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
@@ -304,6 +302,11 @@ const checkTopDownloadAppear = () => {
 
 const toggleMenuOpen = () => {
   menuOpen.value = !menuOpen.value;
+};
+
+const gameClick = (game) => {
+  emits("gameClick", game);
+  menuOpen.value = false;
 };
 
 const topDownloadUrl = ref("");

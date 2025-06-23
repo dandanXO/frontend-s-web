@@ -1,5 +1,5 @@
 <template>
-  <ProfileSummary :homeProfile="true" />
+  <ProfileSummary :homeProfile="true" @gameClick="gameClickFromMenu" />
   <template v-if="bannerLoading">
     <q-skeleton style="height: 200px" />
   </template>
@@ -152,6 +152,7 @@
       :spaceBetween="10"
       :modules="[Navigation, Grid]"
       class="hometop-categories"
+      @swiper="onSwiper"
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
@@ -1225,20 +1226,45 @@ const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const categoriesList = ref([]);
 
-const isSlotLoading= ref(false);
+const isSlotLoading = ref(false);
 const activateSlide = (clickedItem) => {
   categoriesList.value.forEach((item) => {
     item.active = item === clickedItem;
   });
 
   console.log(clickedItem);
-  console.log(categoriesList.value)
+  console.log(categoriesList.value);
 
-  isSlotLoading.value= true;
-  isGameLoading.value =true;
+  isSlotLoading.value = true;
+  isGameLoading.value = true;
 
   loadGameList("SLOT", clickedItem.id);
 };
+
+const gameClickFromMenu = (menuGameSelected) => {
+  let catSelected = null;
+  let index = 0;
+  if (!menuGameSelected.code) {
+    catSelected = categoriesList.value.find((cat) => cat.title === "Hot");
+  } else {
+    index = categoriesList.value.findIndex((cat) => cat.code === menuGameSelected.code);
+    catSelected = categoriesList.value[index];
+  }
+  activateSlide(catSelected);
+  slideToIndex(index);
+};
+
+const swiperInstance = ref(null);
+
+function onSwiper(swiper) {
+  swiperInstance.value = swiper;
+}
+
+function slideToIndex(index) {
+  if (swiperInstance.value) {
+    swiperInstance.value.slideTo(index);
+  }
+}
 
 const getSlotImage = (code) => {
   try {
@@ -1246,7 +1272,7 @@ const getSlotImage = (code) => {
   } catch (e) {
     return require(`../assets/images/index/game-icon.png`);
   }
-}
+};
 
 const csDragPos = ref([10, 0]);
 const isDraggingCsIcon = ref(false);
@@ -3021,7 +3047,7 @@ const checkHbPromo = () => {
 };
 
 const gotoFloatPromo = (val) => {
-  if (val.type === "PROMO" && val.code === "br2-redpacketrain") {
+  if (val.type === "PROMO" && val.code === "money-rain") {
     // isMoneyRainModal.value = true;
     popupPromo.value = "money-rain";
   }
