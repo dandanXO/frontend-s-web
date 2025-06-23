@@ -109,6 +109,9 @@
         <li>{{ $t("content.message3") }}</li>
         <li>{{ $t("content.message4") }}</li>
         <li>{{ $t("content.message5") }}</li>
+        <li>{{ $t("content.message6") }}</li>
+        <li>{{ $t("content.message7") }}</li>
+        <li>{{ $t("content.message8") }}</li>
       </ol>
     </div>
 

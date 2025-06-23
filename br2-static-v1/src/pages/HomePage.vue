@@ -3114,9 +3114,6 @@ const gotoFloatPromo = (val) => {
         router.push(page);
       } else if (val.code === "/activity-details") {
         router.push(`/activity-details`);
-      } else if (val.code === "spin-lucky-wheel") {
-        popupPromo.value = "spin-lucky-wheel";
-        isShownSpinLuckyWheel.value = true;
       } else {
         router.push(`/promo?name=${val.code}`);
       }

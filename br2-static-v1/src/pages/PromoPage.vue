@@ -103,7 +103,10 @@
                     <div class="top-subtitle" v-if="selectedPromo.subtitle">{{ selectedPromo.subtitle }}</div>
                     <div class="top-title">{{ selectedPromo.title }}</div>
                   </div>
-                  <div class="promo-content-inner" v-if="!selectedParam || (selectedParam && !selectedParam.hidetitle)">
+                  <div
+                    class="promo-content-inner"
+                    v-if="!selectedParam || (selectedParam && !selectedParam?.hidetitle)"
+                  >
                     <div class="content-title">{{ selectedPromo.title }}</div>
                   </div>
 

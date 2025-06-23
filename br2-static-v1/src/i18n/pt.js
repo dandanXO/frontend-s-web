@@ -1082,14 +1082,18 @@ export default {
   content: {
     nospinleft: "Sem rodadas restantes",
     title1: "O tempo de registo começa a contar a partir do momento em que o registo é concluído.",
-    message1: "Assim que o seu montante acumulado atingir 1000 PKR, poderá levantar.",
-    message2:
-      "Quando não tiver mais rodadas, convide novos jogadores a registarem-se e depositarem para ganhar rodadas grátis adicionais.",
-    message3:
-      "O evento dura 3 dias. Após o término do evento, as recompensas acumuladas serão redefinidas e o evento recomeçará.",
-    message4: "Cada utilizador pode usufruir de uma rodada grátis por dia, que será adicionada às 00:00 diariamente.",
-    message5:
-      "O convidado deve verificar o número de telefone e não pode ter endereço IP duplicado para se qualificar para a recompensa de indicação.",
+    message1:
+      "Quando o valor acumulado atingir R$100, você poderá solicitar o saque (o saque será feito para a carteira do jogo).",
+    message2: "Quando não houver giros disponíveis, indique um novo jogador para ganhar um giro grátis.",
+    message3: "O evento dura 3 dias. Após o término, o bônus acumulado será reiniciado e o evento começará novamente.",
+    message4:
+      "Cada usuário pode aproveitar uma chance de giro grátis por dia, e o número de giros é reiniciado às 24:00 todos os dias.",
+    message5: "Após a aprovação da solicitação, o bônus será depositado diretamente na sua carteira.",
+    message6: "O bônus precisa ser apostado duas vezes antes que possa ser sacado.",
+    message7:
+      "O indicado precisa vincular seu número de telefone e conectá-lo ao código de convite do convidador para ser considerado válido.",
+    message8:
+      "O direito de interpretação do evento pertence à AKB188. Em caso de dúvidas, entre em contato com o atendimento ao cliente.",
     aviatorPromoIntro:
       "Desfrute da emoção das apostas com o Aviator! O seu Aviator pode ganhar incríveis 3.216x com apenas um clique! O prémio para os 50 melhores é de 1.250.000 PKR!",
     aviatorGoldenEgg:
