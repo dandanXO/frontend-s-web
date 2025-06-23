@@ -346,8 +346,10 @@ export const DashboardService = {
   getSportLiveMatch(request) {
     const token = sessionStorage.getItem('token')
     return api
-      .get(`/session/live-sport/match?${request}`, {
+      .get(`/session/live-sport/match`, {
+        params: request,
         headers: {
+          // For GET requests, parameters are typically sent as `params`
           token: `${token}`,
         },
       })
@@ -369,8 +371,8 @@ export const DashboardService = {
     const token = sessionStorage.getItem('token')
     return api
       .get(`/session/live-sport/team`, {
+        params: request,
         headers: {
-          params: request, // For GET requests, parameters are typically sent as `params`
           token: `${token}`,
         },
       })
@@ -493,12 +495,14 @@ export const DashboardService = {
 
   createSportLiveStreamer(data) {
     const token = sessionStorage.getItem('token')
-    return api.post('/session/live-sport/streamer', data, {
-      headers: {
-        token: `${token}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    }) .then((response) => {
+    return api
+      .post('/session/live-sport/streamer', data, {
+        headers: {
+          token: `${token}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+      .then((response) => {
         if (response.code === 0) {
           // 檢查後端回傳的業務狀態碼
           return response // 返回實際資料，或者可以返回 true 表示成功
@@ -563,6 +567,19 @@ export const DashboardService = {
     })
   },
   //sport-live-event
+  // 獲取隊伍列表
+  getSportLiveTeamById(sportId) {
+    const token = sessionStorage.getItem('token')
+    return api.get('/session/live-sport/team/list', {
+      params: {
+        sportId,
+      },
+      headers: {
+        token: `${token}`,
+      },
+    })
+  },
+  //sport-live-event
   // 獲取運動賽事列表
   getSportLiveEvents(request) {
     const token = sessionStorage.getItem('token')
@@ -577,23 +594,24 @@ export const DashboardService = {
   // 新增運動賽事
   createSportLiveEvent(data) {
     const token = sessionStorage.getItem('token')
-    return api.post('/session/live-sport/event/save', data, {
-      headers: {
-        token: `${token}`,
-        'Content-Type': 'application/json',
-      },
-    })
-  },
-
-  // 更新運動賽事
-  updateSportLiveEvent(data) {
-    const token = sessionStorage.getItem('token')
-    return api.put('/session/live-sport/event', data, {
-      headers: {
-        token: `${token}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    return api
+      .post('/session/live-sport/event/save', data, {
+        headers: {
+          token: `${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          return response.data // 返回實際資料，或者可以返回 true 表示成功
+        }
+        console.log(response)
+        console.error('新增運動賽事失敗:', response.message || '未知錯誤')
+        reject(response.message)
+      })
+      .catch((error) => {
+        reject(false)
+      })
   },
 
   // 刪除運動賽事
@@ -611,6 +629,62 @@ export const DashboardService = {
     return api.post('/session/siteImage', data, {
       headers: {
         'Content-Type': 'multipart/form-data',
+      },
+    })
+  },
+
+  createSportLiveTeam(data) {
+    const token = sessionStorage.getItem('token')
+    return api
+      .post('/session/live-sport/team', data, {
+        headers: {
+          token: `${token}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          // 檢查後端回傳的業務狀態碼
+          return response // 返回實際資料，或者可以返回 true 表示成功
+        }
+        console.error('更新聊天室 VIP 狀態失敗:', response.message || '未知錯誤')
+        return null // 失敗時返回 null
+      })
+      .catch((error) => {
+        console.error('更新聊天室 VIP 狀態請求失敗:', error) // 捕捉網路或請求錯誤
+        return null // 失敗時返回 null
+      })
+  },
+
+  updateSportLiveTeam(request) {
+    const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
+    return api
+      .put('/session/live-sport/streamer', request, {
+        // PUT 請求，request 作為請求體
+        headers: {
+          token: `${token}`,
+          'Content-Type': 'application/json', // 根據原始設定，使用 JSON 格式
+        },
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          // 檢查後端回傳的業務狀態碼
+          return response // 返回實際資料，或者可以返回 true 表示成功
+        }
+        console.error('更新聊天室 VIP 狀態失敗:', response.message || '未知錯誤')
+        return null // 失敗時返回 null
+      })
+      .catch((error) => {
+        console.error('更新聊天室 VIP 狀態請求失敗:', error) // 捕捉網路或請求錯誤
+        return null // 失敗時返回 null
+      })
+  },
+  deleteSportLiveTeam(request) {
+    const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
+    return api.delete(`/session/live-sport/team/${request.teamId}`, {
+      // params: request, // For GET requests, parameters are typically sent as `params`
+      headers: {
+        token: `${token}`,
       },
     })
   },
