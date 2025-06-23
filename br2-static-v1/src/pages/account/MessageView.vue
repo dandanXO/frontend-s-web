@@ -3,7 +3,7 @@
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noMessage')"></NoInfoComponent>
     <template v-else v-for="(e, i) in mailData" :key="`${e}-${i}`">
-      <div class="time">{{ convertToGMT7Time(e.sendTime) }}</div>
+      <div class="time">{{ convertToGMTMinus3(e.sendTime) }}</div>
       <q-card @click="onDetailsClick(e)" class="msg-container">
 
         <div class="message-wrapper">
@@ -36,7 +36,7 @@ import { ref, onMounted, onActivated } from "vue";
 import { useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
-import { convertToGMT55, convertToGMT7, convertToGMT7Time } from "src/boot/utils";
+import { convertToGMT55, convertToGMT7, convertToGMT7Time, convertToGMTMinus3 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 
