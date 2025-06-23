@@ -322,7 +322,9 @@ const initPlayer = async (play = false) => {
     isVideoLoading.value = false;
     showLatestScreenCanvas.value = false;
     isLatestScreenRecorded.value = false;
-  } catch (e) {}
+  } catch (e) {
+    console.error(e)
+  }
 };
 
 const loadDanmu = async () => {

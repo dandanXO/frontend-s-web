@@ -111,18 +111,19 @@ export class VideoPlayer {
 
   async load(startPlay = false) {
     return new Promise(async (resolve, reject) => {
+      const timeoutTimer = setTimeout(() => reject("load timeout"), 5 * 1000);
       if (this._mediaType === "hls") {
         if (this.supportPlayer === "FULL") {
           this.on(this.Events.MANIFEST_PARSED, async () => {
             startPlay && (await this.play());
+            clearTimeout(timeoutTimer);
             resolve();
           });
-          this._player.once(this.Events.ERROR, () => reject("Load error"));
           this._player.loadSource(this._url);
           this._player.attachMedia(this.videoEl);
         } else if (this.supportPlayer === "NATIVE") {
-          this.on("error", () => reject("Load error"), { once: true });
           this.on("loadedmetadata", async () => {
+            clearTimeout(timeoutTimer);
             startPlay && (await this.play());
             resolve();
           });
@@ -131,6 +132,7 @@ export class VideoPlayer {
       } else {
         this.on(this.Events.SCRIPTDATA_ARRIVED, async () => {
           startPlay && (await this.play());
+          clearTimeout(timeoutTimer);
           resolve();
         });
         this._player.attachMediaElement(this.videoEl);
