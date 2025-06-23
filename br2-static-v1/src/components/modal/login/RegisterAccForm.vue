@@ -245,7 +245,7 @@ const getAffiliateCode = () => {
 const getReferralCode = () => {
   const refCode = sessionStorage.getItem("REFERRAL_CODE");
   if (refCode) {
-    codeAffiliate.value = refCode;
+    referrer.value = refCode;
   }
 };
 
