@@ -20,6 +20,22 @@
       </div>
     </div>
 
+    <div class="withdrawalmethod" v-if="!isLoadingWithdrawalMethod">
+      <div
+        v-for="(method, i) in withdrawalMethods"
+        :key="i"
+        class="withdraw-type-item"
+        @click="selectMethod(method, i)"
+        :class="{ active: i === activeItem }"
+      >
+        <span class="promo" v-if="method.recommended">Recommended</span>
+        <div class="withdraw-img">
+          <img :src="imgURL + '/withdraw/' + method.icon" />
+        </div>
+        <div class="type-name">{{ method.name }}</div>
+      </div>
+    </div>
+
     <div class="bank-account-container" v-if="bankCardList.length > 0">
       <div class="top-wrapper">
         <div class="title">{{ $t("form.withdrawChoose_placeholder") }}</div>
@@ -274,8 +290,8 @@ const withdrawalMethods = reactive({
     withdrawMin: 0,
     withdrawMax: 0,
     withdrawableBalance: 0
-  },
-  UPI: {}
+  }
+  // UPI: {}
 });
 const getWithdrawalMethods = () => {
   isLoadingWithdrawalMethod.value = true;
@@ -290,6 +306,7 @@ const getWithdrawalMethods = () => {
       for (let i = 0, l = response.data.length; i < l; i++) {
         const currentData = response.data[i];
         withdrawalMethods[currentData.code] = currentData;
+        selectMethod(withdrawalMethods[currentData.code], currentData.code);
       }
     } else {
       $q.notify({
@@ -332,6 +349,25 @@ const bankCardList = ref([]);
 const isNoBankCard = computed(() => {
   return bankCardList.value.length === 0;
 });
+
+const activeItem = ref(0);
+
+const selectMethod = (method, index) => {
+  withdrawInfo.withdrawCode = null;
+  withdrawInfo.cardId = null;
+  // selectedWithdrawalMethod.value = method;
+  withdrawInfo.withdrawCode = method.code;
+  // displayMaintenanceDialog.value = method.status === false;
+  // isUSDT.value = withdrawInfo.withdrawCode.includes("USDT");
+  // isEWALLET.value =
+  //   withdrawInfo.withdrawCode.includes("KDPAY") ||
+  //   withdrawInfo.withdrawCode.includes("EBPAY") ||
+  //   withdrawInfo.withdrawCode.includes("OKPAY");
+  // isALIPAY.value = withdrawInfo.withdrawCode.includes("ALIPAY");
+  activeItem.value = index;
+  loadCards();
+};
+
 const loadCards = () => {
   isLoadingBankCard.value = true;
 
@@ -348,7 +384,7 @@ const loadCards = () => {
           $q.notify({
             color: "negative",
             position: "top",
-            message: t('notify.addBankCardFirst'),
+            message: t("notify.addBankCardFirst"),
             icon: "report_problem"
           });
           router.push("/account/bank");
@@ -552,7 +588,8 @@ const checkNewUser = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "Please fill in your personal details",
+      // message: "Please fill in your personal details",
+      message: t("notify.fillInPersonalDetails"),
       icon: "report_problem"
     });
     router.push(`/deposit`);
@@ -811,6 +848,94 @@ const isValidCardAddress = () => {
     padding: 8px 12px;
     font-size: 12px;
     color: #fbab1b;
+  }
+}
+
+.withdrawalmethod {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  text-align: center;
+  overflow-x: unset;
+  padding: 0px 5px;
+  grid-gap: 10px;
+  grid-column-gap: 10px;
+  grid-row-gap: 5px;
+  margin-top: 20px;
+
+  .withdraw-type-item {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+
+    .withdraw-img {
+      border: 2px solid transparent;
+      border-radius: 10px;
+      max-width: 4.5rem;
+    }
+
+    img {
+      width: 100%;
+      background: #394142;
+      padding: 5px;
+      border-radius: 10px;
+    }
+
+    &.active {
+      // background: #212534;
+      // color: #db7e42;
+      // box-shadow: none;
+      // filter: drop-shadow(0px 0px 3px #ffffff);
+      img {
+        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+      }
+
+      .type-name {
+        font-weight: bold;
+      }
+
+      // img {
+      //   border: 2px solid #33bcd4;
+      // }
+    }
+
+    .type-name {
+      line-height: 15px;
+      // overflow-wrap: break-word;
+      white-space: nowrap;
+    }
+
+    .promo {
+      position: absolute;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-position: top center;
+      top: -8px;
+      right: -1px;
+      background: linear-gradient(to right, #de4545, #db7e42);
+      padding: 5px;
+      color: #ffffff;
+      font-size: 12px;
+      line-height: 10px;
+      border-radius: 0 10px;
+      font-weight: bold;
+
+      ::after {
+        position: relative;
+      }
+    }
+  }
+
+  .withdraw-btn {
+    margin: 30px auto;
+
+    &.cancel {
+      margin-right: 60px;
+    }
   }
 }
 </style>
