@@ -121,13 +121,9 @@
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="2" :duration="10">
-            <!-- <div>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to
-              AKB188&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </div> -->
             <div v-if="announcementList">
               <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-                {{ a.content }}
+                {{ a.title }}
               </span>
             </div>
           </marquee-text>
@@ -272,7 +268,6 @@
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                   >
-                    <!-- <pre>{{ `/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png` }}</pre> -->
                     <div class="platform-game-img">
                       <div
                         class="game--bg"
@@ -944,7 +939,8 @@
                     >
                       <q-card>
                         <q-card-section>
-                          {{ ann.content }}
+                          <!-- {{ ann.content }} -->
+                          <span v-html="ann.content" />
                         </q-card-section>
                       </q-card>
                     </q-expansion-item>
@@ -2642,16 +2638,16 @@ const loadAnnouncement = () => {
     if (res.code === 0) {
       if (res.data.announcements) {
         const d = res.data.announcements;
-        // announcementList.value = d;
-        announcementList.value = [
-          {
-            title: "Bem-vindo ao AKB148",
-            content: "Bem-vindo ao AKB148",
-            typeId: 72,
-            createTime: 1729150088000,
-            attachment: null
-          }
-        ];
+        announcementList.value = d;
+        // announcementList.value = [
+        //   {
+        //     title: "Bem-vindo ao AKB148",
+        //     content: "Bem-vindo ao AKB148",
+        //     typeId: 72,
+        //     createTime: 1729150088000,
+        //     attachment: null
+        //   }
+        // ];
       }
       if (res.data.type) {
         announcementTypes.value = res.data.type;
