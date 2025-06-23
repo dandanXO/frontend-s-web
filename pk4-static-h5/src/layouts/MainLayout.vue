@@ -171,6 +171,10 @@ export default defineComponent({
             var platformName = route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform);
             pageName.value = `${platformName} Game Lobby`;
           }
+        } else if (route.path === "/affiliate/internal-message") {
+          hasPage.value = true;
+          prevPage.value = "/affiliate/agent";
+          pageName.value = t("header.message");
         } else if (route.path === "/affiliate/internal-message-detail") {
           hasPage.value = true;
           prevPage.value = "/affiliate/internal-message";
