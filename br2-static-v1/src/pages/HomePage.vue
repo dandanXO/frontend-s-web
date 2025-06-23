@@ -132,7 +132,7 @@
     </div>
 
     <div class="jackpot-banner">
-      <div class="jackpot-digit-grp">
+      <div class="jackpot-digit-grp" v-if="ui.jackpotAmt > 0">
         <span
           v-for="(char, index) in convertToCommaAmount(ui.jackpotAmt, false)"
           :class="{ 'jackpot-symbol': char === ',', 'jackpot-digit': char !== ',' }"
@@ -3101,6 +3101,7 @@ const gotoFloatPromo = (val) => {
 };
 
 let intervalId;
+let jackpotTimer
 
 watch(
   () => promoStore.isShownSpinLuckyWheel,
@@ -3139,9 +3140,16 @@ const getJackpotAmt = () => {
     // debugger;
     if (res.code === 0) {
       ui.jackpotAmt = res.data.value;
+      getJackpotIncrease();
     }
   });
 };
+
+const getJackpotIncrease = () => {
+  jackpotTimer = setInterval(() => {
+    ui.jackpotAmt += 1;
+  },500)
+}
 
 const showSpinWheel = () => {
   eventapi
@@ -3206,6 +3214,7 @@ window.addEventListener("beforeunload", () => {
 
 onBeforeUnmount(() => {
   clearInterval(intervalId);
+  clearInterval(jackpotTimer)
 });
 </script>
 
@@ -3434,14 +3443,22 @@ onBeforeUnmount(() => {
       align-items: center;
       justify-content: center;
       background: linear-gradient(180deg, #ffc27a 32.14%, #ffea9c 60.71%, #ffeeaf 89.29%);
-      width: 15px;
-      height: 20px;
-      color: #0a4d13;
+      width: 18px;
+      height: 25px;
+
       font-weight: 700;
-      font-size: 14px;
+      font-size: 21px;
       line-height: 140%;
       letter-spacing: -0.08%;
       border-radius: 4px;
+
+      >span{
+        background: linear-gradient(180deg, #033309 0%, #008B06 51.04%, #033309 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+      }
     }
   }
 }
