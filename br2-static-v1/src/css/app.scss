@@ -312,6 +312,7 @@ body.body--dark .q-footer {
     margin-bottom: 1px;
     &.inactive {
       display: block;
+      padding: 12px;
     }
     &.hover {
       display: none;
@@ -331,6 +332,7 @@ body.body--dark .q-footer {
         display: block;
         background: url("../assets/images/index/footer-item-bg-active.png") center center no-repeat;
         background-size: 100% auto;
+        padding: 12px;
       }
     }
   }
