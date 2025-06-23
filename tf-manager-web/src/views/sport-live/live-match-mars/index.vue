@@ -2,6 +2,21 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-date-picker
+          v-model="request.matchTime"
+          format="DD/MM/YYYY HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          size="small"
+          type="datetimerange"
+          range-separator=":"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
+          style="width: 250px;margin-left:10px"
+          :shortcuts="shortcuts"
+          :editable="false"
+          :clearable="false"
+          :default-time="defaultTime"
+        />
         <el-select
           v-model="request.sportId"
           size="small"
@@ -33,13 +48,13 @@
         <el-input
           v-model="request.matchName"
           size="small"
-          style="width: 200px; margin-left: 10px"
+          style="width: 150px; margin-left: 10px"
           :placeholder="t('fields.name')"
         />
         <el-input
           v-model="request.matchId"
           size="small"
-          style="width: 200px; margin-left: 10px"
+          style="width: 150px; margin-left: 10px"
           :placeholder="t('fields.id')"
         />
         <el-select
@@ -238,6 +253,11 @@ import { onMounted, reactive, watch } from "vue";
 import { getLiveMatchMars, addToLive, refreshToGetLiveUrl, deleteLiveMatchMars } from "../../../api/live-match-mars";
 import { useI18n } from "vue-i18n";
 import { ElMessage, ElMessageBox } from "element-plus";
+import {
+  convertDateToEnd,
+  convertDateToStart,
+  getShortcuts
+} from '@/utils/datetime'
 
 const { t } = useI18n();
 
@@ -282,6 +302,15 @@ const formLivePost = reactive({
   title: null,
 });
 
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
+
+const now = new Date()
+const defaultStartDate = convertDateToStart(now)
+const defaultEndDate = convertDateToEnd(now)
+
 const request = reactive({
   current: 1,
   size: 30,
@@ -289,7 +318,8 @@ const request = reactive({
   status: null,
   matchName: null,
   matchId: null,
-  supplierStreamUrl: null
+  supplierStreamUrl: null,
+  matchTime: [defaultStartDate, defaultEndDate],
 });
 
 const page = reactive({
@@ -297,6 +327,8 @@ const page = reactive({
   pages: 0,
   loading: false
 });
+
+const shortcuts = getShortcuts(t)
 
 async function handleCopy() {
   const ret = await addToLive(formLivePost);
@@ -396,6 +428,7 @@ function resetQuery() {
   request.matchName = null
   request.supplierStreamUrl = null
   request.matchId = null
+  request.matchTime = [defaultStartDate, defaultEndDate]
 }
 
 function changePage(page) {
@@ -417,7 +450,20 @@ function formatTime(ts) {
 }
 
 async function loadLiveMatchMars() {
-  const { data: ret } = await getLiveMatchMars(request);
+  page.loading = true;
+  const requestCopy = { ...request };
+  const query = {};
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value;
+    }
+  });
+  if (request.matchTime !== null) {
+    if (request.matchTime.length === 2) {
+      query.matchTime = request.matchTime.join(",");
+    }
+  }
+  const { data: ret } = await getLiveMatchMars(query);
   page.pages = ret.pages;
   page.records = ret.records;
   page.loading = false;
