@@ -2,55 +2,55 @@
   <div>
     <q-btn class="receive-earn-btn" no-caps @click="claimPromo()">
       <img src="../../../assets/images/promotion/receive-earn/receive-earn-icon.png" />
-      &nbsp;&nbsp;receive
+      &nbsp;&nbsp;receber
     </q-btn>
 
     <div class="receive-bar-container">
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
-          Duration
+          Duração
         </div>
-        <div class="bar-desc">Long-term (ongoing)</div>
+        <div class="bar-desc">Longo prazo (contínuo)</div>
       </div>
 
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
-          Eligibility
+          Elegibilidade
         </div>
-        <div class="bar-desc">All members who have made at least one successful deposit</div>
+        <div class="bar-desc">Todos os membros que fizeram pelo menos um depósito com sucesso</div>
       </div>
 
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-description.svg" />
-          Description
+          Descrição
         </div>
-        <div class="bar-desc">Members can receive a 100% bonus on their second deposit</div>
+        <div class="bar-desc">Os membros podem receber um bônus de 100% no segundo depósito</div>
       </div>
     </div>
 
-    <div class="promo-subtitle">Terms and Conditions</div>
+    <div class="promo-subtitle">Termos e Condições</div>
 
     <div class="tnc-content">
       <ol>
-        <li>Each member can enjoy this re-deposit bonus once.</li>
+        <li>Cada membro pode aproveitar este bônus de segundo depósito apenas uma vez.</li>
         <li>
-          After successfully making their second deposit during the promotion period, members can apply to receive a
-          100% bonus based on the second deposit amount.
+          Após realizar com sucesso o segundo depósito durante o período da promoção, os membros podem solicitar um bônus de
+          100% com base no valor do segundo depósito.
         </li>
-        <li>The minimum deposit amount is R$100.</li>
-        <li>The maximum re-deposit bonus is R$1000.</li>
-        <li>Withdrawals cannot be made before the bonus is credited to the account.</li>
+        <li>O valor mínimo do depósito é de R$100.</li>
+        <li>O valor máximo do bônus de segundo depósito é de R$1000.</li>
+        <li>Saques não podem ser feitos antes que o bônus seja creditado na conta.</li>
         <li>
-          To participate in this promotion, members must submit an application by clicking the "Join Now" button on this
-          page.
+          Para participar desta promoção, os membros devem enviar uma solicitação clicando no botão "Participar Agora" nesta página.
         </li>
-        <li>The deposit amount and bonus must be wagered at least 36 times before a withdrawal can be made.</li>
-        <li>To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion.</li>
+        <li>O valor do depósito e o bônus devem ser apostados pelo menos 36 vezes antes que seja possível realizar um saque.</li>
+        <li>Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção.</li>
       </ol>
     </div>
+
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
