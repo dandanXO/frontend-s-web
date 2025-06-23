@@ -245,11 +245,8 @@
     </template>
 
     <template v-if="withdrawalMethods.tips">
-      <div class="bottom-tnc q-mt-md" v-html="withdrawalMethods.tips">
-
-      </div>
+      <div class="bottom-tnc q-mt-md" v-html="withdrawalMethods.tips"></div>
     </template>
-
   </div>
 
   <q-dialog width="100%" v-model="isShowRedirectAddBankModal">
@@ -601,13 +598,13 @@ const checkNewUser = () => {
 onMounted(() => {
   getWithdrawalMethods();
   checkNewUser();
-  loadCards();
+  // loadCards();
 });
 
 onActivated(() => {
   getWithdrawalMethods();
   checkNewUser();
-  loadCards();
+  // loadCards();
 });
 
 const isValidCardNumber = () => {

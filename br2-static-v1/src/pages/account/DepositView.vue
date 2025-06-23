@@ -68,9 +68,9 @@
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
-<!--            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">-->
-<!--              {{ $t("deposit.depositTutorial") }}-->
-<!--            </div>-->
+            <!--            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">-->
+            <!--              {{ $t("deposit.depositTutorial") }}-->
+            <!--            </div>-->
           </div>
 
           <div v-if="isBank2" class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
@@ -269,7 +269,7 @@ const checkNewUser = () => {
       color: "negative",
       position: "top",
       // message: "Please fill in your personal details",
-      message: t('notify.fillInPersonalDetails'),
+      message: t("notify.fillInPersonalDetails"),
       icon: "report_problem"
     });
     // router.push(`/account/profile`);
@@ -900,10 +900,10 @@ watch(
 );
 
 onActivated(() => {
-
-  loadAppTabs();
   initPay();
+  loadAppTabs();
   loadInfo();
+  refreshNode();
   // resetSelectedMethod();
 });
 
