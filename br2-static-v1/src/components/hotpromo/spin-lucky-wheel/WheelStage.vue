@@ -58,9 +58,7 @@
         />
         <img class="indicate" src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-indicate.png" />
         <button class="btn" :class="{ disabled: !info.availableSpin }" @click="handleWheelClick">
-          {{ $t("hotPromo.rotate") }}
-          <br />
-          {{ info.availableSpin }} {{ $t("hotPromo.time") }}
+          {{ info.availableSpin }}
         </button>
       </div>
 
@@ -579,11 +577,10 @@ onUnmounted(() => {
         border: none;
         width: 80px;
         max-width: 35%;
-        font-size: 16px;
+        font-size: 40px;
         font-weight: 700;
-        line-height: 20px;
         color: #f9f9f9;
-        padding-top: 10px;
+        padding-top: 16px;
 
         &.disabled {
           filter: grayscale(0.7);
@@ -823,14 +820,14 @@ onUnmounted(() => {
       }
     }
 
-    .wheel-wrapper {
-      .wheel-inner-wrapper {
-        .btn {
-          font-size: 14px;
-          line-height: 18px;
-        }
-      }
-    }
+    // .wheel-wrapper {
+    //   .wheel-inner-wrapper {
+    //     .btn {
+    //       font-size: 14px;
+    //       line-height: 18px;
+    //     }
+    //   }
+    // }
   }
 }
 
@@ -850,6 +847,18 @@ onUnmounted(() => {
           .amount {
             font-size: 32px;
           }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .wheel-stage-wrapper {
+    .wheel-wrapper {
+      .wheel-inner-wrapper {
+        .btn {
+          font-size: 11vw;
         }
       }
     }
