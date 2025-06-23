@@ -66,8 +66,6 @@
     </div>
   </div>
 
-  <pre>promoInfo--{{ promoInfo }}</pre>
-
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
     <div class="congrats-wrapper">
