@@ -78,7 +78,8 @@ export default {
     promo: "Promo",
     earnMoney: "Earn Money",
     wallet: "Wallet",
-    me: "Me"
+    me: "Me",
+    deposit: "Deposit",
   },
   form: {
     prependNumber: "+55",
@@ -250,6 +251,8 @@ export default {
     loading: "Loading",
     loading_plsWait: "Loading... Please wait...",
     loading_data: "Loading data… Please wait…",
+    registeringInProgress: "Registering in progress",
+    loggingOut: "Logging out...",
     cancel: "Cancel",
     signOut: "Sign Out",
     back: "Back",
@@ -284,7 +287,10 @@ export default {
     serialNumberCopied: "Serial Number Copied to clipboard.",
     fillInPersonalDetails: "Please fill in your personal details",
     addSucceed: "Add Succeed",
-    areYouSureUnbind: "Are You Sure To Unbind?"
+    areYouSureUnbind: "Are You Sure To Unbind?",
+    withdrawalSubmitSucceed: "Withdrawal Submit Succeed",
+    copiedToClipboard: "copied to clipboard",
+    addBankCardFirst: "Please add a bank card first",
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",

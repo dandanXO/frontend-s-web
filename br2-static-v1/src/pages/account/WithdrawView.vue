@@ -91,7 +91,7 @@
           <div class="card-icon">
             <q-icon key="md" size="md" name="add" />
           </div>
-          <div class="card-label">Add New Account</div>
+          <div class="card-label">{{ $t("btn.addNewAccount") }}</div>
         </div>
       </div>
     </div>
@@ -249,6 +249,7 @@ import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
+import { t } from "src/boot/lang";
 
 // withdraw component
 const qs = require("qs");
@@ -347,7 +348,7 @@ const loadCards = () => {
           $q.notify({
             color: "negative",
             position: "top",
-            message: "Please add a bank card first.",
+            message: t('notify.addBankCardFirst'),
             icon: "report_problem"
           });
           router.push("/account/bank");
@@ -470,7 +471,7 @@ const submitWithdrawBank = async () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Withdrawal Submit Succeed",
+            message: t("notify.withdrawalSubmitSucceed"),
             icon: "check_circle_outline"
           });
           // props.loadCards();
@@ -516,7 +517,7 @@ const withdrawGo = (callback) => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Withdrawal Submit Succeed",
+          message: t("notify.withdrawalSubmitSucceed"),
           icon: "check_circle_outline"
         });
 

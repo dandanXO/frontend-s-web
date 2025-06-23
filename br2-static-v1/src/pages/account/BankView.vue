@@ -166,6 +166,7 @@ import ConfirmButton from "../../atoms//ConfirmButton.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import AddBankCardModal from "../../components/modal/AddBankCardModal.vue";
 import UpdateBankCardModal from "../../components/modal/UpdateBankCardModal.vue";
+import { t } from "src/boot/lang";
 
 const router = useRouter();
 const store = userStore();
@@ -205,7 +206,7 @@ const copy = (val) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${val} copied to clipboard`,
+        message: `${val} ${t('notify.copiedToClipboard')}`,
         icon: "check_circle_outline"
       });
     })

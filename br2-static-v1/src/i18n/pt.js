@@ -78,7 +78,8 @@ export default {
     promo: "Promoção",
     earnMoney: "Ganhe Dinheiro",
     wallet: "Carteira",
-    me: "Minha Conta"
+    me: "Minha Conta",
+    deposit: "Depósito"
   },
   form: {
     prependNumber: "+55",
@@ -250,6 +251,8 @@ export default {
     loading: "Carregando",
     loading_plsWait: "Carregando... Por favor, aguarde...",
     loading_data: "Carregando dados... Por favor, aguarde...",
+    registeringInProgress: "Registrando...",
+    loggingOut: "Saindo...",
     logging_in: "Entrando",
     cancel: "Cancelar",
     signOut: "Sair",
@@ -287,7 +290,9 @@ export default {
     fillInPersonalDetails: "Por favor, preencha seus dados pessoais",
     addSucceed: "Adição bem-sucedida",
     areYouSureUnbind: "Tem certeza de que deseja desvincular?",
-    withdrawSuceed: "Retirada Enviar com sucesso"
+    withdrawalSubmitSucceed: "Retirada Enviar com sucesso",
+    copiedToClipboard: "Copiado para a área de transferência",
+    addBankCardFirst: "Por favor, adicione um cartão bancário primeiro",
   },
   sideNav: {
     inviteToEarn: "Convidar para Ganhar",
@@ -305,7 +310,7 @@ export default {
     downloadApp: "Download APP",
     showing16Of100Games: "Mostrando 16 de 100 jogos",
     balance: "Saldo",
-    downloadAppText: "Baixe nosso aplicativo e ganhe super prêmios!",
+    downloadAppText: "Baixe nosso aplicativo e ganhe super prêmios!"
   },
   home: {
     menu_lobby: "Lobby",
