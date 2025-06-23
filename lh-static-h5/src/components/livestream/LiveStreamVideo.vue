@@ -277,7 +277,7 @@ const danmu = ref(null);
 const qualities = ref([]);
 const playerConfig = ref({
   isPause: false,
-  volume: true,
+  volume: 1,
   isFullScreen: false,
   isDanmuClose: false,
   quality: DEFAULT_QUALITY,
@@ -384,10 +384,10 @@ const loadPlayerConfig = () => {
   } finally {
     Object.entries(finalPlayerConfig).forEach(([key, value]) => {
       switch (key) {
-        case "volume":
-          videoRef.value.volume = value / 100;
-          playerConfig.value[key] = value;
-          break;
+        // case "volume":
+        //   videoRef.value.volume = value / 100;
+        //   playerConfig.value[key] = value;
+        //   break;
         case "isDanmuClose":
           handleDanmuChange(value);
           break;
