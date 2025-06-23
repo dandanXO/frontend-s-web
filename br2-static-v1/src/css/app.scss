@@ -463,6 +463,9 @@ body.body--dark .q-footer {
 
 .wallet-container {
   color: rgba(255, 255, 255, 0.5);
+  display:flex;
+  flex-wrap: nowrap;
+  align-items: center;
 
   .wallet-btn {
     background: rgba(255, 255, 255, 0.8);

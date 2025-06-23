@@ -555,10 +555,19 @@ onMounted(() => {
     gap: 12px;
     padding-top: 0px;
     padding-bottom: 0px;
+    padding-left: 5px;
     margin-bottom: 4px;
     width: 100%;
     padding-right: 5px;
     position: relative;
+
+    @media(max-width: 390px){
+      gap: 6px;
+
+      .q-btn{
+        padding:4px 8px;
+      }
+    }
 
     &.non-login {
       padding-bottom: 0px;
