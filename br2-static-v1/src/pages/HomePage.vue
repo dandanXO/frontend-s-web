@@ -2591,31 +2591,31 @@ function loadData() {
     .get("/opt-session/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
-        // banners.value = res.data;
-        banners.value = [
-          {
-            promoPageId: null,
-            desktopImageUrl: "promo-1.png",
-            desktopImageUrlDark: null,
-            mobileImageUrl: "promo-1.png",
-            mobileImageUrlDark: null,
-            redirectUrl: "/url/promo",
-            category: "HOME",
-            displayStartTime: 1577847600000,
-            displayEndTime: 1893553199000
-          },
-          {
-            promoPageId: null,
-            desktopImageUrl: "promo-2.png",
-            desktopImageUrlDark: null,
-            mobileImageUrl: "promo-2.png",
-            mobileImageUrlDark: null,
-            redirectUrl: "/url/promo",
-            category: "HOME",
-            displayStartTime: 1577836800000,
-            displayEndTime: 1893542399000
-          }
-        ];
+        banners.value = res.data;
+        // banners.value = [
+        //   {
+        //     promoPageId: null,
+        //     desktopImageUrl: "promo-1.png",
+        //     desktopImageUrlDark: null,
+        //     mobileImageUrl: "promo-1.png",
+        //     mobileImageUrlDark: null,
+        //     redirectUrl: "/url/promo",
+        //     category: "HOME",
+        //     displayStartTime: 1577847600000,
+        //     displayEndTime: 1893553199000
+        //   },
+        //   {
+        //     promoPageId: null,
+        //     desktopImageUrl: "promo-2.png",
+        //     desktopImageUrlDark: null,
+        //     mobileImageUrl: "promo-2.png",
+        //     mobileImageUrlDark: null,
+        //     redirectUrl: "/url/promo",
+        //     category: "HOME",
+        //     displayStartTime: 1577836800000,
+        //     displayEndTime: 1893542399000
+        //   }
+        // ];
 
         setTimeout(() => {
           bannerLoading.value = false;
@@ -2742,54 +2742,44 @@ const openPopup = (noticeType) => {
     isStationNotice.value = true;
   }
 };
+
 const gotoPromo = (banner) => {
-  const urlPattern = /^\/url\/(.*)/;
-  const platformPattern = /^\/platform\/(.*)/;
-  const gamePattern = /^\/game\/(.*)/;
-  const openPattern = /^\/open\/(.*)/;
-  const openGamePattern = /^\/openGame\/(.*)/;
+  const urlSplit = banner.redirectUrl.split("|");
+  const gameSplit = urlSplit.map((part) => part.split("/"));
 
-  if (banner.redirectUrl.match(urlPattern)) {
-    const extractedUrl = banner.redirectUrl.match(urlPattern)[1];
-    router.push(`${extractedUrl}`);
-  } else if (banner.redirectUrl.match(platformPattern)) {
-    const extractedUrl = banner.redirectUrl.match(platformPattern)[1];
-
-    if (extractedUrl === "SABA") {
-      // gameName: SABA platformCode: SABA gameCode:  gameStatus: OPEN gameType: SPORT gameId: 50
-      playGame(extractedUrl, extractedUrl, "", "OPEN", "SPORT", "50");
-    } else if (extractedUrl === "Evo") {
-      // gameName: Evo platformCode: Evo gameCode:  gameStatus: OPEN gameType: LIVE gameId: 2
-      playGame(extractedUrl, extractedUrl, "", "OPEN", "LIVE", "2");
-    } else if (extractedUrl === "JILI") {
-      // gameName: JiliGames platformCode: JILI gameCode:  gameStatus: OPEN gameType: SLOT gameId: 8
-      openGame(extractedUrl, extractedUrl, "", "OPEN", "SLOT", "8");
+  if (urlSplit.length >= 2) {
+    const type = urlSplit[0];
+    if (type === "open") {
+      if (gameSplit[1][1] === "LuckySport") {
+        playGame(
+          gameSplit[1][0],
+          gameSplit[1][1],
+          "#/special/uefaeuro",
+          gameSplit[1][3],
+          gameSplit[1][4],
+          gameSplit[1][5]
+        );
+      } else {
+        playGame(gameSplit[1][0], gameSplit[1][1], gameSplit[1][2], gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
+      }
+    } else if (type === "page") {
+      router.push(`/${urlSplit[1]}`);
+    } else {
+      router.push(`/promo?name=${banner.redirectUrl}`);
     }
-  } else if (banner.redirectUrl.match(gamePattern)) {
-    const extractedUrl = banner.redirectUrl.match(gamePattern)[1];
-    switch (extractedUrl) {
-      case "spribe/aviator":
-        // gameName: Aviator platformCode: Spribe gameCode: aviator gameStatus: OPEN gameType: CASUAL gameId: 9568
-        playGame("Aviator", "Spribe", "aviator", "CASUAL", "LIVE", "9568");
-      default:
-        return null;
+  } else {
+    if (banner.redirectUrl.includes("https://")) {
+      window.open(banner.redirectUrl, "_blank");
+    } else if (banner.redirectUrl === "app_login") {
+      if (isH5.value && downloadAppRef.value) downloadAppRef.value.click();
+    } else {
+      if (banner.redirectUrl === "redpacketrain") {
+        // isMoneyRainModal.value = true;
+        popupPromo.value = "money-rain";
+      } else {
+        router.push(`/promo?name=${banner.redirectUrl}`);
+      }
     }
-  } else if (banner.redirectUrl.match(openPattern)) {
-    const extractedUrl = banner.redirectUrl.match(openPattern)[1];
-    const [gameName, platformCode, gameCode, gameStatus, gameType, gameId] = extractedUrl.split("/");
-    playGame(gameName, platformCode, gameCode, gameStatus, gameType, gameId);
-  } else if (banner.redirectUrl.match(openGamePattern)) {
-    const extractedUrl = banner.redirectUrl.match(openGamePattern)[1];
-    const queryString = extractedUrl.replace("/openGame/", "");
-    const params = new URLSearchParams(queryString);
-    const gameName = params.get("gameName");
-    const platformCode = params.get("platformCode");
-    const gameStatus = params.get("gameStatus");
-    const gameType = params.get("gameType");
-    const gameId = params.get("gameId");
-    openGame(gameName, platformCode, "", gameStatus, gameType, gameId);
-  } else if (banner.redirectUrl.slice(0, 4) === "http") {
-    window.open(banner.redirectUrl, "_blank");
   }
 };
 
