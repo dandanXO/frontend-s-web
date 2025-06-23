@@ -418,6 +418,7 @@ export default {
     receiveMonthlyRewards: "Receber recompensas mensais",
     received: "Recebido",
     receive: "Receber",
+    bet: "Aposta",
     accumulateDeposit: "Depósito Acumulado",
     reward: "Recompensa por",
     levelUpgrade: "Recompensa por Atualização de Nível",
