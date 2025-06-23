@@ -54,24 +54,36 @@
         </template>
       </Column>
 
-      <Column field="streamStatus" header="源流狀態" sortable>
+      <!-- <Column field="streamStatus" header="源流狀態" sortable>
         <template #body="slotProps">
           <Tag
             :severity="getStatusSeverity(slotProps.data.streamStatus)"
             :value="getStatusLabel(slotProps.data.streamStatus)"
           />
         </template>
-      </Column>
+      </Column> -->
 
-      <Column field="createTime" header="創建時間" sortable>
+      <Column field="homeName" header="主隊" sortable>
         <template #body="slotProps">
-          {{ formatDateTime(slotProps.data.createTime) }}
+          {{ slotProps.data.homeName }}
         </template>
       </Column>
 
-      <Column field="updateTime" header="更新時間" sortable>
+      <Column field="awayName" header="客隊" sortable>
         <template #body="slotProps">
-          {{ formatDateTime(slotProps.data.updateTime) }}
+          {{ slotProps.data.awayName }}
+        </template>
+      </Column>
+
+      <Column field="startTime" header="比賽時間" sortable>
+        <template #body="slotProps">
+          {{ formatDateTime(slotProps.data.startTime) }}
+        </template>
+      </Column>
+
+      <Column field="matchTime" header="比賽狀態" sortable>
+        <template #body="slotProps">
+          {{ getStatusLabel(slotProps.data.eventStatus) }}
         </template>
       </Column>
 
@@ -81,17 +93,6 @@
         </template>
       </Column>
 
-      <Column field="supplierStreamId" header="供應商串流ID" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.supplierStreamId }}
-        </template>
-      </Column>
-
-      <Column field="streamerStreamId" header="主播串流ID" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.streamerStreamId }}
-        </template>
-      </Column>
       <Column field="streamerStatus" header="直播主狀態" sortable>
         <template #body="slotProps">
           <Tag
