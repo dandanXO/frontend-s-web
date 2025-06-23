@@ -14,7 +14,7 @@
 
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'br1-slot-ftd' && store.token" :params="list.param" />
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
-    <ReceiveEarnPromo v-if="list.redirectUrl === 'receive-earn'" :params="list.param" />
+    <!-- <ReceiveEarnPromo v-if="list.redirectUrl === 'receive-earn'" :params="list.param" /> -->
 
     <MoneyRainPromo v-if="list.redirectUrl === 'money-rain'" :params="list.param" />
     <RedepositBonusPromo v-if="list.redirectUrl === 'redeposit-bonus'" :params="list.param" />
@@ -55,7 +55,7 @@ import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskProm
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import SlotFtdPromo from "../components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
 import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
-import ReceiveEarnPromo from "./hotpromo/receive-earn/ReceiveEarnPromo.vue";
+// import ReceiveEarnPromo from "./hotpromo/receive-earn/ReceiveEarnPromo.vue";
 import MoneyRainPromo from "./hotpromo/money-rain/MoneyRainPromo.vue";
 import RedepositBonusPromo from "./hotpromo/redeposit-bonus/RedepositBonusPromo.vue";
 import VipPlanBettingUpgrade from "./hotpromo/vip-plan-betting-upgrade/VipPlanBettingUpgrade.vue";
@@ -75,7 +75,7 @@ export default defineComponent({
     InviteFriendPromo,
     SlotFtdPromo,
     SpinLuckyWheelPromo,
-    ReceiveEarnPromo,
+    // ReceiveEarnPromo,
     MoneyRainPromo,
     RedepositBonusPromo,
     VipPlanBettingUpgrade,
