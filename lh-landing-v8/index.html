@@ -41,7 +41,7 @@
 
         <div class="contact-wrapper">
           <img src="./imgs/contact-title.png" alt="" width="100%" style="padding: 10px 10px 5px 10px" />
-          <div class="contact-content">
+          <div class="contact-content" id="original-content">
             <div class="contact-group" style="width: 100%">
               <div class="contact-item contact-item1 w-50" style="height: 100%; justify-content: flex-start">
                 <div class="icon">
@@ -122,6 +122,68 @@
               </a>
             </div>
             <a href="https://www.am787.cc" id="landing-page-link2" target="_blank">
+              <img src="./imgs/contact-download.png" width="100%" />
+            </a>
+          </div>
+
+          <div class="contact-content" id="content-19618vip" style="display:none;">
+            <div class="contact-group" style="width: 100%">
+              <div class="contact-item contact-item1 w-50" style="height: 100%; justify-content: flex-start">
+                <div class="icon">
+                  <img id="item-19618-1" src="./imgs/wechat-icon.png" alt="" />
+                </div>
+                <div style="display: flex; flex-direction: column">
+                  <span class="title" >微信号</span>
+                  <span id="">LT3568542</span>
+                </div>
+              </div>
+              <div class="contact-item contact-item3 w-50" style="height: 100%; justify-content: flex-start">
+                <div class="icon">
+                  <img  src="./imgs/wechat-icon.png" alt="" />
+                </div>
+                <div style="display: flex; flex-direction: column">
+                  <span class="title">微信手机</span>
+                  <span >13118393576</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-group" style="width: 100%">
+              <div class="contact-item contact-item1 w-50" style="height: 100%; justify-content: flex-start">
+                <div class="icon">
+                  <img  src="./imgs/douyin-icon.png" alt="" />
+                </div>
+                <div style="display: flex; flex-direction: column">
+                  <span class="title">抖音号：楚儿</span>
+                  <span >26711786289</span>
+                </div>
+              </div>
+              <div class="contact-item contact-item3 w-50" style="height: 100%; justify-content: flex-start">
+                <div class="icon">
+                  <img  src="./imgs/qq-icon.png" alt="" />
+                </div>
+                <div style="display: flex; flex-direction: column">
+                  <span class="title">QQ号</span>
+                  <span >1178831831</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-item contact-item3agent w-100">
+              <div class="contact-group">
+                <div class="icon">
+                  <img src="./imgs/service-icon.png" alt="" />
+                </div>
+                <div style="display: flex; flex-direction: column">
+                  <span class="title">Amico 专员 ID</span>
+                  <span>lhliulian</span>
+                </div>
+              </div>
+              <a href="https://www.am787.cc"  target="_blank" class="service-icon">
+                <img src="./imgs/contact-btn.png" alt="" />
+              </a>
+            </div>
+            <a href="https://www.am787.cc"  target="_blank">
               <img src="./imgs/contact-download.png" width="100%" />
             </a>
           </div>
@@ -287,8 +349,8 @@
           group2Title: "浮力",
           group2Number: "812210954",
           landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
-          redirectUrl: "https://www.lh03551.com",
-          claimUrl: "https://www.lh03551.com",
+          redirectUrl: "https://www.lh153.cc",
+          claimUrl: "https://www.lh153.cc",
           agent1ID: "vip116",
           agent2ID: "vip520"
         };
@@ -296,6 +358,13 @@
         const selectedInfo = contactInfo[hostname] || defaultInfo;
         console.log("ENd Info");
         console.log(selectedInfo);
+
+
+        if(hostname.includes("localhost") || hostname.includes("19618.vip")){
+          document.getElementById("original-content").style.display = "none";
+
+          document.getElementById("content-19618vip").style.display = "flex";
+        }
 
         document.getElementById("group1-title").textContent = selectedInfo.group1Title;
         document.getElementById("group1-number").textContent = selectedInfo.group1Number;
