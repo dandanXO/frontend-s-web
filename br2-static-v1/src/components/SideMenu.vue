@@ -14,7 +14,9 @@
           <img src="../assets/images/sideMenu/icon-balance.png" />
           <div class="side-menu-account-info__balance-inner" @click="refreshBalance()">
             <span class="side-menu-account-info__balance-amount">
-              {{ isLoadingBalance ? "Loading..." : store.currency.value + " " + convertToCommaAmount(store.balance, true) }}
+              {{
+                isLoadingBalance ? "Loading..." : store.currency.value + " " + convertToCommaAmount(store.balance, true)
+              }}
             </span>
             <span class="side-menu-account-info__balance-desc">
               {{ $t("sideNav.balance") }}
@@ -55,7 +57,7 @@
         <div class="jackpot-container">
           <img src="../assets/images/sideMenu/jackpot-icon-1.png" alt="jackpot icon" class="jackpot-icon" />
           <div class="jackpot-text">
-            <div class="jackpot-amount">R$ {{ getDotAmt(ui.jackpotAmt) }}</div>
+            <div class="jackpot-amount">{{ store.currency.value }} {{ convertToCommaAmount(ui.jackpotAmt) }}</div>
             <div class="jackpot-label">JACKPOT</div>
           </div>
         </div>
@@ -79,12 +81,12 @@
       </div>
 
       <!-- TODO:: HIDE it 1st-->
-<!--      <div class="side-menu-promo-download-wrapper">-->
-<!--        <q-btn class="side-menu-promo-download-item" no-caps flat>-->
-<!--          <img src="../assets/images/sideMenu/icon-android.png" />-->
-<!--          <span>android</span>-->
-<!--        </q-btn>-->
-<!--      </div>-->
+      <!--      <div class="side-menu-promo-download-wrapper">-->
+      <!--        <q-btn class="side-menu-promo-download-item" no-caps flat>-->
+      <!--          <img src="../assets/images/sideMenu/icon-android.png" />-->
+      <!--          <span>android</span>-->
+      <!--        </q-btn>-->
+      <!--      </div>-->
     </div>
 
     <div class="side-menu-social-media-wrapper">
@@ -137,10 +139,6 @@ const socialMediaLinks = [
   { icon: "x", url: "" }
 ];
 
-const getDotAmt = (amt) => {
-  return convertToCommaAmount(amt);
-}
-
 const isLoadingBalance = ref(false);
 const refreshBalance = () => {
   if (store.token) {
@@ -163,8 +161,7 @@ const openCSInNewTab = (url) => {
 const goToLink = (url) => {
   //TODO: NO PUT 1st
   // window.open(url, "_blank");
-}
-
+};
 </script>
 <style lang="scss" scoped>
 .menu-open {
@@ -217,7 +214,7 @@ const goToLink = (url) => {
       gap: 18px;
       margin-bottom: 12px;
 
-      > button{
+      > button {
         flex: 1;
       }
 
@@ -301,6 +298,9 @@ const goToLink = (url) => {
     }
 
     .side-menu-promo-wrapper {
+      a {
+        text-decoration: none;
+      }
       .jackpot-container {
         display: flex;
         align-items: center;
@@ -387,7 +387,7 @@ const goToLink = (url) => {
           padding: 7px 0;
           max-width: 98px;
           background: linear-gradient(#404040, #404040) padding-box,
-          linear-gradient(360deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%) border-box;
+            linear-gradient(360deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%) border-box;
           border: 0.5px solid transparent;
           border-radius: 6px;
 
@@ -416,9 +416,9 @@ const goToLink = (url) => {
         border-radius: 50%;
         padding: 8px;
 
-        &:active{
+        &:active {
           filter: brightness(1.2);
-          transform: translate(0px ,1px)
+          transform: translate(0px, 1px);
         }
 
         img {
