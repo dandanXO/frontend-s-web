@@ -1211,7 +1211,7 @@
     class="isCentreDialog spin-lucky-wheel-dialog"
     persistent
   >
-    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
+    <!-- <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" /> -->
     <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">
       <!-- <template #controller>
         <PopupController v-model="popupPromo" :hasSpin="true" />

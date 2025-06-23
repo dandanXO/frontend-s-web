@@ -65,7 +65,8 @@
               </div>
             </div>
           </div>
-          <div v-else class="selected-promo" :class="{ 'no-padding': selectedParam.hidetitle }">
+          <!-- <div v-else class="selected-promo" :class="{ 'no-padding': selectedParam.hidetitle }"> -->
+          <div v-else class="selected-promo">
             <div v-if="isFetchingPromo" class="spinner-container">
               <q-spinner color="yellow" size="70px" :thickness="5" />
             </div>

@@ -1096,12 +1096,12 @@ export default {
       "Ao apostar no Aviator todos os dias, quando o montante efetivo das apostas atingir 888 PKR, pode ter a chance de quebrar o ovo dourado (SUNEHRI ANDY). Recompensa máxima: 88.888 PKR, probabilidade de vitória: 3,6%",
     aviatorTopTurnover:
       "Ao apostar no Aviator, o jogador com o maior volume de apostas acumuladas qualifica-se para o primeiro lugar.",
-    cashRainIntro: "Cada rodada de chuva de dinheiro distribui gratuitamente 666.666 PKR.",
-    cashRainMaxPerRound: "Montante máximo de reembolso por rodada: 66.666 PKR.",
-    cashRainFreeDistribution: "Cada rodada distribui reembolso gratuitamente.",
+    cashRainIntro: "Cada rodada da “Chuva de Dinheiro” distribui R$100.000 gratuitamente.",
+    cashRainMaxPerRound: "O valor máximo de um envelope é de R$7.777.",
+    cashRainFreeDistribution: "O valor recebido pode ser usado em jogos ou sacado diretamente.",
     cashRainClaimCondition:
-      "Deposite ≥ 300 PKR no mesmo dia e complete apostas diárias totais ≥ 350 PKR para reivindicar o seu bónus grátis.",
-    cashRainUsage: "O dinheiro recebido pode ser usado diretamente para jogar ou ser levantado.",
+      "Quanto maior o seu nível VIP (consulte o plano de upgrade VIP), maior o valor do envelope recebido.",
+    cashRainUsage: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção.",
     cashRainVIP: "Quanto maior o nível de membro VIP, maior o valor recebido."
   }
 };
