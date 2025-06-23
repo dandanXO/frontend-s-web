@@ -3047,7 +3047,7 @@ const checkHbPromo = () => {
 };
 
 const gotoFloatPromo = (val) => {
-  if (val.type === "PROMO" && val.code === "br2-redpacketrain") {
+  if (val.type === "PROMO" && val.code === "money-rain") {
     // isMoneyRainModal.value = true;
     popupPromo.value = "money-rain";
   }
