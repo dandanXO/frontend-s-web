@@ -891,7 +891,7 @@
       <div class="character">
         <img src="../assets/images/index/download-app-left.png" alt="Mascot" />
       </div>
-      <div class="app-info">
+      <div class="app-info" style="display:none;">
         <h3>
           <img src="../assets/images/index/tick-icon.png" />
           DOWNLOAD THE APP
