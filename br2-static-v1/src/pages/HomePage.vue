@@ -4640,11 +4640,11 @@ button.android {
   min-width: 100%;
 
   &.active {
-    background: url("../assets/images/index/cat-selection-bg-active.svg") center center no-repeat;
+    background: url("../assets/images/index/cat-selected-bg.png") center center no-repeat;
     background-size: 100% 100%;
 
     .cat-title {
-      color: #10211f;
+      //color: #10211f;
       font-weight: bold;
     }
   }
@@ -4654,7 +4654,7 @@ button.android {
   }
 
   .cat-icon {
-    flex: 3;
+    flex: 4;
     display: flex;
     align-items: center;
 
@@ -4666,7 +4666,7 @@ button.android {
   }
 
   .cat-title {
-    flex: 2;
+    flex: 3;
     display: flex;
     flex-direction: column;
     align-items: center;

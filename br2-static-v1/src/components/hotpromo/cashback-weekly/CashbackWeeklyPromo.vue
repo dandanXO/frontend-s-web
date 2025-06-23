@@ -117,7 +117,7 @@ const loadPromoInit = () => {
 
 const claimPromo = () => {
   eventapi
-    .post("/session/deposit-bonus/claim?promoCode=br2-redeposit-bonus")
+    .post("/session/loss-bonus/claim?promoCode=br2-weekly-loss-cashback")
     .then((res) => {
       // debugger;
       if (res.code === 0) {

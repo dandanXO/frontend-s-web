@@ -27,7 +27,7 @@
           <div class="order-row order-row--content">
             <div class="order-subrow">
               <div class="order-col">
-                <span class="date">{{  convertToGMTMinus3(e.withdrawDate) }}</span>
+                <span class="date">{{ convertToGMTMinus3(e.withdrawDate) }}</span>
               </div>
               <div class="order-col">
                 <span class="yellow">-{{ convertToCommaAmount(e.withdrawAmount, true) }}</span>
@@ -62,7 +62,7 @@
             </div>
           </div>
           <div class="order-row order-num">
-            <div class="order-col order-number-col">{{ $t("records.orderNo") }}</div>
+            <div class="order-col order-number-col ellipsis">{{ $t("records.orderNo") }}</div>
             <div class="order-col flex-c-end gap-8">
               {{ e.serialNumber }}
               <div @click="copyText(e.serialNumber)">
@@ -83,7 +83,7 @@
           <div class="order-row order-row--content">
             <div class="order-subrow">
               <div class="order-col">
-                <span class="date">{{  convertToGMTMinus3(e.depositDate) }}</span>
+                <span class="date">{{ convertToGMTMinus3(e.depositDate) }}</span>
               </div>
               <div class="order-col">
                 <span class="green">+{{ convertToCommaAmount(e.depositAmount, true) }}</span>
@@ -105,7 +105,7 @@
             </div>
           </div>
           <div class="order-row order-num">
-            <div class="order-col order-number-col">{{ $t("records.orderNo") }} {{ e.serialNumber }}</div>
+            <div class="order-col order-number-col ellipsis">{{ $t("records.orderNo") }} {{ e.serialNumber }}</div>
             <div class="order-col flex-c-end gap-8">
               <div @click="copyText(e.serialNumber)">
                 <img
@@ -293,6 +293,7 @@ onActivated(() => {
   width: calc(100% - 20px);
   margin: 30px auto 10px;
   // border: 1px solid #00B9A1;
+  min-height: 42px;
   aspect-ratio: 335/32;
 
   :deep(.q-tabs__content) {
@@ -354,8 +355,8 @@ onActivated(() => {
         background-color: #ffffff1a;
       }
 
-      .order-number-col{
-        white-space: normal
+      .order-number-col {
+        // white-space: normal;
       }
     }
 
