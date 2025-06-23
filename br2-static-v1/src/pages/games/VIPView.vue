@@ -502,7 +502,7 @@ watch(
 
     const vipInfo = vipItems.find(({ vipLevel }) => vipLevel === carouselVipLevel);
     const vipLevel = Number(store.vip.replace("VIP", ""));
-    const currentDeposit = Number(store.getCurrentDeposit());
+    const currentValidBet = Number(store.getCurrentValidBet());
     const upgradeStatus = vipInfo.ugprade;
     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
 
@@ -511,7 +511,7 @@ watch(
         return 100;
       }
 
-      return (currentDeposit / levelUpDeposit) * 100;
+      return (currentValidBet / levelUpDeposit) * 100;
     })();
 
     // alert(vipLevel);
@@ -522,7 +522,7 @@ watch(
       monthlyReward,
       dailyWithdrawalLimit,
       levelUpPercentage,
-      progressBarText: `${currentDeposit} / ${levelUpDeposit}`,
+      progressBarText: `${currentValidBet} / ${levelUpDeposit}`,
       rewardUnlocked: vipLevel > vipCarouselIndex.value
     };
   }

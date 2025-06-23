@@ -40,8 +40,8 @@ import { convertToCommaAmount } from "src/boot/utils";
 const store = userStore();
 
 // progress bar
-const maxProgress = store.levelUpDeposit.toFixed(2);
-const progressRef = ref(store.currentDeposit.toFixed(2));
+const maxProgress = store.levelUpBet.toFixed(2);
+const progressRef = ref(store.currentValidBet.toFixed(2));
 
 const vipLevel = computed(() => store.vip.replace(/VIP/g, ""));
 
