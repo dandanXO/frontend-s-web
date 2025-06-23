@@ -390,6 +390,7 @@ export default defineComponent({
           false
         );
       } else {
+        await router.isReady()
         trackH5Affiliate();
       }
 
