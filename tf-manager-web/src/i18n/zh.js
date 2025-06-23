@@ -2668,6 +2668,7 @@ export default {
     subscribeCount: '当前订阅人数',
     eventCode: '赛事代码',
     roleConfig: '角色设置',
+    chatHistory: '聊天记录'
   },
   message: {
     adsStatusOpen: '开',
@@ -3499,7 +3500,7 @@ export default {
     'Sport Live Sensitive Word': '体育直播敏感词设定',
     'Sport Live Block Member': '聊天室会员禁言设定',
     'Sport Live Chat Vip Status': '聊天室VIP发言设定',
-    'Sport Live History Block': '聊天室记录禁言设定',
+    'Sport Live History Block': '聊天室记录',
     'Sport Live Monitor': '体育直播监控',
     'Sport Live Admin': '主播后台管理员设定',
     'Member Refer Stat Analysis': '邀请返佣分析',
