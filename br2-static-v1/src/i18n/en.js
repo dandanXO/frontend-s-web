@@ -922,6 +922,21 @@ export default {
         "Players who are winners in the history of the our platform do not participate in the loss return settlement. This activity is limited to the benefits of players who have lost to the platform.",
       tnc10: "To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion."
     },
+    vipPlanBettingUpgrade: {
+      eligibility: "All members who have made at least one successful deposit",
+      description:
+        "Upgrade to the corresponding VIP level based on the accumulated betting amount in the member's account.",
+      termsAndConditions: "Terms and Conditions",
+      bet: "BET",
+      vipLevel: "VIP Level",
+      tnc01:
+        "Starting from the member’s first valid bet after completing their first successful deposit, accumulated valid betting amounts will be used to determine VIP level upgrades according to the thresholds below:",
+      tnc02:
+        "Only bets that result in a win or loss on the website are counted as valid betting amounts; cancelled bets or those with refunded stakes will not be included.",
+      tnc03:
+        "VIP members can enjoy other exclusive benefits related to their VIP level on the website, such as higher weekly cashback percentages for higher VIP tiers.",
+      tnc04: "To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion."
+    },
     receiveEarn: {
       description: "Receive up to 100 BRL in free bet bonus",
       tnc01: "You can initiate a withdrawal when the accumulated amount reaches 100 BRL.",

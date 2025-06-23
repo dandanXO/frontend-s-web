@@ -69,7 +69,7 @@
       </template>
     </Carousel>
     <div v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
-      <div class="vip-rewards">
+      <!-- <div class="vip-rewards">
         <div class="vip-reward-item">
           <div class="reward-desc">
             <div class="icon">
@@ -78,7 +78,6 @@
             <div class="title">
               <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
               <br />
-              <!-- {{ $t("vip.reward") }} -->
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
@@ -100,7 +99,6 @@
             <div class="title">
               <span class="bold">{{ $t("vip.monthly") }}</span>
               <br />
-              <!-- {{ $t("vip.reward") }} -->
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
@@ -122,7 +120,6 @@
             <div class="title">
               <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>
               <br />
-              <!-- {{ $t("vip.limit") }} -->
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
@@ -136,7 +133,7 @@
             <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
           </div>
         </div>
-      </div>
+      </div> -->
       <hr class="separator-line" style="margin-top: 20px" />
       <div class="header-wrapper">
         <div class="header">{{ $t("vip.monthlyCumulativeDeposit") }}</div>
@@ -192,7 +189,7 @@
         </template>
       </q-table>
       <div class="hint-msg">{{ $t("vip.aftertheRecharge") }}</div>
-      <q-table
+      <!-- <q-table
         flat
         :hide-pagination="true"
         :columns="columns3"
@@ -205,7 +202,6 @@
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
               <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-              <!-- unable to adjust table width... -->
               <template v-else>
                 <div style="white-space: normal; text-align: center">{{ $t("vip.vipPromoBonus") }}</div>
               </template>
@@ -252,7 +248,6 @@
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
               <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-              <!-- unable to adjust table width... -->
               <template v-else>
                 <div style="text-align: center; padding-right: 60px">{{ $t("vip.vipMonthlyCashBonus") }}</div>
               </template>
@@ -325,7 +320,7 @@
           </q-tr>
         </template>
       </q-table>
-      <div class="hint-msg">{{ $t("vip.dailyWithdrawalLimits") }}</div>
+      <div class="hint-msg">{{ $t("vip.dailyWithdrawalLimits") }}</div> -->
     </div>
   </div>
 </template>
@@ -386,12 +381,12 @@ const columns = [
 const rows = [
   {
     name: "VIP 1",
-    ugprade: "500",
+    ugprade: "0+",
     flow: "x10"
   },
   {
     name: "VIP 2",
-    ugprade: "1,000",
+    ugprade: "500",
     flow: "x10"
   },
   {
@@ -401,49 +396,49 @@ const rows = [
   },
   {
     name: "VIP 4",
-    ugprade: "5,000",
+    ugprade: "8,000",
     flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: "10,000",
+    ugprade: "40,000",
     flow: "x10"
   },
   {
     name: "VIP 6",
-    ugprade: "20,000",
+    ugprade: "120,000",
     flow: "x10"
   },
   {
     name: "VIP 7",
-    ugprade: "50,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 8",
-    ugprade: "100,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 9",
-    ugprade: "200,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 10",
     ugprade: "500,000",
     flow: "x10"
   },
   {
-    name: "VIP 11",
-    ugprade: "1,000,000",
+    name: "VIP 8",
+    ugprade: "1,500,000",
     flow: "x10"
   },
   {
-    name: "VIP 12",
-    ugprade: "2,000,000",
+    name: "VIP 9",
+    ugprade: "3,000,000",
+    flow: "x10"
+  },
+  {
+    name: "VIP 10",
+    ugprade: "6,000,000",
     flow: "x10"
   }
+  // {
+  //   name: "VIP 11",
+  //   ugprade: "10,000,000",
+  //   flow: "x10"
+  // },
+  // {
+  //   name: "VIP 12",
+  //   ugprade: "20,000,000",
+  //   flow: "x10"
+  // }
 ];
 
 const { vipItems, lastVipLevel } = rows.reduce(
@@ -496,7 +491,10 @@ watch(
   () => vipCarouselIndex.value,
   () => {
     const carouselVipLevel =
-      vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : Math.round(vipCarouselIndex.value) + 1;
+      vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value
+        ? rows.length
+        : Math.round(vipCarouselIndex.value) + 1;
+    console.log("hit 1", carouselVipLevel);
 
     const levelUpgrade = rows3.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
     const monthlyReward = rows4.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
