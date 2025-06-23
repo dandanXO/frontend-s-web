@@ -305,8 +305,12 @@ const toggleMenuOpen = () => {
 };
 
 const gameClick = (game) => {
-  emits("gameClick", game);
-  menuOpen.value = false;
+  if (route.path === "/home") {
+    emits("gameClick", game);
+    menuOpen.value = false;
+  } else {
+    router.push("/home");
+  }
 };
 
 const topDownloadUrl = ref("");

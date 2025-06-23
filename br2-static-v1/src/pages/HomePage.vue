@@ -147,12 +147,32 @@
     </div>
 
     <swiper
-      :slidesPerView="4"
-      :slidesPerGroup="4"
-      :spaceBetween="10"
+      :slidesPerGroup="1"
       :modules="[Navigation, Grid]"
       class="hometop-categories"
       @swiper="onSwiper"
+      :breakpoints="{
+        0: {
+          slidesPerView: 3.5,
+          spaceBetween: 4
+        },
+        330: {
+          slidesPerView: 3.8,
+          spaceBetween: 4
+        },
+        365: {
+          slidesPerView: 4.2,
+          spaceBetween: 4
+        },
+        390: {
+          slidesPerView: 4.5,
+          spaceBetween: 4
+        },
+        480: {
+          slidesPerView: 5.5,
+          spaceBetween: 10
+        }
+      }"
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
@@ -1267,10 +1287,9 @@ const activateSlide = (clickedItem) => {
 
   // debugger;
 
-  if(clickedItem.title === 'slot'){
+  if (clickedItem.title === "slot") {
     loadGameList("SLOT", clickedItem.id);
   }
-
 };
 
 const gameClickFromMenu = (menuGameSelected) => {
@@ -1288,15 +1307,15 @@ const gameClickFromMenu = (menuGameSelected) => {
 
 const swiperInstance = ref(null);
 
-function onSwiper(swiper) {
+const onSwiper = (swiper) => {
   swiperInstance.value = swiper;
-}
+};
 
-function slideToIndex(index) {
+const slideToIndex = (index) => {
   if (swiperInstance.value) {
     swiperInstance.value.slideTo(index);
   }
-}
+};
 
 const getSlotImage = (code) => {
   try {
@@ -3140,7 +3159,7 @@ const checkSpinWheel = () => {
 
 const getJackpotAmt = () => {
   ui.jackpotAmt = 25909870;
-}
+};
 
 const showSpinWheel = () => {
   eventapi
@@ -3171,7 +3190,6 @@ onActivated(() => {
   }
   // popupPromo.value = "money-rain";
 });
-
 
 onMounted(() => {
   isPlatLoading.value = true;
@@ -4837,10 +4855,10 @@ button.android {
   margin-bottom: 15px;
 
   .swiper-slide {
-    width: 80px !important;
-    background-image: url("../assets/images/index/icon-frame.png");
-    background-size: 100% auto;
-    background-repeat: no-repeat;
+    // width: 80px !important;
+    // background-image: url("../assets/images/index/icon-frame.png");
+    // background-size: 100% auto;
+    // background-repeat: no-repeat;
   }
 }
 
