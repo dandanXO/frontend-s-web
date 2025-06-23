@@ -281,8 +281,14 @@ body.body--dark .q-footer {
   color: #7f828b;
   flex: 1;
   font-size: 11px;
-
   opacity: 1;
+
+  &:hover {
+    & > .q-focus-helper {
+      opacity: 0 !important;
+    }
+  }
+
   &.center-menu {
     opacity: 1;
     z-index: 9;
