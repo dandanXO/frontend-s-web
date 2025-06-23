@@ -157,6 +157,7 @@
   background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
   width: 100%;
   color: #2d2d2d;
+  border-radius:8px;
   font-weight: bold;
 
   img {
