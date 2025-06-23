@@ -768,7 +768,7 @@ export default {
     CASH_OUT_COSTS: "CASH OUT COSTS",
     invitation_wins: "Invitation wins",
     next_round: "Next Round",
-    countdown: "Countdown",
+    countdown: "Contagem decrescente",
     invitationRecords: "Invitation records",
     lotteryRecords: "Lottery records",
     noRecords: "No Records",
@@ -1081,6 +1081,8 @@ export default {
     cashRainClaimCondition:
       "Deposit ≥ PKR 300 on the same day and complete daily bets totaling ≥ PKR 350 to claim your free bonus.",
     cashRainUsage: "The received money can be directly used for playing games or withdrawing.",
-    cashRainVIP: "The higher the VIP membership level, the greater the amount received."
+    cashRainVIP: "The higher the VIP membership level, the greater the amount received.",
+    linkCopyToClipboard: "Link copied to clipboard",
+    qrCodeSaved: "QR Code image saved to photo gallery."
   }
 };

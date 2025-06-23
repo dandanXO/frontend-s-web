@@ -1123,6 +1123,8 @@ export default {
       "Quanto maior o seu nível VIP (consulte o plano de upgrade VIP), maior o valor do envelope recebido.",
     cashRainUsage:
       "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção.",
-    cashRainVIP: "Quanto maior o nível de membro VIP, maior o valor recebido."
+    cashRainVIP: "Quanto maior o nível de membro VIP, maior o valor recebido.",
+    linkCopyToClipboard: "Link copiado para a área de transferência",
+    qrCodeSaved: "Imagem do código QR salva na galeria de fotos."
   }
 };

@@ -220,6 +220,12 @@ const routes = [
     // component: () => {},
   },
   {
+    path: "/referSpin/:referralSpinCode",
+    name: "referCodeSpin",
+    component: () => {}
+    // component: () => {},
+  },
+  {
     path: "/account",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/SettingsPage.vue") }],
