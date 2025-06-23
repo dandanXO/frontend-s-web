@@ -217,9 +217,9 @@ const { t } = useI18n();
 const slide = ref(0);
 const imgURL = process.env.IMAGE_CDN + "/promo/";
 const btm_banners = ref([
-  {
-    mobileImageUrl: require("../assets/images/promotion/tempo/promo-2.png")
-  }
+  // {
+  //   mobileImageUrl: require("../assets/images/promotion/tempo/promo-2.png")
+  // }
 ]);
 
 const loadingLogout = ref(false);
