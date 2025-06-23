@@ -1054,6 +1054,7 @@ const swipeRight = () => {
       padding-left: 0.5rem;
       padding-right: 0.5rem;
       font-size: 12px;
+      white-space: normal;
     }
   }
 

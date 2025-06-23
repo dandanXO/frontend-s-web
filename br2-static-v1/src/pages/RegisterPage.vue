@@ -149,6 +149,8 @@ import { userStore } from "stores/index";
 import qs from "qs";
 import { useUI } from "stores/ui";
 import { isAndroid, isInPwa } from "boot/utils";
+import { useI18n } from "vue-i18n";
+
 // import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
@@ -156,7 +158,7 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const verificationImg = ref("");
-
+    const { t } = useI18n();
     const captchaRef = ref();
     const innerCodeId = ref("");
     const innerCaptchaRef = ref("");
@@ -296,7 +298,8 @@ export default defineComponent({
       verificationRef.value?.validate();
 
       $q.loading.show({
-        message: "Registering in progress"
+        // message: "Registering in progress"
+        message: t("btn.registeringInProgress")
       });
 
       if (

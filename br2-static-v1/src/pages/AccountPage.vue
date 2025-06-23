@@ -513,7 +513,8 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    // message: "Logging out..."
+    message: t("btn.loggingOut")
   });
 
   store.memberLogout().then(() => {

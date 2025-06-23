@@ -190,11 +190,13 @@ import { computed, onActivated, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "src/stores";
 import ProfileSummary from "../components/ProfileSummary.vue";
+import { useI18n } from "vue-i18n";
 
 const store = userStore();
 const router = useRouter();
 const qs = require("qs");
 const $q = useQuasar();
+const { t } = useI18n();
 
 const slide = ref(0);
 const imgURL = process.env.IMAGE_CDN + "/promo/";
@@ -258,7 +260,8 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    // message: "Logging out..."
+    message: t("btn.loggingOut")
   });
 
   store.memberLogout().then(() => {

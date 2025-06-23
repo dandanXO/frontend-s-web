@@ -23,7 +23,7 @@
           </div>
 
           <div v-if="!drawerVisible" class="wallet-container" @click="goToDeposit()">
-            {{ $t("btn.addCash") }} &nbsp;
+            <span style="text-align:right;margin-right: 5px;">{{ $t("btn.addCash") }}</span>
             <q-btn dense rounded class="wallet-btn">
               <img src="../../assets/images/index/icon-wallet.png" />
             </q-btn>
