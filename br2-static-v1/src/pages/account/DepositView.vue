@@ -240,7 +240,18 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, computed, nextTick, watch } from "vue";
+import {
+  ref,
+  reactive,
+  onMounted,
+  shallowRef,
+  defineEmits,
+  onActivated,
+  computed,
+  nextTick,
+  watch,
+  onDeactivated
+} from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
@@ -303,6 +314,7 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const isInitialized = ref(false);
 
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
@@ -900,6 +912,7 @@ watch(
 );
 
 onActivated(() => {
+  if (!isInitialized.value) return;
   initPay();
   loadAppTabs();
   loadInfo();
@@ -912,6 +925,11 @@ onMounted(() => {
   loadAppTabs();
   initPay();
   loadInfo();
+  refreshNode();
+});
+
+onDeactivated(() => {
+  isInitialized.value = true;
 });
 </script>
 

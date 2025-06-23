@@ -1181,6 +1181,9 @@
     </MoneyRainModal>
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
   </q-dialog>
+
+  <!-- DONT REMOVE THIS GOT USE DE-->
+  <SpinLuckyWheelPromoSticky v-show="false" />
 </template>
 
 <script setup>
