@@ -340,7 +340,7 @@ import "vue3-carousel/dist/carousel.css";
 
 const vipLevel = ref("");
 const currentVipLevelStats = ref({
-  levelUpPercentage: null,
+  levelUpPercentage: 0,
   progressBarText: "",
   levelUpgrade: null,
   monthlyReward: null,
@@ -485,8 +485,7 @@ onActivated(() => {
     }
     // show vip slide correspond to current vip level
     else {
-      // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
-      vipCarouselIndex.value = vipLevelNum - 1;
+      vipCarouselIndex.value = vipLevelNum;
     }
 
     vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
@@ -510,7 +509,7 @@ watch(
     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
 
     const levelUpPercentage = (() => {
-      if (vipLevel > +vipInfo.vipLevel) {
+      if (vipLevel >= +vipInfo.vipLevel) {
         return 100;
       }
 
@@ -926,7 +925,7 @@ const swipeRight = () => {
       position: absolute;
       left: 20px;
       top: 20px;
-      font-family: YouSheBiaoTiHei, 'Noto Sans SC', sans-serif;
+      font-family: YouSheBiaoTiHei, "Noto Sans SC", sans-serif;
       font-weight: bolder;
       font-size: 2.5rem;
       line-height: 100%;

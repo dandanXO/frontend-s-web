@@ -135,15 +135,14 @@ const swipeRight = () => {
       background: #171616;
       // border-radius: 12px;
       padding: 14px 4px;
-      gap: 6px;
+      gap: 5%;
     }
 
     :deep(.q-tab) {
-      margin: 0 15px;
       color: #4b4943;
       border-radius: 8px;
       height: 55px;
-      width: 25%;
+      width: 20%;
       // background: #4b4943;
       font-size: 12px;
       font-weight: 500;
@@ -152,6 +151,9 @@ const swipeRight = () => {
 
     :deep(.q-tab__content) {
       gap: 2px;
+      div {
+        font-size: 0.85rem;
+      }
     }
 
     :deep(.q-tab--active) {
