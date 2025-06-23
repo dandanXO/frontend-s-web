@@ -14,7 +14,6 @@
         playsinline
         webkit-playsinline
         @progress="handlePlayerProgress"
-        @canplay="handlePlayerCanPlay"
       />
       <canvas v-show="showLatestScreenCanvas" ref="canvasRef" class="livestream-video-latest-screen" />
       <div ref="danmuRef" class="livestream-video-danmu" />
@@ -314,6 +313,7 @@ const initPlayer = async (play = false) => {
     await player.value.init();
     isPlayerSupported.value = player.value.supportPlayer !== "NONE";
     player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerErrorDebounce);
+    player.value.on(player.value.Events.STREAM_AVAILABLE, handlePlayerCanPlay);
     player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
     // emitting when hls.isSupported() is false
     player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
@@ -322,7 +322,9 @@ const initPlayer = async (play = false) => {
     isVideoLoading.value = false;
     showLatestScreenCanvas.value = false;
     isLatestScreenRecorded.value = false;
-  } catch (e) {}
+  } catch (e) {
+    console.error(e)
+  }
 };
 
 const loadDanmu = async () => {
@@ -435,14 +437,13 @@ const handlePlayerProgress = () => {
 };
 
 const handlePlayerCanPlay = () => {
-  if (player.value.supportPlayer === "NATIVE") {
-    isVideoLoading.value = false;
-  }
   if (playerConfig.value.isPause) {
     changePlayerConfig("isPause", false);
   }
+  isVideoLoading.value = false;
   isVideoLoadFailed.value = false;
   isLatestScreenRecorded.value = false;
+  videoLoadErrorStartTime.value = null;
 };
 
 const handlePlayerError = (data) => {
@@ -554,15 +555,18 @@ watch(
   { immediate: true }
 );
 
-watch(() => ui.isGameModalOpened, (val) => {
-  if(!videoRef.value) return;
-  if(val) {
-    videoRef.value.muted = true;
-  } else {
-    if(showUnmuteMask.value) return
-    videoRef.value.muted = false;
+watch(
+  () => ui.isGameModalOpened,
+  (val) => {
+    if (!videoRef.value) return;
+    if (val) {
+      videoRef.value.muted = true;
+    } else {
+      if (showUnmuteMask.value) return;
+      videoRef.value.muted = false;
+    }
   }
-})
+);
 
 onMounted(() => {
   // loadData();
