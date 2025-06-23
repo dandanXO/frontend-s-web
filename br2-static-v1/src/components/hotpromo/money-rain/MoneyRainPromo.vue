@@ -176,6 +176,7 @@ const openMoneyRainDialog = () => {
 .receive-earn-btn {
   background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
   width: 100%;
+  border-radius:8px;
   color: #2d2d2d;
   font-weight: bold;
 
