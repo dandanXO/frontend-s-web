@@ -62,7 +62,7 @@
             </div>
           </div>
           <div class="order-row order-num">
-            <div class="order-col order-number-col ellipsis">{{ $t("records.orderNo") }}</div>
+            <div class="order-col order-number-col ellipsis">{{ $t("records.orderNo") }}:</div>
             <div class="order-col flex-c-end gap-8">
               {{ e.serialNumber }}
               <div @click="copyText(e.serialNumber)">
@@ -105,8 +105,9 @@
             </div>
           </div>
           <div class="order-row order-num">
-            <div class="order-col order-number-col ellipsis">{{ $t("records.orderNo") }} {{ e.serialNumber }}</div>
+            <div class="order-col order-number-col ellipsis">{{ $t("records.orderNo") }}: </div>
             <div class="order-col flex-c-end gap-8">
+              {{ e.serialNumber }}
               <div @click="copyText(e.serialNumber)">
                 <img
                   class="copy-btn btn-pointer"
@@ -353,6 +354,7 @@ onActivated(() => {
 
       &.order-num {
         background-color: #ffffff1a;
+        flex-direction: column;
       }
 
       .order-number-col {
