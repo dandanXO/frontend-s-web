@@ -81,7 +81,7 @@ export default route(function (/* { store, ssrContext } */) {
       sessionStorage.setItem("ADJUST_REFERRER", to.query.adjust_referrer);
     }
 
-    if (user.token && from && from.href) {
+    if (user.token && from && from.href && from.name === "login") {
       user.getBalance();
     }
 
