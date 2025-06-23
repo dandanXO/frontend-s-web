@@ -168,8 +168,8 @@
           <span>{{ getSportDisplayName(scope.row.sportId) }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="nameZh" :label="t('fields.competitionNameZh')" width="230" />
-      <el-table-column prop="nameEn" :label="t('fields.competitionNameEn')" width="230" />
+      <el-table-column prop="nameZh" :label="t('fields.competitionNameZh')" width="250" />
+      <el-table-column prop="nameEn" :label="t('fields.competitionNameEn')" width="250" />
       <el-table-column prop="homeTeamId" :label="t('fields.homeTeam')" width="200">
         <template #default="scope">
           <img v-if="scope.row.homeTeamLogo" :src="scope.row.homeTeamLogo" style="width: 24px; height: 24px; margin-right: 8px;">
@@ -217,22 +217,25 @@
           <el-tag v-else type="default">{{ t('status.marsMatch.OTHER') }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="right" fixed="right">
+      <el-table-column :label="t('fields.operate')" align="right" fixed="right" width="350">
         <template #default="scope">
-          <el-button
-            icon="el-icon-refresh"
-            size="mini"
-            type="success"
-            @click="refreshLiveUrl(scope.row)"
-          />
-          <el-button
-            icon="el-icon-edit"
-            size="mini"
-            type="primary"
-            @click="showDialog('ADD_TO_LIVE', scope.row)"
-          >
-            {{ t('fields.addToLive') }}
-          </el-button>
+          <div style="display: flex; gap: 4px; float: right;">
+            <el-button
+              icon="el-icon-refresh"
+              size="mini"
+              type="success"
+              @click="refreshLiveUrl(scope.row)"
+            />
+            <el-button
+              icon="el-icon-edit"
+              size="mini"
+              type="primary"
+              @click="showDialog('ADD_TO_LIVE', scope.row)"
+            >
+              {{ t('fields.addToLive') }}
+            </el-button>
+          </div>
+
         </template>
       </el-table-column>
     </el-table>
@@ -344,7 +347,7 @@ async function refreshLiveUrl(row) {
   const ret = await refreshToGetLiveUrl(row.id);
 
   if (ret.code === 0) {
-    ElMessage.success(t('fields.success'));
+    ElMessage.success(t('fields.successGetUrl'));
   } else {
     ElMessage.error(t('fields.failed'));
   }

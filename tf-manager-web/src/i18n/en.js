@@ -2646,7 +2646,7 @@ export default {
     streamTag: 'Stream Tag',
     isCdnPush: 'Push CDN',
     box: 'Box',
-    isCreateLiveUrl: 'Is Create Live Url (Yes/No)',
+    isCreateLiveUrl: 'Live Url',
     isLiveUrlExist: 'Live Url Exist',
     addToLive: 'Add to Live',
     initialSupplierStreamStatus: 'Initial Supplier Stream Status',
@@ -2729,6 +2729,7 @@ export default {
     confirmToAction: 'Confirm that you want to proceed with this operation?',
     copyToClipboard: ' has been copied to clipboard.',
     copySuccess: 'Copy Success',
+    successGetUrl: 'Get Live Url Success',
     deleteSuccess: 'Delete Success',
     runAtOnceSuccess: 'Run job Success',
     dailyMinRegLimitCannotExceedMax:
@@ -4010,6 +4011,7 @@ export default {
     53000: 'Login name cannot be empty',
     53001: 'Referrer cannot be empty',
     54000: 'Register blacklist record not exist',
-    54001: 'Register blacklist record already exist'
+    54001: 'Register blacklist record already exist',
+    55001: 'Get Live Url Failed'
   },
 }
