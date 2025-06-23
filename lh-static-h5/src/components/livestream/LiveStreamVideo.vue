@@ -146,7 +146,7 @@
           <q-btn color="primary" @click="copyMessage">已捕获错误，点击复制</q-btn>
         </div>
       </template>
-      <div v-else-if="showUnmuteMask" class="livestream-video-mask" @click.stop="handleUnmuteClick">
+      <div v-else-if="showUnmuteMask" class="livestream-video-mask unmute" @click.stop="handleUnmuteClick">
         <button class="btn">
           <img src="../../assets/images/livestream/icon-volume-off.png" />
         </button>
@@ -706,6 +706,7 @@ onBeforeUnmount(() => {
 
 onDeactivated(() => {
   mediaQuery.removeEventListener("change", handleOrientationChange);
+  changePlayerConfig("muted", false);
   player.value?.destroy();
   player.value = null;
   isPlayerSupported.value = true;
@@ -877,6 +878,10 @@ const handleShareClick = () => {
     width: 100%;
     height: 100%;
     color: #fff;
+
+    &.unmute {
+      z-index: 10;
+    }
 
     .livestream-video-mask-text-content {
       max-width: 100%;
