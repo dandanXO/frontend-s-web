@@ -789,16 +789,9 @@ const refreshNode = () => {
   nodeKey.value += 1;
 };
 
+//TODO :: NOT USING Now Yet
 const openDepositPage = () => {
-  // alert(selectedPayType.value);
-  if (selectedPayType.value === "EASYPAISA") {
-    window.open("https://drive.google.com/file/d/13QWAalASV5S5KvF77XErugrnfiw_-Ca1/view?usp=drive_link", "_blank");
-  } else if (selectedPayType.value === "JAZZCASH") {
-    // isDepositTutorial.value= true;
-    window.open("https://drive.google.com/file/d/13QWAalASV5S5KvF77XErugrnfiw_-Ca1/view?usp=drive_link", "_blank");
-  } else {
-    window.open("https://drive.google.com/file/d/13QWAalASV5S5KvF77XErugrnfiw_-Ca1/view?usp=drive_link", "_blank");
-  }
+  window.open("https://tutorial.gc7dy.cc", "_blank");
 };
 
 // KYC Dialog
