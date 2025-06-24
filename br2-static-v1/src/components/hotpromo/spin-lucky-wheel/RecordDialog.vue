@@ -16,7 +16,7 @@
             <div class="record-wrapper invitation">
               <template v-if="info.invitedList.length">
                 <div v-for="(record, index) in info.invitedList" :key="index" class="record">
-                  <span>{{ moment(record.depositDate).format("MM-DD HH:mm:ss") }}</span>
+                  <!-- <span>{{ moment(record.depositDate).format("MM-DD HH:mm:ss") }}</span> -->
                   <span class="name">{{ record.loginName }}</span>
                   <!-- <span>Invitation successful</span> -->
                 </div>
@@ -31,7 +31,7 @@
               <template v-if="info.records.length">
                 <div v-for="(record, index) in info.records" :key="index" class="record">
                   <span>{{ moment(record.recordTime).format("MM-DD HH:mm:ss") }}</span>
-                  <span class="amount"> {{$t("hotPromo.rs")}} {{ record.bonus }}</span>
+                  <span class="amount">{{ $t("hotPromo.rs") }} {{ record.bonus }}</span>
                 </div>
               </template>
               <span v-else class="no-record-text">
@@ -102,7 +102,7 @@ const handleTabClick = (tab) => {
       text-align: center;
 
       &.selected {
-        background: linear-gradient(356.25deg, #FF3A3E -0.21%, #CC1111 93.65%);
+        background: linear-gradient(356.25deg, #ff3a3e -0.21%, #cc1111 93.65%);
         color: #fff;
       }
     }
@@ -119,7 +119,7 @@ const handleTabClick = (tab) => {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background: #9B111399;
+    background: #9b111399;
     border: 1px solid #c4fff799;
     border-radius: 8px;
     padding: 12px;
@@ -134,7 +134,10 @@ const handleTabClick = (tab) => {
 
     &.invitation {
       .record {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
+        .name {
+          text-align: center;
+        }
       }
     }
 
@@ -167,7 +170,7 @@ const handleTabClick = (tab) => {
 
       .amount {
         font-weight: 900;
-        color: #EC9823;
+        color: #ec9823;
       }
     }
 
