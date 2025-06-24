@@ -931,7 +931,7 @@ export default {
       tnc06:
         "Quanto maior o seu nível VIP (consulte o plano de upgrade VIP), maior será a porcentagem de cashback, com um máximo de 25%.",
       tnc07: "Limite máximo de cashback por pessoa por semana R$10.000.",
-      tnc08: "O valor do cashback pode ser sacado diretamente ou utilizado para continuar jogando.",
+      tnc08: "El requisito de apuesta válido antes del retiro es una vez.",
       tnc09:
         "Jogadores que, no histórico da nossa plataforma, apresentem lucro não participam do reembolso de perdas. Esta atividade é limitada aos benefícios para jogadores que tiveram prejuízo na plataforma.",
       tnc10: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção.",
@@ -1175,7 +1175,7 @@ export default {
     message4:
       "Cada usuário pode aproveitar uma chance de giro grátis por dia, e o número de giros é reiniciado às 24:00 todos os dias.",
     message5: "Após a aprovação da solicitação, o bônus será depositado diretamente na sua carteira.",
-    message6: "O bônus precisa ser apostado duas vezes antes que possa ser sacado.",
+    message6: "O bônus precisa ser apostado uma vez antes que possa ser sacado.",
     message7:
       "O indicado precisa vincular seu número de telefone e conectá-lo ao código de convite do convidador para ser considerado válido.",
     message8:

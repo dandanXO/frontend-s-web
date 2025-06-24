@@ -918,7 +918,7 @@ export default {
       tnc06:
         "The higher your VIP level (please refer to the VIP upgrade program), the higher the cashback percentage, up to a maximum of 25%.",
       tnc07: "Maximum cashback reward limit per person per week is R$10000.",
-      tnc08: "The cashback amount can be withdrawn directly or used to continue playing.",
+      tnc08: "Valid wagering requirement before withdrawal is 1 time.",
       tnc09:
         "Players who are winners in the history of the our platform do not participate in the loss return settlement. This activity is limited to the benefits of players who have lost to the platform.",
       tnc10: "To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion.",
@@ -1135,7 +1135,7 @@ export default {
     message4:
       "Each user can enjoy one free spin opportunity per day, and the number of spins is reset at 24:00 every day.",
     message5: "After the application is approved, the bonus is deposited directly into your wallet.",
-    message6: "The bonus needs to be rolled over twice before it can be withdrawn.",
+    message6: "The bonus needs to be rolled over once before it can be withdrawn.",
     message7:
       "The invitee needs to bind his or her phone number and link it with the inviter's invitation code in order to be considered for recommendation.",
     message8:
