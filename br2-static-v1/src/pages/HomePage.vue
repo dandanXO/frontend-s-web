@@ -3036,15 +3036,14 @@ const loadAppTabs = () => {
 const loadCategoryLists = () => {
   let interval;
   const _fillSlotPlat = () => {
-    slot.value.forEach((slotitem, ind1) => {
-      categoriesList.value.splice(4, 0, {
-        title: "slot",
-        code: slotitem.code,
-        icon: slotitem.name,
-        active: false,
-        id: slotitem.id
-      });
-    });
+    const slotCategories = slot.value.map((item) => ({
+      title: "slot",
+      code: item.code,
+      icon: item.name,
+      active: false,
+      id: item.id
+    }));
+    categoriesList.value.push(...slotCategories);
   };
   interval = setInterval(() => {
     if (isAppTabsLoaded.value) {
