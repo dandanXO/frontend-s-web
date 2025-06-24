@@ -775,3 +775,10 @@ export function getNewUserSportBonus2025Bonus(promoCode) {
 export function claimNewUserSportBonus2025Bonus(promoCode) {
   return eventapi.post(`/session/game-type-bonus/claim?promoCode=${promoCode}`);
 }
+
+export function getFissureUniverseS5Bonus(promoCode) {
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimFissureUniverseS5Bonus(promoCode) {
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}

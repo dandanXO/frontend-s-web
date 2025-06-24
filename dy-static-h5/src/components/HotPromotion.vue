@@ -68,6 +68,7 @@
       v-else-if="list.redirectUrl === 'dy2-new-user-sport-bonus-2025'"
       :promo-code="list.promoCode"
     />
+    <FissureUniverseS5 v-else-if="list.redirectUrl === 'dy2-fissure-universe-s5'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -94,6 +95,7 @@ import { useQuasar } from "quasar";
 import moment from "moment";
 import { useRouter } from "vue-router";
 import NewUserSportBonus2025 from "./hotpromo/new-user-sport-bonus-2025/NewUserSportBonus2025.vue";
+
 const BlastPremierPromo = defineAsyncComponent(() => import("./hotpromo/BlastPremierPromo/BlastPremierPromo.vue"));
 const YaLLa2025 = defineAsyncComponent(() => import("./hotpromo/YaLLa2025/YaLLa2025.vue"));
 const Monthly20HongBaoYu = defineAsyncComponent(() => import("./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue"));
@@ -156,6 +158,7 @@ const sportReferBetBonus = defineAsyncComponent(() =>
   import("./hotpromo/sport-refer-bet-bonus/sport-refer-bet-bonus.vue")
 );
 const DuanWuRewards = defineAsyncComponent(() => import("./hotpromo/duan-wu-rewards/DuanWuRewards.vue"));
+const FissureUniverseS5 = defineAsyncComponent(() => import("./hotpromo/fissure-universe-s5/FissureUniverseS5.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -204,7 +207,8 @@ export default defineComponent({
     NewFootball,
     IemDallas2025,
     DreamLeagueS26,
-    NewUserSportBonus2025
+    NewUserSportBonus2025,
+    FissureUniverseS5
   },
   props: {
     list: {
