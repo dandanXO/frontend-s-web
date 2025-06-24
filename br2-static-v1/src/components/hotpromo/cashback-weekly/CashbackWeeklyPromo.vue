@@ -17,10 +17,10 @@
         </div>
       </div>
       <div class="bet-progressbar">
-        <div class="bet-progressbar__inner" :style="{ width: `${promoInfo.bonusPercentage * 100}%` }" />
+        <div class="bet-progressbar__inner" :style="{ width: `${progress}%` }" />
       </div>
       <div class="bet-next-level">
-        {{ $t("hotPromo.cashbackWeekly.upgradeDifference", { amount: promoInfo.totalLoss, vip: vipLevel }) }}
+        {{ $t("hotPromo.cashbackWeekly.upgradeDifference", { amount: promoInfo.minLoss, vip: vipLevel }) }}
       </div>
     </div>
 
@@ -94,15 +94,22 @@ import { api, eventapi } from "boot/axios";
 
 const store = userStore();
 
-const currentCashbackRate = ref(12);
 const maximumCashbackRate = ref(25);
-const currentBet = ref(500);
-const nextLevelBet = ref(1000);
+const promoInfo = ref({});
 
 const vipLevel = computed(() => store.vip.replace("VIP", ""));
-const remainingBet = computed(() => nextLevelBet.value - currentBet.value);
+const currentCashbackRate = computed(() =>
+  promoInfo.value?.bonusPercentage ? promoInfo.value.bonusPercentage * 100 : 0
+);
 
-const promoInfo = ref([]);
+const progress = computed(() => {
+  if (typeof promoInfo.value?.totalLoss === "number" && typeof promoInfo.value?.minLoss === "number") {
+    return Math.min((promoInfo.value.totalLoss / promoInfo.value.minLoss) * 100, 100);
+  } else {
+    return 0;
+  }
+});
+
 const loadPromoInit = () => {
   eventapi
     .get("/session/loss-bonus/init?promoCode=br2-weekly-loss-cashback")
@@ -223,7 +230,7 @@ onMounted(() => {
   background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
   width: 100%;
   color: #2d2d2d;
-  border-radius:8px;
+  border-radius: 8px;
   font-weight: bold;
 
   img {
