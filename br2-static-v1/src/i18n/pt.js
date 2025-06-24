@@ -936,20 +936,19 @@ export default {
       tnc10: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
     },
     vipPlanBettingUpgrade: {
-      eligibility: "Todos los miembros que hayan realizado al menos un depósito exitoso",
+      eligibility: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
       description:
-        "Actualiza al nivel VIP correspondiente según la cantidad acumulada de apuestas en la cuenta del miembro.",
-      termsAndConditions: "Términos y Condiciones",
-      bet: "APUESTA",
-      vipLevel: "Nivel VIP",
+        "Faça o upgrade para o nível VIP correspondente com base no valor acumulado de apostas na conta do membro.",
+      termsAndConditions: "Regras da Promoção",
+      bet: "BET",
+      vipLevel: "VIP Level",
       tnc01:
-        "A partir de la primera apuesta válida del miembro después de completar su primer depósito exitoso, los montos acumulados de apuestas válidas se utilizarán para determinar las mejoras de nivel VIP según los umbrales a continuación:",
+        "A partir da primeira aposta válida feita pelo membro após concluir o primeiro depósito com sucesso, o valor acumulado das apostas válidas será usado para determinar a elevação de nível VIP, conforme os limites abaixo:",
       tnc02:
-        "Solo se cuentan como montos de apuestas válidas aquellas que resulten en una ganancia o pérdida en el sitio web; las apuestas canceladas o con reembolsos no serán incluidas.",
+        "Apenas apostas que resultem em ganho ou perda no site serão consideradas como valor de aposta válida; apostas canceladas ou com devolução do valor apostado não serão incluídas.",
       tnc03:
-        "Los miembros VIP pueden disfrutar de otros beneficios exclusivos relacionados con su nivel VIP en el sitio web, como porcentajes más altos de reembolso semanal para niveles VIP más altos.",
-      tnc04:
-        "Para evitar cualquier malentendido, AKB188 se reserva el derecho final de interpretación de esta promoción."
+        "Membros VIP podem usufruir de outros benefícios exclusivos relacionados ao seu nível VIP no site, como percentuais de reembolso semanais mais altos para níveis VIP superiores.",
+      tnc04: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
     },
     receiveEarn: {
       description: "Receive up to 100 BRL in free bet bonus",
