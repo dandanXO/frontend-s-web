@@ -36,7 +36,7 @@ import { ref, onMounted, onActivated } from "vue";
 import { useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
-import { convertToGMT55, convertToGMT7, convertToGMT7Time, convertToGMTMinus3 } from "src/boot/utils";
+import {convertToGMTMinus3 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 

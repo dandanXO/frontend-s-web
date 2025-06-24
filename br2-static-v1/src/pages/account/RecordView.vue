@@ -46,7 +46,7 @@
       ></NoInfoComponent>
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
-          <div class="date">{{ convertToGMTMinus5(e.betTime) }}</div>
+          <div class="date">{{ e.betTime }}</div>
           <q-btn
             class="bet-btn"
             :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
@@ -99,7 +99,7 @@ import { computed, onActivated, onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { updateDate, convertToGMT8, convertToGMTMinus3, convertToGMTMinus5 } from "src/boot/utils";
+import { updateDate, convertToGMT8 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { convertToCommaAmount, displayPlatform } from "src/boot/utils";
