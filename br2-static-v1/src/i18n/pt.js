@@ -901,7 +901,7 @@ export default {
     spinReferWheel: {
       paymentRequestSubmitted: "Pedido de pagamento submetido",
       stillNeedToMakeWithdrawal: "Ainda precisa fazer levantamento",
-      willBePaidToYourRsAccount: "será pago à sua conta RS",
+      willBePaidToYourRsAccount: "{symbol} será pago à sua conta {symbol}",
       inviteFriendsToHelp: "Convide amigos para ajudar",
       referFriendToRegister:
         "Indique um amigo para se registar, depositar e verificar o telefone para ganhar rodadas grátis",

@@ -890,7 +890,7 @@ export default {
     spinReferWheel: {
       paymentRequestSubmitted: "Payment request submitted",
       stillNeedToMakeWithdrawal: "Still need to make withdrawal",
-      willBePaidToYourRsAccount: "will be paid to your RS account",
+      willBePaidToYourRsAccount: "{symbol} will be paid to your {{symbol}} account",
       inviteFriendsToHelp: "Invite Friends To Help",
       referFriendToRegister: "Refer a friend to register, deposit and verify your phone to win free spins",
       only: "Only",

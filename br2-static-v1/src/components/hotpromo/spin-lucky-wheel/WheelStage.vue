@@ -116,9 +116,9 @@
     <q-dialog v-model="showWithdrawDialog">
       <div class="withdraw-container">
         <img
-          v-if="languageVal === 'ur'"
+          v-if="languageVal === 'pt'"
           class="withdraw-header"
-          src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/withdraw/withdraw-header-ur.png"
+          src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/withdraw/withdraw-header-pt.png"
         />
         <img
           v-else
@@ -137,9 +137,9 @@
           />
         </div>
         <img
-          v-if="languageVal === 'ur'"
+          v-if="languageVal === 'pt'"
           class="payment-method-header"
-          src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/withdraw/payment-method-header-ur.svg"
+          src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/withdraw/payment-method-header-pt.svg"
         />
         <img
           v-else
@@ -184,7 +184,10 @@
               class="icon"
               src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/withdraw/unchecked.svg"
             />
-            <div>{{ info.claimBonus }} RS {{ $t("hotPromo.spinReferWheel.willBePaidToYourRsAccount") }}</div>
+            <div>
+              {{ info.claimBonus }}
+              {{ $t("hotPromo.spinReferWheel.willBePaidToYourRsAccount", { symbol: store.currency.value }) }}
+            </div>
           </div>
         </div>
 
