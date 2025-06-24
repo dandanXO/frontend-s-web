@@ -511,7 +511,8 @@ watch(
         return 100;
       }
 
-      return Math.trunc((currentValidBet / levelUpDeposit) * 100 * 100) / 100;
+      const truncPercentage = Math.trunc((currentValidBet / levelUpDeposit) * 100 * 100) / 100;
+      return truncPercentage >= 100 ? 100 : truncPercentage;
     })();
 
     // alert(vipLevel);
