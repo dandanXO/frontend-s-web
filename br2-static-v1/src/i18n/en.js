@@ -1083,6 +1083,7 @@ export default {
     cashRainUsage: "The received money can be directly used for playing games or withdrawing.",
     cashRainVIP: "The higher the VIP membership level, the greater the amount received.",
     linkCopyToClipboard: "Link copied to clipboard",
-    qrCodeSaved: "QR Code image saved to photo gallery."
+    qrCodeSaved: "QR Code image saved to photo gallery.",
+    receiveSuccessfully: "Receive successfully"
   }
 };
