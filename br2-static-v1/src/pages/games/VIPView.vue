@@ -511,7 +511,7 @@ watch(
         return 100;
       }
 
-      return (currentValidBet / levelUpDeposit) * 100;
+      return Math.trunc((currentValidBet / levelUpDeposit) * 100 * 100) / 100;
     })();
 
     // alert(vipLevel);
