@@ -9,14 +9,19 @@
 
       <q-input
         ref="phoneRef"
-        outlined
         v-model="phone"
-        :placeholder="$t('form.phone_placeholder')"
         class="input"
         :class="{ 'white-txt': !!phone }"
+        :placeholder="$t('form.phone_placeholder')"
+        outlined
+        type="tel"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+        lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-          (val) => (val && val.length >= 8 && val.length <= 12) || $t('form.phone_rules_02'),
+          (val) => (val && val.length >= 8 && val.length <= 11) || $t('form.phone_rules_02'),
           (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04')
         ]"
       >
@@ -34,7 +39,11 @@
         :type="!isShowPassword ? 'password' : 'text'"
         class="input"
         :class="{ 'white-txt': !!password }"
-        :rules="[(val) => (val && val.length > 0) || $t('form.password_rules_01')]"
+        lazy-rules
+        :rules="[
+          (val) => (val && val.length > 0) || $t('form.password_rules_01'),
+          (val) => val.length >= 6 || $t('form.newPassword_rules_02')
+        ]"
       >
         <template v-slot:prepend>
           <img v-if="!password" src="../../../assets/images/auth/lock-icon.png" width="22px" />
