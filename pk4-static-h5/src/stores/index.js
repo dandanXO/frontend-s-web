@@ -70,7 +70,8 @@ export const userStore = defineStore("userStore", {
       canClaimThirdPrivilege: false,
       canSpinPrivilegeCoupon: false,
       isEnableBankCardOTP: false,
-      hasUnusedCoupon: false
+      hasUnusedCoupon: false,
+      hasPhoneVerifiedBonus: true
     };
   },
   actions: {
