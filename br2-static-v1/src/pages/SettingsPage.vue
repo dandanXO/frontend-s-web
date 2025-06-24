@@ -310,6 +310,7 @@ const logout = () => {
     width: 90%;
     margin: 0 auto;
     .profile {
+      z-index: 1;
       display: flex;
       width: 90%;
       :not(:last-child) {
