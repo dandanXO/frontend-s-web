@@ -395,7 +395,7 @@ const loadingClaim = ref(false);
 const onClaimBonus = () => {
   loadingClaim.value = true;
   eventapi
-    .get(`/redPacketVip/claim?promoCode=pak-red-envelope-rain`)
+    .get(`/redPacketVip/claim?promoCode=br2-red-packet-rain`)
     .then((res) => {
       if (res.code === 0) {
         loadingClaim.value = false;
