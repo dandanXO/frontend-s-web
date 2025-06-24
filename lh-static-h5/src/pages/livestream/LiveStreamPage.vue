@@ -11,7 +11,7 @@
     <q-tab-panels v-model="moduleTab" class="content-panels" animated keep-alive>
       <q-tab-panel class="content-panel" name="livestream">
         <livestreamList
-          :livestream-list="liveStreamList"
+          :livestream-list="sortedLiveStreamList"
           :is-loading="isLivestreamListLoading"
           @livestream-click="handleLivestreamClick"
         />
@@ -62,6 +62,9 @@ const openGame = (gameName, code, gameCode) => {
 };
 
 const liveStreamList = ref([]);
+const sortedLiveStreamList = computed(() => {
+  return [...liveStreamList.value].sort((a, b) => a.sort - b.sort);
+});
 
 const getLiveUrlList = () => {
   isLivestreamListLoading.value = true;
