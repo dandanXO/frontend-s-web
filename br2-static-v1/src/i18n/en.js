@@ -785,7 +785,7 @@ export default {
     received: "Received",
     time_left: "time left",
     go_withdraw_now: "Go withdraw now",
-    rs: "RS",
+    rs: "R$",
     youGet: "You get",
     withdraw_money_over_rs: "Withdraw money over R$",
     claim_now: "Claim now",
