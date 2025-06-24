@@ -908,7 +908,8 @@ export default {
       maxCashback: "Max {num}%",
       cashback: "{num}% Cashback",
       upgradeDifference: "{amount} bets to VIP{vip}",
-      tnc01: "Weekly cashback is given as a reward every week.",
+      tnc01:
+        "Weekly cashback is given as a reward every week. Only customers whose losses for the current week and the accumulated losses each exceed R$200.00 will be entitled to cashback.",
       tnc02: "The period over which the weekly cashback is calculated runs from Monday at 00:00 to Sunday at 23:59.",
       tnc03: "Cashback claim time: From Monday of next week 06:00 to Friday 23:59, will expire if not redeemed.",
       tnc04: "The number of Real Money Losses multiplied by the Refund % is the Refund/Cashback for the week.",
