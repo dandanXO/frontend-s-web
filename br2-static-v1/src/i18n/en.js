@@ -921,7 +921,14 @@ export default {
       tnc08: "The cashback amount can be withdrawn directly or used to continue playing.",
       tnc09:
         "Players who are winners in the history of the our platform do not participate in the loss return settlement. This activity is limited to the benefits of players who have lost to the platform.",
-      tnc10: "To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion."
+      tnc10: "To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion.",
+      table: {
+        title: {
+          vip: "VIP",
+          bet: "BET",
+          cashback: "CASHBACK"
+        }
+      }
     },
     vipPlanBettingUpgrade: {
       eligibility: "All members who have made at least one successful deposit",
