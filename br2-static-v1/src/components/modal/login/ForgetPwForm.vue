@@ -13,14 +13,16 @@
         <div v-if="!isOtpSent">
           <q-input
             type="tel"
-            pattern="\d*"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
             maxlength="11"
             ref="phoneRef"
             v-model="phone"
             lazy-rules
             :rules="[
               (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-              (val) => (val && val.length >= 8 && val.length <= 12) || $t('form.phone_rules_02'),
+              (val) => (val && val.length >= 8 && val.length <= 11) || $t('form.phone_rules_02'),
               (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04')
             ]"
             outlined
@@ -60,6 +62,7 @@
             :placeholder="$t('form.otp_placeholder')"
             class="input"
             :class="{ 'white-txt': !!otp }"
+            lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('form.otp_rules_01')]"
           ></q-input>
           <q-input
@@ -70,7 +73,11 @@
             :type="!isShowPassword ? 'password' : 'text'"
             class="input"
             :class="{ 'white-txt': !!password }"
-            :rules="[(val) => (val && val.length > 0) || $t('form.password_rules_01')]"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || $t('form.password_rules_01'),
+              (val) => val.length >= 6 || $t('form.newPassword_rules_02')
+            ]"
           >
             <template v-slot:prepend>
               <img v-if="!password" src="../../../assets/images/auth/lock-icon.png" width="22px" />
@@ -102,7 +109,11 @@
             :type="!isShowConfirmPassword ? 'password' : 'text'"
             class="input"
             :class="{ 'white-txt': !!confirmPassword }"
-            :rules="[(val) => (val && val.length > 0) || $t('form.password_rules_01')]"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || $t('form.confirmNewPassword_rules_01'),
+              (val) => val === password || $t('form.confirmNewPassword_rules_03')
+            ]"
           >
             <template v-slot:prepend>
               <img v-if="!confirmPassword" src="../../../assets/images/auth/lock-icon.png" width="22px" />
