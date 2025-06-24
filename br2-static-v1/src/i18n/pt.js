@@ -920,7 +920,8 @@ export default {
       maxCashback: "Máx : {num}%",
       cashback: "{num}% Cashback",
       upgradeDifference: "{amount} apostas para VIP{vip}",
-      tnc01: "O cashback semanal é concedido como recompensa toda semana.",
+      tnc01:
+        "O cashback semanal é concedido como recompensa toda semana. Solo los clientes cuyas pérdidas de la semana en curso y las pérdidas acumuladas superen cada una los R$200.00 tendrán derecho al reembolso.",
       tnc02: "O período de cálculo do cashback semanal vai de segunda-feira às 00:00 até domingo às 23:59.",
       tnc03:
         "Período para resgatar o cashback: da segunda-feira da semana seguinte às 06:00 até sexta-feira às 23:59. Após esse prazo, o bônus expirará.",
