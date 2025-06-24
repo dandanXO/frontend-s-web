@@ -49,10 +49,10 @@
     <div class="bottom-panel">
       <div class="share-icons">
         <div class="invite-share-social">
-          <a class="social-item" @click="modalSocialShare = true">
+          <!-- <a class="social-item" @click="modalSocialShare = true">
             <img src="../spin-lucky-wheel/img/share-icon.png" />
             <span class="grey">{{ $t("hotPromo.share") }}</span>
-          </a>
+          </a> -->
           <a class="social-item" @click="takeScreenshot">
             <img src="../spin-lucky-wheel/img/download-icon.png" />
             <span class="grey">{{ $t("hotPromo.save_image") }}</span>
@@ -623,7 +623,7 @@ onMounted(() => {
 
   .invite-share-social {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 12px;
     width: 95%;
     margin: 10px auto 16px;
