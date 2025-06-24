@@ -1667,6 +1667,8 @@
 
   <!-- <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" /> -->
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
+  
+  <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" />
 </template>
 
 <script setup>
@@ -1726,6 +1728,7 @@ import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vu
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
 import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
 import SpinLuckyWheelPromoHomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import DepositPromoModal from "src/components/modal/DepositPromoModal.vue";
 import NewPlayerPromoHomePopup from "src/components/hotpromo/newPlayerSpinWheel/NewPlayerPopup.vue";
 
 import { usePromoStore } from "src/stores/promo";
@@ -4272,7 +4275,9 @@ watch(() => isAdditionalWithdrawSteps.value, checkWithdrawStep, { immediate: fal
 const afterActivated = useCustomerTrigger(() => {
   checkShowImgTop();
   checkHbPromo();
-  showSpinWheel();
+  if (store.hasToken()) {
+    showSpinWheel();
+  }
 });
 
 const downloadAppRef = ref();
