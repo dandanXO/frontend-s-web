@@ -379,7 +379,7 @@ const handleReceiveClick = () => {
     // eventapi.post("/session/refer-wheel/claimBonus?promoCode=br2-refer-wheel").then((res) => {
     if (res.code === 0) {
       $q.notify({
-        message: "Receive successfully",
+        message: t("content.receiveSuccessfully"),
         color: "positive",
         position: "top"
       });

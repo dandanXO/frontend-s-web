@@ -1125,6 +1125,7 @@ export default {
       "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção.",
     cashRainVIP: "Quanto maior o nível de membro VIP, maior o valor recebido.",
     linkCopyToClipboard: "Link copiado para a área de transferência",
-    qrCodeSaved: "Imagem do código QR salva na galeria de fotos."
+    qrCodeSaved: "Imagem do código QR salva na galeria de fotos.",
+    receiveSuccessfully: "Recebido com sucesso"
   }
 };
