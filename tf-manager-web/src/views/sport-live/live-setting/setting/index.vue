@@ -257,9 +257,9 @@
       {{ t('fields.add') }}
     </el-button>
     <el-table :data="streamerStreams" size="small" border>
-      <el-table-column prop="streamerName" :label="t('fields.streamer')" />
-      <el-table-column prop="streamerCdnPushUrl" :label="t('fields.streamerCdnPushUrl')" />
-      <el-table-column :label="t('fields.streamerCdnPullUrl')">
+      <el-table-column prop="streamerName" :label="t('fields.streamer')" width="150" />
+      <el-table-column prop="streamerCdnPushUrl" :label="t('fields.streamerCdnPushUrl')" width="350" />
+      <el-table-column :label="t('fields.streamerCdnPullUrl')" width="350">
         <template #default="scope">
           <span>
             {{
@@ -290,8 +290,8 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="roomMessage" :label="t('fields.roomMessage')" />
-      <el-table-column prop="scheduledAnnouncement" :label="t('fields.scheduledAnnouncement')" />
+      <el-table-column prop="roomMessage" :label="t('fields.roomMessage')" width="200" />
+      <el-table-column prop="scheduledAnnouncement" :label="t('fields.scheduledAnnouncement')" width="200" />
       <el-table-column
         prop="subscribeCount"
         :label="t('fields.subscribeCount')"
@@ -301,33 +301,39 @@
         fixed="right"
         :label="t('fields.operate')"
         align="center"
-        width="180"
+        width="350"
       >
         <template #default="scope">
-          <el-button
-            icon="el-icon-chat-line-round"
-            size="mini"
-            type="info"
-            @click="openChatHistory(scope.row.id)"
-          >
-            {{ t('fields.chatHistory') }}
-          </el-button>
-          <el-button
-            icon="el-icon-edit"
-            size="mini"
-            type="primary"
-            @click="showDialog('STREAMER_EDIT', scope.row)"
-          >
-            {{ t('fields.edit') }}
-          </el-button>
-          <el-button
-            icon="el-icon-delete"
-            size="mini"
-            type="danger"
-            @click="deleteStream(scope.row.id)"
-          >
-            {{ t('fields.delete') }}
-          </el-button>
+          <div style="display: flex; gap: 2px; justify-content: center;">
+            <el-button
+              icon="el-icon-chat-line-round"
+              size="mini"
+              type="info"
+              @click="openChatHistory(scope.row.id)"
+              style="width: 100px;"
+            >
+              {{ t('fields.chatHistory') }}
+            </el-button>
+            <el-button
+              icon="el-icon-edit"
+              size="mini"
+              type="primary"
+              @click="showDialog('STREAMER_EDIT', scope.row)"
+              style="width: 100px;"
+            >
+              {{ t('fields.edit') }}
+            </el-button>
+            <el-button
+              icon="el-icon-delete"
+              size="mini"
+              type="danger"
+              @click="deleteStream(scope.row.id)"
+              style="width: 100px;"
+            >
+              {{ t('fields.delete') }}
+            </el-button>
+          </div>
+
         </template>
       </el-table-column>
     </el-table>
@@ -337,6 +343,14 @@
     width="850px"
     :title="t('fields.chatHistory')"
   >
+    <div class="btn-group">
+      <el-button
+        size="mini"
+        type="primary"
+        @click="requestExportExcel(chatHistoryDialog.streamerId)"
+      >{{ t('fields.requestExportToExcel') }}
+      </el-button>
+    </div>
     <el-table :data="chatHistoryDialog.chatList" v-loading="chatHistoryDialog.loading">
       <el-table-column prop="name" :label="t('fields.name')" width="200" />
       <el-table-column prop="content" :label="t('fields.content')" />
@@ -355,6 +369,17 @@
       :current-page="chatHistoryDialog.page.current"
       @current-change="handleChatPageChange"
     />
+  </el-dialog>
+  <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+             :close-on-click-modal="false" :close-on-press-escape="false"
+  >
+    <span>{{ t('message.requestExportToExcelDone1') }}</span>
+    <router-link :to="`/site-management/download-manager`">
+      <el-link type="primary">
+        {{ t('menu.DownloadManager') }}
+      </el-link>
+    </router-link>
+    <span>{{ t('message.requestExportToExcelDone2') }}</span>
   </el-dialog>
 </template>
 <script setup>
@@ -385,7 +410,7 @@ import EmojiPicker from 'vue3-emoji-picker'
 import 'vue3-emoji-picker/dist/style.css'
 import 'videojs-flvjs';
 import flvjs from 'flv.js';
-import { getChatHistory } from "@/api/sport-live-chat";
+import { getChatHistory, getChatHistoryExport } from "@/api/sport-live-chat";
 import dayjs from "dayjs";
 
 const showEmojiPicker = ref(false)
@@ -424,6 +449,7 @@ const formRef = ref(null);
 const supplierStreams = ref([]);
 const streamerStreams = ref([]);
 const monitorScoreMap = ref({});
+const store = useStore();
 
 function insertEmoji(emoji) {
   form.roomTitle += emoji.i
@@ -704,6 +730,17 @@ const chatHistoryDialog = reactive({
   }
 });
 
+async function requestExportExcel(streamerId) {
+  const query = {};
+  query.streamId = streamerId;
+  query.siteId = store.state.user.siteId;
+
+  const { data: ret } = await getChatHistoryExport(query)
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
+}
+
 function openChatHistory(streamerId) {
   chatHistoryDialog.streamerId = streamerId;
   chatHistoryDialog.visible = true;
@@ -717,7 +754,7 @@ function loadChatHistory() {
     current: chatHistoryDialog.page.current,
     size: chatHistoryDialog.page.size
   });
-  const store = useStore();
+
   const siteId = store.state.user.siteId;
   getChatHistory(`?${query.toString()}`, { streamId: chatHistoryDialog.streamerId, siteId: siteId })
     .then(res => {
