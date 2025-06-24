@@ -934,15 +934,22 @@ export default {
       tnc08: "O valor do cashback pode ser sacado diretamente ou utilizado para continuar jogando.",
       tnc09:
         "Jogadores que, no histórico da nossa plataforma, apresentem lucro não participam do reembolso de perdas. Esta atividade é limitada aos benefícios para jogadores que tiveram prejuízo na plataforma.",
-      tnc10: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
+      tnc10: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção.",
+      table: {
+        title: {
+          vip: "VIP",
+          bet: "APOSTA",
+          cashback: "CASHBACK"
+        }
+      }
     },
     vipPlanBettingUpgrade: {
       eligibility: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
       description:
         "Faça o upgrade para o nível VIP correspondente com base no valor acumulado de apostas na conta do membro.",
       termsAndConditions: "Regras da Promoção",
-      bet: "BET",
-      vipLevel: "VIP Level",
+      bet: "APOSTA",
+      vipLevel: "VIP Nível",
       tnc01:
         "A partir da primeira aposta válida feita pelo membro após concluir o primeiro depósito com sucesso, o valor acumulado das apostas válidas será usado para determinar a elevação de nível VIP, conforme os limites abaixo:",
       tnc02:
