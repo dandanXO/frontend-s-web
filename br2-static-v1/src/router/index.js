@@ -90,6 +90,7 @@ export default route(function (/* { store, ssrContext } */) {
         ui.loginView = "register";
       } else {
         next(`/`);
+        ui.loginView = "register";
       }
     }
     if (to.name === "referCodeSpin") {
