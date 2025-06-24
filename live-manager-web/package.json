@@ -7,9 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "serve:staging": "dotenv -e .env.staging vite",
+    "serve:prod": "dotenv -e .env.production vite",
     "preview": "vite preview",
     "format": "prettier --write src/",
     "build:prod": "dotenv -e .env.production vite build",
+    "build:test": "dotenv -e .env.test vite build",
     "build:staging": "dotenv -e .env.staging vite build"
   },
   "dependencies": {
