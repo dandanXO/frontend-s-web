@@ -87,6 +87,11 @@ export default {
     homeCodeBonus: {
       congratsWonFreeCash: "Congratulations, you've won free cash!",
       enterCodeToClaim: "Please enter the cash redemption code to claim it."
+    },
+    appLoginBonus: {
+      validatePhoneAndEmail: "Please bind your phone first",
+      loginTomorrow: "Please log in tomorrow to claim your mystery reward.",
+      claimBonus: "You’ve received {amount}rs bonus!"
     }
   },
   form: {
@@ -792,7 +797,7 @@ export default {
   bankCard: {
     bankAccountNum: "Bank Account Number",
     pleaseEnterCardAccount: "Please enter bank account number",
-    bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
+    bankCardMust16NumberandAbove: "Bank account number must be between 13 and 20 numbers",
     bankCardDisallowDecimal: "Bank account number cannot have decimal points",
     nameofCardAcc: "Card Account Name",
     insertCardAccName: "Please insert card account name"
