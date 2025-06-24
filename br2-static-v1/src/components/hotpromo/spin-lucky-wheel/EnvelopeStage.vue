@@ -290,6 +290,7 @@ onUnmounted(() => {
     .footer {
       position: absolute;
       -webkit-user-drag: none;
+      pointer-events: none;
 
       &.dragon {
         left: 50%;
