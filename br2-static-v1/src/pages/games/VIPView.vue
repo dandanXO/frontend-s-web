@@ -136,7 +136,7 @@
 <!--      </div>-->
       <hr class="separator-line" style="margin-top: 20px" />
       <div class="header-wrapper">
-        <div class="header">{{ $t("vip.monthlyCumulativeDeposit") }}</div>
+        <div class="header">{{ $t("vip.monthlyCumulativeBet") }}</div>
       </div>
       <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
         <template v-slot:header="props">
@@ -147,7 +147,7 @@
               <!-- unable to adjust table width... -->
               <template v-else>
                 <div style="white-space: normal; text-align: center">
-                  {{ $t("vip.monthlyCumulativeDeposit") }}
+                  {{ $t("vip.monthlyCumulativeBet") }}
                 </div>
               </template>
             </q-th>

@@ -345,7 +345,7 @@ export default {
     feedback: "Feedback",
     vip: "VIP",
     logout: "Sair",
-    depositMonthlytoWinGifts: "Deposite Mensalmente Para Ganhar Prêmios",
+    betMonthlytoWinGifts: "Aposte Mensalmente Para Ganhar Prêmios",
     interestProfit: "Lucro de Juros",
     version: "Versão",
     balance: "Saldo"
@@ -432,13 +432,13 @@ export default {
     rewards: "Recompensas",
     vipTable_txt:
       "Assim que seus depósitos atenderem aos requisitos de atualização, seu nível VIP será imediatamente atualizado, aumentando seu número de retiradas.",
-    monthlyCumulativeDeposit: "Depósito Mensal Acumulado para Atualizar Nível VIP",
+    monthlyCumulativeBet: "Aposta Mensal Acumulado para Atualizar Nível VIP",
     level: "Nível",
     amount: "Valor",
     turnover: "Volume de Negócios",
     deposit: "Depósito",
     aftertheRecharge:
-      "Após o depósito no dia atingir o padrão, no dia seguinte o nível VIP será aumentado e as recompensas de atualização correspondentes serão emitidas.",
+      "Após o aposta no dia atingir o padrão, no dia seguinte o nível VIP será aumentado e as recompensas de atualização correspondentes serão emitidas.",
     vipPromoBonus: "Bônus de Promoção VIP",
     promotionBonusDesc:
       "Bônus de Promoção: Toda vez que você avançar, pode receber instantaneamente uma recompensa de promoção.",

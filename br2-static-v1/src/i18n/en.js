@@ -342,7 +342,7 @@ export default {
     feedback: "Feedback",
     vip: "VIP",
     logout: "LOG OUT",
-    depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
+    betMonthlytoWinGifts: "Bet Monthly To Win Gifts",
     interestProfit: "Interest Profit",
     version: "Version",
     balance: "Balance"
@@ -425,13 +425,13 @@ export default {
     rewards: "Rewards",
     vipTable_txt:
       "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals.",
-    monthlyCumulativeDeposit: "Monthly Cumulative Deposit An Upgrade Vip Level",
+    monthlyCumulativeBet: "Monthly Cumulative Bet An Upgrade Vip Level",
     level: "Level",
     amount: "Amount",
     turnover: "Turnover",
     deposit: "Deposit",
     aftertheRecharge:
-      "After the recharge on the day reaches the standard, the next day will increase the VIP level and issue corresponding upgrade rewards.",
+      "After the bet on the day reaches the standard, the next day will increase the VIP level and issue corresponding upgrade rewards.",
     vipPromoBonus: "VIP Promotion Bonus",
     promotionBonusDesc: "Promotion Bonus: Every time you advance, you can instantly receive a promotion reward.",
     vipMonthlyCashBonus: "VIP Monthly Cash Bonus",

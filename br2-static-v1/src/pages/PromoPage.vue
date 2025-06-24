@@ -183,6 +183,11 @@
     </q-card>
   </q-dialog>
 
+  <q-dialog v-model="isMoneyRainModal" width="100%">
+    <MoneyRainModal @closeModal="isMoneyRainModal = false" />
+    <q-btn icon="close" round dense v-close-popup @click="backToPromoList()" class="money-rain-close" />
+  </q-dialog>
+
   <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
     <div class="dialog-mid-text">Loading...</div>
   </q-dialog>
@@ -198,19 +203,19 @@ import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
 import {isAndroid} from "boot/utils";
 import { SessionStorage } from "quasar";
-// import { loadPromo } from "src/api/index/promo.js";
-// import { loadPromoBanner } from "src/api/index/promo";
 import ProfileSummary from "components/ProfileSummary.vue";
 import HotPromotion from 'components/HotPromotion'
 import GameModal from "components/modal/GameModal.vue";
+import MoneyRainModal from "components/modal/MoneyRainModal.vue";
+
 import { t } from "src/boot/lang";
-// import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
   components: {
     GameModal,
     HotPromotion,
-    ProfileSummary
+    ProfileSummary,
+    MoneyRainModal
   },
   setup() {
     const store = userStore();
@@ -247,6 +252,8 @@ export default defineComponent({
     const extensionState = ref(false);
     const extensionToken = ref("");
     const isOpenExtension = ref(false);
+
+    const isMoneyRainModal = ref(false);
 
     const checkExtension = () => {
       if (route.path === "/promotion") {
@@ -375,7 +382,10 @@ export default defineComponent({
         // router.push(`/login`)
         ui.loginView = 'login'
       } else {
-        if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
+        if (promo.redirectUrl === "money-rain") {
+          isMoneyRainModal.value = true;
+        }
+        else if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});
         }else if (promo.redirectUrl && promo.redirectUrl.includes("SigninBonus")) {
           router.push({path: '/activities-details'});
@@ -689,7 +699,8 @@ export default defineComponent({
       isFtdPromoEnded,
       isFetchingPromo,
       extensionState,
-      isOpenExtension
+      isOpenExtension,
+      isMoneyRainModal
     }
   },
 });
