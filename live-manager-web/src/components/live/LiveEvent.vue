@@ -236,7 +236,7 @@
         <div class="p-field">
           <label :for="t('fields.homeTeam')">{{ t('fields.homeTeam') }}</label>
           <AutoComplete
-            v-model="form.homeId"
+            v-model="form.homeName"
             :suggestions="displayTeams"
             @complete="searchTeams"
             field="nameZh"
@@ -252,7 +252,7 @@
                 afterTeamSelectorChanged()
               }
             "
-                        @focus="loadEventWithSite(form.sportId, 'home')"
+            @focus="loadEventWithSite(form.sportId, 'home')"
             :class="{ 'p-invalid': validationErrors.homeId }"
           >
             <template #option="slotProps">
@@ -280,7 +280,7 @@
         <div class="p-field">
           <label :for="t('fields.awayTeam')">{{ t('fields.awayTeam') }}</label>
           <AutoComplete
-            v-model="form.awayId"
+            v-model="form.awayName"
             :suggestions="displayTeams"
             @complete="searchTeams"
             field="nameZh"
@@ -427,7 +427,7 @@
           :label="t('fields.cancel')"
           icon="pi pi-times"
           class="p-button-text"
-          @click="ui.dialogVisible = false"
+          @click="closeDialog"
         />
         <Button
           :label="t('fields.confirm')"
@@ -466,7 +466,7 @@ const { t } = useI18n();
 const confirm = useConfirm();
 const toast = useToast();
 //const const imageUrl = useSessionStorage('IMAGE_CDN', process.env.VUE_APP_IMAGE).value
-const imageUrl = `https://file-admin.fwabm4gvc.com'`
+const imageUrl = `https://file-admin.fwabm4gvc.com`
 const promoDir = imageUrl + '/promo/'
 const promoDir2 = imageUrl
 
@@ -480,11 +480,6 @@ const formatToStartOfDayString = (date) => {
   return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
 };
 const uiControl = reactive({
-  //dialogVisible: false,
-  //dialogTitle: '',
-  //dialogType: 'CREATE',
-  //removeBtn: true,
-  //dialogLoading: false,
   eventStartTime:  getStartOfDayDate(new Date()),
   eventEndTime: getEndOfDayDate(new Date()),
   sport: liveSportTyps,
@@ -603,8 +598,6 @@ const ui = reactive({
   dialogVisible: false,
   dialogTitle: '',
   dialogType: 'CREATE',
-  eventStartTime:  getStartOfDayDate(new Date()),
-  eventEndTime: getEndOfDayDate(new Date()),
 });
 
 const uiForm = reactive({
@@ -617,18 +610,25 @@ const validationErrors = reactive({
   cover: null
 })
 
-const handleTeamSelectorFocus = target => {
-  loadedTeams.value = teams.list.slice(0, TEAMS_PER_VIEW)
-  teamSelectorStatus.value = target
-  nextTick(() => {
-    if (!teamSelectorBottomRef.value) return
-    teamSelectorScrollObserver.value.observe(teamSelectorBottomRef.value)
+const registerTeamSelectorScrollObserver = () => {
+  teamSelectorScrollObserver.value = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        loadedTeams.value = teams.list.slice(
+          0,
+          loadedTeams.value.length + TEAMS_PER_VIEW
+        )
+      }
+    })
   })
 }
 async function loadEventWithSite(sportId, target) {
-  console.log(sportId)
+
+  teams.list = [];
+  loadedTeams.value = [];
+  searchedTeams.value = [];
+  
   if (sportId) {
-    console.log(sportId)
     const { data: team } = await DashboardService.getSportLiveTeamById(sportId)
     teams.list = team
   } else {
@@ -650,6 +650,14 @@ async function loadList() {
     page.loading = false;
   }
 }
+const handleTeamSelectorFocus = target => {
+  loadedTeams.value = teams.list.slice(0, TEAMS_PER_VIEW)
+  teamSelectorStatus.value = target
+  nextTick(() => {
+    if (!teamSelectorBottomRef.value) return
+    teamSelectorScrollObserver.value.observe(teamSelectorBottomRef.value)
+  })
+}
 
 function resetQuery() {
   request.sportId = null
@@ -657,26 +665,39 @@ function resetQuery() {
   request.title = null
 }
 
-function showDialog(type, row = null) {
-  ui.dialogType = type;
-  ui.dialogVisible = true;
+
+function resetDialogContent() {
   validationErrors.title = null;
   validationErrors.cover = null;
+  uiForm.eventStartTime = null
+  uiForm.eventEndTime = null
   Object.assign(form, {
     id: null,
-    sportId: null,
     homeId: null,
     homeNameZh: null,
     awayId: null,
     awayNameZh: null,
+    sportId: null,
+    liveStatus: null,
     sort: null,
+    title: null,
     eventStartTime: null,
     eventEndTime: null,
-    liveStatus: null,
-    title: null,
-    isTest: null,
-    isPopular: null,
+    homeName: '',
+    awayName: '',
+    isTest: false,
+    cover: '',
+    isPopular: false,
   })
+}
+
+function showDialog() {
+  ui.dialogVisible = true;
+  resetDialogContent()
+}
+function closeDialog() {
+  ui.dialogVisible = false;
+  resetDialogContent()
 }
 
 async function attachImage(event) {
@@ -727,7 +748,7 @@ async function submit() {
   
   validationErrors.title = null;
   if (!form.title) {
-    validationErrors.title = t('message.validateTeamNameRequired');
+    validationErrors.title = t('message.validateTitleRequired');
     return;
   }
 
@@ -742,12 +763,12 @@ async function submit() {
   }
 
   form.icon = form.icon?.startsWith('http')
-    ? store.state.user.siteId + '/' + form.icon.split('/').pop()
+    ? store.siteId + '/' + form.icon.split('/').pop()
     : form.icon
   if (form.cover) {
     form.cover = form.cover.startsWith('/live/event/')
       ? form.cover
-      : `/live/event/${store.state.user.siteId}/${form.cover}`
+      : `/live/event/${store.siteId}/${form.cover}`
   }
   console.log(form)
   
@@ -755,11 +776,11 @@ async function submit() {
   try {
     await DashboardService.createSportLiveEvent(form);
     toast.add({ severity: 'success', summary: 'Success', detail: t('message.addSuccess'), life: 3000 });
-    ui.dialogVisible = false;
+    closeDialog()
     await loadList();
   } catch (error) {
     console.log(error)
-    toast.add({ severity: 'error', summary: 'Error', detail: t('message.operationFailed'), life: 3000 });
+    toast.add({ severity: 'error', summary: 'Error', detail: t('fields.fail'), life: 3000 });
   }
 }
 
@@ -790,6 +811,32 @@ function changePage(event) {
   loadList();
 }
 
+
+const afterTeamSelectorChanged = () => {
+  nextTick(() => {
+    loadedTeams.value = []
+    teamSelectorStatus.value = null
+
+    if (teamSelectorScrollObserver.value && teamSelectorBottomRef.value) {
+      teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value)
+    }
+  })
+}
+
+const searchTeams = (obj) => {
+  const query = obj.query || ''
+  if (!query) {
+    searchedTeams.value = []
+  } else {
+    searchedTeams.value = teams.list.filter(team => {
+      return (
+        team.nameZh?.toLowerCase().includes(query.toLowerCase()) ||
+        team.nameEn?.toLowerCase().includes(query.toLowerCase())
+      )
+    })
+  }
+}
+
 watch(() => uiControl.eventStartTime, (newValue) => {
   request.eventStartTime[0] = formatToStartOfDayString(newValue);
 }, { immediate: true });
@@ -807,45 +854,8 @@ watch(() => uiForm.eventEndTime, (newValue) => {
 }, { immediate: true });
 
 
-const afterTeamSelectorChanged = () => {
-  nextTick(() => {
-    loadedTeams.value = []
-    teamSelectorStatus.value = null
-    teamSelectorScrollObserver.value.unobserve(teamSelectorBottomRef.value)
-  })
-}
-
-const searchTeams = query => {
-  if (!query) {
-    searchedTeams.value = []
-  } else {
-    searchedTeams.value = teams.list.filter(team => {
-      return (
-        team.nameZh?.toLowerCase().includes(query.toLowerCase()) ||
-        team.nameEn?.toLowerCase().includes(query.toLowerCase())
-      )
-    })
-  }
-}
-
-const registerTeamSelectorScrollObserver = () => {
-  teamSelectorScrollObserver.value = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        loadedTeams.value = teams.list.slice(
-          0,
-          loadedTeams.value.length + TEAMS_PER_VIEW
-        )
-      }
-    })
-  })
-}
-
 onMounted(async () => {
   const { data: timeZone } = await SiteService.getSiteTimeZoneById(store.siteId) || "+08:00"
-  if (!timeZone) {
-    timezone.value = "+08:00"
-  }
   timezone.value = timeZone
 
   await loadList()
