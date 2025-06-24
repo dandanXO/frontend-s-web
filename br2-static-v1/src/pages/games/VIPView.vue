@@ -41,7 +41,10 @@
                 <!-- <div class="progress-bar-endpoint-label">
                   {{ `V${+vip.vipLevel - 1}` }}
                 </div> -->
-                <div class="progress-indicator" :style="{ left: `${currentVipLevelStats.levelUpPercentage}%` }">
+                <div
+                  class="progress-indicator"
+                  :style="{ left: `${currentVipLevelStats.levelUpPercentage}%`, transition: 'left 0.5s ease-in-out' }"
+                >
                   {{ `${currentVipLevelStats.levelUpPercentage}%` }}
                 </div>
                 <div class="progress-bar-outer-bar">
@@ -494,7 +497,6 @@ watch(
       vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value
         ? rows.length
         : Math.round(vipCarouselIndex.value) + 1;
-    console.log("hit 1", carouselVipLevel);
 
     const levelUpgrade = rows3.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
     const monthlyReward = rows4.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
@@ -982,6 +984,7 @@ const swipeRight = () => {
       }
 
       .progress-bar-inner-bar {
+        transition: width 0.5s ease-in-out;
         color: #fff;
         border-radius: 16px;
         background: #fff1cc;

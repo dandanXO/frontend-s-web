@@ -1257,7 +1257,6 @@ const gameClickFromMenu = (gameCode) => {
     index = categoriesList.value.findIndex((cat) => cat.code === gameCode);
     catSelected = categoriesList.value[index];
   }
-  console.log("hit 1", catSelected);
   activateSlide(catSelected);
   slideToIndex(index);
 };
