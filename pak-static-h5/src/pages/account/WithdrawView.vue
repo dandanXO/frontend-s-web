@@ -1,6 +1,6 @@
 <template>
   <q-dialog width="100%" v-model="showCaptchaDialog" persistent>
-    <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">{{ $t("bankCard.otp") }}</div>
@@ -39,35 +39,35 @@
         </template>
 
         <template v-if="isOtpSent">
-            <InputRowGrid>
-              <template #fields>
-                <!-- <InputField :label="$t('form.virtualWallet')"> -->
-                <InputField :label="$t('bankCard.otp')">
-                  <template #input>
-                    <q-input
-                      ref="phoneVerificationRef"
-                      standout
-                      v-model="withdrawInfo.smsCode"
-                      class="q-pb-xs"
-                      hide-bottom-space
-                      clearable
-                      maxlength="6"
-                      :placeholder="$t('bankCard.pleaseEnterOtp')"
-                      :rules="[(val) => (val && val.length > 5) || $t('bankCard.otpLengthError')]"
-                    ></q-input>
-                  </template>
-                </InputField>
-                <div style="width: 100%" class="q-mt-lg y-n-container">
-                  <q-btn class="btn-primary__full" :label="$t('btn.submit')" no-caps @click="onOTPEnter" />
-                </div>
-              </template>
-            </InputRowGrid>
-          </template>
+          <InputRowGrid>
+            <template #fields>
+              <!-- <InputField :label="$t('form.virtualWallet')"> -->
+              <InputField :label="$t('bankCard.otp')">
+                <template #input>
+                  <q-input
+                    ref="phoneVerificationRef"
+                    standout
+                    v-model="withdrawInfo.smsCode"
+                    class="q-pb-xs"
+                    hide-bottom-space
+                    clearable
+                    maxlength="6"
+                    :placeholder="$t('bankCard.pleaseEnterOtp')"
+                    :rules="[(val) => (val && val.length > 5) || $t('bankCard.otpLengthError')]"
+                  ></q-input>
+                </template>
+              </InputField>
+              <div style="width: 100%" class="q-mt-lg y-n-container">
+                <q-btn class="btn-primary__full" :label="$t('btn.submit')" no-caps @click="onOTPEnter" />
+              </div>
+            </template>
+          </InputRowGrid>
+        </template>
       </div>
     </div>
   </q-dialog>
   <q-dialog v-model="showCaptchaMessageDialog" persistent>
-    <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="flex justify-center">
@@ -586,7 +586,6 @@ import { defineComponent, watch, nextTick, reactive, ref, onActivated, computed,
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
-import AcctBal from "../../components/AcctBal.vue";
 import { useI18n } from "vue-i18n";
 import { useLocalStorage } from "@vueuse/core";
 import { convertToCommaAmount } from "src/boot/utils";
@@ -699,7 +698,7 @@ onActivated(() => {
   checkNewUser();
   store.getBalance();
   isOTPEntered.value = false;
-  isOtpSent.value = false
+  isOtpSent.value = false;
   // loadPlatform()
 });
 
@@ -792,7 +791,6 @@ const onCaptchaSubmit = () => {
 
         showCaptchaMessageDialog.value = true;
         showCaptchaSuccessDialog.value = true;
-
       } else {
         captchaFailedMessage.value = res.message;
         showCaptchaMessageDialog.value = true;
@@ -806,12 +804,12 @@ const onCaptchaSubmit = () => {
 };
 const isOTPEntered = ref(false);
 const onOTPEnter = () => {
-    phoneVerificationRef.value.validate();
-    if (phoneVerificationRef.value.hasError) return;
-    showCaptchaDialog.value = false;
-    isOTPEntered.value = true;
-    submitWithdraw();
-}
+  phoneVerificationRef.value.validate();
+  if (phoneVerificationRef.value.hasError) return;
+  showCaptchaDialog.value = false;
+  isOTPEntered.value = true;
+  submitWithdraw();
+};
 const selectedCardTelephone = ref();
 const submitWithdraw = async () => {
   cardRef.value.validate();
@@ -819,30 +817,26 @@ const submitWithdraw = async () => {
   if (cardRef.value.hasError || amountRef.value.hasError) {
     $q.loading.hide();
   } else {
-      if (withdrawInfo.cardId && !isOTPEntered.value) {
-        $q.loading.show({
-          message: "Loading..."
-        });
-        const selectedCard = withdrawState.bankCardList.find(
-          card => card.id === withdrawInfo.cardId
-        );
+    if (withdrawInfo.cardId && !isOTPEntered.value) {
+      $q.loading.show({
+        message: "Loading..."
+      });
+      const selectedCard = withdrawState.bankCardList.find((card) => card.id === withdrawInfo.cardId);
 
-        if (selectedCard) {
-          const bankCode = selectedCard.bankCode;
+      if (selectedCard) {
+        const bankCode = selectedCard.bankCode;
 
-          const method = withdrawalMethods.value.find(
-            method => method.code === bankCode
-          );
+        const method = withdrawalMethods.value.find((method) => method.code === bankCode);
 
-          if (method?.shouldVerifyOTP && selectedCard.telephone) {
-            selectedCardTelephone.value = selectedCard.telephone;
+        if (method?.shouldVerifyOTP && selectedCard.telephone) {
+          selectedCardTelephone.value = selectedCard.telephone;
 
-            // Show OTP dialog and wait
-            openPhoneVeriDialog();
+          // Show OTP dialog and wait
+          openPhoneVeriDialog();
 
-            $q.loading.hide({
-              message: "Loading..."
-            });
+          $q.loading.hide({
+            message: "Loading..."
+          });
           return;
         }
       }
@@ -893,10 +887,10 @@ const submitWithdraw = async () => {
           });
         }
       })
-      .catch((error) => {
-      }).finally(() => {
+      .catch((error) => {})
+      .finally(() => {
         isOTPEntered.value = false;
-        isOtpSent.value = false
+        isOtpSent.value = false;
       });
     $q.loading.hide();
   }

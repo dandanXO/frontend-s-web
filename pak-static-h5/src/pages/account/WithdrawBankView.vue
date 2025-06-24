@@ -1,5 +1,5 @@
 <template>
-  <q-dialog  width="100%" v-model="isUnbindModalOpen" presistent>
+  <q-dialog width="100%" v-model="isUnbindModalOpen" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -63,32 +63,31 @@
     <div class="bank-detail-wrapper">
       <div class="bank-bind-cards">
         <div
-        v-for="(bankCard, bankCardIndex) in Object.values(bankCardList).flat()"
-        :key="`${bankCard}-${bankCardIndex}`"
-        class="bank-card"
-        :class="[bankCard.bankType.toLowerCase(), 
-                { 'active': selectedCard === bankCardIndex }]"  
-        @click="selectCard(bankCardIndex)"
-      >
-        <div class="left-container">
-          <div class="bank-name">
-            <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
-            <div>{{ bankCard.bankName }}</div>
-          </div>
-          <div class="bank-icon">
-            <img src="../../assets/images/account/bank-icon.png">   
-          </div>
-          <div class="bank-number-wrapper">
-            <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
-            <!-- <img
+          v-for="(bankCard, bankCardIndex) in Object.values(bankCardList).flat()"
+          :key="`${bankCard}-${bankCardIndex}`"
+          class="bank-card"
+          :class="[bankCard.bankType.toLowerCase(), { active: selectedCard === bankCardIndex }]"
+          @click="selectCard(bankCardIndex)"
+        >
+          <div class="left-container">
+            <div class="bank-name">
+              <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
+              <div>{{ bankCard.bankName }}</div>
+            </div>
+            <div class="bank-icon">
+              <img src="../../assets/images/account/bank-icon.png" />
+            </div>
+            <div class="bank-number-wrapper">
+              <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
+              <!-- <img
               class="copy-btn"
               src="../../assets/images/account/account-copy-icon.png"
               @click="copy(bankCard.cardNumber)"
             /> -->
+            </div>
           </div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("btn.untie") }}</div>
         </div>
-        <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("btn.untie") }}</div>
-      </div>
       </div>
       <div class="bank-bind-item q-my-sm">
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
@@ -115,8 +114,6 @@
 
       <!-- <pre>bankCardList[BANK_CARD]--{{ bankCardList[BANK_CARD] }}</pre> -->
       <!-- <pre>bankCardList[EWALLET]--{{ bankCardList[EWALLET] }}</pre> -->
-
-      
     </div>
   </q-page>
 </template>
@@ -126,11 +123,9 @@ import { reactive, ref, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
 import { useRouter } from "vue-router";
-import * as _ from "lodash";
-import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 import { t } from "src/boot/lang";
-const selectedCard = ref(null);  // To keep track of the selected card
+const selectedCard = ref(null); // To keep track of the selected card
 
 // Function to select the card and toggle the active class
 const selectCard = (bankCardIndex) => {
@@ -280,7 +275,6 @@ onActivated(() => {
     padding: 10px;
 
     .bank-bind-item {
-
       // background: $white;
       // box-shadow: 0px -1px 3px 0px rgba(195, 212, 230, 0.5) inset;
       // border-radius: 10px;
@@ -296,7 +290,7 @@ onActivated(() => {
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      
+
       :not(:last-child) {
         margin-bottom: 15px;
       }
@@ -307,9 +301,9 @@ onActivated(() => {
         justify-content: center;
         width: 100%;
         // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-        
-      background: #394142;
-      box-shadow: 0px 2px 0px 0px #2A3637;
+
+        background: #394142;
+        box-shadow: 0px 2px 0px 0px #2a3637;
 
         padding: 12px 5px;
         border-radius: 8px;
@@ -374,25 +368,25 @@ onActivated(() => {
       min-height: 172px;
       overflow: hidden;
       position: relative;
-      transition: all .3s ease-in-out;
+      transition: all 0.3s ease-in-out;
       &.bank {
-        background: url(../../assets/images/account/bank-card-blue.png)no-repeat center center;
+        background: url(../../assets/images/account/bank-card-blue.png) no-repeat center center;
         background-size: cover;
       }
       &.crypto {
-        background: url(../../assets/images/account/bank-card-red.png)no-repeat center center;
+        background: url(../../assets/images/account/bank-card-red.png) no-repeat center center;
         background-size: cover;
       }
       &.ewallet {
-        background: url(../../assets/images/account/bank-card-green.png)no-repeat center center;
+        background: url(../../assets/images/account/bank-card-green.png) no-repeat center center;
         background-size: cover;
       }
       &:nth-of-type(1) {
         margin-top: 20px;
       }
-      &.active { 
+      &.active {
         margin-bottom: 160px;
-        &:nth-child(1) {      
+        &:nth-child(1) {
           margin-top: 20px;
         }
         &:last-child {
@@ -419,7 +413,7 @@ onActivated(() => {
         }
         .bank-icon {
           max-width: 60px;
-          img{ 
+          img {
             width: 100%;
           }
         }

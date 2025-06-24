@@ -149,12 +149,10 @@
 </template>
 
 <script setup>
-import { onActivated, onMounted, reactive, ref } from "vue";
+import { onActivated, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
-import SwiperNav from "../../components/SwiperNav.vue";
-import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { useQuasar } from "quasar";
@@ -211,7 +209,7 @@ const searchWithdrawalRecord = () => {
       })
       .then((response) => {
         if (response.code === 0) {
-          withdrawalData.value = []
+          withdrawalData.value = [];
           const data = response.data.records;
 
           currentWith.value++;
@@ -274,7 +272,7 @@ const searchDepositRecord = () => {
       })
       .then((response) => {
         if (response.code === 0) {
-          depositData.value = []
+          depositData.value = [];
           const data = response.data.records;
           depositData.value.push(...data);
 
