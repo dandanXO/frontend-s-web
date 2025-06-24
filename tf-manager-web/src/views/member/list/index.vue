@@ -596,6 +596,18 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="totalBet"
+          :label="t('fields.totalBet')"
+          width="110"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.totalBet, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="financialLevel"
           :label="t('fields.financialLevel')"
         >
