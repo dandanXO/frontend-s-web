@@ -39,11 +39,9 @@ import { convertToCommaAmount } from "src/boot/utils";
 
 const store = userStore();
 
-// progress bar
-const maxProgress = store.levelUpBet.toFixed(2);
-const progressRef = ref(store.currentValidBet.toFixed(2));
-
 const vipLevel = computed(() => store.vip.replace(/VIP/g, ""));
+const maxProgress = computed(() => store.levelUpBet.toFixed(2));
+const progressRef = computed(() => store.currentValidBet.toFixed(2));
 
 /**
  * NOTE: q-linear-progress
@@ -51,8 +49,7 @@ const vipLevel = computed(() => store.vip.replace(/VIP/g, ""));
  * figma required linear-gradient which wasn't available in "color"
  * hence switch "background" to "color" & "color" to "background", reverse value 1 - result.
  */
-let progressBarRef = ref();
-progressBarRef.value = 1 - progressRef.value / maxProgress;
+const progressBarRef = computed(() => 1 - progressRef.value / maxProgress.value);
 
 const profileImg = [
   {
