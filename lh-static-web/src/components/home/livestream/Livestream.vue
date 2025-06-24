@@ -203,7 +203,6 @@ const getData = () => {
     .then(async (res) => {
       if (res.code === 0) {
         const parsedData = res.data.streamList.map(parseLivestreamData);
-        parsedData.sort((a, b) => a.sort - b.sort);
         if (parsedData.length) {
           hideComponent.value = false;
           await nextTick();
