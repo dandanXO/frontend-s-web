@@ -100,10 +100,6 @@ const gameModalRef = ref(null);
 const livestreamVideoRef = ref(null);
 const livestreamSyncAbortController = ref(null);
 const chatHistoryAbortController = ref(null);
-const livestreamListMeta = ref({
-  current: 1,
-  max: 1
-});
 const isLivestreamListLoading = ref(false);
 const isFirstMessageSync = ref(true);
 const processedUserName = ref();
@@ -197,9 +193,8 @@ const parseLivestreamData = (data) => {
 };
 
 const getData = () => {
-  if (livestreamListMeta.value.current > livestreamListMeta.value.max) return;
   isLivestreamListLoading.value = true;
-  getLivestreamList(livestreamListMeta.value.current)
+  getLivestreamList()
     .then(async (res) => {
       if (res.code === 0) {
         const parsedData = res.data.streamList.map(parseLivestreamData);
@@ -211,7 +206,7 @@ const getData = () => {
         }
         vipStatus.value = !!res.data.vipStatus;
         list.value.push(...parsedData);
-        if (parsedData.length && livestreamListMeta.value.current === 1) {
+        if (parsedData.length) {
           const { _earliestLivestream, _latestWatchLivestream } = parsedData.reduce(
             (result, livestream) => {
               if (!result._earliestLivestream) {
@@ -232,8 +227,6 @@ const getData = () => {
             currentLiveId.value = _earliestLivestream.streamId;
           }
         }
-        livestreamListMeta.value.current++;
-        // livestreamListMeta.value.max = res.data.pages;
       }
     })
     .finally(() => {
