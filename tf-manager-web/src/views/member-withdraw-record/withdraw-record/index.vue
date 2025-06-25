@@ -486,7 +486,7 @@
               {{ t('fields.toBeforePaid') }}
             </el-button>
             <el-button
-              v-if="scope.row.status === 'SUCCESS' && hasPermission(['sys:withdraw:fail'])"
+              v-if="!isBr2(scope.row.siteId) && scope.row.status === 'SUCCESS' && hasPermission(['sys:withdraw:fail'])"
               size="mini"
               type="danger"
               @click="toFail(scope.row)"
@@ -494,7 +494,7 @@
               {{ t('fields.fail') }}
             </el-button>
             <el-button
-              v-if="scope.row.status === 'SUCCESS' && (scope.row.withdrawCode === 'BANK' || scope.row.withdrawCode === 'ALIPAY') && scope.row.confirmStatus === '0' && hasPermission(['sys:withdraw:confirm'])"
+              v-if="!isBr2(scope.row.siteId) && scope.row.status === 'SUCCESS' && (scope.row.withdrawCode === 'BANK' || scope.row.withdrawCode === 'ALIPAY') && scope.row.confirmStatus === '0' && hasPermission(['sys:withdraw:confirm'])"
               size="mini"
               type="primary"
               @click="toConfirm(scope.row)"
@@ -999,6 +999,7 @@ import { selectList } from "../../../api/risk-level";
 import { TENANT } from "@/store/modules/user/action-types";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { ElMessage } from "element-plus";
+import { isBr2 } from '../../../utils/site'
 
 const { t } = useI18n();
 const store = useStore()
