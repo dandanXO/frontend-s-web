@@ -159,7 +159,7 @@ const filteredLivestreamList = computed(() => {
     case "basketball":
       return livestreamList.value.filter((item) => [2].includes(item.sportId));
     case "esport":
-      return livestreamList.value.filter((item) => [3, 4, 5, 6].includes(item.sportId));
+      return livestreamList.value.filter((item) => [3, 4, 5, 6, 7].includes(item.sportId));
     default:
       return livestreamList.value;
   }
