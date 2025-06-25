@@ -941,3 +941,6 @@ export function getEsportWorldCup2025Bonus(promoCode) {
 export function claimEsportWorldCup2025Bonus(promoCode) {
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
+export function claimFifaCwcRedPacketBonus(item) {
+  return server.EVENT.get(`/redPacketVip/claim?promoCode=${item}`);
+}

@@ -95,6 +95,7 @@
     />
     <FissureUniverseS5 v-else-if="list.redirectUrl === 'lh1-fissure-universe-s5'" :promo-code="list.promoCode" />
     <EsportWorldCup2025 v-else-if="list.redirectUrl === 'lh1-esport-world-cup-2025'" :promo-code="list.promoCode" />
+    <FifaCwcRedPacket v-else-if="list.redirectUrl === 'lh1-fifa-cwc-red-packet'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -121,8 +122,7 @@ import { useRouter } from "vue-router";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
-import FissureUniverseS5 from "./hotpromo/fissure-universe-s5/FissureUniverseS5.vue";
-import EsportWorldCup2025 from "./hotpromo/esport-world-cup-2025/EsportWorldCup2025.vue";
+
 const EslOneBkk2024 = defineAsyncComponent(() => import("../components/hotpromo/eslone-bkk-2024/EslOneBkk2024.vue"));
 const AgYuanxiaohongbao = defineAsyncComponent(() =>
   import("../components/hotpromo/ag-yuanxiaohongbao/AgYuanxiaohongbao.vue")
@@ -241,6 +241,11 @@ const WorldCup2025 = defineAsyncComponent(() => import("./hotpromo/worldcup-2025
 const NewUserSportBonus2025 = defineAsyncComponent(() =>
   import("./hotpromo/new-user-sport-bonus-2025/NewUserSportBonus2025.vue")
 );
+const FissureUniverseS5 = defineAsyncComponent(() => import("./hotpromo/fissure-universe-s5/FissureUniverseS5.vue"));
+const EsportWorldCup2025 = defineAsyncComponent(() =>
+  import("./hotpromo/esport-world-cup-2025/EsportWorldCup2025.vue")
+);
+const FifaCwcRedPacket = defineAsyncComponent(() => import("./hotpromo/fifa-cwc-red-packet/FifaCwcRedPacket.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -317,7 +322,8 @@ export default defineComponent({
     WorldCup2025,
     NewUserSportBonus2025,
     FissureUniverseS5,
-    EsportWorldCup2025
+    EsportWorldCup2025,
+    FifaCwcRedPacket
   },
   props: {
     list: {
