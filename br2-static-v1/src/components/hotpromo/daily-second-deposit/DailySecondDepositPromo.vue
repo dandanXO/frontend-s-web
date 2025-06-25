@@ -1,6 +1,7 @@
 <template>
   <div>
-    <q-btn class="receive-earn-btn" no-caps :disabled="!isClaimable" @click="claimPromo">
+<!--    :disabled="!isClaimable"-->
+    <q-btn class="receive-earn-btn" no-caps @click="claimPromo">
       <img src="../../../assets/images/promotion/receive-earn/receive-earn-icon.png" />
       &nbsp;&nbsp;{{ $t("hotPromo.receive") }}
     </q-btn>
@@ -68,6 +69,7 @@ import { userStore } from "src/stores";
 import { computed, ref, onMounted } from "vue";
 import { api, eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
+import { useRouter } from "vue-router";
 
 const store = userStore();
 const $q = useQuasar();
@@ -90,21 +92,24 @@ const loadPromoInit = () => {
     .catch((e) => {});
 };
 
+const router= useRouter();
+
 const claimPromo = () => {
-  eventapi
-    .post("/session/deposit-bonus/claim?promoCode=br2-redeposit-bonus")
-    .then((res) => {
-      if (res.code === 0) {
-        $q.notify({
-          message: t("content.receiveSuccessfully"),
-          color: "positive",
-          position: "top"
-        });
-        isClaimable.value = false;
-        store.getBalance();
-      }
-    })
-    .catch((e) => {});
+  router.push("/deposit")
+  // eventapi
+  //   .post("/session/deposit-bonus/claim?promoCode=br2-redeposit-bonus")
+  //   .then((res) => {
+  //     if (res.code === 0) {
+  //       $q.notify({
+  //         message: t("content.receiveSuccessfully"),
+  //         color: "positive",
+  //         position: "top"
+  //       });
+  //       isClaimable.value = false;
+  //       store.getBalance();
+  //     }
+  //   })
+  //   .catch((e) => {});
 };
 
 const showPrizePopup = ref(false);
