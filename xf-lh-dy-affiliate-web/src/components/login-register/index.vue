@@ -121,6 +121,7 @@
                     type="primary"
                     style="width:50%;"
                     @click="isReg = !isReg"
+                    v-if="props.siteId !== '28'"
                   >
                     {{ $t('common.register_affi') }}
                   </el-button>
@@ -130,7 +131,7 @@
                   v-if="props.siteId !== '5' || props.siteId !== '8'"
                   class="flex-c-center-div"
                 >
-                  <div class="contact-div" @click="swipeToContactUs">
+                  <div class="contact-div" @click="swipeToContactUs" v-if="props.siteId !== '28'">
                     {{ $t('common.contact_us') }}
                   </div>
                 </div>
@@ -251,7 +252,7 @@
                     </el-button>
                   </div>
                   <div
-                    v-if="props.siteId !== '5' || props.siteId !== '8'"
+                    v-if="props.siteId !== '5' || props.siteId !== '8' || props.siteId !== '28'"
                     class="flex-c-center-div"
                   >
                     <div class="contact-div" @click="swipeToContactUs">
@@ -1013,6 +1014,7 @@ export default defineComponent({
               state.loginForm.site === 'IND' ||
               state.loginForm.site === 'IW2' ||
               state.loginForm.site === 'VNM' ||
+              state.loginForm.site === 'BR2' ||
               state.loginForm.site === 'KRW'
             ) {
               methods.userLogin()
@@ -1467,7 +1469,6 @@ export default defineComponent({
         setLanguage('zh')
       }
       if (props.siteId === '18') {
-        console.log(props.siteId)
         currentSite.value.firstLiner = 'Começa a partir de 55ACE'
         currentSite.value.secondLiner =
           'Torne-se uma lenda<br>Ou torne-se o elogista da lenda?'
@@ -1477,7 +1478,6 @@ export default defineComponent({
         setLanguage('pt')
       }
       if (props.siteId === '28') {
-        console.log(props.siteId)
         currentSite.value.firstLiner = 'Começa a partir de AKB188'
         currentSite.value.secondLiner =
           'Torne-se uma lenda<br>Ou torne-se o elogista da lenda?'

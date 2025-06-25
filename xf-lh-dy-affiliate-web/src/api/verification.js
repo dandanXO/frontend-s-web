@@ -3,13 +3,13 @@ const axios = require('axios');
 export const getVerificationImage = async (type = 0, isClick = 1) => {
   var url = '';
   if (window.location.pathname.indexOf("dy") > -1 || window.location.pathname.indexOf("xf") > -1 || window.location.pathname.indexOf("lh") > -1) {
-    url = 'https://api-gateway.mpg1cxp9.com/su/validator/img/1/200/100';
+    url = 'https://api-gateway.scnf3jntnc5.com/su/validator/img/1/200/100';
     if (type === 1) {
-      url = "https://api-gateway.mpg1cxp9.com/su/validator/img/1/200/100/1"
+      url = "https://api-gateway.scnf3jntnc5.com/su/validator/img/1/200/100/1"
     }
     if (isClick === 0) {
       // slider
-      url = "https://api-gateway.mpg1cxp9.com/su/validator/img/0/200/100"
+      url = "https://api-gateway.scnf3jntnc5.com/su/validator/img/0/200/100"
     }
   } else {
     url = 'https://sumbtf.tebarncale.com/validator/img/1/200/100';
