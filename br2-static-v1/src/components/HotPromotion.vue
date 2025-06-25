@@ -23,6 +23,9 @@
     <CashbackWeeklyPromo v-if="list.redirectUrl === 'cashback-weekly'" :params="list.param" />
     <RedPacketRainPromo v-if="list.redirectUrl === 'br2-red-packet-rain'" :params="list.param" />
     <RedepositBonus100Promo v-if="list.redirectUrl === 'redeposit-bonus-100'" :params="list.param" />
+    <DailySecondDepositPromo v-if="list.redirectUrl === 'br2-daily-second-deposit'" :params="list.param" />
+    <BetCashbackPromo v-if="list.redirectUrl === 'br2-bet-rebate'" :params="list.param" />
+    <LossRebatePromo v-if="list.redirectUrl === 'br2-loss-rebate'" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -63,6 +66,9 @@ import VipPlanBettingUpgrade from "./hotpromo/vip-plan-betting-upgrade/VipPlanBe
 import CashbackWeeklyPromo from "./hotpromo/cashback-weekly/CashbackWeeklyPromo.vue";
 import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRainPromo.vue";
 import RedepositBonus100Promo from "../components/hotpromo/redepositBonus100/RedepositBonus100Promo.vue";
+import BetCashbackPromo from "../components/hotpromo/bet-cashback/betCashbackPromo.vue";
+import DailySecondDepositPromo from "../components/hotpromo/daily-second-deposit/DailySecondDepositPromo.vue";
+import LossRebatePromo from "../components/hotpromo/loss-rebate/LossRebatePromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -83,7 +89,10 @@ export default defineComponent({
     VipPlanBettingUpgrade,
     CashbackWeeklyPromo,
     RedPacketRainPromo,
-    RedepositBonus100Promo
+    RedepositBonus100Promo,
+    BetCashbackPromo,
+    DailySecondDepositPromo,
+    LossRebatePromo
   },
   props: {
     list: {
@@ -148,6 +157,9 @@ export default defineComponent({
       this.list.redirectUrl === "br2-vip-plan" ||
       this.list.redirectUrl === "cashback-weekly" ||
       this.list.redirectUrl === "redeposit-bonus-100" ||
+      this.list.redirectUrl === "br2-daily-second-deposit" ||
+      this.list.redirectUrl === "br2-loss-rebate" ||
+      this.list.redirectUrl === "br2-bet-rebate" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
