@@ -94,7 +94,7 @@ export default defineComponent({
     RedepositBonus100Promo,
     BetCashbackPromo,
     DailySecondDepositPromo,
-    LossRebatePromo
+    LossRebatePromo,
     FtdBonusPromo
   },
   props: {
