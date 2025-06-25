@@ -27,6 +27,31 @@ export const DashboardService = {
         })
     })
   },
+  logInV2(username, password) {
+    return new Promise((resolve, reject) => {
+      const formData = new FormData()
+
+      formData.append('loginName', username)
+      formData.append('password', password)
+
+      api
+        .post('/member/mktLogin', formData)
+        .then((response) => {
+          if (response.code == 0) {
+            const token = response.data.token
+            const userId = response.data.id
+            sessionStorage.setItem('token', token)
+            sessionStorage.setItem('userId', userId)
+            resolve(true)
+          } else {
+            resolve(false)
+          }
+        })
+        .catch((error) => {
+          reject(false)
+        })
+    })
+  },
 
   // 獲取流媒體列表
   getStreamList() {
@@ -246,7 +271,7 @@ export const DashboardService = {
       })
   },
   // 獲取直播串流列表
-  getStreamList(request) {
+  getStreamListv1(request) {
     const token = sessionStorage.getItem('token')
     return api
       .get('/session/live-sport/stream/list', {
@@ -271,7 +296,7 @@ export const DashboardService = {
   },
 
   // 獲取聊天記錄
-  getChatHistory(query, body) {
+  getChatHistoryv2(query, body) {
     const token = sessionStorage.getItem('token')
     return api
       .post(`/session/live-sport/chat/history${query}`, body, {
@@ -294,7 +319,7 @@ export const DashboardService = {
   },
 
   // 封鎖用戶 API
-  blockUserApi(request) {
+  blockUserApiV1(request) {
     const token = sessionStorage.getItem('token')
     return api
       .put('/session/live-sport/chat-block', request, {
@@ -318,7 +343,7 @@ export const DashboardService = {
   },
 
   // 解除封鎖用戶 API
-  unblockUserApi(request) {
+  unblockUserApiV2(request) {
     const token = sessionStorage.getItem('token')
     return api
       .put('/session/live-sport/chat-block/unblock', request, {
@@ -346,8 +371,7 @@ export const DashboardService = {
   getSportLiveMatch(request) {
     const token = sessionStorage.getItem('token')
     return api
-      .get(`/session/live-sport/match`, {
-        params: request,
+      .get(`/session/live-sport/match?${request}`, {
         headers: {
           // For GET requests, parameters are typically sent as `params`
           token: `${token}`,
@@ -624,15 +648,6 @@ export const DashboardService = {
     })
   },
 
-  createSiteImage(data) {
-    const token = sessionStorage.getItem('token')
-    return api.post('/session/siteImage', data, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-  },
-
   createSportLiveTeam(data) {
     const token = sessionStorage.getItem('token')
     return api
@@ -679,12 +694,43 @@ export const DashboardService = {
         return null // 失敗時返回 null
       })
   },
+  editSportLiveTeam(request) {
+    const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
+    return api.put('/session/live-sport/team', request, {
+      // params: request, // For GET requests, parameters are typically sent as `params`
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+  },
   deleteSportLiveTeam(request) {
     const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
     return api.delete(`/session/live-sport/team/${request.teamId}`, {
       // params: request, // For GET requests, parameters are typically sent as `params`
       headers: {
         token: `${token}`,
+      },
+    })
+  },
+
+  copySportLiveMatch(data) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/live-sport/match', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+  },
+
+  batchDeleteSportLiveMatch(matchIds) {
+    const token = sessionStorage.getItem('token')
+    return api.delete('/session/live-sport/match/batch-delete', {
+      data: matchIds,
+      headers: {
+        token: token,
+        'Content-Type': 'application/json',
       },
     })
   },

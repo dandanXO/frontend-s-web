@@ -12,9 +12,9 @@
           <PanelMenuComponent style="height: fit-content; margin-left: 10px" />
         </div>
 
-        <div style="margin-right: 10px">
+
           <RouterView />
-        </div>
+
       </div>
     </div>
   </BlockUI>

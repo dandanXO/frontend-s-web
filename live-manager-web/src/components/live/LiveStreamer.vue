@@ -797,7 +797,7 @@ async function attachImage(event) {
   const data = await attachPhoto(event)
   if (data) {
     form.avatar = data
-    await submitImageUpload()
+    // await submitImageUpload()
   } else {
     toast.add({
       severity: 'error',
@@ -857,8 +857,7 @@ async function submitImageUpload() {
   
 
   try {
-    const response = await createSiteImage(imageForm)
-    console.log(response)
+    
 
     if (response && response.code === 0) {
       toast.add({

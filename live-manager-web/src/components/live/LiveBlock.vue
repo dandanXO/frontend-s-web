@@ -176,7 +176,7 @@ async function blockUser() {
 
   try {
     // 呼叫 API 封鎖用戶
-    await DashboardService.blockUserApi({ loginName: form.loginName, blockTime });
+    await DashboardService.blockUserApiV1({ loginName: form.loginName, blockTime });
     toast.add({ severity: 'success', summary: '成功', detail: t('封鎖成功'), life: 3000 });
     form.loginName = ''; // 封鎖成功後清空用戶名稱輸入框
     loadBlockList();     // 重新載入封鎖列表，顯示最新狀態
