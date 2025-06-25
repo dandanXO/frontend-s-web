@@ -70,6 +70,7 @@
       :promo-code="list.promoCode"
     />
     <FissureUniverseS5 v-else-if="list.redirectUrl === 'dy2-fissure-universe-s5'" :promo-code="list.promoCode" />
+    <EsportWorldCup2025 v-else-if="list.redirectUrl === 'dy2-esport-world-cup-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -96,6 +97,7 @@ import { useQuasar } from "quasar";
 import moment from "moment";
 import { useRouter } from "vue-router";
 import NewUserSportBonus2025 from "./hotpromo/new-user-sport-bonus-2025/NewUserSportBonus2025.vue";
+import EsportWorldCup2025 from "./hotpromo/esport-world-cup-2025/EsportWorldCup2025.vue";
 
 const BlastPremierPromo = defineAsyncComponent(() => import("./hotpromo/BlastPremierPromo/BlastPremierPromo.vue"));
 const YaLLa2025 = defineAsyncComponent(() => import("./hotpromo/YaLLa2025/YaLLa2025.vue"));
@@ -213,7 +215,8 @@ export default defineComponent({
     IemDallas2025,
     DreamLeagueS26,
     NewUserSportBonus2025,
-    FissureUniverseS5
+    FissureUniverseS5,
+    EsportWorldCup2025
   },
   props: {
     list: {

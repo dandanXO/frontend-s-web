@@ -783,3 +783,10 @@ export function getFissureUniverseS5Bonus(promoCode) {
 export function claimFissureUniverseS5Bonus(promoCode) {
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
+
+export function getEsportWorldCup2025Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimEsportWorldCup2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
