@@ -6006,6 +6006,13 @@ const checkGoogleLoginSetPwd = () => {
     padding-top: 8px;
     margin-bottom: 12px;
   }
+  &.sport-platform {
+    .platform-game-item {
+      >img {
+        min-height: 120px;
+      }
+    }
+  }
 
   .swiper-scrollbar.swiper-scrollbar-horizontal {
     bottom: 0px;
