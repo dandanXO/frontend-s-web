@@ -52,6 +52,13 @@ const router = createRouter({
     {
       path: '/live-sport',
       name: 'Live Sport',
+      beforeEnter: (to, from, next) => {
+        if (sessionStorage.getItem('memberType') === 'admin'){
+          next()
+        }else{
+          next({ path: '/', query: { redirect: to.fullPath } })
+        }
+      },
       component: '',
       children: [
         {

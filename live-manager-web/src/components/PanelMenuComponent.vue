@@ -55,7 +55,10 @@ const items = ref([
       },
     ],
   },
-  {
+])
+
+if (sessionStorage.getItem('memberType') === 'admin') {
+  items.value.push({
     label: '体育直播',
     icon: 'pi pi-home',
     items: [
@@ -123,6 +126,7 @@ const items = ref([
         },
       },
     ]
-  },
-])
+  })
+
+}
 </script>

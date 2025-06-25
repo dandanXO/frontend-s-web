@@ -15,11 +15,13 @@ export const DashboardService = {
           if (response.code == 0) {
             const token = response.data.token
             const userId = response.data.id
+            const memberType = response.data.memberType
             sessionStorage.setItem('token', token)
             sessionStorage.setItem('userId', userId)
-            resolve(true)
+            sessionStorage.setItem('memberType', memberType)
+            resolve(response.data)
           } else {
-            resolve(false)
+            resolve(response)
           }
         })
         .catch((error) => {
@@ -40,11 +42,13 @@ export const DashboardService = {
           if (response.code == 0) {
             const token = response.data.token
             const userId = response.data.id
+            const memberType = response.data.memberType
             sessionStorage.setItem('token', token)
             sessionStorage.setItem('userId', userId)
-            resolve(true)
+            sessionStorage.setItem('memberType', memberType)
+            resolve(response.data)
           } else {
-            resolve(false)
+            resolve(response)
           }
         })
         .catch((error) => {

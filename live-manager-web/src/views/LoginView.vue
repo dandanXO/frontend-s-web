@@ -108,6 +108,8 @@ const onFormSubmit = () => {
       if (result) {
         router.push({ path: '/' })
         store.isAuthLoading = false
+        console.log('Login successful:', result.memberType)
+        store.memberType = result.memberType
         toast.add({ severity: 'success', summary: t('LOGIN_SUCCESS'), life: 3000 })
       } else {
         store.isAuthLoading = false
