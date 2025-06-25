@@ -280,8 +280,8 @@ const uiControl = reactive({
     { key: 'abandoned', displayName: t('status.marsMatch.ABANDONED'), value: 'abandoned' }
   ],
   isSupplierStreamUrlExist: [
-    { key: true, displayName: t('fields.yes'), value: true },
-    { key: false, displayName: t('fields.no'), value: false }
+    { key: true, displayName: t('fields.yes'), value: "yes" },
+    { key: false, displayName: t('fields.no'), value: "no" }
   ],
   removeBtn: true,
 });
@@ -464,6 +464,13 @@ async function loadLiveMatchMars() {
   if (request.matchTime !== null) {
     if (request.matchTime.length === 2) {
       query.matchTime = request.matchTime.join(",");
+    }
+  }
+  if (request.supplierStreamUrl !== null) {
+    if (request.supplierStreamUrl === "yes") {
+      query.supplierStreamUrl = true
+    } else {
+      query.supplierStreamUrl = false
     }
   }
   const { data: ret } = await getLiveMatchMars(query);
