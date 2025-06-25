@@ -1,11 +1,11 @@
 <template>
   <div class="hot-promo" :style="list.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border-radius: 0;' : ''">
-    <ClaimPromo
-      v-if="isCommonPromo && store.hasToken()"
-      :promo-id="list.id"
-      :loading-claim="btnLoading"
-      @daily-slot="handleSlot()"
-    />
+<!--    <ClaimPromo-->
+<!--      v-if="isCommonPromo && store.hasToken()"-->
+<!--      :promo-id="list.id"-->
+<!--      :loading-claim="btnLoading"-->
+<!--      @daily-slot="handleSlot()"-->
+<!--    />-->
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
 
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'pak-spin-wheel' && !isCommonPromo && store.token" />
@@ -63,7 +63,7 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import * as _ from "lodash";
 import moment from "moment";
-import ClaimPromo from "../components/hotpromo/claimPromo.vue";
+// import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheelPromo.vue";
 import SignIn7DaysPromo from "../components/hotpromo/signIn7Days/SignIn7DaysPromo";
@@ -87,7 +87,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
-    ClaimPromo,
+    // ClaimPromo,
     HongBaoYuPromo,
     BonusSpinWheelPromo,
     SignIn7DaysPromo,
