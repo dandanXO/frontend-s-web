@@ -96,12 +96,14 @@
         const contactBtn = document.getElementById("contact-btn");
         const fullWindow = document.querySelector(".full-container");
 
-        contactBtn.addEventListener("click", () => {
-          fullWindow.scrollTo({
-            top: document.body.scrollHeight,
-            behavior: "smooth"
+        if(contactBtn) {
+          contactBtn.addEventListener("click", () => {
+            fullWindow.scrollTo({
+              top: document.body.scrollHeight,
+              behavior: "smooth"
+            });
           });
-        });
+        }
       });
 
       function updateContactInfoByHostname() {
@@ -174,6 +176,17 @@
             claimUrl: "https://www.lh75717.com",
             agent1ID: "vip520",
             agent2ID: "vip119"
+          },
+          "nbafc.sbs" : {
+            group1Title: "超级活动群",
+            group1Number: "178572309",
+            group2Title: "回归群",
+            group2Number: "141317950",
+            landingPageLink: "https://am787.cc", // You can set a default link or leave it empty
+            redirectUrl: "https://www.lh09952.com",
+            claimUrl: "https://www.lh09952.com",
+            agent1ID: "vip515",
+            agent2ID: "vip516"
           }
         };
 
@@ -205,14 +218,14 @@
         document.getElementById("landing-page-link3").href = selectedInfo.landingPageLink;
         document.getElementById("agent1-id").textContent = selectedInfo.agent1ID;
         document.getElementById("agent2-id").textContent = selectedInfo.agent2ID;
-        document.getElementById("agent3-id").textContent = selectedInfo.agent3ID;
+        // document.getElementById("agent3-id").textContent = selectedInfo.agent3ID;
         const contactItem = document.querySelector(".contact-item3");
         const contactItemAgent = document.querySelector(".contact-item3agent");
 
-        if (!selectedInfo.group3Title || !selectedInfo.agent3ID) {
-          contactItem.style.display = "none";
-          contactItemAgent.style.display = "none";
-        }
+        // if (!selectedInfo.group3Title || !selectedInfo.agent3ID) {
+        //   contactItem.style.display = "none";
+        //   contactItemAgent.style.display = "none";
+        // }
         var element = document.getElementById("tf88Url-btn");
         var claimBtnElement = document.getElementById("click-to-claim-btn");
 

@@ -26,6 +26,7 @@
     <DailySecondDepositPromo v-if="list.redirectUrl === 'br2-daily-second-deposit'" :params="list.param" />
     <BetCashbackPromo v-if="list.redirectUrl === 'br2-bet-rebate'" :params="list.param" />
     <LossRebatePromo v-if="list.redirectUrl === 'br2-loss-rebate'" :params="list.param" />
+    <FtdBonusPromo v-if="list.redirectUrl === 'br2-ftd-bonus'" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -69,6 +70,7 @@ import RedepositBonus100Promo from "../components/hotpromo/redepositBonus100/Red
 import BetCashbackPromo from "../components/hotpromo/bet-cashback/betCashbackPromo.vue";
 import DailySecondDepositPromo from "../components/hotpromo/daily-second-deposit/DailySecondDepositPromo.vue";
 import LossRebatePromo from "../components/hotpromo/loss-rebate/LossRebatePromo.vue";
+import FtdBonusPromo from "../components/hotpromo/ftdBonus/FtdBonusPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -93,6 +95,7 @@ export default defineComponent({
     BetCashbackPromo,
     DailySecondDepositPromo,
     LossRebatePromo
+    FtdBonusPromo
   },
   props: {
     list: {
@@ -157,6 +160,7 @@ export default defineComponent({
       this.list.redirectUrl === "br2-vip-plan" ||
       this.list.redirectUrl === "cashback-weekly" ||
       this.list.redirectUrl === "redeposit-bonus-100" ||
+      this.list.redirectUrl === "br2-ftd-bonus" ||
       this.list.redirectUrl === "br2-daily-second-deposit" ||
       this.list.redirectUrl === "br2-loss-rebate" ||
       this.list.redirectUrl === "br2-bet-rebate" ||
