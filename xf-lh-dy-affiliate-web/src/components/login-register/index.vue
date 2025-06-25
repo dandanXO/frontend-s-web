@@ -24,6 +24,9 @@
           </div>
           <div class="first-liner" v-html="currentSite.firstLiner" />
           <div class="second-liner" v-html="currentSite.secondLiner" />
+          <div>
+            <img v-if="props.siteId === '28'" src="../../assets/images/br2/br2-main-img.png" class="main-img">
+          </div>
         </div>
         <div class="right">
           <div class="bg swiper-no-swiping">
@@ -1093,6 +1096,7 @@ export default defineComponent({
           state.loginForm.site === 'IW2' ||
           state.loginForm.site === 'VNM' ||
           state.loginForm.site === 'KA2' ||
+          state.loginForm.site === 'BR2' ||
           state.loginForm.site === 'KRW'
         ) {
           router
@@ -2005,8 +2009,30 @@ a {
     }
 
     .common-btn {
-      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+      width: 100% !important;
+      background: linear-gradient(90deg, #4FFFA5 0%, #10D16F 100%);
       color: #fff;
+    }
+
+    .main-img {
+      display: block;
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .left{
+      margin-top: 150px;
+    }
+
+     .loginPage .right .top {
+        background: url(../../assets/images/br2/top.png) no-repeat center center;
+        background-size: cover;
+    }
+
+    .forget-pw {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
     }
   }
 

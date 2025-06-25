@@ -773,7 +773,7 @@ export default defineComponent({
         width: 520px;
       }
       .top {
-        background: url(../../../assets/images/login/top.png)no-repeat center center;
+        background: url(../../../assets/images/br2/top.png)no-repeat center center;
         background-size: cover;
         padding: 20px;
         position: relative;
