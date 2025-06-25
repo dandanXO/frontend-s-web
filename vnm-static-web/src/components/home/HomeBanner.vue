@@ -6,7 +6,7 @@
     v-if="!isImpt"
     width="820px"
   >
-    <SitePopout />
+    <SitePopout @popup-click="goToUrl" />
     <!-- <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
       <img :src="homePopupImg" class="alert-img" />
     </a> -->
