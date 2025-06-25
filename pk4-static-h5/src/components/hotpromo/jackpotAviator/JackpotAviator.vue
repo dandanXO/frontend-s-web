@@ -91,7 +91,7 @@ const isLoadingRanking = ref(false);
 const onClickReceive = () => {
   const endpoint =
     timeframe.value === "DAILY"
-      ? "/session/game-jackpot-bonus/claim?promoCode=pak-aviator-jackpot-daily-challenge"
+      ? "/session/game-jackpot-bonus/claim?promoCode=pk4-aviator-jackpot-daily-challenge"
       : "/session/game-jackpot-bonus/claim?promoCode=pak-aviator-jackpot-weekly-challenge";
 
   eventapi.post(endpoint).then((res) => {
@@ -105,7 +105,7 @@ const onClickReceive = () => {
 const getHistory = () => {
   const endpoint =
     timeframe.value === "DAILY"
-      ? "/session/game-jackpot-bonus/top-ranking-history?promoCode=pak-aviator-jackpot-daily-challenge"
+      ? "/session/game-jackpot-bonus/top-ranking-history?promoCode=pk4-aviator-jackpot-daily-challenge"
       : "/session/game-jackpot-bonus/top-ranking-history?promoCode=pak-aviator-jackpot-weekly-challenge";
 
   eventapi.post(endpoint).then((res) => {
@@ -120,7 +120,7 @@ const getRankingDetails = () => {
 
   const endpoint =
     timeframe.value === "DAILY"
-      ? "/session/game-jackpot-bonus/top-ranking-realtime?promoCode=pak-aviator-jackpot-daily-challenge"
+      ? "/session/game-jackpot-bonus/top-ranking-realtime?promoCode=pk4-aviator-jackpot-daily-challenge"
       : "/session/game-jackpot-bonus/top-ranking-realtime?promoCode=pak-aviator-jackpot-weekly-challenge";
 
   eventapi
@@ -144,7 +144,7 @@ const getRankingDetails = () => {
 const initData = () => {
   const endpoint =
     timeframe.value === "DAILY"
-      ? "/session/game-jackpot-bonus/init?promoCode=pak-aviator-jackpot-daily-challenge"
+      ? "/session/game-jackpot-bonus/init?promoCode=pk4-aviator-jackpot-daily-challenge"
       : "/session/game-jackpot-bonus/init?promoCode=pak-aviator-jackpot-weekly-challenge";
 
   eventapi.get(endpoint).then((res) => {

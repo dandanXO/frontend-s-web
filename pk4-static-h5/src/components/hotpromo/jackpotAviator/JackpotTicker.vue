@@ -44,7 +44,7 @@ const jackpotFetchInterval = ref();
 const props = defineProps(['timeframe']);
 
 const updateJackpot = () => {
-    const endpoint = props?.timeframe === 'DAILY' ? '/session/game-jackpot-bonus/jackpot?promoCode=pak-aviator-jackpot-daily-challenge' : '/session/game-jackpot-bonus/jackpot?promoCode=pak-aviator-jackpot-weekly-challenge';
+    const endpoint = props?.timeframe === 'DAILY' ? '/session/game-jackpot-bonus/jackpot?promoCode=pk4-aviator-jackpot-daily-challenge' : '/session/game-jackpot-bonus/jackpot?promoCode=pak-aviator-jackpot-weekly-challenge';
 
     clearInterval(jackpotAmtInterval.value);
 
