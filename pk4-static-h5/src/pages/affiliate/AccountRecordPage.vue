@@ -187,7 +187,7 @@ const options = ref([
   {
     label: "Rebate",
     value: "VIP_REBATE",
-    icon: "icon-all"
+    icon: "icon-rebate"
   },
   {
     label: "Dividend",

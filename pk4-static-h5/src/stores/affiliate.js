@@ -21,6 +21,13 @@ export const useAffiliateStore = defineStore("affiliate", {
 
       return !(affiliateInfo.affiliateLevel === "JUNIOR_AFFILIATE" && affiliateInfo.commission === 0);
     },
+
+    async checkIsCanShowContract() {
+      // Ensure affiliateInfo is loaded before checking
+      const affiliateInfo = await this.fetchAffiliateInfo();
+
+      return !(affiliateInfo.affiliateLevel === "MASTER_AFFILIATE");
+    },
   },
   getters: {
     isShowDividendPage() {

@@ -49,29 +49,29 @@
                     <hr class="separator" />
                     <div class="row">
                         <div class="label">Deposit</div>
-                        <div class="value">{{ record.depositAmount }}</div>
+                        <div class="value">{{ record.depositAmount.toFixed(2) }}</div>
                     </div>
                     <div class="row">
                         <div class="label">Withdrawal</div>
-                        <div class="value">{{ record.withdrawalAmount }}</div>
+                        <div class="value">{{ record.withdrawAmount.toFixed(2) }}</div>
                     </div>
                     <div class="row">
                         <div class="label">Bonus</div>
-                        <div class="value">{{ record.bonus }}</div>
+                        <div class="value">{{ record.bonus.toFixed(2) }}</div>
                     </div>
                     <hr class="separator" />
                     <div class="col">
                         <div class="col-item">
                             <div class="label">Valid Bet</div>
-                            <div class="value valid-bet">{{ record.validBet }}</div>
+                            <div class="value valid-bet">{{ record.validBet.toFixed(2) }}</div>
                         </div>
                         <div class="col-item">
                             <div class="label">Win/Loss</div>
-                            <div class="value win-loss">{{ record.payout - record.validBet }}</div>
+                            <div class="value win-loss">{{ (record.payout - record.validBet).toFixed(2) }}</div>
                         </div>
                         <div class="col-item">
                             <div class="label">Profit and Loss</div>
-                            <div class="value profit-loss">{{ record.payout - record.validBet }}</div>
+                            <div class="value profit-loss">{{ (record.payout - record.validBet).toFixed(2) }}</div>
                         </div>
                     </div>
                 </div>

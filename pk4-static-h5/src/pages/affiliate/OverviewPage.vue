@@ -103,11 +103,12 @@
         <div class="txt-title">{{ $t("btn.reminder") }}</div>
         <div class="txt-content q-mt-md text-center">
           <div class="overview-info">
-            <ul class="info-top">
+            <ul class="info-top" style="list-style-type: none; text-align:left">
               <li>1. For current week and current month, the data will only be refreshed every hour.</li>
+              <br>
               <li>2. Win/Loss , Team P&amp;L :</li>
             </ul>
-            <ul class="info-down">
+            <ul class="info-down" style="list-style-type: none; text-align:left">
               <li>Green representing positive amount, which is the profit.</li>
               <li>Red representing negative amount, which is the loss.</li>
             </ul>

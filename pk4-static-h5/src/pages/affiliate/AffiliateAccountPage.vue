@@ -6,7 +6,7 @@
           <img src="../../assets/images/affiliate/user.png">
           <span>{{ $t('affiliate.main.goodMorning') }} {{ store.nickName }}</span>
         </div>
-        <div class="cs"><img src="../../assets/images/affiliate/cs.png"></div>
+        <div class="cs"><img src="../../assets/images/affiliate/cs.png" @click="openCSInNewTab(ui.CSAUrl)"></div>
       </div>
       <div class="total-section">
         <div class="total-txt">{{ $t('affiliate.main.total') }}</div>
@@ -166,11 +166,16 @@ onActivated(() => {
   store.getUnreadTotal();
 
   if (route.query.openCodeModal) {
-    showExchangeModal.value = true;
+    showExchangeModal.value = true; 
   }
 
   initData();
 });
+
+const openCSInNewTab = (url) => {
+  const absoluteUrl = url;
+  window.open(absoluteUrl, "_blank");
+};
 
 const initData = () => {
   isLoading.value = true;
