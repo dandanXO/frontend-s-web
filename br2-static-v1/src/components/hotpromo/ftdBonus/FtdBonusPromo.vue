@@ -101,17 +101,17 @@ const loadPromoInit = () => {
 const router= useRouter();
 
 const claimPromo = () => {
-  router.push("/deposit")
-  // eventapi
-  //   .post("/session/deposit-bonus/claim?promoCode=br2-ftd-bonus")
-  //   .then((res) => {
-  //     // debugger;
-  //     if (res.code === 0) {
-  //       showPrizePopup.value = true;
-  //       prizeAmount.value = res.data;
-  //     }
-  //   })
-  //   .catch((e) => {});
+  // router.push("/deposit")
+  eventapi
+    .post("/session/deposit-bonus/claim?promoCode=br2-ftd-bonus")
+    .then((res) => {
+      // debugger;
+      if (res.code === 0) {
+        showPrizePopup.value = true;
+        prizeAmount.value = res.data;
+      }
+    })
+    .catch((e) => {});
 };
 
 const showPrizePopup = ref(false);
