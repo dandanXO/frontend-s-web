@@ -10,9 +10,9 @@
           >
             <el-option
               v-for="aff in affiliateNames.list"
-              :key="aff"
-              :label="aff"
-              :value="aff"
+              :key="aff.loginName"
+              :label="aff.loginName + ' (' + aff.affiliateCode + ')'"
+              :value="aff.loginName"
             />
           </el-select>
           <el-date-picker
@@ -388,7 +388,7 @@ function checkQuery() {
     }
   }
   if (request.loginNameList === null || request.loginNameList.length === 0) {
-    query.loginNameList = affiliateNames.list.join(',')
+    query.loginNameList = affiliateNames.list.map(a => a.loginName).join(',')
   } else {
     query.loginNameList = request.loginNameList.join(',')
   }
