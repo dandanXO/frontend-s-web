@@ -37,7 +37,7 @@
             <img
               src="@/assets/promo/lh1-duan-wu-rewards/btn.png"
               alt=""
-              style="padding-top: 12px;cursor: pointer;"
+              style="padding-top: 12px; cursor: pointer"
               @click="postReceive"
             />
           </div>
@@ -49,7 +49,7 @@
         <img
           src="@/assets/promo/lh1-duan-wu-rewards/openBtn.png"
           alt=""
-          style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);cursor: pointer;"
+          style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); cursor: pointer"
           @click="postBonus"
         />
 
@@ -134,7 +134,7 @@
           </div>
         </div>
         <div style="font-size: 20px; font-weight: 400; color: #ff0000; text-align: left; margin-bottom: 40px">
-          会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获的对应安康金。
+          会员A 在当日累计有效投注400,000元，次日即可领取12片粽叶，兑换2个好粽，获得对应安康金。
         </div>
       </div>
     </div>
@@ -177,7 +177,61 @@
         </ul>
       </div>
     </div>
-
+    <el-dialog
+      align-center
+      centered
+      class="duanWuDialog"
+      v-model="isOpenResultDialog"
+      :show-close="false"
+      style="background-color: #fbfbe3; border: #014625 solid 2px; min-width: 560px; width: 560px"
+    >
+      <div style="display: flex; align-items: center; flex-direction: column; justify-content: center; padding: 0px">
+        <div
+          style="
+            border-top-left-radius: 9px;
+            border-top-right-radius: 9px;
+            display: flex;
+            color: #fff;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
+          "
+        >
+          <div>兑换粽子获得安康金</div>
+        </div>
+        <img src="@/assets/promo/lh1-duan-wu-rewards/resultDialogBg.png" alt="" class="title-img" />
+        <div>
+          <span style="color: #ff8400; font-size: 40px; font-weight: 600">{{ rewardAmount }}</span>
+          <span style="color: #ff8400; font-size: 20px">元</span>
+        </div>
+        <div style="font-size: 24px; font-weight: 400; color: #014625; text-align: center; margin: 10px 0">
+          恭喜您获得安康金
+        </div>
+        <div
+          style="
+            background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
+            height: 60px;
+            width: 200px;
+            border-radius: 8px;
+            font-size: 24px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+          "
+          @click="closeResultDialog"
+        >
+          <div>确定</div>
+        </div>
+      </div>
+      <div class="resultClose" @click="closeResultDialog">
+        <img src="@/assets/promo/lh1-duan-wu-rewards/close-icon.png" alt="" />
+      </div>
+    </el-dialog>
     <el-dialog
       align-center
       centered
@@ -197,7 +251,7 @@
           <img src="@/assets/promo/lh1-duan-wu-rewards/close-icon.png" alt="" />
         </div>
 
-        <div v-show="isTabLeft" style="flex: 1; width: 100%;margin: 20px 0px;">
+        <div v-show="isTabLeft" style="flex: 1; width: 100%; margin: 20px 0px">
           <div class="table-container">
             <table class="bet-table">
               <thead>
@@ -208,7 +262,7 @@
               </thead>
               <tbody>
                 <tr v-if="tokenRecord?.length <= 0">
-                  <td colspan="2" >暂无数据</td>
+                  <td colspan="2">暂无数据</td>
                 </tr>
                 <tr v-else v-for="(row, index) in tokenRecord" :key="index">
                   <td>{{ row.recordTime }}</td>
@@ -219,7 +273,7 @@
           </div>
         </div>
 
-        <div v-show="!isTabLeft" style="flex: 1; width: 100%;margin: 20px 0px;">
+        <div v-show="!isTabLeft" style="flex: 1; width: 100%; margin: 20px 0px">
           <div class="table-container">
             <table class="bet-table">
               <thead>
@@ -231,7 +285,7 @@
               </thead>
               <tbody>
                 <tr v-if="rewardRecord?.length <= 0">
-                  <td colspan="3" >暂无数据</td>
+                  <td colspan="3">暂无数据</td>
                 </tr>
                 <tr v-else v-for="(row, index) in rewardRecord" :key="index">
                   <td>{{ row.recordTime }}</td>
@@ -257,14 +311,17 @@ import {
   getDuanWuclaimBonus
 } from "@/api/index/promo";
 import { useNotify } from "@/hooks/notify";
+import { userStore } from "@/store";
 
 const isOpenDialog = ref(false);
-
+const isOpenResultDialog = ref(false);
+const props = defineProps(["promoCode"]);
 const notify = useNotify();
-const todayToken = ref("");
-const currentTokenAmount = ref("");
-const rewardsCanClaim = ref("");
-const totalValidBet = ref("");
+const todayToken = ref(0);
+const currentTokenAmount = ref(0);
+const rewardAmount = ref(0);
+const rewardsCanClaim = ref(0);
+const totalValidBet = ref(0);
 const isTabLeft = ref(false);
 const tokenRecord = ref([]);
 const rewardRecord = ref([]);
@@ -286,9 +343,13 @@ const handleToggleTab = () => {
   isTabLeft.value = !isTabLeft.value;
 };
 
+const store = userStore();
+
 const init = () => {
-  getDuanWuRewardInit("lh1-duan-wu-rewards").then((res) => {
-    console.log(res);
+  if (!store.token) {
+    return;
+  }
+  getDuanWuRewardInit(props.promoCode).then((res) => {
 
     if (res.code === 0) {
       todayToken.value = res.data.todayToken;
@@ -302,12 +363,17 @@ const init = () => {
 };
 
 const postReceive = () => {
-  postDuanWuReceiveToken("lh1-duan-wu-rewards").then((res) => {
+  if(!store.token) {
+    notify.error("请先登录");
+    return;
+  }
+  postDuanWuReceiveToken(props.promoCode).then((res) => {
     if (res.code === 0) {
       notify.success({
         type: "success",
         message: "领取成功"
       });
+      init();
     } else {
       notify.error(res.message);
     }
@@ -315,12 +381,15 @@ const postReceive = () => {
 };
 
 const postBonus = () => {
-  getDuanWuclaimBonus("lh1-duan-wu-rewards").then((res) => {
+  if(!store.token) {
+    notify.error("请先登录");
+    return;
+  }
+  getDuanWuclaimBonus(props.promoCode).then((res) => {
     if (res.code === 0) {
-      notify.success({
-        type: "success",
-        message: "领取成功"
-      });
+      isOpenResultDialog.value = true;
+      rewardAmount.value = res.data;
+      init();
     } else {
       notify.error(res.message);
     }
@@ -328,21 +397,27 @@ const postBonus = () => {
 };
 
 const fetchRecordData = (action) => {
-  isOpenDialog.value = true
-  isTabLeft.value = action
-  getDuanWuTokenRecords("lh1-duan-wu-rewards").then((res) => {
+  if(!store.token) {
+    notify.error("请先登录");
+    return;
+  }
+  isOpenDialog.value = true;
+  isTabLeft.value = action;
+  getDuanWuTokenRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
       tokenRecord.value = res.data;
     }
   });
 
-  getDuanWuRewardRecords("lh1-duan-wu-rewards").then((res) => {
+  getDuanWuRewardRecords(props.promoCode).then((res) => {
     if (res.code === 0) {
       rewardRecord.value = res.data;
     }
   });
 };
-
+const closeResultDialog = () => {
+  isOpenResultDialog.value = false;
+};
 const closeDialog = () => {
   isOpenDialog.value = false;
 };
@@ -407,9 +482,9 @@ onMounted(() => {
   position: relative;
 }
 .title-img {
-  width: 1102px;
-  margin-top: 38px;
-  margin-bottom: 32px;
+  width: 450px;
+  margin-top: 15px;
+  margin-bottom: 10px;
 }
 
 .first-content-title {
@@ -537,6 +612,14 @@ strong {
   height: 10px;
   cursor: pointer;
 }
+.resultClose {
+  position: absolute;
+  right: 40px;
+  top: 0px;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+}
 
 .closeBtn {
   background: linear-gradient(to bottom, #00cc8c, #006646);
@@ -548,5 +631,9 @@ strong {
   justify-content: center;
   border-radius: 8px;
   cursor: pointer;
+}
+:deep(.el-dialog .el-dialog__body) {
+  padding: 0px;
+  padding-bottom: 16px;
 }
 </style>

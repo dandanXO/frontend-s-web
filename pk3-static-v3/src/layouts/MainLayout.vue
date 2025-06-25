@@ -126,6 +126,9 @@ export default defineComponent({
     };
 
     const checkFirstScreen = () => {
+      if (window.location.pathname === "/promotion") {
+        ui.firstScreenLoading = false;
+      }
       if (ui.firstScreenLoading) {
         setTimeout(() => {
           ui.firstScreenLoading = false;

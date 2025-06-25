@@ -44,3 +44,11 @@ export const rejectRecord = (id, recordTime) => {
 export const exportPakMemberReferSummaryBulk = (form) => {
   return https().request("/refer-friend/bulk-summary-pak-export", Method.GET, form, ContentType.form);
 }
+
+export const getPakMemberReferSummaryNew = (form) => {
+  return https().request("/refer-friend/summary-pak-new", Method.GET, form, ContentType.form);
+};
+
+export const getPakMemberReferParentNew = (form) => {
+  return https().request("/refer-friend/parent-pak-new", Method.GET, form, ContentType.form);
+};

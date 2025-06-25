@@ -18,11 +18,17 @@
       <!--        <span style="margin-left: 5px"><span class="customer_phone">+85281701071</span></span>-->
       <!--      </div>-->
     </div>
-    <div class="sticky-sidebar-items">
+
+    <div
+      class="sticky-sidebar-items"
+      :class="stickyHovered && 'sticky-hovered'"
+      @mouseover="stickyHovered = true"
+      @mouseleave="stickyHovered = false"
+    >
       <div class="sticky-sidebar-item" @click="handleDarkModeClick">
         <img v-if="isDark" src="@/assets/images/home/sticky-sidebar/light-mode-icon.svg" />
         <img v-else src="@/assets/images/home/sticky-sidebar/dark-mode-icon.svg" />
-        <div>{{ isDark ? "白天" : "夜间" }}模式</div>
+        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">{{ isDark ? "白天" : "夜间" }}模式</div>
       </div>
       <!-- <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
         <img src="../../assets/images/home/sticky-sidebar/hot-promo-icon.svg" />
@@ -30,17 +36,17 @@
       </router-link> -->
       <div class="sticky-sidebar-item" @mouseover="customerHovered = true">
         <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
-        <div>客服中心</div>
+        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">客服中心</div>
       </div>
       <div @mouseover="customerHovered = false">
         <router-link to="/app" class="sticky-sidebar-item">
           <img src="../../assets/images/home/sticky-sidebar/app-dl-icon.svg" />
-          <div>APP 下载</div>
+          <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">APP 下载</div>
         </router-link>
       </div>
       <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
         <img src="../../assets/images/home/sticky-sidebar/back-top-icon.svg" />
-        <div>返回顶部</div>
+        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">返回顶部</div>
       </div>
     </div>
   </div>
@@ -149,7 +155,7 @@ import { uiStore } from "@/store/ui";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { ElMessageBox } from "element-plus";
 import moment from "moment";
 
@@ -160,9 +166,11 @@ export default defineComponent({
   },
   setup() {
     const notify = useNotify();
+    const route = useRoute();
     const router = useRouter();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
     const customerHovered = ref(false);
+    const stickyHovered = ref(false);
     const scrollToTop = () => {
       window.scroll({ behavior: "smooth", left: 0, top: 0 });
     };
@@ -217,7 +225,7 @@ export default defineComponent({
       promoPosition.value = { top: window.innerHeight - 300, left: window.innerWidth - 320 };
       domainPosition.value = { top: window.innerHeight - 300, left: window.innerWidth - 360 };
     };
-    const floatPromo = [];
+    const floatPromo = ref([]);
     const floatPromoRemainingTime = ref([]);
     const gamePromo = [];
     const floatDomain = [];
@@ -229,7 +237,7 @@ export default defineComponent({
         if (res.code === 0) {
           res.data.forEach((element) => {
             if (element.type === "PROMO") {
-              floatPromo.push(element);
+              floatPromo.value.push(element);
               showFloatPromo.value = true;
             }
             if (element.type === "GAME") {
@@ -325,11 +333,11 @@ export default defineComponent({
     };
 
     const updatePromo = () => {
-      currentPromo.value = floatPromo[currentPromoIndex.value];
-      currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
+      currentPromo.value = floatPromo.value[currentPromoIndex.value];
+      currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.value.length;
     };
     const updatePromoRemainingTime = () => {
-      floatPromoRemainingTime.value = floatPromo.map((promo) => {
+      floatPromoRemainingTime.value = floatPromo.value.map((promo) => {
         let result = "00:00:00";
         if (promo?.endTime) {
           // console.log(promo.endTime);
@@ -397,6 +405,14 @@ export default defineComponent({
         }
       }
     );
+    watch(
+      () => route.query.name,
+      (newName) => {
+        if (newName && newName.includes("page-vip")) {
+          router.push("/vip");
+        }
+      }
+    );
     onBeforeUnmount(() => {
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", stopDragging);
@@ -407,6 +423,7 @@ export default defineComponent({
       floatPromoRemainingTime,
       store,
       customerHovered,
+      stickyHovered,
       scrollToTop,
       downloadUrl,
       isDark,
@@ -646,16 +663,58 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 28px;
-  padding: 15px;
+  gap: 15px;
+  padding: 10px 5px;
   background: #ffffff;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   box-shadow: 0px 0px 8px 0px #00000038;
+  position: relative;
+  transition: 0.3s all;
 
-  > :first-child {
-    padding-bottom: 15px;
+  > div {
+    width: 28px;
+    padding: 10px 5px;
     border-bottom: 1px solid #7a80a14d;
+    transition: 0.3s all;
+  }
+
+  > div:last-child {
+    padding: 0px;
+    border-bottom: 0px;
+  }
+
+  &::before {
+    content: "‹";
+    position: absolute;
+    left: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 32px;
+    width: 16px;
+    background: rgba(255, 255, 255, 1);
+    color: #7A80A1;
+    font-size: 20px;
+    font-weight: lighter;
+    padding-left: 4px;
+    padding-bottom: 2px;
+    light-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 24px;
+    border-bottom-left-radius: 24px;
+    box-shadow: 0px 0px -8px 0px #00000038;
+  }
+
+  &.sticky-hovered {
+    &::before {
+      content: "›";
+    }
+
+    > div {
+      width: 74px;
+    }
   }
 
   .sticky-sidebar-item {
@@ -663,7 +722,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #000;
+    color: #7A80A1;
     gap: 5px;
     cursor: pointer;
 
@@ -671,6 +730,21 @@ export default defineComponent({
       color: #4e93ff;
       img {
         filter: brightness(1.05);
+      }
+    }
+
+    .item-txt {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      white-space: nowrap;
+      transition: 0.3s all;
+      text-align: center;
+
+      &.sticky-hovered {
+        opacity: 1;
+        width: 100%;
+        height: 100%;
       }
     }
   }
@@ -690,6 +764,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 15px;
+  transition: 0.3s all;
 }
 
 .dark {
@@ -699,6 +774,13 @@ export default defineComponent({
 
     > :first-child {
       border-color: #ffffff1a;
+    }
+
+    &::before {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
     }
 
     .sticky-sidebar-item {

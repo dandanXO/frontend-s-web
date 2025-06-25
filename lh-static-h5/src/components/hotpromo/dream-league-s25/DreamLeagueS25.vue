@@ -4,21 +4,18 @@
       <div class="livepoker-rebate-section section-bg">
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
-            <div class="claim-title-icon">
-            </div>
+            <div class="claim-title-icon"></div>
             下注即奖
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon claim-coin-icon">
-            </div>
+            <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
               昨日累计有效投注：
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
-            <div class="reward-info-icon claim-gift-icon">
-            </div>
+            <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
               今日可领取彩金：
               <span class="amount">{{ bonus }}元</span>
@@ -26,12 +23,11 @@
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" :class="{disabled: bonus <= 0}" @click="handleClaimBonus">
+          <div class="bonus-image" :class="{ disabled: bonus <= 0 }" @click="handleClaimBonus">
             <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn3.png" alt="" width="100%" />
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -150,7 +146,7 @@ onMounted(() => {
   background-size: 100% 100%;
   align-items: center;
   width: 100%;
-  font-family: 'PingFang SC', 'PingFang', sans-serif;
+  font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial, sans-serif;
 
   .livepoker-rebate-section-left {
     display: flex;

@@ -2,7 +2,7 @@
   <q-layout view="hHh Lpr fFf">
     <NewMemberGuide v-if="store.regSuccessGuideVisible" />
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
-      <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
+      <q-card-section v-if="!hasPage" class="items-center justify-between top-section" horizontal>
         <div class="logo">
           <router-link to="/"><img src="../assets/logo-1.png" alt="logo" /></router-link>
         </div>
@@ -78,15 +78,15 @@
           <span>首页</span>
         </q-route-tab>
 
-        <q-route-tab v-if="$q.dark.isActive" to="/hotmatch" name="hotmatch">
-          <div class="inactive footer-icon flag" />
-          <div class="hover footer-icon flag" />
-          <span>赛程</span>
+        <q-route-tab v-if="$q.dark.isActive"  to="/livestream" name="livestream">
+          <div class="inactive footer-icon livestream" />
+          <div class="hover footer-icon livestream" />
+          <span>直播</span>
         </q-route-tab>
-        <q-route-tab v-else to="/hotmatch" name="hotmatch">
-          <div class="inactive footer-icon flag-w" />
-          <div class="hover footer-icon flag-w" />
-          <span>赛程</span>
+        <q-route-tab v-else  to="/livestream" name="livestream">
+          <div class="inactive footer-icon livestream-w" />
+          <div class="hover footer-icon livestream-w" />
+          <span>直播</span>
         </q-route-tab>
         <!-- <q-route-tab v-else to="/account/transfer" name="transfer">
           <img class="inactive" v-if="$q.dark.isActive" src="../assets/images/footer/withdraw-icon-dark.png" />
@@ -454,6 +454,10 @@ export default defineComponent({
           prevPage.value = "account/invite";
           hasPage.value = true;
           pageName.value = "APP 安装教程";
+        } else if (route.path === '/downloadApp'){
+          hasPage.value = true;
+          pageName.value = "APP下载";
+          prevPage.value = true;
         }
 
         if (route.query.redirect) {
@@ -465,8 +469,8 @@ export default defineComponent({
     const chatPage = computed(() => {
       if (store.chatGuid) {
         let url = `/liveChat/chat?uid=${store.chatGuid}`;
-        if (csUserStore.token) {
-          url += `&token=${csUserStore.token}`;
+        if (store.token) {
+          url += `&token=${store.token}`;
         }
         return url;
       }
@@ -670,11 +674,22 @@ svg path {
     background: url("../assets/images/footer/flag-white-active.svg") no-repeat center center;
     background-size: 100% 100%;
 
-    &.inactive {
-      background: url("../assets/images/footer/flag-white.svg") no-repeat center center;
-      background-size: 100% 100%;
+      &.inactive {
+        background: url("../assets/images/footer/flag-white.svg") no-repeat center center;
+        background-size: 100% 100%;
+      }
     }
-  }
+
+  &.livestream-w  {
+      width: 28px;
+      background: url("../assets/images/footer/livestream-white-active.svg") no-repeat center center;
+      background-size: 100% 100%;
+
+      &.inactive {
+        background: url("../assets/images/footer/livestream-white.svg") no-repeat center center;
+        background-size: 100% 100%;
+      }
+    }
 
   &.wallet {
     background: url("../assets/images/footer/footer-icons.svg") no-repeat center center;
@@ -744,6 +759,17 @@ svg path {
 
       &.inactive {
         background-position: 25.5% 95%;
+      }
+    }
+
+    &.livestream {
+      width: 28px;
+      background: url("../assets/images/footer/livestream-dark-active.svg") no-repeat center center;
+      background-size: 100% 100%;
+
+      &.inactive {
+        background: url("../assets/images/footer/livestream-dark.svg") no-repeat center center;
+        background-size: 100% 100%;
       }
     }
 

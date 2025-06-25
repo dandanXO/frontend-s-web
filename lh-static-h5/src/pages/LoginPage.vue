@@ -44,7 +44,7 @@
             placeholder="请输入用户名"
             :rules="[
               (val) => (val && val.length > 0) || '请输入用户名',
-              (val) => (val && val.length >= 6 && val.length <= 12) || '长度要在 6-12 之间'
+              (val) => (val && val.length >= 4 && val.length <= 12) || '长度要在 4-12 之间'
             ]"
             autocomplete="username"
           >
@@ -185,7 +185,7 @@
           </q-input>
         </div>
 
-        <div class="row items-center justify-between">
+        <div class="items-center justify-between row">
           <div class="login-via-phone-div">
             <span @click="loginType = !loginType">
               {{ loginType ? "用户名登录" : "手机号登录" }}
@@ -225,7 +225,7 @@
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
     <q-card width="100%">
-      <q-card-section class="q-pa-md bg-brightbtn text-white">
+      <q-card-section class="text-white q-pa-md bg-brightbtn">
         <q-toolbar>
           <q-toolbar-title>验证码</q-toolbar-title>
           <q-btn flat v-close-popup round dense icon="close" />
@@ -471,7 +471,14 @@ export default defineComponent({
 
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.go(jumpUrl);
+
+                  if (jumpUrl.includes("livestream")) {
+                    router.push(jumpUrl).then(() => {
+                      router.go(jumpUrl);
+                    });
+                  } else {
+                    router.go(jumpUrl);
+                  }
                 }
               })
               .catch((error) => {
@@ -686,7 +693,8 @@ export default defineComponent({
   }
   .geetest_captcha.geetest_dark .geetest_holder .geetest_content .geetest_tip_container .geetest_tip {
     color: #424f72;
-    font-family: "PingFang SC" !important;
+    font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+      sans-serif;
   }
 
   .geetest_captcha.geetest_dark.geetest_lock_success

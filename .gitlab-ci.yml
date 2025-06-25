@@ -40,10 +40,8 @@ default:
   script: 
     - sonar-scanner
   allow_failure: true
-  only:
-    - test
-    - staging
-    - production
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "production"'
 
 .build-projects:
   stage: code-check-and-build
@@ -304,6 +302,13 @@ deploy-id1-download-v2:
 
 #===============================================================================================
 
+deploy-au1-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: au1-download
+
+#===============================================================================================
+
 deploy-minifun-site:
   extends: .s3-deploy
   variables:
@@ -479,6 +484,21 @@ build-image-th2-static-v1:
     - build-th2-static-v1
 
 #===============================================================================================
+
+build-th3-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: th3-static-v1
+
+build-image-th3-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: th3-static-v1
+  needs:
+    - build-th3-static-v1
+
+#===============================================================================================
+
 build-ind-static-h5:
   extends: .build-projects
   variables:
@@ -721,6 +741,13 @@ deploy-lh-landing-v4:
   extends: .s3-deploy
   variables:
     PROJECT: lh-landing-v4
+
+#===============================================================================================
+
+deploy-lh-landing-v5:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v5
 
 #===============================================================================================
 
@@ -1113,7 +1140,7 @@ deploy-mx1-download:
     SITE_CODE: P8S1-BR1
   tags:
     - p8s1-br1-runners
-    
+
 #===============================================================================================
 
 deploy-mx1-download-v2:
@@ -1239,6 +1266,20 @@ build-image-br1-static-v1:
 
 #===============================================================================================
 
+build-br2-static-v1:
+  extends: .build-projects
+  variables:
+    PROJECT: br2-static-v1
+
+build-image-br2-static-v1:
+  extends: .docker-build
+  variables:
+    PROJECT: br2-static-v1
+  needs:
+    - build-br2-static-v1
+
+#===============================================================================================
+
 build-id1-static-v1:
   extends: .build-projects
   variables:
@@ -1328,5 +1369,15 @@ deploy-th2-download:
   extends: .s3-deploy
   variables:
     PROJECT: th2-download
+
+#===============================================================================================
+
+deploy-br2-tutorial:
+  extends: .s3-deploy
+  variables:
+    PROJECT: br2-tutorial
+    SITE_CODE: P8S1-BR1
+  tags:
+    - p8s1-br1-runners
 
 #===============================================================================================

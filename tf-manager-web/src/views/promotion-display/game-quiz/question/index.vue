@@ -444,19 +444,12 @@
         </el-row>
         <el-row v-if="viewForm.status !== 'ENDED'">
           <el-form-item :label="t('fields.choiceOne')" prop="choiceOne">
-            <el-radio-group v-model="viewForm.choiceOne" size="mini" style="width: 300px" disabled>
-              <el-radio-button
-                v-for="(item, index) in JSON.parse(viewForm.choiceOne)"
-                :key="index"
-                :label="item"
-                size="small"
-              >{{ item }}</el-radio-button>
-            </el-radio-group>
+            <el-tag v-for="item in JSON.parse(viewForm.choiceOne)" :key="item" type="info" style="margin-right: 5px;">{{ item }}</el-tag>
           </el-form-item>
         </el-row>
         <el-row v-else>
           <el-form-item :label="t('fields.answerOne')" prop="answerOne">
-            <span>{{ viewForm.answerOne }}</span>
+            <el-tag type="primary">{{ viewForm.answerOne }}</el-tag>
           </el-form-item>
         </el-row>
         <el-row v-if="viewForm.questionTwo">
@@ -466,19 +459,12 @@
         </el-row>
         <el-row v-if="viewForm.questionTwo && viewForm.status !== 'ENDED'">
           <el-form-item :label="t('fields.choiceTwo')" prop="choiceTwo">
-            <el-radio-group v-model="viewForm.choiceTwo" size="mini" style="width: 300px" disabled>
-              <el-radio-button
-                v-for="(item, index) in JSON.parse(viewForm.choiceTwo)"
-                :key="index"
-                :label="item"
-                size="small"
-              >{{ item }}</el-radio-button>
-            </el-radio-group>
+            <el-tag v-for="item in JSON.parse(viewForm.choiceTwo)" :key="item" type="info" style="margin-right: 5px;">{{ item }}</el-tag>
           </el-form-item>
         </el-row>
         <el-row v-else-if="viewForm.questionTwo && viewForm.status === 'ENDED'">
           <el-form-item :label="t('fields.answerTwo')" prop="answerTwo">
-            <span>{{ viewForm.answerTwo }}</span>
+            <el-tag type="primary">{{ viewForm.answerTwo }}</el-tag>
           </el-form-item>
         </el-row>
         <el-row v-if="viewForm.questionThree">
@@ -488,19 +474,12 @@
         </el-row>
         <el-row v-if="viewForm.questionThree && viewForm.status !== 'ENDED'">
           <el-form-item :label="t('fields.choiceThree')" prop="answerThree">
-            <el-radio-group v-model="viewForm.answerThree" size="mini" style="width: 300px" disabled>
-              <el-radio-button
-                v-for="(item, index) in JSON.parse(viewForm.choiceThree)"
-                :key="index"
-                :label="item"
-                size="small"
-              >{{ item }}</el-radio-button>
-            </el-radio-group>
+            <el-tag v-for="item in JSON.parse(viewForm.choiceThree)" :key="item" type="info" style="margin-right: 5px;">{{ item }}</el-tag>
           </el-form-item>
         </el-row>
         <el-row v-else-if="viewForm.questionThree && viewForm.status === 'ENDED'">
           <el-form-item :label="t('fields.answerThree')" prop="answerThree">
-            <span>{{ viewForm.answerThree }}</span>
+            <el-tag type="primary">{{ viewForm.answerThree }}</el-tag>
           </el-form-item>
         </el-row>
         <el-row>

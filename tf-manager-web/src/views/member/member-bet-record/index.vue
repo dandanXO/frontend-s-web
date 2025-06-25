@@ -117,6 +117,36 @@
           size="small"
           :placeholder="t('fields.affiliate')"
         />
+      </div>
+      <div style="margin-bottom: 10px;">
+        <el-select
+          v-model="request.orderBy"
+          size="small"
+          :placeholder="t('fields.orderBy')"
+          class="filter-item"
+          style="margin-left: 5px; width: 200px;"
+        >
+          <el-option
+            v-for="item in uiControl.orderBy"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
+        <el-select
+          v-model="request.sortType"
+          size="small"
+          :placeholder="t('fields.sortType')"
+          class="filter-item"
+          style="margin-left: 5px; width: 200px;"
+        >
+          <el-option
+            v-for="item in uiControl.sortType"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
         <el-button
           style="margin-left: 10px"
           icon="el-icon-search"
@@ -297,7 +327,16 @@ const uiControl = reactive({
     { key: 1, displayName: t('betStatus.UNSETTLED'), value: "UNSETTLED" },
     { key: 2, displayName: t('betStatus.SETTLED'), value: "SETTLED" },
     { key: 3, displayName: t('betStatus.CANCEL'), value: "CANCEL" }
-  ]
+  ],
+  orderBy: [
+    { key: 1, displayName: t('fields.betTime'), value: "bet_time" },
+    { key: 2, displayName: t('fields.bet'), value: "bet" },
+    { key: 3, displayName: t('fields.payout'), value: "payout" }
+  ],
+  sortType: [
+    { key: 1, displayName: t('sortType.DESC'), value: "DESC" },
+    { key: 2, displayName: t('sortType.ASC'), value: "ASC" }
+  ],
 });
 
 const defaultTime = [
@@ -328,6 +367,8 @@ const request = reactive({
   status: ["UNSETTLED", "SETTLED", "CANCEL"],
   gameName: null,
   affiliateName: null,
+  orderBy: null,
+  sortType: null,
 });
 
 const total = reactive({
@@ -348,6 +389,8 @@ function resetQuery() {
   request.status = ["UNSETTLED", "SETTLED", "CANCEL"];
   request.gameName = null;
   request.affiliateName = null;
+  request.orderBy = null;
+  request.sortType = null;
   page.pagingState = null
 }
 

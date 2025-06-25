@@ -1,5 +1,10 @@
 <template>
-  <div class="WAL position-relative" :style="style" :class="isChatStarted ? 'WAL-start' : ''" v-show="isPageLoaded">
+  <div
+    class="WAL position-relative"
+    :style="style"
+    :class="[{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }, isChatStarted ? 'WAL-start' : '']"
+    v-show="isPageLoaded"
+  >
     <q-layout
       view="lHh Lpr lFf"
       class="prechat-section"
@@ -21,7 +26,13 @@
       </div>
     </q-layout>
 
-    <q-layout v-if="isChatStarted && !isNoticeClicked" view="lHh Lpr lFf" class="WAL__layout shadow-3" container>
+    <q-layout
+      v-if="isChatStarted && !isNoticeClicked"
+      view="lHh Lpr lFf"
+      class="WAL__layout shadow-3"
+      :class="{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }"
+      container
+    >
       <chat-header
         ref="refChatHeader"
         :room="room"
@@ -186,7 +197,7 @@
         </q-item>
 
         <q-item v-ripple>
-          <q-item-section class="start-chat-btn">
+          <q-item-section class="start-chat-btn" :class="{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }">
             <q-item-label>
               <q-btn
                 color="primary"
@@ -204,13 +215,17 @@
         </q-item>
       </div>
 
-      <div class="duplicate-box" v-if="isDuplicateTab">
+      <div class="duplicate-box" :class="{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }" v-if="isDuplicateTab">
         <span class="duplicate-span">{{ t("duplicated_tab_detected") }}</span>
         <q-btn color="primary" size="md" class="duplicate-span" @click="useThisChatBoard">
           {{ t("recover_chat") }}
         </q-btn>
       </div>
-      <div class="duplicate-box" v-if="footerDisabled && isPreStateStatus && isPreChat">
+      <div
+        class="duplicate-box"
+        :class="{ 'no-footer': chatBaseUrl === 'live-chat/live-chat' }"
+        v-if="footerDisabled && isPreStateStatus && isPreChat"
+      >
         <span class="duplicate-span">{{ t("sess_timeout") }}</span>
         <q-btn color="primary" size="md" class="duplicate-span" @click="useThisChatBoard">
           {{ t("start_new_conversation") }}
@@ -283,6 +298,7 @@ import { useI18n } from "vue-i18n";
 import { useChatStore } from "src/cs-client-web/stores/chat";
 import { useUserStore } from "src/cs-client-web/stores/user";
 import { useSocketStore } from "src/cs-client-web/stores/socket";
+import { userStore as storeUser } from "src/stores";
 import { storeToRefs } from "pinia";
 import useSocket from "src/cs-client-web/composables/use-socket";
 import chatEnum from "src/cs-client-web/enum/chatEnum";
@@ -334,6 +350,7 @@ export default defineComponent({
     const chatStore = useChatStore();
     const userStore = useUserStore();
     const socketStore = useSocketStore();
+    const store = storeUser();
     const { roomList, isChatEnded, sendMessages, chatFreeze } = storeToRefs(chatStore);
     const { userId, nickname, token } = storeToRefs(userStore);
     const { isConnected } = storeToRefs(socketStore);
@@ -371,6 +388,15 @@ export default defineComponent({
     const preIntro = ref("");
 
     const notice_timestamp = ref("");
+
+    const getChatBaseUrl = () => {
+      const url = route?.path?.split?.("/")?.[1] || "live-chat";
+      if (url === "live-chat") {
+        return `${url}/live-chat`;
+      }
+      return url;
+    };
+    const chatBaseUrl = getChatBaseUrl();
 
     const partnerCode = computed(() => {
       return LocalStorage.get("partnerCode");
@@ -467,29 +493,45 @@ export default defineComponent({
 
       sessTimeoutDialogShown = true;
 
-      $q.dialog({
-        title: "",
-        message: t("sess_timeout"),
-        ok: t("start_new_chat"),
-        class: "modal-endchat",
-        cancel: null,
-        persistent: true,
-        noBackdropDismiss: true
-      }).onOk(() => {
-        if (reLogin) {
-          console.log("Dc2 HERE");
-          wsDisconnect();
+      store.chatGuid = "";
 
-          window.parent.postMessage("sess_timeout", "*");
+      if (reLogin) {
+        console.log("Dc2 HERE");
+        wsDisconnect();
 
-          LocalStorage.remove("loginDetails");
-          LocalStorage.remove("isChatStarted");
+        window.parent.postMessage("sess_timeout", "*");
 
-          startNewChat(true, true);
-        } else {
-          window.location.reload();
-        }
-      });
+        LocalStorage.remove("loginDetails");
+        LocalStorage.remove("isChatStarted");
+
+        // startNewChat(true, true);
+      } else {
+        window.location.reload();
+      }
+
+      // $q.dialog({
+      //   title: "",
+      //   message: t("sess_timeout"),
+      //   ok: t("start_new_chat"),
+      //   class: "modal-endchat",
+      //   cancel: null,
+      //   persistent: true,
+      //   noBackdropDismiss: true
+      // }).onOk(() => {
+      //   if (reLogin) {
+      //     console.log("Dc2 HERE");
+      //     wsDisconnect();
+
+      //     window.parent.postMessage("sess_timeout", "*");
+
+      //     LocalStorage.remove("loginDetails");
+      //     LocalStorage.remove("isChatStarted");
+
+      //     startNewChat(true, true);
+      //   } else {
+      //     window.location.reload();
+      //   }
+      // });
     }
 
     let checkResumeInterval;
@@ -1213,7 +1255,7 @@ export default defineComponent({
       }
 
       var origin_url = window.location.origin;
-      var url = `${origin_url}/liveChat?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}${startnew}&referral=${referrer_url}${tokenUrl}`;
+      var url = `${origin_url}/${chatBaseUrl}?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}${startnew}&referral=${referrer_url}${tokenUrl}`;
       // console.log(url);
 
       setTimeout(() => {
@@ -1641,7 +1683,7 @@ export default defineComponent({
       }
 
       var origin_url = window.location.origin;
-      var url = `${origin_url}/liveChat?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}&referral=${referrer_url}${tokenUrl}`;
+      var url = `${origin_url}/${chatBaseUrl}?${partnerText}&way=${way}&lang=${lang}&type=${type}${deviceText}&referral=${referrer_url}${tokenUrl}`;
       console.log(url);
 
       window.location.href = url;
@@ -1706,18 +1748,19 @@ export default defineComponent({
       chatLabel,
       isDuplicateTab,
       useThisChatBoard,
-      isPageLoaded
+      isPageLoaded,
+      chatBaseUrl
     };
   }
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .WAL {
   width: 100%;
   height: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  // padding-top: 20px;
+  // padding-bottom: 20px;
 
   &__layout {
     margin: 0 auto;
@@ -1725,8 +1768,10 @@ export default defineComponent({
     height: 100%;
 
     max-width: 950px;
-    border-radius: 20px;
-    width: calc(90%);
+    // border-radius: 20px;
+    // width: calc(90%);
+    width: 100%;
+    border-radius: 0;
   }
 }
 
@@ -1742,7 +1787,7 @@ export default defineComponent({
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #009688;
+    // background-color: #009688;
   }
 }
 
@@ -1861,10 +1906,17 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 550px;
+  width: 100%;
+  place-self: center;
 
   .duplicate-span {
-    padding-right: 0px;
+    // padding-right: 0px;
     width: auto;
+  }
+
+  &.no-footer {
+    bottom: 0;
   }
 }
 
@@ -1887,7 +1939,7 @@ export default defineComponent({
   align-items: center;
 
   .duplicate-span {
-    padding-right: 0px;
+    // padding-right: 0px;
     width: calc(100%);
   }
 }
@@ -1906,14 +1958,17 @@ export default defineComponent({
 
 .WAL-start,
 .WAL__layout {
-  height: calc(100vh - 60px) !important;
+  height: calc(100vh - 64px) !important;
+  &.no-footer {
+    height: 100vh !important;
+  }
 }
 
 .prechat-section {
   background: rgb(255, 255, 255);
   background: linear-gradient(180deg, rgba(255, 255, 255) 0%, rgba(222, 246, 246, 1) 65%, rgba(191, 238, 238, 1) 100%);
   width: 100%;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 64px);
   min-height: 100vh;
   padding: 55px 15px 12px;
 
@@ -1983,16 +2038,16 @@ export default defineComponent({
   background: #555;
 }
 
-@media (max-width: 850px) {
-  .WAL {
-    padding: 0;
+// @media (max-width: 850px) {
+//   .WAL {
+//     padding: 0;
 
-    &__layout {
-      width: 100%;
-      border-radius: 0;
-    }
-  }
-}
+//     &__layout {
+//       width: 100%;
+//       border-radius: 0;
+//     }
+//   }
+// }
 
 .scroll::-webkit-scrollbar {
   width: 0;
@@ -2016,9 +2071,13 @@ export default defineComponent({
   left: 50%;
   transform: translateX(-50%);
   width: calc(90% - 48px);
+  max-width: 510px;
   background: rgba(210, 242, 242, 0.2);
   backdrop-filter: blur(4px);
   padding-bottom: 16px;
+  &.no-footer {
+    bottom: 0;
+  }
 }
 
 .modal-rating {

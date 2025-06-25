@@ -54,7 +54,18 @@ const routes = [
   {
     path: "/liveChat",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
+    children: [
+      { path: "", component: () => import("src/cs-client-web/pages/LoginPage.vue") },
+      { path: "chat", component: () => import("src/cs-client-web/pages/ChatPage.vue") }
+    ]
+  },
+  {
+    path: "/live-chat",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      { path: "", component: () => import("src/cs-client-web/pages/LoginPage.vue") },
+      { path: "chat", component: () => import("src/cs-client-web/pages/ChatPage.vue") }
+    ]
   },
   {
     path: "/maintenance",

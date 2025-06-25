@@ -7,7 +7,10 @@ import axios from "axios";
 import { getRndInteger } from "boot/utils";
 
 console.log(window.location.hostname);
-const isGlobalDY = window.location.hostname.indexOf("dy988.") > -1 || window.location.hostname.indexOf("dy723.") > -1 || window.location.hostname.indexOf("dy639.") > -1;
+const isGlobalDY =
+  window.location.hostname.indexOf("dy988.") > -1 ||
+  window.location.hostname.indexOf("dy723.") > -1 ||
+  window.location.hostname.indexOf("dy639.") > -1;
 
 const globalAndCNLinks = [
   "dy61190.com",
@@ -22,11 +25,11 @@ const globalAndCNLinks = [
   "dy723.cc",
   "dy111.cc",
   "dy602.cc",
-  "dongyingbet6", 
-  "dongyingbet8", 
-  "dy605.vip", 
-  "dy595.cc", 
-  "dy673.cc", 
+  "dongyingbet6",
+  "dongyingbet8",
+  "dy605.vip",
+  "dy595.cc",
+  "dy673.cc",
   "dy732.cc",
   "dy568.cc",
   "dy668.cc",
@@ -65,6 +68,8 @@ if (isGlobalDY) {
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
 const eventapi = axios.create({ baseURL: evtApi });
+const csapi = axios.create({ baseURL: `${rstApi}/cs/api` });
+const csws = axios.create({ baseURL: `${rstApi}/cs/ws` });
 
 if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {
   const successImgCdn = localStorage.getItem("IMAGE_CDN");
@@ -299,12 +304,27 @@ export default boot(({ app, router }) => {
   app.config.globalProperties.$api = api;
   app.config.globalProperties.$cashier = cashier;
   app.config.globalProperties.$eventapi = eventapi;
+  app.config.globalProperties.$csapi = csapi;
+  app.config.globalProperties.$csws = csws;
   api.interceptors.request.use(onRequest);
   api.interceptors.response.use(onResponse, onResponseError);
   cashier.interceptors.request.use(onRequest);
   cashier.interceptors.response.use(onResponse, onResponseError);
   eventapi.interceptors.request.use(onRequest);
   eventapi.interceptors.response.use(onResponse, onResponseError);
+
+  csapi.interceptors.request.use(async (config) => {
+    return config;
+  });
+
+  csapi.interceptors.response.use(function (response) {
+    const code = response.data?.code ?? -1;
+
+    response.data.code = code;
+    response.data.success = code === 0;
+
+    return response;
+  });
 });
 
-export { axios, api, cashier, eventapi };
+export { axios, api, cashier, eventapi, csapi, csws };

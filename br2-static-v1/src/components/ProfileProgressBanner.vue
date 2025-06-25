@@ -1,0 +1,167 @@
+<template>
+  <div class="progress-container">
+    <div class="left-container">
+      <div class="profile-pic">
+        <q-avatar size="50px">
+          <img :src="profileImagePath" />
+        </q-avatar>
+
+        <div class="vip-details" @click="onVipClick">
+          <img :src="require(`../assets/images/vip/badge/withLevel/vip-badge-${vipLevel}.png`)" alt="" />
+        </div>
+      </div>
+
+      <div class="nickname">{{ store.realName ? store.realName.replace(/,/g, " ") : store.nickName }}</div>
+    </div>
+
+    <div class="right-container">
+      <div class="amount-progress-container">
+        <div class="vip-text">{{ store.vip }}</div>
+        <div class="progress-num">{{ `${progressRef} / ${maxProgress}` }}</div>
+      </div>
+      <q-linear-progress
+        reverse
+        rounded
+        size="15px"
+        :value="progressBarRef"
+        class="progress-bar"
+        color="white"
+      ></q-linear-progress>
+      <div class="win-gift-text">{{ $t("settings.betMonthlytoWinGifts") }}</div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed } from "vue";
+import { userStore } from "stores/index";
+import { convertToCommaAmount } from "src/boot/utils";
+
+const store = userStore();
+
+const vipLevel = computed(() => store.vip.replace(/VIP/g, ""));
+const maxProgress = computed(() => store.levelUpBet.toFixed(2));
+const progressRef = computed(() => store.currentValidBet.toFixed(2));
+
+/**
+ * NOTE: q-linear-progress
+ * the coloring on the bar done w/ css props "background" & "color"
+ * figma required linear-gradient which wasn't available in "color"
+ * hence switch "background" to "color" & "color" to "background", reverse value 1 - result.
+ */
+const progressBarRef = computed(() => 1 - progressRef.value / maxProgress.value);
+
+const profileImg = [
+  {
+    imgPath: ["profile-pic"]
+  }
+];
+const randomProfileImg = computed(() => {
+  const storedImg = sessionStorage.getItem("PROFILE_IMG");
+  if (storedImg) {
+    return storedImg;
+  } else {
+    const randomProfile = profileImg[0];
+    const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
+    const imgPath = randomProfile.imgPath[randomIndex];
+    sessionStorage.setItem("PROFILE_IMG", imgPath);
+    return imgPath;
+  }
+});
+
+const profileImagePath = computed(() => {
+  return require(`../assets/images/account/${randomProfileImg.value}.png`);
+});
+</script>
+
+<style lang="scss" scoped>
+.progress-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 10px;
+  align-items: flex-start;
+  margin: 1.5rem 0 1rem 0;
+  background: url("../assets/images/index/profile-progress-banner-bg.png") no-repeat center;
+  box-shadow: 0px 4px 24px 0px #ff5f5180;
+  border-radius: 8px;
+  min-height: 130px;
+  padding: 14px;
+
+  .left-container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .profile-pic {
+      position: relative;
+      margin: 0 15px 15px;
+
+      .vip-details {
+        img {
+          display: block;
+          width: 100%;
+          max-width: 56px;
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          transform: translate(-50%, 50%);
+        }
+
+        .vip-level {
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 11px;
+          line-height: 1.1;
+          padding-top: 2px;
+          padding-bottom: 4px;
+          z-index: 3;
+          color: #101616;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .nickname {
+      text-overflow: ellipsis;
+      max-width: 100%;
+      overflow: auto;
+    }
+  }
+
+  .right-container {
+    position: relative;
+    top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 12px;
+
+    .amount-progress-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .progress-bar {
+      // background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
+      background: #9e2790;
+      border-radius: 100px;
+      color: #320b5b;
+    }
+
+    .vip-text {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .win-gift-text {
+      text-align: right;
+    }
+  }
+}
+</style>

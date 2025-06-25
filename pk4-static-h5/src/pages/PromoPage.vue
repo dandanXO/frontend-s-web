@@ -67,7 +67,7 @@
               <div
                 class="banner-container"
                 v-if="
-                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' ||
+                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
                   selectedPromo.redirectUrl !== 'new-player-acc-deposit'
                 "
               >
@@ -96,7 +96,8 @@
                 class="promo-content-inner"
                 v-if="
                   selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
-                  selectedPromo.redirectUrl !== 'spin-lucky-wheel'
+                  selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
+                  selectedPromo.redirectUrl !== 'pak-welcome-new-players'
                 "
                 :style="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border:0; padding: 0;' : ''"
               >
@@ -125,6 +126,7 @@
                   isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
                   isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
                   isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards',
+                  isNewPlayerSpinWheel: selectedPromo.redirectUrl === 'pak-welcome-new-players',
                   isSpinLuckyWheel:
                     selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope'
                 }"
@@ -1188,6 +1190,10 @@ export default defineComponent({
         }
         &.isJackpotAviator {
           width: 100%;
+          background: url("../assets/images/promotion/hotpromo/jackpot-aviator/main-bg.jpg") no-repeat top center;
+          background-size: contain;
+          margin-top: -20px;
+          padding-top: 20px;
         }
         &.isDepositSpinnerRewards {
           border-radius: 0;

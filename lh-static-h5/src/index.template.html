@@ -87,7 +87,7 @@
 
       function initTracking() {
         const pathname = window.location.pathname;
-        const appPaths = ["/promotion", "/promotiontest", "/deposit", "/deposittest", "/invitefriend", "/vip", "/viptest", "/privilege/invite"]
+        const appPaths = ["/promotion", "/promotiontest", "/deposit", "/deposittest", "/invitefriend", "/vip", "/viptest", "/privilege/invite", "/livestreampage", "/livestreampage/streamplayer" ]
         if(appPaths.includes(pathname)) {
           initCloudWise("wS0n2SF8WRCb0fAkjFLvksRizrsrej3YfZosUhCbiG7b2z**czacDVZXpilaow2ti")
           initGA();
@@ -229,7 +229,9 @@
         window.location.pathname === "/deposit" ||
         window.location.pathname === "/invitefriend" ||
         window.location.pathname === "/privilege/invite" ||
-        window.location.pathname === "/affiliatepage"
+        window.location.pathname === "/affiliatepage" ||
+        window.location.pathname === "/livestreampage" ||
+        window.location.pathname === "/livestreampage/streamplayer"
       ) {
 
         const url = new URL(window.location.href);

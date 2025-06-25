@@ -94,11 +94,16 @@
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 120">
           <div v-if="announcementList">
-            <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-              {{ a.content }}
-            </span>
+            <template v-for="(a, i) in announcementList" :key="i">
+              <span @click="openPopup(a)" v-html="a.content"></span>
+            </template>
           </div>
         </marquee-text>
+
+        <router-link to="/livestream" class="notice-hot-match">
+          <!-- 热门赛事 -->
+          <img src="../assets/images/home/notice-live-icon.gif" />
+        </router-link>
       </div>
     </div>
 
@@ -620,7 +625,7 @@
     :showCancelButton="false"
     :showConfirmButton="false"
   >
-    <q-card style="width: 100%" class="bg-bright text-black">
+    <q-card style="width: 100%" class="text-black bg-bright">
       <div class="modalcontent">
         <div class="headers">
           <div style="width: 16px">&nbsp;</div>
@@ -1269,16 +1274,24 @@ export default defineComponent({
     };
 
     function loadData() {
+      const randNum = Math.floor(Math.random() * 1000) + 1;
       api
-        .get("/opt-session/promo/banner?category=HOME")
+        .get(`/opt-session/promo/banner?category=HOME&v=${randNum}`)
         .then((res) => {
           if (res.code === 0) {
             banners.value = res.data.filter((promo) => {
+              const isVisible = (() => {
+                if (isH5.value) return promo.showH5;
+                if (!isH5.value) return promo.showApp;
+                return promo.showH5;
+              })();
+
+              if (!isVisible) return false;
               if ($q.dark.isActive) {
                 return !["lh1-dark-mode"].includes(promo.redirectUrl) && promo.mobileImageUrlDark;
               }
 
-              return promo;
+              return true;
             });
           } else {
           }
@@ -1545,6 +1558,8 @@ export default defineComponent({
         return;
       } else if (banner.redirectUrl == "app://deposit") {
         router.push("/finance/deposit");
+      } else if (banner.redirectUrl === "livestream") {
+        router.push("/livestream");
       } else {
         const redirectU = "/promo?name=" + banner.redirectUrl;
         router.push(`${redirectU}`);
@@ -1612,9 +1627,10 @@ export default defineComponent({
     };
 
     const openDownloadAppLink = () => {
-      const affiliate = sessionStorage.getItem("AFFILIATE_CODE");
-      const theurl = `${downloadUrl.value}?agentCode=${affiliate}`;
-      window.open(theurl, "_blank");
+      router.push("/downloadApp");
+      // const affiliate = sessionStorage.getItem("AFFILIATE_CODE");
+      // const theurl = `${downloadUrl.value}?agentCode=${affiliate}`;
+      // window.open(theurl, "_blank");
     };
 
     const getImgPlatformLogo = (platform, code, alias) => {
@@ -1736,6 +1752,7 @@ export default defineComponent({
             result = `${`${hours}`.padStart(2, 0)}:${`${minutes}`.padStart(2, 0)}:${`${seconds}`.padStart(2, 0)}`;
           }
         }
+        // console.log(result,'time');
         return result;
       });
     };
@@ -1853,9 +1870,9 @@ export default defineComponent({
 
     onActivated(() => {
       getPlatList();
-      loadData();
       loadAnnouncement();
       checkPlatform();
+      loadData();
       // getVersionNo();
       getAppDownloadUrl();
       setTimeout(() => {
@@ -2827,6 +2844,23 @@ export default defineComponent({
         }
       }
     }
+  }
+}
+
+.notice-hot-match {
+  // color: #ffffff;
+  // background: linear-gradient(113.58deg, #5277e5 19.8%, #ed22ff 93.06%);
+  // white-space: nowrap;
+  // padding: 2px 8px;
+  position: absolute;
+  right: 0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+
+  img {
+    display: block;
+    width: 90px;
   }
 }
 </style>

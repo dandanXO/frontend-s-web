@@ -21,8 +21,9 @@
 <script setup>
 import { computed, ref, toRefs, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { isAndroid } from "boot/utils";
 
-const props = defineProps(["modelValue", "hasWheel", "hasSpin"]);
+const props = defineProps(["modelValue", "hasWheel", "hasSpin", "hasNewPlayer"]);
 const { modelValue } = toRefs(props);
 
 const emit = defineEmits("update:modelValue");
@@ -32,11 +33,14 @@ const isAdded = ref(false);
 const isAddedSpin = ref(false);
 
 const promoList = ref([
-  { code: "money-rain", name: t("home.cashGift") },
-  { code: "lucky-spin-wheel", name: t("home.welcomeNewPlayer") }
+  // { code: "money-rain", name: t("home.cashGift") },
+  // { code: "newplayer-spin-wheel", name: t("home.welcomeNewPlayer") }
 ]);
 if (props.hasWheel && !isAdded.value) {
   promoList.value.push({ code: "mega-sharing-wheel", name: t("home.MegaSharingRoulette") });
+}
+if (props.hasNewPlayer && !isAddedSpin.value) {
+  promoList.value.push({ code: "newplayer-spin-wheel", name: t("home.welcomeNewPlayer") });
 }
 if (props.hasSpin && !isAddedSpin.value) {
   promoList.value.push({ code: "spin-lucky-wheel", name: t("home.spinLuckyWheel") });
@@ -50,6 +54,10 @@ watch(props, (newVal, oldVal) => {
   if (newVal.hasSpin === true && isAddedSpin.value === false) {
     isAddedSpin.value = true;
     promoList.value.push({ code: "spin-lucky-wheel", name: t("home.spinLuckyWheel") });
+  }
+  if (newVal.hasNewPlayer === true) {
+    isAddedSpin.value = true;
+    promoList.value.push({ code: "newplayer-spin-wheel", name: t("home.welcomeNewPlayer") });
   }
 });
 
@@ -66,6 +74,8 @@ const controllerStyle = computed(() => {
       return "style-1";
     case "lucky-spin-wheel":
       return "lucky-spin-wheel";
+    case "newplayer-spin-wheel":
+      return "newplayer-spin-wheel"
     case "spin-lucky-wheel":
     default:
       return "style-1";
@@ -127,7 +137,7 @@ const handleNextClick = () => {
       background: var(--bg-color);
       border: 1px solid var(--border-color);
       border-radius: 5px;
-      padding: 3px 8px 3px 5px;
+      padding: 3px 5px 3px 5px;
       font-size: 10px;
       font-weight: 700;
       place-content: center;
@@ -174,16 +184,22 @@ const handleNextClick = () => {
     --text-color: #fff;
     --selected-text-color: #fff;
   }
-  &.lucky-spin-wheel{
-    --bg-color: #fff;
-    --selected-bg-color: linear-gradient(180deg, #8045FE 0%, #A958FF 100%);
-    --border-color: #ffffffcc;
-    --selected-border-color: #fff;
-    --text-color: rgba(181, 115, 255, 1);
-    --selected-text-color: #fff;
+  // &.newplayer-spin-wheel{
+  //   --bg-color: #fff;
+  //   --selected-bg-color: linear-gradient(180deg, #8045FE 0%, #A958FF 100%);
+  //   --border-color: #ffffffcc;
+  //   --selected-border-color: #fff;
+  //   --text-color: rgba(181, 115, 255, 1);
+  //   --selected-text-color: #fff;
+  // }
+  &.newplayer-spin-wheel {
+    :deep(.swiper-btn-next),
+    :deep(.swiper-btn-prev), {
+      background: #88dfac;
+    }
   }
 }
 .popup-controller-wrapper :not(:last-child) {
-  margin-right: 14px;
+  margin-right: 4px;
 }
 </style>

@@ -663,7 +663,7 @@ const uiControl = reactive({
   dialogLoading: false,
   useRule: true,
   showReviewRule: true,
-  isShowReviewRule: false
+  isShowReviewRule: true
 })
 const request = reactive({
   size: 30,
@@ -1248,13 +1248,6 @@ onMounted(async() => {
     site.value = list.sites[0];
     request.siteId = store.state.user.siteId
   }
-  checkUseRule()
-  await loadWithdrawPlatform()
-  await loadSiteWithdrawPlatform(request.siteId)
-  loadCurrency()
-  loadPayTypes()
-  await loadAutoPaymentType()
-  filterPayTypeByCurrency()
   const { data: config } = await getConfigList("auto_withdraw_review_control", request.siteId);
   uiControl.showReviewRule = uiControl.isShowReviewRule = config.length > 0 && config[0].value !== 'CLOSE';
   if (uiControl.showReviewRule) {
@@ -1264,6 +1257,13 @@ onMounted(async() => {
     await loadWithdrawReviewRule()
     await loadGamePlatforms()
   }
+  checkUseRule()
+  await loadWithdrawPlatform()
+  await loadSiteWithdrawPlatform(request.siteId)
+  loadCurrency()
+  loadPayTypes()
+  await loadAutoPaymentType()
+  filterPayTypeByCurrency()
 })
 </script>
 

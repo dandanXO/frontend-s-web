@@ -58,7 +58,7 @@
               <img src="../assets/images/account/deposit-svg.svg" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
-            <div v-if="promoPercentage" class="promo-percentage">{{ promoPercentage }} {{ $t("records.bonus") }}</div>
+            <div v-if="promoPercentage !== ''" class="promo-percentage">{{ promoPercentage }} {{ $t("records.bonus") }}</div>
           </router-link>
           <router-link to="/withdraw">
             <div class="acct-nav-item">
@@ -244,6 +244,7 @@ import { useUI } from "stores/ui";
 import { Platform } from "quasar";
 import { t } from "src/boot/lang";
 import { i18nStore } from "src/router/language";
+import { isAndroid } from "boot/utils";
 
 const selfTgurl = ref("");
 const fallbackCopyTextToClipboard = (text) => {
@@ -334,9 +335,11 @@ const showTransferModal = ref(false);
 
 const confirmSignOutDialog = ref(false);
 
+const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
 const promoPercentage = computed(() => {
-  if (!store.claimedFtdPrivilege) return "53%";
-  if (!store.claimedSecondPrivilege) return "35%";
+  if (isAndroid() && store.canClaimFtdPrivilege) return "38";
+  if (store.canClaimSecondPrivilege) return "100";
+  if (store.canClaimThirdPrivilege) return "150";
   return ""; // Optional: for other cases if needed
 });
 
@@ -406,55 +409,49 @@ function isHuaweiBrowser() {
 }
 
 const handleCopyClick = async () => {
-  if (window.location.pathname === "/account") {
-    const textToCopy = store.nickName;
-    // alert(textToCopy);
+  const textToCopy = store.nickName;
+  // alert(textToCopy);
 
-    if (isHuaweiBrowser()) {
-      writeClipboard(store.nickName);
-    } else if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
-      await navigator.clipboard.writeText(textToCopy);
+  if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
+    await navigator.clipboard.writeText(textToCopy);
 
-      setTimeout(() => {
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: t("notify.copiedSuccessfully"),
-          icon: "check_circle_outline"
-        });
-      }, 100);
-    } else {
-      // Use the 'out of viewport hidden text area' trick
-      const textArea = document.createElement("textarea");
-      textArea.value = textToCopy;
-
-      // Move textarea out of the viewport so it's not visible
-      textArea.style.position = "absolute";
-      textArea.style.left = "-999999px";
-
-      document.body.prepend(textArea);
-      textArea.focus();
-      textArea.select();
-
-      try {
-        document.execCommand("copy");
-      } catch (error) {
-        console.error(error);
-      } finally {
-        document.body.removeChild(textArea);
-      }
-
-      setTimeout(() => {
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: t("notify.copiedSuccessfully"),
-          icon: "check_circle_outline"
-        });
-      }, 100);
-    }
+    setTimeout(() => {
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: t("notify.copiedSuccessfully"),
+        icon: "check_circle_outline"
+      });
+    }, 100);
   } else {
-    writeClipboard(currentVoxisId.value);
+    // Use the 'out of viewport hidden text area' trick
+    const textArea = document.createElement("textarea");
+    textArea.value = textToCopy;
+
+    // Move textarea out of the viewport so it's not visible
+    textArea.style.position = "absolute";
+    textArea.style.left = "-999999px";
+
+    document.body.prepend(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand("copy");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      document.body.removeChild(textArea);
+    }
+
+    setTimeout(() => {
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: t("notify.copiedSuccessfully"),
+        icon: "check_circle_outline"
+      });
+    }, 100);
   }
 };
 </script>

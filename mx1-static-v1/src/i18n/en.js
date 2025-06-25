@@ -184,6 +184,7 @@ export default {
     accountNumber_rules_01: "Introduzca el número de cuenta",
     accountNumber_rules_02: "Introduzca un número de cuenta válido",
     accountNumber_rules_03: "El número de cuenta no debe contener un punto decimal",
+    accountNumber_rules_04: "El número de tarjeta debe contener solo 16 o 18 dígitos sin caracteres adicionales",
     holderName: "Nombre del Titular",
     holderName_placeholder: "Introduzca el Nombre del Titular",
     holderName_rules_01: "Introduzca el Nombre del Titular",

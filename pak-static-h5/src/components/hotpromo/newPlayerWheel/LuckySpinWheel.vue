@@ -52,8 +52,10 @@ import { useQuasar } from "quasar";
 import moment from "moment";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { userStore } from "src/stores";
 
 const { t } = useI18n();
+const store = userStore();
 const $q = useQuasar();
 const router = useRouter();
 
@@ -247,7 +249,9 @@ onMounted(() => {
   spinNumRef.value = document.getElementById("spin-wheel-number");
   drawBtnRef.value = document.querySelector(".draw-btn");
 
-  initSpinWheel();
+  if (store.hasToken()) {
+    initSpinWheel();
+  }
 });
 </script>
 

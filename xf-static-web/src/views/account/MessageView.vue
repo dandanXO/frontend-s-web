@@ -56,6 +56,7 @@
                     v-for="(item, index) in mailboxState.mailboxList.inbox.list"
                     :key="index"
                     @click="openMsg(item, index)"
+                    class="mail-collapse-item"
                   >
                     <template #title>
                       <div v-if="isShowSelect" class="mailbox-checkbox" @click.stop="">
@@ -597,6 +598,21 @@ import { ElMessage } from "element-plus";
     overflow: unset;
   }
   .mail-content {
+    :deep(.el-collapse) {
+      border-top: none;
+    }
+
+    .mail-collapse-item {
+      :deep(.el-collapse-item__title) {
+        display: flex;
+        align-items: center;
+        
+        .title-text > p {
+          margin: 0 !important;
+        }
+      }
+    }
+
     overflow-wrap: break-word;
     .mailbox-checkbox {
       display: flex;
@@ -625,6 +641,7 @@ import { ElMessage } from "element-plus";
       font-weight: 600;
       color: #7a80a1;
       font-size: 1rem;
+      width: inherit;
     }
   
     :deep(.el-collapse-item__content) {

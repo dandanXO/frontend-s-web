@@ -19,10 +19,7 @@
         <div class="content">
           <div class="right">
             <div v-if="selectedItem?.desktopImgUrl">
-              <img
-                @click="onClickPopoutImg(`/promotion?name=${selectedItem.path}`)"
-                :src="`${imgURL}${selectedItem.desktopImgUrl}`"
-              />
+              <img @click="$emit('popout-click', selectedItem.path)" :src="`${imgURL}${selectedItem.desktopImgUrl}`" />
             </div>
           </div>
           <div class="left">
@@ -50,9 +47,12 @@ import { useRouter } from "vue-router";
 import { EDITION } from "src/constant/edition";
 
 import { useUI } from "src/stores/ui";
+const props = defineProps(["closePopout"]);
+
+defineEmits(["popout-click"]);
+
 const ui = useUI();
 const router = useRouter();
-const props = defineProps(["closePopout"]);
 const popoutList = ref([]);
 const selectedItemIndex = ref();
 const selectedItem = computed(() =>

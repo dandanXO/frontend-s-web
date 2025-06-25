@@ -35,7 +35,7 @@
 
 <script>
 /* eslint-disable */
-import { defineComponent, onBeforeMount, onMounted, ref, nextTick, computed } from "vue";
+import { defineComponent, onBeforeMount, onActivated, ref, nextTick, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useChatStore } from "src/cs-client-web/stores/chat";
@@ -70,7 +70,10 @@ export default defineComponent({
     const text = ref("");
     const $q = useQuasar();
 
-    var rstApi = localStorage.getItem("LH_H5_RST_URL");
+    var rstArray = Object.values(process.env.RST_API);
+    var rstApiRand = rstArray[getRndInteger(0, rstArray.length)];
+
+    var rstApi = localStorage.getItem("LH_H5_RST_URL") ?? rstApiRand;
 
     const chat_type = ref("");
     // let partnerCode = route.query?.partnerCode ?? "";
@@ -121,7 +124,7 @@ export default defineComponent({
       });
     };
 
-    onMounted(async () => {
+    onActivated(async () => {
       let way;
       let type;
       let deviceId;
@@ -337,8 +340,8 @@ export default defineComponent({
               store.chatGuid = chatGuid;
 
               await router.push({
-                path: "/liveChat/chat",
-                query: { uid: chatGuid, ...(userStore.token && { token: userStore.token }) }
+                path: `${route.path}/chat`,
+                query: { uid: chatGuid, ...(store.token && { token: store.token }) }
               });
             } catch (e) {
               console.log(e);

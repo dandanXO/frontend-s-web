@@ -11,6 +11,11 @@
         </div> -->
     </RouterLink>
 
+    <router-link class="side-menu-item" to="/terms-and-conditions">
+      <div class="item-icon"><img class="flag" src="../assets/images/license/curacao-license.png" /></div>
+      {{ $t("sideNav.legalLicense") }}
+    </router-link>
+
     <div class="side-menu-item side-menu-item__checkin">
       <div>
         CHECK
@@ -99,14 +104,6 @@
         <div class="item-icon"><img src="../assets/images/auth/menu-cs-verifier.png" /></div>
         {{ $t("sideNav.customerServiceVerifier") }}
       </router-link>
-      <router-link
-        v-if="ui.siteType === 'CURACAO'"
-        class="side-menu-item side-menu-item__transparent"
-        to="/terms-and-conditions"
-      >
-        <div class="item-icon"><img src="../assets/images/auth/tac.png" /></div>
-        {{ $t("sideNav.termsAndConditions") }}
-      </router-link>
     </div>
     <a v-if="!isAndroid()" :href="ui.downloadAppUrl" class="side-menu-item side-menu-item__appdownload">
       <div>
@@ -123,15 +120,18 @@
       </div>
       {{ $t("sideNav.language") }}
     </RouterLink>
-    
-
-    <div v-if="ui.siteType === 'CURACAO'" class="side-menu-item license">
+    <a
+      class="side-menu-item license"
+      href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       <img class="license-img" src="../assets/images/license/curacao-license.png" />
       <div class="license-text-wrapper">
         <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
         <span class="license-text__description">{{ $t("sideNav.license.curacao.description") }}</span>
       </div>
-    </div>
+    </a>
 
     <!--    <a class="side-menu-item side-menu-item__download" :href="ui.downloadAppUrl" v-if="!ui.hideDownload">-->
     <!--      <div class="item-icon">-->
@@ -420,6 +420,7 @@ const openCSInNewTab = (url) => {
           width: 100%;
 
           &.flag {
+            display: block;
             width: 26px;
           }
         }

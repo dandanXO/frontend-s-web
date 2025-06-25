@@ -177,6 +177,18 @@
             <div v-if="selectedPromo.redirectUrl === 'lh1-nba-water-battle'">
               <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
             </div>
+            <div v-if="selectedPromo.redirectUrl === 'lh1-valorant-masters-toronto-2025'">
+              <TorontoMasters :promoCode="selectedPromo.promoCode" />
+            </div>
+            <div v-if="selectedPromo.redirectUrl === 'lh1-fifa-2025'">
+              <Fifa2025Promo :promoCode="selectedPromo.promoCode" />
+            </div>
+            <div v-if="selectedPromo.redirectUrl === 'lh1-blast-tv-austin-major-2025'">
+              <BlastAustin :promoCode="selectedPromo.promoCode" />
+            </div>
+            <div v-if="selectedPromo.redirectUrl === 'laohuji'">
+              <Lh1DailySlotBonus :promoCode="selectedPromo.promoCode" />
+            </div>
             <div
               v-if="selectedPromo.redirectUrl !== 'lh1-christmas-gashapon'"
               :class="`content-` + selectedPromo.redirectUrl"
@@ -205,7 +217,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
+import { ref, defineComponent, onMounted, reactive, watch, computed, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo } from "@/api/index/promo.js";
 import { userStore } from "@/store";
@@ -219,13 +231,22 @@ import BlastPremierMarquee from "@/components/hotpromo/BlastPremierPromo/BlastPr
 import NBAWaterBattle from "@/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 import MesaPromo from "@/components/hotpromo/mesa/MesaPromo.vue";
 
+const BlastAustin = defineAsyncComponent(() => import("@/components/hotpromo/blast-austin/BlastAustin.vue"));
+const TorontoMasters = defineAsyncComponent(() => import("@/components/hotpromo/toronto-masters/TorontoMasters.vue"));
+const Fifa2025Promo = defineAsyncComponent(() => import("@/components/hotpromo/fifa-2025/Fifa2025Promo.vue"));
+const Lh1DailySlotBonus = defineAsyncComponent(() => import("@/components/hotpromo/lh1-daily-slot-bonus/Lh1DailySlotBonus.vue"));
+
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
     NBAWaterBattle,
     BlastPremierMarquee,
-    MesaPromo
+    MesaPromo,
+    BlastAustin,
+    TorontoMasters,
+    Fifa2025Promo,
+    Lh1DailySlotBonus
   },
   setup() {
     const isDark = useDark();
@@ -421,6 +442,10 @@ export default defineComponent({
     onMounted(() => {
       //COMMENT: I GUESS We not Using This So I Remove it.
       // loadBanner();
+      if(route.query.name === 'page-vip'){
+        router.push('/vip');
+        return
+      }
       loadAll();
     });
 

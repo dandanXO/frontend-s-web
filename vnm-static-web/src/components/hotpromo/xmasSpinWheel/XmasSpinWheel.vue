@@ -413,7 +413,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 220px;
+    height: 180px;
     gap: 55px;
 
     .bold-text {
@@ -449,7 +449,7 @@ onMounted(() => {
       flex-direction: column;
       justify-content: space-around;
       align-items: center;
-      padding: 50px;
+      padding: 20px 50px;
 
       .action-btn {
         //background: url("./../../../assets/images/promotion/hotpromo/xmas-spinwheel/prize-popup-action-btn.png");

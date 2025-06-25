@@ -13,7 +13,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
         />
@@ -1113,6 +1112,11 @@ const handleClose = tag => {
 }
 
 const loginNameValidator = async (rule, value, callback) => {
+  if (!form.siteId) {
+    ElMessage({ message: t('message.validateSiteRequired'), type: 'error' })
+    return;
+  }
+
   let bal
   if (uiControl.dialogType === 'CREATE_DEDUCT') {
     const response = await getMemberBalanceByLoginNameSite(

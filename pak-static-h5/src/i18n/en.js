@@ -175,6 +175,7 @@ export default {
     code_rules_01: "Verification code is required",
     captchaCodeCheck: "Captcha Code Check",
     captchaCode: "Captcha Code",
+    identity: "Identity ID",
     captchaCode_placeholder: "Enter Captcha Code",
     captchaCode_rules_01: "Please insert captcha code",
     captchaCode_rules_02: "Captcha code length is 4 characters",
@@ -308,9 +309,12 @@ export default {
     playReal: "Play real",
     freeTrial: "Free trial",
     sendOtp: "Send OTP",
-    check: "Check"
+    check: "Check",
+    payAgain: "Pay again"
   },
   notify: {
+    cancelPayment: "Cancel Payment",
+    cancelPaymentWillLose: "Cancel of payment will lose",
     loggingIn: "Logging in...",
     loggingOut: "Logging out...",
     phoneVerifySuccessful: "Phone verified successfully",
@@ -364,7 +368,8 @@ export default {
         description: "by the Government of Curacao"
       }
     },
-    termsAndConditions: "Terms and Conditions"
+    termsAndConditions: "Terms and Conditions",
+    legalLicense: "Legal License"
   },
   home: {
     menu_all: "ALL",
@@ -417,6 +422,8 @@ export default {
     useFtdPrivilege: "Use Slot First Deposit Privilege",
     useFtdBonus: "First Deposit Bonus",
     use2ndBonus: "2nd Deposit Bonus",
+    use3rdBonus: "3rd Deposit Bonus",
+    appDepositBonus: "App Deposit Bonus",
     unlimited: "Unlimited",
     wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
     wagerRequirementEg: "Eg. Deposit 100 Rs, require 1,000 Rs wager",
@@ -671,7 +678,11 @@ export default {
         username: {
           placeholder: "User name"
         },
-        searchButton: "SEARCH"
+        searchButton: "SEARCH",
+        radio: {
+          allLevels: "All Levels",
+          threeLevels: "3 levels"
+        }
       },
       table: {
         username: "Username",
@@ -757,7 +768,7 @@ export default {
   bankCard: {
     bankAccountNum: "Bank Account Number",
     pleaseEnterCardAccount: "Please enter bank account number",
-    bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
+    bankCardMust16NumberandAbove: "Bank account number must be between 13 and 20 numbers",
     bankCardDisallowDecimal: "Bank account number cannot have decimal points",
     nameofCardAcc: "Card Account Name",
     insertCardAccName: "Please insert card account name",
@@ -772,7 +783,8 @@ export default {
     sendOtp: "Send OTP",
     getOtp: "Get OTP",
     telephone: "Mobile number",
-    captchaSuccess: "Operation successful, please check the verification code sent to your phone! (Valid for 5 minutes.)",
+    captchaSuccess:
+      "Operation successful, please check the verification code sent to your phone! (Valid for 5 minutes.)",
     captchaFailedMessage: "Verification code check failed, please refresh the page",
     clickAndEnterPhoneCode:
       "Please click to get the verification code and enter the code sent to your registered phone number"
@@ -858,6 +870,7 @@ export default {
     digitalCurrencyWithdrawal: "digital currency withdrawal"
   },
   hotPromo: {
+    unusedCoupons: "You still have unused coupons from last time, continue to use them?",
     name: "Name",
     date: "Date",
     amount: "Amount",
@@ -972,7 +985,6 @@ export default {
       username: "Username",
       betVolume: "Bet Volume",
       rank: "Rank",
-      dailyOrWeekly: "Daily/Weekly",
       rankingBonusRatio: "Ranking Bonus Ratio",
       myBets: "My Bets",
       myReward: "My Rewards",
@@ -986,7 +998,7 @@ export default {
       rules2:
         "Weekly Ranking Rewards: 0.6% of the platform's total weekly revenue will contribute to the weekly prize pool. This pool will be automatically distributed to players weekly based on their positions in the weekly rankings.",
       activityRules1:
-        "Players' rankings on the daily leaderboard, weekly leaderboard, and overall ranking are based on their corresponding total bet amount.",
+        "Players' rankings on the daily leaderboard, and overall ranking are based on their corresponding total bet amount.",
       activityRules2: "Rewards will be displayed on the leaderboard event page.",
       activityRules3:
         "The daily leaderboard is calculated from 00:00 to 24:00 local time. Daily rewards will be issued within half an hour after the end of the daily leaderboard and can be claimed manually on the promotions page.",

@@ -10,7 +10,8 @@
             @click="clickPlat(plat)"
             :class="{ active: selectedPlat === plat.code }"
           >
-            {{ plat.name }}棋牌
+            <!-- {{ plat.name }}棋牌 -->
+            {{ getAliasName(plat, 'POKER') }}
           </span>
         </div>
         <template v-for="(det, idx) in filteredPlatforms" :key="idx">
@@ -242,16 +243,27 @@ export default defineComponent({
       }
     };
 
+    
+
     const setFilteredPlatforms = () => {
-      filteredPlatforms.value = platforms.value.filter((displayPlatform) =>
-        platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
-      );
+      filteredPlatforms.value = platforms.value
+        .filter((displayPlatform) =>
+          platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
+        )
+        .map((displayPlatform) => {
+          const match = platformsListDisplay.value.find(platform => platform.code === displayPlatform.code);
+          return {
+            ...displayPlatform,
+            alias: match?.alias || null  // Add alias from platformsListDisplay
+          };
+        });
 
       filteredPlatforms.value.forEach((element) => {
         if (element.code === route.query.plat) {
           clickPlat(element);
         }
       });
+
       setSelectedPlat();
     };
 
@@ -291,6 +303,20 @@ export default defineComponent({
       }
     );
 
+    const getAliasName = (plat, platformType) => {
+      // console.log(plat);
+      if (plat.alias?.includes("、")) {
+        const aliass = plat.alias.split("、");
+        const gameTypes = plat.gameType.split(",");
+        const itemIndex = gameTypes.indexOf(platformType);
+        // console.log(platformType);
+        // console.log(aliass);
+        // console.log(aliass[itemIndex]);
+
+        return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
+      }
+      return plat.alias;
+    };
     return {
       platforms,
       selectedPlat,
@@ -300,7 +326,8 @@ export default defineComponent({
       filteredPlatforms,
       setSelectedPlat,
       getPlatList,
-      setFilteredPlatforms
+      setFilteredPlatforms,
+      getAliasName
     };
   }
 });

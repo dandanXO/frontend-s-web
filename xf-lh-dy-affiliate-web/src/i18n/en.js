@@ -36,6 +36,7 @@ export default {
     loofah: 'loofah',
     zalo: 'Zalo',
     telegram: 'Telegram',
+    whatsapp: 'WhatsApp',
   },
   depositStatus: {
     SUCCESS: 'Success',
@@ -541,7 +542,9 @@ export default {
     editShareRatio: 'Edit Share Ratio',
     alipay: 'Alipay',
     alipayAcc: 'Alipay Account',
-    typeWallet: '{walletType} Wallet'
+    typeWallet: '{walletType} Wallet',
+    vietnamese: 'Tiếng Anh',
+    english: 'English'
   },
   google: {
     google_auth_menu: 'Google Authenticator',

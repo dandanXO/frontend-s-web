@@ -167,7 +167,16 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 
 const uiControl = reactive({
-  messageVisible: false
+  messageVisible: false,
+  orderBy: [
+    { key: 1, displayName: t('fields.betTime'), value: "bet_time" },
+    { key: 2, displayName: t('fields.bet'), value: "bet" },
+    { key: 3, displayName: t('fields.payout'), value: "payout" }
+  ],
+  sortType: [
+    { key: 1, displayName: t('sortType.DESC'), value: "DESC" },
+    { key: 2, displayName: t('sortType.ASC'), value: "ASC" }
+  ],
 });
 
 const siteList = reactive({
@@ -190,6 +199,8 @@ const request = reactive({
   current: 1,
   siteId: null,
   recordTime: [defaultStartDate, defaultEndDate],
+  orderBy: null,
+  sortType: null,
 })
 
 async function loadRecord() {

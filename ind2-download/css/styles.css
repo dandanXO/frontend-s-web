@@ -1,0 +1,319 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #15171a;
+  font-family: PingFang SC;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.main-container {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.header-container {
+  position: relative;
+  width: 100%;
+  background: url(../imgs/container-1-bg.png) no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 375 / 812;
+  margin-bottom: -87%;
+}
+
+.header-container .header-logo {
+  width: 24.6vw;
+  max-width: 123px;
+  position: absolute;
+  top: 20px;
+  left: 15px;
+}
+
+.header-container .header-title {
+  width: 64vw;
+  max-width: 320px;
+  position: absolute;
+  top: 11%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.jackpot {
+  position: relative;
+  max-width: 100%;
+  padding: 0 18px;
+}
+
+.aviator {
+  max-width: 100%;
+  padding: 0 32px;
+  margin-bottom: 28px;
+}
+
+.banner-container {
+  padding: 0 20px;
+}
+
+.banner-container .banner-img {
+  max-width: 100%;
+  margin-bottom: 28px;
+}
+
+.wheel-container .earning-mission-text {
+  margin-bottom: 26px;
+  font-size: clamp(14px, 4vw, 20px);
+  text-align: center;
+}
+
+.wheel-container .wheel-inner {
+  position: relative;
+  background: url(../imgs/container-3-bg.png) no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 375 / 304;
+  margin-bottom: 28px;
+}
+
+.wheel-inner-item-list {
+  position: absolute;
+  left: 50%;
+  bottom: 1%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 15px;
+  width: 100%;
+  padding: 0 15px;
+}
+
+.wheel-inner-item {
+  position: relative;
+  background: url(../imgs/container-3-item-bg.png) no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 105 / 100;
+  width: 100%;
+}
+
+.wheel-inner-item img {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10vw;
+  max-width: 50px;
+}
+
+.wheel-inner-item span {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  text-align: center;
+  width: 100%;
+  padding: 0 10px;
+  font-size: clamp(12px, 3.2vw, 16px);
+}
+
+.game-container .game-text {
+  margin-bottom: 28px;
+  font-size: clamp(26px, 7vw, 36px);
+  text-align: center;
+}
+
+.game-container .game-sub-text {
+  margin-bottom: 28px;
+  font-size: clamp(16px, 4.2vw, 22px);
+  text-align: center;
+  color: #fff;
+}
+
+.game-container,
+.platform-container {
+  overflow: hidden;
+}
+
+.game-container .game-list,
+.platform-container .platform-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+  overflow: visible;
+  margin-bottom: 28px;
+  animation: scroll 20s linear infinite;
+}
+
+.game-container .game-list.reverse,
+.platform-container .platform-list.reverse {
+  animation: scroll-revers 20s linear infinite;
+}
+
+.game-container .game-list .game-item {
+  width: 20vw;
+  max-width: 100px;
+}
+
+.support-center {
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.platform-container .platform-list {
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.platform-container .platform-list .platform-item {
+  width: 26vw;
+  max-width: 98px;
+}
+
+.bottom-placeholder {
+  margin-bottom: 60px;
+}
+
+.download-btn-container {
+  position: sticky;
+  bottom: 20px;
+}
+
+.download-btn-container .download-btn-flag {
+  position: absolute;
+  z-index: -1;
+  top: -60%;
+  right: 7px;
+  background: url(../imgs/flag.png) no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 142 / 39;
+  padding: 2% 5px 0;
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(12px, 3.2vw, 16px);
+  text-align: center;
+  animation: anim-get 6s infinite linear;
+  animation-delay: 2s;
+}
+
+.download-btn {
+  position: relative;
+  height: 48px;
+  width: calc(100% - 40px);
+  background: linear-gradient(180deg, #fffeee 0, #fff67f 42%, #fe9400 72%, #ffed39 100%);
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 6px;
+  margin: 4px 20px;
+}
+
+.download-btn:active {
+  opacity: 0.9;
+  transform: translateY(4px);
+}
+
+.download-btn .light {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.download-btn .light::after {
+  content: "";
+  position: absolute;
+  background: url(../imgs/light.png) no-repeat;
+  background-size: 100% 100%;
+  top: 0;
+  width: 72px;
+  height: 100%;
+  animation: light 3s linear infinite;
+}
+
+.download-btn-content {
+  font-weight: 700;
+  font-size: 20px;
+  color: #1b112b;
+}
+
+.linear-text {
+  background: linear-gradient(91.84deg, #fff68b 1.52%, #fe9904 28.29%, #fe9a04 60.95%, #ffd82c 79.95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 900;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-200%);
+  }
+}
+
+@keyframes scroll-revers {
+  0% {
+    transform: translateX(-200%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes light {
+  0% {
+    transform: translateX(-500px);
+  }
+  75% {
+    transform: translateX(500px);
+  }
+  100% {
+    transform: translateX(500px);
+  }
+}
+
+@keyframes anim-get {
+  0% {
+    transform: scale(0.2);
+    transform-origin: left bottom;
+  }
+
+  10% {
+    transform: scale(1);
+    transform-origin: left bottom;
+  }
+
+  45% {
+    transform: translateX(-0.06667rem) scale(1);
+    transform-origin: left bottom;
+  }
+
+  50% {
+    transform: translateX(0.06667rem) scale(1);
+    transform-origin: left bottom;
+  }
+
+  55% {
+    transform: translateX(-0.06667rem) scale(1);
+    transform-origin: left bottom;
+  }
+
+  60% {
+    transform: translateX(0.06667rem) scale(1);
+    transform-origin: left bottom;
+  }
+
+  65% {
+    transform: translateX(0) scale(1);
+    transform-origin: left bottom;
+  }
+
+  100% {
+    transform: scale(1);
+    transform-origin: left bottom;
+  }
+}

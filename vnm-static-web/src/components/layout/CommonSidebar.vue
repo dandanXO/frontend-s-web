@@ -13,6 +13,10 @@
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
         <span style="margin-left: 5px">@TF88_CS</span>
       </div>
+      <div class="additional-info-item">
+        <img src="../../assets/images/home/sticky-sidebar-whatsapp-icon.png" />
+        <span style="margin-left: 5px">+63 976 568 5210</span>
+      </div>
     </div>
     <div class="sticky-sidebar-items">
       <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">

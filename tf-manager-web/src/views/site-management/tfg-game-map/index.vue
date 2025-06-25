@@ -431,14 +431,8 @@ const EXPORT_MAPPING_SITE_HEADER = [
 const EXPORT_MAPPING_FROM_PLATFORM_HEADER = [
   'From Platform',
   'From Game Code',
+  'Game Name',
 ]
-
-const exportGameMappingTemplate = reactive({
-  list: [
-    { platform: 'spribe', gamecode: 'aviator' },
-    { platform: 'jili', gamecode: '229' },
-  ],
-})
 
 let chooseGame = []
 
@@ -701,7 +695,11 @@ async function downloadTemplate() {
   pushRecordToData(sitesMapping, exportMapping)
 
   exportMapping.push([], [], EXPORT_MAPPING_FROM_PLATFORM_HEADER)
-  pushRecordToData(exportGameMappingTemplate.list, exportMapping)
+  const paltformGameList = [];
+  configList.list.forEach(data => {
+    paltformGameList.push({ platform: data.platform, gamecode: data.gameCode, gamename: data.gameName })
+  });
+  pushRecordToData(paltformGameList, exportMapping)
 
   const wsMapping = XLSX.utils.aoa_to_sheet(exportMapping)
   setWidth(exportMapping, maxLengthMapping)

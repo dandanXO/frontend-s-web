@@ -56,6 +56,15 @@ export default defineComponent({
       // console.log("Device ID");
       // console.log(info);
       // console.log(info.identifier);
+      const isPwa = process.env.IS_PWA;
+      const click_id = localStorage.getItem("click_id");
+      if (click_id) {
+        store.googleadid = click_id;
+      }
+      // alert(isPwa);
+      if (isPwa === "1") {
+        sessionStorage.setItem("IS_PWA", "1");
+      }
     };
 
     const initOrientation = () => {
@@ -377,7 +386,7 @@ export default defineComponent({
       initOrientation();
       AOS.init();
 
-      if (isAndroid()) {
+      if (isAndroid() && !isInPwa()) {
         document.addEventListener(
           "deviceready",
           () => {

@@ -83,7 +83,7 @@
         size="mini"
         type="primary"
         :disabled="uiControl.toApplyBtn"
-        @click="toApply()"
+        @click="reconfirmToApply()"
         @keydown.enter.prevent
       >
         {{ t('fields.toApplying') }}
@@ -262,7 +262,7 @@
           fixed="right"
         >
           <template #default="scope">
-            <el-button size="mini" type="primary" @click="toApply(scope.row)" @keydown.enter.prevent>
+            <el-button size="mini" type="primary" @click="reconfirmToApply(scope.row)" @keydown.enter.prevent>
               {{ t('fields.toApplying') }}
             </el-button>
           </template>
@@ -432,6 +432,7 @@ import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { getSiteListSimple } from "@/api/site";
+import { useReconfirm } from '@/hook/reconfirm'
 const store = useStore();
 const { t } = useI18n();
 const searchForm = ref(null)
@@ -598,6 +599,8 @@ async function loadRecord() {
   request.doris = ret.sums.useDoris;
   page.loading = false
 }
+
+const reconfirmToApply = useReconfirm(toApply)
 
 async function toApply(memberWithdrawRecord) {
   if (memberWithdrawRecord) {

@@ -17,6 +17,7 @@ export default {
     addVirtualWallet: "Add Virtual Wallet",
     addBankCard: "Add Bank Card",
     message: "Message",
+    sucessClaimed: "Successfully Claimed ",
     feedback: "Feedback",
     feedbackDetail: "Feedback Detail",
     postComment: "Post Comment",
@@ -86,6 +87,11 @@ export default {
     homeCodeBonus: {
       congratsWonFreeCash: "Congratulations, you've won free cash!",
       enterCodeToClaim: "Please enter the cash redemption code to claim it."
+    },
+    appLoginBonus: {
+      validatePhoneAndEmail: "Please bind your phone first",
+      loginTomorrow: "Please log in tomorrow to claim your mystery reward.",
+      claimBonus: "You’ve received {amount}rs bonus!"
     }
   },
   form: {
@@ -298,9 +304,12 @@ export default {
     signinWithGoogle: "Google",
     goNow: "Go Now",
     playReal: "Play real",
-    freeTrial: "Free trial"
+    freeTrial: "Free trial",
+    payAgain: "Pay again",
   },
   notify: {
+    cancelPayment: "Cancel Payment",
+    cancelPaymentWillLose: "Cancel of payment will lose",
     loggingIn: "Logging in...",
     loggingOut: "Logging out...",
     phoneVerifySuccessful: "Phone verified successfully",
@@ -315,6 +324,7 @@ export default {
     updatedSuccessfully: "Updated successfully",
     emailVerificationSent: "Email verification sent",
     messageSent: "Message Sent",
+
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
@@ -324,7 +334,8 @@ export default {
     tryagain: "Please try again after {seconds} seconds",
     submitting: "Submitting...",
     sendingVerificationCode: "Sending verification code...",
-    passwordResetCompleted: "Password reset completed"
+    passwordResetCompleted: "Password reset completed",
+    success: "Success"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -432,7 +443,6 @@ export default {
     dividendRate: 'Dividend Rate',
     netAmountReceives: 'Net amount receives',
     status: 'Status',
-    activeMember: 'Active member',
     periodValidBet: 'Period valid bet',
     periodPnL: 'Period P&L',
     periodSettledPnL: 'Period settled P&L',
@@ -442,7 +452,8 @@ export default {
     statusChecking: 'Checking',
     statusPay: 'Pay',
     statusCleared: 'Cleared',
-    statusCancelled: 'Cancelled'
+    statusCancelled: 'Cancelled',
+    rate: 'Rate'
   },
   deposit: {
     selectAmount: "Select Amount",
@@ -452,6 +463,7 @@ export default {
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
     useFtdPrivilege: "Use Slot First Deposit Privilege",
+    appDepositBonus: "App Deposit Bonus",
     unlimited: "Unlimited",
     wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
     wagerRequirementEg: "Eg. Deposit 100 Rs, require 1,000 Rs wager",
@@ -785,7 +797,7 @@ export default {
   bankCard: {
     bankAccountNum: "Bank Account Number",
     pleaseEnterCardAccount: "Please enter bank account number",
-    bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
+    bankCardMust16NumberandAbove: "Bank account number must be between 13 and 20 numbers",
     bankCardDisallowDecimal: "Bank account number cannot have decimal points",
     nameofCardAcc: "Card Account Name",
     insertCardAccName: "Please insert card account name"
@@ -871,6 +883,7 @@ export default {
     digitalCurrencyWithdrawal: "digital currency withdrawal"
   },
   hotPromo: {
+    unusedCoupons: "You still have unused coupons from last time, continue to use them?",
     name: "Name",
     date: "Date",
     amount: "Amount",
@@ -957,6 +970,18 @@ export default {
       days: "days",
       signIn: "Sign in",
       signedIn: "Signed in"
+    },
+    monthBeginningDepositRebate: {
+      receive: "Receive",
+      vipLevel: "Vip Level",
+      rebate: "Rebate",
+      runningWater: "Running Water",
+      bigRebate: "Big Rebate",
+      rule_title: "Monthly recharge rebate event",
+      rule_01:
+        "Recharge 1000Rs or more from the 1st to the 7th of each month to get the following VIP level corresponding rebates.",
+      rule_02:
+        "Rebates can be obtained through the event page the next day. Manual collection.   Effective turnover 2 times."
     },
     megaSharingWheel: {
       wheelTitle: "Mega Sharing Roulette",
@@ -1232,7 +1257,8 @@ export default {
     58002: "Event haven't start",
     58003: "Event have expired",
     58004: "Cannot Participate. Previous Tasks Has Failed to Accomplish.",
-    58005: "Congrats, You have Completed All Tasks"
+    58005: "Congrats, You have Completed All Tasks",
+    58103: "VIP0 Cannot Participate."
   },
   content: {
     title1: "The registration time starts from the time the registration is completed.",

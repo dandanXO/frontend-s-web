@@ -1,4 +1,5 @@
 import { server } from "@/utils/request";
+import { userStore } from "@/store";
 import cached from "@/utils/cache";
 
 export function loadPromo(isLogin = false) {
@@ -220,6 +221,51 @@ export function getCheckInRecord(promoCode) {
 
 export function claimCheckInTreasure(promoCode, days) {
   return server.EVENT.post(`/event-check-in/open`, { promoCode, days });
+}
+
+export function getVIPDetails() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/vip-bonus/get-detail?v=${randNum}`);
+}
+
+export function getVIPDetailsNotLoggedIn() {
+  const store = userStore();
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/get-vip-bonus-detail?siteId=${store.siteId}&v=${randNum}`);
+}
+export function canRedeem() {
+  return server.EVENT.get("/vip-upgrade/lh/canRedeem");
+}
+export function claim(level) {
+  return server.EVENT.post("/vip-upgrade/lh/claim", { vipLevel: level });
+}
+
+export function claimItems(status, level) {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  if (status === "upgrade") {
+    return server.EVENT.post("/vip-bonus/claim-upgrade-bonus?_method=PUT", { vipLevel: level });
+  }
+  if (status === "birthday") {
+    return server.EVENT.put("/vip-bonus/claim-birthday-bonus");
+  }
+  if (status === "retain") {
+    return server.EVENT.post("/vip-bonus/claim-first-retain?_method=PUT", { vipLevel: level });
+  }
+  if (status === "monthly") {
+    return server.EVENT.put("/vip-bonus/claim-monthly-bonus");
+  }
+  if (status === "yearlyRetain") {
+    return server.EVENT.post("/vip-bonus/claim-yearly-retain?_method=PUT", { vipLevel: level });
+  }
+  if (status === "coupon") {
+    return server.EVENT.put("/vip-bonus/claim-coupon");
+  }
+  if (status === "redPacket") {
+    return server.EVENT.put("/vip-bonus/claim-red-packet");
+  }
+  if (status === "all") {
+    return server.EVENT.put("/vip-bonus/claim-all");
+  }
 }
 
 export function getLOLMsiMatchRecord() {
@@ -684,4 +730,63 @@ export function postDuanWuReceiveToken(promoCode) {
 
 export function getDuanWuclaimBonus(promoCode) {
   return server.EVENT.post(`/session/token-rewards/claimBonus?promoCode=${promoCode}`);
+}
+
+export function initBlastAustin(promoCode) {
+  return server.EVENT.get(`/session/mission/init?promoCode=${promoCode}`);
+}
+
+export function selectMissionBlastAustin(promoCode, missionNum) {
+  return server.EVENT.post(`/session/mission/select?promoCode=${promoCode}&mission=${missionNum}`);
+}
+
+export function claimChestBlastAustin(promoCode, type) {
+  return server.EVENT.post(`/session/mission/claim?promoCode=${promoCode}&type=${type}`);
+}
+
+export function getTorontoMastersInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/competition-loss/init?promoCode=dy2-valorant-masters-toronto-2025&v=${randNum}`);
+}
+export function claimTorontoMastersBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(`/session/competition-loss/claim?promoCode=dy2-valorant-masters-toronto-2025&v=${randNum}`);
+}
+
+export function getFifa2025PromoInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=dy2-fifa-2025&v=${randNum}`);
+}
+export function claimFifa2025PromoBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=dy2-fifa-2025&v=${randNum}`);
+}
+
+export function getDailySlotBonusInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/game-type-bonus/init?promoCode=dy2-daily-slot-bonus&v=${randNum}`);
+}
+export function claimDailySlotBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(`/session/game-type-bonus/claim?promoCode=dy2-daily-slot-bonus&v=${randNum}`);
+}
+export function getNewUserSportBonus2025Bonus(promoCode) {
+  return server.EVENT.get(`/session/game-type-bonus/init?promoCode=${promoCode}`);
+}
+export function claimNewUserSportBonus2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/game-type-bonus/claim?promoCode=${promoCode}`);
+}
+
+export function getFissureUniverseS5Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimFissureUniverseS5Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getEsportWorldCup2025Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimEsportWorldCup2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }

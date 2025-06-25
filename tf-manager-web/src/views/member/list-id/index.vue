@@ -705,7 +705,7 @@ const page = reactive({
 })
 
 const request = reactive({
-  size: 30,
+  size: 150,
   current: 1,
   loginName: null,
   realName: null,
@@ -953,6 +953,11 @@ function checkQuery() {
 }
 
 async function loadMembers() {
+  if (!request.siteId) {
+    console.warn('Site ID is null. Aborting loadMembers.')
+    ElMessage.error('Site ID is null')
+    return
+  }
   page.loading = true
   uiControl.searchDialogVisible = false
   const query = checkQuery()
@@ -1077,7 +1082,7 @@ async function changeSite(siteId) {
 }
 
 async function setIpLabels() {
-  const { data: labels } = await selectIpLabelAll()
+  const { data: labels } = await selectIpLabelAll(request.siteId)
   store.dispatch(AppActionTypes.ACTION_SET_IP_LABELS, labels)
 }
 

@@ -52,16 +52,18 @@
     >
       <el-table-column prop="referrerName" :label="t('fields.referrer')">
         <template #default="scope">
-          <el-link type="primary" @click="redirectToReferPane(scope.row.referrerName)">
+          <el-link type="primary" v-if="hasPermission(['sys:privi:member-refer-relation:list'])" @click="redirectToReferPane(scope.row.referrerName)">
             {{ scope.row.referrerName }}
           </el-link>
+          <span v-else>{{ scope.row.referrerName }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="referCount" :label="t('fields.referCount')" sortable :sort-orders="sortOrders">
         <template #default="scope">
-          <el-link type="primary" @click="redirectToReferPane(scope.row.referrerName)">
+          <el-link type="primary" v-if="hasPermission(['sys:privi:member-refer-relation:list'])" @click="redirectToReferPane(scope.row.referrerName)">
             {{ scope.row.referCount }}
           </el-link>
+          <span v-else>{{ scope.row.referCount }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="referBonus" :label="t('fields.referBonus')" sortable :sort-orders="sortOrders">
@@ -69,7 +71,13 @@
           $ <span v-formatter="{data: scope.row.referBonus, type: 'money'}" />
         </template>
       </el-table-column>
-      <el-table-column prop="firstDepositCount" :label="t('fields.ftdCount')" sortable :sort-orders="sortOrders" />
+      <el-table-column prop="firstDepositCount" :label="t('fields.ftdCount')" sortable :sort-orders="sortOrders">
+        <template #default="scope">
+          <span v-if="scope.row.firstDepositCount === 0">{{ scope.row.firstDepositCount }}</span>
+          <el-link type="primary" v-else @click="openFtdDialog(scope.row.referrerName)">{{ scope.row.firstDepositCount }}</el-link>
+        </template>
+      </el-table-column>
+      <el-table-column prop="depositMemberCount" :label="t('fields.depositMemberCount')" sortable :sort-orders="sortOrders" />
       <el-table-column prop="successCount" :label="t('fields.successCount')" sortable :sort-orders="sortOrders" />
       <el-table-column prop="depositCount" :label="t('fields.depositCount')" sortable :sort-orders="sortOrders" />
       <el-table-column prop="depositBonus" :label="t('fields.depositBonus')" sortable :sort-orders="sortOrders">
@@ -95,6 +103,61 @@
       @size-change="loadStatsAnalysis"
     />
   </div>
+  <el-dialog
+    :title="t('fields.firstDeposit')"
+    v-model="ftdMembersDialogVisible"
+    append-to-body
+  >
+    <el-table :data="ftdMembersData" v-loading="ftdTableLoading" max-height="400">
+      <el-table-column property="loginName" :label="t('fields.loginName')" />
+      <el-table-column property="regTime" :label="t('fields.regTime')">
+        <template #default="scope">
+          <span v-if="scope.row.regTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.regTime !== null"
+            v-formatter="{
+              data: scope.row.regTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="eligibleStatus" :label="t('fields.status')">
+        <template #default="scope">
+          <span>
+            {{ t(`memberReferStatus.${scope.row.eligibleStatus}`) }}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column property="ftdAmount" :label="t('fields.ftdAmount')">
+        <template #default="scope">
+          $ <span v-formatter="{data: scope.row.ftdAmount, type: 'money'}" />
+        </template>
+      </el-table-column>
+      <el-table-column property="ftdTime" :label="t('fields.ftdTime')">
+        <template #default="scope">
+          <span v-if="scope.row.ftdTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.ftdTime !== null"
+            v-formatter="{
+              data: scope.row.ftdTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column property="balance" :label="t('fields.balance')">
+        <template #default="scope">
+          $ <span v-formatter="{data: scope.row.balance, type: 'money'}" />
+        </template>
+      </el-table-column>
+    </el-table>
+
+  </el-dialog>
 
   <el-dialog
     :title="t('fields.requestExportToExcel')"
@@ -185,31 +248,36 @@
 
 <script setup>
 
-import { computed, reactive, ref, defineEmits } from "vue";
+import { computed, reactive, ref } from "vue"; // defineEmits
 import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
 import { getShortcuts } from "@/utils/datetime";
-import { getAnalysisRecord, getAnalysisRecordExport } from "@/api/member-refer-friend-analysis";
+import { getAnalysisRecord, getAnalysisRecordExport, getFtdMembers } from "@/api/member-refer-friend-analysis";
 import { getSiteListSimple } from "@/api/site";
 import { ElMessage } from "element-plus";
 import * as XLSX from 'xlsx'
+import { useRouter } from "vue-router";
+import { hasPermission } from '@/utils/util'
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const shortcuts = getShortcuts(t);
-const emits = defineEmits(["switch-to-relation-tab"]);
+// const emits = defineEmits(["switch-to-relation-tab"]);
 
 function convertDate(date) {
   return moment(date).endOf('day').format('YYYY-MM-DD');
 }
 
 const sortOrders = ['descending', 'ascending', null]
-
+const ftdMembersDialogVisible = ref(false)
+const ftdTableLoading = ref(false)
+let ftdMembersData = []
+let timeZone = null
 const request = reactive({
   size: 20,
   current: 1,
@@ -278,7 +346,8 @@ function getSummaries(param) {
           index === 1 ||
           index === 3 ||
           index === 4 ||
-          index === 5
+          index === 5 ||
+          index === 6
         ) {
           sums[index] = page.sums[prop]
         } else {
@@ -295,12 +364,19 @@ function getSummaries(param) {
   return sums
 }
 
+const router = useRouter();
+
 function redirectToReferPane(referrerName) {
   const query = {
     referrerName,
     recordTime: request.recordTime
   }
-  emits('switch-to-relation-tab', query)
+
+  router.push({
+    path: '/promo-activity/member-refer/member-refer-relation',
+    query: query
+  });
+  // emits('switch-to-relation-tab', query)
 }
 
 const sort = (column) => {
@@ -423,6 +499,22 @@ async function confirmExport() {
   }
 }
 
+async function openFtdDialog(referrerName) {
+  ftdMembersDialogVisible.value = true
+  ftdTableLoading.value = true;
+  const query = {};
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = request.recordTime.join(",");
+    }
+  }
+  query.referrerName = referrerName
+  query.siteId = request.siteId
+  const { data: ret } = await getFtdMembers(query);
+  ftdMembersData = ret;
+  ftdTableLoading.value = false;
+}
+
 onMounted(async () => {
   await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -431,6 +523,7 @@ onMounted(async () => {
     site.value = sites.list[0];
   }
   request.siteId = site.value.id;
+  timeZone = site.value.timeZone;
   await loadStatsAnalysis();
 });
 

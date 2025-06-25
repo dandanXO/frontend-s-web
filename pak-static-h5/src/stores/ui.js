@@ -74,6 +74,7 @@ export const useUI = defineStore("ui-store", {
       const hostname = window.location.hostname;
       switch (hostname) {
         case "cuw.b9.game":
+        case "pak-static-h5.psna-dev.com":
           return "CURACAO";
         default:
           return "DEFAULT";
@@ -84,6 +85,9 @@ export const useUI = defineStore("ui-store", {
       switch (hostname) {
         case "e3wuiq-test.b9game0.com":
         case "xtjojmwz.nl":
+        case "wf7io956.com":
+        case "zp6marm8.cc":
+        case "zhdjoqzf.cc":
           return "NONE";
         default:
           return "DEFAULT";

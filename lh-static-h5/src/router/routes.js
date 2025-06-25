@@ -25,9 +25,26 @@ const routes = [
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
   },
   {
+    path: "/downloadApp",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/DownloadAppPage.vue") }]
+  },
+  {
     path: "/hotmatch",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/HotMatchPage.vue") }]
+  },
+  {
+    path: "/livestream",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/livestream/LiveStreamPage.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/livestream/streamplayer",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/livestream/StreamPlayerPage.vue") }],
+    meta: { requiresAuth: true }
   },
   {
     path: "/maintenance",
@@ -490,6 +507,14 @@ const routes = [
     ]
   },
   {
+    path: "/live-chat",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      { path: "", component: () => import("src/cs-client-web/pages/LoginPage.vue") },
+      { path: "chat", component: () => import("src/cs-client-web/pages/ChatPage.vue") }
+    ]
+  },
+  {
     path: "/center/:path",
     redirect: (to) => {
       const path = to.params.path;
@@ -501,6 +526,14 @@ const routes = [
   {
     path: "/promotion",
     redirect: "/promo"
+  },
+  {
+    path: "/livestreampage",
+    redirect: "/livestream"
+  },
+  {
+    path: "/livestreampage/streamplayer",
+    redirect: "/livestream"
   },
   // {
   //   path: "/vip",

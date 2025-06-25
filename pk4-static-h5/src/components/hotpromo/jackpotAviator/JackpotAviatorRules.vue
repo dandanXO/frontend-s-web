@@ -41,7 +41,7 @@
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules1") }}</li>
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules2") }}</li>
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules3") }}</li>
-      <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules4") }}</li>
+      <!-- <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules4") }}</li> -->
     </ol>
 
     <br />
@@ -88,7 +88,7 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
   overflow: auto;
   left: 0;
   right: 0;
-  background: #24262b;
+  background: #090f1e;
   height: 90vh;
 
   .title-img {

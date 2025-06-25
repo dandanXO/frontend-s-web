@@ -8,6 +8,7 @@
       props.siteId !== '10' ? '' : 'kr',
       props.siteId !== '11' ? '' : 'pak',
       props.siteId !== '15' ? '' : 'kaka',
+      props.siteId !== '28' ? '' : 'br2',
     ]"
   >
     <img
@@ -23,6 +24,9 @@
           </div>
           <div class="first-liner" v-html="currentSite.firstLiner" />
           <div class="second-liner" v-html="currentSite.secondLiner" />
+          <div>
+            <img v-if="props.siteId === '28'" src="../../assets/images/br2/br2-main-img.png" class="main-img">
+          </div>
         </div>
         <div class="right">
           <div class="bg swiper-no-swiping">
@@ -30,6 +34,7 @@
               <div class="log">
                 {{ isReg ? $t('common.signup') : $t('common.login') }}
               </div>
+              <LangToggle v-if="props.siteId === '8'" />
               <!--              <div class="topright" v-if="props.siteId !== '5'">-->
               <!--                <span class="noaccabs">-->
               <!--                  {{ isReg ? '已经有账号? ' : '没有帐户？' }}-->
@@ -39,7 +44,9 @@
               <!--                </a>-->
               <!--              </div>-->
             </div>
+
             <div class="mid">
+              <img class="top-img" v-if="props.siteId === '7'" src="../../assets//images/login/lh-login-1.png">
               <el-form
                 v-if="!isReg"
                 ref="loginFormRef"
@@ -98,12 +105,12 @@
                     </template>
                   </el-input>
                 </el-form-item>
-                <div style="margin:20px 0px" v-if="props.siteId !== '8'">
+                <div class="forget-pw" v-if="props.siteId !== '8'">
                   <el-link type="primary" @click="forgetPasswordDialog">
                     {{ $t('common.forgetpass') }}
                   </el-link>
                 </div>
-                <div class="flex-c-center-div">
+                <div class="flex-c-center-div login-btn-grp">
                   <el-button
                     class="common-btn"
                     type="danger"
@@ -117,6 +124,7 @@
                     type="primary"
                     style="width:50%;"
                     @click="isReg = !isReg"
+                    v-if="props.siteId !== '28'"
                   >
                     {{ $t('common.register_affi') }}
                   </el-button>
@@ -126,10 +134,11 @@
                   v-if="props.siteId !== '5' || props.siteId !== '8'"
                   class="flex-c-center-div"
                 >
-                  <div class="contact-div" @click="swipeToContactUs">
+                  <div class="contact-div" @click="swipeToContactUs" v-if="props.siteId !== '28'">
                     {{ $t('common.contact_us') }}
                   </div>
                 </div>
+                <LhFeedback v-if="props.siteId === '7'" />
               </el-form>
               <el-form
                 v-if="isReg"
@@ -246,7 +255,7 @@
                     </el-button>
                   </div>
                   <div
-                    v-if="props.siteId !== '5' || props.siteId !== '8'"
+                    v-if="props.siteId !== '5' || props.siteId !== '8' || props.siteId !== '28'"
                     class="flex-c-center-div"
                   >
                     <div class="contact-div" @click="swipeToContactUs">
@@ -615,6 +624,7 @@ import viLogo from '@/assets/images/vi/vilogo.svg'
 import kakaLogo from '@/assets/images/kaka/logo-kaka-game.png'
 import krLogo from '@/assets/images/kr/kr-logo.png'
 import pakLogo from '@/assets/images/pak/logowhitee.png'
+import br2Logo from '@/assets/images/br2/br2-logo.png'
 import { getVerificationImage } from '@/api/verification'
 import {
   getVerificationCode,
@@ -625,6 +635,8 @@ import {
 } from '@/api/user'
 import { useI18n } from 'vue-i18n'
 import { i18nStore } from '@/store/language'
+import LhFeedback from '../customer-service/lh-feedback.vue'
+import LangToggle from '../lang/LangToggle.vue'
 
 export default defineComponent({
   props: {
@@ -632,6 +644,10 @@ export default defineComponent({
       type: [String, Number], // Specify the allowed types for the prop
       required: true,
     },
+  },
+  components: {
+    LhFeedback,
+    LangToggle
   },
   setup(props) {
     const validatePass2 = async (r, v) => {
@@ -1001,6 +1017,7 @@ export default defineComponent({
               state.loginForm.site === 'IND' ||
               state.loginForm.site === 'IW2' ||
               state.loginForm.site === 'VNM' ||
+              state.loginForm.site === 'BR2' ||
               state.loginForm.site === 'KRW'
             ) {
               methods.userLogin()
@@ -1079,6 +1096,7 @@ export default defineComponent({
           state.loginForm.site === 'IW2' ||
           state.loginForm.site === 'VNM' ||
           state.loginForm.site === 'KA2' ||
+          state.loginForm.site === 'BR2' ||
           state.loginForm.site === 'KRW'
         ) {
           router
@@ -1404,8 +1422,14 @@ export default defineComponent({
         setLanguage('en')
       }
       if (props.siteId === '7') {
-        currentSite.value.firstLiner = '从雷火开始'
-        currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
+        // currentSite.value.firstLiner = '从雷火开始'
+        // currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
+        const firstLinerImg = require('@/assets/images/login/lh-login-2.png');
+        const secondLinerImg = require('@/assets/images/login/lh-login-3.png');
+
+        currentSite.value.firstLiner = `<img class="top-img" src="${firstLinerImg}" style="width: 95%;">`;
+        currentSite.value.secondLiner = `<img class="top-img" src="${secondLinerImg}" style="width: 95%;">`;
+
         currentSite.value.logo = lhLogo
         state.loginForm.site = 'LH1'
         setLanguage('zh')
@@ -1416,7 +1440,13 @@ export default defineComponent({
           'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
         currentSite.value.logo = viLogo
         state.loginForm.site = 'VNM'
-        setLanguage('vi')
+
+        const hasPreferredLang = route?.query?.lang;
+        if (hasPreferredLang && ['en', 'vi'].includes(hasPreferredLang)) {
+          setLanguage(hasPreferredLang);
+        } else {
+          setLanguage('vi')
+        }
       }
       if (props.siteId === '15') {
         currentSite.value.firstLiner = 'Bắt đầu với KAKA'
@@ -1451,7 +1481,17 @@ export default defineComponent({
         currentSite.value.lang = 'PT'
         setLanguage('pt')
       }
+      if (props.siteId === '28') {
+        currentSite.value.firstLiner = 'Começa a partir de AKB188'
+        currentSite.value.secondLiner =
+          'Torne-se uma lenda<br>Ou torne-se o elogista da lenda?'
+        currentSite.value.logo = br2Logo
+        state.loginForm.site = 'BR2'
+        currentSite.value.lang = 'PT'
+        setLanguage('pt')
+      }
     }
+
     onMounted(() => {
       // const swiper = new Swiper('.swiper-container', swiperOptions);
       if (route.query.agent) {
@@ -1680,8 +1720,81 @@ a {
     center;
   background-size: cover;
   &.lh {
-    background: url('../../assets/images/login/lh-bg.jpg') no-repeat center
+    .inner{
+      height: unset;
+    }
+    background: url('../../assets/images/login/lh-bg.png') no-repeat center
       center;
+      background-color: #19326D;
+      .left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        .first-liner {
+          margin: 25px 0 !important;
+
+        }
+        .first-liner,
+        .second-liner {
+          max-width: unset !important;
+          @media (max-width: 1100px) {
+            max-width: 400px !important;
+          }
+        }
+      }
+
+      .right {
+        display: flex;
+        justify-content: center;
+        .top {
+          background: #fff !important;
+          margin: 0 10px;
+          margin-bottom: -1px;
+          border-top-left-radius: 25px;
+          border-top-right-radius: 25px;
+          @media (max-width: 768px) {
+            margin: 0 1.75%;
+            margin-bottom: -1px;
+          }
+        }
+
+        .mid {
+          position: relative;
+          .top-img {
+            width: 35%;
+            position: absolute;
+            right: 40px;
+            top: 0;
+            transform: translateY(-50%);
+          }
+        }
+        .forget-pw {
+          margin: 20px 0px;
+          place-self: end;
+        }
+        .login-btn-grp {
+          display: block;
+          width: 100%;
+          button {
+            width: 100% !important;
+            margin: 8px 0;
+            border-radius: 4px;
+          }
+          .el-button--danger {
+            background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%, #3981FF 100%);
+          }
+        }
+        .contact-div {
+          margin-top: 0;
+          color: #3981FF;
+          text-decoration: underline;
+        }
+      }
+      .bot {
+        margin-top: -1px;
+        width: calc(100% - 1.1px);
+      }
   }
   &.vi,
   &.kaka {
@@ -1868,6 +1981,58 @@ a {
         background-size: cover;
         padding: 10px;
       }
+    }
+  }
+
+  &.br2 {
+    background: url('../../assets/images/br2/br2-bg.png') no-repeat center;
+    height: 100vh;
+    .logo {
+      position: absolute;
+      left: 70px;
+      top: 40px;
+      width: 207px;
+    }
+
+    .loginPage .left .first-liner {
+      max-width: 750px;
+      width: 750px;
+    }
+
+    .loginPage .left .second-liner {
+      max-width: 600px;
+      width: 600px;
+    }
+
+    .inner {
+      max-width: 1300px;
+    }
+
+    .common-btn {
+      width: 100% !important;
+      background: linear-gradient(90deg, #4FFFA5 0%, #10D16F 100%);
+      color: #fff;
+    }
+
+    .main-img {
+      display: block;
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .left{
+      margin-top: 150px;
+    }
+
+     .loginPage .right .top {
+        background: url(../../assets/images/br2/top.png) no-repeat center center;
+        background-size: cover;
+    }
+
+    .forget-pw {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
     }
   }
 

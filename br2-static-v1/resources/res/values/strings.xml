@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AKB188</string>
+    <string name="title_activity_main">AKB188</string>
+    <string name="package_name">com.ind.appbr2</string>
+    <string name="custom_url_scheme">com.ind.appbr2</string>
+    <string name="onesignal_notification_accent_color">000000</string>
+</resources>

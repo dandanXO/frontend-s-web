@@ -200,11 +200,23 @@
             <div v-if="selectedPromo.redirectUrl === 'dy2-yalla-compass'">
               <YallaCompass :promoCode="selectedPromo.promoCode" />
             </div>
+            <div v-if="selectedPromo.redirectUrl === 'dy2-valorant-masters-toronto-2025'">
+              <TorontoMasters :promoCode="selectedPromo.promoCode" />
+            </div>
+            <div v-if="selectedPromo.redirectUrl === 'dy2-fifa-2025'">
+              <Fifa2025Promo :promoCode="selectedPromo.promoCode" />
+            </div>
+            <div v-if="selectedPromo.redirectUrl === 'dy2-blast-tv-austin-major-2025'">
+              <BlastAustin :promoCode="selectedPromo.promoCode" />
+            </div>
             <div v-if="selectedPromo.redirectUrl === 'dy2-bbdacha-belgrade'">
               <BbdachaBelgrade />
             </div>
             <div v-if="selectedPromo.redirectUrl === 'dy2-valorant-champion-tour-2024'">
               <ValorantChampionTour2024 :promo-code="selectedPromo.promoCode" />
+            </div>
+            <div v-if="selectedPromo.redirectUrl === 'dy2laohuji'">
+              <Dy2DailySlotBonus :promo-code="selectedPromo.promoCode" />
             </div>
             <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
             <div
@@ -241,6 +253,10 @@ const MesaPromo = defineAsyncComponent(() => import("@/components/hotpromo/mesa/
 const YallaCompass = defineAsyncComponent(() => import("@/components/hotpromo/yalla-compass/YallaCompass.vue"));
 const BbdachaBelgrade = defineAsyncComponent(() => import("@/components/hotpromo/bbdacha-belgrade/BbdachaBelgrade.vue"));
 const ValorantChampionTour2024 = defineAsyncComponent(() => import("@/components/hotpromo/valorant-champion-tour-2024/ValorantChampionTour2024.vue"));
+const BlastAustin = defineAsyncComponent(() => import("@/components/hotpromo/blast-austin/BlastAustin.vue"));
+const TorontoMasters = defineAsyncComponent(() => import("@/components/hotpromo/toronto-masters/TorontoMasters.vue"));
+const Fifa2025Promo = defineAsyncComponent(() => import("@/components/hotpromo/fifa-2025/Fifa2025Promo.vue"));
+const Dy2DailySlotBonus = defineAsyncComponent(() => import("@/components/hotpromo/dy2-daily-slot-bonus/Dy2DailySlotBonus.vue"));
 
 export default defineComponent({
   name: "PromoView",
@@ -251,7 +267,11 @@ export default defineComponent({
     YallaCompass,
     BbdachaBelgrade,
     ValorantChampionTour2024,
-    MesaPromo
+    MesaPromo,
+    BlastAustin,
+    TorontoMasters,
+    Fifa2025Promo,
+    Dy2DailySlotBonus
   },
   setup() {
     const store = userStore();
@@ -406,6 +426,10 @@ export default defineComponent({
       });
     };
     onMounted(() => {
+      if(route.query.name === 'page-vip'){
+        router.push('/vip');
+        return
+      }
       loadBanner();
       loadAll();
     });
@@ -718,7 +742,7 @@ export default defineComponent({
           }
 
           .promo-info {
-            text-align: right;
+            text-align: left;
             padding: 8px 16px;
             left: 0;
             bottom: 0;

@@ -83,7 +83,7 @@
             <el-col :span="10">
               <el-image
                 v-if="form.avatar && uiControl.dialogType === 'EDIT'"
-                :src="form.avatar.startsWith('http:') ? form.avatar : promoDir + form.avatar"
+                :src="form.avatar.startsWith('http') ? form.avatar : promoDir + form.avatar"
                 fit="contain"
                 style="aspect-ratio: 1/1"
                 class="preview"
@@ -200,7 +200,7 @@ import { useSessionStorage } from "@vueuse/core";
 import { createSiteImage } from '@/api/site-image'
 
 const { t } = useI18n();
-const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/promo/'
+const promoDir = useSessionStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE).value + '/streamer/'
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: "",
@@ -262,7 +262,6 @@ function resetQuery() {
 async function attachImage(event) {
   const file = event.target.files[0];
   if (!file) return;
-
   const data = await attachPhoto(event);
   if (data) {
     form.avatar = data;
@@ -361,7 +360,7 @@ function getStatusName(statusId) {
 async function submitImageUpload() {
   imageForm.name = generateRandomString(8);
   imageForm.path = form.avatar;
-  imageForm.category = 'PROMO';
+  imageForm.category = 'STREAMER';
   imageForm.siteId = store.state.user.siteId;
 
   try {

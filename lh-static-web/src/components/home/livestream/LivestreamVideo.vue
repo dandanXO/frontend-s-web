@@ -15,6 +15,7 @@
         webkit-playsinline
         @progress="handlePlayerProgress"
       />
+      <canvas v-show="showLatestScreenCanvas" ref="canvasRef" class="livestream-video-latest-screen" />
       <div ref="danmuRef" class="livestream-video-danmu" />
       <div
         class="livestream-video-controller"
@@ -26,6 +27,7 @@
         <div class="livestream-video-controller-group">
           <button
             class="livestream-video-controller-pause-btn btn"
+            :class="{ disabled: isVideoStuck }"
             :title="playerConfig.isPause ? '播放' : '暂停'"
             @click="handlePauseChange(!playerConfig.isPause)"
           >
@@ -33,8 +35,13 @@
             <img v-else src="@/assets/home/livestream/icon-pause.png" />
           </button>
           <div class="livestream-video-controller-volume-group">
-            <button class="livestream-video-controller-volume-btn btn" title="音量">
-              <img src="@/assets/home/livestream/icon-volume.png" />
+            <button
+              class="livestream-video-controller-volume-btn btn"
+              title="音量"
+              @click="handleVolumeChange(playerConfig.volume > 0 ? 0 : playerConfig.latestVolume)"
+            >
+              <img v-if="playerConfig.volume === 0" src="@/assets/home/livestream/icon-volume-off.png" />
+              <img v-else src="@/assets/home/livestream/icon-volume.png" />
             </button>
             <el-slider
               class="livestream-video-controller-volume-slider"
@@ -123,23 +130,48 @@
           </button>
         </div>
       </div>
-      <div v-if="showUnmuteMask" class="livestream-video-muted-mask" @click.stop="handleUnmuteClick">
-        <button class="btn">
-          <img src="@/assets/home/livestream/icon-volume-off.png" />
-        </button>
-        <span>点击取消静音</span>
-      </div>
+      <template v-if="isVideoStuck">
+        <div v-if="isVideoLoadFailed" class="livestream-video-mask" @click.stop>
+          <button class="btn" @click="loadData">
+            <img src="@/assets/home/livestream/icon-reload.png" />
+          </button>
+          <span>点击重新加载视频</span>
+          <p class="livestream-video-mask-text-content">
+            视频加载失败
+            <template v-if="env !== 'production'">
+              <span>错误讯息：{{ videoLoadFailedReason }}</span>
+            </template>
+          </p>
+        </div>
+        <div v-if="isVideoLoading" class="livestream-video-mask" @click.stop>
+          <div class="loader" />
+          <span>正在加载视频...</span>
+        </div>
+      </template>
+      <template v-else>
+        <div v-if="showUnmuteMask" class="livestream-video-mask" @click.stop="handleUnmuteClick">
+          <button class="btn">
+            <img src="@/assets/home/livestream/icon-volume-off.png" />
+          </button>
+          <span>点击取消静音</span>
+        </div>
+        <div v-if="!isLivestreaming" class="livestream-video-mask" @click.stop>
+          <span>直播尚未开始</span>
+        </div>
+      </template>
     </template>
     <div v-else class="livestream-unsupported">不支援的浏览器</div>
   </div>
 </template>
 <script setup>
-import { computed, onMounted, onUnmounted, ref, toRefs, watch } from "vue";
+import { computed, nextTick, onMounted, onUnmounted, ref, toRefs, watch } from "vue";
 import { VideoPlayer } from "@/utils/videoPlayer";
+import { useDebounceFn } from "@vueuse/core";
+import { uiStore } from "@/store/ui";
 
 /** @type {import("flv.js").default.Config} */
 const DEFAULT_FLV_CONFIG = {
-  enableWorker: true
+  enableWorker: false
 };
 
 /** @type {import("hls.js").HlsConfig} */
@@ -150,6 +182,8 @@ const DEFAULT_HLS_CONFIG = {
 };
 
 const PLAYER_CONFIG_KEY = "lh-livestream-player-config";
+const MAXIMUM_VIDEO_RELOAD_TIMEOUT = 30 * 1000; // 30 seconds
+const ERROR_HANDLER_DEBOUNCE_TIME = 5 * 1000; // 5 seconds
 
 const DEFAULT_DANMU_CONFIG = {
   area: {
@@ -161,7 +195,7 @@ const DEFAULT_DANMU_CONFIG = {
 
 const DANMU_STYLE = {
   color: "#fff",
-  fontSize: "11.32px",
+  fontSize: "13.32px",
   lineHeight: "15.85px",
   borderRadius: "37.74px",
   padding: "6px 10px",
@@ -175,9 +209,16 @@ const DANMU_CONFIG = {
 };
 
 const DEFAULT_QUALITY = "original";
+const env = process.env.NODE_ENV;
 
-const props = defineProps(["danmuList", "channels", "livestreamData"]);
-const { danmuList, channels, livestreamData } = toRefs(props);
+const QUALITY_ALIAS = {
+  original: "原画"
+};
+
+const props = defineProps(["danmuList", "channels", "livestreamData", "isLivestreaming"]);
+const { danmuList, channels, livestreamData, isLivestreaming } = toRefs(props);
+
+const ui = uiStore();
 
 const danmuJs = ref(null);
 
@@ -187,11 +228,18 @@ const danmuRef = ref(null);
 const videoWrapperRef = ref(null);
 const channelPopperRef = ref(null);
 const qualityPopperRef = ref(null);
+const canvasRef = ref(null);
 const videoWrapperMouseLeaveTimer = ref(null);
 const showPlayerController = ref(false);
 const isPlayerSupported = ref(true);
 const isPlayerConfigLoaded = ref(false);
+const isVideoLoadFailed = ref(false);
+const isVideoLoading = ref(false);
+const videoLoadFailedReason = ref("");
 const showUnmuteMask = ref(false);
+const showLatestScreenCanvas = ref(false);
+const isLatestScreenRecorded = ref(false);
+const videoLoadErrorStartTime = ref(null);
 /** @type {import("vue").Ref< VideoPlayer | null>}*/
 const player = ref(null);
 const danmu = ref(null);
@@ -202,42 +250,57 @@ const playerConfig = ref({
   isFullScreen: false,
   isDanmuClose: false,
   quality: DEFAULT_QUALITY,
-  channel: 0
+  channel: 0,
+  latestVolume: 50
 });
 
-const videoSource = computed(() => {
-  if (!livestreamData.value) return {};
-  // TODO: wait for api
-  return livestreamData.value.streamerStatus
-    ? livestreamData.value.streamerCdnPullUrl
-    : livestreamData.value.supplierCdnPullUrl;
-});
+const videoSource = computed(() => getVideoSource(livestreamData.value));
 
-const currentVideoUrl = computed(() => {
-  if (!videoSource.value) return "";
-  const result = Object.entries(videoSource.value).find(([key, value]) => {
-    return key === playerConfig.value.quality;
-  });
-  return result[1]?.hls_url ?? "";
-});
+const currentVideoUrl = computed(() => getVideoUrl(videoSource.value));
 
-const disableVideoController = computed(() => showUnmuteMask.value);
+const disableVideoController = computed(() => showUnmuteMask.value || !isLivestreaming.value);
+
+const isVideoStuck = computed(() => isVideoLoadFailed.value || isVideoLoading.value);
 
 // const currentChannel = computed(() => {
 //   if (!channels.value.length) return {};
 //   return channels.value[playerConfig.value.channel];
 // });
 
+const getVideoSource = (target) => {
+  if (!target) return {};
+  return target.streamerStatus ? target.streamerCdnPullUrl : target.supplierCdnPullUrl;
+};
+
+const getVideoUrl = (source) => {
+  if (!source) return "";
+  const [_, obj] = Object.entries(source).find(([key, value]) => key === playerConfig.value.quality);
+  return obj?.hls_url ?? obj?.flv_url ?? "";
+};
+
 const loadPlayer = async () => {
+  let _mediaType = "";
+  let _playerConfig;
   getQualities();
+  if (player.value) {
+    player.value.destroy();
+  }
+
+  if (currentVideoUrl.value.includes(".flv")) {
+    _mediaType = "flv";
+    _playerConfig = DEFAULT_FLV_CONFIG;
+  } else if (currentVideoUrl.value.includes(".m3u8")) {
+    _mediaType = "hls";
+    _playerConfig = DEFAULT_HLS_CONFIG;
+  }
+
   player.value = new VideoPlayer(
     {
-      mediaType: "hls",
-      // url: currentChannel.value.url,
+      mediaType: _mediaType,
       url: currentVideoUrl.value,
+      // url: "http://localhost:8000/live/test.flv",
       maxLatency: 10,
-      // ...DEFAULT_FLV_CONFIG,
-      ...DEFAULT_HLS_CONFIG
+      ..._playerConfig
     },
     videoRef.value
   );
@@ -246,17 +309,29 @@ const loadPlayer = async () => {
 
 const initPlayer = async (play = false) => {
   if (!player.value) return;
-  await player.value.init();
-  isPlayerSupported.value = player.value.SupportPlayer !== "NONE";
-  player.value.on(player.value.Events.ERROR, handlePlayerError);
-  player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
-  await player.value.load(play);
-  // if (player.value.qualitySupported) getQualities();
+  try {
+    await player.value.init();
+    isPlayerSupported.value = player.value.supportPlayer !== "NONE";
+    player.value.on(player.value.Events.CUSTOM_ERROR, handlePlayerErrorDebounce);
+    player.value.on(player.value.Events.STREAM_AVAILABLE, handlePlayerCanPlay);
+    player.value.on(player.value.Events.AUTO_PLAY_FAILED, handleAutoPlayFailed);
+    // emitting when hls.isSupported() is false
+    player.value.on(player.value.Events.NATIVE_STREAM_BUFFERING, handleNativeStreamBuffering);
+    isVideoLoading.value = true;
+    await player.value.load(play);
+    isVideoLoading.value = false;
+    showLatestScreenCanvas.value = false;
+    isLatestScreenRecorded.value = false;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 const loadDanmu = async () => {
-  const _danmu = (await import("danmu.js")).default;
-  danmuJs.value = _danmu;
+  if (!danmuJs.value) {
+    const _danmu = (await import("danmu.js")).default;
+    danmuJs.value = _danmu;
+  }
   if (danmuRef.value) {
     danmu.value = new danmuJs.value({
       ...DEFAULT_DANMU_CONFIG,
@@ -283,6 +358,9 @@ const loadPlayerConfig = () => {
           videoRef.value.volume = value / 100;
           playerConfig.value[key] = value;
           break;
+        case "latestVolume":
+          playerConfig.value[key] = value;
+          break;
         case "isDanmuClose":
           handleDanmuChange(value);
           break;
@@ -302,6 +380,8 @@ const changePlayerConfig = (key, value) => {
 };
 
 const handlePauseChange = (value) => {
+  if (!player.value) return;
+
   changePlayerConfig("isPause", value);
   if (playerConfig.value.isPause) {
     player.value.pause();
@@ -329,6 +409,9 @@ const handleFullScreenChange = (value) => {
 };
 
 const handleVolumeChange = (value) => {
+  if (value > 0) {
+    changePlayerConfig("latestVolume", value);
+  }
   changePlayerConfig("volume", parseInt(value));
   videoRef.value.volume = value / 100;
 };
@@ -353,11 +436,45 @@ const handlePlayerProgress = () => {
   player.value.syncLive();
 };
 
-const handlePlayerError = (event, data) => {
-  console.log(e);
+const handlePlayerCanPlay = () => {
+  if (playerConfig.value.isPause) {
+    changePlayerConfig("isPause", false);
+  }
+  isVideoLoading.value = false;
+  isVideoLoadFailed.value = false;
+  isLatestScreenRecorded.value = false;
+  videoLoadErrorStartTime.value = null;
+};
+
+const handlePlayerError = (data) => {
+  console.error(data.detail);
   if (!playerConfig.value.isPause) {
     changePlayerConfig("isPause", true);
   }
+  if (!videoLoadErrorStartTime.value) {
+    videoLoadErrorStartTime.value = Date.now();
+  }
+  if (!isLatestScreenRecorded.value) {
+    const ctx = canvasRef.value.getContext("2d");
+    ctx.drawImage(videoRef.value, 0, 0, canvasRef.value.width, canvasRef.value.height);
+    isLatestScreenRecorded.value = true;
+    showLatestScreenCanvas.value = true;
+  }
+  if (Date.now() - videoLoadErrorStartTime.value > MAXIMUM_VIDEO_RELOAD_TIMEOUT) {
+    videoLoadErrorStartTime.value = null;
+    isVideoLoadFailed.value = true;
+    videoLoadFailedReason.value = data.detail;
+    isVideoLoading.value = false;
+  } else {
+    isVideoLoading.value = true;
+    initPlayer(true);
+  }
+};
+
+const handlePlayerErrorDebounce = useDebounceFn(handlePlayerError, ERROR_HANDLER_DEBOUNCE_TIME);
+
+const handleNativeStreamBuffering = () => {
+  isVideoLoading.value = true;
 };
 
 const handleAutoPlayFailed = () => {
@@ -377,34 +494,36 @@ const handleAutoPlayFailed = () => {
 const handleQualityChange = async (level) => {
   const _level = videoSource.value[level] ? level : DEFAULT_QUALITY;
   if (_level === playerConfig.value.quality) return;
+  const videoUrl = videoSource.value[_level]?.hls_url ?? videoSource.value[_level]?.flv_url;
   changePlayerConfig("quality", _level);
   // player.value.setQualityLevel(index);
-  player.value.changeSource(videoSource.value[_level].hls_url);
+  player.value.changeSource(videoUrl);
   await initPlayer(true);
 };
 
 const getQualities = () => {
   if (!videoSource.value) return;
-  const result = Object.entries(videoSource.value).map(([level, value], index) => ({
+  const result = Object.entries(videoSource.value).map(([level, value]) => ({
     value: level,
-    name: level,
-    url: value.hls_url
+    name: QUALITY_ALIAS[level] ?? level,
+    url: value.hls_url ?? value.flv_url
   }));
 
   qualities.value = result;
 };
 
 const handleUnmuteClick = () => {
-  if (!videoRef.value) return;
+  if (!videoRef.value || ui.isGameModalOpened) return;
   videoRef.value.muted = false;
   showUnmuteMask.value = false;
 };
 
-const pause = () => {
-  handlePauseChange(true);
+const loadData = () => {
+  if (!isLivestreaming.value) return;
+  isVideoLoadFailed.value = false;
+  videoLoadFailedReason.value = "";
+  Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
 };
-
-const loadData = () => Promise.all([loadPlayer(), loadDanmu()]).then(loadPlayerConfig);
 
 watch(danmuList, () => {
   if (danmuList.value.length && danmu.value) {
@@ -417,21 +536,50 @@ watch(danmuList, () => {
   }
 });
 
-watch(livestreamData, () => {
-  loadData();
-});
+watch(
+  livestreamData,
+  async (val, oldVal) => {
+    if (oldVal) {
+      const newVideoSource = getVideoSource(val);
+      const newVideoUrl = getVideoUrl(newVideoSource);
+      const _currentVideoSource = getVideoSource(oldVal);
+      const _currentVideoUrl = getVideoUrl(_currentVideoSource);
+      if (newVideoUrl === _currentVideoUrl) return;
+      if (danmu.value) {
+        danmu.value.stop();
+      }
+    }
+    await nextTick();
+    loadData();
+  },
+  { immediate: true }
+);
+
+watch(
+  () => ui.isGameModalOpened,
+  (val) => {
+    if (!videoRef.value) return;
+    if (val) {
+      videoRef.value.muted = true;
+    } else {
+      if (showUnmuteMask.value) return;
+      videoRef.value.muted = false;
+    }
+  }
+);
 
 onMounted(() => {
   // loadData();
+  canvasRef.value.width = videoRef.value.clientWidth;
+  canvasRef.value.height = videoRef.value.clientHeight;
+  document.addEventListener("click", handleUnmuteClick);
 });
 
 onUnmounted(() => {
-  player.value.destroy();
-  danmu.value.stop();
-});
-
-defineExpose({
-  pause
+  player.value && player.value.destroy();
+  player.value = null;
+  danmu.value && danmu.value.stop();
+  document.removeEventListener("click", handleUnmuteClick);
 });
 </script>
 <style lang="scss" scoped>
@@ -470,6 +618,7 @@ defineExpose({
     transform: translateY(100%);
     opacity: 0;
     transition: transform 0.5s ease, opacity 0.5s;
+    z-index: 1;
 
     &.show {
       transform: translateY(0);
@@ -509,6 +658,11 @@ defineExpose({
   .btn {
     background-color: transparent;
     -webkit-user-drag: none;
+    &.disabled {
+      pointer-events: none;
+      filter: grayscale(0.5);
+      opacity: 0.5;
+    }
   }
 
   .livestream-video {
@@ -518,7 +672,12 @@ defineExpose({
     background: #000;
   }
 
-  .livestream-video-muted-mask {
+  .livestream-video-latest-screen {
+    position: absolute;
+    inset: 0;
+  }
+
+  .livestream-video-mask {
     position: absolute;
     inset: 0;
     display: flex;
@@ -529,6 +688,58 @@ defineExpose({
     width: 100%;
     height: 100%;
     color: #fff;
+
+    .livestream-video-mask-text-content {
+      max-width: 100%;
+      overflow: auto;
+    }
+  }
+
+  /* HTML: <div class="loader"></div> */
+  .loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid #3981ff;
+    animation: l20-1 0.8s infinite linear alternate, l20-2 1.6s infinite linear;
+    margin-bottom: 10px;
+  }
+  @keyframes l20-1 {
+    0% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+    }
+    12.5% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
+    }
+    25% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
+    }
+    50% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+    }
+    62.5% {
+      clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+    }
+    75% {
+      clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
+    }
+    100% {
+      clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
+    }
+  }
+  @keyframes l20-2 {
+    0% {
+      transform: scaleY(1) rotate(0deg);
+    }
+    49.99% {
+      transform: scaleY(1) rotate(135deg);
+    }
+    50% {
+      transform: scaleY(-1) rotate(0deg);
+    }
+    100% {
+      transform: scaleY(-1) rotate(-135deg);
+    }
   }
 }
 </style>

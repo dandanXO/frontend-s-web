@@ -43,7 +43,7 @@ body {
 }
 .main .description {
   position: absolute;
-  top: 400px;
+  top: 430px;
   left: 49%;
   width: max-content;
   transform: translate(-50%, -50%);
@@ -52,8 +52,21 @@ body {
   line-height: 80px;
   text-align: center;
 }
+.main .description span {
+  font-size: 45px;
+}
 .main .description .highlight {
   height: 60px;
+}
+.main .title-box {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.main .title-box img {
+  display: block;
+  width: 850px;
+  margin: auto;
 }
 
 .go-btn {
@@ -64,10 +77,10 @@ body {
   transform: translate(-50%, -50%);
   background: linear-gradient(180deg, #83cbff 0%, #0064b5 45.5%, #1c337e 99%);
   box-shadow: 0px -8.3px 19px 0px #93c7ff inset, 0px -4.15px 15.2px 0px #275ec1 inset;
-  padding: 20px 50px;
+  padding: 10px 50px;
   border-radius: 120px;
   text-decoration: none;
-  font-size: 60px;
+  font-size: 45px;
   font-weight: 700;
   line-height: 70px;
   color: inherit;
@@ -78,7 +91,7 @@ body {
 
 .h5-main {
   background-image: url(../imgs/bg-sm.png);
-  background-position: top center;
+  background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
@@ -127,7 +140,39 @@ body {
   font-size: 1.5rem;
   line-height: 2rem;
   padding: 8px 30px;
-  margin-bottom: 30px;
+  margin: -40px auto 30px;
+  display: flex;
+  justify-content: center;
+}
+.h5-main .title-box {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-top: 0px;
+  overflow: hidden;
+}
+.h5-main .title-box img {
+  display: block;
+  /* width: 100%; */
+  width: 500px;
+  margin: auto;
+}
+.h5-main .description {
+  position: absolute;
+  top: 150px;
+  left: 49%;
+  width: max-content;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 3rem;
+  text-align: center;
+}
+.h5-main .description span {
+  font-size: 1.5rem;
+}
+.h5-main .description .highlight {
+  height: 30px;
 }
 
 @media (min-width: 440px) {

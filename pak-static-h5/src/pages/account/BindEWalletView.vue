@@ -1,6 +1,6 @@
 <template>
   <q-dialog v-model="showCaptchaDialog" persistent>
-    <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">{{ $t("bankCard.otp") }}</div>
@@ -39,7 +39,7 @@
     </div>
   </q-dialog>
   <q-dialog v-model="showCaptchaMessageDialog" persistent>
-    <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="flex justify-center">
@@ -177,10 +177,11 @@
                 >
                   <template v-slot:append>
                     <q-btn
+                      v-if="store.isEnableBankCardOTP"
                       @click="openPhoneVeriDialog()"
                       type="submit"
                       size="sm"
-                     :label="!isOtpSent ? $t('bankCard.getOtp') : showTimer()"
+                      :label="!isOtpSent ? $t('bankCard.getOtp') : showTimer()"
                       class="btn-primary__full"
                       style="height: unset"
                     />
@@ -193,7 +194,7 @@
 
         <InputRowGrid v-if="selectedTypeToggleName === 'JAZZCASH'">
           <template #fields>
-            <InputField :label="`Identity ID`">
+            <InputField :label="$t('form.identity')">
               <template #input>
                 <q-input
                   outlined
@@ -202,7 +203,7 @@
                   ref="ifscRef"
                   type="number"
                   maxlength="13"
-                  placeholder="Please insert 13 digits Identity ID"
+                  :placeholder="$t('form.virtualWallet_id_rule')"
                   v-model="bankCardInfo.cardAddress"
                   hide-bottom-space
                   :rules="[
@@ -446,7 +447,7 @@ const getInnerCode = () => {
 
 const showCaptchaDialog = ref(false);
 const openPhoneVeriDialog = () => {
-  cardNumberRef.value.validate()
+  cardNumberRef.value.validate();
   if (cardNumberRef.value && cardNumberRef.value.hasError) return;
   getInnerCode();
   showCaptchaDialog.value = true;
@@ -497,33 +498,33 @@ const onCaptchaSubmit = () => {
     });
 };
 const timer = ref(300); // Timer starts at 60 seconds
-  let intervalId = null;
-  // Method to start the countdown timer
-  function startTimer() {
-    intervalId = setInterval(() => {
-      if (timer.value > 0) {
-        timer.value--;
-      } else {
-        clearInterval(intervalId); // Stop the timer when it reaches 0
-        // isPhoneVerified.value = false;
-        isOtpSent.value = false;
-      }
-    }, 1000); // Update the timer every second
-  }
-
-  // Method to show the timer in the button label
-  function showTimer() {
-    const minutes = Math.floor(timer.value / 60);
-    const seconds = timer.value % 60;
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  }
-
-  // Cleanup the interval when the component is unmounted
-  onBeforeUnmount(() => {
-    if (intervalId) {
-      clearInterval(intervalId);
+let intervalId = null;
+// Method to start the countdown timer
+function startTimer() {
+  intervalId = setInterval(() => {
+    if (timer.value > 0) {
+      timer.value--;
+    } else {
+      clearInterval(intervalId); // Stop the timer when it reaches 0
+      // isPhoneVerified.value = false;
+      isOtpSent.value = false;
     }
-  });
+  }, 1000); // Update the timer every second
+}
+
+// Method to show the timer in the button label
+function showTimer() {
+  const minutes = Math.floor(timer.value / 60);
+  const seconds = timer.value % 60;
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
+// Cleanup the interval when the component is unmounted
+onBeforeUnmount(() => {
+  if (intervalId) {
+    clearInterval(intervalId);
+  }
+});
 const bankList = ref([]);
 const loadBankCards = () => {
   bankList.value = [];
@@ -576,11 +577,11 @@ const submitBankCard = () => {
     !(
       (bankCardRef.value && bankCardRef.value.hasError) ||
       (cardNumberRef.value && cardNumberRef.value.hasError) ||
-      (phoneVerificationRef.value && phoneVerificationRef.value.hasError) ||
+      (store.isEnableBankCardOTP && phoneVerificationRef.value && phoneVerificationRef.value.hasError) ||
       (selectedTypeToggleName.value === "JAZZCASH" && ifscRef.value && ifscRef.value.hasError)
     )
   ) {
-    if (!isOtpSent.value || !bankCardInfo.cardNumber) {
+    if (store.isEnableBankCardOTP && (!isOtpSent.value || !bankCardInfo.cardNumber)) {
       $q.notify({
         color: "negative",
         position: "top",
@@ -590,6 +591,13 @@ const submitBankCard = () => {
       return;
     } else {
       bankCardInfo.telephone = bankCardInfo.cardNumber;
+
+      if (store.isEnableBankCardOTP === false) {
+        bankCardInfo.telephone = undefined;
+        bankCardInfo.smsCode = undefined;
+        bankCardInfo.smsCodeId = undefined;
+      }
+
       // API call
       api
         .post("/session/bankCard", qs.stringify(bankCardInfo))
@@ -610,7 +618,7 @@ const submitBankCard = () => {
         .catch((error) => {
           console.log("error", error);
         });
-      }
+    }
   }
 };
 

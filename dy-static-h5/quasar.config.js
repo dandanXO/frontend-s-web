@@ -21,6 +21,9 @@ const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
 const ContextReplacementPlugin = require("webpack").ContextReplacementPlugin;
 
+const isLiveChat = process.env.BUILD_TARGET === "livechat";
+
+
 module.exports = configure(function (ctx) {
   return {
     // https://v2.quasar.dev/quasar-cli-webpack/supporting-ts
@@ -32,7 +35,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["axios", "cache", "fingerprint"],
+    boot: ["axios", "cache", "fingerprint", "i18n", "vue-native-websocket", "vue-shortkey"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss"],
@@ -58,9 +61,8 @@ module.exports = configure(function (ctx) {
       postcss: {
         configFile: true
       },
-      analyze: {
-        analyzerMode: "static"
-      },
+      publicPath: isLiveChat ? "/live-chat/" : "/",
+      distDir: isLiveChat ? "dist/spa/live-chat" : "dist/spa",
       // transpile: false,
       // publicPath: '/',
 

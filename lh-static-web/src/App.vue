@@ -57,8 +57,9 @@ export default defineComponent({
           sid: sidParam,
           siteCode: process.env.VUE_APP_SITE
         };
-
-        submitMemberStats(params);
+        if (process.env.NODE_ENV === "production") {
+          submitMemberStats(params);
+        }
       }
     };
 
@@ -101,6 +102,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("0522");
       checkServerStatus();
       checkSID();
 

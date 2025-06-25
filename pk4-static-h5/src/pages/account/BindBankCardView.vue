@@ -125,7 +125,7 @@
                   type="number"
                   :rules="[
                     (val) => (val && val.length > 0) || $t('bankCard.pleaseEnterCardAccount'),
-                    (val) => (val && val.length >= 16) || $t('bankCard.bankCardMust16NumberandAbove'),
+                    (val) => (val && val.length >= 20) || $t('bankCard.bankCardMust16NumberandAbove'),
                     (val) => (val && !val.includes('.')) || $t('bankCard.bankCardDisallowDecimal')
                   ]"
                 ></q-input>

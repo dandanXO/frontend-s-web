@@ -69,7 +69,7 @@ export default defineComponent({
 
           // debugger;
           CSAUrl = urlData.hostname;
-          initCsWeb();
+          // initCsWeb();
           console.log(CSAUrl);
         })
         .catch((err) => {
@@ -78,44 +78,44 @@ export default defineComponent({
         });
     };
 
-    const initCsWeb = () => {
-      var regDevice = store.getDeviceType();
-      // console.log("Footer OnMounted");
+    // const initCsWeb = () => {
+    //   var regDevice = store.getDeviceType();
+    //   // console.log("Footer OnMounted");
 
-      // 'DYCS' / 4
-      csclient = new CsClient("DYCS", regDevice, "zh-CN", "2", "prod", `https://${CSAUrl}`);
-      // csclient = new CsClient('DYCS', regDevice, 'zh-CN', '2','local', '');
+    //   // 'DYCS' / 4
+    //   csclient = new CsClient("DYCS", regDevice, "zh-CN", "2", "prod", `https://${CSAUrl}`);
+    //   // csclient = new CsClient('DYCS', regDevice, 'zh-CN', '2','local', '');
 
-      csclient.set("pageurl", "/liveChat");
-      csclient.set("btnid", "cs-web-id");
-      csclient.set("openanimation", false);
+    //   csclient.set("pageurl", "/liveChat");
+    //   csclient.set("btnid", "cs-web-id");
+    //   csclient.set("openanimation", false);
 
-      csclient.set("notification-type", {
-        type: "none"
-      });
+    //   csclient.set("notification-type", {
+    //     type: "none"
+    //   });
 
-      if (store.token) {
-        csclient.set("token", store.token);
-      }
+    //   if (store.token) {
+    //     csclient.set("token", store.token);
+    //   }
 
-      //客服初始化。
-      csclient.init();
+    //   //客服初始化。
+    //   csclient.init();
 
-      csclient.receiveListener("message", function (callback) {
-        //收到新消息。
-        // alert(callback);
-      });
+    //   csclient.receiveListener("message", function (callback) {
+    //     //收到新消息。
+    //     // alert(callback);
+    //   });
 
-      //CsClient Event Listener.
-      window.addEventListener("message", function (event) {
-        // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
-        if (_.isString(event.data)) {
-          // if (event.data == 'sess_timeout') {
-          //   router.push({path: "/liveChat"});
-          // }
-        }
-      });
-    };
+    //   //CsClient Event Listener.
+    //   window.addEventListener("message", function (event) {
+    //     // console.log("HEre Message received from the iframe: " + event.data); // Message received from child
+    //     if (_.isString(event.data)) {
+    //       // if (event.data == 'sess_timeout') {
+    //       //   router.push({path: "/liveChat"});
+    //       // }
+    //     }
+    //   });
+    // };
 
     const getOnlineStatApi = async () => {
       // console.log("Ok Online.");

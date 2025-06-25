@@ -1,6 +1,14 @@
 // live casino
 export const liveCasinoPlatforms = [
   {
+    code: "AR",
+    cnname: "AR真人",
+    image: "ar",
+    message: "真实赌场环境，美艳荷官与您互动，咪牌百家乐，体验包桌尊贵服务，给您亲临现场般的游戏体验。",
+    caption: "",
+    gameCode: ""
+  },
+  {
     code: "AG",
     cnname: "PA真人",
     image: "ag",
@@ -82,6 +90,15 @@ export const liveCasinoPlatforms = [
     cnname: "WE真人",
     image: "we",
     message: "百家乐、骰宝、轮盘、牛牛、炸金花等多款真人视讯游戏，多位真人荷官全年无休的紧密互动，最美荷官在线互动。",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "EEAI",
+    cnname: "EEAI真人",
+    image: "eeai",
+    message:
+      "EEAI真人带你畅玩百家乐、骰宝、轮盘、牛牛、炸金花等多款热门真人视讯游戏，最美荷官实时在线陪伴，让你感受最真实的现场魅力！",
     caption: "",
     gameCode: ""
   }

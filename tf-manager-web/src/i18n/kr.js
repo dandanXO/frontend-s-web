@@ -1682,6 +1682,7 @@ export default {
     upgradeToPaymentOnGoing: '결제 진행 중으로 업그레이드',
     upLineLoginName: '상위 라인 로그인 이름',
     upload: '업로드',
+    uploading: 'Uploading',
     upperName: '상위 이름',
     usdtControl: 'USDT 출금 제어',
     usdtDepositAmount: '디지털 화폐 입금액',
@@ -2056,6 +2057,7 @@ export default {
     confirmUpdate: '업데이트하시겠습니까?',
     confirmUpdatePayment: '결제를 업데이트하시겠습니까?',
     confirmUnbind: '은행 카드를 언바인드하시겠습니까?',
+    confirmToAction: '이 작업을 진행하시겠습니까?',
     copyToClipboard: '이 (가) 클립보드로 복사되었습니다.',
     copySuccess: '복사 성공',
     deleteSuccess: '삭제 성공',
@@ -2759,7 +2761,9 @@ export default {
     Sport: '스포츠',
     'Game Jackpot Bonus Record': '게임 잭팟 보너스 기록',
     'Member Privilege Record Pak Export': '회원 할인 기록 수출 - 파키스탄',
-    'Refer Friend Rebate Point record': '친구 초대 베팅 거래량 리베이트 포인트 기록'
+    'Refer Friend Rebate Point record': '친구 초대 베팅 거래량 리베이트 포인트 기록',
+    'Member Refer Stat Analysis': '- 회원 추천 리베이트 분석',
+    'Member Refer Relation': '- 회원 추천 관계 조회'
   },
   google: {
     google_auth_menu: 'Google 인증자',
@@ -3005,6 +3009,7 @@ export default {
     10051: '시스템 IP 레이블이 존재하지 않습니다',
     10110: '플랫폼 검색 보류중인 거래 오류',
     10111: '플랫폼 업데이트 보류중인 거래 오류',
+    10113: '조회 기간은 3개월을 초과할 수 없습니다',
     11000: '제휴사가 존재하지 않음',
     11006: '사이트 제휴 수수료가 이미 존재합니다',
     11007: '사이트 제휴 수수료가 존재하지 않습니다',

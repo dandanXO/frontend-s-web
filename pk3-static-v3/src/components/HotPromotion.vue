@@ -33,13 +33,12 @@ import { useQuasar } from "quasar";
 import { defineAsyncComponent, defineComponent, ref } from "vue";
 
 import { eventapi } from "@/boot/axios";
-import ClaimPromo from "@/components/hotpromo/claimPromo.vue";
 import { userStore } from "@/stores/index";
-import * as _ from "lodash";
 import moment from "moment";
 
-import SlotFtdPromo from "@/components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
-import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
+const ClaimPromo = defineAsyncComponent(() => import("./hotpromo/claimPromo.vue"));
+const SlotFtdPromo = defineAsyncComponent(() => import("./hotpromo/slotftdpromo/SlotFtdPromo.vue"));
+const SpinLuckyWheelPromo = defineAsyncComponent(() => import("./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -218,9 +217,8 @@ export default defineComponent({
         var data = res.data.data;
 
         for (let i in data) {
-          _.each(data[i].winners, function (winner, index) {
+          data[i].winners.forEach(function (winner, index) {
             winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
-
             winnerDataSource.value.push(winner);
           });
         }
@@ -247,7 +245,7 @@ export default defineComponent({
         .then((res) => {
           loading.value = false;
           var data = res.data;
-          _.each(data, function (item, index) {
+          data.forEach(item => {
             item.date = moment(item.recordTime).format("DD/MM/YYYY");
             dataSource.value.push(item);
           });

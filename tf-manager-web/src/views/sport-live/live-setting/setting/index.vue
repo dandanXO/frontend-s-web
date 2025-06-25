@@ -28,7 +28,7 @@
         </el-form-item>
 
         <el-form-item
-          v-if="uiControl.dialogType === 'STREAMER_CREATE' || uiControl.dialogType === 'STREAMER_EDIT'"
+          v-if="uiControl.dialogType === 'STREAMER_CREATE'"
           :label="t('fields.streamer')"
           prop="streamerId"
         >
@@ -91,6 +91,31 @@
             </div>
           </div>
         </el-form-item>
+        <el-form-item
+          v-if="uiControl.dialogType === 'STREAMER_CREATE' || uiControl.dialogType === 'STREAMER_EDIT'"
+          :label="t('fields.scheduledAnnouncement')"
+          prop="scheduledAnnouncement"
+        >
+          <div style="position: relative;">
+            <el-input
+              v-model="form.scheduledAnnouncement"
+              type="textarea"
+              rows="3"
+              maxlength="200"
+            />
+            <el-button
+              icon="el-icon-smile"
+              size="mini"
+              style="margin-top: 5px;"
+              @click="showEmojiPickerForScheduled = !showEmojiPickerForScheduled"
+            >
+              Emoji
+            </el-button>
+            <div v-if="showEmojiPickerForScheduled" style="position: absolute; z-index: 1000;">
+              <EmojiPicker @select="insertEmojiToScheduled" />
+            </div>
+          </div>
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
@@ -123,6 +148,15 @@
       @click="showDialog('SUPPLIER_CREATE')"
     >
       {{ t('fields.add') }}
+    </el-button>
+    <el-button
+      icon="el-icon-refresh"
+      size="mini"
+      type="primary"
+      style="margin-bottom: 10px"
+      @click="initialSupplierStreamStatus"
+    >
+      {{ t('fields.initialSupplierStreamStatus') }}
     </el-button>
     <el-table :data="supplierStreams" size="small" border>
       <el-table-column :label="t('fields.sourceStreamUrl')" width="500">
@@ -157,7 +191,9 @@
             {{
               (() => {
                 try {
-                  return JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url || '-'
+                  return JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url
+                    || JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.flv_url
+                    || '-'
                 } catch {
                   return '-'
                 }
@@ -165,12 +201,12 @@
             }}
           </span>
           <el-button
-            v-if="JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url"
+            v-if="JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url || JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.flv_url"
             size="mini"
             circle
             type="primary"
             icon="el-icon-view"
-            @click="openPreview(JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url)"
+            @click="openPreview(JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.hls_url || JSON.parse(scope.row.supplierCdnPullUrl || '{}')?.original?.flv_url)"
           />
           <div class="signal-bars" v-if="monitorScoreMap[scope.row.streamId] !== undefined">
             <span
@@ -221,9 +257,9 @@
       {{ t('fields.add') }}
     </el-button>
     <el-table :data="streamerStreams" size="small" border>
-      <el-table-column prop="streamerName" :label="t('fields.streamer')" />
-      <el-table-column prop="streamerCdnPushUrl" :label="t('fields.streamerCdnPushUrl')" />
-      <el-table-column :label="t('fields.streamerCdnPullUrl')">
+      <el-table-column prop="streamerName" :label="t('fields.streamer')" width="150" />
+      <el-table-column prop="streamerCdnPushUrl" :label="t('fields.streamerCdnPushUrl')" width="350" />
+      <el-table-column :label="t('fields.streamerCdnPullUrl')" width="350">
         <template #default="scope">
           <span>
             {{
@@ -254,35 +290,97 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="roomMessage" :label="t('fields.roomMessage')" />
-      <el-table-column prop="roomTitle" :label="t('fields.roomTitle')" />
+      <el-table-column prop="roomMessage" :label="t('fields.roomMessage')" width="200" />
+      <el-table-column prop="scheduledAnnouncement" :label="t('fields.scheduledAnnouncement')" width="200" />
+      <el-table-column
+        prop="subscribeCount"
+        :label="t('fields.subscribeCount')"
+        width="100"
+      />
       <el-table-column
         fixed="right"
         :label="t('fields.operate')"
         align="center"
-        width="300"
+        width="350"
       >
         <template #default="scope">
-          <el-button
-            icon="el-icon-edit"
-            size="mini"
-            type="primary"
-            @click="showDialog('STREAMER_EDIT', scope.row)"
-          >
-            {{ t('fields.edit') }}
-          </el-button>
-          <el-button
-            icon="el-icon-delete"
-            size="mini"
-            type="danger"
-            @click="deleteStream(scope.row.id)"
-          >
-            {{ t('fields.delete') }}
-          </el-button>
+          <div style="display: flex; gap: 2px; justify-content: center;">
+            <el-button
+              icon="el-icon-chat-line-round"
+              size="mini"
+              type="info"
+              @click="openChatHistory(scope.row.id)"
+              style="width: 100px;"
+            >
+              {{ t('fields.chatHistory') }}
+            </el-button>
+            <el-button
+              icon="el-icon-edit"
+              size="mini"
+              type="primary"
+              @click="showDialog('STREAMER_EDIT', scope.row)"
+              style="width: 100px;"
+            >
+              {{ t('fields.edit') }}
+            </el-button>
+            <el-button
+              icon="el-icon-delete"
+              size="mini"
+              type="danger"
+              @click="deleteStream(scope.row.id)"
+              style="width: 100px;"
+            >
+              {{ t('fields.delete') }}
+            </el-button>
+          </div>
+
         </template>
       </el-table-column>
     </el-table>
   </div>
+  <el-dialog
+    v-model="chatHistoryDialog.visible"
+    width="850px"
+    :title="t('fields.chatHistory')"
+  >
+    <div class="btn-group">
+      <el-button
+        size="mini"
+        type="primary"
+        @click="requestExportExcel(chatHistoryDialog.streamerId)"
+      >{{ t('fields.requestExportToExcel') }}
+      </el-button>
+    </div>
+    <el-table :data="chatHistoryDialog.chatList" v-loading="chatHistoryDialog.loading">
+      <el-table-column prop="name" :label="t('fields.name')" width="200" />
+      <el-table-column prop="content" :label="t('fields.content')" />
+      <el-table-column :label="t('fields.createTime')" width="180">
+        <template #default="scope">
+          {{ formatTime(scope.row.createTime) }}
+        </template>
+      </el-table-column>
+
+    </el-table>
+    <el-pagination
+      style="margin-top: 10px; text-align: right"
+      layout="prev, pager, next"
+      :page-size="chatHistoryDialog.page.size"
+      :total="chatHistoryDialog.page.total"
+      :current-page="chatHistoryDialog.page.current"
+      @current-change="handleChatPageChange"
+    />
+  </el-dialog>
+  <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+             :close-on-click-modal="false" :close-on-press-escape="false"
+  >
+    <span>{{ t('message.requestExportToExcelDone1') }}</span>
+    <router-link :to="`/site-management/download-manager`">
+      <el-link type="primary">
+        {{ t('menu.DownloadManager') }}
+      </el-link>
+    </router-link>
+    <span>{{ t('message.requestExportToExcelDone2') }}</span>
+  </el-dialog>
 </template>
 <script setup>
 
@@ -310,6 +408,10 @@ import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
 import EmojiPicker from 'vue3-emoji-picker'
 import 'vue3-emoji-picker/dist/style.css'
+import 'videojs-flvjs';
+import flvjs from 'flv.js';
+import { getChatHistory, getChatHistoryExport } from "@/api/sport-live-chat";
+import dayjs from "dayjs";
 
 const showEmojiPicker = ref(false)
 const { t } = useI18n();
@@ -333,6 +435,12 @@ function insertEmojiToMessage(emoji) {
   form.roomMessage += emoji.i
 }
 
+const showEmojiPickerForScheduled = ref(false);
+
+function insertEmojiToScheduled(emoji) {
+  form.scheduledAnnouncement += emoji.i;
+}
+
 let player = null;
 let scoreTimer = null;
 
@@ -341,6 +449,7 @@ const formRef = ref(null);
 const supplierStreams = ref([]);
 const streamerStreams = ref([]);
 const monitorScoreMap = ref({});
+const store = useStore();
 
 function insertEmoji(emoji) {
   form.roomTitle += emoji.i
@@ -406,15 +515,20 @@ async function deleteSupplierStream(streamId) {
   });
 }
 
+function formatTime(timestamp) {
+  if (!timestamp) return '-';
+  return dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss');
+}
+
 function submit() {
   if (uiControl.dialogType === 'SUPPLIER_CREATE') {
     const url = form.sourceStreamUrl || '';
     const baseUrl = url.split('?')[0];
 
-    if (!baseUrl.endsWith('.m3u8')) {
+    if (!baseUrl.endsWith('.m3u8') && !baseUrl.endsWith('.flv')) {
       const corrected = baseUrl.replace(/\.\w+$/, '') + '.m3u8';
       ElMessageBox.confirm(
-        t('message.streamUrlNotM3U8'),
+        t('message.streamUrlNotM3U8OrFlv'),
         t('fields.confirm'),
         {
           confirmButtonText: t('fields.confirm'),
@@ -427,7 +541,7 @@ function submit() {
         ElMessage.success(t('message.replacedWithM3U8'));
         supplierCreate();
       }).catch(() => {
-        ElMessage.warning(t('message.streamUrlMustBeM3U8'));
+        ElMessage.warning(t('message.streamUrlMustBeM3U8OrFlv'));
       });
       return;
     }
@@ -448,12 +562,14 @@ function openPreview(url) {
       player = null;
     }
 
+    const isFLV = url.toLowerCase().endsWith('.flv');
     const container = document.querySelector('.preview-video-container');
+
     if (container) {
       container.innerHTML = `
         <video
           id="preview-player"
-          class="video-js vjs-default-skin"
+          ${isFLV ? '' : 'class="video-js vjs-default-skin"'}
           controls
           preload="auto"
           width="100%"
@@ -463,19 +579,30 @@ function openPreview(url) {
     }
 
     nextTick(() => {
-      player = videojs('preview-player', {
-        autoplay: true,
-        controls: true,
-        preload: 'auto',
-        responsive: true,
-        fluid: true,
-      }, function () {
-        this.src({
+      const videoEl = document.getElementById('preview-player');
+
+      if (isFLV && flvjs.isSupported()) {
+        const flvPlayer = flvjs.createPlayer({
+          type: 'flv',
+          url: url
+        });
+        flvPlayer.attachMediaElement(videoEl);
+        flvPlayer.load();
+        flvPlayer.play();
+      } else {
+        player = videojs(videoEl, {
+          autoplay: true,
+          controls: true,
+          preload: 'auto',
+          responsive: true,
+          fluid: true,
+        });
+        player.src({
           src: url,
           type: 'application/x-mpegURL',
         });
-        this.play();
-      });
+        player.play();
+      }
     });
   });
 }
@@ -506,7 +633,7 @@ async function supplierCreate() {
 async function streamerSave() {
   formRef.value.validate(async (valid) => {
     if (!valid) return;
-    await createSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, roomMessage: form.roomMessage, roomTitle: form.roomTitle });
+    await createSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, roomMessage: form.roomMessage, scheduledAnnouncement: form.scheduledAnnouncement });
     ElMessage.success(t('message.updateSuccess'));
     uiControl.dialogVisible = false;
     await loadEvent();
@@ -516,7 +643,7 @@ async function streamerSave() {
 async function streamerUpdate() {
   formRef.value.validate(async (valid) => {
     if (!valid) return;
-    await updateSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, id: form.id, roomMessage: form.roomMessage, roomTitle: form.roomTitle });
+    await updateSportLiveStream({ eventId: eventId.value, status: 0, id: form.id, roomMessage: form.roomMessage, roomTitle: form.roomTitle, scheduledAnnouncement: form.scheduledAnnouncement });
     ElMessage.success(t('message.updateSuccess'));
     uiControl.dialogVisible = false;
     await loadEvent();
@@ -530,6 +657,16 @@ async function loadEvent() {
   ]);
   supplierStreams.value = supplierRes.data.records || [];
   streamerStreams.value = streamerRes.data.records || [];
+}
+
+async function initialSupplierStreamStatus() {
+  const { data } = await getSportLiveSupplierStream({ eventId: eventId.value });
+
+  data.records.forEach(async (item) => {
+    await updateSupplierStream({ eventId: eventId.value, id: item.id, status: 4 });
+  });
+  ElMessage.success(t('message.updateSuccess'));
+  await loadEvent();
 }
 
 function showDialog(type, row) {
@@ -546,6 +683,9 @@ function showDialog(type, row) {
     fetchStreamers();
     form.streamerId = row.streamerId;
     form.id = row.id;
+    form.scheduledAnnouncement = row.scheduledAnnouncement;
+    form.roomMessage = row.roomMessage;
+    form.roomTitle = row.roomTitle;
   }
 
   if (type === 'SUPPLIER_CREATE') {
@@ -565,18 +705,71 @@ const form = reactive({
   roomMessage: '',
   roomTitle: '',
   isCdnPush: false,
+  scheduledAnnouncement: '',
 });
 
 const streamerList = ref([]);
 
 const formRules = reactive({
-  sourceStreamUrl: [required(t('message.validateSupplierStreamRequired'))],
-  streamerId: [required(t('message.validateStreamerRequired'))]
+  sourceStreamUrl: [required(t('message.validateSupplierStreamRequired'))]
 });
 
 const request = reactive({
   id: null
 });
+
+const chatHistoryDialog = reactive({
+  visible: false,
+  streamerId: null,
+  chatList: [],
+  loading: false,
+  page: {
+    total: 0,
+    size: 30,
+    current: 1
+  }
+});
+
+async function requestExportExcel(streamerId) {
+  const query = {};
+  query.streamId = streamerId;
+  query.siteId = store.state.user.siteId;
+
+  const { data: ret } = await getChatHistoryExport(query)
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
+}
+
+function openChatHistory(streamerId) {
+  chatHistoryDialog.streamerId = streamerId;
+  chatHistoryDialog.visible = true;
+  chatHistoryDialog.page.current = 1;
+  loadChatHistory();
+}
+
+function loadChatHistory() {
+  chatHistoryDialog.loading = true;
+  const query = new URLSearchParams({
+    current: chatHistoryDialog.page.current,
+    size: chatHistoryDialog.page.size
+  });
+
+  const siteId = store.state.user.siteId;
+  getChatHistory(`?${query.toString()}`, { streamId: chatHistoryDialog.streamerId, siteId: siteId })
+    .then(res => {
+      chatHistoryDialog.chatList = res.data.records;
+      chatHistoryDialog.page.total = res.data.total;
+    })
+    .finally(() => {
+      chatHistoryDialog.loading = false;
+    });
+}
+
+function handleChatPageChange(page) {
+  chatHistoryDialog.page.current = page;
+  loadChatHistory();
+}
 
 onMounted(async () => {
   const store = useStore()
