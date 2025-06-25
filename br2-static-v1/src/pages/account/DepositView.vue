@@ -77,11 +77,17 @@
             <!--            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">-->
             <!--              {{ $t("deposit.depositTutorial") }}-->
             <!--            </div>-->
+
           </div>
 
           <div v-if="isBank2" class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
             {{ $t("deposit.please_pay_exact_amt") }}
           </div>
+          <div  v-if="selectedPrivilege.code === 'br2-redeposit-bonus' && form.localAmount" class="font-small text-tealgreen"
+                style="width: calc(100% - 18px); margin: 10px auto 8px">
+            Você receberá um bônus extra Rs{{ get2ndDepoCommaAmount(form.localAmount) }}
+          </div>
+
           <q-input
             class="deposit-input q-mt-sm"
             ref="depositAmtRef"
@@ -99,6 +105,7 @@
               </span>
             </template>
           </q-input>
+
         </div>
 
         <!-- <q-select
@@ -396,7 +403,7 @@ const getFtdCommaAmount = (amount) => {
 
 const get2ndDepoCommaAmount = (amount) => {
   if (amount < 2880) {
-    return amount * 0.1;
+    return parseFloat(amount * 0.1).toFixed(2);
   } else {
     return 288;
   }
@@ -1266,6 +1273,10 @@ onDeactivated(() => {
 
 .font-small {
   font-size: 12px;
+}
+
+.text-tealgreen{
+  color: #21ef89;
 }
 
 .flex-div {
