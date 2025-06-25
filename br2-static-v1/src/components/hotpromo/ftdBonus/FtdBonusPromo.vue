@@ -86,7 +86,7 @@ const promoInfo = ref({});
 
 const loadPromoInit = () => {
   eventapi
-    .get("/session/loss-bonus/init?promoCode=br2-redeposit-bonus-100")
+    .get("/session/deposit-bonus/init?promoCode=br2-ftd-bonus")
     .then((res) => {
       // debugger;
       if (res.code === 0) {
@@ -98,9 +98,8 @@ const loadPromoInit = () => {
 };
 
 const claimPromo = () => {
-  showPrizePopup.value = true;
   eventapi
-    .post("/session/loss-bonus/claim?promoCode=br2-redeposit-bonus-100")
+    .post("/session/deposit-bonus/claim?promoCode=br2-ftd-bonus")
     .then((res) => {
       // debugger;
       if (res.code === 0) {
