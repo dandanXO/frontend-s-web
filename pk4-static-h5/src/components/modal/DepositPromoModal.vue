@@ -1,7 +1,7 @@
 <template>
   <q-dialog v-model="showModal" ref="dialogRef" persistent @hide="handleDialogClose">
     <div class="deposit-promo-modal">
-      <template v-if="modalImageIndex !== 2">
+      <template v-if="modalType !== 'APP_LOGIN_APK'">
         <div class="modal-img">
           <img :src="require(`../../assets/images/index/deposit-modal/deposit-promo-${modalImageIndex}.png`)" />
         </div>
@@ -13,7 +13,7 @@
           <q-checkbox v-model="hideModalForAWeek">Don't remind me again within a week</q-checkbox>
         </div>
       </template>
-      <template v-if="modalImageIndex === 2">
+      <template v-if="modalType === 'APP_LOGIN_APK'">
         <div class="modal-img-2">
           <img :src="require(`../../assets/images/index/deposit-modal/deposit-promo-${modalImageIndex}-${depositOpen ? 'open' : 'close'}.png`)" />
           <div class="modal-btn-2" @click="!depositOpen ? depositOpen = !depositOpen : btnAction()">
@@ -100,7 +100,7 @@ const hideModalForAWeek = ref(false);
  */
 const modalType = ref("");
 const modalIndex = ref(1);
-const showModal = ref(true);
+const showModal = ref(false);
 const isDuringInitial = ref(true);
 const statusFromApi = ref({
   hadBindEmail: false,
@@ -211,8 +211,7 @@ const btnAction = () => {
       break;
     case 2:
     case 3:
-      router.push("/withdraw");
-      dialogRef.value?.hide()
+      router.push("/deposit");
       break;
     case 4:
       $q.dialog({
@@ -236,13 +235,20 @@ const checkAppLogin = async () => {
     return;
   }
   try {
+    // if (isAndroid() || store.isFromGooglePackage) {
+    //   const res = await eventapi.get("/session/app-login-bonus/popUp?promoCode=pk4-app-login-phone-bonus");
+    //   if (res.code === 0 && res.data) {
+    //     modalType.value = "APP_LOGIN_APK";
+    //   } else {
+    //     showNextModal();
+    //   }
+    // } else if (!combinedStatus.value.isAppLogin) {
+    //   modalType.value = "APP_LOGIN_H5";
+    // } else {
+    //   showNextModal();
+    // }
     if (isAndroid() || store.isFromGooglePackage) {
-      const res = await eventapi.get("/session/app-login-bonus/popUp?promoCode=pk4-app-login-phone-bonus");
-      if (res.code === 0 && res.data) {
-        modalType.value = "APP_LOGIN_APK";
-      } else {
-        showNextModal();
-      }
+      modalType.value = "APP_LOGIN_APK";
     } else if (!combinedStatus.value.isAppLogin) {
       modalType.value = "APP_LOGIN_H5";
     } else {
@@ -383,9 +389,9 @@ watch(modalType, (val) => {
   if (val) {
     showModal.value = true;
   }
-  if ([2, 3].includes(modalIndex.value)) {
-    startCountdown();
-  }
+  // if ([2, 3].includes(modalIndex.value)) {
+  //   startCountdown();
+  // }
 });
 
 watch(

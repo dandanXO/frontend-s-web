@@ -170,6 +170,7 @@ export default defineComponent({
       this.list.redirectUrl === "spin-lucky-wheel" ||
       this.list.redirectUrl === "new-player-acc-deposit" ||
       this.list.redirectUrl === "pak-welcome-new-players" ||
+      this.list.redirectUrl === "pak-jackpot-aviator" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

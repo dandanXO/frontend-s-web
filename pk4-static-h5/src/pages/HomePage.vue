@@ -1640,7 +1640,7 @@
     </div>
   </q-dialog>
   <q-dialog
-    v-if="popupPromo === 'newplayer-spin-wheel'"
+    v-if="popupPromo === 'newplayer-spin-wheel'  && route.path === '/home'"
     full-width
     :model-value="isShownNewPlayerWheel"
     class="isCentreDialog spin-lucky-wheel-dialog"
@@ -1665,10 +1665,10 @@
 
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
+  <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" />
   <!-- <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" /> -->
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
   
-  <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" />
 </template>
 
 <script setup>
@@ -1709,7 +1709,6 @@ import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
 import { useI18n } from "vue-i18n";
 import { eventapi } from "src/boot/axios";
-
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/scrollbar";
@@ -4463,28 +4462,17 @@ const checkSpinWheel = () => {
 
 
 const showSpinWheel = () => {
-  
-  if (store.canClaimFtdPrivilege) {
-    isHasUnusedCoupon.value = true;
-    store.hasUnusedCoupon = true;
-  } else {
-    store.hasUnusedCoupon = false;
-  }
-  if ((store.canSpinPrivilegeCoupon)) {
-    promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
-    popupPromo.value = "newplayer-spin-wheel"
-  }
   eventapi
     .get("/new-user-roulette/init")
     .then((res) => {
       if (res.code == 0) {
-        if (store.canClaimFtdPrivilege) {
+        if (store.canClaimFtdPrivilege && isAndroid()) {
           isHasUnusedCoupon.value = true;
           store.hasUnusedCoupon = true;
         } else {
           store.hasUnusedCoupon = false;
         }
-        if ((store.canSpinPrivilegeCoupon)) {
+        if ((store.canSpinPrivilegeCoupon) && isAndroid()) {
           promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
           popupPromo.value = "newplayer-spin-wheel"
         }

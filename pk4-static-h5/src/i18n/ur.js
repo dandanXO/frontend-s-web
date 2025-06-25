@@ -85,6 +85,11 @@ export default {
     homeCodeBonus: {
       congratsWonFreeCash: "مبارک ہو، آپ نے مفت نقدی جیت لی ہے!",
       enterCodeToClaim: "اسے دعوی کرنے کے لیے نقدی کا کوڈ درج کریں۔"
+    },
+    appLoginBonus: {
+      validatePhoneAndEmail: "براہ کرم پہلے اپنا فون منسلک کریں",
+      loginTomorrow: "براہ کرم کل لاگ اِن کریں تاکہ آپ اپنا پراسرار انعام حاصل کر سکیں۔",
+      claimBonus: "آپ کو 100 روپے کا بونس موصول ہوا ہے!"
     }
   },
   form: {
@@ -779,7 +784,7 @@ export default {
   bankCard: {
     bankAccountNum: "بینک اکاؤنٹ نمبر",
     pleaseEnterCardAccount: "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
-    bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 16 ہندسوں یا اس سے زیادہ ہونا چاہیے",
+    bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 13 سے 20 ہندسوں کے درمیان ہونا چاہیے۔",
     bankCardDisallowDecimal: "بینک اکاؤنٹ نمبر میں اعشاری نمبر نہیں ہو سکتے",
     nameofCardAcc: "کارڈ اکاؤنٹ کا نام",
     insertCardAccName: "براہ کرم کارڈ اکاؤنٹ کا نام درج کریں"

@@ -758,7 +758,7 @@ export default {
   bankCard: {
     bankAccountNum: "بینک اکاؤنٹ نمبر",
     pleaseEnterCardAccount: "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
-    bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 13 سے 16 ہندسوں کے درمیان ہونا چاہیے۔",
+    bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 13 سے 20 ہندسوں کے درمیان ہونا چاہیے۔",
     bankCardDisallowDecimal: "بینک اکاؤنٹ نمبر میں اعشاری نمبر نہیں ہو سکتے",
     nameofCardAcc: "کارڈ اکاؤنٹ کا نام",
     insertCardAccName: "براہ کرم کارڈ اکاؤنٹ کا نام درج کریں",

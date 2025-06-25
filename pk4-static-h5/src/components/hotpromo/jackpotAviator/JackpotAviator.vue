@@ -1,40 +1,40 @@
 <template>
   <template v-if="mode === 'MAIN'">
-      <q-tabs
-        v-model="timeframe"
-        class="timeframe-tabs q-mb-lg"
-        color="yellow"
-        no-caps
-        narrow-indicator
-        indicator-color="yellow"
-      >
-        <q-tab name="DAILY" :label="$t('hotPromo.jackpotAviator.daily')"></q-tab>
-        <q-tab name="WEEKLY" :label="$t('hotPromo.jackpotAviator.weekly')"></q-tab>
-      </q-tabs>
+    <q-tabs
+      v-model="timeframe"
+      class="timeframe-tabs q-mb-lg"
+      color="yellow"
+      no-caps
+      narrow-indicator
+      indicator-color="yellow"
+    >
+      <!-- <q-tab name="DAILY" :label="$t('hotPromo.jackpotAviator.daily')"></q-tab> -->
+      <!-- <q-tab name="WEEKLY" :label="$t('hotPromo.jackpotAviator.weekly')"></q-tab> -->
+    </q-tabs>
 
-      <div class="jackpot">
-        <JackpotTicker :timeframe="timeframe" />
+    <div class="jackpot">
+      <JackpotTicker :timeframe="timeframe" />
 
-        <div class="rules-ribbon" @click="mode = 'RULES'">{{ $t("hotPromo.jackpotAviator.rules") }}</div>
-        <div class="history-ribbon" @click="isShowHistoryPopup = true">{{ $t("hotPromo.jackpotAviator.history") }}</div>
-      </div>
+      <div class="rules-ribbon" @click="mode = 'RULES'">{{ $t("hotPromo.jackpotAviator.rules") }}</div>
+      <div class="history-ribbon" @click="isShowHistoryPopup = true">{{ $t("hotPromo.jackpotAviator.history") }}</div>
 
       <div class="receive-btn" @click="onClickReceive">
         {{ $t("hotPromo.jackpotAviator.receive") }}
       </div>
+    </div>
 
-      <template v-if="isLoadingRanking">
-        <img
-          style="width: 100px; margin: 100px auto"
-          src="../../../assets/images/promotion/hotpromo/jackpot-aviator/podium-loader.gif"
-        />
-      </template>
-      <template v-else>
-        <RankPodium :rankingList="rankingList" />
-        <HistoryTable :historyList="rankingList" />
-      </template>
+    <template v-if="isLoadingRanking">
+      <img
+        style="width: 100px; margin: 100px auto"
+        src="../../../assets/images/promotion/hotpromo/jackpot-aviator/podium-loader.gif"
+      />
+    </template>
+    <template v-else>
+      <RankPodium :rankingList="rankingList" />
+      <HistoryTable :historyList="rankingList" />
+    </template>
 
-      <RankDetails :rankDetails="rankDetails" :isLoadingRanking="isLoadingRanking" />
+    <RankDetails :rankDetails="rankDetails" :isLoadingRanking="isLoadingRanking" />
   </template>
   <template v-else-if="mode === 'RULES'">
     <JackpotAviatorRules :onClickBackBtn="() => (mode = 'MAIN')" :rankingBonusRatioList="rankingBonusRatioList" />
@@ -171,16 +171,21 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .jackpot {
-  background: url("../../../assets/images/promotion/hotpromo/jackpot-aviator/jackpot-bg.png") no-repeat center center;
+  background: url("../../../assets/images/promotion/hotpromo/jackpot-aviator/jackpot-bg.gif") no-repeat 0% 25%;
   // aspect-ratio: 1125/500;
-  aspect-ratio: 750 / 550;
-  background-size: 100% 100%;
+  background-size: cover;
+  
+  min-height: 420px;
   position: relative;
-  min-height: 275px;
+  margin-top: -30px;
 
   .rules-ribbon {
     // background-color: #30af88;
-    background: linear-gradient(180deg, #fb4f77 0%, #da093a 100%);
+    // background: linear-gradient(180deg, #fb4f77 0%, #da093a 100%);
+    
+    // background: linear-gradient(180deg, #9c3624, #3f1203);
+    background: linear-gradient(to bottom, #fcd34d 0%, #f59e0b 50%, #d97706 100%);
+    color: #4b1d06;
     position: absolute;
     width: 74px;
     height: 23px;
@@ -196,7 +201,10 @@ onMounted(() => {
 
   .history-ribbon {
     // background-color: #30af88;
-    background: linear-gradient(180deg, #fb4f77 0%, #da093a 100%);
+    // background: linear-gradient(180deg, #fb4f77 0%, #da093a 100%);
+    // background: linear-gradient(180deg, #9c3624, #3f1203);
+    background: linear-gradient(to bottom, #fcd34d 0%, #f59e0b 50%, #d97706 100%);
+    color: #4b1d06;
     position: absolute;
     width: 74px;
     height: 26px;
@@ -237,22 +245,49 @@ onMounted(() => {
   }
 }
 
+// .receive-btn {
+//   background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/receive-btn.png') center center no-repeat;
+//   background-size: 100% 100%;
+//   width: 90px;
+//   height: 24px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin: 0 auto;
+//   text-transform: uppercase;
+//   color: #582B00;
+//   font-family: Poppins;
+//   font-weight: 900;
+//   font-size: 14.88px;
+//   line-height: 20.27px;
+//   letter-spacing: 0px;
+//   text-align: center;
+//   text-transform: uppercase;
+//   position: absolute;
+//   left: 50%;
+//   top: 82%;
+//   transform: translate(-50%, -50%);
+
+// }
 .receive-btn {
-  background: linear-gradient(180deg, #fb4f77 0%, #da093a 100%);
-  padding: 20px;
-  border-radius: 4px;
-  width: 202px;
-  height: 46px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  font-family: Poppins;
-  font-size: 16.9px;
-  font-weight: 900;
-  line-height: 19.16px;
+  background: linear-gradient(to bottom, #fcd34d 0%, #f59e0b 50%, #d97706 100%);
+  border: 2px solid #b45309;
+  border-radius: 30px;
+  color: #4b1d06;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 5px 30px;
   text-align: center;
+  text-shadow: 0px 0px 2px #4b1d06;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6), 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   text-transform: uppercase;
+  font-weight: bold;
 }
 
 .history-container {
@@ -266,7 +301,7 @@ onMounted(() => {
     color: #fff96f;
     font-size: 16px;
     text-align: center;
-    background-image: url(../../../assets/images/index/modal/congrats-highlight-bg.png);
+    // background-image: url(../../../assets/images/index/modal/congrats-highlight-bg.png);
     padding: 8px 12px;
     background-repeat: no-repeat;
     background-size: 70% 100%;
@@ -302,14 +337,6 @@ onMounted(() => {
   }
   :deep(.q-tab--active .q-tab__indicator) {
     background: #fff900;
-  }
-}
-
-@media (max-width: 350px) {
-  .receive-btn {
-    padding: 10px;
-    width: 150px;
-    height: 30px;
   }
 }
 </style>
