@@ -183,6 +183,7 @@ const https = (api) => {
   const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
   const xf1Host = "affiliate-web.gwd4jptunz.com";
   const xf2Host = "xf1-affiliate.gwd4jptunz.com"
+  const br2Host = "br2-affiliate.ppk8d1a5rw5.com"
   // const vnmHost = "vnm-affiliate.th80to83w1.com"
   // const krwHost = "krw-affiliate.hiemloelebc.com";
   // const testLocal = "localhost:9998"
@@ -195,6 +196,8 @@ const https = (api) => {
   //Only Global or China.
   if (currentHost.indexOf("-cn") > -1 || currentHost.indexOf(lh2Host) > -1 || currentHost.indexOf(lh3Host) > -1 || currentHost.indexOf(xf1Host) > -1 || currentHost.indexOf(xf2Host) > -1 || isLocalhost) {
     apiUrl = isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_AFF_API)
+  } else if (currentHost.indexOf("br2-") > -1 || currentHost.indexOf(br2Host) > -1) {
+    apiUrl = isAff ? process.env.VUE_APP_BR2_RST_API : (isCr ? process.env.VUE_APP_BR2_CR_API : process.env.VUE_APP_BR2_AFF_API)
   } else {
     apiUrl = isAff ? process.env.VUE_APP_GLOBAL_RST_API : (isCr ? process.env.VUE_APP_GLOBAL_CR_API : process.env.VUE_APP_GLOBAL_AFF_API)
   }
