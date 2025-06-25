@@ -66,8 +66,8 @@ import RedepositBonusPromo from "./hotpromo/redeposit-bonus/RedepositBonusPromo.
 import VipPlanBettingUpgrade from "./hotpromo/vip-plan-betting-upgrade/VipPlanBettingUpgrade.vue";
 import CashbackWeeklyPromo from "./hotpromo/cashback-weekly/CashbackWeeklyPromo.vue";
 import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRainPromo.vue";
-import RedepositBonus100Promo from "../components/hotpromo/redepositBonus100/RedepositBonus100Promo.vue";
-import BetCashbackPromo from "../components/hotpromo/bet-cashback/betCashbackPromo.vue";
+import RedepositBonus100Promo from "../components/hotpromo/redeposit-bonus/RedepositBonusPromo.vue";
+import BetCashbackPromo from "../components/hotpromo/bet-cashback/BetCashbackPromo.vue";
 import DailySecondDepositPromo from "../components/hotpromo/daily-second-deposit/DailySecondDepositPromo.vue";
 import LossRebatePromo from "../components/hotpromo/loss-rebate/LossRebatePromo.vue";
 import FtdBonusPromo from "../components/hotpromo/ftdBonus/FtdBonusPromo.vue";
