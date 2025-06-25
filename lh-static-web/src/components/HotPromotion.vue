@@ -86,6 +86,7 @@
     <IemMelbourne2025 v-if="list.redirectUrl === 'lh1-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS5 v-if="list.redirectUrl === 'lh1-pgl-wallachia-s5'" :promo-code="list.promoCode" />
     <tpWorldChamp2025Sa v-if="list.redirectUrl === 'lh1-tp-world-champ-2025-sa'" :promo-code="list.promoCode" />
+    <iemCologne2025 v-if="list.redirectUrl === 'lh1-iem-cologne-2025'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'lh1-blast-slam-3-2025'" :promo-code="list.promoCode" />
     <sport-refer-bet-bonus v-else-if="list.redirectUrl === 'lh1-sport-refer-bet-bonus'" :promo-code="list.promoCode" />
 
@@ -203,6 +204,7 @@ import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
 import PglWallachiaS5 from "./hotpromo/pgl-wallachia-s5/PglWallachiaS5.vue";
 import tpWorldChamp2025Sa from "./hotpromo/tp-world-champ-2025-sa/tp-world-champ-2025-sa.vue";
+import iemCologne2025 from "./hotpromo/iemCologne2025/iemCologne2025.vue";
 import BlastSlam32025 from "./hotpromo/blast-slam-3-2025/BlastSlam32025.vue";
 import sportReferBetBonus from "./hotpromo/sport-refer-bet-bonus/sport-refer-bet-bonus.vue";
 import Lh1Enc2025 from "./hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue";
@@ -272,6 +274,7 @@ export default defineComponent({
     IemMelbourne2025,
     PglWallachiaS5,
     tpWorldChamp2025Sa,
+    iemCologne2025,
     BlastSlam32025,
     PglAstana2025,
     FpSlotPromo,
