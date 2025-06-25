@@ -912,6 +912,7 @@ export default {
     longTerm: "Válida por tempo indeterminado",
     eligibility: "Elegíveis",
     successfulDepositMember: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
+    betMember: "Todos os membros que realizaram apostas",
     newMember: "Todos os novos membros registrados",
     desc: "Descrição",
     tnc: "Regras da Promoção",
@@ -969,6 +970,43 @@ export default {
         "Se você receber um pontos de dinheiro extra, pode jogar jogos de graça e ganhar ainda mais dinheiro real.",
       tnc06: "Se voce nao retirar o dinheiro dentro de 3 dias,ele ser perdido.",
       tnc07: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
+    },
+    dailySecondDeposit: {
+      description: "O primeiro depósito do dia dá direito a 10% de bônus sobre o valor depositado",
+      tnc01: "Cada membro pode aproveitar esta promoção uma vez por dia;",
+      tnc02:
+        "Após realizar o primeiro depósito do dia com sucesso, o membro pode solicitar um bônus de 10% sobre o valor depositado durante o período da promoção;",
+      tnc03: "O valor mínimo de depósito é de R$30;",
+      tnc04: "O bônus máximo é de R$288",
+      tnc05:
+        'Para participar da promoção, é necessário enviar uma solicitação. Membros qualificados devem clicar no botão "Participar Agora" nesta página para enviar;',
+      tnc06:
+        "O valor do depósito mais o bônus devem ser apostados no mínimo 12 vezes antes de ser possível realizar saques;",
+      tnc07: "A AKB188 reserva-se o direito de interpretação final desta promoção para evitar qualquer mal-entendido."
+    },
+    betCashback: {
+      description: "Cashback diário com base no valor apostado e na porcentagem correspondente",
+      tnc01: "O cashback do dia anterior será creditado automaticamente às 18h (horário de Brasília) todos os dias;",
+      tnc02: "O valor do cashback é calculado como: valor apostado no dia anterior × porcentagem de reembolso;",
+      tnc03: "Quanto maior o valor apostado, maior a porcentagem de cashback, podendo chegar a até 3%;",
+      tnc04: "Sem limite máximo para o valor de cashback;",
+      tnc05: "O bônus de cashback deve ser apostado pelo menos 1 vez antes de poder ser sacado;",
+      tnc06:
+        "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção."
+    },
+    lossRebate: {
+      description: "Cashback baseado na porcentagem do valor perdido no dia anterior",
+      tnc01: "Receba 15% do valor perdido no dia anterior diariamente;",
+      tnc02:
+        "O resgate deve ser feito após as 12h (horário de Brasília). Caso não seja solicitado no prazo, será considerado como desistência;",
+      tnc03: "O valor do resgate é calculado como: valor real do prejuízo × porcentagem de cashback",
+      tnc04:
+        "Se você não tiver feito nenhuma aposta durante o período da promoção ou tiver lucrado no total, não terá direito ao bônus de resgate;",
+      tnc05: "É necessário ter perdido pelo menos R$10 no dia anterior para poder solicitar o bônus;",
+      tnc06: "O valor máximo de resgate por pessoa por dia é de R$10.000;",
+      tnc07: "O bônus recebido deve ser apostado pelo menos 3 vezes antes de poder ser sacado;",
+      tnc08:
+        "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção."
     }
   },
   maintenance: {
