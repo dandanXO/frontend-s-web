@@ -70,6 +70,7 @@ const MAXIMUM_MESSAGE_LENGTH = 5000;
 const MESSAGE_HISTORY_START_TIME = 1000 * 60 * 5; // 5 minutes
 
 const LIVESTREAM_SYNC_INTERVAL = 1000 * 10; // 10 seconds
+const LIVESTREAM_LIST_SYNC_INTERVAL = 1000 * 5; // 5 seconds
 const MAXIMUM_MESSAGE_PROCESS_DELAY_COUNT = 5;
 
 const DEFAULT_MESSAGES_HISTORY_META = {
@@ -93,6 +94,7 @@ const list = ref([]);
 const currentLiveId = ref(null);
 const messageTimer = ref(null);
 const livestreamTimer = ref(null);
+const livestreamListTimer = ref(null);
 const lastSyncMessageTime = ref(Date.now());
 const messageHistoryStartTime = ref();
 const unsortMessages = ref([]);
@@ -100,10 +102,6 @@ const gameModalRef = ref(null);
 const livestreamVideoRef = ref(null);
 const livestreamSyncAbortController = ref(null);
 const chatHistoryAbortController = ref(null);
-const livestreamListMeta = ref({
-  current: 1,
-  max: 1
-});
 const isLivestreamListLoading = ref(false);
 const isFirstMessageSync = ref(true);
 const processedUserName = ref();
@@ -197,9 +195,8 @@ const parseLivestreamData = (data) => {
 };
 
 const getData = () => {
-  if (livestreamListMeta.value.current > livestreamListMeta.value.max) return;
   isLivestreamListLoading.value = true;
-  getLivestreamList(livestreamListMeta.value.current)
+  getLivestreamList()
     .then(async (res) => {
       if (res.code === 0) {
         const parsedData = res.data.streamList.map(parseLivestreamData);
@@ -210,8 +207,8 @@ const getData = () => {
           emit("livestreamVisible", true);
         }
         vipStatus.value = !!res.data.vipStatus;
-        list.value.push(...parsedData);
-        if (parsedData.length && livestreamListMeta.value.current === 1) {
+        list.value = parsedData;
+        if (parsedData.length) {
           const { _earliestLivestream, _latestWatchLivestream } = parsedData.reduce(
             (result, livestream) => {
               if (!result._earliestLivestream) {
@@ -232,8 +229,6 @@ const getData = () => {
             currentLiveId.value = _earliestLivestream.streamId;
           }
         }
-        livestreamListMeta.value.current++;
-        // livestreamListMeta.value.max = res.data.pages;
       }
     })
     .finally(() => {
@@ -475,12 +470,17 @@ watch(currentLiveData, (livestream) => {
 onMounted(() => {
   getData();
   resetSyncLivestreamInterval(true);
+  livestreamListTimer.value = setInterval(getData, LIVESTREAM_LIST_SYNC_INTERVAL);
 });
 
 onUnmounted(() => {
   if (messageTimer.value) {
     clearTimeout(messageTimer.value);
     messageTimer.value = null;
+  }
+  if (livestreamListTimer.value) {
+    clearInterval(livestreamListTimer.value);
+    livestreamListTimer.value = null;
   }
   resetSyncLivestreamInterval();
   messagesHistoryMeta.value = DEFAULT_MESSAGES_HISTORY_META;

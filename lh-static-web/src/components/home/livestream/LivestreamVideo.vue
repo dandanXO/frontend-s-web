@@ -323,7 +323,7 @@ const initPlayer = async (play = false) => {
     showLatestScreenCanvas.value = false;
     isLatestScreenRecorded.value = false;
   } catch (e) {
-    console.error(e)
+    console.error(e);
   }
 };
 
