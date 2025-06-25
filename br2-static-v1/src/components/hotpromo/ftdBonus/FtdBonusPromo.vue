@@ -81,6 +81,7 @@
 import { userStore } from "src/stores";
 import { computed, ref, onMounted } from "vue";
 import { api, eventapi } from "boot/axios";
+import { useRouter } from "vue-router";
 
 const promoInfo = ref({});
 
@@ -97,17 +98,20 @@ const loadPromoInit = () => {
     .catch((e) => {});
 };
 
+const router= useRouter();
+
 const claimPromo = () => {
-  eventapi
-    .post("/session/deposit-bonus/claim?promoCode=br2-ftd-bonus")
-    .then((res) => {
-      // debugger;
-      if (res.code === 0) {
-        showPrizePopup.value = true;
-        prizeAmount.value = res.data;
-      }
-    })
-    .catch((e) => {});
+  router.push("/deposit")
+  // eventapi
+  //   .post("/session/deposit-bonus/claim?promoCode=br2-ftd-bonus")
+  //   .then((res) => {
+  //     // debugger;
+  //     if (res.code === 0) {
+  //       showPrizePopup.value = true;
+  //       prizeAmount.value = res.data;
+  //     }
+  //   })
+  //   .catch((e) => {});
 };
 
 const showPrizePopup = ref(false);
