@@ -6,7 +6,7 @@
       <div class="header">{{ $t("hotPromo.jackpotAviator.betVolume") }}</div>
     </div>
 
-    <div class="scrollable">
+    <div class="scrollable" v-if="props?.historyList?.length > 0">
       <div
         class="item"
         v-for="(historyListItem, historyListItemIndex) in props?.historyList?.slice(3)"
@@ -22,6 +22,10 @@
         <div>{{ historyListItem.loginName }}</div>
         <div class="betVolume">{{ historyListItem.amount?.toFixed(2) }}</div>
       </div>
+    </div>
+    
+    <div style="display: flex; padding: 10px; justify-content: center; align-items: center;" v-else>
+        No records
     </div>
   </div>
 </template>

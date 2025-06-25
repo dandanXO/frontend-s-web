@@ -58,7 +58,7 @@
         <q-page-container>
           <div class="terms-conditions">
             <div class="terms-title">
-              <img src="../../assets/images/promotion/hotpromo/app-login/rules-title.png">
+              <img src="../../assets/images/promotion/hotpromo/app-login-bonus/rules-title.png">
             </div>
             <ul>
               <li>To withdraw the bonus, you need to complete 15 times of effective turnover. To withdraw the bonus, you need to deposit at least once (only for slot machine fishing)</li>
@@ -557,7 +557,7 @@ onMounted(() => {
 }
 .rules-container {
   .q-page-container {
-    background: url(../../assets/images/promotion/hotpromo/app-login/rules-bg.png)no-repeat top center;
+    background: url(../../assets/images/promotion/hotpromo/app-login-bonus/rules-bg.png)no-repeat top center;
     background-size: contain;
     background-color: #090F1E;
     height: calc(100% - 50px);

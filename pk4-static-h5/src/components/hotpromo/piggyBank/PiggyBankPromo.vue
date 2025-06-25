@@ -1,4 +1,8 @@
 <template>
+  <img
+    class="promo-banner-img"
+    src="./../../../assets/images/promotion/hotpromo/piggy-bank/promo-banner.png"
+  />
   <div class="piggy-bank-promo-wrapper">
     <div class="piggy-bank-claim-wrapper">
       <img
@@ -108,6 +112,7 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .piggy-bank-promo-wrapper {
+  padding: 20px;
   .piggy-bank-claim-wrapper {
     display: flex;
     flex-direction: column;

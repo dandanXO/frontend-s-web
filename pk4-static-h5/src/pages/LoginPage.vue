@@ -63,7 +63,7 @@
           {{ $t("btn.confirm") }}
         </q-btn>
 
-        <div class="google-login-wrapper">
+        <!-- <div class="google-login-wrapper">
           <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.svg" />
           <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />
           <template v-if="isAndroid()">
@@ -83,7 +83,7 @@
               {{ $t("btn.signinWithGoogle") }}
             </q-btn>
           </template>
-        </div>
+        </div> -->
       </div>
 
       <hr style="background: #F1F3F5;height: 2px;border: none;width: 100%;margin: 20px 0;" />
