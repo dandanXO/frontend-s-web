@@ -132,6 +132,12 @@
       :params="list.param"
     />
 
+    <EsportWorldCup2025
+      v-if="list.redirectUrl === 'lh1-esport-world-cup-2025'"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
+
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -214,6 +220,7 @@ import DreamLeagueS26 from "./hotpromo/dream-league-s26/DreamLeagueS26.vue";
 import WorldCup2025 from "./hotpromo/worldcup-2025/Worldcup2025.vue";
 import NewUserSportBonus2025 from "./hotpromo/new-user-sport-bonus-2025/NewUserSportBonus2025.vue";
 import FissureUniverseS5 from "./hotpromo/fissure-universe-s5/FissureUniverseS5.vue";
+import EsportWorldCup2025 from "./hotpromo/esport-world-cup-2025/EsportWorldCup2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -275,7 +282,8 @@ export default defineComponent({
     Lh1DuanWuRewards,
     WorldCup2025,
     NewUserSportBonus2025,
-    FissureUniverseS5
+    FissureUniverseS5,
+    EsportWorldCup2025
   },
   props: {
     list: {
