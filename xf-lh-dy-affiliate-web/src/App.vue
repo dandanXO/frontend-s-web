@@ -34,6 +34,8 @@ onMounted(() => {
     link.href = '/ind-favicon.ico';
   }else if(window.location.pathname.indexOf("ind") > -1 || window.location.hostname.indexOf("iw2-") > -1){
     link.href = '/ind2-favicon.ico';
+  }else if(window.location.pathname.indexOf("br2") > -1 || window.location.hostname.indexOf("br2-")){
+    link.href = '/br2-favicon.ico';
   }else if(window.location.pathname.indexOf("krw") > -1 || window.location.hostname.indexOf("krw-") > -1){
     link.href = '/kr-favicon.ico';
   }else{
@@ -63,6 +65,8 @@ onMounted(() => {
       window.location.pathname = '/pak/login'
     } else if (window.location.host.indexOf('br1') > -1 || window.location.hostname.indexOf("br1-") > -1 || window.location.href.includes('br1-')) {
       window.location.pathname = '/br1/login'
+      } else if (window.location.host.indexOf('br2') > -1 || window.location.hostname.indexOf("br2-") > -1 || window.location.href.includes('br2-')) {
+      window.location.pathname = '/br2/login'
     } else {
       window.location.pathname = '/dy/login'
     }

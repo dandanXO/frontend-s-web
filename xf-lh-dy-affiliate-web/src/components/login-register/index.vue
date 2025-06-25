@@ -8,6 +8,7 @@
       props.siteId !== '10' ? '' : 'kr',
       props.siteId !== '11' ? '' : 'pak',
       props.siteId !== '15' ? '' : 'kaka',
+      props.siteId !== '28' ? '' : 'br2',
     ]"
   >
     <img
@@ -619,6 +620,7 @@ import viLogo from '@/assets/images/vi/vilogo.svg'
 import kakaLogo from '@/assets/images/kaka/logo-kaka-game.png'
 import krLogo from '@/assets/images/kr/kr-logo.png'
 import pakLogo from '@/assets/images/pak/logowhitee.png'
+import br2Logo from '@/assets/images/br2/br2-logo.png'
 import { getVerificationImage } from '@/api/verification'
 import {
   getVerificationCode,
@@ -1465,11 +1467,22 @@ export default defineComponent({
         setLanguage('zh')
       }
       if (props.siteId === '18') {
+        console.log(props.siteId)
         currentSite.value.firstLiner = 'Começa a partir de 55ACE'
         currentSite.value.secondLiner =
           'Torne-se uma lenda<br>Ou torne-se o elogista da lenda?'
         currentSite.value.logo = indLogo
         state.loginForm.site = 'BR1'
+        currentSite.value.lang = 'PT'
+        setLanguage('pt')
+      }
+      if (props.siteId === '28') {
+        console.log(props.siteId)
+        currentSite.value.firstLiner = 'Começa a partir de AKB188'
+        currentSite.value.secondLiner =
+          'Torne-se uma lenda<br>Ou torne-se o elogista da lenda?'
+        currentSite.value.logo = br2Logo
+        state.loginForm.site = 'BR2'
         currentSite.value.lang = 'PT'
         setLanguage('pt')
       }
@@ -1964,6 +1977,36 @@ a {
         background-size: cover;
         padding: 10px;
       }
+    }
+  }
+
+  &.br2 {
+    background: url('../../assets/images/br2/br2-bg.png') no-repeat center;
+    height: 100vh;
+    .logo {
+      position: absolute;
+      left: 70px;
+      top: 40px;
+      width: 207px;
+    }
+
+    .loginPage .left .first-liner {
+      max-width: 750px;
+      width: 750px;
+    }
+
+    .loginPage .left .second-liner {
+      max-width: 600px;
+      width: 600px;
+    }
+
+    .inner {
+      max-width: 1300px;
+    }
+
+    .common-btn {
+      background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+      color: #fff;
     }
   }
 
