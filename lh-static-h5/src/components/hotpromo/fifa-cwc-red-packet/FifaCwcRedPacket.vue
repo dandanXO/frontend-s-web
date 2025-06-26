@@ -155,7 +155,7 @@ const store = userStore();
 const amount = ref(0);
 const loadingClaim = ref(false);
 
-const isBonusDialog = ref(true);
+const isBonusDialog = ref(false);
 
 const handleClaimBonus = () => {
   loadingClaim.value = true;
