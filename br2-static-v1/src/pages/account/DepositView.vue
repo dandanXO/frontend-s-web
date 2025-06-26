@@ -17,6 +17,10 @@
             +{{ get2ndDepoCommaAmount(item.amount) }}
           </q-badge>
 
+          <q-badge v-if="selectedPrivilege.code === 'br2-ftd-bonus'" color="green" floating rounded>
+            +{{ getFtdCommaAmount(item.amount) }}
+          </q-badge>
+
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -86,6 +90,11 @@
           <div  v-if="form.localAmount >= 20 && selectedPrivilege.code === 'br2-redeposit-bonus' && form.localAmount" class="font-small text-tealgreen"
                 style="width: calc(100% - 18px); margin: 10px auto 8px">
             Você receberá um bônus extra Rs{{ get2ndDepoCommaAmount(form.localAmount) }}
+          </div>
+
+          <div  v-if="selectedPrivilege.code === 'br2-ftd-bonus' && form.localAmount" class="font-small text-tealgreen"
+                style="width: calc(100% - 18px); margin: 10px auto 8px">
+            Você receberá um bônus extra Rs{{ getFtdCommaAmount(form.localAmount) }}
           </div>
 
           <q-input
