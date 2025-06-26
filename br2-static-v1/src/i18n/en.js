@@ -962,7 +962,7 @@ export default {
       tnc01: "Each member can enjoy this promotion once per day;",
       tnc02:
         "After successfully making the first deposit of the day, the member may claim a 10% bonus on the deposited amount during the promotion period;",
-      tnc03: "The minimum deposit amount is R$30;",
+      tnc03: "The minimum deposit amount is R$20;",
       tnc04: "The maximum bonus amount is R$288;",
       tnc05:
         'To participate in this promotion, a request must be submitted. Eligible members must click the "Join Now" button on this page to submit;',
