@@ -25,7 +25,7 @@
               </div>
               <div class="hot-match-time">
                 {{ hotMatch.competitionTime }}
-                <div class="bet-btn" @click="$emit('betClick', hotMatch)">立即投注</div>
+                <div class="bet-btn" @click="$emit('betClick', hotMatch)">点击投注</div>
               </div>
               <div class="hot-match-team">
                 <img class="hot-match-img" :src="`${imgURL + hotMatch.teamTwoLogo}`" />
@@ -83,42 +83,67 @@ const hotMatchesByType = computed(() => {
   overflow: hidden;
 
   .hot-match-item {
+    --hot-match-item-bg: linear-gradient(#fff, #fff);
     background: unset;
     background-size: 100% 100%;
     aspect-ratio: 351 / 139;
     width: 100%;
     height: 150px;
     color: rgba(76, 76, 108, 1);
-    box-shadow: 0px -3.71px 3.71px 0px rgba(195, 212, 230, 1) inset, 0px 1.85px 0px 0px rgba(167, 194, 221, 1);
     border-radius: 10px;
     background: #fff;
+    box-shadow: 0px 4px 4px 0px #0000000d;
+    overflow: hidden;
+    background: none, var(--hot-match-item-bg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+
+    &.ESport {
+      background-image: url("../../assets/images/hotmatch/hotmatch-decorator-esport.png"), var(--hot-match-item-bg);
+    }
+
+    &.Basketball {
+      background-image: url("../../assets/images/hotmatch/hotmatch-decorator-basketball.png"), var(--hot-match-item-bg);
+    }
+
+    &.Football {
+      background-image: url("../../assets/images/hotmatch/hotmatch-decorator-football.png"), var(--hot-match-item-bg);
+    }
 
     .hot-match-info {
+      --match-info-padding: 10px;
       height: 100%;
-      padding: 10px;
+      padding-bottom: var(--match-info-padding);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
       gap: 10px;
       position: relative;
+      font-weight: 600;
 
       .hot-match-name,
       .hot-match-time {
         font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
           sans-serif;
-
         font-size: 14px;
-        font-weight: 400;
         line-height: 15px;
         color: rgba(76, 76, 108, 1);
         text-align: center;
+      }
+
+      .hot-match-name {
+        width: 100%;
+        background: #e7f3ff;
+        padding: calc(var(--match-info-padding) / 2) var(--match-info-padding);
       }
 
       .hot-match-scores {
         display: flex;
         align-items: center;
         gap: 10px;
+        padding: 0 var(--match-info-padding);
 
         .hot-match-time {
           width: 85px;
@@ -132,6 +157,7 @@ const hotMatchesByType = computed(() => {
             background: #fff;
             border-radius: 5px;
             cursor: pointer;
+            font-weight: 500;
             color: rgba(69, 139, 255, 1);
             border: rgba(69, 139, 255, 1) 1px solid;
             border-radius: 100px;
@@ -151,7 +177,6 @@ const hotMatchesByType = computed(() => {
             sans-serif;
 
           font-size: 14px;
-          font-weight: 400;
           line-height: 15px;
           color: rgba(76, 76, 108, 1);
           text-align: center;
@@ -199,26 +224,18 @@ const hotMatchesByType = computed(() => {
 .body--dark {
   .hot-match-items {
     .hot-match-item {
+      --hot-match-item-bg: linear-gradient(180deg, #384e79 0%, #212e4b 100%);
       box-shadow: none;
-      &.ESport {
-        background: url("../../assets/images/hotmatch/hotmatch-item-bg-dark-esport.png") no-repeat center center;
-        background-size: 100% 100%;
-      }
-
-      &.Basketball {
-        background: url("../../assets/images/hotmatch/hotmatch-item-bg-dark-basketball.png") no-repeat center center;
-        background-size: 100% 100%;
-      }
-
-      &.Football {
-        background: url("../../assets/images/hotmatch/hotmatch-item-bg-dark-soccer.png") no-repeat center center;
-        background-size: 100% 100%;
-      }
 
       .hot-match-info {
         .hot-match-name,
         .hot-match-time {
           color: #fff;
+        }
+
+        .hot-match-name {
+          background: #2c3d64;
+          background-blend-mode: overlay;
         }
 
         .hot-match-scores {

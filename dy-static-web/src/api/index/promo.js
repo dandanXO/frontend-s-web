@@ -744,7 +744,6 @@ export function claimChestBlastAustin(promoCode, type) {
   return server.EVENT.post(`/session/mission/claim?promoCode=${promoCode}&type=${type}`);
 }
 
-
 export function getTorontoMastersInit() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return server.EVENT.get(`/session/competition-loss/init?promoCode=dy2-valorant-masters-toronto-2025&v=${randNum}`);
@@ -761,4 +760,36 @@ export function getFifa2025PromoInit() {
 export function claimFifa2025PromoBonus() {
   const randNum = Math.floor(Math.random() * 1000) + 1;
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=dy2-fifa-2025&v=${randNum}`);
+}
+
+export function getDailySlotBonusInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.get(`/session/game-type-bonus/init?promoCode=dy2-daily-slot-bonus&v=${randNum}`);
+}
+export function claimDailySlotBonus() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return server.EVENT.post(`/session/game-type-bonus/claim?promoCode=dy2-daily-slot-bonus&v=${randNum}`);
+}
+export function getNewUserSportBonus2025Bonus(promoCode) {
+  return server.EVENT.get(`/session/game-type-bonus/init?promoCode=${promoCode}`);
+}
+export function claimNewUserSportBonus2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/game-type-bonus/claim?promoCode=${promoCode}`);
+}
+
+export function getFissureUniverseS5Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimFissureUniverseS5Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getEsportWorldCup2025Bonus(promoCode) {
+  return server.EVENT.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimEsportWorldCup2025Bonus(promoCode) {
+  return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+export function claimFifaCwcRedPacketBonus(item) {
+  return server.EVENT.get(`/redPacketVip/claim?promoCode=${item}`);
 }

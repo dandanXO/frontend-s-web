@@ -7,14 +7,11 @@
         </q-avatar>
 
         <div class="vip-details" @click="onVipClick">
-          <img src="../assets/images/index/vip-row.png" alt="" />
-          <div class="vip-level">
-            {{ store.vip }}
-          </div>
+          <img :src="require(`../assets/images/vip/badge/withLevel/vip-badge-${vipLevel}.png`)" alt="" />
         </div>
       </div>
 
-      <div class="nickname">{{ store.realName ? store.realName.replace(/,/g, ' ') : store.nickName }}</div>
+      <div class="nickname">{{ store.realName ? store.realName.replace(/,/g, " ") : store.nickName }}</div>
     </div>
 
     <div class="right-container">
@@ -30,7 +27,7 @@
         class="progress-bar"
         color="white"
       ></q-linear-progress>
-      <div class="win-gift-text">{{ $t("settings.depositMonthlytoWinGifts") }}</div>
+      <div class="win-gift-text">{{ $t("settings.betMonthlytoWinGifts") }}</div>
     </div>
   </div>
 </template>
@@ -42,9 +39,9 @@ import { convertToCommaAmount } from "src/boot/utils";
 
 const store = userStore();
 
-// progress bar
-const maxProgress = store.levelUpDeposit.toFixed(2);
-const progressRef = ref(store.currentDeposit.toFixed(2));
+const vipLevel = computed(() => store.vip.replace(/VIP/g, ""));
+const maxProgress = computed(() => store.levelUpBet.toFixed(2));
+const progressRef = computed(() => store.currentValidBet.toFixed(2));
 
 /**
  * NOTE: q-linear-progress
@@ -52,8 +49,7 @@ const progressRef = ref(store.currentDeposit.toFixed(2));
  * figma required linear-gradient which wasn't available in "color"
  * hence switch "background" to "color" & "color" to "background", reverse value 1 - result.
  */
-let progressBarRef = ref();
-progressBarRef.value = 1 - progressRef.value / maxProgress;
+const progressBarRef = computed(() => 1 - progressRef.value / maxProgress.value);
 
 const profileImg = [
   {
@@ -83,9 +79,10 @@ const profileImagePath = computed(() => {
   display: grid;
   grid-template-columns: auto 1fr;
   grid-gap: 10px;
-  align-items: center;
+  align-items: flex-start;
   margin: 1.5rem 0 1rem 0;
-  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+  background: url("../assets/images/index/profile-progress-banner-bg.png") no-repeat center;
+  box-shadow: 0px 4px 24px 0px #ff5f5180;
   border-radius: 8px;
   min-height: 130px;
   padding: 14px;
@@ -97,23 +94,20 @@ const profileImagePath = computed(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 100px;
 
     .profile-pic {
+      position: relative;
       margin: 0 15px 15px;
 
       .vip-details {
-        position: relative;
-        margin-left: 20px;
-        margin-bottom: 5px;
-        margin-top: -10px;
-
         img {
           display: block;
-          width: 100px;
+          width: 100%;
+          max-width: 56px;
           position: absolute;
-          top: -17px;
-          left: -45px;
+          left: 50%;
+          bottom: 0;
+          transform: translate(-50%, 50%);
         }
 
         .vip-level {
@@ -154,9 +148,8 @@ const profileImagePath = computed(() => {
     }
 
     .progress-bar {
-      border: 1px solid #fed87d;
       // background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+      background: #9e2790;
       border-radius: 100px;
       color: #320b5b;
     }

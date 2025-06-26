@@ -8,6 +8,7 @@ import { getRndInteger, isAndroid, isInPwa } from "boot/utils";
 import { t } from "./lang";
 import { errorMessages } from "./error-messages";
 import { userStore } from "src/stores";
+import { useUI } from "src/stores/ui";
 
 const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
@@ -60,6 +61,7 @@ function getInitApi(apiLinks, urlLsName) {
 export default boot(({ app, router }) => {
   app.use(createPinia());
   const store = userStore();
+  const ui = useUI();
 
   const onRequest = async (config) => {
     if (isRefreshing && !refreshWitheList.includes(config.url)) {
@@ -171,7 +173,8 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED || res.code === ResponseCode.ERROR_TOKEN_REVOKED) {
         SessionStorage.remove("TOKEN");
         LocalStorage.remove("TOKEN");
-        router.push("/login");
+        // router.push("/login");
+        ui.loginView = "login";
         location.reload();
         return;
       } else {
@@ -184,7 +187,8 @@ export default boot(({ app, router }) => {
           if (attemptTimes > 10) {
             SessionStorage.remove("TOKEN");
             LocalStorage.remove("TOKEN");
-            router.push("/login");
+            // router.push("/login");
+            ui.loginView = "login";
             return;
           }
           return refreshTokenAndRetry(response);
@@ -201,7 +205,8 @@ export default boot(({ app, router }) => {
             ok: { color: "brightbtn", label: "Login" },
             padding: "20px"
           }).onOk(() => {
-            router.push("/login");
+            // router.push("/login");
+            ui.loginView = "login";
           });
         }
 

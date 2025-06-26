@@ -22,7 +22,7 @@
 import { computed, ref, toRefs, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
-const props = defineProps(["modelValue", "hasWheel", "hasSpin"]);
+const props = defineProps(["modelValue", "hasWheel", "hasSpin", "hasNewPlayer"]);
 const { modelValue } = toRefs(props);
 
 const emit = defineEmits("update:modelValue");
@@ -32,11 +32,14 @@ const isAdded = ref(false);
 const isAddedSpin = ref(false);
 
 const promoList = ref([
-  { code: "money-rain", name: t("home.cashGift") },
-  { code: "lucky-spin-wheel", name: t("home.welcomeNewPlayer") }
+  // { code: "money-rain", name: t("home.cashGift") },
+  // { code: "lucky-spin-wheel", name: t("home.welcomeNewPlayer") }
 ]);
 if (props.hasWheel && !isAdded.value) {
   promoList.value.push({ code: "mega-sharing-wheel", name: t("home.MegaSharingRoulette") });
+}
+if (props.hasNewPlayer && !isAddedSpin.value) {
+  promoList.value.push({ code: "newplayer-spin-wheel", name: t("home.welcomeNewPlayer") });
 }
 if (props.hasSpin && !isAddedSpin.value) {
   promoList.value.push({ code: "spin-lucky-wheel", name: t("home.spinLuckyWheel") });
@@ -51,6 +54,10 @@ watch(props, (newVal, oldVal) => {
     isAddedSpin.value = true;
     promoList.value.push({ code: "spin-lucky-wheel", name: t("home.spinLuckyWheel") });
   }
+  if (newVal.hasNewPlayer === true) {
+    isAddedSpin.value = true;
+    promoList.value.push({ code: "newplayer-spin-wheel", name: t("home.welcomeNewPlayer") });
+  }
 });
 
 const currentPromo = computed(() => {
@@ -60,6 +67,8 @@ const currentPromo = computed(() => {
 
 const controllerStyle = computed(() => {
   switch (modelValue.value) {
+    case "newplayer-spin-wheel":
+      return "style-3";
     case "mega-sharing-wheel":
       return "style-2";
     case "money-rain":
@@ -163,6 +172,30 @@ const handleNextClick = () => {
       background-clip: border-box;
       &.selected {
         border: 1px solid #FFFFFF;
+      }
+    }
+  }
+  
+  &.style-3 {
+    --bg-color: #fff;
+    --selected-bg-color: #8FDAFF;
+    --border-color: #ffffffcc;
+    --selected-border-color: #fff;
+    --text-color: #0664D2;
+    --selected-text-color: #0664D2;
+
+    .swiper-btn-prev,
+    .swiper-btn-next {
+      background-clip: border-box;
+      background: #0664D2;
+    }
+
+    .promo-list-item {
+      background-clip: border-box;
+      &.selected {
+        border: 1px solid #1E74FF;
+        box-shadow: 0px 4px 4px 0px #15B1FF40 inset;
+        box-shadow: 0px 2px 0px 0px #65B4DF;
       }
     }
   }

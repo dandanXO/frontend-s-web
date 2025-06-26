@@ -2,27 +2,32 @@
   <q-page class="account-message-page">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noMessage')"></NoInfoComponent>
-    <q-card v-else v-for="(e, i) in mailData" :key="`${e}-${i}`" class="msg-container">
-      <img
-        class="new-message-ribbon"
-        src="../../assets/images/message/new-message-ribbon.svg"
-        v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1"
-      />
-      <div class="message-wrapper">
-        <q-card-section class="title">
-          <div>{{ e.title }}</div>
-        </q-card-section>
-        <q-card-section class="content">{{ e.content }}</q-card-section>
+    <template v-else v-for="(e, i) in mailData" :key="`${e}-${i}`">
+      <div class="time">{{ convertToGMTMinus3(e.sendTime) }}</div>
+      <q-card @click="onDetailsClick(e)" class="msg-container">
 
-        <q-card-section class="bottom-wrapper">
-          <div class="time">{{ convertToGMT7(e.sendTime) }}</div>
-          <q-btn class="detail-btn" @click="onDetailsClick(e)" flat unelevated>
-            {{ $t("btn.more") }}&nbsp;
-            <q-icon class="forward-icon" name="arrow_forward_ios" size="small" />
-          </q-btn>
-        </q-card-section>
-      </div>
-    </q-card>
+        <div class="message-wrapper">
+          <q-card-section class="title">
+            <div>{{ e.title }}</div>
+            <div
+              class="new-message-dot"
+              v-if="!e.status && store.readMsgLists.indexOf(e.id) === -1"
+            />
+          </q-card-section>
+          <q-card-section class="content">{{ e.content }}</q-card-section>
+
+<!--          <q-card-section class="bottom-wrapper">-->
+
+<!--            <q-btn class="detail-btn" @click="onDetailsClick(e)" flat unelevated>-->
+<!--              {{ $t("btn.more") }}&nbsp;-->
+<!--              <q-icon class="forward-icon" name="arrow_forward_ios" size="small" />-->
+<!--            </q-btn>-->
+<!--          </q-card-section>-->
+        </div>
+      </q-card>
+    </template>
+
+
   </q-page>
 </template>
 
@@ -31,7 +36,7 @@ import { ref, onMounted, onActivated } from "vue";
 import { useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
-import { convertToGMT55, convertToGMT7 } from "src/boot/utils";
+import {convertToGMTMinus3 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 
@@ -103,20 +108,39 @@ onActivated(() => {
 .account-message-page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  //gap: 20px;
   padding: 0 20px;
 }
+
+.time {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+}
 .msg-container {
-  padding: 1rem;
+  padding: 0.8rem 2rem 1.6rem;
   margin: 0;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: #171e2b;
+  border-radius: 6px;
+  background: #1F241F;
   position: relative;
   box-shadow: none;
+  margin-bottom: 6px;
+
+  .new-message-dot{
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    color: red;
+    background: red;
+    position:absolute;
+    right: 8px;
+    top: 8px;
+  }
 
   &:has(.new-message-ribbon) {
-    background: #27344a;
+    background: #1F241F;
   }
 
   .new-message-ribbon {
@@ -133,7 +157,7 @@ onActivated(() => {
     min-height: 100px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 
   .title {
@@ -141,6 +165,8 @@ onActivated(() => {
     font-weight: 700;
     display: flex;
     gap: 0.5rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
 
     .status {
       border-radius: 12.5rem;
@@ -157,9 +183,13 @@ onActivated(() => {
     font-size: 14px;
     // font-weight: 700;
     color: rgba(255, 255, 255, 0.5);
-    white-space: nowrap;
+    //white-space: nowrap;
+    //text-overflow: ellipsis;
+
     overflow: hidden;
-    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
   }
 
   .bottom-wrapper {
@@ -167,12 +197,6 @@ onActivated(() => {
     align-items: center;
     justify-content: space-between;
     margin: 1rem 0 0 0;
-
-    .time {
-      font-size: 1rem;
-      // font-weight: 700;
-      color: rgba(255, 255, 255, 0.5);
-    }
 
     .detail-btn {
       border-radius: 12.5rem;

@@ -161,7 +161,8 @@
             <marquee-text :repeat="5" :duration="announcementList.length * 500">
               <div v-if="announcementList">
                 <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-                  {{ a.content }}
+                  <!-- {{ a.content }} -->
+                  <span v-html="a.content"></span>
                 </span>
               </div>
             </marquee-text>
@@ -1247,8 +1248,8 @@
           <q-tab-panels v-model="activeKey" animated>
             <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
               <q-list style="min-height: auto">
-                <div v-for="(ann, idx) in announcementList" :key="idx" style="min-height: 50px">
-                  <span v-if="ann.typeId === tab.id">
+                <div v-for="(ann, idx) in announcementList" :key="idx">
+                  <span v-if="ann.typeId === tab.id" style="min-height: 50px">
                     <q-expansion-item
                       style="max-height: 75vh; overflow: auto"
                       group="somegroup"
@@ -1528,7 +1529,7 @@
     @closeGuide="closePlayerGuide"
   />
 
-  <template v-if="isAndroid()">
+  <!-- <template v-if="isAndroid()">
     <q-dialog class="isCentreDialog" v-if="popupPromo === 'lucky-spin-wheel'" :model-value="true">
       <div class="luckyspin-wrapper">
         <div class="luckyspin-header">
@@ -1556,7 +1557,7 @@
         </template>
       </CongratsModal>
     </q-dialog>
-  </template>
+  </template> -->
 
   <CongratsReuseableModal
     :isShowDialog="isShowCodeBonusModal"
@@ -1568,12 +1569,12 @@
     @handleBtnClose="isShowCodeBonusModal = false"
   />
 
-  <q-dialog class="isCentreDialog" v-model="isShowPrizeModal">
+  <!-- <q-dialog class="isCentreDialog" v-model="isShowPrizeModal">
     <div class="congrats-container" :class="{ ur: languageVal === 'ur' }">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
-      <!-- <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div> -->
+      <!- <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div> -->
       <!-- <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div> -->
-      <!-- <div class="congrats-title">You get a coupon，Recharge $300 Get</div> -->
+      <!-- <div class="congrats-title">You get a coupon，Recharge $300 Get</div> ->
       <div class="congrats-highlight">Rs28</div>
 
       <div class="congrats-button">
@@ -1582,7 +1583,7 @@
         </q-btn>
       </div>
     </div>
-  </q-dialog>
+  </q-dialog> -->
 
   <q-dialog class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true" persistent>
     <MoneyRainModal @closeModal="closeDialog">
@@ -1622,6 +1623,36 @@
       </template>
     </SpinLuckyWheelPromoHomePopup>
   </q-dialog>
+  <q-dialog class="isCentreDialog" v-model="isHasUnusedCoupon" @hide="isHasUnusedCoupon = false">
+    <div class="congrats-container">
+      <q-btn icon="close" round dense v-close-popup class="congrats-close" />
+      <div class="congrats-heading">COUPON</div>
+      <div class="congrats-coupons">
+        <img :src="require('../assets/images/index/modal/congrats-coupons.png')" />
+      </div>
+      <div class="congrats-title">{{ $t('hotPromo.unusedCoupons') }}</div>
+
+      <div class="congrats-button-container">
+        <q-btn no-caps unelevated class="congrats-btn" @click="handleNewPlayerDeposit">
+          {{ $t('btn.goNow') }}
+        </q-btn>
+      </div>
+    </div>
+  </q-dialog>
+  <q-dialog
+    v-if="popupPromo === 'newplayer-spin-wheel'  && route.path === '/home'"
+    full-width
+    :model-value="isShownNewPlayerWheel"
+    class="isCentreDialog spin-lucky-wheel-dialog"
+    persistent
+  >
+    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
+    <NewPlayerPromoHomePopup @close-dialog="closeDialog" ref="newPlayerPromoHomePopupRef">
+      <template #controller>
+        <PopupController v-model="popupPromo" :hasWheel="false" :hasSpin="false" :hasNewPlayer="true" />
+      </template>
+    </NewPlayerPromoHomePopup>
+  </q-dialog>
   <q-dialog v-model="isMediaSettingsModal">
     <MediaSettingsComponent :media="mediaCode" />
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
@@ -1634,8 +1665,10 @@
 
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
+  <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" />
   <!-- <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" /> -->
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
+  
 </template>
 
 <script setup>
@@ -1676,7 +1709,6 @@ import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
 import { useI18n } from "vue-i18n";
 import { eventapi } from "src/boot/axios";
-
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/scrollbar";
@@ -1695,6 +1727,9 @@ import SetFirstPasswordModal from "src/components/modal/SetFirstPasswordModal.vu
 import AddToHomeScreenModal from "src/components/modal/AddToHomeScreenModal.vue";
 import SpinLuckyWheelPromoSticky from "src/components/hotpromo/spin-lucky-wheel/PromoSticky.vue";
 import SpinLuckyWheelPromoHomePopup from "src/components/hotpromo/spin-lucky-wheel/HomePopup.vue";
+import DepositPromoModal from "src/components/modal/DepositPromoModal.vue";
+import NewPlayerPromoHomePopup from "src/components/hotpromo/newPlayerSpinWheel/NewPlayerPopup.vue";
+
 import { usePromoStore } from "src/stores/promo";
 import { storeToRefs } from "pinia";
 
@@ -1723,6 +1758,7 @@ const handleScroll = () => {
 };
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
+  store.getMemberInfo();
 });
 
 onUnmounted(() => {
@@ -1734,10 +1770,12 @@ const gameModules = ref([Navigation, Pagination]);
 
 const { t } = useI18n();
 const promoStore = usePromoStore();
-const { isShownSpinLuckyWheel } = storeToRefs(promoStore);
+const { isShownSpinLuckyWheel, isShownNewPlayerWheel } = storeToRefs(promoStore);
 // const isLuckyDrawModal = ref(false);
 // const isCongratsModal = ref(true);
 const isShowPrizeModal = ref(false);
+
+const isHasUnusedCoupon = ref(false);
 // const isMoneyRainModal = ref(false);
 const isMediaSettingsModal = ref(false);
 const popupPromo = ref("");
@@ -1911,6 +1949,8 @@ const isLiveTabVisible = ref(false);
 const liveTabRef = ref();
 
 const spinLuckyWheelPromoHomePopupRef = ref();
+const newPlayerPromoHomePopupRef = ref();
+
 
 const translatedCategoriesList = computed(() => {
   return categoriesList.value.map((category) => ({
@@ -4234,6 +4274,9 @@ watch(() => isAdditionalWithdrawSteps.value, checkWithdrawStep, { immediate: fal
 const afterActivated = useCustomerTrigger(() => {
   checkShowImgTop();
   checkHbPromo();
+  if (store.hasToken()) {
+    showSpinWheel();
+  }
 });
 
 const downloadAppRef = ref();
@@ -4241,6 +4284,11 @@ const downloadAppRef = ref();
 const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
   if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP") && spinLuckyWheelPromoHomePopupRef.value) {
     spinLuckyWheelPromoHomePopupRef.value.checkIsCanShowPopup();
+  }
+};
+const checkNewPlayerWheelPromoHomePopupCanShow = () => {
+  if (!sessionStorage.getItem("NEW_PLAYER_WHEEL_POPUP") && newPlayerPromoHomePopupRef.value) {
+    newPlayerPromoHomePopupRef.value.checkIsCanShowPopup();
   }
 };
 
@@ -4362,6 +4410,13 @@ watch(
     if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
   }
 );
+watch (
+  () => promoStore.isShownNewPlayerWheel,
+  async (val) => {
+    await nextTick();
+    if (val) checkNewPlayerWheelPromoHomePopupCanShow();
+  }
+)
 // watch(
 //   () => route.query.register,
 //   (newValue) => {
@@ -4378,6 +4433,11 @@ const hasInviteWheelPromo = ref(false);
 const handleReceiveCodeBonus = () => {
   router.push({ path: "/account", query: { openCodeModal: "true" } });
 };
+
+const handleNewPlayerDeposit = () => {
+  router.push({ path: '/deposit?from=home' })
+}
+
 const isShowRedemptionInPopup = ref(false);
 const checkCodeBonusModal = () => {
   eventapi.get("/session/promo-code-bonus/checkBonus").then((res) => {
@@ -4400,18 +4460,21 @@ const checkSpinWheel = () => {
   }
 };
 
+
 const showSpinWheel = () => {
   eventapi
     .get("/new-user-roulette/init")
     .then((res) => {
       if (res.code == 0) {
-        if (res.data.hasUnusedCoupon === "YES") {
-          isShowPrizeModal.value = true;
-        } else if (res.data.showRoulette === "YES") {
-          // isLuckyDrawModal.value = true;
-          if (!promoStore.isShownSpinLuckyWheel) {
-            popupPromo.value = "lucky-spin-wheel";
-          }
+        if (store.canClaimFtdPrivilege && isAndroid()) {
+          isHasUnusedCoupon.value = true;
+          store.hasUnusedCoupon = true;
+        } else {
+          store.hasUnusedCoupon = false;
+        }
+        if ((store.canSpinPrivilegeCoupon) && isAndroid()) {
+          promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
+          popupPromo.value = "newplayer-spin-wheel"
         }
       }
     })
@@ -4420,18 +4483,22 @@ const showSpinWheel = () => {
     });
 };
 
-const showCongratsModal = () => {
-  eventapi.get("/new-user-roulette/init").then((res) => {
-    if (res.code === 0) {
-      if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
-        // isCongratsModal.value = true;
-        if (!promoStore.isShownSpinLuckyWheel) {
-          popupPromo.value = "lucky-spin-wheel";
-        }
-      }
-    }
-  });
-};
+// const showCongratsModal = () => {
+//   eventapi.get("/new-user-roulette/init").then((res) => {
+//     if (res.code === 0) {
+//       if (res.data.hasUnusedCoupon === "YES" || res.data.showRoulette === "YES") {
+//         // isCongratsModal.value = true;
+//         isShowPrizeModal.value = true;
+//           store.hasUnusedCoupon = true;
+//         if (!promoStore.isShownSpinLuckyWheel) {
+//           popupPromo.value = "newplayer-spin-wheel";
+//         }
+//       } else {
+//           store.hasUnusedCoupon = false;
+//       }
+//     }
+//   });
+// };
 
 const checkGoogleLoginSetPwd = () => {
   if (store.isGoogleLogin && store.isFirstLandOnHomePage) {
@@ -4850,7 +4917,6 @@ const checkGoogleLoginSetPwd = () => {
     //   rgba(255, 255, 255, 0) 98.21%
     // );
     // background: #ffffff0f;
-
     gap: 10px;
     padding: 5px 10px;
     justify-content: center;
@@ -4891,6 +4957,9 @@ const checkGoogleLoginSetPwd = () => {
       font-weight: 400;
       line-height: 18px;
       text-align: left;
+      float: left;
+      height: 20px;
+      padding: 1px;
     }
   }
 
@@ -6339,44 +6408,54 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .congrats-container {
-  background: url(../assets/images/index/modal/prize-modal-bg.png) center center no-repeat;
-  background-size: 100% 100%;
-  aspect-ratio: 738/923;
-  width: 375px;
-  height: 469px;
+  background-image: unset;
+  background-color: #090F1E;
+  border: 1px solid #0666D3;
+  
+  border-radius: 10px !important;
+  max-width: 350px;
+  width: 100%;
   padding: 16px;
   position: relative;
   overflow: visible;
+  border-radius: 12px;
+  height: unset;
+  aspect-ratio: unset;
 
-  &.ur {
-    background: url(../assets/images/index/modal/prize-modal-bg-ur.png) center center no-repeat;
+  &:before {
+    content: "";
+    background-image: url(../assets/images/index/modal/congrats-container-light.png);
     background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    top: -158px;
   }
 
-  // &:before {
-  //   content: "";
-  //   background-image: url(../assets/images/index/modal/congrats-container-light.png);
-  //   background-size: 100% 100%;
-  //   background-position: center center;
-  //   background-repeat: no-repeat;
-  //   width: 100%;
-  //   height: 150px;
-  //   position: absolute;
-  //   left: 0;
-  //   top: -150px;
+  // .congrats-header {
+  //   display: flex;
+  //   justify-content: center;
+  //   margin-top: -26px;
+  //   z-index: 2;
+
+  //   img {
+  //     display: block;
+  //     width: 100%;
+  //     max-width: 320px;
+  //   }
   // }
 
-  .congrats-header {
-    display: flex;
-    justify-content: center;
-    margin-top: -18px;
-    z-index: 2;
-
-    img {
-      display: block;
-      width: 100%;
-      max-width: 320px;
-    }
+  .congrats-heading {
+    font-family: Poppins;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    text-transform: uppercase;
   }
 
   .congrats-coupons {
@@ -6392,35 +6471,59 @@ const checkGoogleLoginSetPwd = () => {
     color: #ffffff;
     display: flex;
     justify-content: center;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     text-align: center;
   }
 
+  .congrats-highlight-txt,
   .congrats-highlight {
-    position: absolute;
-    bottom: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    color: #cf3aff;
-    font-size: 26px;
-    font-weight: bold;
+    color: #fff96f;
+    font-size: 45px;
     text-align: center;
-    background-image: url(../assets/images/index/modal/congrats-highlight-bg.png);
-    padding: 2px 12px;
+    // background: linear-gradient(90deg, transparent, #fff96f29, transparent);
+    background-image: url(../assets/images/index/modal/green-congrats-highlight-bg.png);
+    padding: 0 12px;
     background-repeat: no-repeat;
     background-size: 70% 100%;
     background-position: center;
     margin-top: 16px;
+    position: relative;
+    text-align: center;
+    top: unset;
+    left: 0;
+    transform: unset;
+    bottom: unset;
+    margin: 16px auto;
   }
 
-  .recharge-btn {
-    background: url(../assets/images/index/modal/download-now-btn-bg.png) center center no-repeat;
-    background-size: 100% 100%;
-    aspect-ratio: 389/139;
-    width: 130px;
-    height: 45px;
+  .congrats-highlight-txt {
+    font-size: 14px;
+  }
+}
+
+.congrats-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.congrats-button-container {
+  // position: absolute;
+  // bottom: -60px;
+  // left: 50%;
+  // transform: translateX(-50%);
+  // white-space: nowrap;
+    margin: 20px auto 0;
+    text-align: center;
+  .congrats-btn {
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+    color: #ffffff;
   }
 }
 

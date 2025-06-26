@@ -58,6 +58,7 @@
               <img src="../assets/images/account/deposit-svg.svg" />
             </div> -->
             <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
+            <div v-if="promoPercentage !== ''" class="promo-percentage">{{ promoPercentage }} {{ $t("records.bonus") }}</div>
           </router-link>
           <router-link to="/withdraw" class="wdw-btn">
             <!-- <div class="acct-nav-item">
@@ -110,12 +111,12 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.vip") }}</div>
           </router-link>
-          <a :href="ui.charityUrl" target="_blank">
+          <!-- <a :href="ui.charityUrl" target="_blank">
             <div class="acct-nav-item">
               <img src="../assets/images/account/charitable-svg.svg" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.charity") }}</div>
-          </a>
+          </a> -->
         </div>
       </div>
       <div class="bottom-setting-section">
@@ -248,6 +249,7 @@ import { api } from "boot/axios";
 import { useUI } from "stores/ui";
 import { Platform } from "quasar";
 import { t } from "src/boot/lang";
+import { isAndroid } from "boot/utils";
 
 const selfTgurl = ref("");
 const fallbackCopyTextToClipboard = (text) => {
@@ -335,6 +337,10 @@ const confirmSignOutDialog = ref(false);
 const openConfirmSignOutDialog = () => {
   confirmSignOutDialog.value = !confirmSignOutDialog.value;
 };
+const promoPercentage = computed(() => {
+  if (isAndroid() && store.canClaimFtdPrivilege) return "38";
+  return ""; // Optional: for other cases if needed
+});
 
 const handleExchangeClick = () => (showExchangeModal.value = true);
 
@@ -850,6 +856,22 @@ const handleCopyClick = async () => {
         // }
       }
     }
+    .promo-percentage {
+        position: absolute;
+        // background: #ff0000;
+        padding: 2px 2px 7px;
+        border-radius: 5px;
+        font-size: 8px;
+        left: 28%;
+        top: 50px;
+        z-index: 2000;
+        background: url(../assets/images/index/redpromo-bg.png) no-repeat center center;
+        background-size: contain;
+        transform: translate(-50%, -100%);
+        width: 70px;
+        text-align: center;
+        color: #fff;
+      }
   }
   .acct-menu {
     padding: 20px 0 0;

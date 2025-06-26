@@ -127,10 +127,12 @@ export default defineComponent({
       }
     };
 
+
+
     const trackH5Affiliate = () => {
       const hostname = window.location.hostname.replace("www.", "");
       const affiliateCodeFromDomain = domainLists[hostname]?.affiliateCode;
-      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || affiliateCodeFromDomain || "C402D4";
+      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || affiliateCodeFromDomain || "076DB8";
 
       const track = () => {
         sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
@@ -241,21 +243,24 @@ export default defineComponent({
       });
     };
 
-    // const getInsetHeight = async () => {
-    //   const ua = navigator.userAgent.toLowerCase();
-    //   console.log(ua);
-    //   const isAndroidPixel = ua.indexOf("android") > -1;
-    //   // && (ua.indexOf("pixel") > -1 || ua.indexOf("samsung") > -1 || ua.indexOf("galaxy") > -1);
-    //   if (Platform.is.capacitor && Platform.is.android && isAndroidPixel) {
-    //     const insets = await SafeArea.getSafeAreaInsets();
-    //     console.log(insets);
-    //     // alert(insets); // Ex. { "bottom":34, "top":47, "right":0, "left":0 }
-    //     if (insets.bottom > 0) {
-    //       // console.log("HERe");
-    //       ui.bottomInsetHeight = insets.bottom;
-    //     }
-    //   }
-    // };
+    const waitAffiliateCodeAndTrack = () => {
+      let maxRetry = 10; // 最多等1秒
+      const interval = setInterval(() => {
+        const code = sessionStorage.getItem("AFFILIATE_CODE");
+        if (code && code !== "076DB8") {
+          clearInterval(interval);
+          console.log("[✅ Tracking] Got real affiliateCode:", code);
+          trackH5Affiliate();
+        } else {
+          maxRetry--;
+          if (maxRetry <= 0) {
+            clearInterval(interval);
+            console.warn("[⚠️ Tracking] Timeout fallback. Run track anyway.");
+            trackH5Affiliate(); // fallback 也要执行
+          }
+        }
+      }, 100);
+    };
 
     const handleVisibilityChange = (status) => {
       if (Platform.is.capacitor && Platform.is.android) {
@@ -390,7 +395,8 @@ export default defineComponent({
           false
         );
       } else {
-        trackH5Affiliate();
+        await router.isReady()
+        waitAffiliateCodeAndTrack();
       }
 
       const hostname = window.location.hostname;

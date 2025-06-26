@@ -120,7 +120,8 @@ const onUpdateCardClick = (bankCardDetails, type) => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: "Please fill in your personal details",
+        // message: "Please fill in your personal details",
+        message: t('notify.fillInPersonalDetails'),
         icon: "report_problem"
       });
       router.push("/account/profile");
@@ -230,9 +231,8 @@ defineExpose({
 
   .close-btn-div {
     position: absolute;
-    background: #cfcfcf;
     border-radius: 50%;
-    color: #787878;
+    color: #fff;
     padding: 8px;
     width: 40px;
     height: 40px;
@@ -240,8 +240,8 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 0px;
-    right: 0;
+    top: 10px;
+    right: 10px;
     z-index: 10;
   }
 
@@ -269,8 +269,10 @@ defineExpose({
     padding: 1.5rem;
     border-radius: 8px;
     // background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
-    background: #101114;
-    width: calc(100% - 16px);
+    width: 100%;
+    height: max-content;
+    max-height: 60vh;
+    overflow: auto;
   }
 
   .q-card__section {

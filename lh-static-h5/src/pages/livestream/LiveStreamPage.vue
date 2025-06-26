@@ -8,7 +8,7 @@
         </q-tabs>
       </div>
     </div>
-    <q-tab-panels v-model="moduleTab" class="content-panels" animated>
+    <q-tab-panels v-model="moduleTab" class="content-panels" animated keep-alive>
       <q-tab-panel class="content-panel" name="livestream">
         <livestreamList
           :livestream-list="sortedLiveStreamList"

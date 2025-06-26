@@ -1,44 +1,36 @@
 <template>
-  <q-dialog
-    width="100%"
-    v-model="isShowSpinLuckyWheelPromoPopupz"
-    class="spin-lucky-wheel-promo-popup"
-    @update:model-value="onCloseSpinLuckyWheelPromoPopup"
-  >
-    <div class="">
-      <div class="spin-lucky-wheel-promo-popup-wrapper">
-        <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
-        <div class="banner-wrapper">
-          <div class="pulse1"></div>
-          <div class="pulse2"></div>
-          <div class="pulse3"></div>
-          <div class="pulse4"></div>
-          <div class="pulse5"></div>
-          <img
-            @click="goToPromo"
-            class="banner"
-            src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/home-popup.png"
-          />
-        </div>
-        <div class="do-not-show-again-wrapper">
-          <q-checkbox v-model="isDoNotShowAgain">Não mostrar novamente</q-checkbox>
-        </div>
+  <div class="spin-lucky-container">
+    <q-btn class="money-rain-close" icon="close" round dense @click="goToPromo" />
+    <div class="controller-wrapper">
+      <slot name="controller" />
+    </div>
+    <div class="spin-lucky-wheel-promo-popup-wrapper">
+      <div class="banner-wrapper">
+        <div class="pulse1"></div>
+        <div class="pulse2"></div>
+        <div class="pulse3"></div>
+        <div class="pulse4"></div>
+        <div class="pulse5"></div>
+        <img
+          @click="goToPromo"
+          class="banner"
+          src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/home-popup.png"
+        />
       </div>
     </div>
-  </q-dialog>
+  </div>
 </template>
 <script setup>
-import { ref, onMounted, onActivated, inject } from "vue";
+import { ref, onMounted, onActivated } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { api, eventapi } from "boot/axios";
-import { storeToRefs } from "pinia";
-
+import { defineEmits } from "vue";
+import moment from "moment";
+const emits = defineEmits(["closeDialog"]);
 const store = userStore();
 const isDoNotShowAgain = ref(false);
-const { spinWheelLuckyPromoInfo: info } = storeToRefs(store);
-const isShowSpinLuckyWheelPromoPopup = ref(false);
 
+const isShowSpinLuckyWheelPromoPopup = ref(false);
 const onCloseSpinLuckyWheelPromoPopup = () => {
   if (isDoNotShowAgain.value) {
     localStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", Date.now());
@@ -49,6 +41,7 @@ const onCloseSpinLuckyWheelPromoPopup = () => {
 };
 
 const checkIsCanShowPopup = () => {
+  console.log("Checking if can show popup...");
   if (localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
     console.log("Do not show again status ongoing...");
     return;
@@ -60,53 +53,40 @@ const checkIsCanShowPopup = () => {
   }
 
   if (store.hasToken()) {
-    if (info.value) {
+    setTimeout(() => {
       isShowSpinLuckyWheelPromoPopup.value = true;
+    }, 750);
+  }
+};
+
+const checkExpirationTime = () => {
+  const preTimeStr = localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP");
+  if (preTimeStr) {
+    const currTime = moment().startOf("day");
+    const prevTime = moment(Number(preTimeStr));
+    const diff = currTime.diff(prevTime, "milliseconds");
+
+    if (diff > 0) {
+      localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
+      isDoNotShowAgain.value = false;
     }
-  } else if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
-    api.get("/config/uiconfigs").then((res) => {
-      if (res.code === 0 && res.data?.spinwheel_promo === "1") {
-        isShowSpinLuckyWheelPromoPopup.value = true;
-      }
-    });
   }
 };
 
 onActivated(() => {
-  if (localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
-    const currTime = Date.now();
-    const prevTime = Number(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP"));
-
-    if (currTime - prevTime > 60 * 1000 * 60 * 24 * 7) {
-      localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
-      isDoNotShowAgain.value = false;
-    }
-  }
+  checkExpirationTime();
 });
 
 onMounted(() => {
-  if (localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
-    const currTime = Date.now();
-    const prevTime = Number(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP"));
-
-    if (currTime - prevTime > 60 * 1000 * 60 * 24 * 7) {
-      localStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
-      isDoNotShowAgain.value = false;
-    }
-  }
+  checkExpirationTime();
 });
 
 const router = useRouter();
 
 const goToPromo = () => {
-  if (!store.hasToken()) {
-    router.push("/login");
-  } else {
-    router.push("/promo?name=spin-lucky-wheel");
-  }
+  router.push("/promo?name=spin-lucky-wheel");
+  emits("closeDialog");
 };
-
-const isShowSpinLuckyWheelPromoPopupz = ref(false);
 
 defineExpose({
   isDoNotShowAgain,
@@ -115,17 +95,13 @@ defineExpose({
 </script>
 <style lang="scss" scoped>
 .spin-lucky-wheel-promo-popup-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
   width: 100%;
-
-  .bg-yellow {
-    margin-left: auto;
-    margin-right: 12px;
-  }
 
   .banner {
     max-width: 90%;
@@ -183,5 +159,30 @@ defineExpose({
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.popup-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.spin-lucky-container {
+  max-width: 400px;
+  width: 100%;
+  padding: 16px;
+  position: relative;
+  overflow: visible;
+  border-radius: 12px;
+  .controller-wrapper {
+    width: fit-content;
+    margin: 0 12px 12px;
+  }
+}
+
+.money-rain-close {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 </style>

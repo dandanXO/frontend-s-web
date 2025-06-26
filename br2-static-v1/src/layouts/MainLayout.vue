@@ -13,12 +13,19 @@
           <span style="font-size: 10px; margin-left: 5px; display: block">Deposit</span>
         </q-btn>
       </q-card-section>
-      <q-card-section class="page-title" v-if="hasPage">
-        <a @click="goToPrevPage(prevPage)" class="q-mt-sm">
-          <q-icon class="header-icon" name="arrow_back_ios"></q-icon>
-          <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">
+      <q-card-section
+        class="page-title"
+        :class="{
+          'page-title__empty': pageName === '',
+          absolute: route.path === '/account'
+        }"
+        v-if="hasPage"
+      >
+        <a @click="goToPrevPage(prevPage)">
+          <q-icon class="header-icon" name="chevron_left"></q-icon>
+          <!-- <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">
             {{ $t("btn.back") }}
-          </span>
+          </span> -->
         </a>
         <div class="page-title-wrapper">
           <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
@@ -65,37 +72,37 @@
     <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" elevated>
       <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify">
         <q-route-tab to="/home" name="home" exact :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/home-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/home-icon-hover.png" />
-          <!-- {{ $t("bottomNav.home") }} -->
-          Home
+          <img class="inactive" src="../assets/images/index/menu/home-icon.svg" />
+          <img class="hover" src="../assets/images/index/menu/home-icon-hover.svg" />
+          {{ $t("bottomNav.home") }}
+          <!-- Home -->
         </q-route-tab>
         <q-route-tab class="cs-web-id" to="/promo" id="cs-web-id" name="live" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/earn-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/earn-icon-hover.png" />
-          <!-- {{ $t("bottomNav.promo") }} -->
-          Bonus
+          <img class="inactive" src="../assets/images/index/menu/earn-icon.svg" />
+          <img class="hover" src="../assets/images/index/menu/earn-icon-hover.svg" />
+          {{ $t("bottomNav.promo") }}
+          <!-- Bonus -->
         </q-route-tab>
         <!-- <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" class="center-menu" :ripple="false">
           <img src="../assets/images/index/menu/deposit-icon.png" />
         </q-route-tab> -->
         <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/deposit-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/deposit-icon-hover.png" />
-          <!-- {{ $t("bottomNav.earnMoney") }} -->
-          Deposit
+          <img class="inactive" src="../assets/images/index/menu/deposit-icon.svg" />
+          <img class="hover" src="../assets/images/index/menu/deposit-icon-hover.svg" />
+          {{ $t("bottomNav.deposit") }}
+          <!-- Deposit -->
         </q-route-tab>
-        <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/bonus-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.png" />
-          <!-- {{ $t("bottomNav.earnMoney") }} -->
-          Earn Money
-        </q-route-tab>
+        <!-- <q-route-tab to="/earn-money" name="earn-money" :ripple="false"> -->
+        <!-- <img class="inactive" src="../assets/images/index/menu/bonus-icon.svg" /> -->
+        <!-- <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.svg" /> -->
+        <!-- {{ $t("bottomNav.earnMoney") }} -->
+        <!-- Earn Money -->
+        <!-- </q-route-tab> -->
         <q-route-tab to="/account" name="account" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/account-icon.png" />
-          <img class="hover" src="../assets/images/index/menu/account-icon-hover.png" />
-          <!-- {{ $t("bottomNav.me") }} -->
-          Me
+          <img class="inactive" src="../assets/images/index/menu/account-icon.svg" />
+          <img class="hover" src="../assets/images/index/menu/account-icon-hover.svg" />
+          {{ $t("bottomNav.me") }}
+          <!-- Me -->
         </q-route-tab>
       </q-tabs>
     </q-footer>
@@ -106,6 +113,7 @@
   </div>
 
   <LoginModal />
+  <RegisterSuccessModal />
 </template>
 
 <script>
@@ -123,12 +131,14 @@ import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
 
 import LoginModal from "src/components/modal/login/LoginModal.vue";
+import RegisterSuccessModal from "src/components/modal/login/RegisterSuccessModal.vue";
 
 export default defineComponent({
   name: "MainLayout",
 
   components: {
-    LoginModal
+    LoginModal,
+    RegisterSuccessModal
   },
 
   setup() {
@@ -195,7 +205,7 @@ export default defineComponent({
           }
         } else if (route.path === "/account") {
           prevPage.value = "/";
-          hasPage.value = false;
+          hasPage.value = true;
           pageName.value = "";
         } else if (route.path === "/account/bank") {
           hasPage.value = true;
@@ -250,23 +260,25 @@ export default defineComponent({
           pageName.value = t("header.vipPrivileges");
           if (route.query.redirect) prevPage.value = route.query.redirect;
           else prevPage.value = "/";
-        } else if (route.path === "/login") {
-          prevPage.value = "home";
-          hasPage.value = true;
-          pageName.value = t("header.login");
-        } else if (route.path === "/register") {
-          prevPage.value = "home";
-          hasPage.value = true;
-          pageName.value = t("header.register");
-        } else if (route.path === "/forgot-account") {
-          prevPage.value = "login";
-          hasPage.value = true;
-          pageName.value = t("header.forgotAccount");
-        } else if (route.path === "/forgot-password") {
-          prevPage.value = "login";
-          hasPage.value = true;
-          pageName.value = t("header.forgotPassword");
-        } else if (route.path === "/live-casino") {
+        }
+        // else if (route.path === "/login") {
+        //   prevPage.value = "home";
+        //   hasPage.value = true;
+        //   pageName.value = t("header.login");
+        // } else if (route.path === "/register") {
+        //   prevPage.value = "home";
+        //   hasPage.value = true;
+        //   pageName.value = t("header.register");
+        // } else if (route.path === "/forgot-account") {
+        //   prevPage.value = "login";
+        //   hasPage.value = true;
+        //   pageName.value = t("header.forgotAccount");
+        // } else if (route.path === "/forgot-password") {
+        //   prevPage.value = "login";
+        //   hasPage.value = true;
+        //   pageName.value = t("header.forgotPassword");
+        // }
+        else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = t("header.liveCasino");
         } else if (route.path === "/poker") {
@@ -447,14 +459,14 @@ export default defineComponent({
         } else if (route.path === "/deposit") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "";
+          pageName.value = t("header.deposit");
           if (route.query.from) {
             prevPage.value = route.query.from;
           }
         } else if (route.path === "/withdraw") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "";
+          pageName.value = t("header.withdraw");
         }
       }
     };
@@ -621,31 +633,51 @@ svg path {
   margin: 0.5rem 0 0 0;
 }
 
-.page-title-wrapper {
-  display: flex;
-  justify-content: space-between;
-  margin: 0;
-  padding: 1rem 0px;
-  height: 60px;
+.page-title {
+  background-color: #242624;
 
-  img {
-    width: 2.25rem;
+  &.absolute {
+    position: absolute;
+    background-color: unset;
   }
 
-  .title-container {
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
+  a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 14rem;
-    margin: 0 0.5rem;
-    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    background-color: #2e3732;
+    border-radius: 6px;
   }
 
-  svg {
-    width: 250px;
+  .page-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 1rem 0px;
+    height: 60px;
+
+    img {
+      width: 2.25rem;
+    }
+
+    .title-container {
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 14rem;
+      margin: 0 0.5rem;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    svg {
+      width: 250px;
+    }
   }
 }
 

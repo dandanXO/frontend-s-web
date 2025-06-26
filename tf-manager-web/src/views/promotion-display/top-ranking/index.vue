@@ -20,21 +20,23 @@
         </el-select>
         <el-date-picker
           v-model="request.recordTime"
+          size="small"
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           type="daterange"
           range-separator=":"
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
-          style="width: 300px; margin-left: 10px"
+          style="width: 300px; margin-left: 5px"
           :shortcuts="shortcuts"
           :editable="false"
           :clearable="false"
+          :default-time="defaultTime"
         />
         <el-input
           v-model="request.loginName"
           size="small"
-          style="width: 200px; margin-left: 10px;"
+          style="width: 200px; margin-left: 5px;"
           :placeholder="t('fields.loginName')"
         />
         <el-select
@@ -107,6 +109,25 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.privilegeName')" prop="privilegeId">
+          <el-select
+            filterable
+            v-model="form.privilegeId"
+            :placeholder="t('fields.privilegeName')"
+            size="small"
+            class="filter-item"
+            style="width: 350px;"
+            default-first-option
+            @focus="loadPrivilegeInfos"
+          >
+            <el-option
+              v-for="item in list.privilege"
+              :key="item.id"
+              :label="item.alias !== null ? item.alias : item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.platform')" prop="platform">
           <el-select
             v-model="form.platform"
@@ -148,6 +169,22 @@
         </el-form-item>
         <el-form-item :label="t('fields.amount')" prop="amount">
           <el-input v-model="form.amount" style="width: 350px;" maxlength="50" />
+        </el-form-item>
+        <el-form-item :label="t('fields.timeType')" prop="timeType">
+          <el-select
+            v-model="form.timeType"
+            value-key="id"
+            :placeholder="t('fields.timeType')"
+            style="width: 350px"
+            filterable
+          >
+            <el-option
+              v-for="item in rankingTimeTypes.list"
+              :key="item"
+              :label="item"
+              :value="item"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.type')" prop="type">
           <el-select
@@ -191,6 +228,7 @@
             v-if="scope.row.recordTime !== null"
             v-formatter="{
               data: scope.row.recordTime,
+              timeZone: timeZone,
               formatter: 'YYYY-MM-DD',
               type: 'date',
             }"
@@ -198,7 +236,19 @@
         </template>
       </el-table-column>
       <el-table-column prop="timeType" :label="t('fields.timeType')" width="100" />
-      <el-table-column prop="createTime" :label="t('fields.createTime')" />
+      <el-table-column prop="createTime" :label="t('fields.createTime')">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="createBy" :label="t('fields.createBy')" />
       <el-table-column :label="t('fields.action')" align="right" v-if="hasPermission(['sys:privi:top-ranking:update']) || hasPermission(['sys:privi:top-ranking:delete'])">
         <template #default="scope">
@@ -227,6 +277,7 @@ import { nextTick, reactive, ref, watch } from "vue";
 import { required } from "../../../utils/validate";
 import { getSiteListSimple } from "@/api/site";
 import { getPlatformsBySite } from "../../../api/platform";
+import { getActivePrivilegeInfoBySiteId } from "../../../api/privilege-info";
 import { createTopRanking, updateTopRanking, getTopRankingList, delTopRanking } from "@/api/top-ranking";
 import { hasRole, hasPermission } from "@/utils/util";
 import { onMounted } from "@vue/runtime-core";
@@ -236,13 +287,15 @@ import { getGameTypes } from '../../../api/game'
 import { ElMessage, ElMessageBox } from "element-plus";
 import moment from 'moment'
 import { getShortcuts } from '@/utils/datetime'
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n();
 const store = useStore();
 const site = ref(null);
 const list = reactive({
   platform: [],
-  site: []
+  site: [],
+  privilege: []
 });
 // const startDate = new Date()
 // startDate.setTime(
@@ -251,9 +304,21 @@ const list = reactive({
 //     .format('x')
 // )
 
-const defaultStartDate = convertDate(new Date())
+const defaultStartDate = convertStartDate(new Date())
 const defaultEndDate = convertDate(new Date())
+function convertDate(date) {
+  return moment(date).endOf('day').format('YYYY-MM-DD HH:mm:ss');
+}
+
+function convertStartDate(date) {
+  return moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss');
+}
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
 const shortcuts = getShortcuts(t)
+let timeZone = null;
 const request = reactive({
   size: 20,
   current: 1,
@@ -291,27 +356,28 @@ const page = reactive({
 const form = reactive({
   id: null,
   siteId: null,
+  privilegeId: null,
   platform: null,
   memberId: null,
   loginName: null,
   gameType: null,
   gameName: null,
   amount: null,
+  timeType: null,
   type: null
 });
 
 const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
+  privilegeId: [required(t('message.validatePrivilegeRequired'))],
   loginName: [required(t('message.validateLoginNameRequired'))],
   platform: [required(t('message.validatePlatformRequired'))],
   gameType: [required(t('message.validateGameTypeRequired'))],
+  gameName: [required(t('message.validateGameNameRequired'))],
   amount: [required(t('message.validateAmountRequired'))],
+  timeType: [required(t('message.validateTimeTypeRequired'))],
   type: [required(t('message.validateTypeRequired'))],
 });
-
-function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD')
-}
 
 async function loadTopRanking() {
   page.loading = true;
@@ -331,20 +397,15 @@ function checkQuery() {
       query[key] = value
     }
   })
+  timeZone = list.site.find(e => e.id === request.siteId).timeZone;
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
       query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
-      query.recordTime[0] = moment(query.recordTime[0]).format(
-        'YYYY-MM-DD'
-      )
-      query.recordTime[1] = moment(query.recordTime[1]).format(
-        'YYYY-MM-DD'
-      )
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone)
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone)
       query.recordTime = query.recordTime.join(',')
     } else {
-      query.recordTime[0] = moment(query.recordTime[0]).format(
-        'YYYY-MM-DD'
-      )
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone)
     }
   }
   return query
@@ -448,6 +509,11 @@ function changepage(page) {
   loadTopRanking();
 }
 
+async function loadPrivilegeInfos(siteId) {
+  const { data: privilegeInfo } = await getActivePrivilegeInfoBySiteId(siteId);
+  list.privilege = privilegeInfo;
+}
+
 watch(() => request.siteId, () => {
   form.siteId = request.siteId
 })
@@ -456,6 +522,7 @@ onMounted(async () => {
   await loadSites();
   site.value = list.site.find(s => s.siteName === store.state.user.siteName);
   request.siteId = site.value.id;
+  await loadPrivilegeInfos(request.siteId)
   loadSearchPlatforms();
   await loadTopRanking();
 });

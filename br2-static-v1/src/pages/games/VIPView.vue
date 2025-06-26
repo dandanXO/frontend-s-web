@@ -16,48 +16,51 @@
   <div class="vip-container">
     <Carousel
       ref="vipCarouselRef"
-      :items-to-show="1.3"
+      :items-to-show="1"
       :wrap-around="false"
       :snapAlign="'start'"
       v-model="vipCarouselIndex"
     >
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
-          <div :class="`vipitem vipitem${vip.vipLevel}`">
-            <!-- <div :class="`vip-badge vip${vip.vipLevel}`"></div> -->
-            <div :class="`vip-badge vip0`"></div>
-
-            <div class="vip-level-header">
-              <!-- <svg viewBox="0 0 450 70"> -->
-              <!-- <defs> -->
-              <!-- Linear Gradient -->
-              <!-- <linearGradient id="myGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color: #00b9a1; stop-opacity: 1" />
-                    <stop offset="100%" style="stop-color: #0097b9; stop-opacity: 1" />
-                  </linearGradient> -->
-              <!-- </defs> -->
-              <!-- </svg> -->
-              <div class="headText">{{ $t("header.vip") }}{{ vip.vipLevel }}</div>
-            </div>
+          <div
+            :class="`vipitem vipitem${vip.vipLevel}`"
+            :style="{
+              backgroundImage: `url(${require(`../../assets/images/vip/badge/vip_card_${vipIndex + 1}.png`)})`
+            }"
+          >
+            <img class="vip_badge" :src="require(`../../assets/images/vip/badge/vip_${vipIndex + 1}.png`)" />
 
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
-              <div class="upgrade-requirements">
+              <!-- <div class="upgrade-requirements">
                 <span v-if="vip.vipLevel !== '0'">{{ $t("vip.accumulateDeposit") }}</span>
                 {{ vip.ugprade }}
-              </div>
+              </div> -->
+              <div class="vip-level">V{{ vipIndex + 1 }}</div>
               <div class="progress-bar-container">
-                <div class="progress-bar-endpoint-label">
+                <!-- <div class="progress-bar-endpoint-label">
                   {{ `V${+vip.vipLevel - 1}` }}
+                </div> -->
+                <div
+                  class="progress-indicator"
+                  :style="{ left: `${currentVipLevelStats.levelUpPercentage}%`, transition: 'left 0.5s ease-in-out' }"
+                >
+                  {{ `${currentVipLevelStats.levelUpPercentage}%` }}
                 </div>
                 <div class="progress-bar-outer-bar">
-                  <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span>
+                  <!-- <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span> -->
                   <div
                     class="progress-bar-inner-bar"
                     :style="{ width: currentVipLevelStats.levelUpPercentage + '%' }"
                   />
                 </div>
-                <div class="progress-bar-endpoint-label">
-                  {{ `V${vip.vipLevel}` }}
+                <div class="progress-bar-endpoint">
+                  <div class="progress-bar-endpoint-label">
+                    {{ `V${+vip.vipLevel - 1}` }}
+                  </div>
+                  <div class="progress-bar-endpoint-label">
+                    {{ `V${vip.vipLevel}` }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -69,78 +72,74 @@
       </template>
     </Carousel>
     <div v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
-      <hr class="separator-line" style="margin-bottom: 20px" />
-      <div class="vip-rewards">
-        <div class="vip-reward-item">
-          <div class="reward-desc">
-            <div class="icon">
-              <img src="../../assets/images/vip/level-upgrade-reward-icon.png" />
-            </div>
-            <div class="title">
-              <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
-              <br />
-              <!-- {{ $t("vip.reward") }} -->
-            </div>
-            <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
-            </div>
-          </div>
-          <div class="unlock-status">
-            <img
-              v-if="currentVipLevelStats.rewardUnlocked"
-              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
-            />
-            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
-          </div>
-        </div>
-        <div class="vip-reward-item">
-          <div class="reward-desc">
-            <div class="icon">
-              <img src="../../assets/images/vip/monthly-reward-icon.png" />
-            </div>
-            <div class="title">
-              <span class="bold">{{ $t("vip.monthly") }}</span>
-              <br />
-              <!-- {{ $t("vip.reward") }} -->
-            </div>
-            <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
-            </div>
-          </div>
-          <div class="unlock-status">
-            <img
-              v-if="currentVipLevelStats.rewardUnlocked"
-              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
-            />
-            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
-          </div>
-        </div>
-        <div class="vip-reward-item">
-          <div class="reward-desc">
-            <div class="icon">
-              <img src="../../assets/images/vip/daily-withdrawal-limit-icon.png" />
-            </div>
-            <div class="title">
-              <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>
-              <br />
-              <!-- {{ $t("vip.limit") }} -->
-            </div>
-            <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
-            </div>
-          </div>
-          <div class="unlock-status">
-            <img
-              v-if="currentVipLevelStats.rewardUnlocked"
-              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
-            />
-            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
-          </div>
-        </div>
-      </div>
+      <!--      <div class="vip-rewards">-->
+      <!--        <div class="vip-reward-item">-->
+      <!--          <div class="reward-desc">-->
+      <!--            <div class="icon">-->
+      <!--              <img src="../../assets/images/vip/level-upgrade-reward-icon.png" />-->
+      <!--            </div>-->
+      <!--            <div class="title">-->
+      <!--              <span class="bold">{{ $t("vip.levelUpgrade") }}</span>-->
+      <!--              <br />-->
+      <!--            </div>-->
+      <!--            <div class="reward-amt-wrapper">-->
+      <!--              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--          <div class="unlock-status">-->
+      <!--            <img-->
+      <!--              v-if="currentVipLevelStats.rewardUnlocked"-->
+      <!--              src="../../assets/images/vip/vip-reward-unlocked-icon.png"-->
+      <!--            />-->
+      <!--            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--        <div class="vip-reward-item">-->
+      <!--          <div class="reward-desc">-->
+      <!--            <div class="icon">-->
+      <!--              <img src="../../assets/images/vip/monthly-reward-icon.png" />-->
+      <!--            </div>-->
+      <!--            <div class="title">-->
+      <!--              <span class="bold">{{ $t("vip.monthly") }}</span>-->
+      <!--              <br />-->
+      <!--            </div>-->
+      <!--            <div class="reward-amt-wrapper">-->
+      <!--              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--          <div class="unlock-status">-->
+      <!--            <img-->
+      <!--              v-if="currentVipLevelStats.rewardUnlocked"-->
+      <!--              src="../../assets/images/vip/vip-reward-unlocked-icon.png"-->
+      <!--            />-->
+      <!--            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--        <div class="vip-reward-item">-->
+      <!--          <div class="reward-desc">-->
+      <!--            <div class="icon">-->
+      <!--              <img src="../../assets/images/vip/daily-withdrawal-limit-icon.png" />-->
+      <!--            </div>-->
+      <!--            <div class="title">-->
+      <!--              <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>-->
+      <!--              <br />-->
+      <!--            </div>-->
+      <!--            <div class="reward-amt-wrapper">-->
+      <!--              <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--          <div class="unlock-status">-->
+      <!--            <img-->
+      <!--              v-if="currentVipLevelStats.rewardUnlocked"-->
+      <!--              src="../../assets/images/vip/vip-reward-unlocked-icon.png"-->
+      <!--            />-->
+      <!--            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
       <hr class="separator-line" style="margin-top: 20px" />
       <div class="header-wrapper">
-        <div class="header">{{ $t("vip.monthlyCumulativeDeposit") }}</div>
+        <div class="header">{{ $t("vip.monthlyCumulativeBet") }}</div>
       </div>
       <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
         <template v-slot:header="props">
@@ -151,7 +150,7 @@
               <!-- unable to adjust table width... -->
               <template v-else>
                 <div style="white-space: normal; text-align: center">
-                  {{ $t("vip.monthlyCumulativeDeposit") }}
+                  {{ $t("vip.monthlyCumulativeBet") }}
                 </div>
               </template>
             </q-th>
@@ -159,15 +158,24 @@
           <q-tr class="top-header">
             <q-td>{{ $t("vip.level") }}</q-td>
             <q-td>{{ $t("vip.amount") }}</q-td>
-            <q-td style="width: 60px">{{ $t("vip.turnover") }}</q-td>
+            <!-- <q-td style="width: 60px">{{ $t("vip.turnover") }}</q-td> -->
           </q-tr>
         </template>
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <template v-if="colIndex === 1">
+              <template v-if="colIndex === 0">
+                <div class="vip-table-badge-container">
+                  <img
+                    class="vip_table_badge"
+                    :src="require(`../../assets/images/vip/badge/vip_${props.rowIndex + 1}.png`)"
+                  />
+                  {{ col.value }}
+                </div>
+              </template>
+              <template v-else-if="colIndex === 1">
                 <div style="text-align: center; font-size: 11px">
-                  {{ $t("vip.deposit") }} {{ store.currency.value }}
+                  {{ $t("vip.bet") }} {{ store.currency.value }}
                   <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>
@@ -184,7 +192,7 @@
         </template>
       </q-table>
       <div class="hint-msg">{{ $t("vip.aftertheRecharge") }}</div>
-      <q-table
+      <!-- <q-table
         flat
         :hide-pagination="true"
         :columns="columns3"
@@ -197,7 +205,6 @@
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
               <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-              <!-- unable to adjust table width... -->
               <template v-else>
                 <div style="white-space: normal; text-align: center">{{ $t("vip.vipPromoBonus") }}</div>
               </template>
@@ -244,7 +251,6 @@
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
               <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-              <!-- unable to adjust table width... -->
               <template v-else>
                 <div style="text-align: center; padding-right: 60px">{{ $t("vip.vipMonthlyCashBonus") }}</div>
               </template>
@@ -252,14 +258,14 @@
           </q-tr>
           <q-tr class="top-header">
             <q-td>{{ $t("vip.level") }}</q-td>
-            <q-td style="text-align: right">{{ $t("vip.amount") }}</q-td>
+            <q-td style="text-align: center">{{ $t("vip.amount") }}</q-td>
           </q-tr>
         </template>
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <template v-if="colIndex === 1">
-                <div style="text-align: right">
+                <div style="text-align: center">
                   {{ store.currency.value }}
                   <span class="amt-text">{{ col.value }}</span>
                 </div>
@@ -297,7 +303,7 @@
           </q-tr>
           <q-tr class="top-header">
             <q-td>{{ $t("vip.level") }}</q-td>
-            <q-td style="text-align: right">{{ $t("vip.amount") }}</q-td>
+            <q-td style="text-align: center">{{ $t("vip.amount") }}</q-td>
           </q-tr>
         </template>
         <template v-slot:body="props">
@@ -317,7 +323,7 @@
           </q-tr>
         </template>
       </q-table>
-      <div class="hint-msg">{{ $t("vip.dailyWithdrawalLimits") }}</div>
+      <div class="hint-msg">{{ $t("vip.dailyWithdrawalLimits") }}</div> -->
     </div>
   </div>
 </template>
@@ -332,7 +338,7 @@ import "vue3-carousel/dist/carousel.css";
 
 const vipLevel = ref("");
 const currentVipLevelStats = ref({
-  levelUpPercentage: null,
+  levelUpPercentage: 0,
   progressBarText: "",
   levelUpgrade: null,
   monthlyReward: null,
@@ -372,70 +378,70 @@ const columns = [
     align: "center",
     field: (row) => row.name
   },
-  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" },
-  { name: "flow", field: "flow", align: "center" }
+  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" }
+  // { name: "flow", field: "flow", align: "center" }
 ];
 const rows = [
   {
     name: "VIP 1",
-    ugprade: "500",
-    flow: "x10"
+    ugprade: "0+"
+    // flow: "x10"
   },
   {
     name: "VIP 2",
-    ugprade: "1,000",
-    flow: "x10"
+    ugprade: "500"
+    // flow: "x10"
   },
   {
     name: "VIP 3",
-    ugprade: "2,000",
-    flow: "x10"
+    ugprade: "2,000"
+    // flow: "x10"
   },
   {
     name: "VIP 4",
-    ugprade: "5,000",
-    flow: "x10"
+    ugprade: "8,000"
+    // flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: "10,000",
-    flow: "x10"
+    ugprade: "40,000"
+    // flow: "x10"
   },
   {
     name: "VIP 6",
-    ugprade: "20,000",
-    flow: "x10"
+    ugprade: "120,000"
+    // flow: "x10"
   },
   {
     name: "VIP 7",
-    ugprade: "50,000",
-    flow: "x10"
+    ugprade: "500,000"
+    // flow: "x10"
   },
   {
     name: "VIP 8",
-    ugprade: "100,000",
-    flow: "x10"
+    ugprade: "1,500,000"
+    // flow: "x10"
   },
   {
     name: "VIP 9",
-    ugprade: "200,000",
-    flow: "x10"
+    ugprade: "3,000,000"
+    // flow: "x10"
   },
   {
     name: "VIP 10",
-    ugprade: "500,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 11",
-    ugprade: "1,000,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 12",
-    ugprade: "2,000,000",
-    flow: "x10"
+    ugprade: "6,000,000"
+    // flow: "x10"
   }
+  // {
+  //   name: "VIP 11",
+  //   ugprade: "10,000,000",
+  //   flow: "x10"
+  // },
+  // {
+  //   name: "VIP 12",
+  //   ugprade: "20,000,000",
+  //   flow: "x10"
+  // }
 ];
 
 const { vipItems, lastVipLevel } = rows.reduce(
@@ -477,8 +483,7 @@ onActivated(() => {
     }
     // show vip slide correspond to current vip level
     else {
-      // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
-      vipCarouselIndex.value = vipLevelNum - 1;
+      vipCarouselIndex.value = vipLevelNum;
     }
 
     vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
@@ -489,7 +494,9 @@ watch(
   () => vipCarouselIndex.value,
   () => {
     const carouselVipLevel =
-      vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : Math.round(vipCarouselIndex.value) + 1;
+      vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value
+        ? rows.length
+        : Math.round(vipCarouselIndex.value) + 1;
 
     const levelUpgrade = rows3.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
     const monthlyReward = rows4.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
@@ -497,16 +504,17 @@ watch(
 
     const vipInfo = vipItems.find(({ vipLevel }) => vipLevel === carouselVipLevel);
     const vipLevel = Number(store.vip.replace("VIP", ""));
-    const currentDeposit = Number(store.getCurrentDeposit());
+    const currentValidBet = Number(store.getCurrentValidBet());
     const upgradeStatus = vipInfo.ugprade;
     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
 
     const levelUpPercentage = (() => {
-      if (vipLevel > +vipInfo.vipLevel) {
+      if (vipLevel >= +vipInfo.vipLevel) {
         return 100;
       }
 
-      return (currentDeposit / levelUpDeposit) * 100;
+      const truncPercentage = Math.trunc((currentValidBet / levelUpDeposit) * 100 * 100) / 100;
+      return truncPercentage >= 100 ? 100 : truncPercentage;
     })();
 
     // alert(vipLevel);
@@ -517,7 +525,7 @@ watch(
       monthlyReward,
       dailyWithdrawalLimit,
       levelUpPercentage,
-      progressBarText: `${currentDeposit} / ${levelUpDeposit}`,
+      progressBarText: `${currentValidBet} / ${levelUpDeposit}`,
       rewardUnlocked: vipLevel > vipCarouselIndex.value
     };
   }
@@ -531,7 +539,7 @@ const columns2 = [
     align: "center",
     field: (row) => row.name
   },
-  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" }
+  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "center" }
 ];
 const rows2 = [
   {
@@ -684,7 +692,7 @@ const columns4 = [
     align: "center",
     field: (row) => row.name
   },
-  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" }
+  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "center" }
 ];
 //row4 : Monthly Reward.
 const rows4 = [
@@ -761,7 +769,7 @@ const swipeRight = () => {
 </script>
 <style lang="scss" scoped>
 .separator-line {
-  border: 1px solid #0d333d;
+  border: 1px solid #4b4943;
   padding: 0 10px;
 }
 
@@ -769,6 +777,7 @@ const swipeRight = () => {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-top: 10px;
 
   .vip-reward-item {
     width: 107px;
@@ -806,25 +815,26 @@ const swipeRight = () => {
       }
 
       .title {
-        color: #00b9a1;
+        color: #fff;
         font-size: 10px;
         height: 35px;
         line-height: 12px;
       }
 
       .reward-amt-wrapper {
-        background-color: #d0f3ec;
+        background-color: #ffffff4d;
         padding: 5px 15px;
-        max-width: 100px;
+        max-width: 130px;
         border-radius: 4px;
         font-family: sans-serif;
         font-size: 12px;
+        margin-top: 10px;
 
         .reward-amt {
           line-height: 12px;
           word-wrap: break-word;
-          color: #8b36f8;
-          background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%), linear-gradient(0deg, #ffffff, #ffffff);
+          // color: #000;
+          background: #246628;
           background-clip: text;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -850,13 +860,14 @@ const swipeRight = () => {
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    // background: rgba(43, 71, 74, 0.27);
-    background: #2b474a;
-    color: #01a1b2;
+    flex: 1;
+    border: 1px solid #4b4943;
+    color: #4b4943;
+    margin: 0 8px;
   }
 
   .vip-promo-tab-toggle {
-    background-color: #2b474a;
+    // background-color: #2b474a;
     border-radius: 8px;
     margin-bottom: 4px;
     margin-top: 5px;
@@ -867,8 +878,8 @@ const swipeRight = () => {
     }
 
     :deep(.q-tab--active) {
-      color: #fff;
-      background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+      color: #000;
+      background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
       box-shadow: 0px 1px 2px 0px #0000000d;
       // border: 2px solid rgba(43, 71, 74, 0.27);
     }
@@ -882,139 +893,25 @@ const swipeRight = () => {
 .vipitem {
   position: relative;
   display: flex;
-  flex-direction: column-reverse;
-  background: url("../../assets/images/vip/badge/banner.png") no-repeat top center;
+  // flex-direction: column-reverse;
+  // background: url("../../assets/images/vip/badge/banner.png") no-repeat top center;
+  background-position: top center;
+  background-repeat: no-repeat;
   background-size: 100% 100%;
-  height: 170px;
+  // height: 120px;
   width: 100%;
   justify-content: flex-end;
   font-size: 12px;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  padding-right: 2%;
 
-  .vip-badge {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    top: 0px;
-    left: 10px;
-    background-repeat: no-repeat;
-    background-position: top left;
-    background-size: contain;
-    width: 102px;
-    height: 100px;
-    color: #fff;
-    position: absolute;
-
-    background: url("../../assets/images/vip/badge/vip1.png") no-repeat top center;
-    background-size: 100% 100%;
-
-    &.vip0 {
-      background: url("../../assets/images/vip/badge/vip0.png") no-repeat top center;
-      background-size: auto 100%;
-      margin-top: -5px;
-    }
-
-    &.vip2 {
-      background: url("../../assets/images/vip/badge/vip2.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip3 {
-      background: url("../../assets/images/vip/badge/vip3.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip4 {
-      background: url("../../assets/images/vip/badge/vip4.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip5 {
-      background: url("../../assets/images/vip/badge/vip5.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip6 {
-      background: url("../../assets/images/vip/badge/vip6.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip7 {
-      background: url("../../assets/images/vip/badge/vip7.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip8 {
-      background: url("../../assets/images/vip/badge/vip8.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip9 {
-      background: url("../../assets/images/vip/badge/vip9.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip10 {
-      background: url("../../assets/images/vip/badge/vip10.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip11 {
-      background: url("../../assets/images/vip/badge/vip11.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
-
-    &.vip12 {
-      background: url("../../assets/images/vip/badge/vip12.png") no-repeat top center;
-      background-size: 100% 100%;
-    }
+  .vip_badge {
+    width: 30%;
+    align-self: center;
   }
-
-  .vip-level-header {
-    font-family: sans-serif;
-    font-size: 3.2em;
-    font-weight: 800;
-    // -webkit-text-stroke: 2px #fff;
-    top: 28%;
-    right: 10%;
-    // z-index: 1;
-    position: absolute;
-    // color: #8b36f8;
-    // color: rgba(0, 151, 185, 1);
-
-    .headText {
-      // font-size: 26px;
-      // font-weight: 800;
-      // line-height: 32px;
-      // text-align: left;
-      // background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
-      background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    // svg {
-    //   font-family: Arial;
-    //   font-size: 10rem;
-    //   font-weight: bold;
-    //   position: absolute;
-    //   width: 125px;
-    //   height: 70px;
-    //   right: 0px;
-    //   top: 0px;
-    // }
-
-    // .svgText {
-    //   stroke: white;
-    //   stroke-width: 10px;
-    //   stroke-linejoin: round;
-    //   paint-order: stroke;
-    // }
-  }
-
   .vip-contents {
-    padding-top: 60px;
+    // padding-top: 60px;
     color: #ffffff;
     border-radius: 20px;
     display: flex;
@@ -1025,24 +922,51 @@ const swipeRight = () => {
       font-size: 18px;
       line-height: 36px;
     }
-
+    .vip-level {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      font-family: YouSheBiaoTiHei, "Noto Sans SC", sans-serif;
+      font-weight: bolder;
+      font-size: 2.5rem;
+      line-height: 100%;
+      letter-spacing: 0;
+    }
     .progress-bar-container {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 2px;
       position: absolute;
-      bottom: 10%;
+      bottom: 5%;
       left: 6%;
       right: 6%;
+      width: 60%;
+      flex-direction: column;
+      padding-top: 6%;
 
+      .progress-bar-endpoint {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 4px;
+      }
       .progress-bar-endpoint-label {
-        color: #333;
+        font-size: 0.9rem;
+        color: #fff;
+        margin: 0 4px;
       }
 
+      .progress-indicator {
+        position: absolute;
+        transform: translateX(-50%);
+        top: 0;
+        font-size: 0.9rem;
+        margin-left: 10px;
+      }
       .progress-bar-outer-bar {
-        border: 1px solid #fff;
+        // border: 1px solid #fff;
         border-radius: 16px;
-        background: #fff;
+        background: rgba(0, 0, 0, 0.19);
         width: 100%;
         overflow: hidden;
         position: relative;
@@ -1055,15 +979,16 @@ const swipeRight = () => {
           right: 0;
           text-align: center;
           color: #333;
-          font-size: 10px;
+          font-size: 0.7rem;
         }
       }
 
       .progress-bar-inner-bar {
+        transition: width 0.5s ease-in-out;
         color: #fff;
         border-radius: 16px;
-        background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
-        height: 12px;
+        background: #fff1cc;
+        height: 10px;
       }
     }
 
@@ -1103,8 +1028,8 @@ const swipeRight = () => {
   &.carousel__slide--next .vipitem,
   &.carousel__slide--prev .vipitem {
     filter: brightness(0.5);
-    height: 150px;
-    margin-top: 20px;
+    // height: 120px;
+    // margin-top: 20px;
 
     .vip-contents .progress-bar-container .progress-bar-inner-bar {
       height: 8px;
@@ -1124,15 +1049,14 @@ const swipeRight = () => {
   text-align: center;
 
   .top-header {
-    color: #f1f1f1;
-    // background: linear-gradient(180deg, #41206f 0%, #1f2862 100%);
-    // background: linear-gradient(180deg, #005348 0%, rgba(0, 83, 72, 0.2) 96.35%);
-    background: linear-gradient(180deg, #0a544c 0%, #0a4855 100%);
+    color: #000;
+    background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
 
     td {
       padding-left: 0.5rem;
       padding-right: 0.5rem;
       font-size: 12px;
+      white-space: normal;
     }
   }
 
@@ -1166,16 +1090,26 @@ const swipeRight = () => {
     background: linear-gradient(180deg, #005348 0%, rgba(0, 83, 72, 0.2) 96.35%);
   }
   tbody > :nth-child(odd) {
-    background: rgba(21, 0, 37, 0.2);
-    background: #016d5e;
+    background: #253028;
   }
   tbody > :nth-child(even) {
-    background: rgba(21, 0, 37, 0.5);
-    background: #005348;
+    background: #1f241f;
+  }
+
+  .vip-table-badge-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+  }
+  .vip_table_badge {
+    width: 30px;
+    height: 30px;
+    margin-right: 4px;
   }
 
   span.amt-text {
-    background-color: #f3ec78 !important;
+    background-color: #f9f700 !important;
     background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%) !important;
     background-size: 100% !important;
     -webkit-background-clip: text !important;
@@ -1206,14 +1140,14 @@ const swipeRight = () => {
   .hint-msg {
     border-radius: 8px;
     // background: linear-gradient(180deg, #2f1b4d 0%, #1a2045 100%);
-    background: linear-gradient(180deg, #005348 0%, rgba(0, 83, 72, 0.2) 96.35%);
-
+    background: #1f241f;
     padding: 10px;
     margin: 0 0 1.25rem 0;
     color: rgba(255, 255, 255, 0.7);
     text-align: center;
     font-weight: 400;
     line-height: 19px;
+    font-size: 12px;
   }
 
   .header-wrapper {

@@ -17,6 +17,7 @@ export default {
     addVirtualWallet: "Add Virtual Wallet",
     addBankCard: "Add Bank Card",
     message: "Message",
+    sucessClaimed: "Successfully Claimed ",
     feedback: "Feedback",
     feedbackDetail: "Feedback Detail",
     postComment: "Post Comment",
@@ -86,6 +87,11 @@ export default {
     homeCodeBonus: {
       congratsWonFreeCash: "Congratulations, you've won free cash!",
       enterCodeToClaim: "Please enter the cash redemption code to claim it."
+    },
+    appLoginBonus: {
+      validatePhoneAndEmail: "Please bind your phone first",
+      loginTomorrow: "Please log in tomorrow to claim your mystery reward.",
+      claimBonus: "You’ve received {amount}rs bonus!"
     }
   },
   form: {
@@ -298,9 +304,12 @@ export default {
     signinWithGoogle: "Google",
     goNow: "Go Now",
     playReal: "Play real",
-    freeTrial: "Free trial"
+    freeTrial: "Free trial",
+    payAgain: "Pay again",
   },
   notify: {
+    cancelPayment: "Cancel Payment",
+    cancelPaymentWillLose: "Cancel of payment will lose",
     loggingIn: "Logging in...",
     loggingOut: "Logging out...",
     phoneVerifySuccessful: "Phone verified successfully",
@@ -315,6 +324,7 @@ export default {
     updatedSuccessfully: "Updated successfully",
     emailVerificationSent: "Email verification sent",
     messageSent: "Message Sent",
+
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
@@ -433,7 +443,6 @@ export default {
     dividendRate: 'Dividend Rate',
     netAmountReceives: 'Net amount receives',
     status: 'Status',
-    activeMember: 'Active member',
     periodValidBet: 'Period valid bet',
     periodPnL: 'Period P&L',
     periodSettledPnL: 'Period settled P&L',
@@ -454,6 +463,7 @@ export default {
     select_privilege: "Select Privilege",
     incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
     useFtdPrivilege: "Use Slot First Deposit Privilege",
+    appDepositBonus: "App Deposit Bonus",
     unlimited: "Unlimited",
     wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
     wagerRequirementEg: "Eg. Deposit 100 Rs, require 1,000 Rs wager",
@@ -787,7 +797,7 @@ export default {
   bankCard: {
     bankAccountNum: "Bank Account Number",
     pleaseEnterCardAccount: "Please enter bank account number",
-    bankCardMust16NumberandAbove: "Bank account number must be 16 numbers and above",
+    bankCardMust16NumberandAbove: "Bank account number must be between 13 and 20 numbers",
     bankCardDisallowDecimal: "Bank account number cannot have decimal points",
     nameofCardAcc: "Card Account Name",
     insertCardAccName: "Please insert card account name"
@@ -873,6 +883,7 @@ export default {
     digitalCurrencyWithdrawal: "digital currency withdrawal"
   },
   hotPromo: {
+    unusedCoupons: "You still have unused coupons from last time, continue to use them?",
     name: "Name",
     date: "Date",
     amount: "Amount",
@@ -927,6 +938,67 @@ export default {
       earnMoney: "Earn Money",
       congratsOnGetting: "Congratulations on getting"
     },
+    appLoginBonus: {
+      newlyRegistered1: "Newly registered",
+      b9: "B9",
+      newlyRegistered2: "members, download and install the application, and get random free bonuses, up to",
+      bdt888: "888BDT",
+      newlyRegistered5: ".",
+      claimNow: "CLAIM NOW",
+      downloadApp: "DOWNLOAD APP",
+      claimed: "CLAIMED",
+      beginnersGuide: "BEGINNER'S GUIDE",
+      rewardDetails: "REWARD DETAILS",
+      beginnersGuideTxt1_1: "1. Follow whatsapp and subscribe to",
+      b9game: "B9.game",
+      beginnersGuideTxt1_2: "channel",
+      beginnersGuideTxt2: "2. Associate and verify email address",
+      rewardDetailTxt1: "The maximum bonus can reach",
+      rewardDetailTxt2: "",
+      rewardDetailTxt3: "New users only",
+      thingsToNote1: "Rewards can only be claimed after logging in through the APP and completing verification",
+      thingsToNote2: "Application must be",
+      thingsToNote3: "downloaded",
+      thingsToNote4: "and",
+      thingsToNote5: "installed",
+      thingsToNote6: "",
+      depositAmt: "DEPOSIT AMOUNT",
+      giveawayBonus: "GIVEAWAY BONUS",
+      turnoverRequirements: "TURNOVER REQUIREMENTS",
+      applicableGames: "APPLICABLE GAMES",
+      conditionsForReceiving: "CONDITIONS FOR RECEIVING",
+      slotMachines: "Slot Machines",
+      depositPayment: "Deposit Payment",
+      selectDepositChannel: "Select a deposit channel",
+      checkDepositOffer: "Check the first deposit offer",
+      downloadAndInstall1: "Download and install",
+      downloadAndInstall2: "official application.",
+      downloadAndInstall3: "Subscribe to",
+      downloadAndInstall4: "official channel",
+      downloadAndInstall5: "WhatsApp channel:",
+      downloadAndInstall6:
+        "Register a member account and enter your original name (must be consistent with the name of your associated withdrawal account)",
+      downloadAndInstall7: "Linked withdrawal account",
+      downloadAndInstall8: "Enter the [Discount Center] to check and collect, and you can get a random reward of up to",
+      downloadAndInstall9: ".",
+      termsCondition1:
+        "This bonus is only available for new member accounts and only for their first deposit.",
+      termsCondition2:
+        "Withdrawal requirements: You need to complete the wagering requirement of at least 10 times the turnover. The calculation formula is: (Deposit amount + Bonus amount) × 10 times the turnover requirement.",
+      termsCondition3:
+        "This bonus is only applicable to the slot game category.",
+      termsCondition4:
+        "If a member mistakenly participates in a non-specified game category, the bonus will be deemed invalid and win7.gam reserves the right to deduct the relevant bonus and the profits generated.",
+      termsCondition5:
+        "Each member is limited to one account (including deposit account, withdrawal account, IP address). Multiple account behavior will result in the bonus being invalid. If violations are found, win7.gam reserves the right to cancel the bonus and freeze the account.",
+      termsCondition6:
+        "Before the first withdrawal application, the bound bank account information and phone number cannot be changed. If the information is changed, the bonus will be cancelled and the bonus and the resulting profits will be deducted.",
+      termsCondition7: "This bonus is only applicable to players in the specified game category. The bonus cannot be used to accumulate betting turnover, calculate arbitrage behavior or be used in combination with other technical means. If violations are found, the bonus will be deemed invalid, all bonuses and profits will be cancelled, and win7.gam reserves the right to close the account.",
+      termsCondition8:
+        "B9.game reserves the right to change, suspend or terminate this activity at any time without prior notice.",
+      termsCondition9: "The final right of interpretation of all terms belongs to win7.gam. win7.gam reserves the right to refuse to deal with any disputes involving terms.",
+      
+    },
     aviatorWheel: {
       remainingDrawTimes: "Remaining draw times",
       congratulations: "Congratulations"
@@ -962,9 +1034,9 @@ export default {
     },
     monthBeginningDepositRebate: {
       receive: "Receive",
-      vipLevel: "Vip Level",
+      vipLevel: "VIP",
       rebate: "Rebate",
-      runningWater: "Running Water",
+      runningWater: "Turnover",
       bigRebate: "Big Rebate",
       rule_title: "Monthly recharge rebate event",
       rule_01:
@@ -1010,7 +1082,7 @@ export default {
       rules2:
         "Weekly Ranking Rewards: 0.6% of the platform's total weekly revenue will contribute to the weekly prize pool. This pool will be automatically distributed to players weekly based on their positions in the weekly rankings.",
       activityRules1:
-        "Players' rankings on the daily leaderboard, weekly leaderboard, and overall ranking are based on their corresponding total bet amount.",
+        "Players' rankings on the daily leaderboard, and overall ranking are based on their corresponding total bet amount.",
       activityRules2: "Rewards will be displayed on the leaderboard event page.",
       activityRules3:
         "The daily leaderboard is calculated from 00:00 to 24:00 local time. Daily rewards will be issued within half an hour after the end of the daily leaderboard and can be claimed manually on the promotions page.",
@@ -1246,7 +1318,8 @@ export default {
     58002: "Event haven't start",
     58003: "Event have expired",
     58004: "Cannot Participate. Previous Tasks Has Failed to Accomplish.",
-    58005: "Congrats, You have Completed All Tasks"
+    58005: "Congrats, You have Completed All Tasks",
+    58103: "VIP0 Cannot Participate."
   },
   content: {
     title1: "The registration time starts from the time the registration is completed.",

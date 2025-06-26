@@ -1,4 +1,8 @@
 <template>
+  <img
+    class="promo-banner-img"
+    src="./../../../assets/images/promotion/hotpromo/piggy-bank/promo-banner.png"
+  />
   <div class="piggy-bank-promo-wrapper">
     <div class="piggy-bank-claim-wrapper">
       <img
@@ -7,16 +11,16 @@
       />
       <span class="piggy-bank-claim-item">Total</span>
       <div class="piggy-bank-linear-bg-text piggy-bank-claim-item">
-        <div class="piggy-bank-linear-bg-text__text">Rs 15.24</div>
+        <div class="piggy-bank-linear-bg-text__text">Rs {{ cashbackGet }}</div>
       </div>
       <div class="piggy-bank-claim-prize">
         <img
           class="piggy-bank-claim-prize-icon"
           src="../../../assets/images/promotion/hotpromo/piggy-bank/icon-cash.png"
         />
-        CASH：Rs7.62
+        CASH：Rs{{yesterdayLoss}}
       </div>
-      <q-btn class="piggy-bank-claim-btn" @click="handleReceiveClick">Receive</q-btn>
+      <q-btn class="piggy-bank-claim-btn" @click="claimApi">Receive</q-btn>
     </div>
 
     <q-dialog v-model="showClaimDialog" persistent>
@@ -35,14 +39,14 @@
             src="../../../assets/images/promotion/hotpromo/piggy-bank/dialog-decorator.png"
           />
           <div class="piggy-bank-linear-bg-text dialog piggy-bank-dialog-item">
-            <div class="piggy-bank-linear-bg-text__text">RS 15.24</div>
+            <div class="piggy-bank-linear-bg-text__text">RS {{ cashback }}</div>
           </div>
           <div class="piggy-bank-dialog-prize">
             <img
               class="piggy-bank-dialog-prize-icon"
               src="../../../assets/images/promotion/hotpromo/piggy-bank/icon-cash.png"
             />
-            CASH：Rs7.62
+            CASH：Rs{{yesterdayLoss}}
           </div>
           <q-btn class="piggy-bank-dialog-btn" @click="handleReceiveClick"></q-btn>
         </div>
@@ -54,15 +58,61 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { eventapi } from "boot/axios";
+import { useQuasar } from "quasar";
+import { userStore } from "src/stores";
+import { onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
+
+const props = defineProps(["promocode"]);
+
+const $q = useQuasar();
+const { t } = useI18n();
+const store = userStore();
+const cashback = ref(0);
+const yesterdayLoss = ref(0);
+const cashbackGet= ref(0);
+
 const showClaimDialog = ref(false);
 
-const handleReceiveClick = () => {
-  showClaimDialog.value = true;
+
+const claimApi = () => {
+  eventapi.post(`/session/cashback-for-yesterday-loss/claim-cashback?promoCode=${props.promocode}`).then((res) => {
+    if (res.code === 0) {
+      console.log(res)
+      showClaimDialog.value = true;
+      cashbackGet.value= res.data;
+    }else{
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: res.message,
+        icon: "report_problem"
+      });
+    }
+  });
 };
+
+const initApi = () => {
+  eventapi.get(`/session/cashback-for-yesterday-loss/calculate-cashback?promoCode=${props.promocode}`).then((res) => {
+    if (res.code === 0) {
+      console.log(res);
+      const { cashback: cb, yesterdayLoss: yl} = res.data;
+
+      cashback.value = cb;
+      yesterdayLoss.value = yl;
+    }
+  });
+};
+
+
+onMounted(() => {
+  initApi();
+});
 </script>
 <style lang="scss" scoped>
 .piggy-bank-promo-wrapper {
+  padding: 20px;
   .piggy-bank-claim-wrapper {
     display: flex;
     flex-direction: column;
@@ -105,6 +155,11 @@ const handleReceiveClick = () => {
       border-radius: 4px;
       font-weight: 700;
       color: #fff;
+
+      &:active{
+        filter: brightness(0.9);
+        transform: translate(0px, 1px);
+      }
     }
   }
 }
@@ -127,10 +182,10 @@ const handleReceiveClick = () => {
     padding: 4px 0;
     position: relative;
     background: linear-gradient(
-      90deg,
-      rgba(6, 102, 211, 0) 0%,
-      rgba(6, 102, 211, 0.3) 49.58%,
-      rgba(6, 102, 211, 0) 100%
+        90deg,
+        rgba(6, 102, 211, 0) 0%,
+        rgba(6, 102, 211, 0.3) 49.58%,
+        rgba(6, 102, 211, 0) 100%
     );
 
     &::before,
@@ -138,10 +193,10 @@ const handleReceiveClick = () => {
       position: absolute;
       width: 100%;
       background: linear-gradient(
-        90deg,
-        rgba(33, 167, 239, 0) 0%,
-        rgba(33, 167, 239, 0.7) 49.58%,
-        rgba(33, 167, 239, 0) 100%
+          90deg,
+          rgba(33, 167, 239, 0) 0%,
+          rgba(33, 167, 239, 0.7) 49.58%,
+          rgba(33, 167, 239, 0) 100%
       );
     }
 

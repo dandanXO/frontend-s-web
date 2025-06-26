@@ -133,9 +133,8 @@ function isNonNumericString(value) {
 }
 
 export const isInPwa = () => {
-  if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
-    return true;
-  } else {
-    return false;
-  }
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  const hasRbKey = Object.keys(localStorage).some((key) => key.startsWith("__rb_"));
+  const hasPwa = sessionStorage.getItem("IS_PWA");
+  return isStandalone || hasRbKey || hasPwa;
 };

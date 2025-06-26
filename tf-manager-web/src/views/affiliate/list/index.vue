@@ -482,7 +482,7 @@
           <template #default="scope">
             <span v-if="scope.row.affiliateLevel === null">-</span>
             <span v-if="scope.row.affiliateLevel !== null">
-              {{ scope.row.affiliateLevel }}
+              {{ isPK4(request.siteId) ? t(`affiliate.level.PK4_${scope.row.affiliateLevel}`) : t(`affiliate.level.${scope.row.affiliateLevel}`) }}
             </span>
           </template>
         </el-table-column>
@@ -794,8 +794,8 @@ const uiControl = reactive({
   ],
   affiliateLevel: [
     // { key: 1, displayName: 'AFFILIATE', value: 'AFFILIATE' },
-    { key: 2, displayName: t('fields.pk4_super_affiliate'), value: 'SUPER_AFFILIATE' },
-    { key: 3, displayName: t('fields.pk4_master_affiliate'), value: 'MASTER_AFFILIATE' },
+    { key: 2, displayName: t('affiliate.level.PK4_MASTER_AFFILIATE'), value: 'MASTER_AFFILIATE' },
+    { key: 3, displayName: t('affiliate.level.PK4_SUPER_AFFILIATE'), value: 'SUPER_AFFILIATE' },
     // { key: 4, displayName: 'CHIEF AFFILIATE', value: 'CHIEF_AFFILIATE' },
   ],
   commissionModel: [

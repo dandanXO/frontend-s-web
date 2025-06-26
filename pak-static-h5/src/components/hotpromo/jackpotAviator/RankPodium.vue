@@ -6,30 +6,30 @@
         </div>
 
         <div class="podium-silver">
-            <div class="left-wing" />
+            <!-- <div class="left-wing" /> -->
             <div class="id-and-prize">
                 <div class="id">{{ rankingList[1].loginName }}</div>
                 <div class="prize">{{ rankingList[1].amount }}</div>
             </div>
-            <div class="right-wing" />
+            <!-- <div class="right-wing" /> -->
         </div>
 
         <div class="podium-gold">
-            <div class="left-wing" />
+            <!-- <div class="left-wing" /> -->
             <div class="id-and-prize">
                 <div class="id">{{ rankingList[0].loginName }}</div>
                 <div class="prize">{{ rankingList[0].amount }}</div>
             </div>
-            <div class="right-wing" />
+            <!-- <div class="right-wing" /> -->
         </div>
 
         <div class="podium-bronze">
-            <div class="left-wing" />
+            <!-- <div class="left-wing" /> -->
             <div class="id-and-prize">
                 <div class="id">{{ rankingList[2].loginName }}</div>
                 <div class="prize">{{ rankingList[2].amount }}</div>
             </div>
-            <div class="right-wing" />
+            <!-- <div class="right-wing" /> -->
         </div>
     </div>
 </template>
@@ -51,11 +51,19 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
     letter-spacing: -1px;
     min-height: 152px;
 
+    
+    margin-top: -190px;
+    .prize {
+      color: #f9cf3a;
+      font-weight: 600;
+    }
     .podium-silver {
         background-size: 100% 100%;
         position: absolute;
-        top: 85%;
-        left: 19.5%;
+        top: 86%;
+        // left: 19.5%;
+        
+        left: 15.5%;
         transform: translate(-50%, -50%);
         display: flex;
         justify-content: center;
@@ -66,28 +74,31 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
         text-align: center;
         gap: 0px;
 
-        .left-wing {
-            background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/silver-left-wing.png') no-repeat center center;
-            aspect-ratio: 66/93;
-            background-size: 100% 100%;
-            min-height: 30px;
-            min-width: 21px;
-        }
+    width: 30%;
+    justify-content: space-around;
+        // .left-wing {
+        //     background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/silver-left-wing.png') no-repeat center center;
+        //     aspect-ratio: 66/93;
+        //     background-size: 100% 100%;
+        //     min-height: 30px;
+        //     min-width: 21px;
+        // }
 
-        .right-wing {
-            background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/silver-right-wing.png') no-repeat center center;
-            aspect-ratio: 66/93;
-            background-size: 100% 100%;
-            min-height: 30px;
-            min-width: 21px;
-        }
+        // .right-wing {
+        //     background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/silver-right-wing.png') no-repeat center center;
+        //     aspect-ratio: 66/93;
+        //     background-size: 100% 100%;
+        //     min-height: 30px;
+        //     min-width: 21px;
+        // }
+        
     }
 
     .podium-gold {
         background-size: 100% 100%;
         position: absolute;
         top: 77%;
-        left: 50%;
+        left: 51%;
         transform: translate(-50%, -50%);
         display: flex;
         justify-content: center;
@@ -99,6 +110,8 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
         gap: 0px;
         font-size: 13px;
 
+    width: 30%;
+    justify-content: space-around;
         .left-wing {
             background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/gold-left-wing.png') no-repeat center center;
             aspect-ratio: 90/141;
@@ -119,8 +132,8 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
     .podium-bronze {
         background-size: 100% 100%;
         position: absolute;
-        top: 85%;
-        left: 80%;
+        top: 86%;
+        left: 85%;
         transform: translate(-50%, -50%);
         display: flex;
         justify-content: center;
@@ -131,6 +144,8 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
         text-align: center;
         gap: 0px;
 
+        width: 30%;
+        justify-content: space-around;
         .left-wing {
             background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/bronze-left-wing.png') no-repeat center center;
             aspect-ratio: 63/90;
@@ -149,9 +164,9 @@ const props = defineProps(['rankingList', 'isLoadingRanking']);
     }
 }
 
-$yellow: #ffd300;
-$blue: #17d3ff;
-$pink: #ff4e91;
+$yellow: #ffe45e;
+$blue: #ffe565;
+$pink: #fff4c0;
 
 $duration: 3000;
 
@@ -243,7 +258,7 @@ $duration: 3000;
   .podium {
     .podium-silver, .podium-bronze, .podium-gold {
       font-size: 12px;
-      letter-spacing: -1px;
+      letter-spacing: 1px;
       .left-wing, .right-wing {
         min-height: 30px;
       }
@@ -259,6 +274,14 @@ $duration: 3000;
       .left-wing, .right-wing {
         min-height: 20px;
       }
+    }
+  }
+}
+
+@media (min-width: 500px) {
+  .podium {
+    .podium-silver, .podium-bronze, .podium-gold {
+      font-size: 16px;
     }
   }
 }

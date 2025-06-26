@@ -17,9 +17,14 @@
       <div class="desc-title">{{ $t("earnMoney.earn.point_03_title") }}</div>
     </div>
     <div class="desc-content">{{ $t("earnMoney.earn.point_03_desc") }}</div>
-    <div class="earn-separator"></div>
-    <div class="earn-title">{{ $t("earnMoney.earn.myReferralLink") }}</div>
-    <div class="earn-separator"></div>
+    <!-- <div class="earn-separator"></div> -->
+    <div class="earn-title-container">
+      <img class="earn-title-arrow" src="../../assets/images/earn-money/title-left.png" />
+      <div class="earn-title">{{ $t("earnMoney.earn.myReferralLink") }}</div>
+      <img class="earn-title-arrow" src="../../assets/images/earn-money/title-right.png" />
+    </div>
+
+    <!-- <div class="earn-separator"></div> -->
     <div class="referral-link-wrapper">
       <q-icon size="xs" name="insert_link" />
       <div class="link">{{ selfTgurl }}</div>
@@ -183,14 +188,26 @@ onMounted(() => {
     height: 2px;
   }
 
-  .earn-title {
-    background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #00b9a1 0.01%, rgba(92, 70, 231, 0) 100%);
-    font-size: 2rem;
-    font-weight: 700;
-    text-align: center;
-    height: 50px;
-    line-height: 50px;
-    margin: 1px 0;
+  .earn-title-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    .earn-title-arrow {
+      width: 10%;
+      margin: 0 8px;
+    }
+    .earn-title {
+      // background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #00b9a1 0.01%, rgba(92, 70, 231, 0) 100%);
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-align: center;
+      height: 50px;
+      margin: 1px 0;
+      font-family: Poppins;
+      font-style: italic;
+      align-content: center;
+    }
   }
 
   :deep(.q-item) {
@@ -259,7 +276,7 @@ onMounted(() => {
     border-radius: 0.75rem 0.75rem 0rem 0rem;
     // background: #392e7b;
     // background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
-    background: #00b9a175;
+    background: #4b4943;
     height: 50px;
     padding: 10px;
     justify-content: space-between;
@@ -281,7 +298,7 @@ onMounted(() => {
 
   .qr-wrapper {
     border-radius: 0rem 0rem 0.75rem 0.75rem;
-    background: #131b1d;
+    background: #1f241f;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -297,10 +314,10 @@ onMounted(() => {
 
     .save-btn {
       width: 50%;
-      color: #ffffff;
+      color: #000;
       font-weight: 700;
       border-radius: 0.5rem;
-      background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+      background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
 
       // background: linear-gradient(188deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
     }
@@ -311,9 +328,13 @@ onMounted(() => {
   margin-left: -16px;
   margin-right: -16px;
 
+  img{
+    margin-top: -100px;
+  }
+
   &:after {
     content: "";
-    background: linear-gradient(to bottom, rgba(17, 19, 31, 0.9), rgba(255, 255, 255, 0));
+    // background: linear-gradient(to bottom, rgba(17, 19, 31, 0.9), rgba(255, 255, 255, 0));
     position: absolute;
     top: 0;
     left: 0;

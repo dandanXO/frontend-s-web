@@ -14,6 +14,19 @@
 
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'br1-slot-ftd' && store.token" :params="list.param" />
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
+    <!-- <ReceiveEarnPromo v-if="list.redirectUrl === 'receive-earn'" :params="list.param" /> -->
+
+    <MoneyRainPromo v-if="list.redirectUrl === 'money-rain'" :params="list.param" />
+    <RedepositBonusPromo v-if="list.redirectUrl === 'redeposit-bonus'" :params="list.param" />
+
+    <VipPlanBettingUpgrade v-if="list.redirectUrl === 'br2-vip-plan'" :params="list.param" />
+    <CashbackWeeklyPromo v-if="list.redirectUrl === 'cashback-weekly'" :params="list.param" />
+    <RedPacketRainPromo v-if="list.redirectUrl === 'br2-red-packet-rain'" :params="list.param" />
+    <RedepositBonus100Promo v-if="list.redirectUrl === 'redeposit-bonus-100'" :params="list.param" />
+    <DailySecondDepositPromo v-if="list.redirectUrl === 'br2-daily-second-deposit'" :params="list.param" />
+    <BetCashbackPromo v-if="list.redirectUrl === 'br2-bet-rebate'" :params="list.param" />
+    <LossRebatePromo v-if="list.redirectUrl === 'br2-loss-rebate'" :params="list.param" />
+    <FtdBonusPromo v-if="list.redirectUrl === 'br2-ftd-bonus'" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -47,6 +60,17 @@ import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskProm
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import SlotFtdPromo from "../components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
 import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
+// import ReceiveEarnPromo from "./hotpromo/receive-earn/ReceiveEarnPromo.vue";
+import MoneyRainPromo from "./hotpromo/money-rain/MoneyRainPromo.vue";
+import RedepositBonusPromo from "./hotpromo/redeposit-bonus/RedepositBonusPromo.vue";
+import VipPlanBettingUpgrade from "./hotpromo/vip-plan-betting-upgrade/VipPlanBettingUpgrade.vue";
+import CashbackWeeklyPromo from "./hotpromo/cashback-weekly/CashbackWeeklyPromo.vue";
+import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRainPromo.vue";
+import RedepositBonus100Promo from "../components/hotpromo/redeposit-bonus/RedepositBonusPromo.vue";
+import BetCashbackPromo from "../components/hotpromo/bet-cashback/BetCashbackPromo.vue";
+import DailySecondDepositPromo from "components/hotpromo/daily-second-deposit/DailySecondDepositPromo.vue";
+import LossRebatePromo from "../components/hotpromo/loss-rebate/LossRebatePromo.vue";
+import FtdBonusPromo from "../components/hotpromo/ftdBonus/FtdBonusPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -60,7 +84,18 @@ export default defineComponent({
     WelcomeTaskPromo,
     InviteFriendPromo,
     SlotFtdPromo,
-    SpinLuckyWheelPromo
+    SpinLuckyWheelPromo,
+    // ReceiveEarnPromo,
+    MoneyRainPromo,
+    RedepositBonusPromo,
+    VipPlanBettingUpgrade,
+    CashbackWeeklyPromo,
+    RedPacketRainPromo,
+    RedepositBonus100Promo,
+    BetCashbackPromo,
+    DailySecondDepositPromo,
+    LossRebatePromo,
+    FtdBonusPromo
   },
   props: {
     list: {
@@ -119,8 +154,16 @@ export default defineComponent({
       this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "br1-slot-ftd" ||
       this.list.redirectUrl === "spin-lucky-wheel" ||
-      this.list.redirectUrl === "promo1" ||
-      this.list.redirectUrl === "promo2" ||
+      this.list.redirectUrl === "receive-earn" ||
+      this.list.redirectUrl === "money-rain" ||
+      this.list.redirectUrl === "redeposit-bonus" ||
+      this.list.redirectUrl === "br2-vip-plan" ||
+      this.list.redirectUrl === "cashback-weekly" ||
+      this.list.redirectUrl === "redeposit-bonus-100" ||
+      this.list.redirectUrl === "br2-ftd-bonus" ||
+      this.list.redirectUrl === "br2-daily-second-deposit" ||
+      this.list.redirectUrl === "br2-loss-rebate" ||
+      this.list.redirectUrl === "br2-bet-rebate" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

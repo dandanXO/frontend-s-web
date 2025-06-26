@@ -2,12 +2,26 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-date-picker
+          v-model="request.matchTime"
+          format="DD/MM/YYYY HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          size="small"
+          type="datetimerange"
+          range-separator=":"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
+          style="width: 250px;margin-left:10px"
+          :editable="false"
+          :clearable="false"
+          :default-time="defaultTime"
+        />
         <el-select
           v-model="request.sportId"
           size="small"
           :placeholder="t('fields.sportType')"
           class="filter-item"
-          style="width: 120px;"
+          style="width: 120px; margin-left: 10px"
         >
           <el-option
             v-for="item in uiControl.sport"
@@ -21,7 +35,7 @@
           size="small"
           :placeholder="t('fields.status')"
           class="filter-item"
-          style="width: 120px;"
+          style="width: 120px; margin-left: 10px"
         >
           <el-option
             v-for="item in uiControl.liveStatus"
@@ -33,9 +47,24 @@
         <el-input
           v-model="request.title"
           size="small"
-          style="width: 200px; margin-left: 5px"
+          style="width: 200px; margin-left: 10px"
           :placeholder="t('fields.matchTitle')"
         />
+        <el-select
+          v-model="request.isStreamIdExist"
+          size="small"
+          :placeholder="t('fields.isLiveUrlExist')"
+          class="filter-item"
+          style="width: 120px; margin-left: 10px"
+        >
+          <el-option
+            v-for="item in uiControl.isStreamIdExist"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
+
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadMatch">
           {{ t('fields.search') }}
         </el-button>
@@ -194,6 +223,10 @@ import { useI18n } from "vue-i18n";
 import { getSportLiveMatch, copySportLiveMatch, batchDeleteSportLiveMatch } from "@/api/sport-live-match";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { liveSportTyps } from "@/utils/live"
+import {
+  convertDateToEnd,
+  convertDateToStart,
+} from '@/utils/datetime'
 
 export default defineComponent({
   setup() {
@@ -212,6 +245,10 @@ export default defineComponent({
         { name: '14', display: t('status.namiMatch.ABANDONED'), id: 14 },
         { name: '15', display: t('status.namiMatch.PENDING'), id: 15 },
       ],
+      isStreamIdExist: [
+        { key: true, displayName: t('fields.yes'), value: true },
+        { key: false, displayName: t('fields.no'), value: false }
+      ],
     });
     const page = reactive({
       pages: 0,
@@ -220,12 +257,22 @@ export default defineComponent({
       current: 1,
       loading: false
     });
+
+    const now = new Date()
+    const defaultStartDate = convertDateToStart(now)
+    const defaultEndDate = convertDateToEnd(now)
+    const defaultTime = [
+      new Date(2000, 1, 1, 0, 0, 0),
+      new Date(2000, 1, 1, 23, 59, 59),
+    ];
     const request = reactive({
       size: 30,
       current: 1,
       sportId: null,
       liveStatus: null,
-      title: null
+      title: null,
+      isStreamIdExist: null,
+      matchTime: [defaultStartDate, defaultEndDate],
     });
     const dialogVisible = ref(false);
     const currentRow = ref(null);
@@ -245,11 +292,21 @@ export default defineComponent({
       request.sportId = null;
       request.title = null;
       request.liveStatus = null;
+      request.isStreamIdExist = null;
+      request.matchTime = [defaultStartDate, defaultEndDate]
     }
 
     async function loadMatch() {
       page.loading = true;
-      const res = await getSportLiveMatch({ sportId: request.sportId, status: request.liveStatus, title: request.title, page: request.current, limit: request.size });
+      const query = {};
+
+      if (request.matchTime !== null) {
+        if (request.matchTime.length === 2) {
+          query.matchTime = request.matchTime.join(",");
+        }
+      }
+
+      const res = await getSportLiveMatch({ sportId: request.sportId, status: request.liveStatus, title: request.title, isStreamIdExist: request.isStreamIdExist, matchTime: query.matchTime, page: request.current, limit: request.size }); //
       console.log(res.data.records);
 
       page.records = res.data.records || [];
@@ -353,6 +410,7 @@ export default defineComponent({
       hasStreamId,
       selectedRows,
       handleSelectionChange,
+      defaultTime
     };
   }
 });

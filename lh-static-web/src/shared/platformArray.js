@@ -92,6 +92,15 @@ export const liveCasinoPlatforms = [
     message: "百家乐、骰宝、轮盘、牛牛、炸金花等多款真人视讯游戏，多位真人荷官全年无休的紧密互动，最美荷官在线互动。",
     caption: "",
     gameCode: ""
+  },
+  {
+    code: "EEAI",
+    cnname: "EEAI真人",
+    image: "eeai",
+    message:
+      "EEAI真人带你畅玩百家乐、骰宝、轮盘、牛牛、炸金花等多款热门真人视讯游戏，最美荷官实时在线陪伴，让你感受最真实的现场魅力！",
+    caption: "",
+    gameCode: ""
   }
 ];
 

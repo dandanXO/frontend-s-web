@@ -769,6 +769,10 @@ body.body--dark .q-footer {
     gap: 0px;
     font-size: 14px;
     color: #090f1e;
+    .pc-form .pc-form-input .q-field--filled .q-field__inner{
+      background: #EAEFF9;
+      border-radius: 10px;
+    }
   }
 }
 .btn-cancel {

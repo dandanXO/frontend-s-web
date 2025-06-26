@@ -33,7 +33,7 @@
               v-if="currentLiveData.name === 'SYSTEM'"
               :src="require('../../assets/images/livestream/system-avatar.png')"
             />
-            <img v-else-if="currentLiveData.avatar" :src="imgURL + currentLiveData.avatar" />
+            <img v-else-if="currentLiveData.avatar" :src="imgStreamerURL + currentLiveData.avatar" />
             <img v-else :src="require('../../assets/images/profile/default-1.png')" />
 
             <!-- <img :src="imgURL + currentLiveData.avatar" /> -->
@@ -117,6 +117,7 @@ const pageContainer = ref(null);
 const store = userStore();
 const livestreamTimer = ref(null);
 const livestreamSyncAbortController = ref(null);
+const chatHistoryAbortController = ref(null);
 const isExpanded = ref(true);
 const showShareModal = ref(false);
 const roomMessageRef = ref(null);
@@ -209,7 +210,7 @@ const parseLivestreamData = (data) => {
 const syncLivestreamInfo = async () => {
   if (!currentLiveData.value?.streamId) return;
   livestreamSyncAbortController.value = new AbortController();
-  getLivestreamDetail(currentLiveData.value.streamId, livestreamSyncAbortController).then((res) => {
+  getLivestreamDetail(currentLiveData.value.streamId, livestreamSyncAbortController.value).then((res) => {
     if (res.code === 0) {
       if (currentLiveData.value.id !== res.data.id) return;
 
@@ -422,13 +423,15 @@ const syncMessages = () => {
     streamId: currentLiveData.value.id,
     recordTime: [messageHistoryStartTime.value, now]
   };
-
+  chatHistoryAbortController.value = new AbortController();
   if (pastTime > MESSAGE_SYNC_INTERVAL && !isProcessingMessageHistory.value) {
     lastSyncMessageTime.value = now;
     if (!isLivestreaming.value) return;
     isProcessingMessageHistory.value = true;
     api
-      .post(`/live/history?current=${messagesHistoryMeta.value.current}&sortType=ASC`, params)
+      .post(`/live/history?current=${messagesHistoryMeta.value.current}&sortType=ASC`, params, {
+        signal: chatHistoryAbortController.value.signal
+      })
       .then(async (res) => {
         if (res.code === 0) {
           // console.log("records:::", res.data.records);
@@ -536,6 +539,8 @@ const sportType = computed(() => {
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
+const imgStreamerURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/streamer/";
+
 let collapseTimeout = null;
 const expandRoomMsg = () => {
   if (collapseTimeout) {
@@ -580,6 +585,8 @@ watch(currentLiveData, (newVal, oldVal) => {
   seenMessageIds.clear();
   latestProcessedMessageId.value = -1;
   lastSyncMessageTime.value = Date.now() - MESSAGE_HISTORY_START_TIME;
+  livestreamSyncAbortController.value && livestreamSyncAbortController.value.abort();
+  chatHistoryAbortController.value && chatHistoryAbortController.value.abort();
   messageHistoryStartTime.value = lastSyncMessageTime.value;
   syncMessages();
   resetSyncLivestreamInterval(true);

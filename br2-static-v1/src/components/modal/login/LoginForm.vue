@@ -1,28 +1,33 @@
 <template>
   <div v-if="uiStore.loginView === 'login'" class="login-container">
     <div class="login-panel">
-      <h2 class="title">Log in</h2>
-      <p class="subtitle">
-        Not a member?
-        <a href="#" class="link">Create account</a>
-      </p>
+      <h2 class="title">{{ $t("header.login") }}</h2>
+      <div class="subtitle">
+        {{ $t("btn.notAMember") }}
+        <div class="link" @click="uiStore.loginView = 'register'">{{ $t("btn.createAccount") }}</div>
+      </div>
 
       <q-input
         ref="phoneRef"
-        outlined
         v-model="phone"
-        placeholder="Enter your Phone Number"
         class="input"
         :class="{ 'white-txt': !!phone }"
+        :placeholder="$t('form.phone_placeholder')"
+        outlined
+        type="tel"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+        lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-          (val) => (val && val.length >= 8 && val.length <= 12) || $t('form.phone_rules_02'),
+          (val) => (val && val.length >= 8 && val.length <= 11) || $t('form.phone_rules_02'),
           (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04')
         ]"
       >
         <template v-slot:prepend>
-          <img v-if="!phone" src="../../../assets/images/auth/email-icon.png" width="22px" />
-          <img v-else src="../../../assets/images/auth/email-icon-active.png" width="22px" />
+          <img v-if="!phone" src="../../../assets/images/auth/acc-icon.png" width="22px" />
+          <img v-else src="../../../assets/images/auth/acc-icon-active.png" width="22px" />
         </template>
       </q-input>
 
@@ -30,10 +35,11 @@
         ref="passwordRef"
         outlined
         v-model="password"
-        placeholder="Enter your Password"
+        :placeholder="$t('form.password_placeholder')"
         :type="!isShowPassword ? 'password' : 'text'"
         class="input"
         :class="{ 'white-txt': !!password }"
+        lazy-rules
         :rules="[(val) => (val && val.length > 0) || $t('form.password_rules_01')]"
       >
         <template v-slot:prepend>
@@ -58,9 +64,9 @@
         </template>
       </q-input>
 
-      <div class="forgot" @click="uiStore.loginView = 'forgetPw'">Forgot password</div>
+      <div class="forgot" @click="uiStore.loginView = 'forgetPw'">{{ $t("form.forgotPassword") }}</div>
 
-      <q-btn unelevated class="bg-greenbtn" label="Login" no-caps padding="12px" @click="login" />
+      <q-btn unelevated class="bg-greenbtn" :label="$t('btn.login')" no-caps padding="12px" @click="login" />
     </div>
   </div>
 </template>
@@ -73,6 +79,7 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { Device } from "@capacitor/device";
 import { t } from "src/boot/lang";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 const uiStore = useUI();
 const store = userStore();
@@ -94,34 +101,46 @@ const login = () => {
   $q.loading.show({
     message: t("btn.logging_in")
   });
-  if (phoneRef.value.hasError || passwordRef.value.hasError) {
-    $q.loading.hide();
-  } else {
-    store
-      .memberLogin({
-        loginName: phone.value,
-        password: password.value,
-        sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
-        ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVersionNo.value } : {})
-      })
-      .then((res) => {
-        sessionStorage.removeItem("REFERRAL_CODE");
+  const fpPromise = FingerprintJS.load();
+  (async () => {
+    const fp = await fpPromise;
+    const result = await fp.get();
+    const excludes = { value: ["timezone", "timeZoneOffset"] };
+    const allComponents = { ...result.components };
+    excludes.value.forEach((element) => {
+      delete allComponents[element];
+    });
+    const sidParam = "fp-" + FingerprintJS.hashComponents(allComponents);
 
-        phone.value = "";
-        password.value = "";
+    if (phoneRef.value.hasError || passwordRef.value.hasError) {
+      $q.loading.hide();
+    } else {
+      store
+        .memberLogin({
+          loginName: phone.value,
+          password: password.value,
+          sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
+          ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVersionNo.value } : {})
+        })
+        .then((res) => {
+          sessionStorage.removeItem("REFERRAL_CODE");
 
-        if (store.hasToken()) {
-          const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
-          router.go(jumpUrl);
-        }
+          phone.value = "";
+          password.value = "";
 
-        uiStore.loginView = "";
-      })
-      .catch((e) => {})
-      .finally(() => {
-        $q.loading.hide();
-      });
-  }
+          if (store.hasToken()) {
+            const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
+            router.go(jumpUrl);
+          }
+
+          uiStore.loginView = "";
+        })
+        .catch((e) => {})
+        .finally(() => {
+          $q.loading.hide();
+        });
+    }
+  })();
 };
 
 const appVersionNo = ref("");
@@ -153,6 +172,7 @@ onMounted(() => {
   font-size: 13px;
   color: #bbb;
   text-align: right;
-  margin: 0 0 54px;
+  display: inline-flex;
+  margin: 0 0 54px auto;
 }
 </style>

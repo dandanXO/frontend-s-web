@@ -171,6 +171,7 @@ export default {
     code_rules_01: "تصدیقی کوڈ درکار ہے",
     captchaCodeCheck: "کیپچا کوڈ چیک",
     captchaCode: "کیپچا کوڈ",
+    identity: "ID نمبر",
     captchaCode_placeholder: "کیپچا کوڈ درج کریں",
     captchaCode_rules_01: "براہ کرم کیپچا کوڈ درج کریں",
     captchaCode_rules_02: "کیپچا کوڈ کی لمبائی 4 حروف ہے",
@@ -303,9 +304,12 @@ export default {
     goNow: "اب جائیں",
     playReal: "حقیقی کھیلیں",
     freeTrial: "مفت آزمائش",
-    check: "چیک کریں"
+    check: "چیک کریں",
+    payAgain: "دوبارہ ادائیگی کریں"
   },
   notify: {
+    cancelPayment: "ادائیگی منسوخ کریں",
+    cancelPaymentWillLose: "ادائیگی منسوخ کرنے پر نقصان ہوگا",
     loggingIn: "لاگ ان ہو رہا ہے",
     loggingOut: "لاگ آؤٹ ہو رہا ہے",
     phoneVerifySuccessful: "فون کامیابی سے تصدیق ہو گئی",
@@ -413,6 +417,8 @@ export default {
     useFtdPrivilege: "سلاٹ پہلی جمع کی مراعات کا استعمال کریں",
     useFtdBonus: "پہلی جمع بونس",
     use2ndBonus: "دوسری جمع بونس",
+    use3rdBonus: "تیسری جمع پر بونس",
+    appDepositBonus: "نئے کھلاڑی کا بونس استعمال ایپ ڈپازٹ بونس",
     unlimited: "لامحدود",
     wagerRequirement: "واجر کی شرط (نکالنے کے لیے): آپ کی جمع رقم کا 10 گنا",
     wagerRequirementEg: "مثال کے طور پر: 100 روپے جمع کروائیں، 1,000 روپے واجرت درکار ہوگی",
@@ -753,7 +759,7 @@ export default {
   bankCard: {
     bankAccountNum: "بینک اکاؤنٹ نمبر",
     pleaseEnterCardAccount: "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
-    bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 13 سے 16 ہندسوں کے درمیان ہونا چاہیے۔",
+    bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 13 سے 20 ہندسوں کے درمیان ہونا چاہیے۔",
     bankCardDisallowDecimal: "بینک اکاؤنٹ نمبر میں اعشاری نمبر نہیں ہو سکتے",
     nameofCardAcc: "کارڈ اکاؤنٹ کا نام",
     insertCardAccName: "براہ کرم کارڈ اکاؤنٹ کا نام درج کریں",
@@ -853,6 +859,8 @@ export default {
     digitalCurrencyWithdrawal: "ڈیجیٹل کرنسی سے نکاسی"
   },
   hotPromo: {
+    unusedCoupons:
+      "آپ کے پاس پچھلی بار کے کچھ غیر استعمال شدہ کوپن ابھی بھی موجود ہیں، کیا آپ ان کا استعمال جاری رکھنا چاہتے ہیں؟",
     name: "نام",
     date: "تاریخ",
     amount: "رقم",
@@ -967,7 +975,6 @@ export default {
       username: "صارف نام",
       betVolume: "شرط کی حجم",
       rank: "درجہ",
-      dailyOrWeekly: "روزانہ/ہفتہ وار",
       rankingBonusRatio: "درجہ بندی انعام کا تناسب",
       myBets: "میری شرطیں",
       myReward: "میرے انعامات",

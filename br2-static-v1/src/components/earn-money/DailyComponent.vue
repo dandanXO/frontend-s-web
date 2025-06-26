@@ -26,7 +26,7 @@
   </div>
   <div class="content-wrapper">
     <div class="progress-bar-wrapper">
-      <q-linear-progress size="15px" :value="progressValueM" color="#EC77FF" class="progress-bar-M">
+      <q-linear-progress size="15px" :value="progressValueM" color="#00FD7C" class="progress-bar-M">
         <div class="linear-indicator linear-start">{{ memberVIPData.currentLevelMemberCount }}</div>
         <div class="absolute-full flex flex-center">
           <q-badge
@@ -73,7 +73,7 @@
         <div class="line"></div>
         <div class="not-achieve">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <circle cx="10" cy="10" r="8.5" stroke="white" stroke-opacity="0.3" stroke-width="3" />
+            <circle cx="10" cy="10" r="8.5" stroke="white" stroke-opacity="1" stroke-width="2" />
           </svg>
         </div>
       </div>
@@ -202,6 +202,11 @@
       <div class="top-container">
         <div class="id-container">
           <span class="id">{{ e.loginName }}</span>
+          <!-- <img
+            v-if="e.rebateLevel > -1"
+            :src="require(`../../assets/images/vip/badge/vip_badge_label_${e.rebateLevel + 1}.png`)"
+            alt=""
+          /> -->
           <img src="../../assets/images/index/icon-vip-badge.png" alt="" />
           <div class="vip-name">
             <template v-if="e.rebateLevel == -1">...</template>
@@ -501,7 +506,7 @@ onMounted(() => {
         height: 10px;
 
         &.m {
-          background: #ec77ff;
+          background: #00fd7c;
         }
 
         &.ba {
@@ -552,8 +557,9 @@ onMounted(() => {
       display: flex;
       gap: 15px;
       // background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
-      background: linear-gradient(180deg, #0a534c 0%, #0a4855 100%);
-      border-radius: 12px;
+      background: #1f241f;
+      border-radius: 4px;
+      border: 1px solid #35383f;
     }
 
     .info-content-item {
@@ -616,6 +622,7 @@ onMounted(() => {
         margin-left: auto;
         margin-top: auto;
         padding-top: 12px;
+        color: #16d674;
 
         &.font-smaller {
           font-size: 12px;
@@ -646,7 +653,7 @@ onMounted(() => {
 
       .info-txt {
         margin-top: 4px;
-        font-weight: 700;
+        // font-weight: 700;
       }
     }
   }
@@ -654,9 +661,11 @@ onMounted(() => {
 
 .content-wrapper {
   border-radius: 0.75rem;
-  background: #00B9A175;
+  // background-color: #88ecb9;
   padding: 15px;
   margin: 0;
+  color: #35383f;
+  background: #88ecb9 url("../../assets/images/earn-money/daily-myteam-card-bg.png") no-repeat center/cover;
 
   // top section
   .progress-bar-wrapper {
@@ -675,7 +684,7 @@ onMounted(() => {
       }
 
       :deep(.q-linear-progress__model) {
-        background: #ec77ff;
+        background: #00fd7c;
       }
     }
 
@@ -711,18 +720,19 @@ onMounted(() => {
     margin: 10px 0 0 0;
 
     .achieve {
-      background: #35c212;
+      background: #de6f6f;
       border-radius: 50%;
       width: 25px;
       height: 25px;
       text-align: center;
       line-height: 25px;
+      color: #fff;
     }
 
     .line {
       width: 100%;
       height: 2px;
-      background: rgba(255, 255, 255, 0.2);
+      background: #fff;
     }
 
     .not-achieve {
@@ -806,7 +816,7 @@ onMounted(() => {
     .arrow {
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.8);
-      color: #00B9A1;
+      color: #00b9a1;
       text-align: center;
       width: 60px;
       height: 30px;
@@ -825,10 +835,11 @@ onMounted(() => {
   }
 
   .member-info {
-    border-radius: 1.25rem;
+    border-radius: 4px;
     padding: 1.25rem;
     margin: 0 0 1rem 0;
-    background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
+    background: #1f241f;
+    border: 1px solid #35383f;
 
     .top-container {
       display: flex;
@@ -901,7 +912,7 @@ onMounted(() => {
           font-family: Helvetica;
           font-size: 1rem;
           font-style: normal;
-          font-weight: 700;
+          // font-weight: 700;
         }
 
         .amount {

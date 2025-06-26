@@ -2,14 +2,14 @@
   <div class="withdrawal-modal-view">
     <div class="withdrawal-summary">
       <div class="balance">
-        <div class="title">Cash Balance</div>
+        <div class="title">{{ $t("withdraw.cashBalance") }}</div>
         <span class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
       </div>
 
       <div class="separator"></div>
 
       <div class="withdrawable">
-        <div class="title">Withdrawable</div>
+        <div class="title">{{ $t("withdraw.withdrawable") }}</div>
         <span class="amount">
           {{
             withdrawalMethods[withdrawalDialogTab].withdrawableBalance >= 0
@@ -20,9 +20,25 @@
       </div>
     </div>
 
+    <div class="withdrawalmethod" v-if="!isLoadingWithdrawalMethod">
+      <div
+        v-for="(method, i) in withdrawalMethods"
+        :key="i"
+        class="withdraw-type-item"
+        @click="selectMethod(method, i)"
+        :class="{ active: i === activeItem }"
+      >
+        <span class="promo" v-if="method.recommended">Recommended</span>
+        <div class="withdraw-img">
+          <img :src="imgURL + '/withdraw/' + method.icon" />
+        </div>
+        <div class="type-name">{{ method.name }}</div>
+      </div>
+    </div>
+
     <div class="bank-account-container" v-if="bankCardList.length > 0">
       <div class="top-wrapper">
-        <div class="title">Choose Bank Account</div>
+        <div class="title">{{ $t("form.withdrawChoose_placeholder") }}</div>
       </div>
 
       <div class="mid-wrapper">
@@ -30,6 +46,7 @@
           <div class="w-form-input">
             <q-select
               ref="cardRef"
+              class="w-select"
               filled
               dense
               clearable
@@ -39,7 +56,7 @@
               option-value="id"
               emit-value
               map-options
-              :rules="[(val) => !!val || 'Please Select A Bank Card']"
+              :rules="[(val) => !!val || $t('form.withdrawChoose_placeholder')]"
               lazy-rules
               hide-bottom-space
             >
@@ -50,7 +67,7 @@
                   </q-item-section>
                   <q-item-section>
                     <q-item-label>
-                      Acc No. ****{{
+                      {{ scope.opt.bankName }} - ****{{
                         scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
                       }}
                     </q-item-label>
@@ -70,7 +87,9 @@
                 </q-item-section>
                 <q-item-section>
                   <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                    Acc No. {{ scope.opt.cardNumber }}
+                    {{ scope.opt.bankName }} - ****{{
+                      scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                    }}
                   </q-item-label>
                   <!-- <q-item-label>
                     IFSC
@@ -88,7 +107,7 @@
           <div class="card-icon">
             <q-icon key="md" size="md" name="add" />
           </div>
-          <div class="card-label">Add New Account</div>
+          <div class="card-label">{{ $t("btn.addNewAccount") }}</div>
         </div>
       </div>
     </div>
@@ -137,8 +156,11 @@
 
       <div class="top-wrapper">
         <div class="title">
-          Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
-          {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} {{ store.currency.label }})
+          {{ $t("form.withdrawalAmount") }}
+          <span class="amount">
+            ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
+            {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} {{ store.currency.label }})
+          </span>
         </div>
       </div>
 
@@ -146,19 +168,23 @@
         <q-input
           type="number"
           ref="amountRef"
-          filled
+          class="amount-input"
+          outlined
           dense
           clearable
           placeholder="Withdraw Amount"
           v-model="withdrawInfo.amount"
           :rules="[
-            (val) => !!val || 'Please Enter Withdraw Amount',
-            (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
-            (val) => val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Valor da Retirada Insuficiente`,
+            (val) => !!val || $t('form.withdrawalAmount_rules_01'),
+            (val) => val > 0 || $t('form.withdrawalAmount_rules_02'),
+            (val) =>
+              val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || $t('form.withdrawalAmount_rules_03'),
             (val) =>
               (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
                 val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
-              `Withdraw Amount Must In Between ${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`
+              `${$t('form.withdrawalAmount_rules_03')} ${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${
+                withdrawalMethods[withdrawalDialogTab].withdrawMax
+              }`
           ]"
           lazy-rules
           hide-bottom-space
@@ -168,23 +194,29 @@
       <div class="bot-wrapper">
         <div class="info">
           <div class="desc-wrapper">
-            <div class="desc">Withdrew Amount</div>
+            <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
           </div>
-          <div class="desc">{{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }}</div>
+          <div class="amount">
+            {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }}
+          </div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
             <div class="desc">{{ $t("withdraw.dailyLimit") }} {{ store.vip }}</div>
           </div>
-          <div class="desc">
-            {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }}
+          <div class="amount">
+            {{ store.currency.label }}:{{
+              convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount)
+            }}
           </div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
-            <div class="desc">{{ $t('withdraw.remainWagers') }}</div>
+            <div class="desc">{{ $t("withdraw.remainWagers") }}</div>
           </div>
-          <div class="desc">{{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }}</div>
+          <div class="amount">
+            {{ store.currency.label }}:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }}
+          </div>
         </div>
       </div>
     </div>
@@ -212,10 +244,9 @@
       </div>
     </template>
 
-    <div class="bottom-tnc q-mt-md">
-      Note: 2% + 50{{ store.currency.label }} of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
-      information, if withdrawal failed or you have any other questions, please contact CS 24/7
-    </div>
+    <template v-if="withdrawalMethods.tips">
+      <div class="bottom-tnc q-mt-md" v-html="withdrawalMethods.tips"></div>
+    </template>
   </div>
 
   <q-dialog width="100%" v-model="isShowRedirectAddBankModal">
@@ -233,6 +264,7 @@ import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
+import { t } from "src/boot/lang";
 
 // withdraw component
 const qs = require("qs");
@@ -257,8 +289,8 @@ const withdrawalMethods = reactive({
     withdrawMin: 0,
     withdrawMax: 0,
     withdrawableBalance: 0
-  },
-  UPI: {}
+  }
+  // UPI: {}
 });
 const getWithdrawalMethods = () => {
   isLoadingWithdrawalMethod.value = true;
@@ -273,6 +305,7 @@ const getWithdrawalMethods = () => {
       for (let i = 0, l = response.data.length; i < l; i++) {
         const currentData = response.data[i];
         withdrawalMethods[currentData.code] = currentData;
+        selectMethod(withdrawalMethods[currentData.code], currentData.code);
       }
     } else {
       $q.notify({
@@ -315,6 +348,25 @@ const bankCardList = ref([]);
 const isNoBankCard = computed(() => {
   return bankCardList.value.length === 0;
 });
+
+const activeItem = ref(0);
+
+const selectMethod = (method, index) => {
+  withdrawInfo.withdrawCode = null;
+  withdrawInfo.cardId = null;
+  // selectedWithdrawalMethod.value = method;
+  withdrawInfo.withdrawCode = method.code;
+  // displayMaintenanceDialog.value = method.status === false;
+  // isUSDT.value = withdrawInfo.withdrawCode.includes("USDT");
+  // isEWALLET.value =
+  //   withdrawInfo.withdrawCode.includes("KDPAY") ||
+  //   withdrawInfo.withdrawCode.includes("EBPAY") ||
+  //   withdrawInfo.withdrawCode.includes("OKPAY");
+  // isALIPAY.value = withdrawInfo.withdrawCode.includes("ALIPAY");
+  activeItem.value = index;
+  loadCards();
+};
+
 const loadCards = () => {
   isLoadingBankCard.value = true;
 
@@ -331,7 +383,7 @@ const loadCards = () => {
           $q.notify({
             color: "negative",
             position: "top",
-            message: "Please add a bank card first.",
+            message: t("notify.addBankCardFirst"),
             icon: "report_problem"
           });
           router.push("/account/bank");
@@ -401,7 +453,7 @@ const submitWithdraw = () => {
     amountRef.value.validate();
 
     $q.loading.show({
-      message: "Withdrawing..."
+      message: t("btn.withdrawing")
     });
 
     // cardRef.value.hasError ||
@@ -454,7 +506,7 @@ const submitWithdrawBank = async () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Withdrawal Submit Succeed",
+            message: t("notify.withdrawalSubmitSucceed"),
             icon: "check_circle_outline"
           });
           // props.loadCards();
@@ -476,7 +528,7 @@ const submitWithdrawBank = async () => {
     amountRef.value.validate();
 
     $q.loading.show({
-      message: "Withdrawing..."
+      message: t("btn.withdrawing")
     });
 
     // cardRef.value.hasError ||
@@ -500,7 +552,7 @@ const withdrawGo = (callback) => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Withdrawal Submit Succeed",
+          message: t("notify.withdrawalSubmitSucceed"),
           icon: "check_circle_outline"
         });
 
@@ -535,7 +587,8 @@ const checkNewUser = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "Please fill in your personal details",
+      // message: "Please fill in your personal details",
+      message: t("notify.fillInPersonalDetails"),
       icon: "report_problem"
     });
     router.push(`/deposit`);
@@ -545,13 +598,13 @@ const checkNewUser = () => {
 onMounted(() => {
   getWithdrawalMethods();
   checkNewUser();
-  loadCards();
+  // loadCards();
 });
 
 onActivated(() => {
   getWithdrawalMethods();
   checkNewUser();
-  loadCards();
+  // loadCards();
 });
 
 const isValidCardNumber = () => {
@@ -583,8 +636,9 @@ const isValidCardAddress = () => {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    border-radius: 0.625rem;
-    background: #1d2635;
+    border: 1px solid #35383f;
+    border-radius: 6px;
+    background: #1f241f;
 
     text-align: center;
     font-family: "Manrope", sans-serif;
@@ -603,7 +657,7 @@ const isValidCardAddress = () => {
     .separator {
       width: 2px;
       height: 3rem;
-      background: #2f3e57;
+      background: #35383f;
     }
 
     .title {
@@ -612,15 +666,15 @@ const isValidCardAddress = () => {
     }
 
     span {
-      color: white;
+      font-size: 20px;
+      color: #00fd7c;
     }
   }
 
   .bank-account-container {
     border-radius: 0.5rem;
     background: rgba(21, 0, 37, 0.2);
-    padding: 1rem;
-    margin-top: 0;
+    margin-top: 20px;
 
     .top-wrapper {
       display: flex;
@@ -628,9 +682,9 @@ const isValidCardAddress = () => {
       justify-content: space-between;
       margin: 0 0 0.5rem 0;
       .title {
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 0.825rem;
-        font-weight: 700;
+        color: #ffffffb2;
+        font-size: 14px;
+        font-weight: 600;
       }
     }
 
@@ -641,6 +695,16 @@ const isValidCardAddress = () => {
       background: rgba(21, 0, 37, 0.5);
       margin: 0 -1rem 0.5rem -1rem;
       padding: 0 1rem;
+
+      .w-form-item {
+        .w-form-input {
+          .w-select {
+            :deep(.q-field__marginal) {
+              height: 62px;
+            }
+          }
+        }
+      }
     }
 
     .bot-wrapper {
@@ -652,15 +716,15 @@ const isValidCardAddress = () => {
 
       .bank-card-item {
         padding: 3px;
-        border-radius: 1.25rem;
-        background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+        border-radius: 4;
+        background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
         position: relative;
         transition: 0.3s all;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #150025;
+        color: #2d2d2d;
 
         .card-label {
           font-size: 1rem;
@@ -679,9 +743,7 @@ const isValidCardAddress = () => {
 
   .withdrawal-amount-container {
     border-radius: 0.5rem;
-    background: rgba(21, 0, 37, 0.2);
-    padding: 1rem 0;
-    margin-top: 0;
+    margin: 20px 0;
 
     .top-wrapper {
       display: flex;
@@ -689,9 +751,12 @@ const isValidCardAddress = () => {
       justify-content: space-between;
       margin: 0 0 0.5rem 0;
       .title {
-        color: #637387;
-        font-size: 0.825rem;
+        color: #ffffffb2;
+        font-size: 14px;
         font-weight: 600;
+        .amount {
+          color: #fbab1b;
+        }
       }
     }
 
@@ -699,9 +764,17 @@ const isValidCardAddress = () => {
       font-size: 1rem;
       font-weight: 700;
       line-height: 2.25rem;
-      background: #263349;
       border-radius: 0.5rem;
       margin: 0 0 0.5rem 0;
+
+      .amount-input {
+        padding: 19px 0;
+        :deep(.q-field__control) {
+          &::before {
+            border-color: #4b4943;
+          }
+        }
+      }
     }
 
     .bot-wrapper {
@@ -709,7 +782,7 @@ const isValidCardAddress = () => {
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 14px;
       margin: 1rem 0 0.5rem 0;
 
       .info {
@@ -720,7 +793,7 @@ const isValidCardAddress = () => {
         color: white;
         border-radius: 3.125rem;
         opacity: 0.8;
-        background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
+        background: linear-gradient(90deg, #abff3e -1.25%, rgba(62, 255, 133, 0) 104.06%);
         padding: 5px 10px;
 
         .desc-wrapper {
@@ -728,11 +801,16 @@ const isValidCardAddress = () => {
           align-items: center;
           justify-content: center;
           gap: 5px;
+          font-size: 12px;
         }
 
         .desc {
-          font-size: 0.825rem;
-          font-weight: 400;
+          font-weight: 700;
+          text-shadow: 0px 4px 4px #00000040;
+        }
+
+        .amount {
+          color: #fbab1b;
         }
       }
     }
@@ -744,14 +822,15 @@ const isValidCardAddress = () => {
     align-items: center;
     font-size: 16px;
     line-height: 1;
-    font-weight: 600;
+    font-weight: 700;
     height: 46px;
     width: 100%;
     transition: 0.3s all;
-    color: #ffffff;
+    color: #2d2d2d;
     margin: auto;
-    border-radius: 6px;
-    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+    border-radius: 4px;
+    background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+    box-shadow: 0px 2px 8px 0px #baffa633;
     aspect-ratio: 335/46;
 
     &:before {
@@ -764,8 +843,98 @@ const isValidCardAddress = () => {
   }
 
   .bottom-tnc {
-    font-size: 80%;
-    opacity: 0.5;
+    background-color: #1f241f;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #fbab1b;
+  }
+}
+
+.withdrawalmethod {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  text-align: center;
+  overflow-x: unset;
+  padding: 0px 5px;
+  grid-gap: 10px;
+  grid-column-gap: 10px;
+  grid-row-gap: 5px;
+  margin-top: 20px;
+
+  .withdraw-type-item {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+
+    .withdraw-img {
+      border: 2px solid transparent;
+      border-radius: 10px;
+      max-width: 4.5rem;
+    }
+
+    img {
+      width: 100%;
+      background: #394142;
+      padding: 5px;
+      border-radius: 10px;
+    }
+
+    &.active {
+      // background: #212534;
+      // color: #db7e42;
+      // box-shadow: none;
+      // filter: drop-shadow(0px 0px 3px #ffffff);
+      img {
+        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+      }
+
+      .type-name {
+        font-weight: bold;
+      }
+
+      // img {
+      //   border: 2px solid #33bcd4;
+      // }
+    }
+
+    .type-name {
+      line-height: 15px;
+      // overflow-wrap: break-word;
+      white-space: nowrap;
+    }
+
+    .promo {
+      position: absolute;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-position: top center;
+      top: -8px;
+      right: -1px;
+      background: linear-gradient(to right, #de4545, #db7e42);
+      padding: 5px;
+      color: #ffffff;
+      font-size: 12px;
+      line-height: 10px;
+      border-radius: 0 10px;
+      font-weight: bold;
+
+      ::after {
+        position: relative;
+      }
+    }
+  }
+
+  .withdraw-btn {
+    margin: 30px auto;
+
+    &.cancel {
+      margin-right: 60px;
+    }
   }
 }
 </style>

@@ -99,7 +99,7 @@
             <div class="content-float float-user">
               <div class="user-avatar">
                 <img v-if="item.name === 'SYSTEM'" :src="require('../../assets/images/livestream/system-avatar.png')" />
-                <img v-else-if="item.avatar" :src="imgURL + item.avatar" />
+                <img v-else-if="item.avatar" :src="imgStreamerUrl + item.avatar" />
                 <img v-else :src="require('../../assets/images/profile/default-1.png')" />
               </div>
               <div>{{ item.name === "SYSTEM" ? "雷火" : item.name }}</div>
@@ -142,6 +142,7 @@ const { livestreamList } = toRefs(props);
 defineEmits(["livestreamClick"]);
 
 const imgURLLivePreview = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
+const imgStreamerUrl = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/streamer/";
 
 const previewImgLoadFailedSet = ref(new Set());
 const countdowns = ref({});
@@ -158,7 +159,7 @@ const filteredLivestreamList = computed(() => {
     case "basketball":
       return livestreamList.value.filter((item) => [2].includes(item.sportId));
     case "esport":
-      return livestreamList.value.filter((item) => [3, 4, 5, 6].includes(item.sportId));
+      return livestreamList.value.filter((item) => [3, 4, 5, 6, 7].includes(item.sportId));
     default:
       return livestreamList.value;
   }

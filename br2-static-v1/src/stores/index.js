@@ -38,7 +38,9 @@ export const userStore = defineStore("userStore", {
       phoneVerified: false,
       emailVerified: false,
       currentDeposit: "",
+      currentValidBet: "",
       levelUpDeposit: "",
+      levelUpBet: "",
       currentMailData: {},
       guest: false,
       readMsgLists: [],
@@ -203,6 +205,7 @@ export const userStore = defineStore("userStore", {
       //   req.headers.token = token;
       //   return req;
       // });
+      // debugger;
       this.token = isAndroid() || isInPwa() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
@@ -222,6 +225,8 @@ export const userStore = defineStore("userStore", {
             evip,
             currentDeposit,
             levelUpDeposit,
+            levelUpBet,
+            currentValidBet,
             guest
           } = response.data;
 
@@ -238,7 +243,9 @@ export const userStore = defineStore("userStore", {
           this.phoneVerified = phoneVerified;
           this.emailVerified = emailVerified;
           this.currentDeposit = parseFloat(currentDeposit);
+          this.currentValidBet = parseFloat(currentValidBet);
           this.levelUpDeposit = parseFloat(levelUpDeposit);
+          this.levelUpBet= parseFloat(levelUpBet)
           this.guest = guest;
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
@@ -314,6 +321,9 @@ export const userStore = defineStore("userStore", {
     },
     getCurrentDeposit() {
       return this.currentDeposit;
+    },
+    getCurrentValidBet() {
+      return this.currentValidBet
     }
   }
 });

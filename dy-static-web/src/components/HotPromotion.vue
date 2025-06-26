@@ -87,6 +87,8 @@
     <YaLLa2025 v-if="list.redirectUrl === 'dy2-yalla-compass-qatar-2025'" :promo-code="list.promoCode" />
     <IemMelbourne2025 v-if="list.redirectUrl === 'dy2-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-if="list.redirectUrl === 'dy2-pgl-wallachia-s4'" :promo-code="list.promoCode" />
+    <tpWorldChamp2025Sa v-if="list.redirectUrl === 'dy2-tp-world-champ-2025-sa'" :promo-code="list.promoCode" />
+    <iemCologne2025 v-if="list.redirectUrl === 'dy2-iem-cologne-2025'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'dy2-blast-slam-3-2025'" :promo-code="list.promoCode" />
     <sport-refer-bet-bonus v-else-if="list.redirectUrl === 'dy2-sport-refer-bet-bonus'" :promo-code="list.promoCode" />
     <BlastRival2025 v-if="list.redirectUrl === 'dy2-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
@@ -94,6 +96,13 @@
     <IemDallas2025 v-if="list.redirectUrl === 'dy2-iem-dallas-2025'" :promo-code="list.promoCode" />
     <DreamLeagueS26 v-if="list.redirectUrl === 'dy2-dream-league-s26'" :promo-code="list.promoCode" />
     <Lh1DuanWuRewards v-else-if="list.redirectUrl === 'dy2-duan-wu-rewards'" :promo-code="list.promoCode" />
+    <NewUserSportBonus2025
+      v-else-if="list.redirectUrl === 'dy2-new-user-sport-bonus-2025'"
+      :promo-code="list.promoCode"
+    />
+    <FissureUniverseS5 v-else-if="list.redirectUrl === 'dy2-fissure-universe-s5'" :promo-code="list.promoCode" />
+    <EsportWorldCup2025 v-else-if="list.redirectUrl === 'dy2-esport-world-cup-2025'" :promo-code="list.promoCode" />
+    <FifaCwcRedPacket v-else-if="list.redirectUrl === 'dy2-fifa-cwc-red-packet'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -167,12 +176,14 @@ import Blast2025 from "../components/hotpromo/Blast2025/Blast2025.vue";
 import elsOne2025 from "../components/hotpromo/elsOne2025/elsOne2025.vue";
 
 import sportReferBetBonus from "./hotpromo/sport-refer-bet-bonus/sport-refer-bet-bonus.vue";
-import Lh1DuanWuRewards from "./hotpromo/lh1-duan-wu-rewards/Lh1DuanWuRewards.vue"
+import Lh1DuanWuRewards from "./hotpromo/lh1-duan-wu-rewards/Lh1DuanWuRewards.vue";
 import FootballFight from "@/components/hotpromo/newFootballfight/FootballFight.vue";
 import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.vue";
 import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
 import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
+import tpWorldChamp2025Sa from "./hotpromo/tp-world-champ-2025-sa/tp-world-champ-2025-sa.vue";
+import iemCologne2025 from "./hotpromo/iemCologne2025/iemCologne2025.vue";
 import BlastSlam32025 from "./hotpromo/blast-slam-3-2025/BlastSlam32025.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
@@ -181,6 +192,10 @@ import IemDallas2025 from "./hotpromo/iem-dallas-2025/IemDallas2025.vue";
 import CS2Sign from "@/components/hotpromo/CS2Sign/CS2Sign.vue";
 import BlastPremierPromo from "@/components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
 import DreamLeagueS26 from "@/components/hotpromo/dream-league-s26/DreamLeagueS26.vue";
+import NewUserSportBonus2025 from "./hotpromo/new-user-sport-bonus-2025/NewUserSportBonus2025.vue";
+import FissureUniverseS5 from "./hotpromo/fissure-universe-s5/FissureUniverseS5.vue";
+import EsportWorldCup2025 from "./hotpromo/esport-world-cup-2025/EsportWorldCup2025.vue";
+import FifaCwcRedPacket from "./hotpromo/fifa-cwc-red-packet/FifaCwcRedPacket.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -236,10 +251,16 @@ export default defineComponent({
     FissureUniverseS4,
     IemMelbourne2025,
     PglWallachiaS4,
+    tpWorldChamp2025Sa,
+    iemCologne2025,
     BlastSlam32025,
     BlastRival2025,
     IemDallas2025,
-    DreamLeagueS26
+    DreamLeagueS26,
+    NewUserSportBonus2025,
+    FissureUniverseS5,
+    EsportWorldCup2025,
+    FifaCwcRedPacket
   },
   props: {
     list: {

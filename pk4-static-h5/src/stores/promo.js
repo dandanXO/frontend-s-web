@@ -14,6 +14,9 @@ export const usePromoStore = defineStore("promo", {
   getters: {
     isShownSpinLuckyWheel(state) {
       return state.shownFloatingOrDialogList.includes("spin-lucky-wheel");
+    },
+    isShownNewPlayerWheel(state) {
+      return state.shownFloatingOrDialogList.includes("newplayer-spin-wheel");
     }
   }
 });

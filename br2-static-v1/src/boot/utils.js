@@ -98,11 +98,20 @@ export const updateDate = (val) => {
 export const convertToGMT55 = (dateTime) => {
   return moment(dateTime).utcOffset("+05:30").format("YYYY-MM-DD HH:mm:ss");
 };
+export const convertToGMTMinus3 = (dateTime) => {
+  return moment(dateTime).utcOffset("-03:00").format("YYYY-MM-DD HH:mm:ss");
+};
+export const convertToGMTMinus5 = (dateTime) => {
+  return moment(dateTime).utcOffset("-05:00").format("YYYY-MM-DD HH:mm:ss");
+};
 export const convertToGMT8 = (dateTime) => {
   return moment(dateTime).utcOffset("+08:00").format("YYYY-MM-DD");
 };
 export const convertToGMT7 = (dateTime) => {
   return moment(dateTime).utcOffset("+07:00").format("YYYY-MM-DD");
+};
+export const convertToGMT7Time = (dateTime) => {
+  return moment(dateTime).utcOffset("+07:00").format("YYYY-MM-DD HH:mm:ss");
 };
 
 export const convertToCommaAmount = (amount, isForceDecimal) => {

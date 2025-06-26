@@ -11,8 +11,7 @@
           <div class="pc-form-input">
             <q-input
               v-model="formDetail.firstName"
-              filled
-              dense
+              outlined
               clearable
               borderless
               standout
@@ -27,8 +26,7 @@
           <div class="pc-form-input">
             <q-input
               v-model="formDetail.lastName"
-              filled
-              dense
+              outlined
               clearable
               borderless
               standout
@@ -43,8 +41,7 @@
           <div class="pc-form-input">
             <q-input
               v-model="formDetail.phone"
-              filled
-              dense
+              outlined
               clearable
               borderless
               standout
@@ -65,9 +62,11 @@
           <div>
             <q-btn
               class="btn-refresh"
+              outline
+              rounded
               no-caps
               icon="refresh"
-              label="Atualizado"
+              :label="$t('btn.updated')"
               :loading="loadingUpdated"
               @click="startRefresh"
             >
@@ -80,8 +79,8 @@
         </div>
 
         <div class="q-mt-md">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">
-            {{ $t("btn.signOut") }}
+          <q-btn rounded flat no-caps class="btn-purple-pattern darker" @click="openConfirmSignOutDialog">
+            {{ $t("settings.logout") }}
           </q-btn>
         </div>
       </q-form>
@@ -122,13 +121,7 @@
 
   <q-dialog width="100%" v-model="personalCenterDialog" presistent>
     <div class="popout-dialog">
-      <q-btn
-        dense
-        rounded
-        icon="close"
-        class="bg-yellow text-black popout-close"
-        @click="closePersonalCenterDialog()"
-      />
+      <q-btn dense rounded icon="close" class="popout-close" @click="closePersonalCenterDialog()" />
       <div class="popout-dialog-container">
         <div class="txt-title">KYC Info</div>
 
@@ -137,8 +130,7 @@
             <div class="pc-form-label">Full Name</div>
             <div class="pc-form-input">
               <q-input
-                filled
-                dense
+                outlined
                 clearable
                 placeholder="Enter Your Full Name"
                 v-model="formDetail.realName"
@@ -152,8 +144,7 @@
             <div class="pc-form-input">
               <q-input
                 type="number"
-                filled
-                dense
+                outlined
                 clearable
                 placeholder="Enter Your Phone"
                 v-model="formDetail.phone"
@@ -228,14 +219,7 @@
 
   <q-dialog width="100%" v-model="changePasswordDialog" presistent>
     <div class="popout-dialog">
-      <q-btn
-        dense
-        rounded
-        icon="close"
-        class="bg-yellow text-black popout-close"
-        @click="openChangePasswordDialog()"
-        v-close-popup
-      />
+      <q-btn dense flat icon="close" class="popout-close" @click="openChangePasswordDialog()" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">{{ $t("header.changePassword") }}</div>
 
@@ -244,8 +228,7 @@
             <div class="pc-form-label">{{ $t("form.currentPassword") }}</div>
             <div class="pc-form-input">
               <q-input
-                filled
-                dense
+                outlined
                 clearable
                 :placeholder="$t('form.currentPassword_placeholder')"
                 v-model="updatePwdInfo.oldPassword"
@@ -256,7 +239,7 @@
               >
                 <template v-slot:append>
                   <q-icon
-                    color="yellow-7"
+                    color="white"
                     :name="isPwd ? 'visibility_off' : 'visibility'"
                     class="cursor-pointer"
                     @click="isPwd = !isPwd"
@@ -269,8 +252,7 @@
             <div class="pc-form-label">{{ $t("form.newPassword") }}</div>
             <div class="pc-form-input">
               <q-input
-                filled
-                dense
+                outlined
                 clearable
                 :placeholder="$t('form.newPassword_placeholder')"
                 v-model="updatePwdInfo.password"
@@ -285,7 +267,7 @@
               >
                 <template v-slot:append>
                   <q-icon
-                    color="yellow-7"
+                    color="white"
                     :name="isPwd ? 'visibility_off' : 'visibility'"
                     class="cursor-pointer"
                     @click="isPwd = !isPwd"
@@ -298,8 +280,7 @@
             <div class="pc-form-label">{{ $t("form.confirmNewPassword") }}</div>
             <div class="pc-form-input">
               <q-input
-                filled
-                dense
+                outlined
                 clearable
                 :placeholder="$t('form.confirmNewPassword_placeholder')"
                 v-model="updatePwdInfo.confirmNewPwd"
@@ -313,7 +294,7 @@
               >
                 <template v-slot:append>
                   <q-icon
-                    color="yellow-7"
+                    color="white"
                     :name="isPwd ? 'visibility_off' : 'visibility'"
                     class="cursor-pointer"
                     @click="isPwd = !isPwd"
@@ -335,7 +316,7 @@
 
   <q-dialog width="100%" v-model="changeNewPasswordDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+      <q-btn dense flat icon="close" class="popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">Change New Password</div>
         <div class="pc-form">
@@ -383,7 +364,7 @@
               >
                 <template v-slot:append>
                   <q-icon
-                    color="yellow-7"
+                    color="white"
                     :name="isPwd ? 'visibility_off' : 'visibility'"
                     class="cursor-pointer"
                     @click="isPwd = !isPwd"
@@ -411,7 +392,7 @@
               >
                 <template v-slot:append>
                   <q-icon
-                    color="yellow-7"
+                    color="white"
                     :name="isPwd ? 'visibility_off' : 'visibility'"
                     class="cursor-pointer"
                     @click="isPwd = !isPwd"
@@ -431,21 +412,21 @@
 
   <q-dialog width="100%" v-model="guestKYCDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="closeGuestKYCDialog" />
+      <q-btn dense flat icon="close" class="popout-close" @click="closeGuestKYCDialog" />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
     </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="userKYCDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" @click="closeUserKYCDialog" />
+      <q-btn dense flat icon="close" class="popout-close" @click="closeUserKYCDialog" />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
 
   <q-dialog width="100%" v-model="verificationCodeDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
+      <q-btn dense flat icon="close" class="popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">Captcha Code Check</div>
 
@@ -482,7 +463,7 @@
 
   <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
+      <q-btn dense flat icon="close" class="popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">Sair</div>
 
@@ -532,7 +513,8 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    // message: "Logging out..."
+    message: t("btn.loggingOut")
   });
 
   store.memberLogout().then(() => {
@@ -1158,10 +1140,6 @@ const openConfirmSignOutDialog = () => {
   padding: 0 20px;
 }
 
-.progress-container {
-  background: linear-gradient(180deg, #d29e3a 0%, #d65033 100%);
-}
-
 .infoboard-container {
   display: flex;
   align-items: center;
@@ -1233,12 +1211,16 @@ const openConfirmSignOutDialog = () => {
 
     :deep(.q-field__control) {
       // background: rgba(71, 178, 178, 0.16) !important;
-      background: #192b2d !important;
+      background: #131313;
       border-radius: 4px;
+      &::before {
+        border-style: solid;
+        border-color: #35383f;
+      }
     }
 
     :deep(.q-field__native) {
-      color: rgba(255, 255, 255, 0.6);
+      color: #fff;
     }
   }
 
@@ -1264,24 +1246,27 @@ const openConfirmSignOutDialog = () => {
   align-items: center;
   font-size: 18px;
   line-height: 1;
-  font-weight: 400;
+  font-weight: 700;
   width: 100%;
   height: 55px;
   text-transform: uppercase;
   transition: 0.3s all;
-  color: #ffffff;
+  color: #2d2d2d;
   margin: auto;
   border-radius: 6px;
-  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
 
   &:active {
     filter: brightness(0.85);
     transform: translate(0px, 1px);
   }
+  &.darker {
+    background: linear-gradient(90deg, #4fffa580 0%, #10d16f80 100%);
+  }
 }
 
 .pc-tip-chg-pwd {
-  color: #0097b9;
+  color: #00fd7c;
 }
 
 .pc-tip {
@@ -1302,33 +1287,26 @@ const openConfirmSignOutDialog = () => {
 .btn-refresh {
   // background: #48325a;
   // background: linear-gradient(180deg, #1cccb4 0%, #21b5d6 100%);
-  background: rgba(71, 178, 178, 0.5);
-  border-radius: 8px;
   font-weight: 400;
   margin-top: auto;
-  color: #00b9a1;
-  padding: 10px 20px;
-
-  :deep(.q-icon) {
-    color: #00b9a1;
-  }
+  color: #4b4943;
+  padding: 8px 13px;
 }
 
 .btn-cancel {
   background: #ffffff20;
   font-weight: 700;
   color: #dcdcdc;
-  border: 1px solid #ffffff80;
   border-radius: 8px;
   width: 140px;
   height: 42px;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
   font-weight: 700;
   width: 140px;
   height: 42px;
-  color: #ffffff;
+  color: #2d2d2d;
   border-radius: 8px;
 }
 </style>

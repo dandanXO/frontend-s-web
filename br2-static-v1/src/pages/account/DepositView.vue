@@ -1,236 +1,230 @@
 <template>
   <div class="deposit-wrapper" :class="isInputFocus && 'input-btm'">
-    <div class="method-title q-mb-sm">{{ $t("deposit.depositMethod") }}</div>
-    <div class="deposit-methods-container" v-if="isLoadingInitPay">
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
-      <div>
-        <q-skeleton style="height: 96px" />
-      </div>
+    <div class="node-wrapper">
+      <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
-    <template v-else>
-      <div class="deposit-methods-container">
-        <template v-for="(item, index) in paymentMethodsItems" :key="index">
-          <div class="content-item" @click="goSelectedMethod(item)" :class="{ active: selectedItem === item }">
-            <div class="item-img">
-              <img :src="imgURL + '/payment/' + item.nodeIcon" />
-            </div>
-            <div class="item-title">{{ item.nodeName }}</div>
-            <div class="item-ribbon" v-if="isPrivilege && paytypeWithPrivilege.includes(item.code)">
-              <img src="../../assets/images/account/ribbon-five-percent.png" />
-            </div>
-          </div>
-        </template>
-      </div>
 
-      <div class="method-title q-mt-md q-mb-sm">{{ $t("deposit.paymentChannels") }}</div>
-      <div class="deposit-methods-container col-three">
-        <template v-for="(item, index) in selectedItemChannel" :key="index">
-          <div class="content-item" @click="goSelectedChannel(item)" :class="{ active: selectedChannel === item }">
-            <div class="item-title">{{ item.nodeName }}</div>
-          </div>
-        </template>
-      </div>
+    <div class="deposit-item-container q-mt-sm">
+      <template v-for="(item, index) in depositItems" :key="index">
+        <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
 
-      <template v-if="selectedChanelExtra.length > 0">
-        <div class="method-title q-mt-md q-mb-sm">{{ $t("header.bank") }}</div>
-        <div>
-          <q-select
-            v-model="selectedChannelBank"
-            :options="selectedChanelExtra"
-            option-label="name"
-            option-value="id"
-            emit-value
-            map-options
-            filled
-          />
+<!--          <q-badge v-if="selectedPrivilege === 'br222-redeposit-bonus'" color="green" floating rounded>-->
+<!--            +{{ getFtdCommaAmount(item.amount) }}-->
+<!--          </q-badge>-->
+
+<!--          {{selectedPrivilege}}-->
+          <q-badge v-if="selectedPrivilege.code === 'br2-redeposit-bonus'" color="green" floating rounded>
+            +{{ get2ndDepoCommaAmount(item.amount) }}
+          </q-badge>
+
+          <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
+          <div :class="['deposit-svg', item.isActive && 'active']">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path
+                d="M8.12492 11.118L14.0828 5L15 5.94102L8.12492 13L4 8.76474L4.9165 7.82373L8.12492 11.118Z"
+                fill="white"
+              />
+            </svg>
+          </div>
         </div>
       </template>
-    </template>
-
-    <div class="slot-ftd-section" v-if="isFtdPrivilege">
-      <img src="../../assets/images/bonus/slot-ftd-img.png" />
     </div>
 
-    <!-- select amount -->
-    <template v-if="isSelectedMethod">
-      <div class="method-title q-mt-md q-mb-sm">{{ $t("header.depositAmount") }}</div>
-      <div class="deposit-methods-container">
-        <template v-for="(amount, index) in selectedItemAmount" :key="index">
-          <div @click="handleDepositItemClick(amount)" :class="'deposit-item '">
-            <q-badge
-              color="orange"
-              floating
-              rounded
-              v-if="!isFtdPrivilege && isPrivilege && paytypeWithPrivilege.includes(selectedChannel.payType)"
-            >
-              +{{ convertToCommaAmount(amount * 0.05) }}
-            </q-badge>
-
-            <q-badge v-if="isFtdPrivilege" color="orange" floating rounded>+{{ getFtdCommaAmount(amount) }}</q-badge>
-
-            <div :class="['deposit-amt', form.localAmount === amount && 'active']">
-              {{ convertToCommaAmount(amount, false) }}
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
-        <div class="submit-message">
-          <div class="line">
-            <span>{{ $t("header.bankName") }}:</span>
-            <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
-              {{ copybtntxt0 }}
-            </q-btn>
-          </div>
-          <div class="line">
-            <span>{{ $t("header.bankAccount") }}:</span>
-            <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
-              {{ copybtntxt1 }}
-            </q-btn>
-          </div>
-          <div class="line">
-            <span>{{ $t("header.bankCardNumber") }}:</span>
-            <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
-              {{ copybtntxt2 }}
-            </q-btn>
-          </div>
-          <div class="line">
-            <span>{{ $t("header.depositAmount") }}:</span>
-            <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
-              {{ copybtntxt3 }}
-            </q-btn>
-          </div>
+    <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
+      <div class="submit-message">
+        <div class="line">
+          <span>Bank Name:</span>
+          <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
+            {{ copybtntxt0 }}
+          </q-btn>
+        </div>
+        <div class="line">
+          <span>Bank Account:</span>
+          <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
+            {{ copybtntxt1 }}
+          </q-btn>
+        </div>
+        <div class="line">
+          <span>Bank Card Number:</span>
+          <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
+            {{ copybtntxt2 }}
+          </q-btn>
+        </div>
+        <div class="line">
+          <span>Deposit Amount:</span>
+          <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
+            {{ copybtntxt3 }}
+          </q-btn>
         </div>
       </div>
+    </div>
 
-      <div class="deposit-container" v-else>
-        <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
-          <div class="deposit-enter-amt" v-if="amountList.length === 0">
-            <div class="lil-title flex-div q-mb-md" style="justify-content: space-between">
-              <q-checkbox v-model="isFtdPrivilegeEnable" v-if="!store.ftd">
-                {{ $t("deposit.useFtdPrivilege") }}
-              </q-checkbox>
-            </div>
-
-            <div class="lil-title">
-              {{ $t("header.amount") }} ({{ convertToCommaAmount(selectedChannel.depositMin) }} -
-              {{ convertToCommaAmount(selectedChannel.depositMax) }} {{ store.currency.label }})
-            </div>
-            <q-input
-              type="number"
-              class="deposit-input q-mt-sm"
-              ref="depositAmtRef"
-              name="localAmount"
-              hide-bottom-space
-              filled
-              v-model="form.localAmount"
-              :rules="[
-                verifyDepositAmount,
-                (val) =>
-                  (val >= selectedChannel.depositMin && val <= selectedChannel.depositMax) ||
-                  `${$t('form.depositAmount_rules_01')} ${convertToCommaAmount(
-                    selectedChannel.depositMin
-                  )} - ${convertToCommaAmount(selectedChannel.depositMax)}`
-              ]"
-              dense
-              clearable
-              @keyup.enter="confirmDeposit"
-              @focus="scrollToInput"
-              @blur="isInputFocus = false"
+    <div class="deposit-container" v-else>
+      <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
+        <div class="deposit-enter-amt">
+          <div class="lil-title flex-div" style="justify-content: space-between">
+            <q-checkbox
+              v-model="isFtdPrivilegeEnable"
+              v-if="store.ftd === 'OPEN' && paytypeWithPrivilege.indexOf(activeMethod.payType) > -1"
             >
-              <template v-slot:prepend>
-                <span style="font-size: 26px" class="currency">
-                  <template v-if="isUSDT">USDT</template>
-                  <template v-else>{{ store.currency.value }}</template>
-                </span>
-              </template>
+              {{ $t("deposit.useFtdPrivilege") }}
+            </q-checkbox>
+            <div v-else>&nbsp;</div>
+            <!--            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">-->
+            <!--              {{ $t("deposit.depositTutorial") }}-->
+            <!--            </div>-->
 
-              <template v-slot:append>
-                <div class="amt-input-append" v-if="isFtdPrivilege && form.localAmount">
-                  {{ $t("header.extra") }}:
-                  <span>{{ getFtdCommaAmount(form.localAmount) }}{{ store.currency.value }}</span>
-                </div>
-
-                <div class="amt-input-append" v-else-if="isPrivilege && form.localAmount">
-                  {{ $t("header.extra") }}:
-                  <span>{{ convertToCommaAmount(form.localAmount * 0.05) }}{{ store.currency.value }}</span>
-                </div>
-              </template>
-            </q-input>
           </div>
 
-          <template v-else>
-            <div class="lil-title q-mt-lg">{{ $t("deposit.selectAmount") }}</div>
-            <q-select
-              ref="depositAmtRef"
-              label="Select Amount"
-              name="localAmount"
-              filled
-              :options="amountList"
-              v-model="form.localAmount"
-              color="bright"
-              :rules="verifyDepositAmount"
-              padding="none"
-            >
-              <template v-slot:prepend>
-                <span style="font-size: 26px" class="currency">
-                  {{ store.currency.value }}
-                </span>
-              </template>
-            </q-select>
-          </template>
-          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="Exchange rate">
-            <span style="color: #fff">
-              1.00 USDT ≈ {{ activeMethod.currencyRate }}
+          <div v-if="isBank2" class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
+            {{ $t("deposit.please_pay_exact_amt") }}
+          </div>
+          <div  v-if="selectedPrivilege.code === 'br2-redeposit-bonus' && form.localAmount" class="font-small text-tealgreen"
+                style="width: calc(100% - 18px); margin: 10px auto 8px">
+            Você receberá um bônus extra Rs{{ get2ndDepoCommaAmount(form.localAmount) }}
+          </div>
+
+          <q-input
+            class="deposit-input q-mt-sm"
+            ref="depositAmtRef"
+            name="localAmount"
+            hide-bottom-space
+            outlined
+            v-model="form.localAmount"
+            :rules="verifyDepositAmount"
+            clearable
+          >
+            <template v-slot:prepend>
+              <span style="font-size: 16px" class="currency">
+                <template v-if="isUSDT">USDT</template>
+                <template v-else>{{ store.currency.value }}</template>
+              </span>
+            </template>
+          </q-input>
+
+        </div>
+
+        <!-- <q-select
+          v-else
+          ref="depositAmtRef"
+          label="Select Amount"
+          name="localAmount"
+          filled
+          :options="amountList"
+          v-model="form.localAmount"
+          color="bright"
+          :rules="verifyDepositAmount"
+          padding="none"
+        >
+          <template v-slot:prepend>
+            <span style="font-size: 26px" class="currency">
               {{ store.currency.value }}
             </span>
-          </div>
-          <BankComponent
-            v-show="selectedPayType && bankCardList.length"
-            ref="payTypeClass"
-            :is="selectedPayType"
-            v-model="form.bankId"
-            :bank-list="bankCardList"
-            @selected="selectedBank"
-            @successful="isDeposited = true"
-          ></BankComponent>
-          <div v-if="activeMethod.msg" class="q-mt-md" v-html="activeMethod.msg"></div>
-        </q-form>
-      </div>
-      <div class="q-mt-lg">
-        <div :class="`btn-submit`" @click="confirmDeposit">
-          <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
-          <template v-else>{{ $t("btn.submit") }}</template>
+          </template>
+        </q-select> -->
+
+        <!-- <div class="q-mt-md q-mb-md text-grey-7">
+          Minimum Amount:
+          {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
+          <br />
+          Maximum Amount:
+          {{
+            activeMethod.depositMax
+              ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
+              : "No Limit"
+          }}
+        </div> -->
+
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-mt-lg" label="Exchange rate">
+          <span style="color: #fff">
+            <template v-if="form.localAmount > 0">{{ form.localAmount }}</template>
+            <template v-else>1.00</template>
+            USDT ≈
+            <template v-if="form.localAmount > 0">
+              {{ convertToTwoDecimalAmount(form.localAmount * activeMethod.currencyRate) }}
+            </template>
+            <template v-else>{{ activeMethod.currencyRate }}</template>
+
+            {{ store.currency.value }}
+          </span>
         </div>
-      </div>
-      <!-- <div class="q-mt-lg" style="color: #576373" v-if="isFtdPrivilege">
-        <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
-        <div class="q-mt-sm">{{ $t("deposit.wagerExample") }}</div>
-      </div> -->
-      <div
-        class="q-mt-lg"
-        style="color: #576373"
-        v-if="isPrivilege && selectedChannel && paytypeWithPrivilege.includes(selectedChannel.payType) && !isFtdPrivilegeEnable"
+
+        <BankComponent
+          v-show="selectedPayType && bankCardList.length"
+          ref="payTypeClass"
+          :is="selectedPayType"
+          v-model="form.bankId"
+          :bank-list="bankCardList"
+          @selected="selectedBank"
+          @successful="isDeposited = true"
+        ></BankComponent>
+
+        <q-select
+          style="width: 100%; margin-top: 25px"
+          ref="offerRef"
+          class="deposit-selection q-mt-xs"
+          :label="$t('deposit.select_privilege')"
+          filled
+          :options="unselectedPrivileges"
+          v-model="selectedPrivilege"
+          emit-value
+          v-if="hasPrivilege && unselectedPrivileges.length > 0"
+          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
+          clearable
+        >
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section>
+                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
+                  {{ scope.opt.name }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+
+        <!--        <div-->
+        <!--          class="rollover-info"-->
+        <!--          v-if="-->
+        <!--            selectedPrivilege &&-->
+        <!--            selectedPrivilege.name &&-->
+        <!--            (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)-->
+        <!--          "-->
+        <!--        >-->
+        <!--          <p v-if="selectedPrivilege.gameTypeRollover && selectedPromo.gameTypeRollover !== '{}'">-->
+        <!--            {{ getRollOverText(selectedPrivilege.gameTypeRollover) }}-->
+        <!--          </p>-->
+        <!--          <p v-else>Wagering Requirements (Deposit + Bonus): {{ selectedPrivilege.rollover }}x</p>-->
+        <!--        </div>-->
+      </q-form>
+    </div>
+
+    <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId || isFtdPrivilegePayType">
+      <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
+      <div class="q-mt-sm">{{ $t("deposit.wagerRequirementEg") }}</div>
+    </div>
+
+    <div class="bottom-btn">
+      <q-btn
+        no-caps
+        unelevated
+        class="btn-primary btn-primary__full bottom-fixed"
+        :loading="isLoadingInitPay || btnLoading"
+        @click="confirmDeposit"
       >
-        <div class="q-mt-sm">{{ $t("deposit.wagerRequirement") }}</div>
-        <div class="q-mt-sm">
-          {{ $t("deposit.wagerExample") }}
-        </div>
-      </div>
-    </template>
+        {{ $t("btn.submit") }}
+      </q-btn>
+    </div>
+
+    <div class="step-desc-div">
+      <template v-if="activeMethod.msg">
+        <div class="description-text" v-html="activeMethod.msg"></div>
+      </template>
+    </div>
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
@@ -259,7 +253,18 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, computed, nextTick, watch } from "vue";
+import {
+  ref,
+  reactive,
+  onMounted,
+  shallowRef,
+  defineEmits,
+  onActivated,
+  computed,
+  nextTick,
+  watch,
+  onDeactivated
+} from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
@@ -287,12 +292,17 @@ const checkNewUser = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "Please fill in your personal details",
+      // message: "Please fill in your personal details",
+      message: t("notify.fillInPersonalDetails"),
       icon: "report_problem"
     });
     // router.push(`/account/profile`);
   }
 };
+
+const isBank2 = computed(() => {
+  return activeMethod.value.code === "BANK-2";
+});
 
 const isSelectedMethod = ref(false);
 const paymentMethodsItems = ref();
@@ -308,7 +318,7 @@ const privilegeList = ref([]);
 const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
 const selectedPayType = shallowRef("");
-const freePrivilege = ref(null);
+const freePrivilege = ref("");
 const hasPrivilege = ref(false);
 const isUSDT = ref(false);
 const isDisplay = ref(false);
@@ -317,6 +327,7 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const isInitialized = ref(false);
 
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
@@ -349,10 +360,12 @@ const blurCode = () => {
 
 const verifyDepositAmount = ref([
   (val) => !!val || t("form.depositAmount_placeholder"),
-  (val) => val > calculatedMinDeposit.value - 1 || t("form.depositAmount_rules_02") + calculatedMinDeposit.value
-  // (val) =>
-  //   val < activeMethod.value.depositMax + 1 ||
-  //   "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
+  (val) =>
+    val > calculatedMinDeposit.value - 1 ||
+    t("form.depositAmount_rules_01") + calculatedMinDeposit.value + "-" + calculatedMaxDeposit.value,
+  (val) =>
+    val < calculatedMaxDeposit.value + 1 ||
+    t("form.depositAmount_rules_01") + calculatedMinDeposit.value + "-" + calculatedMaxDeposit.value
 ]);
 
 const form = reactive({
@@ -364,6 +377,7 @@ const form = reactive({
 
 const $q = useQuasar();
 const calculatedMinDeposit = ref("");
+const calculatedMaxDeposit = ref("");
 
 // const depositItems = computed(() => {
 //   //   // if (!activeMethod.value.amountArr) return [];
@@ -372,17 +386,26 @@ const calculatedMinDeposit = ref("");
 //   return activeMethod.value;
 // });
 
-const depositItems = ref();
+const depositItems = ref([]);
 
-const handleDepositItemClick = (amount) => {
-  form.localAmount = amount;
+const handleDepositItemClick = (index) => {
+  depositItems.value.forEach((item, i) => {
+    item.isActive = i === index;
+    if (i === index) {
+      form.localAmount = item.amount;
+    }
+  });
 };
 
 const getFtdCommaAmount = (amount) => {
-  if (amount < 88) {
-    return amount;
+  return amount;
+};
+
+const get2ndDepoCommaAmount = (amount) => {
+  if (amount < 2880) {
+    return parseFloat(amount * 0.1).toFixed(2);
   } else {
-    return 88;
+    return 288;
   }
 };
 
@@ -459,17 +482,22 @@ function initPay() {
     isLoadingInitPay.value = false;
 
     if (res.code === 0) {
-      paymentMethodsItems.value = res.data.payments;
-      goSelectedMethod(res.data.payments[0]);
+      payMethods.value = [];
+      const d = res.data;
+      d.payments.forEach((element) => {
+        element.promoValue = "";
+        element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
+        payMethods.value.push(element);
+      });
+      if (payMethods.value.length > 0) {
+        activeMethod.value = payMethods.value[0];
+      }
+      if (payMethods.value[0].extra && payMethods.value[0].extra.banks) {
+        bankCardList.value = payMethods.value[0].extra.banks;
+      }
     }
 
-    if (
-      !(
-        (Platform.is.desktop || Platform.is.webkit) &&
-        !Platform.is.capacitor &&
-        Platform.is.name !== "webkit"
-      )
-    ) {
+    if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit")) {
       let isBacked = localStorage.getItem("isBacked");
       isBacked = isBacked ? JSON.parse(isBacked) : false;
       if (isBacked === true) {
@@ -502,6 +530,7 @@ function selectPayType(value) {
 
 const depositForm = ref(null);
 async function onSelect(value) {
+  depositItems.value.forEach((item) => (item.isActive = false));
   isDisplay.value = false;
 
   clearInfo();
@@ -514,25 +543,31 @@ async function onSelect(value) {
       value.children.forEach((element) => {
         if (element.hasActive) {
           activeMethod.value = element;
+          depositItems.value = element.extra.amountArr.map((item) => ({
+            amount: parseInt(item),
+            isActive: false
+          }));
           checkPrivilege(element);
         }
       });
     } else {
       activeMethod.value = value;
+      depositItems.value = value.extra.amountArr.map((item) => ({
+        amount: parseInt(item),
+        isActive: false
+      }));
       checkPrivilege(value);
     }
-    checkMinDepositAmt();
   }
 }
 
-function checkMinDepositAmt() {
+function checkMinDepositAmt(val) {
   // api won't return min and max values from now on, currently min set to 100
-  calculatedMinDeposit.value = 100;
+  calculatedMinDeposit.value = val.depositMin;
+  calculatedMaxDeposit.value = val.depositMax;
 }
 
-function checkPrivilege(v) {
-  selectPayType(v);
-}
+
 
 function selectedBank(value) {
   form.bankId = value.value.id;
@@ -545,7 +580,7 @@ function clearInfo() {
   if (depositForm.value) {
     depositForm.value.reset();
   }
-  checkMinDepositAmt();
+  // checkMinDepositAmt();
 }
 
 const depositAmtRef = ref("");
@@ -557,7 +592,7 @@ async function confirmDeposit() {
     btnLoading.value = false;
   } else {
     await cashier
-      .get(`/session/payment/${selectedChannel.value.paymentId}/amount/${form.localAmount}/verify`)
+      .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
       .then((d) => {
         if (d.code === 11002) {
           if (d.data && d.data.suggestion) {
@@ -566,13 +601,14 @@ async function confirmDeposit() {
           $q.notify({
             color: "negative",
             position: "top",
-            message: d.message,
+            message: t("error." + d.code),
             icon: "report_problem"
           });
 
           btnLoading.value = false;
         } else {
-          if (freePrivilege.value) {
+          // debugger;
+          if (freePrivilege.value.length > 0) {
             if (selectedPrivilege.value) {
               form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
             } else {
@@ -585,21 +621,21 @@ async function confirmDeposit() {
               form.privilegeId = null;
             }
           }
-          form.paymentId = selectedChannel.value.paymentId;
+          form.paymentId = activeMethod.value.paymentId;
 
-          if (selectedChanelExtra.value.length > 0) {
-            form.bankId = selectedChannelBank.value;
-          } else {
-            form.bankId = null;
-          }
+          // if (selectedChanelExtra.value.length > 0) {
+          //   form.bankId = selectedChannelBank.value;
+          // } else {
+          //   form.bankId = null;
+          // }
 
-          if (selectedItemPrivilegeId.value) {
-            if (store.paytypeWithPrivilege.indexOf(selectedChannel.value.payType) > -1) {
-              form.privilegeId = selectedItemPrivilegeId.value;
-            } else {
-              form.privilegeId = null;
-            }
-          }
+          // if (selectedItemPrivilegeId.value) {
+          //   if (store.paytypeWithPrivilege.indexOf(selectedChannel.value.payType) > -1) {
+          //     form.privilegeId = selectedItemPrivilegeId.value;
+          //   } else {
+          //     form.privilegeId = null;
+          //   }
+          // }
 
           if (isFtdPrivilege.value && ftdPrivilegeId.value) {
             form.privilegeId = ftdPrivilegeId.value;
@@ -649,17 +685,6 @@ async function pDepo(deposit) {
       if (res.code === 0) {
         const response = res.data.result;
 
-        // let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
-        // if (!isFirstDepo) {
-        //   console.log("First Depo");
-        //   //ADJUST TRACKEVENT.
-        //   var adjustEvent = new AdjustEvent("medfxb");
-        //   adjustEvent.setRevenue(deposit.localAmount, "INR");
-        //   Adjust.trackEvent(adjustEvent);
-        //
-        //   localStorage.setItem("IS_FIRST_DEPOSIT", "1");
-        // }
-
         if (res.data.result.payResultType === "OFFLINE") {
         }
         if (res.data.result.payResultType === "RENDER_HTML") {
@@ -667,11 +692,7 @@ async function pDepo(deposit) {
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
-          if (
-            (Platform.is.desktop || Platform.is.webkit) &&
-            !Platform.is.capacitor &&
-            Platform.is.name !== "webkit"
-          ) {
+          if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
               if (!newWin) {
@@ -778,6 +799,17 @@ async function pDepo(deposit) {
     });
 }
 
+const nodeKey = ref(0);
+const refreshNode = () => {
+  // Update the key to force re-render
+  nodeKey.value += 1;
+};
+
+//TODO :: NOT USING Now Yet
+const openDepositPage = () => {
+  window.open("https://tutorial.gc7dy.cc", "_blank");
+};
+
 // KYC Dialog
 const personalState = reactive({
   memberInfo: {}
@@ -868,6 +900,47 @@ const isFtdPrivilegePayType = computed(
 );
 const isFtdPrivilege = computed(() => extraPrivilegeId.value && !ftd.value && isFtdPrivilegeEnable.value === true);
 
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+function checkPrivilege(v) {
+  selectPayType(v);
+  if (v.paymentId !== null && v.paymentId !== undefined) {
+    loadPrivilege(v);
+    checkMinDepositAmt(v);
+    // unselectedPrivileges.value = [];
+  }
+}
+
+async function loadPrivilege(val) {
+  privilegeList.value = [];
+  hasPrivilege.value = false;
+
+  await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
+    if (res.code === 0) {
+      privilegeList.value = res.data.privileges;
+      hasPrivilege.value = true;
+      unselectedPrivileges.value = [];
+      freePrivilege.value = [];
+      privilegeList.value.map((p) => {
+        if (p.payTypes.indexOf(val.payType) >= 0) {
+          if (p.triggerType === "FREE") {
+            freePrivilege.value.push(p);
+          } else {
+            unselectedPrivileges.value.push(p);
+          }
+        }
+      });
+    } else {
+      hasPrivilege.value = false;
+      privilegeList.value = [];
+    }
+  });
+}
+
+
 watch(
   isFromFtdPromo,
   (val) => {
@@ -879,24 +952,31 @@ watch(
 );
 
 onActivated(() => {
+  if (!isInitialized.value) return;
   initPay();
-  // checkNewUser();
+  loadAppTabs();
   loadInfo();
-  resetSelectedMethod();
+  refreshNode();
+  // resetSelectedMethod();
 });
 
 onMounted(() => {
+  // alert("Tis")
   loadAppTabs();
   initPay();
-  // checkNewUser();
   loadInfo();
+  refreshNode();
+});
+
+onDeactivated(() => {
+  isInitialized.value = true;
 });
 </script>
 
 <style scoped lang="scss">
 .deposit-tabs {
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0 16px;
   border-radius: 0.5rem;
   background: #1b2232;
 }
@@ -959,12 +1039,80 @@ onMounted(() => {
 }
 
 :deep(.q-field--filled.q-field--dark .q-field__control) {
+  // border-radius: 0.5rem;
+  // background: #0b0e0d !important;
+  // border: 1px solid #072a19;
   border-radius: 0.5rem;
-  background: #192B2D !important;
+  border: 1px solid #ffffff14;
+  background: #292d2f !important;
 }
 
 :deep(.q-tab__label) {
   font-weight: 600;
+}
+
+.deposit-item-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 10px;
+  column-gap: 10px;
+
+  .deposit-item {
+    margin: auto;
+    position: relative;
+    width: 100%;
+
+    .deposit-amt {
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      // padding: 3px 16px;
+      width: 100%;
+      height: 4rem;
+      font-weight: 600;
+      aspect-ratio: 106/64;
+      box-shadow: 0px 2px 0px 0px #2a3637;
+      background: #394142;
+      color: #ffffff80;
+
+      font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 100%;
+      letter-spacing: 0.3px;
+      text-align: center;
+      vertical-align: middle;
+
+      &.active {
+        // background: #00b900;
+        color: #000a01;
+        // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        box-shadow: 0px 2px 0px 0px #1cca6a;
+        background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+
+        color: #2d2d2d;
+      }
+    }
+
+    .deposit-svg {
+      position: absolute;
+      right: 0;
+      bottom: -5px;
+      display: none;
+
+      svg {
+        display: none;
+        // background: #30bb1a;
+        border-radius: 3px;
+      }
+
+      &.active {
+        display: block;
+      }
+    }
+  }
 }
 
 .deposit-container {
@@ -978,10 +1126,27 @@ onMounted(() => {
     width: 100%;
 
     .deposit-enter-amt {
-      margin: 20px auto 0 auto;
+      margin: 20px auto 0px auto;
 
       .deposit-input {
-        background-color: rgba(21, 0, 37, 0.5);
+        --deposit-input-height: 48px;
+        border-radius: 5px;
+        width: 100%;
+        height: var(--deposit-input-height);
+
+        :deep(.q-field__control) {
+          height: var(--deposit-input-height);
+          &::before {
+            border-color: #4b4943;
+          }
+        }
+        :deep(.q-field__marginal) {
+          height: var(--deposit-input-height);
+        }
+      }
+
+      .deposit-selection {
+        background-color: #0b0e0d;
         border-radius: 5px;
         width: 100%;
         height: 46px;
@@ -989,35 +1154,11 @@ onMounted(() => {
         :deep(.q-field__control) {
           height: 46px;
         }
-
-        :deep(.q-field__bottom) {
-          padding-left: 0;
-          padding-right: 0;
-          margin: 0;
-        }
-
-        :deep(.amt-input-append) {
-          padding-left: 6px;
-          display: flex;
-          align-items: center;
-          justify-content: flex-start;
-          font-size: 16px;
-          line-height: 20px;
-          font-weight: 700;
-
-          span {
-            font-size: 18px;
-            font-style: italic;
-            font-weight: 700;
-            color: #00B9A1;
-            text-shadow: 1px 1px 2px #180b3bcc;
-          }
-        }
       }
 
       .currency {
-        color: #698fd0;
-        font-weight: 400;
+        color: #ffffff33;
+        font-weight: 700;
       }
     }
   }
@@ -1028,10 +1169,10 @@ onMounted(() => {
   // width: 90%;
 
   .deposit-option-container {
+    // display: grid;
+    // grid-template-columns: repeat(5, 1fr);
     display: flex;
     gap: 12px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
   }
 
   .deposit-option-btn-wrapper {
@@ -1047,7 +1188,7 @@ onMounted(() => {
     // aspect-ratio: 77/38;
 
     &.active {
-      background: #00B9A1;
+      background: #b81212;
       box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
     }
 
@@ -1075,7 +1216,7 @@ onMounted(() => {
     display: none;
 
     svg {
-      background: #00B9A1;
+      background: #b81212;
       border-radius: 3px;
     }
 
@@ -1101,7 +1242,7 @@ onMounted(() => {
   color: #ffffff;
   margin: auto;
   border-radius: 6px;
-  background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
+  background: #5c46e7;
   width: 100%;
   aspect-ratio: 335/46;
 
@@ -1115,225 +1256,94 @@ onMounted(() => {
 }
 
 .lil-title {
-  color: #576373;
+  color: #d0d0d0;
   font-weight: 600;
+  white-space: nowrap;
+
+  span {
+    color: #b81212;
+  }
+}
+
+.flex-between-c {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.font-small {
+  font-size: 12px;
+}
+
+.text-tealgreen{
+  color: #21ef89;
+}
+
+.flex-div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .deposit-wrapper {
-  width: 95%;
+  // width: 95%;
   margin: auto;
-}
-
-.skeleton-deposit-option {
-  width: 100%;
-  aspect-ratio: 519 / 303;
-  min-height: 50px;
-}
-
-.withdraw-methods-container {
   display: flex;
-  gap: 12px;
   flex-direction: column;
-  background-color: #161f2d;
-  padding: 12px;
-  border-radius: 6px;
+  min-height: calc(100dvh - 168px);
 }
 
-.method-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-
-  .options-picker {
-    display: flex;
-    gap: 6px;
-  }
+.bottom-btn {
+  margin-top: auto;
+  padding: 24px 0;
+  // position: fixed;
+  // bottom: 0;
+  width: 100%;
+  // max-width: 468px;
+  // left: 50%;
+  // transform: translateX(-50%);
+  // background-color: #171616;
+  // margin: 16px;
 }
 
-.method-title {
-  color: #98a6b4;
-  font-size: 14px;
+.tutorial-link {
+  color: #21ef89;
+  text-decoration: underline;
 }
 
-.method-item {
-  border-radius: 6px;
-  background-color: #263349;
-  padding: 6px 8px 6px 12px;
-  display: flex;
-  align-items: center;
+.step-desc-div {
+  color: #b2bdbf;
 
-  &.active {
-    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);
-  }
-
-  &.disabled {
-    cursor: not-allowed;
-    backdrop-filter: grayscale(1) brightness(0.7);
-    pointer-events: none;
-    // opacity: 0.6;
-  }
-
-  .item-icon {
-    border-right: 1px solid #4b6185;
-    padding-right: 8px;
-
-    img {
-      display: block;
-      // width: 100%;
-      width: 50px;
-    }
-  }
-  .item-detail {
-    padding: 6px 6px 6px 8px;
-    .txt-title {
-      font-size: 11px;
-      color: #ffffff;
-    }
-    .txt-content {
-      font-size: 10px;
-      color: #576373;
-      // white-space: nowrap;
-      margin-top: 4px;
-    }
-    .txt-maintenance {
-      color: #f4b975;
-      font-size: 11px;
-    }
-  }
-  .item-amount {
-    font-size: 10px;
-    padding: 6px;
-    margin-left: auto;
-  }
-  .item-arrow {
-    margin-left: auto;
-    width: 30px;
-    min-width: 30px;
-    max-width: 30px;
+  p {
+    margin: 5px 0px;
   }
 }
 
-.method-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-
-  .options-picker {
-    display: flex;
-    gap: 6px;
-  }
+.close-alert {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 1;
 }
 
 .slot-ftd-section {
   width: 100%;
-  margin: 10px auto 0px;
+  margin: 10px auto 10px;
 
   img {
     width: 100%;
   }
 }
-
-.deposit-methods-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  width: 100%;
-  gap: 12px;
-
-  &.col-three {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  &.col-five {
-    // grid-template-columns: repeat(5, 1fr);
-  }
-
-  .content-item {
-    position: relative;
-    background-color: rgba(38, 51, 73, 1);
-    border: 2px solid rgba(120, 121, 133, 0.5);
-    border-radius: 6px;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-
-    .item-ribbon {
-      display: block;
-      position: absolute;
-      top: -2px;
-      left: -2px;
-    }
-
-    &.active {
-      border: 2px solid #00B9A1;
-      .item-title {
-        color: rgba(255, 255, 255, 1);
-      }
-      &:before {
-        content: "";
-        height: 20px;
-        width: 20px;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        background-image: url(../../assets/images/account/active-tick.png);
-        background-size: cover;
-      }
-    }
-
-    .item-img {
-      margin: auto;
-      padding-bottom: 6px;
-      img {
-        display: block;
-        width: 100%;
-        max-width: max-content;
-        border-radius: 6px;
-      }
-    }
-    .item-title {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
-      text-align: center;
-      margin-top: auto;
-    }
-  }
-
-  .deposit-item {
-    margin: auto;
-    position: relative;
-    width: 100%;
-
-    .deposit-amt {
-      padding: 8px;
-      background-color: #263349;
-      border: 2px solid rgba(120, 121, 133, 0.5);
-      border-radius: 6px;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
-      text-align: center;
-
-      &.active {
-        border: 2px solid #00B9A1;
-        color: rgba(255, 255, 255, 1);
-
-        &:before {
-          content: "";
-          height: 20px;
-          width: 20px;
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          background-image: url(../../assets/images/account/active-tick.png);
-          background-size: cover;
-        }
-      }
-    }
-  }
+</style>
+<style scoped>
+.description-text {
+  background-color: #1f241f;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #fbab1b;
 }
-
-.input-btm {
-  padding-bottom: 270px;
+:deep(.description-text p) {
+  margin: 5px 0px !important;
 }
 </style>
