@@ -976,7 +976,7 @@ export default {
       tnc01: "Cada membro pode aproveitar esta promoção uma vez por dia;",
       tnc02:
         "Após realizar o primeiro depósito do dia com sucesso, o membro pode solicitar um bônus de 10% sobre o valor depositado durante o período da promoção;",
-      tnc03: "O valor mínimo de depósito é de R$30;",
+      tnc03: "O valor mínimo de depósito é de R$20;",
       tnc04: "O bônus máximo é de R$288",
       tnc05:
         'Para participar da promoção, é necessário enviar uma solicitação. Membros qualificados devem clicar no botão "Participar Agora" nesta página para enviar;',

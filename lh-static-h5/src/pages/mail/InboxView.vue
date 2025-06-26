@@ -18,18 +18,29 @@ export default defineComponent({
     const mailData = ref([]);
     const mailboxData = ref({
       type: null,
-      orderBy: "sendTime"
+      orderBy: "sendTime",
+      current: 1
     })
     const loadInbox = () => {
       api.get("/session/pm/inbox", {
         params: {
           type: mailboxData.value.type,
-          orderBy: mailboxData.value.orderBy
+          orderBy: mailboxData.value.orderBy,
+          current: mailboxData.value.current
         }
       }).then((response) => {
         if (response.code === 0) {
-          mailData.value = response.data.records
-          visible.value = false
+          if (mailData.value.length === 0) {
+            mailData.value = response.data.records;
+          } else {
+            mailData.value.push(...response.data.records);
+          }
+          visible.value = false;
+
+          if(response.data.current < response.data.pages){
+            mailboxData.value.current++;
+            loadInbox();
+          }
         }
       }).catch((error) => {
         console.log("error", error);

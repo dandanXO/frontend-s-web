@@ -36,11 +36,6 @@
     <div class="tnc-content">
       <ol>
         <li>Cada membro pode aproveitar este bônus de recarga uma única vez.</li>
-        <li>
-          Após concluir com sucesso o segundo depósito durante o período da promoção, o membro poderá solicitar um bônus
-          de 100% sobre o valor do segundo depósito.
-        </li>
-        <li>O valor máximo do bônus de recarga é de R$1000.</li>
         <li>Não é possível solicitar saques antes que o bônus seja creditado na conta.</li>
         <li>
           Para participar desta promoção, os membros devem enviar uma solicitação clicando no botão “Participar Agora”
