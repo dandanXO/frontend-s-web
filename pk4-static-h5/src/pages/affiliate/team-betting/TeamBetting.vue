@@ -77,13 +77,13 @@
 
             <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
             <div class="filter-grid">
-                <div class="filter-item" :class="{ active: daysSelection.label === 'Today' }"
+                <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'Today' }"
                 @click="changeDaySelection('Today')">Today</div>
-                <div class="filter-item" :class="{ active: daysSelection.label === 'Yesterday' }"
+                <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'Yesterday' }"
                 @click="changeDaySelection('Yesterday')">Yesterday</div>
-                <div class="filter-item" :class="{ active: daysSelection.label === '7-days' }"
+                <div class="filter-item" :class="{ active: dialogDaysSelection.label === '7-days' }"
                 @click="changeDaySelection('7-days')">7-days</div>
-                <div class="filter-item" :class="{ active: daysSelection.label === 'This Month' }"
+                <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'This Month' }"
                 @click="changeDaySelection('This Month')">This Month</div>
             </div>
 
@@ -151,16 +151,20 @@ function convertDate(date) {
 
 const isDaySelectionDialog = ref(false)
 const daysSelection = ref({ label: '7-days', value: 7 });
+const dialogDaysSelection = ref({ label: '7-days', value: 7 });
 const openDaySelectionDialog = () => {
+  dialogDaysSelection.value = daysSelection.value;
   isDaySelectionDialog.value = true
 }
 
 const changeDaySelection = (type) => {
-  daysSelection.value = { label: type, value: type };
+  dialogDaysSelection.value = { label: type, value: type };
 }
 
 const confirmDaySelection = () => {
+  daysSelection.value = dialogDaysSelection.value;
   isDaySelectionDialog.value = false;
+  loadBetRecords();
 }
 
 const isTypeSelectionDialog = ref(false)
@@ -207,6 +211,7 @@ const request = reactive({
 });
 
 const loadBetRecords = async () => {
+  request.betTime = getDateRange()
   const requestCopy = { ...request };
   const query = {};
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -214,11 +219,11 @@ const loadBetRecords = async () => {
       query[key] = value;
     }
   });
-  if (request.betTime !== null) {
-    if (request.betTime.length === 2) {
-      query.betTime = request.betTime.join(",");
-    }
-  }
+//   if (request.betTime !== null) {
+//     if (request.betTime.length === 2) {
+//       query.betTime = request.betTime.join(",");
+//     }
+//   }
   if (request.status !== null) {
     if (request.status.length === 1) {
       query.status = request.status[0];
@@ -258,6 +263,41 @@ const initVendors = () => {
     api.get('session/affiliate/platforms').then((res) => {
         vendorsList.value = res.data;
     })
+}
+function getDateRange(startDate = null, endDate = null) {
+    const type = daysSelection.value.label;
+
+    let start, end;
+
+    switch (type) {
+        case 'Today':
+            start = moment().format('YYYY-MM-DD');
+            end = start;
+            break;
+        case 'Yesterday':
+            start = moment().subtract(1, 'days').format('YYYY-MM-DD');
+            end = start;
+            break;
+        case '7-days':
+            start = moment().subtract(7, 'days').format('YYYY-MM-DD');
+            end = moment().format('YYYY-MM-DD');
+            break;
+        case 'This Month':
+            start = moment().startOf('month').format('YYYY-MM-DD');
+            end = moment().endOf('month').format('YYYY-MM-DD');
+            break;
+        case 'Custom':
+            if (!startDate || !endDate) {
+                throw new Error("Custom range requires both startDate and endDate.");
+            }
+            start = moment(startDate).format('YYYY-MM-DD');
+            end = moment(endDate).format('YYYY-MM-DD');
+            break;
+        default:
+            throw new Error("Invalid date range type.");
+    }
+
+    return `${start},${end}`;
 }
 
 onMounted(() => {
