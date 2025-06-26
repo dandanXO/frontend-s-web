@@ -42,12 +42,6 @@
         <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
           <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
         </RouterLink>
-        <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
-          <q-btn flat class="claim">{{ $t("btn.link") }}</q-btn>
-        </RouterLink>
-        <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
-          <q-btn flat class="claim">{{ $t("btn.claim") }}</q-btn>
-        </RouterLink>
       </div>
     </div>
     <div class="bonus-header">

@@ -76,15 +76,13 @@ import { useUI } from "stores/ui";
 import { useRouter } from "vue-router";
 import { eventapi } from "src/boot/axios";
 import { userStore } from "src/stores";
-// import { isAndroid } from "src/boot/utils";
+import { isAndroid } from "src/boot/utils";
 import moment from "moment";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { useLocalStorage } from "@vueuse/core";
 const KEY = "PAK_APP_LOGIN_PHONE_BONUS_LAST_CHECK_TIMESTAMP";
-const isAndroid = () => {
-  return true;
-}
+
 /**
  * @typedef {'APP_LOGIN_H5'|'APP_LOGIN_APK'|'FIRST_DEPOSIT'|'FIRST_DEPOSIT_AMOUNT'|'SECONDARY_DEPOSIT_AMOUNT'|'LUCKY_10_DAY'|'PHONE_VERIFIED_NOT_CLAIMED'} ModalType
  */
