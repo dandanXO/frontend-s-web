@@ -71,6 +71,7 @@
     />
     <FissureUniverseS5 v-else-if="list.redirectUrl === 'dy2-fissure-universe-s5'" :promo-code="list.promoCode" />
     <EsportWorldCup2025 v-else-if="list.redirectUrl === 'dy2-esport-world-cup-2025'" :promo-code="list.promoCode" />
+    <FifaCwcRedPacket v-else-if="list.redirectUrl === 'dy2-fifa-cwc-red-packet'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -165,6 +166,7 @@ const sportReferBetBonus = defineAsyncComponent(() =>
 );
 const DuanWuRewards = defineAsyncComponent(() => import("./hotpromo/duan-wu-rewards/DuanWuRewards.vue"));
 const FissureUniverseS5 = defineAsyncComponent(() => import("./hotpromo/fissure-universe-s5/FissureUniverseS5.vue"));
+const FifaCwcRedPacket = defineAsyncComponent(() => import("./hotpromo/fifa-cwc-red-packet/FifaCwcRedPacket.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -216,7 +218,8 @@ export default defineComponent({
     DreamLeagueS26,
     NewUserSportBonus2025,
     FissureUniverseS5,
-    EsportWorldCup2025
+    EsportWorldCup2025,
+    FifaCwcRedPacket
   },
   props: {
     list: {
