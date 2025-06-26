@@ -32,7 +32,7 @@
         <div class="title-img">活动详情</div>
         <div class="little-title row">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025年6月20日至2025年7月15日</div>
+          <div class="right">2025年6月29日至2025年7月15日</div>
         </div>
         <div class="little-title row">
           <div class="ribbon">活动对象</div>
@@ -57,7 +57,7 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              2025年1月1日起注册，在6月20日至7月14日活动期间，在平台五大体育场馆中任一体育场馆进行投注，当日累计有效投注≥2,000元，次日即可领取迎新红包18元，有效投注次日清零；
+              2025年1月1日起注册，在6月29日至7月15日活动期间，在平台五大体育场馆中任一体育场馆进行投注，当日累计有效投注≥2,000元，次日即可领取迎新红包18元，有效投注次日清零；
             </div>
           </div>
           <div class="item">
