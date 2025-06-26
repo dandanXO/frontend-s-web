@@ -85,13 +85,13 @@
 
                     <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
                         <div class="filter-grid">
-                            <div class="filter-item" :class="{ active: daysSelection.label === 'Today' }"
+                            <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'Today' }"
                                 @click="changeDaySelection('Today')">Today</div>
-                            <div class="filter-item" :class="{ active: daysSelection.label === 'Yesterday' }"
+                            <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'Yesterday' }"
                                 @click="changeDaySelection('Yesterday')">Yesterday</div>
-                            <div class="filter-item" :class="{ active: daysSelection.label === '7-days' }"
+                            <div class="filter-item" :class="{ active: dialogDaysSelection.label === '7-days' }"
                                 @click="changeDaySelection('7-days')">7-days</div>
-                            <div class="filter-item" :class="{ active: daysSelection.label === 'This Month' }"
+                            <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'This Month' }"
                                 @click="changeDaySelection('This Month')">This Month</div>
                         </div>
 
@@ -119,8 +119,10 @@ const selectedTab = ref('All');
 
 const isDaySelectionDialog = ref(false)
 const daysSelection = ref({ label: '7-days', value: 7 });
+const dialogDaysSelection = ref({ label: '7-days', value: 7 });
 const openDaySelectionDialog = () => {
-    isDaySelectionDialog.value = true
+  dialogDaysSelection.value = daysSelection.value;
+  isDaySelectionDialog.value = true
 }
 const isPageInfoDialog = ref(false);
 const openPageInfoDialog = () => {
@@ -142,12 +144,13 @@ const request = reactive({
 const store = userStore();
 
 const changeDaySelection = (type) => {
-    daysSelection.value = { label: type, value: type };
+  dialogDaysSelection.value = { label: type, value: type };
 }
 
 const confirmDaySelection = () => {
-    initData();
-    isDaySelectionDialog.value = false;
+  daysSelection.value = dialogDaysSelection.value;
+  initData();
+  isDaySelectionDialog.value = false;
 }
 
 function getDateRange(startDate = null, endDate = null) {
