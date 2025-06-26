@@ -500,7 +500,7 @@ onMounted(() => {
   .q-dialog__inner {
     padding: 0;
     color: #157eff;
-    width: 95%;
+    width: 80%;
     max-width: 360px;
     margin: 0 auto;
     display: flex;
@@ -510,12 +510,15 @@ onMounted(() => {
     align-self: center;
     height: fit-content;
     border-radius: 8px;
+    > div {
+      border-radius: 0;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
   }
   .title {
     width: 100%;
-    padding: 16px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    padding: 0.9rem;
     font-size: 24px;
     font-weight: 500;
     background-image: url("./images/claim-success-header-bg.png");
@@ -545,9 +548,9 @@ onMounted(() => {
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
     box-shadow: 0px -2px 4.58px 0px #b1d7ff inset;
     box-shadow: 0px -1px 3.66px 0px #5894ff inset;
-    padding: 8px 14px;
+    padding: 0.5rem 14px;
     width: 100%;
-    max-width: 150px;
+    max-width: 120px;
     border-radius: 100px;
     place-self: center;
     font-size: 18px;
@@ -555,6 +558,7 @@ onMounted(() => {
     margin-bottom: 30px;
     cursor: pointer;
     color: #fff;
+    border-radius: 100px !important;
   }
   .close-btn {
     position: absolute;
