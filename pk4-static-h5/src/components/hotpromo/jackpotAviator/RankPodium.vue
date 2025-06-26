@@ -1,37 +1,6 @@
 <template>
     <img v-if="props?.isLoadingRanking" style="width: 100px;margin: 50px auto;" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/podium-loader.gif" />
-    <div class="podium" v-else-if="props?.rankingList?.length > 0">
-        <div class="confetti">
-            <div class="confetti-piece" v-for="n in confettiCount" :key="n"></div>
-        </div>
-
-        <div class="podium-silver">
-            <!-- <div class="left-wing" /> -->
-            <div class="id-and-prize">
-                <div class="id">{{ rankingList[1].loginName }}</div>
-                <div class="prize">{{ rankingList[1].amount }}</div>
-            </div>
-            <!-- <div class="right-wing" /> -->
-        </div>
-
-        <div class="podium-gold">
-            <!-- <div class="left-wing" /> -->
-            <div class="id-and-prize">
-                <div class="id">{{ rankingList[0].loginName }}</div>
-                <div class="prize">{{ rankingList[0].amount }}</div>
-            </div>
-            <!-- <div class="right-wing" /> -->
-        </div>
-
-        <div class="podium-bronze">
-            <!-- <div class="left-wing" /> -->
-            <div class="id-and-prize">
-                <div class="id">{{ rankingList[2].loginName }}</div>
-                <div class="prize">{{ rankingList[2].amount }}</div>
-            </div>
-            <!-- <div class="right-wing" /> -->
-        </div>
-    </div>
+   
 </template>
 <script setup>
 

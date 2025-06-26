@@ -38,6 +38,10 @@
       :params="list.param"
       :promocode="list.promoCode"
     />
+    <AppLoginBonus
+      v-if="list.redirectUrl === 'pk4-app-login-phone-bonus' && !isCommonPromo && store.token"
+      :promocode="list.promoCode"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -81,6 +85,7 @@ import NewPlayerAccDepositPromo from "./hotpromo/new-player-acc-deposit/NewPlaye
 import NewPlayerWelcome from "../components/hotpromo/newPlayerSpinWheel/NewPlayerWheelPromo.vue"
 import PiggyBankPromo from "../components/hotpromo/piggyBank/PiggyBankPromo.vue";
 import MonthBeginningDepositRebate from "../components/hotpromo/monthBeginningDepositRebate/MonthBeginningDepositRebate.vue"
+import AppLoginBonus from "../components/hotpromo/appLoginBonus/AppLoginBonus.vue"
 
 export default defineComponent({
   name: "HotPromo",
@@ -104,7 +109,8 @@ export default defineComponent({
     NewPlayerAccDepositPromo,
     NewPlayerWelcome,
     PiggyBankPromo,
-    MonthBeginningDepositRebate
+    MonthBeginningDepositRebate,
+    AppLoginBonus
   },
   props: {
     list: {
@@ -171,6 +177,7 @@ export default defineComponent({
       this.list.redirectUrl === "new-player-acc-deposit" ||
       this.list.redirectUrl === "pak-welcome-new-players" ||
       this.list.redirectUrl === "pak-jackpot-aviator" ||
+      this.list.redirectUrl === "pk4-app-login-phone-bonus" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

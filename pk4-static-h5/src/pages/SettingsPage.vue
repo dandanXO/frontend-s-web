@@ -111,12 +111,12 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.vip") }}</div>
           </router-link>
-          <a :href="ui.charityUrl" target="_blank">
+          <!-- <a :href="ui.charityUrl" target="_blank">
             <div class="acct-nav-item">
               <img src="../assets/images/account/charitable-svg.svg" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.charity") }}</div>
-          </a>
+          </a> -->
         </div>
       </div>
       <div class="bottom-setting-section">

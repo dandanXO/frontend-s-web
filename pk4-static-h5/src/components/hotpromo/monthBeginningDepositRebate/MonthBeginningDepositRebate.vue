@@ -141,12 +141,15 @@ const initApi = () => {
     if (res.code === 0) {
       console.log(res);
       const {  rebate: rebate1 , totalDeposit: totalDeposit1 } = res;
-
+      if (!totalDeposit1) {
+        percent.value = 0;
+        return
+      }
       totalDeposit.value= totalDeposit1;
       rebate.value= rebate1;
 
       console.log(store.vip)
-      if(store.vip==="VIP0"){
+      if(store.vip==="VIP0" || totalDeposit.value === 0){
         percent.value= 0;
       }else{
         percent.value= totalDeposit.value / vipDepositCount.value[store.vip]
@@ -164,7 +167,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .promo-banner-img {
-  width: 90% !important;
   place-self: center;
 }
 .receive-btn {
@@ -186,7 +188,9 @@ onMounted(() => {
   position: relative;
   display: flex;
   justify-content: center;
-  margin: 28px 0;
+  // margin: 28px 0;
+  
+    margin: 28px 20px;
 
   .big-rebate-title-container {
     position: absolute;
@@ -239,6 +243,8 @@ onMounted(() => {
   font-family: Poppins;
   font-weight: 700;
   font-size: 1.25rem;
+  
+    margin: 0 20px;
   img {
     width: 25% !important;
     margin-bottom: 10px !important;
@@ -252,7 +258,8 @@ onMounted(() => {
   }
 }
 .rule_list {
-  margin-top: 20px !important;
+  // margin-top: 20px !important;
+  margin: 20px 20px 0 !important;
 }
 
 .vip-progress {
@@ -260,7 +267,8 @@ onMounted(() => {
   flex-direction: column;
   gap: 8px;
   font-family: sans-serif;
-  margin-top: 36px;
+  // margin-top: 36px;
+  margin: 36px 25px 0 25px;
 
   .bar-wrapper {
     position: relative;

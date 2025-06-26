@@ -68,7 +68,10 @@
                 class="banner-container"
                 v-if="
                   selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
-                  selectedPromo.redirectUrl !== 'new-player-acc-deposit'
+                  selectedPromo.redirectUrl !== 'new-player-acc-deposit' && 
+                  selectedPromo.redirectUrl !== 'pk4-month-beginning-deposit-rebate' && 
+                  selectedPromo.redirectUrl !== 'pk4-app-login-phone-bonus' && 
+                  selectedPromo.redirectUrl !== 'pk4-piggy-bank'
                 "
               >
                 <!-- <div
@@ -97,7 +100,10 @@
                 v-if="
                   selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
                   selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
-                  selectedPromo.redirectUrl !== 'pak-welcome-new-players'
+                  selectedPromo.redirectUrl !== 'pak-welcome-new-players' && 
+                  selectedPromo.redirectUrl !== 'pk4-month-beginning-deposit-rebate' && 
+                  selectedPromo.redirectUrl !== 'pk4-app-login-phone-bonus' && 
+                  selectedPromo.redirectUrl !== 'pk4-piggy-bank'
                 "
                 :style="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border:0; padding: 0;' : ''"
               >
@@ -128,7 +134,10 @@
                   isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards',
                   isNewPlayerSpinWheel: selectedPromo.redirectUrl === 'pak-welcome-new-players',
                   isSpinLuckyWheel:
-                    selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope'
+                    selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope',
+                  isMonthlyBeginningDepositRebate: selectedPromo.redirectUrl === 'pk4-month-beginning-deposit-rebate',
+                  isAppLoginPhoneBonus: selectedPromo.redirectUrl === 'pk4-app-login-phone-bonus',
+                  isPiggyBank: selectedPromo.redirectUrl === 'pk4-piggy-bank'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo">
@@ -152,7 +161,8 @@
                     liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game',
                     isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel',
-                    isGoldenEgg: selectedPromo.redirectUrl === 'pak-aviator-golden-egg'
+                    isGoldenEgg: selectedPromo.redirectUrl === 'pak-aviator-golden-egg',
+                    isPiggyBank: selectedPromo.redirectUrl === 'pk4-piggy-bank'
                   }"
                 >
                   <!-- <div class="top-float">
@@ -1123,7 +1133,7 @@ export default defineComponent({
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;
-        .promo-content {
+        .promo-content {  
           &.usual {
             display: block;
             width: 100%;
@@ -1179,7 +1189,11 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
         padding-bottom: 40px;
-
+        &.isMonthlyBeginningDepositRebate, &.isAppLoginPhoneBonus, &.isPiggyBank {
+          width: 100%;
+          padding: 0;
+          margin: 0;
+        }
         &.isSpinLuckyWheel {
           background: url("../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/bg.png") no-repeat top
             center;
@@ -1215,6 +1229,9 @@ export default defineComponent({
         .select-promo-html {
           &.isSpinLuckyWheel {
             display: none;
+          }
+          &.isPiggyBank {
+            padding: 0  10px 30px 20px;
           }
           &.isGoldenEgg {
             table {
