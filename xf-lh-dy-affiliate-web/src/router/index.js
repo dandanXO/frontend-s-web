@@ -496,6 +496,14 @@ export const constantRoutes = [
           title: 'Daily Summary',
         },
       },
+      {
+        path: 'retention-report',
+        component: () => import('../views/report/retention-report/index.vue'),
+        name: 'Retention Report',
+        meta: {
+          title: 'Retention Report',
+        },
+      },
     ],
   },
 ]
