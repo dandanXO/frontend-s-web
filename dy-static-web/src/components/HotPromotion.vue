@@ -103,6 +103,7 @@
     <FissureUniverseS5 v-else-if="list.redirectUrl === 'dy2-fissure-universe-s5'" :promo-code="list.promoCode" />
     <EsportWorldCup2025 v-else-if="list.redirectUrl === 'dy2-esport-world-cup-2025'" :promo-code="list.promoCode" />
     <FifaCwcRedPacket v-else-if="list.redirectUrl === 'dy2-fifa-cwc-red-packet'" :promo-code="list.promoCode" />
+    <FissureJulyFinal2025 v-else-if="list.redirectUrl === 'dy2-fissure-july-final-2025'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -196,6 +197,7 @@ import NewUserSportBonus2025 from "./hotpromo/new-user-sport-bonus-2025/NewUserS
 import FissureUniverseS5 from "./hotpromo/fissure-universe-s5/FissureUniverseS5.vue";
 import EsportWorldCup2025 from "./hotpromo/esport-world-cup-2025/EsportWorldCup2025.vue";
 import FifaCwcRedPacket from "./hotpromo/fifa-cwc-red-packet/FifaCwcRedPacket.vue";
+import FissureJulyFinal2025 from "./hotpromo/fissure-july-final-2025/FissureJulyFinal2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -260,7 +262,8 @@ export default defineComponent({
     NewUserSportBonus2025,
     FissureUniverseS5,
     EsportWorldCup2025,
-    FifaCwcRedPacket
+    FifaCwcRedPacket,
+    FissureJulyFinal2025
   },
   props: {
     list: {
