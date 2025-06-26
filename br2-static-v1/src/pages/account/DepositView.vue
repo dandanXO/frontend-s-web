@@ -83,7 +83,7 @@
           <div v-if="isBank2" class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
             {{ $t("deposit.please_pay_exact_amt") }}
           </div>
-          <div  v-if="selectedPrivilege.code === 'br2-redeposit-bonus' && form.localAmount" class="font-small text-tealgreen"
+          <div  v-if="form.localAmount >= 20 && selectedPrivilege.code === 'br2-redeposit-bonus' && form.localAmount" class="font-small text-tealgreen"
                 style="width: calc(100% - 18px); margin: 10px auto 8px">
             Você receberá um bônus extra Rs{{ get2ndDepoCommaAmount(form.localAmount) }}
           </div>
