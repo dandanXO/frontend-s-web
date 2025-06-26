@@ -189,7 +189,10 @@ const chartOptions = (title) => ({
   },
   scales: {
     y: {
-      beginAtZero: true
+      beginAtZero: true,
+      ticks: {
+        precision: title === 'Logins' || title === 'Registers' ? 0 : undefined
+      }
     }
   }
 })
