@@ -75,6 +75,7 @@
     <IemMelbourne2025 v-else-if="list.redirectUrl === 'lh1-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS5 v-else-if="list.redirectUrl === 'lh1-pgl-wallachia-s5'" :promo-code="list.promoCode" />
     <tgWorldChamp2025 v-else-if="list.redirectUrl === 'lh1-tp-world-champ-2025-sa'" :promo-code="list.promoCode" />
+    <iemCologne2025 v-else-if="list.redirectUrl === 'lh1-iem-cologne-2025'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'lh1-blast-slam-3-2025'" :promo-code="list.promoCode" />
     <sport-refer-bet-bonus v-else-if="list.redirectUrl === 'lh1-sport-refer-bet-bonus'" :promo-code="list.promoCode" />
     <Lh1Enc2025 v-else-if="list.redirectUrl === 'lh1-enc-2025'" :promo-code="list.promoCode" />
@@ -151,6 +152,7 @@ const PglWallachiaS5 = defineAsyncComponent(() => import("../components/hotpromo
 const tgWorldChamp2025 = defineAsyncComponent(() =>
   import("../components/hotpromo/tp-world-champ-2025-sa/tp-world-champ-2025-sa.vue")
 );
+const iemCologne2025 = defineAsyncComponent(() => import("../components/hotpromo/iem-cologne-2025/iem-cologne-2025.vue"));
 const BlastSlam32025 = defineAsyncComponent(() =>
   import("../components/hotpromo/blast-slam-3-2025/BlastSlam32025.vue")
 );
@@ -306,6 +308,7 @@ export default defineComponent({
     IemMelbourne2025,
     PglWallachiaS5,
     tgWorldChamp2025,
+    iemCologne2025,
     BlastSlam32025,
     sportReferBetBonus,
     PglastanaAc2025,

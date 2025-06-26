@@ -56,6 +56,7 @@
     <BlastRival2025 v-else-if="list.redirectUrl === 'dy2-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-else-if="list.redirectUrl === 'dy2-pgl-wallachia-s4'" :promo-code="list.promoCode" />
     <tgWorldChamp2025 v-else-if="list.redirectUrl === 'dy2-tp-world-champ-2025-sa'" :promo-code="list.promoCode" />
+    <iemCologne2025 v-else-if="list.redirectUrl === 'dy2-iem-cologne-2025'" :promo-code="list.promoCode" />
     <newVip2025 v-if="list.redirectUrl === 'dy2-2025-new-vip'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'dy2-blast-slam-3-2025'" :promo-code="list.promoCode" />
     <PglastanaAc2025 v-else-if="list.redirectUrl === 'dy2-pgl-astana-2025'" :promo-code="list.promoCode" />
@@ -149,6 +150,7 @@ const PglWallachiaS4 = defineAsyncComponent(() => import("./hotpromo/pgl-wallach
 const tgWorldChamp2025 = defineAsyncComponent(() =>
   import("../components/hotpromo/tp-world-champ-2025-sa/tp-world-champ-2025-sa.vue")
 );
+const iemCologne2025 = defineAsyncComponent(() => import("../components/hotpromo/iem-cologne-2025/iem-cologne-2025.vue"));
 const BlastSlam32025 = defineAsyncComponent(() => import("./hotpromo/blast-slam-3-2025/BlastSlam32025.vue"));
 const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
 const VctBangkok = defineAsyncComponent(() => import("./hotpromo/vct-bangkok/VctBangkok.vue"));
@@ -209,6 +211,7 @@ export default defineComponent({
     IemMelbourne2025,
     PglWallachiaS4,
     tgWorldChamp2025,
+    iemCologne2025,
     BlastSlam32025,
     BlastRival2025,
     NewFootball,
