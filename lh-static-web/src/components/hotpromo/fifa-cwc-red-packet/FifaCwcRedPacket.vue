@@ -135,10 +135,13 @@
 import { onMounted, ref, defineProps } from "vue";
 import { userStore } from "@/store";
 import { claimFifaCwcRedPacketBonus } from "@/api/index/promo";
+import { useNotify } from "@/hooks/notify";
+import { GLOBAL_NOTIFICATION_ERROR_CODE } from "@/api/response";
 
 const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
 const store = userStore();
+const notify = useNotify();
 
 const loadingClaim = ref(false);
 const amount = ref(0);
@@ -153,6 +156,10 @@ const handleClaimBonus = () => {
         amount.value = res.data.lastDigitAmount + res.data.vipAmount;
         isBonusDialog.value = true;
         store.getBalance();
+      } else {
+        if (!GLOBAL_NOTIFICATION_ERROR_CODE.includes(res.code)) {
+          notify.error(res.message || "领取失败，请稍后再试");
+        }
       }
     })
     .catch(() => {})
