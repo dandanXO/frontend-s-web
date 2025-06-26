@@ -738,6 +738,7 @@ export default {
     changeAffiliate: '제휴사 변경',
     check: '검토',
     checkall: '모두 선택',
+    checkBindCard: '바인딩된 카드 확인',
     checkBy: '검토자',
     checkDate: '검토 날짜',
     checkExclusiveUrl: '독점 URL 확인',

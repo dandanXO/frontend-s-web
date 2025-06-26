@@ -718,6 +718,7 @@ export default {
     changeAffiliate: 'Thay đổi đối tác',
     check: 'Kiểm tra',
     checkall: 'Chọn tất cả',
+    checkBindCard: 'Kiểm tra thẻ đã liên kết',
     checkBy: 'Người kiểm tra',
     checkDate: 'Ngày kiểm tra',
     checkExclusiveUrl: 'Kiểm tra URL độc quyền',
