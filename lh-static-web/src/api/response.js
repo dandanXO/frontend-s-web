@@ -34,3 +34,12 @@ export function SkipErrorCode(code) {
   }
   return 0;
 }
+
+export const GLOBAL_NOTIFICATION_ERROR_CODE = [
+  ResponseCode.ERROR_USER_TOO_FAST,
+  ResponseCode.ERROR_PROMO_NOT_STARTED,
+  ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT,
+  ResponseCode.ERROR_PROMO_CLAIMED,
+  ResponseCode.ERROR_PROMO_NOT_IN_RANGE,
+  ResponseCode.ERROR_SYSTEM
+];

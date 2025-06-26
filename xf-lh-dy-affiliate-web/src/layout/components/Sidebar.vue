@@ -251,6 +251,14 @@ const getNavigationData = () => {
             isMainNav: true,
             icon: 'report',
           },
+          {
+            path: '/retention-report',
+            title: t('menu.Retention Report'),
+            label: 'Retention Report',
+            active: false,
+            isMainNav: true,
+            icon: 'report',
+          },
         ],
       },
     ]

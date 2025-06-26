@@ -17,7 +17,6 @@
             :editable="false"
             :clearable="false"
           />
-
           <el-button
             style="margin-left: 20px"
             icon="el-icon-search"
@@ -300,7 +299,7 @@ async function loadSites() {
   request.siteId = site.id
   const { data: affiliates } = await getAffiliateList(store.state.user.id)
 
-  affiliateNames.list = affiliates;
+  affiliateNames.list = affiliates.map(item => item.loginName);
 }
 
 function convertDate(date) {

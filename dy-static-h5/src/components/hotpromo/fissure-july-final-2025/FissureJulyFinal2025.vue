@@ -2,69 +2,87 @@
   <div class="livepoker-rebate-wrapper">
     <div class="livepoker-rebate-container">
       <div class="livepoker-rebate-section section-bg">
-        <div class="livepoker-rebate-section-btn" @click="handleClaimBonus">
-          <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/reward-btn-4.png" alt="" />
+        <div class="livepoker-rebate-section-left">
+          <div class="livepoker-rebate-section-title">
+            <div class="reward-info-icon claim-title-icon"></div>
+            投注嘉奖
+          </div>
+          <div class="reward-info">
+            <div class="reward-info-icon claim-coin-icon"></div>
+            <div class="reward-info-content">
+              昨日累计有效投注：
+              <span class="amount">{{ totalValidBet }}元</span>
+            </div>
+          </div>
+          <div class="reward-info">
+            <div class="reward-info-icon claim-gift-icon"></div>
+            <div class="reward-info-content">
+              今日领取彩金：
+              <span class="amount">{{ bonus }}元</span>
+            </div>
+          </div>
+        </div>
+        <div class="livepoker-rebate-section-right">
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0, loading: loadingClaim }">
+            <img src="../../../assets/images/promotion/hotpromo/lh1-blast-premier/claim-btn3.png" alt="" width="100%" />
+          </div>
         </div>
       </div>
       <div class="livepoker-rebate-game-info section-bg">
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025年6月29日至2025年7月14日</div>
+          <div class="right">2025年7月15日至7月21日</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">
-            在世俱杯期间，每一场比赛都将限时开启一轮“红包雨”活动，会员可在指定赛事即将开始前登录账号，即可参与世俱杯红包雨活动，每场最高狂撒8,888元红包雨！
-          </div>
+          <div class="right">活动期间，当日FISSURE 2025 7月总决赛累计有效投注≥1000 元即可获得最高1388元的奖金。</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
             <tr>
-              <th>红包雨开放时间</th>
-              <th>派发时间</th>
+              <th>当日下注金额</th>
+              <th>投注金</th>
               <th>流水倍数</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>6月29日-7月14日</td>
-              <td>每场世俱杯指定赛事</td>
-              <td>1倍流水</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <table class="livepoker-rebate-game-info-table section-table">
-          <thead>
-            <tr>
-              <th colspan="2">世俱杯指定红包雨活动赛事</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2025.6.25   03:00</td>
-              <td>本菲卡 VS 拜仁慕尼黑</td>
+              <td>≥1,000</td>
+              <td>8元</td>
+              <td rowspan="9">6倍流水</td>
             </tr>
             <tr>
-              <td>2025.6.25   09:00</td>
-              <td>洛杉矶FC  VS  弗拉门戈</td>
+              <td>≥3,000</td>
+              <td>28元</td>
             </tr>
             <tr>
-              <td>2025.6.26   03:00</td>
-              <td>多特蒙德  VS 蔚山HD</td>
+              <td>≥5,000</td>
+              <td>58元</td>
             </tr>
             <tr>
-              <td>2025.6.26   09:00</td>
-              <td>国际米兰  VS 河床</td>
+              <td>≥10,000</td>
+              <td>88元</td>
             </tr>
             <tr>
-              <td>2025.6.27   03:00</td>
-              <td>尤文图斯 VS 曼城</td>
+              <td>≥30,000</td>
+              <td>128元</td>
             </tr>
             <tr>
-              <td>2025.6.27   09:00</td>
-              <td>萨尔茨堡红牛 VS 皇家马德里</td>
+              <td>≥50,000</td>
+              <td>288元</td>
+            </tr>
+            <tr>
+              <td>≥100,000</td>
+              <td>588元</td>
+            </tr>
+            <tr>
+              <td>≥300,000</td>
+              <td>888元</td>
+            </tr>
+            <tr>
+              <td>≥500,000</td>
+              <td>1,388元</td>
             </tr>
           </tbody>
         </table>
@@ -79,7 +97,7 @@
               />
               <span>示例</span>
             </div>
-            在世俱杯赛事期间，会员在指定赛事开始登录雷火账号，即可领取到最高8,888元的开赛红包。
+            会员在FISSURE 2025 7月总决赛累计有效投注为50,000 元，在次日 24 小时内可获得彩金：288元
           </div>
         </div>
       </div>
@@ -91,17 +109,20 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              世俱杯红包雨仅限已实名绑定银行卡账号的会员才可以参与。
+              活动期间，活动仅计算电竞场馆中FISSURE 2025 7月总决赛，会员在当日FISSURE 2025 7月总决赛累计有效投注≥1000
+              元即可获得对应彩金，有效投注次日清零；
+              <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            未存款会员领取红包雨后仅可提款一次，提款金额不超过100元。
+            活动期间，活动仅计算当日FISSURE 2025 7月总决赛已结算的赛事总有效投注，次日 24
+            小时内在活动页面点击【立即领取】按钮领取。逾期未领取则视为放弃，彩金 6倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
-
-            指定赛事开始前登录雷火账号即可参与红包雨活动，彩金实时到账，彩金 1倍流水即可出款；
+            任何低于欧洲盘 1.7 或亚洲盘 0.7
+            水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为单笔最高有效投注内；
           </div>
           <div class="item">
             <div class="item-num">4</div>
@@ -110,34 +131,21 @@
           <div class="item">
             <div class="item-num">5</div>
             此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
-            地址视为同一账户，若有违规者，将不享受此红利；
+            地址视为同一账户，若有违规者，将不享受此红利； 
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            为避免文字理解差异，雷火电竞保留此活动最终解释权；
+            为避免文字理解差异，东赢电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
     </div>
   </div>
-  <q-dialog align-center centered class="fifa-cwc-red-packet-dialog" v-model="isBonusDialog">
-    <q-btn v-close-popup flat dense round class="close-btn" style="height: 30px; width: 30px; padding: 0">
-      <img src="./images/close-icon.png" alt="Close" style="width: 24px; height: 24px" />
-    </q-btn>
-
-    <div class="title">红包雨</div>
-    <div class="content center-items">
-      <img src="./images/success.png" />
-      <div>恭喜您成功开启红包</div>
-      <div class="amount-txt">获得{{ amount }}元</div>
-    </div>
-    <div class="dialog-btn" @click="closeDialog">确定</div>
-  </q-dialog>
 </template>
 
 <script setup>
 import { onMounted, ref, toRefs } from "vue";
-import { claimFifaCwcRedPacketBonus } from "../../../api/index/promo";
+import { getFissureJulyFinal2025Bonus, claimFissureJulyFinal2025Bonus } from "../../../api/index/promo";
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 
@@ -147,18 +155,19 @@ const { promoCode } = toRefs(props);
 const notify = useNotify();
 const store = userStore();
 
-const amount = ref(0);
+const totalValidBet = ref(0);
+const bonus = ref(0);
 const loadingClaim = ref(false);
-
-const isBonusDialog = ref(false);
 
 const handleClaimBonus = () => {
   loadingClaim.value = true;
-  claimFifaCwcRedPacketBonus(promoCode.value)
+  claimFissureJulyFinal2025Bonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
-        amount.value = res.data.lastDigitAmount + res.data.vipAmount;
-        isBonusDialog.value = true;
+        notify({
+          type: "success",
+          message: `成功领取`
+        });
         store.getBalance();
       } else {
         notify({
@@ -173,15 +182,26 @@ const handleClaimBonus = () => {
     });
 };
 
-const closeDialog = () => {
-  // store.getBalance();
-  isBonusDialog.value = false;
+const fetchData = async () => {
+  loadingClaim.value = true;
+  getFissureJulyFinal2025Bonus(promoCode.value)
+    .then((res) => {
+      if (res.code === 0) {
+        totalValidBet.value = res.data.totalValidBet;
+        bonus.value = res.data.bonus;
+      }
+    })
+    .catch(() => {})
+    .finally(() => {
+      loadingClaim.value = false;
+    });
 };
 
 onMounted(() => {
   if (!store.token) {
     return;
   }
+  fetchData();
 });
 </script>
 
@@ -255,15 +275,6 @@ onMounted(() => {
     gap: 8px;
     align-items: center;
     margin-bottom: 20px;
-  }
-  .livepoker-rebate-section-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    img {
-      width: 50%;
-    }
   }
 }
 
@@ -446,7 +457,7 @@ onMounted(() => {
       }
 
       .hint {
-        // font-size: 12px;
+        font-size: 12px;
         font-weight: 400;
         line-height: 22.4px;
         color: #ff0000;
@@ -487,87 +498,27 @@ onMounted(() => {
     font-weight: 600;
   }
 }
-</style>
-<style lang="scss">
-.fifa-cwc-red-packet-dialog {
-  max-width: 500px;
-
-  .q-dialog__inner {
-    padding: 0;
-    color: #157eff;
-    width: 80%;
-    max-width: 360px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    background-color: #fff;
-    align-self: center;
-    height: fit-content;
-    border-radius: 8px;
-    > div {
-      border-radius: 0;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-    }
-  }
-  .title {
-    width: 100%;
-    padding: 0.9rem;
-    font-size: 24px;
-    font-weight: 500;
-    background-image: url("./images/claim-success-header-bg.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    text-align: center;
-    color: #fff;
-  }
-  .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    font-size: 18px;
-    img {
-      width: 90%;
-      margin-bottom: 20px;
-    }
-    .amount-txt {
-      margin-top: 20px;
-      font-size: 28px;
-    }
-  }
-  .dialog-btn {
-    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset;
-    box-shadow: 0px -1px 3.66px 0px #5894ff inset;
-    padding: 0.5rem 14px;
-    width: 100%;
-    max-width: 120px;
-    border-radius: 100px;
-    place-self: center;
-    font-size: 18px;
-    text-align: center;
-    margin-bottom: 30px;
-    cursor: pointer;
-    color: #fff;
-    border-radius: 100px !important;
-  }
-  .close-btn {
-    position: absolute;
-    z-index: 1;
-    top: -30px;
-    right: -30px;
-    cursor: pointer;
-  }
+.claim-title-icon {
+  background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png") no-repeat
+    center center !important;
+  background-size: 100% 100% !important;
 }
-.body--dark {
-  .fifa-cwc-red-packet-dialog {
-    .q-dialog__inner {
-      background: linear-gradient(180deg, #384e79 0%, #212e4b 100%);
-    }
-  }
+
+.claim-coin-icon {
+  background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png") no-repeat center
+    center !important;
+  background-size: 100% 100% !important;
+}
+
+.claim-gift-icon {
+  background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png") no-repeat center
+    center !important;
+  background-size: 100% 100% !important;
+}
+
+.claim-stacked-coins-icon {
+  background: url("../../../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon3.png") no-repeat center
+    center !important;
+  background-size: 100% 100% !important;
 }
 </style>
