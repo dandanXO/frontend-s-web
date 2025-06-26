@@ -24,6 +24,9 @@ export default {
       AFFILIATE: '三级代理',
       SUPER_AFFILIATE: '二级代理',
       MASTER_AFFILIATE: '一级代理',
+      PK4_MASTER_AFFILIATE: '招商',
+      PK4_SUPER_AFFILIATE: '总代',
+      PK4_JUNIOR_AFFILIATE: '普通代理',
     },
     timeType: {
       MONTHLY: '每月',
@@ -266,6 +269,17 @@ export default {
       PENDING: '待定',
       OTHER: '其他',
       ADD_TO_LIVE: '添加到直播',
+    },
+    marsMatch: {
+      NOT_STARTED: '未开赛',
+      ONGOING: '进行中',
+      ENDED: '完场',
+      CANCEL: '已取消',
+      PENDING: '待定',
+      DELAYED: '延期',
+      DELETE: '已删除',
+      ABANDONED: '腰斩',
+      OTHER: '其他',
     },
   },
   betStatus: {
@@ -618,6 +632,20 @@ export default {
     IP: "IP地址"
 
   },
+  investment: {
+    type: {
+      FIXED: '定期',
+      FLEXIBLE: '灵活'
+    },
+    status: {
+      PENDING: '进行中',
+      EXPIRED: '已过期',
+      CLOSED: '已领取',
+      CANCEL: '已取消',
+      COMPLETED: '已完成',
+      INCOMPLETE: '未完成'
+    }
+  },
   fastAccessButtonMode: {
     DETAILS: '详情',
     CLAIM_REDIRECT: '显示领取跳转',
@@ -884,6 +912,7 @@ export default {
     changeAffiliate: '更换代理',
     check: '审核中',
     checkall: '全选',
+    checkBindCard: '判断绑定银行卡',
     checkBy: '审核人',
     checkDate: '审核日期',
     checkExclusiveUrl: '查看专属网址',
@@ -900,6 +929,7 @@ export default {
     claimableRebate: '可领取返水金额',
     className: '类别名',
     clearingSum: '结算总和',
+    clientIp: '客户IP',
     clientType: '客户类型',
     close: '关闭',
     code: '代码',
@@ -917,6 +947,7 @@ export default {
     consumingTime: '耗费时间',
     commitTime: '订单日期',
     companyProfit: '公司盈利',
+    completeWithdrawalCheckHour: '完成任务检查是否提款(小时)',
     configGroup: '设置组',
     confirm: '确认',
     confirmAndExport: '确认并导出',
@@ -2620,6 +2651,7 @@ export default {
     deleteSuccess: '删除成功',
     copyFailed: '复制失败',
     copySuccess: '复制成功',
+    successGetUrl: '获取推流成功',
     match: '赛事',
     confirmDelete: '此操作不可撤销，确定要删除这些数据吗？',
     sensitiveWord: '敏感词',
@@ -2641,7 +2673,8 @@ export default {
     streamTag: '流标签',
     isCdnPush: '推送 CDN',
     box: '回合',
-    isCreateLiveUrl: '是否生产推流地址  (是/否)',
+    isCreateLiveUrl: '推流',
+    isLiveUrlExist: '是否推流',
     addToLive: '添加到直播',
     initialSupplierStreamStatus: '初始厂商流状态',
     isTestEvent: '是否为测试赛事',
@@ -2652,7 +2685,12 @@ export default {
     otp: 'OTP',
     scheduledAnnouncement: '预约公告',
     subscribeCount: '当前订阅人数',
-    eventCode: '赛事代码'
+    eventCode: '赛事代码',
+    roleConfig: '角色设置',
+    chatHistory: '聊天记录',
+    settlementSetting: '佣金比例',
+    settlementBetRequired: '活跃投注额',
+    settlementDepositRequired: '活跃存款额',
   },
   message: {
     adsStatusOpen: '开',
@@ -3152,9 +3190,12 @@ export default {
     downloadUrlEmpty: '下载URL为空',
     streamUrlNotM3U8OrFlv: '目前串流不是以 .m3u8 或 .flv 结尾，是否自动修正为 .m3u8？',
     streamUrlMustBeM3U8OrFlv: '串流网址必须是 .m3u8 或 .flv 格式',
-    replacedWithM3U8: '已自动替换为 .m3u8 结尾',
     validateSupplierStreamRequired: '厂商流为必填',
-    validateStreamerRequired: '主播必填'
+    validateStreamerRequired: '主播必填',
+    inputSensitiveWords: '请输入敏感词',
+    streamUrlNotM3U8: "该链接不是 .m3u8 结尾，是否要自动替换为 .m3u8？",
+    replacedWithM3U8: "已自动替换为 .m3u8 结尾",
+    streamUrlMustBeM3U8: "链接必须以 .m3u8 结尾，请修正后再提交"
   },
   menu: {
     'Add Promo': '新增优惠',
@@ -3479,16 +3520,18 @@ export default {
     'Sport Live Team': '队伍管理',
     'Sport Live Streamer': '主播管理',
     'Sport Live Event': '赛事管理',
-    'Sport Live Match': '赛事资讯',
+    'Sport Live Match': '电竞赛事',
     'Sport Live Event Setting': '体育直播设定',
     'Sport Live Sensitive Word': '体育直播敏感词设定',
     'Sport Live Block Member': '聊天室会员禁言设定',
     'Sport Live Chat Vip Status': '聊天室VIP发言设定',
-    'Sport Live History Block': '聊天室记录禁言设定',
+    'Sport Live History Block': '聊天室记录',
     'Sport Live Monitor': '体育直播监控',
     'Sport Live Admin': '主播后台管理员设定',
     'Member Refer Stat Analysis': '邀请返佣分析',
-    'Member Refer Relation': '邀请关系查询'
+    'Member Refer Relation': '邀请关系查询',
+    'Sport Live Match Mars': '体育赛事',
+    'Affiliate Settlement Setting': '代理佣金设置',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -3953,6 +3996,8 @@ export default {
     53000: '请输入会员名',
     53001: '推荐人或会员名其中一个必须要有',
     54000: '注册黑名单记录不存在',
-    54001: '注册黑名单记录已存在'
+    54001: '注册黑名单记录已存在',
+    55001: '没有获取到流',
+    55000: '会员游戏排行榜记录已存在'
   },
 }

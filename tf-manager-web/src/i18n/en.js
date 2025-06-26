@@ -881,6 +881,7 @@ export default {
     changeAffiliate: 'Change Affiliate',
     check: 'REVIEW',
     checkall: 'Check All',
+    checkBindCard: 'Check Bind Card',
     checkBy: 'Check By',
     checkDate: 'Check Date',
     checkExclusiveUrl: 'Check Exclusive Url',

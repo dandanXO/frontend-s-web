@@ -461,6 +461,7 @@ export default {
     changeAffiliate: 'เปลี่ยนพันธมิตร',
     check: 'ตรวจสอบ',
     checkall: 'Check All',
+    checkBindCard: 'ตรวจสอบบัตรที่เชื่อมโยง',
     checkBy: 'ตรวจสอบโดย',
     checkDate: 'ตรวจสอบวันที่',
     checkExclusiveUrl: 'ตรวจสอบ URL พิเศษ',
