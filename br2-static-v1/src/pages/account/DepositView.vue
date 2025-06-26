@@ -13,7 +13,7 @@
 <!--          </q-badge>-->
 
 <!--          {{selectedPrivilege}}-->
-          <q-badge v-if="selectedPrivilege.code === 'br2-redeposit-bonus'" color="green" floating rounded>
+          <q-badge v-if="item.amount >= 20 && selectedPrivilege.code === 'br2-redeposit-bonus'" color="green" floating rounded>
             +{{ get2ndDepoCommaAmount(item.amount) }}
           </q-badge>
 
