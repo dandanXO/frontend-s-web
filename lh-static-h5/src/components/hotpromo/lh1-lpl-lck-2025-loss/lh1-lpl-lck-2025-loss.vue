@@ -108,7 +108,7 @@
                   />
                   <span>示例</span>
                 </div>
-                用户 A 在 3月 10 日投注2025季中冠军赛段累计有效投注 50,000 元，用户 A 在次日 24 小时内可获得彩金：288 元
+                用户 A 在 6月28日投注2025季中冠军赛段累计有效投注 50,000 元，用户 A 在次日 24 小时内可获得彩金：288 元
               </div>
             </div>
           </div>
@@ -121,18 +121,21 @@
                 <div class="item-num">1</div>
                 <div style="display: flex; flex-direction: column">
                   <div>
-                    活动期间，活动仅计算电竞场馆中2025季中冠军赛段，会员在当日2025季中冠军赛段中累计有效投注≥3,000 元即可获得对应彩金，有效投注次日清零
+                    活动期间，活动仅计算电竞场馆中2025季中冠军赛段，会员在当日2025季中冠军赛段中累计有效投注≥3,000
+                    元即可获得对应彩金，有效投注次日清零
                   </div>
                   <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
                 </div>
               </div>
               <div class="item">
                 <div class="item-num">2</div>
-                活动期间，活动仅计算当日2025季中冠军赛段已结算的赛事总有效投注，次日 24 小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 8 倍流水即可出款；
+                活动期间，活动仅计算当日2025季中冠军赛段已结算的赛事总有效投注，次日 24
+                小时内在活动页面点击【点击领取】按钮领取。逾期未领取则视为放弃，彩金 8 倍流水即可出款；
               </div>
               <div class="item">
                 <div class="item-num">3</div>
-                任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为累计负盈利内；
+                任何低于欧洲盘 1.7 或亚洲盘 0.7
+                水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为累计负盈利内；
               </div>
               <div class="item">
                 <div class="item-num">4</div>
@@ -189,7 +192,7 @@
             <div class="title-img">活动详情</div>
             <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
               <div class="ribbon">活动时间</div>
-              <div class="right">2025 年 3月22日- 6月14日</div>
+              <div class="right">2025年6月28日-7月14日</div>
             </div>
             <div
               class="little-title"
@@ -197,8 +200,8 @@
             >
               <div class="ribbon">活动内容</div>
               <div class="right">
-                会员在电竞场馆中投注2025季中冠军赛段，北京时间当日负盈利达到 1500
-                元及以上，次日即可领取救援金，最高可达 1,188 元！
+                会员在电竞场馆中投注2025季中冠军赛段，北京时间当日负盈利达到 1500 元及以上，次日即可领取救援金，最高可达
+                1,188 元！
               </div>
             </div>
             <table class="livepoker-rebate-game-info-table section-table">
