@@ -26,7 +26,178 @@
 
   <div class="vip-container">
     <VIPCarousel :vipCarouselIndex="vipCarouselIndex" :onlyShowCurrentLevel="false" />
+
     <div class="vip-details" v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
+      <div class="vip-table-wrapper">
+        <q-table
+          flat
+          row-key="level"
+          hide-pagination
+          :columns="upgradeRewardColumns"
+          :rows="upgradeRewardData"
+          :rows-per-page-options="[0]"
+        >
+          <template v-slot:header="props">
+            <q-tr>
+              <q-th v-for="col in props.cols" :key="'n' + col.name" class="non-bottom-border" />
+            </q-tr>
+            <q-tr class="top-header">
+              <q-th v-for="col in props.cols" :key="col.name" :props="props">
+                <div v-if="col.name === 'vip'" class="vip-icon-wrapper">
+                  <img style="width: 24px" src="../../assets/images/vip/vip-col-level.png" />
+                </div>
+                <template v-else>
+                  <span>{{ col.label }}</span>
+                </template>
+              </q-th>
+            </q-tr>
+          </template>
+
+          <template v-slot:body="props">
+            <q-tr :props="props">
+              <q-td
+                v-for="col in props.cols"
+                :key="col.name"
+                :props="props"
+                :class="{
+                  'text-yellow': col.name === 'bet'
+                }"
+              >
+                <template v-if="col.name !== 'vip'">
+                  {{ convertToCommaAmount(col.value, false, 0) }}
+                </template>
+                <template v-else>
+                  {{ col.value }}
+                </template>
+              </q-td>
+            </q-tr>
+          </template>
+
+          <template v-slot:bottom-row>
+            <q-tr style="display: none">
+              <q-td colspan="100%" class="bottom-note text-left">
+                {{ $t("vip.vipTable_txt") }}
+              </q-td>
+            </q-tr>
+          </template>
+        </q-table>
+        <div class="vip-table-header">{{ $t("vip.upgradeRewards") }}</div>
+      </div>
+
+      <div class="vip-table-wrapper">
+        <q-table
+          flat
+          row-key="level"
+          hide-pagination
+          :columns="monthlyRewardColumns"
+          :rows="monthlyRewardData"
+          :rows-per-page-options="[0]"
+        >
+          <template v-slot:header="props">
+            <q-tr>
+              <q-th v-for="col in props.cols" :key="'n' + col.name" class="non-bottom-border" />
+            </q-tr>
+            <q-tr class="top-header">
+              <q-th v-for="col in props.cols" :key="col.name" :props="props">
+                <div v-if="col.name === 'vip'" class="vip-icon-wrapper">
+                  <img style="width: 24px" src="../../assets/images/vip/vip-col-level.png" />
+                </div>
+                <template v-else>
+                  <span>{{ col.label }}</span>
+                </template>
+              </q-th>
+            </q-tr>
+          </template>
+
+          <template v-slot:body="props">
+            <q-tr :props="props">
+              <q-td
+                v-for="col in props.cols"
+                :key="col.name"
+                :props="props"
+                :class="{
+                  'text-yellow': col.name === 'bet'
+                }"
+              >
+                <template v-if="col.name !== 'vip'">
+                  {{ convertToCommaAmount(col.value, false) }}
+                </template>
+                <template v-else>
+                  {{ col.value }}
+                </template>
+              </q-td>
+            </q-tr>
+          </template>
+
+          <template v-slot:bottom-row>
+            <q-tr style="display: none">
+              <q-td colspan="100%" class="bottom-note text-left">
+                {{ $t("vip.vipTable_txt") }}
+              </q-td>
+            </q-tr>
+          </template>
+        </q-table>
+        <div class="vip-table-header">{{ $t("vip.monthlyRewards") }}</div>
+        <div class="vip-table-bottom-text">
+          {{ $t("vip.monthlyRewardsText") }}
+        </div>
+      </div>
+
+      <div class="vip-table-wrapper">
+        <q-table
+          flat
+          row-key="level"
+          hide-pagination
+          :columns="dailyWithdrawalLimitColumns"
+          :rows="dailyWithdrawalLimitData"
+          :rows-per-page-options="[0]"
+        >
+          <template v-slot:header="props">
+            <q-tr>
+              <q-th v-for="col in props.cols" :key="'n' + col.name" class="non-bottom-border" />
+            </q-tr>
+            <q-tr class="top-header">
+              <q-th v-for="col in props.cols" :key="col.name" :props="props">
+                <div v-if="col.name === 'vip'" class="vip-icon-wrapper">
+                  <img style="width: 24px" src="../../assets/images/vip/vip-col-level.png" />
+                </div>
+                <template v-else>
+                  <span>{{ col.label }}</span>
+                </template>
+              </q-th>
+            </q-tr>
+          </template>
+
+          <template v-slot:body="props">
+            <q-tr :props="props">
+              <q-td
+                v-for="col in props.cols"
+                :key="col.name"
+                :props="props"
+                :class="{
+                  'text-yellow': col.name === 'bet'
+                }"
+              >
+                <template v-if="col.name !== 'vip'">
+                  {{ convertToCommaAmount(col.value, false) }}
+                </template>
+                <template v-else>
+                  {{ col.value }}
+                </template>
+              </q-td>
+            </q-tr>
+          </template>
+
+          <template v-slot:bottom-row>
+            <q-tr style="display: none">
+              <q-td colspan="100%" class="bottom-note text-left">
+                {{ $t("vip.vipTable_txt") }}
+              </q-td>
+            </q-tr>
+          </template>
+        </q-table>
+        <div class="vip-table-header">{{ $t("vip.dailyWithdrawalLimit") }}</div>
+      </div>
       <!--      <div class="vip-rewards">-->
       <!--        <div class="vip-reward-item">-->
       <!--          <div class="reward-desc">-->
@@ -96,76 +267,76 @@
       <!--        </div>-->
       <!--      </div>-->
 
-      <div class="header-wrapper">
-        <div class="header">{{ $t("vip.vipStatus_txt") }}</div>
-      </div>
+      <!-- <div class="header-wrapper"> -->
+      <!-- <div class="header">{{ $t("vip.vipStatus_txt") }}</div> -->
+      <!-- </div> -->
 
-      <q-table
-        flat
-        :hide-pagination="true"
-        :columns="columns"
-        :rows="rows"
-        row-key="name"
-        :rows-per-page-options="[0]"
-        class=""
-      >
-        <template v-slot:header="props">
-          <q-tr :props="props" style="display: none">
-            <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
-              <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;</div>
-              <!-- unable to adjust table width... -->
-              <template v-else>
-                <div style="white-space: normal; text-align: center">
-                  Monthly Cumulative Deposit An Upgrade Vip Level
-                </div>
-              </template>
-            </q-th>
-          </q-tr>
+      <!-- <q-table -->
+      <!-- flat -->
+      <!-- :hide-pagination="true" -->
+      <!-- :columns="columns" -->
+      <!-- :rows="rows" -->
+      <!-- row-key="name" -->
+      <!-- :rows-per-page-options="[0]" -->
+      <!-- class="" -->
+      <!-- > -->
+      <!-- <template v-slot:header="props"> -->
+      <!-- <q-tr :props="props" style="display: none"> -->
+      <!-- <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props"> -->
+      <!-- <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" /> -->
+      <!-- <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;</div> -->
+      <!-- unable to adjust table width... -->
+      <!-- <template v-else> -->
+      <!-- <div style="white-space: normal; text-align: center"> -->
+      <!-- Monthly Cumulative Deposit An Upgrade Vip Level -->
+      <!-- </div> -->
+      <!-- </template> -->
+      <!-- </q-th> -->
+      <!-- </q-tr> -->
 
-          <q-tr class="top-header">
-            <q-td>
-              <div><img style="width: 30px" src="../../assets/images/vip/vip-col-level.png" /></div>
-            </q-td>
-            <q-td>
-              {{ $t("vip.upgrade") }}
-              <br />
-              {{ $t("vip.experience") }}
-            </q-td>
-            <q-td style="white-space: normal">
-              {{ $t("vip.dailyWithdrawalTimes") }}
-            </q-td>
-            <!-- <q-td>
+      <!-- <q-tr class="top-header"> -->
+      <!-- <q-td> -->
+      <!-- <div><img style="width: 30px" src="../../assets/images/vip/vip-col-level.png" /></div> -->
+      <!-- </q-td> -->
+      <!-- <q-td> -->
+      <!-- {{ $t("vip.upgrade") }} -->
+      <!-- <br /> -->
+      <!-- {{ $t("vip.experience") }} -->
+      <!-- </q-td> -->
+      <!-- <q-td style="white-space: normal"> -->
+      <!-- {{ $t("vip.dailyWithdrawalTimes") }} -->
+      <!-- </q-td> -->
+      <!-- <q-td>
               {{ $t("vip.monthly") }}
               <br />
               {{ $t("vip.rewards") }}
             </q-td> -->
-          </q-tr>
-        </template>
+      <!-- </q-tr> -->
+      <!-- </template> -->
 
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <template v-if="colIndex === 1 || colIndex === 2">
-                <div style="justify-content: flex-start; padding-left: 20px; display: flex; align-items: center">
-                  <img class="vip-coin-icon" src="../../assets/images/vip/vip-coins.png" />
-                  <span>{{ col.value }}</span>
-                </div>
-              </template>
+      <!-- <template v-slot:body="props"> -->
+      <!-- <q-tr :props="props"> -->
+      <!-- <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props"> -->
+      <!-- <template v-if="colIndex === 1 || colIndex === 2"> -->
+      <!-- <div style="justify-content: flex-start; padding-left: 20px; display: flex; align-items: center"> -->
+      <!-- <img class="vip-coin-icon" src="../../assets/images/vip/vip-coins.png" /> -->
+      <!-- <span>{{ col.value }}</span> -->
+      <!-- </div> -->
+      <!-- </template> -->
 
-              <template v-else>{{ col.value }}</template>
-            </q-td>
-          </q-tr>
-        </template>
+      <!-- <template v-else>{{ col.value }}</template> -->
+      <!-- </q-td> -->
+      <!-- </q-tr> -->
+      <!-- </template> -->
 
-        <template v-slot:bottom-row>
-          <q-tr style="display: none">
-            <q-td colspan="100%" class="bottom-note text-left">
-              {{ $t("vip.vipTable_txt") }}
-            </q-td>
-          </q-tr>
-        </template>
-      </q-table>
+      <!-- <template v-slot:bottom-row> -->
+      <!-- <q-tr style="display: none"> -->
+      <!-- <q-td colspan="100%" class="bottom-note text-left"> -->
+      <!-- {{ $t("vip.vipTable_txt") }} -->
+      <!-- </q-td> -->
+      <!-- </q-tr> -->
+      <!-- </template> -->
+      <!-- </q-table> -->
 
       <!--      <q-table-->
       <!--        flat-->
@@ -232,15 +403,15 @@
       <!--        </template>-->
       <!--      </q-table>-->
 
-      <div class="hint-msg">
-        {{ $t("vip.vipTable_txt") }}
-      </div>
+      <!-- <div class="hint-msg"> -->
+      <!-- {{ $t("vip.vipTable_txt") }} -->
+      <!-- </div> -->
     </div>
   </div>
 </template>
 
 <script setup>
-import { watch, ref, onActivated, onMounted } from "vue";
+import { watch, ref, onActivated, onMounted, computed } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
@@ -248,6 +419,7 @@ import VIPCarousel from "components/VIPCarousel.vue";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
+import { convertToCommaAmount } from "src/boot/utils";
 const { t } = useI18n();
 const $q = useQuasar();
 
@@ -311,19 +483,143 @@ const columnsinvite = [
   // { name: "flow", field: "flow", align: "center" }
 ];
 
-// 1	5000	20	38
-// 2	10000	25	88
-// 3	20000	50	188
-// 4	50000	100	388
-// 5	100000	200	588
-// 6	200000	300	888
-// 7	500000	1000	1888
-// 8	1000000	2000	3888
-// 9	2000000	3000	8888
-// 10	5000000	10000	28888
-// 11	10000000	20000	58888
-// 12	20000000	30000	88888
+const defaultColumns = computed(() => [
+  { name: "vip", label: "", align: "center", field: "level" },
+  { name: "deposit", label: t("vip.deposit"), field: "deposit", align: "center" },
+  { name: "bet", label: t("vip.bet"), field: "bet", align: "center" }
+]);
 
+const upgradeRewardColumns = computed(() => [
+  ...defaultColumns.value,
+  { name: "reward", label: t("vip.upgradeRewards"), field: "reward", align: "center" }
+]);
+
+const monthlyRewardColumns = computed(() => [
+  ...defaultColumns.value,
+  { name: "cashback", label: t("vip.monthlyRewards"), field: "cashback", align: "center" }
+]);
+
+const dailyWithdrawalLimitColumns = computed(() => [
+  ...defaultColumns.value,
+  { name: "limit", label: t("vip.dailyWithdrawalLimit"), field: "limit", align: "center" }
+]);
+
+const upgradeRewardData = [
+  { level: 0, deposit: 0, bet: 0, reward: 0 },
+  { level: 1, deposit: 15000, bet: 150000, reward: 40 },
+  { level: 2, deposit: 30000, bet: 300000, reward: 75 },
+  { level: 3, deposit: 60000, bet: 600000, reward: 150 },
+  { level: 4, deposit: 150000, bet: 1500000, reward: 300 },
+  { level: 5, deposit: 300000, bet: 3000000, reward: 600 },
+  { level: 6, deposit: 600000, bet: 6000000, reward: 900 },
+  { level: 7, deposit: 1500000, bet: 15000000, reward: 3000 },
+  { level: 8, deposit: 3000000, bet: 30000000, reward: 6000 },
+  { level: 9, deposit: 6000000, bet: 60000000, reward: 9000 },
+  { level: 10, deposit: 15000000, bet: 150000000, reward: 30000 },
+  { level: 11, deposit: 30000000, bet: 300000000, reward: 60000 },
+  { level: 12, deposit: 60000000, bet: 600000000, reward: 90000 }
+];
+
+const monthlyRewardData = [
+  { level: 0, deposit: 0, bet: 0, cashback: 0 },
+  { level: 1, deposit: 300, bet: 3000, cashback: 3 },
+  { level: 2, deposit: 1000, bet: 10000, cashback: 10 },
+  { level: 3, deposit: 2000, bet: 20000, cashback: 20 },
+  { level: 4, deposit: 5000, bet: 50000, cashback: 50 },
+  { level: 5, deposit: 10000, bet: 100000, cashback: 100 },
+  { level: 6, deposit: 50000, bet: 500000, cashback: 500 },
+  { level: 7, deposit: 100000, bet: 1000000, cashback: 1000 },
+  { level: 8, deposit: 200000, bet: 2000000, cashback: 2000 },
+  { level: 9, deposit: 400000, bet: 4000000, cashback: 5000 },
+  { level: 10, deposit: 1000000, bet: 10000000, cashback: 15000 },
+  { level: 11, deposit: 5000000, bet: 50000000, cashback: 85000 },
+  { level: 12, deposit: 10000000, bet: 100000000, cashback: 185000 }
+];
+
+const dailyWithdrawalLimitData = [
+  { level: 0, deposit: 0, bet: 0, limit: 5000 },
+  { level: 1, deposit: 15000, bet: 150000, limit: 15000 },
+  { level: 2, deposit: 30000, bet: 300000, limit: 30000 },
+  { level: 3, deposit: 60000, bet: 600000, limit: 60000 },
+  { level: 4, deposit: 150000, bet: 1500000, limit: 150000 },
+  { level: 5, deposit: 300000, bet: 3000000, limit: 300000 },
+  { level: 6, deposit: 600000, bet: 6000000, limit: 600000 },
+  { level: 7, deposit: 1500000, bet: 15000000, limit: 1500000 },
+  { level: 8, deposit: 3000000, bet: 30000000, limit: 3000000 },
+  { level: 9, deposit: 6000000, bet: 60000000, limit: 6000000 },
+  { level: 10, deposit: 15000000, bet: 150000000, limit: 15000000 },
+  { level: 11, deposit: 30000000, bet: 300000000, limit: 30000000 },
+  { level: 12, deposit: 60000000, bet: 600000000, limit: 60000000 }
+];
+
+// onActivated(() => {
+//   store.getMemberInfo().then(() => {
+//     const vipLevelNum = Number(store.vip.replace("VIP", ""));
+//     vipLevel.value = vipLevelNum;
+
+//     // if vip0, show vip1 slide
+//     if (vipLevelNum === 0) {
+//       vipCarouselIndex.value = vipLevelNum;
+//     }
+//     // if vip level higher than existing info available, show last vip level slide
+//     else if (vipLevelNum > lastVipLevel) {
+//       // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
+//       vipCarouselIndex.value = lastVipLevel - 1;
+//     }
+//     // show vip slide correspond to current vip level
+//     else {
+//       // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
+//       vipCarouselIndex.value = vipLevelNum - 1;
+//     }
+
+//     vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
+//   });
+// });
+
+onMounted(() => {
+  checkMonthlyVipReceive();
+});
+
+// watch(
+//   () => vipCarouselIndex.value,
+//   () => {
+//     const carouselVipLevel =
+//       vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : Math.round(vipCarouselIndex.value) + 1;
+
+//     const levelUpgrade = rows3.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
+//     const monthlyReward = rows4.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
+//     const dailyWithdrawalLimit = rows.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
+
+//     const vipInfo = vipItems.find(({ vipLevel }) => vipLevel === carouselVipLevel);
+//     const vipLevel = Number(store.vip.replace("VIP", ""));
+//     const currentDeposit = Number(store.getCurrentDeposit());
+//     const upgradeStatus = vipInfo.ugprade;
+//     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
+
+//     const levelUpPercentage = (() => {
+//       if (vipLevel > +vipInfo.vipLevel) {
+//         return 100;
+//       }
+
+//       return (currentDeposit / levelUpDeposit) * 100;
+//     })();
+
+//     // alert(vipLevel);
+//     // alert(vipCarouselIndex.value);
+//     let progressBarText = `${currentDeposit} / ${levelUpDeposit}`
+//     if (currentDeposit >= levelUpDeposit) {
+//       progressBarText = ` ${levelUpDeposit} /  ${levelUpDeposit}`
+//     }
+//     currentVipLevelStats.value = {
+//       levelUpgrade,
+//       monthlyReward,
+//       dailyWithdrawalLimit,
+//       levelUpPercentage,
+//       progressBarText: progressBarText,
+//       rewardUnlocked: vipLevel > vipCarouselIndex.value
+//     };
+//   }
+// );
 const rows = [
   {
     name: "VIP 0",
@@ -431,331 +727,14 @@ const rows = [
   }
 ];
 
-const { vipItems, lastVipLevel } = rows.reduce(
-  (acc, { name: vipName, ugprade: upgradeRequirement }) => {
-    const vipLevelStr = vipName.replace("VIP ", "");
-    const vipLevelNum = Number(vipLevelStr);
-
-    return {
-      ...acc,
-      vipItems: [
-        ...acc.vipItems,
-        {
-          vipLevel: vipLevelNum,
-          ugprade: upgradeRequirement
-        }
-      ],
-      lastVipLevel: vipLevelNum
-    };
-  },
-  {
-    lastVipLevel: "",
-    vipItems: []
-  }
-);
-
-// onActivated(() => {
-//   store.getMemberInfo().then(() => {
-//     const vipLevelNum = Number(store.vip.replace("VIP", ""));
-//     vipLevel.value = vipLevelNum;
-
-//     // if vip0, show vip1 slide
-//     if (vipLevelNum === 0) {
-//       vipCarouselIndex.value = vipLevelNum;
-//     }
-//     // if vip level higher than existing info available, show last vip level slide
-//     else if (vipLevelNum > lastVipLevel) {
-//       // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
-//       vipCarouselIndex.value = lastVipLevel - 1;
-//     }
-//     // show vip slide correspond to current vip level
-//     else {
-//       // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
-//       vipCarouselIndex.value = vipLevelNum - 1;
-//     }
-
-//     vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
-//   });
-// });
-
-onMounted(() => {
-  checkMonthlyVipReceive();
-});
-
-// watch(
-//   () => vipCarouselIndex.value,
-//   () => {
-//     const carouselVipLevel =
-//       vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : Math.round(vipCarouselIndex.value) + 1;
-
-//     const levelUpgrade = rows3.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
-//     const monthlyReward = rows4.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
-//     const dailyWithdrawalLimit = rows.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
-
-//     const vipInfo = vipItems.find(({ vipLevel }) => vipLevel === carouselVipLevel);
-//     const vipLevel = Number(store.vip.replace("VIP", ""));
-//     const currentDeposit = Number(store.getCurrentDeposit());
-//     const upgradeStatus = vipInfo.ugprade;
-//     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
-
-//     const levelUpPercentage = (() => {
-//       if (vipLevel > +vipInfo.vipLevel) {
-//         return 100;
-//       }
-
-//       return (currentDeposit / levelUpDeposit) * 100;
-//     })();
-
-//     // alert(vipLevel);
-//     // alert(vipCarouselIndex.value);
-//     let progressBarText = `${currentDeposit} / ${levelUpDeposit}`
-//     if (currentDeposit >= levelUpDeposit) {
-//       progressBarText = ` ${levelUpDeposit} /  ${levelUpDeposit}`
-//     }
-//     currentVipLevelStats.value = {
-//       levelUpgrade,
-//       monthlyReward,
-//       dailyWithdrawalLimit,
-//       levelUpPercentage,
-//       progressBarText: progressBarText,
-//       rewardUnlocked: vipLevel > vipCarouselIndex.value
-//     };
-//   }
-// );
-
-const columns2 = [
-  {
-    name: "vip",
-    required: true,
-    label: "",
-    align: "center",
-    field: (row) => row.name
-  },
-  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" }
-];
-const rows2 = [
-  {
-    name: "VIP 0",
-    ugprade: "2,500",
-    flow: "x10"
-  },
-  {
-    name: "VIP 1",
-    ugprade: "5,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 2",
-    ugprade: "10,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 3",
-    ugprade: "20,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 4",
-    ugprade: "50,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 5",
-    ugprade: "100,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 6",
-    ugprade: "200,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 7",
-    ugprade: "500,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 8",
-    ugprade: "1,000,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 9",
-    ugprade: "2,000,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 10",
-    ugprade: "5,000,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 11",
-    ugprade: "10,000,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 12",
-    ugprade: "20,000,000",
-    flow: "x10"
-  }
-];
-
-const columns3 = [
-  {
-    name: "vip",
-    required: true,
-    label: "",
-    align: "center",
-    field: (row) => row.name
-  },
-  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" },
-  { name: "flow", field: "flow", align: "center" }
-];
-//row3 : Level Up Bonus.
-const rows3 = [
-  {
-    name: "VIP 1",
-    ugprade: "20",
-    flow: "x10"
-  },
-  {
-    name: "VIP 2",
-    ugprade: "25",
-    flow: "x10"
-  },
-  {
-    name: "VIP 3",
-    ugprade: "50",
-    flow: "x10"
-  },
-  {
-    name: "VIP 4",
-    ugprade: "100",
-    flow: "x10"
-  },
-  {
-    name: "VIP 5",
-    ugprade: "200",
-    flow: "x10"
-  },
-  {
-    name: "VIP 6",
-    ugprade: "300",
-    flow: "x10"
-  },
-  {
-    name: "VIP 7",
-    ugprade: "1,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 8",
-    ugprade: "2,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 9",
-    ugprade: "3,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 10",
-    ugprade: "10,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 11",
-    ugprade: "20,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 12",
-    ugprade: "30,000",
-    flow: "x10"
-  }
-];
-
-const columns4 = [
-  {
-    name: "vip",
-    required: true,
-    label: "",
-    align: "center",
-    field: (row) => row.name
-  },
-  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" }
-];
-//row4 : Monthly Reward.
-const rows4 = [
-  {
-    name: "VIP 1",
-    ugprade: "38",
-    flow: "x10"
-  },
-  {
-    name: "VIP 2",
-    ugprade: "88",
-    flow: "x10"
-  },
-  {
-    name: "VIP 3",
-    ugprade: "188",
-    flow: "x10"
-  },
-  {
-    name: "VIP 4",
-    ugprade: "388",
-    flow: "x10"
-  },
-  {
-    name: "VIP 5",
-    ugprade: "588",
-    flow: "x10"
-  },
-  {
-    name: "VIP 6",
-    ugprade: "888",
-    flow: "x10"
-  },
-  {
-    name: "VIP 7",
-    ugprade: "1,888",
-    flow: "x10"
-  },
-  {
-    name: "VIP 8",
-    ugprade: "3,888",
-    flow: "x10"
-  },
-  {
-    name: "VIP 9",
-    ugprade: "8,888",
-    flow: "x10"
-  },
-  {
-    name: "VIP 10",
-    ugprade: "28,888",
-    flow: "x10"
-  },
-  {
-    name: "VIP 11",
-    ugprade: "58,888",
-    flow: "x10"
-  },
-  {
-    name: "VIP 12",
-    ugprade: "88,888",
-    flow: "x10"
-  }
-];
-
 const swipeLeft = () => {
+  console.log(111);
   // router.push("/vip");
 };
 
 // Handle swipe right
 const swipeRight = () => {
+  console.log(111);
   router.push("/promo");
 };
 
@@ -825,7 +804,7 @@ const getMonthlyVip = () => {
 
   .vip-promo-tab-toggle {
     // background: url(../../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
-    background: #3237384D;
+    background: #3237384d;
     background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
@@ -899,21 +878,6 @@ const getMonthlyVip = () => {
   align-items: center;
 }
 
-.carousel__slide {
-  padding: 0px 5px 10px;
-
-  &.carousel__slide--next .vipitem,
-  &.carousel__slide--prev .vipitem {
-    filter: brightness(0.5);
-    height: 150px;
-    margin-top: 20px;
-
-    .vip-contents .progress-bar-container .progress-bar-inner-bar {
-      height: 8px;
-    }
-  }
-}
-
 .carousel__prev,
 .carousel__next {
   display: none;
@@ -925,50 +889,44 @@ const getMonthlyVip = () => {
   font-size: 1rem;
   text-align: center;
   .vip-details {
-    background: linear-gradient(90deg, #1c273d 0%, #12192b 100%);
+    margin: 0 12px 20px;
+    .vip-table-wrapper {
+      position: relative;
+      background: #121829;
+      border: 1px solid #ffffff14;
+      border-radius: 4px;
+      margin-bottom: 17px;
 
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+      .vip-table-header {
+        position: absolute;
+        top: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: url(../../assets/images/vip/block-header-bg.png) no-repeat center center;
+        background-size: 100% 100%;
+        width: 100%;
+        max-width: 72vw;
+        padding: 0.5rem 1.25rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+
+      .vip-table-bottom-text {
+        margin: 20px 10px;
+        font-size: 0.875rem;
+        color: #037eea;
+        text-align: left;
+      }
+    }
   }
 
   .q-table__container {
-    position: relative;
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 75px;
-      width: calc(50% - 30px);
-      height: 100%;
-      pointer-events: none;
-      background: linear-gradient(180deg, rgba(255, 163, 107, 0.6) 0%, rgba(255, 163, 107, 0) 100%);
-      z-index: 2;
-
-      @media (max-width: 450px) {
-        width: calc(50% - 16px);
-      }
-
-      // @media (max-width: 410px) {
-      //   width: calc(50% - 16px);
-      // }
-
-      @media (max-width: 375px) {
-        left: 85px;
-        width: calc(50% - 30px);
-      }
-    }
   }
 
   .top-header {
     color: #ffffff80;
     // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
     // background: linear-gradient(180deg, #21EF89 0%, #33562d 100%);
-    background: #121829;
-    > :nth-child(2) {
-      color: #fff;
-    }
   }
 
   .vip-coin-icon {
@@ -981,7 +939,7 @@ const getMonthlyVip = () => {
 
   .q-table__card {
     background: transparent !important;
-    margin: 0 0 1.25rem 0;
+    // margin: 0 0 1.25rem 0;
     border-radius: 8px;
     font-weight: 700;
   }
@@ -993,14 +951,26 @@ const getMonthlyVip = () => {
 
   thead {
     th {
-      font-size: 1rem;
-      font-weight: 700;
-      line-height: 1;
-      text-align: left;
-      border-width: 0px !important;
+      font-size: 0.7rem;
 
-      &:first-child {
-        width: 65px;
+      .vip-icon-wrapper {
+        padding: 0 15px;
+        img {
+          display: block;
+        }
+      }
+
+      &:last-child {
+        border-bottom-color: #ffffff14;
+      }
+
+      &:not(:last-child) {
+        border-right: 1px solid #ffffff14;
+        border-bottom: 1px solid #ffffff14;
+      }
+
+      &.non-bottom-border {
+        border-bottom: none;
       }
     }
   }
@@ -1011,7 +981,6 @@ const getMonthlyVip = () => {
   tbody > :nth-child(odd) {
     // background: rgba(21, 0, 37, 0.2);
     // background: rgba(112, 188, 98, 0.1);
-    background: #ffffff0f;
 
     // background: #652c93;
     // background: #652c9315;
@@ -1020,7 +989,6 @@ const getMonthlyVip = () => {
     // background: rgba(21, 0, 37, 0.5);
     // background: #502175;
     // background: #00ae000c;
-    background: #121829;
   }
 
   tbody > .q-tr {
@@ -1047,6 +1015,19 @@ const getMonthlyVip = () => {
 
   .q-td {
     font-size: 0.7rem;
+    font-weight: 700;
+    &.text-yellow {
+      color: #ffd600;
+    }
+
+    &:last-child {
+      border-bottom-color: #ffffff14;
+    }
+
+    &:not(:last-child) {
+      border-right: 1px solid #ffffff14;
+      border-bottom: 1px solid #ffffff14;
+    }
   }
 
   span.amt-text {
@@ -1060,12 +1041,10 @@ const getMonthlyVip = () => {
   }
 
   .text-center {
-    border-bottom-width: 0 !important;
     padding: 0 0.25rem;
   }
 
   .text-right {
-    border-bottom-width: 0 !important;
     padding: 0 1.5rem;
   }
 
@@ -1165,7 +1144,6 @@ const getMonthlyVip = () => {
 
 @media (max-width: 375px) {
   .vip-container {
-
     .q-table {
       width: 100%;
       table-layout: fixed;
