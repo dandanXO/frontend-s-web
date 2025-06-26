@@ -26,12 +26,7 @@
       <div class="vip-labels">
         <!-- <span class="label">VIP1</span>
         <span class="label">VIP2</span> -->
-        <span v-if="totalDeposit > minDeposit">
-          {{ minDeposit + '/' + minDeposit }}
-        </span>
-        <span v-else>
           {{ totalDeposit + '/' + minDeposit }}
-        </span>
       </div>
     </div>
     <div class="receive-btn" @click="claimApi">{{ $t("hotPromo.monthBeginningDepositRebate.receive") }}</div>

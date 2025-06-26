@@ -1264,7 +1264,11 @@ onBeforeRouteLeave((to, from, next) => {
   // border: 1px solid #072a19;
   // border-radius: 0.5rem;
   // border: 1px solid #ffffff14;
-  // background: #292d2f !important;
+  background: #292d2f !important;
+}
+
+.popout-dialog  :deep(.q-field--filled.q-field--dark .q-field__control) {
+  
   background: #EAEFF9 !important;
   border: none;
 }
