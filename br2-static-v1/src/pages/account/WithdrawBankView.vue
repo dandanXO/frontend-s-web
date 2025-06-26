@@ -320,7 +320,6 @@ import moment from "moment";
 import {api} from "boot/axios"
 import {useQuasar} from "quasar";
 import {userStore} from "stores/index";
-import * as _ from "lodash";
 import {useRouter} from "vue-router";
 
 var qs = require("qs");
@@ -619,7 +618,7 @@ export default defineComponent({
 
       // console.log(card);
       isUnbindCardModal.value = false;
-      unbindcarddetail.value = _.clone({});
+      unbindcarddetail.value = {};
       const dialog = $q.dialog({
         class: "q-px-md q-pt-md",
         title: "解绑 " + card.bankName + "?",

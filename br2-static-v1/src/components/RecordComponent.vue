@@ -191,7 +191,6 @@ import FileUpload from "components/FileUpload.vue";
 import {api} from "boot/axios";
 import {SessionStorage, useQuasar} from "quasar";
 import {translateRecord} from "../directives/translate.js";
-import * as _ from "lodash";
 
 export default defineComponent({
   props: {
@@ -402,12 +401,12 @@ export default defineComponent({
 
     const removeSessionKeys = (prefix) => {
       var keys= SessionStorage.getAllKeys();
-      _.each(keys, function(key, item){
-        // console.log(key);
-        if(key.indexOf(prefix) > -1){
-         SessionStorage.remove(key);
+      keys.forEach((key) => {
+        if (key.includes(prefix)) {
+          SessionStorage.remove(key);
         }
-      })
+      });
+
     }
 
     return {
