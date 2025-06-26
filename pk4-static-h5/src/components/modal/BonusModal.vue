@@ -178,6 +178,12 @@ const openNewPlayerGuide = () => {
           // color: #0287F2;
           color: #ffffff;
         }
+        &.claim {
+          background: url(../../assets/images/index/bonus-details-btn.png)no-repeat center center;
+          background-size: cover;
+          // color: #0287F2;
+          color: #0287F2;
+        }
 
         &.no-reward {
           background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
