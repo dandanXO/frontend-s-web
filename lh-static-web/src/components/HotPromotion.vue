@@ -145,6 +145,12 @@
       :params="list.param"
     />
 
+    <FissureJulyFinal2025
+      v-if="list.redirectUrl === 'lh1-fissure-july-final-2025'"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
+
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -230,6 +236,7 @@ import NewUserSportBonus2025 from "./hotpromo/new-user-sport-bonus-2025/NewUserS
 import FissureUniverseS5 from "./hotpromo/fissure-universe-s5/FissureUniverseS5.vue";
 import EsportWorldCup2025 from "./hotpromo/esport-world-cup-2025/EsportWorldCup2025.vue";
 import FifaCwcRedPacket from "./hotpromo/fifa-cwc-red-packet/FifaCwcRedPacket.vue";
+import FissureJulyFinal2025 from "./hotpromo/fissure-july-final-2025/FissureJulyFinal2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -294,7 +301,8 @@ export default defineComponent({
     NewUserSportBonus2025,
     FissureUniverseS5,
     EsportWorldCup2025,
-    FifaCwcRedPacket
+    FifaCwcRedPacket,
+    FissureJulyFinal2025
   },
   props: {
     list: {
