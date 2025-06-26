@@ -438,12 +438,6 @@ async function loadConfigs() {
   const { data: ret } = await getConfigs({ siteId: siteId.value })
   configs.value = ret
 
-  const csAddressConfig = configs.value.find(item => item.code === 'cs_address')
-
-  if (csAddressConfig) {
-    // editorValue = JSON.parse(csAddressConfig.value)
-  }
-
   configs.customList = configs.value.filter(
     config =>
       config.code !== 'adjust_type' &&
