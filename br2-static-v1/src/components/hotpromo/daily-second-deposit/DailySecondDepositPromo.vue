@@ -1,10 +1,10 @@
 <template>
   <div>
 <!--    :disabled="!isClaimable"-->
-    <q-btn class="receive-earn-btn" no-caps @click="claimPromo">
+    <!-- <q-btn class="receive-earn-btn" no-caps @click="claimPromo">
       <img src="../../../assets/images/promotion/receive-earn/receive-earn-icon.png" />
       &nbsp;&nbsp;{{ $t("hotPromo.receive") }}
-    </q-btn>
+    </q-btn> -->
 
     <div class="receive-bar-container">
       <div class="receive-bar">
