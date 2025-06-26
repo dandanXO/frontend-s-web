@@ -226,27 +226,21 @@
 <script setup>
 import { computed, nextTick, onMounted, reactive, ref, watch } from 'vue'
 import { getSiteListSimple } from '../../../api/site'
-import uuidv1 from 'uuid/v1'
 import { getVipList } from '../../../api/vip'
 import { getFinancialLevels } from '../../../api/financial-level'
 import { selectList } from '../../../api/risk-level'
 import {
-  deleteById,
   updateConfig,
   createConfig,
-  updateOrderBatch,
 } from '../../../api/config'
 import {
   getConfigs,
   updateBatch,
 } from '../../../api/affiliate-settlement'
-import { hasRole } from '../../../utils/util'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import { required } from '../../../utils/validate'
-import JsonEditor from 'json-editor-vue3'
 import { getValueRulesList } from '../../../api/value-rules'
-import { Plus } from '@element-plus/icons-vue'
 import bus from '../../../utils/bus'
 
 const { t } = useI18n()
@@ -444,12 +438,6 @@ async function loadConfigs() {
   const { data: ret } = await getConfigs({ siteId: siteId.value })
   configs.value = ret
 
-  const csAddressConfig = configs.value.find(item => item.code === 'cs_address')
-
-  if (csAddressConfig) {
-    editorValue = JSON.parse(csAddressConfig.value)
-  }
-
   configs.customList = configs.value.filter(
     config =>
       config.code !== 'adjust_type' &&
@@ -523,48 +511,6 @@ async function loadConfigs() {
   }
 
   removeJsonEditorElement()
-}
-
-function loadConfig(customConfig) {
-  nextTick(() => {
-    for (const key in customConfig) {
-      if (Object.keys(form).find(k => k === key)) {
-        form[key] = customConfig[key]
-      }
-    }
-    if (form.rulesId !== null) {
-      const valueType = valueRules.value.find(r => r.id === form.rulesId)
-      selectedRule.value = valueType
-      if (selectedRule.value.type === 'CHECKBOX') {
-        const selectionArr = JSON.parse(selectedRule.value.value)
-        selectionArr.forEach(element => {
-          checkBoxSelections.push(element)
-        })
-        const selectedValue = form.value.split(',')
-        const selectedOption = selectedValue.map(value => {
-          return checkBoxSelections.find(select => select.value === value)
-        })
-        const mergedLabels = selectedOption.map(rule => rule.label)
-        checkedSelection.value = mergedLabels
-        const checkedCount = checkedSelection.value.length
-        checkAll.value = checkedCount === checkBoxSelections.length
-        isIndeterminate.value =
-          checkedCount > 0 && checkedCount < checkBoxSelections.length
-      } else if (selectedRule.value.type === 'SWITCH') {
-        form.value = form.value.toLowerCase() === 'true'
-      }
-    }
-  })
-}
-
-function showEdit(customConfig) {
-  showDialog('EDIT')
-  loadConfig(customConfig)
-}
-
-function showOverrideDefaultConfig(customConfig) {
-  showDialog('OVERRIDE_DEFAULT')
-  loadConfig(customConfig)
 }
 
 async function updateConfigs() {
@@ -661,41 +607,6 @@ async function submit() {
       closeDialog()
     }
   })
-}
-
-function moveUp(item, groupConfig) {
-  const index = groupConfig.items.findIndex(config => config.id === item.id)
-  if (index > 0) {
-    const temp = groupConfig.items[index]
-
-    groupConfig.items[index] = groupConfig.items[index - 1]
-    groupConfig.items[index].orderIndex = index
-    groupConfig.items[index - 1] = temp
-    groupConfig.items[index - 1].code = temp.code
-    groupConfig.items[index - 1].orderIndex = index - 1
-  }
-}
-
-function moveDown(item, groupConfig) {
-  const index = groupConfig.items.findIndex(config => config.id === item.id)
-  if (index < groupConfig.items.length - 1) {
-    const temp = groupConfig.items[index]
-
-    groupConfig.items[index] = groupConfig.items[index + 1]
-    groupConfig.items[index].orderIndex = index
-    groupConfig.items[index + 1] = temp
-    groupConfig.items[index + 1].code = temp.code
-    groupConfig.items[index + 1].orderIndex = index + 1
-  }
-}
-
-let editorValue = ref({})
-
-const updataModel = val => {
-  const config = configs.value.find(item => item.code === 'cs_address')
-  if (config) {
-    config.value = JSON.stringify(val)
-  }
 }
 
 function removeJsonEditorElement() {
