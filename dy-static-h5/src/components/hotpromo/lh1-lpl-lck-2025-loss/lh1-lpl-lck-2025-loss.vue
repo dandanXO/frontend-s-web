@@ -125,7 +125,7 @@
                   />
                   <span>示例</span>
                 </div>
-                用户 A 在 3月 10 日投注2025季中冠军赛段累计有效投注 50,000 元，用户 A 在次日 24 小时内可获得彩金：288 元
+                用户 A 在 6月 28日投注2025季中冠军赛段累计有效投注 50,000 元，用户 A 在次日 24 小时内可获得彩金：288 元
               </div>
             </div>
           </div>
@@ -222,7 +222,7 @@
             <div class="title"></div>
             <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
               <div class="left">活动时间</div>
-              <div class="right">2025 年 3月22日- 6月14日</div>
+              <div class="right">2025年6月28日-7月14日</div>
             </div>
             <div
               class="little-title"
