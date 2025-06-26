@@ -605,3 +605,6 @@ export function getEsportWorldCup2025Bonus(promoCode) {
 export function claimEsportWorldCup2025Bonus(promoCode) {
   return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
+export function claimFifaCwcRedPacketBonus(promoCode) {
+  return eventapi.get(`/redPacketVip/claim?promoCode=${promoCode}`);
+}

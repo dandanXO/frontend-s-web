@@ -139,6 +139,12 @@
       :params="list.param"
     />
 
+    <FifaCwcRedPacket
+      v-if="list.redirectUrl === 'lh1-fifa-cwc-red-packet'"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
+
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -223,6 +229,7 @@ import WorldCup2025 from "./hotpromo/worldcup-2025/Worldcup2025.vue";
 import NewUserSportBonus2025 from "./hotpromo/new-user-sport-bonus-2025/NewUserSportBonus2025.vue";
 import FissureUniverseS5 from "./hotpromo/fissure-universe-s5/FissureUniverseS5.vue";
 import EsportWorldCup2025 from "./hotpromo/esport-world-cup-2025/EsportWorldCup2025.vue";
+import FifaCwcRedPacket from "./hotpromo/fifa-cwc-red-packet/FifaCwcRedPacket.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -286,7 +293,8 @@ export default defineComponent({
     WorldCup2025,
     NewUserSportBonus2025,
     FissureUniverseS5,
-    EsportWorldCup2025
+    EsportWorldCup2025,
+    FifaCwcRedPacket
   },
   props: {
     list: {
