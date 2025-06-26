@@ -42,6 +42,12 @@
         <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
           <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
         </RouterLink>
+        <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
+          <q-btn flat class="claim">{{ $t("btn.link") }}</q-btn>
+        </RouterLink>
+        <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
+          <q-btn flat class="claim">{{ $t("btn.claim") }}</q-btn>
+        </RouterLink>
       </div>
     </div>
     <div class="bonus-header">
@@ -177,6 +183,12 @@ const openNewPlayerGuide = () => {
           background-size: cover;
           // color: #0287F2;
           color: #ffffff;
+        }
+        &.claim {
+          background: url(../../assets/images/index/bonus-details-btn.png)no-repeat center center;
+          background-size: cover;
+          // color: #0287F2;
+          color: #0287F2;
         }
 
         &.no-reward {

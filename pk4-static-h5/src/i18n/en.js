@@ -988,15 +988,15 @@ export default {
       termsCondition3:
         "This bonus is only applicable to the slot game category.",
       termsCondition4:
-        "If a member mistakenly participates in a non-specified game category, the bonus will be deemed invalid and win7.gam reserves the right to deduct the relevant bonus and the profits generated.",
+        "If a member mistakenly participates in a non-specified game category, the bonus will be deemed invalid and b9.game reserves the right to deduct the relevant bonus and the profits generated.",
       termsCondition5:
-        "Each member is limited to one account (including deposit account, withdrawal account, IP address). Multiple account behavior will result in the bonus being invalid. If violations are found, win7.gam reserves the right to cancel the bonus and freeze the account.",
+        "Each member is limited to one account (including deposit account, withdrawal account, IP address). Multiple account behavior will result in the bonus being invalid. If violations are found, b9.game reserves the right to cancel the bonus and freeze the account.",
       termsCondition6:
         "Before the first withdrawal application, the bound bank account information and phone number cannot be changed. If the information is changed, the bonus will be cancelled and the bonus and the resulting profits will be deducted.",
-      termsCondition7: "This bonus is only applicable to players in the specified game category. The bonus cannot be used to accumulate betting turnover, calculate arbitrage behavior or be used in combination with other technical means. If violations are found, the bonus will be deemed invalid, all bonuses and profits will be cancelled, and win7.gam reserves the right to close the account.",
+      termsCondition7: "This bonus is only applicable to players in the specified game category. The bonus cannot be used to accumulate betting turnover, calculate arbitrage behavior or be used in combination with other technical means. If violations are found, the bonus will be deemed invalid, all bonuses and profits will be cancelled, and b9.game reserves the right to close the account.",
       termsCondition8:
         "B9.game reserves the right to change, suspend or terminate this activity at any time without prior notice.",
-      termsCondition9: "The final right of interpretation of all terms belongs to win7.gam. win7.gam reserves the right to refuse to deal with any disputes involving terms.",
+      termsCondition9: "The final right of interpretation of all terms belongs to b9.game. b9.game reserves the right to refuse to deal with any disputes involving terms.",
       
     },
     aviatorWheel: {
@@ -1319,7 +1319,8 @@ export default {
     58003: "Event have expired",
     58004: "Cannot Participate. Previous Tasks Has Failed to Accomplish.",
     58005: "Congrats, You have Completed All Tasks",
-    58103: "VIP0 Cannot Participate."
+    58103: "VIP0 Cannot Participate.",
+    99999: "Not eligible for claiming",
   },
   content: {
     title1: "The registration time starts from the time the registration is completed.",
