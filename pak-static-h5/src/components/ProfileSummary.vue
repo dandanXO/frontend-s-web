@@ -230,7 +230,7 @@ const router = useRouter();
 const store = userStore();
 const ui = useUI();
 const i18nStoreLanguage = i18nStore();
-const alreadyDeposited = JSON.parse(localStorage.getItem("onAppFirstDeposit"));
+const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
 const promoPercentage = computed(() => {
   if (isAndroid() && store.canClaimFtdPrivilege) return "38";
   if (store.canClaimSecondPrivilege) return "100";

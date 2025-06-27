@@ -84,6 +84,7 @@
         <div class="vip-table-header">{{ $t("vip.upgradeRewards") }}</div>
       </div>
 
+
       <div class="vip-table-wrapper">
         <q-table
           flat

@@ -5,17 +5,17 @@
                 <img src="../../../assets/images/affiliate/team-management/username-icon.png" />
                 <div>{{ store.nickName }}</div>
             </div>
-            <div class="filter">
+            <!-- <div class="filter">
                 <div class="filter-value">All subordinates</div>
                 <img src="../../../assets/images/affiliate/team-management/filter-icon.png" />
-            </div>
+            </div> -->
         </div>
 
         <InputField :isDark="true">
             <template #input>
-                <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
+                <q-input class="input" v-model="request.loginName" outlined clearable hide-bottom-space>
                     <template v-slot:append>
-                        <q-btn class="confirm-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
+                        <q-btn class="confirm-btn" color="primary" :label="$t('btn.confirm')" @click="loadTeam" />
                     </template>
                 </q-input>
             </template>
@@ -36,8 +36,8 @@
                     <!-- <div class="icon">
                         <div class="num">4362</div>
                     </div> -->
-                    <div class="label">Net amount receives</div>
-                    <div class="value">{{ record.myCommission ?? '-' }}</div>
+                    <div class="label">Balance</div>
+                    <div class="value">{{ record.balance ?? '-' }}</div>
                 </div>
                 <hr class="separator" />
                 <div class="row">
@@ -50,35 +50,62 @@
                 </div>
             </div>
         </div>
+        <div ref="trigger" class="scroll-trigger"></div>
     </div>
 </template>
 
 <script setup>
 import InputField from 'src/components/auth/InputField.vue';
-import { reactive, onMounted } from 'vue';
+import { reactive, onMounted, ref } from 'vue';
 import { api } from 'boot/axios';
 import { userStore } from 'src/stores';
+import { useIntersectionObserver } from '@vueuse/core';
 
 const store = userStore();
 
-const formDetail = reactive([]);
+const request = reactive({
+  loginName: null,
+  current: 1,
+  size: 30,
+})
 
 const page = reactive({
   pages: 0,
   records: [],
   loading: false,
+  total: 0,
 });
 
+function loadTeam() {
+  request.current = 1;
+  api.get('/session/affiliate/downline-simple-list', { params: request }).then((res) => {
+    const data = res.data;
+    page.records = data.records;
+    page.total = data.total;
+  })
+}
+
+function loadMoreLazy() {
+  if (page.total < request.size) {
+    // return;
+  }
+  request.current = request.current + 1;
+  api.get('/session/affiliate/downline-simple-list', { params: request }).then((res) => {
+    const data = res.data;
+    page.total = data.total;
+    page.records.push(...data.records);
+  })
+}
+
+const trigger = ref(null)
+useIntersectionObserver(trigger, ([entry]) => {
+  if (entry.isIntersecting) {
+    loadMoreLazy();
+  }
+})
+
 onMounted(() => {
-    api.get('/session/affiliate/downline-simple-list', {
-        params: {
-            current: 1,
-            size: 50
-        }
-    }).then((res) => {
-        const data = res.data;
-        page.records = data.records;
-    })
+  loadTeam()
 })
 </script>
 

@@ -8,7 +8,7 @@
         <div class="modal-btn" @click="btnAction()">
           <img :src="require(`../../assets/images/index/deposit-modal/deposit-promo-${modalImageIndex}-btn.png`)" />
         </div>
-        
+
         <div class="modal-checkbox">
           <q-checkbox v-model="hideModalForAWeek">Don't remind me again within a week</q-checkbox>
         </div>
@@ -49,7 +49,7 @@
             </div>
             <!--          <img src="../assets/images/index/hot-elephant-right.png" alt="" />-->
           </div>
-          
+
           <div
             class="header-right"
           >
@@ -188,8 +188,8 @@ const handleAppLoginPromoClaim = async () => {
             message: t("modal.appLoginBonus.claimBonus", { amount: res.data }),
             icon: "check_circle_outline"
           });
-          store.getBalance();
           showModal.value = false;
+          store.getBalance();
         }
       } catch (e) {
         console.error(e);
@@ -292,7 +292,7 @@ const checkModalType = async () => {
     case 1:
       if (shouldShowModalAgain(modalIndex.value)) {
         checkAppLogin();
-      } 
+      }
       // else {
       //   showNextModal();
       // }
@@ -335,7 +335,7 @@ const recheckModalType = async () => {
   if (shouldCheckAppAgain.value && shouldShowModalAgain(1)) {
     await getData(false);
     checkAppLogin();
-  } 
+  }
   // else if (
   //   combinedStatus.value.claimedFtdPrivilege &&
   //   !store.claimedSecondPrivilege &&
@@ -442,7 +442,7 @@ onMounted(() => {
       max-width: 300px;
     }
   }
-  
+
   .modal-btn-2 {
     position: absolute;
     display: flex;
@@ -544,7 +544,7 @@ onMounted(() => {
     .modal-img {
       img {
         // max-width: 240px;
-        
+
         max-width: 80%;
         margin-bottom: -90px;
       }

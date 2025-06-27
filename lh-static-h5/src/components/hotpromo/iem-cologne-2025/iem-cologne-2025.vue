@@ -117,7 +117,7 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，活动仅计算电竞场馆中IEM 科隆 2025赛事，会员在当天投注IEM 科隆 2025中累计有效投注≥1,000元即可获得对应彩金，有效投注次日清零；
+              活动期间，活动仅计算电竞场馆中IEM 科隆 2025赛事，会员在当天投注IEM 科隆 2025中累计有效投注≥2,000元即可获得对应彩金，有效投注次日清零；
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。 </div>
             </div>
           </div>

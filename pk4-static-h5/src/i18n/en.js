@@ -305,7 +305,8 @@ export default {
     goNow: "Go Now",
     playReal: "Play real",
     freeTrial: "Free trial",
-    payAgain: "Pay again"
+    payAgain: "Pay again",
+    reminder: "Reminder",
   },
   notify: {
     cancelPayment: "Cancel Payment",
@@ -824,7 +825,8 @@ export default {
     payment: "Payment",
     system: "System",
     noMessage: "No messages",
-    visitLink: "Visit link"
+    visitLink: "Visit link",
+    copySuccess: "Serial Number Copied to clipboard",
   },
   customerServiceVerifier: {
     mainTitle: "B9.GAME",
@@ -1278,6 +1280,7 @@ export default {
     30005: "Turnover has not reached the requirements",
     30006: "Members listed as account holders are prohibited from receiving this privilege",
     30007: "Member deposit does not meet the requirements",
+    30008: "The device/platform being used does not meet the requirements",
     30009: "Deposit/Betting requirements not met.",
     30101: "Existing users cannot participate in this promotion.",
     31000: "Promotion not found",
