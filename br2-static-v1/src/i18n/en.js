@@ -971,15 +971,13 @@ export default {
     },
     dailySecondDeposit: {
       description: "The first deposit of the day entitles you to a 10% bonus on the deposited amount",
-      tnc01: "Each member can enjoy this promotion once per day;",
-      tnc02:
-        "After successfully making the first deposit of the day, the member may claim a 10% bonus on the deposited amount during the promotion period;",
-      tnc03: "The minimum deposit amount is R$20;",
-      tnc04: "The maximum bonus amount is R$288;",
+      tnc01: "This promotion is valid for all deposits made after the first deposit on the same day.",
+      tnc02: "Each subsequent deposit grants a 20% bonus, with a limit of R$288 per deposit.",
+      tnc03: "The bonus (including the principal) requires 12 times valid wagering to be eligible for withdrawal.",
+      tnc04: "All additional deposits of the day are eligible, with no limit on the number of participations per day.",
       tnc05:
-        'To participate in this promotion, a request must be submitted. Eligible members must click the "Join Now" button on this page to submit;',
-      tnc06: "The deposit amount plus the bonus must be wagered at least 12 times before withdrawals are allowed;",
-      tnc07: "AKB188 reserves the right to the final interpretation of this promotion to avoid any misunderstandings."
+        "Only the account holder may claim the bonus. In case of irregular behavior, the bonus may be canceled, deducted, frozen, or the account may be blacklisted.",
+      tnc06: "The platform reserves the final right of interpretation for this promotion."
     },
     betCashback: {
       description: "Daily cashback based on the amount wagered and the corresponding percentage",

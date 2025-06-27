@@ -36,7 +36,7 @@
 
     <div class="tnc-content">
       <ol>
-        <li v-for="index in 7" :key="index">
+        <li v-for="index in 6" :key="index">
           {{ $t(`hotPromo.dailySecondDeposit.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
       </ol>
