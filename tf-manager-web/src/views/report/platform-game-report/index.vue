@@ -769,6 +769,12 @@ function getSummaries(param) {
               maximumFractionDigits: 2,
             })
         }
+        if (index === 9) {
+          const val7 = Number(sums[7].slice(1).replace(/,/g, ''));
+          const val5 = Number(sums[5].slice(1).replace(/,/g, ''));
+
+          sums[9] = ((val7 / val5) * 100).toFixed(2) + '%';
+        }
       }
     })
 
