@@ -1,7 +1,7 @@
 <template>
-
   <div class="valid-bet-div">
-    Current Valid Bet: {{store.currency.value}}&nbsp;<span>{{ store.getCurrentValidBet()}}</span>
+    {{ $t("vip.currentValidBets") }}: {{ store.currency.value }}&nbsp;
+    <span>{{ store.getCurrentValidBet() }}</span>
   </div>
 
   <Carousel
@@ -57,8 +57,6 @@
       <Navigation />
     </template>
   </Carousel>
-
-
 </template>
 <script setup>
 import { defineModel, watch, onMounted, ref, computed, nextTick } from "vue";
@@ -445,7 +443,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-
 $colors: (
   #072569,
   #523014,
@@ -496,13 +493,18 @@ $gradients: (
   }
 }
 
-.valid-bet-div{
-  text-align:left;
+.valid-bet-div {
+  text-align: left;
   width: 100%;
-  padding: 8px 20px 0px;
+  margin: 8px 20px 0px;
+  color: #fff;
+  background-color: #56616396;
+  width: fit-content;
+  padding: 2px 10px;
+  border-radius: 10px;
 
-  span{
-    color: #ffd600;
+  span {
+    color: #fff;
     font-size: 18px;
     font-weight: bold;
   }
