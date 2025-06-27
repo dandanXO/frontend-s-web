@@ -371,10 +371,10 @@ const isLoadingBalance = ref(false);
 const refreshBalance = () => {
   if (store.token) {
     isLoadingBalance.value = true;
-    store.getBalance().then((res) => {
-      isLoadingBalance.value = false;
-      transferOutAll();
-    });
+    // store.getBalance().then((res) => {
+      // isLoadingBalance.value = false;
+    transferOutAll();
+    // });
   }
 };
 
