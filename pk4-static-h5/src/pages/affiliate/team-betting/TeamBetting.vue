@@ -134,7 +134,6 @@ import { api } from 'boot/axios';
 import { userStore } from "src/stores";
 import moment from 'moment';
 
-
 const store = userStore();
 const formDetail = reactive([]);
 const selectedTab = ref('All');
@@ -264,6 +263,7 @@ const initVendors = () => {
         vendorsList.value = res.data;
     })
 }
+let timeZone = '+05:00';
 function getDateRange(startDate = null, endDate = null) {
     const type = daysSelection.value.label;
 
@@ -271,33 +271,53 @@ function getDateRange(startDate = null, endDate = null) {
 
     switch (type) {
         case 'Today':
-            start = moment().format('YYYY-MM-DD');
-            end = start;
+            start = moment().startOf('day').format('YYYY-MM-DD HH:mm:ss');
+            end = moment().format('YYYY-MM-DD') + ' 23:59:59';
             break;
         case 'Yesterday':
-            start = moment().subtract(1, 'days').format('YYYY-MM-DD');
-            end = start;
+            start = moment().subtract(1, 'days').startOf('day').format('YYYY-MM-DD HH:mm:ss');
+            end = moment(start).format('YYYY-MM-DD') + ' 23:59:59';;
             break;
         case '7-days':
-            start = moment().subtract(7, 'days').format('YYYY-MM-DD');
-            end = moment().format('YYYY-MM-DD');
+            start = moment().subtract(7, 'days').format('YYYY-MM-DD HH:mm:ss');
+            end = moment().format('YYYY-MM-DD') + ' 23:59:59';
             break;
         case 'This Month':
-            start = moment().startOf('month').format('YYYY-MM-DD');
-            end = moment().endOf('month').format('YYYY-MM-DD');
+            start = moment().startOf('month').format('YYYY-MM-DD HH:mm:ss');
+            end = moment().endOf('month').format('YYYY-MM-DD HH:mm:ss');
             break;
         case 'Custom':
             if (!startDate || !endDate) {
                 throw new Error("Custom range requires both startDate and endDate.");
             }
-            start = moment(startDate).format('YYYY-MM-DD');
-            end = moment(endDate).format('YYYY-MM-DD');
+            start = moment(startDate).format('YYYY-MM-DD HH:mm:ss');
+            end = moment(endDate).format('YYYY-MM-DD HH:mm:ss');
             break;
         default:
             throw new Error("Invalid date range type.");
     }
+    start = formatInputTimeZone(start, timeZone);
+    end = formatInputTimeZone(end, timeZone);
 
     return `${start},${end}`;
+}
+
+function formatInputTimeZone(time, timezone, type = '') {
+  if (!timezone) {
+    return moment(time).format('YYYY-MM-DD HH:mm:ss');
+  }
+
+  var oriTimeZone = moment(time).add(8, 'hour');
+  if (type === 'end') {
+    oriTimeZone.add(1, 'day').subtract(1, 'second');
+  }
+  var hourDifferent = timezone.substring(1);
+
+  var formattedTimeZone = timezone.charAt(0) === '+'
+    ? moment(oriTimeZone).subtract(hourDifferent, 'hours')
+    : moment(oriTimeZone).add(hourDifferent, 'hours');
+
+  return moment(formattedTimeZone).format('YYYY-MM-DD HH:mm:ss');
 }
 
 onMounted(() => {
