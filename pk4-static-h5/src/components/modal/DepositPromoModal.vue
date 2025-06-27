@@ -117,12 +117,7 @@ const countdownTimer = ref(null);
 const dialogRef = ref(null);
 const currentTriggerType = ref("LOGIN");
 const modalTriggerList = ref([
-  null,
-  "LOGIN,REDIRECT_TO_HOME",
-  "LOGIN,REDIRECT_TO_HOME",
-  "LOGIN,REDIRECT_TO_HOME",
-  "LOGIN,REDIRECT_TO_HOME",
-  "LOGIN"
+  null
 ]);
 
 const combinedStatus = computed(() => ({
