@@ -7,10 +7,20 @@
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
-          <q-badge v-if="activeMethod.privilegeId" color="green" floating rounded>+{{ item.hotLabel }}</q-badge>
-          <q-badge v-if="isFtdPrivilegePayType" color="green" floating rounded>
+
+<!--          <q-badge v-if="selectedPrivilege === 'br222-redeposit-bonus'" color="green" floating rounded>-->
+<!--            +{{ getFtdCommaAmount(item.amount) }}-->
+<!--          </q-badge>-->
+
+<!--          {{selectedPrivilege}}-->
+          <q-badge v-if="item.amount >= 20 && selectedPrivilege.code === 'br2-redeposit-bonus'" color="green" floating rounded>
+            +{{ get2ndDepoCommaAmount(item.amount) }}
+          </q-badge>
+
+          <q-badge v-if="selectedPrivilege.code === 'br2-ftd-bonus'" color="green" floating rounded>
             +{{ getFtdCommaAmount(item.amount) }}
           </q-badge>
+
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -71,11 +81,22 @@
             <!--            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">-->
             <!--              {{ $t("deposit.depositTutorial") }}-->
             <!--            </div>-->
+
           </div>
 
           <div v-if="isBank2" class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
             {{ $t("deposit.please_pay_exact_amt") }}
           </div>
+          <div  v-if="form.localAmount >= 20 && selectedPrivilege.code === 'br2-redeposit-bonus' && form.localAmount" class="font-small text-tealgreen"
+                style="width: calc(100% - 18px); margin: 10px auto 8px">
+            Você receberá um bônus extra Rs{{ get2ndDepoCommaAmount(form.localAmount) }}
+          </div>
+
+          <div  v-if="selectedPrivilege.code === 'br2-ftd-bonus' && form.localAmount" class="font-small text-tealgreen"
+                style="width: calc(100% - 18px); margin: 10px auto 8px">
+            Você receberá um bônus extra Rs{{ getFtdCommaAmount(form.localAmount) }}
+          </div>
+
           <q-input
             class="deposit-input q-mt-sm"
             ref="depositAmtRef"
@@ -93,6 +114,7 @@
               </span>
             </template>
           </q-input>
+
         </div>
 
         <!-- <q-select
@@ -305,7 +327,7 @@ const privilegeList = ref([]);
 const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
 const selectedPayType = shallowRef("");
-const freePrivilege = ref(null);
+const freePrivilege = ref("");
 const hasPrivilege = ref(false);
 const isUSDT = ref(false);
 const isDisplay = ref(false);
@@ -385,10 +407,14 @@ const handleDepositItemClick = (index) => {
 };
 
 const getFtdCommaAmount = (amount) => {
-  if (amount < 88) {
-    return amount;
+  return amount;
+};
+
+const get2ndDepoCommaAmount = (amount) => {
+  if (amount < 2880) {
+    return parseFloat(amount * 0.1).toFixed(2);
   } else {
-    return 88;
+    return 288;
   }
 };
 
@@ -550,10 +576,7 @@ function checkMinDepositAmt(val) {
   calculatedMaxDeposit.value = val.depositMax;
 }
 
-function checkPrivilege(v) {
-  selectPayType(v);
-  checkMinDepositAmt(v);
-}
+
 
 function selectedBank(value) {
   form.bankId = value.value.id;
@@ -593,7 +616,8 @@ async function confirmDeposit() {
 
           btnLoading.value = false;
         } else {
-          if (freePrivilege.value) {
+          // debugger;
+          if (freePrivilege.value.length > 0) {
             if (selectedPrivilege.value) {
               form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
             } else {
@@ -669,17 +693,6 @@ async function pDepo(deposit) {
     .then((res) => {
       if (res.code === 0) {
         const response = res.data.result;
-
-        // let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
-        // if (!isFirstDepo) {
-        //   console.log("First Depo");
-        //   //ADJUST TRACKEVENT.
-        //   var adjustEvent = new AdjustEvent("medfxb");
-        //   adjustEvent.setRevenue(deposit.localAmount, "INR");
-        //   Adjust.trackEvent(adjustEvent);
-        //
-        //   localStorage.setItem("IS_FIRST_DEPOSIT", "1");
-        // }
 
         if (res.data.result.payResultType === "OFFLINE") {
         }
@@ -900,6 +913,42 @@ const convertToTwoDecimalAmount = (amount) => {
   let formattedAmount = parseFloat(amount).toFixed(2);
   return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+
+function checkPrivilege(v) {
+  selectPayType(v);
+  if (v.paymentId !== null && v.paymentId !== undefined) {
+    loadPrivilege(v);
+    checkMinDepositAmt(v);
+    // unselectedPrivileges.value = [];
+  }
+}
+
+async function loadPrivilege(val) {
+  privilegeList.value = [];
+  hasPrivilege.value = false;
+
+  await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
+    if (res.code === 0) {
+      privilegeList.value = res.data.privileges;
+      hasPrivilege.value = true;
+      unselectedPrivileges.value = [];
+      freePrivilege.value = [];
+      privilegeList.value.map((p) => {
+        if (p.payTypes.indexOf(val.payType) >= 0) {
+          if (p.triggerType === "FREE") {
+            freePrivilege.value.push(p);
+          } else {
+            unselectedPrivileges.value.push(p);
+          }
+        }
+      });
+    } else {
+      hasPrivilege.value = false;
+      privilegeList.value = [];
+    }
+  });
+}
+
 
 watch(
   isFromFtdPromo,
@@ -1233,6 +1282,10 @@ onDeactivated(() => {
 
 .font-small {
   font-size: 12px;
+}
+
+.text-tealgreen{
+  color: #21ef89;
 }
 
 .flex-div {

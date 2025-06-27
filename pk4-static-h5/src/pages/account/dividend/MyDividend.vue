@@ -68,11 +68,11 @@
 
         <div class="detailed-stats panel bordered">
             <div class="header">
-                <div>{{ searchForm.dateRange.from }} - {{ searchForm.dateRange.to }}</div>
-                <div class="collapse">
+                <div>{{ (searchForm.dateRange?.from) ? searchForm.dateRange.from : searchForm.dateRange }} to {{ (searchForm.dateRange?.to) ? searchForm.dateRange.to : searchForm.dateRange}}</div>
+                <!-- <div class="collapse">
                     <span></span>
                     <img class="collapse-icon" src="../../../assets/images/account/dividend/collapse-icon.png" />
-                </div>
+                </div> -->
             </div>
 
             <div class="stats">

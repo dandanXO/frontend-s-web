@@ -912,6 +912,7 @@ export default {
     longTerm: "Válida por tempo indeterminado",
     eligibility: "Elegíveis",
     successfulDepositMember: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
+    betMember: "Todos os membros que realizaram apostas",
     newMember: "Todos os novos membros registrados",
     desc: "Descrição",
     tnc: "Regras da Promoção",
@@ -920,7 +921,8 @@ export default {
       maxCashback: "Máx : {num}%",
       cashback: "{num}% Cashback",
       upgradeDifference: "{amount} apostas para VIP{vip}",
-      tnc01: "O cashback semanal é concedido como recompensa toda semana.",
+      tnc01:
+        "O cashback semanal é concedido como recompensa toda semana. Solo los clientes cuyas pérdidas de la semana en curso y las pérdidas acumuladas superen cada una los R$200.00 tendrán derecho al reembolso.",
       tnc02: "O período de cálculo do cashback semanal vai de segunda-feira às 00:00 até domingo às 23:59.",
       tnc03:
         "Período para resgatar o cashback: da segunda-feira da semana seguinte às 06:00 até sexta-feira às 23:59. Após esse prazo, o bônus expirará.",
@@ -930,18 +932,25 @@ export default {
       tnc06:
         "Quanto maior o seu nível VIP (consulte o plano de upgrade VIP), maior será a porcentagem de cashback, com um máximo de 25%.",
       tnc07: "Limite máximo de cashback por pessoa por semana R$10.000.",
-      tnc08: "O valor do cashback pode ser sacado diretamente ou utilizado para continuar jogando.",
+      tnc08: "El requisito de apuesta válido antes del retiro es una vez.",
       tnc09:
         "Jogadores que, no histórico da nossa plataforma, apresentem lucro não participam do reembolso de perdas. Esta atividade é limitada aos benefícios para jogadores que tiveram prejuízo na plataforma.",
-      tnc10: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
+      tnc10: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção.",
+      table: {
+        title: {
+          vip: "VIP",
+          bet: "APOSTA",
+          cashback: "CASHBACK"
+        }
+      }
     },
     vipPlanBettingUpgrade: {
       eligibility: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
       description:
         "Faça o upgrade para o nível VIP correspondente com base no valor acumulado de apostas na conta do membro.",
       termsAndConditions: "Regras da Promoção",
-      bet: "BET",
-      vipLevel: "VIP Level",
+      bet: "APOSTA",
+      vipLevel: "VIP Nível",
       tnc01:
         "A partir da primeira aposta válida feita pelo membro após concluir o primeiro depósito com sucesso, o valor acumulado das apostas válidas será usado para determinar a elevação de nível VIP, conforme os limites abaixo:",
       tnc02:
@@ -961,6 +970,43 @@ export default {
         "Se você receber um pontos de dinheiro extra, pode jogar jogos de graça e ganhar ainda mais dinheiro real.",
       tnc06: "Se voce nao retirar o dinheiro dentro de 3 dias,ele ser perdido.",
       tnc07: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
+    },
+    dailySecondDeposit: {
+      description: "O primeiro depósito do dia dá direito a 10% de bônus sobre o valor depositado",
+      tnc01: "Cada membro pode aproveitar esta promoção uma vez por dia;",
+      tnc02:
+        "Após realizar o primeiro depósito do dia com sucesso, o membro pode solicitar um bônus de 10% sobre o valor depositado durante o período da promoção;",
+      tnc03: "O valor mínimo de depósito é de R$20;",
+      tnc04: "O bônus máximo é de R$288",
+      tnc05:
+        'Para participar da promoção, é necessário enviar uma solicitação. Membros qualificados devem clicar no botão "Participar Agora" nesta página para enviar;',
+      tnc06:
+        "O valor do depósito mais o bônus devem ser apostados no mínimo 12 vezes antes de ser possível realizar saques;",
+      tnc07: "A AKB188 reserva-se o direito de interpretação final desta promoção para evitar qualquer mal-entendido."
+    },
+    betCashback: {
+      description: "Cashback diário com base no valor apostado e na porcentagem correspondente",
+      tnc01: "O cashback do dia anterior será creditado automaticamente às 18h (horário de Brasília) todos os dias;",
+      tnc02: "O valor do cashback é calculado como: valor apostado no dia anterior × porcentagem de reembolso;",
+      tnc03: "Quanto maior o valor apostado, maior a porcentagem de cashback, podendo chegar a até 3%;",
+      tnc04: "Sem limite máximo para o valor de cashback;",
+      tnc05: "O bônus de cashback deve ser apostado pelo menos 1 vez antes de poder ser sacado;",
+      tnc06:
+        "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção."
+    },
+    lossRebate: {
+      description: "Cashback baseado na porcentagem do valor perdido no dia anterior",
+      tnc01: "Receba 15% do valor perdido no dia anterior diariamente;",
+      tnc02:
+        "O resgate deve ser feito após as 12h (horário de Brasília). Caso não seja solicitado no prazo, será considerado como desistência;",
+      tnc03: "O valor do resgate é calculado como: valor real do prejuízo × porcentagem de cashback",
+      tnc04:
+        "Se você não tiver feito nenhuma aposta durante o período da promoção ou tiver lucrado no total, não terá direito ao bônus de resgate;",
+      tnc05: "É necessário ter perdido pelo menos R$10 no dia anterior para poder solicitar o bônus;",
+      tnc06: "O valor máximo de resgate por pessoa por dia é de R$10.000;",
+      tnc07: "O bônus recebido deve ser apostado pelo menos 3 vezes antes de poder ser sacado;",
+      tnc08:
+        "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção."
     }
   },
   maintenance: {
@@ -1167,7 +1213,7 @@ export default {
     message4:
       "Cada usuário pode aproveitar uma chance de giro grátis por dia, e o número de giros é reiniciado às 24:00 todos os dias.",
     message5: "Após a aprovação da solicitação, o bônus será depositado diretamente na sua carteira.",
-    message6: "O bônus precisa ser apostado duas vezes antes que possa ser sacado.",
+    message6: "O bônus precisa ser apostado uma vez antes que possa ser sacado.",
     message7:
       "O indicado precisa vincular seu número de telefone e conectá-lo ao código de convite do convidador para ser considerado válido.",
     message8:

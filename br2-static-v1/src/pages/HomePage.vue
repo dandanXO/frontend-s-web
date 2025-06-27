@@ -1257,7 +1257,6 @@ const gameClickFromMenu = (gameCode) => {
     index = categoriesList.value.findIndex((cat) => cat.code === gameCode);
     catSelected = categoriesList.value[index];
   }
-  console.log("hit 1", catSelected);
   activateSlide(catSelected);
   slideToIndex(index);
 };
@@ -2972,6 +2971,8 @@ const translateTitle = (title) => {
   return translations[title.toLowerCase()] || title;
 };
 
+const isAppTabsLoaded = ref(false);
+
 const loadAppTabs = () => {
   const localStorageKey = "appTabs";
   const savedTabs = JSON.parse(localStorage.getItem(localStorageKey));
@@ -2981,14 +2982,14 @@ const loadAppTabs = () => {
   //     tab.active = index === 0;
   //   });
   // } else {
-  categoriesList.value = [
-    { title: "Hot", icon: "hot", active: true },
-    // { title: "Lobby", icon: "lobby", active: false },
-    // { title: "Slot", icon: "slot", active: false },
-    { title: "Casino", icon: "casino", active: false },
-    { title: "Fishing", icon: "fishing", active: false },
-    { title: "Sport", icon: "sport", active: false }
-  ];
+  // categoriesList.value = [
+  //   { title: "Hot", icon: "hot", active: true },
+  //   // { title: "Lobby", icon: "lobby", active: false },
+  //   // { title: "Slot", icon: "slot", active: false },
+  //   { title: "Casino", icon: "casino", active: false },
+  //   { title: "Fishing", icon: "fishing", active: false },
+  //   { title: "Sport", icon: "sport", active: false }
+  // ];
   // }
 
   api
@@ -3010,7 +3011,21 @@ const loadAppTabs = () => {
         if (data && data.hasOwnProperty("ftd")) {
           store.ftd = data.ftd;
         }
+        if (data && data.tabs) {
+          categoriesList.value = data.tabs.map((tab) => ({
+            ...tab,
+            active: tab.icon === "hot" ? true : false
+          }));
+        } else {
+          categoriesList.value = [
+            { title: "Hot", icon: "hot", active: true },
+            { title: "Casino", icon: "casino", active: false },
+            { title: "Fishing", icon: "fishing", active: false },
+            { title: "Sport", icon: "sport", active: false }
+          ];
+        }
       }
+      isAppTabsLoaded.value = true;
     })
     .catch((e) => {
       console.error("Failed to fetch tabs:", e);
@@ -3018,17 +3033,24 @@ const loadAppTabs = () => {
 };
 
 const loadCategoryLists = () => {
-  // console.log(slot.value);
-  slot.value.forEach((slotitem, ind1) => {
-    categoriesList.value.splice(1, 0, {
+  let interval;
+  const _fillSlotPlat = () => {
+    const slotCategories = slot.value.map((item) => ({
       title: "slot",
-      code: slotitem.code,
-      icon: slotitem.name,
+      code: item.code,
+      icon: item.name,
       active: false,
-      id: slotitem.id
-    });
-  });
-  // console.log(categoriesList.value)
+      id: item.id
+    }));
+    categoriesList.value.push(...slotCategories);
+  };
+  interval = setInterval(() => {
+    if (isAppTabsLoaded.value) {
+      _fillSlotPlat();
+      clearInterval(interval);
+    }
+  }, 500);
+  // console.log(categoriesList.value);
 };
 
 const hbDragPos = ref([10, 120]);
@@ -3104,7 +3126,7 @@ const gotoFloatPromo = (val) => {
 };
 
 let intervalId;
-let jackpotTimer
+let jackpotTimer;
 
 watch(
   () => promoStore.isShownSpinLuckyWheel,
@@ -3151,8 +3173,8 @@ const getJackpotAmt = () => {
 const getJackpotIncrease = () => {
   jackpotTimer = setInterval(() => {
     ui.jackpotAmt += 1;
-  },500)
-}
+  }, 500);
+};
 
 const showSpinWheel = () => {
   eventapi
@@ -3217,7 +3239,7 @@ window.addEventListener("beforeunload", () => {
 
 onBeforeUnmount(() => {
   clearInterval(intervalId);
-  clearInterval(jackpotTimer)
+  clearInterval(jackpotTimer);
 });
 </script>
 
@@ -3455,8 +3477,8 @@ onBeforeUnmount(() => {
       letter-spacing: -0.08%;
       border-radius: 4px;
 
-      >span{
-        background: linear-gradient(180deg, #033309 0%, #008B06 51.04%, #033309 100%);
+      > span {
+        background: linear-gradient(180deg, #033309 0%, #008b06 51.04%, #033309 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;

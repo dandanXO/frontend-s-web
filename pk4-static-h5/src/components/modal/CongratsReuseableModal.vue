@@ -8,9 +8,9 @@
       <div class="congrats-coupons">
         <img :src="computedContentImg" />
       </div>
-      <div class="congrats-title">{{ bonusTitle || $t("modal.congrats.congratsUnlockedBonus") }}</div>
+      <div class="congrats-title">{{ bonusTitle || $t("modal.appLoginBonus.claimBonus", {amount: bonusAmount }) }}</div>
       <div v-if="bonusTxt" class="congrats-highlight-txt">{{ bonusTxt }}</div>
-      <div v-else class="congrats-highlight">{{ !!bonusAmount ? convertToCommaAmount(bonusAmount) : 0 }}BDT</div>
+      <div v-else class="congrats-highlight">{{store.currency.value}} {{ !!bonusAmount ? convertToCommaAmount(bonusAmount) : 0 }}</div>
 
       <div class="congrats-button-container">
         <q-btn no-caps unelevated class="congrats-btn" @click="handleBtnClick">
@@ -21,6 +21,7 @@
   </q-dialog>
 </template>
 <script setup>
+import { userStore } from "src/stores";
 import { ref, watch, computed } from "vue";
 import { convertToCommaAmount } from "src/boot/utils";
 
@@ -35,6 +36,7 @@ const props = defineProps([
 ]);
 const emit = defineEmits(["handleBtnClick", "handleBtnClose"]);
 
+const store= userStore()
 const localIsShowDialog = ref(props.isShowDialog);
 
 const computedHeaderImg = computed(() => {

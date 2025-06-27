@@ -83,7 +83,7 @@ const profileImagePath = computed(() => {
 
 
 $textcolors: (
-  #4a75d9,
+  #072569,
   #523014,
   #780f70,
   #be2526,
@@ -139,7 +139,7 @@ $colors: (
   }
 }
 $gradients: (
-  linear-gradient(90deg, #9ec2fa 0%, #4077de 100%),
+  linear-gradient(90deg, #002560 0%, #002262 100%),
   linear-gradient(90deg, #e5b888 0%, #b08240 100%),
   linear-gradient(90deg, #e268d9 0%, #780f70 100%),
   linear-gradient(90deg, #ff5f60 0%, #ae0536 100%),

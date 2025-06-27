@@ -4,7 +4,7 @@ import router from "@/router";
 import { useStore } from "./store";
 import { MenuActionType } from "@/store/modules/menu/action-types";
 
-const whiteList = ['/403', '/login', '/my/login', '/my/register', '/kaka/login', '/kaka/register', '/ph/login', '/ph/register', '/th/login', '/th/register', '/xf/login', '/xf/register', '/dy/login', '/dy/register', '/poster', '/ind/login', '/ind/register', '/lh/login', '/lh/register', '/vi/login', '/vi/register', '/ind2/login', '/ind2/register', '/kr/login', '/kr/register', '/pak/login', '/pak/register', '/ph1/summary', '/br1/login', '/br1/register']
+const whiteList = ['/403', '/login', '/my/login', '/my/register', '/kaka/login', '/kaka/register', '/ph/login', '/ph/register', '/th/login', '/th/register', '/xf/login', '/xf/register', '/dy/login', '/dy/register', '/poster', '/ind/login', '/ind/register', '/lh/login', '/lh/register', '/vi/login', '/vi/register', '/ind2/login', '/ind2/register', '/kr/login', '/kr/register', '/pak/login', '/pak/register', '/ph1/summary', '/br1/login', '/br1/register', '/br2/login', '/br2/register']
 NProgress.configure({ showSpinner: false });
 
 router.beforeEach(async (to, _, next) => {
@@ -57,6 +57,8 @@ router.beforeEach(async (to, _, next) => {
           next(`/pak/login?redirect=${to.path}`)
         } else if (siteCode === 'br1') {
           next(`/br1/login?redirect=${to.path}`)
+        } else if (siteCode === 'br2') {
+          next(`/br2/login?redirect=${to.path}`)
         } else {
           next(`/login?redirect=${to.path}`);
         }

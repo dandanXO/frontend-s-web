@@ -92,12 +92,12 @@
           {{ $t("bottomNav.deposit") }}
           <!-- Deposit -->
         </q-route-tab>
-        <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
-          <img class="inactive" src="../assets/images/index/menu/bonus-icon.svg" />
-          <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.svg" />
-          {{ $t("bottomNav.earnMoney") }}
-          <!-- Earn Money -->
-        </q-route-tab>
+        <!-- <q-route-tab to="/earn-money" name="earn-money" :ripple="false"> -->
+        <!-- <img class="inactive" src="../assets/images/index/menu/bonus-icon.svg" /> -->
+        <!-- <img class="hover" src="../assets/images/index/menu/bonus-icon-hover.svg" /> -->
+        <!-- {{ $t("bottomNav.earnMoney") }} -->
+        <!-- Earn Money -->
+        <!-- </q-route-tab> -->
         <q-route-tab to="/account" name="account" :ripple="false">
           <img class="inactive" src="../assets/images/index/menu/account-icon.svg" />
           <img class="hover" src="../assets/images/index/menu/account-icon-hover.svg" />

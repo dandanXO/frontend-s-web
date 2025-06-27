@@ -8,6 +8,7 @@
       props.siteId !== '10' ? '' : 'kr',
       props.siteId !== '11' ? '' : 'pak',
       props.siteId !== '15' ? '' : 'kaka',
+      props.siteId !== '28' ? '' : 'br2',
     ]"
   >
     <img
@@ -23,6 +24,9 @@
           </div>
           <div class="first-liner" v-html="currentSite.firstLiner" />
           <div class="second-liner" v-html="currentSite.secondLiner" />
+          <div>
+            <img v-if="props.siteId === '28'" src="../../assets/images/br2/br2-main-img.png" class="main-img">
+          </div>
         </div>
         <div class="right">
           <div class="bg swiper-no-swiping">
@@ -120,6 +124,7 @@
                     type="primary"
                     style="width:50%;"
                     @click="isReg = !isReg"
+                    v-if="props.siteId !== '28'"
                   >
                     {{ $t('common.register_affi') }}
                   </el-button>
@@ -129,7 +134,7 @@
                   v-if="props.siteId !== '5' || props.siteId !== '8'"
                   class="flex-c-center-div"
                 >
-                  <div class="contact-div" @click="swipeToContactUs">
+                  <div class="contact-div" @click="swipeToContactUs" v-if="props.siteId !== '28'">
                     {{ $t('common.contact_us') }}
                   </div>
                 </div>
@@ -250,7 +255,7 @@
                     </el-button>
                   </div>
                   <div
-                    v-if="props.siteId !== '5' || props.siteId !== '8'"
+                    v-if="props.siteId !== '5' || props.siteId !== '8' || props.siteId !== '28'"
                     class="flex-c-center-div"
                   >
                     <div class="contact-div" @click="swipeToContactUs">
@@ -619,6 +624,7 @@ import viLogo from '@/assets/images/vi/vilogo.svg'
 import kakaLogo from '@/assets/images/kaka/logo-kaka-game.png'
 import krLogo from '@/assets/images/kr/kr-logo.png'
 import pakLogo from '@/assets/images/pak/logowhitee.png'
+import br2Logo from '@/assets/images/br2/br2-logo.png'
 import { getVerificationImage } from '@/api/verification'
 import {
   getVerificationCode,
@@ -1011,6 +1017,7 @@ export default defineComponent({
               state.loginForm.site === 'IND' ||
               state.loginForm.site === 'IW2' ||
               state.loginForm.site === 'VNM' ||
+              state.loginForm.site === 'BR2' ||
               state.loginForm.site === 'KRW'
             ) {
               methods.userLogin()
@@ -1089,6 +1096,7 @@ export default defineComponent({
           state.loginForm.site === 'IW2' ||
           state.loginForm.site === 'VNM' ||
           state.loginForm.site === 'KA2' ||
+          state.loginForm.site === 'BR2' ||
           state.loginForm.site === 'KRW'
         ) {
           router
@@ -1470,6 +1478,15 @@ export default defineComponent({
           'Torne-se uma lenda<br>Ou torne-se o elogista da lenda?'
         currentSite.value.logo = indLogo
         state.loginForm.site = 'BR1'
+        currentSite.value.lang = 'PT'
+        setLanguage('pt')
+      }
+      if (props.siteId === '28') {
+        currentSite.value.firstLiner = 'Começa a partir de AKB188'
+        currentSite.value.secondLiner =
+          'Torne-se uma lenda<br>Ou torne-se o elogista da lenda?'
+        currentSite.value.logo = br2Logo
+        state.loginForm.site = 'BR2'
         currentSite.value.lang = 'PT'
         setLanguage('pt')
       }
@@ -1964,6 +1981,58 @@ a {
         background-size: cover;
         padding: 10px;
       }
+    }
+  }
+
+  &.br2 {
+    background: url('../../assets/images/br2/br2-bg.png') no-repeat center;
+    height: 100vh;
+    .logo {
+      position: absolute;
+      left: 70px;
+      top: 40px;
+      width: 207px;
+    }
+
+    .loginPage .left .first-liner {
+      max-width: 750px;
+      width: 750px;
+    }
+
+    .loginPage .left .second-liner {
+      max-width: 600px;
+      width: 600px;
+    }
+
+    .inner {
+      max-width: 1300px;
+    }
+
+    .common-btn {
+      width: 100% !important;
+      background: linear-gradient(90deg, #4FFFA5 0%, #10D16F 100%);
+      color: #fff;
+    }
+
+    .main-img {
+      display: block;
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .left{
+      margin-top: 150px;
+    }
+
+     .loginPage .right .top {
+        background: url(../../assets/images/br2/top.png) no-repeat center center;
+        background-size: cover;
+    }
+
+    .forget-pw {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
     }
   }
 

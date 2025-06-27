@@ -450,6 +450,18 @@
             + {{ t('fields.add_new') }}
           </el-button>
         </el-form-item>
+        <el-form-item :label="t('fields.checkBindCard')" prop="checkBindCard" style="width: 600px;">
+          <el-radio-group v-model="form.checkBindCard" style="width: 300px;">
+            <el-radio
+              v-for="s in uiControl.checkBindCardStatus"
+              :key="s.key"
+              :label="s.value"
+              size="small"
+            >
+              {{ s.displayName }}
+            </el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item :label="t('fields.redPacketMinDayBetAmount')" prop="minDayBetAmount" style="width: 600px;">
           $
           <el-input-number
@@ -952,6 +964,10 @@ const uiControl = reactive({
     { key: 6, displayName: "POKER", value: "POKER" },
     { key: 7, displayName: "LOTTERY", value: "LOTTERY" }
   ],
+  checkBindCardStatus: [
+    { key: 1, displayName: t('common.status.OPEN'), value: true },
+    { key: 2, displayName: t('common.status.CLOSE'), value: false },
+  ],
 })
 
 const request = reactive({
@@ -990,7 +1006,8 @@ const form = reactive({
   totalDepositDaysEndDate: null,
   depositRules: [],
   checkBetGameType: false,
-  betGameType: null
+  betGameType: null,
+  checkBindCard:false,
 })
 
 const vipRuleForm = reactive({

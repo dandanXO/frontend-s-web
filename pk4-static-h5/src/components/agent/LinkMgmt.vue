@@ -5,7 +5,7 @@
     <div class="qr-loader" style="display:flex;margin:30px auto;">
       <div class="qr-loader-scan">
       </div>
-    </div>
+    </div> 
   </template>
   <template v-else>
     <div class="forum-card" v-if="affiliateStore.affiliateInfo.affiliateLevel !== 'MASTER_AFFILIATE'">
@@ -41,7 +41,7 @@
       <div class="popout-dialog-container">
         <div class="qr-header">
           <div class="qr-header-left">
-            <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" />
+            <img alt="forum" src="@/assets/images/agent/forum-icon.png" width="24" height="24" @click="openCSInNewTab(ui.CSAUrl)" />
             <span class="qr-title">{{ '' }}</span>
           </div>
           <span class="qr-subtitle">{{ $t('affiliate.account.qrCode') }}</span>
@@ -75,6 +75,7 @@ import VueQRCodeComponent from "vue-qrcode-component";
 import { useQuasar, Platform } from "quasar";
 import { useI18n } from "vue-i18n";
 import { useAffiliateStore } from "src/stores/affiliate";
+import { useUI } from "stores/ui";
 
 const { t } = useI18n();
 var qs = require('qs');
@@ -87,7 +88,7 @@ const affCode = ref('');
 const isScanQrDialog = ref(false);
 const isLoading = ref(false);
 const affiliateStore = useAffiliateStore();
-
+const ui = useUI();
 
 const generateShortCode = () => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -196,6 +197,11 @@ async function copyToClipboard(textToCopy) {
     }
   }
 }
+
+const openCSInNewTab = (url) => {
+  const absoluteUrl = url;
+  window.open(absoluteUrl, "_blank");
+};
 
 onMounted(() => {
   getLinkList();

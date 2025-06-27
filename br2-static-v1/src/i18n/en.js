@@ -900,6 +900,7 @@ export default {
     longTerm: "Long-term (ongoing)",
     eligibility: "Eligibility",
     successfulDepositMember: "All members who have made at least one successful deposit",
+    betMember: "All members who placed bets",
     newMember: "All new registered member",
     desc: "Description",
     tnc: "Terms and Conditions",
@@ -908,7 +909,8 @@ export default {
       maxCashback: "Max {num}%",
       cashback: "{num}% Cashback",
       upgradeDifference: "{amount} bets to VIP{vip}",
-      tnc01: "Weekly cashback is given as a reward every week.",
+      tnc01:
+        "Weekly cashback is given as a reward every week. Only customers whose losses for the current week and the accumulated losses each exceed R$200.00 will be entitled to cashback.",
       tnc02: "The period over which the weekly cashback is calculated runs from Monday at 00:00 to Sunday at 23:59.",
       tnc03: "Cashback claim time: From Monday of next week 06:00 to Friday 23:59, will expire if not redeemed.",
       tnc04: "The number of Real Money Losses multiplied by the Refund % is the Refund/Cashback for the week.",
@@ -917,10 +919,17 @@ export default {
       tnc06:
         "The higher your VIP level (please refer to the VIP upgrade program), the higher the cashback percentage, up to a maximum of 25%.",
       tnc07: "Maximum cashback reward limit per person per week is R$10000.",
-      tnc08: "The cashback amount can be withdrawn directly or used to continue playing.",
+      tnc08: "Valid wagering requirement before withdrawal is 1 time.",
       tnc09:
         "Players who are winners in the history of the our platform do not participate in the loss return settlement. This activity is limited to the benefits of players who have lost to the platform.",
-      tnc10: "To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion."
+      tnc10: "To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion.",
+      table: {
+        title: {
+          vip: "VIP",
+          bet: "BET",
+          cashback: "CASHBACK"
+        }
+      }
     },
     vipPlanBettingUpgrade: {
       eligibility: "All members who have made at least one successful deposit",
@@ -947,6 +956,42 @@ export default {
       tnc05: "If you get extra cash points, you can play games for free and win even more real money.",
       tnc06: "If you do not withdraw the money within 3 days, it will be lost.",
       tnc07: "To avoid any misunderstandings, AKB188 reserves the final right of interpretation for this promotion."
+    },
+    dailySecondDeposit: {
+      description: "The first deposit of the day entitles you to a 10% bonus on the deposited amount",
+      tnc01: "Each member can enjoy this promotion once per day;",
+      tnc02:
+        "After successfully making the first deposit of the day, the member may claim a 10% bonus on the deposited amount during the promotion period;",
+      tnc03: "The minimum deposit amount is R$20;",
+      tnc04: "The maximum bonus amount is R$288;",
+      tnc05:
+        'To participate in this promotion, a request must be submitted. Eligible members must click the "Join Now" button on this page to submit;',
+      tnc06: "The deposit amount plus the bonus must be wagered at least 12 times before withdrawals are allowed;",
+      tnc07: "AKB188 reserves the right to the final interpretation of this promotion to avoid any misunderstandings."
+    },
+    betCashback: {
+      description: "Daily cashback based on the amount wagered and the corresponding percentage",
+      tnc01: "Cashback from the previous day will be credited automatically at 6:00 PM (Brasília time) every day;",
+      tnc02: "The cashback amount is calculated as: total amount wagered on the previous day × cashback percentage;",
+      tnc03: "The more you bet, the higher the cashback percentage, up to 3%;",
+      tnc04: "There is no maximum limit on the cashback amount;",
+      tnc05: "The cashback bonus must be wagered at least once before it can be withdrawn;",
+      tnc06:
+        "To avoid discrepancies in interpretation, the AKB188 platform reserves the right to the final explanation of this promotion."
+    },
+    lossRebate: {
+      description: "Cashback based on percentage of amount lost the previous day",
+      tnc01: "Receive 15% of your losses from the previous day on a daily basis;",
+      tnc02:
+        "The claim must be made after 12:00 PM (Brasília time). If not claimed within the period, it will be considered forfeited;",
+      tnc03: "The rebate amount is calculated as: actual loss amount × cashback percentage;",
+      tnc04:
+        "If you did not place any bets during the promotion period or made an overall profit, you will not be eligible for the rebate bonus;",
+      tnc05: "You must have lost at least R$10 on the previous day to claim the bonus;",
+      tnc06: "The maximum rebate per person per day is R$10,000;",
+      tnc07: "The bonus received must be wagered at least 3 times before it can be withdrawn;",
+      tnc08:
+        "To avoid discrepancies in interpretation, the AKB188 platform reserves the right to the final explanation of this promotion."
     }
   },
   maintenance: {
@@ -1127,7 +1172,7 @@ export default {
     message4:
       "Each user can enjoy one free spin opportunity per day, and the number of spins is reset at 24:00 every day.",
     message5: "After the application is approved, the bonus is deposited directly into your wallet.",
-    message6: "The bonus needs to be rolled over twice before it can be withdrawn.",
+    message6: "The bonus needs to be rolled over once before it can be withdrawn.",
     message7:
       "The invitee needs to bind his or her phone number and link it with the inviter's invitation code in order to be considered for recommendation.",
     message8:

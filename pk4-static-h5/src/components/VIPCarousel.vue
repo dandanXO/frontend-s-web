@@ -1,4 +1,9 @@
 <template>
+
+  <div class="valid-bet-div">
+    Current Valid Bet: {{store.currency.value}}&nbsp;<span>{{ store.getCurrentValidBet()}}</span>
+  </div>
+
   <Carousel
     ref="vipCarouselRef"
     :items-to-show="1"
@@ -51,6 +56,8 @@
       <Navigation />
     </template>
   </Carousel>
+
+
 </template>
 <script setup>
 import { defineModel, watch, onMounted, ref, computed, nextTick } from "vue";
@@ -374,6 +381,7 @@ watch(
     const vipInfo = vipItems.find(({ vipLevel }) => vipLevel === carouselVipLevel);
     const vipLevel = Number(store.vip.replace("VIP", ""));
     const currentDeposit = Number(store.getCurrentDeposit());
+    const currentValidBet= Number(store.getCurrentValidBet())
     const upgradeStatus = vipInfo.ugprade;
     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
 
@@ -385,7 +393,9 @@ watch(
         return 100;
       }
 
-      return (currentDeposit / levelUpDeposit) * 100;
+      const percentage = (currentDeposit / levelUpDeposit) * 100;
+      if (percentage >= 100) return 100;
+      return percentage;
     })();
 
     // alert(vipLevel);
@@ -432,43 +442,9 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-// $colors: (
-//   #6d96c6,
-//   #8c9b6a,
-//   #4ca1fc,
-//   #4c5efc,
-//   #d34cfc,
-//   #fc4cc4,
-//   #efa1f6,
-//   #ff9d86,
-//   #5bfc49,
-//   #efe639,
-//   #67c2ac,
-//   #ff7879,
-//   #d89053
-// );
-// @for $i from 0 through length($colors) - 1 {
-//   .vipitem#{$i} {
-//     .progress-bar-inner-bar {
-//       background: nth($colors, $i + 1); // Match color with vipitem
-
-//       .progress-bar-inner-bar-endpoint-circle {
-//         background: rgba(nth($colors, $i + 1), 0.16); /* 16% opacity */
-//       }
-
-//       .progress-bar-inner-bar-endpoint-circle__outer {
-//         background: rgba(nth($colors, $i + 1), 0.25); /* 25% opacity */
-//       }
-
-//       .progress-bar-inner-bar-endpoint-circle__inner {
-//         background: nth($colors, $i + 1); // Full color
-//       }
-//     }
-//   }
-// }
 
 $colors: (
-  #4a75d9,
+  #072569,
   #523014,
   #780f70,
   #be2526,
@@ -514,6 +490,18 @@ $gradients: (
     .progress-bar-inner-bar {
       background: nth($gradients, $i + 1);
     }
+  }
+}
+
+.valid-bet-div{
+  text-align:left;
+  width: 100%;
+  padding: 8px 20px 0px;
+
+  span{
+    color: #ffd600;
+    font-size: 18px;
+    font-weight: bold;
   }
 }
 
@@ -791,7 +779,7 @@ $gradients: (
 }
 
 .carousel__slide {
-  padding: 0px 0 10px;
+  padding: 5px 18px 30px;
 
   &.carousel__slide--next .vipitem,
   &.carousel__slide--prev .vipitem {
@@ -808,111 +796,6 @@ $gradients: (
 .carousel__prev,
 .carousel__next {
   display: none;
-}
-
-.vip-container {
-  width: 90%;
-  margin: 0 auto;
-  // padding: 0 1.75rem;
-  overflow: hidden;
-  font-size: 1rem;
-  text-align: center;
-
-  .top-header {
-    color: #f1f1f1;
-    // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
-    background: linear-gradient(180deg, #21ef89 0%, #33562d 100%);
-  }
-
-  .q-table__card {
-    background: transparent !important;
-    margin: 0 0 1.25rem 0;
-    border-radius: 8px;
-    font-weight: 700;
-  }
-
-  .vip-icon {
-    width: 3.5rem;
-    margin: 0.5rem 0 0;
-  }
-
-  thead {
-    th {
-      font-size: 1rem;
-      font-weight: 700;
-      line-height: 1;
-      text-align: left;
-      border-width: 0px !important;
-
-      &:first-child {
-        width: 65px;
-      }
-    }
-  }
-  thead > :first-child {
-    background: linear-gradient(270deg, #5d01b9 -0.1%, #b11bff 50.22%, #6a069c 97.6%);
-  }
-  tbody > :nth-child(odd) {
-    // background: rgba(21, 0, 37, 0.2);
-    background: rgba(112, 188, 98, 0.1);
-
-    // background: #652c93;
-    // background: #652c9315;
-  }
-  tbody > :nth-child(even) {
-    // background: rgba(21, 0, 37, 0.5);
-    // background: #502175;
-    // background: #00ae000c;
-  }
-
-  span.amt-text {
-    background-color: #f3ec78 !important;
-    background-image: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%) !important;
-    background-size: 100% !important;
-    -webkit-background-clip: text !important;
-    -moz-background-clip: text !important;
-    -webkit-text-fill-color: transparent;
-    -moz-text-fill-color: transparent;
-  }
-
-  .text-center {
-    border-bottom-width: 0 !important;
-    padding: 0 0.25rem;
-  }
-
-  .text-right {
-    border-bottom-width: 0 !important;
-    padding: 0 1.5rem;
-  }
-
-  .bottom-note {
-    color: #edd3ff;
-    font-size: 0.85rem;
-    font-weight: 400;
-    line-height: 1.5;
-    padding: 0.5rem 1.25rem;
-    white-space: normal;
-  }
-  .header-wrapper {
-    display: flex;
-    gap: 15px;
-    padding: 10px 0px 20px;
-
-    .header {
-      font-size: 26px;
-      font-weight: 800;
-      line-height: 32px;
-      text-align: left;
-      color: #fff;
-    }
-  }
-}
-
-@media (max-width: 410px) {
-  .vip-container {
-    // padding: 0 0.75rem;
-    padding: 0;
-  }
 }
 
 .receive-monthly {

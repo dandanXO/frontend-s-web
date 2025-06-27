@@ -264,14 +264,20 @@ onMounted(() => {
 
 .btn-confirm {
   
-  font-weight: 700;
+  // font-weight: 700;
+  // width: 100%;
+  // padding: 10px 10px;
+  // font-size: 16px;
+  // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  // color: #000000;
+  // box-shadow: 0px 2px 0px 0px #1cca6a;
+  // border-radius: 4px;
+  // height: unset;
+  background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
+  color: #ffffff;
   width: 100%;
-  padding: 10px 10px;
-  font-size: 16px;
-  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-  color: #000000;
-  box-shadow: 0px 2px 0px 0px #1cca6a;
-  border-radius: 4px;
-  height: unset;
+  border-radius: 12px;
+  padding: 10px;
+  font-weight: bold;
 }
 </style>
