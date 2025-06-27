@@ -385,7 +385,9 @@ watch(
         return 100;
       }
 
-      return (currentDeposit / levelUpDeposit) * 100;
+      const percentage = (currentDeposit / levelUpDeposit) * 100;
+      if (percentage >= 100) return 100;
+      return percentage;
     })();
 
     // alert(vipLevel);
