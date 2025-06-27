@@ -6,7 +6,7 @@
         <img src="../../assets/images/index/download/download-phone.png" />
       </div>
       <div class="add-to-homescreen-top">
-        <img class="app-logo" src="../../assets/images/index/download/download-app-logo_2.png" />
+        <img class="app-logo" src="../../assets/images/index/download/download-app-logo.png" />
         <div class="add-to-homescreen-content">
           {{ $t("modal.addToHomeScreen.addToHomeScreenBonus") }}
         </div>

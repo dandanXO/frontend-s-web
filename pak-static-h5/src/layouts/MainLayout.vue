@@ -107,9 +107,7 @@ import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import FooterSection from "../layouts/FooterSection.vue";
-// import EssentialLink from "components/EssentialLink.vue";
 
-import { translateRecord } from "src/directives/translate";
 import { useI18n } from "vue-i18n";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
@@ -173,10 +171,6 @@ export default defineComponent({
           hasPage.value = true;
           hasDrawer.value = true;
           pageName.value = "Slot";
-          if (route.query.platform) {
-            var platformName = route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform);
-            pageName.value = `${platformName} Game Lobby`;
-          }
         } else if (route.path === "/account") {
           prevPage.value = "/";
           hasPage.value = true;
