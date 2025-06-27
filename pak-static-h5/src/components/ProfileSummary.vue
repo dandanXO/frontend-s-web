@@ -367,14 +367,34 @@ const profileImagePath = computed(() => {
 });
 
 const isLoadingBalance = ref(false);
+
 const refreshBalance = () => {
   if (store.token) {
     isLoadingBalance.value = true;
-    store.getBalance().then((res) => {
-      isLoadingBalance.value = false;
-    });
+    // store.getBalance().then((res) => {
+      // isLoadingBalance.value = false;
+    transferOutAll();
+    // });
   }
 };
+
+const transferOutAll = () => {
+  isLoadingBalance.value = true;
+  api.post("/session/balance/transfer/withdrawPlatform?platform=NineW").then((response) => {
+    if (response.code === 0) {
+      setTimeout(() => {
+        store.getBalance().then((res) => {
+          isLoadingBalance.value = false;
+        });
+      }, 1000);
+    } else {
+      isLoadingBalance.value = false;
+    }
+  }).catch(() => {
+    isLoadingBalance.value = false;
+  });
+};
+
 
 const onClickLogo = () => {
   if (props.homeProfile) {
