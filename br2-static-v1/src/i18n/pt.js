@@ -272,8 +272,7 @@ export default {
     withdrawing: "Retirando...",
     unbinding: "Desvinculando",
     deposit: "Depositar",
-    updated: "Atualizado",
-    continue: "Continuar"
+    updated: "Atualizado"
   },
   notify: {
     noRecord: "Nenhum Registro",
@@ -364,8 +363,7 @@ export default {
     deposited: "Depositado",
     youWillBeRedirect: "Você será redirecionado para a página do seu banco para completar o depósito.",
     afterDepositSuccessfully: "Após o depósito ser concluído com sucesso, será refletido aqui.",
-    useFtdPrivilege: "Aproveite o Benefício de Primeiro Depósito em Slots",
-    hasUnusedPrivilege: "Você tem um desconto que ainda não resgatou. Tem certeza de que deseja enviá-lo?"
+    useFtdPrivilege: "Aproveite o Benefício de Primeiro Depósito em Slots"
   },
   withdraw: {
     cashBalance: "Saldo em Dinheiro",
@@ -846,6 +844,17 @@ export default {
       signIn: "Assinar",
       signedIn: "Assinado"
     },
+    redepositBonus: {
+      description: "Receba um bônus extra de 100% no primeiro depósito do dia",
+      tnc01: "Esta promoção é válida para todos os membros que realizarem o primeiro depósito do dia.",
+      tnc02: "O valor do bônus será de 100% do valor depositado, sem limite máximo.",
+      tnc03: "O bônus (incluir o principal) requer 12 vezes de apostas válidas para sacar;",
+      tnc04:
+        "Cada membro pode participar uma vez por dia, sendo o bônus aplicável somente à primeira transação do dia.",
+      tnc05:
+        "Apenas o titular da conta pode realizar a operação de recebimento do bônus. Em caso de comportamento irregular, o bônus poderá ser cancelado, deduzido, congelado ou a conta adicionada à lista negra.",
+      tnc06: "A plataforma reserva-se o direito final de interpretação desta promoção."
+    },
     megaSharingWheel: {
       wheelTitle: "Roleta Mega Compartilhada",
       missionTitle: "Recompensas",
@@ -916,6 +925,7 @@ export default {
     successfulDepositMember: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
     betMember: "Todos os membros que realizaram apostas",
     newMember: "Todos os novos membros registrados",
+    allMembers: "Todos os membros",
     desc: "Descrição",
     tnc: "Regras da Promoção",
     cashbackWeekly: {
@@ -950,7 +960,6 @@ export default {
       eligibility: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
       description:
         "Faça o upgrade para o nível VIP correspondente com base no valor acumulado de apostas na conta do membro.",
-      termsAndConditions: "Regras da Promoção",
       bet: "APOSTA",
       vipLevel: "VIP Nível",
       tnc01:
@@ -974,17 +983,14 @@ export default {
       tnc07: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
     },
     dailySecondDeposit: {
-      description: "O primeiro depósito do dia dá direito a 20% de bônus sobre o valor depositado",
-      tnc01: "Cada membro pode aproveitar esta promoção uma vez por dia;",
-      tnc02:
-        "Após realizar o primeiro depósito do dia com sucesso, o membro pode solicitar um bônus de 20% sobre o valor depositado durante o período da promoção;",
-      tnc03: "O valor mínimo de depósito é de R$20;",
-      tnc04: "O bônus máximo é de R$288",
+      description: "O primeiro depósito do dia dá direito a 10% de bônus sobre o valor depositado",
+      tnc01: "Esta promoção é válida para todos os depósitos realizados após o primeiro no mesmo dia.",
+      tnc02: "Cada depósito subsequente dará direito a um bônus de 20%, com um limite de R$ 288 por depósito.",
+      tnc03: "O bônus (incluir o principal) requer 12 vezes de apostas válidas para sacar;",
+      tnc04: "Todos os depósitos adicionais do dia são elegíveis, sem limite de quantidade de participações por dia.",
       tnc05:
-        'Para participar da promoção, é necessário enviar uma solicitação. Membros qualificados devem clicar no botão "Participar Agora" nesta página para enviar;',
-      tnc06:
-        "O valor do depósito mais o bônus devem ser apostados no mínimo 12 vezes antes de ser possível realizar saques;",
-      tnc07: "A AKB188 reserva-se o direito de interpretação final desta promoção para evitar qualquer mal-entendido."
+        "Apenas o titular da conta pode realizar a operação de recebimento do bônus. Em caso de comportamento irregular, o bônus poderá ser cancelado, deduzido, congelado ou a conta adicionada à lista negra.",
+      tnc06: "A plataforma reserva-se o direito final de interpretação desta promoção."
     },
     betCashback: {
       description: "Cashback diário com base no valor apostado e na porcentagem correspondente",
@@ -1237,9 +1243,5 @@ export default {
     linkCopyToClipboard: "Link copiado para a área de transferência",
     qrCodeSaved: "Imagem do código QR salva na galeria de fotos.",
     receiveSuccessfully: "Recebido com sucesso"
-  },
-  notification: {
-    confirm: "Confirmar",
-    cancel: "Cancelar"
   }
 };
