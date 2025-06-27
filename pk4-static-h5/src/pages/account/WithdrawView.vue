@@ -1222,6 +1222,17 @@ watch(
   }
 }
 
+:deep(.q-field--filled.q-field--dark .q-field__control) {
+  // border-radius: 0.5rem;
+  // background: #0b0e0d !important;
+  // border: 1px solid #072a19;
+  // border-radius: 0.5rem;
+  // border: 1px solid #ffffff14;
+  // background: #292d2f !important;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%) !important;
+  border: none;
+}
+
 .bot-wrapper {
   display: flex;
   flex-direction: column;

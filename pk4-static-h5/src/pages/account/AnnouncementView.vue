@@ -1,24 +1,23 @@
 <template>
   <div class="announcement-section">
     <q-tabs
-        active-color="dark"
-        indicator-color="bright"
+        indicator-color="transparent"
         align="justify"
-        v-model="activeKey"
+        v-model="activeTab"
     >
       <q-tab
-          v-for="(tab, i) in tabItems"
-          :key="i"
+          v-for="(tab) in announcementTypes"
+          :key="tab.id"
           :name="tab.id"
           :label="tab.name"
       />
     </q-tabs>
 
-    <q-tab-panels v-model="activeKey" animated>
-      <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.id">
+    <q-tab-panels v-model="activeTab" animated>
+      <q-tab-panel v-for="(tab) in announcementTypes" :key="tab.id" :name="tab.id">
         <q-list class="rounded-borders">
-          <span v-for="ann in announcementsList" :key="ann">
-            <div v-if="ann.typeId === tab.id">
+          <span v-for="ann in announcementsList" :key="ann.id">
+            <div v-if="ann.type === tab.id">
               <q-expansion-item
                   class="expansion-bg"
                   expand-separator
@@ -34,7 +33,7 @@
                   class="text-center q-pa-md text-brand"
                   v-if="ann.content.length === 0"
               >
-                暂时无通知
+                No Content Yet
               </div>
             </div>
           </span>
@@ -44,47 +43,51 @@
   </div>
 </template>
 <script lang="js">
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, reactive } from "vue";
 import { api } from "boot/axios";
 
 export default defineComponent({
   name: "AnnouncementView",
   setup() {
     const tab = ref("");
-    const tabItems = ref([]);
+    const activeTab = ref("");
     const announcementsList = ref([]);
     const announcementTypes = ref([]);
-    const activeKey = ref(null);
+    const request = reactive({
+      size: 20,
+      current: 1,
+      siteId: 26,
+      announcementType: null,
+    });
 
-    const loadAnnouncement = () => {
-      api.get("/announcement").then((res) => {
+    const loadAnnouncementType = () => {
+      api.get("/session/affiliate/announcement-type").then((res) => {
         if (res.code === 0) {
-          if (res.data.announcements) {
-            const d = res.data.announcements;
-            announcementsList.value = d;
-            console.log(announcementsList.value)
-          }
-          if (res.data.type) {
-            const e = res.data.type
-            tabItems.value = e;
-            activeKey.value = res.data.type[0].id;
-          }
-          // announcementList.value = d.announcements
-          // announcementList.value = res.data.announcements
+          announcementTypes.value = res.data;
+          activeTab.value = res.data[0].id;
+        }
+      });
+    };
+
+    const loadAnnouncementList = () => {
+      api.get("/session/affiliate/announcement-list", { params: request }).then((res) => {
+        if (res.code === 0) {
+          announcementsList.value = res.data.records;
         }
       });
     };
 
     onMounted(() => {
-      loadAnnouncement();
+      loadAnnouncementType();
+      loadAnnouncementList();
     });
 
     return {
       tab,
-      tabItems,
       announcementsList,
       announcementTypes,
-      activeKey
+      request,
+      activeTab,
     };
   }
 });
@@ -133,10 +136,11 @@ export default defineComponent({
 
   .q-tab--active .q-tab__indicator {
     // background: url("../../assets/images/promotion/tab_bg.png") no-repeat center
-    center;
+    // center;
     background-size: 20px 10px;
     width: 100%;
-    height: 10px;
+    // height: 10px;
+    // opacity: 0;
   }
 
   .notice_txt {

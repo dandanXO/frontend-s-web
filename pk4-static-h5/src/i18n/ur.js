@@ -301,7 +301,8 @@ export default {
     goNow: "اب جائیں",
     playReal: "حقیقی کھیلیں",
     freeTrial: "مفت آزمائش",
-    payAgain: "دوبارہ ادائیگی کریں"
+    payAgain: "دوبارہ ادائیگی کریں",
+    reminder: "یاد دہانی",
   },
   notify: {
     cancelPayment: "ادائیگی منسوخ کریں",
@@ -810,7 +811,8 @@ export default {
     payment: "ادائیگی",
     system: "نظام",
     noMessage: "کوئی پیغام نہیں",
-    visitLink: "لنک دیکھیں"
+    visitLink: "لنک دیکھیں",
+    copySuccess: "سیریل نمبر کلپ بورڈ پر کاپی ہو گیا۔",
   },
   customerServiceVerifier: {
     mainTitle: "B9.GAME",

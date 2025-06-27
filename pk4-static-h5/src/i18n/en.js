@@ -305,7 +305,8 @@ export default {
     goNow: "Go Now",
     playReal: "Play real",
     freeTrial: "Free trial",
-    payAgain: "Pay again"
+    payAgain: "Pay again",
+    reminder: "Reminder",
   },
   notify: {
     cancelPayment: "Cancel Payment",
@@ -824,7 +825,8 @@ export default {
     payment: "Payment",
     system: "System",
     noMessage: "No messages",
-    visitLink: "Visit link"
+    visitLink: "Visit link",
+    copySuccess: "Serial Number Copied to clipboard",
   },
   customerServiceVerifier: {
     mainTitle: "B9.GAME",

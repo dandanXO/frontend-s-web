@@ -3,9 +3,9 @@
         <div class="filters">
             <InputField :isDark="true">
                 <template #input>
-                    <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
+                    <q-input class="input" v-model="formDetail.loginName" outlined clearable hide-bottom-space>
                         <template v-slot:append>
-                            <q-btn class="primary-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
+                            <q-btn class="primary-btn" color="primary" :label="$t('btn.confirm')" @click="searchByLoginName()" />
                         </template>
                     </q-input>
                 </template>
@@ -17,7 +17,7 @@
             <table v-else class="card-table" border="0" cellpadding="0" cellspacing="0" width="100%"
                 style="text-align: center">
                 <tbody>
-                    <tr v-for="downline, index in downlineInfo" :key="index">
+                    <tr v-for="downline, index in selectedDownlineInfo" :key="index">
                         <td><img src="../../../assets/images/account/dividend/avatar-icon.png" /></td>
                         <td class="user">{{ downline.loginName }}</td>
                         <td class="user">{{ (downline.commission * 100).toFixed(0) }}%</td>
@@ -65,6 +65,7 @@ const formDetail = reactive([]);
 const isLoading = ref(false);
 const store = userStore();
 const downlineInfo = ref([]);
+const selectedDownlineInfo = ref([]);
 const selectedContract = ref(null);
 const isShowContractDialog = computed(() => selectedContract.value !== null)
 const $q = useQuasar();
@@ -171,6 +172,7 @@ const initData = () => {
         params: query
     }).then((res) => {
         downlineInfo.value = res.data;
+        selectedDownlineInfo.value = res.data;
         isLoading.value = false;
     }).finally(() => {
         isLoading.value = false;
@@ -182,6 +184,14 @@ const initData = () => {
     }).finally(() => {
         isLoading.value = false;
     })
+}
+
+function searchByLoginName() {
+  if (formDetail.loginName) {
+    selectedDownlineInfo.value = downlineInfo.value.filter(a => a.loginName === formDetail.loginName)
+  } else {
+    selectedDownlineInfo.value = downlineInfo.value;
+  }
 }
 
 onMounted(() => {
