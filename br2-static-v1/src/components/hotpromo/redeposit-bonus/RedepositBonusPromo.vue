@@ -1,9 +1,9 @@
 <template>
   <div>
-    <q-btn class="receive-earn-btn" no-caps @click="claimPromo()">
+    <!-- <q-btn class="receive-earn-btn" no-caps @click="claimPromo()">
       <img src="../../../assets/images/promotion/receive-earn/receive-earn-icon.png" />
       &nbsp;&nbsp;Participar Agora
-    </q-btn>
+    </q-btn> -->
 
     <div class="receive-bar-container">
       <div class="receive-bar">

@@ -32,70 +32,57 @@
         <div class="title-img">活动详情</div>
         <div class="little-title" style="flex-direction: row;align-items: center;">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025年7月23日至2025年8月03日</div>
-        </div>
-         <div class="little-title" style="flex-direction: row;align-items: center;">
-          <div class="ribbon">活动對象</div>
-          <div class="right">投注IEM 科隆 2025 的会员</div>
-        </div>
-         <div class="little-title" style="flex-direction: row;align-items: center;">
-          <div class="ribbon">活动平台</div>
-          <div class="right">电竞</div>
+          <div class="right">2025年9月4日至9月15日 </div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">活动期间，IEM 科隆 2025累计有效投注≥2,000元即可获得 最高1588元的奖励金 </div>
+          <div class="right">会员当日存款≥100元且在TI14国际邀请赛中累计有效≥1000元，次日即可领取彩金。 </div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
             <tr>
-              <th>当日累计有效投注</th>
-              <th>投注金</th>
-              <th>流水倍数</th>
+              <th>VIP 等級 / 有效流水</th>
+              <th>≥1,000</th>
+              <th>≥10,000</th>
+              <th>≥50,000</th>
+              <th>≥100,000</th>
+              <th>流水要求</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>≥2,000</td>
-              <td>18元</td>
-              <td rowspan="9">6倍流水</td>
+              <td>VIP1-VIP3</td>
+              <td>18</td>
+              <td>38</td>
+              <td>88</td>
+              <td>128</td>
+              <td rowspan="4">5倍流水</td>
             </tr>
             <tr>
-              <td>≥5,000</td>
-              <td>28元</td>
+              <td>VIP4-VIP6</td>
+              <td>38</td>
+              <td>88</td>
+              <td>128</td>
+              <td>188</td>
             </tr>
             <tr>
-              <td>≥10,000</td>
-              <td>58元</td>
+              <td>VIP7-VIP9</td>
+              <td>88</td>
+              <td>128</td>
+              <td>188</td>
+              <td>268</td>
             </tr>
             <tr>
-              <td>≥30,000</td>
-              <td>88元</td>
-            </tr>
-            <tr>
-              <td>≥50,000</td>
-              <td>168元</td>
-            </tr>
-            <tr>
-              <td>≥100,000</td>
-              <td>288元</td>
-            </tr>
-            <tr>
-              <td>≥500,000</td>
-              <td>588元</td>
-            </tr>
-            <tr>
-              <td>≥800,000</td>
-              <td>888元</td>
-            </tr>
-             <tr>
-              <td>≥1,000,000</td>
-              <td>1,588元</td>
+              <td>VIP10-VIP12</td>
+              <td>128</td>
+              <td>188</td>
+              <td>268</td>
+              <td>588</td>
             </tr>
           </tbody>
         </table>
 
-        <div class="livepoker-rebate-game-bottom">
+        <!-- <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
             <div class="livepoker-rebate-game-bottom-left-btn">
               <img
@@ -105,9 +92,9 @@
               />
               <span>示例</span>
             </div>
-            会员在活动期间投注IEM 科隆 2025赛事，当日累计有效投注为 250,000 元，在次日24 小时内可获得彩金：288元
+            会员在活动期间投注IEM 科隆 2025赛事，累计有效投注为 250,000 元，在次日24 小时内可获得彩金：588元 
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule section-bg">
@@ -116,14 +103,14 @@
         <div class="content">
           <div class="item">
             <div class="item-num">1</div>
-            <div style="display: flex; flex-direction: column"> 
-              活动期间，活动仅计算电竞场馆中IEM 科隆 2025赛事，会员在当天投注IEM 科隆 2025中累计有效投注≥1,000元即可获得对应彩金，有效投注次日清零；
-              <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。 </div>
+            <div style="display: flex; flex-direction: column">
+              活动期间，活动仅计算电竞场馆中TI14国际邀请赛，会员在当日累计存款≥100元且在TI14国际邀请赛中累计有效投注≥1000 元即可按照所属vip等级获得相应彩金，存款和有效投注次日清零；
+              <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。  </div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算活动期间内IEM 科隆 2025已结算的赛事总有效投注，次日24 小时内在优惠页面点击【立即领取】按钮领取。逾期未领取则视为放弃，彩金 6 倍流水即可出款； 
+            活动期间，活动仅计算当日TI14国际邀请赛中已结算的赛事总有效投注，次日 24 小时内在活动页面点击【立即领取】按钮领取。逾期未领取则视为放弃，彩金 5倍流水即可出款； 
           </div>
           <div class="item">
             <div class="item-num">3</div>
@@ -139,7 +126,7 @@
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            为避免文字理解差异，东赢电竞保留此活动最终解释权；
+            为避免文字理解差异，雷火电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
