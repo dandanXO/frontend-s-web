@@ -61,7 +61,8 @@
               <img src="../../assets/images/promotion/hotpromo/app-login-bonus/rules-title.png">
             </div>
             <ul>
-              <li>To withdraw the bonus, you need to complete 15 times of effective turnover. To withdraw the bonus, you need to deposit at least once (only for slot machine fishing)</li>
+              <li>{{ $t("hotPromo.appLoginBonus.termsCondition8") }}</li>
+              <li>{{ $t("hotPromo.appLoginBonus.termsCondition9") }}</li>
             </ul>
           </div>
         </q-page-container>
