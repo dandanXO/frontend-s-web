@@ -477,6 +477,7 @@ export default {
     withdrawable: "واپسی کے قابل",
     withdrewAmount: "واپس لی گئی رقم",
     withdrawMaxTimes: "باقی نکالنے کی کوششیں",
+    withdrawMaxAmount: "باقی نکالنے کی رقم",
     dailyLimit: "یومیہ حد",
     remainWagers: "باقی شرطیں",
     withdrawTutorial: "نکالنے کا ٹیوٹوریل",
