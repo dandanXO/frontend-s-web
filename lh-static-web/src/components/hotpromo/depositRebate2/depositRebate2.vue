@@ -57,9 +57,9 @@
                 </tr> -->
         <tr>
           <td>K豆</td>
-          <td>1.0%</td>
+          <td>0.5%</td>
           <td>任意金额</td>
-          <td>188</td>
+          <td>38</td>
         </tr>
         <tr>
           <td>数字人民币</td>
@@ -131,10 +131,9 @@ const depositCards = ref([
     code: "kdou",
     title: "K豆",
     content:
-      "充值即送<em>1.0%</em>彩金K豆完全可以满足您不同需求和使用场景。活动期间，每位玩家每笔使用K豆单笔充值成功享受存款金额的1.0%加码彩金，单日优惠最高上限188元！",
+      "充值即送<em>0.5%</em>彩金K豆完全可以满足您不同需求和使用场景。活动期间，每位玩家每笔使用K豆单笔充值成功享受存款金额的0.5%加码彩金，单日优惠最高上限38元！",
     lesson: "https://kdxz1848.com/"
   },
-  
 
   // {
   //   "code": "jdpay",
@@ -157,7 +156,7 @@ const depositCards = ref([
     title: "OKPAY",
     content: `充值即送<em class="light-bg">1.0%</em>彩金，OKPAY超快充值 极致体验，支持：银行卡，支付宝，微信！活动期间，每位玩家每笔使用OKPAY单笔充值≥1000元即可享受存款金额的<em class="light-bg">1.0%</em>加码彩金，单日优惠最高上限188元！`,
     lesson: "https://me-qr.com/l/okpayjiaocheng"
-  },
+  }
 ]);
 </script>
 <style lang="scss">
