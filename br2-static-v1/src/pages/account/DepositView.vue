@@ -294,6 +294,7 @@ import KYCUserForm from "../../components/KYCUserForm.vue";
 import { cached } from "boot/cache";
 import { storeToRefs } from "pinia";
 import { t } from "../../boot/lang";
+import { useNotify } from "src/hooks/notify";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -393,6 +394,7 @@ const form = reactive({
 });
 
 const $q = useQuasar();
+const notify = useNotify();
 const calculatedMinDeposit = ref("");
 const calculatedMaxDeposit = ref("");
 
@@ -606,6 +608,20 @@ async function confirmDeposit() {
   if (depositAmtRef.value.hasError) {
     btnLoading.value = false;
   } else {
+    if (unselectedPrivileges.value.length && !selectedPrivilege.value) {
+      const { type } = await notify({
+        message: t("deposit.hasUnusedPrivilege"),
+        type: "red-packet",
+        confirmBtnText: t("btn.continue"),
+        cancelBtnText: t("btn.back")
+      });
+
+      if (type !== "confirm") {
+        btnLoading.value = false;
+        return;
+      }
+    }
+
     await cashier
       .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
       .then((d) => {
