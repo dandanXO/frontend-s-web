@@ -89,6 +89,7 @@ import GameBetRecordFetchJobIdleCheck from './dialog-custom-content/gameBetRecor
 import DepositErrorComponent from './dialog-custom-content/depositError.vue';
 import OtpFailComponent from './dialog-custom-content/otpFail.vue';
 import FirstDepositFluctuation from './dialog-custom-content/firstDepositFluctuation.vue';
+import WithdrawAlertComponent from './dialog-custom-content/withdrawAlert.vue';
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n()
@@ -187,6 +188,7 @@ const componentMapping = {
   JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: GameBetRecordFetchJobIdleCheck,
   OTP_FAIL: OtpFailComponent,
   FIRST_DEPOSIT_FLUCTUATION: FirstDepositFluctuation,
+  WITHDRAW_ALERT: WithdrawAlertComponent,
 };
 
 async function loadAllConfigurableTypeName() {

@@ -3559,8 +3559,6 @@ export default {
     'Sport Live History Block': 'Sport Live History Block Setting',
     'Sport Live Monitor': 'Sport Live Monitor',
     'Affiliate Settlement Setting': 'Affiliate Settlement Setting',
-    'Sport Live History Block': 'Sport Live History Message',
-    'Sport Live Monitor': 'Sport Live Monitor',
     'Sport Live Admin': 'Sport Live Admin Setting',
     'Member Refer Stat Analysis': 'Refer Friend Analysis',
     'Member Refer Relation': 'Refer Relation Query',
@@ -3788,7 +3786,8 @@ export default {
     WITHDRAW_ERROR: 'Withdraw Error',
     DEPOSIT_ERROR: 'Deposit Error',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'Task Idle(Bet Record Fetch)',
-    FIRST_DEPOSIT_FLUCTUATION: 'First deposit fluctuation'
+    FIRST_DEPOSIT_FLUCTUATION: 'First deposit fluctuation',
+    WITHDRAW_ALERT: 'Withdraw alert'
   },
   domain: {
     domainMainType: {
