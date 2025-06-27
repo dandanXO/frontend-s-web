@@ -3556,8 +3556,6 @@ export default {
     'Sport Live Sensitive Word': 'Sport Live Sensitive Word',
     'Sport Live Block Member': 'Sport Live Block Member Setting',
     'Sport Live Chat Vip Status': 'Sport Live Vip Message Setting',
-    'Sport Live History Block': 'Sport Live History Block Setting',
-    'Sport Live Monitor': 'Sport Live Monitor',
     'Affiliate Settlement Setting': 'Affiliate Settlement Setting',
     'Sport Live History Block': 'Sport Live History Message',
     'Sport Live Monitor': 'Sport Live Monitor',
