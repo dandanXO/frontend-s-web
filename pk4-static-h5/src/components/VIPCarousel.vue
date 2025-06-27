@@ -21,7 +21,8 @@
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements" v-if="vipIndex !== vipItems.length - 1">
                 {{ $t("vip.accumulateDeposit") }}
-                {{ props.onlyShowCurrentLevel ? vipItems[vip.vipLevel + 1].ugprade : vipItems[vipIndex + 1].ugprade }}
+                <!-- {{ props.onlyShowCurrentLevel ? vipItems[vip.vipLevel + 1].ugprade : vipItems[vipIndex + 1].ugprade }} -->
+                {{ convertToCommaAmount(store.levelUpDeposit, null, 0) }}
               </div>
 
               <div class="progress-bar-container">
@@ -66,6 +67,8 @@ import "vue3-carousel/dist/carousel.css";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
+import { convertToCommaAmount } from "src/boot/utils";
+
 const props = defineProps({
   onlyShowCurrentLevel: {
     type: Boolean,
@@ -381,7 +384,7 @@ watch(
     const vipInfo = vipItems.find(({ vipLevel }) => vipLevel === carouselVipLevel);
     const vipLevel = Number(store.vip.replace("VIP", ""));
     const currentDeposit = Number(store.getCurrentDeposit());
-    const currentValidBet= Number(store.getCurrentValidBet())
+    const currentValidBet = Number(store.getCurrentValidBet());
     const upgradeStatus = vipInfo.ugprade;
     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
 
