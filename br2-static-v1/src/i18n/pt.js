@@ -972,10 +972,10 @@ export default {
       tnc07: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
     },
     dailySecondDeposit: {
-      description: "O primeiro depósito do dia dá direito a 10% de bônus sobre o valor depositado",
+      description: "O primeiro depósito do dia dá direito a 20% de bônus sobre o valor depositado",
       tnc01: "Cada membro pode aproveitar esta promoção uma vez por dia;",
       tnc02:
-        "Após realizar o primeiro depósito do dia com sucesso, o membro pode solicitar um bônus de 10% sobre o valor depositado durante o período da promoção;",
+        "Após realizar o primeiro depósito do dia com sucesso, o membro pode solicitar um bônus de 20% sobre o valor depositado durante o período da promoção;",
       tnc03: "O valor mínimo de depósito é de R$20;",
       tnc04: "O bônus máximo é de R$288",
       tnc05:
@@ -1235,5 +1235,9 @@ export default {
     linkCopyToClipboard: "Link copiado para a área de transferência",
     qrCodeSaved: "Imagem do código QR salva na galeria de fotos.",
     receiveSuccessfully: "Recebido com sucesso"
+  },
+  notification: {
+    confirm: "Confirmar",
+    cancel: "Cancelar"
   }
 };
