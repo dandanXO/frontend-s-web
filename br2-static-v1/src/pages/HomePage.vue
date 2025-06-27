@@ -3020,8 +3020,8 @@ const loadAppTabs = () => {
           categoriesList.value = [
             { title: "Hot", icon: "hot", active: true },
             { title: "Casino", icon: "casino", active: false },
+            { title: "Sport", icon: "sport", active: false },
             { title: "Fishing", icon: "fishing", active: false },
-            { title: "Sport", icon: "sport", active: false }
           ];
         }
       }
@@ -3043,6 +3043,8 @@ const loadCategoryLists = () => {
       id: item.id
     }));
     categoriesList.value.push(...slotCategories);
+    categoriesList.value.push({ title: "Fishing", icon: "fishing", active: false })
+
   };
   interval = setInterval(() => {
     if (isAppTabsLoaded.value) {
