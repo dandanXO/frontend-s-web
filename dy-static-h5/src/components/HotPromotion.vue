@@ -75,6 +75,7 @@
     <EsportWorldCup2025 v-else-if="list.redirectUrl === 'dy2-esport-world-cup-2025'" :promo-code="list.promoCode" />
     <FifaCwcRedPacket v-else-if="list.redirectUrl === 'dy2-fifa-cwc-red-packet'" :promo-code="list.promoCode" />
     <FissureJulyFinal2025 v-else-if="list.redirectUrl === 'dy2-fissure-july-final-2025'" :promo-code="list.promoCode" />
+    <WorldCup2025 v-else-if="list.redirectUrl === 'dy2-fifa-quiz-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -166,6 +167,7 @@ const newVip2025 = defineAsyncComponent(() => import("./hotpromo/2025-new-vip/20
 const IemDallas2025 = defineAsyncComponent(() => import("./hotpromo/iem-dallas-2025/IemDallas2025.vue"));
 const BlastRival2025 = defineAsyncComponent(() => import("./hotpromo/BlastRival2025/BlastRival2025.vue"));
 const Lh1Enc2025 = defineAsyncComponent(() => import("./hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue"));
+const WorldCup2025 = defineAsyncComponent(() => import("./hotpromo/worldcup-2025/WorldCup2025.vue"));
 const sportReferBetBonus = defineAsyncComponent(() =>
   import("./hotpromo/sport-refer-bet-bonus/sport-refer-bet-bonus.vue")
 );
@@ -236,7 +238,8 @@ export default defineComponent({
     FissureUniverseS5,
     EsportWorldCup2025,
     FifaCwcRedPacket,
-    FissureJulyFinal2025
+    FissureJulyFinal2025,
+    WorldCup2025
   },
   props: {
     list: {
