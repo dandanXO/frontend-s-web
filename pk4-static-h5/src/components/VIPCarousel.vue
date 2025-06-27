@@ -1,4 +1,9 @@
 <template>
+
+  <div class="valid-bet-div">
+    Current Valid Bet: {{store.currency.value}}&nbsp;<span>{{ store.getCurrentValidBet()}}</span>
+  </div>
+
   <Carousel
     ref="vipCarouselRef"
     :items-to-show="1"
@@ -51,6 +56,8 @@
       <Navigation />
     </template>
   </Carousel>
+
+
 </template>
 <script setup>
 import { defineModel, watch, onMounted, ref, computed, nextTick } from "vue";
@@ -374,6 +381,7 @@ watch(
     const vipInfo = vipItems.find(({ vipLevel }) => vipLevel === carouselVipLevel);
     const vipLevel = Number(store.vip.replace("VIP", ""));
     const currentDeposit = Number(store.getCurrentDeposit());
+    const currentValidBet= Number(store.getCurrentValidBet())
     const upgradeStatus = vipInfo.ugprade;
     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
 
@@ -434,40 +442,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-// $colors: (
-//   #6d96c6,
-//   #8c9b6a,
-//   #4ca1fc,
-//   #4c5efc,
-//   #d34cfc,
-//   #fc4cc4,
-//   #efa1f6,
-//   #ff9d86,
-//   #5bfc49,
-//   #efe639,
-//   #67c2ac,
-//   #ff7879,
-//   #d89053
-// );
-// @for $i from 0 through length($colors) - 1 {
-//   .vipitem#{$i} {
-//     .progress-bar-inner-bar {
-//       background: nth($colors, $i + 1); // Match color with vipitem
-
-//       .progress-bar-inner-bar-endpoint-circle {
-//         background: rgba(nth($colors, $i + 1), 0.16); /* 16% opacity */
-//       }
-
-//       .progress-bar-inner-bar-endpoint-circle__outer {
-//         background: rgba(nth($colors, $i + 1), 0.25); /* 25% opacity */
-//       }
-
-//       .progress-bar-inner-bar-endpoint-circle__inner {
-//         background: nth($colors, $i + 1); // Full color
-//       }
-//     }
-//   }
-// }
 
 $colors: (
   #072569,
@@ -516,6 +490,18 @@ $gradients: (
     .progress-bar-inner-bar {
       background: nth($gradients, $i + 1);
     }
+  }
+}
+
+.valid-bet-div{
+  text-align:left;
+  width: 100%;
+  padding: 8px 20px 0px;
+
+  span{
+    color: #ffd600;
+    font-size: 18px;
+    font-weight: bold;
   }
 }
 
@@ -793,7 +779,7 @@ $gradients: (
 }
 
 .carousel__slide {
-  padding: 20px 18px 30px;
+  padding: 5px 18px 30px;
 
   &.carousel__slide--next .vipitem,
   &.carousel__slide--prev .vipitem {

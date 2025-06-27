@@ -43,6 +43,7 @@ export const userStore = defineStore("userStore", {
       phoneVerified: false,
       emailVerified: false,
       currentDeposit: "",
+      currentValidBet: "",
       levelUpDeposit: "",
       hasDeposit: "",
       currentMailData: {},
@@ -244,6 +245,7 @@ export const userStore = defineStore("userStore", {
             evip,
             hasDeposit,
             currentDeposit,
+            currentValidBet,
             levelUpDeposit,
             guest,
             memberId,
@@ -267,6 +269,7 @@ export const userStore = defineStore("userStore", {
           this.phoneVerified = phoneVerified;
           this.emailVerified = emailVerified;
           this.currentDeposit = parseFloat(currentDeposit);
+          this.currentValidBet= parseFloat(currentValidBet);
           this.levelUpDeposit = parseFloat(levelUpDeposit);
           this.hasDeposit = hasDeposit;
           this.guest = guest;
@@ -377,6 +380,9 @@ export const userStore = defineStore("userStore", {
     },
     getCurrentDeposit() {
       return this.currentDeposit;
+    },
+    getCurrentValidBet() {
+      return this.currentValidBet;
     }
   }
 });
