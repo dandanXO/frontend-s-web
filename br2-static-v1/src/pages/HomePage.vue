@@ -3126,6 +3126,7 @@ const gotoFloatPromo = (val) => {
 };
 
 let intervalId;
+let jackpotApiTimer;
 let jackpotTimer;
 
 watch(
@@ -3160,20 +3161,42 @@ const checkSpinWheel = () => {
   }
 };
 
+function animateValue(obj, prop, start, end, duration) {
+  const startTime = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1); // Clamp to [0,1]
+
+    // Linear interpolation
+    obj[prop] = Math.floor(start + (end - start) * progress);
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
 const getJackpotAmt = () => {
   api.get("/app/jackpot").then((res) => {
     // debugger;
     if (res.code === 0) {
-      ui.jackpotAmt = res.data.value;
+      const startAmt= ui.jackpotAmt;
+
+      animateValue(ui, 'jackpotAmt', startAmt, res.data.value, 500);
       getJackpotIncrease();
     }
   });
 };
 
 const getJackpotIncrease = () => {
+  clearInterval(jackpotTimer)
   jackpotTimer = setInterval(() => {
-    ui.jackpotAmt += 1;
-  }, 500);
+    const randomInt = Math.floor(Math.random() * 2) + 1;
+    ui.jackpotAmt += randomInt;
+  }, 1000);
 };
 
 const showSpinWheel = () => {
@@ -3220,6 +3243,9 @@ onMounted(() => {
   checkHbPromo();
   checkSpinLuckyWheelPromo();
   getJackpotAmt();
+
+  jackpotApiTimer = setInterval(getJackpotAmt, 5000);
+
   SwiperCore.use([Grid, Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
@@ -3240,6 +3266,7 @@ window.addEventListener("beforeunload", () => {
 onBeforeUnmount(() => {
   clearInterval(intervalId);
   clearInterval(jackpotTimer);
+  clearInterval(jackpotApiTimer)
 });
 </script>
 
