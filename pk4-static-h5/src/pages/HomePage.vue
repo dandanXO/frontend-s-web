@@ -290,7 +290,7 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                  return `url(https://pk1.game/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -333,7 +333,7 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                  return `url(https://pk1.game/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -376,7 +376,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                return `url(https://pk1.game/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -418,7 +418,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://pk1.game/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -489,7 +489,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://pk1.game/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -525,7 +525,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://pk1.game/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -607,7 +607,7 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://m.b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(https://pk1.game/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -657,7 +657,7 @@
                           try {
                             return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(https://pk1.game/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -730,7 +730,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://pk1.game/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -769,7 +769,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://pk1.game/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -918,7 +918,7 @@
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(https://pk1.game/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         }
                       })()
@@ -949,7 +949,7 @@
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(https://pk1.game/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         }
                       })()
@@ -1018,7 +1018,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://pk1.game/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -1065,7 +1065,7 @@
                             try {
                               return `url(${imgURLGame}${item.icon})`;
                             } catch (e) {
-                              return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(https://pk1.game/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           }
                         })()
@@ -1121,7 +1121,7 @@
                       try {
                         return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
-                        return `url(https://m.b9mega1.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(https://pk1.game/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
                       }
                     })()
                   }"
@@ -1152,14 +1152,14 @@
             </div>
             <div class="app app_android">
               <div class="icon">
-                
+
                 <img src="../assets/images/index/app-android.png">
               </div>
               <div class="app-text">
                 <div class="type">App</div>
                 <div class="version">Android version</div>
               </div>
-              
+
               <div class="right-btn">
                 <img src="../assets/images/index/btn-right.png">
               </div>
@@ -1170,9 +1170,9 @@
               <div class="supp-main">24/7 support</div>
               <div class="supp-sub">If you still have questions, please contact us</div>
             </div>
-            
+
             <q-btn class="btn-primary" :href="ui.CSAUrl" target="_blank">Chat</q-btn>
-            
+
             <!-- <a class="btn-primary" :href="ui.CSAUrl" target="_blank">
               <img src="../assets/images/index/cs-cs.png" />
             </a> -->
@@ -1666,9 +1666,7 @@
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
   <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" />
-  <!-- <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" /> -->
-  <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
-  
+
 </template>
 
 <script setup>
@@ -1756,10 +1754,7 @@ const handleScroll = () => {
 
   lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 };
-onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
-  store.getMemberInfo();
-});
+
 
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
@@ -4371,7 +4366,11 @@ onActivated(() => {
 
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
+
+
 onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+
   getPlatList();
   loadData();
   loadAnnouncement();
@@ -4382,6 +4381,7 @@ onMounted(() => {
   ui.shouldFetchDownloadAppUrl = true;
 
   if (store.hasToken()) {
+    store.getMemberInfo();
     checkCodeBonusModal();
   }
 
@@ -4806,14 +4806,14 @@ const checkGoogleLoginSetPwd = () => {
   padding: 5px;
   img {
     width: 100%;
-    
+
     &.absolute-hot {
       position: absolute;
       right: -10px;
       top: 0px;
       width: 18px;
       height: unset;
-      img { 
+      img {
         width: 25px;
       }
     }
@@ -5695,7 +5695,7 @@ const checkGoogleLoginSetPwd = () => {
         border-radius: 6px;
         font-weight: 700;
         cursor: pointer;
-        img { 
+        img {
           display: none;
         }
       }
@@ -5864,7 +5864,7 @@ const checkGoogleLoginSetPwd = () => {
   .platform-game-item {
     position: relative;
     > img {
-      // min-height: 145px;    
+      // min-height: 145px;
       min-height: 120px;
     }
 
@@ -5913,7 +5913,7 @@ const checkGoogleLoginSetPwd = () => {
     align-items: center;
     padding: 10px;
     width: 100%;
-    
+
     font-family: Microsoft YaHei UI;
       font-weight: 700;
       font-size: 12px;
@@ -5954,7 +5954,7 @@ const checkGoogleLoginSetPwd = () => {
   .btn-primary {
     border-radius: 20px;
   }
-  .supp-left{ 
+  .supp-left{
     font-weight: 700;
     font-size: 11px;
 
@@ -6411,7 +6411,7 @@ const checkGoogleLoginSetPwd = () => {
   background-image: unset;
   background-color: #090F1E;
   border: 1px solid #0666D3;
-  
+
   border-radius: 10px !important;
   max-width: 350px;
   width: 100%;
