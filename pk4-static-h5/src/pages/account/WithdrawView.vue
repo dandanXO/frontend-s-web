@@ -250,10 +250,12 @@
               <div class="desc-wrapper">
                 <div class="desc">
                   <img src="../../assets/images/account/withdraw-max.svg" />
-                  {{ $t("withdraw.withdrawMaxTimes") }}
+                  {{ $t("withdraw.withdrawMaxAmount") }}
                 </div>
               </div>
-              <div class="desc" style="color: #fbab1b">{{ selectedWithdrawalMethod.withdrawMaxTimes }}</div>
+              <div class="desc" style="color: #fbab1b">
+                RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawMaxAmount) }}
+              </div>
             </div>
           </div>
 

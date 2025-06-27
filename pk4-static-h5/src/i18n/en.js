@@ -489,6 +489,7 @@ export default {
     withdrawable: "Withdrawable",
     withdrewAmount: "Withdrew Amount",
     withdrawMaxTimes: "Remaining Withdrawal Attempts",
+    withdrawMaxAmount: "Remaining Withdrawal Amount",
     dailyLimit: "Daily Limit",
     remainWagers: "Remain Wagers",
     withdrawTutorial: "Withdraw Tutorial",
