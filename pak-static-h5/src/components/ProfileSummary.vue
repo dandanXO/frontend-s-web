@@ -256,7 +256,7 @@ const getFastAccessPromo = () => {
   if (store.claimedFtdPrivilege === false) {
     eligiblePromoCount.value++;
   }
-  api.get(`/promo/fast-access-promo?language=${i18nStoreLanguage.languageVal}`).then(async (res) => {
+  api.get(`/opt-session/promo/fast-access-promo?language=${i18nStoreLanguage.languageVal}`).then(async (res) => {
     if (res.code === 0) {
       let _fastAccessPromo;
       if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
