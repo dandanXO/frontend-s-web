@@ -52,7 +52,7 @@ export const userStore = defineStore("userStore", {
       aaid: "",
       googleadid: "",
       visitorId: "",
-      h5Url: "https://m.b9mega1.com/",
+      h5Url: "https://pk1.game/",
       isFbPixel: false,
       isOldFBPixel: false,
       hasUpdatedOneSignal: false,

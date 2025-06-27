@@ -1,4 +1,4 @@
-package com.ind.appb9mega1;
+package com.ind.apppk1game;
 
 import android.app.Application;
 
