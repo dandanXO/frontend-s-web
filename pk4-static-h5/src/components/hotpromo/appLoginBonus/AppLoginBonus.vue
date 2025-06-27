@@ -1,18 +1,26 @@
 <template>
   <div>
-    <img
-      class="promo-banner-img"
-      src="./../../../assets/images/promotion/hotpromo/app-login-bonus/promo-banner.png"
-    />
+    <img class="promo-banner-img" src="./../../../assets/images/promotion/hotpromo/app-login-bonus/promo-banner.png" />
     <div class="app-login-bonus">
       <div class="link-to-phone-container">
         <div class="link-to-phone">
           <div class="link-to-phone__left">
             <img class="icon" src="./../../../assets/images/promotion/hotpromo/app-login-bonus/link-phone-icon.png" />
             Bind phone
-            <img class="tick" :src="require(`./../../../assets/images/promotion/hotpromo/app-login-bonus/tick-${ hasBindPhone ? 'active' : 'inactive'}.png`)" />
+            <img
+              class="tick"
+              :src="
+                require(`./../../../assets/images/promotion/hotpromo/app-login-bonus/tick-${
+                  hasBindPhone ? 'active' : 'inactive'
+                }.png`)
+              "
+            />
           </div>
-          <div class="link-to-phone__rgt"><q-btn class="btn-primary" @click="handleClaimBtnClick()">{{ hasBindPhone ? 'Claim' : 'Link' }}</q-btn></div>
+          <div class="link-to-phone__rgt">
+            <q-btn class="btn-primary" :class="hadClaim ? 'disabled' : ''" @click="handleClaimBtnClick()">
+              {{ hadClaim ? "Claimed" : hasBindPhone ? "Claim" : "Link" }}
+            </q-btn>
+          </div>
         </div>
       </div>
       <!-- <div class="download-container">
@@ -37,7 +45,7 @@
         </div>
       </div>
 
-      
+
 
       <div class="things-to-note-container">
         <img
@@ -95,15 +103,48 @@
         </span>
       </div> -->
       <div class="section event-details-container">
-        <img class="section-title" :src="require(`../../../assets/images/promotion/hotpromo/app-login-bonus/event-details-${languageVal}.png`)">
+        <img
+          class="section-title"
+          :src="require(`../../../assets/images/promotion/hotpromo/app-login-bonus/event-details-${languageVal}.png`)"
+        />
         <template v-if="languageVal === 'en'">
-          <p><span class="yellow">B9.game</span> Exclusive Offer: Bind Your Phone & Get <span class="red">{{store.currency.value}}100</span> Instantly!</p>
-          <p>New to <span class="yellow">B9.game</span>? Just bind your mobile number after registration and receive an instant reward of <span class="red">{{store.currency.value}}100</span>—no deposit required!</p>
-          <p>It’s quick, easy, and secure. Bind now to claim your bonus and enjoy all the exciting features and rewards <span class="yellow">B9.game</span> has to offer.</p>        </template>
+          <p>
+            <span class="yellow">B9.game</span>
+            Exclusive Offer: Bind Your Phone & Get
+            <span class="red">{{ store.currency.value }}100</span>
+            Instantly!
+          </p>
+          <p>
+            New to
+            <span class="yellow">B9.game</span>
+            ? Just bind your mobile number after registration and receive an instant reward of
+            <span class="red">{{ store.currency.value }}100</span>
+            —no deposit required!
+          </p>
+          <p>
+            It’s quick, easy, and secure. Bind now to claim your bonus and enjoy all the exciting features and rewards
+            <span class="yellow">B9.game</span>
+            has to offer.
+          </p>
+        </template>
         <template v-if="languageVal === 'ur'">
-          <p><span class="yellow">B9.game</span> کی خصوصی پیشکش: اپنا فون بائنڈ کریں اور فوراً حاصل کریں <span class="red">{{STORE.CURRENCY.VALUE}}100</span>!</p>
-          <p><span class="yellow">B9.game</span> پر نئے ہیں؟ صرف رجسٹریشن کے بعد اپنا موبائل نمبر بائنڈ کریں اور فوراً حاصل کریں <span class="red">{{STORE.CURRENCY.VALUE}}100</span> کا انعام — بغیر کسی ڈپازٹ کے!</p>
-          <p>یہ آسان، تیز اور محفوظ ہے۔ ابھی بائنڈ کریں اور اپنے بونس کا دعویٰ کریں، اور <span class="yellow">B9.game</span> کی تمام زبردست خصوصیات اور انعامات سے لطف اٹھائیں۔</p>
+          <p>
+            <span class="yellow">B9.game</span>
+            کی خصوصی پیشکش: اپنا فون بائنڈ کریں اور فوراً حاصل کریں
+            <span class="red">{{ STORE.CURRENCY.VALUE }}100</span>
+            !
+          </p>
+          <p>
+            <span class="yellow">B9.game</span>
+            پر نئے ہیں؟ صرف رجسٹریشن کے بعد اپنا موبائل نمبر بائنڈ کریں اور فوراً حاصل کریں
+            <span class="red">{{ STORE.CURRENCY.VALUE }}100</span>
+            کا انعام — بغیر کسی ڈپازٹ کے!
+          </p>
+          <p>
+            یہ آسان، تیز اور محفوظ ہے۔ ابھی بائنڈ کریں اور اپنے بونس کا دعویٰ کریں، اور
+            <span class="yellow">B9.game</span>
+            کی تمام زبردست خصوصیات اور انعامات سے لطف اٹھائیں۔
+          </p>
         </template>
         <!-- <div class="scrollable-table">
           <table class="content-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
@@ -151,7 +192,7 @@
                   </span>
                 </td> ->
               </tr>
-              
+
               <tr>
                 <td>
                   <span>100</span>
@@ -215,7 +256,7 @@
         <img class="section-title" :src="require(`../../../assets/images/promotion/hotpromo/app-login-bonus/examples-${languageVal}.png`)">
         <template v-if="languageVal === 'en'">
           <p>For example, member A tops up <span class="red">100TK</span> for the first time and gets <span class="red">119TK</span> as a reward. Before withdrawing, he needs to complete at least 10 times the turnover requirement, that is:</p>
-          
+
           <span class="note">100 principal x 10 + 119 reward x 10 = 2190 turnover</span>
         </template>
         <template v-if="languageVal === 'ur'">
@@ -223,7 +264,7 @@
           <span class="note">100 اصل رقم x 10 + 119 انعام x 10 = 2190 ٹرن اوور</span>
         </template>
       </div>
-      
+
       <div class="section how-to-receive-container">
         <img class="section-title" :src="require(`../../../assets/images/promotion/hotpromo/app-login-bonus/how-to-receive-${languageVal}.png`)">
         <template v-if="languageVal === 'en'">
@@ -236,7 +277,12 @@
         </template>
       </div> -->
       <div class="section terms-and-conditions-container">
-        <img class="section-title" :src="require(`../../../assets/images/promotion/hotpromo/app-login-bonus/terms-and-conditions-${languageVal}.png`)">
+        <img
+          class="section-title"
+          :src="
+            require(`../../../assets/images/promotion/hotpromo/app-login-bonus/terms-and-conditions-${languageVal}.png`)
+          "
+        />
         <ul>
           <!-- <li>{{ $t("hotPromo.appLoginBonus.termsCondition1") }}</li>
           <li>
@@ -302,6 +348,9 @@ const updateBindEvent = async (event) => {
 };
 
 const claimAppLoginBonus = () => {
+  // isShowReceiveDialog.value= true;
+  // bonusAmount.value = 100;
+
   eventapi
     .post(`/session/app-login-bonus/claimBonus?promoCode=${props.promocode}`)
     .then((res) => {
@@ -309,12 +358,7 @@ const claimAppLoginBonus = () => {
         isShowReceiveDialog.value = true;
         bonusAmount.value = res.data;
       } else {
-        $q.notify({
-          message: i18n.global.t("error." + res.code) || "Error",
-          color: "negative",
-          position: "top",
-          timeout: 2000
-        });
+        getAppLoginBonusData();
       }
     })
     .catch(() => {});
@@ -322,11 +366,9 @@ const claimAppLoginBonus = () => {
 const getAppLoginBonusData = () => {
   eventapi.get(`/session/app-login-bonus/init?promoCode=${props.promocode}`).then((res) => {
     if (res.code === 0) {
-      // hasBindEmail.value = res.data.hadBindEmail;
       hasBindPhone.value = res.data.hadBindPhone;
       hadClaim.value = res.data.hadClaim;
       isAppLogin.value = res.data.isAppLogin;
-
     }
   });
 };
@@ -354,12 +396,12 @@ onMounted(() => {
 .app-login-bonus {
   padding: 0px 20px;
   .link-to-phone-container {
-    border: 1px solid #252A3A;
+    border: 1px solid #252a3a;
     border-radius: 10px;
     background: #121829;
     padding: 8px;
     .link-to-phone {
-      background: #FFFFFF14;
+      background: #ffffff14;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -381,6 +423,13 @@ onMounted(() => {
         }
       }
     }
+
+    .disabled {
+      filter: grayscale(50%);
+      cursor: not-allowed;
+      pointer-events: none;
+      color: #ddd;
+    }
   }
   .section {
     margin-top: 20px;
@@ -389,7 +438,7 @@ onMounted(() => {
       width: unset;
       margin: 0 auto 10px;
     }
-    
+
     p {
       font-weight: 700;
       font-size: 12px !important;
@@ -397,15 +446,15 @@ onMounted(() => {
       margin-bottom: 10px;
       span {
         &.yellow {
-          color:#FFF96F;
+          color: #fff96f;
         }
         &.red {
-          color: #FF0000;
+          color: #ff0000;
         }
       }
     }
     span.note {
-      color: #CCFF00;
+      color: #ccff00;
       font-weight: 700;
       font-size: 12px;
       line-height: 15px;
@@ -449,7 +498,7 @@ onMounted(() => {
   margin-top: 20px;
   white-space: break-spaces !important;
   thead {
-    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+    background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
 
     th {
       background: unset !important;
@@ -460,10 +509,10 @@ onMounted(() => {
   tbody {
     tr {
       background: none !important;
-      
-        td {
-          background-color: #121829 !important;
-        }
+
+      td {
+        background-color: #121829 !important;
+      }
     }
   }
 }
