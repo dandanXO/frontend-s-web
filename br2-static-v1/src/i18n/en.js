@@ -832,6 +832,17 @@ export default {
       signIn: "Sign in",
       signedIn: "Signed in"
     },
+    redepositBonus: {
+      description: "Receive an extra 100% bonus on your first deposit of the day",
+      tnc01: "This promotion is valid for all members who make their first deposit of the day.",
+      tnc02: "The bonus amount will be 100% of the deposited value, with no maximum limit.",
+      tnc03: "The bonus (including the principal) requires 12 times valid wagering to be eligible for withdrawal.",
+      tnc04:
+        "Each member can participate once per day, and the bonus is only applicable to the first transaction of the day.",
+      tnc05:
+        "Only the account holder may claim the bonus. In case of irregular behavior, the bonus may be canceled, deducted, frozen, or the account may be blacklisted.",
+      tnc06: "The platform reserves the final right of interpretation for this promotion."
+    },
     megaSharingWheel: {
       wheelTitle: "Mega Sharing Roulette",
       missionTitle: "Rewards",
@@ -902,6 +913,7 @@ export default {
     successfulDepositMember: "All members who have made at least one successful deposit",
     betMember: "All members who placed bets",
     newMember: "All new registered member",
+    allMembers: "All members",
     desc: "Description",
     tnc: "Terms and Conditions",
     cashbackWeekly: {

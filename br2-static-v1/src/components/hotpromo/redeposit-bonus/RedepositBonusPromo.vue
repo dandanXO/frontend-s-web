@@ -9,48 +9,39 @@
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
-          Duração
+          {{ $t("hotPromo.duration") }}
         </div>
-        <div class="bar-desc">Longo prazo (contínuo)</div>
+        <div class="bar-desc">
+          <div class="bar-desc">{{ $t("hotPromo.longTerm") }}</div>
+        </div>
       </div>
 
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
-          Elegibilidade
+          {{ $t("hotPromo.eligibility") }}
         </div>
-        <div class="bar-desc">Todos os membros que fizeram pelo menos um depósito com sucesso</div>
+        <div class="bar-desc">{{ $t("hotPromo.allMembers") }}</div>
       </div>
 
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-description.svg" />
-          Descrição
+          {{ $t("hotPromo.desc") }}
         </div>
-        <div class="bar-desc">Os membros podem receber um bônus de 100% no segundo depósito</div>
+        <div class="bar-desc">{{ $t("hotPromo.redepositBonus.description") }}</div>
       </div>
     </div>
 
-    <div class="promo-subtitle">Termos e Condições</div>
+    <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
 
     <div class="tnc-content">
       <ol>
-        <li>Cada membro pode aproveitar este bônus de segundo depósito apenas uma vez.</li>
-        <li>
-          Após realizar com sucesso o segundo depósito durante o período da promoção, os membros podem solicitar um bônus de
-          100% com base no valor do segundo depósito.
+        <li v-for="index in 6" :key="index">
+          {{ $t(`hotPromo.redepositBonus.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
-        <li>O valor mínimo do depósito é de R$100.</li>
-        <li>O valor máximo do bônus de segundo depósito é de R$1000.</li>
-        <li>Saques não podem ser feitos antes que o bônus seja creditado na conta.</li>
-        <li>
-          Para participar desta promoção, os membros devem enviar uma solicitação clicando no botão "Participar Agora" nesta página.
-        </li>
-        <li>O valor do depósito e o bônus devem ser apostados pelo menos 36 vezes antes que seja possível realizar um saque.</li>
-        <li>Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção.</li>
       </ol>
     </div>
-
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
@@ -123,7 +114,7 @@ onMounted(() => {
   background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
   width: 100%;
   color: #2d2d2d;
-  border-radius:8px;
+  border-radius: 8px;
   font-weight: bold;
 
   img {

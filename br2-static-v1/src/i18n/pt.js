@@ -844,6 +844,17 @@ export default {
       signIn: "Assinar",
       signedIn: "Assinado"
     },
+    redepositBonus: {
+      description: "Receba um bônus extra de 100% no primeiro depósito do dia",
+      tnc01: "Esta promoção é válida para todos os membros que realizarem o primeiro depósito do dia.",
+      tnc02: "O valor do bônus será de 100% do valor depositado, sem limite máximo.",
+      tnc03: "O bônus (incluir o principal) requer 12 vezes de apostas válidas para sacar.",
+      tnc04:
+        "Cada membro pode participar uma vez por dia, sendo o bônus aplicável somente à primeira transação do dia.",
+      tnc05:
+        "Apenas o titular da conta pode realizar a operação de recebimento do bônus. Em caso de comportamento irregular, o bônus poderá ser cancelado, deduzido, congelado ou a conta adicionada à lista negra.",
+      tnc06: "A plataforma reserva-se o direito final de interpretação desta promoção."
+    },
     megaSharingWheel: {
       wheelTitle: "Roleta Mega Compartilhada",
       missionTitle: "Recompensas",
@@ -914,6 +925,7 @@ export default {
     successfulDepositMember: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
     betMember: "Todos os membros que realizaram apostas",
     newMember: "Todos os novos membros registrados",
+    allMembers: "Todos os membros",
     desc: "Descrição",
     tnc: "Regras da Promoção",
     cashbackWeekly: {
@@ -948,7 +960,6 @@ export default {
       eligibility: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
       description:
         "Faça o upgrade para o nível VIP correspondente com base no valor acumulado de apostas na conta do membro.",
-      termsAndConditions: "Regras da Promoção",
       bet: "APOSTA",
       vipLevel: "VIP Nível",
       tnc01:
