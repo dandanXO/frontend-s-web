@@ -272,7 +272,8 @@ export default {
     withdrawing: "Retirando...",
     unbinding: "Desvinculando",
     deposit: "Depositar",
-    updated: "Atualizado"
+    updated: "Atualizado",
+    continue: "Continuar"
   },
   notify: {
     noRecord: "Nenhum Registro",
@@ -363,7 +364,8 @@ export default {
     deposited: "Depositado",
     youWillBeRedirect: "Você será redirecionado para a página do seu banco para completar o depósito.",
     afterDepositSuccessfully: "Após o depósito ser concluído com sucesso, será refletido aqui.",
-    useFtdPrivilege: "Aproveite o Benefício de Primeiro Depósito em Slots"
+    useFtdPrivilege: "Aproveite o Benefício de Primeiro Depósito em Slots",
+    hasUnusedPrivilege: "Você tem um desconto que ainda não resgatou. Tem certeza de que deseja enviá-lo?"
   },
   withdraw: {
     cashBalance: "Saldo em Dinheiro",
