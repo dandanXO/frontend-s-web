@@ -524,7 +524,7 @@ onUnmounted(() => {
   top: 0;
   right: 0;
   // background: rgb(35, 38, 38);
-  
+
   background: #1B2339;
   border-radius: 20px 0 0 20px;
 
@@ -709,7 +709,7 @@ onUnmounted(() => {
       width: 100%;
       // gap: 5px;
       gap: unset;
-      // :not(:last-child) { 
+      // :not(:last-child) {
       //   margin-right: 2px;
       // }
       justify-content: space-between;
@@ -741,6 +741,7 @@ onUnmounted(() => {
 
     .q-btn {
       white-space: nowrap;
+      flex: 1;
       width: 100%;
       &.btn-primary {
         border: 0;
@@ -844,7 +845,7 @@ onUnmounted(() => {
       .gift-wrapper {
         // height: 20px;
         // width: 20px;
-        
+
         padding: 0px 12px;
         // padding-left: 20px;
 
