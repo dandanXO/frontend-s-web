@@ -82,10 +82,10 @@
               <div
                 class="inner"
                 :class="{
-                  isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel',
+                  isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel' ||  selectedPromo.redirectUrl === 'spin-lucky-wheel-2',
                   envelope:
                     selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope',
-                  wheel: selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel'
+                  wheel: (selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel')||  selectedPromo.redirectUrl === 'spin-lucky-wheel-2'
                 }"
               >
                 <div
@@ -113,7 +113,7 @@
                   <div
                     class="hot-promo-div"
                     :class="{
-                      isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel'
+                      isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel'||selectedPromo.redirectUrl === 'spin-lucky-wheel-2'
                     }"
                     v-if="selectedPromo.hasPromo"
                   >
