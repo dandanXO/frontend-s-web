@@ -3525,7 +3525,7 @@ export default {
     'Sport Live Sensitive Word': '体育直播敏感词设定',
     'Sport Live Block Member': '聊天室会员禁言设定',
     'Sport Live Chat Vip Status': '聊天室VIP发言设定',
-    'Sport Live History Block': '聊天室记录禁言设定',
+    'Sport Live History Block': '聊天室记录',
     'Sport Live Monitor': '体育直播监控',
     'Affiliate Settlement Setting': '代理佣金设置',
     'Sport Live Admin': '主播后台管理员设定',
