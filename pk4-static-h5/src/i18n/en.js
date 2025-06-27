@@ -831,10 +831,10 @@ export default {
     copySuccess: "Serial Number Copied to clipboard",
   },
   customerServiceVerifier: {
-    mainTitle: "B9.GAME",
+    mainTitle: "PK1.GAME",
     subTitle: "Customer Service Verifier",
     contentPara01:
-      "To prevent scams using B9.GAME's list, you can verify the Telegram or Discord account you are chatting&nbsp;with ",
+      "To prevent scams using PK1.GAME's list, you can verify the Telegram or Discord account you are chatting&nbsp;with ",
     contentPara02: "Please enter the agent account ID and click the Check button"
   },
   playerGuide: {
@@ -961,7 +961,7 @@ export default {
       beginnersGuide: "BEGINNER'S GUIDE",
       rewardDetails: "REWARD DETAILS",
       beginnersGuideTxt1_1: "1. Follow whatsapp and subscribe to",
-      b9game: "B9.game",
+      b9game: "PK1.GAME",
       beginnersGuideTxt1_2: "channel",
       beginnersGuideTxt2: "2. Associate and verify email address",
       rewardDetailTxt1: "The maximum bonus can reach",
@@ -1005,7 +1005,7 @@ export default {
       termsCondition7:
         "This bonus is only applicable to players in the specified game category. The bonus cannot be used to accumulate betting turnover, calculate arbitrage behavior or be used in combination with other technical means. If violations are found, the bonus will be deemed invalid, all bonuses and profits will be cancelled, and b9.game reserves the right to close the account.",
       termsCondition8:
-        "B9.game reserves the right to change, suspend or terminate this activity at any time without prior notice.",
+        "PK1.game reserves the right to change, suspend or terminate this activity at any time without prior notice.",
       termsCondition9:
         "The final right of interpretation of all terms belongs to b9.game. b9.game reserves the right to refuse to deal with any disputes involving terms."
     },
@@ -1028,7 +1028,7 @@ export default {
       rule_03: "All rewards will be deposited directly into your wallet.",
       rule_04: "The bonus requires one turnover to withdraw.",
       rule_05:
-        "The right to interpret this event belongs to B9.game. If you have any questions, please contact customer service.",
+        "The right to interpret this event belongs to PK1.game. If you have any questions, please contact customer service.",
       silver: "Silver",
       gold: "Gold",
       diamond: "Diamond",

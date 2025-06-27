@@ -175,8 +175,8 @@
       </a> -->
     </div>
     <swiper
-      :slidesPerView="4"
-      :slidesPerGroup="4"
+      :slidesPerView="6"
+      :slidesPerGroup="6"
       :spaceBetween="10"
       :modules="[Navigation, Grid]"
       class="hometop-categories"
@@ -185,10 +185,10 @@
         <template v-if="item.icon !== 'lobby'">
           <swiper-slide @click="activateSlide(item)">
             <div class="category">
-              <img :src="`${getImageUrl(item.icon)}`" />
-              <div class="cat-label">
+              <img :src="`${getImageUrl(item)}`" />
+              <!-- <div class="cat-label">
                 {{ item.label }}
-              </div>
+              </div> -->
             </div>
           </swiper-slide>
         </template>
@@ -1953,8 +1953,8 @@ const translatedCategoriesList = computed(() => {
     label: t(`home.menu_${category.title.toLowerCase()}`)
   }));
 });
-const getImageUrl = (title) => {
-  return require(`../assets/images/index/category/hometop-${title.toLowerCase()}.png`);
+const getImageUrl = (img) => {
+  return require(`../assets/images/index/category/hometop-${img.active?img.icon.toLowerCase()+'-active':img.icon.toLowerCase()}.png`);
 };
 
 const activeCategoryLabel = computed(() => {
