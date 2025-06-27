@@ -98,8 +98,12 @@ if (isIOS) {
 
     &.isOwn {
     //   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-      background: linear-gradient(90deg, #0287f2, #0664d2);
+      // background: linear-gradient(90deg, #0287f2, #0664d2);
+      background: #cba46b !important;
       color: #fff;
+      .betVolume {
+        color: #3c0e10;
+      }
     }
 
     .rank {
@@ -121,13 +125,13 @@ if (isIOS) {
       background: #332e2d;
     }
     &:hover {
-      background: linear-gradient(180deg, #730319 0%, #da093a 100%);
+      // background: linear-gradient(180deg, #730319 0%, #da093a 100%);
 
-      color: #3c0e10;
-      background: #cba46b;
-      .betVolume {
-        color: #3c0e10;
-      }
+      // color: #3c0e10;
+      // background: #cba46b;
+      // .betVolume {
+      //   color: #3c0e10;
+      // }
     }
     .betVolume {
       color: #dac385;
