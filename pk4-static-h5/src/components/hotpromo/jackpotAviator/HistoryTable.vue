@@ -97,7 +97,8 @@ if (isIOS) {
     }
 
     &.isOwn {
-      background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    //   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+      background: linear-gradient(90deg, #0287f2, #0664d2);
       color: #fff;
     }
 
