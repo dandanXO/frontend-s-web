@@ -270,7 +270,8 @@ export default {
     loss: "Loss",
     unbinding: "Unbinding",
     deposit: "Deposit",
-    updated: "Updated"
+    updated: "Updated",
+    continue: "Continue"
   },
   notify: {
     noRecord: "No Record",
@@ -358,7 +359,8 @@ export default {
     wagerExample: "Eg. Deposit R$1,000, require R$10,000 wager in slot games",
     deposited: "Deposited",
     youWillBeRedirect: "You will be redirected to your bank page to complete the deposit.",
-    afterDepositSuccessfully: "After deposited successfully, it will be reflected here."
+    afterDepositSuccessfully: "After deposited successfully, it will be reflected here.",
+    hasUnusedPrivilege: "You have a discount that you haven’t redeemed yet. Are you sure you want to send it?"
   },
   withdraw: {
     cashBalance: "Cash Balance",

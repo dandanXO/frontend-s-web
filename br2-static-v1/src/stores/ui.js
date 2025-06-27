@@ -1,6 +1,16 @@
 import { defineStore } from "pinia";
 import { useRoute } from "vue-router";
 
+/**
+ * @typedef {Object} NotificationOptions
+ * @property {'success'|'error'|'warning'|'red-packet'|'info'} type - The type of notification.
+ * @property {Object} [params] - Additional parameters for the notification.
+ * @property {String} [message] - The notification message.
+ * @property {String} [confirmBtnText] - The text of confirm button.
+ * @property {String} [cancelBtnText] - The text of cancel button.
+ * @property {string[]} actions - The actions of notification. Default: ['confirm', 'cancel']
+ */
+
 export const useUI = defineStore("ui-store", {
   state: () => {
     return {
@@ -18,7 +28,10 @@ export const useUI = defineStore("ui-store", {
       loginView: "",
       promoBg: "",
       hideDownload: false,
-      jackpotAmt: 0
+      jackpotAmt: 0,
+      notificationQueue: [],
+      notificationZIndex: 9500,
+      duringNotificationAnimation: false
     };
   },
   actions: {
@@ -37,6 +50,41 @@ export const useUI = defineStore("ui-store", {
     },
     changePromoName(name) {
       this.pageName = name;
+    },
+    /**
+     * Adds a notification to the queue with a unique ID and z-index.
+     *
+     * @param {NotificationOptions} options - The notification options.
+     */
+    notify(options) {
+      return new Promise((resolve, reject) => {
+        const id = `${Date.now()}-${Math.floor(Math.random() * 100)}`;
+        const notificationOjb = {
+          ...options,
+          id,
+          zIndex: this.notificationZIndex++,
+          actions: options.actions || ["confirm", "cancel"],
+          _onConfirm: () => resolve({ type: "confirm" }),
+          _onCancel: () => resolve({ type: "cancel" })
+        };
+        this.notificationQueue.push(notificationOjb);
+      });
+    },
+    async removeNotification(id, type) {
+      console.log(id);
+      const index = this.notificationQueue.findIndex((notification) => notification.id === id);
+      if (index < 0) return;
+      this.duringNotificationAnimation = true;
+      setTimeout(() => {
+        if (type === "confirm" && this.notificationQueue[index]._onConfirm) {
+          this.notificationQueue[index]._onConfirm();
+        }
+        if (type === "cancel" && this.notificationQueue[index]._onCancel) {
+          this.notificationQueue[index]._onCancel();
+        }
+        this.notificationQueue.splice(index, 1);
+        this.duringNotificationAnimation = false;
+      }, 500);
     }
   }
 });
