@@ -12,7 +12,11 @@
             Bind phone
             <img class="tick" :src="require(`./../../../assets/images/promotion/hotpromo/app-login-bonus/tick-${ hasBindPhone ? 'active' : 'inactive'}.png`)" />
           </div>
-          <div class="link-to-phone__rgt"><q-btn class="btn-primary" @click="handleClaimBtnClick()">{{ hasBindPhone ? 'Claim' : 'Link' }}</q-btn></div>
+          <div class="link-to-phone__rgt">
+            <q-btn class="btn-primary"
+                   :class="hadClaim ? 'disabled' : '' "
+                   @click="handleClaimBtnClick()">{{
+              hadClaim ? 'Claimed' : hasBindPhone ? 'Claim' : 'Link' }}</q-btn></div>
         </div>
       </div>
       <!-- <div class="download-container">
@@ -37,7 +41,7 @@
         </div>
       </div>
 
-      
+
 
       <div class="things-to-note-container">
         <img
@@ -151,7 +155,7 @@
                   </span>
                 </td> ->
               </tr>
-              
+
               <tr>
                 <td>
                   <span>100</span>
@@ -215,7 +219,7 @@
         <img class="section-title" :src="require(`../../../assets/images/promotion/hotpromo/app-login-bonus/examples-${languageVal}.png`)">
         <template v-if="languageVal === 'en'">
           <p>For example, member A tops up <span class="red">100TK</span> for the first time and gets <span class="red">119TK</span> as a reward. Before withdrawing, he needs to complete at least 10 times the turnover requirement, that is:</p>
-          
+
           <span class="note">100 principal x 10 + 119 reward x 10 = 2190 turnover</span>
         </template>
         <template v-if="languageVal === 'ur'">
@@ -223,7 +227,7 @@
           <span class="note">100 اصل رقم x 10 + 119 انعام x 10 = 2190 ٹرن اوور</span>
         </template>
       </div>
-      
+
       <div class="section how-to-receive-container">
         <img class="section-title" :src="require(`../../../assets/images/promotion/hotpromo/app-login-bonus/how-to-receive-${languageVal}.png`)">
         <template v-if="languageVal === 'en'">
@@ -303,12 +307,16 @@ const updateBindEvent = async (event) => {
 }
 
 const claimAppLoginBonus = () => {
+  // isShowReceiveDialog.value= true;
+  // bonusAmount.value = 100;
+
   eventapi
     .post(`/session/app-login-bonus/claimBonus?promoCode=${props.promocode}`)
     .then((res) => {
       if (res.code === 0) {
         isShowReceiveDialog.value= true;
         bonusAmount.value = res.data;
+        getAppLoginBonusData();
       }
     })
     .catch(() => {});
@@ -316,11 +324,9 @@ const claimAppLoginBonus = () => {
 const getAppLoginBonusData = () => {
   eventapi.get(`/session/app-login-bonus/init?promoCode=${props.promocode}`).then((res) => {
     if (res.code === 0) {
-      // hasBindEmail.value = res.data.hadBindEmail;
       hasBindPhone.value = res.data.hadBindPhone;
       hadClaim.value = res.data.hadClaim;
       isAppLogin.value = res.data.isAppLogin;
-
     }
   });
 };
@@ -375,6 +381,13 @@ onMounted(() => {
         }
       }
     }
+
+    .disabled {
+      filter: grayscale(50%);
+      cursor: not-allowed;
+      pointer-events: none;
+      color: #ddd;
+    }
   }
   .section {
     margin-top: 20px;
@@ -383,7 +396,7 @@ onMounted(() => {
       width: unset;
       margin: 0 auto 10px;
     }
-    
+
     p {
       font-weight: 700;
       font-size: 12px !important;
@@ -454,7 +467,7 @@ onMounted(() => {
   tbody {
     tr {
       background: none !important;
-      
+
         td {
           background-color: #121829 !important;
         }
