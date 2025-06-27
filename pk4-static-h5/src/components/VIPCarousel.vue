@@ -21,8 +21,8 @@
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements" v-if="vipIndex !== vipItems.length - 1">
                 {{ $t("vip.accumulateDeposit") }}
-                <!-- {{ props.onlyShowCurrentLevel ? vipItems[vip.vipLevel + 1].ugprade : vipItems[vipIndex + 1].ugprade }} -->
-                {{ convertToCommaAmount(store.levelUpDeposit, null, 0) }}
+                {{ props.onlyShowCurrentLevel ? vipItems[vip.vipLevel + 1].ugprade : vipItems[vipIndex + 1].ugprade }}
+                <!-- {{ convertToCommaAmount(store.levelUpDeposit, null, 0) }} -->
               </div>
 
               <div class="progress-bar-container">
@@ -108,7 +108,7 @@ const rows = [
   },
   {
     name: "VIP 1",
-    ugprade: "1,000",
+    ugprade: "15,000",
     reward: "3",
     flow: "38",
     invitee: 3,
@@ -116,7 +116,7 @@ const rows = [
   },
   {
     name: "VIP 2",
-    ugprade: "3,000",
+    ugprade: "30,000",
     reward: "3",
     flow: "88",
     invitee: 5,
@@ -124,7 +124,7 @@ const rows = [
   },
   {
     name: "VIP 3",
-    ugprade: "5,000",
+    ugprade: "60,000",
     reward: "3",
     flow: "188",
     invitee: 10,
@@ -132,7 +132,7 @@ const rows = [
   },
   {
     name: "VIP 4",
-    ugprade: "10,000",
+    ugprade: "150,000",
     reward: "4",
     flow: "388",
     invitee: 20,
@@ -140,7 +140,7 @@ const rows = [
   },
   {
     name: "VIP 5",
-    ugprade: "30,000",
+    ugprade: "300,000",
     reward: "5",
     flow: "588",
     invitee: 30,
@@ -148,7 +148,7 @@ const rows = [
   },
   {
     name: "VIP 6",
-    ugprade: "50,000",
+    ugprade: "600,000",
     reward: "6",
     flow: "888",
     invitee: 40,
@@ -156,7 +156,7 @@ const rows = [
   },
   {
     name: "VIP 7",
-    ugprade: "100,000",
+    ugprade: "1,500,000",
     reward: "7",
     flow: "1,888",
     invitee: 50,
@@ -164,7 +164,7 @@ const rows = [
   },
   {
     name: "VIP 8",
-    ugprade: "300,000",
+    ugprade: "3,000,000",
     reward: "8",
     flow: "3,888",
     invitee: 60,
@@ -172,7 +172,7 @@ const rows = [
   },
   {
     name: "VIP 9",
-    ugprade: "500,000",
+    ugprade: "6,000,000",
     reward: "9",
     flow: "8,888",
     invitee: 70,
@@ -180,7 +180,7 @@ const rows = [
   },
   {
     name: "VIP 10",
-    ugprade: "1,000,000",
+    ugprade: "15,000,000",
     reward: "10",
     flow: "28,888",
     invitee: 80,
@@ -188,7 +188,7 @@ const rows = [
   },
   {
     name: "VIP 11",
-    ugprade: "3,000,000",
+    ugprade: "30,000,000",
     reward: t("vip.unlimited"),
     flow: "58,888",
     invitee: 90,
@@ -196,7 +196,7 @@ const rows = [
   },
   {
     name: "VIP 12",
-    ugprade: "5,000,000",
+    ugprade: "60,000,000",
     reward: t("vip.unlimited"),
     flow: "88,888",
     invitee: 100,
