@@ -1,5 +1,6 @@
 <template>
   <router-view />
+  <notification-wrapper />
 </template>
 
 <script>
@@ -18,10 +19,13 @@ import AOS from "aos";
 import { useRouter } from "vue-router";
 import "aos/dist/aos.css";
 import { domainLists } from "./constant";
-
+import NotificationWrapper from "./components/notification/NotificationWrapper.vue";
 
 export default defineComponent({
   name: "App",
+  components: {
+    NotificationWrapper
+  },
   setup() {
     var qs = require("qs");
     const store = userStore();
@@ -126,8 +130,6 @@ export default defineComponent({
         }, 100);
       }
     };
-
-
 
     const trackH5Affiliate = () => {
       const hostname = window.location.hostname.replace("www.", "");
@@ -395,7 +397,7 @@ export default defineComponent({
           false
         );
       } else {
-        await router.isReady()
+        await router.isReady();
         waitAffiliateCodeAndTrack();
       }
 

@@ -7,13 +7,17 @@
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
+          <!--          <q-badge v-if="selectedPrivilege === 'br222-redeposit-bonus'" color="green" floating rounded>-->
+          <!--            +{{ getFtdCommaAmount(item.amount) }}-->
+          <!--          </q-badge>-->
 
-<!--          <q-badge v-if="selectedPrivilege === 'br222-redeposit-bonus'" color="green" floating rounded>-->
-<!--            +{{ getFtdCommaAmount(item.amount) }}-->
-<!--          </q-badge>-->
-
-<!--          {{selectedPrivilege}}-->
-          <q-badge v-if="item.amount >= 20 && selectedPrivilege.code === 'br2-redeposit-bonus'" color="green" floating rounded>
+          <!--          {{selectedPrivilege}}-->
+          <q-badge
+            v-if="item.amount >= 20 && selectedPrivilege.code === 'br2-redeposit-bonus'"
+            color="green"
+            floating
+            rounded
+          >
             +{{ get2ndDepoCommaAmount(item.amount) }}
           </q-badge>
 
@@ -81,19 +85,24 @@
             <!--            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">-->
             <!--              {{ $t("deposit.depositTutorial") }}-->
             <!--            </div>-->
-
           </div>
 
           <div v-if="isBank2" class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
             {{ $t("deposit.please_pay_exact_amt") }}
           </div>
-          <div  v-if="form.localAmount >= 20 && selectedPrivilege.code === 'br2-redeposit-bonus' && form.localAmount" class="font-small text-tealgreen"
-                style="width: calc(100% - 18px); margin: 10px auto 8px">
+          <div
+            v-if="form.localAmount >= 20 && selectedPrivilege.code === 'br2-redeposit-bonus' && form.localAmount"
+            class="font-small text-tealgreen"
+            style="width: calc(100% - 18px); margin: 10px auto 8px"
+          >
             Você receberá um bônus extra Rs{{ get2ndDepoCommaAmount(form.localAmount) }}
           </div>
 
-          <div  v-if="selectedPrivilege.code === 'br2-ftd-bonus' && form.localAmount" class="font-small text-tealgreen"
-                style="width: calc(100% - 18px); margin: 10px auto 8px">
+          <div
+            v-if="selectedPrivilege.code === 'br2-ftd-bonus' && form.localAmount"
+            class="font-small text-tealgreen"
+            style="width: calc(100% - 18px); margin: 10px auto 8px"
+          >
             Você receberá um bônus extra Rs{{ getFtdCommaAmount(form.localAmount) }}
           </div>
 
@@ -114,7 +123,6 @@
               </span>
             </template>
           </q-input>
-
         </div>
 
         <!-- <q-select
@@ -286,6 +294,7 @@ import KYCUserForm from "../../components/KYCUserForm.vue";
 import { cached } from "boot/cache";
 import { storeToRefs } from "pinia";
 import { t } from "../../boot/lang";
+import { useNotify } from "src/hooks/notify";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -385,6 +394,7 @@ const form = reactive({
 });
 
 const $q = useQuasar();
+const notify = useNotify();
 const calculatedMinDeposit = ref("");
 const calculatedMaxDeposit = ref("");
 
@@ -412,7 +422,7 @@ const getFtdCommaAmount = (amount) => {
 
 const get2ndDepoCommaAmount = (amount) => {
   if (amount < 2880) {
-    return parseFloat(amount * 0.1).toFixed(2);
+    return parseFloat(amount * 0.2).toFixed(2);
   } else {
     return 288;
   }
@@ -576,8 +586,6 @@ function checkMinDepositAmt(val) {
   calculatedMaxDeposit.value = val.depositMax;
 }
 
-
-
 function selectedBank(value) {
   form.bankId = value.value.id;
 }
@@ -600,6 +608,20 @@ async function confirmDeposit() {
   if (depositAmtRef.value.hasError) {
     btnLoading.value = false;
   } else {
+    if (unselectedPrivileges.value.length && !selectedPrivilege.value) {
+      const { type } = await notify({
+        message: t("deposit.hasUnusedPrivilege"),
+        type: "red-packet",
+        confirmBtnText: t("btn.continue"),
+        cancelBtnText: t("btn.back")
+      });
+
+      if (type !== "confirm") {
+        btnLoading.value = false;
+        return;
+      }
+    }
+
     await cashier
       .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
       .then((d) => {
@@ -949,7 +971,6 @@ async function loadPrivilege(val) {
   });
 }
 
-
 watch(
   isFromFtdPromo,
   (val) => {
@@ -1284,7 +1305,7 @@ onDeactivated(() => {
   font-size: 12px;
 }
 
-.text-tealgreen{
+.text-tealgreen {
   color: #21ef89;
 }
 
