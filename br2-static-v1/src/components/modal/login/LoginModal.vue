@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed , watch} from "vue";
 import { useUI } from "stores/ui";
 import LoginForm from "./LoginForm.vue";
 import ForgetPwForm from "./ForgetPwForm.vue";
@@ -20,6 +20,12 @@ const isShowLoginDialog = computed(() => {
   return !!uiStore.loginView;
 });
 const uiStore = useUI();
+
+watch(isShowLoginDialog, (val) => {
+  if(val===false){
+    uiStore.showFooter()
+  }
+})
 </script>
 
 <style lang="scss" scoped>
