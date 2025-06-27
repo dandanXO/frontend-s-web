@@ -48,7 +48,7 @@
             />
             CASH：Rs{{yesterdayLoss}}
           </div>
-          <q-btn class="piggy-bank-dialog-btn" @click="handleReceiveClick"></q-btn>
+          <q-btn class="piggy-bank-dialog-btn" v-close-popup></q-btn>
         </div>
         <q-btn v-close-popup class="piggy-bank-dialog-close-btn" color="white" flat round>
           <img src="../../../assets/images/promotion/hotpromo/piggy-bank/close-btn.png" />
