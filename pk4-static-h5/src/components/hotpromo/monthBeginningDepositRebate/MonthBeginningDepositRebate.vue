@@ -97,6 +97,7 @@ import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import i18n from "src/i18n/index";
 
 const props= defineProps(["promocode"])
 
@@ -135,9 +136,16 @@ const claimApi = () => {
         position: "top",
         timeout: 2000
       });
+    } else {
+      $q.notify({
+        message: i18n.global.t("error." + res.code) || "Error",
+        color: "negative",
+        position: "top",
+        timeout: 2000
+      });
     }
   });
-}
+};
 
 const initApi = () => {
   eventapi.get(`/session/month-beginning-deposit-rebate/calculate-rebate?promoCode=${props.promocode}`).then((res) => {

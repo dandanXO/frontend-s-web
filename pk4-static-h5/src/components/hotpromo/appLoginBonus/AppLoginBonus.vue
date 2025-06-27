@@ -280,6 +280,7 @@ import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import i18n from "src/i18n/index";
 
 const { t } = useI18n();
 const props = defineProps(["promocode"]);
@@ -295,20 +296,25 @@ const bonusAmount = ref(0);
 const $q = useQuasar();
 const router = useRouter();
 
-
-
 const updateBindEvent = async (event) => {
-  bindEmailDialog.value= event;
+  bindEmailDialog.value = event;
   getAppLoginBonusData();
-}
+};
 
 const claimAppLoginBonus = () => {
   eventapi
     .post(`/session/app-login-bonus/claimBonus?promoCode=${props.promocode}`)
     .then((res) => {
       if (res.code === 0) {
-        isShowReceiveDialog.value= true;
+        isShowReceiveDialog.value = true;
         bonusAmount.value = res.data;
+      } else {
+        $q.notify({
+          message: i18n.global.t("error." + res.code) || "Error",
+          color: "negative",
+          position: "top",
+          timeout: 2000
+        });
       }
     })
     .catch(() => {});
