@@ -958,10 +958,10 @@ export default {
       tnc07: "To avoid any misunderstandings, AKB188 reserves the final right of interpretation for this promotion."
     },
     dailySecondDeposit: {
-      description: "The first deposit of the day entitles you to a 10% bonus on the deposited amount",
+      description: "The first deposit of the day entitles you to a 20% bonus on the deposited amount",
       tnc01: "Each member can enjoy this promotion once per day;",
       tnc02:
-        "After successfully making the first deposit of the day, the member may claim a 10% bonus on the deposited amount during the promotion period;",
+        "After successfully making the first deposit of the day, the member may claim a 20% bonus on the deposited amount during the promotion period;",
       tnc03: "The minimum deposit amount is R$20;",
       tnc04: "The maximum bonus amount is R$288;",
       tnc05:
@@ -1193,5 +1193,9 @@ export default {
     linkCopyToClipboard: "Link copied to clipboard",
     qrCodeSaved: "QR Code image saved to photo gallery.",
     receiveSuccessfully: "Receive successfully"
+  },
+  notification: {
+    confirm: "Confirm",
+    cancel: "Cancel"
   }
 };
