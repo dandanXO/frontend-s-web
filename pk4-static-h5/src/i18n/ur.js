@@ -553,7 +553,8 @@ export default {
       "VIP بونس صرف ماہانہ کل ڈپازٹس پر لاگو ہوتا ہے اور اگلے مہینے کی پہلی تاریخ کو صبح 12:00تاریخ کو صبح 12:00",
     dailyWithdrawalLimit: "روزانہ نکاسی کی حد",
     bet: "شرط",
-    deposit: "جمع"
+    deposit: "جمع",
+    currentValidBets: "موجودہ معتبر شرط"
   },
   earnMoney: {
     title: "بونس پوٹ آ گیا",

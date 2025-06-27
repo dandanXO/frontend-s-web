@@ -566,7 +566,8 @@ export default {
       "VIP bonus is only applicable to monthly total deposits and will reset at 12:00am on the first day of the next month",
     dailyWithdrawalLimit: "Daily Withdrawal Limit",
     bet: "Bet",
-    deposit: "Deposit"
+    deposit: "Deposit",
+    currentValidBets: "Current Valid Bets"
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
