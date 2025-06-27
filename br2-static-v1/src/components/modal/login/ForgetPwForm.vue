@@ -31,7 +31,9 @@
             :placeholder="$t('form.phone_placeholder')"
           >
             <template v-slot:prepend>
-              <span class="prepend-phone">{{ $t("form.prependNumber") }}</span>
+              <img src="../../../assets/images/auth/phone-br.svg" width="17px" />
+              &nbsp;+55
+              <!-- <span class="prepend-phone">{{ $t("form.prependNumber") }}</span> -->
             </template>
           </q-input>
 
@@ -48,6 +50,9 @@
             class="input"
             :class="{ 'white-txt': !!captchaCode }"
           >
+            <template v-slot:prepend>
+              <img src="../../../assets/images/auth/captcha.svg" width="18px" />
+            </template>
             <template v-slot:append>
               <img class="verification-img" :src="verificationImg" @click="getCode()" />
             </template>

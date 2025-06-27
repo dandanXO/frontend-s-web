@@ -26,8 +26,10 @@
         ]"
       >
         <template v-slot:prepend>
-          <img v-if="!phone" src="../../../assets/images/auth/acc-icon.png" width="22px" />
-          <img v-else src="../../../assets/images/auth/acc-icon-active.png" width="22px" />
+          <!-- <img v-if="!phone" src="../../../assets/images/auth/acc-icon.png" width="22px" /> -->
+          <!-- <img v-else src="../../../assets/images/auth/acc-icon-active.png" width="22px" /> -->
+          <img src="../../../assets/images/auth/phone-br.svg" width="17px" />
+          &nbsp;+55
         </template>
       </q-input>
 
