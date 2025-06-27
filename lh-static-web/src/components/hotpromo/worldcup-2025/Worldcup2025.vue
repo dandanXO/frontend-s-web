@@ -89,7 +89,7 @@
         <div class="vs-time">{{ getDisplayDateTime(currentListItem.matchTime) }}</div>
         <div class="vs-icon"><img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-vs.png" alt="" /></div>
         <div class="vs-win">独赢</div>
-        <div class="vs-notes">该场赛事竞猜截止时间 {{ getDisplayDateTime(currentListItem.endTime) }}</div>
+        <div class="vs-notes">本场赛事竞猜时间 {{ getDisplayDateTime(currentListItem.startTime) }} - {{ getDisplayDateTime(currentListItem.endTime) }}</div>
       </div>
 
       <div class="match-info match-info--away">

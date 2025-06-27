@@ -399,18 +399,18 @@ export default {
     interestProfit: "Interest Profit",
     exchange: "Exchange",
     transfer: "Transfer",
-    "agentAccount": "Agent Account",
+    agentAccount: "Agent Account"
   },
   affiliateSettings: {
-    "overview": "Overview",
-    "accountRecord": "Account Record",
-    "teamManagement": "Team Management",
-    "teamPnl": "Team P&L",
-    "teamBetting": "Team Betting",
-    "editRebate": "Edit Rebate",
-    "securityCenter": "Security Center",
-    "internalMessage": "Internal Message",
-    "customerService": "Customer Service",
+    overview: "Overview",
+    accountRecord: "Account Record",
+    teamManagement: "Team Management",
+    teamPnl: "Team P&L",
+    teamBetting: "Team Betting",
+    editRebate: "Edit Rebate",
+    securityCenter: "Security Center",
+    internalMessage: "Internal Message",
+    customerService: "Customer Service",
     linkManagement: "Link Management"
   },
   affiliate: {
@@ -432,29 +432,29 @@ export default {
     }
   },
   accountRecord: {
-    myDividend: 'My Dividend',
-    contractManagement: 'Contract Management',
-    dividendRecord: 'Dividend Record',
+    myDividend: "My Dividend",
+    contractManagement: "Contract Management",
+    dividendRecord: "Dividend Record"
   },
   dividend: {
-    myDividend: 'My Dividend',
-    contractManagement: 'Contract Management',
-    dividendRecord: 'Dividend Record',
-    activeMember: 'Active Member',
-    dividendRate: 'Dividend Rate',
-    netAmountReceives: 'Net amount receives',
-    status: 'Status',
-    periodValidBet: 'Period valid bet',
-    periodPnL: 'Period P&L',
-    periodSettledPnL: 'Period settled P&L',
-    dividendAmount: 'Dividend amount',
-    downlineDividendsToPay: 'Downline dividends to pay',
-    disbursementTime: 'Disbursement time',
-    statusChecking: 'Checking',
-    statusPay: 'Pay',
-    statusCleared: 'Cleared',
-    statusCancelled: 'Cancelled',
-    rate: 'Rate'
+    myDividend: "My Dividend",
+    contractManagement: "Contract Management",
+    dividendRecord: "Dividend Record",
+    activeMember: "Active Member",
+    dividendRate: "Dividend Rate",
+    netAmountReceives: "Net amount receives",
+    status: "Status",
+    periodValidBet: "Period valid bet",
+    periodPnL: "Period P&L",
+    periodSettledPnL: "Period settled P&L",
+    dividendAmount: "Dividend amount",
+    downlineDividendsToPay: "Downline dividends to pay",
+    disbursementTime: "Disbursement time",
+    statusChecking: "Checking",
+    statusPay: "Pay",
+    statusCleared: "Cleared",
+    statusCancelled: "Cancelled",
+    rate: "Rate"
   },
   deposit: {
     selectAmount: "Select Amount",
@@ -559,7 +559,14 @@ export default {
     accumulate: "Accumulate",
     invites: "Invites",
     extra: "Extra",
-    rewardss: "Rewards"
+    rewardss: "Rewards",
+    upgradeRewards: "Upgrade Rewards",
+    monthlyRewards: "Monthly Rewards",
+    monthlyRewardsText:
+      "VIP bonus is only applicable to monthly total deposits and will reset at 12:00am on the first day of the next month",
+    dailyWithdrawalLimit: "Daily Withdrawal Limit",
+    bet: "Bet",
+    deposit: "Deposit"
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
@@ -983,23 +990,22 @@ export default {
       downloadAndInstall7: "Linked withdrawal account",
       downloadAndInstall8: "Enter the [Discount Center] to check and collect, and you can get a random reward of up to",
       downloadAndInstall9: ".",
-      termsCondition1:
-        "This bonus is only available for new member accounts and only for their first deposit.",
+      termsCondition1: "This bonus is only available for new member accounts and only for their first deposit.",
       termsCondition2:
         "Withdrawal requirements: You need to complete the wagering requirement of at least 10 times the turnover. The calculation formula is: (Deposit amount + Bonus amount) × 10 times the turnover requirement.",
-      termsCondition3:
-        "This bonus is only applicable to the slot game category.",
+      termsCondition3: "This bonus is only applicable to the slot game category.",
       termsCondition4:
-        "If a member mistakenly participates in a non-specified game category, the bonus will be deemed invalid and win7.gam reserves the right to deduct the relevant bonus and the profits generated.",
+        "If a member mistakenly participates in a non-specified game category, the bonus will be deemed invalid and b9.game reserves the right to deduct the relevant bonus and the profits generated.",
       termsCondition5:
-        "Each member is limited to one account (including deposit account, withdrawal account, IP address). Multiple account behavior will result in the bonus being invalid. If violations are found, win7.gam reserves the right to cancel the bonus and freeze the account.",
+        "Each member is limited to one account (including deposit account, withdrawal account, IP address). Multiple account behavior will result in the bonus being invalid. If violations are found, b9.game reserves the right to cancel the bonus and freeze the account.",
       termsCondition6:
         "Before the first withdrawal application, the bound bank account information and phone number cannot be changed. If the information is changed, the bonus will be cancelled and the bonus and the resulting profits will be deducted.",
-      termsCondition7: "This bonus is only applicable to players in the specified game category. The bonus cannot be used to accumulate betting turnover, calculate arbitrage behavior or be used in combination with other technical means. If violations are found, the bonus will be deemed invalid, all bonuses and profits will be cancelled, and win7.gam reserves the right to close the account.",
+      termsCondition7:
+        "This bonus is only applicable to players in the specified game category. The bonus cannot be used to accumulate betting turnover, calculate arbitrage behavior or be used in combination with other technical means. If violations are found, the bonus will be deemed invalid, all bonuses and profits will be cancelled, and b9.game reserves the right to close the account.",
       termsCondition8:
         "B9.game reserves the right to change, suspend or terminate this activity at any time without prior notice.",
-      termsCondition9: "The final right of interpretation of all terms belongs to win7.gam. win7.gam reserves the right to refuse to deal with any disputes involving terms.",
-      
+      termsCondition9:
+        "The final right of interpretation of all terms belongs to b9.game. b9.game reserves the right to refuse to deal with any disputes involving terms."
     },
     aviatorWheel: {
       remainingDrawTimes: "Remaining draw times",
@@ -1103,59 +1109,65 @@ export default {
     }
   },
   shareAffiliate: {
-    login: 'Login',
-    secondLevelTitle: 'Second-level agent-dividend system',
-    agentType: 'Agent Type',
-    merchantModel: 'Merchants Monthly Dividend Model (Cumulative)',
-    investmentPromotion: 'Investment promotion',
-    activeMembers: 'Number of active and valid members',
-    monthlyDividend: 'Monthly dividend (cumulative), net profit - commission ratio',
+    login: "Login",
+    secondLevelTitle: "Second-level agent-dividend system",
+    agentType: "Agent Type",
+    merchantModel: "Merchants Monthly Dividend Model (Cumulative)",
+    investmentPromotion: "Investment promotion",
+    activeMembers: "Number of active and valid members",
+    monthlyDividend: "Monthly dividend (cumulative), net profit - commission ratio",
 
-    generalAgentTitle: 'General agent weekly dividend model (non-accumulative) - unlimited contract',
-    generalAgent: 'General Agent',
-    weeklyDividend: 'Weekly dividend (not cumulative), net profit - commission ratio',
+    generalAgentTitle: "General agent weekly dividend model (non-accumulative) - unlimited contract",
+    generalAgent: "General Agent",
+    weeklyDividend: "Weekly dividend (not cumulative), net profit - commission ratio",
 
-    memberDefinition: 'Definition of active and valid members:',
-    memberCriteria: 'Active members with cumulative deposits ≥ 1000PKR or valid bets ≥ 10000PKR during the week',
+    memberDefinition: "Definition of active and valid members:",
+    memberCriteria: "Active members with cumulative deposits ≥ 1000PKR or valid bets ≥ 10000PKR during the week",
 
-    profitFormulaTitle: 'Net profit formula:',
-    profitFormula: 'Net profit = win/loss value - discount, code washing - operating cost (8% platform fee) - recharge fee cost (deposit amount * 5%)',
+    profitFormulaTitle: "Net profit formula:",
+    profitFormula:
+      "Net profit = win/loss value - discount, code washing - operating cost (8% platform fee) - recharge fee cost (deposit amount * 5%)",
 
-    backendTitle: 'The backend allows you to change the following indicator parameters at any time',
-    dividends: 'Dividends:',
-    dividendRequirements: 'Requirements for the number of people, Dividend ratio',
+    backendTitle: "The backend allows you to change the following indicator parameters at any time",
+    dividends: "Dividends:",
+    dividendRequirements: "Requirements for the number of people, Dividend ratio",
 
-    qualifiedDefinition: 'Definition of qualified and valid members:',
-    effectiveBets: 'Effective betting amount',
-    cumulativeRecharge: 'Cumulative recharge amount',
+    qualifiedDefinition: "Definition of qualified and valid members:",
+    effectiveBets: "Effective betting amount",
+    cumulativeRecharge: "Cumulative recharge amount",
 
-    profitDeduction: 'Net profit deduction item ratio',
-    deductionDetails: 'Game wins and losses - Promotions - Platform game package points - Recharge and withdrawal fees',
+    profitDeduction: "Net profit deduction item ratio",
+    deductionDetails: "Game wins and losses - Promotions - Platform game package points - Recharge and withdrawal fees",
 
-    modelDescription: 'Description of the agent dividend model',
-    generalCalc1: 'General calculation',
-    basicSame: '- The basic calculation is the same as the normal calculation',
-    lossBySuperior: '- If there is a situation where the left and right lines of a superior agent cancel each other out, the superior agent will still bear the loss',
-    noSuperiorLoss: '- However, when the dividends received by the superior agent are insufficient to pay all the subordinate agents, the platform will make up for it',
+    modelDescription: "Description of the agent dividend model",
+    generalCalc1: "General calculation",
+    basicSame: "- The basic calculation is the same as the normal calculation",
+    lossBySuperior:
+      "- If there is a situation where the left and right lines of a superior agent cancel each other out, the superior agent will still bear the loss",
+    noSuperiorLoss:
+      "- However, when the dividends received by the superior agent are insufficient to pay all the subordinate agents, the platform will make up for it",
 
-    generalCalculation: 'General calculation:',
-    calcExample1: `B1 dividend = -200 x 30% = -60 -> 0<br>` +
-              `B2 dividend = 300 x 20% = 60<br>` +
-              `A profit and loss = B1 + B2 = 100<br>` +
-              `A dividend = 100 x 40% = 40<br>` +
-              `A needs to pay B1 60, which is 20 platform subsidies, and A's net income is 0<br>` +
-              `The platform pays 60`,
+    generalCalculation: "General calculation:",
+    calcExample1:
+      `B1 dividend = -200 x 30% = -60 -> 0<br>` +
+      `B2 dividend = 300 x 20% = 60<br>` +
+      `A profit and loss = B1 + B2 = 100<br>` +
+      `A dividend = 100 x 40% = 40<br>` +
+      `A needs to pay B1 60, which is 20 platform subsidies, and A's net income is 0<br>` +
+      `The platform pays 60`,
 
-    noGeneralCalculation: 'No general calculation',
-    sameCalc: '- The basic calculation is the same as the normal calculation',
-    cancelledLines: '- If a superior agent has two lines that cancel each other out, the superior agent will only bear its own part of the loss',
-    subAgentNoLoss: '- The subordinate agent will not bear any loss',
-    platformInvestment: '- Negative dividends of the agent team that makes profits are the platform\'s investment',
+    noGeneralCalculation: "No general calculation",
+    sameCalc: "- The basic calculation is the same as the normal calculation",
+    cancelledLines:
+      "- If a superior agent has two lines that cancel each other out, the superior agent will only bear its own part of the loss",
+    subAgentNoLoss: "- The subordinate agent will not bear any loss",
+    platformInvestment: "- Negative dividends of the agent team that makes profits are the platform's investment",
 
-    calcExample2: `B1 dividend = -200 x 30% = -60 -> 0<br>` +
-              `B2 dividend = 300 x 20% = 60<br>` +
-              `A profit and loss = -200 x (40%-30%) + 300 x (40%-20%) = -20 + 60 = 40<br>` +
-              `Total platform contribution = 60 + 40 = 100`,
+    calcExample2:
+      `B1 dividend = -200 x 30% = -60 -> 0<br>` +
+      `B2 dividend = 300 x 20% = 60<br>` +
+      `A profit and loss = -200 x (40%-30%) + 300 x (40%-20%) = -20 + 60 = 40<br>` +
+      `Total platform contribution = 60 + 40 = 100`
   },
   maintenance: {
     underMaintenance: "Under maintenance",
@@ -1321,7 +1333,8 @@ export default {
     58003: "Event have expired",
     58004: "Cannot Participate. Previous Tasks Has Failed to Accomplish.",
     58005: "Congrats, You have Completed All Tasks",
-    58103: "VIP0 Cannot Participate."
+    58103: "VIP0 Cannot Participate.",
+    99999: "Not eligible for claiming"
   },
   content: {
     title1: "The registration time starts from the time the registration is completed.",

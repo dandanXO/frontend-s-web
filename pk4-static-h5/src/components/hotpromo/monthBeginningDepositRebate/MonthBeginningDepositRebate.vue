@@ -24,8 +24,9 @@
       </div>
 
       <div class="vip-labels">
-        <span class="label">VIP1</span>
-        <span class="label">VIP2</span>
+        <!-- <span class="label">VIP1</span>
+        <span class="label">VIP2</span> -->
+          {{ totalDeposit + '/' + minDeposit }}
       </div>
     </div>
     <div class="receive-btn" @click="claimApi">{{ $t("hotPromo.monthBeginningDepositRebate.receive") }}</div>
@@ -103,7 +104,9 @@ const props= defineProps(["promocode"])
 const $q = useQuasar();
 const { t } = useI18n();
 const store= userStore()
-const totalDeposit= ref(0);
+const totalDeposit = ref(0);
+const minDeposit = ref(0);
+const progress= ref(0);
 const rebate= ref(0)
 
 const percent = ref(0);
@@ -139,23 +142,18 @@ const claimApi = () => {
 const initApi = () => {
   eventapi.get(`/session/month-beginning-deposit-rebate/calculate-rebate?promoCode=${props.promocode}`).then((res) => {
     if (res.code === 0) {
-      console.log(res);
-      const {  rebate: rebate1 , totalDeposit: totalDeposit1 } = res;
-      if (!totalDeposit1) {
+      totalDeposit.value = res.data.totalDeposit;
+      minDeposit.value = res.data.minDeposit;
+
+      if (store.vip === "VIP0") {
         percent.value = 0;
-        return
+      } else {
+        if (res.data.progress > 1) {
+          percent.value = 100;
+        } else {
+          percent.value = res.data.progress * 100;
+        }
       }
-      totalDeposit.value= totalDeposit1;
-      rebate.value= rebate1;
-
-      console.log(store.vip)
-      if(store.vip==="VIP0" || totalDeposit.value === 0){
-        percent.value= 0;
-      }else{
-        percent.value= totalDeposit.value / vipDepositCount.value[store.vip]
-      }
-
-
     }
   });
 }
@@ -333,7 +331,8 @@ onMounted(() => {
 
   .vip-labels {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     padding: 0 3px;
 
     .label {

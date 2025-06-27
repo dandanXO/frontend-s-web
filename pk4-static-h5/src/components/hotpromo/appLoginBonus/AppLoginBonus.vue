@@ -97,16 +97,15 @@
       <div class="section event-details-container">
         <img class="section-title" :src="require(`../../../assets/images/promotion/hotpromo/app-login-bonus/event-details-${languageVal}.png`)">
         <template v-if="languageVal === 'en'">
-          <p><span class="yellow">B9.game</span> Special Offer for New Members: First Deposit Bonus Up to <span class="red">119%</span>!</p>
-          <p>Simply create a new member account at <span class="yellow">B9.game</span>, complete your first deposit, and you can claim your bonus. In addition, with a minimum deposit of <span class="red">100TK</span>, you can enjoy the first deposit bonus and an additional bonus of up to <span class="red">119%</span>, providing more fun.</p>
-          <p>In addition, there are additional offers for users with higher top-ups. Top up more, enjoy more rewards, and participate in <span class="yellow">B9.game</span> activities with your friends to experience higher benefits and services.</p>
-        </template>
+          <p><span class="yellow">B9.game</span> Exclusive Offer: Bind Your Phone & Get <span class="red">{{store.currency.value}}100</span> Instantly!</p>
+          <p>New to <span class="yellow">B9.game</span>? Just bind your mobile number after registration and receive an instant reward of <span class="red">{{store.currency.value}}100</span>—no deposit required!</p>
+          <p>It’s quick, easy, and secure. Bind now to claim your bonus and enjoy all the exciting features and rewards <span class="yellow">B9.game</span> has to offer.</p>        </template>
         <template v-if="languageVal === 'ur'">
-          <p><span class="yellow">B9.game</span> نئے ممبرز کے لیے خاص آفر: پہلے ڈپازٹ پر بونس <span class="red">119%</span> تک!</p>
-          <p>بس <span class="yellow">B9.game</span> پر نیا اکاؤنٹ بنائیں، پہلا ڈپازٹ مکمل کریں، اور اپنا بونس حاصل کریں۔ اس کے علاوہ، صرف <span class="red">100TK</span> کے کم از کم ڈپازٹ پر، آپ نہ صرف پہلے ڈپازٹ کا بونس حاصل کر سکتے ہیں بلکہ <span class="red">119%</span> تک اضافی بونس سے مزید مزہ بھی حاصل کریں۔</p>
-          <p>اس کے ساتھ ساتھ، زیادہ رقم ٹاپ اپ کرنے والے صارفین کے لیے مزید آفرز بھی موجود ہیں۔ جتنا زیادہ ٹاپ اپ کریں، اتنے زیادہ انعامات حاصل کریں، اور اپنے دوستوں کے ساتھ <span class="yellow">B9.game</span> کی سرگرمیوں میں حصہ لے کر مزید فوائد اور سروسز کا لطف اٹھائیں۔</p>
+          <p><span class="yellow">B9.game</span> کی خصوصی پیشکش: اپنا فون بائنڈ کریں اور فوراً حاصل کریں <span class="red">{{STORE.CURRENCY.VALUE}}100</span>!</p>
+          <p><span class="yellow">B9.game</span> پر نئے ہیں؟ صرف رجسٹریشن کے بعد اپنا موبائل نمبر بائنڈ کریں اور فوراً حاصل کریں <span class="red">{{STORE.CURRENCY.VALUE}}100</span> کا انعام — بغیر کسی ڈپازٹ کے!</p>
+          <p>یہ آسان، تیز اور محفوظ ہے۔ ابھی بائنڈ کریں اور اپنے بونس کا دعویٰ کریں، اور <span class="yellow">B9.game</span> کی تمام زبردست خصوصیات اور انعامات سے لطف اٹھائیں۔</p>
         </template>
-        <div class="scrollable-table">
+        <!-- <div class="scrollable-table">
           <table class="content-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
             <thead>
               <tr>
@@ -140,7 +139,7 @@
                   <span style="color: #0385F0;">{{ $t("hotPromo.appLoginBonus.checkDepositOffer") }}</span>
                   </div>
                 </td>
-                <!-- <td rowspan="2">
+                <!- <td rowspan="2">
                   <span>
                     {{ $t("hotPromo.appLoginBonus.rewardDetailTxt1") }}
                     <span style="color: #ff9500">{{ $t("hotPromo.appLoginBonus.bdt888") }}</span>
@@ -150,7 +149,7 @@
                       {{ $t("hotPromo.appLoginBonus.rewardDetailTxt3") }}
                     </span>
                   </span>
-                </td> -->
+                </td> ->
               </tr>
               
               <tr>
@@ -210,9 +209,9 @@
               </tr>
             </tbody>
           </table>
-        </div>
+        </div> -->
       </div>
-      <div class="section examples-container">
+      <!-- <div class="section examples-container">
         <img class="section-title" :src="require(`../../../assets/images/promotion/hotpromo/app-login-bonus/examples-${languageVal}.png`)">
         <template v-if="languageVal === 'en'">
           <p>For example, member A tops up <span class="red">100TK</span> for the first time and gets <span class="red">119TK</span> as a reward. Before withdrawing, he needs to complete at least 10 times the turnover requirement, that is:</p>
@@ -235,11 +234,11 @@
           <p>اپنا پہلا ڈپازٹ کرنے سے پہلے، ممبرز کو اپنا ای میل ایڈریس تصدیق کرنا ہوگا اور ایک درست نکاسی اکاؤنٹ (Nagad، Rocket، Bkash، Upay کی سہولت موجود ہے) لنک کرنا ہوگا۔</p>
           <span class="note">ڈپازٹ پیج پر جائیں > ڈپازٹ چینل منتخب کریں > پروموشن منتخب کریں > 119% پہلے ڈپازٹ بونس حاصل کرنے کے لیے کلک کریں</span>
         </template>
-      </div>
+      </div> -->
       <div class="section terms-and-conditions-container">
         <img class="section-title" :src="require(`../../../assets/images/promotion/hotpromo/app-login-bonus/terms-and-conditions-${languageVal}.png`)">
         <ul>
-          <li>{{ $t("hotPromo.appLoginBonus.termsCondition1") }}</li>
+          <!-- <li>{{ $t("hotPromo.appLoginBonus.termsCondition1") }}</li>
           <li>
             {{ $t("hotPromo.appLoginBonus.termsCondition2") }}
           </li>
@@ -254,8 +253,8 @@
           </li>
           <li>
             {{ $t("hotPromo.appLoginBonus.termsCondition6") }}
-          </li>
-          <li>{{ $t("hotPromo.appLoginBonus.termsCondition7") }}</li>
+          </li> -->
+          <!-- <li>{{ $t("hotPromo.appLoginBonus.termsCondition7") }}</li> -->
           <li>{{ $t("hotPromo.appLoginBonus.termsCondition8") }}</li>
           <li>{{ $t("hotPromo.appLoginBonus.termsCondition9") }}</li>
         </ul>

@@ -124,12 +124,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, onUnmounted } from "vue";
+import { ref, onMounted, computed, onUnmounted, watch, provide, shallowRef } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid, isInPwa } from "src/boot/utils";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { useI18n } from "vue-i18n";
@@ -139,7 +139,10 @@ import SideMenu from "components/SideMenu.vue";
 
 import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
+import { i18nStore } from "src/router/language";
+import { useThrottleFn } from "@vueuse/core";
 
+const i18nStoreLanguage = i18nStore();
 const props = defineProps(["homeProfile", "showRedemption"]);
 const emits = defineEmits(["closeslot", "activateSlide", "showNewPlayer"]);
 const route = useRoute();
@@ -156,17 +159,66 @@ const handleScroll = () => {
   isScrolled.value = window.scrollY > 0;
 };
 
+const eligiblePromoCount = ref(1);
+const isFastAccessPromoCounting = ref(false);
+const fastAccessPromoAbortController = ref(null);
+
 const isBonusModal = ref(false);
 const fastAccessPromo = ref([]);
 
+
 const getFastAccessPromo = () => {
-  api.get("/opt-session/promo/page?showFastAccess=1").then((res) => {
+  if (!store.token) return;
+  isFastAccessPromoCounting.value = true;
+  eligiblePromoCount.value = 0;
+  if (store.claimedFtdPrivilege === false) {
+    eligiblePromoCount.value++;
+  }
+  api.get(`/promo/fast-access-promo`).then(async (res) => {
     if (res.code === 0) {
+      let _fastAccessPromo;
       if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-        fastAccessPromo.value = res.data;
+        _fastAccessPromo = res.data;
       } else {
-        fastAccessPromo.value = res.data.filter((item) => item.privilegeStatus !== "TEST");
+        _fastAccessPromo = res.data.filter((item) => item.privilegeStatus !== "TEST");
       }
+
+      const apiQueue = [];
+      fastAccessPromoAbortController.value?.abort();
+      fastAccessPromoAbortController.value = new AbortController();
+      _fastAccessPromo.forEach((promo) => {
+        if (promo.initApiUrl) {
+          apiQueue.push(() =>
+            eventapi
+              .get(`${promo.initApiUrl}?promoCode=${promo.promoCode}`, {
+                signal: fastAccessPromoAbortController.value.signal
+              })
+              .then((res) => ({ apiRes: res, promoCode: promo.promoCode }))
+          );
+        } else if (promo.buttonMode === "CLAIM_REDIRECT") {
+          eligiblePromoCount.value++;
+        }
+      });
+
+      const initApiResList = await Promise.allSettled(apiQueue.map((apiCall) => apiCall()));
+      for (const initApiRes of initApiResList) {
+        if (initApiRes.status === "fulfilled") {
+          const { apiRes, promoCode } = initApiRes.value;
+          const _currentFastAccessPromo = _fastAccessPromo.find((promo) => promo.promoCode === promoCode);
+          if (_currentFastAccessPromo) {
+            _currentFastAccessPromo.response = apiRes.code === 0 ? apiRes.data : null;
+          }
+          if (apiRes.data.eligible || (promoCode === "pak-refer-wheel-spin" && apiRes.data.promoEndTime)) {
+            eligiblePromoCount.value++;
+          }
+          if (apiRes.data.hidePromo) {
+            _fastAccessPromo = _fastAccessPromo.filter((promo) => promo.promoCode !== "new-player-acc-deposit");
+          }
+        }
+      }
+      isFastAccessPromoCounting.value = false;
+
+      fastAccessPromo.value = _fastAccessPromo;
     }
   });
 };
@@ -321,6 +373,21 @@ const handleBackBtn = () => {
 const isSideDownload = ref(false);
 
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
+
+const throttledGetFastAccessPromo = useThrottleFn(() => {
+  getFastAccessPromo();
+}, 5000);
+
+watch(() => i18nStoreLanguage.languageVal, getFastAccessPromo);
+watch(() => store.token, getFastAccessPromo);
+watch(
+  () => isBonusModal.value,
+  (newVal) => {
+    if (newVal === true) {
+      throttledGetFastAccessPromo();
+    }
+  }
+);
 
 onMounted(() => {
   checkTopDownloadAppear();
