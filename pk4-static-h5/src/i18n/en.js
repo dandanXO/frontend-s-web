@@ -1233,6 +1233,7 @@ export default {
     1402: "OTP sending schedule error, please resend OTP",
     1403: "OTP verification error",
     1404: "Failed to send OTP code",
+    35001: "User has claimed this offer",
     53000: "Unable to deposit, no eligible plan found",
     53001: "Invalid deposit amount",
     53002: "Invalid deposit days",
