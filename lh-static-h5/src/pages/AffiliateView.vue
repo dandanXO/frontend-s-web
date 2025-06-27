@@ -1,11 +1,11 @@
 <template>
   <div class="affiliate-container">
-    <div class="page-title" v-if="!$q.dark.isActive">
+    <div class="page-title">
       <div class="page-title-img"><img src="../assets/images/affiliate/title-1.png" /></div>
       <div class="page-title-img"><img src="../assets/images/affiliate/title-2.png" /></div>
       <div class="page-title-img" style="margin-top: 32px"><img src="../assets/images/affiliate/title-3.png" /></div>
     </div>
-    <div class="page-title-img" v-else><img src="../assets/images/affiliate/affiliate-title.png" /></div>
+    <!--    <div class="page-title-img" v-else><img src="../assets/images/affiliate/affiliate-title.png" /></div>-->
     <q-input style="width: 100%; opacity: 0; height: 5px" filled color="white" ref="copyinput" v-model="text_copied" />
     <div class="contact-list">
       <div class="contact-item">
@@ -568,6 +568,7 @@ const copyText = (text, msgTitle) => {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 100%;
+  margin: 0 auto;
 }
 
 .contact-item {
