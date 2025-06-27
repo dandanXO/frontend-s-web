@@ -824,7 +824,8 @@ export default defineComponent({
       background-repeat: no-repeat;
       background-position: center bottom;
       overflow: hidden;
-      height: 170px;
+      min-height: 130px;
+      height: auto;
       // max-height: 130px;
       margin: 10px;
 
@@ -938,7 +939,7 @@ export default defineComponent({
               background-position: center center;
               margin: 0;
               // border-radius: 10px 10px 0 0;
-              border-radius: 17px;
+              border-radius: 0px 0px 17px 17px;
 
               &:hover {
                 transform: scale(1.2);
