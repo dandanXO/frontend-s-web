@@ -10,6 +10,7 @@
   width: 100%;
   aspect-ratio: 190 / 75;
   background: url(../../../assets/images/promotion/spin-lucky-wheel/common-btn.png) no-repeat;
+  background: linear-gradient(90deg, #4FFFA5 0%, #10D16F 100%);
   background-size: cover;
   border: none;
   font-size: 20px;

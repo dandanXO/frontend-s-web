@@ -1,9 +1,10 @@
 <template>
   <div class="envelope-stage-wrapper">
+    sadfijaosdfisad
     <div class="envelope-stage-inner-wrapper">
       <img
         class="title"
-        src="../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/title.png"
+        src="./img/N-title.jpg"
         alt="get cash every day"
       />
       <div v-if="envelopeStatus === 'idle'" class="envelope-wrapper">
@@ -26,6 +27,14 @@
         </button>
       </div>
       <div v-else class="selected-envelope">
+        ;asdkifjlkasdjf
+        <div>
+          <img
+          class="title"
+          src="./img/N-title.jpg"
+          alt="get cash every day"
+        />
+        </div>
         <span class="prize">{{ $t("hotPromo.rs") }}{{ prizeList[selectedIndex]?.prize }}</span>
         <span class="desc">{{ $t("hotPromo.withdraw_money_over_rs") }} {{ targetWithdrawAmount }}</span>
         <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">

@@ -2,8 +2,8 @@
   <q-dialog v-model="_modelValue" @hide="$emit('hide')">
     <div class="wheel-result-wrapper">
       <span class="prize">+{{ $t("hotPromo.rs") }}{{ props.prize }}</span>
-      <span class="desc">{{ $t("hotPromo.withdraw_money_over_rs") }}{{ targetWithdrawAmount }}</span>
-      <CommonButton class="close-btn" v-close-popup>Okay</CommonButton>
+      <span class="desc">Obtendrás R$ {{ props.prize }}</span>
+      <button class="close-btn" v-close-popup>Okay</button>
     </div>
   </q-dialog>
 </template>
@@ -23,9 +23,9 @@ const _modelValue = computed({
 </script>
 <style lang="scss" scoped>
 .wheel-result-wrapper {
-  width: 75%;
+  width: 90%;
   max-width: 375px;
-  background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/envelope-simply.png) no-repeat;
+  background: url(./img/N-dialog-bg.png) no-repeat;
   aspect-ratio: 290 / 296;
   background-size: 100% 100%;
   position: relative;
@@ -33,39 +33,43 @@ const _modelValue = computed({
 
   .prize {
     position: absolute;
-    top: 20%;
+    top: 50%;
     width: 100%;
     font-size: 56px;
     font-weight: 900;
-    color: #f33d31;
+    background: linear-gradient(90deg, #4FFFA5 0%, #10D16F 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
     text-align: center;
+
   }
 
   .desc {
     position: absolute;
-    top: 40%;
+    top: 70%;
     left: 50%;
     transform: translateX(-50%);
     width: 70%;
     font-size: 20px;
     font-weight: 900;
-    color: #f33d31;
+    color: #000;
     text-align: center;
   }
 
   .close-btn {
     position: absolute;
-    bottom: 2%;
+    bottom: 8%;
     left: 50%;
     width: 80%;
     transform: translateX(-50%);
-    background-image: url("../../../assets/images/promotion/spin-lucky-wheel/common-btn-gold.png");
-    color: #8a2c05;
-    min-height: 100px;
-
-    &.common-btn {
-      background-size: 100% 100%;
-    }
+    width: 117px;
+    height: 40px;
+    color: #fff;
+    border: 0px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #4FFFA5 0%, #10D16F 100%);
   }
 }
 

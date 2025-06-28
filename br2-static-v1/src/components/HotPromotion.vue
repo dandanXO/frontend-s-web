@@ -14,7 +14,7 @@
 
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'br1-slot-ftd' && store.token" :params="list.param" />
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
-    <SpinLuckyWheelPromoTemp v-if="list.redirectUrl === 'spin-lucky-wheel-2'" :params="list.param" />
+    <SpinLuckyWheelPromoTemp v-if="list.redirectUrl === 'br2-aviator-wheel-bet-count'" :params="list.param" />
 
     <MoneyRainPromo v-if="list.redirectUrl === 'money-rain'" :params="list.param" />
     <RedepositBonusPromo v-if="list.redirectUrl === 'redeposit-bonus'" :params="list.param" />
@@ -153,7 +153,7 @@ export default defineComponent({
       this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "br1-slot-ftd" ||
       this.list.redirectUrl === "spin-lucky-wheel" ||
-      this.list.redirectUrl === "spin-lucky-wheel-2" ||
+      this.list.redirectUrl === "br2-aviator-wheel-bet-count" ||
       this.list.redirectUrl === "receive-earn" ||
       this.list.redirectUrl === "money-rain" ||
       this.list.redirectUrl === "redeposit-bonus" ||

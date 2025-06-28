@@ -55,7 +55,8 @@ provide("targetWithdrawAmount", targetWithdrawAmount);
 const loadData = async () => {
   // isDuringInit.value = true;
   const res = await eventapi.get("/session/refer-wheel-spin/init?promoCode=br2-refer-wheel");
-  // const res = await eventapi.get("/session/refer-wheel/init?promoCode=br2-refer-wheel");
+  // dan test
+  //const res = await eventapi.get("/session/aviator-wheel-bet-count/init?promoCode=br2-aviator-wheel-bet-count");
   if (res.code === 0) {
     switch (res.data.currentBonusType) {
       case "REDPACKET":
@@ -99,6 +100,11 @@ onUnmounted(() => {
 </script>
 <style lang="scss">
 .spin-lucky-wheel-promo-wrapper {
+  margin-top: -14px;
+  background-image: url(./img/N-bg-1.png);
+  background-size: contain;
+  background-position: top;
+  background-repeat: no-repeat;
   .q-inner-loading {
     justify-content: flex-start;
   }

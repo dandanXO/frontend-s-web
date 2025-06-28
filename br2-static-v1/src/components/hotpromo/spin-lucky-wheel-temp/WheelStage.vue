@@ -1,45 +1,11 @@
 <template>
   <div class="wheel-stage-wrapper">
-    <div class="countdown">
-      {{ isWheelEnded ? $t("hotPromo.next_round") : $t("hotPromo.countdown") }}
-      : {{ remainingTime }}
+    <div style="width: 100%; height: 100%;padding-top: 24px;">
+      <img style="border-radius: 12px;" src="./img/N-title.jpg" />
     </div>
-
-    <div class="wheel-outer-wrapper">
-      <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
-      <div class="summary-wrapper">
-        <!-- <span class="prize">
-         Rs
-          <span class="amount">{{ info.accumulatedBonus }}</span>
-        </span> -->
-
-        <GradientTextAmount :amountText="`${store.currency.label} ${info.accumulatedBonus}`" />
-
-        <template v-if="extractionDifference > 0 && !info.hasWithdrawn">
-          <ProgressBar />
-          <div class="cash-out-btn" :class="{ disabled: isWheelEnded }" @click="handleWithdrawClick" />
-        </template>
-
-        <button v-else-if="!info.hasWithdrawn" class="receive-btn" @click="handleReceiveClick">
-          <img src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin-2.png" />
-          <span>{{ $t("hotPromo.receive") }}</span>
-        </button>
-
-        <button v-else-if="info.hasWithdrawn" class="receive-btn disabled">
-          <img src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/coin-2.png" />
-          <span>{{ $t("hotPromo.received") }}</span>
-        </button>
-
-        <div class="foreground-wrapper"></div>
-      </div>
-
-      <button class="record-btn" @click="handleRecordClick">{{ $t("hotPromo.record") }}</button>
-    </div>
-
-    <CommonButton class="draw-btn" :class="{ disabled: isWheelEnded }" @click="handleInviteClick">
-      {{ $t("hotPromo.invite_to_earn_spin") }}
-    </CommonButton>
-
+    <!-- <div class="plant-bg">
+      <img src="./img/N-bg.png" >
+    </div> -->
     <div class="wheel-wrapper">
       <!-- <img
               class="decoration penguin"
@@ -49,14 +15,13 @@
               class="decoration ox"
               src="../../../assets/images/promotion/spin-lucky-wheel/decoration-ox.png"
             /> -->
-
       <div class="wheel-inner-wrapper">
         <img
           ref="spinWheelRef"
           class="wheel"
-          src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-bg.png"
+          src="./img/wheel-bg.png"
         />
-        <img class="indicate" src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-indicate.png" />
+        <!-- <img class="indicate" src="./img/wheel-arraw.png" /> -->
         <button class="btn" :class="{ disabled: !info.availableSpin }" @click="handleWheelClick">
           {{ info.availableSpin }}
         </button>
@@ -71,13 +36,13 @@
               src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png"
             /> -->
 
-      <span v-if="isWheelEnded" class="next-spin-remaining-time">{{ $t("hotPromo.this_round_has_ended") }}</span>
-      <span v-if="!isWheelEnded" class="next-spin-remaining-time">
+      <!-- <span v-if="isWheelEnded" class="next-spin-remaining-time">{{ $t("hotPromo.this_round_has_ended") }}</span> -->
+      <!-- <span v-if="!isWheelEnded" class="next-spin-remaining-time">
         {{ $t("hotPromo.countdown_to_next_free_spins") }}: {{ nextFreeSpinRemainingTime }}
-      </span>
+      </span> -->
     </div>
 
-    <div class="winning-record-outer-wrapper">
+    <!-- <div class="winning-record-outer-wrapper">
       <div ref="winningRecordRef" class="winning-record-wrapper">
         <template v-if="winningRecord.length">
           <div v-for="(record, index) in winningRecord" :key="index" class="winning-record-item">
@@ -91,25 +56,61 @@
         </template>
         <div v-else class="no-record-text">{{ $t("hotPromo.no_records") }}</div>
       </div>
+    </div> -->
+    <div class="history-component">
+        <div class="history-header">
+            <img style="width: 80%;position: relative;top: -6px;" src="./img/N-table-tittle.png"> 
+        </div>
+        <div class="history-table-container" ref="historyTableContainer">
+          <table>
+            <thead>
+              <tr>
+                <th style="height:40px; background: #6D0000; opacity: 0.5;">ID</th>
+                <th style="background: #6D0000; opacity: 0.5;">Horário</th>
+                <th style="background: #6D0000; opacity: 0.5;">Prêmio</th>
+              </tr>
+            </thead>
+            <tbody class="history-tbody-scroll">
+              <tr v-for="(record, index) in winningRecord" :key="index">
+                <td style="border:0px; background: #270001;" :class="index === 0 ? 'history-td-br-left' : ''">{{ record.loginName }}</td>
+                <td style="border:0px; background: #270001; border-left: solid 1px #2e3039; border-right: solid 1px #2e3039;" :class="index === winningRecord.length - 1 ? 'history-td-br-right' : ''">{{ moment(record.recordTime).format("YYYY-MM-DD") }}</td>
+                <td style="border:0px; background: #270001;">{{ record.bonus }}</td>
+              </tr>
+              <tr>
+                <td class="history-td-br-left" style="border:0px; background: #270001;">3636</td>
+                <td style="border:0px; background: #270001; border-left: solid 1px #2e3039; border-right: solid 1px #2e3039;">2026-09-12</td>
+                <td class="history-td-br-right" style="border:0px; background: #270001;">1,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
     </div>
 
     <div class="block-wrapper">
       <div class="title-wrapper">
-        {{ $t("hotPromo.activityRules") }}
+        <img src="./img/N-rule-title.png" >
+        <!-- {{ $t("hotPromo.activityRules") }} -->
         <!-- <img
           style="width: 100%; max-width: 250px; padding: 0 0 5px 0"
           src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/activity-rules-title.png"
         /> -->
       </div>
       <ol>
-        <li>{{ $t("content.message1") }}</li>
+        <!-- <li>{{ $t("content.message1") }}</li>
         <li>{{ $t("content.message2") }}</li>
         <li>{{ $t("content.message3") }}</li>
         <li>{{ $t("content.message4") }}</li>
         <li>{{ $t("content.message5") }}</li>
         <li>{{ $t("content.message6") }}</li>
         <li>{{ $t("content.message7") }}</li>
-        <li>{{ $t("content.message8") }}</li>
+        <li>{{ $t("content.message8") }}</li> -->
+        <li>Jogue o jogo Aviator e ganhe prêmios em dinheiro gratuitamente</li>
+        <li> cada 10 apostas no jogo Aviator, você ganha uma chance na roleta. Super prêmio de 10.000 </li>
+        <li>s chances de roleta são válidas apenas no mesmo dia. No dia seguinte, a contagem recomeça. Participe todos os dias!</li>
+        <li> bônus (excluindo o principal) requer 1 vezes de apostas válidas para sacar;</li>
+        <li>Somente o proprietário da conta pode realizar operações manuais normais, caso contrário, o bônus será cancelado ou deduzido, congelado ou até mesmo colocado na lista negra;</li>
+        <li>Para evitar diferenças na compreensão do texto, a plataforma se reserva o direito final de interpretação desta atividade.</li>
+       
       </ol>
     </div>
 
@@ -192,7 +193,6 @@
         </div>
 
         <div class="desc">* {{ $t("hotPromo.spinReferWheel.referFriendToRegister") }}</div>
-
         <div class="invite-friends-btn" @click="handleInviteClick">
           {{ $t("hotPromo.spinReferWheel.inviteFriendsToHelp") }}
         </div>
@@ -226,16 +226,17 @@ import { storeToRefs } from "pinia";
 
 const { languageVal } = storeToRefs(i18nStore());
 
+const historyTableContainer = ref();
 const store = userStore();
 const emit = defineEmits(["reload"]);
 const props = defineProps(["info"]);
 const { info } = toRefs(props);
 
-const TOTAL_ITEMS = 6;
+const TOTAL_ITEMS = 8;
 const DEFAULT_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [0.02, 0.03, 0.04, 0.05, 0.06, 0.07];
+const SPIN_WHEEL_PRIZES = [0.02, 0.03, 0.04, 0.05, 0.06, 0.07,0.08, 0.09];
 const SPIN_DURATION = 5000;
 const SPIN_DECELERATION_TIME = 3;
 const RESULT_DIALOG_OPEN_DELAY = 1000;
@@ -247,7 +248,7 @@ const remainingTime = ref("");
 const nextFreeSpinRemainingTime = ref("");
 const showRecordDialog = ref(false);
 const showWithdrawDialog = ref(false);
-const showResultDialog = ref(false);
+const showResultDialog = ref(true);
 const spinWheelRef = ref();
 const spinButtonDisable = ref(false);
 const finalDegree = ref(0);
@@ -299,7 +300,7 @@ const rotate = (timestamp, stopCallback) => {
   }
 
   finalDegree.value = (degree.value * speed.value) % FULL_DEGREE;
-  const transformValue = `rotate(${finalDegree.value}deg)`;
+  const transformValue = `rotate(${finalDegree.value+20}deg)`;
   spinWheelRef.value.style.transform = transformValue;
 
   if (elapsed < SPIN_DURATION) {
@@ -309,10 +310,10 @@ const rotate = (timestamp, stopCallback) => {
     const endDegree = degreeToStopAt.value[prizeIndex.value].degree;
     finalDegree.value = stopSpinRound + endDegree;
     spinWheelRef.value.style.transition = `transform ${SPIN_DECELERATION_TIME}s ease-out`;
-    spinWheelRef.value.style.transform = `rotate(${finalDegree.value}deg)`;
+    spinWheelRef.value.style.transform = `rotate(${finalDegree.value+20}deg)`;
     setTimeout(() => {
       spinButtonDisable.value = false;
-      stopCallback?.();
+      // stopCallback?.();
     }, SPIN_DECELERATION_TIME * 1000);
   }
 };
@@ -333,20 +334,22 @@ const reset = () => {
 };
 
 const handleWheelClick = () => {
-  if (spinButtonDisable.value || !info.value.availableSpin) return;
-  eventapi.post("/session/refer-wheel-spin/spin?promoCode=br2-refer-wheel").then((res) => {
-    // eventapi.post("/session/refer-wheel/spin?promoCode=br2-refer-wheel").then((res) => {
-    if (res.code === 0) {
-      prize.value = res.data;
-      const prizeIndex = Math.floor(Math.random() * TOTAL_ITEMS);
-
-      spin(prizeIndex, () => {
+  //dan test
+  spin(7, () => {
         setTimeout(() => {
           showResultDialog.value = true;
         }, RESULT_DIALOG_OPEN_DELAY);
       });
-    }
-  });
+  // if (spinButtonDisable.value || !info.value.availableSpin) return;
+  
+  // eventapi.post("/session/aviator-wheel-bet-count/spin?promoCode=br2-aviator-wheel-bet-count").then((res) => {
+  //   if (res.code === 0) {
+  //     prize.value = res.data;
+  //     const prizeIndex = Math.floor(Math.random() * TOTAL_ITEMS);
+      
+      
+  //   }
+  // });
 };
 
 const handleInviteClick = () => {
@@ -428,6 +431,8 @@ const updateCountdownTime = () => {
 };
 
 const getRecords = () => {
+  // dan test
+  // /session/aviator-wheel-bet-count/records?promoCode=br2-aviator-wheel-bet-count&size=30&current=1
   eventapi.get("/session/refer-wheel-spin/getRecords?promoCode=br2-refer-wheel").then((res) => {
     // eventapi.get("/session/refer-wheel/getRecords?promoCode=br2-refer-wheel").then((res) => {
     if (res.code === 0) {
@@ -442,11 +447,34 @@ watch(info, () => {
 
 onMounted(() => {
   for (let i = 0; i < TOTAL_ITEMS; i++) {
-    const _degree = (FULL_DEGREE / TOTAL_ITEMS) * i * -1;
+    // 每個獎項多偏移4度，讓指針永遠不會剛好在中線上
+    const _degree = ((FULL_DEGREE / TOTAL_ITEMS) * i * -1) + 4;
     degreeToStopAt.value.push({ degree: _degree, prize: SPIN_WHEEL_PRIZES[i] });
   }
 
+  // 初始角度設為4度
+  finalDegree.value = 20;
+  degree.value = 20;
+  if (spinWheelRef.value) {
+    spinWheelRef.value.style.transform = `rotate(20deg)`;
+  }
+
   updateCountdownTime();
+  // dan test
+  setInterval(() => {
+    const el = historyTableContainer.value?.querySelector('.history-tbody-scroll');
+    if (el) {
+      // 若已經到底，回到頂部，否則往下捲一行高度
+      const row = el.querySelector('tr');
+      if (row) {
+        if (el.scrollTop + el.clientHeight >= el.scrollHeight - 1) {
+          el.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          el.scrollBy({ top: row.offsetHeight, behavior: 'smooth' });
+        }
+      }
+    }
+  }, 1000); // 每秒捲動一次
   getRecords();
 });
 
@@ -483,6 +511,8 @@ onUnmounted(() => {
 
   .winning-record-outer-wrapper {
     padding: 18px 20px;
+    margin-top: 100px;
+    position:relative;
     width: 100%;
     background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/records-bg.png) no-repeat;
     background-size: 100% 100%;
@@ -554,17 +584,17 @@ onUnmounted(() => {
 
     .wheel-inner-wrapper {
       position: relative;
-      top: 0;
+      top: 100px;
       padding: 0 20px;
 
       .indicate {
         -webkit-user-drag: none;
         position: absolute;
-        top: 3px;
+        top: 35%;
         left: 50%;
         transform: translateX(-50%);
         width: 217px;
-        max-width: 47%;
+        max-width: 20%;
       }
 
       .btn {
@@ -574,7 +604,7 @@ onUnmounted(() => {
         top: 48%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-btn.png);
+        background: url(./img/wheel-arraw.png);
         background-size: cover;
         aspect-ratio: 250/300;
         border: none;
@@ -627,17 +657,17 @@ onUnmounted(() => {
       }
     }
 
-    .next-spin-remaining-time {
-      font-weight: 700;
-      color: #fff;
-      display: block;
-      text-align: center;
-      background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/next-spin-countdown-bg.png)
-        no-repeat;
-      background-size: 100% 100%;
-      padding: 8px;
-      margin-top: 10px;
-    }
+    // .next-spin-remaining-time {
+    //   font-weight: 700;
+    //   color: #fff;
+    //   display: block;
+    //   text-align: center;
+    //   background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/next-spin-countdown-bg.png)
+    //     no-repeat;
+    //   background-size: 100% 100%;
+    //   padding: 8px;
+    //   margin-top: 10px;
+    // }
   }
 
   .wheel-outer-wrapper {
@@ -961,6 +991,61 @@ onUnmounted(() => {
     color: #fff;
     border-radius: 6px;
     margin-top: 10px;
+  }
+}
+.plant-bg{
+  position: absolute;
+  top: 0;
+  left: 0;
+  top: 8%;
+  left: -18%;
+  width: 109%;
+  height: 100%;
+
+}
+.history-header{
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+  position: relative;
+  width: 100%;
+  background-color: #270001;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.history-component{
+  border-radius: 12px;
+  margin-top: 36%;;
+}
+.history-td-br-right {
+  border-bottom-right-radius: 12px;
+  overflow: hidden;
+}
+.history-td-br-left {
+  border-bottom-left-radius: 12px;
+  overflow: hidden;
+}
+.history-table-container {
+  max-height: 220px;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 0 0 12px 12px;
+  background: #270001;
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .history-tbody-scroll {
+    display: block;
+    max-height: 180px;
+    overflow-y: auto;
+    width: 100%;
+  }
+  thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
   }
 }
 </style>
