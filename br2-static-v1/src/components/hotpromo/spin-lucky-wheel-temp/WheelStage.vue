@@ -73,8 +73,8 @@
             <tbody class="history-tbody-scroll">
               <tr v-for="(record, index) in winningRecord.records" :key="record.recordTime">
                 <!-- <td style="border:0px; background: #270001;" :class="index === 0 ? 'history-td-br-left' : ''">{{ record.loginName }}</td> -->
-                <td style="border:0px; background: #270001; border-left: solid 1px #2e3039; border-right: solid 1px #2e3039;" :class="index === winningRecord.length - 1 ? 'history-td-br-right' : ''">{{ record.recordTime && moment(record.recordTime).format("YYYY-MM-DD") }}</td>
-                <td style="border:0px; background: #270001;">{{ record.bonus }}</td>
+                <td style="border:0px; background: #270001; border-left: solid 1px #2e3039; border-right: solid 1px #2e3039;" :class="index === winningRecord.length - 1 ? 'history-td-br-right' : ''">{{ record.recordTime && moment(record.recordTime).format("YYYY-MM-DD HH:mm:ss") }}</td>
+                <td style="border:0px; background: #270001;">R${{ record.bonus }}</td>
               </tr>
               <!-- <tr>
                 <td class="history-td-br-left" style="border:0px; background: #270001;">3636</td>
@@ -314,7 +314,8 @@ const rotate = (timestamp, stopCallback) => {
     setTimeout(() => {
       spinButtonDisable.value = false;
       stopCallback?.();
-      getRecords()
+      getRecords();
+      store.getBalance();
     }, SPIN_DECELERATION_TIME * 1000);
   }
 };
@@ -337,13 +338,12 @@ const reset = () => {
 const handleWheelClick = () => {
   //dan test
   
-  // if (spinButtonDisable.value || !info.value.availableSpin) return;
+  if (spinButtonDisable.value || !info.value.availableSpin) return;
   
   eventapi.post("/session/aviator-wheel-bet-count/spin?promoCode=br2-aviator-wheel-bet-count").then((res) => {
     if (res.code == 0) {
       prize.value = res.data;
-      const prizeIndex = Math.floor(Math.random() * TOTAL_ITEMS);
-      console.log('dan', prizeIndex, TOTAL_ITEMS)
+      const prizeIndex = prize.value.bonusAmount > 4 ? 5 : 7 // 5鈔票 7金幣
       spin(prizeIndex, () => {
         setTimeout(() => {
           showResultDialog.value = true;
