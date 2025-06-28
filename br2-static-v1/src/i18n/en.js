@@ -983,11 +983,14 @@ export default {
       description: "Daily cashback based on the amount wagered and the corresponding percentage",
       tnc01: "Cashback from the previous day will be credited automatically at 6:00 PM (Brasília time) every day;",
       tnc02: "The cashback amount is calculated as: total amount wagered on the previous day × cashback percentage;",
-      tnc03: "The more you bet, the higher the cashback percentage, up to 3%;",
+      tnc03: "The more you bet, the higher the cashback percentage, up to 3.2%;",
       tnc04: "There is no maximum limit on the cashback amount;",
       tnc05: "The cashback bonus must be wagered at least once before it can be withdrawn;",
       tnc06:
-        "To avoid discrepancies in interpretation, the AKB188 platform reserves the right to the final explanation of this promotion."
+        "To avoid discrepancies in interpretation, the AKB188 platform reserves the right to the final explanation of this promotion.",
+      thead1: "Level",
+      thead2: "Transaction Volume",
+      thead3: "Return Rate"
     },
     lossRebate: {
       description: "Cashback based on percentage of amount lost the previous day",

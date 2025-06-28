@@ -65,7 +65,7 @@ const CashbackWeeklyPromo = defineAsyncComponent(() => import("./hotpromo/cashba
 const RedPacketRainPromo = defineAsyncComponent(() => import("../components/hotpromo/redPacketRain/RedPacketRainPromo.vue"));
 const RedepositBonus100Promo = defineAsyncComponent(() => import("../components/hotpromo/redeposit-bonus/RedepositBonusPromo.vue"));
 const BetCashbackPromo = defineAsyncComponent(() => import("../components/hotpromo/bet-cashback/BetCashbackPromo.vue"));
-const DailySecondDepositPromo = defineAsyncComponent(() => import("components/hotpromo/daily-second-deposit/DailySecondDepositPromo.vue"));
+const DailySecondDepositPromo = defineAsyncComponent(() => import("../components/hotpromo/daily-second-deposit/DailySecondDepositPromo.vue"));
 const LossRebatePromo = defineAsyncComponent(() => import("../components/hotpromo/loss-rebate/LossRebatePromo.vue"));
 const FtdBonusPromo = defineAsyncComponent(() => import("../components/hotpromo/ftdBonus/FtdBonusPromo.vue"));
 

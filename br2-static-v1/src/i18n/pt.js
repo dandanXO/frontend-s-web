@@ -998,11 +998,14 @@ export default {
       description: "Cashback diário com base no valor apostado e na porcentagem correspondente",
       tnc01: "O cashback do dia anterior será creditado automaticamente às 18h (horário de Brasília) todos os dias;",
       tnc02: "O valor do cashback é calculado como: valor apostado no dia anterior × porcentagem de reembolso;",
-      tnc03: "Quanto maior o valor apostado, maior a porcentagem de cashback, podendo chegar a até 3%;",
+      tnc03: "Quanto maior o valor apostado, maior a porcentagem de cashback, podendo chegar a até 3.2%;",
       tnc04: "Sem limite máximo para o valor de cashback;",
       tnc05: "O bônus de cashback deve ser apostado pelo menos 1 vez antes de poder ser sacado;",
       tnc06:
-        "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção."
+        "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção.",
+      thead1: "Nível",
+      thead2: "Volume de Transações",
+      thead3: "Taxa de Retorno"
     },
     lossRebate: {
       description: "Cashback baseado na porcentagem do valor perdido no dia anterior",
