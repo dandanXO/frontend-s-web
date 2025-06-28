@@ -14,6 +14,7 @@
 
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'br1-slot-ftd' && store.token" :params="list.param" />
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
+    <SpinLuckyWheelPromoTemp v-if="list.redirectUrl === 'br2-aviator-wheel-bet-count'" :params="list.param" />
 
     <MoneyRainPromo v-if="list.redirectUrl === 'money-rain'" :params="list.param" />
     <RedepositBonusPromo v-if="list.redirectUrl === 'redeposit-bonus'" :params="list.param" />
@@ -58,6 +59,7 @@ const WelcomeTaskPromo = defineAsyncComponent(() => import("../components/hotpro
 const InviteFriendPromo = defineAsyncComponent(() => import("../components/hotpromo/invitefriend/inviteFriendPromo.vue"));
 const SlotFtdPromo = defineAsyncComponent(() => import("../components/hotpromo/slotftdpromo/SlotFtdPromo.vue"));
 const SpinLuckyWheelPromo = defineAsyncComponent(() => import("./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue"));
+const SpinLuckyWheelPromoTemp = defineAsyncComponent(() => import("./hotpromo/spin-lucky-wheel-temp/SpinLuckyWheelPromo.vue"));
 const MoneyRainPromo = defineAsyncComponent(() => import("./hotpromo/money-rain/MoneyRainPromo.vue"));
 const RedepositBonusPromo = defineAsyncComponent(() => import("./hotpromo/redeposit-bonus/RedepositBonusPromo.vue"));
 const VipPlanBettingUpgrade = defineAsyncComponent(() => import("./hotpromo/vip-plan-betting-upgrade/VipPlanBettingUpgrade.vue"));
@@ -82,6 +84,7 @@ export default defineComponent({
     InviteFriendPromo,
     SlotFtdPromo,
     SpinLuckyWheelPromo,
+    SpinLuckyWheelPromoTemp,
     MoneyRainPromo,
     RedepositBonusPromo,
     VipPlanBettingUpgrade,
@@ -150,6 +153,7 @@ export default defineComponent({
       this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "br1-slot-ftd" ||
       this.list.redirectUrl === "spin-lucky-wheel" ||
+      this.list.redirectUrl === "br2-aviator-wheel-bet-count" ||
       this.list.redirectUrl === "receive-earn" ||
       this.list.redirectUrl === "money-rain" ||
       this.list.redirectUrl === "redeposit-bonus" ||

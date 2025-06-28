@@ -72,7 +72,7 @@
             </div>
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
-              <div v-if="selectedPromo.redirectUrl !== 'spin-lucky-wheel'" class="banner-container">
+              <div v-if="selectedPromo.redirectUrl !== 'spin-lucky-wheel' && selectedPromo.redirectUrl !== 'br2-aviator-wheel-bet-count'" class="banner-container">
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
@@ -82,10 +82,10 @@
               <div
                 class="inner"
                 :class="{
-                  isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel',
+                  isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel' ||  selectedPromo.redirectUrl === 'br2-aviator-wheel-bet-count',
                   envelope:
                     selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope',
-                  wheel: selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel'
+                  wheel: (selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel')
                 }"
               >
                 <div
@@ -113,7 +113,7 @@
                   <div
                     class="hot-promo-div"
                     :class="{
-                      isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel'
+                      isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel'||selectedPromo.redirectUrl === 'br2-aviator-wheel-bet-count'
                     }"
                     v-if="selectedPromo.hasPromo"
                   >
