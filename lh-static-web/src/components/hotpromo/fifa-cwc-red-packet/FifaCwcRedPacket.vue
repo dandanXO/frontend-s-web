@@ -69,6 +69,12 @@
             在世俱杯赛事期间，会员在指定赛事开始登录雷火账号，即可领取到最高8,888元的开赛红包。
           </div>
         </div>
+
+        <div class="livepoker-rebate-game-bottom">
+          <div class="livepoker-rebate-game-bottom-left-title">
+            注：每场世俱杯红包雨限量500个，抢完为止，若您抢到【本场红包雨已全部派发】，则代表该场次红包数量已全部抽完
+          </div>
+        </div>
       </div>
 
       <div class="livepoker-rebate-game-bottom-rule section-bg">
@@ -87,19 +93,23 @@
           </div>
           <div class="item">
             <div class="item-num">3</div>
-            指定赛事开始前登录雷火账号即可参与红包雨活动，彩金实时到账，彩金 1倍流水即可出款；
+            .每场世俱杯红包雨限量500个，抢完即止，若您抢到【本场红包雨已全部派发】，则代表该场次红包数量已全部抽完
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+            指定赛事开始前登录雷火账号即可参与红包雨活动，彩金实时到账，彩金 1倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">5</div>
+            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+          </div>
+          <div class="item">
+            <div class="item-num">6</div>
             此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
             地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
-            <div class="item-num">6</div>
+            <div class="item-num">7</div>
             为避免文字理解差异，雷火电竞保留此活动最终解释权；
           </div>
         </div>
