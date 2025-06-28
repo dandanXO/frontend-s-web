@@ -31,10 +31,10 @@
     </template>
     <template v-else>
       <RankPodium :rankingList="rankingList" />
-      <HistoryTable :historyList="rankingList" />
+      <HistoryTable :isAll="false" :historyList="rankingList" />
     </template>
 
-    <RankDetails :rankDetails="rankDetails" :isLoadingRanking="isLoadingRanking" />
+    <RankDetails :isAll="false" :rankDetails="rankDetails" :isLoadingRanking="isLoadingRanking" />
   </template>
   <template v-else-if="mode === 'RULES'">
     <JackpotAviatorRules :onClickBackBtn="() => (mode = 'MAIN')" :rankingBonusRatioList="rankingBonusRatioList" />
@@ -56,7 +56,7 @@
         <div class="congrats-prize">{{ store.currency.value }} {{ historyData.jackpotAmount }}</div>
       </div>
 
-      <HistoryTable :historyList="historyData.rankingList" />
+      <HistoryTable :isAll="true" :historyList="historyData.rankingList" />
     </div>
   </q-dialog>
 
@@ -174,7 +174,7 @@ onMounted(() => {
   background: url("../../../assets/images/promotion/hotpromo/jackpot-aviator/jackpot-bg.gif") no-repeat 0% 25%;
   // aspect-ratio: 1125/500;
   background-size: cover;
-  
+
   min-height: 420px;
   position: relative;
   margin-top: -30px;
@@ -182,7 +182,7 @@ onMounted(() => {
   .rules-ribbon {
     // background-color: #30af88;
     // background: linear-gradient(180deg, #fb4f77 0%, #da093a 100%);
-    
+
     // background: linear-gradient(180deg, #9c3624, #3f1203);
     background: linear-gradient(to bottom, #fcd34d 0%, #f59e0b 50%, #d97706 100%);
     color: #4b1d06;
