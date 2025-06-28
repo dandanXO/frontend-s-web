@@ -1009,17 +1009,15 @@ export default {
     },
     lossRebate: {
       description: "Cashback baseado na porcentagem do valor perdido no dia anterior",
-      tnc01: "Receba 15% do valor perdido no dia anterior diariamente;",
+      tnc01: "O cashback do dia anterior será creditado automaticamente às 12h (horário de Brasília) todos os dias;",
       tnc02:
-        "O resgate deve ser feito após as 12h (horário de Brasília). Caso não seja solicitado no prazo, será considerado como desistência;",
-      tnc03: "O valor do resgate é calculado como: valor real do prejuízo × porcentagem de cashback",
+        ".O valor do resgate é calculado como: valor real do prejuízo × porcentagem de cashback;",
+      tnc03: "Se você não tiver feito nenhuma aposta durante o período da promoção ou tiver lucrado no total, não terá direito ao bônus de resgate;",
       tnc04:
-        "Se você não tiver feito nenhuma aposta durante o período da promoção ou tiver lucrado no total, não terá direito ao bônus de resgate;",
-      tnc05: "É necessário ter perdido pelo menos R$10 no dia anterior para poder solicitar o bônus;",
-      tnc06: "O valor máximo de resgate por pessoa por dia é de R$10.000;",
-      tnc07: "O bônus recebido deve ser apostado pelo menos 3 vezes antes de poder ser sacado;",
-      tnc08:
-        "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção."
+        "É necessário ter perdido pelo menos R$10 no dia anterior para poder solicitar o bônus;",
+      tnc05: "O valor máximo de resgate por pessoa por dia é de R$10.000;",
+      tnc06: "O bônus recebido deve ser apostado pelo menos 3 vezes antes de poder ser sacado;",
+      tnc07: "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção."
     }
   },
   maintenance: {

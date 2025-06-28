@@ -1,8 +1,8 @@
 <template>
   <div>
-    <q-btn class="receive-earn-btn" no-caps :disabled="!isClaimable" @click="claimPromo()">
-      {{ $t("hotPromo.receive") }}
-    </q-btn>
+<!--    <q-btn class="receive-earn-btn" no-caps :disabled="!isClaimable" @click="claimPromo()">-->
+<!--      {{ $t("hotPromo.receive") }}-->
+<!--    </q-btn>-->
 
     <div class="receive-bar-container">
       <div class="receive-bar">
@@ -34,7 +34,7 @@
 
     <div class="tnc-content">
       <ol>
-        <li v-for="index in 8" :key="index">
+        <li v-for="index in 7" :key="index">
           {{ $t(`hotPromo.lossRebate.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
       </ol>
