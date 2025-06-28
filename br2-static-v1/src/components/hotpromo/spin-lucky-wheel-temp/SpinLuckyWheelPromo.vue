@@ -1,7 +1,6 @@
 <template>
   <div class="spin-lucky-wheel-promo-wrapper">
-    <EnvelopeStage v-if="stage === 'envelope'" @envelope-click="handleEnvelopClick" />
-    <WheelStage v-else-if="stage === 'wheel'" :info="info" @reload="loadData" ref="wheelstage" />
+    <WheelStage :info="info" @reload="loadData" ref="wheelstage" />
     <q-inner-loading :showing="isDuringInit" />
   </div>
 </template>
@@ -54,9 +53,9 @@ provide("targetWithdrawAmount", targetWithdrawAmount);
 
 const loadData = async () => {
   // isDuringInit.value = true;
-  const res = await eventapi.get("/session/refer-wheel-spin/init?promoCode=br2-refer-wheel");
+  // const res = await eventapi.get("/session/refer-wheel-spin/init?promoCode=br2-refer-wheel");
   // dan test
-  //const res = await eventapi.get("/session/aviator-wheel-bet-count/init?promoCode=br2-aviator-wheel-bet-count");
+  const res = await eventapi.get("/session/aviator-wheel-bet-count/init?promoCode=br2-aviator-wheel-bet-count");
   if (res.code === 0) {
     switch (res.data.currentBonusType) {
       case "REDPACKET":
