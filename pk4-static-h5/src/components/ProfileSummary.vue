@@ -37,9 +37,9 @@
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
         <div class="logo-img" style="cursor: pointer" @click="onClickLogo">
-          <img src="../assets/images/auth/bg-logo-only.png" />
+          <img src="../assets/logo.png" />
           <!-- <span v-if="!ui.loggedIn && !store.hasToken()">B9.GAME</span> -->
-           <span>B9.GAME</span>
+           <!-- <span>PK1.GAME</span> -->
         </div>
       <div class="profile-menu">
         <img src="../assets/images/auth/icon-more.png" @click="toggleMenuOpen()" />
@@ -1035,7 +1035,7 @@ onUnmounted(() => {
     text-align: center;
 
     img {
-      width: 32px;
+      width: 120px;
       text-align: center;
     }
   }

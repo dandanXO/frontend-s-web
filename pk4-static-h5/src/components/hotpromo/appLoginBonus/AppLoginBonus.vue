@@ -109,40 +109,40 @@
         />
         <template v-if="languageVal === 'en'">
           <p>
-            <span class="yellow">B9.game</span>
+            <span class="yellow">PK1.game</span>
             Exclusive Offer: Bind Your Phone & Get
             <span class="red">{{ store.currency.value }}100</span>
             Instantly!
           </p>
           <p>
             New to
-            <span class="yellow">B9.game</span>
+            <span class="yellow">PK1.game</span>
             ? Just bind your mobile number after registration and receive an instant reward of
             <span class="red">{{ store.currency.value }}100</span>
             —no deposit required!
           </p>
           <p>
             It’s quick, easy, and secure. Bind now to claim your bonus and enjoy all the exciting features and rewards
-            <span class="yellow">B9.game</span>
+            <span class="yellow">PK1.game</span>
             has to offer.
           </p>
         </template>
         <template v-if="languageVal === 'ur'">
           <p>
-            <span class="yellow">B9.game</span>
+            <span class="yellow">PK1.game</span>
             کی خصوصی پیشکش: اپنا فون بائنڈ کریں اور فوراً حاصل کریں
             <span class="red">{{ STORE.CURRENCY.VALUE }}100</span>
             !
           </p>
           <p>
-            <span class="yellow">B9.game</span>
+            <span class="yellow">PK1.game</span>
             پر نئے ہیں؟ صرف رجسٹریشن کے بعد اپنا موبائل نمبر بائنڈ کریں اور فوراً حاصل کریں
             <span class="red">{{ STORE.CURRENCY.VALUE }}100</span>
             کا انعام — بغیر کسی ڈپازٹ کے!
           </p>
           <p>
             یہ آسان، تیز اور محفوظ ہے۔ ابھی بائنڈ کریں اور اپنے بونس کا دعویٰ کریں، اور
-            <span class="yellow">B9.game</span>
+            <span class="yellow">PK1.game</span>
             کی تمام زبردست خصوصیات اور انعامات سے لطف اٹھائیں۔
           </p>
         </template>

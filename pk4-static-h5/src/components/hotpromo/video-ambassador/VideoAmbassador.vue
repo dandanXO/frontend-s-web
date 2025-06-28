@@ -2,7 +2,7 @@
   <div class="btn-container">
     <img class="icon" src="./img/flower.png" />
     <div class="styled-box">
-      <div class="title">Show your creativity and become the face of B9.GAME!</div>
+      <div class="title">Show your creativity and become the face of PK1.GAME!</div>
       <ul class="content">
         <li>
           Win
@@ -12,7 +12,7 @@
         <li>Do you have creative ideas?</li>
         <li>Do you want to be in the spotlight?</li>
         <li>
-          <span class="sp2">B9.GAME</span>
+          <span class="sp2">PK1.GAME</span>
           is searching for its next Brand Ambassador, and it could be YOU!
         </li>
       </ul>
@@ -27,7 +27,7 @@
     <ul>
       <li>
         Represent
-        <span class="l1">B9.GAME</span>
+        <span class="l1">PK1.GAME</span>
         for 12 months
       </li>
       <li>
@@ -40,7 +40,7 @@
     <ul>
       <li>
         Represent
-        <span class="l1">B9.GAME</span>
+        <span class="l1">PK1.GAME</span>
         for 6 months
       </li>
       <li>
@@ -52,7 +52,7 @@
     <ul>
       <li>
         Represent
-        <span class="l1">B9.GAME</span>
+        <span class="l1">PK1.GAME</span>
         for 1 month
       </li>
       <li>
@@ -110,18 +110,18 @@
         <li>How to Claim Rewards?</li>
         <li>
           Once your video reaches 1,000 views, contact
-          <span class="sp2">B9.GAME</span>
+          <span class="sp2">PK1.GAME</span>
           Customer Support to submit your video link and ID. Your reward will be processed within 7 working days!
         </li>
         <li>
           Don't Miss Out! Download
-          <span class="sp2">B9.GAME</span>
+          <span class="sp2">PK1.GAME</span>
           now, use your creativity, and shine like a star!
         </li>
         <li>“This is your chance to make Pakistan proud!”</li>
         <li>
           “The next
-          <span class="sp2">B9.GAME</span>
+          <span class="sp2">PK1.GAME</span>
           Brand Ambassador could be YOU!"
         </li>
       </ul>
