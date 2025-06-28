@@ -65,14 +65,14 @@
           <table>
             <thead>
               <tr>
-                <th style="height:40px; background: #6D0000; opacity: 0.5;">ID</th>
+                <!-- <th style="height:40px; background: #6D0000; opacity: 0.5;">ID</th> -->
                 <th style="background: #6D0000; opacity: 0.5;">Horário</th>
                 <th style="background: #6D0000; opacity: 0.5;">Prêmio</th>
               </tr>
             </thead>
             <tbody class="history-tbody-scroll">
-              <tr v-for="(record, index) in winningRecord" :key="index">
-                <td style="border:0px; background: #270001;" :class="index === 0 ? 'history-td-br-left' : ''">{{ record.loginName }}</td>
+              <tr v-for="(record, index) in winningRecord.records" :key="record.recordTime">
+                <!-- <td style="border:0px; background: #270001;" :class="index === 0 ? 'history-td-br-left' : ''">{{ record.loginName }}</td> -->
                 <td style="border:0px; background: #270001; border-left: solid 1px #2e3039; border-right: solid 1px #2e3039;" :class="index === winningRecord.length - 1 ? 'history-td-br-right' : ''">{{ record.recordTime && moment(record.recordTime).format("YYYY-MM-DD") }}</td>
                 <td style="border:0px; background: #270001;">{{ record.bonus }}</td>
               </tr>
@@ -313,7 +313,8 @@ const rotate = (timestamp, stopCallback) => {
     spinWheelRef.value.style.transform = `rotate(${finalDegree.value+20}deg)`;
     setTimeout(() => {
       spinButtonDisable.value = false;
-      // stopCallback?.();
+      stopCallback?.();
+      getRecords()
     }, SPIN_DECELERATION_TIME * 1000);
   }
 };
@@ -342,6 +343,7 @@ const handleWheelClick = () => {
     if (res.code == 0) {
       prize.value = res.data;
       const prizeIndex = Math.floor(Math.random() * TOTAL_ITEMS);
+      console.log('dan', prizeIndex, TOTAL_ITEMS)
       spin(prizeIndex, () => {
         setTimeout(() => {
           showResultDialog.value = true;
