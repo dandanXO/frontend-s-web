@@ -348,6 +348,9 @@ const handleWheelClick = () => {
         }, RESULT_DIALOG_OPEN_DELAY);
       });
     }
+    emit("reload");
+  }).catch((err) => {
+    emit("reload");
   });
 };
 
@@ -376,27 +379,27 @@ const getRemainingTime = (endTime) => {
   return result;
 };
 
-const handleReceiveClick = () => {
-  eventapi.post("/session/refer-wheel-spin/claimBonus?promoCode=br2-refer-wheel").then((res) => {
-    // eventapi.post("/session/refer-wheel/claimBonus?promoCode=br2-refer-wheel").then((res) => {
-    if (res.code === 0) {
-      $q.notify({
-        message: t("content.receiveSuccessfully"),
-        color: "positive",
-        position: "top"
-      });
-      emit("reload");
-    }
-  });
-};
+// const handleReceiveClick = () => {
+//   eventapi.post("/session/refer-wheel-spin/claimBonus?promoCode=br2-refer-wheel").then((res) => {
+//     // eventapi.post("/session/refer-wheel/claimBonus?promoCode=br2-refer-wheel").then((res) => {
+//     if (res.code === 0) {
+//       $q.notify({
+//         message: t("content.receiveSuccessfully"),
+//         color: "positive",
+//         position: "top"
+//       });
+//       emit("reload");
+//     }
+//   });
+// };
 
-const handleRecordClick = () => {
-  showRecordDialog.value = true;
-};
+// const handleRecordClick = () => {
+//   showRecordDialog.value = true;
+// };
 
-const handleWithdrawClick = () => {
-  showWithdrawDialog.value = true;
-};
+// const handleWithdrawClick = () => {
+//   showWithdrawDialog.value = true;
+// };
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
@@ -437,6 +440,7 @@ const getRecords = () => {
     if (res.code === 0) {
       winningRecord.value = res.data;
     }
+  }).catch((err) => {
   });
 };
 
@@ -458,7 +462,7 @@ onMounted(() => {
     spinWheelRef.value.style.transform = `rotate(20deg)`;
   }
 
-  updateCountdownTime();
+  // updateCountdownTime();
   // dan test
   setInterval(() => {
     const el = historyTableContainer.value?.querySelector('.history-tbody-scroll');
