@@ -89,17 +89,17 @@
       <!--      </div>-->
     </div>
 
-    <div class="side-menu-social-media-wrapper">
-      <a
-        v-for="(link, index) in socialMediaLinks"
-        :key="index"
-        class="side-menu-social-media-item"
-        @click="goToLink(link.url)"
-        target="_blank"
-      >
-        <img :src="require(`../assets/images/sideMenu/socialMedia/icon-${link.icon}.png`)" />
-      </a>
-    </div>
+<!--    <div class="side-menu-social-media-wrapper">-->
+<!--      <a-->
+<!--        v-for="(link, index) in socialMediaLinks"-->
+<!--        :key="index"-->
+<!--        class="side-menu-social-media-item"-->
+<!--        @click="goToLink(link.url)"-->
+<!--        target="_blank"-->
+<!--      >-->
+<!--        <img :src="require(`../assets/images/sideMenu/socialMedia/icon-${link.icon}.png`)" />-->
+<!--      </a>-->
+<!--    </div>-->
   </div>
 </template>
 <script setup>
