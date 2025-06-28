@@ -370,11 +370,7 @@ onMounted(() => {
     tgDomain = "https://" + store.evip;
   }
 
-  api.get("/session/member/referralCode").then((res) => {
-    if (res.code === 0) {
-      selfTgurl.value = tgDomain + "/referSpin/" + res.data;
-    }
-  });
+  
 });
 </script>
 <style>
