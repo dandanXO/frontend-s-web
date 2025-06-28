@@ -73,14 +73,14 @@
             <tbody class="history-tbody-scroll">
               <tr v-for="(record, index) in winningRecord" :key="index">
                 <td style="border:0px; background: #270001;" :class="index === 0 ? 'history-td-br-left' : ''">{{ record.loginName }}</td>
-                <td style="border:0px; background: #270001; border-left: solid 1px #2e3039; border-right: solid 1px #2e3039;" :class="index === winningRecord.length - 1 ? 'history-td-br-right' : ''">{{ moment(record.recordTime).format("YYYY-MM-DD") }}</td>
+                <td style="border:0px; background: #270001; border-left: solid 1px #2e3039; border-right: solid 1px #2e3039;" :class="index === winningRecord.length - 1 ? 'history-td-br-right' : ''">{{ record.recordTime && moment(record.recordTime).format("YYYY-MM-DD") }}</td>
                 <td style="border:0px; background: #270001;">{{ record.bonus }}</td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <td class="history-td-br-left" style="border:0px; background: #270001;">3636</td>
                 <td style="border:0px; background: #270001; border-left: solid 1px #2e3039; border-right: solid 1px #2e3039;">2026-09-12</td>
                 <td class="history-td-br-right" style="border:0px; background: #270001;">1,000</td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
@@ -248,7 +248,7 @@ const remainingTime = ref("");
 const nextFreeSpinRemainingTime = ref("");
 const showRecordDialog = ref(false);
 const showWithdrawDialog = ref(false);
-const showResultDialog = ref(true);
+const showResultDialog = ref(false);
 const spinWheelRef = ref();
 const spinButtonDisable = ref(false);
 const finalDegree = ref(0);
@@ -335,21 +335,23 @@ const reset = () => {
 
 const handleWheelClick = () => {
   //dan test
-  spin(7, () => {
+  
+  // if (spinButtonDisable.value || !info.value.availableSpin) return;
+  
+  eventapi.post("/session/aviator-wheel-bet-count/spin?promoCode=br2-aviator-wheel-bet-count").then((res) => {
+    if (res.code == 0) {
+      prize.value = res.data;
+      const prizeIndex = Math.floor(Math.random() * TOTAL_ITEMS);
+      spin(prizeIndex, () => {
         setTimeout(() => {
           showResultDialog.value = true;
         }, RESULT_DIALOG_OPEN_DELAY);
       });
-  // if (spinButtonDisable.value || !info.value.availableSpin) return;
-  
-  // eventapi.post("/session/aviator-wheel-bet-count/spin?promoCode=br2-aviator-wheel-bet-count").then((res) => {
-  //   if (res.code === 0) {
-  //     prize.value = res.data;
-  //     const prizeIndex = Math.floor(Math.random() * TOTAL_ITEMS);
-      
-      
-  //   }
-  // });
+    }
+    emit("reload");
+  }).catch((err) => {
+    emit("reload");
+  });
 };
 
 const handleInviteClick = () => {
@@ -377,27 +379,27 @@ const getRemainingTime = (endTime) => {
   return result;
 };
 
-const handleReceiveClick = () => {
-  eventapi.post("/session/refer-wheel-spin/claimBonus?promoCode=br2-refer-wheel").then((res) => {
-    // eventapi.post("/session/refer-wheel/claimBonus?promoCode=br2-refer-wheel").then((res) => {
-    if (res.code === 0) {
-      $q.notify({
-        message: t("content.receiveSuccessfully"),
-        color: "positive",
-        position: "top"
-      });
-      emit("reload");
-    }
-  });
-};
+// const handleReceiveClick = () => {
+//   eventapi.post("/session/refer-wheel-spin/claimBonus?promoCode=br2-refer-wheel").then((res) => {
+//     // eventapi.post("/session/refer-wheel/claimBonus?promoCode=br2-refer-wheel").then((res) => {
+//     if (res.code === 0) {
+//       $q.notify({
+//         message: t("content.receiveSuccessfully"),
+//         color: "positive",
+//         position: "top"
+//       });
+//       emit("reload");
+//     }
+//   });
+// };
 
-const handleRecordClick = () => {
-  showRecordDialog.value = true;
-};
+// const handleRecordClick = () => {
+//   showRecordDialog.value = true;
+// };
 
-const handleWithdrawClick = () => {
-  showWithdrawDialog.value = true;
-};
+// const handleWithdrawClick = () => {
+//   showWithdrawDialog.value = true;
+// };
 
 const updateCountdownTime = () => {
   // console.log("updateCountdownTime")
@@ -433,11 +435,12 @@ const updateCountdownTime = () => {
 const getRecords = () => {
   // dan test
   // /session/aviator-wheel-bet-count/records?promoCode=br2-aviator-wheel-bet-count&size=30&current=1
-  eventapi.get("/session/refer-wheel-spin/getRecords?promoCode=br2-refer-wheel").then((res) => {
+  eventapi.get("/session/aviator-wheel-bet-count/records?promoCode=br2-aviator-wheel-bet-count&size=30&current=1").then((res) => {
     // eventapi.get("/session/refer-wheel/getRecords?promoCode=br2-refer-wheel").then((res) => {
     if (res.code === 0) {
       winningRecord.value = res.data;
     }
+  }).catch((err) => {
   });
 };
 
@@ -459,7 +462,7 @@ onMounted(() => {
     spinWheelRef.value.style.transform = `rotate(20deg)`;
   }
 
-  updateCountdownTime();
+  // updateCountdownTime();
   // dan test
   setInterval(() => {
     const el = historyTableContainer.value?.querySelector('.history-tbody-scroll');
@@ -1027,7 +1030,7 @@ onUnmounted(() => {
 }
 .history-table-container {
   max-height: 220px;
-  height: 220px;
+  // height: 220px;
   overflow: hidden;
   border-radius: 0 0 12px 12px;
   background: #270001;

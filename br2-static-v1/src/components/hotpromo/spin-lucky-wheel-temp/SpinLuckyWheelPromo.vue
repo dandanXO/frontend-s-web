@@ -1,7 +1,7 @@
 <template>
   <div class="spin-lucky-wheel-promo-wrapper">
-    <EnvelopeStage v-if="stage === 'envelope'" @envelope-click="handleEnvelopClick" />
-    <WheelStage v-else-if="stage === 'wheel'" :info="info" @reload="loadData" ref="wheelstage" />
+    <!-- <EnvelopeStage v-if="stage === 'envelope'" @envelope-click="handleEnvelopClick" /> -->
+    <WheelStage :info="info" @reload="loadData" ref="wheelstage" @loadInitData="loadData"/>
     <q-inner-loading :showing="isDuringInit" />
   </div>
 </template>
