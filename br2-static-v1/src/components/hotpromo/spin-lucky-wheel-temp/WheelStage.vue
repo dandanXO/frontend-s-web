@@ -1,8 +1,8 @@
 <template>
+  <div style="width: 100%; height: 100%;padding-top: 14px;">
+    <img style="border-radius: 12px;" src="./img/N-title.jpg" />
+  </div>
   <div class="wheel-stage-wrapper">
-    <div style="width: 100%; height: 100%;padding-top: 24px;">
-      <img style="border-radius: 12px;" src="./img/N-title.jpg" />
-    </div>
     <!-- <div class="plant-bg">
       <img src="./img/N-bg.png" >
     </div> -->
@@ -587,7 +587,7 @@ onUnmounted(() => {
 
     .wheel-inner-wrapper {
       position: relative;
-      top: 100px;
+      top: 10px;
       padding: 0 20px;
 
       .indicate {
@@ -1018,7 +1018,7 @@ onUnmounted(() => {
 }
 .history-component{
   border-radius: 12px;
-  margin-top: 36%;;
+  margin-top: 6%;;
 }
 .history-td-br-right {
   border-bottom-right-radius: 12px;

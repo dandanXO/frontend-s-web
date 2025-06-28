@@ -149,20 +149,7 @@ onMounted(() => {
     tgDomain = store.h5Url;
   }
 
-  api
-    .get("/session/member/referralCode")
-    .then((res) => {
-      if (res.code === 0) {
-        selfTgurl.value = tgDomain + "referSpin/" + res.data;
-        isLoading.value = false;
-      }
-    })
-    .catch(() => {
-      isLoading.value = false;
-    })
-    .finally(() => {
-      isLoading.value = false;
-    });
+
 });
 </script>
 
