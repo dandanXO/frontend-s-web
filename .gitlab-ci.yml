@@ -1371,3 +1371,13 @@ deploy-th2-download:
     PROJECT: th2-download
 
 #===============================================================================================
+
+deploy-br2-tutorial:
+  extends: .s3-deploy
+  variables:
+    PROJECT: br2-tutorial
+    SITE_CODE: P8S1-BR1
+  tags:
+    - p8s1-br1-runners
+
+#===============================================================================================

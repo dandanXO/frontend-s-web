@@ -129,10 +129,10 @@ onMounted(() => {
         background: rgba(255, 255, 255, 0.7);
         margin: 0 auto;
         text-align: center;
-        padding: 30px 50px 25px 50px;
+        padding: 30px;
         .title {
           color: #000;
-          font-size: 1.75rem;
+          font-size: 1.6rem;
           font-weight: 600;
         }
 

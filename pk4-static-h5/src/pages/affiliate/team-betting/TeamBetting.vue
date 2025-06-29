@@ -2,20 +2,20 @@
     <div class="my-dividend-container">
 
         <div class="tabs">
-            <div class="tab-item" :class="{ active: typesSelection.label === 'All' }" @click="typesSelection.label = 'All'">All</div>
-            <div class="tab-item" :class="{ active: typesSelection.label === 'Slot' }" @click="typesSelection.label = 'Slot'">Slot</div>
-            <div class="tab-item" :class="{ active: typesSelection.label === 'Live' }" @click="typesSelection.label = 'Live'">Live</div>
-            <div class="tab-item" :class="{ active: typesSelection.label === 'Fish' }" @click="typesSelection.label = 'Fish'">Fish</div>
-            <div class="tab-item" :class="{ active: typesSelection.label === 'Poker' }" @click="typesSelection.label = 'Poker'">Poker
-            </div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'ALL' }" @click="typesSelection.label = 'ALL'">ALL</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'SLOT' }" @click="typesSelection.label = 'SLOT'">SLOT</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'LIVE' }" @click="typesSelection.label = 'LIVE'">LIVE</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'SPORT' }" @click="typesSelection.label = 'SPORT'">SPORT</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'FISH' }" @click="typesSelection.label = 'FISH'">FISH</div>
+            <div class="tab-item" :class="{ active: typesSelection.label === 'POKER' }" @click="typesSelection.label = 'POKER'">POKER</div>
         </div>
 
         <div class="filter">
             <InputField :isDark="true">
                 <template #input>
-                    <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
+                    <q-input class="input" v-model="request.loginName" outlined clearable hide-bottom-space>
                         <template v-slot:append>
-                            <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
+                            <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="loadBetRecords" />
                         </template>
                     </q-input>
                 </template>
@@ -31,8 +31,8 @@
             </InputField>
             <InputField :isDark="true">
                 <template #input>
-                    <q-select class="dropdown" outlined v-model="model" :options="vendorsList" dense
-                        :display-value="'Vendors'" />
+                    <q-select class="dropdown" outlined v-model="request.platform" :options="vendorsList" option-label="name" option-value="code" dense 
+                        label="Vendors" emit-value map-options/>
                 </template>
             </InputField>
             <InputField :isDark="true">
@@ -77,13 +77,13 @@
 
             <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
             <div class="filter-grid">
-                <div class="filter-item" :class="{ active: daysSelection.label === 'Today' }"
+                <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'Today' }"
                 @click="changeDaySelection('Today')">Today</div>
-                <div class="filter-item" :class="{ active: daysSelection.label === 'Yesterday' }"
+                <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'Yesterday' }"
                 @click="changeDaySelection('Yesterday')">Yesterday</div>
-                <div class="filter-item" :class="{ active: daysSelection.label === '7-days' }"
+                <div class="filter-item" :class="{ active: dialogDaysSelection.label === '7-days' }"
                 @click="changeDaySelection('7-days')">7-days</div>
-                <div class="filter-item" :class="{ active: daysSelection.label === 'This Month' }"
+                <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'This Month' }"
                 @click="changeDaySelection('This Month')">This Month</div>
             </div>
 
@@ -103,12 +103,18 @@
 
             <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
             <div class="filter-grid">
-                <div class="filter-item" :class="{ active: typesSelection.label === 'Slot' }"
-                @click="changeTypeSelection('Slot')">Slot</div>
-                <div class="filter-item" :class="{ active: typesSelection.label === 'Fish' }"
-                @click="changeTypeSelection('Fish')">Fish</div>
-                <div class="filter-item" :class="{ active: typesSelection.label === 'Live' }"
-                @click="changeTypeSelection('Live')">Live</div>
+                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'ALL' }"
+                @click="changeTypeSelection('ALL')">ALL</div>
+                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'SLOT' }"
+                @click="changeTypeSelection('SLOT')">SLOT</div>
+                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'LIVE' }"
+                @click="changeTypeSelection('LIVE')">LIVE</div>
+                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'SPORT' }"
+                @click="changeTypeSelection('SPORT')">SPORT</div>
+                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'FISH' }"
+                @click="changeTypeSelection('FISH')">FISH</div>
+                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'POKER' }"
+                @click="changeTypeSelection('POKER')">POKER</div>
             </div>
 
             <div style="display:flex;">
@@ -128,7 +134,6 @@ import { api } from 'boot/axios';
 import { userStore } from "src/stores";
 import moment from 'moment';
 
-
 const store = userStore();
 const formDetail = reactive([]);
 const selectedTab = ref('All');
@@ -145,30 +150,39 @@ function convertDate(date) {
 
 const isDaySelectionDialog = ref(false)
 const daysSelection = ref({ label: '7-days', value: 7 });
+const dialogDaysSelection = ref({ label: '7-days', value: 7 });
 const openDaySelectionDialog = () => {
+  dialogDaysSelection.value = daysSelection.value;
   isDaySelectionDialog.value = true
 }
 
 const changeDaySelection = (type) => {
-  daysSelection.value = { label: type, value: type };
+  dialogDaysSelection.value = { label: type, value: type };
 }
 
 const confirmDaySelection = () => {
+  daysSelection.value = dialogDaysSelection.value;
   isDaySelectionDialog.value = false;
+  loadBetRecords();
 }
 
 const isTypeSelectionDialog = ref(false)
-const typesSelection = ref({ label: 'Slot', value: 'Slot' });
+const typesSelection = ref({ label: 'ALL', value: 'ALL' });
+const dialogTypesSelection = ref({ label: 'ALL', value: 'ALL' });
+
 const openTypeSelectionDialog = () => {
-  isTypeSelectionDialog.value = true
+  dialogTypesSelection.value = typesSelection.value;
+  isTypeSelectionDialog.value = true;
 }
 
 const changeTypeSelection = (type) => {
-    typesSelection.value = { label: type, value: type };
+  dialogTypesSelection.value = { label: type, value: type };
 }
 
 const confirmTypeSelection = () => {
+  typesSelection.value = dialogTypesSelection.value;
   isTypeSelectionDialog.value = false;
+  loadBetRecords();
 }
 
 const page = reactive({
@@ -196,6 +210,7 @@ const request = reactive({
 });
 
 const loadBetRecords = async () => {
+  request.betTime = getDateRange()
   const requestCopy = { ...request };
   const query = {};
   Object.entries(requestCopy).forEach(([key, value]) => {
@@ -203,11 +218,11 @@ const loadBetRecords = async () => {
       query[key] = value;
     }
   });
-  if (request.betTime !== null) {
-    if (request.betTime.length === 2) {
-      query.betTime = request.betTime.join(",");
-    }
-  }
+//   if (request.betTime !== null) {
+//     if (request.betTime.length === 2) {
+//       query.betTime = request.betTime.join(",");
+//     }
+//   }
   if (request.status !== null) {
     if (request.status.length === 1) {
       query.status = request.status[0];
@@ -216,13 +231,16 @@ const loadBetRecords = async () => {
     }
   }
   query.siteId = 26;
-  if (query.gameType === 'SPORT') {
-    query.gameType = 'SPORT,ESPORT';
-  } else if (query.gameType === 'FISH') {
-    query.gameType = 'FISH,CASUAL';
-  } else if (query.gameType === 'LIVE') {
-    query.gameType = 'LIVE,POKER';
-  }
+  if (typesSelection.value.label !== 'ALL') {
+    query.gameType = typesSelection.value.label;
+  } 
+//   if (query.gameType === 'SPORT') {
+//     query.gameType = 'SPORT,ESPORT';
+//   } else if (query.gameType === 'FISH') {
+//     query.gameType = 'FISH,CASUAL';
+//   } else if (query.gameType === 'LIVE') {
+//     query.gameType = 'LIVE,POKER';
+//   }
   const { data: ret } = await api.get('/session/affiliate/bet-records', {
     params: query
   });
@@ -244,6 +262,62 @@ const initVendors = () => {
     api.get('session/affiliate/platforms').then((res) => {
         vendorsList.value = res.data;
     })
+}
+let timeZone = '+05:00';
+function getDateRange(startDate = null, endDate = null) {
+    const type = daysSelection.value.label;
+
+    let start, end;
+
+    switch (type) {
+        case 'Today':
+            start = moment().startOf('day').format('YYYY-MM-DD HH:mm:ss');
+            end = moment().format('YYYY-MM-DD') + ' 23:59:59';
+            break;
+        case 'Yesterday':
+            start = moment().subtract(1, 'days').startOf('day').format('YYYY-MM-DD HH:mm:ss');
+            end = moment(start).format('YYYY-MM-DD') + ' 23:59:59';;
+            break;
+        case '7-days':
+            start = moment().subtract(7, 'days').format('YYYY-MM-DD HH:mm:ss');
+            end = moment().format('YYYY-MM-DD') + ' 23:59:59';
+            break;
+        case 'This Month':
+            start = moment().startOf('month').format('YYYY-MM-DD HH:mm:ss');
+            end = moment().endOf('month').format('YYYY-MM-DD HH:mm:ss');
+            break;
+        case 'Custom':
+            if (!startDate || !endDate) {
+                throw new Error("Custom range requires both startDate and endDate.");
+            }
+            start = moment(startDate).format('YYYY-MM-DD HH:mm:ss');
+            end = moment(endDate).format('YYYY-MM-DD HH:mm:ss');
+            break;
+        default:
+            throw new Error("Invalid date range type.");
+    }
+    start = formatInputTimeZone(start, timeZone);
+    end = formatInputTimeZone(end, timeZone);
+
+    return `${start},${end}`;
+}
+
+function formatInputTimeZone(time, timezone, type = '') {
+  if (!timezone) {
+    return moment(time).format('YYYY-MM-DD HH:mm:ss');
+  }
+
+  var oriTimeZone = moment(time).add(8, 'hour');
+  if (type === 'end') {
+    oriTimeZone.add(1, 'day').subtract(1, 'second');
+  }
+  var hourDifferent = timezone.substring(1);
+
+  var formattedTimeZone = timezone.charAt(0) === '+'
+    ? moment(oriTimeZone).subtract(hourDifferent, 'hours')
+    : moment(oriTimeZone).add(hourDifferent, 'hours');
+
+  return moment(formattedTimeZone).format('YYYY-MM-DD HH:mm:ss');
 }
 
 onMounted(() => {

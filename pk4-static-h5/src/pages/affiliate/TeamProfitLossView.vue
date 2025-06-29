@@ -1,9 +1,9 @@
 <template>
     <q-card class="q-pa-md bg-transparent">
-      <img @click="openPageInfoDialog" class="info-qn" src="../../assets/images/affiliate/qnmark.png">
-      <div class="top-right" @click="() => {}">
-        <img src="../../assets/images/affiliate/team-management/sort-icon.png">
-      </div>
+      <!-- <img @click="openPageInfoDialog" class="info-qn" src="../../assets/images/affiliate/qnmark.png"> -->
+      <!-- <div class="top-right" @click="() => {}"> -->
+        <!-- <img src="../../assets/images/affiliate/team-management/sort-icon.png"> -->
+      <!-- </div> -->
 
       <TeamProfitLoss />
     </q-card>

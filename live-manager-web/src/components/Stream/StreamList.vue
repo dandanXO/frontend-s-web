@@ -54,24 +54,27 @@
         </template>
       </Column>
 
-      <Column field="streamStatus" header="源流狀態" sortable>
+      <Column field="homeName" header="主隊" sortable>
         <template #body="slotProps">
-          <Tag
-            :severity="getStatusSeverity(slotProps.data.streamStatus)"
-            :value="getStatusLabel(slotProps.data.streamStatus)"
-          />
+          {{ slotProps.data.homeName }}
         </template>
       </Column>
 
-      <Column field="createTime" header="創建時間" sortable>
+      <Column field="awayName" header="客隊" sortable>
         <template #body="slotProps">
-          {{ formatDateTime(slotProps.data.createTime) }}
+          {{ slotProps.data.awayName }}
         </template>
       </Column>
 
-      <Column field="updateTime" header="更新時間" sortable>
+      <Column field="startTime" header="比賽時間" sortable>
         <template #body="slotProps">
-          {{ formatDateTime(slotProps.data.updateTime) }}
+          {{ formatDateTime(slotProps.data.startTime) }}
+        </template>
+      </Column>
+
+      <Column field="eventStatus" header="比賽狀態" sortable>
+        <template #body="slotProps">
+          {{ getStatusLabel(slotProps.data.eventStatus) }}
         </template>
       </Column>
 
@@ -81,17 +84,6 @@
         </template>
       </Column>
 
-      <Column field="supplierStreamId" header="供應商串流ID" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.supplierStreamId }}
-        </template>
-      </Column>
-
-      <Column field="streamerStreamId" header="主播串流ID" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.streamerStreamId }}
-        </template>
-      </Column>
       <Column field="streamerStatus" header="直播主狀態" sortable>
         <template #body="slotProps">
           <Tag
@@ -284,14 +276,10 @@ const formatDateTime = (timestamp) => {
 // 獲取狀態標籤
 const getStatusLabel = (status) => {
   const statusMap = {
-    0: '初始化',
-    1: '準備中',
-    2: '開始啟動',
-    3: '啟動完成',
-    4: '直播中',
-    5: '已結束',
-    6: '已停止',
-    7: '已結束',
+    0: '準備中',
+    1: '進行中',
+    2: '已結束',
+    3: '其他',
   }
   return statusMap[status] || '未知狀態'
 }

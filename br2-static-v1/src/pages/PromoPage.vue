@@ -65,13 +65,14 @@
               </div>
             </div>
           </div>
-          <div v-else class="selected-promo" :class="{ 'no-padding': selectedParam.hidetitle }">
+          <!-- <div v-else class="selected-promo" :class="{ 'no-padding': selectedParam.hidetitle }"> -->
+          <div v-else class="selected-promo">
             <div v-if="isFetchingPromo" class="spinner-container">
               <q-spinner color="yellow" size="70px" :thickness="5" />
             </div>
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
-              <div v-if="selectedPromo.redirectUrl !== 'spin-lucky-wheel'" class="banner-container">
+              <div v-if="selectedPromo.redirectUrl !== 'spin-lucky-wheel' && selectedPromo.redirectUrl !== 'br2-aviator-wheel-bet-count'" class="banner-container">
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
@@ -81,10 +82,10 @@
               <div
                 class="inner"
                 :class="{
-                  isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel',
+                  isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel' ||  selectedPromo.redirectUrl === 'br2-aviator-wheel-bet-count',
                   envelope:
                     selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope',
-                  wheel: selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel'
+                  wheel: (selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel')
                 }"
               >
                 <div
@@ -102,14 +103,17 @@
                     <div class="top-subtitle" v-if="selectedPromo.subtitle">{{ selectedPromo.subtitle }}</div>
                     <div class="top-title">{{ selectedPromo.title }}</div>
                   </div>
-                  <div class="promo-content-inner" v-if="!selectedParam || (selectedParam && !selectedParam.hidetitle)">
+                  <div
+                    class="promo-content-inner"
+                    v-if="!selectedParam || (selectedParam && !selectedParam?.hidetitle)"
+                  >
                     <div class="content-title">{{ selectedPromo.title }}</div>
                   </div>
 
                   <div
                     class="hot-promo-div"
                     :class="{
-                      isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel'
+                      isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel'||selectedPromo.redirectUrl === 'br2-aviator-wheel-bet-count'
                     }"
                     v-if="selectedPromo.hasPromo"
                   >
@@ -179,6 +183,11 @@
     </q-card>
   </q-dialog>
 
+  <q-dialog v-model="isMoneyRainModal" width="100%">
+    <MoneyRainModal @closeModal="isMoneyRainModal = false" />
+    <q-btn icon="close" round dense v-close-popup @click="backToPromoList()" class="money-rain-close" />
+  </q-dialog>
+
   <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
     <div class="dialog-mid-text">Loading...</div>
   </q-dialog>
@@ -194,18 +203,19 @@ import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
 import {isAndroid} from "boot/utils";
 import { SessionStorage } from "quasar";
-// import { loadPromo } from "src/api/index/promo.js";
-// import { loadPromoBanner } from "src/api/index/promo";
 import ProfileSummary from "components/ProfileSummary.vue";
 import HotPromotion from 'components/HotPromotion'
 import GameModal from "components/modal/GameModal.vue";
-// import HotPromotion from 'components/HotPromotion'
+import MoneyRainModal from "components/modal/MoneyRainModal.vue";
+
+import { t } from "src/boot/lang";
 export default defineComponent({
   name: "PromoView",
   components: {
     GameModal,
     HotPromotion,
-    ProfileSummary
+    ProfileSummary,
+    MoneyRainModal
   },
   setup() {
     const store = userStore();
@@ -227,114 +237,7 @@ export default defineComponent({
     ]);
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([
-  //     {
-  //   "id": 525,
-  //   "title": "Girar a Roda da Sorte",
-  //   "desktopImgUrl": "18/233913cb-58ff-4d0b-80a5-64e08086722e.png",
-  //   "desktopImgUrlDark": null,
-  //   "desktopImgBackgroundUrl": null,
-  //   "desktopImgBackgroundUrlDark": null,
-  //   "mobileImgUrl": "promo-1.png",
-  //   "mobileImgUrlDark": null,
-  //   "mobileImgBackgroundUrl": null,
-  //   "mobileImgBackgroundUrlDark": null,
-  //   "desktopBannerUrl": "18/c4159958-25ef-45e5-bff4-01ffca5d516d.png",
-  //   "desktopBannerUrlDark": null,
-  //   "mobileBannerUrl": "promo-1.png",
-  //   "mobileBannerUrlDark": null,
-  //   "redirectUrl": "promo1",
-  //   "labelType": 0,
-  //   "promoType": "VIP",
-  //   "pageContent": "<div bis_skin_checked=\"1\">\n        <div style=\"\n            display: flex;\n            align-items: center;\n            background: #42B9E440;\n            justify-content: flex-start;\n            border-radius: 4px;\n            padding: 2px 6px;\n            gap: 6px;\n            margin-top: 10px;\n          \" bis_skin_checked=\"1\">\n          <img style=\"width: 29px; height: 29px\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAMAAABhTZc9AAABzlBMVEUAAAD7g0r+3tf/0cD/vX7/toD/uXv9klr/1rz/ybL/v4j/sIj+pW3/2NH/z5P/zLz+tYT9nmf/m137mnj7nnX9m27/yIH+29b93dX7jmX5fEn+18j/4cP91MD+yrf9rHT6g0/+18j+z8L+qW//zZX/wov/wG7/vG//s3j/27D+28v/zLX/0Lj/4sX+07v/z5f/zIn+tHj7nYD/0av/0LX9vJP/zqH9mVL4gE7/xKT/vpv90rr5jlz/yYD/1qj/x6H/zpj/mFD/pnn/5tb/z4v/sIL/2LL/xpP/wn7/tY3/1rj/rnT/yYz/jUL/pGT/z5X0gFX/sYD/i0j/r4r/j0D/vXv/oYb/v3D/v0D/+/z/9vf/+vr/9/j/+Pn/9fX/8/X//v7/8vP//P3/7u//8PH/+fr+5uf+18/+6+z/7ev+4uT9297+39r+3tj+5OP+3uD92tz9zML/unL/8vD+7Oj+6ef+497+4N392Nb92s3+08z/2MH+0rz/zrn/0Z77r5n/t4v+sn76mX7/p2r95eD90Mf+y7j7w7j7xLX/1a7/1qH/xZ//yZn/uZT/x43+u4z8sYT/qoT/yYP/wXv9q3j/r3X8qHX/sXD/tGv/rGZ+Fbx0AAAAWXRSTlMA/fzeQDn+/ODBsHFuIyD+/v7+/fz8+vf08/Hw7+/v7+/s5uXf39/c2dPPz8e/v7+4sq6ro6Cbm5qUlI2If3BkY2NfXVpaVlBPTERCPjo4NTAuLiMgHxMQBL4QruoAAAGASURBVCjPxcllUysxFIDhtLT45bob7u7u7g5Zy2Z96y3u7u7wb+kytA39zvBMcmbOecHbmqjL+pPX8rwMtFomyTiW4TtdPViKAxVNIKFg9fAyvZOosZEPdx++/IpvzCyy1t5G+u59x93BOLK+9Wnj4/Wy06W45v6em6K2bo6ig9V6EWXaWHIhyEu8wCkrZ+tfT1beBer4z8SUBRHyPG/2f0Yy/zd9fh+sYNC6IAqOaUHQBQF6BfzDUlkMQqIVCIVpaJjiINTyAaHDwWgwZBs7LUQtsdG6SvtBY8w6aaWGqNmaLMv+O7e2xtEGMYeov0Vd1WWZ1Tc3MctOeRelCKImaQzFGmYd7JMXNUJhGMyEyFoMUUvd1PwiFaDuM2IVUXvmJYriAo+CvLMfEHLtiMM7nMExQ/M4BpCGVBuam0FIFRHag5R5FLwQr7oxQsgrIYSV710gTOyyxyZKGIs2z25DeEz4llad7Lbb7Z5/ZVfl4bU3tR2Avra45mEACuvBq3sEGECA6pE4qVgAAAAASUVORK5CYII=\"/>\n          <span>Horário de Emissão do Rebate:</span>\n          <span style=\"color: #fff700\">00:30 do dia seguinte</span>\n        </div>\n\n        <div style=\"margin: 12px auto\" bis_skin_checked=\"1\">\n          <table border=\"0\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n            <tbody>\n              <tr>\n                <th style=\"\n                    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);\n                    border-radius: 8px 0px 0px 0px;\n                    border-right: 1px solid #ffffff20;\n                  \">\n                  <img style=\"width: 29px; height: 29px; margin: 0 auto; padding: 0px 0px\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAcCAMAAABBJv+bAAACEFBMVEUAAABYZoNnc5bw+/+wxN/D1uq7xdT1/v/G1erO4O3O3uv2///c4+qnu9i0w+L////T4fOpudijqryUqbvN0+bA1+zR5vbw+//I2e1+iLK70OfK0OTw+//FytaTp8ju+v+rv9q5zua2yuPq7vTx/P/V5O+5xNbF2+7x+/+kuNDk6/bw+//u7/W+zuOEibHf6fSFi6G/0ea0vMrF2e27z+aCkqtMV3v2+fxNWYHL3PBwgpiyxtmtwc6+1Om5wdy2yO3x+//T6PjF1Ouwv9vc7/3U6vnH3fDK2e6zw92sttiqu9fm9f/3+v3Y7fzQ5fbM4vS5yeK3xt+qtNamt9Ocqszz+//p8v3b7fvR5/fR4/TG0/DI1+zI0+e+zuW9zOO7y+Orwt2tvdmotNSosdSis9GUpMPv9vvl8PnW6fnO4vTF2vC/ze7D2e3D0ui1z+jAz+ewzOWjtdKlr9KesdGhrs6ktM2dp8yUqciOncF3jLt1hrRugLBqfbD////0/f/r9v/7/P7f8v7g8v3u8/rj7PXX4fTS3PTc5/PI4PPI2fPJ3/Ld4/HR4fHM3fDK1vDW5O29yuzX3eu/1uvB1OqyxOq7yOi3zubP1eWqu+TBzuO7zuCbstynudiwvtaltNWksdOfr9Cjq86hqc6cssugr8mWpcSGnsGVqL6Job5+lrx9jrp/ibN3gKx0g6RqeptTX5ShKSlhAAAAQHRSTlMAXln97NtnVjUkHx0SDQgF/f37+/jz7+7t6eTa2c/Gv7q2rKelo6GWko2MhoSCfXZ1b2pmZV5bWllYVFA+Ox0OZpPgIgAAAYBJREFUKM9ioBPg1LfDI8shmsXKi1OWhzXHzU0dp7ThpJwufz9LHLK8Um5u/hGuYhwMRrJsDAzm0nrIsvy6/o5+fo6+vhJqE7unG2iJLJREktUREmhq9HV09XWJzJ0ZExPj7Lmogg8hrdzi7e3t4uqYkdHr5Jzi4e7hWVZsj5Bmd0jzaXdxDW/ti8pNBEo7e5axIBnOzezgUxvpmh6V7R7rlRLonugZoojsMpm6MB+f9LYJndFxXoWB7p5BC4yRXQ6YSqh3WENz9hTH6HigdHRQ0BwuZGlth3qXsKgZWX5OAV7BAU5JyRCrEW5jDnecOts/EiQdn59cpIQize3gEB6RV9CR6RSfGBwblzTfBDVQxUNdgNJumU6xzsH5gUHzbFGl5UN7EpatLC8OCUlNdU5KFuRElVaN8/BISJg2OcA5pKJk9Ro5PlRpjbT+WYtXlJeWLlmaOrekSAEtQtmE162vqayqXFVdU121drkmRmqxsWJkZGJisjBjNLXmYhgEAAC3JGlY6TfxFAAAAABJRU5ErkJggg==\"/>\n                </th>\n                <th style=\"\n                    background: linear-gradient(180deg, #00B9A1 0%, #0097B9 100%);\n                    border-radius: 0px 8px 0px 0px;\n                    border-right: 1px solid #ffffff20;\n                    padding: 8px 0px;\n                  \">\n                  Rebate\n                </th>\n              </tr>\n              <tr>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">VIP 0</td>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">0.1%</td>\n              </tr>\n              <tr>\n                <td style=\"background-color: #4DF6CF38; border: 1px solid #ffffff20\">VIP 1</td>\n                <td style=\"background-color: #4DF6CF38; border: 1px solid #ffffff20\">0.2%</td>\n              </tr>\n              <tr>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">VIP 2</td>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">0.3%</td>\n              </tr>\n              <tr>\n                <td style=\"background-color: #4DF6CF38; border: 1px solid #ffffff20\">VIP 3</td>\n                <td style=\"background-color: #4DF6CF38; border: 1px solid #ffffff20\">0.4%</td>\n              </tr>\n              <tr>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">VIP 4</td>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">0.5%</td>\n              </tr>\n              <tr>\n                <td style=\"background-color: #4DF6CF38; border: 1px solid #ffffff20\">VIP 5</td>\n                <td style=\"background-color: #4DF6CF38; border: 1px solid #ffffff20\">0.6%</td>\n              </tr>\n              <tr>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">VIP 6</td>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">0.7%</td>\n              </tr>\n              <tr>\n                <td style=\"background-color: #4DF6CF38; border: 1px solid #ffffff20\">VIP 7</td>\n                <td style=\"background-color: #4DF6CF38; border: 1px solid #ffffff20\">0.8%</td>\n              </tr>\n              <tr>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">VIP 8</td>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">0.9%</td>\n              </tr>\n              <tr>\n                <td style=\"background-color: #4DF6CF38; border: 1px solid #ffffff20\">VIP 9</td>\n                <td style=\"background-color: #4DF6CF38; border: 1px solid #ffffff20\">1.0%</td>\n              </tr>\n              <tr>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">VIP 10</td>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">1.1%</td>\n              </tr>\n              <tr>\n                <td style=\"background-color: #4DF6CF38; border: 1px solid #ffffff20\">VIP 11</td>\n                <td style=\"background-color: #4DF6CF38; border: 1px solid #ffffff20\">1.2%</td>\n              </tr>\n              <tr>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">VIP 12</td>\n                <td style=\"background-color: #4AECF526; border: 1px solid #ffffff20\">1.3%</td>\n              </tr>\n            </tbody>\n          </table>\n        </div>\n\n        \n\n        <ol>\n          <li><p>Receba bônus de reembolso extra com base no nível VIP. Exemplo:O reembolso original do VIP1 é de 0.2%.</p></li><li><p>Aplica-se apenas às apostas em máquinas de slot.</p></li><li><p>Requisito de saque: Para sacar o bônus, você deve completar um turnover de 1x. Por exemplo, se você receber um bônus de R$100, precisa apostar R$100 para ser elegível para o saque.(Apenas o slot conta para a aposta, exceto dois jogos de slot de apostas laterais)</p></li>\n          <li><p>Se algum usuário ou organização se envolver em arbitragem através de métodos impróprios, a plataforma reserva-se o direito de congelar a conta relevante sem aviso prévio e sem reembolsos. O jogador será colocado na lista negra.</p></li>\n          <li><p>A AKB188 reserva-se o direito final de interpretação para este evento e pode modificar os detalhes do evento ou encerrá-lo sem aviso prévio.</p></li>\n        </ol>\n      </div>",
-  //   "promoCode": "promo1",
-  //   "hasPromo": true,
-  //   "privilegeStatus": null,
-  //   "status": "0",
-  //   "param": "{\"sub\":\"Get cash everyday\",\"hidebottom\":\"1\",\"hidetitle\":\"1\"}",
-  //   "vips": null,
-  //   "affiliates": null,
-  //   "startTime": null,
-  //   "endTime": null,
-  //   "displayStartTime": 1577847600000,
-  //   "displayEndTime": 1893553199000,
-  //   "desktopFastAccessIconImgUrl": null,
-  //   "desktopFastAccessIconImgUrlDark": null,
-  //   "mobileFastAccessIconImgUrl": null,
-  //   "mobileFastAccessIconImgUrlDark": null,
-  //   "fastAccessSeq": 99
-  // },
-  // {
-  //   "id": 506,
-  //   "title": "Reembolso Semanal de Perda em Máquinas de Slot",
-  //   "desktopImgUrl": "18/f93d9ca7-b397-4cb1-83da-489726c38cf4.png",
-  //   "desktopImgUrlDark": null,
-  //   "desktopImgBackgroundUrl": null,
-  //   "desktopImgBackgroundUrlDark": null,
-  //   "mobileImgUrl": "promo-2.png",
-  //   "mobileImgUrlDark": null,
-  //   "mobileImgBackgroundUrl": null,
-  //   "mobileImgBackgroundUrlDark": null,
-  //   "desktopBannerUrl": "18/80d45aa4-f99c-428b-8eb0-8ab0f49cd70a.png",
-  //   "desktopBannerUrlDark": null,
-  //   "mobileBannerUrl": "promo-2.png",
-  //   "mobileBannerUrlDark": null,
-  //   "redirectUrl": "promo2",
-  //   "labelType": 0,
-  //   "promoType": "VIP",
-  //   "pageContent": "<p>Ganhe Dinheiro</p><p>Cashback de até 1.5% do valor apostado</p><p>Convide mais amigos e você ganhará mais dinheiro. Cada membro que ingressa no AKB188 tanto jogador quanto agente.</p><p>- Defendemos benefícios e bônus para todos.</p><p>- Membros Ativos: O valor da aposta diária atinge 200.<br/></p><p>- Seu cashback será calculado com base no valor total apostado pelos seus membros ativos. O cashback pode ser retirado ou usado para mais apostas.</p><p>- Ganhe receita vitalícia com seus jogadores indicados.</p><p>-<br/></p><p>- Indique o maior número possível de amigos para obter um desconto maior.</p><p>Para mais detalhes e regras, clique Aqui</p>",
-  //   "promoCode": "promo2",
-  //   "hasPromo": false,
-  //   "privilegeStatus": null,
-  //   "status": "0",
-  //   "param": "{\"page\":\"/earn-money\"}",
-  //   "vips": null,
-  //   "affiliates": null,
-  //   "startTime": null,
-  //   "endTime": null,
-  //   "displayStartTime": 1577808000000,
-  //   "displayEndTime": 1893513599000,
-  //   "desktopFastAccessIconImgUrl": null,
-  //   "desktopFastAccessIconImgUrlDark": null,
-  //   "mobileFastAccessIconImgUrl": null,
-  //   "mobileFastAccessIconImgUrlDark": null,
-  //   "fastAccessSeq": 0
-  // },
-  // {
-  //   "id": 507,
-  //   "title": "Get RS$100 for free",
-  //   "desktopImgUrl": "18/f93d9ca7-b397-4cb1-83da-489726c38cf4.png",
-  //   "desktopImgUrlDark": null,
-  //   "desktopImgBackgroundUrl": null,
-  //   "desktopImgBackgroundUrlDark": null,
-  //   "mobileImgUrl": "promo-3.png",
-  //   "mobileImgUrlDark": null,
-  //   "mobileImgBackgroundUrl": null,
-  //   "mobileImgBackgroundUrlDark": null,
-  //   "desktopBannerUrl": "18/80d45aa4-f99c-428b-8eb0-8ab0f49cd70a.png",
-  //   "desktopBannerUrlDark": null,
-  //   "mobileBannerUrl": "promo-3.png",
-  //   "mobileBannerUrlDark": null,
-  //   "redirectUrl": "receive-earn",
-  //   "labelType": 0,
-  //   "promoType": "VIP",
-  //   "pageContent": "",
-  //   "promoCode": "receive-earn",
-  //   "hasPromo": true,
-  //   "privilegeStatus": null,
-  //   "status": "0",
-  //   "param": "{\"sub\":\"Get cash everyday\",\"hidebottom\":\"1\",\"hidetitle\":\"1\"}",
-  //   "vips": null,
-  //   "affiliates": null,
-  //   "startTime": null,
-  //   "endTime": null,
-  //   "displayStartTime": 1577808000000,
-  //   "displayEndTime": 1893513599000,
-  //   "desktopFastAccessIconImgUrl": null,
-  //   "desktopFastAccessIconImgUrlDark": null,
-  //   "mobileFastAccessIconImgUrl": null,
-  //   "mobileFastAccessIconImgUrlDark": null,
-  //   "fastAccessSeq": 0
-  // }
+
 ]);
     const isPromoDetail = ref(false);
     const selectedPromo = ref({});
@@ -349,6 +252,8 @@ export default defineComponent({
     const extensionState = ref(false);
     const extensionToken = ref("");
     const isOpenExtension = ref(false);
+
+    const isMoneyRainModal = ref(false);
 
     const checkExtension = () => {
       if (route.path === "/promotion") {
@@ -471,12 +376,16 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: 'Please login to continue',
+          message: t('notify.plsLoginToContinue'),
           icon: "report_problem"
         });
-        router.push(`/login`)
+        // router.push(`/login`)
+        ui.loginView = 'login'
       } else {
-        if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
+        if (promo.redirectUrl === "money-rain") {
+          isMoneyRainModal.value = true;
+        }
+        else if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});
         }else if (promo.redirectUrl && promo.redirectUrl.includes("SigninBonus")) {
           router.push({path: '/activities-details'});
@@ -790,7 +699,8 @@ export default defineComponent({
       isFtdPromoEnded,
       isFetchingPromo,
       extensionState,
-      isOpenExtension
+      isOpenExtension,
+      isMoneyRainModal
     }
   },
 });
@@ -914,7 +824,8 @@ export default defineComponent({
       background-repeat: no-repeat;
       background-position: center bottom;
       overflow: hidden;
-      height: 170px;
+      min-height: 130px;
+      height: auto;
       // max-height: 130px;
       margin: 10px;
 
@@ -1028,7 +939,7 @@ export default defineComponent({
               background-position: center center;
               margin: 0;
               // border-radius: 10px 10px 0 0;
-              border-radius: 17px;
+              border-radius: 0px 0px 17px 17px;
 
               &:hover {
                 transform: scale(1.2);

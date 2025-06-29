@@ -186,13 +186,17 @@ export default defineComponent({
       if (store.token) {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LIVE"));
+          platformsListDisplay.value = platformsList.value
+            .filter((element) => element.gameType.includes("LIVE"))
+            .sort((a, b) => a.sequence - b.sequence);
           setFilteredPlatforms();
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LIVE"));
+          platformsListDisplay.value = platformsList.value
+            .filter((element) => element.gameType.includes("LIVE"))
+            .sort((a, b) => a.sequence - b.sequence);
           setFilteredPlatforms();
         });
       }
@@ -202,12 +206,17 @@ export default defineComponent({
       filteredPlatforms.value = platforms.value.filter((displayPlatform) =>
         platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
       );
-
+      filteredPlatforms.value.sort((a, b) => {
+        const seqA = platformsListDisplay.value.find((p) => p.code === a.code)?.sequence ?? 0;
+        const seqB = platformsListDisplay.value.find((p) => p.code === b.code)?.sequence ?? 0;
+        return seqA - seqB;
+      });
       filteredPlatforms.value.forEach((element) => {
         if (element.code === route.query.plat) {
           clickPlat(element);
         }
       });
+
       setSelectedPlat();
     };
 

@@ -149,6 +149,8 @@ import { userStore } from "stores/index";
 import qs from "qs";
 import { useUI } from "stores/ui";
 import { isAndroid, isInPwa } from "boot/utils";
+import { useI18n } from "vue-i18n";
+
 // import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
@@ -156,7 +158,7 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const verificationImg = ref("");
-
+    const { t } = useI18n();
     const captchaRef = ref();
     const innerCodeId = ref("");
     const innerCaptchaRef = ref("");
@@ -296,7 +298,8 @@ export default defineComponent({
       verificationRef.value?.validate();
 
       $q.loading.show({
-        message: "Registering in progress"
+        // message: "Registering in progress"
+        message: t("btn.registeringInProgress")
       });
 
       if (
@@ -601,7 +604,8 @@ function charType(num) {
   flex-direction: column;
   min-height: 100vh;
   justify-content: flex-start;
-  background: url("../assets/images/index/auth-bg.png");
+  background: url("../assets/images/index/login-page.png");
+  background-position: bottom center;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -630,9 +634,11 @@ function charType(num) {
   }
 }
 .register-btn {
-  background: linear-gradient(180deg, #00b9a1 0%, #0097b9 100%);
+  background: linear-gradient(90deg, #4FFFA5 0%, #10D16F 100%);
+  color: #2D2d2d;
   width: 100%;
   height: 56px;
+  font-weight: 600;
   border-radius: 4px;
   margin-top: 10px;
 }

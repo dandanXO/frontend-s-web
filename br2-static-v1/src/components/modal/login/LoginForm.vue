@@ -9,20 +9,27 @@
 
       <q-input
         ref="phoneRef"
-        outlined
         v-model="phone"
-        :placeholder="$t('form.phone_placeholder')"
         class="input"
         :class="{ 'white-txt': !!phone }"
+        :placeholder="$t('form.phone_placeholder')"
+        outlined
+        type="tel"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+        lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-          (val) => (val && val.length >= 8 && val.length <= 12) || $t('form.phone_rules_02'),
+          (val) => (val && val.length >= 8 && val.length <= 11) || $t('form.phone_rules_02'),
           (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04')
         ]"
       >
         <template v-slot:prepend>
-          <img v-if="!phone" src="../../../assets/images/auth/acc-icon.png" width="22px" />
-          <img v-else src="../../../assets/images/auth/acc-icon-active.png" width="22px" />
+          <!-- <img v-if="!phone" src="../../../assets/images/auth/acc-icon.png" width="22px" /> -->
+          <!-- <img v-else src="../../../assets/images/auth/acc-icon-active.png" width="22px" /> -->
+          <img src="../../../assets/images/auth/phone-br.svg" width="17px" />
+          &nbsp;+55
         </template>
       </q-input>
 
@@ -34,6 +41,7 @@
         :type="!isShowPassword ? 'password' : 'text'"
         class="input"
         :class="{ 'white-txt': !!password }"
+        lazy-rules
         :rules="[(val) => (val && val.length > 0) || $t('form.password_rules_01')]"
       >
         <template v-slot:prepend>
@@ -60,7 +68,7 @@
 
       <div class="forgot" @click="uiStore.loginView = 'forgetPw'">{{ $t("form.forgotPassword") }}</div>
 
-      <q-btn unelevated class="bg-greenbtn" :label="$t('btn.createAccount')" no-caps padding="12px" @click="login" />
+      <q-btn unelevated class="bg-greenbtn" :label="$t('btn.login')" no-caps padding="12px" @click="login" />
     </div>
   </div>
 </template>
@@ -166,6 +174,7 @@ onMounted(() => {
   font-size: 13px;
   color: #bbb;
   text-align: right;
-  margin: 0 0 54px;
+  display: inline-flex;
+  margin: 0 0 54px auto;
 }
 </style>

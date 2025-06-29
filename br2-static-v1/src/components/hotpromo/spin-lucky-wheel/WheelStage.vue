@@ -58,9 +58,7 @@
         />
         <img class="indicate" src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/wheel-indicate.png" />
         <button class="btn" :class="{ disabled: !info.availableSpin }" @click="handleWheelClick">
-          {{ $t("hotPromo.rotate") }}
-          <br />
-          {{ info.availableSpin }} {{ $t("hotPromo.time") }}
+          {{ info.availableSpin }}
         </button>
       </div>
 
@@ -109,15 +107,18 @@
         <li>{{ $t("content.message3") }}</li>
         <li>{{ $t("content.message4") }}</li>
         <li>{{ $t("content.message5") }}</li>
+        <li>{{ $t("content.message6") }}</li>
+        <li>{{ $t("content.message7") }}</li>
+        <li>{{ $t("content.message8") }}</li>
       </ol>
     </div>
 
     <q-dialog v-model="showWithdrawDialog">
       <div class="withdraw-container">
         <img
-          v-if="languageVal === 'ur'"
+          v-if="languageVal === 'pt'"
           class="withdraw-header"
-          src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/withdraw/withdraw-header-ur.png"
+          src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/withdraw/withdraw-header-pt.png"
         />
         <img
           v-else
@@ -136,9 +137,9 @@
           />
         </div>
         <img
-          v-if="languageVal === 'ur'"
+          v-if="languageVal === 'pt'"
           class="payment-method-header"
-          src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/withdraw/payment-method-header-ur.svg"
+          src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/withdraw/payment-method-header-pt.svg"
         />
         <img
           v-else
@@ -183,7 +184,10 @@
               class="icon"
               src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/withdraw/unchecked.svg"
             />
-            <div>{{ info.claimBonus }} RS {{ $t("hotPromo.spinReferWheel.willBePaidToYourRsAccount") }}</div>
+            <div>
+              {{ info.claimBonus }}
+              {{ $t("hotPromo.spinReferWheel.willBePaidToYourRsAccount", { symbol: store.currency.value }) }}
+            </div>
           </div>
         </div>
 
@@ -330,8 +334,8 @@ const reset = () => {
 
 const handleWheelClick = () => {
   if (spinButtonDisable.value || !info.value.availableSpin) return;
-  // eventapi.post("/session/refer-wheel-spin/spin?promoCode=pak-refer-wheel-spin").then((res) => {
-  eventapi.post("/session/refer-wheel/spin?promoCode=br2-refer-wheel").then((res) => {
+  eventapi.post("/session/refer-wheel-spin/spin?promoCode=br2-refer-wheel").then((res) => {
+    // eventapi.post("/session/refer-wheel/spin?promoCode=br2-refer-wheel").then((res) => {
     if (res.code === 0) {
       prize.value = res.data;
       const prizeIndex = Math.floor(Math.random() * TOTAL_ITEMS);
@@ -371,11 +375,11 @@ const getRemainingTime = (endTime) => {
 };
 
 const handleReceiveClick = () => {
-  // eventapi.post("/session/refer-wheel-spin/claimBonus?promoCode=pak-refer-wheel-spin").then((res) => {
-  eventapi.post("/session/refer-wheel/claimBonus?promoCode=br2-refer-wheel").then((res) => {
+  eventapi.post("/session/refer-wheel-spin/claimBonus?promoCode=br2-refer-wheel").then((res) => {
+    // eventapi.post("/session/refer-wheel/claimBonus?promoCode=br2-refer-wheel").then((res) => {
     if (res.code === 0) {
       $q.notify({
-        message: "Receive successfully",
+        message: t("content.receiveSuccessfully"),
         color: "positive",
         position: "top"
       });
@@ -424,8 +428,8 @@ const updateCountdownTime = () => {
 };
 
 const getRecords = () => {
-  // eventapi.get("/session/refer-wheel-spin/getRecords?promoCode=pak-refer-wheel-spin").then((res) => {
-  eventapi.get("/session/refer-wheel/getRecords?promoCode=br2-refer-wheel").then((res) => {
+  eventapi.get("/session/refer-wheel-spin/getRecords?promoCode=br2-refer-wheel").then((res) => {
+    // eventapi.get("/session/refer-wheel/getRecords?promoCode=br2-refer-wheel").then((res) => {
     if (res.code === 0) {
       winningRecord.value = res.data;
     }
@@ -471,8 +475,8 @@ onUnmounted(() => {
     background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/countdown-bg.png) no-repeat;
     background-size: 100% 100%;
     aspect-ratio: 295 / 24;
-    margin: 14px 24px 16px;
-    font-size: 16px;
+    margin: 14px 0 16px;
+    font-size: 13px;
     font-weight: 700;
     color: #fff;
   }
@@ -576,11 +580,10 @@ onUnmounted(() => {
         border: none;
         width: 80px;
         max-width: 35%;
-        font-size: 16px;
+        font-size: 40px;
         font-weight: 700;
-        line-height: 20px;
         color: #f9f9f9;
-        padding-top: 10px;
+        padding-top: 16px;
 
         &.disabled {
           filter: grayscale(0.7);
@@ -820,14 +823,14 @@ onUnmounted(() => {
       }
     }
 
-    .wheel-wrapper {
-      .wheel-inner-wrapper {
-        .btn {
-          font-size: 14px;
-          line-height: 18px;
-        }
-      }
-    }
+    // .wheel-wrapper {
+    //   .wheel-inner-wrapper {
+    //     .btn {
+    //       font-size: 14px;
+    //       line-height: 18px;
+    //     }
+    //   }
+    // }
   }
 }
 
@@ -847,6 +850,18 @@ onUnmounted(() => {
           .amount {
             font-size: 32px;
           }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .wheel-stage-wrapper {
+    .wheel-wrapper {
+      .wheel-inner-wrapper {
+        .btn {
+          font-size: 11vw;
         }
       }
     }

@@ -238,7 +238,7 @@
           </el-select>
         </el-form-item>
         <el-form-item prop="title">
-          <editor
+          <!-- <editor
             api-key="arlf5h2wcrqydmiiogww80cfx98khxd8o81s2i93qhq0n7wv"
             :init="{
               placeholder: 'Title',
@@ -253,10 +253,11 @@
               toolbar: 'undo redo | styles | bold italic'
             }"
             v-model="form.title"
-          />
+          /> -->
+          <Editor v-model:value="form.title" @input="getTitleInput" />
         </el-form-item>
         <el-form-item prop="content">
-          <editor
+          <!-- <editor
             api-key="arlf5h2wcrqydmiiogww80cfx98khxd8o81s2i93qhq0n7wv"
             :init="{
               placeholder: 'Content',
@@ -273,7 +274,8 @@
                 'outdent indent | numlist bullist',
             }"
             v-model="form.content"
-          />
+          /> -->
+          <Editor v-model:value="form.content" @input="getContentInput" />
         </el-form-item>
         <el-form-item prop="redirectType">
           <el-select
@@ -518,7 +520,8 @@ import { hasPermission, hasRole } from '../../../../utils/util'
 import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { TENANT } from '../../../../store/modules/user/action-types';
-import Editor from "@tinymce/tinymce-vue";
+// import Editor from "@tinymce/tinymce-vue";
+import Editor from '../../../../components/editor/index.vue'
 import { debounce } from "lodash";
 import { getMemberLoginNameList } from "../../../../api/system-message-template";
 import moment from 'moment';
@@ -824,6 +827,14 @@ function handleVipFilter() {
     return element.siteId === selected.site
   })
   dropdownList.vip = newRecord
+}
+
+function getTitleInput(value) {
+  form.title = value
+}
+
+function getContentInput(value) {
+  form.content = value
 }
 
 function submit() {

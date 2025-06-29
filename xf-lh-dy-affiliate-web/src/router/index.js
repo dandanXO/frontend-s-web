@@ -195,6 +195,24 @@ export const constantRoutes = [
       ),
   },
   {
+    path: '/br2/login',
+    name: 'BR2 Login',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "loginAffiliate" */ '../views/br2/login/index.vue'
+      ),
+  },
+  {
+    path: '/br2/register',
+    name: 'BR2 Register',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "registerAffiliate" */ '../views/br2/register/index.vue'
+      ),
+  },
+  {
     path: '/ph1/summary',
     name: 'Ph1 Summary',
     meta: { hidden: true },
@@ -476,6 +494,14 @@ export const constantRoutes = [
         name: 'Daily Summary',
         meta: {
           title: 'Daily Summary',
+        },
+      },
+      {
+        path: 'retention-report',
+        component: () => import('../views/report/retention-report/index.vue'),
+        name: 'Retention Report',
+        meta: {
+          title: 'Retention Report',
         },
       },
     ],

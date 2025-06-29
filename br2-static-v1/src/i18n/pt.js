@@ -36,7 +36,7 @@ export default {
     personalInformation: "Personal Information",
     verifyMobileNumber: "Verify Mobile Number",
     email: "E-mail",
-    changePassword: "Change Password",
+    changePassword: "Alterar senha",
     referral: "Referral",
     announcement: "Announcement",
     mail: "Mail",
@@ -78,7 +78,8 @@ export default {
     promo: "Promoção",
     earnMoney: "Ganhe Dinheiro",
     wallet: "Carteira",
-    me: "Minha Conta"
+    me: "Minha Conta",
+    deposit: "Depósito"
   },
   form: {
     prependNumber: "+55",
@@ -250,6 +251,8 @@ export default {
     loading: "Carregando",
     loading_plsWait: "Carregando... Por favor, aguarde...",
     loading_data: "Carregando dados... Por favor, aguarde...",
+    registeringInProgress: "Registrando...",
+    loggingOut: "Saindo...",
     logging_in: "Entrando",
     cancel: "Cancelar",
     signOut: "Sair",
@@ -263,12 +266,14 @@ export default {
     getInterestProfit: "Obter Lucro com Juros",
     notAMember: "Não é um membro?",
     createAccount: "Criar uma conta",
+    login: "Entrar",
     profit: "Lucro",
     loss: "Perda",
     withdrawing: "Retirando...",
     unbinding: "Desvinculando",
     deposit: "Depositar",
-    updated: "Atualizado"
+    updated: "Atualizado",
+    continue: "Continuar"
   },
   notify: {
     noRecord: "Nenhum Registro",
@@ -287,7 +292,10 @@ export default {
     fillInPersonalDetails: "Por favor, preencha seus dados pessoais",
     addSucceed: "Adição bem-sucedida",
     areYouSureUnbind: "Tem certeza de que deseja desvincular?",
-    withdrawSuceed: "Retirada Enviar com sucesso"
+    withdrawalSubmitSucceed: "Retirada Enviar com sucesso",
+    copiedToClipboard: "Copiado para a área de transferência",
+    addBankCardFirst: "Por favor, adicione um cartão bancário primeiro",
+    unbindSucceed: "Desvinculação realizada com sucesso"
   },
   sideNav: {
     inviteToEarn: "Convidar para Ganhar",
@@ -305,7 +313,7 @@ export default {
     downloadApp: "Download APP",
     showing16Of100Games: "Mostrando 16 de 100 jogos",
     balance: "Saldo",
-    downloadAppText: "Baixe nosso aplicativo e ganhe super prêmios!",
+    downloadAppText: "Baixe nosso aplicativo e ganhe super prêmios!"
   },
   home: {
     menu_lobby: "Lobby",
@@ -320,7 +328,8 @@ export default {
     cat_slotsgame: "Jogos de Caça-Níqueis",
     cat_fishing: "Pesca",
     cat_poker: "Poker",
-    cat_sport: "Esporte"
+    cat_sport: "Esporte",
+    showAll: "Mostrar todos"
   },
   settings: {
     totalScore: "Pontuação Total",
@@ -337,7 +346,7 @@ export default {
     feedback: "Feedback",
     vip: "VIP",
     logout: "Sair",
-    depositMonthlytoWinGifts: "Deposite Mensalmente Para Ganhar Prêmios",
+    betMonthlytoWinGifts: "Aposte Mensalmente Para Ganhar Prêmios",
     interestProfit: "Lucro de Juros",
     version: "Versão",
     balance: "Saldo"
@@ -355,7 +364,8 @@ export default {
     deposited: "Depositado",
     youWillBeRedirect: "Você será redirecionado para a página do seu banco para completar o depósito.",
     afterDepositSuccessfully: "Após o depósito ser concluído com sucesso, será refletido aqui.",
-    useFtdPrivilege: "Aproveite o Benefício de Primeiro Depósito em Slots"
+    useFtdPrivilege: "Aproveite o Benefício de Primeiro Depósito em Slots",
+    hasUnusedPrivilege: "Você tem um desconto que ainda não resgatou. Tem certeza de que deseja enviá-lo?"
   },
   withdraw: {
     cashBalance: "Saldo em Dinheiro",
@@ -410,6 +420,7 @@ export default {
     receiveMonthlyRewards: "Receber recompensas mensais",
     received: "Recebido",
     receive: "Receber",
+    bet: "Aposta",
     accumulateDeposit: "Depósito Acumulado",
     reward: "Recompensa por",
     levelUpgrade: "Recompensa por Atualização de Nível",
@@ -423,13 +434,13 @@ export default {
     rewards: "Recompensas",
     vipTable_txt:
       "Assim que seus depósitos atenderem aos requisitos de atualização, seu nível VIP será imediatamente atualizado, aumentando seu número de retiradas.",
-    monthlyCumulativeDeposit: "Depósito Mensal Acumulado para Atualizar Nível VIP",
+    monthlyCumulativeBet: "Aposta Mensal Acumulado para Atualizar Nível VIP",
     level: "Nível",
     amount: "Valor",
     turnover: "Volume de Negócios",
     deposit: "Depósito",
     aftertheRecharge:
-      "Após o depósito no dia atingir o padrão, no dia seguinte o nível VIP será aumentado e as recompensas de atualização correspondentes serão emitidas.",
+      "Após o aposta no dia atingir o padrão, no dia seguinte o nível VIP será aumentado e as recompensas de atualização correspondentes serão emitidas.",
     vipPromoBonus: "Bônus de Promoção VIP",
     promotionBonusDesc:
       "Bônus de Promoção: Toda vez que você avançar, pode receber instantaneamente uma recompensa de promoção.",
@@ -572,9 +583,9 @@ export default {
       betting_tips:
         "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
-      shareTitle: "B9GAME Share and Earn",
+      shareTitle: "AKB188 Share and Earn",
       shareText:
-        "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
+        "AKB188 Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
     },
     teamManagement: {
       searchField: {
@@ -788,9 +799,9 @@ export default {
     received: "Recebido",
     time_left: "tempo restante",
     go_withdraw_now: "Levantar agora",
-    rs: "RS",
+    rs: "R$",
     youGet: "Você obtém",
-    withdraw_money_over_rs: "Levantar dinheiro acima de Rs",
+    withdraw_money_over_rs: "Levantar dinheiro acima de R$",
     claim_now: "Reivindicar agora",
     claimed: "Reivindicado",
     bonus_claim_time: "Tempo de reivindicação do bónus",
@@ -834,6 +845,17 @@ export default {
       days: "dias",
       signIn: "Assinar",
       signedIn: "Assinado"
+    },
+    redepositBonus: {
+      description: "Receba um bônus extra de 100% no primeiro depósito do dia",
+      tnc01: "Esta promoção é válida para todos os membros que realizarem o primeiro depósito do dia.",
+      tnc02: "O valor do bônus será de 100% do valor depositado, sem limite máximo.",
+      tnc03: "O bônus (incluir o principal) requer 12 vezes de apostas válidas para sacar;",
+      tnc04:
+        "Cada membro pode participar uma vez por dia, sendo o bônus aplicável somente à primeira transação do dia.",
+      tnc05:
+        "Apenas o titular da conta pode realizar a operação de recebimento do bônus. Em caso de comportamento irregular, o bônus poderá ser cancelado, deduzido, congelado ou a conta adicionada à lista negra.",
+      tnc06: "A plataforma reserva-se o direito final de interpretação desta promoção."
     },
     megaSharingWheel: {
       wheelTitle: "Roleta Mega Compartilhada",
@@ -892,7 +914,7 @@ export default {
     spinReferWheel: {
       paymentRequestSubmitted: "Pedido de pagamento submetido",
       stillNeedToMakeWithdrawal: "Ainda precisa fazer levantamento",
-      willBePaidToYourRsAccount: "será pago à sua conta RS",
+      willBePaidToYourRsAccount: "{symbol} será pago à sua conta {symbol}",
       inviteFriendsToHelp: "Convide amigos para ajudar",
       referFriendToRegister:
         "Indique um amigo para se registar, depositar e verificar o telefone para ganhar rodadas grátis",
@@ -903,15 +925,18 @@ export default {
     longTerm: "Válida por tempo indeterminado",
     eligibility: "Elegíveis",
     successfulDepositMember: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
+    betMember: "Todos os membros que realizaram apostas",
     newMember: "Todos os novos membros registrados",
+    allMembers: "Todos os membros",
     desc: "Descrição",
     tnc: "Regras da Promoção",
     cashbackWeekly: {
       description: "Cashback semanal com base na sua atividade de apostas e na porcentagem correspondente.",
-      maxCashback: "Máx. {num}%",
+      maxCashback: "Máx : {num}%",
       cashback: "{num}% Cashback",
       upgradeDifference: "{amount} apostas para VIP{vip}",
-      tnc01: "O cashback semanal é concedido como recompensa toda semana.",
+      tnc01:
+        "O cashback semanal é concedido como recompensa toda semana. Solo los clientes cuyas pérdidas de la semana en curso y las pérdidas acumuladas superen cada una los R$200.00 tendrán derecho al reembolso.",
       tnc02: "O período de cálculo do cashback semanal vai de segunda-feira às 00:00 até domingo às 23:59.",
       tnc03:
         "Período para resgatar o cashback: da segunda-feira da semana seguinte às 06:00 até sexta-feira às 23:59. Após esse prazo, o bônus expirará.",
@@ -921,10 +946,31 @@ export default {
       tnc06:
         "Quanto maior o seu nível VIP (consulte o plano de upgrade VIP), maior será a porcentagem de cashback, com um máximo de 25%.",
       tnc07: "Limite máximo de cashback por pessoa por semana R$10.000.",
-      tnc08: "O valor do cashback pode ser sacado diretamente ou utilizado para continuar jogando.",
+      tnc08: "El requisito de apuesta válido antes del retiro es una vez.",
       tnc09:
         "Jogadores que, no histórico da nossa plataforma, apresentem lucro não participam do reembolso de perdas. Esta atividade é limitada aos benefícios para jogadores que tiveram prejuízo na plataforma.",
-      tnc10: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
+      tnc10: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção.",
+      table: {
+        title: {
+          vip: "VIP",
+          bet: "APOSTA",
+          cashback: "CASHBACK"
+        }
+      }
+    },
+    vipPlanBettingUpgrade: {
+      eligibility: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
+      description:
+        "Faça o upgrade para o nível VIP correspondente com base no valor acumulado de apostas na conta do membro.",
+      bet: "APOSTA",
+      vipLevel: "VIP Nível",
+      tnc01:
+        "A partir da primeira aposta válida feita pelo membro após concluir o primeiro depósito com sucesso, o valor acumulado das apostas válidas será usado para determinar a elevação de nível VIP, conforme os limites abaixo:",
+      tnc02:
+        "Apenas apostas que resultem em ganho ou perda no site serão consideradas como valor de aposta válida; apostas canceladas ou com devolução do valor apostado não serão incluídas.",
+      tnc03:
+        "Membros VIP podem usufruir de outros benefícios exclusivos relacionados ao seu nível VIP no site, como percentuais de reembolso semanais mais altos para níveis VIP superiores.",
+      tnc04: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
     },
     receiveEarn: {
       description: "Receive up to 100 BRL in free bet bonus",
@@ -937,6 +983,41 @@ export default {
         "Se você receber um pontos de dinheiro extra, pode jogar jogos de graça e ganhar ainda mais dinheiro real.",
       tnc06: "Se voce nao retirar o dinheiro dentro de 3 dias,ele ser perdido.",
       tnc07: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
+    },
+    dailySecondDeposit: {
+      description: "O primeiro depósito do dia dá direito a 10% de bônus sobre o valor depositado",
+      tnc01: "Esta promoção é válida para todos os depósitos realizados após o primeiro no mesmo dia.",
+      tnc02: "Cada depósito subsequente dará direito a um bônus de 20%, com um limite de R$ 288 por depósito.",
+      tnc03: "O bônus (incluir o principal) requer 12 vezes de apostas válidas para sacar;",
+      tnc04: "Todos os depósitos adicionais do dia são elegíveis, sem limite de quantidade de participações por dia.",
+      tnc05:
+        "Apenas o titular da conta pode realizar a operação de recebimento do bônus. Em caso de comportamento irregular, o bônus poderá ser cancelado, deduzido, congelado ou a conta adicionada à lista negra.",
+      tnc06: "A plataforma reserva-se o direito final de interpretação desta promoção."
+    },
+    betCashback: {
+      description: "Cashback diário com base no valor apostado e na porcentagem correspondente",
+      tnc01: "O cashback do dia anterior será creditado automaticamente às 18h (horário de Brasília) todos os dias;",
+      tnc02: "O valor do cashback é calculado como: valor apostado no dia anterior × porcentagem de reembolso;",
+      tnc03: "Quanto maior o valor apostado, maior a porcentagem de cashback, podendo chegar a até 3.2%;",
+      tnc04: "Sem limite máximo para o valor de cashback;",
+      tnc05: "O bônus de cashback deve ser apostado pelo menos 1 vez antes de poder ser sacado;",
+      tnc06:
+        "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção.",
+      thead1: "Nível",
+      thead2: "Volume de Transações",
+      thead3: "Taxa de Retorno"
+    },
+    lossRebate: {
+      description: "Cashback baseado na porcentagem do valor perdido no dia anterior",
+      tnc01: "O cashback do dia anterior será creditado automaticamente às 12h (horário de Brasília) todos os dias;",
+      tnc02:
+        ".O valor do resgate é calculado como: valor real do prejuízo × porcentagem de cashback;",
+      tnc03: "Se você não tiver feito nenhuma aposta durante o período da promoção ou tiver lucrado no total, não terá direito ao bônus de resgate;",
+      tnc04:
+        "É necessário ter perdido pelo menos R$10 no dia anterior para poder solicitar o bônus;",
+      tnc05: "O valor máximo de resgate por pessoa por dia é de R$10.000;",
+      tnc06: "O bônus recebido deve ser apostado pelo menos 3 vezes antes de poder ser sacado;",
+      tnc07: "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção."
     }
   },
   maintenance: {
@@ -976,124 +1057,194 @@ export default {
   },
   error: {
     101: "Plataforma não encontrada",
-    102: "Plataforma fechada",
+    102: "Plataforma está fechada",
     104: "Não é uma plataforma de transferência de dinheiro",
     105: "Site não encontrado",
     400: "Solicitação malsucedida",
     403: "Não autorizado",
     405: "Método não permitido",
-    500: "Mal funcionamento do sistema",
+    500: "Falha do sistema",
     501: "Código de solicitação já foi usado",
     502: "Servidor não encontrado",
-    504: "Solicitação muito frequente",
-    601: "Erro de validação do token",
+    504: "Solicitações com muita frequência",
+    601: "Erro na validação do token",
     603: "Token não encontrado",
-    604: "Login bem-sucedido",
-    608: "As operações do usuário atual estão muito frequentes.",
+    608: "Operações do usuário muito frequentes. Por favor, tente novamente.",
+    609: "Plataforma em manutenção",
+    610: "Proibido participar do jogo, por favor contate o administrador",
+    604: "Login realizado com sucesso",
     707: "Saldo insuficiente",
-    710: "Saldo disponível para retirada insuficiente",
-    800: "Código de verificação incorreto",
+    710: "Saldo insuficiente",
+    800: "Código de confirmação incorreto",
     801: "Captcha de senha expirou",
     900: "Membro não encontrado",
     901: "Registro não encontrado",
-    902: "O e-mail não corresponde ao nosso membro",
-    903: "O e-mail não corresponde à conta registrada",
-    904: "O e-mail não foi verificado",
-    905: "Nome real não fornecido",
+    902: "O email não corresponde ao nosso membro",
+    903: "O email não corresponde à conta registrada",
+    904: "Email ainda não foi verificado, por favor contate o Suporte 24/7.",
+    905: "Nome verdadeiro não fornecido",
+    906: "Email do usuário não foi verificado ainda.",
     909: "Número de telefone não encontrado",
-    910: "O nome de usuário não corresponde ao número de telefone",
-    1000: "Erro no nome de login ou senha",
-    1001: "Conta está fechada",
-    1002: "Conta é para afiliados",
-    1004: "A conta foi bloqueada. Por favor, tente novamente após 60 minutos ou entre em contato com o atendimento ao cliente para desbloqueá-la.",
+    910: "Nome de usuário não corresponde ao número de telefone",
+    1000: "Nome de login ou senha incorretos",
+    1001: "Conta está encerrada",
+    1002: "Conta é de afiliado",
+    1004: "Conta temporariamente bloqueada devido a muitas senhas erradas",
+    1011: "A conta já vinculou um número de telefone",
+    1012: "A conta já vinculou um endereço de email",
+    1013: "A conta já vinculou uma data de nascimento",
+    1014: "A conta já vinculou um nome",
+    1015: "A conta já vinculou um apelido",
+    1016: "A função de registro está em atualização. Por favor, registre-se após as 9:00 (horário local). Obrigado!",
     1300: "O valor deve ser um número maior que 0",
     1301: "Este cartão não é suportado",
     1302: "Esta moeda não é suportada",
     1304: "Este número já foi usado",
     1305: "Banco não encontrado",
-    1306: "Excedido o limite de tempo diário para retirada",
-    1307: "Excedido o limite diário de retirada",
+    1306: "Excedido o limite de tempo de retirada diário",
+    1307: "Excedido o limite de retirada diário",
     1308: "Saldo insuficiente",
-    1309: "A conta do cartão não corresponde ao nome do membro",
-    1401: "Tempo de envio de OTP excedido",
-    1402: "Erro na programação do envio do OTP, por favor, reenviar o OTP",
+    1309: "Conta do cartão não corresponde ao nome do membro",
+    1318: "Esta operação não é suportada, por favor contate o atendimento ao cliente.",
+    1319: "O número do cartão foi vinculado mais de duas vezes",
+    1401: "Tempo para envio de OTP excedido",
+    1402: "Erro no cronograma de envio de OTP, por favor reenvie o OTP",
     1403: "Erro na verificação do OTP",
     1404: "Falha ao enviar o código OTP",
-    10000: "Erro de saldo restante insuficiente",
+    53000: "Não foi possível depositar, nenhum plano elegível encontrado",
+    53001: "Quantia de depósito inválida",
+    53002: "Dias de depósito inválidos",
+    53003: "Registro de aposta não existe",
+    53004: "Ainda não venceu",
+    53005: "Investimento já foi liquidado",
+    53006: "Não é possível enviar, os juros em andamento atingiram o limite máximo",
+    53007: "Saldo insuficiente",
+    58500: "Não há giros disponíveis",
+    10000: "Erro: saldo restante insuficiente",
     10001: "Erro na retirada",
     10002: "Erro no depósito",
     10005: "Usuário já foi utilizado",
-    10006: "Nome não pode ser usado",
-    10007: "Erro ao entrar na sala de jogos",
+    10006: "Nome não pode ser utilizado",
+    10007: "Erro ao entrar na sala de jogo",
     10008: "Erro",
-    11000: "Não há gateway para o valor fornecido",
+    11000: "Falha na submissão do depósito.",
     11003: "Depósito falhou",
+    11005: "Operações do usuário muito frequentes. Por favor, tente novamente.",
+    12100: "Senha de retirada não corresponde",
+    12101: "A nova senha de retirada não pode ser igual à antiga",
+    12104: "Este recurso está desativado, por favor contate o suporte",
+    12105:
+      "Sua operação de retirada teve um atraso de rede, causando falha no pagamento. Por favor, aguarde 30 minutos antes de tentar novamente, obrigado!",
+    12106: "O valor de retirada não pode conter decimais",
     13000: "Nome de domínio não encontrado",
     13001: "Não é possível consultar informações com mais de 3 meses",
     13002: "Deve estar dentro de 7 dias",
-    13003: "O horário de término deve ser maior que o horário de início",
-    14000: "O nome de login já foi registrado",
+    13003: "A hora de término deve ser maior que a de início",
+    14000: "Nome de login já registrado",
     14001: "Este número de telefone já foi registrado",
-    14002: "Este e-mail já foi registrado",
+    14002: "Este email já foi registrado",
     14003: "Código de afiliado não encontrado",
-    14010: "Seu dispositivo já registrou uma conta",
-    15201: "Senha antiga incorreta",
-    15202: "A nova senha não deve ser igual à senha antiga",
-    21000: "Este jogo já está na sua lista de jogos favoritos",
-    25001: "Evento da roleta não participado",
-    25002: "Você já resgatou a recompensa.",
-    25003: "O evento da roleta não atingiu o valor mínimo para saque",
-    25004: "Evento da roleta já participado",
-    25005: "O evento da roleta atingiu o valor mínimo para saque.",
+    15011: "Não é possível selecionar data anterior a 10/07/2024",
+    15201: "Código antigo incorreto",
+    15202: "A nova senha não pode ser igual à anterior",
+    21000: "Este jogo já está na sua lista de favoritos.",
+    24001: "Registro de presença já existe.",
+    24002: "Mesmo IP detectado",
+    24005: "Não atende o depósito mínimo exigido",
     30000: "Dados do membro não encontrados",
-    30001: "O membro já recebeu a promoção",
-    30002: "O membro enviou o número hoje",
+    30001: "Membro já recebeu a promoção",
+    30002: "Membro enviou o número hoje",
     30003: "Saldo do membro não atende aos requisitos",
-    30004: "O depósito do membro não atende aos requisitos",
-    30005: "Volume de apostas não atingiu os requisitos",
-    30006: "Membros listados como titulares de contas são proibidos",
+    30004: "Depósito do membro não atende aos requisitos",
+    30005: "Giro não atingiu os requisitos",
+    30006: "Membros listados como titulares de conta estão proibidos de receber este privilégio",
+    30007: "Depósito do membro não atende aos requisitos",
+    30008: "O cliente do usuário não atende aos requisitos.",
+    30009: "Requisitos de depósito/aposta não atendidos.",
+    30101: "Usuários existentes não podem participar desta promoção.",
     31000: "Promoção não encontrada",
     32000: "Nível VIP não encontrado",
+    32003: "Não atingiu o nível VIP exigido",
     33000: "Deve usar um número de 3 dígitos",
     33001: "Deve ser um número de 3 dígitos",
-    34000: "O aniversário do membro não é neste mês",
+    34000: "Aniversário do membro não é neste mês",
     34001: "Aniversário do membro não encontrado",
-    35000: "35000 Membro não pode receber este privilégio",
-    35001: "O membro já recebeu este privilégio",
-    35002: "Não há privilégios especiais elegíveis para serem recebidos",
-    35003: "Privilégios especiais e membros não coincidem",
-    35004: "Votos dados excedem o limite de votos do membro",
-    35006: "Nosso limite foi atingido",
+    35000: "Membro não pode receber esse privilégio",
+    35001: "Membro já recebeu esse privilégio",
+    35002: "Nenhum privilégio especial elegível disponível",
+    35003: "Privilégios especiais e membros não correspondem",
+    35004: "Votos concedidos excedem o limite de votos do membro",
+    35006: "Nossa cota foi atingida",
     35007: "Este IP já recebeu privilégios",
     35008: "Você não tem esse privilégio",
-    35009: "O privilégio entrará em vigor em breve",
-    35010: "35010 Membro não pode receber este privilégio",
-    35011: "35011 Membro não pode receber este privilégio.",
-    37001: "O horário de coleta é fora do período do evento"
+    35009: "O privilégio estará disponível em breve",
+    35010: "35010 Membro não pode receber esse privilégio",
+    35011: "35011 Membro não pode receber esse privilégio.",
+    35013: "Já foi resgatado pelo mesmo IP",
+    35015: "O mesmo dispositivo já reivindicou esse desconto.",
+    37001: "O horário de resgate não está dentro do período da atividade.",
+    45000: "Não atingiu o valor mínimo de retirada",
+    45001: "Bônus aleatório recebido hoje",
+    47000: "O desconto ainda não foi reivindicado.",
+    47001: "Nenhum valor disponível para reivindicação.",
+    50000:
+      "Para manter seus fundos seguros, você precisa aguardar 48 horas após alterar sua senha antes de adicionar uma nova carteira.",
+    50001: "Número de transferências disponíveis atingido, por favor continue apostando antes de transferir novamente",
+    51000: "Recompensa de check-in de hoje já foi reivindicada",
+    51001: "Requisitos não atendidos",
+    51002: "A recompensa já foi reivindicada por outra conta",
+    53008: "Não é possível enviar, limite diário de depósito atingido hoje",
+    53009: "Não é possível enviar, mesmo endereço IP já foi usado",
+    53010: "Não é possível enviar, mesmo dispositivo já foi usado",
+    53011: "Requisito de giro para retirada de juros não foi concluído, então você não pode depositar novamente",
+    54000: "O horário de coleta ainda não chegou.",
+    54001: "O usuário não vinculou uma conta de retirada.",
+    54002: "O cartão do usuário já está vinculado a outra conta.",
+    57000: "Código totalmente resgatado",
+    57001: "Não pode ser resgatado",
+    57002: "Aposta não atendeu ao requisito",
+    57003: "Depósito não atendeu ao requisito",
+    57004: "Depósito histórico não atendeu ao requisito",
+    57005: "Erro ao resgatar o código",
+    57006: "Código inválido",
+    58000: "Erro de estágio do sistema",
+    58001: "Erro nas configurações do estágio do sistema",
+    58002: "Evento ainda não começou",
+    58003: "Evento já expirou",
+    58004: "Não pode participar. Tarefas anteriores falharam.",
+    58005: "Parabéns, você completou todas as tarefas"
   },
   content: {
     nospinleft: "Sem rodadas restantes",
     title1: "O tempo de registo começa a contar a partir do momento em que o registo é concluído.",
-    message1: "Assim que o seu montante acumulado atingir 1000 PKR, poderá levantar.",
-    message2:
-      "Quando não tiver mais rodadas, convide novos jogadores a registarem-se e depositarem para ganhar rodadas grátis adicionais.",
-    message3:
-      "O evento dura 3 dias. Após o término do evento, as recompensas acumuladas serão redefinidas e o evento recomeçará.",
-    message4: "Cada utilizador pode usufruir de uma rodada grátis por dia, que será adicionada às 00:00 diariamente.",
-    message5:
-      "O convidado deve verificar o número de telefone e não pode ter endereço IP duplicado para se qualificar para a recompensa de indicação.",
+    message1:
+      "Quando o valor acumulado atingir R$100, você poderá solicitar o saque (o saque será feito para a carteira do jogo).",
+    message2: "Quando não houver giros disponíveis, indique um novo jogador para ganhar um giro grátis.",
+    message3: "O evento dura 3 dias. Após o término, o bônus acumulado será reiniciado e o evento começará novamente.",
+    message4:
+      "Cada usuário pode aproveitar uma chance de giro grátis por dia, e o número de giros é reiniciado às 24:00 todos os dias.",
+    message5: "Após a aprovação da solicitação, o bônus será depositado diretamente na sua carteira.",
+    message6: "O bônus precisa ser apostado uma vez antes que possa ser sacado.",
+    message7:
+      "O indicado precisa vincular seu número de telefone e conectá-lo ao código de convite do convidador para ser considerado válido.",
+    message8:
+      "O direito de interpretação do evento pertence à AKB188. Em caso de dúvidas, entre em contato com o atendimento ao cliente.",
     aviatorPromoIntro:
       "Desfrute da emoção das apostas com o Aviator! O seu Aviator pode ganhar incríveis 3.216x com apenas um clique! O prémio para os 50 melhores é de 1.250.000 PKR!",
     aviatorGoldenEgg:
       "Ao apostar no Aviator todos os dias, quando o montante efetivo das apostas atingir 888 PKR, pode ter a chance de quebrar o ovo dourado (SUNEHRI ANDY). Recompensa máxima: 88.888 PKR, probabilidade de vitória: 3,6%",
     aviatorTopTurnover:
       "Ao apostar no Aviator, o jogador com o maior volume de apostas acumuladas qualifica-se para o primeiro lugar.",
-    cashRainIntro: "Cada rodada de chuva de dinheiro distribui gratuitamente 666.666 PKR.",
-    cashRainMaxPerRound: "Montante máximo de reembolso por rodada: 66.666 PKR.",
-    cashRainFreeDistribution: "Cada rodada distribui reembolso gratuitamente.",
+    cashRainIntro: "Cada rodada da “Chuva de Dinheiro” distribui R$100.000 gratuitamente.",
+    cashRainMaxPerRound: "O valor máximo de um envelope é de R$7.777.",
+    cashRainFreeDistribution: "O valor recebido pode ser usado em jogos ou sacado diretamente.",
     cashRainClaimCondition:
-      "Deposite ≥ 300 PKR no mesmo dia e complete apostas diárias totais ≥ 350 PKR para reivindicar o seu bónus grátis.",
-    cashRainUsage: "O dinheiro recebido pode ser usado diretamente para jogar ou ser levantado.",
-    cashRainVIP: "Quanto maior o nível de membro VIP, maior o valor recebido."
+      "Quanto maior o seu nível VIP (consulte o plano de upgrade VIP), maior o valor do envelope recebido.",
+    cashRainUsage:
+      "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção.",
+    cashRainVIP: "Quanto maior o nível de membro VIP, maior o valor recebido.",
+    linkCopyToClipboard: "Link copiado para a área de transferência",
+    qrCodeSaved: "Imagem do código QR salva na galeria de fotos.",
+    receiveSuccessfully: "Recebido com sucesso"
   }
 };

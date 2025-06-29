@@ -804,21 +804,23 @@ export default defineComponent({
       if (isRegisterAdjustSentFromLogin.value || !ui.adjust_register_event || store.isFromGooglePackage) return;
       isRegisterAdjustSentFromLogin.value = true;
 
-      if (isInPwa()) {
-        console.log(ui.adjust_register_event);
-        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-        AdjustWeb.trackEvent({
-          eventToken: ui.adjust_register_event
-        });
+      if (process.env.MODE === "spa") {
+        if (isInPwa()) {
+          console.log(ui.adjust_register_event);
+          const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+          AdjustWeb.trackEvent({
+            eventToken: ui.adjust_register_event
+          });
+        } else {
+          const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+          AdjustWeb.trackEvent({
+            eventToken: ui.adjust_register_event
+          });
+        }
       } else if (Platform.is.android && Platform.is.capacitor) {
         var adjustEvent = new AdjustEvent(ui.adjust_register_event);
         // alert(affRegEvent.value);
         Adjust.trackEvent(adjustEvent);
-      } else {
-        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-        AdjustWeb.trackEvent({
-          eventToken: ui.adjust_register_event
-        });
       }
     };
 

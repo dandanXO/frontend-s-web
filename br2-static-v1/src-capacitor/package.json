@@ -1,7 +1,7 @@
 {
   "name": "AKB188",
-  "version": "1.0.4",
-  "description": "BR2 App",
+  "version": "1.0.1",
+  "description": "A plataforma de jogos favorita dos brasileiros",
   "author": "KengHong <kenghongho@eagrp.net>",
   "private": true,
   "scripts": {

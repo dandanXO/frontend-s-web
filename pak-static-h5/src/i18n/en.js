@@ -175,6 +175,7 @@ export default {
     code_rules_01: "Verification code is required",
     captchaCodeCheck: "Captcha Code Check",
     captchaCode: "Captcha Code",
+    identity: "Identity ID",
     captchaCode_placeholder: "Enter Captcha Code",
     captchaCode_rules_01: "Please insert captcha code",
     captchaCode_rules_02: "Captcha code length is 4 characters",
@@ -309,7 +310,7 @@ export default {
     freeTrial: "Free trial",
     sendOtp: "Send OTP",
     check: "Check",
-    payAgain: "Pay again",
+    payAgain: "Pay again"
   },
   notify: {
     cancelPayment: "Cancel Payment",
@@ -767,7 +768,7 @@ export default {
   bankCard: {
     bankAccountNum: "Bank Account Number",
     pleaseEnterCardAccount: "Please enter bank account number",
-    bankCardMust16NumberandAbove: "Bank account number must be between 13 and 16 numbers",
+    bankCardMust16NumberandAbove: "Bank account number must be between 13 and 20 numbers",
     bankCardDisallowDecimal: "Bank account number cannot have decimal points",
     nameofCardAcc: "Card Account Name",
     insertCardAccName: "Please insert card account name",

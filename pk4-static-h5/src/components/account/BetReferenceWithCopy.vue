@@ -10,11 +10,14 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n';
 const props = defineProps(['betId']);
 
 const hasCopied = ref(false);
 const betIdRef = ref();
-
+const $q = useQuasar();
+const { t } = useI18n();
 
 const copyMessage = () => {
   let copyText = null;
@@ -31,5 +34,11 @@ const copyMessage = () => {
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
   hasCopied.value = true;
+  $q.notify({
+    color: "positive",
+    position: "top",
+    message: t("message.copySuccess"),
+    icon: "check_circle_outline"
+  });
 };
 </script>

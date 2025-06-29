@@ -489,17 +489,17 @@ const routes = [
   //   ],
   //   meta: { requiresAuth: true }
   // },
-  // {
-  //   path: "/account/announcement",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       component: () => import("pages/account/AnnouncementView.vue")
-  //     }
-  //   ],
-  //   meta: { requiresAuth: true }
-  // },
+  {
+    path: "/account/announcement",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/AnnouncementView.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
   // {
   //   path: "/account/records/deposit",
   //   component: () => import("layouts/MainLayout.vue"),

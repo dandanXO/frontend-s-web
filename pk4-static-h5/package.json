@@ -1,8 +1,8 @@
 {
   "name": "pak-project",
   "version": "1.0.37",
-  "description": "B9.GAME",
-  "productName": "B9.GAME",
+  "description": "PK1.GAME",
+  "productName": "PK1.GAME",
   "author": "KengHong <kenghongho@eagrp.net>",
   "private": true,
   "scripts": {

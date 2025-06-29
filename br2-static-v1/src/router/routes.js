@@ -11,22 +11,22 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/HomePage.vue") }]
   },
-  {
-    path: "/login",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/LoginPage.vue") }]
-  },
+  // {
+  //   path: "/login",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [{ path: "", component: () => import("pages/LoginPage.vue") }]
+  // },
 
-  {
-    path: "/register",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/RegisterPage.vue") }]
-  },
-  {
-    path: "/forgot-password",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/ForgotPwdPage.vue") }]
-  },
+  // {
+  //   path: "/register",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [{ path: "", component: () => import("pages/RegisterPage.vue") }]
+  // },
+  // {
+  //   path: "/forgot-password",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [{ path: "", component: () => import("pages/ForgotPwdPage.vue") }]
+  // },
   // {
   //   path: "/home",
   //   component: () => import("layouts/MainLayout.vue"),
@@ -216,6 +216,12 @@ const routes = [
   {
     path: "/refer/:referralCode",
     name: "referCode",
+    component: () => {}
+    // component: () => {},
+  },
+  {
+    path: "/referSpin/:referralSpinCode",
+    name: "referCodeSpin",
     component: () => {}
     // component: () => {},
   },

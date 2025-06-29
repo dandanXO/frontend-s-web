@@ -7,10 +7,24 @@
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
-          <q-badge v-if="activeMethod.privilegeId" color="green" floating rounded>+{{ item.hotLabel }}</q-badge>
-          <q-badge v-if="isFtdPrivilegePayType" color="green" floating rounded>
+          <!--          <q-badge v-if="selectedPrivilege === 'br222-redeposit-bonus'" color="green" floating rounded>-->
+          <!--            +{{ getFtdCommaAmount(item.amount) }}-->
+          <!--          </q-badge>-->
+
+          <!--          {{selectedPrivilege}}-->
+          <q-badge
+            v-if="item.amount >= 20 && selectedPrivilege.code === 'br2-redeposit-bonus'"
+            color="green"
+            floating
+            rounded
+          >
+            +{{ get2ndDepoCommaAmount(item.amount) }}
+          </q-badge>
+
+          <q-badge v-if="selectedPrivilege.code === 'br2-ftd-bonus'" color="green" floating rounded>
             +{{ getFtdCommaAmount(item.amount) }}
           </q-badge>
+
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -68,16 +82,30 @@
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
-            <!--            {{ $t("form.depositAmount") }}-->
-            <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
-            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
-              {{ $t("deposit.depositTutorial") }}
-            </div>
+            <!--            <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">-->
+            <!--              {{ $t("deposit.depositTutorial") }}-->
+            <!--            </div>-->
           </div>
 
           <div v-if="isBank2" class="font-small" style="width: calc(100% - 18px); margin: 10px auto 8px">
             {{ $t("deposit.please_pay_exact_amt") }}
           </div>
+          <div
+            v-if="form.localAmount >= 20 && selectedPrivilege.code === 'br2-redeposit-bonus' && form.localAmount"
+            class="font-small text-tealgreen"
+            style="width: calc(100% - 18px); margin: 10px auto 8px"
+          >
+            Você receberá um bônus extra Rs{{ get2ndDepoCommaAmount(form.localAmount) }}
+          </div>
+
+          <div
+            v-if="selectedPrivilege.code === 'br2-ftd-bonus' && form.localAmount"
+            class="font-small text-tealgreen"
+            style="width: calc(100% - 18px); margin: 10px auto 8px"
+          >
+            Você receberá um bônus extra Rs{{ getFtdCommaAmount(form.localAmount) }}
+          </div>
+
           <q-input
             class="deposit-input q-mt-sm"
             ref="depositAmtRef"
@@ -207,7 +235,6 @@
       >
         {{ $t("btn.submit") }}
       </q-btn>
-      <!--      <div class="tutorial-link q-mt-sm" @click="openDepositPage">{{ $t("deposit.depositTutorial") }}</div>-->
     </div>
 
     <div class="step-desc-div">
@@ -243,7 +270,18 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, computed, nextTick, watch } from "vue";
+import {
+  ref,
+  reactive,
+  onMounted,
+  shallowRef,
+  defineEmits,
+  onActivated,
+  computed,
+  nextTick,
+  watch,
+  onDeactivated
+} from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
@@ -256,6 +294,7 @@ import KYCUserForm from "../../components/KYCUserForm.vue";
 import { cached } from "boot/cache";
 import { storeToRefs } from "pinia";
 import { t } from "../../boot/lang";
+import { useNotify } from "src/hooks/notify";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -271,7 +310,8 @@ const checkNewUser = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "Please fill in your personal details",
+      // message: "Please fill in your personal details",
+      message: t("notify.fillInPersonalDetails"),
       icon: "report_problem"
     });
     // router.push(`/account/profile`);
@@ -296,7 +336,7 @@ const privilegeList = ref([]);
 const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
 const selectedPayType = shallowRef("");
-const freePrivilege = ref(null);
+const freePrivilege = ref("");
 const hasPrivilege = ref(false);
 const isUSDT = ref(false);
 const isDisplay = ref(false);
@@ -305,6 +345,7 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const isInitialized = ref(false);
 
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
@@ -353,6 +394,7 @@ const form = reactive({
 });
 
 const $q = useQuasar();
+const notify = useNotify();
 const calculatedMinDeposit = ref("");
 const calculatedMaxDeposit = ref("");
 
@@ -375,10 +417,14 @@ const handleDepositItemClick = (index) => {
 };
 
 const getFtdCommaAmount = (amount) => {
-  if (amount < 88) {
-    return amount;
+  return amount;
+};
+
+const get2ndDepoCommaAmount = (amount) => {
+  if (amount < 2880) {
+    return parseFloat(amount * 0.2).toFixed(2);
   } else {
-    return 88;
+    return 288;
   }
 };
 
@@ -540,11 +586,6 @@ function checkMinDepositAmt(val) {
   calculatedMaxDeposit.value = val.depositMax;
 }
 
-function checkPrivilege(v) {
-  selectPayType(v);
-  checkMinDepositAmt(v);
-}
-
 function selectedBank(value) {
   form.bankId = value.value.id;
 }
@@ -567,6 +608,20 @@ async function confirmDeposit() {
   if (depositAmtRef.value.hasError) {
     btnLoading.value = false;
   } else {
+    if (unselectedPrivileges.value.length && !selectedPrivilege.value) {
+      const { type } = await notify({
+        message: t("deposit.hasUnusedPrivilege"),
+        type: "red-packet",
+        confirmBtnText: t("btn.continue"),
+        cancelBtnText: t("btn.back")
+      });
+
+      if (type !== "confirm") {
+        btnLoading.value = false;
+        return;
+      }
+    }
+
     await cashier
       .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
       .then((d) => {
@@ -577,13 +632,14 @@ async function confirmDeposit() {
           $q.notify({
             color: "negative",
             position: "top",
-            message: d.message,
+            message: t("error." + d.code),
             icon: "report_problem"
           });
 
           btnLoading.value = false;
         } else {
-          if (freePrivilege.value) {
+          // debugger;
+          if (freePrivilege.value.length > 0) {
             if (selectedPrivilege.value) {
               form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
             } else {
@@ -659,17 +715,6 @@ async function pDepo(deposit) {
     .then((res) => {
       if (res.code === 0) {
         const response = res.data.result;
-
-        // let isFirstDepo = localStorage.getItem("IS_FIRST_DEPOSIT");
-        // if (!isFirstDepo) {
-        //   console.log("First Depo");
-        //   //ADJUST TRACKEVENT.
-        //   var adjustEvent = new AdjustEvent("medfxb");
-        //   adjustEvent.setRevenue(deposit.localAmount, "INR");
-        //   Adjust.trackEvent(adjustEvent);
-        //
-        //   localStorage.setItem("IS_FIRST_DEPOSIT", "1");
-        // }
 
         if (res.data.result.payResultType === "OFFLINE") {
         }
@@ -791,16 +836,9 @@ const refreshNode = () => {
   nodeKey.value += 1;
 };
 
+//TODO :: NOT USING Now Yet
 const openDepositPage = () => {
-  // alert(selectedPayType.value);
-  if (selectedPayType.value === "EASYPAISA") {
-    window.open("https://drive.google.com/file/d/13QWAalASV5S5KvF77XErugrnfiw_-Ca1/view?usp=drive_link", "_blank");
-  } else if (selectedPayType.value === "JAZZCASH") {
-    // isDepositTutorial.value= true;
-    window.open("https://drive.google.com/file/d/13QWAalASV5S5KvF77XErugrnfiw_-Ca1/view?usp=drive_link", "_blank");
-  } else {
-    window.open("https://drive.google.com/file/d/13QWAalASV5S5KvF77XErugrnfiw_-Ca1/view?usp=drive_link", "_blank");
-  }
+  window.open("https://tutorial.gc7dy.cc", "_blank");
 };
 
 // KYC Dialog
@@ -898,6 +936,41 @@ const convertToTwoDecimalAmount = (amount) => {
   return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
+function checkPrivilege(v) {
+  selectPayType(v);
+  if (v.paymentId !== null && v.paymentId !== undefined) {
+    loadPrivilege(v);
+    checkMinDepositAmt(v);
+    // unselectedPrivileges.value = [];
+  }
+}
+
+async function loadPrivilege(val) {
+  privilegeList.value = [];
+  hasPrivilege.value = false;
+
+  await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
+    if (res.code === 0) {
+      privilegeList.value = res.data.privileges;
+      hasPrivilege.value = true;
+      unselectedPrivileges.value = [];
+      freePrivilege.value = [];
+      privilegeList.value.map((p) => {
+        if (p.payTypes.indexOf(val.payType) >= 0) {
+          if (p.triggerType === "FREE") {
+            freePrivilege.value.push(p);
+          } else {
+            unselectedPrivileges.value.push(p);
+          }
+        }
+      });
+    } else {
+      hasPrivilege.value = false;
+      privilegeList.value = [];
+    }
+  });
+}
+
 watch(
   isFromFtdPromo,
   (val) => {
@@ -909,17 +982,24 @@ watch(
 );
 
 onActivated(() => {
+  if (!isInitialized.value) return;
   initPay();
-  // checkNewUser();
+  loadAppTabs();
   loadInfo();
-  resetSelectedMethod();
+  refreshNode();
+  // resetSelectedMethod();
 });
 
 onMounted(() => {
+  // alert("Tis")
   loadAppTabs();
   initPay();
-  // checkNewUser();
   loadInfo();
+  refreshNode();
+});
+
+onDeactivated(() => {
+  isInitialized.value = true;
 });
 </script>
 
@@ -1223,6 +1303,10 @@ onMounted(() => {
 
 .font-small {
   font-size: 12px;
+}
+
+.text-tealgreen {
+  color: #21ef89;
 }
 
 .flex-div {

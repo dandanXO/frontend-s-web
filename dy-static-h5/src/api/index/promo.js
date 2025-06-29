@@ -591,3 +591,56 @@ export function getNewUserSportBonus2025Bonus(promoCode) {
 export function claimNewUserSportBonus2025Bonus(promoCode) {
   return eventapi.post(`/session/game-type-bonus/claim?promoCode=${promoCode}`);
 }
+
+export function getFissureUniverseS5Bonus(promoCode) {
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimFissureUniverseS5Bonus(promoCode) {
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getEsportWorldCup2025Bonus(promoCode) {
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimEsportWorldCup2025Bonus(promoCode) {
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function claimFifaCwcRedPacketBonus(promoCode) {
+  return eventapi.get(`/redPacketVip/claim?promoCode=${promoCode}`);
+}
+
+export function getFissureJulyFinal2025Bonus(promoCode) {
+  return eventapi.get(`/session/competition/yesterday?promoCode=${promoCode}`);
+}
+export function claimFissureJulyFinal2025Bonus(promoCode) {
+  return eventapi.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function getFifaQuiz2025PromoInit() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/quiz-promo/init?promoCode=dy2-fifa-quiz-2025&v=${randNum}`);
+}
+
+export function getFifaQuiz2025PromoRecord() {
+  const randNum = Math.floor(Math.random() * 1000) + 1;
+  return eventapi.get(`/session/quiz-promo/records?promoCode=dy2-fifa-quiz-2025&v=${randNum}`);
+}
+
+export function submitFifaQuiz2025(promoCode, quizId, answerOne) {
+  return eventapi.post(`/session/quiz-promo/submit?promoCode=${promoCode}&quizId=${quizId}&answerOne=${answerOne}`);
+}
+
+export function submitOccasionFifaQuiz2025(promoCode, quizId, selectedOccasion) {
+  return eventapi.post(
+    `/session/quiz-promo/submitOccasion?promoCode=${promoCode}&quizId=${quizId}&selectedOccasion=${selectedOccasion}`
+  );
+}
+
+export function claimFifaQuiz2025(promoCode, quizId) {
+  return eventapi.post(`/session/quiz-promo/claim?promoCode=${promoCode}&quizId=${quizId}`);
+}
+
+export function claimOccasionFifaQuiz2025(promoCode, quizId) {
+  return eventapi.post(`/session/quiz-promo/claimOccasion?promoCode=${promoCode}&quizId=${quizId}`);
+}

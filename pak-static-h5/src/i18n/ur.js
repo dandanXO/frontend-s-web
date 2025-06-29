@@ -171,6 +171,7 @@ export default {
     code_rules_01: "تصدیقی کوڈ درکار ہے",
     captchaCodeCheck: "کیپچا کوڈ چیک",
     captchaCode: "کیپچا کوڈ",
+    identity: "ID نمبر",
     captchaCode_placeholder: "کیپچا کوڈ درج کریں",
     captchaCode_rules_01: "براہ کرم کیپچا کوڈ درج کریں",
     captchaCode_rules_02: "کیپچا کوڈ کی لمبائی 4 حروف ہے",
@@ -758,7 +759,7 @@ export default {
   bankCard: {
     bankAccountNum: "بینک اکاؤنٹ نمبر",
     pleaseEnterCardAccount: "براہ کرم بینک اکاؤنٹ نمبر درج کریں",
-    bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 13 سے 16 ہندسوں کے درمیان ہونا چاہیے۔",
+    bankCardMust16NumberandAbove: "بینک اکاؤنٹ نمبر 13 سے 20 ہندسوں کے درمیان ہونا چاہیے۔",
     bankCardDisallowDecimal: "بینک اکاؤنٹ نمبر میں اعشاری نمبر نہیں ہو سکتے",
     nameofCardAcc: "کارڈ اکاؤنٹ کا نام",
     insertCardAccName: "براہ کرم کارڈ اکاؤنٹ کا نام درج کریں",
@@ -858,7 +859,8 @@ export default {
     digitalCurrencyWithdrawal: "ڈیجیٹل کرنسی سے نکاسی"
   },
   hotPromo: {
-    unusedCoupons: "آپ کے پاس پچھلی بار کے کچھ غیر استعمال شدہ کوپن ابھی بھی موجود ہیں، کیا آپ ان کا استعمال جاری رکھنا چاہتے ہیں؟",
+    unusedCoupons:
+      "آپ کے پاس پچھلی بار کے کچھ غیر استعمال شدہ کوپن ابھی بھی موجود ہیں، کیا آپ ان کا استعمال جاری رکھنا چاہتے ہیں؟",
     name: "نام",
     date: "تاریخ",
     amount: "رقم",

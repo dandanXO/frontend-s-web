@@ -1,50 +1,44 @@
 <template>
   <div>
-    <!-- <q-btn class="receive-earn-btn" no-caps>
-      <img src="../../../assets/images/promotion/receive-earn/receive-earn-icon.png" />
-      &nbsp;&nbsp;receive
-    </q-btn> -->
-
     <div class="receive-bar-container">
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
-          Duration
+          {{ $t("hotPromo.duration") }}
         </div>
-        <div class="bar-desc">Long-term (ongoing)</div>
+        <div class="bar-desc">{{ $t("hotPromo.longTerm") }}</div>
       </div>
 
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
-          Eligibility
+          {{ $t("hotPromo.eligibility") }}
         </div>
-        <div class="bar-desc">All members who have made at least one successful deposit</div>
+        <div class="bar-desc">{{ $t("hotPromo.vipPlanBettingUpgrade.eligibility") }}</div>
       </div>
 
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-description.svg" />
-          Description
+          {{ $t("hotPromo.desc") }}
         </div>
         <div class="bar-desc">
-          Upgrade to the corresponding VIP level based on the accumulated betting amount in the member's account.
+          {{ $t("hotPromo.vipPlanBettingUpgrade.description") }}
         </div>
       </div>
     </div>
 
-    <div class="promo-subtitle">Terms and Conditions</div>
+    <div class="promo-subtitle">{{ $t("hotPromo.vipPlanBettingUpgrade.termsAndConditions") }}</div>
 
     <div class="tnc-content">
       <ol>
         <li>
-          Starting from the member’s first valid bet after completing their first successful deposit, accumulated valid
-          betting amounts will be used to determine VIP level upgrades according to the thresholds below:
+          {{ $t("hotPromo.vipPlanBettingUpgrade.tnc01") }}
           <table class="promo-table">
             <thead>
               <tr>
-                <th>BET</th>
-                <th>VIP Level</th>
+                <th>{{ $t("hotPromo.vipPlanBettingUpgrade.bet") }}</th>
+                <th>{{ $t("hotPromo.vipPlanBettingUpgrade.vipLevel") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -142,31 +136,18 @@
           </table>
         </li>
         <li>
-          Only bets that result in a win or loss on the website are counted as valid betting amounts; cancelled bets or
-          those with refunded stakes will not be included.
+          {{ $t("hotPromo.vipPlanBettingUpgrade.tnc02") }}
         </li>
         <li>
-          VIP members can enjoy other exclusive benefits related to their VIP level on the website, such as higher
-          weekly cashback percentages for higher VIP tiers.
+          {{ $t("hotPromo.vipPlanBettingUpgrade.tnc03") }}
         </li>
-        <li>To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion.</li>
+        <li>{{ $t("hotPromo.vipPlanBettingUpgrade.tnc04") }}</li>
       </ol>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.receive-earn-btn {
-  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
-  width: 100%;
-  color: #2d2d2d;
-  font-weight: bold;
-
-  img {
-    width: 34px !important;
-  }
-}
-
 .receive-bar-container {
   margin-top: 24px;
   display: flex;

@@ -1005,7 +1005,7 @@ function showDialog(type) {
     gameQuizForm.value.resetFields();
   }
   if (type === 'CREATE') {
-    form.id = null;
+    clearForm()
     form.siteId = request.siteId;
     choiceOne.value = [];
     addChoice();
@@ -1020,6 +1020,18 @@ function showDialog(type) {
   }
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
+}
+
+function clearForm() {
+  form.id = null
+  form.quizTitle = null
+  form.homeTeam = null
+  form.homeTeamIcon = null
+  form.awayTeam = null
+  form.awayTeamIcon = null
+  form.matchTime = null
+  form.startTime = null
+  form.endTime = null
 }
 
 function showEdit(quiz) {

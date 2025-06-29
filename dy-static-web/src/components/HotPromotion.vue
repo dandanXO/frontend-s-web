@@ -87,6 +87,9 @@
     <YaLLa2025 v-if="list.redirectUrl === 'dy2-yalla-compass-qatar-2025'" :promo-code="list.promoCode" />
     <IemMelbourne2025 v-if="list.redirectUrl === 'dy2-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-if="list.redirectUrl === 'dy2-pgl-wallachia-s4'" :promo-code="list.promoCode" />
+    <tpWorldChamp2025Sa v-if="list.redirectUrl === 'dy2-tp-world-champ-2025-sa'" :promo-code="list.promoCode" />
+    <iemCologne2025 v-if="list.redirectUrl === 'dy2-iem-cologne-2025'" :promo-code="list.promoCode" />
+    <lh1Ti14 v-if="list.redirectUrl === 'dy2-ti14'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'dy2-blast-slam-3-2025'" :promo-code="list.promoCode" />
     <sport-refer-bet-bonus v-else-if="list.redirectUrl === 'dy2-sport-refer-bet-bonus'" :promo-code="list.promoCode" />
     <BlastRival2025 v-if="list.redirectUrl === 'dy2-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
@@ -98,6 +101,11 @@
       v-else-if="list.redirectUrl === 'dy2-new-user-sport-bonus-2025'"
       :promo-code="list.promoCode"
     />
+    <FissureUniverseS5 v-else-if="list.redirectUrl === 'dy2-fissure-universe-s5'" :promo-code="list.promoCode" />
+    <EsportWorldCup2025 v-else-if="list.redirectUrl === 'dy2-esport-world-cup-2025'" :promo-code="list.promoCode" />
+    <FifaCwcRedPacket v-else-if="list.redirectUrl === 'dy2-fifa-cwc-red-packet'" :promo-code="list.promoCode" />
+    <FissureJulyFinal2025 v-else-if="list.redirectUrl === 'dy2-fissure-july-final-2025'" :promo-code="list.promoCode" />
+    <WorldCup2025 v-else-if="list.redirectUrl === 'dy2-fifa-quiz-2025'" :promo-code="list.promoCode" />
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi'">
       <img
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
@@ -177,6 +185,9 @@ import FissureUniverseS4 from "./hotpromo/fissure-universe-s4/FissureUniverseS4.
 import YaLLa2025 from "./hotpromo/YaLLa2025/YaLLa2025.vue";
 import IemMelbourne2025 from "./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue";
 import PglWallachiaS4 from "./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue";
+import tpWorldChamp2025Sa from "./hotpromo/tp-world-champ-2025-sa/tp-world-champ-2025-sa.vue";
+import iemCologne2025 from "./hotpromo/iemCologne2025/iemCologne2025.vue";
+import lh1Ti14 from "./hotpromo/lh1-ti14/lh1-ti14.vue";
 import BlastSlam32025 from "./hotpromo/blast-slam-3-2025/BlastSlam32025.vue";
 import Cct2025 from "./hotpromo/Cct-2025/Cct-2025.vue";
 import BlastRival2025 from "./hotpromo/BlastRival2025/BlastRival2025.vue";
@@ -186,6 +197,11 @@ import CS2Sign from "@/components/hotpromo/CS2Sign/CS2Sign.vue";
 import BlastPremierPromo from "@/components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
 import DreamLeagueS26 from "@/components/hotpromo/dream-league-s26/DreamLeagueS26.vue";
 import NewUserSportBonus2025 from "./hotpromo/new-user-sport-bonus-2025/NewUserSportBonus2025.vue";
+import FissureUniverseS5 from "./hotpromo/fissure-universe-s5/FissureUniverseS5.vue";
+import EsportWorldCup2025 from "./hotpromo/esport-world-cup-2025/EsportWorldCup2025.vue";
+import FifaCwcRedPacket from "./hotpromo/fifa-cwc-red-packet/FifaCwcRedPacket.vue";
+import FissureJulyFinal2025 from "./hotpromo/fissure-july-final-2025/FissureJulyFinal2025.vue";
+import WorldCup2025 from "./hotpromo/worldcup-2025/Worldcup2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -241,11 +257,19 @@ export default defineComponent({
     FissureUniverseS4,
     IemMelbourne2025,
     PglWallachiaS4,
+    tpWorldChamp2025Sa,
+    iemCologne2025,
+    lh1Ti14,
     BlastSlam32025,
     BlastRival2025,
     IemDallas2025,
     DreamLeagueS26,
-    NewUserSportBonus2025
+    NewUserSportBonus2025,
+    FissureUniverseS5,
+    EsportWorldCup2025,
+    FifaCwcRedPacket,
+    FissureJulyFinal2025,
+    WorldCup2025
   },
   props: {
     list: {

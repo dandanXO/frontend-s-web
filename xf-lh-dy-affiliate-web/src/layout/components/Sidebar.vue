@@ -227,7 +227,7 @@ const checkMenu = nav => {
   })
 }
 const getNavigationData = () => {
-  if (parseInt(store.state.user.siteId) === 5) {
+  if (parseInt(store.state.user.siteId) === 5 || parseInt(store.state.user.siteId) === 28) {
     navigationData.value = [
       {
         title: t('menu.Daily Report'),
@@ -247,6 +247,14 @@ const getNavigationData = () => {
             path: '/daily-summary',
             title: t('menu.Daily Summary'),
             label: 'Daily Summary',
+            active: false,
+            isMainNav: true,
+            icon: 'report',
+          },
+          {
+            path: '/retention-report',
+            title: t('menu.Retention Report'),
+            label: 'Retention Report',
             active: false,
             isMainNav: true,
             icon: 'report',

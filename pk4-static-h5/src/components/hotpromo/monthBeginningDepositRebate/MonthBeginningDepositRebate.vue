@@ -24,8 +24,9 @@
       </div>
 
       <div class="vip-labels">
-        <span class="label">VIP1</span>
-        <span class="label">VIP2</span>
+        <!-- <span class="label">VIP1</span>
+        <span class="label">VIP2</span> -->
+          {{ totalDeposit + '/' + minDeposit }}
       </div>
     </div>
     <div class="receive-btn" @click="claimApi">{{ $t("hotPromo.monthBeginningDepositRebate.receive") }}</div>
@@ -96,6 +97,7 @@ import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import i18n from "src/i18n/index";
 
 const props= defineProps(["promocode"])
 
@@ -103,7 +105,9 @@ const props= defineProps(["promocode"])
 const $q = useQuasar();
 const { t } = useI18n();
 const store= userStore()
-const totalDeposit= ref(0);
+const totalDeposit = ref(0);
+const minDeposit = ref(0);
+const progress= ref(0);
 const rebate= ref(0)
 
 const percent = ref(0);
@@ -132,27 +136,32 @@ const claimApi = () => {
         position: "top",
         timeout: 2000
       });
+    } else {
+      $q.notify({
+        message: i18n.global.t("error." + res.code) || "Error",
+        color: "negative",
+        position: "top",
+        timeout: 2000
+      });
     }
   });
-}
+};
 
 const initApi = () => {
   eventapi.get(`/session/month-beginning-deposit-rebate/calculate-rebate?promoCode=${props.promocode}`).then((res) => {
     if (res.code === 0) {
-      console.log(res);
-      const {  rebate: rebate1 , totalDeposit: totalDeposit1 } = res;
+      totalDeposit.value = res.data.totalDeposit;
+      minDeposit.value = res.data.minDeposit;
 
-      totalDeposit.value= totalDeposit1;
-      rebate.value= rebate1;
-
-      console.log(store.vip)
-      if(store.vip==="VIP0"){
-        percent.value= 0;
-      }else{
-        percent.value= totalDeposit.value / vipDepositCount.value[store.vip]
+      if (store.vip === "VIP0") {
+        percent.value = 0;
+      } else {
+        if (res.data.progress > 1) {
+          percent.value = 100;
+        } else {
+          percent.value = res.data.progress * 100;
+        }
       }
-
-
     }
   });
 }
@@ -164,7 +173,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .promo-banner-img {
-  width: 90% !important;
   place-self: center;
 }
 .receive-btn {
@@ -186,7 +194,9 @@ onMounted(() => {
   position: relative;
   display: flex;
   justify-content: center;
-  margin: 28px 0;
+  // margin: 28px 0;
+  
+    margin: 28px 20px;
 
   .big-rebate-title-container {
     position: absolute;
@@ -239,6 +249,8 @@ onMounted(() => {
   font-family: Poppins;
   font-weight: 700;
   font-size: 1.25rem;
+  
+    margin: 0 20px;
   img {
     width: 25% !important;
     margin-bottom: 10px !important;
@@ -252,7 +264,8 @@ onMounted(() => {
   }
 }
 .rule_list {
-  margin-top: 20px !important;
+  // margin-top: 20px !important;
+  margin: 20px 20px 0 !important;
 }
 
 .vip-progress {
@@ -260,7 +273,8 @@ onMounted(() => {
   flex-direction: column;
   gap: 8px;
   font-family: sans-serif;
-  margin-top: 36px;
+  // margin-top: 36px;
+  margin: 36px 25px 0 25px;
 
   .bar-wrapper {
     position: relative;
@@ -325,7 +339,8 @@ onMounted(() => {
 
   .vip-labels {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     padding: 0 3px;
 
     .label {

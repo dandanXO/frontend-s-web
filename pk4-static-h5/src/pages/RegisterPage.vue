@@ -1,6 +1,6 @@
 <template>
   <div class="auth-container" :class="isRestrictedDomain ? 'w-domain' : ''">
-    <img class="top-left-logo" src="../assets/images/auth/b9-logo.svg" />
+    <img class="top-left-logo" src="../assets/images/auth/pk4-logo.svg" />
     <div class="back-left" v-if="!isRestrictedDomain">
       <router-link :to="'/home'">
         <img src="../assets/images/index/close-btn.png" />
@@ -110,7 +110,7 @@
           {{ $t("btn.confirm") }}
         </q-btn>
 
-        <div v-if="!isSpinReferrer" class="google-login-wrapper">
+        <!-- <div v-if="!isSpinReferrer" class="google-login-wrapper">
           <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.svg" />
           <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />
           <template v-if="isAndroid()">
@@ -129,7 +129,7 @@
               {{ $t("btn.signinWithGoogle") }}
             </q-btn>
           </template>
-        </div>
+        </div> -->
       </div>
 
       <hr style="background: #F1F3F5;height: 2px;border: none;width: 100%;margin: 20px 0;" />

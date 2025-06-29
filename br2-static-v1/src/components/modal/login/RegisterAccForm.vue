@@ -9,20 +9,27 @@
 
       <q-input
         ref="phoneRef"
-        outlined
         v-model="phone"
-        :placeholder="$t('form.phone_placeholder')"
         class="input"
         :class="{ 'white-txt': !!phone }"
+        :placeholder="$t('form.phone_placeholder')"
+        outlined
+        type="tel"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+        lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-          (val) => (val && val.length >= 8 && val.length <= 12) || $t('form.phone_rules_02'),
+          (val) => (val && val.length >= 8 && val.length <= 11) || $t('form.phone_rules_02'),
           (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04')
         ]"
       >
         <template v-slot:prepend>
-          <img v-if="!phone" src="../../../assets/images/auth/acc-icon.png" width="22px" />
-          <img v-else src="../../../assets/images/auth/acc-icon-active.png" width="22px" />
+          <!-- <img v-if="!phone" src="../../../assets/images/auth/acc-icon.png" width="22px" /> -->
+          <!-- <img v-else src="../../../assets/images/auth/acc-icon-active.png" width="22px" /> -->
+          <img src="../../../assets/images/auth/phone-br.svg" width="17px" />
+          &nbsp;+55
         </template>
       </q-input>
 
@@ -34,7 +41,11 @@
         :type="!isShowPassword ? 'password' : 'text'"
         class="input"
         :class="{ 'white-txt': !!password }"
-        :rules="[(val) => (val && val.length > 0) || $t('form.password_rules_01')]"
+        lazy-rules
+        :rules="[
+          (val) => (val && val.length > 0) || $t('form.password_rules_01'),
+          (val) => val.length >= 6 || $t('form.newPassword_rules_02')
+        ]"
       >
         <template v-slot:prepend>
           <img v-if="!password" src="../../../assets/images/auth/lock-icon.png" width="22px" />
@@ -186,9 +197,10 @@ const register = () => {
             if (store.hasToken()) {
               router.push("/");
             }
-            uiStore.loginView = "";
+            // uiStore.loginView = "";
             isAgreeReg.value = false;
-            location.href = "/";
+            // location.href = "/";
+            uiStore.loginView = "regSuccess";
           } else {
             $q.notify({
               color: "negative",
@@ -245,7 +257,7 @@ const getAffiliateCode = () => {
 const getReferralCode = () => {
   const refCode = sessionStorage.getItem("REFERRAL_CODE");
   if (refCode) {
-    codeAffiliate.value = refCode;
+    referrer.value = refCode;
   }
 };
 

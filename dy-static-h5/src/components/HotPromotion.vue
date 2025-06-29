@@ -55,6 +55,9 @@
     <IemMelbourne2025 v-if="list.redirectUrl === 'dy2-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <BlastRival2025 v-else-if="list.redirectUrl === 'dy2-blast-rivals-2025-s1'" :promo-code="list.promoCode" />
     <PglWallachiaS4 v-else-if="list.redirectUrl === 'dy2-pgl-wallachia-s4'" :promo-code="list.promoCode" />
+    <tgWorldChamp2025 v-else-if="list.redirectUrl === 'dy2-tp-world-champ-2025-sa'" :promo-code="list.promoCode" />
+    <iemCologne2025 v-else-if="list.redirectUrl === 'dy2-iem-cologne-2025'" :promo-code="list.promoCode" />
+    <lh1Ti14 v-else-if="list.redirectUrl === 'dy2-ti14'" :promo-code="list.promoCode" />
     <newVip2025 v-if="list.redirectUrl === 'dy2-2025-new-vip'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'dy2-blast-slam-3-2025'" :promo-code="list.promoCode" />
     <PglastanaAc2025 v-else-if="list.redirectUrl === 'dy2-pgl-astana-2025'" :promo-code="list.promoCode" />
@@ -68,6 +71,11 @@
       v-else-if="list.redirectUrl === 'dy2-new-user-sport-bonus-2025'"
       :promo-code="list.promoCode"
     />
+    <FissureUniverseS5 v-else-if="list.redirectUrl === 'dy2-fissure-universe-s5'" :promo-code="list.promoCode" />
+    <EsportWorldCup2025 v-else-if="list.redirectUrl === 'dy2-esport-world-cup-2025'" :promo-code="list.promoCode" />
+    <FifaCwcRedPacket v-else-if="list.redirectUrl === 'dy2-fifa-cwc-red-packet'" :promo-code="list.promoCode" />
+    <FissureJulyFinal2025 v-else-if="list.redirectUrl === 'dy2-fissure-july-final-2025'" :promo-code="list.promoCode" />
+    <WorldCup2025 v-else-if="list.redirectUrl === 'dy2-fifa-quiz-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -93,7 +101,7 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
 import { useRouter } from "vue-router";
-import NewUserSportBonus2025 from "./hotpromo/new-user-sport-bonus-2025/NewUserSportBonus2025.vue";
+
 const BlastPremierPromo = defineAsyncComponent(() => import("./hotpromo/BlastPremierPromo/BlastPremierPromo.vue"));
 const YaLLa2025 = defineAsyncComponent(() => import("./hotpromo/YaLLa2025/YaLLa2025.vue"));
 const Monthly20HongBaoYu = defineAsyncComponent(() => import("./hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue"));
@@ -141,6 +149,13 @@ const Blast2025S3 = defineAsyncComponent(() => import("./hotpromo/Blast2025-s3/B
 const FissureUniverseS4 = defineAsyncComponent(() => import("./hotpromo/fissure-universe-s4/FissureUniverseS4.vue"));
 const IemMelbourne2025 = defineAsyncComponent(() => import("./hotpromo/iem-melbourne-2025/IemMelbourne2025.vue"));
 const PglWallachiaS4 = defineAsyncComponent(() => import("./hotpromo/pgl-wallachia-s4/PglWallachiaS4.vue"));
+const tgWorldChamp2025 = defineAsyncComponent(() =>
+  import("../components/hotpromo/tp-world-champ-2025-sa/tp-world-champ-2025-sa.vue")
+);
+const iemCologne2025 = defineAsyncComponent(() =>
+  import("../components/hotpromo/iem-cologne-2025/iem-cologne-2025.vue")
+);
+const lh1Ti14 = defineAsyncComponent(() => import("../components/hotpromo/lh1-ti14/lh1-ti14.vue"));
 const BlastSlam32025 = defineAsyncComponent(() => import("./hotpromo/blast-slam-3-2025/BlastSlam32025.vue"));
 const NewFootball = defineAsyncComponent(() => import("../components/hotpromo/NewFootball/NewFootball.vue"));
 const VctBangkok = defineAsyncComponent(() => import("./hotpromo/vct-bangkok/VctBangkok.vue"));
@@ -152,10 +167,22 @@ const newVip2025 = defineAsyncComponent(() => import("./hotpromo/2025-new-vip/20
 const IemDallas2025 = defineAsyncComponent(() => import("./hotpromo/iem-dallas-2025/IemDallas2025.vue"));
 const BlastRival2025 = defineAsyncComponent(() => import("./hotpromo/BlastRival2025/BlastRival2025.vue"));
 const Lh1Enc2025 = defineAsyncComponent(() => import("./hotpromo/Lh1-enc-2025/Lh1-enc-2025.vue"));
+const WorldCup2025 = defineAsyncComponent(() => import("./hotpromo/worldcup-2025/WorldCup2025.vue"));
 const sportReferBetBonus = defineAsyncComponent(() =>
   import("./hotpromo/sport-refer-bet-bonus/sport-refer-bet-bonus.vue")
 );
 const DuanWuRewards = defineAsyncComponent(() => import("./hotpromo/duan-wu-rewards/DuanWuRewards.vue"));
+const NewUserSportBonus2025 = defineAsyncComponent(() =>
+  import("./hotpromo/new-user-sport-bonus-2025/NewUserSportBonus2025.vue")
+);
+const FissureUniverseS5 = defineAsyncComponent(() => import("./hotpromo/fissure-universe-s5/FissureUniverseS5.vue"));
+const EsportWorldCup2025 = defineAsyncComponent(() =>
+  import("./hotpromo/esport-world-cup-2025/EsportWorldCup2025.vue")
+);
+const FifaCwcRedPacket = defineAsyncComponent(() => import("./hotpromo/fifa-cwc-red-packet/FifaCwcRedPacket.vue"));
+const FissureJulyFinal2025 = defineAsyncComponent(() =>
+  import("./hotpromo/fissure-july-final-2025/FissureJulyFinal2025.vue")
+);
 
 export default defineComponent({
   name: "HotPromo",
@@ -199,12 +226,20 @@ export default defineComponent({
     FissureUniverseS4,
     IemMelbourne2025,
     PglWallachiaS4,
+    tgWorldChamp2025,
+    iemCologne2025,
+    lh1Ti14,
     BlastSlam32025,
     BlastRival2025,
     NewFootball,
     IemDallas2025,
     DreamLeagueS26,
-    NewUserSportBonus2025
+    NewUserSportBonus2025,
+    FissureUniverseS5,
+    EsportWorldCup2025,
+    FifaCwcRedPacket,
+    FissureJulyFinal2025,
+    WorldCup2025
   },
   props: {
     list: {
