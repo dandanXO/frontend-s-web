@@ -69,25 +69,30 @@
           </div>
           <div class="title-txt">世俱杯</div>
 
-          <div class="title-status ongoing" v-if="currentListItem.status === 'ONGOING' && !showNotStart">
-            <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-ongoing.svg" alt="" />
-            &nbsp; 进行中
-          </div>
-
-          <div class="title-status notstart" v-if="currentListItem.status === 'ONGOING' && showNotStart">
+          <!--          <pre>{{ currentListItem }}</pre>-->
+          <div class="title-status notstart" v-if="currentListItem.startTime > currentTime">
             <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-notstart.svg" alt="" />
             &nbsp; 未开始
           </div>
-
-          <div class="title-status ended" v-if="currentListItem.status === 'ENDED'">
+          <div class="title-status ended" v-else-if="currentListItem.endTime <= currentTime">
             <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-ended.svg" alt="" />
             &nbsp; 已结束
+          </div>
+          <div
+            class="title-status ongoing"
+            v-else-if="currentListItem.endTime > currentTime && currentTime >= currentListItem.startTime"
+          >
+            <img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-match-ongoing.svg" alt="" />
+            &nbsp; 进行中
           </div>
         </div>
         <div class="vs-time">{{ getDisplayDateTime(currentListItem.matchTime) }}</div>
         <div class="vs-icon"><img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-vs.png" alt="" /></div>
         <div class="vs-win">独赢</div>
-        <div class="vs-notes">该场赛事竞猜截止时间 {{ getDisplayDateTime(currentListItem.endTime) }}</div>
+        <div class="vs-notes">
+          本场赛事竞猜时间 {{ getDisplayDateTime(currentListItem.startTime) }} -
+          {{ getDisplayDateTime(currentListItem.endTime) }}
+        </div>
       </div>
 
       <div class="match-info match-info--away">
@@ -225,6 +230,7 @@
           独赢竞猜结果分为：输、和、赢，竞猜结算（赢）猜中 即可获得8元奖金，若竞猜结果结算为“和”将会视为无效竞猜。
         </li>
         <li>竞猜正确的用户在次日优惠活动界面点击【立即领取】即可领取昨日竞猜成功的竞猜金，竞猜金仅需5倍流水出款。</li>
+        <li>每日竞猜比赛结果计算包含常规时间（含上下半场、伤停补时）、加时赛及点球大战（如进行）的最终比分。</li>
         <li>
           根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
         </li>
@@ -303,6 +309,9 @@ const { promoCode } = toRefs(props);
 const totalValidBet = ref();
 const totalDeposit = ref();
 const tableData = ref();
+
+const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
+
 const fetchTableData = async () => {
   try {
     const res = await getFifaQuiz2025PromoRecord(promoCode.value);
@@ -466,10 +475,10 @@ const swiperConfig = computed(() => {
   return {
     slidesPerView: SLIDE_PER_VIEW,
     // slidesPerGroup: SLIDE_PER_VIEW,
-    slidesPerGroup: 4,
+    slidesPerGroup: 1,
     spaceBetween: 20,
     modules: [Navigation],
-    navigation: list.value.length > SLIDE_PER_VIEW,
+    navigation: list.value.length > SLIDE_PER_VIEW
     // allowTouchMove: false
   };
 });
@@ -479,25 +488,30 @@ const handleLivestreamClick = (index) => {
 
   const SLIDE_PER_VIEW = 4;
   const total = list.value.length;
+  let targetIndex;
 
-//   let targetIndex;
+  if (index <= 1) {
+    targetIndex = 0;
+  } else if (index >= total - 2) {
+    targetIndex = total - SLIDE_PER_VIEW;
+  } else {
+    targetIndex = index - 1;
+  }
 
-//   if (index <= 1) {
-//     targetIndex = 0;
-//   } else if (index >= total - 2) {
-//     targetIndex = total - SLIDE_PER_VIEW;
-//   } else {
-//     targetIndex = index - 1;
-//   }
+  targetIndex = Math.min(Math.max(0, targetIndex), total - SLIDE_PER_VIEW);
 
-//   targetIndex = Math.min(Math.max(0, targetIndex), total - SLIDE_PER_VIEW);
-
-//   if (swiperInstance.value) {
-//   swiperInstance.value.slideTo(0, 0); 
-//   setTimeout(() => {
-//     swiperInstance.value.slideTo(targetIndex, 300); 
-//   }, 10);
-// }
+  if (swiperInstance.value) {
+    swiperInstance.value.slideTo(0, 0);
+    setTimeout(() => {
+      if (index === 1) {
+        swiperInstance.value.slideTo(0, 0);
+      } else if (index === total - 1) {
+        swiperInstance.value.slideTo(total - 1, 0);
+      } else {
+        swiperInstance.value.slideTo(targetIndex, 300);
+      }
+    }, 10);
+  }
   selectedTeam.value = "";
   selectedSpecial.value = "";
 };

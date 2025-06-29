@@ -32,7 +32,7 @@
         </div>
 
         <div class="loader-container">
-          <img class="loader-logo" src="../../assets/images/auth/auth-logo-text-only.png" alt="B9.GAME" />
+          <img class="loader-logo" src="../../assets/images/auth/auth-logo-text-only.png" alt="PK1.GAME" />
           <div>{{ $t("btn.loading_plsWait") }}</div>
         </div>
 
@@ -589,9 +589,9 @@ defineExpose({
     align-items: center;
 
     .game-logo-img {
-      height: 50px;
+      height: 25px;
       position: absolute;
-      top: 10px;
+      top: 18px;
       left: 45px;
 
       .game-logo {

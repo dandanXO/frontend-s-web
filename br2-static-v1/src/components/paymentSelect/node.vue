@@ -112,6 +112,7 @@ export default defineComponent({
       if (item) {
         item.hasActive = true;
         this.selectItem = item;
+        this.$emit("clicked", this.selectItem);
         if (item.group) {
           this.$emit("clicked", item.children[0]);
         } else {

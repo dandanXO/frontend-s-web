@@ -41,7 +41,10 @@
                 <!-- <div class="progress-bar-endpoint-label">
                   {{ `V${+vip.vipLevel - 1}` }}
                 </div> -->
-                <div class="progress-indicator" :style="{ left: `${currentVipLevelStats.levelUpPercentage}%` }">
+                <div
+                  class="progress-indicator"
+                  :style="{ left: `${currentVipLevelStats.levelUpPercentage}%`, transition: 'left 0.5s ease-in-out' }"
+                >
                   {{ `${currentVipLevelStats.levelUpPercentage}%` }}
                 </div>
                 <div class="progress-bar-outer-bar">
@@ -69,77 +72,74 @@
       </template>
     </Carousel>
     <div v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
-      <div class="vip-rewards">
-        <div class="vip-reward-item">
-          <div class="reward-desc">
-            <div class="icon">
-              <img src="../../assets/images/vip/level-upgrade-reward-icon.png" />
-            </div>
-            <div class="title">
-              <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
-              <br />
-              <!-- {{ $t("vip.reward") }} -->
-            </div>
-            <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
-            </div>
-          </div>
-          <div class="unlock-status">
-            <img
-              v-if="currentVipLevelStats.rewardUnlocked"
-              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
-            />
-            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
-          </div>
-        </div>
-        <div class="vip-reward-item">
-          <div class="reward-desc">
-            <div class="icon">
-              <img src="../../assets/images/vip/monthly-reward-icon.png" />
-            </div>
-            <div class="title">
-              <span class="bold">{{ $t("vip.monthly") }}</span>
-              <br />
-              <!-- {{ $t("vip.reward") }} -->
-            </div>
-            <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
-            </div>
-          </div>
-          <div class="unlock-status">
-            <img
-              v-if="currentVipLevelStats.rewardUnlocked"
-              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
-            />
-            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
-          </div>
-        </div>
-        <div class="vip-reward-item">
-          <div class="reward-desc">
-            <div class="icon">
-              <img src="../../assets/images/vip/daily-withdrawal-limit-icon.png" />
-            </div>
-            <div class="title">
-              <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>
-              <br />
-              <!-- {{ $t("vip.limit") }} -->
-            </div>
-            <div class="reward-amt-wrapper">
-              <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
-            </div>
-          </div>
-          <div class="unlock-status">
-            <img
-              v-if="currentVipLevelStats.rewardUnlocked"
-              src="../../assets/images/vip/vip-reward-unlocked-icon.png"
-            />
-            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />
-          </div>
-        </div>
-      </div>
+      <!--      <div class="vip-rewards">-->
+      <!--        <div class="vip-reward-item">-->
+      <!--          <div class="reward-desc">-->
+      <!--            <div class="icon">-->
+      <!--              <img src="../../assets/images/vip/level-upgrade-reward-icon.png" />-->
+      <!--            </div>-->
+      <!--            <div class="title">-->
+      <!--              <span class="bold">{{ $t("vip.levelUpgrade") }}</span>-->
+      <!--              <br />-->
+      <!--            </div>-->
+      <!--            <div class="reward-amt-wrapper">-->
+      <!--              <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--          <div class="unlock-status">-->
+      <!--            <img-->
+      <!--              v-if="currentVipLevelStats.rewardUnlocked"-->
+      <!--              src="../../assets/images/vip/vip-reward-unlocked-icon.png"-->
+      <!--            />-->
+      <!--            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--        <div class="vip-reward-item">-->
+      <!--          <div class="reward-desc">-->
+      <!--            <div class="icon">-->
+      <!--              <img src="../../assets/images/vip/monthly-reward-icon.png" />-->
+      <!--            </div>-->
+      <!--            <div class="title">-->
+      <!--              <span class="bold">{{ $t("vip.monthly") }}</span>-->
+      <!--              <br />-->
+      <!--            </div>-->
+      <!--            <div class="reward-amt-wrapper">-->
+      <!--              <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--          <div class="unlock-status">-->
+      <!--            <img-->
+      <!--              v-if="currentVipLevelStats.rewardUnlocked"-->
+      <!--              src="../../assets/images/vip/vip-reward-unlocked-icon.png"-->
+      <!--            />-->
+      <!--            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--        <div class="vip-reward-item">-->
+      <!--          <div class="reward-desc">-->
+      <!--            <div class="icon">-->
+      <!--              <img src="../../assets/images/vip/daily-withdrawal-limit-icon.png" />-->
+      <!--            </div>-->
+      <!--            <div class="title">-->
+      <!--              <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>-->
+      <!--              <br />-->
+      <!--            </div>-->
+      <!--            <div class="reward-amt-wrapper">-->
+      <!--              <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--          <div class="unlock-status">-->
+      <!--            <img-->
+      <!--              v-if="currentVipLevelStats.rewardUnlocked"-->
+      <!--              src="../../assets/images/vip/vip-reward-unlocked-icon.png"-->
+      <!--            />-->
+      <!--            <img v-else src="../../assets/images/vip/vip-reward-locked-icon.png" />-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
       <hr class="separator-line" style="margin-top: 20px" />
       <div class="header-wrapper">
-        <div class="header">{{ $t("vip.monthlyCumulativeDeposit") }}</div>
+        <div class="header">{{ $t("vip.monthlyCumulativeBet") }}</div>
       </div>
       <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
         <template v-slot:header="props">
@@ -150,7 +150,7 @@
               <!-- unable to adjust table width... -->
               <template v-else>
                 <div style="white-space: normal; text-align: center">
-                  {{ $t("vip.monthlyCumulativeDeposit") }}
+                  {{ $t("vip.monthlyCumulativeBet") }}
                 </div>
               </template>
             </q-th>
@@ -158,7 +158,7 @@
           <q-tr class="top-header">
             <q-td>{{ $t("vip.level") }}</q-td>
             <q-td>{{ $t("vip.amount") }}</q-td>
-            <q-td style="width: 60px">{{ $t("vip.turnover") }}</q-td>
+            <!-- <q-td style="width: 60px">{{ $t("vip.turnover") }}</q-td> -->
           </q-tr>
         </template>
         <template v-slot:body="props">
@@ -175,7 +175,7 @@
               </template>
               <template v-else-if="colIndex === 1">
                 <div style="text-align: center; font-size: 11px">
-                  {{ $t("vip.deposit") }} {{ store.currency.value }}
+                  {{ $t("vip.bet") }} {{ store.currency.value }}
                   <span class="amt-text">{{ col.value }}</span>
                 </div>
               </template>
@@ -192,7 +192,7 @@
         </template>
       </q-table>
       <div class="hint-msg">{{ $t("vip.aftertheRecharge") }}</div>
-      <q-table
+      <!-- <q-table
         flat
         :hide-pagination="true"
         :columns="columns3"
@@ -205,7 +205,6 @@
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
               <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-              <!-- unable to adjust table width... -->
               <template v-else>
                 <div style="white-space: normal; text-align: center">{{ $t("vip.vipPromoBonus") }}</div>
               </template>
@@ -252,7 +251,6 @@
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
               <img v-if="colIndex === 0" class="vip-icon" src="../../assets/images/bonus/vip.png" alt="" />
               <div v-else-if="colIndex === 2" style="width: 60px">&nbsp;&nbsp;&nbsp;&nbsp;</div>
-              <!-- unable to adjust table width... -->
               <template v-else>
                 <div style="text-align: center; padding-right: 60px">{{ $t("vip.vipMonthlyCashBonus") }}</div>
               </template>
@@ -325,7 +323,7 @@
           </q-tr>
         </template>
       </q-table>
-      <div class="hint-msg">{{ $t("vip.dailyWithdrawalLimits") }}</div>
+      <div class="hint-msg">{{ $t("vip.dailyWithdrawalLimits") }}</div> -->
     </div>
   </div>
 </template>
@@ -340,7 +338,7 @@ import "vue3-carousel/dist/carousel.css";
 
 const vipLevel = ref("");
 const currentVipLevelStats = ref({
-  levelUpPercentage: null,
+  levelUpPercentage: 0,
   progressBarText: "",
   levelUpgrade: null,
   monthlyReward: null,
@@ -380,70 +378,70 @@ const columns = [
     align: "center",
     field: (row) => row.name
   },
-  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" },
-  { name: "flow", field: "flow", align: "center" }
+  { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" }
+  // { name: "flow", field: "flow", align: "center" }
 ];
 const rows = [
   {
     name: "VIP 1",
-    ugprade: "500",
-    flow: "x10"
+    ugprade: "0+"
+    // flow: "x10"
   },
   {
     name: "VIP 2",
-    ugprade: "1,000",
-    flow: "x10"
+    ugprade: "500"
+    // flow: "x10"
   },
   {
     name: "VIP 3",
-    ugprade: "2,000",
-    flow: "x10"
+    ugprade: "2,000"
+    // flow: "x10"
   },
   {
     name: "VIP 4",
-    ugprade: "5,000",
-    flow: "x10"
+    ugprade: "8,000"
+    // flow: "x10"
   },
   {
     name: "VIP 5",
-    ugprade: "10,000",
-    flow: "x10"
+    ugprade: "40,000"
+    // flow: "x10"
   },
   {
     name: "VIP 6",
-    ugprade: "20,000",
-    flow: "x10"
+    ugprade: "120,000"
+    // flow: "x10"
   },
   {
     name: "VIP 7",
-    ugprade: "50,000",
-    flow: "x10"
+    ugprade: "500,000"
+    // flow: "x10"
   },
   {
     name: "VIP 8",
-    ugprade: "100,000",
-    flow: "x10"
+    ugprade: "1,500,000"
+    // flow: "x10"
   },
   {
     name: "VIP 9",
-    ugprade: "200,000",
-    flow: "x10"
+    ugprade: "3,000,000"
+    // flow: "x10"
   },
   {
     name: "VIP 10",
-    ugprade: "500,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 11",
-    ugprade: "1,000,000",
-    flow: "x10"
-  },
-  {
-    name: "VIP 12",
-    ugprade: "2,000,000",
-    flow: "x10"
+    ugprade: "6,000,000"
+    // flow: "x10"
   }
+  // {
+  //   name: "VIP 11",
+  //   ugprade: "10,000,000",
+  //   flow: "x10"
+  // },
+  // {
+  //   name: "VIP 12",
+  //   ugprade: "20,000,000",
+  //   flow: "x10"
+  // }
 ];
 
 const { vipItems, lastVipLevel } = rows.reduce(
@@ -485,8 +483,7 @@ onActivated(() => {
     }
     // show vip slide correspond to current vip level
     else {
-      // carousel index starts from 0, thus any vip level will require minus 1 for slide index to show correctly
-      vipCarouselIndex.value = vipLevelNum - 1;
+      vipCarouselIndex.value = vipLevelNum;
     }
 
     vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
@@ -497,7 +494,9 @@ watch(
   () => vipCarouselIndex.value,
   () => {
     const carouselVipLevel =
-      vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value ? 12 : Math.round(vipCarouselIndex.value) + 1;
+      vipCarouselIndex.value === vipCarouselRef.value.data.maxSlide.value
+        ? rows.length
+        : Math.round(vipCarouselIndex.value) + 1;
 
     const levelUpgrade = rows3.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
     const monthlyReward = rows4.find(({ name }) => name === `VIP ${carouselVipLevel}`).ugprade;
@@ -505,16 +504,17 @@ watch(
 
     const vipInfo = vipItems.find(({ vipLevel }) => vipLevel === carouselVipLevel);
     const vipLevel = Number(store.vip.replace("VIP", ""));
-    const currentDeposit = Number(store.getCurrentDeposit());
+    const currentValidBet = Number(store.getCurrentValidBet());
     const upgradeStatus = vipInfo.ugprade;
     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
 
     const levelUpPercentage = (() => {
-      if (vipLevel > +vipInfo.vipLevel) {
+      if (vipLevel >= +vipInfo.vipLevel) {
         return 100;
       }
 
-      return (currentDeposit / levelUpDeposit) * 100;
+      const truncPercentage = Math.trunc((currentValidBet / levelUpDeposit) * 100 * 100) / 100;
+      return truncPercentage >= 100 ? 100 : truncPercentage;
     })();
 
     // alert(vipLevel);
@@ -525,7 +525,7 @@ watch(
       monthlyReward,
       dailyWithdrawalLimit,
       levelUpPercentage,
-      progressBarText: `${currentDeposit} / ${levelUpDeposit}`,
+      progressBarText: `${currentValidBet} / ${levelUpDeposit}`,
       rewardUnlocked: vipLevel > vipCarouselIndex.value
     };
   }
@@ -777,7 +777,7 @@ const swipeRight = () => {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 10px;
 
   .vip-reward-item {
     width: 107px;
@@ -824,7 +824,7 @@ const swipeRight = () => {
       .reward-amt-wrapper {
         background-color: #ffffff4d;
         padding: 5px 15px;
-        max-width: 100px;
+        max-width: 130px;
         border-radius: 4px;
         font-family: sans-serif;
         font-size: 12px;
@@ -926,7 +926,7 @@ const swipeRight = () => {
       position: absolute;
       left: 20px;
       top: 20px;
-      font-family: YouSheBiaoTiHei, 'Noto Sans SC', sans-serif;
+      font-family: YouSheBiaoTiHei, "Noto Sans SC", sans-serif;
       font-weight: bolder;
       font-size: 2.5rem;
       line-height: 100%;
@@ -961,11 +961,12 @@ const swipeRight = () => {
         transform: translateX(-50%);
         top: 0;
         font-size: 0.9rem;
+        margin-left: 10px;
       }
       .progress-bar-outer-bar {
-        border: 1px solid #fff;
+        // border: 1px solid #fff;
         border-radius: 16px;
-        background: #fff;
+        background: rgba(0, 0, 0, 0.19);
         width: 100%;
         overflow: hidden;
         position: relative;
@@ -983,6 +984,7 @@ const swipeRight = () => {
       }
 
       .progress-bar-inner-bar {
+        transition: width 0.5s ease-in-out;
         color: #fff;
         border-radius: 16px;
         background: #fff1cc;
@@ -1054,6 +1056,7 @@ const swipeRight = () => {
       padding-left: 0.5rem;
       padding-right: 0.5rem;
       font-size: 12px;
+      white-space: normal;
     }
   }
 

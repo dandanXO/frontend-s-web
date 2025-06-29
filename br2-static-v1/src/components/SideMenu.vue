@@ -14,7 +14,9 @@
           <img src="../assets/images/sideMenu/icon-balance.png" />
           <div class="side-menu-account-info__balance-inner" @click="refreshBalance()">
             <span class="side-menu-account-info__balance-amount">
-              {{ isLoadingBalance ? "Loading..." : store.currency.value + " " + convertToCommaAmount(store.balance, true) }}
+              {{
+                isLoadingBalance ? "Loading..." : store.currency.value + " " + convertToCommaAmount(store.balance, true)
+              }}
             </span>
             <span class="side-menu-account-info__balance-desc">
               {{ $t("sideNav.balance") }}
@@ -39,17 +41,29 @@
     </div>
 
     <div class="side-menu-plat-link-wrapper divider">
-      <router-link v-for="(link, index) in categoryList" :key="index" class="side-menu-plat-link" :to="link.url">
+      <div
+        v-for="(link, index) in categoryList"
+        :key="index"
+        class="side-menu-plat-link"
+        @click="emits('gameClick', link.code)"
+      >
         <img :src="require(`../assets/images/index/category/cat-${link.icon}.png`)" />
         <span>{{ link.name }}</span>
-      </router-link>
+      </div>
     </div>
 
     <div class="side-menu-promo-wrapper divider">
       <router-link to="">
-        <img class="jackpot-promo" src="../assets/images/sideMenu/jackpot-promo.png" />
+        <div class="jackpot-container">
+          <img src="../assets/images/sideMenu/jackpot-icon-1.png" alt="jackpot icon" class="jackpot-icon" />
+          <div class="jackpot-text">
+            <div class="jackpot-amount">{{ store.currency.value }} {{ convertToCommaAmount(ui.jackpotAmt) }}</div>
+            <div class="jackpot-label">JACKPOT</div>
+          </div>
+        </div>
+        <!--        <img class="jackpot-promo" src="../assets/images/sideMenu/jackpot-promo.png" />-->
       </router-link>
-      <div class="side-menu-promo-hot-game">
+      <div class="side-menu-promo-hot-game" @click="emits('gameClick')">
         <div class="side-menu-promo-hot-game__title">
           <img src="../assets/images/index/category/cat-hot.png" />
           <span>{{ $t("home.menu_hot") }}</span>
@@ -66,29 +80,26 @@
         </div>
       </div>
 
-      <div class="side-menu-promo-download-wrapper">
-        <!-- <q-btn class="side-menu-promo-download-item" no-caps flat>
-          <img src="../assets/images/sideMenu/icon-ios.png" />
-          <span>ios</span>
-        </q-btn> -->
-        <q-btn class="side-menu-promo-download-item" no-caps flat>
-          <img src="../assets/images/sideMenu/icon-android.png" />
-          <span>android</span>
-        </q-btn>
-      </div>
+      <!-- TODO:: HIDE it 1st-->
+      <!--      <div class="side-menu-promo-download-wrapper">-->
+      <!--        <q-btn class="side-menu-promo-download-item" no-caps flat>-->
+      <!--          <img src="../assets/images/sideMenu/icon-android.png" />-->
+      <!--          <span>android</span>-->
+      <!--        </q-btn>-->
+      <!--      </div>-->
     </div>
 
-    <div class="side-menu-social-media-wrapper">
-      <a
-        v-for="(link, index) in socialMediaLinks"
-        :key="index"
-        class="side-menu-social-media-item"
-        :href="link.url"
-        target="_blank"
-      >
-        <img :src="require(`../assets/images/sideMenu/socialMedia/icon-${link.icon}.png`)" />
-      </a>
-    </div>
+<!--    <div class="side-menu-social-media-wrapper">-->
+<!--      <a-->
+<!--        v-for="(link, index) in socialMediaLinks"-->
+<!--        :key="index"-->
+<!--        class="side-menu-social-media-item"-->
+<!--        @click="goToLink(link.url)"-->
+<!--        target="_blank"-->
+<!--      >-->
+<!--        <img :src="require(`../assets/images/sideMenu/socialMedia/icon-${link.icon}.png`)" />-->
+<!--      </a>-->
+<!--    </div>-->
   </div>
 </template>
 <script setup>
@@ -99,7 +110,7 @@ import ProfileSummary from "../components/ProfileSummary.vue";
 import { useUI } from "stores/ui";
 import { userStore } from "src/stores";
 
-const emits = defineEmits(["closeMenu", "goLogin"]);
+const emits = defineEmits(["closeMenu", "goLogin", "gameClick"]);
 
 const router = useRouter();
 const ui = useUI();
@@ -108,11 +119,11 @@ const topDownload = inject("topDownload");
 
 const categoryList = [
   { icon: "hot", name: "HOT", url: "" },
-  { icon: "pg", name: "PG", url: "" },
-  { icon: "jili", name: "JILI", url: "" },
-  { icon: "pp", name: "PP", url: "" },
-  { icon: "jdb", name: "JDB", url: "" },
-  { icon: "mic", name: "MIC", url: "" }
+  { icon: "pg", name: "PG", url: "", code: "PGF" },
+  { icon: "wcots", name: "One Touch", url: "", code: "WCOTS" },
+  { icon: "tfgaming", name: "TFGaming", url: "", code: "TFGaming" },
+  { icon: "jdb", name: "JDB", url: "", code: "JDB" },
+  { icon: "wcrt", name: "Red tiger", url: "", code: "WCRT" }
 ];
 
 const socialMediaLinks = [
@@ -146,6 +157,10 @@ const activateSlide = (item) => {
 const openCSInNewTab = (url) => {
   const absoluteUrl = url;
   window.open(absoluteUrl, "_blank");
+};
+const goToLink = (url) => {
+  //TODO: NO PUT 1st
+  // window.open(url, "_blank");
 };
 </script>
 <style lang="scss" scoped>
@@ -199,7 +214,7 @@ const openCSInNewTab = (url) => {
       gap: 18px;
       margin-bottom: 12px;
 
-      > button{
+      > button {
         flex: 1;
       }
 
@@ -283,11 +298,44 @@ const openCSInNewTab = (url) => {
     }
 
     .side-menu-promo-wrapper {
-      .jackpot-promo {
-        width: 100%;
-        max-width: 179px;
-        margin-bottom: 16px;
+      a {
+        text-decoration: none;
       }
+      .jackpot-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #0d0d0d; /* 背景可选 */
+        padding: 0px 10px 10px;
+        margin-bottom: 8px;
+      }
+
+      .jackpot-icon {
+        width: 40px;
+        height: 40px;
+      }
+
+      .jackpot-text {
+        display: flex;
+        flex-direction: column;
+        color: #ccffcc;
+        font-family: Arial, sans-serif;
+      }
+
+      .jackpot-amount {
+        font-size: 20px;
+        font-weight: bold;
+        color: #c0ffb7;
+        text-shadow: 0 0 3px #9fff9f, 0 0 2px #9fff9f;
+      }
+
+      .jackpot-label {
+        font-size: 12px;
+        color: #66ff99;
+        margin-top: 2px;
+        text-transform: uppercase;
+      }
+
       .side-menu-promo-hot-game {
         background-color: #1f2420;
         border: 1px solid #ffffff33;
@@ -367,6 +415,12 @@ const openCSInNewTab = (url) => {
         background: #4b49434d;
         border-radius: 50%;
         padding: 8px;
+
+        &:active {
+          filter: brightness(1.2);
+          transform: translate(0px, 1px);
+        }
+
         img {
           max-width: 24px;
         }

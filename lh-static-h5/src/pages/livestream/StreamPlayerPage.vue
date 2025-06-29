@@ -117,6 +117,7 @@ const pageContainer = ref(null);
 const store = userStore();
 const livestreamTimer = ref(null);
 const livestreamSyncAbortController = ref(null);
+const chatHistoryAbortController = ref(null);
 const isExpanded = ref(true);
 const showShareModal = ref(false);
 const roomMessageRef = ref(null);
@@ -209,7 +210,7 @@ const parseLivestreamData = (data) => {
 const syncLivestreamInfo = async () => {
   if (!currentLiveData.value?.streamId) return;
   livestreamSyncAbortController.value = new AbortController();
-  getLivestreamDetail(currentLiveData.value.streamId, livestreamSyncAbortController).then((res) => {
+  getLivestreamDetail(currentLiveData.value.streamId, livestreamSyncAbortController.value).then((res) => {
     if (res.code === 0) {
       if (currentLiveData.value.id !== res.data.id) return;
 
@@ -422,13 +423,15 @@ const syncMessages = () => {
     streamId: currentLiveData.value.id,
     recordTime: [messageHistoryStartTime.value, now]
   };
-
+  chatHistoryAbortController.value = new AbortController();
   if (pastTime > MESSAGE_SYNC_INTERVAL && !isProcessingMessageHistory.value) {
     lastSyncMessageTime.value = now;
     if (!isLivestreaming.value) return;
     isProcessingMessageHistory.value = true;
     api
-      .post(`/live/history?current=${messagesHistoryMeta.value.current}&sortType=ASC`, params)
+      .post(`/live/history?current=${messagesHistoryMeta.value.current}&sortType=ASC`, params, {
+        signal: chatHistoryAbortController.value.signal
+      })
       .then(async (res) => {
         if (res.code === 0) {
           // console.log("records:::", res.data.records);
@@ -582,6 +585,8 @@ watch(currentLiveData, (newVal, oldVal) => {
   seenMessageIds.clear();
   latestProcessedMessageId.value = -1;
   lastSyncMessageTime.value = Date.now() - MESSAGE_HISTORY_START_TIME;
+  livestreamSyncAbortController.value && livestreamSyncAbortController.value.abort();
+  chatHistoryAbortController.value && chatHistoryAbortController.value.abort();
   messageHistoryStartTime.value = lastSyncMessageTime.value;
   syncMessages();
   resetSyncLivestreamInterval(true);

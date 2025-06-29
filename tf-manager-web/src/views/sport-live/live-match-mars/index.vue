@@ -2,6 +2,21 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-date-picker
+          v-model="request.matchTime"
+          format="DD/MM/YYYY HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          size="small"
+          type="datetimerange"
+          range-separator=":"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
+          style="width: 250px;margin-left:10px"
+          :shortcuts="shortcuts"
+          :editable="false"
+          :clearable="false"
+          :default-time="defaultTime"
+        />
         <el-select
           v-model="request.sportId"
           size="small"
@@ -33,13 +48,13 @@
         <el-input
           v-model="request.matchName"
           size="small"
-          style="width: 200px; margin-left: 10px"
+          style="width: 150px; margin-left: 10px"
           :placeholder="t('fields.name')"
         />
         <el-input
           v-model="request.matchId"
           size="small"
-          style="width: 200px; margin-left: 10px"
+          style="width: 150px; margin-left: 10px"
           :placeholder="t('fields.id')"
         />
         <el-select
@@ -153,8 +168,8 @@
           <span>{{ getSportDisplayName(scope.row.sportId) }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="nameZh" :label="t('fields.competitionNameZh')" width="230" />
-      <el-table-column prop="nameEn" :label="t('fields.competitionNameEn')" width="230" />
+      <el-table-column prop="nameZh" :label="t('fields.competitionNameZh')" width="250" />
+      <el-table-column prop="nameEn" :label="t('fields.competitionNameEn')" width="250" />
       <el-table-column prop="homeTeamId" :label="t('fields.homeTeam')" width="200">
         <template #default="scope">
           <img v-if="scope.row.homeTeamLogo" :src="scope.row.homeTeamLogo" style="width: 24px; height: 24px; margin-right: 8px;">
@@ -202,22 +217,25 @@
           <el-tag v-else type="default">{{ t('status.marsMatch.OTHER') }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="right" fixed="right">
+      <el-table-column :label="t('fields.operate')" align="right" fixed="right" width="350">
         <template #default="scope">
-          <el-button
-            icon="el-icon-refresh"
-            size="mini"
-            type="success"
-            @click="refreshLiveUrl(scope.row)"
-          />
-          <el-button
-            icon="el-icon-edit"
-            size="mini"
-            type="primary"
-            @click="showDialog('ADD_TO_LIVE', scope.row)"
-          >
-            {{ t('fields.addToLive') }}
-          </el-button>
+          <div style="display: flex; gap: 4px; float: right;">
+            <el-button
+              icon="el-icon-refresh"
+              size="mini"
+              type="success"
+              @click="refreshLiveUrl(scope.row)"
+            />
+            <el-button
+              icon="el-icon-edit"
+              size="mini"
+              type="primary"
+              @click="showDialog('ADD_TO_LIVE', scope.row)"
+            >
+              {{ t('fields.addToLive') }}
+            </el-button>
+          </div>
+
         </template>
       </el-table-column>
     </el-table>
@@ -238,6 +256,11 @@ import { onMounted, reactive, watch } from "vue";
 import { getLiveMatchMars, addToLive, refreshToGetLiveUrl, deleteLiveMatchMars } from "../../../api/live-match-mars";
 import { useI18n } from "vue-i18n";
 import { ElMessage, ElMessageBox } from "element-plus";
+import {
+  convertDateToEnd,
+  convertDateToStart,
+  getShortcuts
+} from '@/utils/datetime'
 
 const { t } = useI18n();
 
@@ -257,8 +280,8 @@ const uiControl = reactive({
     { key: 'abandoned', displayName: t('status.marsMatch.ABANDONED'), value: 'abandoned' }
   ],
   isSupplierStreamUrlExist: [
-    { key: true, displayName: t('fields.yes'), value: true },
-    { key: false, displayName: t('fields.no'), value: false }
+    { key: true, displayName: t('fields.yes'), value: "yes" },
+    { key: false, displayName: t('fields.no'), value: "no" }
   ],
   removeBtn: true,
 });
@@ -282,6 +305,15 @@ const formLivePost = reactive({
   title: null,
 });
 
+const defaultTime = [
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 1, 1, 23, 59, 59),
+];
+
+const now = new Date()
+const defaultStartDate = convertDateToStart(now)
+const defaultEndDate = convertDateToEnd(now)
+
 const request = reactive({
   current: 1,
   size: 30,
@@ -289,7 +321,8 @@ const request = reactive({
   status: null,
   matchName: null,
   matchId: null,
-  supplierStreamUrl: null
+  supplierStreamUrl: null,
+  matchTime: [defaultStartDate, defaultEndDate],
 });
 
 const page = reactive({
@@ -297,6 +330,8 @@ const page = reactive({
   pages: 0,
   loading: false
 });
+
+const shortcuts = getShortcuts(t)
 
 async function handleCopy() {
   const ret = await addToLive(formLivePost);
@@ -312,7 +347,7 @@ async function refreshLiveUrl(row) {
   const ret = await refreshToGetLiveUrl(row.id);
 
   if (ret.code === 0) {
-    ElMessage.success(t('fields.success'));
+    ElMessage.success(t('fields.successGetUrl'));
   } else {
     ElMessage.error(t('fields.failed'));
   }
@@ -396,6 +431,7 @@ function resetQuery() {
   request.matchName = null
   request.supplierStreamUrl = null
   request.matchId = null
+  request.matchTime = [defaultStartDate, defaultEndDate]
 }
 
 function changePage(page) {
@@ -417,7 +453,27 @@ function formatTime(ts) {
 }
 
 async function loadLiveMatchMars() {
-  const { data: ret } = await getLiveMatchMars(request);
+  page.loading = true;
+  const requestCopy = { ...request };
+  const query = {};
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value;
+    }
+  });
+  if (request.matchTime !== null) {
+    if (request.matchTime.length === 2) {
+      query.matchTime = request.matchTime.join(",");
+    }
+  }
+  if (request.supplierStreamUrl !== null) {
+    if (request.supplierStreamUrl === "yes") {
+      query.supplierStreamUrl = true
+    } else {
+      query.supplierStreamUrl = false
+    }
+  }
+  const { data: ret } = await getLiveMatchMars(query);
   page.pages = ret.pages;
   page.records = ret.records;
   page.loading = false;

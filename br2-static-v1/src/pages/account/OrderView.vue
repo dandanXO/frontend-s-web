@@ -27,7 +27,7 @@
           <div class="order-row order-row--content">
             <div class="order-subrow">
               <div class="order-col">
-                <span class="date">{{ e.withdrawDate }}</span>
+                <span class="date">{{ convertToGMTMinus3(e.withdrawDate) }}</span>
               </div>
               <div class="order-col">
                 <span class="yellow">-{{ convertToCommaAmount(e.withdrawAmount, true) }}</span>
@@ -62,7 +62,7 @@
             </div>
           </div>
           <div class="order-row order-num">
-            <div class="order-col ellipsis">{{ $t("records.orderNo") }}</div>
+            <div class="order-col order-number-col ellipsis">{{ $t("records.orderNo") }}:</div>
             <div class="order-col flex-c-end gap-8">
               {{ e.serialNumber }}
               <div @click="copyText(e.serialNumber)">
@@ -83,7 +83,7 @@
           <div class="order-row order-row--content">
             <div class="order-subrow">
               <div class="order-col">
-                <span class="date">{{ e.depositDate }}</span>
+                <span class="date">{{ convertToGMTMinus3(e.depositDate) }}</span>
               </div>
               <div class="order-col">
                 <span class="green">+{{ convertToCommaAmount(e.depositAmount, true) }}</span>
@@ -105,8 +105,9 @@
             </div>
           </div>
           <div class="order-row order-num">
-            <div class="order-col ellipsis">{{ $t("records.orderNo") }} {{ e.serialNumber }}</div>
+            <div class="order-col order-number-col ellipsis">{{ $t("records.orderNo") }}: </div>
             <div class="order-col flex-c-end gap-8">
+              {{ e.serialNumber }}
               <div @click="copyText(e.serialNumber)">
                 <img
                   class="copy-btn btn-pointer"
@@ -128,7 +129,7 @@
 import { onActivated, onMounted, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
-import { updateDate, convertToGMT8, convertToGMT55, convertToGMT7 } from "src/boot/utils";
+import { updateDate, convertToGMT8, convertToGMT55, convertToGMT7, convertToGMTMinus3 } from "src/boot/utils";
 import SwiperNav from "../../components/SwiperNav.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
@@ -291,9 +292,9 @@ onActivated(() => {
 <style lang="scss" scoped>
 .order-option-tab {
   width: calc(100% - 20px);
-  margin: 0 10px;
   margin: 30px auto 10px;
   // border: 1px solid #00B9A1;
+  min-height: 42px;
   aspect-ratio: 335/32;
 
   :deep(.q-tabs__content) {
@@ -306,6 +307,7 @@ onActivated(() => {
   }
 
   .q-tab {
+    flex: 1;
     border-radius: 4px;
     border: 1px solid #4b4943;
   }
@@ -352,6 +354,11 @@ onActivated(() => {
 
       &.order-num {
         background-color: #ffffff1a;
+        flex-direction: column;
+      }
+
+      .order-number-col {
+        // white-space: normal;
       }
     }
 

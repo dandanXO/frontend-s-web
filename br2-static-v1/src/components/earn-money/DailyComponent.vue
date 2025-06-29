@@ -275,11 +275,8 @@ const progressValueBA = ref(0);
 progressValue.value = progressRef.value / maxProgress;
 
 const getProgressValue = () => {
-  // progressValueM.value = memberVIPData.memberCount / memberVIPData.nextLevelMemberCount;
-  // progressValueBA.value = memberVIPData.totalValidBet / memberVIPData.nextLevelBet;
-
-  progressValueM.value = 0.2;
-  progressValueBA.value = 0.7;
+  progressValueM.value = memberVIPData.memberCount / memberVIPData.nextLevelMemberCount;
+  progressValueBA.value = memberVIPData.totalValidBet / memberVIPData.nextLevelBet;
 };
 
 const getRandomImageSource = (index) => {

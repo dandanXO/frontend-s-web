@@ -250,10 +250,12 @@
               <div class="desc-wrapper">
                 <div class="desc">
                   <img src="../../assets/images/account/withdraw-max.svg" />
-                  {{ $t("withdraw.withdrawMaxTimes") }}
+                  {{ $t("withdraw.withdrawMaxAmount") }}
                 </div>
               </div>
-              <div class="desc" style="color: #fbab1b">{{ selectedWithdrawalMethod.withdrawMaxTimes }}</div>
+              <div class="desc" style="color: #fbab1b">
+                RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawMaxAmount) }}
+              </div>
             </div>
           </div>
 
@@ -507,8 +509,11 @@ import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 import { useCheckKYC } from "src/hooks/checkKYC";
 import AdditionalSteps from "../../components/modal/AdditionalSteps.vue";
+
+import { usePromoStore } from "src/stores/promo";
 // import MediaSettingsComponent from "../../components/MediaSettingsComponent.vue";
 
+const promoStore = usePromoStore();
 const router = useRouter();
 const store = userStore();
 const isNewUser = ref(false);
@@ -607,6 +612,7 @@ onMounted(() => {
 onActivated(() => {
   checkNewUser();
   store.getBalance();
+  promoStore.removeShownFloatingOrDialogList("newplayer-spin-wheel");
   // loadPlatform()
 });
 
@@ -1216,6 +1222,17 @@ watch(
       margin-right: 60px;
     }
   }
+}
+
+:deep(.q-field--filled.q-field--dark .q-field__control) {
+  // border-radius: 0.5rem;
+  // background: #0b0e0d !important;
+  // border: 1px solid #072a19;
+  // border-radius: 0.5rem;
+  // border: 1px solid #ffffff14;
+  // background: #292d2f !important;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%) !important;
+  border: none;
 }
 
 .bot-wrapper {

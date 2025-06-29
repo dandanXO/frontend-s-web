@@ -36,8 +36,8 @@
       <Carousel v-bind="carouselSettings" class="custom-carousel sharepopupslider" v-model="activeSlide">
         <Slide v-for="i in 6" :key="i">
           <div class="slide-content">
-            <img class="slide-img" :src="require(`../spin-lucky-wheel/img/share-${i}.png`)" alt="Slide Image" />
-            <VueQRCodeComponent class="qr-code" size="200" :text="qrCode" />
+            <img class="slide-img" :src="require(`../spin-lucky-wheel/img/share-${i}.jpg`)" alt="Slide Image" />
+            <VueQRCodeComponent class="qr-code" size="150" :text="qrCode" />
           </div>
         </Slide>
 
@@ -49,10 +49,10 @@
     <div class="bottom-panel">
       <div class="share-icons">
         <div class="invite-share-social">
-          <a class="social-item" @click="modalSocialShare = true">
+          <!-- <a class="social-item" @click="modalSocialShare = true">
             <img src="../spin-lucky-wheel/img/share-icon.png" />
             <span class="grey">{{ $t("hotPromo.share") }}</span>
-          </a>
+          </a> -->
           <a class="social-item" @click="takeScreenshot">
             <img src="../spin-lucky-wheel/img/download-icon.png" />
             <span class="grey">{{ $t("hotPromo.save_image") }}</span>
@@ -208,7 +208,7 @@ const takeScreenshot = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "QR Code image saved to photo gallery.",
+          message: t("content.qrCodeSaved"),
           icon: "check_circle_outline"
         });
       })
@@ -305,7 +305,7 @@ const fallbackCopyTextToClipboard = (text) => {
   document.body.removeChild(textarea);
 
   $q.notify({
-    message: "Link copied to clipboard",
+    message: t("content.linkCopyToClipboard"),
     color: "positive",
     position: "top",
     timeout: 2000
@@ -330,7 +330,7 @@ const copyHrefLink = async () => {
       .writeText(textToCopy)
       .then(() => {
         $q.notify({
-          message: "Link copied to clipboard",
+          message: t("content.linkCopyToClipboard"),
           color: "positive",
           position: "top",
           timeout: 2000
@@ -466,12 +466,12 @@ onMounted(() => {
     // right: 50px;
     // bottom: 68px;
     width: 28vw;
-    max-width: 123px;
+    max-width: 100px;
 
     // right: 13%;
     // bottom: 12%;
-    right: 10%;
-    bottom: 4%;
+    right: 6%;
+    bottom: 2.5%;
 
     :deep(img) {
       max-width: 100%;
@@ -623,7 +623,7 @@ onMounted(() => {
 
   .invite-share-social {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-gap: 12px;
     width: 95%;
     margin: 10px auto 16px;

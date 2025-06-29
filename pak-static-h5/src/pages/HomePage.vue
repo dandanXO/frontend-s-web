@@ -2066,7 +2066,7 @@ const checkHash = () => {
     handleActivateSlide(hash);
   } else {
     if (route.path === "/home") {
-      router.replace({ hash: `Lobby` });
+      router.replace({ hash: `#Lobby` });
     }
   }
 };
@@ -6005,6 +6005,13 @@ const checkGoogleLoginSetPwd = () => {
   &.live-casino {
     padding-top: 8px;
     margin-bottom: 12px;
+  }
+  &.sport-platform {
+    .platform-game-item {
+      >img {
+        min-height: 120px;
+      }
+    }
   }
 
   .swiper-scrollbar.swiper-scrollbar-horizontal {

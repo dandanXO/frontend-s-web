@@ -102,7 +102,7 @@
       :name="i"
       class="column no-wrap flex-center"
       :img-src="imgURL + banner.mobileImageUrl"
-      @click="gotoPromo(banner)"
+      @click="gotoPromo(banner.redirectUrl)"
     />
   </q-carousel>
 
@@ -612,7 +612,7 @@
         <!-- <div class="close-alert" @click="setExpiryBanner()">
           <q-icon size="24px" name="close"></q-icon>
         </div> -->
-        <SitePopout :closePopout="setExpiryBanner" />
+        <SitePopout @popout-click="setExpiryBanner" />
         <!-- <router-link class="promo-banner-container" :to="homePopupLink" :target="homePopupLinkOut ? '_blank' : '_self'">
           <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
           <div class="promo-banner-img" v-else>
@@ -995,7 +995,8 @@ export default defineComponent({
     const homePopupLink = ref("");
     const homePopupLinkOut = ref(false);
 
-    const setExpiryBanner = () => {
+    const setExpiryBanner = (path) => {
+      gotoPromo(path);
       isImportantAnnoucementModal.value = false;
     };
 
@@ -1554,26 +1555,26 @@ export default defineComponent({
       window.open(newsDetail_00.value.url);
     };
 
-    const gotoPromo = (banner) => {
-      const urlSplit = banner.redirectUrl.split("|");
+    const gotoPromo = (redirectUrl) => {
+      const urlSplit = redirectUrl.split("|");
       if (urlSplit.length >= 2) {
         const type = urlSplit[0];
         if (type === "page") {
           router.push(`/${urlSplit[1]}`);
         } else {
-          router.push(`/promo?name=${banner.redirectUrl}`);
+          router.push(`/promo?name=${redirectUrl}`);
         }
       } else {
         const openPattern = /^\/open\/(.*)/;
-        if (banner.redirectUrl.match(openPattern)) {
-          const extractedUrl = banner.redirectUrl.match(openPattern)[1];
+        if (redirectUrl.match(openPattern)) {
+          const extractedUrl = redirectUrl.match(openPattern)[1];
           const [gameName, platformCode, gameCode] = extractedUrl.split("/");
 
           allGames.value.open(gameName, platformCode, gameCode, "OPEN");
-        } else if (banner.redirectUrl.includes("https://")) {
-          window.open(banner.redirectUrl, "_blank");
+        } else if (redirectUrl.includes("https://")) {
+          window.open(redirectUrl, "_blank");
         } else {
-          router.push(`/promo?name=${banner.redirectUrl}`);
+          router.push(`/promo?name=${redirectUrl}`);
         }
       }
     };

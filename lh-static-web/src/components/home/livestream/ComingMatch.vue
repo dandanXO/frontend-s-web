@@ -1,61 +1,70 @@
 <template>
   <div class="coming-match-wrapper">
-    <div class="coming-match-info home">
-      <div class="coming-match-info__team-emblem">
-        <img :src="livestreamData.homeIcon || systemAvatarImg" loading="lazy" />
-      </div>
-      <div class="coming-match-info__team-name">
-        <div class="coming-match-info__team-name-inner">
-          {{ livestreamData.homeNameZh || livestreamData.homeNameEn || livestreamData.homeName }}
+    <img
+      v-if="hasCover"
+      class="coming-match-cover"
+      :src="`${imgURL}${livestreamData.cover}`"
+      @error="handleCoverLoadError"
+    />
+    <template v-else>
+      <div class="coming-match-info home">
+        <div class="coming-match-info__team-emblem">
+          <img :src="livestreamData.homeIcon || systemAvatarImg" loading="lazy" />
         </div>
-        <div class="coming-match-info__team-name-stripe light left" />
-        <div class="coming-match-info__team-name-stripe light right" />
+        <div class="coming-match-info__team-name">
+          <div class="coming-match-info__team-name-inner">
+            {{ livestreamData.homeNameZh || livestreamData.homeNameEn || livestreamData.homeName }}
+          </div>
+          <div class="coming-match-info__team-name-stripe light left" />
+          <div class="coming-match-info__team-name-stripe light right" />
+        </div>
       </div>
-    </div>
 
-    <div class="coming-match-info__countdown">
-      <span class="coming-match-info__countdown-title">直播倒计时</span>
-      <div class="coming-match-info__countdown__time">
-        <div
-          v-for="(char, index) in countdown.hours"
-          :key="`hour-${index}`"
-          class="coming-match-info__countdown-time-item"
-        >
-          {{ char }}
+      <div class="coming-match-info__countdown">
+        <span class="coming-match-info__countdown-title">直播倒计时</span>
+        <div class="coming-match-info__countdown__time">
+          <div
+            v-for="(char, index) in countdown.hours"
+            :key="`hour-${index}`"
+            class="coming-match-info__countdown-time-item"
+          >
+            {{ char }}
+          </div>
+          <span class="coming-match-info__countdown-time-colon">:</span>
+          <div
+            v-for="(char, index) in countdown.minutes"
+            :key="`minute-${index}`"
+            class="coming-match-info__countdown-time-item"
+          >
+            {{ char }}
+          </div>
+          <div class="coming-match-info__countdown-time-item-desc">小时</div>
+          <div />
+          <div class="coming-match-info__countdown-time-item-desc">分钟</div>
         </div>
-        <span class="coming-match-info__countdown-time-colon">:</span>
-        <div
-          v-for="(char, index) in countdown.minutes"
-          :key="`minute-${index}`"
-          class="coming-match-info__countdown-time-item"
-        >
-          {{ char }}
-        </div>
-        <div class="coming-match-info__countdown-time-item-desc">小时</div>
-        <div />
-        <div class="coming-match-info__countdown-time-item-desc">分钟</div>
+        <button class="coming-match-info__bet-btn" @click="$emit('click')">投一注</button>
       </div>
-      <button class="coming-match-info__bet-btn" @click="$emit('click')">投一注</button>
-    </div>
 
-    <div class="coming-match-info away">
-      <div class="coming-match-info__team-emblem">
-        <img :src="livestreamData.awayIcon || systemAvatarImg" loading="lazy" />
-      </div>
-      <div class="coming-match-info__team-name">
-        <div class="coming-match-info__team-name-inner">
-          {{ livestreamData.awayNameZh || livestreamData.awayNameEn || livestreamData.awayName }}
+      <div class="coming-match-info away">
+        <div class="coming-match-info__team-emblem">
+          <img :src="livestreamData.awayIcon || systemAvatarImg" loading="lazy" />
         </div>
-        <div class="coming-match-info__team-name-stripe light left" />
-        <div class="coming-match-info__team-name-stripe light right" />
+        <div class="coming-match-info__team-name">
+          <div class="coming-match-info__team-name-inner">
+            {{ livestreamData.awayNameZh || livestreamData.awayNameEn || livestreamData.awayName }}
+          </div>
+          <div class="coming-match-info__team-name-stripe light left" />
+          <div class="coming-match-info__team-name-stripe light right" />
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 <script setup>
 import systemAvatarImg from "@/assets/home/livestream/system-avatar.png";
 import moment from "moment";
-import { toRefs, watch, ref, onUnmounted } from "vue";
+import { toRefs, watch, ref, onUnmounted, onMounted, computed } from "vue";
+import { useLocalStorage } from "@vueuse/core";
 
 const DEFAULT_COUNTDOWN = {
   hours: "00",
@@ -67,8 +76,13 @@ const { livestreamData } = toRefs(props);
 
 defineEmits(["click"]);
 
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
+
 const timer = ref(null);
 const countdown = ref(DEFAULT_COUNTDOWN);
+const isCoverLoadError = ref(false);
+
+const hasCover = computed(() => !!livestreamData.value?.cover && !isCoverLoadError.value);
 
 const handleCountdown = () => {
   const now = moment();
@@ -96,9 +110,15 @@ const startCountdown = () => {
   handleCountdown();
 };
 
+const handleCoverLoadError = () => {
+  isCoverLoadError.value = true;
+};
+
 watch(livestreamData, () => {
   startCountdown();
 });
+
+onMounted(startCountdown);
 
 onUnmounted(() => {
   if (timer.value) {
@@ -110,10 +130,18 @@ onUnmounted(() => {
 .coming-match-wrapper {
   display: grid;
   grid-template-columns: 1fr 305px 1fr;
+  position: relative;
   background: url("@/assets/home/livestream/coming-match-bg.png") no-repeat center center;
   background-size: 100% 100%;
   border-radius: 15.1px;
+  overflow: hidden;
   color: #fff;
+
+  .coming-match-cover {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+  }
 
   .coming-match-info {
     display: flex;

@@ -1,54 +1,40 @@
 <template>
   <div>
-    <q-btn class="receive-earn-btn" no-caps @click="claimPromo()">
-      <img src="../../../assets/images/promotion/receive-earn/receive-earn-icon.png" />
-      &nbsp;&nbsp;receive
-    </q-btn>
-
     <div class="receive-bar-container">
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
-          Duration
+          {{ $t("hotPromo.duration") }}
         </div>
-        <div class="bar-desc">Long-term (ongoing)</div>
+        <div class="bar-desc">
+          <div class="bar-desc">{{ $t("hotPromo.longTerm") }}</div>
+        </div>
       </div>
 
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
-          Eligibility
+          {{ $t("hotPromo.eligibility") }}
         </div>
-        <div class="bar-desc">All members who have made at least one successful deposit</div>
+        <div class="bar-desc">{{ $t("hotPromo.allMembers") }}</div>
       </div>
 
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-description.svg" />
-          Description
+          {{ $t("hotPromo.desc") }}
         </div>
-        <div class="bar-desc">Members can receive a 100% bonus on their second deposit</div>
+        <div class="bar-desc">{{ $t("hotPromo.redepositBonus.description") }}</div>
       </div>
     </div>
 
-    <div class="promo-subtitle">Terms and Conditions</div>
+    <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
 
     <div class="tnc-content">
       <ol>
-        <li>Each member can enjoy this re-deposit bonus once.</li>
-        <li>
-          After successfully making their second deposit during the promotion period, members can apply to receive a
-          100% bonus based on the second deposit amount.
+        <li v-for="index in 6" :key="index">
+          {{ $t(`hotPromo.redepositBonus.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
-        <li>The minimum deposit amount is R$100.</li>
-        <li>The maximum re-deposit bonus is R$1000.</li>
-        <li>Withdrawals cannot be made before the bonus is credited to the account.</li>
-        <li>
-          To participate in this promotion, members must submit an application by clicking the "Join Now" button on this
-          page.
-        </li>
-        <li>The deposit amount and bonus must be wagered at least 36 times before a withdrawal can be made.</li>
-        <li>To avoid any misunderstanding, AKB188 reserves the final right of interpretation of this promotion.</li>
       </ol>
     </div>
   </div>
@@ -119,17 +105,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.receive-earn-btn {
-  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
-  width: 100%;
-  color: #2d2d2d;
-  font-weight: bold;
-
-  img {
-    width: 34px !important;
-  }
-}
-
 .receive-bar-container {
   margin-top: 24px;
   display: flex;

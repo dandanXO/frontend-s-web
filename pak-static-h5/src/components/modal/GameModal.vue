@@ -385,7 +385,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
   } else {
     const _isPlatformAllowNonLogin = isPlatformAllowNonLogin(demo);
     if (store.hasToken() || _isPlatformAllowNonLogin) {
-      if (platformCode !== "LuckySport") {
+      if (platformCode !== "LuckySport" && platformCode !== "NineW") {
         visible.value = true;
       }
 
@@ -440,12 +440,12 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
           let srcDoc = res.data;
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
           if (firstFourChars === "http") {
-            if (platformCode === "LuckySport" && gameCode !== "") {
+            if ((platformCode === "LuckySport" || platformCode === "NineW") && gameCode !== "") {
               src.value = srcDoc.replace(gameCode, "");
               setTimeout(function () {
                 src.value = srcDoc.substring(0, srcDoc.indexOf("?"));
               }, 1000);
-            } else if (platformCode === "LuckySport") {
+            } else if (platformCode === "LuckySport" || platformCode === "NineW") {
               window.open(srcDoc, "_blank", "location=no,zoom=no");
             } else {
               src.value = srcDoc;

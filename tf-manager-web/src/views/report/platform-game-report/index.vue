@@ -81,7 +81,9 @@
     </div>
 
     <div v-if="uiControl.display === 'CHART'">
-      <el-card class="chart-summary" v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="gap: 10px; height: 500px;">
+      <el-card class="chart-summary" v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading"
+               style="gap: 10px; height: 500px;"
+      >
         <Chart :options="amountOptions" />
       </el-card>
       <el-card style="height: 500px; margin-top: 10px">
@@ -234,6 +236,18 @@
           />
         </template>
       </el-table-column>
+
+      <el-table-column label="RTP">
+        <template #default="scope">
+          <span>
+            {{
+              scope.row.totalBet
+                ? ((scope.row.totalPayout / scope.row.totalBet) * 100).toFixed(2) + '%'
+                : '0.00%'
+            }}
+          </span>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       v-if="uiControl.display === 'DATA'"
@@ -270,7 +284,7 @@ import {
   getPlatformGameReport,
   getDailyReport,
   getExportReport,
-  getPlatformGameReportList
+  getPlatformGameReportList,
 } from '@/api/report-platform-game'
 import { hasPermission } from '../../../utils/util'
 import Chart from "@/components/charts/Charts.vue";
@@ -334,7 +348,7 @@ const shortcuts = [
       start.setTime(
         moment(start)
           .startOf('day')
-          .format('x')
+          .format('x'),
       )
       return [start, end]
     },
@@ -348,13 +362,13 @@ const shortcuts = [
         moment(start)
           .subtract(1, 'days')
           .startOf('day')
-          .format('x')
+          .format('x'),
       )
       end.setTime(
         moment(end)
           .subtract(1, 'days')
           .endOf('day')
-          .format('x')
+          .format('x'),
       )
       return [start, end]
     },
@@ -367,7 +381,7 @@ const shortcuts = [
       start.setTime(
         moment(start)
           .startOf('isoWeek')
-          .format('x')
+          .format('x'),
       )
       return [start, end]
     },
@@ -381,13 +395,13 @@ const shortcuts = [
         moment(start)
           .subtract(1, 'weeks')
           .startOf('isoWeek')
-          .format('x')
+          .format('x'),
       )
       end.setTime(
         moment(end)
           .subtract(1, 'weeks')
           .endOf('isoWeek')
-          .format('x')
+          .format('x'),
       )
       return [start, end]
     },
@@ -400,7 +414,7 @@ const shortcuts = [
       start.setTime(
         moment(start)
           .startOf('month')
-          .format('x')
+          .format('x'),
       )
       return [start, end]
     },
@@ -414,13 +428,13 @@ const shortcuts = [
         moment(start)
           .subtract(1, 'months')
           .startOf('month')
-          .format('x')
+          .format('x'),
       )
       end.setTime(
         moment(end)
           .subtract(1, 'months')
           .endOf('month')
-          .format('x')
+          .format('x'),
       )
       return [start, end]
     },
@@ -434,7 +448,7 @@ const shortcuts = [
         moment(start)
           .subtract(2, 'months')
           .startOf('month')
-          .format('x')
+          .format('x'),
       )
       return [start, end]
     },
@@ -448,7 +462,7 @@ const shortcuts = [
         moment(start)
           .subtract(5, 'months')
           .startOf('month')
-          .format('x')
+          .format('x'),
       )
       return [start, end]
     },
@@ -504,11 +518,11 @@ async function loadCharts() {
   const { data } = await getPlatformGameReportList(query)
   getAmountChart(
     data,
-    amountOptions
+    amountOptions,
   )
   getBarChart(
     data,
-    barOptions
+    barOptions,
   )
   uiControl.chartLoading = false
 }
@@ -585,7 +599,7 @@ const amountOptions = reactive({
         label: {
           show: true,
           formatter: '{b}: [' + t('fields.amount') + ': ' + '$' + '{@Amount}] ({d}%)',
-        }
+        },
       },
       label: {
         show: false,
@@ -608,33 +622,36 @@ const barOptions = {
     axisPointer: {
       type: 'cross',
       crossStyle: {
-        color: '#999'
-      }
-    }
+        color: '#999',
+      },
+    },
   },
   legend: {
-    data: ['Bet', 'Win/Loss']
+    data: ['Bet', 'Win/Loss'],
   },
   xAxis: [
     {
       type: 'category',
       data: [],
       axisPointer: {
-        type: 'shadow'
+        type: 'shadow',
       },
-      axisLabel: { interval: 0, rotate: 30 }
-    }
+      axisLabel: {
+        interval: 0,
+        rotate: 30,
+      },
+    },
   ],
   yAxis: [
     {
       type: 'value',
       name: 'Amount',
       axisLabel: {
-        formatter: '$' + '{value}'
-      }
+        formatter: '$' + '{value}',
+      },
     },
   ],
-  series: []
+  series: [],
 };
 
 function convertDate(date) {
@@ -644,10 +661,10 @@ function convertDate(date) {
 function disabledDate(time) {
   return (
     time.getTime() <
-      moment(new Date())
-        .subtract(5, 'months')
-        .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
+    moment(new Date())
+      .subtract(5, 'months')
+      .startOf('month')
+      .format('x') || time.getTime() > new Date().getTime()
   )
 }
 
@@ -707,7 +724,7 @@ onMounted(async () => {
   request.siteId = store.state.user.siteId
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
-      s => s.siteName === store.state.user.siteName
+      s => s.siteName === store.state.user.siteName,
     )
     request.siteId = site.value.id
   }
@@ -719,7 +736,10 @@ onMounted(async () => {
 
 function getSummaries(param) {
   if (hasPermission(['sys:report:platform:game:report:summary'])) {
-    const { columns, data } = param;
+    const {
+      columns,
+      data,
+    } = param;
     // console.log(param);
     const sums = []
     columns.forEach((column, index) => {
@@ -748,6 +768,12 @@ function getSummaries(param) {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })
+        }
+        if (index === 9) {
+          const val7 = Number(sums[7].slice(1).replace(/,/g, ''));
+          const val5 = Number(sums[5].slice(1).replace(/,/g, ''));
+
+          sums[9] = ((val7 / val5) * 100).toFixed(2) + '%';
         }
       }
     })

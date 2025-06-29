@@ -1,5 +1,5 @@
 <template>
-  <ProfileSummary :homeProfile="true" />
+  <ProfileSummary :homeProfile="true" @gameClick="gameClickFromMenu" />
   <template v-if="bannerLoading">
     <q-skeleton style="height: 200px" />
   </template>
@@ -94,10 +94,10 @@
               @click="gotoFloatPromo(promo)"
               style="padding: 0"
             >
-              <template v-if="promo.code === 'spin-lucky-wheel' && !isShowSticky">
+              <template v-if="promo.code === 'spin-lucky-wheel' && isShowSticky">
                 <SpinLuckyWheelPromoSticky style="width: 100%" />
               </template>
-              <template v-else-if="promo.code === 'spin-lucky-wheel' && isShowSticky">
+              <template v-else-if="promo.code === 'spin-lucky-wheel' && !isShowSticky">
                 <img :src="promo.icon" />
               </template>
               <template v-else>
@@ -121,13 +121,9 @@
         </div>
         <div class="marquee-container">
           <marquee-text :repeat="2" :duration="10">
-            <!-- <div>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Welcome to
-              AKB188&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </div> -->
             <div v-if="announcementList">
               <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-                {{ a.content }}
+                {{ a.title }}
               </span>
             </div>
           </marquee-text>
@@ -136,26 +132,44 @@
     </div>
 
     <div class="jackpot-banner">
-      <div class="jackpot-digit-grp">
-        <span class="jackpot-digit">2</span>
-        <span class="jackpot-digit">5</span>
-        <span class="jackpot-symbol">,</span>
-        <span class="jackpot-digit">9</span>
-        <span class="jackpot-digit">0</span>
-        <span class="jackpot-digit">9</span>
-        <span class="jackpot-symbol">,</span>
-        <span class="jackpot-digit">8</span>
-        <span class="jackpot-digit">7</span>
-        <span class="jackpot-digit">0</span>
+      <div class="jackpot-digit-grp" v-if="ui.jackpotAmt > 0">
+        <span
+          v-for="(char, index) in convertToCommaAmount(ui.jackpotAmt, false)"
+          :class="{ 'jackpot-symbol': char === ',', 'jackpot-digit': char !== ',' }"
+          :key="index"
+        >
+          <span>{{ char }}</span>
+        </span>
       </div>
     </div>
 
     <swiper
-      :slidesPerView="4"
-      :slidesPerGroup="4"
-      :spaceBetween="10"
+      :slidesPerGroup="1"
       :modules="[Navigation, Grid]"
       class="hometop-categories"
+      @swiper="onSwiper"
+      :breakpoints="{
+        0: {
+          slidesPerView: 3.5,
+          spaceBetween: 4
+        },
+        330: {
+          slidesPerView: 3.8,
+          spaceBetween: 4
+        },
+        365: {
+          slidesPerView: 4.2,
+          spaceBetween: 4
+        },
+        390: {
+          slidesPerView: 4.5,
+          spaceBetween: 4
+        },
+        480: {
+          slidesPerView: 5.5,
+          spaceBetween: 10
+        }
+      }"
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
@@ -163,8 +177,8 @@
             <div class="cat-icon" v-if="item.title !== 'slot'">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
-            <div class="cat-icon"  v-else>
-              <img :src="getSlotImage(item.code)"  alt="" />
+            <div class="cat-icon" v-else>
+              <img :src="getSlotImage(item.code)" alt="" />
             </div>
             <div class="cat-title">{{ translateTitle(item.icon) }}</div>
           </div>
@@ -267,63 +281,75 @@
           <div class="platform-game-wrapper" v-else>
             <div class="platform-game-container grid-view-col-4 revamp">
               <template v-for="(item, index) in hotGameList" :key="index">
-                <template v-if="item.type && item.type === 'game'">
-                  <div
-                    class="platform-game-item btn-effect"
-                    @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
-                  >
-                    <!-- <pre>{{ `/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png` }}</pre> -->
-                    <div class="platform-game-img">
-                      <div
-                        class="game--bg"
-                        :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
-                            } catch (e) {
+                <template v-if="index < showValue">
+                  <template v-if="item.type && item.type === 'game' && index < showValue">
+                    <div
+                      class="platform-game-item btn-effect"
+                      @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                    >
+                      <div class="platform-game-img">
+                        <div
+                          class="game--bg"
+                          :style="{
+                            backgroundImage: (() => {
                               try {
-                                return `url(${imgURLGame}${item.icon})`;
+                                return `url(${require(`../assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                              } catch (e) {
+                                try {
+                                  return `url(${imgURLGame}${item.icon})`;
+                                } catch (e) {
+                                  return `url(${
+                                    store.h5Url
+                                  }static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                }
+                              }
+                            })()
+                          }"
+                        ></div>
+                      </div>
+                      <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
+                    </div>
+                  </template>
+
+                  <template v-else>
+                    <div
+                      class="platform-game-item btn-effect"
+                      @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                    >
+                      <div class="platform-game-img">
+                        <div
+                          class="game--bg"
+                          :style="{
+                            backgroundImage: (() => {
+                              try {
+                                return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                               } catch (e) {
                                 return `url(${
                                   store.h5Url
-                                }static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                }static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                               }
-                            }
-                          })()
-                        }"
-                      ></div>
+                            })()
+                          }"
+                        ></div>
+                      </div>
+                      <div class="platform-game-title">
+                        {{ truncateText(item.alias ? item.alias : item.name, 22) }}
+                      </div>
                     </div>
-                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-                  </div>
-                </template>
-
-                <template v-else>
-                  <div
-                    class="platform-game-item btn-effect"
-                    @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                  >
-                    <div class="platform-game-img">
-                      <div
-                        class="game--bg"
-                        :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
-                            } catch (e) {
-                              return `url(${
-                                store.h5Url
-                              }static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
-                            }
-                          })()
-                        }"
-                      ></div>
-                    </div>
-                    <div class="platform-game-title">
-                      {{ truncateText(item.alias ? item.alias : item.name, 22) }}
-                    </div>
-                  </div>
+                  </template>
                 </template>
               </template>
+              <q-btn
+                v-if="hotGameList.length > 12"
+                class="show-all-btn"
+                :class="{ expanded: isShowAllFullGames }"
+                flat
+                no-caps
+                @click="scrollDownFullGames"
+              >
+                {{ $t("home.showAll") }}
+                <q-icon name="chevron_right" size="xs" />
+              </q-btn>
             </div>
           </div>
         </div>
@@ -399,10 +425,7 @@
               </div>
             </template>
 
-            <div
-              class="platform-game-container grid-view revamp"
-            >
-
+            <div class="platform-game-container grid-view revamp">
               <template v-if="isGameLoading">
                 <div class="loader-container">
                   <div>
@@ -412,7 +435,7 @@
                 </div>
               </template>
               <template v-else>
-<!--                <pre>{{filteredSubGameList}}</pre>-->
+                <!--                <pre>{{filteredSubGameList}}</pre>-->
                 <template v-for="(item, index) in filteredSubGameList" :key="index">
                   <template v-if="index < showValue">
                     <div
@@ -427,8 +450,8 @@
                         <div
                           class="game--bg"
                           :style="{
-                              backgroundImage: `url(${imgURLGame}${item.icon})`
-                            }"
+                            backgroundImage: `url(${imgURLGame}${item.icon})`
+                          }"
                         ></div>
                       </div>
                       <div class="game-platform-title">{{ truncateText(item.name, 18) }}</div>
@@ -436,9 +459,9 @@
                       <div
                         class="game-platform-label game-platform-label--hot"
                         v-if="
-                            (item.gameLabel && item.gameLabel.includes('LIST')) ||
-                            (item.gameLabel && item.gameLabel.includes('HOT'))
-                          "
+                          (item.gameLabel && item.gameLabel.includes('LIST')) ||
+                          (item.gameLabel && item.gameLabel.includes('HOT'))
+                        "
                       >
                         <img src="../assets/images/index/platform-label-hot.png" alt="" />
                       </div>
@@ -452,8 +475,6 @@
                   </template>
                 </template>
               </template>
-
-
 
               <!--              <template v-for="(item, index) in slot" :key="index">-->
               <!--                <div-->
@@ -484,6 +505,17 @@
               <!--                  <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>-->
               <!--                </div>-->
               <!--              </template>-->
+              <q-btn
+                v-if="filteredSubGameList.length > 12"
+                class="show-all-btn"
+                :class="{ expanded: isShowAllFullGames }"
+                flat
+                no-caps
+                @click="scrollDownFullGames"
+              >
+                {{ $t("home.showAll") }}
+                <q-icon name="chevron_right" size="xs" />
+              </q-btn>
             </div>
           </div>
         </div>
@@ -718,92 +750,49 @@
             <span class="txt-style">{{ $t("home.cat_fishing") }}</span>
           </div>
           <div class="platform-game-container grid-view revamp">
-            <template v-for="(item, index) in fishGameTADAList" :key="index">
-              <div
-                class="platform-game-item btn-effect"
-                @click="playGame(item.name, 'TaDa', item.code, item.status, item.gameType, item.id)"
-              >
-                <div class="platform-game-img">
-                  <div
-                    class="game--bg"
-                    :style="{
-                      backgroundImage: (() => {
-                        try {
-                          return `url(${require(`../assets/images/games/fish/tada-${item.code.toLowerCase()}.png`)})`;
-                        } catch (e) {
+            <template v-for="(item, index) in fishGameList" :key="index">
+              <template v-if="index < showValue">
+                <div
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                >
+                  <div class="platform-game-img">
+                    <div
+                      class="game--bg"
+                      :style="{
+                        backgroundImage: (() => {
                           try {
-                            return `url(${imgURLGame}${item.icon})`;
+                            return `url(${require(`../assets/images/games/fish/${
+                              item._iconPrefix
+                            }-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(${
-                              store.h5Url
-                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(${
+                                store.h5Url
+                              }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            }
                           }
-                        }
-                      })()
-                    }"
-                  ></div>
+                        })()
+                      }"
+                    ></div>
+                  </div>
+                  <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                 </div>
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-              </div>
+              </template>
             </template>
-
-            <template v-for="(item, index) in fishGameJILIList" :key="index">
-              <div
-                class="platform-game-item btn-effect"
-                @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
-              >
-                <div class="platform-game-img">
-                  <div
-                    class="game--bg"
-                    :style="{
-                      backgroundImage: (() => {
-                        try {
-                          return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
-                        } catch (e) {
-                          try {
-                            return `url(${imgURLGame}${item.icon})`;
-                          } catch (e) {
-                            return `url(${
-                              store.h5Url
-                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        }
-                      })()
-                    }"
-                  ></div>
-                </div>
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-              </div>
-            </template>
-
-            <template v-for="(item, index) in fishGameJDBList" :key="index">
-              <div
-                class="platform-game-item btn-effect"
-                @click="playGame(item.name, 'JDB', item.code, item.status, item.gameType, item.id)"
-              >
-                <div class="platform-game-img">
-                  <div
-                    class="game--bg"
-                    :style="{
-                      backgroundImage: (() => {
-                        try {
-                          return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
-                        } catch (e) {
-                          try {
-                            return `url(${imgURLGame}${item.icon})`;
-                          } catch (e) {
-                            return `url(${
-                              store.h5Url
-                            }static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
-                          }
-                        }
-                      })()
-                    }"
-                  ></div>
-                </div>
-                <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-              </div>
-            </template>
+            <q-btn
+              v-if="fishGameList.length > 12"
+              class="show-all-btn"
+              :class="{ expanded: isShowAllFullGames }"
+              flat
+              no-caps
+              @click="scrollDownFullGames"
+            >
+              {{ $t("home.showAll") }}
+              <q-icon name="chevron_right" size="xs" />
+            </q-btn>
           </div>
         </div>
       </template>
@@ -851,25 +840,33 @@
   </div>
 
   <section class="app-download-section">
-
-
     <div class="app-board">
       <div class="character">
         <img src="../assets/images/index/download-app-left.png" alt="Mascot" />
       </div>
-      <div class="app-info">
-        <h3><img src="../assets/images/index/tick-icon.png"/> DOWNLOAD THE APP</h3>
-        <p>Download And Install The Application<br>On Your Desktop For A Smoother<br>Gaming Experience.</p>
+      <div class="app-info" style="display: none">
+        <h3>
+          <img src="../assets/images/index/tick-icon.png" />
+          DOWNLOAD THE APP
+        </h3>
+        <p>
+          Download And Install The Application
+          <br />
+          On Your Desktop For A Smoother
+          <br />
+          Gaming Experience.
+        </p>
 
         <div class="download-buttons">
-          <button class="android"><img src="../assets/images/index/android-icon.png"/><span>Android</span></button>
+          <button class="android">
+            <img src="../assets/images/index/android-icon.png" />
+            <span>Android</span>
+          </button>
         </div>
       </div>
     </div>
 
-
     <div class="logos">
-
       <div class="providers">
         <img src="../assets/images/index/logo-lists.png" />
       </div>
@@ -879,9 +876,7 @@
       </div>
     </div>
 
-    <footer class="footer">
-      ©{{currentYear}} AKB188.COM Todos os direitos reservados
-    </footer>
+    <footer class="footer">©{{ currentYear }} AKB188.COM Todos os direitos reservados</footer>
   </section>
 
   <GameModal
@@ -944,7 +939,8 @@
                     >
                       <q-card>
                         <q-card-section>
-                          {{ ann.content }}
+                          <!-- {{ ann.content }} -->
+                          <span v-html="ann.content" />
                         </q-card-section>
                       </q-card>
                     </q-expansion-item>
@@ -1168,7 +1164,7 @@
     class="isCentreDialog spin-lucky-wheel-dialog"
     persistent
   >
-    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
+    <!-- <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" /> -->
     <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">
       <!-- <template #controller>
         <PopupController v-model="popupPromo" :hasSpin="true" />
@@ -1177,7 +1173,7 @@
   </q-dialog>
   <!-- Spin Lucky Wheel promo end -->
 
-  <q-dialog class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true" >
+  <q-dialog class="isCentreDialog" v-if="popupPromo === 'money-rain'" :model-value="true">
     <MoneyRainModal @closeModal="closeDialog">
       <template #controller>
         <PopupController v-model="popupPromo" :hasWheel="hasInviteWheelPromo" :hasSpin="isShownSpinLuckyWheel" />
@@ -1185,6 +1181,9 @@
     </MoneyRainModal>
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
   </q-dialog>
+
+  <!-- DONT REMOVE THIS GOT USE DE-->
+  <SpinLuckyWheelPromoSticky v-show="false" />
 </template>
 
 <script setup>
@@ -1216,7 +1215,7 @@ import "swiper/css/effect-coverflow";
 import { t } from "../boot/lang";
 // Import Swiper modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Grid } from "swiper/core";
-import { isAndroid } from "src/boot/utils";
+import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { storeToRefs } from "pinia";
 
 import PopupController from "src/components/PopupController.vue";
@@ -1229,19 +1228,49 @@ const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const categoriesList = ref([]);
 
-const isSlotLoading= ref(false);
+const isSlotLoading = ref(false);
 const activateSlide = (clickedItem) => {
   categoriesList.value.forEach((item) => {
     item.active = item === clickedItem;
   });
 
   console.log(clickedItem);
-  console.log(categoriesList.value)
+  console.log(categoriesList.value);
 
-  isSlotLoading.value= true;
-  isGameLoading.value =true;
+  isSlotLoading.value = true;
+  isGameLoading.value = true;
+  isShowAllFullGames.value = false;
 
-  loadGameList("SLOT", clickedItem.id);
+  // debugger;
+
+  if (clickedItem.title === "slot") {
+    loadGameList("SLOT", clickedItem.id);
+  }
+};
+
+const gameClickFromMenu = (gameCode) => {
+  let catSelected = null;
+  let index = 0;
+  if (!gameCode) {
+    catSelected = categoriesList.value.find((cat) => cat.title === "Hot");
+  } else {
+    index = categoriesList.value.findIndex((cat) => cat.code === gameCode);
+    catSelected = categoriesList.value[index];
+  }
+  activateSlide(catSelected);
+  slideToIndex(index);
+};
+
+const swiperInstance = ref(null);
+
+const onSwiper = (swiper) => {
+  swiperInstance.value = swiper;
+};
+
+const slideToIndex = (index) => {
+  if (swiperInstance.value) {
+    swiperInstance.value.slideTo(index);
+  }
 };
 
 const getSlotImage = (code) => {
@@ -1250,7 +1279,7 @@ const getSlotImage = (code) => {
   } catch (e) {
     return require(`../assets/images/index/game-icon.png`);
   }
-}
+};
 
 const csDragPos = ref([10, 0]);
 const isDraggingCsIcon = ref(false);
@@ -2263,6 +2292,29 @@ const loadHotGameList = () => {
     });
 };
 
+const fishGameList = computed(() => {
+  const result = [];
+  for (const game of fishGameTADAList.value) {
+    result.push({
+      ...game,
+      _iconPrefix: "tada"
+    });
+  }
+  for (const game of fishGameJILIList.value) {
+    result.push({
+      ...game,
+      _iconPrefix: "jili"
+    });
+  }
+  for (const game of fishGameJDBList.value) {
+    result.push({
+      ...game,
+      _iconPrefix: "jdb"
+    });
+  }
+  return result;
+});
+
 const fishGameTADAList = ref([]);
 
 const loadTADAFishGameList = () => {
@@ -2433,7 +2485,7 @@ const scrollDownHotGames = () => {
 
 const isShowAllFullGames = ref(false);
 const scrollDownFullGames = () => {
-  isShowAllFullGames.value = true;
+  isShowAllFullGames.value = !isShowAllFullGames.value;
 };
 
 const showValue = computed(() => {
@@ -2518,31 +2570,31 @@ function loadData() {
     .get("/opt-session/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
-        // banners.value = res.data;
-        banners.value = [
-          {
-            promoPageId: null,
-            desktopImageUrl: "promo-1.png",
-            desktopImageUrlDark: null,
-            mobileImageUrl: "promo-1.png",
-            mobileImageUrlDark: null,
-            redirectUrl: "/url/promo",
-            category: "HOME",
-            displayStartTime: 1577847600000,
-            displayEndTime: 1893553199000
-          },
-          {
-            promoPageId: null,
-            desktopImageUrl: "promo-2.png",
-            desktopImageUrlDark: null,
-            mobileImageUrl: "promo-2.png",
-            mobileImageUrlDark: null,
-            redirectUrl: "/url/promo",
-            category: "HOME",
-            displayStartTime: 1577836800000,
-            displayEndTime: 1893542399000
-          }
-        ];
+        banners.value = res.data;
+        // banners.value = [
+        //   {
+        //     promoPageId: null,
+        //     desktopImageUrl: "promo-1.png",
+        //     desktopImageUrlDark: null,
+        //     mobileImageUrl: "promo-1.png",
+        //     mobileImageUrlDark: null,
+        //     redirectUrl: "/url/promo",
+        //     category: "HOME",
+        //     displayStartTime: 1577847600000,
+        //     displayEndTime: 1893553199000
+        //   },
+        //   {
+        //     promoPageId: null,
+        //     desktopImageUrl: "promo-2.png",
+        //     desktopImageUrlDark: null,
+        //     mobileImageUrl: "promo-2.png",
+        //     mobileImageUrlDark: null,
+        //     redirectUrl: "/url/promo",
+        //     category: "HOME",
+        //     displayStartTime: 1577836800000,
+        //     displayEndTime: 1893542399000
+        //   }
+        // ];
 
         setTimeout(() => {
           bannerLoading.value = false;
@@ -2631,6 +2683,12 @@ const getPlatList = () => {
       loadHotGameList();
 
       loadCategoryLists();
+
+      setTimeout(() => {
+        if (route.query.game) {
+          gameClickFromMenu(route.query.game);
+        }
+      }, 100);
     })
     .catch((err) => {});
 };
@@ -2642,16 +2700,16 @@ const loadAnnouncement = () => {
     if (res.code === 0) {
       if (res.data.announcements) {
         const d = res.data.announcements;
-        // announcementList.value = d;
-        announcementList.value = [
-          {
-            title: "Bem-vindo ao AKB148",
-            content: "Bem-vindo ao AKB148",
-            typeId: 72,
-            createTime: 1729150088000,
-            attachment: null
-          }
-        ];
+        announcementList.value = d;
+        // announcementList.value = [
+        //   {
+        //     title: "Bem-vindo ao AKB148",
+        //     content: "Bem-vindo ao AKB148",
+        //     typeId: 72,
+        //     createTime: 1729150088000,
+        //     attachment: null
+        //   }
+        // ];
       }
       if (res.data.type) {
         announcementTypes.value = res.data.type;
@@ -2669,54 +2727,44 @@ const openPopup = (noticeType) => {
     isStationNotice.value = true;
   }
 };
+
 const gotoPromo = (banner) => {
-  const urlPattern = /^\/url\/(.*)/;
-  const platformPattern = /^\/platform\/(.*)/;
-  const gamePattern = /^\/game\/(.*)/;
-  const openPattern = /^\/open\/(.*)/;
-  const openGamePattern = /^\/openGame\/(.*)/;
+  const urlSplit = banner.redirectUrl.split("|");
+  const gameSplit = urlSplit.map((part) => part.split("/"));
 
-  if (banner.redirectUrl.match(urlPattern)) {
-    const extractedUrl = banner.redirectUrl.match(urlPattern)[1];
-    router.push(`${extractedUrl}`);
-  } else if (banner.redirectUrl.match(platformPattern)) {
-    const extractedUrl = banner.redirectUrl.match(platformPattern)[1];
-
-    if (extractedUrl === "SABA") {
-      // gameName: SABA platformCode: SABA gameCode:  gameStatus: OPEN gameType: SPORT gameId: 50
-      playGame(extractedUrl, extractedUrl, "", "OPEN", "SPORT", "50");
-    } else if (extractedUrl === "Evo") {
-      // gameName: Evo platformCode: Evo gameCode:  gameStatus: OPEN gameType: LIVE gameId: 2
-      playGame(extractedUrl, extractedUrl, "", "OPEN", "LIVE", "2");
-    } else if (extractedUrl === "JILI") {
-      // gameName: JiliGames platformCode: JILI gameCode:  gameStatus: OPEN gameType: SLOT gameId: 8
-      openGame(extractedUrl, extractedUrl, "", "OPEN", "SLOT", "8");
+  if (urlSplit.length >= 2) {
+    const type = urlSplit[0];
+    if (type === "open") {
+      if (gameSplit[1][1] === "LuckySport") {
+        playGame(
+          gameSplit[1][0],
+          gameSplit[1][1],
+          "#/special/uefaeuro",
+          gameSplit[1][3],
+          gameSplit[1][4],
+          gameSplit[1][5]
+        );
+      } else {
+        playGame(gameSplit[1][0], gameSplit[1][1], gameSplit[1][2], gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
+      }
+    } else if (type === "page") {
+      router.push(`/${urlSplit[1]}`);
+    } else {
+      router.push(`/promo?name=${banner.redirectUrl}`);
     }
-  } else if (banner.redirectUrl.match(gamePattern)) {
-    const extractedUrl = banner.redirectUrl.match(gamePattern)[1];
-    switch (extractedUrl) {
-      case "spribe/aviator":
-        // gameName: Aviator platformCode: Spribe gameCode: aviator gameStatus: OPEN gameType: CASUAL gameId: 9568
-        playGame("Aviator", "Spribe", "aviator", "CASUAL", "LIVE", "9568");
-      default:
-        return null;
+  } else {
+    if (banner.redirectUrl.includes("https://")) {
+      window.open(banner.redirectUrl, "_blank");
+    } else if (banner.redirectUrl === "app_login") {
+      if (isH5.value && downloadAppRef.value) downloadAppRef.value.click();
+    } else {
+      if (banner.redirectUrl === "redpacketrain") {
+        // isMoneyRainModal.value = true;
+        popupPromo.value = "money-rain";
+      } else {
+        router.push(`/promo?name=${banner.redirectUrl}`);
+      }
     }
-  } else if (banner.redirectUrl.match(openPattern)) {
-    const extractedUrl = banner.redirectUrl.match(openPattern)[1];
-    const [gameName, platformCode, gameCode, gameStatus, gameType, gameId] = extractedUrl.split("/");
-    playGame(gameName, platformCode, gameCode, gameStatus, gameType, gameId);
-  } else if (banner.redirectUrl.match(openGamePattern)) {
-    const extractedUrl = banner.redirectUrl.match(openGamePattern)[1];
-    const queryString = extractedUrl.replace("/openGame/", "");
-    const params = new URLSearchParams(queryString);
-    const gameName = params.get("gameName");
-    const platformCode = params.get("platformCode");
-    const gameStatus = params.get("gameStatus");
-    const gameType = params.get("gameType");
-    const gameId = params.get("gameId");
-    openGame(gameName, platformCode, "", gameStatus, gameType, gameId);
-  } else if (banner.redirectUrl.slice(0, 4) === "http") {
-    window.open(banner.redirectUrl, "_blank");
   }
 };
 
@@ -2878,7 +2926,7 @@ const populatePushNotificationData = (data) => {
 };
 
 const initOneSignal = () => {
-  OneSignal.initialize("e79d0180-b889-40a2-9a46-5c7ce9f06ab9");
+  OneSignal.initialize("58af944a-61fc-4180-91db-af60216840d2");
 
   let myClickListener = async function (event) {
     console.log("CLICK PUSH");
@@ -2923,6 +2971,8 @@ const translateTitle = (title) => {
   return translations[title.toLowerCase()] || title;
 };
 
+const isAppTabsLoaded = ref(false);
+
 const loadAppTabs = () => {
   const localStorageKey = "appTabs";
   const savedTabs = JSON.parse(localStorage.getItem(localStorageKey));
@@ -2932,14 +2982,14 @@ const loadAppTabs = () => {
   //     tab.active = index === 0;
   //   });
   // } else {
-    categoriesList.value = [
-      { title: "Hot", icon: "hot", active: true },
-      // { title: "Lobby", icon: "lobby", active: false },
-      // { title: "Slot", icon: "slot", active: false },
-      { title: "Casino", icon: "casino", active: false },
-      { title: "Fishing", icon: "fishing", active: false },
-      { title: "Sport", icon: "sport", active: false }
-    ];
+  // categoriesList.value = [
+  //   { title: "Hot", icon: "hot", active: true },
+  //   // { title: "Lobby", icon: "lobby", active: false },
+  //   // { title: "Slot", icon: "slot", active: false },
+  //   { title: "Casino", icon: "casino", active: false },
+  //   { title: "Fishing", icon: "fishing", active: false },
+  //   { title: "Sport", icon: "sport", active: false }
+  // ];
   // }
 
   api
@@ -2961,7 +3011,21 @@ const loadAppTabs = () => {
         if (data && data.hasOwnProperty("ftd")) {
           store.ftd = data.ftd;
         }
+        if (data && data.tabs) {
+          categoriesList.value = data.tabs.map((tab) => ({
+            ...tab,
+            active: tab.icon === "hot" ? true : false
+          }));
+        } else {
+          categoriesList.value = [
+            { title: "Hot", icon: "hot", active: true },
+            { title: "Casino", icon: "casino", active: false },
+            { title: "Sport", icon: "sport", active: false },
+            { title: "Fishing", icon: "fishing", active: false },
+          ];
+        }
       }
+      isAppTabsLoaded.value = true;
     })
     .catch((e) => {
       console.error("Failed to fetch tabs:", e);
@@ -2969,12 +3033,27 @@ const loadAppTabs = () => {
 };
 
 const loadCategoryLists = () => {
-  // console.log(slot.value);
-  slot.value.forEach((slotitem, ind1) => {
-    categoriesList.value.splice(1, 0, { title: "slot", code: slotitem.code, icon: slotitem.name, active: false, id: slotitem.id });
-  })
-  // console.log(categoriesList.value)
-}
+  let interval;
+  const _fillSlotPlat = () => {
+    const slotCategories = slot.value.map((item) => ({
+      title: "slot",
+      code: item.code,
+      icon: item.name,
+      active: false,
+      id: item.id
+    }));
+    categoriesList.value.push(...slotCategories);
+    categoriesList.value.push({ title: "Fishing", icon: "fishing", active: false })
+
+  };
+  interval = setInterval(() => {
+    if (isAppTabsLoaded.value) {
+      _fillSlotPlat();
+      clearInterval(interval);
+    }
+  }, 500);
+  // console.log(categoriesList.value);
+};
 
 const hbDragPos = ref([10, 120]);
 const isHbShow = ref(true);
@@ -3025,20 +3104,16 @@ const checkHbPromo = () => {
 };
 
 const gotoFloatPromo = (val) => {
-  if (val.type === "PROMO" && val.code === "br2-redpacketrain") {
+  if (val.type === "PROMO" && val.code === "money-rain") {
     // isMoneyRainModal.value = true;
     popupPromo.value = "money-rain";
-  }
-  else if (val.type === "PROMO") {
+  } else if (val.type === "PROMO") {
     if (store.hasToken()) {
       if (val.code.indexOf("url|") > -1) {
         const page = val.code.replace("url|", "");
         router.push(page);
       } else if (val.code === "/activity-details") {
         router.push(`/activity-details`);
-      } else if (val.code === "spin-lucky-wheel") {
-        popupPromo.value = "spin-lucky-wheel";
-        isShownSpinLuckyWheel.value = true;
       } else {
         router.push(`/promo?name=${val.code}`);
       }
@@ -3053,12 +3128,21 @@ const gotoFloatPromo = (val) => {
 };
 
 let intervalId;
+let jackpotApiTimer;
+let jackpotTimer;
 
 watch(
   () => promoStore.isShownSpinLuckyWheel,
   async (val) => {
     await nextTick();
     if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
+  }
+);
+
+watch(
+  () => route.path,
+  () => {
+    gameClickFromMenu(route.query.game);
   }
 );
 
@@ -3077,6 +3161,44 @@ const checkSpinWheel = () => {
       showSpinWheel();
     }, 750);
   }
+};
+
+function animateValue(obj, prop, start, end, duration) {
+  const startTime = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1); // Clamp to [0,1]
+
+    // Linear interpolation
+    obj[prop] = Math.floor(start + (end - start) * progress);
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+const getJackpotAmt = () => {
+  api.get("/app/jackpot").then((res) => {
+    // debugger;
+    if (res.code === 0) {
+      const startAmt= ui.jackpotAmt;
+
+      animateValue(ui, 'jackpotAmt', startAmt, res.data.value, 500);
+      getJackpotIncrease();
+    }
+  });
+};
+
+const getJackpotIncrease = () => {
+  clearInterval(jackpotTimer)
+  jackpotTimer = setInterval(() => {
+    const randomInt = Math.floor(Math.random() * 2) + 1;
+    ui.jackpotAmt += randomInt;
+  }, 1000);
 };
 
 const showSpinWheel = () => {
@@ -3122,6 +3244,10 @@ onMounted(() => {
   loadCustomerAddress();
   checkHbPromo();
   checkSpinLuckyWheelPromo();
+  getJackpotAmt();
+
+  jackpotApiTimer = setInterval(getJackpotAmt, 5000);
+
   SwiperCore.use([Grid, Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
@@ -3141,6 +3267,8 @@ window.addEventListener("beforeunload", () => {
 
 onBeforeUnmount(() => {
   clearInterval(intervalId);
+  clearInterval(jackpotTimer);
+  clearInterval(jackpotApiTimer)
 });
 </script>
 
@@ -3307,10 +3435,10 @@ onBeforeUnmount(() => {
   .station-notice-wrapper {
     display: flex;
     background: linear-gradient(
-        270deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.11) 50.48%,
-        rgba(255, 255, 255, 0) 100%
+      270deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.11) 50.48%,
+      rgba(255, 255, 255, 0) 100%
     );
     gap: 10px;
     padding: 2px 10px;
@@ -3369,14 +3497,22 @@ onBeforeUnmount(() => {
       align-items: center;
       justify-content: center;
       background: linear-gradient(180deg, #ffc27a 32.14%, #ffea9c 60.71%, #ffeeaf 89.29%);
-      width: 15px;
-      height: 20px;
-      color: #0a4d13;
+      width: 18px;
+      height: 25px;
+
       font-weight: 700;
-      font-size: 14px;
+      font-size: 21px;
       line-height: 140%;
       letter-spacing: -0.08%;
       border-radius: 4px;
+
+      > span {
+        background: linear-gradient(180deg, #033309 0%, #008b06 51.04%, #033309 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+      }
     }
   }
 }
@@ -3850,46 +3986,44 @@ onBeforeUnmount(() => {
   }
 }
 
-
 .app-download-section {
   text-align: center;
-  padding: 40px 20px;
+  padding: 0px 20px 30px;
 }
 
-.character{
-  position:absolute;
-  left:0px;
-  top:0px;
+.character {
+  position: absolute;
+  left: 0px;
+  top: 0px;
   bottom: 0px;
   z-index: 2;
   width: 24%;
 
   img {
-    height:100%;
+    height: 100%;
   }
 
-  @media(max-width: 400px){
+  @media (max-width: 400px) {
     width: 18%;
 
     img {
-      height:75%;
+      height: 75%;
     }
   }
 }
 
-
-.app-board{
-  position:relative;
+.app-board {
+  position: relative;
 }
 
-.app-info{
+.app-info {
   margin-left: auto;
   width: 80%;
-  border: 1px solid #4B4943;
+  border: 1px solid #4b4943;
   border-radius: 10px;
   padding: 5px 12px;
 
-  @media(max-width: 400px){
+  @media (max-width: 400px) {
     width: 65%;
   }
 }
@@ -3905,7 +4039,7 @@ onBeforeUnmount(() => {
   font-size: 14px;
   line-height: 1.5;
   margin-bottom: 15px;
-  padding: 5px ;
+  padding: 5px;
 }
 
 .download-buttons {
@@ -3928,9 +4062,9 @@ button.ios {
 }
 
 button.android {
-  background-color: rgba(255,255,255,0.25);
+  background-color: rgba(255, 255, 255, 0.25);
   color: #fff;
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
@@ -4264,8 +4398,8 @@ button.android {
   }
 }
 
-.swiper-wrapper{
-  width:100%;
+.swiper-wrapper {
+  width: 100%;
 }
 
 .platform-game-container {
@@ -4572,11 +4706,11 @@ button.android {
   min-width: 100%;
 
   &.active {
-    background: url("../assets/images/index/cat-selection-bg-active.svg") center center no-repeat;
+    background: url("../assets/images/index/cat-selected-bg.png") center center no-repeat;
     background-size: 100% 100%;
 
     .cat-title {
-      color: #10211f;
+      //color: #10211f;
       font-weight: bold;
     }
   }
@@ -4586,8 +4720,8 @@ button.android {
   }
 
   .cat-icon {
-    flex: 3;
-    display:flex;
+    flex: 4;
+    display: flex;
     align-items: center;
 
     img {
@@ -4598,8 +4732,8 @@ button.android {
   }
 
   .cat-title {
-    flex: 2;
-    display:flex;
+    flex: 3;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -4609,7 +4743,7 @@ button.android {
     font-size: 11px;
     text-align: center;
     line-height: 13px;
-    white-space:normal;
+    white-space: normal;
   }
 }
 
@@ -4774,12 +4908,31 @@ button.android {
   margin-bottom: 15px;
 
   .swiper-slide {
-    width: 80px !important;
-    background-image: url("../assets/images/index/icon-frame.png");
-    background-size: 100% auto;
-    background-repeat: no-repeat;
+    // width: 80px !important;
+    // background-image: url("../assets/images/index/icon-frame.png");
+    // background-size: 100% auto;
+    // background-repeat: no-repeat;
   }
 }
 
+.show-all-btn {
+  grid-column: span 4;
+  font-size: 18px;
+  font-weight: 600;
+  color: #00fd7c;
 
+  &.expanded {
+    .q-icon {
+      transform: rotate(-90deg);
+    }
+  }
+
+  .q-icon {
+    background: #00fd7c;
+    margin-left: 10px;
+    border-radius: 50%;
+    color: #1f241f;
+    transform: rotate(90deg);
+  }
+}
 </style>

@@ -90,6 +90,8 @@ const onResponse = (response) => {
         router.go("/kaka/login")
       }else if (siteId === "18" || siteId === 18) {
         router.go("/br1/login")
+      }else if (siteId === "28" || siteId === 28) {
+        router.go("/br2/login")
       }
       location.reload()
     } else if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
@@ -181,6 +183,7 @@ const https = (api) => {
   const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
   const xf1Host = "affiliate-web.gwd4jptunz.com";
   const xf2Host = "xf1-affiliate.gwd4jptunz.com"
+  const br2Host = "br2-affiliate.ppk8d1a5rw5.com"
   // const vnmHost = "vnm-affiliate.th80to83w1.com"
   // const krwHost = "krw-affiliate.hiemloelebc.com";
   // const testLocal = "localhost:9998"
@@ -191,8 +194,10 @@ const https = (api) => {
   console.log(currentHost)
   const isLocalhost = currentHost.indexOf("localhost") > -1 || currentHost.indexOf("127.0.0.1") > -1;
   //Only Global or China.
-  if (currentHost.indexOf("-cn") > -1 || currentHost.indexOf(lh2Host) > -1 || currentHost.indexOf(lh3Host) > -1 || currentHost.indexOf(xf1Host) > -1 || currentHost.indexOf(xf2Host) > -1 || isLocalhost) {
+  if (currentHost.indexOf("-cn") > -1 || currentHost.indexOf(lh2Host) > -1 || currentHost.indexOf(lh3Host) > -1 || currentHost.indexOf(xf1Host) > -1 || currentHost.indexOf(xf2Host) > -1 ) {
     apiUrl = isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_AFF_API)
+  } else if (currentHost.indexOf("br2-") > -1 || currentHost.indexOf(br2Host) > -1 || isLocalhost) {
+    apiUrl = isAff ? process.env.VUE_APP_BR2_RST_API : (isCr ? process.env.VUE_APP_BR2_CR_API : process.env.VUE_APP_BR2_AFF_API)
   } else {
     apiUrl = isAff ? process.env.VUE_APP_GLOBAL_RST_API : (isCr ? process.env.VUE_APP_GLOBAL_CR_API : process.env.VUE_APP_GLOBAL_AFF_API)
   }

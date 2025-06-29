@@ -41,7 +41,7 @@ const targetWithdrawAmount = computed(() => {
   //   default:
   //     return 0;
   // }
-  return 1000;
+  return 100;
 });
 
 const extractionDifference = computed(() =>
@@ -54,8 +54,8 @@ provide("targetWithdrawAmount", targetWithdrawAmount);
 
 const loadData = async () => {
   // isDuringInit.value = true;
-  // const res = await eventapi.get("/session/refer-wheel-spin/init?promoCode=br2-refer-wheel");
-  const res = await eventapi.get("/session/refer-wheel/init?promoCode=br2-refer-wheel");
+  const res = await eventapi.get("/session/refer-wheel-spin/init?promoCode=br2-refer-wheel");
+  // const res = await eventapi.get("/session/refer-wheel/init?promoCode=br2-refer-wheel");
   if (res.code === 0) {
     switch (res.data.currentBonusType) {
       case "REDPACKET":

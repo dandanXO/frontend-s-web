@@ -3,7 +3,7 @@ import { getRndInteger } from "@/utils/utils";
 import { stringify } from "qs";
 import { userStore } from "@/store";
 // import i18n from "../i18n/index";
-import { ResponseCode, SkipErrorCode } from "@/api/response";
+import { GLOBAL_NOTIFICATION_ERROR_CODE, ResponseCode, SkipErrorCode } from "@/api/response";
 import { uiStore } from "@/store/ui";
 import { useRouter } from "vue-router";
 import { globalLinks, globalAndCNLinks } from "@/configs/domain";
@@ -212,12 +212,7 @@ const onResponse = (response) => {
         return;
       }
       if (
-        (res.code === ResponseCode.ERROR_USER_TOO_FAST ||
-          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
-          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
-          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
-          res.code === ResponseCode.ERROR_PROMO_NOT_IN_RANGE ||
-          res.code === ResponseCode.ERROR_SYSTEM) &&
+        GLOBAL_NOTIFICATION_ERROR_CODE.includes(res.code) &&
         window.location.href.indexOf("?name=lh1-daily-checkin") === -1
       ) {
         ui.notify({

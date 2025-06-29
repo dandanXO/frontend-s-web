@@ -5,6 +5,7 @@
       <img class="logo" src="../../../assets/images/dy/logo.png" v-if="siteId === '6' || siteId === 6"> <!--DY-->
       <img class="logo" src="../../../assets/images/home/logo_w_text.png" v-if="siteId === '7' || siteId === 7"> <!--LH-->
       <img class="logo" src="../../../assets/images/ind/logo.png" v-if="siteId === '5' || siteId === 5"> <!--LH-->
+      <img class="logo" src="../../../assets/images/br2/br2-logo-square.png" v-if="siteId === '28' || siteId === 28"> <!--BR2-->
     </div>
     <div class="right-menu">
       <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">

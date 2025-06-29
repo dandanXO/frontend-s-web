@@ -74,6 +74,9 @@
     <YaLLa2025 v-else-if="list.redirectUrl === 'lh1-yalla-compass-qatar-2025'" :promo-code="list.promoCode" />
     <IemMelbourne2025 v-else-if="list.redirectUrl === 'lh1-iem-melbourne-2025'" :promo-code="list.promoCode" />
     <PglWallachiaS5 v-else-if="list.redirectUrl === 'lh1-pgl-wallachia-s5'" :promo-code="list.promoCode" />
+    <tgWorldChamp2025 v-else-if="list.redirectUrl === 'lh1-tp-world-champ-2025-sa'" :promo-code="list.promoCode" />
+    <lh1Ti14 v-else-if="list.redirectUrl === 'lh1-ti14'" :promo-code="list.promoCode" />
+    <iemCologne2025 v-else-if="list.redirectUrl === 'lh1-iem-cologne-2025'" :promo-code="list.promoCode" />
     <BlastSlam32025 v-else-if="list.redirectUrl === 'lh1-blast-slam-3-2025'" :promo-code="list.promoCode" />
     <sport-refer-bet-bonus v-else-if="list.redirectUrl === 'lh1-sport-refer-bet-bonus'" :promo-code="list.promoCode" />
     <Lh1Enc2025 v-else-if="list.redirectUrl === 'lh1-enc-2025'" :promo-code="list.promoCode" />
@@ -92,6 +95,10 @@
       v-else-if="list.redirectUrl === 'lh1-new-user-sport-bonus-2025'"
       :promo-code="list.promoCode"
     />
+    <FissureUniverseS5 v-else-if="list.redirectUrl === 'lh1-fissure-universe-s5'" :promo-code="list.promoCode" />
+    <EsportWorldCup2025 v-else-if="list.redirectUrl === 'lh1-esport-world-cup-2025'" :promo-code="list.promoCode" />
+    <FifaCwcRedPacket v-else-if="list.redirectUrl === 'lh1-fifa-cwc-red-packet'" :promo-code="list.promoCode" />
+    <FissureJulyFinal2025 v-else-if="list.redirectUrl === 'lh1-fissure-july-final-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -118,6 +125,7 @@ import { useRouter } from "vue-router";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
+
 const EslOneBkk2024 = defineAsyncComponent(() => import("../components/hotpromo/eslone-bkk-2024/EslOneBkk2024.vue"));
 const AgYuanxiaohongbao = defineAsyncComponent(() =>
   import("../components/hotpromo/ag-yuanxiaohongbao/AgYuanxiaohongbao.vue")
@@ -143,6 +151,13 @@ const IemMelbourne2025 = defineAsyncComponent(() =>
   import("../components/hotpromo/iem-melbourne-2025/IemMelbourne2025.vue")
 );
 const PglWallachiaS5 = defineAsyncComponent(() => import("../components/hotpromo/pgl-wallachia-s5/PglWallachiaS5.vue"));
+const tgWorldChamp2025 = defineAsyncComponent(() =>
+  import("../components/hotpromo/tp-world-champ-2025-sa/tp-world-champ-2025-sa.vue")
+);
+const lh1Ti14 = defineAsyncComponent(() => import("../components/hotpromo/lh1-ti14/lh1-ti14.vue"));
+const iemCologne2025 = defineAsyncComponent(() =>
+  import("../components/hotpromo/iem-cologne-2025/iem-cologne-2025.vue")
+);
 const BlastSlam32025 = defineAsyncComponent(() =>
   import("../components/hotpromo/blast-slam-3-2025/BlastSlam32025.vue")
 );
@@ -233,6 +248,14 @@ const WorldCup2025 = defineAsyncComponent(() => import("./hotpromo/worldcup-2025
 const NewUserSportBonus2025 = defineAsyncComponent(() =>
   import("./hotpromo/new-user-sport-bonus-2025/NewUserSportBonus2025.vue")
 );
+const FissureUniverseS5 = defineAsyncComponent(() => import("./hotpromo/fissure-universe-s5/FissureUniverseS5.vue"));
+const EsportWorldCup2025 = defineAsyncComponent(() =>
+  import("./hotpromo/esport-world-cup-2025/EsportWorldCup2025.vue")
+);
+const FifaCwcRedPacket = defineAsyncComponent(() => import("./hotpromo/fifa-cwc-red-packet/FifaCwcRedPacket.vue"));
+const FissureJulyFinal2025 = defineAsyncComponent(() =>
+  import("./hotpromo/fissure-july-final-2025/FissureJulyFinal2025.vue")
+);
 
 export default defineComponent({
   name: "HotPromo",
@@ -297,6 +320,9 @@ export default defineComponent({
     FissureUniverseS4,
     IemMelbourne2025,
     PglWallachiaS5,
+    tgWorldChamp2025,
+    lh1Ti14,
+    iemCologne2025,
     BlastSlam32025,
     sportReferBetBonus,
     PglastanaAc2025,
@@ -306,7 +332,11 @@ export default defineComponent({
     IemDallas2025,
     DreamLeagueS26,
     WorldCup2025,
-    NewUserSportBonus2025
+    NewUserSportBonus2025,
+    FissureUniverseS5,
+    EsportWorldCup2025,
+    FifaCwcRedPacket,
+    FissureJulyFinal2025
   },
   props: {
     list: {
@@ -921,20 +951,6 @@ export default defineComponent({
       align-items: center;
     }
 
-    .claim-title-icon {
-      background: url("../assets/images/promotion/hotpromo/common/claim-title-icon.svg") no-repeat center center;
-      background-size: 100% 100%;
-    }
-
-    .claim-coin-icon {
-      background: url("../assets/images/promotion/hotpromo/common/claim-coin-icon.svg") no-repeat center center;
-      background-size: 100% 100%;
-    }
-
-    .claim-gift-icon {
-      background: url("../assets/images/promotion/hotpromo/common/claim-gift-icon.svg") no-repeat center center;
-      background-size: 100% 100%;
-    }
 
     .title-img {
       color: #fff;

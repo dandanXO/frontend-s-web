@@ -175,11 +175,16 @@ defineExpose({
     position: relative;
 
     :deep(.q-field__control) {
-      background: rgba(255, 255, 255, 0.15) !important;
+      // background: rgba(255, 255, 255, 0.15) !important;
+      background:#EAEFF9;
+      border-radius: 10px;
+    }
+    :deep(.q-field__focusable-action) {
+          color: #000000b3;
     }
 
     :deep(.q-field__native) {
-      color: #ffffff;
+      color: #000000;
     }
   }
 

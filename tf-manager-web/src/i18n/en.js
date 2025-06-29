@@ -25,6 +25,9 @@ export default {
       SUPER_AFFILIATE: 'Super Affiliate',
       MASTER_AFFILIATE: 'Master Affiliate',
       CHIEF_AFFILIATE: 'Chief Affiliate',
+      PK4_MASTER_AFFILIATE: 'Master Affiliate',
+      PK4_SUPER_AFFILIATE: 'Super Affiliate',
+      PK4_JUNIOR_AFFILIATE: 'Junior Affiliate',
     },
     timeType: {
       MONTHLY: 'Monthly',
@@ -892,6 +895,7 @@ export default {
     changeAffiliate: 'Change Affiliate',
     check: 'REVIEW',
     checkall: 'Check All',
+    checkBindCard: 'Check Bind Card',
     checkBy: 'Check By',
     checkDate: 'Check Date',
     checkExclusiveUrl: 'Check Exclusive Url',
@@ -2648,9 +2652,12 @@ export default {
     streamScore: 'Stream Score',
     screenShot: 'Screen Shot',
     streamTag: 'Stream Tag',
+    settlementSetting: 'Dividend Rate',
+    settlementBetRequired: 'Active Bet Amount',
+    settlementDepositRequired: 'Active Deposit Amount',
     isCdnPush: 'Push CDN',
     box: 'Box',
-    isCreateLiveUrl: 'Is Create Live Url (Yes/No)',
+    isCreateLiveUrl: 'Live Url',
     isLiveUrlExist: 'Live Url Exist',
     addToLive: 'Add to Live',
     initialSupplierStreamStatus: 'Initial Supplier Stream Status',
@@ -2664,6 +2671,7 @@ export default {
     subscribeCount: 'Subscribe Count',
     eventCode: 'Event Code',
     roleConfig: 'Role Config',
+    chatHistory: 'Chat History'
   },
   message: {
     adsStatusOpen: 'Open',
@@ -2734,6 +2742,7 @@ export default {
     confirmToAction: 'Confirm that you want to proceed with this operation?',
     copyToClipboard: ' has been copied to clipboard.',
     copySuccess: 'Copy Success',
+    successGetUrl: 'Get Live Url Success',
     deleteSuccess: 'Delete Success',
     runAtOnceSuccess: 'Run job Success',
     dailyMinRegLimitCannotExceedMax:
@@ -3547,7 +3556,8 @@ export default {
     'Sport Live Sensitive Word': 'Sport Live Sensitive Word',
     'Sport Live Block Member': 'Sport Live Block Member Setting',
     'Sport Live Chat Vip Status': 'Sport Live Vip Message Setting',
-    'Sport Live History Block': 'Sport Live History Block Setting',
+    'Affiliate Settlement Setting': 'Affiliate Settlement Setting',
+    'Sport Live History Block': 'Sport Live History Message',
     'Sport Live Monitor': 'Sport Live Monitor',
     'Sport Live Admin': 'Sport Live Admin Setting',
     'Member Refer Stat Analysis': 'Refer Friend Analysis',
@@ -3776,7 +3786,8 @@ export default {
     WITHDRAW_ERROR: 'Withdraw Error',
     DEPOSIT_ERROR: 'Deposit Error',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'Task Idle(Bet Record Fetch)',
-    FIRST_DEPOSIT_FLUCTUATION: 'First deposit fluctuation'
+    FIRST_DEPOSIT_FLUCTUATION: 'First deposit fluctuation',
+    WITHDRAW_ALERT: 'Withdraw alert'
   },
   domain: {
     domainMainType: {
@@ -4017,6 +4028,7 @@ export default {
     53001: 'Referrer cannot be empty',
     54000: 'Register blacklist record not exist',
     54001: 'Register blacklist record already exist',
+    55001: 'Do not get the live url',
     55000: 'The member already exist in the top ranking list'
   },
 }

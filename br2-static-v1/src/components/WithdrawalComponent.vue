@@ -231,6 +231,7 @@ import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import LoadingComponent from "./LoadingComponent.vue";
 import AddBankCardModal from "./modal/AddBankCardModal.vue";
+import { t } from "src/boot/lang";
 
 const qs = require("qs");
 const $q = useQuasar();
@@ -391,7 +392,7 @@ const submitWithdraw = async () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "Withdrawal Submit Succeed",
+            message: t("notify.withdrawalSubmitSucceed"),
             icon: "check_circle_outline"
           });
           // props.loadCards();
@@ -430,7 +431,7 @@ const withdrawGo = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Withdrawal Submit Succeed",
+          message: t("notify.withdrawalSubmitSucceed"),
           icon: "check_circle_outline"
         });
 

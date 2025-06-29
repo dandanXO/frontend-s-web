@@ -10,7 +10,7 @@ export const getLivestreamList = () => {
 // };
 
 export const getLivestreamDetail = (livestreamId, abortController) => {
-  return api.get(`/opt-session/live/${livestreamId}`, { abortController });
+  return api.get(`/opt-session/live/${livestreamId}`, { signal: abortController.signal });
 };
 
 export const getChatHistory = (payload, current) => {

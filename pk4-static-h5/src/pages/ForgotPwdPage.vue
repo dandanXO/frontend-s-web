@@ -1,7 +1,7 @@
 <template>
 
   <div class="auth-container">
-    <img class="top-left-logo" src="../assets/images/auth/b9-logo.svg" />
+    <img class="top-left-logo" src="../assets/images/auth/pk4-logo.svg" />
     <div class="back-left">
       <router-link :to="'/home'">
         <img src="../assets/images/index/close-btn.png" />

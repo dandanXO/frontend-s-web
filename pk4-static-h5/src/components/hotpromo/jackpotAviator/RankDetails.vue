@@ -35,8 +35,8 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
 .bottom {
   // background: linear-gradient(180deg, #0d5819 0%, #082a23 100%);
   // border: 1px solid #258838;
-  background: #3237384D;
-  color: #ffffff;
+  background: #090f1e;
+  color: #3f4c6b;
   display: grid;
   grid-template-columns: 0.8fr 1fr 1fr;
   align-items: center;
@@ -48,7 +48,7 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
   max-width: 500px;
   font-size: 12px;
   font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 700;
+  // font-weight: 700;
   line-height: 100%;
   letter-spacing: 0;
   text-align: center;
@@ -82,7 +82,7 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
 
   &.isNotInApp {
     // bottom: 95px;
-    bottom: 45px;
+    bottom: 70px;
   }
 
   .column {
@@ -94,18 +94,18 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
       margin-top: 8px;
     }
 
-
     &:last-child {
       align-items: flex-end;
     }
   }
 
   .label {
-    color: #c84846;
+    // color: #ffffff;
+    color: #3f4c6b;
   }
 
   .value {
-    color: #f1ff55;
+    color: #DAC385;
   }
 }
 

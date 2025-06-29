@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed , watch} from "vue";
 import { useUI } from "stores/ui";
 import LoginForm from "./LoginForm.vue";
 import ForgetPwForm from "./ForgetPwForm.vue";
@@ -20,6 +20,12 @@ const isShowLoginDialog = computed(() => {
   return !!uiStore.loginView;
 });
 const uiStore = useUI();
+
+watch(isShowLoginDialog, (val) => {
+  if(val===false){
+    uiStore.showFooter()
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -39,16 +45,21 @@ const uiStore = useUI();
   box-shadow: 0 -30px 20px -10px #00fd7a5e;
 }
 
+:deep(.q-field__bottom){
+  @media (max-width: 390px) {
+    font-size: 9px;
+  }
+}
+
 .close-btn {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(200px);
+  position: absolute;
+  transform: translateX(214px);
   color: white;
-  z-index: 1;
+  z-index: 2;
+  margin-top: 14px;
   width: fit-content !important;
   @media (max-width: 500px) {
-    right: 20px;
+    right: 0.75rem;
     left: unset;
     transform: unset;
   }

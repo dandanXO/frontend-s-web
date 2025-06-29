@@ -1,15 +1,31 @@
 <template>
   <q-page>
     <div class="top-setting-section">
+      <div class="profile-menu">
+        <!-- <q-btn dense flat @click="toggleMenuOpen()">
+          <img style="width: 32px; height: 32px" src="../assets/images/index/left-menu-icon.png" />
+        </q-btn> -->
+        <ProfileSummary :settingsPage="true" />
+      </div>
+
       <div class="top-profile">
         <div class="profile">
           <div class="profile-pic">
             <q-avatar size="56px">
               <img :src="profileImagePath" />
             </q-avatar>
+            <div class="vip-details">
+              <img
+                class="bg"
+                :src="require(`../assets/images/vip/badge/withLevel/vip-badge-${store.vip.replace('VIP', '')}.png`)"
+                alt=""
+              />
+              <!-- C:\Users\caspe\dev\Fork\frontend\br2-static-v1\src\assets\images\vip\badge\withLevel -->
+            </div>
           </div>
           <div class="top-name">
             <div class="top-name-details">
+              <div>{{ store.phone }}</div>
               <div>{{ store.realName }}</div>
             </div>
             <div class="top-copy-id">
@@ -151,7 +167,7 @@
         </q-card-section>
       </q-card>
 
-      <div class="super-promo">
+      <div class="super-promo" @click="goToPromo('/promo?name=redeposit-bonus')">
         <img class="super-promo-img" src="../assets/images/account/super-promo.png" />
         <router-link class="super-promo-chevron" to="">
           <q-icon name="chevron_right" color="white" />
@@ -190,18 +206,20 @@ import { computed, onActivated, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { userStore } from "src/stores";
 import ProfileSummary from "../components/ProfileSummary.vue";
+import { useI18n } from "vue-i18n";
 
 const store = userStore();
 const router = useRouter();
 const qs = require("qs");
 const $q = useQuasar();
+const { t } = useI18n();
 
 const slide = ref(0);
 const imgURL = process.env.IMAGE_CDN + "/promo/";
 const btm_banners = ref([
-  {
-    mobileImageUrl: require("../assets/images/promotion/tempo/promo-2.png")
-  }
+  // {
+  //   mobileImageUrl: require("../assets/images/promotion/tempo/promo-2.png")
+  // }
 ]);
 
 const loadingLogout = ref(false);
@@ -243,13 +261,17 @@ const goToPage = (promo) => {
   }
 };
 
+const goToPromo = (page) => {
+  router.push(page);
+};
+
 const loadBanner = () => {
   api.get("/opt-session/promo/banner?category=CENTERPROMO").then((response) => {
     if (response.code === 0) {
       response.data.forEach((item) => {
         item.mobileImageUrl = imgURL + item.mobileImageUrl;
       });
-      // btm_banners.value = response.data;
+      btm_banners.value = response.data;
     }
   });
 };
@@ -258,7 +280,8 @@ const logout = () => {
   loadingLogout.value = true;
 
   $q.loading.show({
-    message: "Logging out..."
+    // message: "Logging out..."
+    message: t("btn.loggingOut")
   });
 
   store.memberLogout().then(() => {
@@ -271,10 +294,14 @@ const logout = () => {
 <style scoped lang="scss">
 .top-setting-section {
   background: url(../assets/images/account/setting-bg.png) no-repeat center center;
-  padding-top: 60px;
+  padding-top: 20px;
   background-size: cover;
   position: relative;
   margin-bottom: 22px;
+
+  .profile-menu {
+    margin-left: 12px;
+  }
 
   .top-profile {
     display: flex;
@@ -283,6 +310,7 @@ const logout = () => {
     width: 90%;
     margin: 0 auto;
     .profile {
+      z-index: 1;
       display: flex;
       width: 90%;
       :not(:last-child) {
@@ -503,7 +531,7 @@ const logout = () => {
   height: 42px;
   //color: #ffffff;
   border-radius: 8px;
-  color:#2D2D2D;
+  color: #2d2d2d;
 }
 
 .super-promo {

@@ -18,10 +18,7 @@
       </div>
       <div class="right">
         <div v-if="selectedItem?.desktopImgUrl">
-          <img
-            @click="onClickPopoutImg(`/promotion?name=${selectedItem.path}`)"
-            :src="`${imgURL}${selectedItem.desktopImgUrl}`"
-          />
+          <img @click="$emit('popup-click', selectedItem.path)" :src="`${imgURL}${selectedItem.desktopImgUrl}`" />
           <!-- <router-link :to="`/promotion?name=${selectedItem.path}`" class="check-details-btn">{{ $t('sitePopout.checkDetails') }}</router-link> -->
         </div>
       </div>
@@ -37,6 +34,8 @@ import moment from "moment";
 import { useRouter } from "vue-router";
 import { uiStore } from "@/store/ui";
 import { EDITION } from "@/constant/edition";
+
+defineEmits(["popup-click"]);
 
 const router = useRouter();
 const ui = uiStore();

@@ -1,11 +1,11 @@
 <template>
   <div class="hot-promo">
-    <ClaimPromo
-      v-if="isCommonPromo && store.hasToken()"
-      :promo-id="list.id"
-      :loading-claim="btnLoading"
-      @daily-slot="handleSlot()"
-    />
+<!--    <ClaimPromo-->
+<!--      v-if="isCommonPromo && store.hasToken()"-->
+<!--      :promo-id="list.id"-->
+<!--      :loading-claim="btnLoading"-->
+<!--      @daily-slot="handleSlot()"-->
+<!--    />-->
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'tigercard'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
@@ -14,7 +14,7 @@
 
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'br1-slot-ftd' && store.token" :params="list.param" />
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
-    <ReceiveEarnPromo v-if="list.redirectUrl === 'receive-earn'" :params="list.param" />
+    <SpinLuckyWheelPromoTemp v-if="list.redirectUrl === 'br2-aviator-wheel-bet-count'" :params="list.param" />
 
     <MoneyRainPromo v-if="list.redirectUrl === 'money-rain'" :params="list.param" />
     <RedepositBonusPromo v-if="list.redirectUrl === 'redeposit-bonus'" :params="list.param" />
@@ -22,6 +22,11 @@
     <VipPlanBettingUpgrade v-if="list.redirectUrl === 'br2-vip-plan'" :params="list.param" />
     <CashbackWeeklyPromo v-if="list.redirectUrl === 'cashback-weekly'" :params="list.param" />
     <RedPacketRainPromo v-if="list.redirectUrl === 'br2-red-packet-rain'" :params="list.param" />
+    <RedepositBonus100Promo v-if="list.redirectUrl === 'redeposit-bonus-100'" :params="list.param" />
+    <DailySecondDepositPromo v-if="list.redirectUrl === 'br2-daily-second-deposit'" :params="list.param" />
+    <BetCashbackPromo v-if="list.redirectUrl === 'br2-bet-rebate'" :params="list.param" />
+    <LossRebatePromo v-if="list.redirectUrl === 'br2-loss-rebate'" :params="list.param" />
+    <FtdBonusPromo v-if="list.redirectUrl === 'br2-ftd-bonus'" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -41,33 +46,37 @@
 </template>
 
 <script>
-import { computed, defineComponent, onMounted, ref } from "vue";
+import { defineAsyncComponent, defineComponent, onMounted, ref } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
-import * as _ from "lodash";
 import moment from "moment";
-import ClaimPromo from "../components/hotpromo/claimPromo.vue";
-import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
-import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
-import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
-import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
-import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
-import SlotFtdPromo from "../components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
-import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
-import ReceiveEarnPromo from "./hotpromo/receive-earn/ReceiveEarnPromo.vue";
-import MoneyRainPromo from "./hotpromo/money-rain/MoneyRainPromo.vue";
-import RedepositBonusPromo from "./hotpromo/redeposit-bonus/RedepositBonusPromo.vue";
-import VipPlanBettingUpgrade from "./hotpromo/vip-plan-betting-upgrade/VipPlanBettingUpgrade.vue";
-import CashbackWeeklyPromo from "./hotpromo/cashback-weekly/CashbackWeeklyPromo.vue";
-import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRainPromo.vue";
+
+const TigerCardPromo = defineAsyncComponent(() => import("../components/hotpromo/tigercard/tigerCardPromo.vue"));
+const GoldenEggPromo = defineAsyncComponent(() => import("../components/hotpromo/goldenegg/goldenEggPromo.vue"));
+const HongBaoYuPromo = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu/HongBaoYu.vue"));
+const WelcomeTaskPromo = defineAsyncComponent(() => import("../components/hotpromo/welcometask/welcomeTaskPromo.vue"));
+const InviteFriendPromo = defineAsyncComponent(() => import("../components/hotpromo/invitefriend/inviteFriendPromo.vue"));
+const SlotFtdPromo = defineAsyncComponent(() => import("../components/hotpromo/slotftdpromo/SlotFtdPromo.vue"));
+const SpinLuckyWheelPromo = defineAsyncComponent(() => import("./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue"));
+const SpinLuckyWheelPromoTemp = defineAsyncComponent(() => import("./hotpromo/spin-lucky-wheel-temp/SpinLuckyWheelPromo.vue"));
+const MoneyRainPromo = defineAsyncComponent(() => import("./hotpromo/money-rain/MoneyRainPromo.vue"));
+const RedepositBonusPromo = defineAsyncComponent(() => import("./hotpromo/redeposit-bonus/RedepositBonusPromo.vue"));
+const VipPlanBettingUpgrade = defineAsyncComponent(() => import("./hotpromo/vip-plan-betting-upgrade/VipPlanBettingUpgrade.vue"));
+const CashbackWeeklyPromo = defineAsyncComponent(() => import("./hotpromo/cashback-weekly/CashbackWeeklyPromo.vue"));
+const RedPacketRainPromo = defineAsyncComponent(() => import("../components/hotpromo/redPacketRain/RedPacketRainPromo.vue"));
+const RedepositBonus100Promo = defineAsyncComponent(() => import("../components/hotpromo/redeposit-bonus/RedepositBonusPromo.vue"));
+const BetCashbackPromo = defineAsyncComponent(() => import("../components/hotpromo/bet-cashback/BetCashbackPromo.vue"));
+const DailySecondDepositPromo = defineAsyncComponent(() => import("../components/hotpromo/daily-second-deposit/DailySecondDepositPromo.vue"));
+const LossRebatePromo = defineAsyncComponent(() => import("../components/hotpromo/loss-rebate/LossRebatePromo.vue"));
+const FtdBonusPromo = defineAsyncComponent(() => import("../components/hotpromo/ftdBonus/FtdBonusPromo.vue"));
+
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
-    ClaimPromo,
     TigerCardPromo,
     GoldenEggPromo,
     HongBaoYuPromo,
@@ -75,12 +84,17 @@ export default defineComponent({
     InviteFriendPromo,
     SlotFtdPromo,
     SpinLuckyWheelPromo,
-    ReceiveEarnPromo,
+    SpinLuckyWheelPromoTemp,
     MoneyRainPromo,
     RedepositBonusPromo,
     VipPlanBettingUpgrade,
     CashbackWeeklyPromo,
-    RedPacketRainPromo
+    RedPacketRainPromo,
+    RedepositBonus100Promo,
+    BetCashbackPromo,
+    DailySecondDepositPromo,
+    LossRebatePromo,
+    FtdBonusPromo
   },
   props: {
     list: {
@@ -139,11 +153,17 @@ export default defineComponent({
       this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "br1-slot-ftd" ||
       this.list.redirectUrl === "spin-lucky-wheel" ||
+      this.list.redirectUrl === "br2-aviator-wheel-bet-count" ||
       this.list.redirectUrl === "receive-earn" ||
       this.list.redirectUrl === "money-rain" ||
       this.list.redirectUrl === "redeposit-bonus" ||
       this.list.redirectUrl === "br2-vip-plan" ||
       this.list.redirectUrl === "cashback-weekly" ||
+      this.list.redirectUrl === "redeposit-bonus-100" ||
+      this.list.redirectUrl === "br2-ftd-bonus" ||
+      this.list.redirectUrl === "br2-daily-second-deposit" ||
+      this.list.redirectUrl === "br2-loss-rebate" ||
+      this.list.redirectUrl === "br2-bet-rebate" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
@@ -152,13 +172,6 @@ export default defineComponent({
     }
     const store = userStore();
 
-    if (this.list.id == 30) {
-      // console.log("Iphone promo");
-      // this.loadLNWinnerList();
-      if (store.hasToken()) {
-        this.filterWinnerLists();
-      }
-    }
   },
   setup() {
     const $q = useQuasar();
@@ -239,52 +252,6 @@ export default defineComponent({
       }
     ];
 
-    const filterWinnerLists = () => {
-      var resultTime = formState.value.resultTime;
-      var winnerUrl = "/privi/winners";
-      if (resultTime) {
-        winnerUrl += "?resultTime=" + resultTime;
-      }
-
-      // console.log(winnerUrl);
-
-      winnerDataSource.value = [];
-      loading.value = true;
-      eventapi.get(winnerUrl).then((res) => {
-        loading.value = false;
-        var data = res.data.data;
-
-        for (let i in data) {
-          _.each(data[i].winners, function (winner, index) {
-            winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
-
-            winnerDataSource.value.push(winner);
-          });
-        }
-      });
-    };
-
-    // const loadLNWinnerList = () => {
-    //   const winnerUrl = "/privi/winners";
-    //   winnerDataSource.value = [];
-    //   loading.value = true;
-    //   eventapi
-    //     .get(winnerUrl)
-    //     .then((res) => {
-    //       loading.value = false;
-    //       var data = res.data.data;
-
-    //       for (let i in data) {
-    //         _.each(data[i].winners, function (winner, index) {
-
-    //           winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
-    //           console.log(winner);
-
-    //           winnerDataSource.value.push(winner);
-    //         })
-    //       }
-    //     });
-    // }
 
     const filterLuckyNumber = () => {
       loading.value = true;
@@ -401,7 +368,6 @@ export default defineComponent({
       submitLuckyNumber,
       // loadLNWinnerList,
       filterLuckyNumber,
-      filterWinnerLists,
       formState,
       dataSource,
       winnerDataSource,

@@ -18,6 +18,10 @@
       <div class="nickname">{{ store.realName ? store.realName : store.nickName }}</div>
     </div>
 
+    <div class="valid-bet-div">
+      {{ $t("vip.currentValidBets") }}: {{ store.currency.value }}&nbsp;
+      <span>{{ store.getCurrentValidBet() }}</span>
+    </div>
     <div class="right-container" :class="`vipitem${store.vip.replace('VIP', '')}`">
       <div class="amount-progress-container">
         <div class="vip-text">{{ store.vip }}</div>
@@ -83,7 +87,7 @@ const profileImagePath = computed(() => {
 
 
 $textcolors: (
-  #4a75d9,
+  #072569,
   #523014,
   #780f70,
   #be2526,
@@ -139,7 +143,7 @@ $colors: (
   }
 }
 $gradients: (
-  linear-gradient(90deg, #9ec2fa 0%, #4077de 100%),
+  linear-gradient(90deg, #002560 0%, #002262 100%),
   linear-gradient(90deg, #e5b888 0%, #b08240 100%),
   linear-gradient(90deg, #e268d9 0%, #780f70 100%),
   linear-gradient(90deg, #ff5f60 0%, #ae0536 100%),
@@ -291,6 +295,21 @@ $gradients: (
       // color: #B2BDBF;
       font-weight: 400;
     }
+  }
+}
+.valid-bet-div {
+  width: 100%;
+  color: #fff;
+  background-color: #56616396;
+  width: fit-content;
+  padding: 2px 10px;
+  border-radius: 10px;
+  align-self: flex-start;
+  margin-top: 20px;
+  span {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
   }
 }
 </style>

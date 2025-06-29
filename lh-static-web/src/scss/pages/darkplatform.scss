@@ -183,6 +183,7 @@
 
           .game-img {
             max-height: 42px;
+            max-width: 4.5rem;
             filter: grayscale(1);
           }
 
@@ -556,7 +557,7 @@
             aspect-ratio: 1/1;
             overflow: hidden;
             border-radius: 18px;
-            .slot-tag{
+            .slot-tag {
               position: absolute;
               z-index: 1;
               top: 0px;
@@ -583,7 +584,7 @@
             padding: 0.5rem 1rem;
             color: $font-grey;
             position: relative;
-            color:#fff;
+            color: #fff;
 
             img {
               width: 90px;

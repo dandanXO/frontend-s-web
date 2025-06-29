@@ -1,11 +1,11 @@
 <template>
   <div class="hot-promo" :style="list.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border-radius: 0;' : ''">
-    <ClaimPromo
-      v-if="isCommonPromo && store.hasToken()"
-      :promo-id="list.id"
-      :loading-claim="btnLoading"
-      @daily-slot="handleSlot()"
-    />
+<!--    <ClaimPromo-->
+<!--      v-if="isCommonPromo && store.hasToken()"-->
+<!--      :promo-id="list.id"-->
+<!--      :loading-claim="btnLoading"-->
+<!--      @daily-slot="handleSlot()"-->
+<!--    />-->
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
 
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'pak-spin-wheel' && !isCommonPromo && store.token" />
@@ -38,6 +38,10 @@
       :params="list.param"
       :promocode="list.promoCode"
     />
+    <AppLoginBonus
+      v-if="list.redirectUrl === 'pk4-app-login-phone-bonus' && !isCommonPromo && store.token"
+      :promocode="list.promoCode"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -63,7 +67,7 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import * as _ from "lodash";
 import moment from "moment";
-import ClaimPromo from "../components/hotpromo/claimPromo.vue";
+// import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheelPromo.vue";
 import SignIn7DaysPromo from "../components/hotpromo/signIn7Days/SignIn7DaysPromo";
@@ -81,13 +85,14 @@ import NewPlayerAccDepositPromo from "./hotpromo/new-player-acc-deposit/NewPlaye
 import NewPlayerWelcome from "../components/hotpromo/newPlayerSpinWheel/NewPlayerWheelPromo.vue"
 import PiggyBankPromo from "../components/hotpromo/piggyBank/PiggyBankPromo.vue";
 import MonthBeginningDepositRebate from "../components/hotpromo/monthBeginningDepositRebate/MonthBeginningDepositRebate.vue"
+import AppLoginBonus from "../components/hotpromo/appLoginBonus/AppLoginBonus.vue"
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
-    ClaimPromo,
+    // ClaimPromo,
     HongBaoYuPromo,
     BonusSpinWheelPromo,
     SignIn7DaysPromo,
@@ -104,7 +109,8 @@ export default defineComponent({
     NewPlayerAccDepositPromo,
     NewPlayerWelcome,
     PiggyBankPromo,
-    MonthBeginningDepositRebate
+    MonthBeginningDepositRebate,
+    AppLoginBonus
   },
   props: {
     list: {
@@ -170,6 +176,8 @@ export default defineComponent({
       this.list.redirectUrl === "spin-lucky-wheel" ||
       this.list.redirectUrl === "new-player-acc-deposit" ||
       this.list.redirectUrl === "pak-welcome-new-players" ||
+      this.list.redirectUrl === "pak-jackpot-aviator" ||
+      this.list.redirectUrl === "pk4-app-login-phone-bonus" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

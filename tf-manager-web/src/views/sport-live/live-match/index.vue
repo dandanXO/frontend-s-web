@@ -2,6 +2,20 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-date-picker
+          v-model="request.matchTime"
+          format="DD/MM/YYYY HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
+          size="small"
+          type="datetimerange"
+          range-separator=":"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
+          style="width: 250px;margin-left:10px"
+          :editable="false"
+          :clearable="false"
+          :default-time="defaultTime"
+        />
         <el-select
           v-model="request.sportId"
           size="small"
@@ -194,6 +208,10 @@ import { useI18n } from "vue-i18n";
 import { getSportLiveMatch, copySportLiveMatch, batchDeleteSportLiveMatch } from "@/api/sport-live-match";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { liveSportTyps } from "@/utils/live"
+import {
+  convertDateToEnd,
+  convertDateToStart,
+} from '@/utils/datetime'
 
 export default defineComponent({
   setup() {
@@ -220,12 +238,22 @@ export default defineComponent({
       current: 1,
       loading: false
     });
+
+    const now = new Date()
+    const defaultStartDate = convertDateToStart(now)
+    const defaultEndDate = convertDateToEnd(now)
+    const defaultTime = [
+      new Date(2000, 1, 1, 0, 0, 0),
+      new Date(2000, 1, 1, 23, 59, 59),
+    ];
     const request = reactive({
       size: 30,
       current: 1,
       sportId: null,
       liveStatus: null,
-      title: null
+      title: null,
+      isStreamIdExist: null,
+      matchTime: [defaultStartDate, defaultEndDate],
     });
     const dialogVisible = ref(false);
     const currentRow = ref(null);
@@ -245,11 +273,21 @@ export default defineComponent({
       request.sportId = null;
       request.title = null;
       request.liveStatus = null;
+      request.isStreamIdExist = null;
+      request.matchTime = [defaultStartDate, defaultEndDate]
     }
 
     async function loadMatch() {
       page.loading = true;
-      const res = await getSportLiveMatch({ sportId: request.sportId, status: request.liveStatus, title: request.title, page: request.current, limit: request.size });
+      const query = {};
+
+      if (request.matchTime !== null) {
+        if (request.matchTime.length === 2) {
+          query.matchTime = request.matchTime.join(",");
+        }
+      }
+
+      const res = await getSportLiveMatch({ sportId: request.sportId, status: request.liveStatus, title: request.title, isStreamIdExist: request.isStreamIdExist, matchTime: query.matchTime, page: request.current, limit: request.size }); //
       console.log(res.data.records);
 
       page.records = res.data.records || [];
@@ -354,6 +392,7 @@ export default defineComponent({
       hasStreamId,
       selectedRows,
       handleSelectionChange,
+      defaultTime
     };
   }
 });

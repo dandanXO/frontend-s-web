@@ -317,7 +317,7 @@ const copyHrefLink = async () => {
   if (navigator.share) {
     try {
       await navigator.share({
-        title: "b9.game",
+        title: "pk1.game",
         text: "Pakistan real money games",
         url: textToCopy
       });

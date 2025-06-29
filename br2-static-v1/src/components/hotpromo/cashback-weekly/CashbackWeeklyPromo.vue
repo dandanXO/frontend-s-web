@@ -2,13 +2,13 @@
   <div>
     <div class="bet-wrapper">
       <div class="bet-info">
-        <img class="bet-info__icon" src="../../../assets/images/promotion/cashback-weekly/icon-cash.png" />
+        <img class="bet-info__icon" src="../../../assets/images/promotion/cashback-weekly/icon-cash.svg" />
         <div class="bet-info-title">
           <span class="bet-info-title__current-cashback">
             {{ $t("hotPromo.cashbackWeekly.cashback", { num: currentCashbackRate }) }}
           </span>
           <span class="bet-info-title__max-cashback">
-            {{ $t("hotPromo.cashbackWeekly.cashback", { num: currentCashbackRate }) }}
+            {{ $t("hotPromo.cashbackWeekly.maxCashback", { num: maximumCashbackRate }) }}
           </span>
         </div>
         <div class="bet-info-vip">
@@ -17,16 +17,15 @@
         </div>
       </div>
       <div class="bet-progressbar">
-        <div class="bet-progressbar__inner" :style="{ width: `${(remainingBet / nextLevelBet) * 100}%` }" />
+        <div class="bet-progressbar__inner" :style="{ width: `${progress}%` }" />
       </div>
       <div class="bet-next-level">
-        {{ $t("hotPromo.cashbackWeekly.upgradeDifference", { amount: remainingBet, vip: vipLevel }) }}
+        {{ $t("hotPromo.cashbackWeekly.upgradeDifference", { amount: promoInfo.minLoss, vip: vipLevel }) }}
       </div>
     </div>
 
     <q-btn class="receive-earn-btn" no-caps @click="claimPromo()">
-      <img src="../../../assets/images/promotion/receive-earn/receive-earn-icon.png" />
-      &nbsp;&nbsp;{{ $t("hotPromo.receive") }}
+      {{ $t("hotPromo.receive") }}
     </q-btn>
 
     <div class="receive-bar-container">
@@ -54,6 +53,118 @@
         <div class="bar-desc">{{ $t("hotPromo.cashbackWeekly.description") }}</div>
       </div>
     </div>
+
+    <table class="promo-table">
+      <thead>
+        <tr>
+          <th>{{ $t("hotPromo.cashbackWeekly.table.title.vip") }}</th>
+          <th>{{ $t("hotPromo.cashbackWeekly.table.title.bet") }}</th>
+          <th>{{ $t("hotPromo.cashbackWeekly.table.title.cashback") }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="vip-level-td">
+              <img class="vip-badge" src="../../../assets/images/vip/badge/vip_1.png" />
+              <div>VIP 1</div>
+            </div>
+          </td>
+          <td>0+</td>
+          <td>12%</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="vip-level-td">
+              <img class="vip-badge" src="../../../assets/images/vip/badge/vip_2.png" />
+              <div>VIP 2</div>
+            </div>
+          </td>
+          <td>500.00</td>
+          <td>13%</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="vip-level-td">
+              <img class="vip-badge" src="../../../assets/images/vip/badge/vip_3.png" />
+              <div>VIP 3</div>
+            </div>
+          </td>
+          <td>2000.00</td>
+          <td>14%</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="vip-level-td">
+              <img class="vip-badge" src="../../../assets/images/vip/badge/vip_4.png" />
+              <div>VIP 4</div>
+            </div>
+          </td>
+          <td>8000.00</td>
+          <td>15%</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="vip-level-td">
+              <img class="vip-badge" src="../../../assets/images/vip/badge/vip_5.png" />
+              <div>VIP 5</div>
+            </div>
+          </td>
+          <td>4000.00</td>
+          <td>16%</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="vip-level-td">
+              <img class="vip-badge" src="../../../assets/images/vip/badge/vip_6.png" />
+              <div>VIP 6</div>
+            </div>
+          </td>
+          <td>12000.00</td>
+          <td>17%</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="vip-level-td">
+              <img class="vip-badge" src="../../../assets/images/vip/badge/vip_7.png" />
+              <div>VIP 7</div>
+            </div>
+          </td>
+          <td>50000.00</td>
+          <td>19%</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="vip-level-td">
+              <img class="vip-badge" src="../../../assets/images/vip/badge/vip_8.png" />
+              <div>VIP 8</div>
+            </div>
+          </td>
+          <td>1500000.00</td>
+          <td>21%</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="vip-level-td">
+              <img class="vip-badge" src="../../../assets/images/vip/badge/vip_9.png" />
+              <div>VIP 9</div>
+            </div>
+          </td>
+          <td>3000000.00</td>
+          <td>23%</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="vip-level-td">
+              <img class="vip-badge" src="../../../assets/images/vip/badge/vip_10.png" />
+              <div>VIP 10</div>
+            </div>
+          </td>
+          <td><span style="color: #ff9500">6000000.00</span></td>
+          <td>25%</td>
+        </tr>
+      </tbody>
+    </table>
 
     <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
 
@@ -94,13 +205,21 @@ import { api, eventapi } from "boot/axios";
 
 const store = userStore();
 
-const currentCashbackRate = ref(6);
 const maximumCashbackRate = ref(25);
-const currentBet = ref(500);
-const nextLevelBet = ref(1000);
+const promoInfo = ref({});
 
 const vipLevel = computed(() => store.vip.replace("VIP", ""));
-const remainingBet = computed(() => nextLevelBet.value - currentBet.value);
+const currentCashbackRate = computed(() =>
+  promoInfo.value?.bonusPercentage ? promoInfo.value.bonusPercentage * 100 : 0
+);
+
+const progress = computed(() => {
+  if (typeof promoInfo.value?.totalLoss === "number" && typeof promoInfo.value?.minLoss === "number") {
+    return Math.min((promoInfo.value.totalLoss / promoInfo.value.minLoss) * 100, 100);
+  } else {
+    return 0;
+  }
+});
 
 const loadPromoInit = () => {
   eventapi
@@ -109,7 +228,7 @@ const loadPromoInit = () => {
       // debugger;
       if (res.code === 0) {
         const { data } = res;
-        console.log(data);
+        promoInfo.value = data;
       }
     })
     .catch((e) => {});
@@ -117,7 +236,7 @@ const loadPromoInit = () => {
 
 const claimPromo = () => {
   eventapi
-    .post("/session/deposit-bonus/claim?promoCode=br2-redeposit-bonus")
+    .post("/session/loss-bonus/claim?promoCode=br2-weekly-loss-cashback")
     .then((res) => {
       // debugger;
       if (res.code === 0) {
@@ -148,15 +267,16 @@ onMounted(() => {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: 36px;
 
     .bet-info__icon {
-      max-width: 44px;
+      max-width: 54px;
     }
     .bet-info-title {
       display: flex;
       flex-direction: column;
       font-weight: 500;
+      position: relative;
 
       .bet-info-title__current-cashback {
         font-size: 22px;
@@ -165,7 +285,9 @@ onMounted(() => {
 
       .bet-info-title__max-cashback {
         font-size: 10px;
-        color: #4b4943;
+        color: #7b7b7b;
+        position: absolute;
+        bottom: -20px;
       }
     }
     .bet-info-vip {
@@ -200,7 +322,7 @@ onMounted(() => {
     .bet-progressbar__inner {
       height: var(--bet-progressbar-height);
       border-radius: var(--bet-progressbar-border-radius);
-      background-color: #000;
+      background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
       transition: width 0.3s ease-in-out;
     }
   }
@@ -211,19 +333,18 @@ onMounted(() => {
     bottom: 10px;
     font-size: 10px;
     font-weight: 500;
-    color: #4b4943;
+    color: #7b7b7b;
   }
 }
 
 .receive-earn-btn {
-  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+  background: linear-gradient(180deg, #419f74 0%, #1d3f31 100%);
   width: 100%;
-  color: #2d2d2d;
-  font-weight: bold;
-
-  img {
-    width: 34px !important;
-  }
+  color: #fff;
+  border-radius: 50px;
+  font-weight: 500;
+  border: 1.5px solid #e0c4a8;
+  box-shadow: 0px 4px 4px 0px #ffffff66 inset;
 }
 
 .receive-bar-container {
@@ -390,6 +511,84 @@ onMounted(() => {
     .btn-confirm {
       background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
       color: #ffffff;
+    }
+  }
+}
+
+.promo-table {
+  width: 100%;
+  height: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: center;
+  vertical-align: middle;
+  margin: 20px 0;
+
+  thead {
+    background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+  }
+
+  th {
+    height: 36px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 28px;
+    color: #2d2d2d;
+    background-image: none !important;
+
+    &:first-child {
+      border-top-left-radius: 12px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 12px;
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background-color: #253028;
+      }
+
+      &:nth-child(even) {
+        background-color: #1f241f;
+      }
+
+      // &:last-child {
+      //   td {
+      //     &:first-child {
+      //       border-bottom-left-radius: 12px;
+      //     }
+
+      //     &:last-child {
+      //       border-bottom-right-radius: 12px;
+      //     }
+      //   }
+      // }
+    }
+  }
+
+  td {
+    background: transparent;
+    background-color: unset !important;
+    border: 1px solid #ffffff1a;
+    height: 36px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 28px;
+    color: #fff;
+    font-family: Poppins;
+  }
+
+  .vip-level-td {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .vip-badge {
+      height: 25px;
+      margin-right: 4px;
+      margin-top: 2px;
     }
   }
 }

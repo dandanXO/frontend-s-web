@@ -72,11 +72,11 @@ const openNewPlayerGuide = () => {
 
 <style lang="scss" scoped>
 .bonus-container {
-  background-color: #1e371f;
-  border: 1px solid #337e3a;
+  background-color: #090F1E;
+  border: 1px solid #0666D3;
   border-radius: 10px !important;
   max-width: 400px;
-  width: 100%;
+  width: 90% !important;
   padding: 16px;
   position: relative;
   overflow: visible;
@@ -86,7 +86,7 @@ const openNewPlayerGuide = () => {
 
   &:before {
     content: "";
-    background-image: url(../../assets/images/index/modal/bonus-container-light.png);
+    // background-image: url(../../assets/images/index/modal/bonus-container-light.png);
     background-size: 100% 100%;
     background-position: center center;
     background-repeat: no-repeat;
@@ -108,21 +108,21 @@ const openNewPlayerGuide = () => {
     // margin-top: -18px;
     // z-index: 2;
     position: absolute;
-    bottom: 5px;
+    top: -8px;
     width: 100%;
 
     img {
       display: block;
       width: 100%;
-      max-width: 248px;
+      max-width: 245px;
       margin-bottom: -24px;
       margin-right: 24px;
-      height: 60px;
+      height: 40px;
     }
   }
 
   .bonus-content-wrapper {
-    margin: 0 auto 29px;
+    margin: 30px auto 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -135,7 +135,10 @@ const openNewPlayerGuide = () => {
       display: flex;
       align-items: center;
       padding: 8px 8px 8px 6px;
-      background-color: #81ff9e1a;
+      // background-color: #81ff9e1a;
+      border: 1px solid #FFFFFF1A;
+      background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+
       border-radius: 8px;
 
       .mission-icon {
@@ -169,8 +172,17 @@ const openNewPlayerGuide = () => {
         text-transform: none;
 
         &.details {
-          background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
-          color: #000a01;
+          // background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+          background: url(../../assets/images/index/bonus-receive-btn.png)no-repeat center center;
+          background-size: cover;
+          // color: #0287F2;
+          color: #ffffff;
+        }
+        &.claim {
+          background: url(../../assets/images/index/bonus-details-btn.png)no-repeat center center;
+          background-size: cover;
+          // color: #0287F2;
+          color: #0287F2;
         }
 
         &.no-reward {
@@ -185,7 +197,7 @@ const openNewPlayerGuide = () => {
 
 .bonus-close {
   position: absolute;
-  bottom: 10px;
+  top: 10px;
   right: 10px;
   z-index: 99;
 }
