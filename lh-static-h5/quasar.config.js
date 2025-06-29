@@ -170,17 +170,6 @@ module.exports = configure(function (ctx) {
                   }
                   return null;
                 }
-              },
-              images: {
-                test: /\.(jpe?g|png|gif|svg)$/i,
-                name(module) {
-                  const relativePath = module.context.match(/[\\/]src[\\/](.+)[\\/]/);
-                  if (relativePath) {
-                    const nestedPath = relativePath[1].replace(/[\\/]/g, "-");
-                    return `img-${nestedPath}`;
-                  }
-                  return "img-ungrouped";
-                }
               }
             }
           }
