@@ -105,12 +105,12 @@
         <li>{{ $t("content.message7") }}</li>
         <li>{{ $t("content.message8") }}</li> -->
         <li>Jogue o jogo Aviator e ganhe prêmios em dinheiro gratuitamente</li>
-        <li> cada 10 apostas no jogo Aviator, você ganha uma chance na roleta. Super prêmio de 10.000 </li>
+        <li> cada 10 apostas no jogo Aviator, você ganha uma chance na roleta. Super prêmio de 100,000 </li>
         <li>s chances de roleta são válidas apenas no mesmo dia. No dia seguinte, a contagem recomeça. Participe todos os dias!</li>
         <li> bônus (excluindo o principal) requer 1 vezes de apostas válidas para sacar;</li>
         <li>Somente o proprietário da conta pode realizar operações manuais normais, caso contrário, o bônus será cancelado ou deduzido, congelado ou até mesmo colocado na lista negra;</li>
         <li>Para evitar diferenças na compreensão do texto, a plataforma se reserva o direito final de interpretação desta atividade.</li>
-       
+
       </ol>
     </div>
 
