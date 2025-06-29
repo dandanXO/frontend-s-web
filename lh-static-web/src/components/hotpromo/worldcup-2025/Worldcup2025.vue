@@ -89,7 +89,10 @@
         <div class="vs-time">{{ getDisplayDateTime(currentListItem.matchTime) }}</div>
         <div class="vs-icon"><img src="@/assets/images/promotion/hotpromo/worldcup-2025/icon-vs.png" alt="" /></div>
         <div class="vs-win">独赢</div>
-        <div class="vs-notes">本场赛事竞猜时间 {{ getDisplayDateTime(currentListItem.startTime) }} - {{ getDisplayDateTime(currentListItem.endTime) }}</div>
+        <div class="vs-notes">
+          本场赛事竞猜时间 {{ getDisplayDateTime(currentListItem.startTime) }} -
+          {{ getDisplayDateTime(currentListItem.endTime) }}
+        </div>
       </div>
 
       <div class="match-info match-info--away">
@@ -227,6 +230,7 @@
           独赢竞猜结果分为：输、和、赢，竞猜结算（赢）猜中 即可获得8元奖金，若竞猜结果结算为“和”将会视为无效竞猜。
         </li>
         <li>竞猜正确的用户在次日优惠活动界面点击【立即领取】即可领取昨日竞猜成功的竞猜金，竞猜金仅需5倍流水出款。</li>
+        <li>每日竞猜比赛结果计算包含常规时间（含上下半场、伤停补时）、加时赛及点球大战（如进行）的最终比分。</li>
         <li>
           根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
         </li>
@@ -484,19 +488,19 @@ const handleLivestreamClick = (index) => {
 
   const SLIDE_PER_VIEW = 4;
   const total = list.value.length;
-    let targetIndex;
+  let targetIndex;
 
-    if (index <= 1) {
-      targetIndex = 0;
-    } else if (index >= total - 2) {
-      targetIndex = total - SLIDE_PER_VIEW;
-    } else {
-      targetIndex = index - 1;
-    }
+  if (index <= 1) {
+    targetIndex = 0;
+  } else if (index >= total - 2) {
+    targetIndex = total - SLIDE_PER_VIEW;
+  } else {
+    targetIndex = index - 1;
+  }
 
-    targetIndex = Math.min(Math.max(0, targetIndex), total - SLIDE_PER_VIEW);
+  targetIndex = Math.min(Math.max(0, targetIndex), total - SLIDE_PER_VIEW);
 
-    if (swiperInstance.value) {
+  if (swiperInstance.value) {
     swiperInstance.value.slideTo(0, 0);
     setTimeout(() => {
       if (index === 1) {

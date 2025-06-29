@@ -230,6 +230,7 @@
           独赢竞猜结果分为：输、和、赢，竞猜结算（赢）猜中 即可获得8元奖金，若竞猜结果结算为“和”将会视为无效竞猜。
         </li>
         <li>竞猜正确的用户在次日优惠活动界面点击【立即领取】即可领取昨日竞猜成功的竞猜金，竞猜金仅需5倍流水出款。</li>
+        <li>每日竞猜比赛结果计算包含常规时间（含上下半场、伤停补时）、加时赛及点球大战（如进行）的最终比分。</li>
         <li>
           根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
         </li>
@@ -959,7 +960,8 @@ onMounted(() => {
                 inset: 0;
                 width: 100%;
                 height: 100%;
-                background: url(@/assets/images/promotion/hotpromo/worldcup-2025/icon-img-error.png) no-repeat center, #a9a9a9;
+                background: url(@/assets/images/promotion/hotpromo/worldcup-2025/icon-img-error.png) no-repeat center,
+                  #a9a9a9;
                 background-size: 80% 80%;
               }
             }
