@@ -18,6 +18,7 @@
 
     <MoneyRainPromo v-if="list.redirectUrl === 'money-rain'" :params="list.param" />
     <RedepositBonusPromo v-if="list.redirectUrl === 'redeposit-bonus'" :params="list.param" />
+    <CheckinBonusPromo v-if="!isCommonPromo && list.redirectUrl === 'br2-checkin-bonus'" :params="list.param" />
 
     <VipPlanBettingUpgrade v-if="list.redirectUrl === 'br2-vip-plan'" :params="list.param" />
     <CashbackWeeklyPromo v-if="list.redirectUrl === 'cashback-weekly'" :params="list.param" />
@@ -70,6 +71,7 @@ const BetCashbackPromo = defineAsyncComponent(() => import("../components/hotpro
 const DailySecondDepositPromo = defineAsyncComponent(() => import("../components/hotpromo/daily-second-deposit/DailySecondDepositPromo.vue"));
 const LossRebatePromo = defineAsyncComponent(() => import("../components/hotpromo/loss-rebate/LossRebatePromo.vue"));
 const FtdBonusPromo = defineAsyncComponent(() => import("../components/hotpromo/ftdBonus/FtdBonusPromo.vue"));
+const CheckinBonusPromo = defineAsyncComponent(() => import("../components/hotpromo/checkin-bonus/CheckinBonusPromo.vue"));
 
 
 export default defineComponent({
@@ -94,7 +96,8 @@ export default defineComponent({
     BetCashbackPromo,
     DailySecondDepositPromo,
     LossRebatePromo,
-    FtdBonusPromo
+    FtdBonusPromo,
+    CheckinBonusPromo
   },
   props: {
     list: {
@@ -164,6 +167,7 @@ export default defineComponent({
       this.list.redirectUrl === "br2-daily-second-deposit" ||
       this.list.redirectUrl === "br2-loss-rebate" ||
       this.list.redirectUrl === "br2-bet-rebate" ||
+      this.list.redirectUrl === "br2-checkin-bonus" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

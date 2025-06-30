@@ -1,0 +1,132 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0%;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  background-color: #080a16;
+  position:relative;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+}
+
+a {
+  transition: 0.3s all;
+}
+
+.showMobile {
+  display: block;
+}
+
+.showDesktop {
+  display: none;
+}
+
+.full-container {
+  height: 100dvh;
+  overflow: auto;
+  position: relative;
+  /* margin-bottom: 20px; */
+}
+
+.main-wrapper {
+  /* background-image: url(../img/main-bg.jpg); */
+  /* background-position: top center; */
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  max-width: 550px;
+  margin: auto;
+}
+
+
+.top-logo {
+  display: block;
+  width: 40%;
+  max-width: 200px;
+  position: absolute;
+  top: 15px;
+  /* left: 50%;
+  transform: translateX(-50%); */
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.top-logo img {
+  width: 100%;
+}
+
+.top-banner {
+    height: 85dvw;
+    max-height: 430px;
+}
+.top-banner img{
+  width: 100%;
+}
+.login-reg-btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  width: 90%;
+  margin: 0 auto;
+}
+.login-reg-btns a {
+  text-decoration: none;
+}
+
+.login-reg-btns .login-btn {
+  background: url(../img/first-btn.png)no-repeat center center;
+  background-size: contain;
+  width: 100%;
+  padding: 15px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 4px 10px #000000;
+  text-transform: uppercase;
+  font-size: 22px;
+
+}
+.login-reg-btns .reg-btn {
+  background: url(../img/sec-btn.png)no-repeat center center;
+  background-size: contain;
+  width: 100%;
+  padding: 15px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 4px 10px #000000;
+  text-transform: uppercase;
+  font-size: 22px;
+  position: relative;
+}
+.login-reg-btns .reg-btn .pointer {
+  position: absolute;
+  bottom: -28px;
+  right: -15px;
+  width: 50px;
+}
+.promo-list {
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.promo-list img {
+  width: 100%;
+}
