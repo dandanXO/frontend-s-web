@@ -1344,7 +1344,7 @@
           <template v-if="isGameLoading">
             <div class="loader-container">
               <div>
-                <q-spinner color="green" size="10em" :thickness="10" />
+                <q-spinner color="blue" size="10em" :thickness="10" />
               </div>
               <div>{{ $t("btn.loading_plsWait") }}</div>
             </div>
@@ -6328,9 +6328,10 @@ const checkGoogleLoginSetPwd = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #333333;
-  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-  box-shadow: 0px 2px 0px 0px #1cca6a;
+  color: #ffffff;
+  // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  // box-shadow: 0px 2px 0px 0px #1cca6a;
+  background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
   text-transform: uppercase;
   font-weight: 700;
 }

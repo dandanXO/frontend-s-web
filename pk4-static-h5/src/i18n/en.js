@@ -5,7 +5,7 @@ export default {
   },
   header: {
     login: "Login",
-    welcomeMsg: "Welcome to B9",
+    welcomeMsg: "Welcome to PK1",
     register: "Register",
     download: "Download",
     getFreeSpins: "Get free spins on the APP",
@@ -268,7 +268,7 @@ export default {
     confirm: "Confirm",
     submit: "Submit",
     forgetPwd: "Forget Password",
-    areyounew: "Are you new to B9?",
+    areyounew: "Are you new to PK1?",
     alreadyhaveacct: "Already have an account?",
     addNewAccount: "Add New Account",
     updated: "Updated",
@@ -525,7 +525,8 @@ export default {
     statusCleared: "Cleared",
     statusCancelled: "Cancelled",
     rate: "Rate",
-    createContract: "Create Contract"
+    createContract: "Create Contract",
+    selfCommissionShare: "Self Commission Share"
   },
   deposit: {
     selectAmount: "Select Amount",
@@ -683,9 +684,9 @@ export default {
       multiple_acc_hint: `2. It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
     Reward distribution time: Between 3:00 PM and 6:00 PM Pakistan time on the next day. The rewards will be credited to the account during this time frame.
     `,
-      shareTitle: "B9GAME Share and Earn",
+      shareTitle: "PK1GAME Share and Earn",
       shareText:
-        "B9GAME Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
+        "PK1GAME Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
       betting_table: {
         header: {
           description: "Description",
@@ -1022,7 +1023,7 @@ export default {
     },
     appLoginBonus: {
       newlyRegistered1: "Newly registered",
-      b9: "B9",
+      pk1: "PK1",
       newlyRegistered2: "members, download and install the application, and get random free bonuses, up to",
       bdt888: "888BDT",
       newlyRegistered5: ".",
