@@ -40,7 +40,7 @@
       </RouterLink>
       <div class="top-total-score">
         <div class="score-txt">
-          <img src="../assets/images/account/total-score.svg" />
+          <img style="width: 22px" src="../assets/images/account/total-score.png" />
           {{ $t("settings.totalScore") }}
         </div>
         <div class="score-amount">{{ store.balance.toFixed(2) }}</div>
@@ -58,7 +58,9 @@
               <img src="../assets/images/account/deposit-svg.svg" />
             </div>
             <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
-            <div v-if="promoPercentage !== ''" class="promo-percentage">{{ promoPercentage }} {{ $t("records.bonus") }}</div>
+            <div v-if="promoPercentage !== ''" class="promo-percentage">
+              {{ promoPercentage }} {{ $t("records.bonus") }}
+            </div>
           </router-link>
           <router-link to="/withdraw">
             <div class="acct-nav-item">
@@ -335,7 +337,7 @@ const showTransferModal = ref(false);
 
 const confirmSignOutDialog = ref(false);
 
-const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
+const alreadyDeposited = JSON.parse(localStorage.getItem("onAppFirstDeposit"));
 const promoPercentage = computed(() => {
   if (isAndroid() && store.canClaimFtdPrivilege) return "38";
   if (store.canClaimSecondPrivilege) return "100";

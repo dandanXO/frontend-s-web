@@ -10,7 +10,7 @@ function getAllSvgFiles(dir, fileList = []) {
     const stat = fs.statSync(fullPath);
     if (stat.isDirectory()) {
       getAllSvgFiles(fullPath, fileList);
-    } else if (path.extname(file).toLowerCase() === ".png") {
+    } else if (path.extname(file).toLowerCase() === ".gif") {
       //Change .png .jpeg .gif .svg .jpg here.
       fileList.push({
         path: fullPath.replace(imageDir + path.sep, ""),
@@ -36,7 +36,7 @@ svgFiles.sort((a, b) => b.size - a.size);
 
 console.log(`\n🗂️Files in ${imageDir} (Top 100 sorted by size):\n`);
 svgFiles.forEach((file, index) => {
-  if(index < 100){
+  if (index < 100) {
     console.log(`${index + 1}. ${file.path} - ${formatSize(file.size)}`);
   }
 });
