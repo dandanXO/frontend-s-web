@@ -985,7 +985,7 @@ export default {
       tnc07: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
     },
     dailySecondDeposit: {
-      description: "O primeiro depósito do dia dá direito a 10% de bônus sobre o valor depositado",
+      description: "O primeiro depósito do dia dá direito a 20% de bônus sobre o valor depositado",
       tnc01: "Esta promoção é válida para todos os depósitos realizados após o primeiro no mesmo dia.",
       tnc02: "Cada depósito subsequente dará direito a um bônus de 20%, com um limite de R$ 288 por depósito.",
       tnc03: "O bônus (incluir o principal) requer 12 vezes de apostas válidas para sacar;",
