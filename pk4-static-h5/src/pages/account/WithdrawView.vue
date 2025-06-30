@@ -613,7 +613,7 @@ onMounted(() => {
 onActivated(() => {
   checkNewUser();
   store.getBalance();
-  promoStore.removeShownFloatingOrDialogList("newplayer-spin-wheel");
+  promoStore?.removeShownFloatingOrDialogList?.("newplayer-spin-wheel");
   // loadPlatform()
 });
 
