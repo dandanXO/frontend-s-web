@@ -325,7 +325,6 @@ export default {
     updatedSuccessfully: "Updated successfully",
     emailVerificationSent: "Email verification sent",
     messageSent: "Message Sent",
-
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
@@ -336,7 +335,8 @@ export default {
     submitting: "Submitting...",
     sendingVerificationCode: "Sending verification code...",
     passwordResetCompleted: "Password reset completed",
-    success: "Success"
+    success: "Success",
+    pleaseCompleteYourKYC: 'Please Complete your KYC.',
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -377,7 +377,10 @@ export default {
     cashGift: "Cash Gifts",
     welcomeNewPlayer: "Welcome New Players",
     MegaSharingRoulette: "Mega Sharing Roulette",
-    spinLuckyWheel: "Spin Lucky Wheel"
+    spinLuckyWheel: "Spin Lucky Wheel",
+    twentyFourSevenSupport: '24/7 support',
+    ifHaveQuestionsContactUs: 'If you still have questions, please contact us',
+    chat: 'Chat'
   },
   settings: {
     totalScore: "Total Score",
@@ -482,6 +485,7 @@ export default {
       yesterday: 'Yesterday',
       sevenDays: '7 days',
       thisMonth: 'This Month',
+      total: 'Total'
     },
     teamBetting: {
       all: 'All',

@@ -331,7 +331,8 @@ export default {
     submitting: "جمع کر رہا ہے...",
     sendingVerificationCode: "ویری فیکیشن کوڈ بھیجا جا رہا ہے...",
     passwordResetCompleted: "پاسورڈ ری سیٹ مکمل ہو چکا ہے",
-    success: "کامیابی"
+    success: "کامیابی",
+    pleaseCompleteYourKYC: "براہ کرم اپنی کے وائی سی مکمل کریں۔"
   },
   sideNav: {
     inviteToEarn: "دعوت دیں اور کمائیں",
@@ -372,7 +373,10 @@ export default {
     cashGift: "نقدی تحفے",
     welcomeNewPlayer: "نئے کھلاڑیوں کو خوش آمدید",
     MegaSharingRoulette: "میگا شیئرنگ رولیٹی",
-    spinLuckyWheel: "خوش قسمت پہیہ گھمائیں"
+    spinLuckyWheel: "خوش قسمت پہیہ گھمائیں",
+    twentyFourSevenSupport: "چوبیس گھنٹے معاونت",
+    ifHaveQuestionsContactUs: "اگر آپ کے مزید سوالات ہیں تو براہ کرم ہم سے رابطہ کریں",
+    chat: "چیٹ"
   },
   settings: {
     totalScore: "کل اسکور",
@@ -477,6 +481,7 @@ export default {
       yesterday: "کل",
       sevenDays: "7 دن",
       thisMonth: "اس مہینے",
+      total: "کل"
     },
     teamBetting: {
       all: "سب",

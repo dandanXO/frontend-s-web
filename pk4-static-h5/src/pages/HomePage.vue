@@ -1167,11 +1167,11 @@
           </div>
           <div class="support-button">
             <div class="supp-left">
-              <div class="supp-main">24/7 support</div>
-              <div class="supp-sub">If you still have questions, please contact us</div>
+              <div class="supp-main">{{ $t('home.twentyFourSevenSupport') }}</div>
+              <div class="supp-sub">{{ $t('home.ifHaveQuestionsContactUs') }}</div>
             </div>
 
-            <q-btn class="btn-primary" :href="ui.CSAUrl" target="_blank">Chat</q-btn>
+            <q-btn class="btn-primary" :href="ui.CSAUrl" target="_blank">{{ $t('home.chat') }}</q-btn>
 
             <!-- <a class="btn-primary" :href="ui.CSAUrl" target="_blank">
               <img src="../assets/images/index/cs-cs.png" />

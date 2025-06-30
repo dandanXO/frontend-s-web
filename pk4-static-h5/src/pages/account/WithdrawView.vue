@@ -55,6 +55,7 @@
             :options="withdrawState.bankCardList"
             map-options
             :rules="[(val) => !!val || $t('form.withdrawChoose_rules_01')]"
+            style="background:linear-gradient(90deg, #1C273D 0%, #12192B 100%);border: none;"
           >
             <template v-slot:no-option>
               <q-item>
@@ -612,7 +613,7 @@ onMounted(() => {
 onActivated(() => {
   checkNewUser();
   store.getBalance();
-  promoStore.removeShownFloatingOrDialogList("newplayer-spin-wheel");
+  promoStore?.removeShownFloatingOrDialogList?.("newplayer-spin-wheel");
   // loadPlatform()
 });
 
@@ -1222,17 +1223,6 @@ watch(
       margin-right: 60px;
     }
   }
-}
-
-:deep(.q-field--filled.q-field--dark .q-field__control) {
-  // border-radius: 0.5rem;
-  // background: #0b0e0d !important;
-  // border: 1px solid #072a19;
-  // border-radius: 0.5rem;
-  // border: 1px solid #ffffff14;
-  // background: #292d2f !important;
-  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%) !important;
-  border: none;
 }
 
 .bot-wrapper {
