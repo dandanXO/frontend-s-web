@@ -429,6 +429,27 @@ export default {
       qrCode: "QR Code",
       scanTheCodeToRegister: "Scan the QR code to register",
       pressQRCode: "press and hold to save QR code to album"
+    },
+    overview: {
+      today: 'Today',
+      yesterday: 'Yesterday',
+      sevenDays: '7 days',
+      thisMonth: 'This Month',
+      logins: 'Logins',
+      registers: 'Registers',
+      betCount: 'Bet count',
+      promotions: 'Promotions',
+      registersFirstDeposits: 'Registers first deposits',
+      firstDeposits: 'First deposits',
+      deposits: 'Deposits',
+      withdrawals: 'Withdrawals',
+      deposit: 'Deposit',
+      withdrawalAmount: 'Withdrawal amount',
+      bonus: 'Bonus',
+      validBet: 'Valid bet',
+      winLoss: 'Win/loss',
+      teamPnL: 'Team P&L',
+      teamRebate: 'Team Rebate'
     }
   },
   accountRecord: {
@@ -454,7 +475,8 @@ export default {
     statusPay: "Pay",
     statusCleared: "Cleared",
     statusCancelled: "Cancelled",
-    rate: "Rate"
+    rate: "Rate",
+    createContract: "Create Contract"
   },
   deposit: {
     selectAmount: "Select Amount",

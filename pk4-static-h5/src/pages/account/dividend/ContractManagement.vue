@@ -21,8 +21,8 @@
                         <td><img src="../../../assets/images/account/dividend/avatar-icon.png" /></td>
                         <td class="user">{{ downline.loginName }}</td>
                         <td class="user">{{ (downline.commission * 100).toFixed(0) }}%</td>
-                        <td v-if="downline.commission === 0" class="create-contract-btn" @click="() => createContract(downline)">create contract</td>
-                        <td v-else class="create-contract-btn"><span style="visibility:hidden">create contract</span></td>
+                        <td v-if="downline.commission === 0" class="create-contract-btn" @click="() => createContract(downline)">{{ $t('dividend.createContract') }}</td>
+                        <td v-else class="create-contract-btn"><span style="visibility:hidden">{{ $t('dividend.createContract') }}</span></td>
                     </tr>
                 </tbody>
             </table>
