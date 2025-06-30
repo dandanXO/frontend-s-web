@@ -18,6 +18,7 @@
       <ChatFloatingPanel class="livestream-chat__chat-panel" :is-system-livestream :livestream-data />
       <div v-for="(message, index) in messages" :key="index" class="livestream-chat-item">
         <BadgeChip :level="message.vip">V{{ message.vip }}</BadgeChip>
+        <div v-if="message.memberType !== 'NORMAL'" class="livestream-chat-item__manager-badge">管</div>
         <img
           v-if="message.profilePhoto && message.profilePhoto.includes('default')"
           class="livestream-chat-item__profile-photo"
@@ -228,6 +229,20 @@ onMounted(() => {
 
       > *:not(:last-child) {
         margin-right: 4px;
+      }
+
+      .livestream-chat-item__manager-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(180deg, #1c51ff 0%, #56d1fb 100%);
+        border: 1px solid #aae7ff;
+        border-radius: 50%;
+        font-weight: 500;
+        color: #fff;
+        vertical-align: super;
       }
 
       .livestream-chat-item__profile-photo {

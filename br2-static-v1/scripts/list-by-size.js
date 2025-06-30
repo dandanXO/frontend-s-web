@@ -3,18 +3,20 @@ const path = require("path");
 
 const imageDir = path.resolve(__dirname, "../src/assets/");
 
-function getAllSvgFiles(dir, fileList = []) {
+// Add your desired extensions here
+const allowedExtensions = [".png", ".jpeg", ".gif", ".svg", ".jpg"];
+
+function getAllImageFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
   files.forEach((file) => {
     const fullPath = path.join(dir, file);
     const stat = fs.statSync(fullPath);
     if (stat.isDirectory()) {
-      getAllSvgFiles(fullPath, fileList);
-    } else if (path.extname(file).toLowerCase() === ".gif") {
-      //Change .png .jpeg .gif .svg .jpg here.
+      getAllImageFiles(fullPath, fileList);
+    } else if (allowedExtensions.includes(path.extname(file).toLowerCase())) {
       fileList.push({
         path: fullPath.replace(imageDir + path.sep, ""),
-        size: stat.size
+        size: stat.size,
       });
     }
   });
@@ -31,11 +33,11 @@ function formatSize(bytes) {
   return `${bytes.toFixed(1)} ${units[i]}`;
 }
 
-const svgFiles = getAllSvgFiles(imageDir);
-svgFiles.sort((a, b) => b.size - a.size);
+const imageFiles = getAllImageFiles(imageDir);
+imageFiles.sort((a, b) => b.size - a.size);
 
-console.log(`\n🗂️Files in ${imageDir} (Top 100 sorted by size):\n`);
-svgFiles.forEach((file, index) => {
+console.log(`\n🗂️ Files in ${imageDir} (Top 100 sorted by size):\n`);
+imageFiles.forEach((file, index) => {
   if (index < 100) {
     console.log(`${index + 1}. ${file.path} - ${formatSize(file.size)}`);
   }

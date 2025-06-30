@@ -73,7 +73,7 @@
               <td>268</td>
             </tr>
             <tr>
-              <td>VIP10-VIP12</td>
+              <td>VIP10</td>
               <td>128</td>
               <td>188</td>
               <td>268</td>

@@ -800,7 +800,7 @@ $gradients: (
 
 .carousel__prev,
 .carousel__next {
-  display: none;
+  display: none !important;
 }
 
 .receive-monthly {

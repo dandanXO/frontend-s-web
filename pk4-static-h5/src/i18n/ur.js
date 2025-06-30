@@ -331,7 +331,8 @@ export default {
     submitting: "جمع کر رہا ہے...",
     sendingVerificationCode: "ویری فیکیشن کوڈ بھیجا جا رہا ہے...",
     passwordResetCompleted: "پاسورڈ ری سیٹ مکمل ہو چکا ہے",
-    success: "کامیابی"
+    success: "کامیابی",
+    pleaseCompleteYourKYC: "براہ کرم اپنی کے وائی سی مکمل کریں۔"
   },
   sideNav: {
     inviteToEarn: "دعوت دیں اور کمائیں",
@@ -372,7 +373,10 @@ export default {
     cashGift: "نقدی تحفے",
     welcomeNewPlayer: "نئے کھلاڑیوں کو خوش آمدید",
     MegaSharingRoulette: "میگا شیئرنگ رولیٹی",
-    spinLuckyWheel: "خوش قسمت پہیہ گھمائیں"
+    spinLuckyWheel: "خوش قسمت پہیہ گھمائیں",
+    twentyFourSevenSupport: "چوبیس گھنٹے معاونت",
+    ifHaveQuestionsContactUs: "اگر آپ کے مزید سوالات ہیں تو براہ کرم ہم سے رابطہ کریں",
+    chat: "چیٹ"
   },
   settings: {
     totalScore: "کل اسکور",
@@ -424,6 +428,73 @@ export default {
       qrCode: "کیو آر کوڈ",
       scanTheCodeToRegister: "رجسٹر کرنے کے لیے کیو آر کوڈ اسکین کریں",
       pressQRCode: "کیو آر کوڈ کو البم میں محفوظ کرنے کے لیے دبائیں اور پکڑیں"
+    },
+    overview: {
+      today: "آج",
+      yesterday: "کل",
+      sevenDays: "7 دن",
+      thisMonth: "اس مہینے",
+      logins: "لاگ ان",
+      registers: "رجسٹریشن",
+      betCount: "بیٹ کی تعداد",
+      promotions: "پروموشنز",
+      registersFirstDeposits: "رجسٹریشن کے بعد پہلی جمع",
+      firstDeposits: "پہلی جمع",
+      deposits: "جمع",
+      withdrawals: "نکال",
+      deposit: "جمع",
+      withdrawalAmount: "نکال کی رقم",
+      bonus: "بونس",
+      validBet: "درست شرط",
+      winLoss: "جیت/ہار",
+      teamPnL: "ٹیم منافع و نقصان",
+      teamRebate: "ٹیم ریبیٹ",
+    },
+    accountRecord: {
+      all: "سب",
+      deposit: "جمع",
+      withdrawal: "نکال",
+      betting: "بیٹنگ",
+      bonus: "بونس",
+      rebate: "ریبیٹ",
+      dividend: "ڈیویڈنڈ",
+      loginName: "لاگ ان نام",
+      recordDate: "ریکارڈ کی تاریخ",
+      beforeBalance: "پہلے کا بیلنس",
+      afterBalance: "بعد کا بیلنس",
+      amount: "رقم",
+      currency: "کرنسی"
+    },
+    teamManagement: {
+      lastLoginTime: "آخری لاگ ان وقت",
+      registrationDate: "رجسٹریشن کی تاریخ",
+      balance: "بیلنس"
+    },
+    teamPnL: {
+      deposit: "جمع",
+      withdrawal: "نکال",
+      bonus: "بونس",
+      validBet: "درست شرط",
+      winLoss: "جیت/ہار",
+      profitLoss: "منافع و نقصان",
+      today: "آج",
+      yesterday: "کل",
+      sevenDays: "7 دن",
+      thisMonth: "اس مہینے",
+      total: "کل"
+    },
+    teamBetting: {
+      all: "سب",
+      slot: "سلاٹ",
+      live: "لائیو",
+      sport: "کھیل",
+      fish: "فش",
+      poker: "پوکر",
+      today: "آج",
+      yesterday: "کل",
+      sevenDays: "7 دن",
+      thisMonth: "اس مہینے",
+      vendors: "فراہم کنندگان"
     }
   },
   dividend: {
@@ -444,7 +515,8 @@ export default {
     statusPay: "ادائیگی",
     statusCleared: "صاف کیا گیا",
     statusCancelled: "منسوخ کیا گیا",
-    rate: "شرح"
+    rate: "شرح",
+    createContract: "معاہدہ بنائیں"
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",

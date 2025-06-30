@@ -186,9 +186,9 @@
           <swiper-slide @click="activateSlide(item)">
             <div class="category">
               <img :src="`${getImageUrl(item)}`" />
-              <!-- <div class="cat-label">
+              <div class="cat-label" :class="item.active ? 'active' : ''">
                 {{ item.label }}
-              </div> -->
+              </div>
             </div>
           </swiper-slide>
         </template>
@@ -266,9 +266,8 @@
               :slidesPerGroup="3"
               :spaceBetween="10"
               :modules="[Navigation, Grid]"
-              :grid="{ rows: 1, fill: 'row' }"
-              :navigation="{ nextEl: '.custom-hot-next', prevEl: '.custom-hot-prev' }"
-              class="platform-game-container"
+              :grid="{ rows: 2, fill: 'row' }"
+              style="padding:10px 0;"
             >
               <template v-for="(item, index) in hotGameList" :key="index">
                 <template v-if="item.type && item.type === 'game'">
@@ -1167,11 +1166,11 @@
           </div>
           <div class="support-button">
             <div class="supp-left">
-              <div class="supp-main">24/7 support</div>
-              <div class="supp-sub">If you still have questions, please contact us</div>
+              <div class="supp-main">{{ $t('home.twentyFourSevenSupport') }}</div>
+              <div class="supp-sub">{{ $t('home.ifHaveQuestionsContactUs') }}</div>
             </div>
 
-            <q-btn class="btn-primary" :href="ui.CSAUrl" target="_blank">Chat</q-btn>
+            <q-btn class="btn-primary" :href="ui.CSAUrl" target="_blank">{{ $t('home.chat') }}</q-btn>
 
             <!-- <a class="btn-primary" :href="ui.CSAUrl" target="_blank">
               <img src="../assets/images/index/cs-cs.png" />
@@ -4847,13 +4846,17 @@ const checkGoogleLoginSetPwd = () => {
     .cat-label {
       position: absolute;
       font-weight: bold;
-      bottom: 10px;
+      bottom: 5px;
       left: 0;
       right: 0;
       margin: auto;
       width: 100%;
       text-align: center;
-      color: #000000;
+      color: #FFFFFFB2;
+
+      &.active {
+        color: #fff;
+      }
     }
   }
   /* Top row spans 2 columns each */
@@ -6059,6 +6062,10 @@ const checkGoogleLoginSetPwd = () => {
   top: -10px;
   right: -10px;
   width: 30px;
+
+  img {
+    width: 100%;
+  }
 }
 
 .loading-spinner {

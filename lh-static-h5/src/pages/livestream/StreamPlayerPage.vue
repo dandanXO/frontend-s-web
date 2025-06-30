@@ -368,16 +368,18 @@ const handleSendChatMessage = (message) => {
     .then((res) => {
       if (res.code === 0) {
         const { content, name } = res.data;
+        const displayName = store.memberType !== "NORMAL" ? store.nickName : name;
         messages.value.push({
           content,
-          name,
+          name: displayName,
           time: Date.now(),
           vip: userVipLevel.value,
-          profilePhoto: store.profilePhoto
+          profilePhoto: store.profilePhoto,
+          memberType: store.memberType
         });
         danmuList.value = [content];
         if (!processedUserName.value) {
-          processedUserName.value = name;
+          processedUserName.value = displayName;
         }
       }
     });
@@ -429,7 +431,7 @@ const syncMessages = () => {
     if (!isLivestreaming.value) return;
     isProcessingMessageHistory.value = true;
     api
-      .post(`/live/history?current=${messagesHistoryMeta.value.current}&sortType=ASC`, params, {
+      .post(`/opt-session/live/history?current=${messagesHistoryMeta.value.current}&sortType=ASC`, params, {
         signal: chatHistoryAbortController.value.signal
       })
       .then(async (res) => {
@@ -486,7 +488,7 @@ const syncMessages = () => {
 
 const syncMessagesPerPage = async (params, current) => {
   try {
-    const res = await api.post(`/live/history?current=${current}&sortType=ASC`, params);
+    const res = await api.post(`/opt-session/live/history?current=${current}&sortType=ASC`, params);
     return formatHistoryMessages(res.data.records);
   } catch (e) {
     console.error(e);
@@ -508,7 +510,8 @@ const formatHistoryMessages = (messages) => {
         name: record.name,
         time: record.createTime,
         vip: extractVipLevelFromVipStr(record.vip),
-        profilePhoto: record.profilePhoto
+        profilePhoto: record.profilePhoto,
+        memberType: record.memberType
       });
     }
 
