@@ -22,7 +22,7 @@ export const getChatHistory = (payload, current, abortController) => {
   };
   let rstUrl = localStorage.getItem("LH_WEB_RST_URL") || process.env.VUE_APP_RST_API.split(",")[0];
 
-  return fetch(rstUrl + `/live/history?current=${current}&sortType=ASC`, requestOptions)
+  return fetch(rstUrl + `/opt-session/live/history?current=${current}&sortType=ASC`, requestOptions)
     .then((response) => {
       return response.json();
     })

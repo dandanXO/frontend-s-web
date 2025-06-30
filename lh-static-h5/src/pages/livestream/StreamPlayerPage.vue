@@ -429,7 +429,7 @@ const syncMessages = () => {
     if (!isLivestreaming.value) return;
     isProcessingMessageHistory.value = true;
     api
-      .post(`/live/history?current=${messagesHistoryMeta.value.current}&sortType=ASC`, params, {
+      .post(`/opt-session/live/history?current=${messagesHistoryMeta.value.current}&sortType=ASC`, params, {
         signal: chatHistoryAbortController.value.signal
       })
       .then(async (res) => {
@@ -486,7 +486,7 @@ const syncMessages = () => {
 
 const syncMessagesPerPage = async (params, current) => {
   try {
-    const res = await api.post(`/live/history?current=${current}&sortType=ASC`, params);
+    const res = await api.post(`/opt-session/live/history?current=${current}&sortType=ASC`, params);
     return formatHistoryMessages(res.data.records);
   } catch (e) {
     console.error(e);
