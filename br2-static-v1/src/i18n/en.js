@@ -970,7 +970,7 @@ export default {
       tnc07: "To avoid any misunderstandings, AKB188 reserves the final right of interpretation for this promotion."
     },
     dailySecondDeposit: {
-      description: "The first deposit of the day entitles you to a 10% bonus on the deposited amount",
+      description: "The first deposit of the day entitles you to a 20% bonus on the deposited amount",
       tnc01: "This promotion is valid for all deposits made after the first deposit on the same day.",
       tnc02: "Each subsequent deposit grants a 20% bonus, with a limit of R$288 per deposit.",
       tnc03: "The bonus (including the principal) requires 12 times valid wagering to be eligible for withdrawal.",
