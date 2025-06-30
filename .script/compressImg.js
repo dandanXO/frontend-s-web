@@ -91,9 +91,16 @@ const main = async () => {
     }
   }
 
+  if(updated) {
+    execSync(`git add ${imgs.join(' ')}`);
+    console.log("Added compressed images to git staging area.");
+  }
+
   if (updated || removed) {
     fse.writeJsonSync(CACHE_PATH, cache, { spaces: 2 });
     console.log("Cache updated.");
+    execSync(`git add ${CACHE_PATH}`);
+    console.log(`Added cache file to git staging area: ${CACHE_PATH}`);
   }
 };
 
