@@ -206,7 +206,7 @@
                     class="form-input"
                     :controls="false"
                     :step="1"
-                    :precision="0"
+                    :precision="2"
                     style="width: 200px;"
                   />
                 </template>
@@ -729,6 +729,7 @@ const ruleType = reactive({
     { key: 16, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 1 + t('withdrawRuleType.week') + ')', value: '#betCountByPlatform_7' },
     { key: 17, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 2 + t('withdrawRuleType.week') + ')', value: '#betCountByPlatform_14' },
     { key: 18, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 1 + t('withdrawRuleType.month') + ')', value: '#betCountByPlatform_30' },
+    { key: 19, name: t('withdrawRuleType.balanceThresholdMultiplier'), value: '#balanceThresholdMultiplier>' },
   ],
 })
 
@@ -899,7 +900,7 @@ function getValue(str, keyword) {
 }
 
 function getValueList(str) {
-  const conditionRegex = /(#\w+)\s*(<=|>=|==|<|>)\s*(-?\d+)/g;
+  const conditionRegex = /(#\w+)\s*(<=|>=|==|<|>)\s*(-?\d+(?:\.\d+)?)/g;
   const matchesRegex = /\(([^)]+)\)\s+matches\s+'(.*)'/g;
   const platformRegex = /#betCountByPlatform_([a-zA-Z0-9_]+)_(\d+)/g;
   const results = [];
@@ -912,7 +913,7 @@ function getValueList(str) {
     while ((match = conditionRegex.exec(conditionStr)) !== null) {
       const variable = match[1] + match[2];
       const operator = match[2];
-      const value = parseInt(match[3], 10);
+      const value = parseFloat(match[3]);
       results.push({ variable, operator, value });
     }
     while ((match = matchesRegex.exec(conditionStr)) !== null) {
