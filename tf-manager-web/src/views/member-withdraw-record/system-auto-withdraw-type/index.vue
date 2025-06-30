@@ -729,7 +729,7 @@ const ruleType = reactive({
     { key: 16, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 1 + t('withdrawRuleType.week') + ')', value: '#betCountByPlatform_7' },
     { key: 17, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 2 + t('withdrawRuleType.week') + ')', value: '#betCountByPlatform_14' },
     { key: 18, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 1 + t('withdrawRuleType.month') + ')', value: '#betCountByPlatform_30' },
-    { key: 19, name: t('withdrawRuleType.balanceThresholdMultiplier'), value: '#balanceThresholdMultiplier>' },
+    { key: 19, name: t('withdrawRuleType.balanceThresholdMultiplier'), value: '#balanceThresholdMultiplier<' },
   ],
 })
 

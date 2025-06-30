@@ -128,7 +128,7 @@ export default {
     noAutoWithdrawalGamePlatform: '禁止自动审核游戏平台',
     week: '周内',
     month: '月内',
-    balanceThresholdMultiplier: '余额需高于存款金额倍数',
+    balanceThresholdMultiplier: '余额需小于存款金额倍数',
   },
   outboxStatus: {
     0: '未回复',
