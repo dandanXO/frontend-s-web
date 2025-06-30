@@ -38,7 +38,7 @@
           <div class="mission-block-mission-upside-wrapper">
             <span class="mission-block-mission-upside-title">Nhiệm vụ {{ index + 1 }}</span>
             <div class="mission-block-mission-upside-reward-wrapper">
-              <img src="@/assets/images/promotion/hotpromo/newPlayer/coin.svg" />
+              <img src="@/assets/images/promotion/hotpromo/newPlayer/coin.png" />
               <span class="mission-block-mission-upside-reward-amount">{{ mission.reward }} VNDP</span>
             </div>
           </div>
