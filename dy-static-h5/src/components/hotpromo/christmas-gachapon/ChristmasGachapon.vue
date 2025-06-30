@@ -450,7 +450,7 @@ onMounted(() => {
 }
 .christmas-gachapon-container {
   position: relative;
-  background: url(../../../assets/promo/christmas-gachapon/christmas-bg.png) no-repeat top left;
+  //background: url(../../../assets/promo/christmas-gachapon/christmas-bg.png) no-repeat top left;
   background-size: 100%;
   width: 100%;
   position: relative;
