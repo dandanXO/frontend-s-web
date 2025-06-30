@@ -4,5 +4,16 @@
     "qrcode": "^1.5.3",
     "vue-pick-colors": "^1.6.0",
     "vue-qr": "^4.0.9"
+  },
+  "devDependencies": {
+    "crypto": "^1.0.1",
+    "dotenv": "^17.0.0",
+    "fs-extra": "^11.3.0",
+    "glob": "^11.0.3",
+    "husky": "^9.1.7",
+    "tinify": "^1.8.0"
+  },
+  "scripts": {
+  "prepare": "husky install"
   }
 }

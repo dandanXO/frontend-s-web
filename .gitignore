@@ -8,3 +8,4 @@ dy-static-h5/resources/.gradle/*
 **/capacitor-cordova-android-plugins
 **/src-capacitor/www
 **/build/
+.env
