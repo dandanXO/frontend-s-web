@@ -477,6 +477,19 @@ export default {
       yesterday: "کل",
       sevenDays: "7 دن",
       thisMonth: "اس مہینے",
+    },
+    teamBetting: {
+      all: "سب",
+      slot: "سلاٹ",
+      live: "لائیو",
+      sport: "کھیل",
+      fish: "فش",
+      poker: "پوکر",
+      today: "آج",
+      yesterday: "کل",
+      sevenDays: "7 دن",
+      thisMonth: "اس مہینے",
+      vendors: "فراہم کنندگان"
     }
   },
   dividend: {

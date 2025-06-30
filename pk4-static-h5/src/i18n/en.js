@@ -482,6 +482,19 @@ export default {
       yesterday: 'Yesterday',
       sevenDays: '7 days',
       thisMonth: 'This Month',
+    },
+    teamBetting: {
+      all: 'All',
+      slot: 'Slot',
+      live: 'Live',
+      sport: 'Sport',
+      fish: 'Fish',
+      poker: 'Poker',
+      today: 'Today',
+      yesterday: 'Yesterday',
+      sevenDays: '7 days',
+      thisMonth: 'This Month',
+      vendors: 'Vendors'
     }
   },
   accountRecord: {
