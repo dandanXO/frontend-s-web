@@ -2,12 +2,12 @@
     <div class="my-dividend-container">
 
         <div class="tabs">
-            <div class="tab-item" :class="{ active: typesSelection.label === 'ALL' }" @click="typesSelection.label = 'ALL'">ALL</div>
-            <div class="tab-item" :class="{ active: typesSelection.label === 'SLOT' }" @click="typesSelection.label = 'SLOT'">SLOT</div>
-            <div class="tab-item" :class="{ active: typesSelection.label === 'LIVE' }" @click="typesSelection.label = 'LIVE'">LIVE</div>
-            <div class="tab-item" :class="{ active: typesSelection.label === 'SPORT' }" @click="typesSelection.label = 'SPORT'">SPORT</div>
-            <div class="tab-item" :class="{ active: typesSelection.label === 'FISH' }" @click="typesSelection.label = 'FISH'">FISH</div>
-            <div class="tab-item" :class="{ active: typesSelection.label === 'POKER' }" @click="typesSelection.label = 'POKER'">POKER</div>
+            <div class="tab-item" :class="{ active: typesSelection.value === 'ALL' }" @click="typesSelection.value = 'ALL'">{{ $t('affiliate.teamBetting.all') }}</div>
+            <div class="tab-item" :class="{ active: typesSelection.value === 'SLOT' }" @click="typesSelection.value = 'SLOT'">{{ $t('affiliate.teamBetting.slot') }}</div>
+            <div class="tab-item" :class="{ active: typesSelection.value === 'LIVE' }" @click="typesSelection.value = 'LIVE'">{{ $t('affiliate.teamBetting.live') }}</div>
+            <div class="tab-item" :class="{ active: typesSelection.value === 'SPORT' }" @click="typesSelection.value = 'SPORT'">{{ $t('affiliate.teamBetting.sport') }}</div>
+            <div class="tab-item" :class="{ active: typesSelection.value === 'FISH' }" @click="typesSelection.value = 'FISH'">{{ $t('affiliate.teamBetting.fish') }}</div>
+            <div class="tab-item" :class="{ active: typesSelection.value === 'POKER' }" @click="typesSelection.value = 'POKER'">{{ $t('affiliate.teamBetting.poker') }}</div>
         </div>
 
         <div class="filter">
@@ -25,19 +25,19 @@
         <div class="date-filter filter">
             <InputField :isDark="true">
                 <template #input>
-                    <q-input readonly class="dropdown" outlined v-model="typesSelection.label" @click="openTypeSelectionDialog" dense
+                    <q-input readonly class="dropdown" outlined :model-value="$t(typesSelection.label)" @click="openTypeSelectionDialog" dense
                         :display-value="'Types'" />
                 </template>
             </InputField>
             <InputField :isDark="true">
                 <template #input>
                     <q-select class="dropdown" outlined v-model="request.platform" :options="vendorsList" option-label="name" option-value="code" dense 
-                        label="Vendors" emit-value map-options/>
+                        :label="$t('affiliate.teamBetting.vendors')" emit-value map-options/>
                 </template>
             </InputField>
             <InputField :isDark="true">
                 <template #input>
-                    <q-input readonly class="dropdown" outlined v-model="daysSelection.label" @click="openDaySelectionDialog" dense placeholder="Date" />
+                    <q-input readonly class="dropdown" outlined :model-value="$t(daysSelection.label)" @click="openDaySelectionDialog" dense placeholder="Date" />
                 </template>
             </InputField>
         </div>
@@ -77,14 +77,14 @@
 
             <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
             <div class="filter-grid">
-                <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'Today' }"
-                @click="changeDaySelection('Today')">Today</div>
-                <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'Yesterday' }"
-                @click="changeDaySelection('Yesterday')">Yesterday</div>
-                <div class="filter-item" :class="{ active: dialogDaysSelection.label === '7-days' }"
-                @click="changeDaySelection('7-days')">7-days</div>
-                <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'This Month' }"
-                @click="changeDaySelection('This Month')">This Month</div>
+                <div class="filter-item" :class="{ active: dialogDaysSelection.value === 'Today' }"
+                @click="changeDaySelection({label: 'affiliate.teamBetting.today', value: 'Today'})">{{ $t('affiliate.teamBetting.today') }}</div>
+                <div class="filter-item" :class="{ active: dialogDaysSelection.value === 'Yesterday' }"
+                @click="changeDaySelection({label: 'affiliate.teamBetting.yesterday', value: 'Yesterday'})">{{ $t('affiliate.teamBetting.yesterday') }}</div>
+                <div class="filter-item" :class="{ active: dialogDaysSelection.value === '7-days' }"
+                @click="changeDaySelection({label: 'affiliate.teamBetting.sevenDays', value: '7-days'})">{{ $t('affiliate.teamBetting.sevenDays') }}</div>
+                <div class="filter-item" :class="{ active: dialogDaysSelection.value === 'This Month' }"
+                @click="changeDaySelection({label: 'affiliate.teamBetting.thisMonth', value: 'This Month'})">{{ $t('affiliate.teamBetting.thisMonth') }}</div>
             </div>
 
             <div style="display:flex;">
@@ -103,18 +103,18 @@
 
             <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
             <div class="filter-grid">
-                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'ALL' }"
-                @click="changeTypeSelection('ALL')">ALL</div>
-                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'SLOT' }"
-                @click="changeTypeSelection('SLOT')">SLOT</div>
-                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'LIVE' }"
-                @click="changeTypeSelection('LIVE')">LIVE</div>
-                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'SPORT' }"
-                @click="changeTypeSelection('SPORT')">SPORT</div>
-                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'FISH' }"
-                @click="changeTypeSelection('FISH')">FISH</div>
-                <div class="filter-item" :class="{ active: dialogTypesSelection.label === 'POKER' }"
-                @click="changeTypeSelection('POKER')">POKER</div>
+                <div class="filter-item" :class="{ active: dialogTypesSelection.value === 'ALL' }"
+                @click="changeTypeSelection({label: 'affiliate.teamBetting.all', value: 'ALL'})">{{ $t('affiliate.teamBetting.all') }}</div>
+                <div class="filter-item" :class="{ active: dialogTypesSelection.value === 'SLOT' }"
+                @click="changeTypeSelection({label: 'affiliate.teamBetting.slot', value: 'SLOT'})">{{ $t('affiliate.teamBetting.slot') }}</div>
+                <div class="filter-item" :class="{ active: dialogTypesSelection.value === 'LIVE' }"
+                @click="changeTypeSelection({label: 'affiliate.teamBetting.live', value: 'LIVE'})">{{ $t('affiliate.teamBetting.live') }}</div>
+                <div class="filter-item" :class="{ active: dialogTypesSelection.value === 'SPORT' }"
+                @click="changeTypeSelection({label: 'affiliate.teamBetting.sport', value: 'SPORT'})">{{ $t('affiliate.teamBetting.sport') }}</div>
+                <div class="filter-item" :class="{ active: dialogTypesSelection.value === 'FISH' }"
+                @click="changeTypeSelection({label: 'affiliate.teamBetting.fish', value: 'FISH'})">{{ $t('affiliate.teamBetting.fish') }}</div>
+                <div class="filter-item" :class="{ active: dialogTypesSelection.value === 'POKER' }"
+                @click="changeTypeSelection({label: 'affiliate.teamBetting.poker', value: 'POKER'})">{{ $t('affiliate.teamBetting.poker') }}</div>
             </div>
 
             <div style="display:flex;">
@@ -133,7 +133,9 @@ import { ref, reactive, onMounted } from 'vue';
 import { api } from 'boot/axios';
 import { userStore } from "src/stores";
 import moment from 'moment';
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const store = userStore();
 const formDetail = reactive([]);
 const selectedTab = ref('All');
@@ -149,15 +151,15 @@ function convertDate(date) {
 }
 
 const isDaySelectionDialog = ref(false)
-const daysSelection = ref({ label: '7-days', value: 7 });
-const dialogDaysSelection = ref({ label: '7-days', value: 7 });
+const daysSelection = ref({ label: 'affiliate.teamBetting.sevenDays', value: '7-days' });
+const dialogDaysSelection = ref({ label: 'affiliate.teamBetting.sevenDays', value: '7-days' });
 const openDaySelectionDialog = () => {
   dialogDaysSelection.value = daysSelection.value;
   isDaySelectionDialog.value = true
 }
 
-const changeDaySelection = (type) => {
-  dialogDaysSelection.value = { label: type, value: type };
+const changeDaySelection = (newValue) => {
+  dialogDaysSelection.value = newValue;
 }
 
 const confirmDaySelection = () => {
@@ -167,16 +169,16 @@ const confirmDaySelection = () => {
 }
 
 const isTypeSelectionDialog = ref(false)
-const typesSelection = ref({ label: 'ALL', value: 'ALL' });
-const dialogTypesSelection = ref({ label: 'ALL', value: 'ALL' });
+const typesSelection = ref({ label: t('affiliate.teamBetting.all'), value: 'ALL' });
+const dialogTypesSelection = ref({ label: t('affiliate.teamBetting.all'), value: 'ALL' });
 
 const openTypeSelectionDialog = () => {
   dialogTypesSelection.value = typesSelection.value;
   isTypeSelectionDialog.value = true;
 }
 
-const changeTypeSelection = (type) => {
-  dialogTypesSelection.value = { label: type, value: type };
+const changeTypeSelection = (newValue) => {
+  dialogTypesSelection.value = newValue;
 }
 
 const confirmTypeSelection = () => {
@@ -231,8 +233,8 @@ const loadBetRecords = async () => {
     }
   }
   query.siteId = 26;
-  if (typesSelection.value.label !== 'ALL') {
-    query.gameType = typesSelection.value.label;
+  if (typesSelection.value.value !== 'ALL') {
+    query.gameType = typesSelection.value.value;
   } 
 //   if (query.gameType === 'SPORT') {
 //     query.gameType = 'SPORT,ESPORT';
@@ -265,7 +267,7 @@ const initVendors = () => {
 }
 let timeZone = '+05:00';
 function getDateRange(startDate = null, endDate = null) {
-    const type = daysSelection.value.label;
+    const type = daysSelection.value.value;
 
     let start, end;
 

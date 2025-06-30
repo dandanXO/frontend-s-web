@@ -186,9 +186,9 @@
           <swiper-slide @click="activateSlide(item)">
             <div class="category">
               <img :src="`${getImageUrl(item)}`" />
-              <!-- <div class="cat-label">
+              <div class="cat-label" :class="item.active ? 'active' : ''">
                 {{ item.label }}
-              </div> -->
+              </div>
             </div>
           </swiper-slide>
         </template>
@@ -4847,13 +4847,17 @@ const checkGoogleLoginSetPwd = () => {
     .cat-label {
       position: absolute;
       font-weight: bold;
-      bottom: 10px;
+      bottom: 5px;
       left: 0;
       right: 0;
       margin: auto;
       width: 100%;
       text-align: center;
-      color: #000000;
+      color: #FFFFFFB2;
+
+      &.active {
+        color: #fff;
+      }
     }
   }
   /* Top row spans 2 columns each */
