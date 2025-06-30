@@ -31,7 +31,7 @@
                 <img src="../../../assets/images/affiliate/team-management/username-icon.png" />
                 <div>{{ store.nickName }}</div>
             </div>
-            <div style="color: #21EF89;">Total: {{ page.total === null ? 0 : page.total }}</div>
+            <div style="color: #21EF89;">{{ $t('affiliate.teamPnL.total') }}: {{ page.total === null ? 0 : page.total }}</div>
         </div>
 
 
