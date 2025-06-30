@@ -424,6 +424,59 @@ export default {
       qrCode: "کیو آر کوڈ",
       scanTheCodeToRegister: "رجسٹر کرنے کے لیے کیو آر کوڈ اسکین کریں",
       pressQRCode: "کیو آر کوڈ کو البم میں محفوظ کرنے کے لیے دبائیں اور پکڑیں"
+    },
+    overview: {
+      today: "آج",
+      yesterday: "کل",
+      sevenDays: "7 دن",
+      thisMonth: "اس مہینے",
+      logins: "لاگ ان",
+      registers: "رجسٹریشن",
+      betCount: "بیٹ کی تعداد",
+      promotions: "پروموشنز",
+      registersFirstDeposits: "رجسٹریشن کے بعد پہلی جمع",
+      firstDeposits: "پہلی جمع",
+      deposits: "جمع",
+      withdrawals: "نکال",
+      deposit: "جمع",
+      withdrawalAmount: "نکال کی رقم",
+      bonus: "بونس",
+      validBet: "درست شرط",
+      winLoss: "جیت/ہار",
+      teamPnL: "ٹیم منافع و نقصان",
+      teamRebate: "ٹیم ریبیٹ",
+    },
+    accountRecord: {
+      all: "سب",
+      deposit: "جمع",
+      withdrawal: "نکال",
+      betting: "بیٹنگ",
+      bonus: "بونس",
+      rebate: "ریبیٹ",
+      dividend: "ڈیویڈنڈ",
+      loginName: "لاگ ان نام",
+      recordDate: "ریکارڈ کی تاریخ",
+      beforeBalance: "پہلے کا بیلنس",
+      afterBalance: "بعد کا بیلنس",
+      amount: "رقم",
+      currency: "کرنسی"
+    },
+    teamManagement: {
+      lastLoginTime: "آخری لاگ ان وقت",
+      registrationDate: "رجسٹریشن کی تاریخ",
+      balance: "بیلنس"
+    },
+    teamPnL: {
+      deposit: "جمع",
+      withdrawal: "نکال",
+      bonus: "بونس",
+      validBet: "درست شرط",
+      winLoss: "جیت/ہار",
+      profitLoss: "منافع و نقصان",
+      today: "آج",
+      yesterday: "کل",
+      sevenDays: "7 دن",
+      thisMonth: "اس مہینے",
     }
   },
   dividend: {
@@ -444,7 +497,8 @@ export default {
     statusPay: "ادائیگی",
     statusCleared: "صاف کیا گیا",
     statusCancelled: "منسوخ کیا گیا",
-    rate: "شرح"
+    rate: "شرح",
+    createContract: "معاہدہ بنائیں"
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",

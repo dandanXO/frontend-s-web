@@ -429,6 +429,59 @@ export default {
       qrCode: "QR Code",
       scanTheCodeToRegister: "Scan the QR code to register",
       pressQRCode: "press and hold to save QR code to album"
+    },
+    overview: {
+      today: 'Today',
+      yesterday: 'Yesterday',
+      sevenDays: '7 days',
+      thisMonth: 'This Month',
+      logins: 'Logins',
+      registers: 'Registers',
+      betCount: 'Bet count',
+      promotions: 'Promotions',
+      registersFirstDeposits: 'Registers first deposits',
+      firstDeposits: 'First deposits',
+      deposits: 'Deposits',
+      withdrawals: 'Withdrawals',
+      deposit: 'Deposit',
+      withdrawalAmount: 'Withdrawal amount',
+      bonus: 'Bonus',
+      validBet: 'Valid bet',
+      winLoss: 'Win/loss',
+      teamPnL: 'Team P&L',
+      teamRebate: 'Team Rebate',
+    },
+    accountRecord: {
+      all: 'All',
+      deposit: 'Deposit',
+      withdrawal: 'Withdrawal',
+      betting: 'Betting',
+      bonus: 'Bonus',
+      rebate: 'Rebate',
+      dividend: 'Dividend',
+      loginName: 'Login Name',
+      recordDate: 'Record Date',
+      beforeBalance: 'Before Balance',
+      afterBalance: 'After Balance',
+      amount: 'Amount',
+      currency: 'Currency'
+    },
+    teamManagement: {
+      lastLoginTime: 'Last login time',
+      registrationDate: 'Registration date',
+      balance: 'Balance'
+    },
+    teamPnL: {
+      deposit: 'Deposit',
+      withdrawal: 'Withdrawal',
+      bonus: 'Bonus',
+      validBet: 'Valid Bet',
+      winLoss: 'Win/Loss',
+      profitLoss: 'Profit & Loss',
+      today: 'Today',
+      yesterday: 'Yesterday',
+      sevenDays: '7 days',
+      thisMonth: 'This Month',
     }
   },
   accountRecord: {
@@ -454,7 +507,8 @@ export default {
     statusPay: "Pay",
     statusCleared: "Cleared",
     statusCancelled: "Cancelled",
-    rate: "Rate"
+    rate: "Rate",
+    createContract: "Create Contract"
   },
   deposit: {
     selectAmount: "Select Amount",
