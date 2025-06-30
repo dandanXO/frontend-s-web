@@ -266,9 +266,8 @@
               :slidesPerGroup="3"
               :spaceBetween="10"
               :modules="[Navigation, Grid]"
-              :grid="{ rows: 1, fill: 'row' }"
-              :navigation="{ nextEl: '.custom-hot-next', prevEl: '.custom-hot-prev' }"
-              class="platform-game-container"
+              :grid="{ rows: 2, fill: 'row' }"
+              style="padding:10px 0;"
             >
               <template v-for="(item, index) in hotGameList" :key="index">
                 <template v-if="item.type && item.type === 'game'">
@@ -6063,6 +6062,10 @@ const checkGoogleLoginSetPwd = () => {
   top: -10px;
   right: -10px;
   width: 30px;
+
+  img {
+    width: 100%;
+  }
 }
 
 .loading-spinner {
