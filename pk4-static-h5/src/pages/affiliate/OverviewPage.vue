@@ -213,8 +213,6 @@ function getDateRange(startDate = null, endDate = null) {
 
   let start, end;
 
-  console.log('here', type)
-
   switch (type) {
     case 'Today':
       start = moment().format('YYYY-MM-DD');

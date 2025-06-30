@@ -465,6 +465,23 @@ export default {
       afterBalance: 'After Balance',
       amount: 'Amount',
       currency: 'Currency'
+    },
+    teamManagement: {
+      lastLoginTime: 'Last login time',
+      registrationDate: 'Registration date',
+      balance: 'Balance'
+    },
+    teamPnL: {
+      deposit: 'Deposit',
+      withdrawal: 'Withdrawal',
+      bonus: 'Bonus',
+      validBet: 'Valid Bet',
+      winLoss: 'Win/Loss',
+      profitLoss: 'Profit & Loss',
+      today: 'Today',
+      yesterday: 'Yesterday',
+      sevenDays: '7 days',
+      thisMonth: 'This Month',
     }
   },
   accountRecord: {

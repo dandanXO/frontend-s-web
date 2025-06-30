@@ -460,6 +460,23 @@ export default {
       afterBalance: "بعد کا بیلنس",
       amount: "رقم",
       currency: "کرنسی"
+    },
+    teamManagement: {
+      lastLoginTime: "آخری لاگ ان وقت",
+      registrationDate: "رجسٹریشن کی تاریخ",
+      balance: "بیلنس"
+    },
+    teamPnL: {
+      deposit: "جمع",
+      withdrawal: "نکال",
+      bonus: "بونس",
+      validBet: "درست شرط",
+      winLoss: "جیت/ہار",
+      profitLoss: "منافع و نقصان",
+      today: "آج",
+      yesterday: "کل",
+      sevenDays: "7 دن",
+      thisMonth: "اس مہینے",
     }
   },
   dividend: {
