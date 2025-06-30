@@ -449,7 +449,22 @@ export default {
       validBet: 'Valid bet',
       winLoss: 'Win/loss',
       teamPnL: 'Team P&L',
-      teamRebate: 'Team Rebate'
+      teamRebate: 'Team Rebate',
+    },
+    accountRecord: {
+      all: 'All',
+      deposit: 'Deposit',
+      withdrawal: 'Withdrawal',
+      betting: 'Betting',
+      bonus: 'Bonus',
+      rebate: 'Rebate',
+      dividend: 'Dividend',
+      loginName: 'Login Name',
+      recordDate: 'Record Date',
+      beforeBalance: 'Before Balance',
+      afterBalance: 'After Balance',
+      amount: 'Amount',
+      currency: 'Currency'
     }
   },
   accountRecord: {

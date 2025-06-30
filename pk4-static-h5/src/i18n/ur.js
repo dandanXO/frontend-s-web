@@ -444,7 +444,22 @@ export default {
       validBet: "درست شرط",
       winLoss: "جیت/ہار",
       teamPnL: "ٹیم منافع و نقصان",
-      teamRebate: "ٹیم ریبیٹ"
+      teamRebate: "ٹیم ریبیٹ",
+    },
+    accountRecord: {
+      all: "سب",
+      deposit: "جمع",
+      withdrawal: "نکال",
+      betting: "بیٹنگ",
+      bonus: "بونس",
+      rebate: "ریبیٹ",
+      dividend: "ڈیویڈنڈ",
+      loginName: "لاگ ان نام",
+      recordDate: "ریکارڈ کی تاریخ",
+      beforeBalance: "پہلے کا بیلنس",
+      afterBalance: "بعد کا بیلنس",
+      amount: "رقم",
+      currency: "کرنسی"
     }
   },
   dividend: {
