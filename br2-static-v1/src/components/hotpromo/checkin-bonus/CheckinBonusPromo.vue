@@ -126,7 +126,7 @@ const checkDays = ref([{
   amt: 888
 }]);
 
-const showPrizePopup = ref(true);
+const showPrizePopup = ref(false);
 const prizeAmount = ref();
 
 onMounted(() => {
