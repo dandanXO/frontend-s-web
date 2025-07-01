@@ -2,7 +2,7 @@
   <q-scroll-area>
     <q-dialog v-model="visible" class="gameDialog" full-height full-width persistent no-esc-dismiss no-backdrop-dismiss>
       <q-toolbar>
-        <div class="topActions">
+        <div class="topActions" :class="{ betby: isBetBy }">
           <q-icon name="chevron_left" size="30px" @click="onExitClick" />
           <div class="game-logo-img">
             <img src="../../assets/images/auth/auth-logo-text-only.png" />
@@ -31,12 +31,12 @@
           </div>
         </div>
 
-        <div class="loader-container">
+        <div v-if="isLoading" class="loader-container">
           <img class="loader-logo" src="../../assets/images/auth/auth-logo-text-only.png" alt="B9.GAME" />
           <div>{{ $t("btn.loading_plsWait") }}</div>
         </div>
 
-        <template v-if="isInnerHtmlSrc === false">
+        <template v-if="isInnerHtmlSrc === false && !isBetBy">
           <iframe
             @load="loadGame()"
             v-show="!logoShow"
@@ -48,6 +48,7 @@
             :style="`height: calc(100% - 65px - ${ui.bottomInsetHeight}px);`"
           ></iframe>
         </template>
+        <div v-else-if="isBetBy" ref="betbyRef" />
         <template v-else>
           <iframe
             @load="loadGame()"
@@ -140,7 +141,7 @@ import { userStore } from "stores/index";
 // import { launchSessionGame } from "api/platform/platform";
 // import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated, watch } from "vue";
+import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated, watch, nextTick } from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
 import { App } from "@capacitor/app";
@@ -175,6 +176,10 @@ const bankCardList = ref([]);
 const privilegeList = ref([]);
 const selectedPayType = shallowRef("");
 const isPaymentLoading = ref(true);
+const isBetBy = ref(false);
+const isLoading = ref(false);
+const betbyInstance = ref(null);
+const betbyRef = ref(null);
 
 const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
@@ -284,6 +289,9 @@ const closeDialog = () => {
     screen.orientation.lock("portrait");
     App.removeAllListeners();
   }
+  if (betbyInstance.value) {
+    betbyInstance.value.kill();
+  }
 };
 
 const goToDepositPage = () => {
@@ -309,6 +317,7 @@ const pendingGameParams = ref(null);
 const isDepositZero = ref(false);
 const open = (gameName, platformCode, gameCode, gameType, demo, isChoice = false) => {
   const store = userStore();
+  isLoading.value = true;
   isDepositZero.value = store.hasDeposit === false;
   const _isFromNewPlayerGuide = sessionStorage.getItem("isFromNewPlayerGuide");
   if (_isFromNewPlayerGuide) {
@@ -331,6 +340,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
   // debugger;
   // AppFullscreen.request()
   isInnerHtmlSrc.value = false;
+  isBetBy.value = false;
   platformCodeImg.value = platformCode;
 
   //TESt
@@ -385,7 +395,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
   } else {
     const _isPlatformAllowNonLogin = isPlatformAllowNonLogin(demo);
     if (store.hasToken() || _isPlatformAllowNonLogin) {
-      if (platformCode !== "LuckySport" && platformCode !== "NineW" && platformCode !== "BetBy") {
+      if (platformCode !== "LuckySport" && platformCode !== "NineW") {
         visible.value = true;
       }
 
@@ -436,28 +446,30 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
         .get(apiUrl, {
           params: apiParam
         })
-        .then((res) => {
+        .then(async (res) => {
           let srcDoc = res.data;
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
+          isLoading.value = false;
           if (platformCode === "BetBy") {
-            debugger;
-            const betbyItem = document.getElementById("betby");
-            betbyItem.style.display = "flex";
+            isBetBy.value = true;
+            await nextTick();
+            // debugger;
+            // betbyItem.style.display = "flex";
 
-            var bt = new BTRenderer().initialize({
+            betbyInstance.value = new BTRenderer().initialize({
               brand_id: "2547441365755760643",
               token: srcDoc,
               onTokenExpired: function () {},
               themeName: "default",
               lang: "en",
-              target: document.getElementById("betby"),
+              target: betbyRef.value,
               betSlipOffsetTop: 0,
               betslipZIndex: 999,
               onLogin: function () {},
               onRegister: function () {},
               onSessionRefresh: function () {}
             });
-            console.log(bt);
+            console.log(betbyInstance.value);
           } else if (firstFourChars === "http") {
             if ((platformCode === "LuckySport" || platformCode === "NineW") && gameCode !== "") {
               src.value = srcDoc.replace(gameCode, "");
@@ -625,6 +637,12 @@ defineExpose({
     width: 100%;
     padding: 16px;
     align-items: center;
+
+    &.betby {
+      position: sticky;
+      top: 0;
+      background: inherit;
+    }
 
     .game-logo-img {
       height: 50px;

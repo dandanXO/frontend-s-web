@@ -98,8 +98,6 @@
     <FooterSection />
   </q-layout>
 
-  <div id="betby"></div>
-
   <div class="first-screen-loading" :class="isPromoPage ? 'ispromo-screen' : ''" v-show="ui.firstScreenLoading" />
 </template>
 
@@ -764,18 +762,5 @@ svg path {
 
 .house-icon {
   animation: beat 1.5s infinite;
-}
-
-#betby {
-  display: none;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: 99999;
-  overflow-y: auto;
 }
 </style>
