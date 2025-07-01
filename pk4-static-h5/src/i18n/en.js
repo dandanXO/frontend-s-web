@@ -1183,6 +1183,10 @@ export default {
       betVolume: "Bet Volume"
     }
   },
+  csVerifier: {
+    validAccDesc: 'is an official representative of PK1.GAME and can be trusted',
+    invalidAccDesc: 'is not an official representative of PK1.GAME, please do not trust this account'
+  },
   shareAffiliate: {
     login: "Login",
     secondLevelTitle: "Second-level agent-dividend system",
