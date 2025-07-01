@@ -48,7 +48,7 @@
       style="margin-top:20px;"
       :row-style="{width: '100px'}"
     >
-      <el-table-column prop="recordTime" :label="t('fields.recordTime')" width="120" />
+      <el-table-column prop="recordTime" :label="t('fields.recordTime')" width="120" fixed="left" />
       <el-table-column :label="t('fields.ftdAmountAndMemberCount')" width="200">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.ftdAmount, type: 'money'}" /> / {{ scope.row.ftdMemberCount }}
@@ -119,6 +119,13 @@
           {{ scope.row.retention30d }} ({{ (scope.row.retention30dRate * 100).toFixed(2) }} %)
         </template>
       </el-table-column>
+      <el-table-column prop="loginDay1" :label="t('fields.loginDay1')" width="120" />
+      <el-table-column prop="loginDay2" :label="t('fields.loginDay2')" width="120" />
+      <el-table-column prop="loginDay3" :label="t('fields.loginDay3')" width="120" />
+      <el-table-column prop="loginDay4" :label="t('fields.loginDay4')" width="120" />
+      <el-table-column prop="loginDay5" :label="t('fields.loginDay5')" width="120" />
+      <el-table-column prop="loginDay6" :label="t('fields.loginDay6')" width="120" />
+      <el-table-column prop="loginDay7" :label="t('fields.loginDay7')" width="120" />
     </el-table>
     <el-pagination
       class="pagination"

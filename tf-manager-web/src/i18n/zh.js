@@ -2692,6 +2692,13 @@ export default {
     eventCode: '赛事代码',
     roleConfig: '角色设置',
     chatHistory: '聊天记录',
+    loginDay1: '1日前注册活跃用户',
+    loginDay2: '2日前注册活跃用户',
+    loginDay3: '3日前注册活跃用户',
+    loginDay4: '4日前注册活跃用户',
+    loginDay5: '5日前注册活跃用户',
+    loginDay6: '6日前注册活跃用户',
+    loginDay7: '7日前注册活跃用户',
   },
   message: {
     adsStatusOpen: '开',
