@@ -9,15 +9,15 @@
     <div class="scrollable" v-if="props?.historyList?.length > 0">
       <div
         class="item"
-        v-for="(historyListItem, historyListItemIndex) in props?.historyList?.slice(3)"
+        v-for="(historyListItem, historyListItemIndex) in historyList()"
         :key="historyListItemIndex"
         :class="{ isOwn: historyListItem?.currentMember }"
       >
         <div class="rank">
-          <!-- <img class="crown-icon" v-if="historyListItemIndex + 1 === 1" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/1st-place-crown.png" />
-                    <img class="crown-icon" v-else-if="historyListItemIndex + 1 === 2"  src="../../../assets/images/promotion/hotpromo/jackpot-aviator/2nd-place-crown.png" />
-                    <img class="crown-icon" v-else-if="historyListItemIndex + 1 === 3" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/3rd-place-crown.png" /> -->
-          <span>{{ historyListItemIndex + 4 }}</span>
+          <img class="crown-icon" v-if="inDialog && historyListItemIndex + 1 === 1" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/1st-place-crown.png" />
+          <img class="crown-icon" v-else-if="inDialog && historyListItemIndex + 1 === 2"  src="../../../assets/images/promotion/hotpromo/jackpot-aviator/2nd-place-crown.png" />
+          <img class="crown-icon" v-else-if="inDialog && historyListItemIndex + 1 === 3" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/3rd-place-crown.png" />
+          <span v-if="historyListItemIndex + 1 > 3">{{ inDialog ? historyListItemIndex + 1 : historyListItemIndex + 4 }}</span>
         </div>
         <div>{{ historyListItem.loginName }}</div>
         <div class="betVolume">{{ historyListItem.amount?.toFixed(2) }}</div>
@@ -30,7 +30,7 @@
   </div>
 </template>
 <script setup>
-const props = defineProps(["historyList"]);
+const props = defineProps(["historyList", "inDialog"]);
 
 const isNotInApp = window.location.pathname === "/promo";
 
@@ -44,6 +44,14 @@ if (isIOS) {
       }
     `;
   document.head.appendChild(style);
+}
+const historyList = () => {
+  if (props?.inDialog) {
+    return props?.historyList
+  } else {
+    return props?.historyList?.slice(3);
+  }
+  
 }
 </script>
 <style lang="scss" scoped>

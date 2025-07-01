@@ -26,9 +26,9 @@
           <q-badge v-if="isFtdPrivilegePayType" color="green" floating rounded>
             +{{ getFtdCommaAmount(item.amount) }}
           </q-badge>
-          <q-badge v-if="isNewPlayerPrivilege" color="blue" floating rounded>
+          <!-- <q-badge v-if="isNewPlayerPrivilege" color="blue" floating rounded>
             {{ getNewPlayerAmount(item.amount) }}
-          </q-badge>
+          </q-badge> -->
           <div :class="['deposit-amt', item.isActive && 'active', 'panel']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -85,12 +85,12 @@
             >
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
-            <q-checkbox
+            <!-- <q-checkbox
               v-model="newPlayerDepositBonusConfig.selected"
               v-else-if="newPlayerDepositBonusConfig.hasBonus && !isUSDT && isAndroid()"
             >
               {{ $t("deposit.appDepositBonus") }}
-            </q-checkbox>
+            </q-checkbox> -->
             <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
             <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
@@ -513,8 +513,7 @@ const isNewPlayerPrivilege = computed(
   () => 
     selectedPayType.value !== "USDTTRC" &&
     newPlayerDepositBonusConfig.value.selected &&
-    newPlayerDepositBonusConfig.value.hasBonus && 
-    isAndroid()
+    newPlayerDepositBonusConfig.value.hasBonus
 )
 
 

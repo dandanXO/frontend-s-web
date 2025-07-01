@@ -5836,6 +5836,7 @@ const checkGoogleLoginSetPwd = () => {
 
     .platform-game-item--img {
       border-radius: 8px;
+      background-size: 102% 102%;
     }
   }
 
