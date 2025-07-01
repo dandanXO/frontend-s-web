@@ -4,7 +4,7 @@ const path = require("path");
 const imageDir = path.resolve(__dirname, "../src/assets/");
 
 // Add your desired extensions here
-const allowedExtensions = [".png", ".jpeg", ".jpg"];
+const allowedExtensions = [".png", ".jpeg", ".gif", ".svg", ".jpg"];
 
 function getAllImageFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
