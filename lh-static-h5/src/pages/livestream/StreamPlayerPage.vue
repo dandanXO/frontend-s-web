@@ -45,7 +45,7 @@
             <div class="tag tag--live">主播</div>
           </template>
 
-          <div class="tag" :class="`tag--${sportType.val}`">{{ sportType.label }}</div>
+          <div class="tag tag--sport">{{ sportType.label }}</div>
         </div>
 
         <div class="room-message-txt" :class="{ expanded: isExpanded }" v-if="currentLiveData.roomMessage">
@@ -368,7 +368,7 @@ const handleSendChatMessage = (message) => {
     .then((res) => {
       if (res.code === 0) {
         const { content, name } = res.data;
-        const displayName = store.memberType !== "NORMAL" ? store.nickName : name;
+        const displayName = store.memberType !== "NORMAL" ? store.name2 || store.nickName : name;
         messages.value.push({
           content,
           name: displayName,
@@ -735,29 +735,9 @@ onDeactivated(() => {
           color: #8658fb;
         }
 
-        &--football {
+        &--sport {
           background-color: #fbcd74;
           color: #c84e16;
-        }
-
-        &--basketball {
-          background-color: #a1e3d8;
-          color: #107361;
-        }
-
-        &--lol {
-          background-color: #f7a9a8;
-          color: #b30000;
-        }
-
-        &--csgo {
-          background-color: #ffd8a8;
-          color: #b65d00;
-        }
-
-        &--dota2 {
-          background-color: #c2f0fc;
-          color: #157a9d;
         }
       }
     }
@@ -873,29 +853,9 @@ onDeactivated(() => {
               color: #54ff00;
             }
 
-            &--football {
-              background-color: #605c72;
+            &--sport {
+              background: #ff99004d;
               color: #ff9900;
-            }
-
-            &--basketball {
-              background-color: #3b3a61;
-              color: #00e0ff;
-            }
-
-            &--lol {
-              bbackground-color: #4a2f45;
-              color: #ff5ec4;
-            }
-
-            &--csgo {
-              background-color: #374b3e;
-              color: #a6ff00;
-            }
-
-            &--dota2 {
-              background-color: #2f3e5c;
-              color: #ffde59;
             }
           }
         }
