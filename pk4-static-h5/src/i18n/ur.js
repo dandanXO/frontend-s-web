@@ -56,6 +56,7 @@ export default {
     interestProfit: "سود کا منافع",
     spinnerRules: "قواعد",
     effectiveRevenueFAQ: "مؤثر آمدنی کے عمومی سوالات",
+    customerServiceVerifer: "کسٹمر سروس کی تصدیق کرنے والا",
     teamManagement: "ٹیم مینجمنٹ",
     teamPnL: "ٹیم منافع اور نقصان",
     teamBetting: "ٹیم شرط بندی",
@@ -256,7 +257,8 @@ export default {
     accountOwnerOnly: "صرف اکاؤنٹ کا مالک ہی کوڈ ریڈیم کر سکتا ہے۔",
     unauthorizedMethods:
       "بوٹس، دھوکہ دہی یا کسی بھی غیر مجاز طریقے کے استعمال سے اکاؤنٹ پر پابندی اور بونس کی ضبطی ہو جائے گی۔",
-    recoverPwd: "اپنا پاس ورڈ بازیافت کریں"
+    recoverPwd: "اپنا پاس ورڈ بازیافت کریں",
+    copiedToClipboard: "کاپی کیا گیا"
   },
   btn: {
     login: "لاگ ان",
@@ -1167,6 +1169,10 @@ export default {
       termsCondition9:
         "تمام شرائط کی حتمی وضاحت کا حق b9.game کے پاس محفوظ ہے، اور وہ کسی بھی تنازعے سے انکار کا حق رکھتا ہے۔"
     }
+  },
+  csVerifier: {
+    validAccDesc: 'PK1.GAME کا سرکاری نمائندہ ہے اور اس پر بھروسہ کیا جا سکتا ہے',
+    invalidAccDesc: 'PK1.GAME کا سرکاری نمائندہ نہیں ہے، براہ کرم اس اکاؤنٹ پر بھروسہ نہ کریں'
   },
   shareAffiliate: {
     login: "لاگ ان کریں",

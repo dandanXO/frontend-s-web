@@ -156,7 +156,7 @@ const copy = (val) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${val} ${t('account.copiedToClipboard')}`,
+        message: `${val} ${t('form.copiedToClipboard')}`,
         icon: "check_circle_outline"
       });
     })
