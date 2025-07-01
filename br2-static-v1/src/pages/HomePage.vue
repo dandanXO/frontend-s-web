@@ -1184,6 +1184,7 @@
 
   <!-- DONT REMOVE THIS GOT USE DE-->
   <SpinLuckyWheelPromoSticky v-show="false" />
+  <LossRebateModal v-model="isShowLossRebateModal" />
 </template>
 
 <script setup>
@@ -1220,6 +1221,9 @@ import { storeToRefs } from "pinia";
 
 import PopupController from "src/components/PopupController.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
+import LossRebateModal from "src/components/modal/LossRebateModal.vue";
+
+const isShowLossRebateModal = ref(false);
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -3021,7 +3025,7 @@ const loadAppTabs = () => {
             { title: "Hot", icon: "hot", active: true },
             { title: "Casino", icon: "casino", active: false },
             { title: "Sport", icon: "sport", active: false },
-            { title: "Fishing", icon: "fishing", active: false },
+            { title: "Fishing", icon: "fishing", active: false }
           ];
         }
       }
@@ -3043,8 +3047,7 @@ const loadCategoryLists = () => {
       id: item.id
     }));
     categoriesList.value.push(...slotCategories);
-    categoriesList.value.push({ title: "Fishing", icon: "fishing", active: false })
-
+    categoriesList.value.push({ title: "Fishing", icon: "fishing", active: false });
   };
   interval = setInterval(() => {
     if (isAppTabsLoaded.value) {
@@ -3185,16 +3188,16 @@ const getJackpotAmt = () => {
   api.get("/app/jackpot").then((res) => {
     // debugger;
     if (res.code === 0) {
-      const startAmt= ui.jackpotAmt;
+      const startAmt = ui.jackpotAmt;
 
-      animateValue(ui, 'jackpotAmt', startAmt, res.data.value, 500);
+      animateValue(ui, "jackpotAmt", startAmt, res.data.value, 500);
       getJackpotIncrease();
     }
   });
 };
 
 const getJackpotIncrease = () => {
-  clearInterval(jackpotTimer)
+  clearInterval(jackpotTimer);
   jackpotTimer = setInterval(() => {
     const randomInt = Math.floor(Math.random() * 2) + 1;
     ui.jackpotAmt += randomInt;
@@ -3268,7 +3271,7 @@ window.addEventListener("beforeunload", () => {
 onBeforeUnmount(() => {
   clearInterval(intervalId);
   clearInterval(jackpotTimer);
-  clearInterval(jackpotApiTimer)
+  clearInterval(jackpotApiTimer);
 });
 </script>
 
