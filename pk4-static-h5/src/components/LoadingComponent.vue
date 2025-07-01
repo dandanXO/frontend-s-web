@@ -13,7 +13,7 @@
   align-items: center;
   justify-content: center;
   .loading {
-    color: #00AE00;
+    color: #1774ff;
   }
 }
 </style>
