@@ -348,7 +348,7 @@ const fallbackCopyTextToClipboard = (text) => {
   document.body.removeChild(textarea);
 
   $q.notify({
-    message: "Link copied to clipboard",
+    message: t('account.copiedToClipboard'),
     color: "positive",
     position: "top",
     timeout: 2000,
@@ -373,7 +373,7 @@ const copyHrefLink = async () => {
       .writeText(textToCopy)
       .then(() => {
         $q.notify({
-          message: "Link copied to clipboard",
+          message: t('account.copiedToClipboard'),
           color: "positive",
           position: "top",
           timeout: 2000,
