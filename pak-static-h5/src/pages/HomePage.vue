@@ -1172,8 +1172,6 @@
     </template>
   </div>
 
-  <div id="betby"></div>
-
   <GameModal
     v-if="route.path !== '/account/profile'"
     ref="allGames"
@@ -1823,22 +1821,6 @@ onDeactivated(() => {
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
   store.getMemberInfo();
-
-  debugger;
-  var bt = new BTRenderer().initialize({
-    brand_id: "2547441365755760643",
-    token: "JWT token",
-    onTokenExpired: function () {},
-    themeName: "default",
-    lang: "en",
-    target: document.getElementById("betby"),
-    betSlipOffsetTop: 0,
-    betslipZIndex: 999,
-    onLogin: function () {},
-    onRegister: function () {},
-    onSessionRefresh: function () {}
-  });
-  console.log(bt);
 });
 
 onUnmounted(() => {
@@ -6030,7 +6012,7 @@ const checkGoogleLoginSetPwd = () => {
   }
   &.sport-platform {
     .platform-game-item {
-      >img {
+      > img {
         min-height: 120px;
       }
     }

@@ -385,7 +385,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
   } else {
     const _isPlatformAllowNonLogin = isPlatformAllowNonLogin(demo);
     if (store.hasToken() || _isPlatformAllowNonLogin) {
-      if (platformCode !== "LuckySport" && platformCode !== "NineW") {
+      if (platformCode !== "LuckySport" && platformCode !== "NineW" && platformCode !== "BetBy") {
         visible.value = true;
       }
 
@@ -439,7 +439,26 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
         .then((res) => {
           let srcDoc = res.data;
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
-          if (firstFourChars === "http") {
+          if (platformCode === "BetBy") {
+            debugger;
+            const betbyItem = document.getElementById("betby");
+            betbyItem.style.display = "flex";
+
+            var bt = new BTRenderer().initialize({
+              brand_id: "2547441365755760643",
+              token: srcDoc,
+              onTokenExpired: function () {},
+              themeName: "default",
+              lang: "en",
+              target: document.getElementById("betby"),
+              betSlipOffsetTop: 0,
+              betslipZIndex: 999,
+              onLogin: function () {},
+              onRegister: function () {},
+              onSessionRefresh: function () {}
+            });
+            console.log(bt);
+          } else if (firstFourChars === "http") {
             if ((platformCode === "LuckySport" || platformCode === "NineW") && gameCode !== "") {
               src.value = srcDoc.replace(gameCode, "");
               setTimeout(function () {
