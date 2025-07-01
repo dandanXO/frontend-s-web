@@ -1193,7 +1193,7 @@
   </div>
   <div style="display: none;">
 
-    <ShareIcons ref="shareRef" />
+    <ShareIcons ref="shareRef" :is-invite="true" />
   </div>
   <GameModal
     v-if="route.path !== '/account/profile'"
