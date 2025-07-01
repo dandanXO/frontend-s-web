@@ -220,7 +220,7 @@ const copyText = (text) => {
     $q.notify({
       color: "positive",
       position: "top",
-      message: `Serial Number ${t('account.copiedToClipboard')}.`,
+      message: `Serial Number ${t('form.copiedToClipboard')}.`,
       icon: "check_circle_outline"
     });
   }, 100);

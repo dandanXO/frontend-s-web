@@ -260,7 +260,8 @@ export default {
     accountOwnerOnly: "Only the account owner can redeem the code.",
     unauthorizedMethods:
       "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus.",
-    recoverPwd: "Recover your password"
+    recoverPwd: "Recover your password",
+    copiedToClipboard: "Copied to Clipboard",
   },
   btn: {
     login: "Login",

@@ -102,7 +102,7 @@
         </q-checkbox>
       </div>
 
-      <router-link to="/forgot-password" class="is-domain forget-pwd">Forget password</router-link>
+      <router-link to="/forgot-password" class="is-domain forget-pwd">{{ $t("btn.forgetPwd") }}</router-link>
 
       <div class="no-domain bottom-btn-primary">
         <q-btn class="btn-primary btn-primary__full" no-caps unelevated :disabled="!isAgreeReg" :loading="isLoading"
