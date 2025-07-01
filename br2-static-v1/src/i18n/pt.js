@@ -774,6 +774,7 @@ export default {
     promoExclusionNotice: "Aviso: Esta promoção não é contabilizada para apostas de CASINO e DESPORTOS!",
     deposit: "Depósito",
     dailyWagerCount: "Número de apostas diárias",
+    dailyRewards: "Recompensas Diárias",
     deposits_of_the_day: "Depósitos do dia",
     currentSignIn: "Entrada atual",
     consecutiveDepositBonus: "Quanto mais dias consecutivos de depósito cumprir, mais bónus extra receberá.",
