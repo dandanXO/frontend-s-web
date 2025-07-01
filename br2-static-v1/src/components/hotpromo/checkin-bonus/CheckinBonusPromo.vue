@@ -55,7 +55,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-description.svg" />
           {{ $t("hotPromo.desc") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.redepositBonus.description") }}</div>
+        <div class="bar-desc">{{ $t("hotPromo.signIn7Days.description") }}</div>
       </div>
     </div>
 
@@ -63,8 +63,8 @@
 
     <div class="tnc-content">
       <ol>
-        <li v-for="index in 6" :key="index">
-          {{ $t(`hotPromo.redepositBonus.tnc${`${index}`.padStart(2, "0")}`) }}
+        <li v-for="index in 7" :key="index">
+          {{ $t(`hotPromo.signIn7Days.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
       </ol>
     </div>
