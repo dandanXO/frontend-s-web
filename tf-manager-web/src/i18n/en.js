@@ -2672,7 +2672,14 @@ export default {
     subscribeCount: 'Subscribe Count',
     eventCode: 'Event Code',
     roleConfig: 'Role Config',
-    chatHistory: 'Chat History'
+    chatHistory: 'Chat History',
+    loginDay1: 'Register Retention Day 1',
+    loginDay2: 'Register Retention Day 2',
+    loginDay3: 'Register Retention Day 3',
+    loginDay4: 'Register Retention Day 4',
+    loginDay5: 'Register Retention Day 5',
+    loginDay6: 'Register Retention Day 6',
+    loginDay7: 'Register Retention Day 7'
   },
   message: {
     adsStatusOpen: 'Open',
