@@ -3,29 +3,41 @@
     <div class="loss-rebate-dialog-container">
       <img src="../../assets/images/index/loss-rebate/loss-rebate-congrats-title.png" />
       <img class="bonus-title" src="../../assets/images/index/loss-rebate/loss-rebate-bonus-title.png" />
-      <div class="cashback-row">
+      <div class="cashback-row" v-if="props.detail.lossRebateAmount > 0">
         <div class="label">Cashback de Perda：</div>
-        <div class="amount">R$200</div>
-        <div class="status sent">(Enviado)</div>
+        <div class="amount">R${{ props.detail.lossRebateAmount }}</div>
+
+        <div class="status sent" v-if="props.detail.lossRebateClaimed === true">(Enviado)</div>
+        <div class="status processing" v-else>(Processando)</div>
+
       </div>
-      <div class="cashback-row">
-        <div class="label">Cashback de Perda：</div>
-        <div class="amount">R$200,000</div>
-        <div class="status processing">(Processando)</div>
+      <div class="cashback-row" v-if="props.detail.betRebateAmount > 0">
+        <div class="label">Cashback：</div>
+        <div class="amount">R${{ props.detail.betRebateAmount }}</div>
+
+        <div class="status sent" v-if="props.detail.betRebateClaimed === true">(Enviado)</div>
+        <div class="status processing" v-else>(Processando)</div>
+
       </div>
-      <img class="loss-rebate-content-img" src="../../assets/images/index/loss-rebate/loss-rebate-img.png" />
-      <div class="confirm-btn">Confirmar</div>
+      <div class="loss-rebate-board">
+        <div class="close-click-icon" @click="closePopup">&nbsp;</div>
+        <img class="loss-rebate-content-img" src="../../assets/images/index/loss-rebate/loss-rebate-img.png" />
+      </div>
+
+      <div class="confirm-btn" @click="closePopup">Confirmar</div>
     </div>
   </q-dialog>
 </template>
 <script setup>
 import { computed } from "vue";
 
-const props = defineProps({
-  modelValue: Boolean
-});
+const props = defineProps(["detail", "modelValue"]);
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "closeDialog"]);
+
+const closePopup = () => {
+  emit("closeDialog")
+}
 
 const isShowLossRebateModal = computed({
   get: () => props.modelValue,
@@ -50,9 +62,26 @@ const isShowLossRebateModal = computed({
     }
   }
   .loss-rebate-content-img {
-    width: 90%;
+    width: 100%;
     @media (min-width: 400px) {
-      width: 75%;
+      width: 90%;
+    }
+  }
+
+  .loss-rebate-board{
+    position:relative;
+    width: 75%;
+    margin:0px auto;
+    text-align: center;
+
+    .close-click-icon{
+      position:absolute;
+      z-index:88;
+      right:10%;
+      top:10%;
+      width: 60px;
+      height: 60px;
+      background:transparent;
     }
   }
 
@@ -116,6 +145,11 @@ const isShowLossRebateModal = computed({
     letter-spacing: 0px;
     text-align: center;
     text-shadow: -1px -1px 0 #014997, 1px -1px 0 #014997, -1px 1px 0 #014997, 1px 1px 0 #014997;
+
+    &:active{
+      filter: brightness(0.9);
+      transform: translate(0px, 1px);
+    }
   }
 }
 </style>
