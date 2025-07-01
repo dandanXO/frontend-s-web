@@ -15,7 +15,7 @@
         <div class="left-panel">
           <div style="display: flex; align-items: center">
             <template v-if="isDark">
-              <img class="big-icon" src="../../../assets/images/promotion/hotpromo/common/claim-title-icon.svg" alt="Gift" /> 
+              <img class="big-icon" src="../../../assets/images/promotion/hotpromo/common/claim-title-icon.png" alt="Gift" /> 
             </template>
             <template v-else>
               <img class="big-icon" src="@/assets/images/promotion/hotpromo/newplayerguide/gift.png" alt="Gift" />   
