@@ -1,9 +1,8 @@
-<!--TODO-->
 <template>
   <div class="card">
     <DataTable
       :value="streams"
-      :paginator="true"
+      paginator
       :rows="10"
       :loading="loading"
       dataKey="eventId"
@@ -13,18 +12,16 @@
       responsiveLayout="scroll"
     >
       <template #header>
-        <div class="flex justify-between" style="display: flex; gap: 8px">
-          <div style="display: flex; gap: 8px">
+        <div class="flex justify-between gap-2">
+          <div class="flex gap-2">
             <Button
-              :size="'small'"
-              type="button"
+              size="small"
               icon="pi pi-filter-slash"
               label="清除"
               outlined
-              @click="clearFilter()"
+              @click="clearFilter"
             />
           </div>
-          <!-- 搜尋框 -->
           <IconField class="search-container">
             <InputIcon>
               <i class="pi pi-search search-icon" />
@@ -32,14 +29,12 @@
             <InputText
               v-model="filters['global'].value"
               placeholder="關鍵詞搜索"
-              :size="'small'"
+              size="small"
               class="search-input"
             />
           </IconField>
-          <!-- 重新載入按鈕 -->
           <Button
-            :size="'small'"
-            type="button"
+            size="small"
             icon="pi pi-refresh"
             label="重新載入"
             severity="info"
@@ -49,103 +44,69 @@
         </div>
       </template>
 
-      <Column field="eventTitle" header="標題" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.eventTitle }}
-        </template>
-      </Column>
+      <Column field="eventTitle" header="標題" sortable />
 
       <Column field="streamStatus" header="源流狀態" sortable>
-        <template #body="slotProps">
-          <Tag
-            :severity="getStatusSeverity(slotProps.data.streamStatus)"
-            :value="getStatusLabel(slotProps.data.streamStatus)"
-          />
+        <template #body="{ data }">
+          <Tag :severity="getStatusSeverity(data.streamStatus)" :value="getStatusLabel(data.streamStatus)" />
         </template>
       </Column>
 
       <Column field="createTime" header="創建時間" sortable>
-        <template #body="slotProps">
-          {{ formatDateTime(slotProps.data.createTime) }}
+        <template #body="{ data }">
+          {{ formatDateTime(data.createTime) }}
         </template>
       </Column>
 
       <Column field="updateTime" header="更新時間" sortable>
-        <template #body="slotProps">
-          {{ formatDateTime(slotProps.data.updateTime) }}
+        <template #body="{ data }">
+          {{ formatDateTime(data.updateTime) }}
         </template>
       </Column>
 
       <Column field="streamerName" header="主播" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.streamerName || '未分配' }}
+        <template #body="{ data }">
+          {{ data.streamerName || '未分配' }}
         </template>
       </Column>
 
-      <Column field="supplierStreamId" header="供應商串流ID" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.supplierStreamId }}
-        </template>
-      </Column>
+      <Column field="supplierStreamId" header="供應商串流ID" sortable />
+      <Column field="streamerStreamId" header="主播串流ID" sortable />
 
-      <Column field="streamerStreamId" header="主播串流ID" sortable>
-        <template #body="slotProps">
-          {{ slotProps.data.streamerStreamId }}
-        </template>
-      </Column>
       <Column field="streamerStatus" header="直播主狀態" sortable>
-        <template #body="slotProps">
-          <Tag
-            :severity="getStreamerStatusSeverity(slotProps.data.streamerStatus)"
-            :value="getStreamerStatusLabel(slotProps.data.streamerStatus)"
-          />
+        <template #body="{ data }">
+          <Tag :severity="getStreamerStatusSeverity(data.streamerStatus)" :value="getStreamerStatusLabel(data.streamerStatus)" />
         </template>
       </Column>
+
       <Column header="操作">
-        <template #body="slotProps">
+        <template #body="{ data }">
           <Button
             icon="pi pi-eye"
             class="p-button-rounded p-button-info mr-2"
-            @click="viewStream(slotProps.data)"
-            :disabled="!canPreview(slotProps.data.eventStatus)"
-            :tooltip="getPreviewTooltip(slotProps.data.eventStatus)"
+            @click="viewStream(data)"
+            :disabled="!canPreview(data.eventStatus)"
+            :tooltip="getPreviewTooltip(data.eventStatus)"
           />
         </template>
       </Column>
     </DataTable>
   </div>
 
-  <Dialog
-    v-model:visible="editDialogVisible"
-    header="修改聊天室名称"
-    :style="{ width: '400px' }"
-    :modal="true"
-  >
+  <Dialog v-model:visible="editDialogVisible" header="修改聊天室名稱" :style="{ width: '400px' }" modal>
     <div class="p-fluid">
       <div class="p-field">
-        <label for="title">新名称</label>
+        <label for="title">新名稱</label>
         <InputText id="title" v-model="editedTitle" />
       </div>
     </div>
     <template #footer>
-      <Button
-        label="取消"
-        icon="pi pi-times"
-        class="p-button-text"
-        @click="editDialogVisible = false"
-      />
+      <Button label="取消" icon="pi pi-times" class="p-button-text" @click="editDialogVisible = false" />
       <Button label="確認" icon="pi pi-check" class="p-button-text" @click="submitRoomTitleEdit" />
     </template>
   </Dialog>
 
-<!--  <StreamPlayer-->
-<!--    :visible="showPlayer"-->
-<!--    :stream="selectedStream"-->
-<!--    @update:visible="(val) => (showPlayer = val)"-->
-<!--    @reload="fetchStreams"-->
-<!--  />-->
-
-  <Dialog v-model:visible="deleteDialog" :style="{ width: '450px' }" header="確認" :modal="true">
+  <Dialog v-model:visible="deleteDialog" header="確認" :style="{ width: '450px' }" modal>
     <div class="confirmation-content">
       <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
       <span>確定要刪除這個直播嗎？</span>
@@ -172,274 +133,503 @@ export default {
 </script>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
-//import StreamPlayer from './StreamPlayer.vue'
-import DataTable from 'primevue/datatable'
-import Column from 'primevue/column'
-import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
-import Dialog from 'primevue/dialog'
-import Tag from 'primevue/tag'
+import { nextTick, onMounted, onUnmounted, reactive, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { DashboardService } from '@/service/DashboardService'
+import { SiteService } from '@/service/SiteService.js'
 import { useToast } from 'primevue/usetoast'
+import { useConfirm } from 'primevue/useconfirm'
+
+import { required } from "@/utils/validate";
+import { useRoute } from "vue-router";
+import videojs from 'video.js'
+import 'video.js/dist/video-js.css'
+// import 'vue3-emoji-picker/dist/style.css'
+import 'videojs-flvjs-es6'
+import flvjs from 'flv.js';
+
+import dayjs from "dayjs";
+
+const { updateSupplierStream, updateSportLiveStream,getStreamers,getSportLiveSupplierStream, getSportLiveStream, deleteSportLiveSupplierStream,deleteSportLiveStream,createSportLiveSupplierStream, getChatHistoryExport,getChatHistory,createSportLiveStream, getLiveMonitorScores } = DashboardService
 const toast = useToast()
+const confirm = useConfirm()
 
+const showEmojiPicker = ref(false)
+const { t } = useI18n();
+const uiControl = reactive({
+  dialogVisible: false,
+  dialogTitle: "",
+  dialogType: 'SUPPLIER_CREATE' | 'STREAMER_CREATE' | 'STREAMER_EDIT',
+  editBtn: true,
+  removeBtn: true,
+  dialogLoading: false
+});
 const route = useRoute()
-
-const streams = ref([])
-const loading = ref(false)
-const showPlayer = ref(false)
-const selectedStream = ref(null)
-const deleteDialog = ref(false)
-const streamToDelete = ref(null)
-const editDialogVisible = ref(false)
-const editedTitle = ref('')
-const editingStreamId = ref(null)
-
-const openEditDialog = (stream) => {
-  editingStreamId.value = stream.streamerStreamId
-  editedTitle.value = stream.roomTitle || ''
-  editDialogVisible.value = true
-}
-
-const submitRoomTitleEdit = async () => {
-  if (!editingStreamId.value || !editedTitle.value) return
-
-  try {
-    const res = await DashboardService.updateRoomTitle(editingStreamId.value, editedTitle.value)
-
-    if (res) {
-      toast.add({ severity: 'success', summary: '成功', detail: '标题已更新', life: 3000 })
-      editDialogVisible.value = false
-      await fetchStreams()
-    } else {
-      toast.add({
-        severity: 'error',
-        summary: '错误',
-        detail: response?.message || '更新失败',
-        life: 3000,
-      })
-    }
-  } catch (err) {
-    console.error('更新标题错误:', err)
-    toast.add({ severity: 'error', summary: '错误', detail: '无法更新标题', life: 3000 })
-  }
-}
-
-const filters = ref({
-  global: { value: null, matchMode: 'contains' },
+const eventId = ref(Number(route.query.id))
+const previewDialog = reactive({
+  visible: false,
+  url: ''
 })
+const showEmojiPickerForMessage = ref(false)
 
-// 清除數據
-const clearData = () => {
-  streams.value = []
-  loading.value = false
-  showPlayer.value = false
-  selectedStream.value = null
-  deleteDialog.value = false
-  streamToDelete.value = null
-  filters.value = {
-    global: { value: null, matchMode: 'contains' },
+function insertEmojiToMessage(emoji) {
+  form.roomMessage += emoji.i
+}
+
+const showEmojiPickerForScheduled = ref(false);
+
+function insertEmojiToScheduled(emoji) {
+  form.scheduledAnnouncement += emoji.i;
+}
+
+let player = null;
+let scoreTimer = null;
+
+const timezone = ref(null);
+const formRef = ref(null);
+const supplierStreams = ref([]);
+const streamerStreams = ref([]);
+const monitorScoreMap = ref({});
+
+function insertEmoji(emoji) {
+  form.roomTitle += emoji.i
+}
+async function fetchMonitorScores() {
+  const allStreamIds = [
+    ...supplierStreams.value.map(s => s.streamId),
+    ...streamerStreams.value.map(s => s.streamId)
+  ].filter(Boolean);
+
+  if (allStreamIds.length > 0) {
+    const { data } = await getLiveMonitorScores(allStreamIds);
+    monitorScoreMap.value = Object.fromEntries(
+      (data || []).map(m => [m.streamName, m.score])
+    );
   }
 }
 
-// 清除過濾器
-const clearFilter = () => {
-  filters.value = {
-    global: { value: null, matchMode: 'contains' },
-  }
-}
-
-// 獲取直播列表
-const fetchStreams = async () => {
-  try {
-    clearData()
-    loading.value = true
-    // 根據當前路由設置數據獲取方法
-    const dataMethod = route.path.includes('/my-streams')
-      ? DashboardService.getMyStreams
-      : DashboardService.getStreamList
-    const response = await dataMethod()
-    streams.value = response
-  } catch (error) {
-    console.error('獲取直播列表失敗:', error)
-  } finally {
-    loading.value = false
-  }
-}
-
-// 監聽路由變化，重新獲取數據
-watch(
-  () => route.path,
-  () => {
-    fetchStreams()
-  },
-)
-
-// 格式化日期時間
-const formatDateTime = (timestamp) => {
-  if (!timestamp) return ''
-  return new Date(timestamp).toLocaleString('zh-TW')
-}
-
-// 獲取狀態標籤
-const getStatusLabel = (status) => {
-  const statusMap = {
-    0: '初始化',
-    1: '準備中',
-    2: '開始啟動',
-    3: '啟動完成',
-    4: '直播中',
-    5: '已結束',
-    6: '已停止',
-    7: '已結束',
-  }
-  return statusMap[status] || '未知狀態'
-}
-
-// 獲取狀態樣式
-const getStatusSeverity = (status) => {
-  const severityMap = {
-    0: 'info',
-    1: 'info',
-    2: 'warning',
-    3: 'success',
-    4: 'success',
-    5: 'danger',
-    6: 'danger',
-    7: 'danger',
-  }
-  return severityMap[status] || 'info'
-}
-
-// 獲取直播主狀態標籤
-const getStreamerStatusLabel = (status) => {
-  const statusMap = {
-    0: '停止直播',
-    1: '開始直播',
-  }
-  return statusMap[status] || '未知狀態'
-}
-
-// 獲取直播主狀態樣式
-const getStreamerStatusSeverity = (status) => {
-  const severityMap = {
-    0: 'danger',
-    1: 'success',
-  }
-  return severityMap[status] || 'info'
-}
-// 檢查是否可以預覽
-const canPreview = (status) => {
-  return [0, 1].includes(status)
-}
-
-// 獲取預覽按鈕提示
-const getPreviewTooltip = (status) => {
-  return canPreview(status) ? '點擊預覽' : '當前狀態無法預覽'
-}
-
-// 查看直播
-const viewStream = (stream) => {
-  if (!canPreview(stream.eventStatus)) {
-    return
-  }
-
-  if (stream.cdnPlayUrlsHls !== null) {
-    selectedStream.value = {
-      ...stream,
-      title: stream.eventTitle,
-      streamId: stream.streamerStreamId,
-      playUrls: {
-        hls: stream.cdnPlayUrlsHls,
-        flv: stream.cdnPlayUrlsFlv,
-      },
+async function deleteStream(streamId) {
+  confirm.require({
+    message: t('message.confirmDelete'),
+    header: t('fields.confirm'),
+    icon: 'pi pi-exclamation-triangle',
+    acceptLabel: t('fields.confirm'),
+    rejectLabel: t('fields.cancel'),
+    accept: async () => {
+      try {
+        await deleteSportLiveStream(streamId);
+        toast.add({ severity: 'success', summary: t("message.deleteSuccess"), life: 3000 });
+        await loadEvent();
+      } catch (error) {
+        toast.add({ severity: 'error', summary: t("message.deleteFailed"), life: 3000 });
+      }
+    },
+    reject: () => {
+      // 用户点击取消时的处理（可留空）
     }
-  }
-  showPlayer.value = true
+  });
 }
 
-const editRoomTitle = async (stream) => {
-  try {
-    const { value } = await ElMessageBox.prompt('請輸入新的房間標題', '修改房間標題', {
-      confirmButtonText: '確認',
-      cancelButtonText: '取消',
-      inputValue: stream.roomTitle,
+async function setSupplierDefault(id) {
+  await updateSupplierStream({ eventId: eventId.value, id: id, isDefault: 1 });
+  toast.add({
+    severity: 'success',
+    summary: t('message.updateSuccess'),
+    life: 3000
+  });
+  await loadEvent();
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    toast.add({
+      severity: 'success',
+      summary: t('message.copySuccess'),
+      life: 3000
+    });
+  }).catch(() => {
+  });
+}
+
+async function deleteSupplierStream(streamId) {
+  confirm.require({
+    message: t('message.confirmDelete'),
+    header: t('fields.confirm'),
+    icon: 'pi pi-exclamation-triangle',
+    acceptLabel: t('fields.confirm'),
+    rejectLabel: t('fields.cancel'),
+    accept: async () => {
+      try {
+        await deleteSportLiveSupplierStream(streamId);
+        toast.add({
+          severity: 'success',
+          summary: t('message.deleteSuccess'),
+          life: 3000
+        });
+        await loadEvent();
+      } catch (error) {
+        toast.add({
+          severity: 'error',
+          summary: t('message.deleteFailed'),
+          life: 3000
+        });
+      }
+    },
+    reject: () => {
+      // 可选处理取消操作
+    }
+  });
+}
+
+function formatTime(timestamp) {
+  if (!timestamp) return '-';
+  return dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss');
+}
+
+function submit() {
+  if (uiControl.dialogType === 'SUPPLIER_CREATE') {
+    const url = form.sourceStreamUrl || '';
+    const baseUrl = url.split('?')[0];
+
+    if (!baseUrl.endsWith('.m3u8') && !baseUrl.endsWith('.flv')) {
+      const corrected = baseUrl.replace(/\.\w+$/, '') + '.m3u8';
+      confirm.require({
+        message: t('message.streamUrlNotM3U8OrFlv'),
+        header: t('fields.confirm'),
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: t('fields.confirm'),
+        rejectLabel: t('fields.cancel'),
+        accept: () => {
+          const queryParams = url.includes('?') ? '?' + url.split('?')[1] : '';
+          form.sourceStreamUrl = corrected + queryParams;
+
+          toast.add({
+            severity: 'success',
+            summary: t('message.replacedWithM3U8'),
+            life: 3000
+          });
+
+          supplierCreate();
+        },
+        reject: () => {
+          toast.add({
+            severity: 'warn',
+            summary: t('message.streamUrlMustBeM3U8OrFlv'),
+            life: 3000
+          });
+        }
+      });
+
+      return;
+    }
+    supplierCreate();
+  } else if (uiControl.dialogType === 'STREAMER_CREATE') {
+    streamerSave();
+  } else if (uiControl.dialogType === 'STREAMER_EDIT') {
+    streamerUpdate();
+  }
+}
+
+function openPreview(url) {
+  previewDialog.visible = true;
+
+  nextTick(() => {
+    if (player) {
+      player.dispose();
+      player = null;
+    }
+
+    const isFLV = url.toLowerCase().endsWith('.flv');
+    const container = document.querySelector('.preview-video-container');
+
+    if (container) {
+      container.innerHTML = `
+        <video
+          id="preview-player"
+          ${isFLV ? '' : 'class="video-js vjs-default-skin"'}
+          controls
+          preload="auto"
+          width="100%"
+          height="400"
+        ></video>
+      `;
+    }
+
+    nextTick(() => {
+      const videoEl = document.getElementById('preview-player');
+
+      if (isFLV && flvjs.isSupported()) {
+        const flvPlayer = flvjs.createPlayer({
+          type: 'flv',
+          url: url
+        });
+        flvPlayer.attachMediaElement(videoEl);
+        flvPlayer.load();
+        flvPlayer.play();
+      } else {
+        player = videojs(videoEl, {
+          autoplay: true,
+          controls: true,
+          preload: 'auto',
+          responsive: true,
+          fluid: true,
+        });
+        player.src({
+          src: url,
+          type: 'application/x-mpegURL',
+        });
+        player.play();
+      }
+    });
+  });
+}
+
+function onPreviewDialogClose() {
+  if (player) {
+    player.pause();
+    player.dispose();
+    player = null;
+  }
+}
+
+async function supplierCreate() {
+  formRef.value.validate(async (valid) => {
+    if (!valid) return;
+    const payload = {
+      eventId: eventId.value,
+      sourceStreamUrl: form.sourceStreamUrl,
+      isCdnPush: form.isCdnPush
+    };
+    await createSportLiveSupplierStream(payload);
+    toast.add({
+      severity: 'success',
+      summary: t('message.addSuccess'),
+      life: 3000
+    });
+    uiControl.dialogVisible = false;
+    await loadEvent();
+  });
+}
+
+async function streamerSave() {
+  formRef.value.validate(async (valid) => {
+    if (!valid) return;
+    await createSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, roomMessage: form.roomMessage, scheduledAnnouncement: form.scheduledAnnouncement });
+    toast.add({
+      severity: 'success',
+      summary: t('message.updateSuccess'),
+      life: 3000
+    });
+    uiControl.dialogVisible = false;
+    await loadEvent();
+  });
+}
+
+async function streamerUpdate() {
+  formRef.value.validate(async (valid) => {
+    if (!valid) return;
+    await updateSportLiveStream({ eventId: eventId.value, status: 0, id: form.id, roomMessage: form.roomMessage, roomTitle: form.roomTitle, scheduledAnnouncement: form.scheduledAnnouncement });
+    toast.add({
+      severity: 'success',
+      summary: t('message.updateSuccess'),
+      life: 3000
+    });
+    uiControl.dialogVisible = false;
+    await loadEvent();
+  });
+}
+
+async function loadEvent() {
+  const [supplierRes, streamerRes] = await Promise.all([
+    getSportLiveSupplierStream({ eventId: eventId.value }),
+    getSportLiveStream({ eventId: eventId.value })
+  ]);
+  supplierStreams.value = supplierRes.data.records || [];
+  streamerStreams.value = streamerRes.data.records || [];
+}
+
+async function initialSupplierStreamStatus() {
+  const { data } = await getSportLiveSupplierStream({ eventId: eventId.value });
+
+  data.records.forEach(async (item) => {
+    await updateSupplierStream({ eventId: eventId.value, id: item.id, status: 4 });
+  });
+  toast.add({
+    severity: 'success',
+    summary: t('message.updateSuccess'),
+    life: 3000
+  });
+  await loadEvent();
+}
+
+function showDialog(type, row) {
+  uiControl.dialogVisible = true;
+  uiControl.dialogType = type;
+
+  if (type === 'STREAMER_CREATE') {
+    fetchStreamers();
+    form.streamerId = null;
+    form.id = null;
+  }
+
+  if (type === 'STREAMER_EDIT' && row) {
+    fetchStreamers();
+    form.streamerId = row.streamerId;
+    form.id = row.id;
+    form.scheduledAnnouncement = row.scheduledAnnouncement;
+    form.roomMessage = row.roomMessage;
+    form.roomTitle = row.roomTitle;
+  }
+
+  if (type === 'SUPPLIER_CREATE') {
+    form.sourceStreamUrl = '';
+  }
+}
+
+async function fetchStreamers() {
+  const { data } = await getStreamers();
+  streamerList.value = data.records;
+}
+
+const form = reactive({
+  id: null,
+  sourceStreamUrl: '',
+  streamerId: null,
+  roomMessage: '',
+  roomTitle: '',
+  isCdnPush: false,
+  scheduledAnnouncement: '',
+});
+
+const streamerList = ref([]);
+
+const formRules = reactive({
+  sourceStreamUrl: [required(t('message.validateSupplierStreamRequired'))]
+});
+
+const request = reactive({
+  id: null
+});
+
+const chatHistoryDialog = reactive({
+  visible: false,
+  streamerId: null,
+  chatList: [],
+  loading: false,
+  page: {
+    total: 0,
+    size: 30,
+    current: 1
+  }
+});
+
+async function requestExportExcel(streamerId) {
+  const query = {};
+  query.streamId = streamerId;
+  query.siteId = 7;
+
+  const { data: ret } = await getChatHistoryExport(query)
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
+}
+
+function openChatHistory(streamerId) {
+  chatHistoryDialog.streamerId = streamerId;
+  chatHistoryDialog.visible = true;
+  chatHistoryDialog.page.current = 1;
+  loadChatHistory();
+}
+
+function loadChatHistory() {
+  chatHistoryDialog.loading = true;
+  const query = new URLSearchParams({
+    current: chatHistoryDialog.page.current,
+    size: chatHistoryDialog.page.size
+  });
+
+  const siteId = 7;
+  getChatHistory(`?${query.toString()}`, { streamId: chatHistoryDialog.streamerId, siteId: siteId })
+    .then(res => {
+      chatHistoryDialog.chatList = res.data.records;
+      chatHistoryDialog.page.total = res.data.total;
     })
-    const result = await DashboardService.updateRoomTitle(stream.streamerStreamId, value)
-    if (result) {
-      ElMessage.success('房間標題更新成功')
-      fetchStreams()
-    }
-  } catch (err) {
-    console.log('取消修改房間標題')
-  }
+    .finally(() => {
+      chatHistoryDialog.loading = false;
+    });
 }
 
-onMounted(() => {
-  fetchStreams()
-})
+function handleChatPageChange(page) {
+  chatHistoryDialog.page.current = page;
+  loadChatHistory();
+}
+
+onMounted(async () => {
+  const { data: timeZone } = await SiteService.getSiteTimeZoneById(
+    7
+  )
+  timezone.value = timeZone
+  request.id = eventId
+  await loadEvent();
+  await fetchMonitorScores();
+  scoreTimer = setInterval(fetchMonitorScores, 30000);
+});
+
+onUnmounted(() => {
+  clearInterval(scoreTimer);
+});
 </script>
 
-<style scoped>
-.p-button.p-button-icon-only {
-  width: 2rem;
-  padding: 0.5rem 0;
+<style rel="stylesheet/scss" lang="scss" scoped>
+.header-container {
+  margin-bottom: 10px;
 }
 
-.search-container {
-  width: 100%;
-  max-width: 230px;
-}
-
-/* 自定義圖標樣式 */
-:deep(.p-input-icon-left i) {
-  color: #666; /* 修改圖標顏色 */
-  font-size: 1.5rem; /* 修改圖標大小 */
-}
-
-/* 在懸停時改變圖標顏色 */
-:deep(.p-input-icon-left:hover i) {
-  color: #3b82f6;
-}
-
-/* 搜索圖標樣式 */
-:deep(.search-icon) {
-  color: #6b7280; /* 深灰色圖標 */
-  font-size: 0.7rem; /* 調整大小 */
-  transition: color 0.3s ease; /* 平滑過渡 */
-}
-
-/* 當搜索框獲得焦點時的圖標樣式 */
-:deep(.p-inputtext:focus ~ .p-input-icon-left i) {
-  color: #3b82f6; /* 藍色高亮 */
-}
-
-/* 搜索容器樣式 */
-.search-container {
-  min-width: 200px; /* 設置最小寬度 */
-  position: relative;
-}
-
-/* 搜索輸入框樣式 */
-:deep(.search-input) {
-  transition: all 0.3s ease;
-  border-radius: 4px; /* 圓角邊框 */
-}
-
-/* 搜索輸入框獲得焦點時的樣式 */
-:deep(.search-input:focus) {
-  border-color: #3b82f6; /* 藍色邊框 */
-  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.25); /* 輕微發光效果 */
-}
-
-/* 如果需要調整圖標位置 */
-:deep(.p-input-icon-left) {
+.search {
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
 }
 
-:deep(.p-input-icon-left i) {
-  margin-left: 0.5rem; /* 調整左邊距 */
+.btn-group {
+  margin-top: 15px;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.el-table--enable-row-transition .el-table__body td.el-table__cell {
+  padding: 4px 0;
+}
+
+.preview-video-container {
+  width: 100%;
+  height: auto;
+  .video-js {
+    width: 100% !important;
+    height: 400px !important;
+  }
+}
+
+.signal-bars {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 14px;
+}
+.bar {
+  width: 4px;
+  background: #ccc;
+  transition: 0.3s;
+}
+.bar:nth-child(1) { height: 4px; }
+.bar:nth-child(2) { height: 6px; }
+.bar:nth-child(3) { height: 8px; }
+.bar:nth-child(4) { height: 10px; }
+.bar:nth-child(5) { height: 12px; }
+.bar.active {
+  background: #67C23A;
 }
 </style>
+

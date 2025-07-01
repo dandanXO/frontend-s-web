@@ -553,6 +553,33 @@ export const DashboardService = {
       },
     })
   },
+  getSportLiveStream(request) {
+    const token = sessionStorage.getItem('token')
+    return api.get('/live-sport/stream', {
+      params: request, // For GET requests, parameters are typically sent as `params`
+      headers: {
+        token: `${token}`,
+      },
+    })
+  },
+  getSportLiveSupplierStream(request) {
+    const token = sessionStorage.getItem('token')
+    return api.get('/live-sport/supplier-stream', {
+      params: request, // For GET requests, parameters are typically sent as `params`
+      headers: {
+        token: `${token}`,
+      },
+    })
+  },
+  getStreamers(request) {
+    const token = sessionStorage.getItem('token')
+    return api.get( '/live-sport/streamer', {
+      params: request, // For GET requests, parameters are typically sent as `params`
+      headers: {
+        token: `${token}`,
+      },
+    })
+  },
   addSensitiveWordNew(data) {
     const token = sessionStorage.getItem('token')
     return api.post('/session/live-sport/sensitive-word/add', data, {
@@ -708,6 +735,26 @@ export const DashboardService = {
       },
     })
   },
+  updateSportLiveStream(stream) {
+    const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
+    return api.put('/live-sport/stream', stream, {
+      // params: request, // For GET requests, parameters are typically sent as `params`
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+  },
+  updateSupplierStream(stream) {
+    const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
+    return api.put('/live-sport/supplier-stream/status', stream, {
+      // params: request, // For GET requests, parameters are typically sent as `params`
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+  },
   deleteSportLiveTeam(request) {
     const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
     return api.delete(`/session/live-sport/team/${request.teamId}`, {
@@ -727,7 +774,25 @@ export const DashboardService = {
       },
     })
   },
-
+  getChatHistoryExport (query) {
+    const token = sessionStorage.getItem('token');
+    return api.get('/live-sport/chat/export', {
+      params: query,
+      headers: {
+        token: token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+  },
+  createSportLiveSupplierStream(stream) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/live-sport/supplier-stream', stream, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+  },
   batchDeleteSportLiveMatch(matchIds) {
     const token = sessionStorage.getItem('token')
     return api.delete('/session/live-sport/match/batch-delete', {
@@ -738,4 +803,22 @@ export const DashboardService = {
       },
     })
   },
+  deleteSportLiveStream(id){
+    const token = sessionStorage.getItem('token');
+    return api.delete(`/live-sport/stream/${id}`, {
+      headers: {
+        token: token,
+        'Content-Type': 'application/json',
+      },
+    });
+  },
+  deleteSportLiveSupplierStream(id){
+    const token = sessionStorage.getItem('token');
+    return api.delete(`/live-sport/supplier-stream/${id}`, {
+      headers: {
+        token: token,
+        'Content-Type': 'application/json',
+      },
+    });
+  }
 }
