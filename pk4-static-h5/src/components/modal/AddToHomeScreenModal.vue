@@ -96,7 +96,8 @@ watch(
   /* margin: 60px 10px 10px; */
   color: #000;
   padding: 32px 16px 16px;
-  height: 310px;
+  // height: 310px;
+    height: 335px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -112,13 +113,13 @@ watch(
     left: 0;
     right: 0;
     margin: auto;
-    height: 93px;
+    height: 120px;
     z-index: 9999;
     img {
       display: block;
       width: 100%;
       max-width: 120px;
-      height: 93px;
+      height: 120px;
     }
   }
   .add-to-homescreen-top {
@@ -141,7 +142,7 @@ watch(
   }
 
   .continue-to-h5 {
-    color: #82d81d;
+    color: #037EE9;
     text-decoration: none;
     font-weight: 600;
     width: 100%;

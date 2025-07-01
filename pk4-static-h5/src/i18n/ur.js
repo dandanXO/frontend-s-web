@@ -516,7 +516,8 @@ export default {
     statusCleared: "صاف کیا گیا",
     statusCancelled: "منسوخ کیا گیا",
     rate: "شرح",
-    createContract: "معاہدہ بنائیں"
+    createContract: "معاہدہ بنائیں",
+    selfCommissionShare: "ذاتی کمیشن کا حصہ"
   },
   deposit: {
     selectAmount: "رقم منتخب کریں",

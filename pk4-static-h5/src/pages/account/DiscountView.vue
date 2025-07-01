@@ -5,7 +5,7 @@
     <div v-else v-for="(e, i) in discountData" :key="`${e}-${i}`" class="discount-table">
       <div class="discount-row discount-row--title">
         <div class="discount-col">
-          <span class="txt-gray">{{ convertToGMT55(e.recordTime) }}</span>
+          <span class="txt-gray">{{ e.recordTime }}</span>
         </div>
       </div>
       <div class="discount-row discount-row--content">

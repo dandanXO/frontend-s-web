@@ -185,7 +185,7 @@
         <span>{{ $t("sideNav.experienceOneStopGaming") }}</span>
       </div>
       <div class="right-icon">
-        <img :src="require(`../assets/images/auth/app-download.png`)" />
+        <img style="padding: 16px; margin-bottom: 10px;" :src="require(`../assets/images/auth/app-download.png`)" />
       </div>
     </a>
     <!-- <a
