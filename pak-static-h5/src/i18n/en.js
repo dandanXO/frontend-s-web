@@ -718,6 +718,7 @@ export default {
     date: "Date",
     beforeBalance: "Before Balance",
     afterBalance: "After Balance",
+    payout: "Payout",
     gamePlatform: "Game Platform",
     bet: "Bet",
     settle: "Settle",
