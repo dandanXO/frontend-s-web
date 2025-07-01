@@ -38,49 +38,52 @@
           <div class="ribbon">活动内容</div>
           <div class="right">会员当日存款≥100元且在TI14国际邀请赛中累计有效≥1000元，次日即可领取彩金。 </div>
         </div>
-        <table class="livepoker-rebate-game-info-table section-table">
-          <thead>
-            <tr>
-              <th>VIP 等級 / 有效流水</th>
-              <th>≥1,000</th>
-              <th>≥10,000</th>
-              <th>≥50,000</th>
-              <th>≥100,000</th>
-              <th>流水要求</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>VIP1-VIP3</td>
-              <td>18</td>
-              <td>38</td>
-              <td>88</td>
-              <td>128</td>
-              <td rowspan="4">5倍流水</td>
-            </tr>
-            <tr>
-              <td>VIP4-VIP6</td>
-              <td>38</td>
-              <td>88</td>
-              <td>128</td>
-              <td>188</td>
-            </tr>
-            <tr>
-              <td>VIP7-VIP9</td>
-              <td>88</td>
-              <td>128</td>
-              <td>188</td>
-              <td>268</td>
-            </tr>
-            <tr>
-              <td>VIP10</td>
-              <td>128</td>
-              <td>188</td>
-              <td>268</td>
-              <td>588</td>
-            </tr>
-          </tbody>
-        </table>
+
+        <div class="table-scroll-wrapper">
+          <table class="livepoker-rebate-game-info-table section-table">
+            <thead>
+              <tr>
+                <th>VIP 等級 / 有效流水</th>
+                <th>≥1,000</th>
+                <th>≥10,000</th>
+                <th>≥50,000</th>
+                <th>≥100,000</th>
+                <th>流水要求</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>VIP1-VIP3</td>
+                <td>18</td>
+                <td>38</td>
+                <td>88</td>
+                <td>128</td>
+                <td rowspan="4">5倍流水</td>
+              </tr>
+              <tr>
+                <td>VIP4-VIP6</td>
+                <td>38</td>
+                <td>88</td>
+                <td>128</td>
+                <td>188</td>
+              </tr>
+              <tr>
+                <td>VIP7-VIP9</td>
+                <td>88</td>
+                <td>128</td>
+                <td>188</td>
+                <td>268</td>
+              </tr>
+              <tr>
+                <td>VIP10</td>
+                <td>128</td>
+                <td>188</td>
+                <td>268</td>
+                <td>588</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <!-- <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
@@ -488,5 +491,10 @@ onMounted(() => {
     color: #00a1ff;
     font-weight: 600;
   }
+}
+
+.table-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 </style>
