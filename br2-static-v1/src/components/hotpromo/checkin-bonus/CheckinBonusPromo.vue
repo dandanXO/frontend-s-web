@@ -1,22 +1,31 @@
 <template>
   <div>
     <div class="checkin-promo">
-      <div class="checkin-btn">
-        CHECK-IN
-      </div>
+      <div class="checkin-btn" @click="claimPromo()">CHECK-IN</div>
       <div class="checkin-grid">
-        <div class="checkin-day" :class="`day-${i+1}`" v-for="(day, i) in checkDays" :key="i">
-          <img class="tickbox" :src="require(`../../../assets/images/promotion/checkin-bonus/tickbox${day.checkedin ? '-active': ''}.png`)">
+        <div
+          class="checkin-day"
+          v-for="(day, i) in checkDays"
+          :key="i"
+          :class="[`day-${i + 1}`, { checkedin: day.checkedin, expired: day.expired, today: day.today }]"
+        >
+          <img
+            class="tickbox"
+            :src="
+              require(`../../../assets/images/promotion/checkin-bonus/tickbox${day.checkedin ? '-active' : ''}.png`)
+            "
+          />
           <div class="day-indication">
-            {{ 'Day ' + (i + 1) }}
+            {{ "Day " + (i + 1) }}
           </div>
           <div class="treasure-amt">
             <div class="treasure">
-              <img class="treasure-icon" :src="require(`../../../assets/images/promotion/checkin-bonus/day-${i+1}.png`)">
+              <img
+                class="treasure-icon"
+                :src="require(`../../../assets/images/promotion/checkin-bonus/day-${i + 1}.png`)"
+              />
             </div>
-            <div class="money">
-              FREE RS{{ day.amt }}
-            </div>
+            <div class="money">{{ day.bonus }}</div>
           </div>
         </div>
       </div>
@@ -62,7 +71,7 @@
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
-    <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
+    <!-- <q-btn icon="close" round dense v-close-popup class="money-rain-close" /> -->
     <div class="congrats-wrapper">
       <div class="congrats-container">
         <div class="congrats-highlight">+ {{ $t("hotPromo.rs") }}{{ prizeAmount }}</div>
@@ -92,45 +101,92 @@ const router = useRouter();
 const props = defineProps(["params"]);
 const params = JSON.parse(props.params || "{}");
 
-const checkDays = ref([{
-  day: 1,
-  amt: 588,
-  checkedin: true
-},
-{
-  day: 2,
-  amt: 588,
-  checkedin: true
-},
-{
-  day: 3,
-  amt: 588,
-  checkedin: true
-},
-{
-  day: 4,
-  amt: 588,
-  checkedin: true
-},
-{
-  day: 5,
-  amt: 588,
-  checkedin: true
-},
-{
-  day: 6,
-  amt: 588
-},
-{
-  day: 7,
-  amt: 888
-}]);
+// const checkDays = ref([
+//   {
+//     day: 1,
+//     amt: 188,
+//     checkedin: true
+//   },
+//   {
+//     day: 2,
+//     amt: 288,
+//     checkedin: true
+//   },
+//   {
+//     day: 3,
+//     amt: 388,
+//     checkedin: true
+//   },
+//   {
+//     day: 4,
+//     amt: 488,
+//     checkedin: true
+//   },
+//   {
+//     day: 5,
+//     amt: 588,
+//     checkedin: true
+//   },
+//   {
+//     day: 6,
+//     amt: 688
+//   },
+//   {
+//     day: 7,
+//     amt: 888
+//   }
+// ]);
+
+const checkDays = ref([
+  { day: 1, bonus: "MÁXIMA R$18" },
+  { day: 2, bonus: "MÁXIMA R$28" },
+  { day: 3, bonus: "Grande Prêmio" },
+  { day: 4, bonus: "MÁXIMA R$68" },
+  { day: 5, bonus: "MÁXIMA R$108" },
+  { day: 6, bonus: "MÁXIMA R$168" },
+  { day: 7, bonus: "Grande Prêmio" }
+]);
 
 const showPrizePopup = ref(false);
 const prizeAmount = ref();
 
+const promoInfo = ref();
+
+const loadPromoInit = () => {
+  eventapi
+    .get("/session/cycle-check-in?promoCode=br2-daily-check-in")
+    .then((res) => {
+      // debugger;
+      if (res.code === 0) {
+        const { checkedInDays, expiredDays, currentDay } = res.data;
+        promoInfo.value = res.data;
+
+        checkDays.value.forEach((day) => {
+          day.checkedin = checkedInDays.includes(day.day);
+          day.expired = expiredDays.includes(day.day);
+          day.today = day.day === currentDay;
+        });
+      }
+    })
+    .catch((e) => {});
+};
+
+const claimPromo = () => {
+  eventapi
+    .post("/session/cycle-check-in?promoCode=br2-daily-check-in")
+    .then((res) => {
+      // debugger;
+      if (res.code === 0) {
+        showPrizePopup.value = true;
+        prizeAmount.value = res.data;
+        loadPromoInit();
+      }
+    })
+    .catch((e) => {});
+};
+
 onMounted(() => {
-  // loadPromoInit();
+  loadPromoInit();
 });
 </script>
 
@@ -143,9 +199,9 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     border-radius: 20px;
-    border: 1.5px solid #E0C4A8;
-    background: linear-gradient(180deg, #419F74 0%, #1D3F31 100%);
-    box-shadow: 0px 4px 4px 0px #FFFFFF66 inset;
+    border: 1.5px solid #e0c4a8;
+    background: linear-gradient(180deg, #419f74 0%, #1d3f31 100%);
+    box-shadow: 0px 4px 4px 0px #ffffff66 inset;
     color: #ffffff;
     padding: 10px;
   }
@@ -155,12 +211,20 @@ onMounted(() => {
     gap: 10px;
     margin: 20px auto;
     .checkin-day {
-      background: url(../../../assets/images/promotion/checkin-bonus/day-bg.png)no-repeat center center;
+      background: url(../../../assets/images/promotion/checkin-bonus/day-bg.png) no-repeat center center;
       background-size: 100% 100%;
       position: relative;
       padding: 5px;
       border-radius: 5px;
-      
+
+      &.expired {
+        opacity: 0.5;
+        filter: grayscale(100%);
+      }
+      &.today {
+        // border: 2px solid gold;
+      }
+
       .treasure-amt {
         display: flex;
         flex-direction: column;
@@ -168,7 +232,7 @@ onMounted(() => {
         align-items: center;
         .treasure {
           width: 100%;
-          background: url(../../../assets/images/promotion/checkin-bonus/treasure-bg.png)no-repeat center center;
+          background: url(../../../assets/images/promotion/checkin-bonus/treasure-bg.png) no-repeat center center;
           background-size: contain;
           display: flex;
           justify-content: center;
@@ -180,20 +244,21 @@ onMounted(() => {
           }
         }
         .money {
-            background: linear-gradient(149.86deg, #C4FFA8 21.97%, #FFEE56 57.74%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+          background: linear-gradient(149.86deg, #c4ffa8 21.97%, #ffee56 57.74%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
 
-            /* Optional for smoother rendering */
-            background-clip: text;
-            color: transparent;
-            font-weight: 700;
-            font-size: 13px;
+          /* Optional for smoother rendering */
+          background-clip: text;
+          color: transparent;
+          font-weight: 700;
+          font-size: 13px;
+          text-align: center;
         }
       }
       &:nth-child(7) {
         grid-column: span 3;
-        
+
         .treasure-amt {
           flex-direction: row;
           .treasure {
@@ -217,15 +282,15 @@ onMounted(() => {
         width: 20px !important;
       }
       .day-indication {
-         background: url(../../../assets/images/promotion/checkin-bonus/day-indicator.png)no-repeat center center;
-          background-size: 100% 100%;
-          width: 25px;
-          padding: 3px;
-          font-size: 8px;
-          top: 0;
-          right: 5px;
-          position: absolute;
-          color: #14461F;
+        background: url(../../../assets/images/promotion/checkin-bonus/day-indicator.png) no-repeat center center;
+        background-size: 100% 100%;
+        width: 25px;
+        padding: 3px;
+        font-size: 8px;
+        top: 0;
+        right: 5px;
+        position: absolute;
+        color: #14461f;
         text-align: center;
       }
     }
@@ -324,6 +389,7 @@ onMounted(() => {
   background-size: contain;
   flex-direction: column;
   gap: 20px;
+  padding: 20px;
   // padding-top: 100px;
 }
 .congrats-head {
