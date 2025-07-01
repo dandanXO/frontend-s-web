@@ -74,7 +74,9 @@ import { Filesystem, Encoding, Directory } from "@capacitor/filesystem";
 import InputRowGrid from "../auth/InputRowGrid.vue";
 import InputField from "../auth/InputField.vue";
 import PrimaryButton from "../auth/PrimaryButton.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const $q = useQuasar();
 const store = userStore();
 
@@ -85,7 +87,7 @@ const copyShareLink = (selfTgurl) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${selfTgurl} copied to clipboard`,
+        message: `${selfTgurl} ${t('account.copiedToClipboard')}`,
         icon: "check_circle_outline"
       });
     })

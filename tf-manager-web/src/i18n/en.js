@@ -129,6 +129,7 @@ export default {
     noAutoWithdrawalGamePlatform: 'no Auto Review Game Platform',
     week: ' week',
     month: ' month',
+    balanceThresholdMultiplier: 'Balance must be less than (Deposit × Multiplier)',
   },
   outboxStatus: {
     0: 'Not reply yet',

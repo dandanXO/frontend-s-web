@@ -2,13 +2,13 @@
   <q-card class="q-pa-md bg-transparent">
     <img @click="openPageInfoDialog" class="info-qn" src="../../assets/images/affiliate/qnmark.png">
     <div class="top-right" @click="openDaySelectionDialog">
-      {{ daysSelection.label }}
+      {{ $t(daysSelection.label) }}
     </div>
     <q-card-section class="graph-section">
       <!-- Tabs -->
       <q-tabs v-model="tab" dense no-caps class="tab-toggle" indicator-color="transparent" align="center">
-        <q-tab name="activity" :label="selectedMetric.label" />
-        <q-tab name="team_pl" label="Team P&L" />
+        <q-tab name="activity" :label="$t(selectedMetric.label)" />
+        <q-tab name="team_pl" :label="$t('affiliate.overview.teamPnL')" />
       </q-tabs>
 
       <!-- Tab Panels -->
@@ -56,12 +56,12 @@
           { active: selectedMetric.key === item.key }
         ]" @click="selectMetric(item)">
         <div class="text-h6">{{ item.count }}</div>
-        <div class="text-caption">{{ item.label }}</div>
+        <div class="text-caption">{{ $t(item.label) }}</div>
       </q-card>
     </q-card-section>
     <q-card-section class="statistics row">
       <div class="stats-row" v-for="(stat, index) in stats" :key="(index)">
-        <div class="stats-label">{{ stat.label }}</div>
+        <div class="stats-label">{{ $t(stat.label) }}</div>
         <div class="stats-value" :class="['text-' + stat.label.toLowerCase(), 'text-' + stat.textColor]">{{ stat.value
         }}
         </div>
@@ -76,14 +76,14 @@
 
         <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
           <div class="filter-grid">
-            <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'Today' }"
-              @click="changeDaySelection('Today')">Today</div>
-            <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'Yesterday' }"
-              @click="changeDaySelection('Yesterday')">Yesterday</div>
-            <div class="filter-item" :class="{ active: dialogDaysSelection.label === '7-days' }"
-              @click="changeDaySelection('7-days')">7-days</div>
-            <div class="filter-item" :class="{ active: dialogDaysSelection.label === 'This Month' }"
-              @click="changeDaySelection('This Month')">This Month</div>
+            <div class="filter-item" :class="{ active: dialogDaysSelection.value === 'Today' }"
+              @click="changeDaySelection({label: 'affiliate.overview.today', value: 'Today'})">{{ $t('affiliate.overview.today') }}</div>
+            <div class="filter-item" :class="{ active: dialogDaysSelection.value === 'Yesterday' }"
+              @click="changeDaySelection({label: 'affiliate.overview.yesterday', value: 'Yesterday'})">{{ $t('affiliate.overview.yesterday') }}</div>
+            <div class="filter-item" :class="{ active: dialogDaysSelection.value === '7-days' }"
+              @click="changeDaySelection({label: 'affiliate.overview.sevenDays', value: '7-days'})">{{ $t('affiliate.overview.sevenDays') }}</div>
+            <div class="filter-item" :class="{ active: dialogDaysSelection.value === 'This Month' }"
+              @click="changeDaySelection({label: 'affiliate.overview.thisMonth', value: 'This Month'})">{{ $t('affiliate.overview.thisMonth') }}</div>
           </div>
 
           <div style="display:flex;">
@@ -197,8 +197,8 @@ const chartOptions = (title) => ({
   }
 })
 
-const changeDaySelection = (type) => {
-  dialogDaysSelection.value = { label: type, value: type };
+const changeDaySelection = (newValue) => {
+  dialogDaysSelection.value = newValue;
 }
 
 const confirmDaySelection = () => {
@@ -209,7 +209,7 @@ const confirmDaySelection = () => {
 
 
 function getDateRange(startDate = null, endDate = null) {
-  const type = daysSelection.value.label;
+  const type = daysSelection.value.value;
 
   let start, end;
 
@@ -246,14 +246,14 @@ function getDateRange(startDate = null, endDate = null) {
 
 // Cards & metric chart selectors
 const metrics = ref([
-  { key: 'logins', count: 0, label: 'Logins', color: 'chartlogins', textColor: 'white' },
-  { key: 'registers', count: 0, label: 'Registers', color: 'chartregisters', textColor: 'white' },
-  { key: 'bets', count: 0, label: 'Bet count', color: 'chartbetcount', textColor: 'white' },
-  { key: 'promotions', count: 0, label: 'Promotions', color: 'chartpromotions', textColor: 'white' },
-  { key: 'registersFirstDeposits', count: 0, label: 'Registers First deposits', color: 'chartregistersfirstdeposits', textColor: 'white' },
-  { key: 'firstDeposits', count: 0, label: 'First deposits', color: 'chartfirstdeposits', textColor: 'white' },
-  { key: 'deposits', count: 0, label: 'Deposits', color: 'chartdeposits', textColor: 'white' },
-  { key: 'withdrawals', count: 0, label: 'Withdrawals', color: 'chartwithdrawal', textColor: 'white' }
+  { key: 'logins', count: 0, label: 'affiliate.overview.logins', color: 'chartlogins', textColor: 'white' },
+  { key: 'registers', count: 0, label: 'affiliate.overview.registers', color: 'chartregisters', textColor: 'white' },
+  { key: 'bets', count: 0, label: 'affiliate.overview.betCount', color: 'chartbetcount', textColor: 'white' },
+  { key: 'promotions', count: 0, label: 'affiliate.overview.promotions', color: 'chartpromotions', textColor: 'white' },
+  { key: 'registersFirstDeposits', count: 0, label: 'affiliate.overview.registersFirstDeposits', color: 'chartregistersfirstdeposits', textColor: 'white' },
+  { key: 'firstDeposits', count: 0, label: 'affiliate.overview.firstDeposits', color: 'chartfirstdeposits', textColor: 'white' },
+  { key: 'deposits', count: 0, label: 'affiliate.overview.deposits', color: 'chartdeposits', textColor: 'white' },
+  { key: 'withdrawals', count: 0, label: 'affiliate.overview.withdrawals', color: 'chartwithdrawal', textColor: 'white' }
 ]);
 
 const selectedMetric = ref(metrics.value[0])
@@ -263,17 +263,17 @@ const selectMetric = (item) => {
   tab.value = 'activity'
 }
 const stats = ref([
-  { key: 'deposit', label: 'Deposit', value: (0).toFixed(2), textColor: 'grey-6' }, //
-  { key: 'withdrawalAmount', label: 'Withdrawal amount', value: (0).toFixed(2), textColor: 'grey-6' },
-  { key: 'bonus', label: 'Bonus', value: (0).toFixed(2), textColor: 'blue-8' },
-  { key: 'validBet', label: 'Valid bet', value: (0).toFixed(2), textColor: 'blue-8' }, // validBet
-  { key: 'winLoss', label: 'Win/Loss', value: (0).toFixed(2), textColor: 'negative' }, // payout - validBet
-  { key: 'teamPnL', label: 'Team P&L', value: (0).toFixed(2), textColor: 'negative' }, // payout - validBet
-  { key: 'teamRebate', label: 'Team Rebate', value: (0).toFixed(2), textColor: 'positive' }, // rebate
+  { key: 'deposit', label: 'affiliate.overview.deposit', value: (0).toFixed(2), textColor: 'grey-6' }, //
+  { key: 'withdrawalAmount', label: 'affiliate.overview.withdrawalAmount', value: (0).toFixed(2), textColor: 'grey-6' },
+  { key: 'bonus', label: 'affiliate.overview.bonus', value: (0).toFixed(2), textColor: 'blue-8' },
+  { key: 'validBet', label: 'affiliate.overview.validBet', value: (0).toFixed(2), textColor: 'blue-8' }, // validBet
+  { key: 'winLoss', label: 'affiliate.overview.winLoss', value: (0).toFixed(2), textColor: 'negative' }, // payout - validBet
+  { key: 'teamPnL', label: 'affiliate.overview.teamPnL', value: (0).toFixed(2), textColor: 'negative' }, // payout - validBet
+  { key: 'teamRebate', label: 'affiliate.overview.teamRebate', value: (0).toFixed(2), textColor: 'positive' }, // rebate
 ]);
 const isDaySelectionDialog = ref(false)
-const daysSelection = ref({ label: '7-days', value: 7 });
-const dialogDaysSelection = ref({ label: '7-days', value: 7 });
+const daysSelection = ref({ label: 'affiliate.overview.sevenDays', value: '7-days' });
+const dialogDaysSelection = ref({ label: 'affiliate.overview.sevenDays', value: '7-days' });
 const openDaySelectionDialog = () => {
   dialogDaysSelection.value = daysSelection.value;
   isDaySelectionDialog.value = true

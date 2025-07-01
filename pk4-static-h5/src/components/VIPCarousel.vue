@@ -1,8 +1,8 @@
 <template>
-  <div class="valid-bet-div">
+  <!-- <div class="valid-bet-div">
     {{ $t("vip.currentValidBets") }}: {{ store.currency.value }}&nbsp;
     <span>{{ store.getCurrentValidBet() }}</span>
-  </div>
+  </div> -->
 
   <Carousel
     ref="vipCarouselRef"
@@ -20,6 +20,9 @@
           <div v-if="vip.vipLevel !== 12">
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements" v-if="vipIndex !== vipItems.length - 1">
+                <div>
+                   {{ $t("vip.currentValidBets") }}: {{ store.currency.value }} {{ store.getCurrentValidBet() }}
+                </div>
                 {{ $t("vip.accumulateDeposit") }}
                 {{ props.onlyShowCurrentLevel ? vipItems[vip.vipLevel + 1].ugprade : vipItems[vipIndex + 1].ugprade }}
                 <!-- {{ convertToCommaAmount(store.levelUpDeposit, null, 0) }} -->
@@ -674,12 +677,16 @@ $gradients: (
     margin: 10px 0px;
     display: flex;
     justify-content: flex-start;
-    gap: 10px;
+    // gap: 10px;
     font-size: 12px;
     left: 6%;
     bottom: 25%;
     font-size: 0.85rem;
     font-weight: bolder;
+    
+    flex-direction: column;
+    gap: 0;
+    align-items: flex-start;
     // color: #fff;
 
     // span {
@@ -800,7 +807,7 @@ $gradients: (
 
 .carousel__prev,
 .carousel__next {
-  display: none;
+  display: none !important;
 }
 
 .receive-monthly {

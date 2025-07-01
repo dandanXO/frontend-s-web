@@ -715,9 +715,10 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .get-code-btn {
-  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-  color: #000000;
-  box-shadow: 0px 2px 0px 0px #1cca6a;
+  // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  color: #ffffff;
+  // box-shadow: 0px 2px 0px 0px #1cca6a;
+  background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
   min-width: 100px;
   max-width: 120px;
   font-weight: bold;

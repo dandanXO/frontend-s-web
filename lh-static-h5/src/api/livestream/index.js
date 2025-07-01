@@ -17,7 +17,7 @@ export const getChatHistory = (payload, current) => {
   const requestOptions = payload;
 
   api
-    .post(`/live/history?current=${current}&sortType=ASC`, requestOptions)
+    .post(`/opt-session/live/history?current=${current}&sortType=ASC`, requestOptions)
     .then((response) => {
       // return response.json();
       return response;

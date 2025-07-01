@@ -88,7 +88,7 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
   overflow: auto;
   left: 0;
   right: 0;
-  background: #090f1e;
+  background: #090f1e;                                            
   height: 90vh;
 
   .title-img {

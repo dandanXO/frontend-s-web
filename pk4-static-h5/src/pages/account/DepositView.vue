@@ -1511,7 +1511,7 @@ const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #24262b;
+  background-color: #090f1e;
   // margin: 16px;
 }
 

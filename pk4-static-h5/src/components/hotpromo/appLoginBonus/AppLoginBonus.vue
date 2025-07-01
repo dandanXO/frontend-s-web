@@ -131,13 +131,13 @@
           <p>
             <span class="yellow">PK1.game</span>
             کی خصوصی پیشکش: اپنا فون بائنڈ کریں اور فوراً حاصل کریں
-            <span class="red">{{ STORE.CURRENCY.VALUE }}100</span>
+            <span class="red">{{ store.currency.value }}100</span>
             !
           </p>
           <p>
             <span class="yellow">PK1.game</span>
             پر نئے ہیں؟ صرف رجسٹریشن کے بعد اپنا موبائل نمبر بائنڈ کریں اور فوراً حاصل کریں
-            <span class="red">{{ STORE.CURRENCY.VALUE }}100</span>
+            <span class="red">{{ store.currency.value }}100</span>
             کا انعام — بغیر کسی ڈپازٹ کے!
           </p>
           <p>

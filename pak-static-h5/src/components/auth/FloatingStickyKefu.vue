@@ -1,22 +1,22 @@
 <template>
-    <q-page-sticky
-      v-if="ui.CSAUrl"
-      style="z-index: 3000"
-      position="top-right"
-      :offset="csDragPos"
-      class="floating-btn scalable"
-      :style="{ transform: `scale(${scaleValue})` }"
-    >
-      <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef">
-        <a :href="ui.CSAUrl" target="_blank">
-            <div class="cs-icon-wrapper"></div>
-        </a>
-      </div>
-    </q-page-sticky>
+  <q-page-sticky
+    v-if="ui.CSAUrl"
+    style="z-index: 3000"
+    position="top-right"
+    :offset="csDragPos"
+    class="floating-btn scalable"
+    :style="{ transform: `scale(${scaleValue})` }"
+  >
+    <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef">
+      <a :href="ui.CSAUrl" target="_blank">
+        <div class="cs-icon-wrapper"></div>
+      </a>
+    </div>
+  </q-page-sticky>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 import { useUI } from "stores/ui";
 
 const scaleValue = ref(1);
@@ -35,7 +35,7 @@ const moveCsIcon = (ev) => {
 .cs-icon-wrapper {
   width: 55px;
   height: 55px;
-  background: url("../../assets/images/index/icon-cs-auth.gif") no-repeat center center;
+  //background: url("../../assets/images/index/icon-cs-auth.gif") no-repeat center center;
   background-size: contain;
   position: relative;
   aspect-ratio: 500/500;
