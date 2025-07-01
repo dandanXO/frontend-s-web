@@ -147,7 +147,7 @@ const handleSendChatMessage = (message) => {
   }).then((res) => {
     if (res.code === 0) {
       const { content, name } = res.data;
-      const displayName = store.memberType !== "NORMAL" ? store.nickName : name;
+      const displayName = store.memberType !== "NORMAL" ? store.name2 || store.nickName : name;
       messages.value.push({
         content,
         name: displayName,
