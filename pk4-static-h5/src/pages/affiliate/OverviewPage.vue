@@ -345,8 +345,8 @@ const initData = () => {
       else if (stat.key === 'withdrawalAmount') stat.value = sumByKey("withdrawAmount");
       else if (stat.key === 'bonus') stat.value = sumByKey("bonus");
       else if (stat.key === 'validBet') stat.value = sumByKey("validBet");
-      else if (stat.key === 'winLoss') stat.value = sumByKey("payout") - sumByKey("validBet");
-      else if (stat.key === 'teamPnL') stat.value = sumByKey("payout") - sumByKey("validBet") - sumByKey("rebate");
+      else if (stat.key === 'winLoss') stat.value = (sumByKey("payout") - sumByKey("validBet")).toFixed(2);
+      else if (stat.key === 'teamPnL') stat.value = (sumByKey("payout") - sumByKey("validBet") - sumByKey("rebate")).toFixed(2);
       else if (stat.key === 'teamRebate') stat.value = sumByKey("rebate");
       return stat;
     });
