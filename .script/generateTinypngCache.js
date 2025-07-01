@@ -18,7 +18,7 @@ function createCache() {
   const files = glob.sync(IMAGE_GLOB, {
     cwd: ROOT_DIR,
     nodir: true,
-    ignore: ['**/node_modules/**', '**/.git/**'],
+    ignore: ['**/node_modules/**', '**/.git/**', '**/resources/**', '**/src-capacitor/**', '**/dist/**', '**/Runner/**', '**/android/**'],
   });
 
   const cache = {};
