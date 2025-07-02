@@ -3289,7 +3289,6 @@ const loadLoginCashBackPopup = () => {
         `/session/member/rebateAndCashback?betRebatePromoCode=br2-daily-bet-rebate&lossRebatePromoCode=br2-loss-rebate&day=0`
       )
       .then((res) => {
-        console.log("hit 1", res);
         if (res.code === 0) {
           const { betRebateAmount, betRebateClaimed, lossRebateAmount, lossRebateClaimed } = res.data;
 
