@@ -12,10 +12,11 @@
     "android": "cross-env ENV_FILE=app quasar build -m capacitor -T android",
     "dev:test": "dotenv -e .test.env quasar dev",
     "dev:staging": "dotenv -e .staging.env quasar dev",
-    "build:prod": "dotenv -e .prod.env quasar build && dotenv -e .prod.env cross-env BUILD_TARGET=livechat quasar build",
+    "build:normal": "dotenv -e .prod.env quasar build",
+    "build:prod": "concurrently --names \"MAIN,LIVECHAT\" \"dotenv -e .prod.env quasar build\" \"dotenv -e .prod.env cross-env BUILD_TARGET=livechat quasar build\"",
     "build:staging": "concurrently --names \"MAIN,LIVECHAT\" \"dotenv -e .staging.env quasar build\" \"dotenv -e .staging.env cross-env BUILD_TARGET=livechat quasar build\"",
-    "build:dev": "dotenv -e .dev.env quasar build && dotenv -e .dev.env cross-env BUILD_TARGET=livechat quasar build",
-    "build:test": "dotenv -e .test.env quasar build && dotenv -e .test.env cross-env BUILD_TARGET=livechat quasar build",
+    "build:dev": "concurrently --names \"MAIN,LIVECHAT\" \"dotenv -e .dev.env quasar build\" \"dotenv -e .dev.env cross-env BUILD_TARGET=livechat quasar build\"",
+    "build:test": "concurrently --names \"MAIN,LIVECHAT\" \"dotenv -e .test.env quasar build\" \"dotenv -e .test.env cross-env BUILD_TARGET=livechat quasar build\"",
     "dev": "dotenv -e .dev.env quasar dev"
   },
   "dependencies": {

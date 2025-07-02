@@ -202,7 +202,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      console.log("LH 0701")
+      console.log("LH 0702")
 
       checkSessStorageItem();
       checkDarkMode();
