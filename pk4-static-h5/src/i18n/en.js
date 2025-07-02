@@ -1070,17 +1070,17 @@ export default {
         "Withdrawal requirements: You need to complete the wagering requirement of at least 10 times the turnover. The calculation formula is: (Deposit amount + Bonus amount) × 10 times the turnover requirement.",
       termsCondition3: "This bonus is only applicable to the slot game category.",
       termsCondition4:
-        "If a member mistakenly participates in a non-specified game category, the bonus will be deemed invalid and b9.game reserves the right to deduct the relevant bonus and the profits generated.",
+        "If a member mistakenly participates in a non-specified game category, the bonus will be deemed invalid and pk1.game reserves the right to deduct the relevant bonus and the profits generated.",
       termsCondition5:
-        "Each member is limited to one account (including deposit account, withdrawal account, IP address). Multiple account behavior will result in the bonus being invalid. If violations are found, b9.game reserves the right to cancel the bonus and freeze the account.",
+        "Each member is limited to one account (including deposit account, withdrawal account, IP address). Multiple account behavior will result in the bonus being invalid. If violations are found, pk1.game reserves the right to cancel the bonus and freeze the account.",
       termsCondition6:
         "Before the first withdrawal application, the bound bank account information and phone number cannot be changed. If the information is changed, the bonus will be cancelled and the bonus and the resulting profits will be deducted.",
       termsCondition7:
-        "This bonus is only applicable to players in the specified game category. The bonus cannot be used to accumulate betting turnover, calculate arbitrage behavior or be used in combination with other technical means. If violations are found, the bonus will be deemed invalid, all bonuses and profits will be cancelled, and b9.game reserves the right to close the account.",
+        "This bonus is only applicable to players in the specified game category. The bonus cannot be used to accumulate betting turnover, calculate arbitrage behavior or be used in combination with other technical means. If violations are found, the bonus will be deemed invalid, all bonuses and profits will be cancelled, and pk1.game reserves the right to close the account.",
       termsCondition8:
         "PK1.game reserves the right to change, suspend or terminate this activity at any time without prior notice.",
       termsCondition9:
-        "The final right of interpretation of all terms belongs to b9.game. b9.game reserves the right to refuse to deal with any disputes involving terms."
+        "The final right of interpretation of all terms belongs to pk1.game. pk1.game reserves the right to refuse to deal with any disputes involving terms."
     },
     aviatorWheel: {
       remainingDrawTimes: "Remaining draw times",

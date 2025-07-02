@@ -108,7 +108,7 @@ installBtn.addEventListener("click", async () => {
           // alert(isQRCodeScannerWebView());
           const newTab = window.open(`${window.location.origin}/register`, "_blank", "noopener");
           if (!newTab) {
-            window.location.href = `https://b9.game/register`;
+            window.location.href = `https://pk1.game/register`;
           }
         }
       } else {

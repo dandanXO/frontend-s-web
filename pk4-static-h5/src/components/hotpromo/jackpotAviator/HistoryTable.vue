@@ -17,7 +17,7 @@
           <img class="crown-icon" v-if="inDialog && historyListItemIndex + 1 === 1" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/1st-place-crown.png" />
           <img class="crown-icon" v-else-if="inDialog && historyListItemIndex + 1 === 2"  src="../../../assets/images/promotion/hotpromo/jackpot-aviator/2nd-place-crown.png" />
           <img class="crown-icon" v-else-if="inDialog && historyListItemIndex + 1 === 3" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/3rd-place-crown.png" />
-          <span v-if="historyListItemIndex + 1 > 3">{{ inDialog ? historyListItemIndex + 1 : historyListItemIndex + 4 }}</span>
+        <span v-else>{{ inDialog ? historyListItemIndex + 1 : historyListItemIndex + 4 }}</span>
         </div>
         <div>{{ historyListItem.loginName }}</div>
         <div class="betVolume">{{ historyListItem.amount?.toFixed(2) }}</div>

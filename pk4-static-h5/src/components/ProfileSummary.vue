@@ -38,7 +38,7 @@
       <div class="profile-wrapper-extra">
         <div class="logo-img" style="cursor: pointer" @click="onClickLogo">
           <img src="../assets/logo.png" />
-          <!-- <span v-if="!ui.loggedIn && !store.hasToken()">B9.GAME</span> -->
+          <!-- <span v-if="!ui.loggedIn && !store.hasToken()">PK1.GAME</span> -->
            <!-- <span>PK1.GAME</span> -->
         </div>
       <div class="profile-menu">

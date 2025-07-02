@@ -1,6 +1,6 @@
-# B9.GAME App (pak-h5-project)
+# PK1.GAME App (pak-h5-project)
 
-B9.GAME (**pak**) H5 APP
+PK1.GAME (**pak**) H5 APP
 
 - Node Version >= 16.17.0
 - H5 + Android APP
