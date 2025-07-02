@@ -278,7 +278,7 @@ export const userStore = defineStore("userStore", {
           this.canClaimFtdPrivilege = canClaimFtdPrivilege;
           this.canClaimThirdPrivilege = canClaimThirdPrivilege;
           this.canClaimSecondPrivilege = canClaimSecondPrivilege;
-          this.canSpinPrivilegeCoupon = canSpinPrivilegeCoupon;
+          this.canSpinPrivilegeCoupon = true;
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
             OneSignal.login(this.nickName);
