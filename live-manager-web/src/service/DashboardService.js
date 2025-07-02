@@ -148,6 +148,30 @@ export const DashboardService = {
       },
     })
   },
+  uploadImage(formData) {
+    const requestOptions = {
+      method: 'POST',
+      body: formData
+    };
+    const baseApi = globals;
+    return fetch(baseApi + '/image/uploadBanner', requestOptions)
+      .then(response => {
+        return response.json()
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  },
+  updateSportLiveEvent(streamer){
+    const token = sessionStorage.getItem('token')
+
+    return api.put(`/live-sport/event`, streamer, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+  },
 
   // 更新敏感字
   updateSensitiveWord(data) {
@@ -206,6 +230,15 @@ export const DashboardService = {
     const token = sessionStorage.getItem('token')
 
     return api.get(`/session/live-sport/chat-block${queryString}`, {
+      headers: {
+        token: `${token}`,
+      },
+    })
+  },
+  getTeamById(sportId) {
+    const token = sessionStorage.getItem('token')
+
+    return api.get(`/live-sport/team/list?sportId=${sportId}`, {
       headers: {
         token: `${token}`,
       },
@@ -583,6 +616,15 @@ export const DashboardService = {
   addSensitiveWordNew(data) {
     const token = sessionStorage.getItem('token')
     return api.post('/session/live-sport/sensitive-word/add', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+  },
+  getEvents(request) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/live-sport/event', request, {
       headers: {
         token: `${token}`,
         'Content-Type': 'application/x-www-form-urlencoded',
