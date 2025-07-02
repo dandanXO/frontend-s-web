@@ -26,9 +26,9 @@
           <q-badge v-if="isFtdPrivilegePayType" color="green" floating rounded>
             +{{ getFtdCommaAmount(item.amount) }}
           </q-badge>
-          <!-- <q-badge v-if="isNewPlayerPrivilege" color="blue" floating rounded>
+          <q-badge v-if="isNewPlayerPrivilege" color="blue" floating rounded>
             {{ getNewPlayerAmount(item.amount) }}
-          </q-badge> -->
+          </q-badge>
           <div :class="['deposit-amt', item.isActive && 'active', 'panel']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -85,12 +85,12 @@
             >
               {{ $t("deposit.useFtdPrivilege") }}
             </q-checkbox>
-            <!-- <q-checkbox
+            <q-checkbox
               v-model="newPlayerDepositBonusConfig.selected"
               v-else-if="newPlayerDepositBonusConfig.hasBonus && !isUSDT && isAndroid()"
             >
               {{ $t("deposit.appDepositBonus") }}
-            </q-checkbox> -->
+            </q-checkbox>
             <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
             <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
@@ -341,7 +341,7 @@
     </div>
   </q-dialog>
 
-  <!-- <q-dialog width="100%" v-model="showPaymentCancellationDialog">
+  <q-dialog width="100%" v-model="showPaymentCancellationDialog">
     <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
       <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -357,7 +357,7 @@
         </div>
       </div>
     </div>
-  </q-dialog> -->
+  </q-dialog>
   <AdditionalSteps
     v-if="isAdditionalDepositSteps"
     :currentAdditionalStep="currentDepStep"
@@ -513,7 +513,8 @@ const isNewPlayerPrivilege = computed(
   () => 
     selectedPayType.value !== "USDTTRC" &&
     newPlayerDepositBonusConfig.value.selected &&
-    newPlayerDepositBonusConfig.value.hasBonus
+    newPlayerDepositBonusConfig.value.hasBonus && 
+    isAndroid()
 )
 
 
@@ -756,6 +757,12 @@ async function loadPrivilege(val) {
         if (p.payTypes.indexOf(val.payType) >= 0) {
           if (p.triggerType == "FREE") {
             freePrivilege.value.push(p);
+          } else if (p.code === "pak-new-user-roulette") {
+            newPlayerDepositBonusConfig.value = {
+              selected: true,
+              hasBonus: true,
+              privilegeId: p.id
+            };
           } else {
             unselectedPrivileges.value.push(p);
           }
@@ -1133,52 +1140,52 @@ onMounted(() => {
     isAdditionalDepositSteps.value = true;
   }
 });
-// const showPaymentCancellationDialog = ref();
-// const paymentCancellationAmtLoss = ref(0);
-// const pendingNext = ref(null)
+const showPaymentCancellationDialog = ref();
+const paymentCancellationAmtLoss = ref(0);
+const pendingNext = ref(null)
 
-// const confirmLeave = () => {
-//   showPaymentCancellationDialog.value = false
-//   if (pendingNext.value) {
-//     pendingNext.value()
-//     pendingNext.value = null
-//   }
-// }
+const confirmLeave = () => {
+  showPaymentCancellationDialog.value = false
+  if (pendingNext.value) {
+    pendingNext.value()
+    pendingNext.value = null
+  }
+}
 
-// const cancelLeave = () => {
-//   showPaymentCancellationDialog.value = false
-//   if (pendingNext.value) {
-//     pendingNext.value(false)
-//     pendingNext.value = null
-//   }
-// }
+const cancelLeave = () => {
+  showPaymentCancellationDialog.value = false
+  if (pendingNext.value) {
+    pendingNext.value(false)
+    pendingNext.value = null
+  }
+}
 const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
 
 
-// onBeforeRouteLeave((to, from, next) => {
-//   console.log(from)
-//   if (from.path !== '/deposit') {
-//     next()
-//     return
-//   }
-//   const hasNewPlayerReward = newPlayerDepositBonusConfig.value?.hasBonus
+onBeforeRouteLeave((to, from, next) => {
+  console.log(from)
+  if (from.path !== '/deposit') {
+    next()
+    return
+  }
+  const hasNewPlayerReward = newPlayerDepositBonusConfig.value?.hasBonus
   
-//   const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
+  const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
 
-//   if (alreadyDeposited && isAndroid()) {
-//     next()
-//     return
-//   }
-//   if (((hasNewPlayerReward) && isAndroid())) {
-//     if (hasNewPlayerReward) {
-//       paymentCancellationAmtLoss.value = 38
-//     }
-//     pendingNext.value = next
-//     showPaymentCancellationDialog.value = true
-//   } else {
-//     next()
-//   }
-// })
+  if (alreadyDeposited && isAndroid()) {
+    next()
+    return
+  }
+  if (((hasNewPlayerReward) && isAndroid())) {
+    if (hasNewPlayerReward) {
+      paymentCancellationAmtLoss.value = 38
+    }
+    pendingNext.value = next
+    showPaymentCancellationDialog.value = true
+  } else {
+    next()
+  }
+})
 </script>
 
 <style scoped lang="scss">
