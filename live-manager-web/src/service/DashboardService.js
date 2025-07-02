@@ -165,7 +165,7 @@ export const DashboardService = {
   updateSportLiveEvent(streamer){
     const token = sessionStorage.getItem('token')
 
-    return api.put(`/live-sport/event`, streamer, {
+    return api.put(`/session/live-sport/event`, streamer, {
       headers: {
         token: `${token}`,
         'Content-Type': 'application/json',
@@ -238,7 +238,7 @@ export const DashboardService = {
   getTeamById(sportId) {
     const token = sessionStorage.getItem('token')
 
-    return api.get(`/live-sport/team/list?sportId=${sportId}`, {
+    return api.get(`/session/live-sport/team/list?sportId=${sportId}`, {
       headers: {
         token: `${token}`,
       },
@@ -588,7 +588,7 @@ export const DashboardService = {
   },
   getSportLiveStream(request) {
     const token = sessionStorage.getItem('token')
-    return api.get('/live-sport/stream', {
+    return api.get('/session/live-sport/stream', {
       params: request, // For GET requests, parameters are typically sent as `params`
       headers: {
         token: `${token}`,
@@ -597,7 +597,7 @@ export const DashboardService = {
   },
   getSportLiveSupplierStream(request) {
     const token = sessionStorage.getItem('token')
-    return api.get('/live-sport/supplier-stream', {
+    return api.get('/session/live-sport/supplier-stream', {
       params: request, // For GET requests, parameters are typically sent as `params`
       headers: {
         token: `${token}`,
@@ -606,7 +606,7 @@ export const DashboardService = {
   },
   getStreamers(request) {
     const token = sessionStorage.getItem('token')
-    return api.get( '/live-sport/streamer', {
+    return api.get( '/session/live-sport/streamer', {
       params: request, // For GET requests, parameters are typically sent as `params`
       headers: {
         token: `${token}`,
@@ -624,7 +624,7 @@ export const DashboardService = {
   },
   getEvents(request) {
     const token = sessionStorage.getItem('token')
-    return api.post('/live-sport/event', request, {
+    return api.post('/session/live-sport/event', request, {
       headers: {
         token: `${token}`,
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -779,7 +779,7 @@ export const DashboardService = {
   },
   updateSportLiveStream(stream) {
     const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
-    return api.put('/live-sport/stream', stream, {
+    return api.put('/session/live-sport/stream', stream, {
       // params: request, // For GET requests, parameters are typically sent as `params`
       headers: {
         token: `${token}`,
@@ -789,7 +789,7 @@ export const DashboardService = {
   },
   updateSupplierStream(stream) {
     const token = sessionStorage.getItem('token') // 從 sessionStorage 拿取 token
-    return api.put('/live-sport/supplier-stream/status', stream, {
+    return api.put('/session/live-sport/supplier-stream/status', stream, {
       // params: request, // For GET requests, parameters are typically sent as `params`
       headers: {
         token: `${token}`,
@@ -828,7 +828,7 @@ export const DashboardService = {
   },
   createSportLiveSupplierStream(stream) {
     const token = sessionStorage.getItem('token')
-    return api.post('/live-sport/supplier-stream', stream, {
+    return api.post('/session/live-sport/supplier-stream', stream, {
       headers: {
         token: `${token}`,
         'Content-Type': 'application/json',
@@ -847,7 +847,7 @@ export const DashboardService = {
   },
   deleteSportLiveStream(id){
     const token = sessionStorage.getItem('token');
-    return api.delete(`/live-sport/stream/${id}`, {
+    return api.delete(`/session/live-sport/stream/${id}`, {
       headers: {
         token: token,
         'Content-Type': 'application/json',
@@ -856,7 +856,7 @@ export const DashboardService = {
   },
   deleteSportLiveSupplierStream(id){
     const token = sessionStorage.getItem('token');
-    return api.delete(`/live-sport/supplier-stream/${id}`, {
+    return api.delete(`/session/live-sport/supplier-stream/${id}`, {
       headers: {
         token: token,
         'Content-Type': 'application/json',

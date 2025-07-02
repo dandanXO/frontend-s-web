@@ -1,5 +1,5 @@
 <template>
-  <TabView v-model:activeIndex="activeIndex" @update:activeIndex="onTabChange">
+  <TabView>
     <TabPanel :header="t('fields.sportLiveEventSetting')">
       <SettingTab />
     </TabPanel>
@@ -26,8 +26,13 @@ export default defineComponent({
     const router = useRouter()
     const activeName = computed(() => router.currentRoute.value.query.tab || 'sport-live-event-setting')
 
+    const onTabChange = () => {
+
+    }
+
     return {
       activeName,
+      onTabChange,
       t
     }
   }

@@ -41,7 +41,6 @@
       </form>
     </Dialog>
 
-    <!-- The rest such as tables, chat history, and preview Dialogs can be added next in PrimeVue format -->
   </div>
 </template>
 

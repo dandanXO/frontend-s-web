@@ -1,134 +1,135 @@
 <template>
-  <div class="event-editor-container">
-    <Card>
-      <form @submit.prevent="submit" class="p-fluid">
-        <!-- Sport Type Dropdown -->
-        <div class="p-field">
-          <label for="sportId">{{ t('fields.sportType') }}</label>
-          <Dropdown v-model="form.sportId" :options="uiControl.sport" optionLabel="display" optionValue="id" inputId="sportId" style="width: 300px" />
-        </div>
+  2
+<!--  <div class="event-editor-container">-->
+<!--    <Card>-->
+<!--      <form @submit.prevent="submit" class="p-fluid">-->
+<!--        &lt;!&ndash; Sport Type Dropdown &ndash;&gt;-->
+<!--        <div class="p-field">-->
+<!--          <label for="sportId">{{ t('fields.sportType') }}</label>-->
+<!--          <Dropdown v-model="form.sportId" :options="uiControl.sport" optionLabel="display" optionValue="id" inputId="sportId" style="width: 300px" />-->
+<!--        </div>-->
 
-        <!-- Title Input -->
-        <div class="p-field">
-          <label for="title">{{ t('fields.title') }}</label>
-          <InputText v-model="form.title" id="title" maxlength="100" style="width: 300px" />
-        </div>
+<!--        &lt;!&ndash; Title Input &ndash;&gt;-->
+<!--        <div class="p-field">-->
+<!--          <label for="title">{{ t('fields.title') }}</label>-->
+<!--          <InputText v-model="form.title" id="title" maxlength="100" style="width: 300px" />-->
+<!--        </div>-->
 
-        <!-- Home Team Selector -->
-        <div class="p-field">
-          <label for="homeTeam">{{ t('fields.homeTeam') }}</label>
-          <AutoComplete
-            v-model="form.homeId"
-            :suggestions="displayTeams"
-            field="nameZh"
-            :completeMethod="searchTeams"
-            forceSelection
-            dropdown
-            style="width: 300px"
-            @item-select="e => selectTeam('home', e.value)"
-            @blur="() => validateTeam('home')"
-          >
-            <template #item="slotProps">
-              <div style="display: flex; align-items: center">
-                <img :src="resolveIcon(slotProps.item.icon)" style="width: 20px; height: 20px; margin-right: 10px" />
-                {{ slotProps.item.nameZh }}
-              </div>
-            </template>
-          </AutoComplete>
-        </div>
+<!--        &lt;!&ndash; Home Team Selector &ndash;&gt;-->
+<!--        <div class="p-field">-->
+<!--          <label for="homeTeam">{{ t('fields.homeTeam') }}</label>-->
+<!--          <AutoComplete-->
+<!--            v-model="form.homeId"-->
+<!--            :suggestions="displayTeams"-->
+<!--            field="nameZh"-->
+<!--            :completeMethod="searchTeams"-->
+<!--            forceSelection-->
+<!--            dropdown-->
+<!--            style="width: 300px"-->
+<!--            @item-select="e => selectTeam('home', e.value)"-->
+<!--            @blur="() => validateTeam('home')"-->
+<!--          >-->
+<!--            <template #item="slotProps">-->
+<!--              <div style="display: flex; align-items: center">-->
+<!--                <img :src="resolveIcon(slotProps.item.icon)" style="width: 20px; height: 20px; margin-right: 10px" />-->
+<!--                {{ slotProps.item.nameZh }}-->
+<!--              </div>-->
+<!--            </template>-->
+<!--          </AutoComplete>-->
+<!--        </div>-->
 
-        <!-- Away Team Selector -->
-        <div class="p-field">
-          <label for="awayTeam">{{ t('fields.awayTeam') }}</label>
-          <AutoComplete
-            v-model="form.awayId"
-            :suggestions="displayTeams"
-            field="nameZh"
-            :completeMethod="searchTeams"
-            forceSelection
-            dropdown
-            style="width: 300px"
-            @item-select="e => selectTeam('away', e.value)"
-            @blur="() => validateTeam('away')"
-          >
-            <template #item="slotProps">
-              <div style="display: flex; align-items: center">
-                <img :src="resolveIcon(slotProps.item.icon)" style="width: 20px; height: 20px; margin-right: 10px" />
-                {{ slotProps.item.nameZh }}
-              </div>
-            </template>
-          </AutoComplete>
-        </div>
+<!--        &lt;!&ndash; Away Team Selector &ndash;&gt;-->
+<!--        <div class="p-field">-->
+<!--          <label for="awayTeam">{{ t('fields.awayTeam') }}</label>-->
+<!--          <AutoComplete-->
+<!--            v-model="form.awayId"-->
+<!--            :suggestions="displayTeams"-->
+<!--            field="nameZh"-->
+<!--            :completeMethod="searchTeams"-->
+<!--            forceSelection-->
+<!--            dropdown-->
+<!--            style="width: 300px"-->
+<!--            @item-select="e => selectTeam('away', e.value)"-->
+<!--            @blur="() => validateTeam('away')"-->
+<!--          >-->
+<!--            <template #item="slotProps">-->
+<!--              <div style="display: flex; align-items: center">-->
+<!--                <img :src="resolveIcon(slotProps.item.icon)" style="width: 20px; height: 20px; margin-right: 10px" />-->
+<!--                {{ slotProps.item.nameZh }}-->
+<!--              </div>-->
+<!--            </template>-->
+<!--          </AutoComplete>-->
+<!--        </div>-->
 
-        <!-- Sequence -->
-        <div class="p-field">
-          <label for="sort">{{ t('fields.sequence') }}</label>
-          <InputNumber v-model="form.sort" id="sort" :min="0" />
-        </div>
+<!--        &lt;!&ndash; Sequence &ndash;&gt;-->
+<!--        <div class="p-field">-->
+<!--          <label for="sort">{{ t('fields.sequence') }}</label>-->
+<!--          <InputNumber v-model="form.sort" id="sort" :min="0" />-->
+<!--        </div>-->
 
-        <!-- Match Time -->
-        <div class="p-field">
-          <label for="matchTime">{{ t('fields.matchTime') }}</label>
-          <Calendar v-model="form.eventStartTime" showTime hourFormat="24" dateFormat="yy-mm-dd" style="width: 350px" />
-        </div>
+<!--        &lt;!&ndash; Match Time &ndash;&gt;-->
+<!--        <div class="p-field">-->
+<!--          <label for="matchTime">{{ t('fields.matchTime') }}</label>-->
+<!--          <Calendar v-model="form.eventStartTime" showTime hourFormat="24" dateFormat="yy-mm-dd" style="width: 350px" />-->
+<!--        </div>-->
 
-        <!-- End Time -->
-        <div class="p-field">
-          <label for="endTime">{{ t('fields.endTime') }}</label>
-          <Calendar v-model="form.eventEndTime" showTime hourFormat="24" dateFormat="yy-mm-dd" style="width: 350px" />
-        </div>
+<!--        &lt;!&ndash; End Time &ndash;&gt;-->
+<!--        <div class="p-field">-->
+<!--          <label for="endTime">{{ t('fields.endTime') }}</label>-->
+<!--          <Calendar v-model="form.eventEndTime" showTime hourFormat="24" dateFormat="yy-mm-dd" style="width: 350px" />-->
+<!--        </div>-->
 
-        <!-- Status Dropdown -->
-        <div class="p-field">
-          <label for="liveStatus">{{ t('fields.status') }}</label>
-          <Dropdown v-model="form.liveStatus" :options="uiControl.liveStatus" optionLabel="display" optionValue="id" style="width: 300px" />
-        </div>
+<!--        &lt;!&ndash; Status Dropdown &ndash;&gt;-->
+<!--        <div class="p-field">-->
+<!--          <label for="liveStatus">{{ t('fields.status') }}</label>-->
+<!--          <Dropdown v-model="form.liveStatus" :options="uiControl.liveStatus" optionLabel="display" optionValue="id" style="width: 300px" />-->
+<!--        </div>-->
 
-        <!-- Event Code -->
-        <div class="p-field">
-          <label for="eventCode">{{ t('fields.eventCode') }}</label>
-          <InputText v-model="form.eventCode" id="eventCode" maxlength="100" style="width: 300px" />
-        </div>
+<!--        &lt;!&ndash; Event Code &ndash;&gt;-->
+<!--        <div class="p-field">-->
+<!--          <label for="eventCode">{{ t('fields.eventCode') }}</label>-->
+<!--          <InputText v-model="form.eventCode" id="eventCode" maxlength="100" style="width: 300px" />-->
+<!--        </div>-->
 
-        <!-- Is Test Switch -->
-        <div class="p-field-checkbox">
-          <label>{{ t('fields.isTestEvent') }}</label>
-          <InputSwitch v-model="form.isTest" /> {{ form.isTest ? t('fields.yes') : t('fields.no') }}
-        </div>
+<!--        &lt;!&ndash; Is Test Switch &ndash;&gt;-->
+<!--        <div class="p-field-checkbox">-->
+<!--          <label>{{ t('fields.isTestEvent') }}</label>-->
+<!--          <InputSwitch v-model="form.isTest" /> {{ form.isTest ? t('fields.yes') : t('fields.no') }}-->
+<!--        </div>-->
 
-        <!-- Is Popular Switch -->
-        <div class="p-field-checkbox">
-          <label>{{ t('fields.isPopularEvent') }}</label>
-          <InputSwitch v-model="form.isPopular" /> {{ form.isPopular ? t('fields.yes') : t('fields.no') }}
-        </div>
+<!--        &lt;!&ndash; Is Popular Switch &ndash;&gt;-->
+<!--        <div class="p-field-checkbox">-->
+<!--          <label>{{ t('fields.isPopularEvent') }}</label>-->
+<!--          <InputSwitch v-model="form.isPopular" /> {{ form.isPopular ? t('fields.yes') : t('fields.no') }}-->
+<!--        </div>-->
 
-        <!-- Cover Upload -->
-        <div class="p-field">
-          <label>{{ t('fields.cover') }}</label>
-          <div style="display: flex; flex-direction: column;">
-            <Image
-              v-if="form.cover"
-              :src="promoDir2 + form.cover"
-              alt="cover preview"
-              width="120"
-              height="68"
-              preview
-              class="preview"
-              style="margin-bottom: 8px; border: 1px solid #ccc"
-            />
-            <Button v-if="form.cover" label="{{ t('fields.remove') }}" icon="pi pi-times" class="p-button-danger p-button-sm" @click="form.cover = ''" style="margin-bottom: 8px; width: fit-content;" />
-            <input type="file" accept="image/*" @change="attachImage" />
-          </div>
-        </div>
+<!--        &lt;!&ndash; Cover Upload &ndash;&gt;-->
+<!--        <div class="p-field">-->
+<!--          <label>{{ t('fields.cover') }}</label>-->
+<!--          <div style="display: flex; flex-direction: column;">-->
+<!--            <Image-->
+<!--              v-if="form.cover"-->
+<!--              :src="promoDir2 + form.cover"-->
+<!--              alt="cover preview"-->
+<!--              width="120"-->
+<!--              height="68"-->
+<!--              preview-->
+<!--              class="preview"-->
+<!--              style="margin-bottom: 8px; border: 1px solid #ccc"-->
+<!--            />-->
+<!--            <Button v-if="form.cover" label="{{ t('fields.remove') }}" icon="pi pi-times" class="p-button-danger p-button-sm" @click="form.cover = ''" style="margin-bottom: 8px; width: fit-content;" />-->
+<!--            <input type="file" accept="image/*" @change="attachImage" />-->
+<!--          </div>-->
+<!--        </div>-->
 
-        <!-- Submit Buttons -->
-        <div class="p-field">
-          <Button label="{{ t('fields.confirm') }}" icon="pi pi-check" type="submit" class="p-button-primary" />
-          <Button label="{{ t('fields.cancel') }}" icon="pi pi-times" class="p-button-secondary" @click="$router.back()" style="margin-left: 10px" />
-        </div>
-      </form>
-    </Card>
-  </div>
+<!--        &lt;!&ndash; Submit Buttons &ndash;&gt;-->
+<!--        <div class="p-field">-->
+<!--          <Button label="{{ t('fields.confirm') }}" icon="pi pi-check" type="submit" class="p-button-primary" />-->
+<!--          <Button label="{{ t('fields.cancel') }}" icon="pi pi-times" class="p-button-secondary" @click="$router.back()" style="margin-left: 10px" />-->
+<!--        </div>-->
+<!--      </form>-->
+<!--    </Card>-->
+<!--  </div>-->
 </template>
 
 <script setup>
