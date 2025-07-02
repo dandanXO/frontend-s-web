@@ -151,6 +151,13 @@
       :promo-code="list.promoCode"
       :params="list.param"
     />
+    
+
+    <PPDianZiTianTianSong
+      v-if="list.redirectUrl === 'lh-PPdianzitiantiansong'"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -239,6 +246,7 @@ import FissureUniverseS5 from "./hotpromo/fissure-universe-s5/FissureUniverseS5.
 import EsportWorldCup2025 from "./hotpromo/esport-world-cup-2025/EsportWorldCup2025.vue";
 import FifaCwcRedPacket from "./hotpromo/fifa-cwc-red-packet/FifaCwcRedPacket.vue";
 import FissureJulyFinal2025 from "./hotpromo/fissure-july-final-2025/FissureJulyFinal2025.vue";
+import PPDianZiTianTianSong from "./hotpromo/ppdianzitiantiansong/PPDianZiTianTianSong.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -305,7 +313,8 @@ export default defineComponent({
     FissureUniverseS5,
     EsportWorldCup2025,
     FifaCwcRedPacket,
-    FissureJulyFinal2025
+    FissureJulyFinal2025,
+    PPDianZiTianTianSong
   },
   props: {
     list: {
