@@ -69,6 +69,8 @@
     >
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
+          <img class="cs-icon-wrapper-img" src="../assets/images/index/icon-cs.png" />
+
           <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
             <img src="../assets/images/index/youtube-icon.gif" />
           </a>
@@ -5500,13 +5502,29 @@ const checkGoogleLoginSetPwd = () => {
   pointer-events: none;
 }
 
+@keyframes zoomInOut {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
 .cs-icon-wrapper {
   width: 55px;
   height: 55px;
-  background: url("../assets/images/index/icon-cs.gif") no-repeat center center;
-  background-size: contain;
   position: relative;
   aspect-ratio: 500/500;
+
+  .cs-icon-wrapper-img {
+    width: 55px;
+    height: 55px;
+    background: url("../assets/images/index/icon-cs.png") no-repeat center center;
+    background-size: contain;
+    aspect-ratio: 500/500;
+    animation: zoomInOut 3s infinite;
+  }
 
   &:active {
     filter: brightness(0.85);
