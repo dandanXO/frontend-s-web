@@ -74,8 +74,9 @@
           <Image
             v-if="slotProps.data.avatar"
             :src="promoDir + slotProps.data.avatar"
+            preview
             alt="Image"
-            width="250"
+            width="100"
           />
         </template>
       </Column>

@@ -90,8 +90,9 @@
                 ? slotProps.data.icon
                 : promoDir + slotProps.data.icon
             "
+            preview
             alt="Image"
-            width="250"
+            width="100"
           />
         </template>
       </Column>
@@ -158,7 +159,7 @@
         margin-bottom: 16px;
       "
     >
-      <label for="loginName" class="w-24 font-semibold">{{ t('fields.teamNameEn') }}</label>
+      <label for="loginName" class="w-24 font-semibold"> 1111{{ t('fields.teamNameEn') }}</label>
       <div style="width: 450px">
         <InputText id="loginName" class="w-full" style="width: 100%" v-model="form.nameEn" />
       </div>
@@ -192,7 +193,7 @@
       "
     >
       <label for="confirmPassword" class="w-24 font-semibold">{{ t('fields.teamIcon') }}</label>
-      <div style="width: 450px">
+      <div style="width: 100px">
         <Button
           type="button"
           :label="t('fields.upload')"
