@@ -1111,7 +1111,7 @@ export default {
     1300: "O valor deve ser um número maior que 0",
     1301: "Este cartão não é suportado",
     1302: "Esta moeda não é suportada",
-    1304: "Este número já foi usado",
+    1304: "O CPF já foi utilizado",
     1305: "Banco não encontrado",
     1306: "Excedido o limite de tempo de retirada diário",
     1307: "Excedido o limite de retirada diário",
