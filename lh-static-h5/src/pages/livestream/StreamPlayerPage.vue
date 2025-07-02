@@ -367,14 +367,14 @@ const handleSendChatMessage = (message) => {
     })
     .then((res) => {
       if (res.code === 0) {
-        const { content, name } = res.data;
+        const { content, name, memberType } = res.data;
         messages.value.push({
           content,
           name: name,
           time: Date.now(),
           vip: userVipLevel.value,
           profilePhoto: store.profilePhoto,
-          memberType: store.memberType
+          memberType: memberType || store.memberType
         });
         danmuList.value = [content];
         if (!processedUserName.value) {
