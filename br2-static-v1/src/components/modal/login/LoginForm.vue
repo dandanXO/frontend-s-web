@@ -82,12 +82,14 @@ import { useRoute, useRouter } from "vue-router";
 import { Device } from "@capacitor/device";
 import { t } from "src/boot/lang";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { useGtag } from "vue-gtag-next";
 
 const uiStore = useUI();
 const store = userStore();
 const $q = useQuasar();
 const router = useRouter();
 const route = useRoute();
+const gtag = useGtag();
 
 const phoneRef = ref();
 const passwordRef = ref();
@@ -124,18 +126,39 @@ const login = () => {
           sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
           ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVersionNo.value } : {})
         })
-        .then((res) => {
-          sessionStorage.removeItem("REFERRAL_CODE");
+        .then(async (res) => {
+          await new Promise((resolve) => {
+            const redirectPage = () => {
+              const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
+              router.go(jumpUrl);
+            };
 
-          phone.value = "";
-          password.value = "";
+            sessionStorage.removeItem("REFERRAL_CODE");
 
-          if (store.hasToken()) {
-            const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
-            router.go(jumpUrl);
-          }
+            phone.value = "";
+            password.value = "";
 
-          uiStore.loginView = "";
+            if (store.hasToken()) {
+              // gtag.event("login", {
+              //   custom_user_id: store.nickName,
+              //   event_callback: () => {
+              //     setTimeout(() => {
+              //       redirectPage();
+              //       resolve();
+              //     }, 1500);
+              //   }
+              // });
+              redirectPage();
+              resolve();
+            }
+
+            // setTimeout(() => {
+            //   redirectPage();
+            //   resolve();
+            // }, 2000);
+
+            uiStore.loginView = "";
+          });
         })
         .catch((e) => {})
         .finally(() => {
