@@ -4270,9 +4270,6 @@ watch(() => isAdditionalWithdrawSteps.value, checkWithdrawStep, { immediate: fal
 const afterActivated = useCustomerTrigger(() => {
   checkShowImgTop();
   checkHbPromo();
-  if (store.hasToken()) {
-    showSpinWheel();
-  }
 });
 
 const downloadAppRef = ref();
@@ -4288,7 +4285,7 @@ const checkNewPlayerWheelPromoHomePopupCanShow = () => {
   }
 };
 
-onActivated(() => {
+onActivated(async () => {
   nextTick(() => {
     if (
       LocalStorage.getItem("completeddepositguide") === "true" &&
@@ -4328,6 +4325,14 @@ onActivated(() => {
   store.getUnreadTotal();
   checkHash();
 
+  if (store.hasToken()) {
+    await store.getMemberInfo();
+    checkCodeBonusModal();
+  }
+  
+  if (store.hasToken()) {
+    await showSpinWheel();
+  }
   // checkSpinWheel();
   checkGoogleLoginSetPwd();
 
@@ -4381,10 +4386,6 @@ onMounted(() => {
   loadJILIPokerhGameList();
   ui.shouldFetchDownloadAppUrl = true;
 
-  if (store.hasToken()) {
-    store.getMemberInfo();
-    checkCodeBonusModal();
-  }
 
   AOS.init();
   SwiperCore.use([Grid, Navigation, Pagination, A11y]);
