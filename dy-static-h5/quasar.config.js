@@ -161,11 +161,13 @@ module.exports = configure(function (ctx) {
         // chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
       },
       afterBuild({ cfg }) {
-        const fs = require("fs-extra");
-        const sourceDir = path.resolve(__dirname, "src/assets");
-        const destinationDir = path.resolve(__dirname, "dist/spa/static");
+        if(!isLiveChat){
+          const fs = require("fs-extra");
+          const sourceDir = path.resolve(__dirname, "src/assets");
+          const destinationDir = path.resolve(__dirname, "dist/spa/static");
 
-        fs.copySync(sourceDir, destinationDir);
+          fs.copySync(sourceDir, destinationDir);
+        }
       }
     },
 

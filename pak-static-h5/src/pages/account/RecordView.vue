@@ -7,12 +7,12 @@
             <template v-slot:append>
               <img src="../../assets/images/earn-money/calendar-icon.svg" />
               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="white" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
+                <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="white" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
             </template>
           </q-input>
           <span>to</span>
@@ -20,12 +20,12 @@
             <template v-slot:append>
               <img src="../../assets/images/earn-money/calendar-icon.svg" />
               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="white" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
+                <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="white" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
             </template>
           </q-input>
         </div>
@@ -53,29 +53,35 @@
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <!-- <q-card-section class="top-wrapper">
 
-          
+
         </q-card-section> -->
 
         <q-card-section class="mid-wrapper">
           <div class="game-platform-val">
-            <img :src="require(`../../assets/images/index/logo/logo-${e.platform.toLowerCase()}.png`)">
-             / {{ e.platform }}
-          </div>
-          <q-btn flat
+            <img
+              :src="require(`../../assets/images/index/logo/logo-${e.platform.toLowerCase()}.png`)"
               :class="{
-                'btn--green': ['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus),
-                'btn--red': ['CANCEL', 'ROLLBACK', 'PATCH'].includes(e.betStatus),
-                'btn--orange': e.betStatus === 'BET',
-                'btn--yellow': e.betStatus === 'UNSETTLED',
-                'btn--blue': ['JACKPOT', 'BONUS'].includes(e.betStatus)
+                'nine-w': e.platform === 'NineW'
               }"
-              :label="getRecordStatus(e.betStatus)"
-            ></q-btn>
+            />
+            / {{ e.platform }}
+          </div>
+          <q-btn
+            flat
+            :class="{
+              'btn--green': ['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus),
+              'btn--red': ['CANCEL', 'ROLLBACK', 'PATCH'].includes(e.betStatus),
+              'btn--orange': e.betStatus === 'BET',
+              'btn--yellow': e.betStatus === 'UNSETTLED',
+              'btn--blue': ['JACKPOT', 'BONUS'].includes(e.betStatus)
+            }"
+            :label="getRecordStatus(e.betStatus)"
+          ></q-btn>
         </q-card-section>
 
         <q-card-section class="bot-wrapper">
           <div class="origin">
-            <div class="bet">{{$t('records.date')}}</div>
+            <div class="bet">{{ $t("records.date") }}</div>
             <div class="bet">{{ $t("records.bet") }}</div>
             <!-- <div class="game-platform">{{ $t("records.gamePlatform") }}</div> -->
           </div>
@@ -86,14 +92,24 @@
         </q-card-section>
 
         <q-card-section class="bot-wrapper last">
-          <div class="origin">
-            <div class="bet">{{$t('records.beforeBalance')}}</div>
-            <div class="game-platform">{{$t('records.afterBalance')}}</div>
-          </div>
-          <div class="origin-val">
-            <div class="bet-val win-amt">{{ convertToCommaAmount(e.beforeBalance, true) }}</div>
-            <div class="game-platform-val win-amt">{{ convertToCommaAmount(e.afterBalance, true) }}</div>
-          </div>
+          <template v-if="e.platform !== 'NineW'">
+            <div class="origin">
+              <div class="bet">{{ $t("records.beforeBalance") }}</div>
+              <div class="game-platform">{{ $t("records.afterBalance") }}</div>
+            </div>
+            <div class="origin-val">
+              <div class="bet-val win-amt">{{ convertToCommaAmount(e.beforeBalance, true) }}</div>
+              <div class="game-platform-val win-amt">{{ convertToCommaAmount(e.afterBalance, true) }}</div>
+            </div>
+          </template>
+          <template v-else>
+            <div class="origin">
+              <div class="bet">{{ $t("records.payout") }}</div>
+            </div>
+            <div class="origin-val">
+              <div class="bet-val win-amt">{{ convertToCommaAmount(e.payout, true) }}</div>
+            </div>
+          </template>
         </q-card-section>
         <BetRefereceWithCopy :betId="e.betId" />
       </q-card>
@@ -315,7 +331,6 @@ onActivated(() => {
       padding: 0px 12px;
     }
 
-
     .q-field {
       background: #2f3136;
       padding: 4px 3px;
@@ -361,7 +376,7 @@ onActivated(() => {
   // padding: 1rem;
   // margin-top: 0;
 
-  background: #292D2E;
+  background: #292d2e;
   border-radius: 6px;
   box-shadow: none;
   .top-wrapper {
@@ -382,7 +397,6 @@ onActivated(() => {
       font-weight: 700;
     }
     .amt {
-      
       span {
         color: #fff;
       }
@@ -404,7 +418,7 @@ onActivated(() => {
     // background: rgba(21, 0, 37, 0.5);
     margin: 0 -1rem;
 
-    padding: 1rem 1rem .5rem;
+    padding: 1rem 1rem 0.5rem;
     display: flex;
     margin: 0px;
     width: 100%;
@@ -455,7 +469,7 @@ onActivated(() => {
     }
 
     .btn--orange {
-      color: #FBAB1B;
+      color: #fbab1b;
       font-size: 0.825rem;
       font-weight: 700;
       text-transform: capitalize;
@@ -466,24 +480,24 @@ onActivated(() => {
     }
 
     .btn--red {
-      color: #FF3434;
+      color: #ff3434;
       font-size: 0.825rem;
       font-weight: 700;
       text-transform: capitalize;
       padding: 4px 10px;
       border-radius: 4px;
-      background:rgba(255, 52, 52, 0.2);
+      background: rgba(255, 52, 52, 0.2);
       min-height: unset;
     }
 
     .btn--green {
-      color: #21EF89;
+      color: #21ef89;
       font-size: 0.825rem;
       font-weight: 700;
       text-transform: capitalize;
       padding: 4px 10px;
       border-radius: 4px;
-      background: rgba(33, 239, 137, .2);
+      background: rgba(33, 239, 137, 0.2);
       min-height: unset;
     }
 
@@ -495,6 +509,9 @@ onActivated(() => {
       font-size: 16px;
       img {
         height: 20px;
+        &.nine-w {
+          margin-right: 4px;
+        }
       }
     }
   }
@@ -538,9 +555,9 @@ onActivated(() => {
       justify-content: space-between;
       .bet-val {
         font-size: 0.825rem;
-        color:#B2BDBF;
+        color: #b2bdbf;
       }
-      
+
       .game-platform-val {
         font-size: 0.825rem;
         font-weight: 700;
@@ -563,14 +580,12 @@ onActivated(() => {
   }
   .bet-id-wrapper {
     display: flex;
-    background: #FFFFFF0F;
+    background: #ffffff0f;
     padding: 10px;
     display: flex;
     justify-content: space-between;
     gap: 10px;
   }
-
-
 }
 
 .pagination-container {

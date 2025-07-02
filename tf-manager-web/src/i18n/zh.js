@@ -3765,7 +3765,8 @@ export default {
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '任务闲置 (注单捞取)',
     OTP_FAIL: 'OTP 发送失败',
     FIRST_DEPOSIT_FLUCTUATION: '首存波动',
-    WITHDRAW_ALERT: '提款请求提示'
+    WITHDRAW_ALERT: '提款请求提示',
+    WITHDRAW_BALANCE: '代付余额',
   },
   domain: {
     domainMainType: {
