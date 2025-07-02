@@ -1930,8 +1930,8 @@ const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
   { title: "Hot", label: t("home.menu_hot"), icon: "hot", active: false },
   { title: "Slot", label: t("home.menu_slot"), icon: "slot", active: false },
-  { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
   { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false },
+  { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
   { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false },
   { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false }
 ]);
