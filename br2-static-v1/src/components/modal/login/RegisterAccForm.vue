@@ -84,18 +84,16 @@
 import { ref, onActivated, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
-import { useQuasar, Platform } from "quasar";
+import { useQuasar, Platform, SessionStorage } from "quasar";
 import { useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import { isAndroid } from "boot/utils";
-import { useGtag } from "vue-gtag-next";
 
 const store = userStore();
 const $q = useQuasar();
 const uiStore = useUI();
 const router = useRouter();
-const gtag = useGtag();
 
 const phoneRef = ref();
 const passwordRef = ref();
@@ -203,16 +201,10 @@ const register = () => {
             isAgreeReg.value = false;
             // location.href = "/";
 
-            // gtag.event("register", {
-            //   custom_user_id: store.nickName,
-            //   event_callback: () => {
-            //     uiStore.loginView = "regSuccess";
-            //   }
-            // });
-
-            // setTimeout(() => {
-            //   uiStore.loginView = "regSuccess";
-            // }, 1000);
+            SessionStorage.set("user-info", {
+              account: phone.value,
+              type: "register"
+            });
 
             uiStore.loginView = "regSuccess";
           } else {
