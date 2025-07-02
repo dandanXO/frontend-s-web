@@ -59,7 +59,7 @@ const router = createRouter({
           next({ path: '/', query: { redirect: to.fullPath } })
         }
       },
-      component: '',
+      component: () => import('../views/Live/LiveView.vue'),
       children: [
         {
           name: '体育直播赛事设定',

@@ -1,6 +1,6 @@
 <!--TODO-->
 <template>
-  <div class="roles-main">
+  <div class="card">
     <ConfirmDialog></ConfirmDialog>
     <DataTable 
       :value="page.records" 
@@ -559,16 +559,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.roles-main {
-  width: 99%;
-  overflow-x: auto;
-}
-
-.header-container {
-  display: flex;
-  justify-content: flex-end; /* Align to right for search and add buttons */
-  margin-bottom: 10px;
-}
 .p-button.p-button-icon-only {
   width: 2rem;
   padding: 0.5rem 0;
@@ -628,38 +618,5 @@ onMounted(() => {
 
 :deep(.p-input-icon-left i) {
   margin-left: 0.5rem; /* 調整左邊距 */
-}
-
-.header-container {
-  margin-bottom: 10px;
-}
-
-.search {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.pagination {
-  margin-top: 20px;
-  text-align: right;
-}
-
-.match-info-list {
-  margin-bottom: 10px;
-}
-.match-info-row {
-  display: flex;
-  margin-bottom: 4px;
-}
-.match-info-row .label {
-  min-width: 90px;
-  color: #888;
-  text-align: right;
-  flex-shrink: 0;
-}
-.match-info-row .value {
-  flex: 1;
-  padding-left: 8px;
-  word-break: break-all;
 }
 </style>

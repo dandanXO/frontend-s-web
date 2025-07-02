@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card style="width: 99%;">
     <template #content>
       <RouterView />
     </template>
