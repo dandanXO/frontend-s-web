@@ -683,12 +683,12 @@ body.body--dark .q-footer {
   &::after {
     content: "";
     position: absolute;
-    right: 0;
+    right:0px;
     top: 0;
-    width: 51px;
+    width: 80px;
     background: url(../assets/images/index/reg-bonus-flag.png) no-repeat center center;
     background-size: 100% 100%;
-    aspect-ratio: 51 / 15;
+    aspect-ratio: 157 / 52;
     transform: translateY(-50%);
   }
 }
