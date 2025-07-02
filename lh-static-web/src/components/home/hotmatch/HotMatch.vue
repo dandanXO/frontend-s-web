@@ -14,7 +14,7 @@
           <div class="competition-item-img-wrapper">
             <img
               class="competition-item-img"
-              :src="require(`@/assets/home/hotmatch/${competitionType.toLowerCase()}-light.svg`)"
+              :src="require(`@/assets/home/hotmatch/${competitionType.toLowerCase()}-light.png`)"
             />
           </div>
           <div class="competition-item-name">{{ getCompetitionTypeCnLabel(competitionType) }}</div>

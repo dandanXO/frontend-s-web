@@ -709,6 +709,7 @@ export default {
     date: "تاریخ",
     beforeBalance: "پہلے کا بیلنس",
     afterBalance: "بعد کا بیلنس",
+    payout: "ادائیگی",
     gamePlatform: "گیم پلیٹ فارم",
     bet: "شرط",
     settle: "سیٹل",

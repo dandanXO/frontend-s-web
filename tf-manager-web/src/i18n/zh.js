@@ -128,6 +128,7 @@ export default {
     noAutoWithdrawalGamePlatform: '禁止自动审核游戏平台',
     week: '周内',
     month: '月内',
+    balanceThresholdMultiplier: '余额需小于存款金额倍数',
   },
   outboxStatus: {
     0: '未回复',
@@ -2691,6 +2692,13 @@ export default {
     eventCode: '赛事代码',
     roleConfig: '角色设置',
     chatHistory: '聊天记录',
+    loginDay1: '1日前注册活跃用户',
+    loginDay2: '2日前注册活跃用户',
+    loginDay3: '3日前注册活跃用户',
+    loginDay4: '4日前注册活跃用户',
+    loginDay5: '5日前注册活跃用户',
+    loginDay6: '6日前注册活跃用户',
+    loginDay7: '7日前注册活跃用户',
   },
   message: {
     adsStatusOpen: '开',
@@ -3755,7 +3763,8 @@ export default {
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '任务闲置 (注单捞取)',
     OTP_FAIL: 'OTP 发送失败',
     FIRST_DEPOSIT_FLUCTUATION: '首存波动',
-    WITHDRAW_ALERT: '提款请求提示'
+    WITHDRAW_ALERT: '提款请求提示',
+    WITHDRAW_BALANCE: '代付余额',
   },
   domain: {
     domainMainType: {

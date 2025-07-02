@@ -774,6 +774,7 @@ export default {
     promoExclusionNotice: "Aviso: Esta promoção não é contabilizada para apostas de CASINO e DESPORTOS!",
     deposit: "Depósito",
     dailyWagerCount: "Número de apostas diárias",
+    dailyRewards: "Recompensas Diárias",
     deposits_of_the_day: "Depósitos do dia",
     currentSignIn: "Entrada atual",
     consecutiveDepositBonus: "Quanto mais dias consecutivos de depósito cumprir, mais bónus extra receberá.",
@@ -844,7 +845,17 @@ export default {
       day: "dia",
       days: "dias",
       signIn: "Assinar",
-      signedIn: "Assinado"
+      signedIn: "Assinado",
+
+      description: "Versão em Português do Brasil: Regras da Promoção de Check-in de 7 Dias Descrição da Promoção",
+
+      tnc01: "Esta é uma atividade de check-in contínuo com um ciclo de 7 dias. Ao completar 7 dias de check-in, o ciclo é reiniciado automaticamente no 8º dia.",
+      tnc02: "Os usuários podem realizar o check-in manualmente a cada dia, sendo que cada dia oferece uma recompensa específica.",
+      tnc03: "Caso o usuário interrompa o check-in (ex: fez o check-in no dia 1, não fez no dia 2), no dia 3 ele poderá realizar apenas o check-in referente ao dia 3, sem direito à recompensa do dia 2.",
+      tnc04: "As recompensas devem ser resgatadas manualmente pelo usuário. Recompensas não resgatadas serão consideradas renunciadas.",
+      tnc05: "Os bônus recebidos exigem um rollover de 1x antes que possam ser sacados.",
+      tnc06: "A promoção é exclusiva para usuários reais. Caso sejam detectadas operações suspeitas, como múltiplas contas ou atividades não autorizadas, a plataforma se reserva o direito de cancelar o bônus, bloquear a conta ou aplicar outras medidas necessárias.",
+      tnc07: "A plataforma reserva-se o direito exclusivo de interpretação final desta promoção.",
     },
     redepositBonus: {
       description: "Receba um bônus extra de 100% no primeiro depósito do dia",
@@ -985,7 +996,7 @@ export default {
       tnc07: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
     },
     dailySecondDeposit: {
-      description: "O primeiro depósito do dia dá direito a 10% de bônus sobre o valor depositado",
+      description: "O primeiro depósito do dia dá direito a 20% de bônus sobre o valor depositado",
       tnc01: "Esta promoção é válida para todos os depósitos realizados após o primeiro no mesmo dia.",
       tnc02: "Cada depósito subsequente dará direito a um bônus de 20%, com um limite de R$ 288 por depósito.",
       tnc03: "O bônus (incluir o principal) requer 12 vezes de apostas válidas para sacar;",

@@ -174,6 +174,20 @@
           <span v-else>{{ scope.row.answerThree }}</span>
         </template>
       </el-table-column>
+      <el-table-column prop="createTime" :label="t('fields.createTime')" width="180">
+        <template #default="scope">
+          <span v-if="scope.row.createTime === null">-</span>
+          <!-- eslint-disable -->
+          <span
+            v-if="scope.row.createTime !== null"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: timeZone,
+              type: 'date',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:privi:game-quiz-answer:update'])">
         <template #default="scope">
           <el-button

@@ -17,6 +17,7 @@ export const userStore = defineStore("userStore", {
       id: "",
       nickName: "",
       realName: "",
+      name2: "",
       birthday: "",
       phone: "",
       email: "",
@@ -109,6 +110,7 @@ export const userStore = defineStore("userStore", {
             this.id = ret.data.id;
             this.nickName = ret.data.loginName;
             this.realName = ret.data.realName;
+            this.name2 = ret.data.name2;
             this.birthday = ret.data.birthday;
             this.email = ret.data.email;
             this.phone = ret.data.telephone;

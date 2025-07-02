@@ -90,6 +90,7 @@ import DepositErrorComponent from './dialog-custom-content/depositError.vue';
 import OtpFailComponent from './dialog-custom-content/otpFail.vue';
 import FirstDepositFluctuation from './dialog-custom-content/firstDepositFluctuation.vue';
 import WithdrawAlertComponent from './dialog-custom-content/withdrawAlert.vue';
+import WithdrawBalanceComponent from './dialog-custom-content/withdrawBalance.vue';
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n()
@@ -189,6 +190,7 @@ const componentMapping = {
   OTP_FAIL: OtpFailComponent,
   FIRST_DEPOSIT_FLUCTUATION: FirstDepositFluctuation,
   WITHDRAW_ALERT: WithdrawAlertComponent,
+  WITHDRAW_BALANCE: WithdrawBalanceComponent,
 };
 
 async function loadAllConfigurableTypeName() {

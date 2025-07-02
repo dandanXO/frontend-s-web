@@ -107,9 +107,10 @@ export default route(function (/* { store, ssrContext } */) {
       }
 
       if (to.query.dark) {
-        localStorage.setItem("DARK_MODE", true);
+        const isDarkMode = to.query.dark === "1";
+        localStorage.setItem("DARK_MODE", isDarkMode);
         const $q = useQuasar();
-        $q.dark.set(true);
+        $q.dark.set(isDarkMode);
       }
 
       user.token = to.query.token;
