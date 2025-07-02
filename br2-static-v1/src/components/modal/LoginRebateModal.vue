@@ -1,6 +1,6 @@
 <template>
   <q-dialog class="isCentreDialog" v-model="isShowLoginRebateModal" no-backdrop-dismiss no-esc-dismiss>
-    <div class="loss-rebate-dialog-container">
+    <div class="login-rebate-dialog-container">
       <img class="title" src="../../assets/images/index/login-rebate/login-rebate-title.png" />
       <img class="bonus-title" src="../../assets/images/index/login-rebate/login-rebate-register-title.png" />
       <div class="cashback-row" v-if="props.detail.betRebateAmount > 0">
@@ -11,9 +11,9 @@
         <div class="label">Cashback de Perda：</div>
         <div class="amount">R${{ props.detail.lossRebateAmount }}</div>
       </div>
-      <div class="loss-rebate-board">
+      <div class="login-rebate-board">
         <div class="close-click-icon" @click="closePopup">&nbsp;</div>
-        <img class="loss-rebate-content-img" src="../../assets/images/index/login-rebate/login-rebate-img.png" />
+        <img class="login-rebate-content-img" src="../../assets/images/index/login-rebate/login-rebate-img.png" />
       </div>
 
       <div class="confirm-btn" @click="closePopup">Confirmar</div>
@@ -37,7 +37,7 @@ const isShowLoginRebateModal = computed({
 });
 </script>
 <style scoped lang="scss">
-.loss-rebate-dialog-container {
+.login-rebate-dialog-container {
   padding: 20px 0;
   background-color: #000000cc;
   width: 100%;
@@ -53,14 +53,14 @@ const isShowLoginRebateModal = computed({
   .title {
     width: 60%;
   }
-  .loss-rebate-content-img {
+  .login-rebate-content-img {
     width: 100%;
     @media (min-width: 400px) {
       width: 90%;
     }
   }
 
-  .loss-rebate-board {
+  .login-rebate-board {
     position: relative;
     width: 75%;
     margin: 0px auto;
