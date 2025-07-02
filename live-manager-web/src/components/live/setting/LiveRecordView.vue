@@ -190,13 +190,13 @@ const form = reactive({
 });
 
 const formRules = reactive({
-  sportId: [required(t('fields.sportTypeRequired'))],
-  title: [required(t('fields.validateMatchTitleRequired'))],
+  sportId: [required(t('message.sportTypeRequired'))],
+  title: [required(t('message.validateMatchTitleRequired'))],
   homeId: [
     {
       validator: (_, value, callback) => {
         if (!value && !form.homeName) {
-          callback(new Error(t('fields.validateHomeTeamRequired')));
+          callback(new Error(t('message.validateHomeTeamRequired')));
         } else {
           callback();
         }
@@ -208,7 +208,7 @@ const formRules = reactive({
     {
       validator: (_, value, callback) => {
         if (!value && !form.awayName) {
-          callback(new Error(t('fields.validateAwayTeamRequired')));
+          callback(new Error(t('message.validateAwayTeamRequired')));
         } else {
           callback();
         }
@@ -216,8 +216,8 @@ const formRules = reactive({
       trigger: 'blur'
     }
   ],
-  eventStartTime: [required(t('fields.validateMatchTimeRequired'))],
-  eventEndTime: [required(t('fields.validateMatchTimeRequired'))],
+  eventStartTime: [required(t('message.validateMatchTimeRequired'))],
+  eventEndTime: [required(t('message.validateMatchTimeRequired'))],
 });
 
 const request = reactive({
