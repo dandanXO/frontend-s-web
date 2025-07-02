@@ -76,7 +76,14 @@
         </q-checkbox>
       </div>
 
-      <q-btn unelevated class="bg-greenbtn" :label="$t('header.register')" no-caps padding="12px" @click="register" />
+      <q-btn
+        unelevated
+        class="bg-greenbtn reg-bonus-flag-btn"
+        :label="$t('header.register')"
+        no-caps
+        padding="12px"
+        @click="register"
+      />
     </div>
   </div>
 </template>
@@ -279,6 +286,12 @@ onMounted(() => {
 }
 .reg-checked-box {
   margin-top: 0;
+}
+
+.reg-bonus-flag-btn {
+  &::after {
+    width: 77px;
+  }
 }
 
 :deep(.reg-checked-box) {
