@@ -80,9 +80,9 @@
         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
         lazy-rules
         :rules="[
-          (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-          (val) => /^[1-9]{2}9[0-9]{8}$/.test(val) || $t('form.phone_rules_02'),
-          (val) => /^[0-9]*$/.test(val) || $t('form.phone_rules_04')
+           (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+            (val) => (val.length >= 8 && val.length <= 11) || $t('form.phone_rules_02'),
+            (val) => /^[0-9]*$/.test(val) || $t('form.phone_rules_04')
         ]"
       >
         <template v-slot:prepend>
