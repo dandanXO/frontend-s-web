@@ -43,7 +43,11 @@
           icon="el-icon-search"
           size="mini"
           type="success"
-          @click="uiControl.display === 'DATA' ? loadPrivilegeReport(false) : loadCharts() "
+          @click="
+            uiControl.display === 'DATA'
+              ? loadPrivilegeReport(false)
+              : loadCharts()
+          "
         >
           {{ t('fields.search') }}
         </el-button>
@@ -61,21 +65,36 @@
           v-permission="['sys:report:privilege:export']"
           @click="requestExportExcel"
           style="float: right;"
-        >{{ t('fields.requestExportToExcel') }}
+        >
+          {{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
       <div style="margin-top: 10px;">
         <el-radio-group v-model="uiControl.display" size="small">
-          <el-radio-button label="DATA">{{ t('fields.table') }}</el-radio-button>
-          <el-radio-button label="CHART">{{ t('fields.chart') }}</el-radio-button>
+          <el-radio-button label="DATA">
+            {{ t('fields.table') }}
+          </el-radio-button>
+          <el-radio-button label="CHART">
+            {{ t('fields.chart') }}
+          </el-radio-button>
         </el-radio-group>
       </div>
     </div>
 
-    <el-card class="chart-summary" v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="gap: 10px; height: 500px;">
+    <el-card
+      class="chart-summary"
+      v-if="uiControl.display === 'CHART'"
+      v-loading="uiControl.chartLoading"
+      style="gap: 10px; height: 500px;"
+    >
       <Chart :options="amountPiechatOptions" />
     </el-card>
-    <el-card class="chart-summary" v-if="uiControl.display === 'CHART'" v-loading="uiControl.chartLoading" style="margin-top: 10px; height: 500px;">
+    <el-card
+      class="chart-summary"
+      v-if="uiControl.display === 'CHART'"
+      v-loading="uiControl.chartLoading"
+      style="margin-top: 10px; height: 500px;"
+    >
       <Chart :options="countPiechatOptions" />
     </el-card>
 
@@ -83,7 +102,7 @@
       v-if="uiControl.display === 'DATA'"
       :data="page.records"
       ref="table"
-      row-key="name"
+      row-key="id"
       :expand-row-keys="expandrowkey"
       size="small"
       highlight-current-row
@@ -173,8 +192,13 @@
       :page-count="page.pages"
       :current-page="request.current"
     />
-    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
-               :close-on-click-modal="false" :close-on-press-escape="false"
+    <el-dialog
+      :title="t('fields.exportToExcel')"
+      v-model="uiControl.messageVisible"
+      append-to-body
+      width="500px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
     >
       <span>{{ t('message.requestExportToExcelDone1') }}</span>
       <router-link :to="`/site-management/download-manager`">
@@ -194,14 +218,15 @@ import {
   getPrivilegeReport,
   getDailyReport,
   getTotalPrivilegeAmount,
-  getPrivilegeReportExport, getPrivilegeReportAll,
+  getPrivilegeReportExport,
+  getPrivilegeReportAll,
 } from '../../../api/report-privilege'
 import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 import { hasPermission } from '../../../utils/util'
-import Chart from "@/components/charts/Charts.vue";
+import Chart from '@/components/charts/Charts.vue'
 
 const { t } = useI18n()
 const startDate = new Date()
@@ -234,10 +259,10 @@ const request = reactive({
 })
 
 const uiControl = reactive({
-  display: "DATA",
+  display: 'DATA',
   messageVisible: false,
   chartLoading: false,
-});
+})
 
 function getAmountChart(summaryList, chartOptions) {
   const dataset = [['Privilege', 'Amount']]
@@ -252,7 +277,7 @@ function getAmountChart(summaryList, chartOptions) {
     })
     chartOptions.dataset.source = dataset
     chartOptions.legend.data = legendData
-    console.log("legend", legendData)
+    console.log('legend', legendData)
   }
 }
 
@@ -299,7 +324,7 @@ const amountPiechatOptions = reactive({
         label: {
           show: true,
           formatter: '{b}: [' + t('fields.amount') + ': {@Amount}] ({d}%)',
-        }
+        },
       },
       label: {
         show: false,
@@ -339,7 +364,7 @@ const countPiechatOptions = reactive({
         label: {
           show: true,
           formatter: '{b}: [' + t('fields.count') + ': {@Count}] ({d}%)',
-        }
+        },
       },
       label: {
         show: false,
@@ -401,11 +426,11 @@ async function requestExportExcel() {
       query.recordTime = request.recordTime.join(',')
     }
   }
-  query.requestBy = store.state.user.name;
-  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-  const { data: ret } = await getPrivilegeReportExport(query);
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  const { data: ret } = await getPrivilegeReportExport(query)
   if (ret) {
-    uiControl.messageVisible = true;
+    uiControl.messageVisible = true
   }
 }
 
@@ -480,20 +505,14 @@ async function loadCharts() {
   }
 
   const { data } = await getPrivilegeReportAll(query)
-  getAmountChart(
-    data,
-    amountPiechatOptions
-  )
-  getCountChart(
-    data,
-    countPiechatOptions
-  )
+  getAmountChart(data, amountPiechatOptions)
+  getCountChart(data, countPiechatOptions)
 
   uiControl.chartLoading = false
 }
 
 function patchRecord(records) {
-  const couponStr = "Coupon";
+  const couponStr = 'Coupon'
   if (records.length > 0) {
     records.forEach((item, index) => {
       if (item.alias !== null && !item.name.includes(couponStr)) {
@@ -579,5 +598,4 @@ onMounted(async () => {
 .el-input-number:deep(.el-input__inner) {
   text-align: left;
 }
-
 </style>
