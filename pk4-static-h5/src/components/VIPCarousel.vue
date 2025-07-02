@@ -683,7 +683,7 @@ $gradients: (
     bottom: 25%;
     font-size: 0.85rem;
     font-weight: bolder;
-    
+    letter-spacing: -0.3px;
     flex-direction: column;
     gap: 0;
     align-items: flex-start;

@@ -121,7 +121,7 @@
                 }"
               >
                 <template v-if="col.name !== 'vip'">
-                  {{ convertToCommaAmount(col.value, false) }}
+                  {{ convertToCommaAmount(col.value, false, 0) }}
                 </template>
                 <template v-else>
                   {{ col.value }}
@@ -180,7 +180,7 @@
                 }"
               >
                 <template v-if="col.name !== 'vip'">
-                  {{ convertToCommaAmount(col.value, false) }}
+                  {{ convertToCommaAmount(col.value, false, 0) }}
                 </template>
                 <template v-else>
                   {{ col.value }}
