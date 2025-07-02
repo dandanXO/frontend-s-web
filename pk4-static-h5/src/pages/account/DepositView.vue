@@ -757,7 +757,7 @@ async function loadPrivilege(val) {
         if (p.payTypes.indexOf(val.payType) >= 0) {
           if (p.triggerType == "FREE") {
             freePrivilege.value.push(p);
-          } else if (p.code === "pak-new-user-roulette") {
+          } else if (p.code === "pk4-new-user-roulette") {
             newPlayerDepositBonusConfig.value = {
               selected: true,
               hasBonus: true,
