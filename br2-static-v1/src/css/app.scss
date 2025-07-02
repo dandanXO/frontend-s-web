@@ -678,6 +678,21 @@ body.body--dark .q-footer {
   color: #2d2d2d;
 }
 
+.reg-bonus-flag-btn {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 51px;
+    background: url(../assets/images/index/reg-bonus-flag.png) no-repeat center center;
+    background-size: 100% 100%;
+    aspect-ratio: 51 / 15;
+    transform: translateY(-50%);
+  }
+}
+
 // lower android version
 .android-low {
   .cat-selection-wrapper {
