@@ -61,7 +61,7 @@
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky
       v-if="isShowStickyIcons"
-      style="z-index: 2000"
+      style="z-index: 2001"
       position="bottom-right"
       :offset="csDragPos"
       class="floating-btn scalable"
@@ -70,19 +70,19 @@
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
           <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
-            <img src="../assets/images/index/youtube-icon.png" />
+            <img src="../assets/images/index/youtube-icon.gif" />
           </a>
           <a class="cs-icon tiktok" :href="ui.instagramUrl" target="_blank">
-            <img src="../assets/images/index/insta-icon.png" />
+            <img src="../assets/images/index/insta-icon.gif" />
           </a>
           <!--          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">-->
           <!--            <img src="../assets/images/index/cs-tiktok.png" />-->
           <!--          </a>-->
           <a class="cs-icon whatsapp" :href="ui.whatsappUrl" target="_blank">
-            <img src="../assets/images/index/cs-whatsapp.png" />
+            <img src="../assets/images/index/cs-whatsapp.gif" />
           </a>
           <a class="cs-icon cs" :href="ui.CSAUrl" target="_blank">
-            <img src="../assets/images/index/cs-cs.png" />
+            <img src="../assets/images/index/cs-cs.gif" />
           </a>
         </div>
       </div>
