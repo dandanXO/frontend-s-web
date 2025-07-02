@@ -389,8 +389,8 @@ import { isAndroid } from "src/boot/utils";
 import AdditionalSteps from "../../components/modal/AdditionalSteps.vue";
 
 const DEFAULT_BONUS_CONFIG = {
-  selected: true,
-  hasBonus: true,
+  selected: false,
+  hasBonus: false,
   privilegeId: null
 };
 
