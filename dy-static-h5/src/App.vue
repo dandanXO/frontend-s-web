@@ -177,6 +177,8 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("DY H5 0701")
+
       checkServerStatus();
       checkSID();
       // initCsWeb();

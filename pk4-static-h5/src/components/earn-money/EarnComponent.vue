@@ -87,7 +87,7 @@ const copyShareLink = (selfTgurl) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${selfTgurl} ${t('account.copiedToClipboard')}`,
+        message: `${selfTgurl} ${t('form.copiedToClipboard')}`,
         icon: "check_circle_outline"
       });
     })

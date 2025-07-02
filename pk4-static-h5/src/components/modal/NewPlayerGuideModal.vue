@@ -483,7 +483,7 @@ const fallbackCopyTextToClipboard = (text) => {
   document.body.removeChild(textarea);
 
   $q.notify({
-    message: t('account.copiedToClipboard'),
+    message: t('form.copiedToClipboard'),
     color: "positive",
     position: "top",
     timeout: 2000,
@@ -498,7 +498,7 @@ const copyHrefLink = () => {
       .writeText(textToCopy)
       .then(() => {
         $q.notify({
-          message: t('account.copiedToClipboard'),
+          message: t('form.copiedToClipboard'),
           color: "positive",
           position: "top",
           timeout: 2000,

@@ -260,7 +260,8 @@ export default {
     accountOwnerOnly: "Only the account owner can redeem the code.",
     unauthorizedMethods:
       "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus.",
-    recoverPwd: "Recover your password"
+    recoverPwd: "Recover your password",
+    copiedToClipboard: "Copied to Clipboard",
   },
   btn: {
     login: "Login",
@@ -1181,6 +1182,10 @@ export default {
       userName: "Username",
       betVolume: "Bet Volume"
     }
+  },
+  csVerifier: {
+    validAccDesc: 'is an official representative of PK1.GAME and can be trusted',
+    invalidAccDesc: 'is not an official representative of PK1.GAME, please do not trust this account'
   },
   shareAffiliate: {
     login: "Login",

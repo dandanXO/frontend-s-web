@@ -1104,17 +1104,17 @@ export default defineComponent({
     }
 
     .claim-title-icon {
-      background: url("../assets/images/promotion/hotpromo/common/claim-title-icon.svg") no-repeat center center;
+      background: url("../assets/images/promotion/hotpromo/common/claim-title-icon.png") no-repeat center center;
       background-size: 100% 100%;
     }
 
     .claim-coin-icon {
-      background: url("../assets/images/promotion/hotpromo/common/claim-coin-icon.svg") no-repeat center center;
+      background: url("../assets/images/promotion/hotpromo/common/claim-coin-icon.png") no-repeat center center;
       background-size: 100% 100%;
     }
 
     .claim-gift-icon {
-      background: url("../assets/images/promotion/hotpromo/common/claim-gift-icon.svg") no-repeat center center;
+      background: url("../assets/images/promotion/hotpromo/common/claim-gift-icon.png") no-repeat center center;
       background-size: 100% 100%;
     }
 

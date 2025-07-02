@@ -119,14 +119,7 @@ export default defineComponent({
   setup() {
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
     const gameMenu = ref(null);
-    const banners = ref([
-      {
-        src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png"
-      },
-      {
-        src: "9ba30f5e-162a-429e-a811-ad918c958fbd.jpg"
-      }
-    ]);
+    const banners = ref([]);
     const isImportantAnnouncementModal = ref(false);
     const openGame = (gameName, platType, gameCode) => {
       gameMenu.value.open(gameName, platType, gameCode);

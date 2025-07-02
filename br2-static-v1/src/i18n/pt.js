@@ -845,7 +845,17 @@ export default {
       day: "dia",
       days: "dias",
       signIn: "Assinar",
-      signedIn: "Assinado"
+      signedIn: "Assinado",
+
+      description: "Versão em Português do Brasil: Regras da Promoção de Check-in de 7 Dias Descrição da Promoção",
+
+      tnc01: "Esta é uma atividade de check-in contínuo com um ciclo de 7 dias. Ao completar 7 dias de check-in, o ciclo é reiniciado automaticamente no 8º dia.",
+      tnc02: "Os usuários podem realizar o check-in manualmente a cada dia, sendo que cada dia oferece uma recompensa específica.",
+      tnc03: "Caso o usuário interrompa o check-in (ex: fez o check-in no dia 1, não fez no dia 2), no dia 3 ele poderá realizar apenas o check-in referente ao dia 3, sem direito à recompensa do dia 2.",
+      tnc04: "As recompensas devem ser resgatadas manualmente pelo usuário. Recompensas não resgatadas serão consideradas renunciadas.",
+      tnc05: "Os bônus recebidos exigem um rollover de 1x antes que possam ser sacados.",
+      tnc06: "A promoção é exclusiva para usuários reais. Caso sejam detectadas operações suspeitas, como múltiplas contas ou atividades não autorizadas, a plataforma se reserva o direito de cancelar o bônus, bloquear a conta ou aplicar outras medidas necessárias.",
+      tnc07: "A plataforma reserva-se o direito exclusivo de interpretação final desta promoção.",
     },
     redepositBonus: {
       description: "Receba um bônus extra de 100% no primeiro depósito do dia",
