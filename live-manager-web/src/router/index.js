@@ -107,9 +107,14 @@ const router = createRouter({
           component: () => import('../components/live/LiveTeam.vue'),
         },
         {
-          name: '赛事资讯',
+          name: '电竞赛事',
           path: 'live-match',
           component: () => import('../components/live/liveMatch.vue'),
+        },
+        {
+          name: '体育赛事',
+          path: 'live-match-mars',
+          component: () => import('../components/live/LiveMatchMars.vue'),
         },
       ]
     },

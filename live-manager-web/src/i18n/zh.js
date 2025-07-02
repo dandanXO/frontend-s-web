@@ -146,6 +146,17 @@ export default {
       OTHER: '其他',
       ADD_TO_LIVE: '添加到直播',
     },
+    marsMatch: {
+      NOT_STARTED: '未开赛',
+      ONGOING: '进行中',
+      ENDED: '完场',
+      CANCEL: '已取消',
+      PENDING: '待定',
+      DELAYED: '延期',
+      DELETE: '已删除',
+      ABANDONED: '腰斩',
+      OTHER: '其他',
+    }
   },
   fields: {
     account: '账号',
@@ -2161,7 +2172,7 @@ export default {
     streamTag: '流标签',
     isCdnPush: '推送 CDN',
     box: '回合',
-    isCreateLiveUrl: '是否生产推流地址  (是/否)',
+    isCreateLiveUrl: '推流',
     addToLive: '添加到直播',
     initialSupplierStreamStatus: '初始厂商流状态',
     isTestEvent: '是否为测试赛事',
@@ -2174,7 +2185,9 @@ export default {
     subscribeCount: '当前订阅人数',
     eventCode: '赛事代码',
     addSensitiveWord:"新增敏感词",
-    editSensitiveWord:"修改敏感词"
+    editSensitiveWord:"修改敏感词",
+    successGetUrl: '获取推流成功',
+    failedGetUrl: '没有获取到流'
   },
   message: {
     adsStatusOpen: '开',

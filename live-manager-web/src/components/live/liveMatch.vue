@@ -3,8 +3,7 @@
   <div class="card" style="width: 98%">
     <DataTable
       :value="page.records"
-      :paginator="true"
-      :rows="10"
+      :rows="30"
       :loading="loading"
       dataKey="matchId"
       :filters="filters"
@@ -15,6 +14,14 @@
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
+          <Calendar
+              id="matchTime"
+              v-model="request.matchTime"
+              selectionMode="range"
+              hourFormat="24"
+              dateFormat="yy-mm-dd"
+              fluid
+          />
           <Select
             v-model="request.sportId"
             :options="uiControl.sport"
@@ -36,6 +43,14 @@
             optionLabel="赛事标题"
             placeholder="赛事标题"
           />
+          <Select
+              v-model="request.isStreamIdExist"
+              :options="uiControl.isStreamIdExist"
+              optionLabel="display"
+              optionValue="key"
+              placeholder="状态"
+              :size="'small'"
+            />
           <Button
             label="搜索"
             :size="'small'"
@@ -193,6 +208,15 @@
         </template>
       </Column>
     </DataTable>
+    <Paginator
+        :rows="request.size"
+        :totalRecords="page.total"
+        :rowsPerPageOptions="[10, 20, 50]"
+        :first="(request.current - 1) * request.size"
+        template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+        @page="changePage"
+        class="p-mt-2"
+        />
   </div>
 
   <Dialog
@@ -300,6 +324,7 @@ import { liveSportTyps } from '@/utils/live'
 import { useToast } from 'primevue/usetoast'
 import { DashboardService } from '@/service/DashboardService'
 import { useConfirm } from 'primevue/useconfirm'
+  import dayjs from 'dayjs'
 const { getSportLiveMatch, copySportLiveMatch, batchDeleteSportLiveMatch } = DashboardService
 const { t } = useI18n()
 const toast = useToast()
@@ -319,6 +344,10 @@ const uiControl = reactive({
     { name: '14', display: t('status.namiMatch.ABANDONED'), id: 14 },
     { name: '15', display: t('status.namiMatch.PENDING'), id: 15 },
   ],
+  isStreamIdExist: [
+        { key: true, display: t('fields.yes'), value: true },
+        { key: false, display: t('fields.no'), value: false }
+  ],
 })
 const request = reactive({
   size: 30,
@@ -326,6 +355,8 @@ const request = reactive({
   sportId: null,
   liveStatus: null,
   title: null,
+  matchTime: [new Date(), new Date()],
+  isStreamIdExist: null,
 })
 
 const page = reactive({
@@ -345,6 +376,8 @@ function resetQuery() {
   request.sportId = null
   request.title = null
   request.liveStatus = null
+  request.matchTime = [new Date(), new Date()]
+  request.isStreamIdExist = null
 }
 
 async function loadMatch() {
@@ -355,12 +388,22 @@ async function loadMatch() {
     sportId: request.sportId,
     title: request.title,
     status: request.liveStatus,
+    matchTime: request.matchTime,
+    isStreamIdExist: request.isStreamIdExist,
   }
   
   if (rawParams.status) {
     rawParams.status = rawParams.status.id
   }
 
+  if (rawParams.matchTime && rawParams.matchTime.length === 2) {
+        const [startTime, endTime] = request.matchTime;
+        const formattedRange = [
+        dayjs(startTime).format('YYYY-MM-DD 00:00:00'),
+        dayjs(endTime).format('YYYY-MM-DD 23:59:59'),
+        ].join(',');
+        rawParams.matchTime = formattedRange
+  }
   // 過濾掉 null 或 undefined 的參數
   const filteredParams = {}
   for (const key in rawParams) {
@@ -380,6 +423,12 @@ async function loadMatch() {
   page.pages = res.pages || 0
   page.current = res.current || 1
   page.loading = false
+}
+
+function changePage(event) {
+    request.current = event.page + 1;
+    request.size = event.rows;
+    loadMatch();
 }
 
 function getSportDisplayName(sportId) {

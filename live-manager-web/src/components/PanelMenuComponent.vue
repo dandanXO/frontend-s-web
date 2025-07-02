@@ -119,10 +119,17 @@ if (sessionStorage.getItem('memberType') === 'admin') {
         },
       },
       {
-        label: '赛事资讯',
+        label: '电竞赛事',
         icon: 'pi pi-info-circle',
         command: () => {
           router.push('/live-sport/live-match')
+        },
+      },
+      {
+        label: '体育赛事',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-match-mars')
         },
       },
     ]

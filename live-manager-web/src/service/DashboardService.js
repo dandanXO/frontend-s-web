@@ -862,5 +862,61 @@ export const DashboardService = {
         'Content-Type': 'application/json',
       },
     });
+  },
+  
+  // live-match-mars
+  getSportLiveMatchMars(request) {
+    const token = sessionStorage.getItem('token')
+    return api
+      .get(`/session/live-match-mars?${request}`, {
+        headers: {
+          // For GET requests, parameters are typically sent as `params`
+          token: `${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.code === 0) {
+          return response.data
+        }
+        console.error('獲取運動直播賽事失敗:', response.message || '未知錯誤')
+        return null
+      })
+      .catch((error) => {
+        console.error('獲取運動直播賽事請求失敗:', error)
+        return null
+      })
+  },
+
+  // refresh live url
+  refreshToGetLiveUrl(id) {
+    const token = sessionStorage.getItem('token')
+    return api.get(`/session/live-match-mars/refresh/${id}`, {
+      headers: {
+        token: `${token}`,
+      },
+    })
+  },
+
+  // copy-live-match-mars to live event
+  copySportLiveMatchMars(data) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/live-match-mars/add-to-live', data, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+  },
+
+  // delete sport live match mars
+  deleteSportLiveMatchMars(data) {
+    const token = sessionStorage.getItem('token')
+    console.log("data", data.join(","))
+    return api.post('/session/live-match-mars?_method=DELETE', { ids: data.join(",") }, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
   }
 }

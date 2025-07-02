@@ -2,7 +2,7 @@
   <div class="roles-main">
     <ConfirmDialog></ConfirmDialog>
 
-    <DataTable :value="page.records" :loading="page.loading" responsiveLayout="scroll" scrollable>
+    <DataTable :value="page.records" :loading="page.loading" responsiveLayout="scroll" scrollable scrollWidth="100%">
 
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
@@ -217,7 +217,7 @@
             :class="{ 'p-invalid': validationErrors.sportId }"
             filter
           />
-          <small class="p-error" v-if="validationErrors.sportId">{{ validationErrors.sportId }}</small>
+          <small class="p-error" v-if="validationErrors.sportId">1111{{ validationErrors.sportId }}</small>
         </div>
 
         <!-- Title -->
@@ -871,6 +871,7 @@ onUnmounted(() => {
 <style scoped>
 .roles-main {
   padding: 20px;
+  overflow-x: auto;
 }
 
 .header-container {
