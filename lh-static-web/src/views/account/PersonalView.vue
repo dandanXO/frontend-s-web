@@ -106,7 +106,7 @@
                         type="button"
                         @click="updatePhoneModal"
                       >
-                        验证
+                        绑定
                       </button>
                     </div>
                   </div>
