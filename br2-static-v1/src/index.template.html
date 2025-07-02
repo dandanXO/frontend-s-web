@@ -21,6 +21,7 @@
     <link rel="shortcut icon" type="image/png" href="favicon.ico" />
     <link rel="icon" type="image/ico" href="favicon.ico" />
 
+    <% if (!ctx.mode.cordova && !ctx.mode.capacitor) { %>
     <script>
       var CWRUMLICENCE = "wS0n2SF8WRCb0fAkjFLvksRizrsrej3YzEOG/2dhczIaB10nBxKDy**/8wl49yKc7";
     </script>
@@ -28,6 +29,7 @@
       src="https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=wS0n2SF8WRCb0fAkjFLvksRizrsrej3YzEOG/2dhczIaB10nBxKDy**/8wl49yKc7"
       async
     ></script>
+    <% } %>
 
     <!-- PolyFill Script To Support Lower Version of Browser/Device -->
     <script type="text/javascript">
