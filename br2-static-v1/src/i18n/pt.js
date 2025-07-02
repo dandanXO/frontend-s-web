@@ -104,6 +104,7 @@ export default {
     email_placeholder: "Por favor, insira o email",
     email_rules_01: "Por favor, insira o email",
     email_rules_02: "Por favor, insira um email válido",
+    email_rules_03: "Formato de e-mail inválido.",
     send: "Enviar",
     verificationCode: "Código de Verificação",
     verificationCode_placeholder: "Por favor, insira o Código de Verificação",
