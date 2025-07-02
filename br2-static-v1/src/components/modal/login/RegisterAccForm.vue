@@ -387,7 +387,8 @@ onMounted(() => {
 
 .reg-bonus-flag-btn {
   &::after {
-    width: 77px;
+    width: 150px;
+    right: 10px;
   }
 }
 
