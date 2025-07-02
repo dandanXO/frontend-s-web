@@ -413,13 +413,6 @@
     </div>
   </div>
 
-  <!-- <q-page-sticky position="bottom-left" :offset="goldenEggPos" style="z-index: 999">
-    <div v-if="isGoldenEgg">
-      <q-btn class="close-btn" icon="close" flat round dense @click="hideGoldenEgg()"></q-btn>
-      <img src="../assets/images/home/golden-egg.gif" class="golden-egg" @click="goGoldenEgg" />
-    </div>
-  </q-page-sticky> -->
-
   <q-page-sticky position="bottom-right" :offset="packetPos" style="z-index: 999">
     <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
       <img src="../assets/images/home/redpacket.png" class="red-envelope" />

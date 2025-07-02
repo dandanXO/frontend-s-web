@@ -43,10 +43,10 @@
         </div>
         <div class="text-center q-py-md">
           <span class="txt-green" v-if="accountValid">
-            {{ agentAccountId }} is an official representative of PK1.GAME and can be trusted
+            {{ agentAccountId }} {{ $t('csVerifier.validAccDesc') }}
           </span>
           <span class="txt-red" v-else>
-            {{ agentAccountId }} is not an official representative of PK1.GAME, please do not trust this account
+            {{ agentAccountId }} {{ $t('csVerifier.invalidAccDesc') }}
           </span>
         </div>
 

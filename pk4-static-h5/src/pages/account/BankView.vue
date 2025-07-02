@@ -116,7 +116,9 @@ import ConfirmButton from "../../atoms//ConfirmButton.vue";
 import ProfileSummary from "../../components/ProfileSummary.vue";
 import AddBankCardModal from "../../components/modal/AddBankCardModal.vue";
 import UpdateBankCardModal from "../../components/modal/UpdateBankCardModal.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const router = useRouter();
 const store = userStore();
 const $q = useQuasar();
@@ -154,7 +156,7 @@ const copy = (val) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${val} copied to clipboard`,
+        message: `${val} ${t('form.copiedToClipboard')}`,
         icon: "check_circle_outline"
       });
     })

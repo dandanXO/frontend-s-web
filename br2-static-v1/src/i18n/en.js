@@ -830,7 +830,15 @@ export default {
       day: "day",
       days: "days",
       signIn: "Sign in",
-      signedIn: "Signed in"
+      signedIn: "Signed in",
+      description: "Brazilian Portuguese Version: 7-Day Check-in Promotion Rules Description",
+      tnc01: "This is a continuous 7-day check-in activity. Upon completing 7 check-in days, the cycle automatically restarts on the 8th day.",
+      tnc02: "Users can check in manually each day, with each day offering a specific reward.",
+      tnc03: "If the user misses a check-in (e.g., checked in on day 1 but not on day 2), on day 3 they can only check in for day 3, without being eligible for the day 2 reward.",
+      tnc04: "Rewards must be claimed manually by the user. Unclaimed rewards will be considered forfeited.",
+      tnc05: "Received bonuses require a 1x rollover before they can be withdrawn.",
+      tnc06: "The promotion is exclusive to real users. If suspicious activity is detected, such as multiple accounts or unauthorized behavior, the platform reserves the right to cancel the bonus, block the account, or apply other necessary measures.",
+      tnc07: "The platform reserves the exclusive right to the final interpretation of this promotion.",
     },
     redepositBonus: {
       description: "Receive an extra 100% bonus on your first deposit of the day",
@@ -970,7 +978,7 @@ export default {
       tnc07: "To avoid any misunderstandings, AKB188 reserves the final right of interpretation for this promotion."
     },
     dailySecondDeposit: {
-      description: "The first deposit of the day entitles you to a 10% bonus on the deposited amount",
+      description: "The first deposit of the day entitles you to a 20% bonus on the deposited amount",
       tnc01: "This promotion is valid for all deposits made after the first deposit on the same day.",
       tnc02: "Each subsequent deposit grants a 20% bonus, with a limit of R$288 per deposit.",
       tnc03: "The bonus (including the principal) requires 12 times valid wagering to be eligible for withdrawal.",

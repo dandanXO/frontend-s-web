@@ -21,8 +21,8 @@
                         <td><img src="../../../assets/images/account/dividend/avatar-icon.png" /></td>
                         <td class="user">{{ downline.loginName }}</td>
                         <td class="user">{{ (downline.commission * 100).toFixed(0) }}%</td>
-                        <td v-if="downline.commission === 0" class="create-contract-btn" @click="() => createContract(downline)">create contract</td>
-                        <td v-else class="create-contract-btn"><span style="visibility:hidden">create contract</span></td>
+                        <td v-if="downline.commission === 0" class="create-contract-btn" @click="() => createContract(downline)">{{ $t('dividend.createContract') }}</td>
+                        <td v-else class="create-contract-btn"><span style="visibility:hidden">{{ $t('dividend.createContract') }}</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -31,7 +31,7 @@
         <q-dialog v-model="isShowContractDialog" width="100%">
             <div class="contract-dialog">
                 <div class="downline"><img src="../../../assets/images/account/dividend/avatar-icon.png" />{{ selectedContract.loginName }}</div>
-
+                <div class="contract-title">{{ $t('dividend.selfCommissionShare') }}</div>
                 <div class="row">
                     <div>{{ $t('dividend.rate') }} ({{ parseFloat((selectedContract.commission * 100).toFixed(0)) }}%)</div>
                     <div>
@@ -385,6 +385,13 @@ onActivated(() => {
     justify-content: space-between;
 
     .downline {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        font-weight: 700;
+    }
+    .contract-title {
         display: flex;
         align-items: center;
         justify-content: center;

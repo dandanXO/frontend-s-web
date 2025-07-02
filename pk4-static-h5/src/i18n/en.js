@@ -5,7 +5,7 @@ export default {
   },
   header: {
     login: "Login",
-    welcomeMsg: "Welcome to B9",
+    welcomeMsg: "Welcome to PK1",
     register: "Register",
     download: "Download",
     getFreeSpins: "Get free spins on the APP",
@@ -260,7 +260,8 @@ export default {
     accountOwnerOnly: "Only the account owner can redeem the code.",
     unauthorizedMethods:
       "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus.",
-    recoverPwd: "Recover your password"
+    recoverPwd: "Recover your password",
+    copiedToClipboard: "Copied to Clipboard",
   },
   btn: {
     login: "Login",
@@ -268,7 +269,7 @@ export default {
     confirm: "Confirm",
     submit: "Submit",
     forgetPwd: "Forget Password",
-    areyounew: "Are you new to B9?",
+    areyounew: "Are you new to PK1?",
     alreadyhaveacct: "Already have an account?",
     addNewAccount: "Add New Account",
     updated: "Updated",
@@ -325,7 +326,6 @@ export default {
     updatedSuccessfully: "Updated successfully",
     emailVerificationSent: "Email verification sent",
     messageSent: "Message Sent",
-
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
@@ -336,7 +336,8 @@ export default {
     submitting: "Submitting...",
     sendingVerificationCode: "Sending verification code...",
     passwordResetCompleted: "Password reset completed",
-    success: "Success"
+    success: "Success",
+    pleaseCompleteYourKYC: 'Please Complete your KYC.',
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -377,7 +378,10 @@ export default {
     cashGift: "Cash Gifts",
     welcomeNewPlayer: "Welcome New Players",
     MegaSharingRoulette: "Mega Sharing Roulette",
-    spinLuckyWheel: "Spin Lucky Wheel"
+    spinLuckyWheel: "Spin Lucky Wheel",
+    twentyFourSevenSupport: '24/7 support',
+    ifHaveQuestionsContactUs: 'If you still have questions, please contact us',
+    chat: 'Chat'
   },
   settings: {
     totalScore: "Total Score",
@@ -429,6 +433,73 @@ export default {
       qrCode: "QR Code",
       scanTheCodeToRegister: "Scan the QR code to register",
       pressQRCode: "press and hold to save QR code to album"
+    },
+    overview: {
+      today: 'Today',
+      yesterday: 'Yesterday',
+      sevenDays: '7 days',
+      thisMonth: 'This Month',
+      logins: 'Logins',
+      registers: 'Registers',
+      betCount: 'Bet count',
+      promotions: 'Promotions',
+      registersFirstDeposits: 'Registers first deposits',
+      firstDeposits: 'First deposits',
+      deposits: 'Deposits',
+      withdrawals: 'Withdrawals',
+      deposit: 'Deposit',
+      withdrawalAmount: 'Withdrawal amount',
+      bonus: 'Bonus',
+      validBet: 'Valid bet',
+      winLoss: 'Win/loss',
+      teamPnL: 'Team P&L',
+      teamRebate: 'Team Rebate',
+    },
+    accountRecord: {
+      all: 'All',
+      deposit: 'Deposit',
+      withdrawal: 'Withdrawal',
+      betting: 'Betting',
+      bonus: 'Bonus',
+      rebate: 'Rebate',
+      dividend: 'Dividend',
+      loginName: 'Login Name',
+      recordDate: 'Record Date',
+      beforeBalance: 'Before Balance',
+      afterBalance: 'After Balance',
+      amount: 'Amount',
+      currency: 'Currency'
+    },
+    teamManagement: {
+      lastLoginTime: 'Last login time',
+      registrationDate: 'Registration date',
+      balance: 'Balance'
+    },
+    teamPnL: {
+      deposit: 'Deposit',
+      withdrawal: 'Withdrawal',
+      bonus: 'Bonus',
+      validBet: 'Valid Bet',
+      winLoss: 'Win/Loss',
+      profitLoss: 'Profit & Loss',
+      today: 'Today',
+      yesterday: 'Yesterday',
+      sevenDays: '7 days',
+      thisMonth: 'This Month',
+      total: 'Total'
+    },
+    teamBetting: {
+      all: 'All',
+      slot: 'Slot',
+      live: 'Live',
+      sport: 'Sport',
+      fish: 'Fish',
+      poker: 'Poker',
+      today: 'Today',
+      yesterday: 'Yesterday',
+      sevenDays: '7 days',
+      thisMonth: 'This Month',
+      vendors: 'Vendors'
     }
   },
   accountRecord: {
@@ -454,7 +525,9 @@ export default {
     statusPay: "Pay",
     statusCleared: "Cleared",
     statusCancelled: "Cancelled",
-    rate: "Rate"
+    rate: "Rate",
+    createContract: "Create Contract",
+    selfCommissionShare: "Self Commission Share"
   },
   deposit: {
     selectAmount: "Select Amount",
@@ -612,9 +685,9 @@ export default {
       multiple_acc_hint: `2. It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
     Reward distribution time: Between 3:00 PM and 6:00 PM Pakistan time on the next day. The rewards will be credited to the account during this time frame.
     `,
-      shareTitle: "B9GAME Share and Earn",
+      shareTitle: "PK1GAME Share and Earn",
       shareText:
-        "B9GAME Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
+        "PK1GAME Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
       betting_table: {
         header: {
           description: "Description",
@@ -951,7 +1024,7 @@ export default {
     },
     appLoginBonus: {
       newlyRegistered1: "Newly registered",
-      b9: "B9",
+      pk1: "PK1",
       newlyRegistered2: "members, download and install the application, and get random free bonuses, up to",
       bdt888: "888BDT",
       newlyRegistered5: ".",
@@ -1109,6 +1182,10 @@ export default {
       userName: "Username",
       betVolume: "Bet Volume"
     }
+  },
+  csVerifier: {
+    validAccDesc: 'is an official representative of PK1.GAME and can be trusted',
+    invalidAccDesc: 'is not an official representative of PK1.GAME, please do not trust this account'
   },
   shareAffiliate: {
     login: "Login",

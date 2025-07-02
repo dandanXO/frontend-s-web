@@ -797,7 +797,6 @@ const swipeRight = () => {
 
       .bold {
         font-weight: 800;
-        // white-space: nowrap;
       }
 
       .icon {
@@ -867,7 +866,6 @@ const swipeRight = () => {
   }
 
   .vip-promo-tab-toggle {
-    // background-color: #2b474a;
     border-radius: 8px;
     margin-bottom: 4px;
     margin-top: 5px;
@@ -881,7 +879,6 @@ const swipeRight = () => {
       color: #000;
       background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
       box-shadow: 0px 1px 2px 0px #0000000d;
-      // border: 2px solid rgba(43, 71, 74, 0.27);
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -893,12 +890,9 @@ const swipeRight = () => {
 .vipitem {
   position: relative;
   display: flex;
-  // flex-direction: column-reverse;
-  // background: url("../../assets/images/vip/badge/banner.png") no-repeat top center;
   background-position: top center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  // height: 120px;
   width: 100%;
   justify-content: flex-end;
   font-size: 12px;
@@ -911,7 +905,6 @@ const swipeRight = () => {
     align-self: center;
   }
   .vip-contents {
-    // padding-top: 60px;
     color: #ffffff;
     border-radius: 20px;
     display: flex;
@@ -1028,9 +1021,6 @@ const swipeRight = () => {
   &.carousel__slide--next .vipitem,
   &.carousel__slide--prev .vipitem {
     filter: brightness(0.5);
-    // height: 120px;
-    // margin-top: 20px;
-
     .vip-contents .progress-bar-container .progress-bar-inner-bar {
       height: 8px;
     }
@@ -1086,7 +1076,6 @@ const swipeRight = () => {
     }
   }
   thead > :first-child {
-    // background: linear-gradient(270deg, #5d01b9 -0.1%, #b11bff 50.22%, #6a069c 97.6%);
     background: linear-gradient(180deg, #005348 0%, rgba(0, 83, 72, 0.2) 96.35%);
   }
   tbody > :nth-child(odd) {
@@ -1139,7 +1128,6 @@ const swipeRight = () => {
 
   .hint-msg {
     border-radius: 8px;
-    // background: linear-gradient(180deg, #2f1b4d 0%, #1a2045 100%);
     background: #1f241f;
     padding: 10px;
     margin: 0 0 1.25rem 0;

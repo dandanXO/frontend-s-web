@@ -2519,7 +2519,6 @@ body {
 
       .acc-dialog-left {
         width: calc(100% - 450px);
-        // background-image: url(../../assets/home/acc-dialog-bg-paris.png);
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
@@ -2701,7 +2700,6 @@ body {
 
     .el-dialog__body {
       .acc-dialog-left {
-        // background-image: url(../../assets/home/acc-dialog-bg-dark-eurocup.png);
         background-size: 100% 100%;
         background-position: center center;
       }

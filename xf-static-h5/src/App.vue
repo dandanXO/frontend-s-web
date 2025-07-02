@@ -158,6 +158,8 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("XF H5 0207");
+
       checkServerStatus();
       checkSID();
       // initCsWeb();

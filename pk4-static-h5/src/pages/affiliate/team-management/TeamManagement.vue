@@ -36,16 +36,16 @@
                     <!-- <div class="icon">
                         <div class="num">4362</div>
                     </div> -->
-                    <div class="label">Balance</div>
+                    <div class="label">{{ $t('affiliate.teamManagement.balance') }}</div>
                     <div class="value">{{ record.balance ?? '-' }}</div>
                 </div>
                 <hr class="separator" />
                 <div class="row">
-                    <div class="label">Last login time</div>
+                    <div class="label">{{ $t('affiliate.teamManagement.lastLoginTime') }}</div>
                     <div class="value">{{ record.lastLoginTime ?? '-' }}</div>
                 </div>
                 <div class="row">
-                    <div class="label">Registration date</div>
+                    <div class="label">{{ $t('affiliate.teamManagement.registrationDate') }}</div>
                     <div class="value">{{ record.regTime }}</div>
                 </div>
             </div>

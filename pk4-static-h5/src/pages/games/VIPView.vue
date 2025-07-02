@@ -881,7 +881,7 @@ const getMonthlyVip = () => {
 
 .carousel__prev,
 .carousel__next {
-  display: none;
+  display: none !important;
 }
 
 .vip-container {

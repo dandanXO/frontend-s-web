@@ -393,7 +393,7 @@ const loadBankCards = () => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: "Please Complete your KYC.",
+        message: t('notify.pleaseCompleteYourKYC'),
         icon: "report_problem"
       });
       router.push("/account/profile");

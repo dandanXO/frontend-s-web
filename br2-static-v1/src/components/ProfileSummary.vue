@@ -68,7 +68,7 @@
                     <span v-if="!isLoadingBalance">
                       {{ store.currency.value }}
                     </span>
-                    {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
+                    {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, true) }}
                   </span>
                   <span class="balance-txt">{{ $t("sideNav.balance") }}</span>
                 </div>

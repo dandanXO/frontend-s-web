@@ -105,13 +105,13 @@
         </q-btn>
       </div>
 
-      <div class="regulated-and-licensed">
+      <!-- <div class="regulated-and-licensed">
         <img class="regulated-logo" src="../assets/images/auth/regulated-and-licensed.png" />
         <div class="text">
           <div class="text-1">Regulated & Licensed</div>
           <div class="text-2">by the Govemment of Couracao</div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 

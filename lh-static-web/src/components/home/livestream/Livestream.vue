@@ -147,16 +147,18 @@ const handleSendChatMessage = (message) => {
   }).then((res) => {
     if (res.code === 0) {
       const { content, name } = res.data;
+      const displayName = store.memberType !== "NORMAL" ? store.name2 || store.nickName : name;
       messages.value.push({
         content,
-        name,
+        name: displayName,
         time: Date.now(),
         vip: userVipLevel.value,
-        profilePhoto: store.profilePhoto
+        profilePhoto: store.profilePhoto,
+        memberType: store.memberType
       });
       danmuList.value = [content];
       if (!processedUserName.value) {
-        processedUserName.value = name;
+        processedUserName.value = displayName;
       }
     } else {
       notify({
@@ -323,7 +325,8 @@ const formatHistoryMessages = (messages) => {
         name: record.name,
         time: record.createTime,
         vip: extractVipLevelFromVipStr(record.vip),
-        profilePhoto: record.profilePhoto
+        profilePhoto: record.profilePhoto,
+        memberType: record.memberType
       });
     }
 
