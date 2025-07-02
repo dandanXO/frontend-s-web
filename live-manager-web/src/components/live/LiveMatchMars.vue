@@ -8,6 +8,7 @@
       v-model:selection="selectedRows"
       responsiveLayout="scroll"
       scrollable 
+      scrollWidth="100%"
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
@@ -80,12 +81,12 @@
       </template>
 
       <Column selectionMode="multiple" headerStyle="min-width: 10px;"></Column>
-      <Column field="ID" header="ID" sortable style="min-width: 120px;">
+      <Column field="ID" header="ID" sortable style="min-width: 100px;">
         <template #body="slotProps">
           {{ slotProps.data.matchId }}
         </template>
       </Column>
-      <Column field="sportType" :header="t('fields.sportType')" sortable style="min-width: 120px">
+      <Column field="sportType" :header="t('fields.sportType')" sortable style="min-width: 150px">
         <template #body="slotProps">
           {{ getSportDisplayName(slotProps.data.sportId) }}
         </template>
@@ -95,7 +96,7 @@
         field="nameZh"
         :header="t('fields.competitionNameZh')"
         sortable
-        style="min-width: 200px"
+        style="min-width: 250px"
       >
         <template #body="slotProps">
           {{ slotProps.data.nameZh }}
@@ -106,35 +107,37 @@
         field="nameEn"
         :header="t('fields.competitionNameEn')"
         sortable
-        style="min-width: 200px"
+        style="min-width: 250px"
       >
         <template #body="slotProps">
           {{ slotProps.data.nameEn }}
         </template>
       </Column>
 
-      <Column field="homeTeam" :header="t('fields.homeTeam')" sortable style="min-width: 150px">
+      <Column field="homeTeam" :header="t('fields.homeTeam')" sortable style="min-width: 200px">
         <template #body="slotProps">
-          <img
+          <Image
             v-if="slotProps.data.homeTeamLogo"
             :src="slotProps.data.homeTeamLogo"
             style="width: 24px; height: 24px; margin-right: 8px"
+            preview
           />
           {{ slotProps.data.homeTeamNameZh || slotProps.data.homeTeamNameEn }}
         </template>
       </Column>
 
-      <Column field="awayTeam" :header="t('fields.awayTeam')" sortable style="min-width: 150px">
+      <Column field="awayTeam" :header="t('fields.awayTeam')" sortable style="min-width: 200px">
         <template #body="slotProps">
-          <img
+          <Image
             v-if="slotProps.data.awayTeamLogo"
             :src="slotProps.data.awayTeamLogo"
             style="width: 24px; height: 24px; margin-right: 8px"
+            preview
           />
           {{ slotProps.data.awayTeamNameZh || slotProps.data.awayTeamNameEn }}
         </template>
       </Column>
-      <Column field="matchTime" :header="t('fields.matchTime')" sortable style="min-width: 100px">
+      <Column field="matchTime" :header="t('fields.matchTime')" sortable style="min-width: 200px">
         <template #body="slotProps">
           {{ formatTime(slotProps.data.matchTime) }}
         </template>
@@ -143,14 +146,14 @@
         field="supplierStreamUrl"
         :header="t('fields.isCreateLiveUrl')"
         sortable
-        style="min-width: 50px"
+        style="min-width: 100px"
       >
         <template #body="slotProps">
           <Tag v-if="slotProps.data.supplierStreamUrl !== null" severity="success" :value="t('fields.yes')"></Tag>
           <Tag v-else severity="danger" :value="t('fields.no')"></Tag>
         </template>
       </Column>
-      <Column field="status" :header="t('fields.status')" sortable style="min-width: 50px">
+      <Column field="status" :header="t('fields.status')" sortable style="min-width: 100px">
         <template #body="slotProps">
           <Tag
             v-if="slotProps.data.status === 'upcoming'"
@@ -195,7 +198,7 @@
           <Tag v-else severity="default" :value="t('status.namiMatch.OTHER')" />
         </template>
       </Column>
-      <Column field="status" :header="t('fields.operate')" sortable style="min-width: 100px; display: flex; justify-content: center;">
+      <Column field="status" :header="t('fields.operate')" sortable style="min-width: 300px; display: flex; justify-content: center;">
         <template #body="slotProps">
           <Button
             icon="pi pi-refresh"
@@ -557,6 +560,7 @@ onMounted(() => {
 
 <style scoped>
 .roles-main {
+  width: 99%;
   overflow-x: auto;
 }
 

@@ -1,6 +1,6 @@
 <!--TODO-->
 <template>
-  <div class="card" style="width: 98%">
+  <div class="roles-main">
     <DataTable
       :value="page.records"
       :rows="30"
@@ -10,7 +10,9 @@
       filterDisplay="menu"
       :globalFilterFields="['title']"
       v-model:selection="selectedRows"
-      scrollable
+      responsiveLayout="scroll"
+      scrollable 
+      scrollWidth="100%"
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
@@ -75,12 +77,12 @@
         </div>
       </template>
       <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-      <Column field="title" header="ID" sortable style="min-width: 2rem">
+      <Column field="title" header="ID" sortable style="min-width: 100px">
         <template #body="slotProps">
           {{ slotProps.data.matchId }}
         </template>
       </Column>
-      <Column field="liveStatus" :header="t('fields.sportType')" sortable style="min-width: 2rem">
+      <Column field="liveStatus" :header="t('fields.sportType')" sortable style="min-width: 150px">
         <template #body="slotProps">
           {{ getSportDisplayName(slotProps.data.sportId) }}
         </template>
@@ -90,7 +92,7 @@
         field="eventStartTime"
         :header="t('fields.competitionNameZh')"
         sortable
-        style="min-width: 2rem"
+        style="min-width: 250px"
       >
         <template #body="slotProps">
           {{ slotProps.data.competitionNameZh }}
@@ -101,35 +103,37 @@
         field="sportId"
         :header="t('fields.competitionNameEn')"
         sortable
-        style="min-width: 2rem"
+        style="min-width: 250px"
       >
         <template #body="slotProps">
           {{ slotProps.data.competitionNameEn }}
         </template>
       </Column>
 
-      <Column field="liveStatus" :header="t('fields.homeTeam')" sortable style="min-width: 2rem">
+      <Column field="liveStatus" :header="t('fields.homeTeam')" sortable style="min-width: 200px">
         <template #body="slotProps">
-          <img
+          <Image
             v-if="slotProps.data.home && slotProps.data.home.icon"
             :src="slotProps.data.home.icon"
             style="width: 24px; height: 24px; margin-right: 8px"
+            preview
           />
           {{ slotProps.data.home?.nameZh || slotProps.data.home?.nameEn }}
         </template>
       </Column>
 
-      <Column field="liveStatus" :header="t('fields.awayTeam')" sortable style="min-width: 2rem">
+      <Column field="liveStatus" :header="t('fields.awayTeam')" sortable style="min-width: 200px">
         <template #body="slotProps">
-          <img
+          <Image
             v-if="slotProps.data.away && slotProps.data.away.icon"
             :src="slotProps.data.away.icon"
             style="width: 24px; height: 24px; margin-right: 8px"
+            preview
           />
           {{ slotProps.data.away?.nameZh || slotProps.data.away?.nameEn }}
         </template>
       </Column>
-      <Column field="liveStatus" :header="t('fields.matchTime')" sortable style="min-width: 2rem">
+      <Column field="liveStatus" :header="t('fields.matchTime')" sortable style="min-width: 200px">
         <template #body="slotProps">
           {{ formatTime(slotProps.data.matchTime) }}
         </template>
@@ -138,7 +142,7 @@
         field="liveStatus"
         :header="t('fields.isCreateLiveUrl')"
         sortable
-        style="min-width: 2rem"
+        style="min-width: 100px"
       >
         <template #body="slotProps">
           {{ slotProps.data.isCreateLiveUrl }}
@@ -146,7 +150,7 @@
           <Tag v-else severity="danger" :value="t('fields.no')"></Tag>
         </template>
       </Column>
-      <Column field="liveStatus" :header="t('fields.status')" sortable style="min-width: 2rem">
+      <Column field="liveStatus" :header="t('fields.status')" sortable style="min-width: 100px">
         <template #body="slotProps">
           <Tag
             v-if="slotProps.data.statusId === 0"
@@ -196,7 +200,7 @@
           <Tag v-else severity="default" :value="t('status.namiMatch.OTHER')" />
         </template>
       </Column>
-      <Column field="liveStatus" :header="t('fields.operate')" sortable style="min-width: 2rem">
+      <Column field="liveStatus" :header="t('fields.operate')" sortable style="min-width: 300px">
         <template #body="slotProps">
           <Button
             :label="t('fields.addToLive')"
@@ -533,6 +537,11 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.roles-main {
+  overflow-x: auto;
+  width: 99%;
+}
+
 .p-button.p-button-icon-only {
   width: 2rem;
   padding: 0.5rem 0;

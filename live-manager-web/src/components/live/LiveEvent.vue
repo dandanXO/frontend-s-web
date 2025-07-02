@@ -84,10 +84,11 @@
       <Column field="homeNameZh" :header="t('fields.homeTeam')" style="min-width: 200px">
         <template #body="slotProps">
           <div style="display: flex; align-items: center">
-            <img
+            <Image
               v-if="slotProps.data.homeIcon"
               :src="slotProps.data.homeIcon?.startsWith('http') ? slotProps.data.homeIcon : promoDir + slotProps.data.homeIcon"
               style="width: 20px; height: 20px; margin-right: 10px"
+              preview
             />
             <span>{{ slotProps.data.homeNameZh || slotProps.data.homeName }}</span>
           </div>
@@ -96,9 +97,10 @@
       <Column field="awayNameZh" :header="t('fields.awayTeam')" style="min-width: 200px">
         <template #body="slotProps">
           <div style="display: flex; align-items: center">
-            <img
+            <Image
               v-if="slotProps.data.awayIcon"
               :src="slotProps.data.awayIcon?.startsWith('http') ? slotProps.data.awayIcon : promoDir + slotProps.data.awayIcon"
+              preview
               style="width: 20px; height: 20px; margin-right: 10px"
             />
             <span>{{ slotProps.data.awayNameZh || slotProps.data.awayName }}</span>
@@ -108,10 +110,11 @@
       <Column field="cover" :header="t('fields.cover')" style="min-width: 80px">
         <template #body="slotProps">
           <div style="display: flex; align-items: center">
-            <img
+            <Image
               v-if="slotProps.data.cover"
               :src="promoDir2 + slotProps.data.cover"
               style="width: 20px; height: 20px; margin-right: 10px"
+              preview
             />
           </div>
         </template>
@@ -870,8 +873,8 @@ onUnmounted(() => {
 
 <style scoped>
 .roles-main {
-  padding: 20px;
   overflow-x: auto;
+  width: 99%;
 }
 
 .header-container {
