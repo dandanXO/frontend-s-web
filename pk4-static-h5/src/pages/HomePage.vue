@@ -107,7 +107,7 @@
       :offset="hbDragPos"
       class="floating-btn scalable"
       :style="{ transform: `scale(${scaleValue})` }"
-      v-if="isHbShow && isShowStickyIcons"
+      v-if="isHbShow && isShowStickyIcons && hbPromo.length > 0"
     >
       <div>
         <!--        <div class="hb-close">-->
