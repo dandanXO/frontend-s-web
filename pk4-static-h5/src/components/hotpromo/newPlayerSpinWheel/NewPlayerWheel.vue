@@ -109,7 +109,7 @@ const drawBtnRef = ref();
 
 const spinButtonDisable = ref(false);
 const degreesToStopAt = ref([]);
-const showPrizePopup = ref(true);
+const showPrizePopup = ref(false);
 const showHasUnusedPopup = ref(false);
 const prizePopupBonusAmt = ref();
 const remainingDraws = ref(0);
