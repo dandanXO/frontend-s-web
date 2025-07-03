@@ -23,14 +23,14 @@
             fluid
           />
           <Button
-            label="搜索"
+            :label="t('fields.search')"
             :size="'small'"
             severity="success"
             icon="pi pi-search"
             @click="fetchStreams"
           />
           <Button
-            label="重置"
+            :label="t('fields.reset')"
             :size="'small'"
             severity="warn"
             icon="pi pi-refresh"
@@ -41,25 +41,25 @@
 
       <Column :expander="true" headerStyle="width: 3rem" />
 
-      <Column field="title" header="标题" sortable>
+      <Column field="title" :header="t('fields.title')" sortable>
         <template #body="slotProps">
           {{ slotProps.data.title }}
         </template>
       </Column>
 
-      <Column field="eventStartTime" header="赛事时间" sortable>
+      <Column field="eventStartTime" :header="t('fields.matchTime')" sortable>
         <template #body="slotProps">
           {{ formatTime(slotProps.data.eventStartTime) }}
         </template>
       </Column>
 
-      <Column field="sportId" header="体育项目" sortable>
+      <Column field="sportId" :header="t('fields.sportType')" sortable>
         <template #body="slotProps">
           {{ getSportDisplayName(slotProps.data.sportId) }}
         </template>
       </Column>
 
-      <Column field="liveStatus" header="状态" sortable>
+      <Column field="liveStatus" :header="t('fields.status')" sortable>
         <template #body="slotProps">
           {{ getLiveStatusDisplayName(slotProps.data.liveStatus) }}
         </template>
@@ -68,12 +68,12 @@
       <template #expansion="slotProps">
         <div class="p-3">
           <DataTable :value="slotProps.data.monitors" :showGridlines="true" class="p-datatable-sm">
-            <Column header="串流標籤" style="width: 120px;">
+            <Column :header="t('fields.streamTag')" style="width: 120px;">
               <template #body="{data}">
                 {{ tagMap[data.tag] || data.tag || '-' }}
               </template>
             </Column>
-            <Column header="串流分數" style="width: 120px;">
+            <Column :header="t('fields.streamScore')" style="width: 120px;">
               <template #body="{ data }">
                 <div class="signal-bars">
                   <span
@@ -85,27 +85,27 @@
                 </div>
               </template>
             </Column>
-            <Column header="媒體網址" style="width: 350px;">
+            <Column :header="t('fields.mediaUrl')" style="width: 350px;">
               <template #body="{ data }">
                 <span style="word-break: break-all;">
                   {{ data.tag === 'streamer' ? data.streamerUrl : data.supplierUrl }}
                 </span>
               </template>
             </Column>
-            <Column field="name" header="名稱" style="width: 100px;" />
-            <Column header="創建時間" style="width: 180px;">
+            <Column field="name" :header="t('fields.name')" style="width: 100px;" />
+            <Column :header="t('fields.createTime')" style="width: 180px;">
               <template #body="{ data }">
                 {{ formatDate(data.createdAt) }}
               </template>
             </Column>
-            <Column header="截圖">
+            <Column :header="t('fields.screenShot')">
               <template #body="{ data }">
-                <img
+                <Image
                   v-if="data.screenShot"
                   :src="data.screenShot.startsWith('http') ? data.screenShot : promoDir + data.screenShot"
-                  alt="截圖"
+                  :alt="t('fields.screenshot')"
                   style="height: 50px; aspect-ratio: 1/1; cursor: pointer; object-fit: contain;"
-                  @click="previewImage(data.screenShot)"
+                  preview
                 />
               </template>
             </Column>
@@ -153,7 +153,7 @@ import Dialog from 'primevue/dialog'
 import Tag from 'primevue/tag'
 import { useToast } from 'primevue/usetoast'
 import { useStorage } from '@vueuse/core'
-const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/promo/'
+const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value
 //const toast = useToast()
 
 const route = useRoute()

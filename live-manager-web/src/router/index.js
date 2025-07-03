@@ -72,7 +72,7 @@ const router = createRouter({
           component: () => import('../components/live/LiveMonitor.vue'),
         },
         {
-          name: '聊天室记录禁言设定',
+          name: '聊天室记录',
           path: 'live-history-block',
           component: () => import('../components/live/LiveHistoryBlock.vue'),
         },

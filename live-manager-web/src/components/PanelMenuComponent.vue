@@ -70,7 +70,7 @@ if (sessionStorage.getItem('memberType') === 'admin') {
         },
       },
       {
-        label: '聊天室记录禁言设定',
+        label: '聊天室记录',
         icon: 'pi pi-info-circle',
         command: () => {
           router.push('/live-sport/live-history-block')
