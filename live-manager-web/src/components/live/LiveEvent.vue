@@ -48,7 +48,7 @@
             hourFormat="24"
             dateFormat="yy-mm-dd"
             fluid
-            placeholder="請選擇結束時間" />
+            :placeholder="t('fields.endTime')" />
 
           <Button
             :label="t('fields.search')"

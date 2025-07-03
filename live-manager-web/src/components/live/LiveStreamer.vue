@@ -21,7 +21,7 @@
             :placeholder="t('fields.status')"
             size="small"
           />
-          <InputText type="text" v-model="request.name" optionLabel="名称" placeholder="名称" />
+          <InputText type="text" v-model="request.name" :optionLabel="t('fields.name')" :placeholder="t('fields.name')" />
           <Button
             :label="t('fields.search')"
             size="small"
@@ -45,7 +45,7 @@
           />
         </div>
       </template>
-      <Column field="title" header="ID" sortable>
+      <Column field="title" :header="t('fields.id')" sortable>
         <template #body="slotProps">
           {{ slotProps.data.id }}
         </template>

@@ -19,37 +19,37 @@
             :options="uiControl.sport"
             optionLabel="name"
             optionValue="name"
-            placeholder="体育项目"
+            :placeholder="t('fields.sportType')"
             :size="'small'"
           />
           <InputText
             type="text"
             v-model="request.nameZh"
-            optionLabel="队伍名称(英文)"
-            placeholder="队伍名称(英文)"
+            :optionLabel="t('fields.teamNameEn')"
+            :placeholder="t('fields.teamNameEn')"
           />
           <InputText
             type="text"
             v-model="request.nameEn"
-            optionLabel="队伍名称(中文)"
-            placeholder="队伍名称(中文)"
+            :optionLabel="t('fields.teamNameZh')"
+            :placeholder="t('fields.teamNameZh')"
           />
           <Button
-            label="搜索"
+            :label="t('fields.search')"
             :size="'small'"
             severity="success"
             icon="pi pi-search"
             @click="loadTeam"
           />
           <Button
-            label="重置"
+            :label="t('fields.reset')"
             :size="'small'"
             severity="warn"
             icon="pi pi-refresh"
             @click="resetQuery"
           />
           <Button
-            label="新增"
+            :label="t('fields.add')"
             :size="'small'"
             severity="info"
             icon="pi pi-plus"
@@ -57,31 +57,31 @@
           />
         </div>
       </template>
-      <Column field="title" header="ID" sortable>
+      <Column field="title" :header="t('fields.id')" sortable>
         <template #body="slotProps">
           {{ slotProps.data.id }}
         </template>
       </Column>
 
-      <Column field="eventStartTime" header="体育项目" sortable>
+      <Column field="eventStartTime" :header="t('fields.sportType')" sortable>
         <template #body="slotProps">
           {{ getSportName(slotProps.data.sportId) }}
         </template>
       </Column>
 
-      <Column field="liveStatus" header="赛事名称(英文)" sortable>
+      <Column field="liveStatus" :header="t('fields.teamNameEn')" sortable>
         <template #body="slotProps">
           {{ slotProps.data.nameEn }}
         </template>
       </Column>
 
-      <Column field="sportId" header="赛事名称(中文)" sortable>
+      <Column field="sportId" :header="t('fields.teamNameZh')" sortable>
         <template #body="slotProps">
           {{ slotProps.data.nameZh }}
         </template>
       </Column>
 
-      <Column field="liveStatus" header="队伍图标" sortable style="min-width: 80px; max-width: 80px;">
+      <Column field="liveStatus" :header="t('fields.teamIcon')" sortable style="min-width: 80px; max-width: 80px;">
         <template #body="slotProps">
           <Image
             v-if="slotProps.data.icon"
@@ -98,7 +98,7 @@
           />
         </template>
       </Column>
-      <Column field="liveStatus" header="操作" sortable>
+      <Column field="liveStatus" :header="t('fields.operate')" sortable>
         <template #body="slotProps">
           <div class="flex justify-between" style="display: flex; gap: 8px">
             <Button
@@ -146,7 +146,7 @@
           :options="uiControl.sport"
           optionLabel="name"
           optionValue="id"
-          placeholder="体育项目"
+          :placeholder="t('fields.sportType')"
         />
       </div>
     </div>

@@ -16,6 +16,7 @@
             :max="unitMaxMap[form.unit] || 60"
             :useGrouping="false"
             class="flex-grow-1"
+            style="padding-right: 8px;"
           />
           <Dropdown
             v-model="form.unit"
@@ -28,14 +29,14 @@
       </div>
 
       <Button
-        label="封鎖"
+        :label="t('fields.block')"
         icon="pi pi-lock"
         severity="primary"
         @click="blockUser"
         class="p-button-sm"
       />
       <Button
-        label="重新整理"
+        :label="t('fields.refresh')"
         icon="pi pi-refresh"
         severity="secondary"
         @click="loadBlockList"
@@ -52,7 +53,7 @@
       <Column :header="t('fields.operate')">
         <template #body="slotProps">
           <Button
-            label="解除封鎖"
+            :label="t('fields.unblock')"
             icon="pi pi-unlock"
             severity="danger"
             size="small"

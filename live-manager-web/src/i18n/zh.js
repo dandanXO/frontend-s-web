@@ -777,6 +777,7 @@ export default {
     innerSetting: '内圈几率设置',
     ip: '访问 IP',
     isDeposit: '显示存款会员',
+    isLiveUrlExist: '是否推流',
     isMultiple: '支持多选项',
     itsYou: '是你',
     jackpotAmount: '奖金池',

@@ -25,7 +25,7 @@
             :options="uiControl.sport"
             optionLabel="name"
             optionValue="key"
-            placeholder="体育项目"
+            :placeholder="t('fields.sportType')"
             :size="'small'"
           />
           <Select
@@ -33,45 +33,45 @@
             :options="uiControl.status"
             optionLabel="display"
             optionValue="key"
-            placeholder="状态"
+            :placeholder="t('fields.status')"
             :size="'small'"
           />
           <InputText
             type="text"
             v-model="request.matchName"
-            optionLabel="赛事标题"
-            placeholder="赛事标题"
+            :optionLabel="t('fields.matchTitle')"
+            :placeholder="t('fields.name')"
           />
           <InputText
             type="text"
             v-model="request.matchId"
             optionLabel="ID"
-            placeholder="ID"
+            :placeholder="t('fields.id')"
           />
           <Select
             v-model="request.supplierStreamUrl"
             :options="uiControl.isSupplierStreamUrlExist"
             optionLabel="display"
             optionValue="key"
-            placeholder="状态"
+            :placeholder="t('fields.isLiveUrlExist')"
             :size="'small'"
           />
           <Button
-            label="搜索"
+            :label="t('fields.search')"
             :size="'small'"
             severity="success"
             icon="pi pi-search"
             @click="loadMatchMars"
           />
           <Button
-            label="重置"
+            :label="t('fields.reset')"
             :size="'small'"
             severity="warn"
             icon="pi pi-refresh"
             @click="resetQuery"
           />
           <Button
-            label="删除"
+            :label="t('fields.delete')"
             :size="'small'"
             icon="pi pi-times"
             severity="danger"
@@ -81,7 +81,7 @@
       </template>
 
       <Column selectionMode="multiple" headerStyle="min-width: 10px;"></Column>
-      <Column field="ID" header="ID" sortable style="min-width: 100px;">
+      <Column field="ID" :header="t('fields.id')" sortable style="min-width: 100px;">
         <template #body="slotProps">
           {{ slotProps.data.matchId }}
         </template>

@@ -2,7 +2,7 @@
   <div class="p-3 vip-status-main">
     <div class="flex mb-3 justify-content-start">
       <Button
-        label="重新整理"
+        :label="t('fields.refresh')"
         icon="pi pi-refresh"
         severity="primary"
         @click="loadVipStatus"
@@ -16,8 +16,8 @@
       dataKey="id"
       class="p-datatable-sm"
     >
-      <Column field="name" header="名稱" />
-      <Column header="狀態" style="width: 100px; text-align: center;">
+      <Column field="name" :header="t('fields.name')" />
+      <Column :header="t('fields.status')" style="width: 100px; text-align: center;">
         <template #body="slotProps">
           <InputSwitch
             v-model="slotProps.data.status"

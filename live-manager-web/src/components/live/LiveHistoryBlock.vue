@@ -1,14 +1,14 @@
 <template>
   <div class="p-3 chat-history-page">
     <div class="flex gap-3 mb-4 align-items-center">
-      <label for="stream-select" class="font-bold">直播流:</label>
+      <label for="stream-select" class="font-bold">{{ t('fields.stream') }}:</label>
       <Dropdown
         id="stream-select"
         v-model="selectedStreamId"
         :options="streamList"
         optionLabel="titleWithId"
         optionValue="id"
-        placeholder="選擇串流"
+        :placeholder="t('fields.stream')"
         :filter="true"
         class="w-full md:w-20rem"
         @change="loadChatHistory"
@@ -16,14 +16,14 @@
     </div>
 
     <DataTable :value="chatList" :loading="loading" class="p-datatable-sm" style="margin-top: 20px">
-      <Column field="name" :header="'名稱'" style="width: 200px;" />
-      <Column field="content" :header="'內容'" />
-      <Column :header="'操作'" style="width: 220px;">
+      <Column field="name" :header="t('fields.name')" style="width: 200px;" />
+      <Column field="content" :header="t('fields.content')" />
+      <Column :header="t('fields.operate')" style="width: 220px;">
         <template #body="slotProps">
           <div class="p-button-group">
             <Button
               v-if="!slotProps.data.blocked"
-              label="封鎖"
+              :label="t('fields.block')"
               icon="pi pi-ban"
               severity="danger"
               size="small"
@@ -31,14 +31,14 @@
             />
             <template v-else>
               <Button
-                label="延長封鎖"
+                :label="t('fields.extendBlock')"
                 icon="pi pi-clock"
                 severity="info"
                 size="small"
                 @click="showBlockDialog(slotProps.data.name)"
               />
               <Button
-                label="解除封鎖"
+                :label="t('fields.unblock')"
                 icon="pi pi-check"
                 severity="success"
                 size="small"
@@ -69,11 +69,11 @@
     >
       <div class="p-fluid">
         <div class="field">
-          <label for="loginName" class="font-bold"> 登录名</label>
+          <label for="loginName" class="font-bold"> {{ t('fields.loginName') }}</label>
           <InputText id="loginName" v-model="dialog.form.loginName" disabled />
         </div>
         <div class="field">
-          <label for="blockDuration" class="font-bold">封锁时间</label>
+          <label for="blockDuration" class="font-bold"> {{ t('fields.blockDuration') }}</label>
           <div class="grid">
             <div class="col-6">
               <InputNumber
@@ -97,14 +97,14 @@
       </div>
       <template #footer>
         <Button
-          label="取消"
+          :label="t('fields.cancel')"
           icon="pi pi-times"
           text
           severity="danger"
           @click="dialog.visible = false"
         />
         <Button
-          label="確認"
+          :label="t('fields.confirm')"
           icon="pi pi-check"
           severity="primary"
           @click="submitBlock"
