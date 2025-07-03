@@ -19,9 +19,9 @@ export function formatTimeZone(time, timezone) {
   return moment(formattedTimeZone).format('YYYY/MM/DD HH:mm:ss');
 }
 
-export function formatInputTimeZone(time, timezone, type = '') {
+export function formatInputTimeZone(time, timezone, type = '', format = 'YYYY-MM-DD HH:mm:ss') {
   if (!timezone) {
-    return moment(time).format('YYYY-MM-DD HH:mm:ss');
+    return moment(time).format(format);
   }
 
   var oriTimeZone = moment(time).add(8, 'hour');
@@ -34,5 +34,5 @@ export function formatInputTimeZone(time, timezone, type = '') {
     ? moment(oriTimeZone).subtract(hourDifferent, 'hours')
     : moment(oriTimeZone).add(hourDifferent, 'hours');
 
-  return moment(formattedTimeZone).format('YYYY-MM-DD HH:mm:ss');
+  return moment(formattedTimeZone).format(format);
 }
