@@ -13,28 +13,13 @@
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
-          <div style="display: flex; gap: 8px">
-            <Button
-              :size="'small'"
-              type="button"
-              icon="pi pi-filter-slash"
-              label="清除"
-              outlined
-              @click="clearFilter()"
-            />
-          </div>
           <!-- 搜尋框 -->
-          <IconField class="search-container">
-            <InputIcon>
-              <i class="pi pi-search search-icon" />
-            </InputIcon>
-            <InputText
-              v-model="filters['global'].value"
-              placeholder="關鍵詞搜索"
-              :size="'small'"
-              class="search-input"
-            />
-          </IconField>
+          <InputText
+            v-model="filters['global'].value"
+            placeholder="關鍵詞搜索"
+            :size="'small'"
+            class="search-input"
+          />
           <!-- 重新載入按鈕 -->
           <Button
             :size="'small'"
@@ -43,6 +28,15 @@
             label="重新載入"
             severity="info"
             @click="fetchStreams"
+            :loading="loading"
+          />
+          <Button
+            :size="'small'"
+            type="button"
+            icon="pi pi-refresh"
+            label="清除"
+            severity="warn"
+            @click="clearFilter"
             :loading="loading"
           />
         </div>
@@ -95,6 +89,7 @@
       <Column header="操作">
         <template #body="slotProps">
           <Button
+            :size="'small'"
             icon="pi pi-eye"
             class="p-button-rounded p-button-info mr-2"
             @click="viewStream(slotProps.data)"

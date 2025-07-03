@@ -7,12 +7,14 @@
           :label="t('fields.search')"
           icon="pi pi-search"
           class="p-button-sm"
+          severity="success"
           @click="loadList()"
         />
         <Button
           :label="t('fields.add')"
           icon="pi pi-plus"
           class="p-button-sm p-button-primary"
+          severity="info"
           @click="showDialog('CREATE')"
         />
       </div>
@@ -81,6 +83,7 @@
             class="p-button-sm p-button-warning p-mr-2"
             :label="t('fields.edit')"
             @click="showDialog('EDIT', slotProps.data)"
+            style="margin-right: 8px;"
           />
           <Button
             icon="pi pi-trash"

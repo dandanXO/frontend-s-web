@@ -15,37 +15,33 @@
         <!-- 搜尋欄位 -->
         <template #header>
           <div class="flex justify-between" style="display: flex; gap: 8px">
-            <div style="display: flex; gap: 8px">
-              <Button
-                :size="'small'"
-                type="button"
-                icon="pi pi-filter-slash"
-                label="清除"
-                outlined
-                @click="clearFilter()"
-              />
-            </div>
             <!-- 搜尋框 -->
-            <IconField class="search-container">
-              <InputIcon>
-                <i class="pi pi-search search-icon" />
-              </InputIcon>
-              <InputText v-model="filters['global'].value" placeholder="關鍵詞搜索" :size="'small'" class="search-input" />
-            </IconField>
+            <InputText 
+              v-model="filters['global'].value" 
+              :placeholder="t('fields.search')" 
+              :size="'small'" 
+              class="search-input" 
+            />
             <!-- 重新載入按鈕 -->
             <Button
               :size="'small'"
               type="button"
               icon="pi pi-refresh"
-              label="重新載入"
+              :label="t('fields.refresh')"
               severity="info"
               @click="fetchSensitiveWords"
               :loading="loading"
             />
-
             <Button 
               :size="'small'"
-              label="新增敏感字" 
+              :label="t('fields.reset')" 
+              severity="warn"
+              icon="pi pi-filter-slash"
+              @click="clearFilter()" 
+            />
+            <Button 
+              :size="'small'"
+              :label="t('fields.add')" 
               icon="pi pi-plus" 
               @click="openDialog()" 
             />
@@ -54,29 +50,32 @@
         </template>
   
         <!-- 表格欄位 -->
-        <Column field="word" header="敏感字" sortable>
+        <Column field="word" :header="t('fields.sensitiveWord')" sortable>
           <template #body="slotProps">
             {{ slotProps.data.word }}
           </template>
         </Column>
-        <Column field="createTime" header="建立時間" sortable>
+        <Column field="createTime" :header="t('fields.createTime')" sortable>
           <template #body="slotProps">
             {{ formatDateTime(slotProps.data.createTime) }}
           </template>
         </Column>
-        <Column field="createBy" header="建立者" sortable>
+        <Column field="createBy" :header="t('fields.createBy')" sortable>
           <template #body="slotProps">
             {{ slotProps.data.createBy }}
           </template>
         </Column>
-        <Column header="操作" :exportable="false" style="min-width:8rem">
+        <Column :header="t('fields.operate')" :exportable="false" style="min-width:8rem">
           <template #body="slotProps">
             <Button 
+              :size="'small'"
               icon="pi pi-pencil" 
               class="mr-2 p-button-rounded p-button-success"
               @click="editWord(slotProps.data)"
+              style="margin-right: 8px;"
             />
             <Button 
+              :size="'small'"
               icon="pi pi-trash" 
               class="p-button-rounded p-button-danger" 
               @click="confirmDelete(slotProps.data)"
@@ -89,17 +88,17 @@
       <Dialog 
         v-model:visible="dialogVisible" 
         :style="{width: '450px'}" 
-        :header="dialogMode === 'add' ? '新增敏感字' : '編輯敏感字'" 
+        :header="dialogMode === 'add' ? t('fields.addSensitiveWord') : t('fields.editSensitiveWord')" 
         :modal="true"
         class="p-fluid"
       >
         <div class="field">
-          <label for="word">敏感字</label>
+          <label for="word">{{ t('fields.sensitiveWord') }}</label>
           <InputText id="word" v-model.trim="editingWord.word" required autofocus />
         </div>
         <template #footer>
-          <Button label="取消" icon="pi pi-times" class="p-button-text" @click="closeDialog" />
-          <Button label="確定" icon="pi pi-check" class="p-button-text" @click="saveWord" />
+          <Button :label="t('fields.cancel')" icon="pi pi-times" class="p-button-text" @click="closeDialog" />
+          <Button :label="t('fields.confirm')" icon="pi pi-check" class="p-button-text" @click="saveWord" />
         </template>
       </Dialog>
   
@@ -107,7 +106,7 @@
       <Dialog 
         v-model:visible="deleteDialogVisible" 
         :style="{width: '450px'}"
-        header="確認"
+        :header="t('fields.confirm')"
         :modal="true"
       >
         <div class="confirmation-content">
@@ -115,8 +114,8 @@
           <span>確定要刪除此敏感字嗎？</span>
         </div>
         <template #footer>
-          <Button label="否" icon="pi pi-times" class="p-button-text" @click="deleteDialogVisible = false" />
-          <Button label="是" icon="pi pi-check" class="p-button-text" @click="deleteWord" />
+          <Button :label="t('fields.no')" icon="pi pi-times" class="p-button-text" @click="deleteDialogVisible = false" />
+          <Button :label="t('fields.yes')" icon="pi pi-check" class="p-button-text" @click="deleteWord" />
         </template>
       </Dialog>
     </div>
@@ -128,7 +127,7 @@
   import { DashboardService } from '@/service/DashboardService'
   import { useI18n } from 'vue-i18n'
 
-  const t = useI18n()
+  const { t } = useI18n()
   const toast = useToast()
   const loading = ref(false)
   const sensitiveWords = ref([])
