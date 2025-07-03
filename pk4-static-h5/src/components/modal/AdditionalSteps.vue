@@ -349,13 +349,21 @@ onMounted(() => {
     background: transparent;
     border-radius: 10px;
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.8);
+    &.step-1 {
+      .inner-line {
+        background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
+        background-size: contain;
+      }
+    }
     .inner-line {
       width: 100%;
       height: 100%;
-      border: 2px dashed #5dcd77;
-      box-shadow: 0px 0px 30px 0px #00e60091;
+      // border: 2px dashed #5dcd77;
+      // box-shadow: 0px 0px 30px 0px #00e60091;
+      border: 2px dotted #0084FF;
+      box-shadow: 0 0 20px 0 rgb(0 112 230 / 57%);
       border-radius: 20px;
-
+        
       &:after {
         position: absolute;
         content: "";
@@ -429,8 +437,11 @@ onMounted(() => {
     .inner-line {
       width: 100%;
       height: 100%;
-      border: 2px dashed #5dcd77;
-      box-shadow: 0px 0px 30px 0px #00e60091;
+      // border: 2px dashed #5dcd77;
+      // box-shadow: 0px 0px 30px 0px #00e60091;
+      
+      border: 2px dotted #0084FF;
+      box-shadow: 0 0 20px 0 rgb(0 112 230 / 57%);
       border-radius: 20px;
 
       &:after {
@@ -458,10 +469,11 @@ onMounted(() => {
       right: unset;
       bottom: 0;
       right: 0;
-      // .inner-line {
-      //   background: url(../../assets/images/newplayerguide/refer-point-2.png) no-repeat center center;
-      //   background-size: 150%;
-      // }
+      .inner-line {
+        background: url(../../assets/images/newplayerguide/refer-point-2.png) no-repeat center center;
+        // background-size: 150%;
+        background-size: contain;
+      }
     }
     &.step-3 {
       width: 95%;
@@ -491,8 +503,8 @@ onMounted(() => {
     }
   }
   .green-highlight-box.withdraw-mode {
-    width: 80px;
-    height: 80px;
+    // width: 80px;
+    // height: 80px;
     position: absolute;
     right: 11vh;
     bottom: 0;
@@ -500,11 +512,21 @@ onMounted(() => {
     background: transparent;
     border-radius: 10px;
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.8);
+    
+    &.step-1 {
+      .inner-line {
+        background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
+        background-size: contain;
+      }
+    }
     .inner-line {
       width: 100%;
       height: 100%;
-      border: 2px dashed #5dcd77;
-      box-shadow: 0px 0px 30px 0px #00e60091;
+      // border: 2px dashed #5dcd77;
+      // box-shadow: 0px 0px 30px 0px #00e60091;
+      
+      border: 2px dotted #0084FF;
+      box-shadow: 0 0 20px 0 rgb(0 112 230 / 57%);
       border-radius: 20px;
 
       &:after {
@@ -520,11 +542,18 @@ onMounted(() => {
       }
     }
     &.step-1 {
-      width: 80px;
-      height: 80px;
-      // right: 11vh;
-      right: 22%;
-      bottom: 0;
+      // width: 80px;
+      // height: 80px;
+      // // right: 11vh;
+      // right: 22%;
+      // bottom: 0;
+        width: 16vw;
+        height: 16vw;
+        max-width: 80px;
+        max-height: 80px;
+        // right: 11vh;
+        right: 22%;
+        bottom: 0;
       // .inner-line {
       //   background: url(../../assets/images/newplayerguide/dep-point-1.png) no-repeat center center;
       //   background-size: 60%;
@@ -766,20 +795,30 @@ onMounted(() => {
       .title {
         position: absolute;
         font-family: Inter;
-        font-weight: 700;
+        font-weight: 900;
         font-size: 5.6vw;
         line-height: 71.12px;
         text-align: center;
         color: #ffffff;
-        text-shadow: -1px -1px 0 #215f25, 1px -1px 0 #215f25, -1px 1px 0 #215f25, 1px 1px 0 #215f25;
+        // text-shadow: -1px -1px 0 #215f25, 1px -1px 0 #215f25, -1px 1px 0 #215f25, 1px 1px 0 #215f25;
         text-transform: uppercase;
-        bottom: 1.3vh;
+        bottom: -.6vh;
         width: 80%;
         margin: 0 auto;
         left: 0;
         right: 0;
+        
+        background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        -webkit-text-stroke: .2px;
+          letter-spacing: -1px;
+        filter: drop-shadow(0px 4.08px 0px 0px #00000026);
         @media screen and (min-width: 500px) {
-          bottom: 2.4vh;
+          // bottom: 2.4vh;
+          
+          bottom: -.6vh;
           font-size: 30px;
         }
       }
@@ -790,12 +829,18 @@ onMounted(() => {
 
     .main-box {
       z-index: 1;
-      background: linear-gradient(325.86deg, rgba(14, 30, 8, 0.85) 5.38%, rgba(27, 96, 38, 0.85) 98.11%);
+      // background: linear-gradient(325.86deg, rgba(14, 30, 8, 0.85) 5.38%, rgba(27, 96, 38, 0.85) 98.11%);
+      // box-shadow: 0px 0px 37.43px 0px #b479ff40 inset;
+      // backdrop-filter: blur(10px);
+      // border: 1px solid #24ee89;
+      // padding: 25px 10px 15px;
+      // margin: -45px auto 0;
       box-shadow: 0px 0px 37.43px 0px #b479ff40 inset;
       backdrop-filter: blur(10px);
-      border: 1px solid #24ee89;
-      padding: 25px 10px 15px;
-      margin: -45px auto 0;
+      background: linear-gradient(231.79deg, #D8F3FA 5.22%, #E4F4FF 53.35%, #D8F3FA 95.86%);
+      
+      margin: -65px auto 0;
+      padding: 65px 10px 15px;
       border-radius: 16px;
       display: flex;
       // gap: 25px;
@@ -809,6 +854,7 @@ onMounted(() => {
       width: 85%;
       .other-steps {
         margin: 20px auto 0;
+        width: 100%;
         &.hide {
           display: none;
         }
@@ -824,12 +870,13 @@ onMounted(() => {
         }
         .mid-content {
           min-height: 45px;
-          background: linear-gradient(
-            270deg,
-            rgba(69, 181, 121, 0) 0%,
-            rgba(69, 181, 121, 0.5) 46.5%,
-            rgba(69, 181, 121, 0) 100%
-          );
+          // background: linear-gradient(
+          //   270deg,
+          //   rgba(69, 181, 121, 0) 0%,
+          //   rgba(69, 181, 121, 0.5) 46.5%,
+          //   rgba(69, 181, 121, 0) 100%
+          // );
+          background: linear-gradient(270deg, rgba(6, 107, 216, 0) 0%, #066BD8 46.5%, rgba(6, 107, 216, 0) 100%);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -838,7 +885,8 @@ onMounted(() => {
           font-family: Poppins;
           font-weight: 700;
           .ins {
-            color: #90e974;
+            color: #ffffff;
+            webkit-text-stroke: .5;
             font-size: 1.5vh;
             line-height: 1.8vh;
           }
@@ -854,7 +902,7 @@ onMounted(() => {
             .ins {
               font-size: 2.5vh;
               line-height: 3.5vh;
-              color: #fff15c;
+              color: #000000;
               text-align: center;
             }
           }
@@ -862,7 +910,8 @@ onMounted(() => {
       }
 
       .step-no {
-        color: #90e974;
+        color: #066AD7;
+        font-weight: bold;
         margin: 0px auto 15px;
         text-align: center;
         &.refer-mode {
@@ -882,7 +931,8 @@ onMounted(() => {
       .next-button {
         text-transform: uppercase;
         cursor: pointer;
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+
         padding: 10px;
         font-family: Poppins;
         font-weight: 700;
@@ -894,13 +944,14 @@ onMounted(() => {
         // padding: 8px 30px;
         letter-spacing: 0px;
         text-align: center;
-        color: #000000;
+        color: #ffffff;
         border-radius: 8px;
         margin: 0 auto;
         position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
+    min-width: 120px;
         // gap: 10px;
         > div:not(:last-child) {
           margin-right: 10px;
@@ -908,7 +959,7 @@ onMounted(() => {
       }
       .bottom-button {
         cursor: pointer;
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        background: #BCDCFF;
         padding: 10px;
         font-family: Poppins;
         font-weight: 700;
@@ -919,7 +970,7 @@ onMounted(() => {
         padding: 15px 10px;
         letter-spacing: 0px;
         text-align: center;
-        color: #000000;
+        color: #333333;
         border-radius: 8px;
         margin: 0 auto;
         position: relative;
@@ -927,6 +978,7 @@ onMounted(() => {
         justify-content: center;
         align-items: center;
         gap: 10px;
+    min-width: 120px;
         img {
           width: 25px;
         }
