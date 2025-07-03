@@ -65,7 +65,7 @@
     >
       <Column field="id" header="ID" style="width: 100px" />
       <Column field="word" :header="t('fields.sensitiveWord')" />
-      <Column field="createTime" :header="t('fields.createTime')" style="width: 180px">
+      <Column field="createTime" :header="t('fields.createTime')" style="width: 200px">
         <template #body="slotProps">
           <span v-if="slotProps.data.createTime === null">-</span>
           <span v-else>
@@ -73,8 +73,8 @@
           </span>
         </template>
       </Column>
-      <Column field="createBy" :header="t('fields.createBy')" style="width: 120px" />
-      <Column :header="t('fields.operate')" style="width: 200px; text-align: right">
+      <Column field="createBy" :header="t('fields.createBy')" style="width: 200px" />
+      <Column :header="t('fields.operate')" style="width: 200px;">
         <template #body="slotProps">
           <Button
             icon="pi pi-pencil"
@@ -96,7 +96,7 @@
       :rows="request.size"
       :totalRecords="page.total"
       :rowsPerPageOptions="[10, 20, 50]"
-      v-model:first="request.current"
+      :first="(request.current - 1) * request.size"
       template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
       @page="changePage"
       class="p-mt-2"
@@ -130,13 +130,15 @@ const toast = useToast();
 
 const request = reactive({
   siteId: '',
-  size: 10,
-  current: 0 // PrimeVue Paginator uses 0-based index for 'first'
+  size: 30,
+  current: 1 // PrimeVue Paginator uses 0-based index for 'first'
 });
 
 const page = reactive({
   total: 0,
   records: [],
+  loading: false,
+  current: 1,
   loading: false
 });
 
@@ -162,6 +164,7 @@ async function loadList() {
     const res = await DashboardService.getSensitiveWordNew({ siteId: request.siteId, size: request.size, current: request.current + 1 }); // Adjust for 1-based API
     page.records = res.data.records;
     page.total = res.data.total;
+    page.current = res.data.current;
   } catch (error) {
     toast.add({ severity: 'error', summary: 'Error', detail: t('message.loadFailed'), life: 3000 });
   } finally {
@@ -236,7 +239,7 @@ function confirmDelete(id) {
 }
 
 function changePage(event) {
-  request.current = event.first; // PrimeVue Paginator returns 'first' which is the 0-based index of the first row
+  request.current = event.page + 1; // PrimeVue Paginator returns 'first' which is the 0-based index of the first row
   request.size = event.rows;
   loadList();
 }

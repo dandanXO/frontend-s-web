@@ -81,7 +81,7 @@
         </template>
       </Column>
 
-      <Column field="liveStatus" header="队伍图标" sortable>
+      <Column field="liveStatus" header="队伍图标" sortable style="min-width: 80px; max-width: 80px;">
         <template #body="slotProps">
           <Image
             v-if="slotProps.data.icon"
@@ -92,7 +92,9 @@
             "
             preview
             alt="Image"
-            width="100"
+            width="50"
+      height="50"
+      style="object-fit: contain; max-width: 100%;"
           />
         </template>
       </Column>
@@ -159,7 +161,7 @@
         margin-bottom: 16px;
       "
     >
-      <label for="loginName" class="w-24 font-semibold"> 1111{{ t('fields.teamNameEn') }}</label>
+      <label for="loginName" class="w-24 font-semibold"> {{ t('fields.teamNameEn') }}</label>
       <div style="width: 450px">
         <InputText id="loginName" class="w-full" style="width: 100%" v-model="form.nameEn" />
       </div>
@@ -574,4 +576,10 @@ onMounted(() => {
 :deep(.p-input-icon-left i) {
   margin-left: 0.5rem; /* 調整左邊距 */
 }
+
+.p-image img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
 </style>

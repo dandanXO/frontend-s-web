@@ -219,7 +219,7 @@ export const DashboardService = {
   unblockUserApi(data) {
     const token = sessionStorage.getItem('token')
 
-    return api.put('/session/unblock', data, {
+    return api.put('/session/live-sport/chat-block/unblock', data, {
       headers: {
         token: `${token}`,
         'Content-Type': 'application/json',

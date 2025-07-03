@@ -1,6 +1,6 @@
 <!--TODO-->
 <template>
-  <div class="roles-main">
+  <div class="card">
     <DataTable
       :value="page.records"
       :rows="30"

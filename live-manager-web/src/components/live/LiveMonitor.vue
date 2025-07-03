@@ -14,40 +14,27 @@
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
-          <div style="display: flex; gap: 8px">
-            <Button
-              :size="'small'"
-              type="button"
-              icon="pi pi-filter-slash"
-              label="清除"
-              outlined
-              @click="clearFilter()"
-            />
-          </div>
-          <div style="display: flex; gap: 8px; align-items: center">
-            <span>日期区间：</span>
-            <Calendar
-              v-model="filters.startDate"
-              placeholder="开始日期"
-              :showIcon="true"
-              dateFormat="yy-mm-dd"
-            />
-            <span></span>
-            <Calendar
-              v-model="filters.endDate"
-              placeholder="结束日期"
-              :showIcon="true"
-              dateFormat="yy-mm-dd"
-            />
-          </div>
+          <Calendar
+            id="eventTime"
+            v-model="request.eventTime"
+            selectionMode="range"
+            hourFormat="24"
+            dateFormat="yy-mm-dd"
+            fluid
+          />
           <Button
+            label="搜索"
             :size="'small'"
-            type="button"
-            icon="pi pi-refresh"
-            label="重新载入"
-            severity="info"
+            severity="success"
+            icon="pi pi-search"
             @click="fetchStreams"
-            :loading="loading"
+          />
+          <Button
+            label="重置"
+            :size="'small'"
+            severity="warn"
+            icon="pi pi-refresh"
+            @click="resetQuery"
           />
         </div>
       </template>
@@ -165,7 +152,8 @@ import InputText from 'primevue/inputtext'
 import Dialog from 'primevue/dialog'
 import Tag from 'primevue/tag'
 import { useToast } from 'primevue/usetoast'
-
+import { useStorage } from '@vueuse/core'
+const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/promo/'
 //const toast = useToast()
 
 const route = useRoute()
@@ -277,6 +265,15 @@ const clearFilter = () => {
     endDate: defaultEndDate,
   }
 }
+
+const request = reactive({
+  eventTime: [new Date(), new Date()]
+})
+
+function resetQuery() {
+  request.eventTime = [new Date(), new Date()]
+}
+
 //TODO filter date
 // 獲取直播列表
 const fetchStreams = async () => {
@@ -284,10 +281,19 @@ const fetchStreams = async () => {
   try {
     // clearData()
     loading.value = true
-    const request = {
-      eventTime: [formatDate(filters.value.startDate) || defaultStartDate, formatDate(filters.value.endDate) || defaultEndDate],
-    }
+    // const request = {
+    //   eventTime: [formatDate(filters.value.startDate) || defaultStartDate, formatDate(filters.value.endDate) || defaultEndDate],
+    // }
 
+    if (request.eventTime && request.eventTime.length === 2) {
+      const [startTime, endTime] = request.eventTime;
+      const formattedRange = [
+      dayjs(startTime).format('YYYY-MM-DD 00:00:00'),
+      dayjs(endTime).format('YYYY-MM-DD 23:59:59'),
+      ];
+      request.eventTime = formattedRange
+    }
+  
     const dataMethod = DashboardService.getLiveSportMonitorList
     const response = await dataMethod(request)
     streams.value = response
@@ -503,5 +509,24 @@ onMounted(() => {
 
 :deep(.p-input-icon-left i) {
   margin-left: 0.5rem; /* 調整左邊距 */
+}
+.signal-bars {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 14px;
+}
+.bar {
+  width: 4px;
+  background: #ccc;
+  transition: 0.3s;
+}
+.bar:nth-child(1) { height: 4px; }
+.bar:nth-child(2) { height: 6px; }
+.bar:nth-child(3) { height: 8px; }
+.bar:nth-child(4) { height: 10px; }
+.bar:nth-child(5) { height: 12px; }
+.bar.active {
+  background: #67C23A;
 }
 </style>
