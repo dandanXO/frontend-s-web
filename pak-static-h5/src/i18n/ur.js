@@ -913,6 +913,9 @@ export default {
     claimed: "دعوت کر لیا",
     bonus_claim_time: "بونس دعوت کا وقت",
     promoEndsOn: "پرومو ختم ہونے کی تاریخ",
+    claimPopup: {
+      youGet: 'آپ کو ملتا ہے'
+    },
     earnMoney: {
       earnMoney: "پیسہ کمائیں",
       congratsOnGetting: "مبارک ہو، آپ کو یہ حاصل ہوا"

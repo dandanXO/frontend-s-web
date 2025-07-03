@@ -1180,6 +1180,29 @@
 
   <q-dialog
     width="100%"
+    v-model="showClaimPopup.visible"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+    :persistent="true"
+  >
+    <div class="claim-popup-container">
+      <template v-if="showClaimPopup.prize !== 0">
+        <div class="claimed-reward-wrapper">
+          <img class="claimed-reward" src="../assets/images/index/modal/claim-popup/claimed-reward.png" />
+          <span class="claimed-reward-desc">{{ `${$t('hotPromo.claimPopup.youGet')} ${store.currency.value}${showClaimPopup.prize}!` }}</span>
+          <div class="claimed-reward-highlight">{{ `+${store.currency.value}${showClaimPopup.prize}` }}</div>
+        </div>
+      </template>
+      <img v-else class="claim-reward" src="../assets/images/index/modal/claim-popup/please-claim-reward.png" />
+      <img @click="claimClaimPopupPrize" class="claim-reward-btn" src="../assets/images/index/modal/claim-popup/receieve-btn.png" />
+      <img @click="showClaimPopup.visible = false" class="close-btn" src="../assets/images/index/modal/claim-popup/close-btn.png" />
+    </div>
+  </q-dialog>
+  
+
+  <q-dialog
+    width="100%"
     class="modal-update-div"
     v-model="isAppUpdateModal"
     show-cancel-button
@@ -4168,6 +4191,10 @@ const homePopupFrequency = ref(0);
 const homePopupFrequencyNum = ref(0);
 const homePopupLink = ref("");
 const homePopupLinkOut = ref(false);
+const showClaimPopup = ref({
+  visible: false,
+  prize: 0,
+});
 
 const setExpiryBanner = () => {
   isImportantAnnoucementModal.value = false;
@@ -4365,6 +4392,21 @@ const checkNewPlayerWheelPromoHomePopupCanShow = () => {
     newPlayerPromoHomePopupRef.value.checkIsCanShowPopup();
   }
 };
+
+const claimClaimPopupPrize = () => {
+  eventapi.post('/session/privilege-voucher/claim').then((res) => {
+    console.log('here', res)
+  })
+}
+
+const loadClaimPopup = () => {
+  eventapi.get('/session/privilege-voucher/init').then((res) => {
+    if(res.code === 0 && res.data.bonus > 0) {
+      showClaimPopup.value.visible = true;
+    }
+  })
+}
+
 onActivated(async () => {
   nextTick(() => {
     if (
@@ -4457,6 +4499,7 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
+  loadClaimPopup();
   ui.shouldFetchDownloadAppUrl = true;
 
   if (store.hasToken() && ui.annoyingType !== "NONE") {
@@ -6761,6 +6804,90 @@ const checkGoogleLoginSetPwd = () => {
   100% {
     bottom: 60%; /* End position */
     right: -7vh; /* Back to the original position on the right */
+  }
+}
+
+.claim-popup-container {
+  background: url('../assets/images/index/modal/claim-popup/claim-popup-bg.png') center center no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 747/1000;
+  width: 350px;
+  height: 468px;
+  position: relative;
+
+  .claim-reward {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    width: 220px;
+    aspect-ratio: 393/350;
+  }
+
+  .claimed-reward-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .claimed-reward {
+      width: 150px;
+      aspect-ratio: 393/304;
+    }
+
+    .claimed-reward-desc {
+
+    }
+
+    .claimed-reward-highlight {
+      background: url('../assets/images/index/modal/claim-popup/claimed-reward-highlight.png') center center no-repeat;
+      background-size: 100% 100%;
+      aspect-ratio: 358/95;
+      width: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: 'Poppins';
+      font-weight: 900;
+      font-size: 30px;
+      line-height: 100%;
+      letter-spacing: 0px;
+      text-align: center;
+      color: #FFF96F;
+    }
+  }
+
+  .claim-reward-btn {
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 130px;
+    height: auto;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+
+    &:active {
+      transform: translate(-50%, -48%);
+    }
+  }
+
+  .close-btn {
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, 8%);
+    width: 25px;
+    height: auto;
   }
 }
 </style>
