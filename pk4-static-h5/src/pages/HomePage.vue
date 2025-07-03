@@ -61,7 +61,7 @@
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky
       v-if="isShowStickyIcons"
-      style="z-index: 2000"
+      style="z-index: 2001"
       position="bottom-right"
       :offset="csDragPos"
       class="floating-btn scalable"
@@ -69,20 +69,22 @@
     >
       <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
         <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
+          <img class="cs-icon-wrapper-img" src="../assets/images/index/icon-cs.png" />
+
           <a class="cs-icon youtube" :href="ui.youtubeUrl" target="_blank">
-            <img src="../assets/images/index/youtube-icon.png" />
+            <img src="../assets/images/index/youtube-icon.gif" />
           </a>
           <a class="cs-icon tiktok" :href="ui.instagramUrl" target="_blank">
-            <img src="../assets/images/index/insta-icon.png" />
+            <img src="../assets/images/index/insta-icon.gif" />
           </a>
           <!--          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">-->
           <!--            <img src="../assets/images/index/cs-tiktok.png" />-->
           <!--          </a>-->
           <a class="cs-icon whatsapp" :href="ui.whatsappUrl" target="_blank">
-            <img src="../assets/images/index/cs-whatsapp.png" />
+            <img src="../assets/images/index/cs-whatsapp.gif" />
           </a>
           <a class="cs-icon cs" :href="ui.CSAUrl" target="_blank">
-            <img src="../assets/images/index/cs-cs.png" />
+            <img src="../assets/images/index/cs-cs.gif" />
           </a>
         </div>
       </div>
@@ -105,7 +107,7 @@
       :offset="hbDragPos"
       class="floating-btn scalable"
       :style="{ transform: `scale(${scaleValue})` }"
-      v-if="isHbShow && isShowStickyIcons"
+      v-if="isHbShow && isShowStickyIcons && hbPromo.length > 0"
     >
       <div>
         <!--        <div class="hb-close">-->
@@ -175,8 +177,8 @@
       </a> -->
     </div>
     <swiper
-      :slidesPerView="4"
-      :slidesPerGroup="4"
+      :slidesPerView="6"
+      :slidesPerGroup="6"
       :spaceBetween="10"
       :modules="[Navigation, Grid]"
       class="hometop-categories"
@@ -185,8 +187,8 @@
         <template v-if="item.icon !== 'lobby'">
           <swiper-slide @click="activateSlide(item)">
             <div class="category">
-              <img :src="`${getImageUrl(item.icon)}`" />
-              <div class="cat-label">
+              <img :src="`${getImageUrl(item)}`" />
+              <div class="cat-label" :class="item.active ? 'active' : ''">
                 {{ item.label }}
               </div>
             </div>
@@ -266,9 +268,8 @@
               :slidesPerGroup="3"
               :spaceBetween="10"
               :modules="[Navigation, Grid]"
-              :grid="{ rows: 1, fill: 'row' }"
-              :navigation="{ nextEl: '.custom-hot-next', prevEl: '.custom-hot-prev' }"
-              class="platform-game-container"
+              :grid="{ rows: 2, fill: 'row' }"
+              style="padding:10px 0;"
             >
               <template v-for="(item, index) in hotGameList" :key="index">
                 <template v-if="item.type && item.type === 'game'">
@@ -290,7 +291,7 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                  return `url(https://pk1.game/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -333,7 +334,7 @@
                                 try {
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                  return `url(https://pk1.game/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
                                 }
                               }
                             })()
@@ -376,7 +377,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                return `url(https://pk1.game/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -418,7 +419,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://pk1.game/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -489,7 +490,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://pk1.game/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -525,7 +526,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://pk1.game/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -607,7 +608,7 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://m.b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(https://pk1.game/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -657,7 +658,7 @@
                           try {
                             return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(https://pk1.game/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -730,7 +731,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://pk1.game/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -769,7 +770,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://pk1.game/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -918,7 +919,7 @@
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(https://pk1.game/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         }
                       })()
@@ -949,7 +950,7 @@
                           try {
                             return `url(${imgURLGame}${item.icon})`;
                           } catch (e) {
-                            return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(https://pk1.game/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         }
                       })()
@@ -1018,7 +1019,7 @@
                               try {
                                 return `url(${imgURLGame}${item.icon})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://pk1.game/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             }
                           })()
@@ -1065,7 +1066,7 @@
                             try {
                               return `url(${imgURLGame}${item.icon})`;
                             } catch (e) {
-                              return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(https://pk1.game/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           }
                         })()
@@ -1121,7 +1122,7 @@
                       try {
                         return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
-                        return `url(https://m.b9mega1.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(https://pk1.game/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
                       }
                     })()
                   }"
@@ -1152,14 +1153,14 @@
             </div>
             <div class="app app_android">
               <div class="icon">
-                
+
                 <img src="../assets/images/index/app-android.png">
               </div>
               <div class="app-text">
                 <div class="type">App</div>
                 <div class="version">Android version</div>
               </div>
-              
+
               <div class="right-btn">
                 <img src="../assets/images/index/btn-right.png">
               </div>
@@ -1167,12 +1168,12 @@
           </div>
           <div class="support-button">
             <div class="supp-left">
-              <div class="supp-main">24/7 support</div>
-              <div class="supp-sub">If you still have questions, please contact us</div>
+              <div class="supp-main">{{ $t('home.twentyFourSevenSupport') }}</div>
+              <div class="supp-sub">{{ $t('home.ifHaveQuestionsContactUs') }}</div>
             </div>
-            
-            <q-btn class="btn-primary" :href="ui.CSAUrl" target="_blank">Chat</q-btn>
-            
+
+            <q-btn class="btn-primary" :href="ui.CSAUrl" target="_blank">{{ $t('home.chat') }}</q-btn>
+
             <!-- <a class="btn-primary" :href="ui.CSAUrl" target="_blank">
               <img src="../assets/images/index/cs-cs.png" />
             </a> -->
@@ -1194,7 +1195,7 @@
   </div>
   <div style="display: none;">
 
-    <ShareIcons ref="shareRef" />
+    <ShareIcons ref="shareRef" :is-invite="true" />
   </div>
   <GameModal
     v-if="route.path !== '/account/profile'"
@@ -1345,7 +1346,7 @@
           <template v-if="isGameLoading">
             <div class="loader-container">
               <div>
-                <q-spinner color="green" size="10em" :thickness="10" />
+                <q-spinner color="blue" size="10em" :thickness="10" />
               </div>
               <div>{{ $t("btn.loading_plsWait") }}</div>
             </div>
@@ -1666,9 +1667,7 @@
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
   <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" />
-  <!-- <SpinLuckyWheelPromoSticky v-show="isShownSpinLuckyWheel" /> -->
-  <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
-  
+
 </template>
 
 <script setup>
@@ -1756,10 +1755,7 @@ const handleScroll = () => {
 
   lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 };
-onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
-  store.getMemberInfo();
-});
+
 
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
@@ -1936,8 +1932,8 @@ const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
   { title: "Hot", label: t("home.menu_hot"), icon: "hot", active: false },
   { title: "Slot", label: t("home.menu_slot"), icon: "slot", active: false },
-  { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
   { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false },
+  { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
   { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false },
   { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false }
 ]);
@@ -1958,8 +1954,8 @@ const translatedCategoriesList = computed(() => {
     label: t(`home.menu_${category.title.toLowerCase()}`)
   }));
 });
-const getImageUrl = (title) => {
-  return require(`../assets/images/index/category/hometop-${title.toLowerCase()}.png`);
+const getImageUrl = (img) => {
+  return require(`../assets/images/index/category/hometop-${img.active?img.icon.toLowerCase()+'-active':img.icon.toLowerCase()}.png`);
 };
 
 const activeCategoryLabel = computed(() => {
@@ -4004,7 +4000,7 @@ const populatePushNotificationData = (data) => {
 };
 
 const initOneSignal = () => {
-  OneSignal.initialize("3670fee8-23c0-465f-b067-03add84e835e");
+  OneSignal.initialize("66dc41ba-8bd8-4759-beb8-b246c84cbae8");
 
   let myClickListener = async function (event) {
     console.log("CLICK PUSH");
@@ -4274,9 +4270,6 @@ watch(() => isAdditionalWithdrawSteps.value, checkWithdrawStep, { immediate: fal
 const afterActivated = useCustomerTrigger(() => {
   checkShowImgTop();
   checkHbPromo();
-  if (store.hasToken()) {
-    showSpinWheel();
-  }
 });
 
 const downloadAppRef = ref();
@@ -4292,7 +4285,7 @@ const checkNewPlayerWheelPromoHomePopupCanShow = () => {
   }
 };
 
-onActivated(() => {
+onActivated(async () => {
   nextTick(() => {
     if (
       LocalStorage.getItem("completeddepositguide") === "true" &&
@@ -4332,6 +4325,14 @@ onActivated(() => {
   store.getUnreadTotal();
   checkHash();
 
+  if (store.hasToken()) {
+    await store.getMemberInfo();
+    checkCodeBonusModal();
+  }
+  
+  if (store.hasToken()) {
+    await showSpinWheel();
+  }
   // checkSpinWheel();
   checkGoogleLoginSetPwd();
 
@@ -4371,7 +4372,11 @@ onActivated(() => {
 
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
+
+
 onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+
   getPlatList();
   loadData();
   loadAnnouncement();
@@ -4381,9 +4386,6 @@ onMounted(() => {
   loadJILIPokerhGameList();
   ui.shouldFetchDownloadAppUrl = true;
 
-  if (store.hasToken()) {
-    checkCodeBonusModal();
-  }
 
   AOS.init();
   SwiperCore.use([Grid, Navigation, Pagination, A11y]);
@@ -4806,14 +4808,14 @@ const checkGoogleLoginSetPwd = () => {
   padding: 5px;
   img {
     width: 100%;
-    
+
     &.absolute-hot {
       position: absolute;
       right: -10px;
       top: 0px;
       width: 18px;
       height: unset;
-      img { 
+      img {
         width: 25px;
       }
     }
@@ -4847,13 +4849,17 @@ const checkGoogleLoginSetPwd = () => {
     .cat-label {
       position: absolute;
       font-weight: bold;
-      bottom: 10px;
+      bottom: 5px;
       left: 0;
       right: 0;
       margin: auto;
       width: 100%;
       text-align: center;
-      color: #000000;
+      color: #FFFFFFB2;
+
+      &.active {
+        color: #fff;
+      }
     }
   }
   /* Top row spans 2 columns each */
@@ -5497,13 +5503,29 @@ const checkGoogleLoginSetPwd = () => {
   pointer-events: none;
 }
 
+@keyframes zoomInOut {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
 .cs-icon-wrapper {
   width: 55px;
   height: 55px;
-  background: url("../assets/images/index/icon-cs.gif") no-repeat center center;
-  background-size: contain;
   position: relative;
   aspect-ratio: 500/500;
+
+  .cs-icon-wrapper-img {
+    width: 55px;
+    height: 55px;
+    background: url("../assets/images/index/icon-cs.png") no-repeat center center;
+    background-size: contain;
+    aspect-ratio: 500/500;
+    animation: zoomInOut 3s infinite;
+  }
 
   &:active {
     filter: brightness(0.85);
@@ -5695,7 +5717,7 @@ const checkGoogleLoginSetPwd = () => {
         border-radius: 6px;
         font-weight: 700;
         cursor: pointer;
-        img { 
+        img {
           display: none;
         }
       }
@@ -5833,6 +5855,7 @@ const checkGoogleLoginSetPwd = () => {
 
     .platform-game-item--img {
       border-radius: 8px;
+      background-size: 102% 102%;
     }
   }
 
@@ -5864,7 +5887,7 @@ const checkGoogleLoginSetPwd = () => {
   .platform-game-item {
     position: relative;
     > img {
-      // min-height: 145px;    
+      // min-height: 145px;
       min-height: 120px;
     }
 
@@ -5913,7 +5936,7 @@ const checkGoogleLoginSetPwd = () => {
     align-items: center;
     padding: 10px;
     width: 100%;
-    
+
     font-family: Microsoft YaHei UI;
       font-weight: 700;
       font-size: 12px;
@@ -5954,7 +5977,7 @@ const checkGoogleLoginSetPwd = () => {
   .btn-primary {
     border-radius: 20px;
   }
-  .supp-left{ 
+  .supp-left{
     font-weight: 700;
     font-size: 11px;
 
@@ -6059,6 +6082,10 @@ const checkGoogleLoginSetPwd = () => {
   top: -10px;
   right: -10px;
   width: 30px;
+
+  img {
+    width: 100%;
+  }
 }
 
 .loading-spinner {
@@ -6321,9 +6348,10 @@ const checkGoogleLoginSetPwd = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #333333;
-  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-  box-shadow: 0px 2px 0px 0px #1cca6a;
+  color: #ffffff;
+  // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  // box-shadow: 0px 2px 0px 0px #1cca6a;
+  background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
   text-transform: uppercase;
   font-weight: 700;
 }
@@ -6411,7 +6439,7 @@ const checkGoogleLoginSetPwd = () => {
   background-image: unset;
   background-color: #090F1E;
   border: 1px solid #0666D3;
-  
+
   border-radius: 10px !important;
   max-width: 350px;
   width: 100%;

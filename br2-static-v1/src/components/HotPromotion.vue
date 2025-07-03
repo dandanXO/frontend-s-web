@@ -14,9 +14,11 @@
 
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'br1-slot-ftd' && store.token" :params="list.param" />
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
+    <SpinLuckyWheelPromoTemp v-if="list.redirectUrl === 'br2-aviator-wheel-bet-count'" :params="list.param" />
 
     <MoneyRainPromo v-if="list.redirectUrl === 'money-rain'" :params="list.param" />
     <RedepositBonusPromo v-if="list.redirectUrl === 'redeposit-bonus'" :params="list.param" />
+    <CheckinBonusPromo v-if="!isCommonPromo && list.redirectUrl === 'br2-checkin-bonus'" :params="list.param" />
 
     <VipPlanBettingUpgrade v-if="list.redirectUrl === 'br2-vip-plan'" :params="list.param" />
     <CashbackWeeklyPromo v-if="list.redirectUrl === 'cashback-weekly'" :params="list.param" />
@@ -58,6 +60,7 @@ const WelcomeTaskPromo = defineAsyncComponent(() => import("../components/hotpro
 const InviteFriendPromo = defineAsyncComponent(() => import("../components/hotpromo/invitefriend/inviteFriendPromo.vue"));
 const SlotFtdPromo = defineAsyncComponent(() => import("../components/hotpromo/slotftdpromo/SlotFtdPromo.vue"));
 const SpinLuckyWheelPromo = defineAsyncComponent(() => import("./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue"));
+const SpinLuckyWheelPromoTemp = defineAsyncComponent(() => import("./hotpromo/spin-lucky-wheel-temp/SpinLuckyWheelPromo.vue"));
 const MoneyRainPromo = defineAsyncComponent(() => import("./hotpromo/money-rain/MoneyRainPromo.vue"));
 const RedepositBonusPromo = defineAsyncComponent(() => import("./hotpromo/redeposit-bonus/RedepositBonusPromo.vue"));
 const VipPlanBettingUpgrade = defineAsyncComponent(() => import("./hotpromo/vip-plan-betting-upgrade/VipPlanBettingUpgrade.vue"));
@@ -65,9 +68,10 @@ const CashbackWeeklyPromo = defineAsyncComponent(() => import("./hotpromo/cashba
 const RedPacketRainPromo = defineAsyncComponent(() => import("../components/hotpromo/redPacketRain/RedPacketRainPromo.vue"));
 const RedepositBonus100Promo = defineAsyncComponent(() => import("../components/hotpromo/redeposit-bonus/RedepositBonusPromo.vue"));
 const BetCashbackPromo = defineAsyncComponent(() => import("../components/hotpromo/bet-cashback/BetCashbackPromo.vue"));
-const DailySecondDepositPromo = defineAsyncComponent(() => import("components/hotpromo/daily-second-deposit/DailySecondDepositPromo.vue"));
+const DailySecondDepositPromo = defineAsyncComponent(() => import("../components/hotpromo/daily-second-deposit/DailySecondDepositPromo.vue"));
 const LossRebatePromo = defineAsyncComponent(() => import("../components/hotpromo/loss-rebate/LossRebatePromo.vue"));
 const FtdBonusPromo = defineAsyncComponent(() => import("../components/hotpromo/ftdBonus/FtdBonusPromo.vue"));
+const CheckinBonusPromo = defineAsyncComponent(() => import("../components/hotpromo/checkin-bonus/CheckinBonusPromo.vue"));
 
 
 export default defineComponent({
@@ -82,6 +86,7 @@ export default defineComponent({
     InviteFriendPromo,
     SlotFtdPromo,
     SpinLuckyWheelPromo,
+    SpinLuckyWheelPromoTemp,
     MoneyRainPromo,
     RedepositBonusPromo,
     VipPlanBettingUpgrade,
@@ -91,7 +96,8 @@ export default defineComponent({
     BetCashbackPromo,
     DailySecondDepositPromo,
     LossRebatePromo,
-    FtdBonusPromo
+    FtdBonusPromo,
+    CheckinBonusPromo
   },
   props: {
     list: {
@@ -150,6 +156,7 @@ export default defineComponent({
       this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "br1-slot-ftd" ||
       this.list.redirectUrl === "spin-lucky-wheel" ||
+      this.list.redirectUrl === "br2-aviator-wheel-bet-count" ||
       this.list.redirectUrl === "receive-earn" ||
       this.list.redirectUrl === "money-rain" ||
       this.list.redirectUrl === "redeposit-bonus" ||
@@ -160,6 +167,7 @@ export default defineComponent({
       this.list.redirectUrl === "br2-daily-second-deposit" ||
       this.list.redirectUrl === "br2-loss-rebate" ||
       this.list.redirectUrl === "br2-bet-rebate" ||
+      this.list.redirectUrl === "br2-checkin-bonus" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

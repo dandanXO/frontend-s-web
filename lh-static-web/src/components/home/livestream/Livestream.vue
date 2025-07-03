@@ -146,13 +146,14 @@ const handleSendChatMessage = (message) => {
     streamId: currentLiveData.value.id
   }).then((res) => {
     if (res.code === 0) {
-      const { content, name } = res.data;
+      const { content, name, memberType } = res.data;
       messages.value.push({
         content,
-        name,
+        name: name,
         time: Date.now(),
         vip: userVipLevel.value,
-        profilePhoto: store.profilePhoto
+        profilePhoto: store.profilePhoto,
+        memberType: memberType || store.memberType
       });
       danmuList.value = [content];
       if (!processedUserName.value) {
@@ -323,7 +324,8 @@ const formatHistoryMessages = (messages) => {
         name: record.name,
         time: record.createTime,
         vip: extractVipLevelFromVipStr(record.vip),
-        profilePhoto: record.profilePhoto
+        profilePhoto: record.profilePhoto,
+        memberType: record.memberType
       });
     }
 

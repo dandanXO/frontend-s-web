@@ -3,7 +3,7 @@
     <div class="flex justify-center csv-icon">
       <img src="../assets/images/cs-verifier/csv-icon.png" alt="" />
     </div>
-    <div class="main-title">B9.GAME</div>
+    <div class="main-title">PK1.GAME</div>
     <div class="sub-title">{{ $t("customerServiceVerifier.subTitle") }}</div>
     <div class="content-para q-mt-sm" v-html="$t('customerServiceVerifier.contentPara01')"></div>
 
@@ -43,10 +43,10 @@
         </div>
         <div class="text-center q-py-md">
           <span class="txt-green" v-if="accountValid">
-            {{ agentAccountId }} is an official representative of B9.GAME and can be trusted
+            {{ agentAccountId }} {{ $t('csVerifier.validAccDesc') }}
           </span>
           <span class="txt-red" v-else>
-            {{ agentAccountId }} is not an official representative of B9.GAME, please do not trust this account
+            {{ agentAccountId }} {{ $t('csVerifier.invalidAccDesc') }}
           </span>
         </div>
 

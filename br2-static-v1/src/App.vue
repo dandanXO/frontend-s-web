@@ -1,10 +1,11 @@
 <template>
   <router-view />
+  <notification-wrapper />
 </template>
 
 <script>
 import { defineComponent, onMounted, ref, nextTick } from "vue";
-import { Platform, useQuasar } from "quasar";
+import { Platform, SessionStorage, useQuasar } from "quasar";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
@@ -18,14 +19,19 @@ import AOS from "aos";
 import { useRouter } from "vue-router";
 import "aos/dist/aos.css";
 import { domainLists } from "./constant";
-
+import NotificationWrapper from "./components/notification/NotificationWrapper.vue";
+import { useGtag } from "vue-gtag-next";
 
 export default defineComponent({
   name: "App",
+  components: {
+    NotificationWrapper
+  },
   setup() {
     var qs = require("qs");
     const store = userStore();
     const ui = useUI();
+    const gtag = useGtag();
 
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
@@ -126,8 +132,6 @@ export default defineComponent({
         }, 100);
       }
     };
-
-
 
     const trackH5Affiliate = () => {
       const hostname = window.location.hostname.replace("www.", "");
@@ -372,6 +376,17 @@ export default defineComponent({
       requestNotificationPermission();
     };
 
+    const traceUserInfo = () => {
+      const savedUserInfo = SessionStorage.getItem("user-info");
+      console.log(savedUserInfo);
+      if (savedUserInfo) {
+        gtag.event(savedUserInfo.type, {
+          custom_user_id: savedUserInfo.account
+        });
+        SessionStorage.removeItem("user-info");
+      }
+    };
+
     onMounted(async () => {
       // const info = await App.getInfo();
       // console.log("APP Info");
@@ -382,6 +397,7 @@ export default defineComponent({
       getAppInfo();
       initOrientation();
       AOS.init();
+      traceUserInfo();
 
       if (isAndroid()) {
         document.addEventListener(
@@ -395,7 +411,7 @@ export default defineComponent({
           false
         );
       } else {
-        await router.isReady()
+        await router.isReady();
         waitAffiliateCodeAndTrack();
       }
 

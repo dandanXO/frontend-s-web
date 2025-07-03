@@ -38,49 +38,52 @@
           <div class="ribbon">活动内容</div>
           <div class="right">会员当日存款≥100元且在TI14国际邀请赛中累计有效≥1000元，次日即可领取彩金。 </div>
         </div>
-        <table class="livepoker-rebate-game-info-table section-table">
-          <thead>
-            <tr>
-              <th>VIP 等級 / 有效流水</th>
-              <th>≥1,000</th>
-              <th>≥10,000</th>
-              <th>≥50,000</th>
-              <th>≥100,000</th>
-              <th>流水要求</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>VIP1-VIP3</td>
-              <td>18</td>
-              <td>38</td>
-              <td>88</td>
-              <td>128</td>
-              <td rowspan="4">5倍流水</td>
-            </tr>
-            <tr>
-              <td>VIP4-VIP6</td>
-              <td>38</td>
-              <td>88</td>
-              <td>128</td>
-              <td>188</td>
-            </tr>
-            <tr>
-              <td>VIP7-VIP9</td>
-              <td>88</td>
-              <td>128</td>
-              <td>188</td>
-              <td>268</td>
-            </tr>
-            <tr>
-              <td>VIP10-VIP12</td>
-              <td>128</td>
-              <td>188</td>
-              <td>268</td>
-              <td>588</td>
-            </tr>
-          </tbody>
-        </table>
+
+        <div class="table-scroll-wrapper">
+          <table class="livepoker-rebate-game-info-table section-table">
+            <thead>
+              <tr>
+                <th>VIP 等級 / 有效流水</th>
+                <th>≥1,000</th>
+                <th>≥10,000</th>
+                <th>≥50,000</th>
+                <th>≥100,000</th>
+                <th>流水要求</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>VIP1-VIP3</td>
+                <td>18</td>
+                <td>38</td>
+                <td>88</td>
+                <td>128</td>
+                <td rowspan="4">5倍流水</td>
+              </tr>
+              <tr>
+                <td>VIP4-VIP6</td>
+                <td>38</td>
+                <td>88</td>
+                <td>128</td>
+                <td>188</td>
+              </tr>
+              <tr>
+                <td>VIP7-VIP9</td>
+                <td>88</td>
+                <td>128</td>
+                <td>188</td>
+                <td>268</td>
+              </tr>
+              <tr>
+                <td>VIP10</td>
+                <td>128</td>
+                <td>188</td>
+                <td>268</td>
+                <td>588</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <!-- <div class="livepoker-rebate-game-bottom">
           <div class="livepoker-rebate-game-bottom-left-title">
@@ -92,7 +95,7 @@
               />
               <span>示例</span>
             </div>
-            会员在活动期间投注IEM 科隆 2025赛事，累计有效投注为 250,000 元，在次日24 小时内可获得彩金：588元 
+            会员在活动期间投注IEM 科隆 2025赛事，累计有效投注为 250,000 元，在次日24 小时内可获得彩金：588元
           </div>
         </div> -->
       </div>
@@ -110,7 +113,7 @@
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算当日TI14国际邀请赛中已结算的赛事总有效投注，次日 24 小时内在活动页面点击【立即领取】按钮领取。逾期未领取则视为放弃，彩金 5倍流水即可出款； 
+            活动期间，活动仅计算当日TI14国际邀请赛中已结算的赛事总有效投注，次日 24 小时内在活动页面点击【立即领取】按钮领取。逾期未领取则视为放弃，彩金 5倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
@@ -118,7 +121,7 @@
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户； 
+            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
           </div>
           <div class="item">
             <div class="item-num">5</div>
@@ -126,7 +129,7 @@
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            为避免文字理解差异，雷火电竞保留此活动最终解释权；
+            为避免文字理解差异，东赢电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
@@ -488,5 +491,10 @@ onMounted(() => {
     color: #00a1ff;
     font-weight: 600;
   }
+}
+
+.table-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 </style>

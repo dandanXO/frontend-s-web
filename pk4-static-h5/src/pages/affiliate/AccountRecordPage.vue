@@ -96,15 +96,15 @@
         </q-card-section>
       <q-card-section class="bot-wrapper">
         <div class="origin">
-          <div class="bet">Login Name</div><div class="bet">Record Date</div>
+          <div class="bet">{{ $t('affiliate.accountRecord.loginName') }}</div><div class="bet">{{ $t('affiliate.accountRecord.recordDate') }}</div>
         </div>
         <div class="origin-val">
-          <div class="bet-val">{{ e.loginName || '-' }}</div><div class="bet-val">{{ e.recordTime }}</div>
+          <div class="bet-val">{{ displayName || '-' }}</div><div class="bet-val">{{ e.recordTime }}</div>
         </div>
       </q-card-section>
       <q-card-section class="bot-wrapper">
         <div class="origin">
-          <div class="bet">Before Balance</div><div class="bet">After Balance</div>
+          <div class="bet">{{ $t('affiliate.accountRecord.beforeBalance') }}</div><div class="bet">{{ $t('affiliate.accountRecord.afterBalance') }}</div>
         </div>
         <div class="origin-val">
           <div class="bet-val">{{ e.beforeBalance ?? 0 }}</div><div class="bet-val">{{ e.afterBalance ?? 0 }}</div>
@@ -112,7 +112,7 @@
       </q-card-section>
       <q-card-section class="bot-wrapper">
         <div class="origin">
-          <div class="bet">Amount</div><div class="bet">Currency</div>
+          <div class="bet">{{ $t('affiliate.accountRecord.amount') }}</div><div class="bet">{{ $t('affiliate.accountRecord.currency') }}</div>
         </div>
         <div class="origin-val">
           <div class="bet-val">{{ e.amount ?? 0 }}</div><div class="bet-val">{{ e.currency || '-' }}</div>
@@ -149,7 +149,9 @@ import { api } from "src/boot/axios";
 import { userStore } from "stores/index";
 import InputField from "src/components/auth/InputField.vue";
 import BetRefereceWithCopy from "../../components/account/BetReferenceWithCopy.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const store = userStore();
 const qs = require("qs");
 const formDetail = reactive({ loginName: "" });
@@ -160,37 +162,37 @@ const loadingSuggestions = ref(false);
 const recordType = ref("ALL");
 const options = ref([
   {
-    label: "All",
+    label: t("affiliate.accountRecord.all"),
     value: "ALL",
     icon: "icon-all"
   },
   {
-    label: "Deposit",
+    label: t("affiliate.accountRecord.deposit"),
     value: "DEPOSIT",
     icon: "icon-deposit"
   },
   {
-    label: "Withdrawal",
+    label: t("affiliate.accountRecord.withdrawal"),
     value: "WITHDRAW",
     icon: "icon-withdraw"
   },
   {
-    label: "Betting",
+    label: t("affiliate.accountRecord.betting"),
     value: "BET",
     icon: "icon-betting"
   },
   {
-    label: "Bonus",
+    label: t("affiliate.accountRecord.bonus"),
     value: "PROMO",
     icon: "icon-bonus"
   },
   {
-    label: "Rebate",
+    label: t("affiliate.accountRecord.rebate"),
     value: "VIP_REBATE",
-    icon: "icon-all"
+    icon: "icon-rebate"
   },
   {
-    label: "Dividend",
+    label: t("affiliate.accountRecord.dividend"),
     value: "TRANSFER",
     icon: "icon-winning"
   }
@@ -200,6 +202,7 @@ const today = new Date();
 const dayBefore = new Date();
 dayBefore.setDate(today.getDate() - 30); // 30days before
 const formatDate = (date) => date.toISOString().split("T")[0];
+let displayName = null;
 
 const searchForm = reactive({
   startDate: {
@@ -290,6 +293,7 @@ const getDownlineMemberDetails = () => {
   } else {
     params.type = moneyChangeByType.type;
   }
+  displayName = moneyChangeByType.loginName;
 
   api
     .get(`/session/member/moneyChangeByType`, { params })

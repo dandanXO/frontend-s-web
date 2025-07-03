@@ -56,7 +56,7 @@
         <div class="congrats-prize">{{ store.currency.value }} {{ historyData.jackpotAmount }}</div>
       </div>
 
-      <HistoryTable :historyList="historyData.rankingList" />
+      <HistoryTable :inDialog="true" :historyList="historyData.rankingList" />
     </div>
   </q-dialog>
 

@@ -1,10 +1,10 @@
 {
-  "appId": "com.ind.appb9mega1",
-  "appName": "B9.GAME",
+  "appId": "com.ind.apppk1game",
+  "appName": "PK1.GAME",
   "webDir": "www",
   "server": {
     "androidScheme": "https",
-    "hostname": "7rzyd3kui.b9mega1.com"
+    "hostname": "pk1.game"
   },
   "plugins": {
     "GoogleAuth": {

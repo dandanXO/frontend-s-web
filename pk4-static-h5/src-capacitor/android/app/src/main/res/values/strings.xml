@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">B9.GAME</string>
-    <string name="title_activity_main">B9.GAME</string>
-    <string name="package_name">com.ind.appb9mega1</string>
-    <string name="custom_url_scheme">com.ind.appb9mega1</string>
+    <string name="app_name">PK1.GAME</string>
+    <string name="title_activity_main">PK1.GAME</string>
+    <string name="package_name">com.ind.apppk1game</string>
+    <string name="custom_url_scheme">com.ind.apppk1game</string>
     <string name="onesignal_notification_accent_color">000000</string>
     <string name="server_client_id">224522131575-tao52ramaq70tl8eclgcqe6pdotdd7gg.apps.googleusercontent.com</string>
 </resources>

@@ -1,6 +1,5 @@
 /* eslint-disable */
 import { LocalStorage as ls } from "quasar";
-import { isNull } from "lodash";
 
 const LocalStorage = {
   set(keyName, keyValue, ttl = 0) {
@@ -15,6 +14,7 @@ const LocalStorage = {
       data.ttl = Date.now() + ttl * 1000; // store the TTL (time to live)
     }
 
+    // debugger;
     // store data in LocalStorage
     // console.log("SEt With Name: " + this.getKeyName(keyName));
     ls.set(keyName, data);
@@ -51,7 +51,7 @@ const LocalStorage = {
   has(keyName) {
     let data = this.get(keyName);
 
-    return !isNull(data);
+    return data !== null;
   },
   remove(keyName) {
     ls.remove(keyName);

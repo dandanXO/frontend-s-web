@@ -26,8 +26,10 @@
         ]"
       >
         <template v-slot:prepend>
-          <img v-if="!phone" src="../../../assets/images/auth/acc-icon.png" width="22px" />
-          <img v-else src="../../../assets/images/auth/acc-icon-active.png" width="22px" />
+          <!-- <img v-if="!phone" src="../../../assets/images/auth/acc-icon.png" width="22px" /> -->
+          <!-- <img v-else src="../../../assets/images/auth/acc-icon-active.png" width="22px" /> -->
+          <img src="../../../assets/images/auth/phone-br.svg" width="17px" />
+          &nbsp;+55
         </template>
       </q-input>
 
@@ -75,7 +77,7 @@
 import { ref, onMounted } from "vue";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
-import { useQuasar, Platform } from "quasar";
+import { useQuasar, Platform, SessionStorage } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { Device } from "@capacitor/device";
 import { t } from "src/boot/lang";
@@ -125,13 +127,18 @@ const login = () => {
         .then((res) => {
           sessionStorage.removeItem("REFERRAL_CODE");
 
-          phone.value = "";
-          password.value = "";
-
           if (store.hasToken()) {
+            console.log(store.nickName);
+            SessionStorage.set("user-info", {
+              account: phone.value,
+              type: "login"
+            });
             const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
             router.go(jumpUrl);
           }
+
+          phone.value = "";
+          password.value = "";
 
           uiStore.loginView = "";
         })

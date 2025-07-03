@@ -9,15 +9,16 @@
     <div class="scrollable">
       <div
         class="item"
-        v-for="(historyListItem, historyListItemIndex) in props?.historyList?.slice(3)"
+        v-for="(historyListItem, historyListItemIndex) in historyLists"
         :key="historyListItemIndex"
         :class="{ isOwn: historyListItem?.currentMember }"
       >
         <div class="rank">
+          <!--          {{ props.isAll }}-->
           <!-- <img class="crown-icon" v-if="historyListItemIndex + 1 === 1" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/1st-place-crown.png" />
                     <img class="crown-icon" v-else-if="historyListItemIndex + 1 === 2"  src="../../../assets/images/promotion/hotpromo/jackpot-aviator/2nd-place-crown.png" />
                     <img class="crown-icon" v-else-if="historyListItemIndex + 1 === 3" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/3rd-place-crown.png" /> -->
-          <span>{{ historyListItemIndex + 4 }}</span>
+          <span>{{ historyListItemIndex + (props.isAll ? 1 : 4) }}</span>
         </div>
         <div>{{ historyListItem.loginName }}</div>
         <div class="betVolume">{{ historyListItem.amount?.toFixed(2) }}</div>
@@ -26,9 +27,19 @@
   </div>
 </template>
 <script setup>
-const props = defineProps(["historyList"]);
+import { computed } from "vue";
+
+const props = defineProps(["historyList", "isAll"]);
 
 const isNotInApp = window.location.pathname === "/promo";
+
+const historyLists = computed(() => {
+  if (props.isAll) {
+    return props?.historyList;
+  } else {
+    return props?.historyList?.slice(3);
+  }
+});
 
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 if (isIOS) {

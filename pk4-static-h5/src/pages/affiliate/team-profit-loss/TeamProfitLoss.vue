@@ -12,16 +12,16 @@
         <div class="filter">
             <InputField :isDark="true">
                 <template #input>
-                    <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
+                    <q-input class="input" v-model="request.loginName" outlined clearable hide-bottom-space>
                         <template v-slot:append>
-                            <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
+                            <q-btn class="get-code-btn" color="primary" :label="$t('btn.confirm')" @click="initData" />
                         </template>
                     </q-input>
                 </template>
             </InputField>
 
             <q-btn class="datetime-dropdown" @click="openDaySelectionDialog" flat unelevated>
-                {{ daysSelection.label }}&nbsp;
+                {{ $t(daysSelection.label) }}&nbsp;
                 <q-icon class="forward-icon" name="keyboard_arrow_down" size="small" />
             </q-btn>
         </div>
@@ -31,7 +31,7 @@
                 <img src="../../../assets/images/affiliate/team-management/username-icon.png" />
                 <div>{{ store.nickName }}</div>
             </div>
-            <div style="color: #21EF89;">Total: {{ page.total }}</div>
+            <div style="color: #21EF89;">{{ $t('affiliate.teamPnL.total') }}: {{ page.total === null ? 0 : page.total }}</div>
         </div>
 
 
@@ -48,30 +48,30 @@
                 <div class="stats">
                     <hr class="separator" />
                     <div class="row">
-                        <div class="label">Deposit</div>
-                        <div class="value">{{ record.depositAmount }}</div>
+                        <div class="label">{{ $t('affiliate.teamPnL.deposit') }}</div>
+                        <div class="value">{{ record.depositAmount.toFixed(2) }}</div>
                     </div>
                     <div class="row">
-                        <div class="label">Withdrawal</div>
-                        <div class="value">{{ record.withdrawalAmount }}</div>
+                        <div class="label">{{ $t('affiliate.teamPnL.withdrawal') }}</div>
+                        <div class="value">{{ record.withdrawAmount.toFixed(2) }}</div>
                     </div>
                     <div class="row">
-                        <div class="label">Bonus</div>
-                        <div class="value">{{ record.bonus }}</div>
+                        <div class="label">{{ $t('affiliate.teamPnL.bonus') }}</div>
+                        <div class="value">{{ record.bonus.toFixed(2) }}</div>
                     </div>
                     <hr class="separator" />
                     <div class="col">
                         <div class="col-item">
-                            <div class="label">Valid Bet</div>
-                            <div class="value valid-bet">{{ record.validBet }}</div>
+                            <div class="label">{{ $t('affiliate.teamPnL.validBet') }}</div>
+                            <div class="value valid-bet">{{ record.validBet.toFixed(2) }}</div>
                         </div>
                         <div class="col-item">
-                            <div class="label">Win/Loss</div>
-                            <div class="value win-loss">{{ record.payout - record.validBet }}</div>
+                            <div class="label">{{ $t('affiliate.teamPnL.winLoss') }}</div>
+                            <div class="value win-loss">{{ (record.payout - record.validBet).toFixed(2) }}</div>
                         </div>
                         <div class="col-item">
-                            <div class="label">Profit and Loss</div>
-                            <div class="value profit-loss">{{ record.payout - record.validBet }}</div>
+                            <div class="label">{{ $t('affiliate.teamPnL.profitLoss') }}</div>
+                            <div class="value profit-loss">{{ (record.payout - record.validBet).toFixed(2) }}</div>
                         </div>
                     </div>
                 </div>
@@ -85,14 +85,14 @@
 
                     <div style="width: 100%;" class="q-mt-lg q-pl-lg q-pr-lg x-n-container">
                         <div class="filter-grid">
-                            <div class="filter-item" :class="{ active: daysSelection.label === 'Today' }"
-                                @click="changeDaySelection('Today')">Today</div>
-                            <div class="filter-item" :class="{ active: daysSelection.label === 'Yesterday' }"
-                                @click="changeDaySelection('Yesterday')">Yesterday</div>
-                            <div class="filter-item" :class="{ active: daysSelection.label === '7-days' }"
-                                @click="changeDaySelection('7-days')">7-days</div>
-                            <div class="filter-item" :class="{ active: daysSelection.label === 'This Month' }"
-                                @click="changeDaySelection('This Month')">This Month</div>
+                            <div class="filter-item" :class="{ active: dialogDaysSelection.value === 'Today' }"
+                            @click="changeDaySelection({label: 'affiliate.teamPnL.today', value: 'Today'})">{{ $t('affiliate.teamPnL.today') }}</div>
+                            <div class="filter-item" :class="{ active: dialogDaysSelection.value === 'Yesterday' }"
+                            @click="changeDaySelection({label: 'affiliate.teamPnL.yesterday', value: 'Yesterday'})">{{ $t('affiliate.teamPnL.yesterday') }}</div>
+                            <div class="filter-item" :class="{ active: dialogDaysSelection.value === '7-days' }"
+                            @click="changeDaySelection({label: 'affiliate.teamPnL.sevenDays', value: '7-days'})">{{ $t('affiliate.teamPnL.sevenDays') }}</div>
+                            <div class="filter-item" :class="{ active: dialogDaysSelection.value === 'This Month' }"
+                            @click="changeDaySelection({label: 'affiliate.teamPnL.thisMonth', value: 'This Month'})">{{ $t('affiliate.teamPnL.thisMonth') }}</div>
                         </div>
 
                         <div style="display:flex;">
@@ -118,9 +118,11 @@ const formDetail = reactive([]);
 const selectedTab = ref('All');
 
 const isDaySelectionDialog = ref(false)
-const daysSelection = ref({ label: '7-days', value: 7 });
+const daysSelection = ref({ label: 'affiliate.teamPnL.sevenDays', value: '7-days' });
+const dialogDaysSelection = ref({ label: 'affiliate.teamPnL.sevenDays', value: '7-days' });
 const openDaySelectionDialog = () => {
-    isDaySelectionDialog.value = true
+  dialogDaysSelection.value = daysSelection.value;
+  isDaySelectionDialog.value = true
 }
 const isPageInfoDialog = ref(false);
 const openPageInfoDialog = () => {
@@ -135,22 +137,24 @@ const page = reactive({
 
 const request = reactive({
     size: 20,
-    current: 1
+    current: 1,
+    siteId: 26,
 });
 
 const store = userStore();
 
-const changeDaySelection = (type) => {
-    daysSelection.value = { label: type, value: type };
+const changeDaySelection = (newValue) => {
+  dialogDaysSelection.value = newValue;
 }
 
 const confirmDaySelection = () => {
-    initData();
-    isDaySelectionDialog.value = false;
+  daysSelection.value = dialogDaysSelection.value;
+  initData();
+  isDaySelectionDialog.value = false;
 }
 
 function getDateRange(startDate = null, endDate = null) {
-    const type = daysSelection.value.label;
+    const type = daysSelection.value.value;
 
     let start, end;
 
@@ -194,6 +198,8 @@ const initData = () => {
         params: {
             current: request.current,
             size: request.size,
+            loginName: request.loginName,
+            siteId: request.siteId,
             recordTime
         }
     }).then((res) => {

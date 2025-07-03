@@ -67,7 +67,7 @@
             <q-icon size="sm" name="link_off" />
           </div>
         </div>
-        <div class="bank-card-add" style="display:none;">
+        <div class="bank-card-add" style="display: none">
           <!--
             <div class="card-icon">
               <img src="../../assets/images/account/bank-icon-bpi.png" alt="" />
@@ -110,10 +110,8 @@ import { useQuasar, copyToClipboard } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { api } from "boot/axios";
-import SwiperNav from "../../components/SwiperNav.vue";
 import DialogHeader from "../../atoms//DialogHeader.vue";
 import ConfirmButton from "../../atoms//ConfirmButton.vue";
-import ProfileSummary from "../../components/ProfileSummary.vue";
 import AddBankCardModal from "../../components/modal/AddBankCardModal.vue";
 import UpdateBankCardModal from "../../components/modal/UpdateBankCardModal.vue";
 

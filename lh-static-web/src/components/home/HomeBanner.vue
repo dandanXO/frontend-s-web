@@ -289,7 +289,6 @@ watch(
 
   .banner-container {
     .banner-background {
-      // background-image: url(@/assets/images/home/banner/banner-background.png);
       background-size: contain;
       width: 100%;
       height: 100%;
@@ -321,7 +320,6 @@ watch(
     .banner-container {
       .banner-background {
         mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, transparent 100%);
-        // background-image: url(@/assets/images/home/banner/banner-background-dark.png);
       }
     }
   }

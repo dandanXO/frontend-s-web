@@ -1,10 +1,5 @@
 <template>
   <div>
-    <!-- <q-btn class="receive-earn-btn" no-caps>
-      <img src="../../../assets/images/promotion/receive-earn/receive-earn-icon.png" />
-      &nbsp;&nbsp;receive
-    </q-btn> -->
-
     <div class="receive-bar-container">
       <div class="receive-bar">
         <div class="bar-ribbon">
@@ -153,18 +148,6 @@
 </template>
 
 <style lang="scss" scoped>
-.receive-earn-btn {
-  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
-  width: 100%;
-  color: #2d2d2d;
-  border-radius:8px;
-  font-weight: bold;
-
-  img {
-    width: 34px !important;
-  }
-}
-
 .receive-bar-container {
   margin-top: 24px;
   display: flex;

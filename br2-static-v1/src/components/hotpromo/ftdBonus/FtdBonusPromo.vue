@@ -1,9 +1,6 @@
 <template>
   <div>
-    <q-btn class="receive-earn-btn" no-caps @click="claimPromo">
-      <img src="../../../assets/images/promotion/receive-earn/receive-earn-icon.png" />
-      &nbsp;&nbsp;Participar Agora
-    </q-btn>
+    <q-btn class="receive-earn-btn" no-caps @click="claimPromo">Participar Agora</q-btn>
 
     <div class="receive-bar-container">
       <div class="receive-bar">
@@ -190,15 +187,13 @@ onMounted(() => {
 }
 
 .receive-earn-btn {
-  background: linear-gradient(90deg, #4fffa5 0%, #10d16f 100%);
+  background: linear-gradient(180deg, #419f74 0%, #1d3f31 100%);
   width: 100%;
-  border-radius: 8px;
-  color: #2d2d2d;
-  font-weight: bold;
-
-  img {
-    width: 34px !important;
-  }
+  color: #fff;
+  border-radius: 50px;
+  font-weight: 500;
+  border: 1.5px solid #e0c4a8;
+  box-shadow: 0px 4px 4px 0px #ffffff66 inset;
 }
 
 .receive-bar-container {

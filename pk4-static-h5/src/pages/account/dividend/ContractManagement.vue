@@ -3,9 +3,9 @@
         <div class="filters">
             <InputField :isDark="true">
                 <template #input>
-                    <q-input class="input" v-model="formDetail.realName" outlined clearable hide-bottom-space>
+                    <q-input class="input" v-model="formDetail.loginName" outlined clearable hide-bottom-space>
                         <template v-slot:append>
-                            <q-btn class="primary-btn" color="primary" :label="$t('btn.confirm')" @click="() => { }" />
+                            <q-btn class="primary-btn" color="primary" :label="$t('btn.confirm')" @click="searchByLoginName()" />
                         </template>
                     </q-input>
                 </template>
@@ -17,12 +17,12 @@
             <table v-else class="card-table" border="0" cellpadding="0" cellspacing="0" width="100%"
                 style="text-align: center">
                 <tbody>
-                    <tr v-for="downline, index in downlineInfo" :key="index">
+                    <tr v-for="downline, index in selectedDownlineInfo" :key="index">
                         <td><img src="../../../assets/images/account/dividend/avatar-icon.png" /></td>
                         <td class="user">{{ downline.loginName }}</td>
                         <td class="user">{{ (downline.commission * 100).toFixed(0) }}%</td>
-                        <td v-if="downline.commission === 0" class="create-contract-btn" @click="() => createContract(downline)">create contract</td>
-                        <td v-else class="create-contract-btn"><span style="visibility:hidden">create contract</span></td>
+                        <td v-if="downline.commission === 0" class="create-contract-btn" @click="() => createContract(downline)">{{ $t('dividend.createContract') }}</td>
+                        <td v-else class="create-contract-btn"><span style="visibility:hidden">{{ $t('dividend.createContract') }}</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -31,7 +31,7 @@
         <q-dialog v-model="isShowContractDialog" width="100%">
             <div class="contract-dialog">
                 <div class="downline"><img src="../../../assets/images/account/dividend/avatar-icon.png" />{{ selectedContract.loginName }}</div>
-
+                <div class="contract-title">{{ $t('dividend.selfCommissionShare') }}</div>
                 <div class="row">
                     <div>{{ $t('dividend.rate') }} ({{ parseFloat((selectedContract.commission * 100).toFixed(0)) }}%)</div>
                     <div>
@@ -65,6 +65,7 @@ const formDetail = reactive([]);
 const isLoading = ref(false);
 const store = userStore();
 const downlineInfo = ref([]);
+const selectedDownlineInfo = ref([]);
 const selectedContract = ref(null);
 const isShowContractDialog = computed(() => selectedContract.value !== null)
 const $q = useQuasar();
@@ -171,6 +172,7 @@ const initData = () => {
         params: query
     }).then((res) => {
         downlineInfo.value = res.data;
+        selectedDownlineInfo.value = res.data;
         isLoading.value = false;
     }).finally(() => {
         isLoading.value = false;
@@ -182,6 +184,14 @@ const initData = () => {
     }).finally(() => {
         isLoading.value = false;
     })
+}
+
+function searchByLoginName() {
+  if (formDetail.loginName) {
+    selectedDownlineInfo.value = downlineInfo.value.filter(a => a.loginName === formDetail.loginName)
+  } else {
+    selectedDownlineInfo.value = downlineInfo.value;
+  }
 }
 
 onMounted(() => {
@@ -375,6 +385,13 @@ onActivated(() => {
     justify-content: space-between;
 
     .downline {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        font-weight: 700;
+    }
+    .contract-title {
         display: flex;
         align-items: center;
         justify-content: center;

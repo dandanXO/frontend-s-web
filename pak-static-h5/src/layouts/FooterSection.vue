@@ -16,7 +16,7 @@
         <span class="footer-label">{{ $t("bottomNav.promo") }}</span>
       </q-route-tab>
       <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
-        <div class="footer-big-img earn-money">
+        <div class="footer-big-img">
           <img
             style="width: 100%"
             :src="ui.footerIcon ? ui.footerIcon : require(`../assets/images/index/menu/icon-earnmoneynew.gif`)"
@@ -81,23 +81,5 @@ const tab = ref("home");
   //   background-repeat: no-repeat;
   //   // background-image: url("../assets/images/account/shadow2-bg.png");
   // }
-}
-
-// .earn-money {
-//   animation: blink 1.5s infinite;
-// }
-
-@keyframes blink {
-  0% {
-    filter: brightness(0.8) saturate(0.8) contrast(0.8);
-  }
-
-  50% {
-    filter: brightness(1.3) saturate(1) contrast(1);
-  }
-
-  100% {
-    filter: brightness(0.8) saturate(0.8) contrast(0.8);
-  }
 }
 </style>

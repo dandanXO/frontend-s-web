@@ -55,6 +55,7 @@
             :options="withdrawState.bankCardList"
             map-options
             :rules="[(val) => !!val || $t('form.withdrawChoose_rules_01')]"
+            style="background:linear-gradient(90deg, #1C273D 0%, #12192B 100%);border: none;"
           >
             <template v-slot:no-option>
               <q-item>
@@ -250,10 +251,12 @@
               <div class="desc-wrapper">
                 <div class="desc">
                   <img src="../../assets/images/account/withdraw-max.svg" />
-                  {{ $t("withdraw.withdrawMaxTimes") }}
+                  {{ $t("withdraw.withdrawMaxAmount") }}
                 </div>
               </div>
-              <div class="desc" style="color: #fbab1b">{{ selectedWithdrawalMethod.withdrawMaxTimes }}</div>
+              <div class="desc" style="color: #fbab1b">
+                RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawMaxAmount) }}
+              </div>
             </div>
           </div>
 
@@ -362,7 +365,7 @@
       </template>
       <div v-if="selectedWithdrawalMethod.tips" class="q-mt-md q-mb-sm" v-html="selectedWithdrawalMethod.tips"></div>
 
-      <div class="q-mt-sm step-desc-div q-mb-lg">
+      <div class="q-mt-sm step-desc-div q-mb-lg" style="margin-bottom: 105px;">
         <p>
           {{ $t("withdraw.withdrawTutorial") }}
           <span class="tutorial-link" @click="isWithdrawTutorial = true">{{ $t('withdraw.picture')}}</span>
@@ -610,7 +613,7 @@ onMounted(() => {
 onActivated(() => {
   checkNewUser();
   store.getBalance();
-  promoStore.removeShownFloatingOrDialogList("newplayer-spin-wheel");
+  promoStore?.removeShownFloatingOrDialogList?.("newplayer-spin-wheel");
   // loadPlatform()
 });
 
@@ -1110,7 +1113,7 @@ watch(
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #24262b;
+  background-color: #090f1e;
 }
 
 .tutorial-link {
@@ -1220,6 +1223,22 @@ watch(
       margin-right: 60px;
     }
   }
+}
+
+:deep(.q-field--filled.q-field--dark .q-field__control) {
+  // border-radius: 0.5rem;
+  // background: #0b0e0d !important;
+  // border: 1px solid #072a19;
+  // border-radius: 0.5rem;
+  // border: 1px solid #ffffff14;
+  // background: #292d2f !important;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%) !important;
+  border: none;
+}
+
+.popout-dialog  :deep(.q-field--filled.q-field--dark .q-field__control) {
+  background: #EAEFF9 !important;
+  border: none;
 }
 
 .bot-wrapper {

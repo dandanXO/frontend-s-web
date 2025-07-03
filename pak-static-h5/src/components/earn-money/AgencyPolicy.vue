@@ -5,7 +5,7 @@
     <!-- <div class="title">Invite to Earn</div>
     <div class="subtitle">Simply share your exclusive QR code</div> -->
     <div class="desc-wrapper">
-      <img src="../../assets/images/earn-money/about-invite.svg" />
+      <!--      <img src="../../assets/images/earn-money/about-invite.svg" />-->
       <div>
         Invite more friends and you will earn more. Every member who joins Skyace Club is both a player and an agent.
       </div>
@@ -520,7 +520,7 @@ const rows3 = [
     gap: 15px;
     margin: 0 0 25px 0;
     letter-spacing: 0.5px;
-    background: #FFFFFF0D;
+    background: #ffffff0d;
     position: relative;
     width: 100%;
     border-radius: 10px;
@@ -608,7 +608,7 @@ const rows3 = [
   }
   .table-container {
     :deep(thead) {
-      background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
+      background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
     }
 
     :deep(tbody) {

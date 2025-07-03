@@ -128,6 +128,7 @@ export default {
     noAutoWithdrawalGamePlatform: '禁止自动审核游戏平台',
     week: '周内',
     month: '月内',
+    balanceThresholdMultiplier: '余额需小于存款金额倍数',
   },
   outboxStatus: {
     0: '未回复',
@@ -2691,6 +2692,15 @@ export default {
     eventCode: '赛事代码',
     roleConfig: '角色设置',
     chatHistory: '聊天记录',
+    loginDay1: '1日',
+    loginDay2: '2日',
+    loginDay3: '3日',
+    loginDay4: '4日',
+    loginDay5: '5日',
+    loginDay6: '6日',
+    loginDay7: '7日',
+    depositRetention: '存款留存',
+    regLoginRetention: '注册回头',
   },
   message: {
     adsStatusOpen: '开',
@@ -3525,7 +3535,7 @@ export default {
     'Sport Live Sensitive Word': '体育直播敏感词设定',
     'Sport Live Block Member': '聊天室会员禁言设定',
     'Sport Live Chat Vip Status': '聊天室VIP发言设定',
-    'Sport Live History Block': '聊天室记录禁言设定',
+    'Sport Live History Block': '聊天室记录',
     'Sport Live Monitor': '体育直播监控',
     'Affiliate Settlement Setting': '代理佣金设置',
     'Sport Live Admin': '主播后台管理员设定',
@@ -3754,7 +3764,9 @@ export default {
     DEPOSIT_ERROR: '存款请求报错',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: '任务闲置 (注单捞取)',
     OTP_FAIL: 'OTP 发送失败',
-    FIRST_DEPOSIT_FLUCTUATION: '首存波动'
+    FIRST_DEPOSIT_FLUCTUATION: '首存波动',
+    WITHDRAW_ALERT: '提款请求提示',
+    WITHDRAW_BALANCE: '代付余额',
   },
   domain: {
     domainMainType: {

@@ -25,7 +25,9 @@ import { api } from "boot/axios";
 import VueQRCodeComponent from "vue-qrcode-component";
 import html2canvas from "html2canvas";
 import { Filesystem, Directory } from "@capacitor/filesystem";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const $q = useQuasar();
 const store = userStore();
 const isLoading = ref(false);
@@ -42,7 +44,7 @@ const copyShareLink = (selfTgurl) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${selfTgurl} copied to clipboard`,
+        message: `${selfTgurl} ${t('form.copiedToClipboard')}`,
         icon: "check_circle_outline"
       });
     })

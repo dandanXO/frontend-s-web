@@ -678,6 +678,21 @@ body.body--dark .q-footer {
   color: #2d2d2d;
 }
 
+.reg-bonus-flag-btn {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    right:0px;
+    top: 0;
+    width: 80px;
+    background: url(../assets/images/index/reg-bonus.svg) no-repeat center center;
+    background-size: 100% 100%;
+    aspect-ratio: 157 / 52;
+    transform: translateY(-50%);
+  }
+}
+
 // lower android version
 .android-low {
   .cat-selection-wrapper {
@@ -725,4 +740,15 @@ body.body--dark .q-footer {
     box-shadow: 0px 2px 0px 0px #1cca6a;
     text-transform: uppercase;
   }
+}
+
+.notification-move,
+.notification-enter-active,
+.notification-leave-active {
+  transition: opacity 0.5s ease, top 0.5s ease;
+}
+
+.notification-enter-from,
+.notification-leave-to {
+  opacity: 0;
 }

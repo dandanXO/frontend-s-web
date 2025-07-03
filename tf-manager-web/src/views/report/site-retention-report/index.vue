@@ -48,7 +48,7 @@
       style="margin-top:20px;"
       :row-style="{width: '100px'}"
     >
-      <el-table-column prop="recordTime" :label="t('fields.recordTime')" width="120" />
+      <el-table-column prop="recordTime" :label="t('fields.recordTime')" width="120" fixed="left" />
       <el-table-column :label="t('fields.ftdAmountAndMemberCount')" width="200">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.ftdAmount, type: 'money'}" /> / {{ scope.row.ftdMemberCount }}
@@ -74,50 +74,61 @@
           {{ (scope.row.reloadRate * 100).toFixed(2) }} %
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.retention2d')" width="150">
-        <template #default="scope">
-          {{ scope.row.retention2d }} ({{ (scope.row.retention2dRate * 100).toFixed(2) }} %)
-        </template>
+      <el-table-column :label="t('fields.depositRetention')">
+        <el-table-column :label="t('fields.retention2d')" width="150">
+          <template #default="scope">
+            {{ scope.row.retention2d }} ({{ (scope.row.retention2dRate * 100).toFixed(2) }} %)
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('fields.retention3d')" width="150">
+          <template #default="scope">
+            {{ scope.row.retention3d }} ({{ (scope.row.retention3dRate * 100).toFixed(2) }} %)
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('fields.retention4d')" width="150">
+          <template #default="scope">
+            {{ scope.row.retention4d }} ({{ (scope.row.retention4dRate * 100).toFixed(2) }} %)
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('fields.retention5d')" width="150">
+          <template #default="scope">
+            {{ scope.row.retention5d }} ({{ (scope.row.retention5dRate * 100).toFixed(2) }} %)
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('fields.retention6d')" width="150">
+          <template #default="scope">
+            {{ scope.row.retention6d }} ({{ (scope.row.retention6dRate * 100).toFixed(2) }} %)
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('fields.retention7d')" width="150">
+          <template #default="scope">
+            {{ scope.row.retention7d }} ({{ (scope.row.retention7dRate * 100).toFixed(2) }} %)
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('fields.retention10d')" width="150">
+          <template #default="scope">
+            {{ scope.row.retention10d }} ({{ (scope.row.retention10dRate * 100).toFixed(2) }} %)
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('fields.retention14d')" width="150">
+          <template #default="scope">
+            {{ scope.row.retention14d }} ({{ (scope.row.retention14dRate * 100).toFixed(2) }} %)
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('fields.retention30d')" width="150">
+          <template #default="scope">
+            {{ scope.row.retention30d }} ({{ (scope.row.retention30dRate * 100).toFixed(2) }} %)
+          </template>
+        </el-table-column>
       </el-table-column>
-      <el-table-column :label="t('fields.retention3d')" width="150">
-        <template #default="scope">
-          {{ scope.row.retention3d }} ({{ (scope.row.retention3dRate * 100).toFixed(2) }} %)
-        </template>
-      </el-table-column>
-      <el-table-column :label="t('fields.retention4d')" width="150">
-        <template #default="scope">
-          {{ scope.row.retention4d }} ({{ (scope.row.retention4dRate * 100).toFixed(2) }} %)
-        </template>
-      </el-table-column>
-      <el-table-column :label="t('fields.retention5d')" width="150">
-        <template #default="scope">
-          {{ scope.row.retention5d }} ({{ (scope.row.retention5dRate * 100).toFixed(2) }} %)
-        </template>
-      </el-table-column>
-      <el-table-column :label="t('fields.retention6d')" width="150">
-        <template #default="scope">
-          {{ scope.row.retention6d }} ({{ (scope.row.retention6dRate * 100).toFixed(2) }} %)
-        </template>
-      </el-table-column>
-      <el-table-column :label="t('fields.retention7d')" width="150">
-        <template #default="scope">
-          {{ scope.row.retention7d }} ({{ (scope.row.retention7dRate * 100).toFixed(2) }} %)
-        </template>
-      </el-table-column>
-      <el-table-column :label="t('fields.retention10d')" width="150">
-        <template #default="scope">
-          {{ scope.row.retention10d }} ({{ (scope.row.retention10dRate * 100).toFixed(2) }} %)
-        </template>
-      </el-table-column>
-      <el-table-column :label="t('fields.retention14d')" width="150">
-        <template #default="scope">
-          {{ scope.row.retention14d }} ({{ (scope.row.retention14dRate * 100).toFixed(2) }} %)
-        </template>
-      </el-table-column>
-      <el-table-column :label="t('fields.retention30d')" width="150">
-        <template #default="scope">
-          {{ scope.row.retention30d }} ({{ (scope.row.retention30dRate * 100).toFixed(2) }} %)
-        </template>
+      <el-table-column :label="t('fields.regLoginRetention')">
+        <el-table-column prop="loginDay1" :label="t('fields.loginDay1')" width="120" />
+        <el-table-column prop="loginDay2" :label="t('fields.loginDay2')" width="120" />
+        <el-table-column prop="loginDay3" :label="t('fields.loginDay3')" width="120" />
+        <el-table-column prop="loginDay4" :label="t('fields.loginDay4')" width="120" />
+        <el-table-column prop="loginDay5" :label="t('fields.loginDay5')" width="120" />
+        <el-table-column prop="loginDay6" :label="t('fields.loginDay6')" width="120" />
+        <el-table-column prop="loginDay7" :label="t('fields.loginDay7')" width="120" />
       </el-table-column>
     </el-table>
     <el-pagination

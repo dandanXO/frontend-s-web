@@ -9,15 +9,15 @@
     <div class="scrollable" v-if="props?.historyList?.length > 0">
       <div
         class="item"
-        v-for="(historyListItem, historyListItemIndex) in props?.historyList?.slice(3)"
+        v-for="(historyListItem, historyListItemIndex) in historyList()"
         :key="historyListItemIndex"
         :class="{ isOwn: historyListItem?.currentMember }"
       >
         <div class="rank">
-          <!-- <img class="crown-icon" v-if="historyListItemIndex + 1 === 1" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/1st-place-crown.png" />
-                    <img class="crown-icon" v-else-if="historyListItemIndex + 1 === 2"  src="../../../assets/images/promotion/hotpromo/jackpot-aviator/2nd-place-crown.png" />
-                    <img class="crown-icon" v-else-if="historyListItemIndex + 1 === 3" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/3rd-place-crown.png" /> -->
-          <span>{{ historyListItemIndex + 4 }}</span>
+          <img class="crown-icon" v-if="inDialog && historyListItemIndex + 1 === 1" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/1st-place-crown.png" />
+          <img class="crown-icon" v-else-if="inDialog && historyListItemIndex + 1 === 2"  src="../../../assets/images/promotion/hotpromo/jackpot-aviator/2nd-place-crown.png" />
+          <img class="crown-icon" v-else-if="inDialog && historyListItemIndex + 1 === 3" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/3rd-place-crown.png" />
+        <span v-else>{{ inDialog ? historyListItemIndex + 1 : historyListItemIndex + 4 }}</span>
         </div>
         <div>{{ historyListItem.loginName }}</div>
         <div class="betVolume">{{ historyListItem.amount?.toFixed(2) }}</div>
@@ -30,7 +30,7 @@
   </div>
 </template>
 <script setup>
-const props = defineProps(["historyList"]);
+const props = defineProps(["historyList", "inDialog"]);
 
 const isNotInApp = window.location.pathname === "/promo";
 
@@ -44,6 +44,14 @@ if (isIOS) {
       }
     `;
   document.head.appendChild(style);
+}
+const historyList = () => {
+  if (props?.inDialog) {
+    return props?.historyList
+  } else {
+    return props?.historyList?.slice(3);
+  }
+  
 }
 </script>
 <style lang="scss" scoped>
@@ -97,8 +105,13 @@ if (isIOS) {
     }
 
     &.isOwn {
-      background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    //   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+      // background: linear-gradient(90deg, #0287f2, #0664d2);
+      background: #cba46b !important;
       color: #fff;
+      .betVolume {
+        color: #3c0e10;
+      }
     }
 
     .rank {
@@ -120,13 +133,13 @@ if (isIOS) {
       background: #332e2d;
     }
     &:hover {
-      background: linear-gradient(180deg, #730319 0%, #da093a 100%);
+      // background: linear-gradient(180deg, #730319 0%, #da093a 100%);
 
-      color: #3c0e10;
-      background: #cba46b;
-      .betVolume {
-        color: #3c0e10;
-      }
+      // color: #3c0e10;
+      // background: #cba46b;
+      // .betVolume {
+      //   color: #3c0e10;
+      // }
     }
     .betVolume {
       color: #dac385;

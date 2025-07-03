@@ -991,7 +991,7 @@ export default defineComponent({
           width: 100%;
           gap: 0px;
           padding: 10px;
-          background: url(../assets/images/promotion/hotpromo/LOL-msi/h6bgbg.jpg) no-repeat center center;
+          //background: url(../assets/images/promotion/hotpromo/LOL-msi/h6bgbg.jpg) no-repeat center center;
         }
 
         &.dy12025pgls3 {

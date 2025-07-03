@@ -34,7 +34,7 @@
           {{ $t("header.login") }}
         </q-btn>
         <!-- <q-btn class="btn-style-pear" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn> -->
-        <q-btn class="btn-style-pear col-grow" no-caps @click="ui.loginView = 'register'">
+        <q-btn class="btn-style-pear col-grow reg-bonus-flag-btn" no-caps @click="ui.loginView = 'register'">
           {{ $t("header.register") }}
         </q-btn>
       </template>
@@ -89,17 +89,17 @@
       <!--      </div>-->
     </div>
 
-    <div class="side-menu-social-media-wrapper">
-      <a
-        v-for="(link, index) in socialMediaLinks"
-        :key="index"
-        class="side-menu-social-media-item"
-        @click="goToLink(link.url)"
-        target="_blank"
-      >
-        <img :src="require(`../assets/images/sideMenu/socialMedia/icon-${link.icon}.png`)" />
-      </a>
-    </div>
+    <!--    <div class="side-menu-social-media-wrapper">-->
+    <!--      <a-->
+    <!--        v-for="(link, index) in socialMediaLinks"-->
+    <!--        :key="index"-->
+    <!--        class="side-menu-social-media-item"-->
+    <!--        @click="goToLink(link.url)"-->
+    <!--        target="_blank"-->
+    <!--      >-->
+    <!--        <img :src="require(`../assets/images/sideMenu/socialMedia/icon-${link.icon}.png`)" />-->
+    <!--      </a>-->
+    <!--    </div>-->
   </div>
 </template>
 <script setup>

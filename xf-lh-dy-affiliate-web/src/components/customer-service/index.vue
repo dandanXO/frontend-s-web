@@ -219,7 +219,7 @@ const initContactList = () => {
       {
         icon: 'whatsapp',
         type: t('common.whatsapp'),
-        link: '+855975762995',
+        link: '+84379357818',
         btns: [{
           text: t('common.copy'),
           action: ''

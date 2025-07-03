@@ -68,7 +68,7 @@
                     <span v-if="!isLoadingBalance">
                       {{ store.currency.value }}
                     </span>
-                    {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
+                    {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, true) }}
                   </span>
                   <span class="balance-txt">{{ $t("sideNav.balance") }}</span>
                 </div>
@@ -155,7 +155,7 @@
         </div>
         <div class="profile-wrapper non-login" v-else>
           <q-btn class="btn-style-butter" no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
-          <q-btn class="btn-style-pear" no-caps @click="uiStore.loginView = 'register'">
+          <q-btn class="btn-style-pear reg-bonus-flag-btn" no-caps @click="uiStore.loginView = 'register'">
             {{ $t("header.register") }}
           </q-btn>
         </div>

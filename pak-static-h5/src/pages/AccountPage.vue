@@ -757,7 +757,6 @@
 </template>
 
 <script setup>
-import SwiperNav from "../components/SwiperNav.vue";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import ProfileProgressBanner from "../components/ProfileProgressBanner.vue";
 import { defineComponent, reactive, ref, onMounted, computed, onActivated } from "vue";
@@ -1312,8 +1311,8 @@ const isValidPhone = () => {
     return "Please Enter Phone Number";
   }
 
-  if(!phone.startsWith('03')) {
-    return t('form.phone_rules_03');
+  if (!phone.startsWith("03")) {
+    return t("form.phone_rules_03");
   }
 
   const phoneRegex = /^\d{11,20}$/;

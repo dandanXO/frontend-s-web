@@ -1,9 +1,9 @@
 <template>
   <div class="popout-dialog-container">
-    <div class="txt-title">Please Complete KYC</div>
+    <div class="txt-title">{{ $t('form.pleaseCompleteYourKYC') }}</div>
     <div class="pc-form">
       <div class="pc-form-item">
-        <div class="pc-form-label">Full Name</div>
+        <div class="pc-form-label">{{ $t('form.fullName') }}</div>
         <div class="pc-form-input">
           <q-input
             filled
@@ -17,7 +17,7 @@
       </div>
 
       <div class="pc-form-item">
-        <div class="pc-form-label">Phone</div>
+        <div class="pc-form-label">{{ $t('form.phone') }}</div>
         <div class="pc-form-input">
           <q-input
             type="number"
@@ -32,13 +32,13 @@
       </div>
 
       <div class="pc-form-item">
-        <div class="pc-form-label">New Password</div>
+        <div class="pc-form-label">{{ $t('form.newPassword') }}</div>
         <div class="pc-form-input">
           <q-input
             filled
             dense
             clearable
-            placeholder="Enter New Password"
+            :placeholder="$t('form.newPassword_placeholder')"
             v-model="formDetail.password"
             ref="passwordRef"
             hide-bottom-space

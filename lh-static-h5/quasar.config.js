@@ -137,11 +137,13 @@ module.exports = configure(function (ctx) {
       },
       // Add a hook to copy assets after the build
       afterBuild({ cfg }) {
-        const fs = require("fs-extra");
-        const sourceDir = path.resolve(__dirname, "src/assets");
-        const destinationDir = path.resolve(__dirname, "dist/spa/static");
+        if(!isLiveChat) {
+          const fs = require("fs-extra");
+          const sourceDir = path.resolve(__dirname, "src/assets");
+          const destinationDir = path.resolve(__dirname, "dist/spa/static");
 
-        fs.copySync(sourceDir, destinationDir);
+          fs.copySync(sourceDir, destinationDir);
+        }
       },
       extendWebpack(cfg) {
         cfg.optimization.minimizer = [
@@ -169,17 +171,6 @@ module.exports = configure(function (ctx) {
                     return packageName ? `npm.${packageName.replace("@", "")}` : null;
                   }
                   return null;
-                }
-              },
-              images: {
-                test: /\.(jpe?g|png|gif|svg)$/i,
-                name(module) {
-                  const relativePath = module.context.match(/[\\/]src[\\/](.+)[\\/]/);
-                  if (relativePath) {
-                    const nestedPath = relativePath[1].replace(/[\\/]/g, "-");
-                    return `img-${nestedPath}`;
-                  }
-                  return "img-ungrouped";
                 }
               }
             }

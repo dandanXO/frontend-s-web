@@ -37,9 +37,9 @@
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
       <div class="profile-wrapper-extra">
         <div class="logo-img" style="cursor: pointer" @click="onClickLogo">
-          <img src="../assets/images/auth/bg-logo-only.png" />
-          <!-- <span v-if="!ui.loggedIn && !store.hasToken()">B9.GAME</span> -->
-           <span>B9.GAME</span>
+          <img src="../assets/logo.png" />
+          <!-- <span v-if="!ui.loggedIn && !store.hasToken()">PK1.GAME</span> -->
+           <!-- <span>PK1.GAME</span> -->
         </div>
       <div class="profile-menu">
         <img src="../assets/images/auth/icon-more.png" @click="toggleMenuOpen()" />
@@ -129,7 +129,7 @@ import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid, isInPwa } from "src/boot/utils";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import { useI18n } from "vue-i18n";
@@ -174,7 +174,7 @@ const getFastAccessPromo = () => {
   if (store.claimedFtdPrivilege === false) {
     eligiblePromoCount.value++;
   }
-  api.get(`/promo/fast-access-promo`).then(async (res) => {
+  api.get(`/opt-session/promo/fast-access-promo`).then(async (res) => {
     if (res.code === 0) {
       let _fastAccessPromo;
       if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
@@ -524,7 +524,7 @@ onUnmounted(() => {
   top: 0;
   right: 0;
   // background: rgb(35, 38, 38);
-  
+
   background: #1B2339;
   border-radius: 20px 0 0 20px;
 
@@ -709,7 +709,7 @@ onUnmounted(() => {
       width: 100%;
       // gap: 5px;
       gap: unset;
-      // :not(:last-child) { 
+      // :not(:last-child) {
       //   margin-right: 2px;
       // }
       justify-content: space-between;
@@ -741,6 +741,7 @@ onUnmounted(() => {
 
     .q-btn {
       white-space: nowrap;
+      flex: 1;
       width: 100%;
       &.btn-primary {
         border: 0;
@@ -844,7 +845,7 @@ onUnmounted(() => {
       .gift-wrapper {
         // height: 20px;
         // width: 20px;
-        
+
         padding: 0px 12px;
         // padding-left: 20px;
 
@@ -1034,7 +1035,7 @@ onUnmounted(() => {
     text-align: center;
 
     img {
-      width: 32px;
+      width: 120px;
       text-align: center;
     }
   }

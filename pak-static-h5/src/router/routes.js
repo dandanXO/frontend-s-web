@@ -21,11 +21,11 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/RegisterPage.vue") }]
   },
-  {
-    path: "/verification",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/VerificationCodePage.vue") }]
-  },
+  // {
+  //   path: "/verification",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [{ path: "", component: () => import("pages/VerificationCodePage.vue") }]
+  // },
   {
     path: "/forgot-password",
     component: () => import("layouts/MainLayout.vue"),
@@ -59,22 +59,22 @@ const routes = [
     children: [{ path: "", component: () => import("pages/LanguagePage.vue") }],
     meta: { requiresAuth: false }
   },
-  {
-    path: "/agency-policy",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/AgencyPolicyPage.vue") }]
-  },
-  {
-    path: "/liveChat",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
-  },
-  {
-    path: "/interest-profit",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/InterestProfitPage.vue") }],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/agency-policy",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [{ path: "", component: () => import("pages/AgencyPolicyPage.vue") }]
+  // },
+  // {
+  //   path: "/liveChat",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
+  // },
+  // {
+  //   path: "/interest-profit",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [{ path: "", component: () => import("pages/InterestProfitPage.vue") }],
+  //   meta: { requiresAuth: true }
+  // },
   {
     path: "/faq-page",
     component: () => import("layouts/MainLayout.vue"),
@@ -85,12 +85,6 @@ const routes = [
     path: "/cs-verifier",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/CsVerifierPage.vue") }],
-    meta: { requiresAuth: false }
-  },
-  {
-    path: "/terms-and-conditions",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/TermsAndConditionsPage.vue") }],
     meta: { requiresAuth: false }
   },
 
@@ -396,6 +390,12 @@ const routes = [
     ],
     meta: { requiresAuth: true }
   },
+  {
+    path: "/terms-and-conditions",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/TermsAndConditionsPage.vue") }],
+    meta: { requiresAuth: false }
+  },
   // {
   //   path: "/account/changePwd",
   //   component: () => import("layouts/MainLayout.vue"),
@@ -572,17 +572,17 @@ const routes = [
   //   ],
   //   meta: { requiresAuth: true }
   // },
-  {
-    path: "/account/transit",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/account/TransitRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
+  // {
+  //   path: "/account/transit",
+  //   component: () => import("layouts/MainLayout.vue"),
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: () => import("pages/account/TransitRecordView.vue")
+  //     }
+  //   ],
+  //   meta: { requiresAuth: true }
+  // },
   // {
   //   path: "/account/personal",
   //   component: () => import("layouts/MainLayout.vue"),
@@ -745,10 +745,12 @@ const routes = [
 ];
 
 if (process.env.MODE === "spa") {
-  routes.push({
-    path: "/redirect",
-    component: () => import("pages/RedirectPage.vue") // Your new redirect page
-  });
+  routes.push([
+    {
+      path: "/redirect",
+      component: () => import("pages/RedirectPage.vue") // Your new redirect page
+    }
+  ]);
 }
 
 export default routes;

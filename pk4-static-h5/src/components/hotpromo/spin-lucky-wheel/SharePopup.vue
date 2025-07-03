@@ -304,7 +304,7 @@ const fallbackCopyTextToClipboard = (text) => {
   document.body.removeChild(textarea);
 
   $q.notify({
-    message: "Link copied to clipboard",
+    message: t('form.copiedToClipboard'),
     color: "positive",
     position: "top",
     timeout: 2000,
@@ -317,7 +317,7 @@ const copyHrefLink = async () => {
   if (navigator.share) {
     try {
       await navigator.share({
-        title: "b9.game",
+        title: "pk1.game",
         text: "Pakistan real money games",
         url: textToCopy
       });
@@ -329,7 +329,7 @@ const copyHrefLink = async () => {
       .writeText(textToCopy)
       .then(() => {
         $q.notify({
-          message: "Link copied to clipboard",
+          message: t('form.copiedToClipboard'),
           color: "positive",
           position: "top",
           timeout: 2000,

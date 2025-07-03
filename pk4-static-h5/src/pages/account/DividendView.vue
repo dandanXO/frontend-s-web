@@ -2,7 +2,7 @@
   <div class="container">
     <q-tabs v-model="activeKey" class="tabs" color="black" no-caps indicator-color="transparent">
       <q-tab name="my-dividend" :label="$t('dividend.myDividend')"></q-tab>
-      <q-tab name="contract-management" :label="$t('dividend.contractManagement')"></q-tab>
+      <q-tab name="contract-management" :label="$t('dividend.contractManagement')" v-if="showContractTab"></q-tab>
     </q-tabs>
 
     <q-tab-panels v-model="activeKey" class="panels">
@@ -17,13 +17,19 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import MyDividend from "../account/dividend/MyDividend.vue";
 import ContractManagement from "../account/dividend/ContractManagement.vue";
+import { useAffiliateStore } from "src/stores/affiliate";
 
 const route = useRoute();
 const activeKey = ref("my-dividend");
+const showContractTab = ref();
+const affiliateStore = useAffiliateStore();
+onMounted(async () => {
+  showContractTab.value = await affiliateStore.checkIsCanShowContract();
+})
 </script>
 
 <style scoped lang="scss">

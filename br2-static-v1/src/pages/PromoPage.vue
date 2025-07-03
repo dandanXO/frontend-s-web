@@ -72,7 +72,7 @@
             </div>
             <div class="selected-promo-wrapper">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
-              <div v-if="selectedPromo.redirectUrl !== 'spin-lucky-wheel'" class="banner-container">
+              <div v-if="selectedPromo.redirectUrl !== 'spin-lucky-wheel' && selectedPromo.redirectUrl !== 'br2-aviator-wheel-bet-count'" class="banner-container">
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
@@ -82,10 +82,10 @@
               <div
                 class="inner"
                 :class="{
-                  isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel',
+                  isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel' ||  selectedPromo.redirectUrl === 'br2-aviator-wheel-bet-count',
                   envelope:
                     selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope',
-                  wheel: selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel'
+                  wheel: (selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel')
                 }"
               >
                 <div
@@ -113,7 +113,7 @@
                   <div
                     class="hot-promo-div"
                     :class="{
-                      isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel'
+                      isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel'||selectedPromo.redirectUrl === 'br2-aviator-wheel-bet-count'
                     }"
                     v-if="selectedPromo.hasPromo"
                   >
@@ -824,7 +824,8 @@ export default defineComponent({
       background-repeat: no-repeat;
       background-position: center bottom;
       overflow: hidden;
-      height: 170px;
+      min-height: 130px;
+      height: auto;
       // max-height: 130px;
       margin: 10px;
 
@@ -938,7 +939,7 @@ export default defineComponent({
               background-position: center center;
               margin: 0;
               // border-radius: 10px 10px 0 0;
-              border-radius: 17px;
+              border-radius: 0px 0px 17px 17px;
 
               &:hover {
                 transform: scale(1.2);

@@ -1,6 +1,6 @@
 <template>
   <div class="auth-container" :class="isRestrictedDomain ? 'w-domain' : ''">
-    <img class="top-left-logo" src="../assets/images/auth/b9-logo.svg" />
+    <img class="top-left-logo" src="../assets/images/auth/pk4-logo.svg" />
     <div class="back-left" v-if="!isRestrictedDomain">
       <router-link :to="'/home'">
         <img src="../assets/images/index/close-btn.png" />
@@ -102,7 +102,7 @@
         </q-checkbox>
       </div>
 
-      <router-link to="/forgot-password" class="is-domain forget-pwd">Forget password</router-link>
+      <router-link to="/forgot-password" class="is-domain forget-pwd">{{ $t("btn.forgetPwd") }}</router-link>
 
       <div class="no-domain bottom-btn-primary">
         <q-btn class="btn-primary btn-primary__full" no-caps unelevated :disabled="!isAgreeReg" :loading="isLoading"
@@ -156,13 +156,13 @@
         <!-- </router-link> -->
       </div>
 
-      <div class="regulated-and-licensed">
+      <!-- <div class="regulated-and-licensed">
         <img class="regulated-logo" src="../assets/images/auth/regulated-and-licensed.png" />
         <div class="text">
           <div class="text-1">Regulated & Licensed</div>
           <div class="text-2">by the Govemment of Couracao</div>
         </div>
-      </div>
+      </div> -->
 
     </div>
 

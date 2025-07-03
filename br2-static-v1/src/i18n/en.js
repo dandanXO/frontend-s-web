@@ -830,7 +830,26 @@ export default {
       day: "day",
       days: "days",
       signIn: "Sign in",
-      signedIn: "Signed in"
+      signedIn: "Signed in",
+      description: "Brazilian Portuguese Version: 7-Day Check-in Promotion Rules Description",
+      tnc01: "This is a continuous 7-day check-in activity. Upon completing 7 check-in days, the cycle automatically restarts on the 8th day.",
+      tnc02: "Users can check in manually each day, with each day offering a specific reward.",
+      tnc03: "If the user misses a check-in (e.g., checked in on day 1 but not on day 2), on day 3 they can only check in for day 3, without being eligible for the day 2 reward.",
+      tnc04: "Rewards must be claimed manually by the user. Unclaimed rewards will be considered forfeited.",
+      tnc05: "Received bonuses require a 1x rollover before they can be withdrawn.",
+      tnc06: "The promotion is exclusive to real users. If suspicious activity is detected, such as multiple accounts or unauthorized behavior, the platform reserves the right to cancel the bonus, block the account, or apply other necessary measures.",
+      tnc07: "The platform reserves the exclusive right to the final interpretation of this promotion.",
+    },
+    redepositBonus: {
+      description: "Receive an extra 100% bonus on your first deposit of the day",
+      tnc01: "This promotion is valid for all members who make their first deposit of the day.",
+      tnc02: "The bonus amount will be 100% of the deposited value, with no maximum limit.",
+      tnc03: "The bonus (including the principal) requires 12 times valid wagering to be eligible for withdrawal.",
+      tnc04:
+        "Each member can participate once per day, and the bonus is only applicable to the first transaction of the day.",
+      tnc05:
+        "Only the account holder may claim the bonus. In case of irregular behavior, the bonus may be canceled, deducted, frozen, or the account may be blacklisted.",
+      tnc06: "The platform reserves the final right of interpretation for this promotion."
     },
     megaSharingWheel: {
       wheelTitle: "Mega Sharing Roulette",
@@ -902,6 +921,7 @@ export default {
     successfulDepositMember: "All members who have made at least one successful deposit",
     betMember: "All members who placed bets",
     newMember: "All new registered member",
+    allMembers: "All members",
     desc: "Description",
     tnc: "Terms and Conditions",
     cashbackWeekly: {
@@ -958,26 +978,27 @@ export default {
       tnc07: "To avoid any misunderstandings, AKB188 reserves the final right of interpretation for this promotion."
     },
     dailySecondDeposit: {
-      description: "The first deposit of the day entitles you to a 10% bonus on the deposited amount",
-      tnc01: "Each member can enjoy this promotion once per day;",
-      tnc02:
-        "After successfully making the first deposit of the day, the member may claim a 10% bonus on the deposited amount during the promotion period;",
-      tnc03: "The minimum deposit amount is R$20;",
-      tnc04: "The maximum bonus amount is R$288;",
+      description: "The first deposit of the day entitles you to a 20% bonus on the deposited amount",
+      tnc01: "This promotion is valid for all deposits made after the first deposit on the same day.",
+      tnc02: "Each subsequent deposit grants a 20% bonus, with a limit of R$288 per deposit.",
+      tnc03: "The bonus (including the principal) requires 12 times valid wagering to be eligible for withdrawal.",
+      tnc04: "All additional deposits of the day are eligible, with no limit on the number of participations per day.",
       tnc05:
-        'To participate in this promotion, a request must be submitted. Eligible members must click the "Join Now" button on this page to submit;',
-      tnc06: "The deposit amount plus the bonus must be wagered at least 12 times before withdrawals are allowed;",
-      tnc07: "AKB188 reserves the right to the final interpretation of this promotion to avoid any misunderstandings."
+        "Only the account holder may claim the bonus. In case of irregular behavior, the bonus may be canceled, deducted, frozen, or the account may be blacklisted.",
+      tnc06: "The platform reserves the final right of interpretation for this promotion."
     },
     betCashback: {
       description: "Daily cashback based on the amount wagered and the corresponding percentage",
       tnc01: "Cashback from the previous day will be credited automatically at 6:00 PM (Brasília time) every day;",
       tnc02: "The cashback amount is calculated as: total amount wagered on the previous day × cashback percentage;",
-      tnc03: "The more you bet, the higher the cashback percentage, up to 3%;",
+      tnc03: "The more you bet, the higher the cashback percentage, up to 3.2%;",
       tnc04: "There is no maximum limit on the cashback amount;",
       tnc05: "The cashback bonus must be wagered at least once before it can be withdrawn;",
       tnc06:
-        "To avoid discrepancies in interpretation, the AKB188 platform reserves the right to the final explanation of this promotion."
+        "To avoid discrepancies in interpretation, the AKB188 platform reserves the right to the final explanation of this promotion.",
+      thead1: "Level",
+      thead2: "Transaction Volume",
+      thead3: "Return Rate"
     },
     lossRebate: {
       description: "Cashback based on percentage of amount lost the previous day",
@@ -1046,7 +1067,7 @@ export default {
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",
-    1304: "This number has already been used",
+    1304: "CPF has already been used",
     1305: "Bank not found",
     1306: "Exceeded daily withdrawal time limit",
     1307: "Exceeded daily withdrawal limit",

@@ -18,6 +18,10 @@
       <div class="nickname">{{ store.realName ? store.realName : store.nickName }}</div>
     </div>
 
+    <div class="valid-bet-div">
+      {{ $t("vip.currentValidBets") }}: {{ store.currency.value }}&nbsp;
+      <span>{{ store.getCurrentValidBet() }}</span>
+    </div>
     <div class="right-container" :class="`vipitem${store.vip.replace('VIP', '')}`">
       <div class="amount-progress-container">
         <div class="vip-text">{{ store.vip }}</div>
@@ -291,6 +295,21 @@ $gradients: (
       // color: #B2BDBF;
       font-weight: 400;
     }
+  }
+}
+.valid-bet-div {
+  width: 100%;
+  color: #fff;
+  background-color: #56616396;
+  width: fit-content;
+  padding: 2px 10px;
+  border-radius: 10px;
+  align-self: flex-start;
+  margin-top: 20px;
+  span {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
   }
 }
 </style>

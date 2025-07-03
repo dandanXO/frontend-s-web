@@ -1184,6 +1184,16 @@
 
   <!-- DONT REMOVE THIS GOT USE DE-->
   <SpinLuckyWheelPromoSticky v-show="false" />
+  <LossRebateModal
+    @closeDialog="isShowLossRebateModal = false"
+    :detail="cashBackDetails"
+    v-model="isShowLossRebateModal"
+  />
+  <LoginRebateModal
+    @closeDialog="isShowLoginRebateModal = false"
+    :detail="loginCashBackDetails"
+    v-model="isShowLoginRebateModal"
+  />
 </template>
 
 <script setup>
@@ -1213,13 +1223,31 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import { t } from "../boot/lang";
-// Import Swiper modules
+import moment from "moment";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y, Grid } from "swiper/core";
 import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { storeToRefs } from "pinia";
 
 import PopupController from "src/components/PopupController.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
+import LossRebateModal from "src/components/modal/LossRebateModal.vue";
+import LoginRebateModal from "src/components/modal/LoginRebateModal.vue";
+
+const isShowLossRebateModal = ref(false);
+const cashBackDetails = reactive({
+  betRebateAmount: 0,
+  betRebateClaimed: false,
+  lossRebateAmount: 0,
+  lossRebateClaimed: false
+});
+
+const isShowLoginRebateModal = ref(false);
+const loginCashBackDetails = reactive({
+  betRebateAmount: 0,
+  betRebateClaimed: false,
+  lossRebateAmount: 0,
+  lossRebateClaimed: false
+});
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -3020,8 +3048,8 @@ const loadAppTabs = () => {
           categoriesList.value = [
             { title: "Hot", icon: "hot", active: true },
             { title: "Casino", icon: "casino", active: false },
-            { title: "Fishing", icon: "fishing", active: false },
-            { title: "Sport", icon: "sport", active: false }
+            { title: "Sport", icon: "sport", active: false },
+            { title: "Fishing", icon: "fishing", active: false }
           ];
         }
       }
@@ -3043,6 +3071,7 @@ const loadCategoryLists = () => {
       id: item.id
     }));
     categoriesList.value.push(...slotCategories);
+    categoriesList.value.push({ title: "Fishing", icon: "fishing", active: false });
   };
   interval = setInterval(() => {
     if (isAppTabsLoaded.value) {
@@ -3126,6 +3155,7 @@ const gotoFloatPromo = (val) => {
 };
 
 let intervalId;
+let jackpotApiTimer;
 let jackpotTimer;
 
 watch(
@@ -3160,20 +3190,42 @@ const checkSpinWheel = () => {
   }
 };
 
+function animateValue(obj, prop, start, end, duration) {
+  const startTime = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1); // Clamp to [0,1]
+
+    // Linear interpolation
+    obj[prop] = Math.floor(start + (end - start) * progress);
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
 const getJackpotAmt = () => {
   api.get("/app/jackpot").then((res) => {
     // debugger;
     if (res.code === 0) {
-      ui.jackpotAmt = res.data.value;
+      const startAmt = ui.jackpotAmt;
+
+      animateValue(ui, "jackpotAmt", startAmt, res.data.value, 500);
       getJackpotIncrease();
     }
   });
 };
 
 const getJackpotIncrease = () => {
+  clearInterval(jackpotTimer);
   jackpotTimer = setInterval(() => {
-    ui.jackpotAmt += 1;
-  }, 500);
+    const randomInt = Math.floor(Math.random() * 2) + 1;
+    ui.jackpotAmt += randomInt;
+  }, 1000);
 };
 
 const showSpinWheel = () => {
@@ -3196,14 +3248,79 @@ const showSpinWheel = () => {
     });
 };
 
+const loadBetCashBackPopup = () => {
+  const getTime = sessionStorage.getItem("IS_CASHBACK_POPUP");
+  const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
+  // true ||
+  if (!getTime || getTime > currentTime) {
+    sessionStorage.removeItem("IS_CASHBACK_POPUP");
+    api
+      .get(
+        `/session/member/rebateAndCashback?betRebatePromoCode=br2-daily-bet-rebate&lossRebatePromoCode=br2-loss-rebate`
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.code === 0) {
+          const { betRebateAmount, betRebateClaimed, lossRebateAmount, lossRebateClaimed } = res.data;
+
+          cashBackDetails.betRebateAmount = betRebateAmount;
+          cashBackDetails.betRebateClaimed = betRebateClaimed;
+          cashBackDetails.lossRebateAmount = lossRebateAmount;
+          cashBackDetails.lossRebateClaimed = lossRebateClaimed;
+
+          // true ||
+          isShowLossRebateModal.value = cashBackDetails.betRebateAmount !== 0 || cashBackDetails.lossRebateAmount !== 0;
+
+          const after6HoursTime = moment().add(6, "hours").format("YYYY-MM-DD HH:mm:ss");
+          sessionStorage.setItem("IS_CASHBACK_POPUP", JSON.stringify(after6HoursTime));
+        }
+      });
+  }
+};
+
+const loadLoginCashBackPopup = () => {
+  const getTime = sessionStorage.getItem("IS_LOGIN_CASHBACK_POPUP");
+  const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
+  // true ||
+  if (!getTime || getTime > currentTime) {
+    sessionStorage.removeItem("IS_LOGIN_CASHBACK_POPUP");
+    api
+      .get(
+        `/session/member/rebateAndCashback?betRebatePromoCode=br2-daily-bet-rebate&lossRebatePromoCode=br2-loss-rebate&day=0`
+      )
+      .then((res) => {
+        if (res.code === 0) {
+          const { betRebateAmount, betRebateClaimed, lossRebateAmount, lossRebateClaimed } = res.data;
+
+          loginCashBackDetails.betRebateAmount = betRebateAmount;
+          loginCashBackDetails.betRebateClaimed = betRebateClaimed;
+          loginCashBackDetails.lossRebateAmount = lossRebateAmount;
+          loginCashBackDetails.lossRebateClaimed = lossRebateClaimed;
+
+          // true ||
+          isShowLoginRebateModal.value =
+            loginCashBackDetails.betRebateAmount !== 0 || loginCashBackDetails.lossRebateAmount !== 0;
+
+          const after6HoursTime = moment().add(6, "hours").format("YYYY-MM-DD HH:mm:ss");
+          sessionStorage.setItem("IS_LOGIN_CASHBACK_POPUP", JSON.stringify(after6HoursTime));
+        }
+      });
+  }
+};
+
 onActivated(() => {
-  store.getUnreadTotal();
   if (route.query.login === "true" || route.query.register === "true") {
     //TODO: change back.
     // popupPromo.value = "money-rain";
     popupPromo.value = "spin-lucky-wheel";
   }
   // popupPromo.value = "money-rain";
+
+  if (store.hasToken()) {
+    store.getUnreadTotal();
+    loadBetCashBackPopup();
+    loadLoginCashBackPopup();
+  }
 });
 
 onMounted(() => {
@@ -3220,6 +3337,9 @@ onMounted(() => {
   checkHbPromo();
   checkSpinLuckyWheelPromo();
   getJackpotAmt();
+
+  jackpotApiTimer = setInterval(getJackpotAmt, 5000);
+
   SwiperCore.use([Grid, Navigation, Pagination, Scrollbar, A11y]);
 
   if (Platform.is.android && Platform.is.capacitor) {
@@ -3240,6 +3360,7 @@ window.addEventListener("beforeunload", () => {
 onBeforeUnmount(() => {
   clearInterval(intervalId);
   clearInterval(jackpotTimer);
+  clearInterval(jackpotApiTimer);
 });
 </script>
 

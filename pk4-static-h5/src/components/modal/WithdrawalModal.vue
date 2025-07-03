@@ -719,8 +719,9 @@ const isValidCardAddress = () => {
           align-items: center;
           justify-content: center;
           color: #150025;
-          background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-          box-shadow: 0px 2px 0px 0px #1cca6a;
+          // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+          // box-shadow: 0px 2px 0px 0px #1cca6a;
+          background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
           .card-label {
             font-size: 1rem;
             font-weight: 700;

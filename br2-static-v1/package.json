@@ -54,6 +54,7 @@
     "quasar": "^2.7.7",
     "swiper": "^9.4.1",
     "vue": "^3.0.0",
+    "vue-gtag-next": "^1.14.0",
     "vue-i18n": "^9.9.0",
     "vue-marquee-text-component": "^2.0.1",
     "vue-qrcode-component": "^2.1.1",

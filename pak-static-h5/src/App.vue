@@ -135,7 +135,7 @@ export default defineComponent({
             }
           });
         }, 0);
-      } else {
+      } else if (process.env.MODE === "spa") {
         //Normal WEb / H5 / iOS WEbclip.
         console.log("Init Web Adjust");
         console.log(affAppToken.value);

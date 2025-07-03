@@ -62,7 +62,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { computed, ref, toRefs, watch } from "vue";
+import { computed, ref, toRefs, watch, nextTick } from "vue";
 
 const props = defineProps({
   list: Array,
@@ -121,8 +121,14 @@ watch(model, () => {
   swiperInstance.value.slideTo(currentIndex, 0);
 });
 
-watch(list, () => {
+watch(list, async (newVal, oldVal) => {
+  const newValStr = JSON.stringify(newVal);
+  const oldValStr = JSON.stringify(oldVal);
+  if (newValStr === oldValStr) return;
+
   const currentIndex = list.value.findIndex((item) => item.streamId === model.value);
+
+  await nextTick();
   if (currentIndex === -1) {
     swiperInstance.value.slideTo(0, 0);
   } else {

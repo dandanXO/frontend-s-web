@@ -115,12 +115,16 @@ export default defineComponent({
       if (store.token) {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LIVE"));
+          platformsListDisplay.value = platformsList.value
+            .filter((element) => element.gameType.includes("LIVE"))
+            .sort((a, b) => a.sequence - b.sequence);
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LIVE"));
+          platformsListDisplay.value = platformsList.value
+            .filter((element) => element.gameType.includes("LIVE"))
+            .sort((a, b) => a.sequence - b.sequence);
         });
       }
     };
@@ -130,7 +134,8 @@ export default defineComponent({
         .map((nav) => ({
           ...nav,
           ...platformsListDisplay.value.find((platform) => platform.code === nav.code)
-        }));
+        }))
+        .sort((a, b) => a.sequence - b.sequence); 
     });
 
     onMounted(() => {

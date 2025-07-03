@@ -394,6 +394,7 @@ body.body--dark .q-footer {
     color: #3f4c6b;
     font-weight: bold;
     padding-bottom: 10px;
+    letter-spacing: -0.3px;
   }
 
   img {
@@ -887,8 +888,9 @@ body.body--dark .q-footer {
   font-weight: 600;
   border-radius: 6px;
   position: relative;
-  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-  box-shadow: 0px 1.13px 0px 0px #1cca6a;
+  // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  // box-shadow: 0px 1.13px 0px 0px #1cca6a;
+  background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
   padding: 5px;
   color: #333333;
 }

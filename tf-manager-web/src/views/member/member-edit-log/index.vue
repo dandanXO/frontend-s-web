@@ -380,6 +380,7 @@ const uiControl = reactive({
   // ENUM('NAME', 'PASSWORD', 'STATUS', 'EMAIL', 'TELEPHONE', 'AGENT', 'BIRTHDAY', 'COUNTRY', 'VIP_LEVEL', 'FINANCIAL_LEVEL', 'RISK_LEVEL', 'MEMBER_TYPE', 'NAME2')
   editType: [
     { key: 1, displayName: 'Name', value: 'NAME' },
+    { key: 2, displayName: 'Name2', value: 'NAME2' },
     // { key: 2, displayName: 'VIP LEVEL', value: 'VIP_LEVEL' },
     { key: 3, displayName: 'Email', value: 'EMAIL' },
     { key: 4, displayName: 'Status', value: 'STATUS' },

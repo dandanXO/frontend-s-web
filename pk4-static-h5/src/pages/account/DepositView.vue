@@ -389,8 +389,8 @@ import { isAndroid } from "src/boot/utils";
 import AdditionalSteps from "../../components/modal/AdditionalSteps.vue";
 
 const DEFAULT_BONUS_CONFIG = {
-  selected: true,
-  hasBonus: true,
+  selected: false,
+  hasBonus: false,
   privilegeId: null
 };
 
@@ -757,7 +757,7 @@ async function loadPrivilege(val) {
         if (p.payTypes.indexOf(val.payType) >= 0) {
           if (p.triggerType == "FREE") {
             freePrivilege.value.push(p);
-          } else if (p.code === "pak-new-user-roulette") {
+          } else if (p.code === "pk4-new-user-roulette") {
             newPlayerDepositBonusConfig.value = {
               selected: true,
               hasBonus: true,
@@ -1264,7 +1264,11 @@ onBeforeRouteLeave((to, from, next) => {
   // border: 1px solid #072a19;
   // border-radius: 0.5rem;
   // border: 1px solid #ffffff14;
-  // background: #292d2f !important;
+  background: #292d2f !important;
+}
+
+.popout-dialog  :deep(.q-field--filled.q-field--dark .q-field__control) {
+  
   background: #EAEFF9 !important;
   border: none;
 }
@@ -1513,7 +1517,7 @@ onBeforeRouteLeave((to, from, next) => {
   max-width: 468px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #24262b;
+  background-color: #090f1e;
   // margin: 16px;
 }
 

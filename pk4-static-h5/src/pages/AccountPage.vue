@@ -1892,4 +1892,7 @@ const openConfirmSignOutDialog = () => {
   width: 100%;
   margin-top: 20px;
 }
+:deep(.q-field__append) {
+  color: #b3bec1;
+}
 </style>

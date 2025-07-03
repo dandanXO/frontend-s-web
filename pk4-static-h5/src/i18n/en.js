@@ -5,7 +5,7 @@ export default {
   },
   header: {
     login: "Login",
-    welcomeMsg: "Welcome to B9",
+    welcomeMsg: "Welcome to PK1",
     register: "Register",
     download: "Download",
     getFreeSpins: "Get free spins on the APP",
@@ -260,7 +260,8 @@ export default {
     accountOwnerOnly: "Only the account owner can redeem the code.",
     unauthorizedMethods:
       "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus.",
-    recoverPwd: "Recover your password"
+    recoverPwd: "Recover your password",
+    copiedToClipboard: "Copied to Clipboard",
   },
   btn: {
     login: "Login",
@@ -268,7 +269,7 @@ export default {
     confirm: "Confirm",
     submit: "Submit",
     forgetPwd: "Forget Password",
-    areyounew: "Are you new to B9?",
+    areyounew: "Are you new to PK1?",
     alreadyhaveacct: "Already have an account?",
     addNewAccount: "Add New Account",
     updated: "Updated",
@@ -306,6 +307,7 @@ export default {
     playReal: "Play real",
     freeTrial: "Free trial",
     payAgain: "Pay again",
+    reminder: "Reminder",
   },
   notify: {
     cancelPayment: "Cancel Payment",
@@ -324,7 +326,6 @@ export default {
     updatedSuccessfully: "Updated successfully",
     emailVerificationSent: "Email verification sent",
     messageSent: "Message Sent",
-
     feedbackSentSuccess: "Your feedback has been sent successfully!",
     quitGameMessage: "Are you sure want to quit? Click Confirm to quit the game.",
     signOutMessage: "Are you sure you want to sign out?",
@@ -335,7 +336,8 @@ export default {
     submitting: "Submitting...",
     sendingVerificationCode: "Sending verification code...",
     passwordResetCompleted: "Password reset completed",
-    success: "Success"
+    success: "Success",
+    pleaseCompleteYourKYC: 'Please Complete your KYC.',
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -376,7 +378,10 @@ export default {
     cashGift: "Cash Gifts",
     welcomeNewPlayer: "Welcome New Players",
     MegaSharingRoulette: "Mega Sharing Roulette",
-    spinLuckyWheel: "Spin Lucky Wheel"
+    spinLuckyWheel: "Spin Lucky Wheel",
+    twentyFourSevenSupport: '24/7 support',
+    ifHaveQuestionsContactUs: 'If you still have questions, please contact us',
+    chat: 'Chat'
   },
   settings: {
     totalScore: "Total Score",
@@ -398,18 +403,18 @@ export default {
     interestProfit: "Interest Profit",
     exchange: "Exchange",
     transfer: "Transfer",
-    "agentAccount": "Agent Account",
+    agentAccount: "Agent Account"
   },
   affiliateSettings: {
-    "overview": "Overview",
-    "accountRecord": "Account Record",
-    "teamManagement": "Team Management",
-    "teamPnl": "Team P&L",
-    "teamBetting": "Team Betting",
-    "editRebate": "Edit Rebate",
-    "securityCenter": "Security Center",
-    "internalMessage": "Internal Message",
-    "customerService": "Customer Service",
+    overview: "Overview",
+    accountRecord: "Account Record",
+    teamManagement: "Team Management",
+    teamPnl: "Team P&L",
+    teamBetting: "Team Betting",
+    editRebate: "Edit Rebate",
+    securityCenter: "Security Center",
+    internalMessage: "Internal Message",
+    customerService: "Customer Service",
     linkManagement: "Link Management"
   },
   affiliate: {
@@ -428,32 +433,101 @@ export default {
       qrCode: "QR Code",
       scanTheCodeToRegister: "Scan the QR code to register",
       pressQRCode: "press and hold to save QR code to album"
+    },
+    overview: {
+      today: 'Today',
+      yesterday: 'Yesterday',
+      sevenDays: '7 days',
+      thisMonth: 'This Month',
+      logins: 'Logins',
+      registers: 'Registers',
+      betCount: 'Bet count',
+      promotions: 'Promotions',
+      registersFirstDeposits: 'Registers first deposits',
+      firstDeposits: 'First deposits',
+      deposits: 'Deposits',
+      withdrawals: 'Withdrawals',
+      deposit: 'Deposit',
+      withdrawalAmount: 'Withdrawal amount',
+      bonus: 'Bonus',
+      validBet: 'Valid bet',
+      winLoss: 'Win/loss',
+      teamPnL: 'Team P&L',
+      teamRebate: 'Team Rebate',
+    },
+    accountRecord: {
+      all: 'All',
+      deposit: 'Deposit',
+      withdrawal: 'Withdrawal',
+      betting: 'Betting',
+      bonus: 'Bonus',
+      rebate: 'Rebate',
+      dividend: 'Dividend',
+      loginName: 'Login Name',
+      recordDate: 'Record Date',
+      beforeBalance: 'Before Balance',
+      afterBalance: 'After Balance',
+      amount: 'Amount',
+      currency: 'Currency'
+    },
+    teamManagement: {
+      lastLoginTime: 'Last login time',
+      registrationDate: 'Registration date',
+      balance: 'Balance'
+    },
+    teamPnL: {
+      deposit: 'Deposit',
+      withdrawal: 'Withdrawal',
+      bonus: 'Bonus',
+      validBet: 'Valid Bet',
+      winLoss: 'Win/Loss',
+      profitLoss: 'Profit & Loss',
+      today: 'Today',
+      yesterday: 'Yesterday',
+      sevenDays: '7 days',
+      thisMonth: 'This Month',
+      total: 'Total'
+    },
+    teamBetting: {
+      all: 'All',
+      slot: 'Slot',
+      live: 'Live',
+      sport: 'Sport',
+      fish: 'Fish',
+      poker: 'Poker',
+      today: 'Today',
+      yesterday: 'Yesterday',
+      sevenDays: '7 days',
+      thisMonth: 'This Month',
+      vendors: 'Vendors'
     }
   },
   accountRecord: {
-    myDividend: 'My Dividend',
-    contractManagement: 'Contract Management',
-    dividendRecord: 'Dividend Record',
+    myDividend: "My Dividend",
+    contractManagement: "Contract Management",
+    dividendRecord: "Dividend Record"
   },
   dividend: {
-    myDividend: 'My Dividend',
-    contractManagement: 'Contract Management',
-    dividendRecord: 'Dividend Record',
-    activeMember: 'Active Member',
-    dividendRate: 'Dividend Rate',
-    netAmountReceives: 'Net amount receives',
-    status: 'Status',
-    periodValidBet: 'Period valid bet',
-    periodPnL: 'Period P&L',
-    periodSettledPnL: 'Period settled P&L',
-    dividendAmount: 'Dividend amount',
-    downlineDividendsToPay: 'Downline dividends to pay',
-    disbursementTime: 'Disbursement time',
-    statusChecking: 'Checking',
-    statusPay: 'Pay',
-    statusCleared: 'Cleared',
-    statusCancelled: 'Cancelled',
-    rate: 'Rate'
+    myDividend: "My Dividend",
+    contractManagement: "Contract Management",
+    dividendRecord: "Dividend Record",
+    activeMember: "Active Member",
+    dividendRate: "Dividend Rate",
+    netAmountReceives: "Net amount receives",
+    status: "Status",
+    periodValidBet: "Period valid bet",
+    periodPnL: "Period P&L",
+    periodSettledPnL: "Period settled P&L",
+    dividendAmount: "Dividend amount",
+    downlineDividendsToPay: "Downline dividends to pay",
+    disbursementTime: "Disbursement time",
+    statusChecking: "Checking",
+    statusPay: "Pay",
+    statusCleared: "Cleared",
+    statusCancelled: "Cancelled",
+    rate: "Rate",
+    createContract: "Create Contract",
+    selfCommissionShare: "Self Commission Share"
   },
   deposit: {
     selectAmount: "Select Amount",
@@ -488,6 +562,7 @@ export default {
     withdrawable: "Withdrawable",
     withdrewAmount: "Withdrew Amount",
     withdrawMaxTimes: "Remaining Withdrawal Attempts",
+    withdrawMaxAmount: "Remaining Withdrawal Amount",
     dailyLimit: "Daily Limit",
     remainWagers: "Remain Wagers",
     withdrawTutorial: "Withdraw Tutorial",
@@ -558,7 +633,15 @@ export default {
     accumulate: "Accumulate",
     invites: "Invites",
     extra: "Extra",
-    rewardss: "Rewards"
+    rewardss: "Rewards",
+    upgradeRewards: "Upgrade Rewards",
+    monthlyRewards: "Monthly Rewards",
+    monthlyRewardsText:
+      "VIP bonus is only applicable to monthly total deposits and will reset at 12:00am on the first day of the next month",
+    dailyWithdrawalLimit: "Daily Withdrawal Limit",
+    bet: "Bet",
+    deposit: "Deposit",
+    currentValidBets: "Current Valid Bets"
   },
   earnMoney: {
     title: "Bonus Pot Arrived",
@@ -602,9 +685,9 @@ export default {
       multiple_acc_hint: `2. It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
     Reward distribution time: Between 3:00 PM and 6:00 PM Pakistan time on the next day. The rewards will be credited to the account during this time frame.
     `,
-      shareTitle: "B9GAME Share and Earn",
+      shareTitle: "PK1GAME Share and Earn",
       shareText:
-        "B9GAME Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
+        "PK1GAME Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
       betting_table: {
         header: {
           description: "Description",
@@ -817,13 +900,14 @@ export default {
     payment: "Payment",
     system: "System",
     noMessage: "No messages",
-    visitLink: "Visit link"
+    visitLink: "Visit link",
+    copySuccess: "Serial Number Copied to clipboard",
   },
   customerServiceVerifier: {
-    mainTitle: "B9.GAME",
+    mainTitle: "PK1.GAME",
     subTitle: "Customer Service Verifier",
     contentPara01:
-      "To prevent scams using B9.GAME's list, you can verify the Telegram or Discord account you are chatting&nbsp;with ",
+      "To prevent scams using PK1.GAME's list, you can verify the Telegram or Discord account you are chatting&nbsp;with ",
     contentPara02: "Please enter the agent account ID and click the Check button"
   },
   playerGuide: {
@@ -940,7 +1024,7 @@ export default {
     },
     appLoginBonus: {
       newlyRegistered1: "Newly registered",
-      b9: "B9",
+      pk1: "PK1",
       newlyRegistered2: "members, download and install the application, and get random free bonuses, up to",
       bdt888: "888BDT",
       newlyRegistered5: ".",
@@ -950,7 +1034,7 @@ export default {
       beginnersGuide: "BEGINNER'S GUIDE",
       rewardDetails: "REWARD DETAILS",
       beginnersGuideTxt1_1: "1. Follow whatsapp and subscribe to",
-      b9game: "B9.game",
+      b9game: "PK1.GAME",
       beginnersGuideTxt1_2: "channel",
       beginnersGuideTxt2: "2. Associate and verify email address",
       rewardDetailTxt1: "The maximum bonus can reach",
@@ -981,23 +1065,22 @@ export default {
       downloadAndInstall7: "Linked withdrawal account",
       downloadAndInstall8: "Enter the [Discount Center] to check and collect, and you can get a random reward of up to",
       downloadAndInstall9: ".",
-      termsCondition1:
-        "This bonus is only available for new member accounts and only for their first deposit.",
+      termsCondition1: "This bonus is only available for new member accounts and only for their first deposit.",
       termsCondition2:
         "Withdrawal requirements: You need to complete the wagering requirement of at least 10 times the turnover. The calculation formula is: (Deposit amount + Bonus amount) × 10 times the turnover requirement.",
-      termsCondition3:
-        "This bonus is only applicable to the slot game category.",
+      termsCondition3: "This bonus is only applicable to the slot game category.",
       termsCondition4:
-        "If a member mistakenly participates in a non-specified game category, the bonus will be deemed invalid and b9.game reserves the right to deduct the relevant bonus and the profits generated.",
+        "If a member mistakenly participates in a non-specified game category, the bonus will be deemed invalid and pk1.game reserves the right to deduct the relevant bonus and the profits generated.",
       termsCondition5:
-        "Each member is limited to one account (including deposit account, withdrawal account, IP address). Multiple account behavior will result in the bonus being invalid. If violations are found, b9.game reserves the right to cancel the bonus and freeze the account.",
+        "Each member is limited to one account (including deposit account, withdrawal account, IP address). Multiple account behavior will result in the bonus being invalid. If violations are found, pk1.game reserves the right to cancel the bonus and freeze the account.",
       termsCondition6:
         "Before the first withdrawal application, the bound bank account information and phone number cannot be changed. If the information is changed, the bonus will be cancelled and the bonus and the resulting profits will be deducted.",
-      termsCondition7: "This bonus is only applicable to players in the specified game category. The bonus cannot be used to accumulate betting turnover, calculate arbitrage behavior or be used in combination with other technical means. If violations are found, the bonus will be deemed invalid, all bonuses and profits will be cancelled, and b9.game reserves the right to close the account.",
+      termsCondition7:
+        "This bonus is only applicable to players in the specified game category. The bonus cannot be used to accumulate betting turnover, calculate arbitrage behavior or be used in combination with other technical means. If violations are found, the bonus will be deemed invalid, all bonuses and profits will be cancelled, and pk1.game reserves the right to close the account.",
       termsCondition8:
-        "B9.game reserves the right to change, suspend or terminate this activity at any time without prior notice.",
-      termsCondition9: "The final right of interpretation of all terms belongs to b9.game. b9.game reserves the right to refuse to deal with any disputes involving terms.",
-      
+        "PK1.game reserves the right to change, suspend or terminate this activity at any time without prior notice.",
+      termsCondition9:
+        "The final right of interpretation of all terms belongs to pk1.game. pk1.game reserves the right to refuse to deal with any disputes involving terms."
     },
     aviatorWheel: {
       remainingDrawTimes: "Remaining draw times",
@@ -1018,7 +1101,7 @@ export default {
       rule_03: "All rewards will be deposited directly into your wallet.",
       rule_04: "The bonus requires one turnover to withdraw.",
       rule_05:
-        "The right to interpret this event belongs to B9.game. If you have any questions, please contact customer service.",
+        "The right to interpret this event belongs to PK1.game. If you have any questions, please contact customer service.",
       silver: "Silver",
       gold: "Gold",
       diamond: "Diamond",
@@ -1100,60 +1183,70 @@ export default {
       betVolume: "Bet Volume"
     }
   },
+  csVerifier: {
+    validAccDesc: 'is an official representative of PK1.GAME and can be trusted',
+    invalidAccDesc: 'is not an official representative of PK1.GAME, please do not trust this account'
+  },
   shareAffiliate: {
-    login: 'Login',
-    secondLevelTitle: 'Second-level agent-dividend system',
-    agentType: 'Agent Type',
-    merchantModel: 'Merchants Monthly Dividend Model (Cumulative)',
-    investmentPromotion: 'Investment promotion',
-    activeMembers: 'Number of active and valid members',
-    monthlyDividend: 'Monthly dividend (cumulative), net profit - commission ratio',
+    login: "Login",
+    secondLevelTitle: "Second-level agent-dividend system",
+    agentType: "Agent Type",
+    merchantModel: "Merchants Monthly Dividend Model (Cumulative)",
+    investmentPromotion: "Investment promotion",
+    activeMembers: "Number of active and valid members",
+    monthlyDividend: "Monthly dividend (cumulative), net profit - commission ratio",
 
-    generalAgentTitle: 'General agent weekly dividend model (non-accumulative) - unlimited contract',
-    generalAgent: 'General Agent',
-    weeklyDividend: 'Weekly dividend (not cumulative), net profit - commission ratio',
+    generalAgentTitle: "General agent weekly dividend model (non-accumulative) - unlimited contract",
+    generalAgent: "General Agent",
+    weeklyDividend: "Weekly dividend (not cumulative), net profit - commission ratio",
 
-    memberDefinition: 'Definition of active and valid members:',
-    memberCriteria: 'Active members with cumulative deposits ≥ 1000PKR or valid bets ≥ 10000PKR during the week',
+    memberDefinition: "Definition of active and valid members:",
+    memberCriteria: "Active members with cumulative deposits ≥ 1000PKR or valid bets ≥ 10000PKR during the week",
 
-    profitFormulaTitle: 'Net profit formula:',
-    profitFormula: 'Net profit = win/loss value - discount, code washing - operating cost (8% platform fee) - recharge fee cost (deposit amount * 5%)',
+    profitFormulaTitle: "Net profit formula:",
+    profitFormula:
+      "Net profit = win/loss value - discount, code washing - operating cost (8% platform fee) - recharge fee cost (deposit amount * 5%)",
 
-    backendTitle: 'The backend allows you to change the following indicator parameters at any time',
-    dividends: 'Dividends:',
-    dividendRequirements: 'Requirements for the number of people, Dividend ratio',
+    backendTitle: "The backend allows you to change the following indicator parameters at any time",
+    dividends: "Dividends:",
+    dividendRequirements: "Requirements for the number of people, Dividend ratio",
 
-    qualifiedDefinition: 'Definition of qualified and valid members:',
-    effectiveBets: 'Effective betting amount',
-    cumulativeRecharge: 'Cumulative recharge amount',
+    qualifiedDefinition: "Definition of qualified and valid members:",
+    effectiveBets: "Effective betting amount",
+    cumulativeRecharge: "Cumulative recharge amount",
 
-    profitDeduction: 'Net profit deduction item ratio',
-    deductionDetails: 'Game wins and losses - Promotions - Platform game package points - Recharge and withdrawal fees',
+    profitDeduction: "Net profit deduction item ratio",
+    deductionDetails: "Game wins and losses - Promotions - Platform game package points - Recharge and withdrawal fees",
 
-    modelDescription: 'Description of the agent dividend model',
-    generalCalc1: 'General calculation',
-    basicSame: '- The basic calculation is the same as the normal calculation',
-    lossBySuperior: '- If there is a situation where the left and right lines of a superior agent cancel each other out, the superior agent will still bear the loss',
-    noSuperiorLoss: '- However, when the dividends received by the superior agent are insufficient to pay all the subordinate agents, the platform will make up for it',
+    modelDescription: "Description of the agent dividend model",
+    generalCalc1: "General calculation",
+    basicSame: "- The basic calculation is the same as the normal calculation",
+    lossBySuperior:
+      "- If there is a situation where the left and right lines of a superior agent cancel each other out, the superior agent will still bear the loss",
+    noSuperiorLoss:
+      "- However, when the dividends received by the superior agent are insufficient to pay all the subordinate agents, the platform will make up for it",
 
-    generalCalculation: 'General calculation:',
-    calcExample1: `B1 dividend = -200 x 30% = -60 -> 0<br>` +
-              `B2 dividend = 300 x 20% = 60<br>` +
-              `A profit and loss = B1 + B2 = 100<br>` +
-              `A dividend = 100 x 40% = 40<br>` +
-              `A needs to pay B1 60, which is 20 platform subsidies, and A's net income is 0<br>` +
-              `The platform pays 60`,
+    generalCalculation: "General calculation:",
+    calcExample1:
+      `B1 dividend = -200 x 30% = -60 -> 0<br>` +
+      `B2 dividend = 300 x 20% = 60<br>` +
+      `A profit and loss = B1 + B2 = 100<br>` +
+      `A dividend = 100 x 40% = 40<br>` +
+      `A needs to pay B1 60, which is 20 platform subsidies, and A's net income is 0<br>` +
+      `The platform pays 60`,
 
-    noGeneralCalculation: 'No general calculation',
-    sameCalc: '- The basic calculation is the same as the normal calculation',
-    cancelledLines: '- If a superior agent has two lines that cancel each other out, the superior agent will only bear its own part of the loss',
-    subAgentNoLoss: '- The subordinate agent will not bear any loss',
-    platformInvestment: '- Negative dividends of the agent team that makes profits are the platform\'s investment',
+    noGeneralCalculation: "No general calculation",
+    sameCalc: "- The basic calculation is the same as the normal calculation",
+    cancelledLines:
+      "- If a superior agent has two lines that cancel each other out, the superior agent will only bear its own part of the loss",
+    subAgentNoLoss: "- The subordinate agent will not bear any loss",
+    platformInvestment: "- Negative dividends of the agent team that makes profits are the platform's investment",
 
-    calcExample2: `B1 dividend = -200 x 30% = -60 -> 0<br>` +
-              `B2 dividend = 300 x 20% = 60<br>` +
-              `A profit and loss = -200 x (40%-30%) + 300 x (40%-20%) = -20 + 60 = 40<br>` +
-              `Total platform contribution = 60 + 40 = 100`,
+    calcExample2:
+      `B1 dividend = -200 x 30% = -60 -> 0<br>` +
+      `B2 dividend = 300 x 20% = 60<br>` +
+      `A profit and loss = -200 x (40%-30%) + 300 x (40%-20%) = -20 + 60 = 40<br>` +
+      `Total platform contribution = 60 + 40 = 100`
   },
   maintenance: {
     underMaintenance: "Under maintenance",
@@ -1266,6 +1359,7 @@ export default {
     30005: "Turnover has not reached the requirements",
     30006: "Members listed as account holders are prohibited from receiving this privilege",
     30007: "Member deposit does not meet the requirements",
+    30008: "The device/platform being used does not meet the requirements",
     30009: "Deposit/Betting requirements not met.",
     30101: "Existing users cannot participate in this promotion.",
     31000: "Promotion not found",
@@ -1320,7 +1414,7 @@ export default {
     58004: "Cannot Participate. Previous Tasks Has Failed to Accomplish.",
     58005: "Congrats, You have Completed All Tasks",
     58103: "VIP0 Cannot Participate.",
-    99999: "Not eligible for claiming",
+    99999: "Not eligible for claiming"
   },
   content: {
     title1: "The registration time starts from the time the registration is completed.",

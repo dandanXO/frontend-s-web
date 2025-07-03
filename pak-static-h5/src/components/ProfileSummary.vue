@@ -230,7 +230,7 @@ const router = useRouter();
 const store = userStore();
 const ui = useUI();
 const i18nStoreLanguage = i18nStore();
-const alreadyDeposited = JSON.parse(localStorage.getItem("onAppFirstDeposit"));
+const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
 const promoPercentage = computed(() => {
   if (isAndroid() && store.canClaimFtdPrivilege) return "38";
   if (store.canClaimSecondPrivilege) return "100";
@@ -256,7 +256,7 @@ const getFastAccessPromo = () => {
   if (store.claimedFtdPrivilege === false) {
     eligiblePromoCount.value++;
   }
-  api.get(`/promo/fast-access-promo?language=${i18nStoreLanguage.languageVal}`).then(async (res) => {
+  api.get(`/opt-session/promo/fast-access-promo?language=${i18nStoreLanguage.languageVal}`).then(async (res) => {
     if (res.code === 0) {
       let _fastAccessPromo;
       if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
@@ -367,14 +367,34 @@ const profileImagePath = computed(() => {
 });
 
 const isLoadingBalance = ref(false);
+
 const refreshBalance = () => {
   if (store.token) {
     isLoadingBalance.value = true;
-    store.getBalance().then((res) => {
-      isLoadingBalance.value = false;
-    });
+    // store.getBalance().then((res) => {
+      // isLoadingBalance.value = false;
+    transferOutAll();
+    // });
   }
 };
+
+const transferOutAll = () => {
+  isLoadingBalance.value = true;
+  api.post("/session/balance/transfer/withdrawPlatform?platform=NineW").then((response) => {
+    if (response.code === 0) {
+      setTimeout(() => {
+        store.getBalance().then((res) => {
+          isLoadingBalance.value = false;
+        });
+      }, 1000);
+    } else {
+      isLoadingBalance.value = false;
+    }
+  }).catch(() => {
+    isLoadingBalance.value = false;
+  });
+};
+
 
 const onClickLogo = () => {
   if (props.homeProfile) {

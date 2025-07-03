@@ -129,6 +129,7 @@ export default {
     noAutoWithdrawalGamePlatform: 'no Auto Review Game Platform',
     week: ' week',
     month: ' month',
+    balanceThresholdMultiplier: 'Balance must be less than (Deposit × Multiplier)',
   },
   outboxStatus: {
     0: 'Not reply yet',
@@ -2671,7 +2672,16 @@ export default {
     subscribeCount: 'Subscribe Count',
     eventCode: 'Event Code',
     roleConfig: 'Role Config',
-    chatHistory: 'Chat History'
+    chatHistory: 'Chat History',
+    loginDay1: 'Day 1',
+    loginDay2: 'Day 2',
+    loginDay3: 'Day 3',
+    loginDay4: 'Day 4',
+    loginDay5: 'Day 5',
+    loginDay6: 'Day 6',
+    loginDay7: 'Day 7',
+    depositRetention: 'Deposit Retention',
+    regLoginRetention: 'Register Login Retenion',
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3556,8 +3566,6 @@ export default {
     'Sport Live Sensitive Word': 'Sport Live Sensitive Word',
     'Sport Live Block Member': 'Sport Live Block Member Setting',
     'Sport Live Chat Vip Status': 'Sport Live Vip Message Setting',
-    'Sport Live History Block': 'Sport Live History Block Setting',
-    'Sport Live Monitor': 'Sport Live Monitor',
     'Affiliate Settlement Setting': 'Affiliate Settlement Setting',
     'Sport Live History Block': 'Sport Live History Message',
     'Sport Live Monitor': 'Sport Live Monitor',
@@ -3788,7 +3796,9 @@ export default {
     WITHDRAW_ERROR: 'Withdraw Error',
     DEPOSIT_ERROR: 'Deposit Error',
     JOB_IDLE_CHECK_GAME_BET_RECORD_FETCH_TASK: 'Task Idle(Bet Record Fetch)',
-    FIRST_DEPOSIT_FLUCTUATION: 'First deposit fluctuation'
+    FIRST_DEPOSIT_FLUCTUATION: 'First deposit fluctuation',
+    WITHDRAW_ALERT: 'Withdraw alert',
+    WITHDRAW_BALANCE: 'Withdraw balance',
   },
   domain: {
     domainMainType: {

@@ -99,6 +99,8 @@
     <EsportWorldCup2025 v-else-if="list.redirectUrl === 'lh1-esport-world-cup-2025'" :promo-code="list.promoCode" />
     <FifaCwcRedPacket v-else-if="list.redirectUrl === 'lh1-fifa-cwc-red-packet'" :promo-code="list.promoCode" />
     <FissureJulyFinal2025 v-else-if="list.redirectUrl === 'lh1-fissure-july-final-2025'" :promo-code="list.promoCode" />
+    <PPDianZiTianTianSong v-else-if="list.redirectUrl === 'lh-PPdianzitiantiansong'" :promo-code="list.promoCode" />
+
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -256,6 +258,9 @@ const FifaCwcRedPacket = defineAsyncComponent(() => import("./hotpromo/fifa-cwc-
 const FissureJulyFinal2025 = defineAsyncComponent(() =>
   import("./hotpromo/fissure-july-final-2025/FissureJulyFinal2025.vue")
 );
+const PPDianZiTianTianSong = defineAsyncComponent(() =>
+  import("./hotpromo/ppdianzitiantiansong/PPDianZiTianTianSong.vue")
+);
 
 export default defineComponent({
   name: "HotPromo",
@@ -336,7 +341,8 @@ export default defineComponent({
     FissureUniverseS5,
     EsportWorldCup2025,
     FifaCwcRedPacket,
-    FissureJulyFinal2025
+    FissureJulyFinal2025,
+    PPDianZiTianTianSong
   },
   props: {
     list: {
@@ -951,20 +957,6 @@ export default defineComponent({
       align-items: center;
     }
 
-    .claim-title-icon {
-      background: url("../assets/images/promotion/hotpromo/common/claim-title-icon.svg") no-repeat center center;
-      background-size: 100% 100%;
-    }
-
-    .claim-coin-icon {
-      background: url("../assets/images/promotion/hotpromo/common/claim-coin-icon.svg") no-repeat center center;
-      background-size: 100% 100%;
-    }
-
-    .claim-gift-icon {
-      background: url("../assets/images/promotion/hotpromo/common/claim-gift-icon.svg") no-repeat center center;
-      background-size: 100% 100%;
-    }
 
     .title-img {
       color: #fff;
