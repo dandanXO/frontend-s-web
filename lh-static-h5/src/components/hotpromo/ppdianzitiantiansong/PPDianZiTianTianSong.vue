@@ -199,8 +199,8 @@
                 <div style="display: flex; flex-direction: column">
                   得分 =（比赛中单次旋转最大获胜金额）/（比赛中投注额）* 100
                   <span>参考计算：</span>
-                  <div class="hint">玩家 1：下注 1美元 -> 赢取 50美元（分数 = 50美元 / 1美元 * 100 = 5,000）</div>
-                  <div class="hint">玩家 2：下注 1 美元 -> 赢得 5 美元（分数 = 5 美元 / 1 美元 * 100 = 500）</div>
+                  <div class="hint">玩家 1：下注 1 元 -> 赢取 50 元（分数 = 50 元 / 1 元 * 100 = 5,000）</div>
+                  <div class="hint">玩家 2：下注 1 元 -> 赢得 5 元（分数 = 5 元 / 1 元 * 100 = 500）</div>
                 </div>
                   
                   
