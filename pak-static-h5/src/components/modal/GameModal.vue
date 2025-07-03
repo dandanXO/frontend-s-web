@@ -23,11 +23,24 @@
             </div> -->
           </div>
 
-          <div v-if="!drawerVisible" class="wallet-container" @click="goToDeposit()">
+          <div v-if="!drawerVisible && !isBetBy" class="wallet-container" @click="goToDeposit()">
             {{ $t("btn.addCash") }} &nbsp;
             <q-btn dense rounded class="wallet-btn">
               <img src="../../assets/images/account/personal-svg.svg" />
             </q-btn>
+          </div>
+
+          <div v-if="!drawerVisible && isBetBy" class="wallet-container">
+            <div class="flex-c-start">
+              <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
+                <span class="currency-amount">
+                  {{ store.currency.value }}
+                </span>
+                <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
+                  {{ isLoadingBalance ? `${$t("btn.loading")}...` : convertToCommaAmount(store.balance, false) }}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -48,7 +61,7 @@
             :style="`height: calc(100% - 65px - ${ui.bottomInsetHeight}px);`"
           ></iframe>
         </template>
-        <div v-else-if="isBetBy" ref="betbyRef" />
+        <div v-else-if="isBetBy" ref="betbyRef" class="game-iframe--betby" />
         <template v-else>
           <iframe
             @load="loadGame()"
@@ -151,7 +164,7 @@ import { App } from "@capacitor/app";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
-import { isAndroid } from "boot/utils";
+import { isAndroid, convertToCommaAmount } from "boot/utils";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import DepositView from "../../pages/account/DepositView.vue";
 import { useUI } from "stores/ui";
@@ -547,6 +560,16 @@ const close = () => {
   payMethods = [];
 };
 
+const isLoadingBalance = ref(false);
+const refreshBalance = () => {
+  if (store.token) {
+    isLoadingBalance.value = true;
+    store.getBalance().then((res) => {
+      isLoadingBalance.value = false;
+    });
+  }
+};
+
 watch(
   () => route.path,
   (val) => {
@@ -798,6 +821,10 @@ defineExpose({
   width: 100vw;
   z-index: 1;
   top: 65px;
+}
+
+.game-iframe--betby {
+  width: 100%;
 }
 
 .q-toolbar .topActions {
@@ -1113,6 +1140,53 @@ defineExpose({
         border-top: 1px solid #ffffff;
       }
     }
+  }
+}
+
+.profile-balance {
+  position: relative;
+  // background: #ffffff0f;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  min-width: 100px;
+  width: 100%;
+  min-height: 35px;
+  // border: 1px solid #ffffff14;
+  font-size: 14px;
+  color: #fff;
+  font-weight: bold;
+
+  &:active {
+    filter: brightness(0.75);
+  }
+
+  .currency-amount {
+    color: #000000;
+    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 3px;
+    border-radius: 50%;
+    padding: 3px 5px;
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 16px;
+    vertical-align: middle;
+  }
+
+  .balance-amount {
+    padding-right: 5px;
+    white-space: nowrap;
+    width: 100%;
   }
 }
 </style>
