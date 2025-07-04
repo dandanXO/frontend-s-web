@@ -211,23 +211,25 @@ img.svg {
 }
 
 .q-footer {
-  border-radius: 20px 20px 0 0;
+  border-radius: 8px 8px 0 0;
   //box-shadow: 0 0 0px 0px #75757550;
-  //overflow: hidden;
+  // overflow: hidden;
   font-size: 12px;
+  box-shadow: 0px 4px 4px 0px #00000040;
 
   .q-tabs {
-    background: #d2d2de !important;
+    border-radius: inherit;
+    background: #ffffff !important;
   }
 
   .q-tab {
     padding: 5px 0 0px;
-    background: #ffffff;
-    color: #929292;
+    background: transparent;
+    color: #8c98b9;
 
     img {
-      height: 22px;
-      margin-bottom: 5px;
+      height: 38px;
+      margin-bottom: 8px;
 
       &.inactive {
         display: block;
@@ -331,7 +333,7 @@ img.svg {
 }
 
 .bg-dyorange {
-  background: linear-gradient(270deg, #DC9A45 0%, #EA9526 0.01%, #FFF6A6 100%);
+  background: linear-gradient(270deg, #dc9a45 0%, #ea9526 0.01%, #fff6a6 100%);
   color: black;
 }
 
