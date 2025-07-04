@@ -853,6 +853,9 @@ async function confirmDeposit() {
           if (isFtdPrivilegePayType.value && extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
             form.privilegeId = extraPrivilegeId.value;
           }
+          if (newPlayerDepositBonusConfig.value.selected && newPlayerDepositBonusConfig.value.hasBonus) {
+            form.privilegeId = newPlayerDepositBonusConfig.value.privilegeId;
+          }
 
           const copy = { ...form };
           const data = {};
