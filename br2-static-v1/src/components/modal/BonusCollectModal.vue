@@ -68,7 +68,7 @@
             </div>
             <div class="col-desc">
               Reembolso
-              <span>R$588</span>
+              <span>R${{betRebateAmount}}</span>
             </div>
             <div class="col-status">
               <img src="../../assets/images/index/bonus-collect/status-ticked.png" alt="" class="status-ticked" />
@@ -81,7 +81,7 @@
             </div>
             <div class="col-desc">
               Cashback diário
-              <span>R$588</span>
+              <span>R${{lossRebateAmount}}</span>
             </div>
             <div class="col-status">
               <img src="../../assets/images/index/bonus-collect/status-ticked.png" alt="" class="status-ticked" />
@@ -114,6 +114,9 @@ const uiStore = useUI();
 const props = defineProps(["detail", "modelValue"]);
 const emit = defineEmits(["update:modelValue", "closeDialog"]);
 const store = userStore();
+
+const lossRebateAmount = ref(0);
+const betRebateAmount= ref(0);
 
 const closePopup = () => {
   emit("closeDialog");
@@ -174,8 +177,9 @@ const loadRebateAndCashback = () => {
     )
     .then((res) => {
       if (res.code === 0) {
-        // currentDay.value = res.data.currentDay;
         console.log(res.data);
+        betRebateAmount.value= res.data.betRebateAmount;
+        lossRebateAmount.value = res.data.lossRebateAmount;
       }
     })
     .catch((e) => {});
