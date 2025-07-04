@@ -491,6 +491,7 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const isInitialized = ref(false);
 
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
@@ -1146,6 +1147,7 @@ onMounted(() => {
   if (route.query.isNewPlayer && completedGuide !== "true" && userKYCDialog.value === false) {
     isAdditionalDepositSteps.value = true;
   }
+  isInitialized.value = true;
 });
 const showPaymentCancellationDialog = ref();
 const paymentCancellationAmtLoss = ref(0);
