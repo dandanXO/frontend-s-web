@@ -48,6 +48,7 @@
       style="margin-top:20px;"
       :row-style="{width: '100px'}"
     >
+      <el-table-column prop="recordTime" :label="t('fields.recordTime')" width="120" fixed="left" />
       <el-table-column :label="t('fields.depositRetention')">
         <el-table-column prop="depositDay1" :label="t('fields.retentionDay1')" width="120" />
         <el-table-column prop="depositDay2" :label="t('fields.retentionDay2')" width="120" />
