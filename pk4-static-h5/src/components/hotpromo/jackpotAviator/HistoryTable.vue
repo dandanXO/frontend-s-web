@@ -21,7 +21,7 @@
         </div>
         <div>{{ historyListItem.loginName }}</div>
         <div class="betVolume">
-          {{ historyListItem.bonus?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+          {{ historyListItem.amount?.toFixed(2) }}
         </div>
       </div>
     </div>
@@ -48,17 +48,13 @@ if (isIOS) {
   document.head.appendChild(style);
 }
 const historyList = () => {
-  props?.historyList?.forEach((element, index) => {
-    const initItem = props?.initList?.[index];
-    if (initItem) {
-      element.bonus = initItem.bonus;
-    }
-  });
-
-  return props?.inDialog
-    ? props?.historyList
-    : props?.historyList?.slice(3);
-};
+  if (props?.inDialog) {
+    return props?.historyList
+  } else {
+    return props?.historyList?.slice(3);
+  }
+  
+}
 </script>
 <style lang="scss" scoped>
 @supports (-webkit-overflow-scrolling: touch) and (not (overflow: -webkit-marquee)) {
@@ -76,6 +72,7 @@ const historyList = () => {
   border-radius: 5px;
   overflow: hidden;
   margin: 0;
+    padding-top: 45px;
   // padding-bottom: 0px;
   // padding-bottom: 15px;
   .item {

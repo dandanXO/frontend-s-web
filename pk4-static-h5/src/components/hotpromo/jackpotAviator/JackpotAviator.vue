@@ -30,8 +30,8 @@
       />
     </template>
     <template v-else>
-      <RankPodium :rankingList="rankingList" :initList="rankingBonusRatioList" />
-      <HistoryTable :historyList="rankingList" :initList="rankingBonusRatioList" />
+      <RankPodium :rankingList="rankingList" />
+      <HistoryTable :historyList="rankingList" />
     </template>
 
     <RankDetails :rankDetails="rankDetails" :isLoadingRanking="isLoadingRanking" />
@@ -56,7 +56,7 @@
         <div class="congrats-prize">{{ store.currency.value }} {{ historyData.jackpotAmount }}</div>
       </div> -->
 
-      <HistoryTable :inDialog="true" :historyList="historyData.rankingList" :initList="rankingBonusRatioList" />
+      <HistoryTable :inDialog="true" :historyList="historyData.rankingList" />
     </div>
   </q-dialog>
 
@@ -296,7 +296,6 @@ onMounted(() => {
   border-radius: 15px;
   width: 90%;
   position: relative;
-    padding-top: 45px;
 
   .congrats-highlight {
     color: #fff96f;
