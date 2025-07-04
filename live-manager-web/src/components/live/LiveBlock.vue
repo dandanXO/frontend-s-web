@@ -1,48 +1,23 @@
 <template>
-  <div class="p-3 chat-block-page">
-    <div class="flex gap-3 mb-4 align-items-end">
-      <div class="p-field">
-        <label for="loginName" class="font-bold">{{ t('fields.loginName') }}</label>
-        <InputText id="loginName" v-model="form.loginName" :placeholder="t('fields.loginName')" />
-      </div>
+  <div class="card">
+    <div>
+      <label for="loginName" style="margin-right: 10px;">{{ t('fields.loginName') }}</label>
+      <InputText v-model="form.loginName" :placeholder="t('fields.loginName')" style="margin-right: 10px;" />
 
-      <div class="flex p-field">
-        <label for="blockDuration" class="mr-2 font-bold">{{ t('fields.blockDuration') }}</label>
-        <div class="flex gap-2 flex-grow-1 align-items-center">
-          <InputNumber
-            id="blockDuration"
-            v-model="form.duration"
-            :min="1"
-            :max="unitMaxMap[form.unit] || 60"
-            :useGrouping="false"
-            class="flex-grow-1"
-            style="padding-right: 8px;"
-          />
-          <Dropdown
+      <label style="margin-right: 10px;">{{ t('fields.blockDuration') }}</label>
+      <InputNumber v-model="form.duration" :min="1" :max="unitMaxMap[form.unit] || 60" inputStyle="width: 100px;" style="margin-right: 10px;" />
+      <Dropdown
             v-model="form.unit"
             :options="durationUnits"
             optionLabel="label"
             optionValue="value"
-            class="w-8rem"
-          />
-        </div>
-      </div>
+            style="width: 100px; margin-right: 10px;"
+        />
 
-      <Button
-        :label="t('fields.block')"
-        icon="pi pi-lock"
-        severity="primary"
-        @click="blockUser"
-        class="p-button-sm"
-      />
-      <Button
-        :label="t('fields.refresh')"
-        icon="pi pi-refresh"
-        severity="secondary"
-        @click="loadBlockList"
-        class="p-button-sm"
-      />
+      <Button icon="pi pi-lock" :label="t('fields.block')" @click="blockUser" style="margin-right: 10px;" />
+      <Button icon="pi pi-refresh" :label="t('fields.refresh')" severity="warn" @click="loadBlockList" />
     </div>
+
     <DataTable :value="blockList" :loading="loading" class="mt-4 p-datatable-sm">
       <Column field="loginName" :header="t('fields.loginName')" style="width: 200px;" />
       <Column :header="t('fields.blockDuration')" style="width: 250px;">
@@ -64,15 +39,14 @@
     </DataTable>
 
     <Paginator
-      v-if="page.total > 0"
-      :rows="page.size"
+      :rows="request.size"
       :totalRecords="page.total"
-      :first="(page.current - 1) * page.size"
-      @page="onPageChange"
-      template="PrevPageLink CurrentPageReport NextPageLink"
-      currentPageReportTemplate="{currentPage} / {totalPages}"
-      class="mt-4 pagination"
-    />
+      :rowsPerPageOptions="[10, 20, 50]"
+      :first="(request.current - 1) * request.size"
+      template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+      @page="changePage"
+      class="p-mt-2"
+      />
   </div>
 </template>
 
@@ -104,6 +78,11 @@ const form = reactive({
   unit: 'minute'   // 封鎖單位，預設分鐘
 });
 
+const request = reactive({
+  size: 30,
+  current: 1,
+})
+
 // 不同封鎖單位對應的最大時長
 const unitMaxMap = {
   minute: 60,
@@ -131,7 +110,7 @@ const loading = ref(false);
 const page = reactive({
   total: 0,     // 總共有多少筆資料
   current: 1,   // 目前在第幾頁 (從 1 開始)
-  size: 10      // 每頁顯示幾筆資料
+  size: 30      // 每頁顯示幾筆資料
 });
 
 // 格式化日期時間的函式
@@ -147,8 +126,8 @@ async function loadBlockList() {
   try {
     // 準備好傳給後端的查詢參數
     const query = new URLSearchParams({
-      current: page.current,
-      size: page.size
+      current: request.current,
+      size: request.size
     });
 
     // 呼叫 API 取得封鎖列表資料
@@ -200,12 +179,10 @@ async function unblockUser(loginName) {
   }
 }
 
-// 分頁器頁碼改變時觸發的函式
-function onPageChange(event) {
-  // PrimeVue 的分頁器頁碼從 0 開始，我們需要轉換成 1 開始的頁碼給後端
-  page.current = event.page + 1;
-  page.size = event.rows; // 雖然這裡固定為 10，但養成習慣還是更新一下
-  loadBlockList(); // 重新載入封鎖列表
+function changePage(event) {
+  request.current = event.page + 1;
+  request.size = event.rows;
+  loadBlockList();
 }
 
 // 頁面載入時，自動執行這個函式

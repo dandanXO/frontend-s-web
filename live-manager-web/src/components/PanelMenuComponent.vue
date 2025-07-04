@@ -7,9 +7,9 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
-const items = ref([
-  {
+const items = ref([])
+if(sessionStorage.getItem('memberType') === 'streamer'){
+  items.value.push({
     label: '流媒体',
     icon: 'pi pi-sync',
     items: [
@@ -54,8 +54,8 @@ const items = ref([
         },
       },
     ],
-  },
-])
+  })
+}
 
 if (sessionStorage.getItem('memberType') === 'admin') {
   items.value.push({

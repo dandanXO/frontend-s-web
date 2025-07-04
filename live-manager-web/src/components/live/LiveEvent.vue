@@ -48,7 +48,7 @@
             hourFormat="24"
             dateFormat="yy-mm-dd"
             fluid
-            :placeholder="t('fields.endTime')" />
+            placeholder="請選擇結束時間" />
 
           <Button
             :label="t('fields.search')"
@@ -128,13 +128,13 @@
           <Tag v-else severity="info">{{ t('status.uefaMatch.PENDING') }}</Tag>
         </template>
       </Column>
-      <Column field="eventStartTime" :header="t('fields.matchTime')" style="min-width: 160px">
+      <Column field="eventStartTime" :header="t('fields.matchTime')" style="min-width: 200px">
         <template #body="slotProps">
           <span v-if="!slotProps.data.eventStartTime">-</span>
           <span v-else>{{ formatTime(slotProps.data.eventStartTime) }}</span>
         </template>
       </Column>
-      <Column field="eventEndTime" :header="t('fields.endTime')" style="min-width: 160px">
+      <Column field="eventEndTime" :header="t('fields.endTime')" style="min-width: 200px">
         <template #body="slotProps">
           <span v-if="!slotProps.data.eventEndTime">-</span>
           <span v-else>{{ formatTime(slotProps.data.eventEndTime) }}</span>
@@ -155,23 +155,23 @@
         </template>
       </Column>
       <Column field="eventCode" :header="t('fields.eventCode')" style="min-width: 120px" />
-      <Column field="createTime" :header="t('fields.createTime')" style="min-width: 160px">
+      <Column field="createTime" :header="t('fields.createTime')" style="min-width: 200px">
         <template #body="slotProps">
           <span v-if="!slotProps.data.createTime">-</span>
           <span v-else>{{ formatTime(slotProps.data.createTime) }}</span>
         </template>
       </Column>
       <Column field="createBy" :header="t('fields.createBy')" style="min-width: 120px" />
-      <Column field="updateTime" :header="t('fields.updateTime')" style="min-width: 160px">
+      <Column field="updateTime" :header="t('fields.updateTime')" style="min-width: 200px">
         <template #body="slotProps">
           <span v-if="!slotProps.data.updateTime">-</span>
           <span v-else>{{ formatTime(slotProps.data.updateTime) }}</span>
         </template>
       </Column>
-      <Column field="updateBy" :header="t('fields.updateBy')" style="min-width: 120px" /><Column :header="t('fields.operate')" frozen alignFrozen="right">
+      <Column field="updateBy" :header="t('fields.updateBy')" style="min-width: 200px" /><Column :header="t('fields.operate')" frozen alignFrozen="right">
         <template #body="slotProps">
           <div style="display: flex; gap: 8px; flex-wrap: nowrap;">
-            <Button icon="pi pi-trash" class="p-button-text p-button-sm p-button-danger" style="width: 50px"  @click="confirmDelete(slotProps.data.id)">
+            <Button icon="pi pi-trash" class="p-button-text p-button-sm p-button-danger" style="width: 80px"  @click="confirmDelete(slotProps.data.id)">
               {{ t('fields.delete') }}
             </Button>
             <router-link
