@@ -568,7 +568,13 @@ export default defineComponent({
       }
     };
 
+
     const loadLoginCashBackPopup = () => {
+      const hasGameDialog = document.body.querySelector('div.gameDialog') !== null;
+
+      if(hasGameDialog=== true){
+        return;
+      }
       // const getTime = sessionStorage.getItem("IS_LOGIN_CASHBACK_POPUP");
       // const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
       // true ||
@@ -628,7 +634,7 @@ export default defineComponent({
         loadLoginCashBackPopup();
         cashbackTimer = setInterval(() => {
           loadLoginCashBackPopup();
-        }, 60000);
+        }, 600000);
       }
 
     });
