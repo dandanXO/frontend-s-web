@@ -68,7 +68,7 @@
             </div>
             <div class="col-desc">
               Reembolso
-              <span>R${{betRebateAmount}}</span>
+              <span>R${{convertToCommaAmount(betRebateAmount, true)}}</span>
             </div>
             <div class="col-status">
               <img src="../../assets/images/index/bonus-collect/status-ticked.png" alt="" class="status-ticked" />
@@ -81,7 +81,7 @@
             </div>
             <div class="col-desc">
               Cashback diário
-              <span>R${{lossRebateAmount}}</span>
+              <span>R${{convertToCommaAmount(lossRebateAmount, true)}}</span>
             </div>
             <div class="col-status">
               <img src="../../assets/images/index/bonus-collect/status-ticked.png" alt="" class="status-ticked" />
@@ -101,6 +101,7 @@
   </q-dialog>
 </template>
 <script setup>
+import { convertToCommaAmount } from "boot/utils";
 import { computed, onMounted, ref } from "vue";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
