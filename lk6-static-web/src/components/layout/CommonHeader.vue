@@ -5,7 +5,7 @@
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/logo-1.png" />
+          <img class="logo" src="../../assets/lucky-6-logo.svg" />
         </router-link>
 
         <div class="navigations">
@@ -50,9 +50,6 @@
               </div>
             </template>
           </template>
-          <!-- <div class="header-menu-item" @mouseover="selectedMenu = ''" @click="getPlatformListAndGoImSport">
-            <img class="eroup-menu-icon" :src="require(`../../assets/images/home/header-eroup.png`)" />
-          </div> -->
         </div>
 
         <div class="navigations second-nav">
@@ -61,26 +58,29 @@
               <div class="header-menu-item">
                 <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
                   <span>
-                    <img
+                    <div class="promotion-icon" v-if="nav.code === 'Promotion'" />
+                    <!-- <img
                       class="hover-icon promotion"
                       :src="require(`../../assets/images/home/header-promo-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'Promotion'"
-                    />
-                    <img
+                    /> -->
+                    <!-- <img
                       class="hover-icon"
                       :src="require(`../../assets/images/home/header-affiliate-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'Agent'"
-                    />
-                    <img
+                    /> -->
+                    <div class="app-icon" v-if="nav.code === 'App'" />
+                    <!-- <img
                       class="hover-icon"
                       :src="require(`../../assets/images/home/header-download-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'App'"
-                    />
-                    <img
+                    /> -->
+                    <div class="app-icon" v-if="nav.code === 'CS'" />
+                    <!-- <img
                       class="hover-icon"
                       :src="require(`../../assets/images/home/header-vip-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'VIP'"
-                    />
+                    /> -->
                   </span>
                   <span>{{ nav.name }}</span>
                 </router-link>
@@ -108,8 +108,8 @@
           <router-link to="/register" class="action-btn">
             <a class="header-btn btn-color-white">注册</a>
           </router-link> -->
-          <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">登录</a>
-          <a class="header-btn btn-color-white" @click="registerDialogVisible = true">注册</a>
+          <a class="standard-button btn-color-blue" @click="loginDialogVisible = true">登录</a>
+          <a class="standard-button btn-color-white" @click="registerDialogVisible = true">注册</a>
         </div>
 
         <div v-if="store.token" class="profile-actions">
@@ -371,7 +371,7 @@
         </div>
         <div class="acc-dialog-right register">
           <div class="acc-dialog-homelogo">
-            <img src="../../assets/logo-1.png" width="150" />
+            <img src="../../assets/lucky-6-logo.svg" width="150" />
           </div>
           <RegisterAccount @close-dialog="registerDialogVisible = false" @open-login-dialog="openLoginDialog" />
         </div>
@@ -420,7 +420,7 @@
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../assets/logo-1.png" width="150" />
+            <img src="../../assets/lucky-6-logo.svg" width="150" />
           </div>
           <div class="acc-dialog-content">
             <ForgotPwdDialog @close-dialog="forgetPassDialogVisible = false" @open-login-dialog="openLoginDialog" />
@@ -558,9 +558,10 @@ export default defineComponent({
         hasicon: true,
         isTest: false
       },
-      { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true, isTest: false },
+      // { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true, isTest: false },
       { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true, isTest: false },
-      { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false }
+      // { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false },
+      { code: "CS", name: "客服", enName: "CS", path: "/cs", hasicon: true, isTest: false }
     ]);
     const { token } = storeToRefs(store);
     const router = useRouter();
@@ -1845,10 +1846,8 @@ body {
 
   .top-nav-wrapper {
     padding: 10px;
-    background: $color-white;
-
+    background: linear-gradient(180deg, #EEF9FC 0%, #FBFFFF, 50%, #F8FDFE, 95%, #D6E8F9, 97%, #BED4E9 100%);
     position: relative;
-    box-shadow: $shadow-header;
 
     .top-nav-inner {
       max-width: 1300px;
@@ -1877,8 +1876,8 @@ body {
       }
 
       .logo {
+        aspect-ratio: 97 / 38;
         height: 60px;
-        //width: 102px;
 
         img {
           width: 100%;
@@ -1902,25 +1901,20 @@ body {
           padding-left: 5px;
           padding-right: 5px;
         }
-        .eroup-menu-icon {
-          cursor: pointer;
-          width: 58px;
-          height: 58px;
-
-          &:hover {
-            filter: brightness(0.9);
-          }
-          &:active {
-            transform: translate(0px, 1px);
-          }
-        }
         a {
           // padding-top: 10px;
           display: flex;
           flex-direction: column;
           text-decoration: none;
-          gap: 2px;
-          color: $font-1;
+          gap: 5px;
+          font-family: 'PingFang SC';
+          font-weight: 400;
+          font-size: 12.38px;
+          line-height: 100%;
+          letter-spacing: 0px;
+          text-align: center;
+          color: #35648F;
+
 
           &.icon {
             gap: 0;
@@ -1936,23 +1930,6 @@ body {
           }
           .menu-icon {
             width: 50px;
-          }
-
-          span:first-child {
-            color: #000000;
-            font-size: 1rem;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-
-          span:last-child {
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            display: flex;
-            flex-direction: column;
-            white-space: nowrap;
           }
 
           &:hover,
@@ -2639,6 +2616,34 @@ body {
 .header-menu-item {
   min-width: 40px;
   position: relative;
+
+  .promotion-icon {
+    background: url('../../assets/images/home/header-icon-set.svg');
+    background-position: 5% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    width: 38px;
+    height: 38px;
+  }
+
+  .app-icon {
+    background: url('../../assets/images/home/header-icon-set.svg');
+    background-position: 51% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    width: 38px;
+    height: 38px;
+  }
+
+  .cs-icon {
+    background: url('../../assets/images/home/header-icon-set.svg');
+    background-position: 51% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    width: 38px;
+    height: 38px;
+  }
+
   &.active {
     &:after {
       content: "";
@@ -2677,9 +2682,16 @@ body {
     font-weight: 600;
     font-size: 12px;
     margin: 0;
+    display: none;
+    
     &.cn {
+      display: block;
+      font-family: 'PingFang SC';
       font-weight: 600;
-      font-size: 16px;
+      font-size: 19px;
+      line-height: 100%;
+      letter-spacing: 1.68px;
+      text-align: center;
     }
 
     &.active {

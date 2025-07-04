@@ -13,7 +13,7 @@
   </el-dialog>
 
   <div v-if="isFetchingBanners" class="banner-loading">
-    <img class="loading-img" src="@/assets/logo-1.png" />
+    <img class="loading-img" src="@/assets/lucky-6-logo.svg" />
   </div>
   <el-carousel
     v-else-if="banners?.length > 0"

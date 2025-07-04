@@ -4,8 +4,8 @@
     <div class="home-mid-section">
       <HomeAnnouncement></HomeAnnouncement>
       <!-- <EurocupHomePageBanner /> -->
-      <Livestream ref="livestreamRef" @livestreamVisible="onLivestreamVisible" />
-      <HomeHotMatch :openGame="openGame" />
+      <!-- <Livestream ref="livestreamRef" @livestreamVisible="onLivestreamVisible" /> -->
+      <!-- <HomeHotMatch :openGame="openGame" /> -->
       <HomeDownload></HomeDownload>
       <HomeHotGame></HomeHotGame>
       <HomeService></HomeService>
@@ -23,11 +23,9 @@ import { ref, onMounted } from "vue";
 import HomeBanner from "@/components/home/HomeBanner.vue";
 import HomeAnnouncement from "@/components/home/announcement/index.vue";
 import HomeDownload from "@/components/home/download/index.vue";
-import HomeHotMatch from "@/components/home/hotmatch/HotMatch.vue";
 import HomeHotGame from "@/components/home/hotgame/index.vue";
 import HomeService from "@/components/home/service/index.vue";
 import { userStore } from "@/store";
-import Livestream from "@/components/home/livestream/Livestream.vue";
 // import EurocupHomePageBanner from "@/components/home/EurocupHomePageBanner.vue";
 // import NewMemberGuide from '@/components/home/NewMemberGuide.vue'
 import { useRoute } from 'vue-router';

@@ -496,7 +496,6 @@ body {
   align-items: center;
   border-radius: 2rem;
   background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-  box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
   cursor: pointer;
   transition: 0.3s all;
   line-height: 1;
@@ -513,14 +512,14 @@ body {
   }
 
   &.btn-color-blue {
-    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
     color: $color-white;
+    background: url('../assets/images/common/blue-btn-bg.svg') center center no-repeat;
+    background-size: 100% 100%; 
   }
 
   &.btn-color-white {
-    background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-    box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
+    background: url('../assets/images/common/white-btn-bg.svg') center center no-repeat;
+    background-size: 100% 100%; 
     color: $font-1;
   }
 }
