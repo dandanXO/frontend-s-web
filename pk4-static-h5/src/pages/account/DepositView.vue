@@ -1130,6 +1130,13 @@ const goBackPage = () => {
   // }
 };
 
+onActivated(() => {
+  if (!isInitialized.value) return;
+  initPay();
+  refreshNode();
+  loadAppTabs();
+});
+
 onMounted(() => {
   initPay();
   refreshNode();
