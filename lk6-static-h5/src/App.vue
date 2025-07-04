@@ -177,7 +177,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      console.log("DY H5 0701")
+      console.log("lk6-static-h5 0704")
 
       checkServerStatus();
       checkSID();
