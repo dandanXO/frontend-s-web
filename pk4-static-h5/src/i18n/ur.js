@@ -1081,6 +1081,7 @@ export default {
       rank: "درجہ",
       dailyOrWeekly: "روزانہ/ہفتہ وار",
       rankingBonusRatio: "درجہ بندی انعام کا تناسب",
+      rankingBonus: "رینکنگ بونس",
       myBets: "میری شرطیں",
       myReward: "میرے انعامات",
       ranksLeft: "باقی درجہ بندی",

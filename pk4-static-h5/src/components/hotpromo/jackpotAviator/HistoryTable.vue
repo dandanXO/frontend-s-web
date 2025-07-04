@@ -20,7 +20,9 @@
         <span v-else>{{ inDialog ? historyListItemIndex + 1 : historyListItemIndex + 4 }}</span>
         </div>
         <div>{{ historyListItem.loginName }}</div>
-        <div class="betVolume">{{ historyListItem.amount?.toFixed(2) }}</div>
+        <div class="betVolume">
+          {{ historyListItem.amount?.toFixed(2) }}
+        </div>
       </div>
     </div>
     
@@ -30,7 +32,7 @@
   </div>
 </template>
 <script setup>
-const props = defineProps(["historyList", "inDialog"]);
+const props = defineProps(["historyList", "inDialog", "initList"]);
 
 const isNotInApp = window.location.pathname === "/promo";
 
@@ -70,6 +72,7 @@ const historyList = () => {
   border-radius: 5px;
   overflow: hidden;
   margin: 0;
+    padding-top: 45px;
   // padding-bottom: 0px;
   // padding-bottom: 15px;
   .item {
