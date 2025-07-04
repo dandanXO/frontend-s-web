@@ -1189,12 +1189,12 @@
     <div class="claim-popup-container" :class="{ ur: languageVal === 'ur' }">
       <div v-if="showClaimPopup.prize !== 0" class="claimed-reward-wrapper">
         <img class="claimed-reward" src="../assets/images/index/modal/claim-popup/claimed-reward.png" />
-        <span class="claimed-reward-desc">{{ `${$t('hotPromo.claimPopup.youGet')} ${store.currency.value}${showClaimPopup.prize}!` }}</span>
+        <span class="claimed-reward-desc">{{ `${$t('hotPromo.claimPopup.youWon')} ${store.currency.value}${showClaimPopup.prize}!` }}</span>
         <div class="claimed-reward-highlight">{{ `+${store.currency.value}${showClaimPopup.prize}` }}</div>
       </div>
       <div v-else class="claim-reward-wrapper">
         <img class="unclaimed-reward" src="../assets/images/index/modal/claim-popup/please-claim-reward.png" />
-        <span class="claimed-reward-desc">{{ `${$t('hotPromo.claimPopup.pleaseClaimReward')}` }}</span>
+        <span class="claimed-reward-desc">{{ `${$t('hotPromo.claimPopup.oneOfTodayWinners')}!` }}</span>
       </div>
       <img v-if="languageVal === 'ur'" @click="claimClaimPopupPrize" class="claim-reward-btn" :class="{ claimed: showClaimPopup.prize !== 0 }" src="../assets/images/index/modal/claim-popup/receieve-btn-ur.png" />
       <img v-else @click="claimClaimPopupPrize" class="claim-reward-btn" :class="{ claimed: showClaimPopup.prize !== 0 }" src="../assets/images/index/modal/claim-popup/receieve-btn.png" />

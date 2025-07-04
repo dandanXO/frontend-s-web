@@ -914,8 +914,8 @@ export default {
     bonus_claim_time: "بونس دعوت کا وقت",
     promoEndsOn: "پرومو ختم ہونے کی تاریخ",
     claimPopup: {
-      youGet: 'آپ کو ملتا ہے',
-      pleaseClaimReward: 'براہ کرم اپنا انعام حاصل کریں'
+      youWon: 'آپ جیت گئے',
+      oneOfTodayWinners: 'آج کے 77 خوش نصیب جیتنے والوں میں سے ایک'
     },
     earnMoney: {
       earnMoney: "پیسہ کمائیں",
