@@ -3,8 +3,6 @@
     <HomeBanner @scrollToView="handleScrollToView" />
     <div class="home-mid-section">
       <HomeAnnouncement></HomeAnnouncement>
-      <Livestream ref="livestreamRef" />
-      <HotMatch :openGame="openGame"></HotMatch>
       <HomeHotGame></HomeHotGame>
       <HomeDownload></HomeDownload>
       <HomeService></HomeService>
@@ -21,8 +19,6 @@ import HomeAnnouncement from "@/components/home/announcement/index.vue";
 import HomeDownload from "@/components/home/download/index.vue";
 import HomeHotGame from "@/components/home/hotgame/index.vue";
 import HomeService from "@/components/home/service/index.vue";
-import HotMatch from "@/components/home/hotmatch/DarkHotMatch.vue";
-import Livestream from "@/components/home/livestream/Livestream.vue";
 
 const livestreamRef = ref(null);
 const gameMenu = ref(null);

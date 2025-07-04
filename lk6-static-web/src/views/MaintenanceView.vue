@@ -2,7 +2,7 @@
   <div class="maintenance-container">
     <div class="maintenance-details">
       <div class="maintenance-logo">
-        <img src="../assets/logo-1.png" />
+        <img src="../assets/lucky-6-logo.svg" />
       </div>
       <div class="maintenance-title">目前我们的网站正在维护中...</div>
       <div class="maintenance-desc">

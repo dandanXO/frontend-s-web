@@ -3,7 +3,7 @@
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../../assets/logo-1.png" />
+          <img class="logo" src="../../../assets/lucky-6-logo.svg" />
         </router-link>
 
         <div class="navigations">
@@ -204,7 +204,7 @@
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../../assets/logo-1.png" width="150" />
+            <img src="../../../assets/lucky-6-logo.svg" width="150" />
           </div>
           <div class="acc-dialog-content">
             <LoginDialog
@@ -233,7 +233,7 @@
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../../assets/logo-1.png" width="150" />
+            <img src="../../../assets/lucky-6-logo.svg" width="150" />
           </div>
           <RegisterAccount @close-dialog="registerDialogVisible = false" @open-login-dialog="openLoginDialog" />
         </div>
@@ -282,7 +282,7 @@
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../../assets/logo-1.png" width="150" />
+            <img src="../../../assets/lucky-6-logo.svg" width="150" />
           </div>
           <div class="acc-dialog-content">
             <ForgotPwdDialog @close-dialog="forgetPassDialogVisible = false" @open-login-dialog="openLoginDialog" />
