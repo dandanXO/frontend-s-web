@@ -1,0 +1,7 @@
+.vip-list-container {
+    --_offset-side: 36px;
+
+    .carousel__prev { left: var(--_offset-side); }
+    .carousel__next { right: var(--_offset-side); }
+}
+
