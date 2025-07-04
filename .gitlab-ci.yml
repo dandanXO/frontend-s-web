@@ -1391,3 +1391,17 @@ deploy-br2-landing-v1:
     - p8s1-br1-runners
 
 #===============================================================================================
+
+build-lk6-static-h5:
+  extends: .build-projects
+  variables:
+    PROJECT: lk6-static-h5
+
+build-image-lk6-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: lk6-static-h5
+  needs:
+    - build-lk6-static-h5
+
+#===============================================================================================
