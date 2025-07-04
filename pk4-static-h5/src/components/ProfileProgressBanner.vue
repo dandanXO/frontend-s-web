@@ -1,22 +1,6 @@
 <template>
   <div class="progress-container">
-    <div class="left-container" :class="`vipitem${store.vip.replace('VIP', '')}`">
-      <div class="profile-pic">
-        <q-avatar size="50px">
-          <img :src="profileImagePath" />
-        </q-avatar>
-
-        <div class="vip-details" @click="onVipClick">
-          <img
-            class="bg"
-            :src="require(`../assets/images/index/vip-badge/vip-${store.vip.replace('VIP', '')}.png`)"
-            alt=""
-          />
-        </div>
-      </div>
-
-      <div class="nickname">{{ store.realName ? store.realName : store.nickName }}</div>
-    </div>
+    <ProfileAvatar />
 
     <div class="valid-bet-div">
       {{ $t("vip.currentValidBets") }}: {{ store.currency.value }}&nbsp;
@@ -50,6 +34,7 @@
 import { ref, computed } from "vue";
 import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
+import ProfileAvatar from "./ProfileAvatar.vue";
 
 const store = userStore();
 
@@ -199,55 +184,6 @@ $gradients: (
     margin: 1.5rem 0 1rem 0;
     border-radius: 8px;
     min-height: 130px;
-
-  .left-container {
-    position: relative;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 100px;
-
-    .profile-pic {
-      margin: 0 15px 15px;
-
-      .vip-details {
-        position: relative;
-        margin-left: 20px;
-        margin-bottom: 5px;
-        margin-top: -10px;
-
-        img {
-          display: block;
-          width: 60px;
-          position: absolute;
-          top: -2px;
-          left: -25px;
-        }
-
-        .vip-level {
-          position: absolute;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 11px;
-          line-height: 1.1;
-          padding-top: 2px;
-          padding-bottom: 4px;
-          z-index: 3;
-          color: #00ae00;
-          font-weight: bold;
-        }
-      }
-    }
-
-    .nickname {
-      text-overflow: ellipsis;
-      max-width: 100%;
-      overflow: auto;
-    }
-  }
 
   .right-container {
     position: relative;
