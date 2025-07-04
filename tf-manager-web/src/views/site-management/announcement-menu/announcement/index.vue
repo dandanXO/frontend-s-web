@@ -995,6 +995,9 @@ onMounted(async () => {
 .w-e-toolbar .w-e-menu {
   z-index: auto !important;
 }
+.w-e-toolbar .w-e-droplist {
+  z-index: 1;
+}
 .header-container {
   margin-bottom: 10px;
 }
