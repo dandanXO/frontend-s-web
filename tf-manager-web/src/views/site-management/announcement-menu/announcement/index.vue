@@ -992,6 +992,9 @@ onMounted(async () => {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.w-e-toolbar .w-e-menu {
+  z-index: auto !important;
+}
 .header-container {
   margin-bottom: 10px;
 }
