@@ -1186,16 +1186,18 @@
     :showConfirmButton="false"
     :persistent="true"
   >
-    <div class="claim-popup-container">
-      <template v-if="showClaimPopup.prize !== 0">
-        <div class="claimed-reward-wrapper">
-          <img class="claimed-reward" src="../assets/images/index/modal/claim-popup/claimed-reward.png" />
-          <span class="claimed-reward-desc">{{ `${$t('hotPromo.claimPopup.youGet')} ${store.currency.value}${showClaimPopup.prize}!` }}</span>
-          <div class="claimed-reward-highlight">{{ `+${store.currency.value}${showClaimPopup.prize}` }}</div>
-        </div>
-      </template>
-      <img v-else class="claim-reward" src="../assets/images/index/modal/claim-popup/please-claim-reward.png" />
-      <img @click="claimClaimPopupPrize" class="claim-reward-btn" src="../assets/images/index/modal/claim-popup/receieve-btn.png" />
+    <div class="claim-popup-container" :class="{ ur: languageVal === 'ur' }">
+      <div v-if="showClaimPopup.prize !== 0" class="claimed-reward-wrapper">
+        <img class="claimed-reward" src="../assets/images/index/modal/claim-popup/claimed-reward.png" />
+        <span class="claimed-reward-desc">{{ `${$t('hotPromo.claimPopup.youGet')} ${store.currency.value}${showClaimPopup.prize}!` }}</span>
+        <div class="claimed-reward-highlight">{{ `+${store.currency.value}${showClaimPopup.prize}` }}</div>
+      </div>
+      <div v-else class="claim-reward-wrapper">
+        <img class="unclaimed-reward" src="../assets/images/index/modal/claim-popup/please-claim-reward.png" />
+        <span class="claimed-reward-desc">{{ `${$t('hotPromo.claimPopup.pleaseClaimReward')}` }}</span>
+      </div>
+      <img v-if="languageVal === 'ur'" @click="claimClaimPopupPrize" class="claim-reward-btn" :class="{ claimed: showClaimPopup.prize !== 0 }" src="../assets/images/index/modal/claim-popup/receieve-btn-ur.png" />
+      <img v-else @click="claimClaimPopupPrize" class="claim-reward-btn" :class="{ claimed: showClaimPopup.prize !== 0 }" src="../assets/images/index/modal/claim-popup/receieve-btn.png" />
       <img @click="showClaimPopup.visible = false" class="close-btn" src="../assets/images/index/modal/claim-popup/close-btn.png" />
     </div>
   </q-dialog>
@@ -4394,8 +4396,14 @@ const checkNewPlayerWheelPromoHomePopupCanShow = () => {
 };
 
 const claimClaimPopupPrize = () => {
+  if(showClaimPopup.value.prize > 0) {
+    return;
+  }
+
   eventapi.post('/session/privilege-voucher/claim').then((res) => {
-    console.log('here', res)
+    if(res.code === 0) {
+      showClaimPopup.value.prize = res.data;
+    }
   })
 }
 
@@ -6810,10 +6818,16 @@ const checkGoogleLoginSetPwd = () => {
 .claim-popup-container {
   background: url('../assets/images/index/modal/claim-popup/claim-popup-bg.png') center center no-repeat;
   background-size: 100% 100%;
-  aspect-ratio: 747/1000;
+  aspect-ratio: 1120/1550;
   width: 350px;
-  height: 468px;
+  height: 485px;
   position: relative;
+  text-align: center;
+
+  &.ur {
+    background: url('../assets/images/index/modal/claim-popup/claim-popup-bg-ur.png') center center no-repeat;
+    background-size: 100% 100%;
+  }
 
   .claim-reward {
     position: absolute;
@@ -6821,7 +6835,7 @@ const checkGoogleLoginSetPwd = () => {
     left: 50%;
     transform: translate(-50%, -30%);
     width: 220px;
-    aspect-ratio: 393/350;
+    aspect-ratio: 393/305;
   }
 
   .claimed-reward-wrapper {
@@ -6838,10 +6852,6 @@ const checkGoogleLoginSetPwd = () => {
     .claimed-reward {
       width: 150px;
       aspect-ratio: 393/304;
-    }
-
-    .claimed-reward-desc {
-
     }
 
     .claimed-reward-highlight {
@@ -6863,11 +6873,29 @@ const checkGoogleLoginSetPwd = () => {
     }
   }
 
+  .claim-reward-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 250px;
+
+    .unclaimed-reward {
+      width: 215px;
+      aspect-ratio: 393/304;
+    }
+  }
+
   .claim-reward-btn {
     position: absolute;
     bottom: 0%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -55%);
     width: 130px;
     height: auto;
     cursor: pointer;
@@ -6877,7 +6905,11 @@ const checkGoogleLoginSetPwd = () => {
     }
 
     &:active {
-      transform: translate(-50%, -48%);
+      transform: translate(-50%, -53%);
+    }
+
+    &.claimed {
+      filter: grayscale(1);
     }
   }
 
