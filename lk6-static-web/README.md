@@ -1,12 +1,12 @@
 # LH 雷火 
 
 ## 项目简介
-- lh-static-web
+- lk6-static-web
 - LH雷火 Web page
 - Node JS 版本: 推荐使用 16.17.0 
 - 使用：Vue 3.0 、 Element Plus UI.
-- Site Code: LH1.
-- Site ID: 7
+- Site Code: LK6.
+- Site ID: 30
 
 
 ## 安装与部署
