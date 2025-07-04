@@ -141,6 +141,8 @@ const login = () => {
           password.value = "";
 
           uiStore.loginView = "";
+
+          SessionStorage.set("IS_COLLECTBONUS_POPUP", true);
         })
         .catch((e) => {})
         .finally(() => {

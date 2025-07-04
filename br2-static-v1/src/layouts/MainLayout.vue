@@ -112,14 +112,21 @@
     <img src="../assets/akb188-logo.png" alt="" />
   </div>
 
+  <LoginRebateModal
+    @closeDialog="isShowLoginRebateModal = false"
+    :detail="loginCashBackDetails"
+    v-model="isShowLoginRebateModal"
+  />
   <LoginModal />
   <RegisterSuccessModal />
 </template>
 
 <script>
 import { SplashScreen } from "@capacitor/splash-screen";
+import { api } from "boot/axios";
 import { isAndroid } from "boot/utils";
-import { computed, defineComponent, onMounted, ref, watch } from "vue";
+import LoginRebateModal from "components/modal/LoginRebateModal.vue";
+import { computed, defineComponent, onMounted, reactive, ref, watch } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
@@ -137,6 +144,7 @@ export default defineComponent({
   name: "MainLayout",
 
   components: {
+    LoginRebateModal,
     LoginModal,
     RegisterSuccessModal
   },
@@ -171,6 +179,16 @@ export default defineComponent({
         }, 500);
       }
     };
+
+    const isShowLoginRebateModal = ref(false);
+    const loginCashBackDetails = reactive({
+      betRebateAmount: 0,
+      betRebateClaimed: false,
+      lossRebateAmount: 0,
+      lossRebateClaimed: false,
+      preBetAmount: -1,
+      preLoseAmount: -1
+    });
 
     watch(
       () => route.path,
@@ -261,22 +279,22 @@ export default defineComponent({
           if (route.query.redirect) prevPage.value = route.query.redirect;
           else prevPage.value = "/";
         }
-        // else if (route.path === "/login") {
-        //   prevPage.value = "home";
-        //   hasPage.value = true;
-        //   pageName.value = t("header.login");
-        // } else if (route.path === "/register") {
-        //   prevPage.value = "home";
-        //   hasPage.value = true;
-        //   pageName.value = t("header.register");
-        // } else if (route.path === "/forgot-account") {
-        //   prevPage.value = "login";
-        //   hasPage.value = true;
-        //   pageName.value = t("header.forgotAccount");
-        // } else if (route.path === "/forgot-password") {
-        //   prevPage.value = "login";
-        //   hasPage.value = true;
-        //   pageName.value = t("header.forgotPassword");
+          // else if (route.path === "/login") {
+          //   prevPage.value = "home";
+          //   hasPage.value = true;
+          //   pageName.value = t("header.login");
+          // } else if (route.path === "/register") {
+          //   prevPage.value = "home";
+          //   hasPage.value = true;
+          //   pageName.value = t("header.register");
+          // } else if (route.path === "/forgot-account") {
+          //   prevPage.value = "login";
+          //   hasPage.value = true;
+          //   pageName.value = t("header.forgotAccount");
+          // } else if (route.path === "/forgot-password") {
+          //   prevPage.value = "login";
+          //   hasPage.value = true;
+          //   pageName.value = t("header.forgotPassword");
         // }
         else if (route.path === "/live-casino") {
           hasPage.value = true;
@@ -550,6 +568,53 @@ export default defineComponent({
       }
     };
 
+    const loadLoginCashBackPopup = () => {
+      // const getTime = sessionStorage.getItem("IS_LOGIN_CASHBACK_POPUP");
+      // const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
+      // true ||
+      // if (!getTime || getTime > currentTime) {
+      //   sessionStorage.removeItem("IS_LOGIN_CASHBACK_POPUP");
+      let isNewVal= false;
+      api
+        .get(
+          `/session/member/rebateAndCashback?betRebatePromoCode=br2-daily-bet-rebate&lossRebatePromoCode=br2-loss-rebate&day=0`
+        )
+        .then((res) => {
+          if (res.code === 0) {
+            const { betRebateAmount, betRebateClaimed, lossRebateAmount, lossRebateClaimed } = res.data;
+
+            if(loginCashBackDetails.preBetAmount !== betRebateAmount && loginCashBackDetails.preBetAmount !== -1){
+              isNewVal= true;
+            }
+            if(loginCashBackDetails.preLoseAmount !== lossRebateAmount && loginCashBackDetails.preLoseAmount !== -1){
+              isNewVal= true;
+            }
+
+            loginCashBackDetails.betRebateAmount = betRebateAmount;
+            loginCashBackDetails.betRebateClaimed = betRebateClaimed;
+            loginCashBackDetails.lossRebateAmount = lossRebateAmount;
+            loginCashBackDetails.lossRebateClaimed = lossRebateClaimed;
+
+            if(loginCashBackDetails.preBetAmount === -1){
+              loginCashBackDetails.preBetAmount =betRebateAmount
+            }
+            if(loginCashBackDetails.preLoseAmount === -1){
+              loginCashBackDetails.preLoseAmount =lossRebateAmount
+            }
+
+            // true ||
+            isShowLoginRebateModal.value = isNewVal &&
+              (loginCashBackDetails.betRebateAmount !== 0 || loginCashBackDetails.lossRebateAmount !== 0);
+
+            // const after6HoursTime = moment().add(6, "hours").format("YYYY-MM-DD HH:mm:ss");
+            // sessionStorage.setItem("IS_LOGIN_CASHBACK_POPUP", JSON.stringify(after6HoursTime));
+          }
+        });
+      // }
+    };
+
+    let cashbackTimer;
+
     onMounted(() => {
       checkRoute();
       checkFirstScreen();
@@ -559,6 +624,13 @@ export default defineComponent({
           SplashScreen.hide();
         }, 500);
       }
+      if (store.hasToken()) {
+        loadLoginCashBackPopup();
+        cashbackTimer = setInterval(() => {
+          loadLoginCashBackPopup();
+        }, 60000);
+      }
+
     });
     return {
       tab: ref("home"),
@@ -579,7 +651,9 @@ export default defineComponent({
       platformsList,
       changePlatform,
       languageVal,
-      goToPrevPage
+      goToPrevPage,
+      isShowLoginRebateModal,
+      loginCashBackDetails
     };
   }
 });

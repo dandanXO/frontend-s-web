@@ -245,7 +245,7 @@ export const userStore = defineStore("userStore", {
           this.currentDeposit = parseFloat(currentDeposit);
           this.currentValidBet = parseFloat(currentValidBet);
           this.levelUpDeposit = parseFloat(levelUpDeposit);
-          this.levelUpBet= parseFloat(levelUpBet)
+          this.levelUpBet = parseFloat(levelUpBet);
           this.guest = guest;
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
@@ -323,7 +323,7 @@ export const userStore = defineStore("userStore", {
       return this.currentDeposit;
     },
     getCurrentValidBet() {
-      return this.currentValidBet
+      return this.currentValidBet;
     }
   }
 });
