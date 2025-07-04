@@ -119,15 +119,33 @@ const goToMailDetail = (mail) => {
 
 .dark {
   .announcement-content {
-    color: #fff;
+    color: #b8b8b8;
   }
-  .announcement-footer .footer-button {
-    color: #fff;
-    border: 1px solid #fff;
+  .announcement-footer .footer-button:first-child {
+    color: #a98f7c;
+    border: 1px solid #a98f7c;
+
+    img {
+      filter: brightness(0) saturate(100%) invert(63%) sepia(9%) saturate(836%) hue-rotate(343deg) brightness(91%)
+        contrast(91%);
+    }
   }
 
   .announcement-title {
     color: #fff;
+  }
+
+  .announcement-footer {
+    .footer-button {
+      &.detail {
+        background: url("../../assets/home/announcement/blue-bg-title.png");
+        background-repeat: no-repeat;
+      }
+
+      .el-icon {
+        filter: brightness(0) invert(1);
+      }
+    }
   }
 }
 </style>
