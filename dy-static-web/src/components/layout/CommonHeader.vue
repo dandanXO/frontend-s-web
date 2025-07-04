@@ -767,7 +767,7 @@
       title="公告"
     >
       <el-tabs type="card" class="announcementTabs" v-model="announcementActive" @tab-click="announcementTabChange">
-        <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :tab="ind" :label="tab.name">
+        <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :name="tab.id" :tab="tab.id" :label="tab.name">
           <el-collapse accordion v-model="typeActive">
             <template v-for="(ann, idx) in announcementList" :key="idx">
               <template v-if="ann.typeId === tab.id">
@@ -1551,7 +1551,12 @@ export default defineComponent({
           const d = res.data.announcements;
           announcementTypes.value = res.data.type;
           if (res.data.type && res.data.type.length > 0) {
-            announcementActive.value = res.data.type[0].id;
+            if(d[0].typeId){
+              announcementActive.value = d[0].typeId;
+            }else{
+              announcementActive.value = res.data.type[0].id;
+            }
+            
           }
           announcementList.value = d;
           // announcementList.value = d.announcements
