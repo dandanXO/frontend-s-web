@@ -1,0 +1,4 @@
+包名：com.dy.client
+密码：DhYu3uHoeb
+别名：dy_app
+文件：dy_jks.jks

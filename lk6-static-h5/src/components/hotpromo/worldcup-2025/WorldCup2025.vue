@@ -1,0 +1,1594 @@
+<template>
+  <div v-if="pageLoading">
+    <div style="margin: 4px auto; display: flex; justify-content: center"><q-spinner size="3em" /></div>
+  </div>
+
+  <div class="worldcup-2025-wrapper" v-else>
+    <div class="title-content">
+      <div class="col-title">活动内容</div>
+      <div class="col-record" @click="openTableRecord">【竞猜记录】</div>
+    </div>
+    <div class="toptitle-row">
+      <div class="col-desc">
+        活动期间，会员完成特殊事件竞猜或独赢竞猜，最高可获得
+        <span>288</span>
+        竞猜奖金。
+      </div>
+    </div>
+    <div class="swiper-container-wrapper">
+      <div class="swiper-button-prev">
+        <i class="icon-chevron-left"></i>
+      </div>
+      <Swiper
+        class="livestream-list-wrapper"
+        :slides-per-view="computedSlidesPerView"
+        :centered-slides="true"
+        :space-between="16"
+        :loop="false"
+        :pagination="false"
+        :direction="'horizontal'"
+        :navigation="{
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
+        }"
+        @swiper="onSwiper"
+      >
+        <SwiperSlide v-for="(live, index) in list" :key="`${live}-${index}`" class="swiper-slide">
+          <div
+            class="livestream-list-item"
+            :class="{
+              selected: model === index
+            }"
+            @click="handleLivestreamClick(index)"
+          >
+            <div class="livestream-list-item__match-info">
+              <div class="livestream-list-item__match-info__team">
+                <div class="livestream-list-item__match-info__team-emblem">
+                  <img :src="imgURL + live.homeTeamIcon || systemAvatarImg" loading="lazy" />
+                </div>
+                <span class="livestream-list-item__match-info__team-name">
+                  <!-- {{ live.homeNameZh || live.homeNameEn || live.homeName }} -->
+                  {{ live.homeTeam }}
+                </span>
+              </div>
+
+              <div class="livestream-list-item__match-info__date">
+                <span class="livestream-list-item__match-info__date__vs">VS</span>
+                <!-- <div v-if="live.status === 'ENDED'" class="livestream-list-item__match-info__date__on-air">正在直播</div> -->
+                <!-- <div v-if="live.status !== 'ENDED'" class="livestream-list-item__match-info__date__on-air">正在直播</div> -->
+                <div class="livestream-list-item__match-info__date__date">
+                  {{ live.matchTime }}
+                </div>
+              </div>
+              <div class="livestream-list-item__match-info__team">
+                <div class="livestream-list-item__match-info__team-emblem">
+                  <img :src="imgURL + live.awayTeamIcon || systemAvatarImg" loading="lazy" />
+                </div>
+                <span class="livestream-list-item__match-info__team-name">
+                  <!-- {{ live.awayNameZh || live.awayNameEn || live.awayName }} -->
+                  {{ live.awayTeam }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </SwiperSlide>
+      </Swiper>
+      <div class="swiper-button-next">
+        <i class="icon-chevron-right"></i>
+      </div>
+    </div>
+
+    <div class="current-match-container">
+      <div class="match-info match-info--home">
+        <div class="info-img">
+          <img :src="imgURL + currentListItem.homeTeamIcon || systemAvatarImg" loading="lazy" />
+        </div>
+        <div class="info-txt">
+          <!-- {{ currentListItem.homeNameZh || currentListItem.homeNameEn || currentListItem.homeName }} -->
+          {{ currentListItem.homeTeam }}
+        </div>
+      </div>
+
+      <div class="match-home-vs">
+        <div class="vs-title-row">
+          <div class="title-icon">
+            <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-fifa.png" alt="" />
+          </div>
+          <div class="title-txt">世俱杯</div>
+
+          <div class="title-status notstart" v-if="currentListItem.startTime > currentTime">
+            <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-match-notstart.svg" alt="" />
+            &nbsp; 未开始
+          </div>
+          <div class="title-status ended" v-else-if="currentListItem.endTime <= currentTime">
+            <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-match-ended.svg" alt="" />
+            &nbsp; 已结束
+          </div>
+          <div
+            class="title-status ongoing"
+            v-else-if="currentListItem.endTime > currentTime && currentTime >= currentListItem.startTime"
+          >
+            <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-match-ongoing.svg" alt="" />
+            &nbsp; 进行中
+          </div>
+        </div>
+        <div class="vs-time">{{ getDisplayDateTime(currentListItem.matchTime) }}</div>
+        <div class="vs-icon"><img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-vs.png" alt="" /></div>
+        <div class="vs-win">独赢</div>
+        <div class="vs-notes">该场赛事竞猜截止时间 {{ getDisplayDateTime(currentListItem.endTime) }}</div>
+      </div>
+
+      <div class="match-info match-info--away">
+        <div class="info-img">
+          <img :src="imgURL + currentListItem.awayTeamIcon || systemAvatarImg" loading="lazy" />
+        </div>
+        <div class="info-txt">
+          <!-- {{ currentListItem.awayNameZh || currentListItem.awayNameEn || currentListItem.awayName }} -->
+          {{ currentListItem.awayTeam }}
+        </div>
+      </div>
+    </div>
+
+    <div class="title-match-row">
+      <div class="col-txt">
+        <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-win.png" alt="" />
+        竞猜独赢事件
+      </div>
+      <div class="col-record">
+        当日首存≥100可参与(
+        <span>当前存款{{ totalDeposit }}元</span>
+        )
+      </div>
+    </div>
+
+    <div class="current-match-bet">
+      <div
+        class="bet-select"
+        :class="{
+          active: currentListItem.memberAnswerOne === choiceOneArray[0] || selectedTeam == choiceOneArray[0],
+          disabled: currentListItem.memberAnswerOne || currentListItem.status === 'ENDED'
+        }"
+        @click="selectTeam(choiceOneArray[0])"
+      >
+        {{ choiceOneArray[0] }} 赢
+      </div>
+      <div
+        class="bet-select"
+        :class="{
+          active: currentListItem.memberAnswerOne === choiceOneArray[1] || selectedTeam == choiceOneArray[1],
+          disabled: currentListItem.memberAnswerOne || currentListItem.status === 'ENDED'
+        }"
+        @click="selectTeam(choiceOneArray[1])"
+      >
+        {{ choiceOneArray[1] }} 赢
+      </div>
+    </div>
+
+    <!-- 独赢事件竞猜 -->
+    <template v-if="currentListItem.memberAnswerOne || selectedTeam || currentListItem.status === 'ENDED'">
+      <div class="match-btn disabled" v-if="currentListItem.hasClaimedBonus">已领取</div>
+      <div
+        class="match-btn"
+        v-else-if="currentListItem.status === 'ENDED'"
+        :class="{ disabled: loadingBtn }"
+        @click="handleClaimFifaQuiz2025(currentListItem.id)"
+      >
+        立即领取
+      </div>
+      <div class="match-btn disabled" v-else-if="currentListItem.memberAnswerOne">已参与竞猜</div>
+      <div
+        class="match-btn"
+        v-else
+        :class="{ disabled: loadingBtn }"
+        @click="handleSubmitFifaQuiz2025(currentListItem.id, selectedTeam)"
+      >
+        确认竞猜
+      </div>
+    </template>
+
+    <div class="title-match-row">
+      <div class="col-txt">
+        <img src="../../../assets/images/promo/hotpromo/worldcup-2025/icon-special.png" alt="" />
+        竞猜特殊事件
+      </div>
+    </div>
+
+    <div class="current-match-bet special-grid">
+      <div
+        v-for="(item, index) in filteredSpecialList"
+        :key="index"
+        class="bet-select"
+        :class="{
+          'long-select': index === specialList.length - 1,
+          active: currentListItem.memberSelectedOccasion === item.occasion || selectedSpecial == item.occasion,
+          disabled: currentListItem.memberSelectedOccasion || currentListItem.status === 'ENDED'
+        }"
+        @click="selectSpecial(item.occasion)"
+      >
+        {{ item.occasion }}
+        <img :src="require(`../../../assets/images/promo/hotpromo/worldcup-2025/special-${index}.png`)" alt="" />
+        <div class="prize-amt">
+          <span>{{ item.bonus }}</span>
+          彩金
+        </div>
+      </div>
+    </div>
+
+    <!-- 特殊事件竞猜 -->
+    <template v-if="currentListItem.memberSelectedOccasion || selectedSpecial || currentListItem.status === 'ENDED'">
+      <div class="match-btn disabled" v-if="currentListItem.hasClaimedOccasionBonus">已领取</div>
+      <div
+        class="match-btn"
+        v-else-if="currentListItem.status === 'ENDED'"
+        :class="{ disabled: loadingBtn }"
+        @click="handleClaimOccasionFifaQuiz2025(currentListItem.id)"
+      >
+        立即领取
+      </div>
+      <div class="match-btn disabled" v-else-if="currentListItem.memberSelectedOccasion">已参与竞猜</div>
+      <div
+        class="match-btn"
+        v-else
+        :class="{ disabled: loadingBtn }"
+        @click="handleSubmitOccasionFifaQuiz2025(currentListItem.id, selectedSpecial)"
+      >
+        确认竞猜
+      </div>
+    </template>
+  </div>
+
+  <div class="tnc-wrapper">
+    <div class="tnc-title">活动规则</div>
+    <div class="tnc-content">
+      <ol>
+        <li>
+          独赢竞猜：当日存款≥100元，即可获得独赢竞猜机会，仅限独赢竞猜，竞猜正确即可获得彩金。 ​
+          <br />
+          特殊事件竞猜：比赛开始前完成特殊事件竞猜，并在指定赛事中累计投注≥1000元，若竞猜正确，即可获得竞猜彩金。
+          竞猜机会仅限当天使用有效，隔日无效。
+        </li>
+        <li>
+          竞猜活动仅计算世俱杯赛事。任何低于欧洲盘 1.7 或亚洲盘 0.7
+          水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+        </li>
+        <li>
+          独赢竞猜结果分为：输、和、赢，竞猜结算（赢）猜中 即可获得8元奖金，若竞猜结果结算为“和”将会视为无效竞猜。
+        </li>
+        <li>竞猜正确的用户在次日优惠活动界面点击【立即领取】即可领取昨日竞猜成功的竞猜金，竞猜金仅需5倍流水出款。</li>
+        <li>每日竞猜比赛结果计算包含常规时间（含上下半场、伤停补时）、加时赛及点球大战（如进行）的最终比分。</li>
+        <li>
+          根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+        </li>
+        <li>
+          此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+          地址视为同一账户，若有违规者，将不享受此红利；
+        </li>
+        <li>为避免文字理解差异，东赢电竞保留此活动最终解释权；</li>
+      </ol>
+    </div>
+  </div>
+
+  <q-dialog v-model="tableRecordDialog">
+    <q-card class="dialog-content">
+      <div class="record-dialog-container">
+        <div class="record-title">竞猜记录</div>
+        <table class="record-table">
+          <thead>
+            <tr>
+              <th>赛事</th>
+              <th>竞猜队伍</th>
+              <th>竞猜事件</th>
+              <th>可获彩金</th>
+              <th>竞猜结果</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(record, index) in tableData" :key="index">
+              <td>{{ record.quizTitle }}</td>
+              <td>{{ record.answerOne }}</td>
+              <td>{{ record.selectedOccasion }}</td>
+              <td>{{ record.bonus }}</td>
+              <td>{{ record.status }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- <div class="close-btn" @click="tableRecordDialog = false">关闭</div> -->
+      </div>
+    </q-card>
+  </q-dialog>
+</template>
+<script setup>
+import { useLocalStorage } from "@vueuse/core";
+import moment from "moment";
+import systemAvatarImg from "../../../assets/images/promo/hotpromo/worldcup-2025/dy.png";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import SwiperCore, { Navigation } from "swiper";
+import "swiper/swiper-bundle.css";
+import {
+  getFifaQuiz2025PromoInit,
+  getFifaQuiz2025PromoRecord,
+  submitFifaQuiz2025,
+  submitOccasionFifaQuiz2025,
+  claimFifaQuiz2025,
+  claimOccasionFifaQuiz2025
+} from "../../../api/index/promo";
+import { computed, ref, watch, onMounted, defineProps, toRefs, nextTick } from "vue";
+import { useNotify } from "src/hooks/notify";
+import { userStore } from "src/stores";
+
+const notify = useNotify();
+const list = ref([]);
+const store = userStore();
+const props = defineProps(["promoCode"]);
+const { promoCode } = toRefs(props);
+const totalValidBet = ref();
+const totalDeposit = ref();
+const tableData = ref();
+
+const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
+
+const fetchTableData = async () => {
+  try {
+    const res = await getFifaQuiz2025PromoRecord(promoCode.value);
+    tableData.value = res.data;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    pageLoading.value = false;
+    loadingBtn.value = false;
+  }
+};
+
+const fetchData = async () => {
+  try {
+    const res = await getFifaQuiz2025PromoInit(promoCode.value);
+    totalValidBet.value = res.data.totalValidBet;
+    totalDeposit.value = res.data.totalDeposit;
+    list.value = res.data.gameQuizList;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    pageLoading.value = false;
+    loadingBtn.value = false;
+  }
+};
+
+const handleSubmitFifaQuiz2025 = (quizId, answerOne) => {
+  loadingBtn.value = true;
+  submitFifaQuiz2025(promoCode.value, quizId, answerOne)
+    .then((res) => {
+      if (res.code === 0) {
+        notify({
+          type: "success",
+          message: "成功提交竞猜"
+        });
+        fetchData();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      loadingBtn.value = false;
+    });
+};
+
+const handleSubmitOccasionFifaQuiz2025 = (quizId, selectedOccasion) => {
+  loadingBtn.value = true;
+  submitOccasionFifaQuiz2025(promoCode.value, quizId, selectedOccasion)
+    .then((res) => {
+      if (res.code === 0) {
+        notify({
+          type: "success",
+          message: "成功提交竞猜"
+        });
+        fetchData();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      loadingBtn.value = false;
+    });
+};
+
+const handleClaimFifaQuiz2025 = (quizId) => {
+  loadingBtn.value = true;
+  claimFifaQuiz2025(promoCode.value, quizId)
+    .then((res) => {
+      if (res.code === 0) {
+        notify.redPacket("成功领取", res.data);
+        fetchData();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      loadingBtn.value = false;
+    });
+};
+
+const handleClaimOccasionFifaQuiz2025 = (quizId) => {
+  loadingBtn.value = true;
+  claimOccasionFifaQuiz2025(promoCode.value, quizId)
+    .then((res) => {
+      if (res.code === 0) {
+        notify.redPacket("成功领取", res.data);
+        fetchData();
+      } else if (
+        !(
+          res.code === ResponseCode.ERROR_USER_TOO_FAST ||
+          res.code === ResponseCode.ERROR_PROMO_NOT_STARTED ||
+          res.code === ResponseCode.ERROR_PROMO_USER_NOT_MEET_REQUIREMENT ||
+          res.code === ResponseCode.ERROR_PROMO_CLAIMED ||
+          res.code === ResponseCode.ERROR_SYSTEM
+        )
+      ) {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      loadingBtn.value = false;
+    });
+};
+
+SwiperCore.use([Navigation]);
+const model = ref(0);
+const emit = defineEmits(["scroll-reach-right"]);
+
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+
+const handleLivestreamClick = (index) => {
+  model.value = index;
+  selectedTeam.value = "";
+  selectedSpecial.value = "";
+};
+
+const swiperInstance = ref();
+const onSwiper = (swiper) => {
+  swiperInstance.value = swiper;
+
+  nextTick(() => {
+    if (swiperInstance.value) {
+      swiperInstance.value.slideTo(model.value, 0);
+    }
+  });
+};
+
+const findInitialIndex = () => {
+  const priority = ["ONGOING", "ENDED"];
+
+  for (const status of priority) {
+    const idx = list.value.findIndex((item) => item.status === status);
+    if (idx !== -1) return idx;
+  }
+  return 0;
+};
+
+const onSlideClick = (i) => {
+  selectedPlatformIndex.value = i;
+  const centeredIndex = i - 2;
+  swiperInstance.value.slideTo(centeredIndex);
+};
+
+const getDisplayDateTime = (timestamp) => {
+  const now = moment().startOf("day");
+  const eventDate = moment(timestamp);
+  const eventDay = moment(timestamp).startOf("day");
+
+  const diffInDays = eventDay.diff(now, "days");
+
+  if (diffInDays === 0) {
+    return eventDate.format("今日 HH:mm");
+  } else if (diffInDays === 1) {
+    return eventDate.format("明日 HH:mm");
+  } else {
+    return eventDate.format("MM/DD HH:mm");
+  }
+};
+
+const currentListItem = computed(() => {
+  return list.value[model.value];
+});
+
+const choiceOneArray = computed(() => {
+  try {
+    return JSON.parse(currentListItem.value.choiceOne || "[]");
+  } catch (e) {
+    return [];
+  }
+});
+
+const selectedTeam = ref("");
+const selectTeam = (team) => {
+  selectedTeam.value = team;
+};
+
+const selectedSpecial = ref("");
+const selectSpecial = (special) => {
+  selectedSpecial.value = special;
+};
+const specialList = [
+  { id: "1", title: "全场零进球", prize: "18", img: "special-01.png" },
+  { id: "2", title: "出现红牌", prize: "28", img: "special-02.png" },
+  { id: "3", title: "补时进球", prize: "38", img: "special-03.png" },
+  { id: "4", title: "点球得分", prize: "58", img: "special-04.png" },
+  { id: "5", title: "梅开二度", prize: "88", img: "special-05.png" },
+  { id: "6", title: "帽子戏法", prize: "128", img: "special-06.png" },
+  { id: "7", title: "乌龙球", prize: "288", img: "special-07.png" }
+];
+
+const filteredSpecialList = computed(() => {
+  return currentListItem.value.occasions;
+});
+
+watch(
+  list,
+  () => {
+    model.value = findInitialIndex();
+  },
+  { immediate: true }
+);
+
+const showNotStart = computed(() => {
+  return moment(currentListItem.value.startTime).isAfter(moment());
+});
+
+const tableRecordDialog = ref(false);
+
+const openTableRecord = () => {
+  fetchTableData();
+  tableRecordDialog.value = true;
+};
+
+const pageLoading = ref(true);
+const loadingBtn = ref(false);
+
+const computedSlidesPerView = computed(() => {
+  return list.value.length === 1 ? 1 : 1.5;
+});
+
+onMounted(() => {
+  if (!store.token) {
+    return;
+  }
+
+  fetchData();
+  fetchTableData();
+  model.value = findInitialIndex();
+});
+</script>
+
+<style lang="scss" scoped>
+// @import "@/scss/pages/livestream.scss";
+
+.livestream-list-wrapper {
+  display: flex;
+  // gap: 18.87px;
+  padding: 0 18px 18px 0;
+  align-items: center;
+  margin: 0 0;
+  // --swiper-navigation-color: #3981ff;
+
+  :deep(.swiper-button-prev) {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+    box-shadow: 0px -1.67px 3.82px 0px #b1d7ff inset;
+
+    &:after {
+      font-size: 12px;
+      color: #ffffff;
+    }
+    &.swiper-button-disabled {
+      background: #ffffff;
+      opacity: 1;
+
+      &:after {
+        color: #333333;
+      }
+    }
+  }
+
+  :deep(.swiper-button-next) {
+    right: 28px;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+    box-shadow: 0px -1.67px 3.82px 0px #b1d7ff inset;
+
+    &:after {
+      font-size: 12px;
+      color: #ffffff;
+    }
+    &.swiper-button-disabled {
+      background: #ffffff;
+      opacity: 1;
+
+      &:after {
+        color: #333333;
+      }
+    }
+  }
+
+  .livestream-list-item {
+    // @include livestream-content-block;
+    background-color: #fff;
+    border-radius: 18px;
+    position: relative;
+    padding: 11px 0;
+    margin: 18px 0 0;
+    cursor: pointer;
+
+    .q-dark & {
+      background-color: #304774;
+      border: 1px solid transparent;
+    }
+
+    &.selected {
+      border: 2px solid #468cff;
+      background: rgba(0, 161, 255, 0.4);
+      &::after {
+        display: block;
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 100%);
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #468cff;
+      }
+    }
+
+    .livestream-list-item__title {
+      margin-bottom: 10px;
+      font-size: 15px;
+      line-height: 21px;
+      font-weight: 500;
+      text-align: center;
+      color: #333333;
+    }
+    .livestream-list-item__match-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      .livestream-list-item__match-info__team {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 7px;
+        flex-basis: 33%;
+        max-width: 33%;
+        padding: 6px;
+
+        .livestream-list-item__match-info__team-emblem {
+          // @include livestream-team-emblem;
+          background-color: #fff;
+          border-radius: 18px;
+          box-shadow: 0px 3.77px 20.76px 0px #00000026;
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .q-dark & {
+            background-color: #17223e;
+            box-shadow: 2px 4px 10px 0px #00194b52;
+          }
+
+          // padding: 7px;
+          border-radius: 50%;
+
+          img {
+            display: block;
+            width: 30px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            margin-bottom: 0;
+          }
+        }
+        .livestream-list-item__match-info__team-name {
+          font-size: 12px;
+          line-height: 15px;
+          color: #7a80a1;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          max-width: 100%;
+        }
+      }
+    }
+
+    .livestream-list-item__match-info__date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      .livestream-list-item__match-info__date__on-air {
+        // @include livestream-on-air;
+      }
+      .livestream-list-item__match-info__date__date {
+        font-size: 9px;
+        line-height: 15px;
+        color: #7a80a1;
+        margin-top: 12px;
+        text-align: center;
+      }
+      .livestream-list-item__match-info__date__vs {
+        font-size: 16px;
+        line-height: 23px;
+        color: #333333;
+      }
+    }
+
+    .livestream-list-item__badge-wrapper {
+      position: absolute;
+      top: 4px;
+      left: 14px;
+      transform: translateY(-100%);
+      background: linear-gradient(
+        259.14deg,
+        #ffecce 11.64%,
+        #f3cd92 27.82%,
+        #fff2ca 52.4%,
+        #efd190 72.12%,
+        #e4bd80 99.13%
+      );
+      border: 0.94px solid #d3aa69;
+      border-radius: 8px;
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+
+      .livestream-list-item__badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding-right: 7px;
+        font-size: 11px;
+        line-height: 15px;
+        color: #000000;
+        img {
+          // @include img-pseudo;
+          border-radius: 50%;
+          width: 22px;
+          aspect-ratio: 1;
+        }
+      }
+    }
+  }
+
+  .livestream-list__pseudo {
+    flex: 0 0 calc(25% - 12.87px);
+    height: 100%;
+    :deep(.path) {
+      stroke: #4c88f8;
+    }
+  }
+}
+
+.q-dark {
+  .livestream-list-wrapper {
+    // --swiper-navigation-color: #fff;
+
+    :deep(.swiper-button-prev) {
+      background: linear-gradient(180deg, #ffe2b9 0%, #be9457 100%);
+      box-shadow: 0px 1.57px 1.57px 0px #7488accc inset;
+      &:after {
+        color: #653b00;
+      }
+      &.swiper-button-disabled {
+        background: #2d3e6a;
+        &:after {
+          color: #ffffff;
+        }
+      }
+    }
+
+    :deep(.swiper-button-next) {
+      background: linear-gradient(180deg, #ffe2b9 0%, #be9457 100%);
+      box-shadow: 0px 1.57px 1.57px 0px #7488accc inset;
+      &:after {
+        color: #653b00;
+      }
+      &.swiper-button-disabled {
+        background: #2d3e6a;
+        &:after {
+          color: #ffffff;
+        }
+      }
+    }
+
+    .livestream-list-item {
+      &.selected {
+        background: #be945766;
+        background-size: 100% 100%;
+        background-clip: border-box;
+        border-color: #be9457;
+        &::after {
+          border-top: 10px solid #be9457;
+        }
+
+        .livestream-list-item__match-info__date {
+          .livestream-list-item__match-info__date__vs {
+            color: #fff;
+          }
+        }
+      }
+
+      .livestream-list-item__match-info__date {
+        .livestream-list-item__match-info__date__vs {
+          color: #fff;
+        }
+      }
+
+      .livestream-list-item__title {
+        color: #fff;
+      }
+      .livestream-list-item__match-info {
+        .livestream-list-item__match-info__team {
+          .livestream-list-item__match-info__team-emblem {
+            // @include livestream-team-emblem;
+          }
+          .livestream-list-item__match-info__team-name {
+            color: #fff;
+          }
+        }
+      }
+
+      .livestream-list-item__match-info__date {
+        .livestream-list-item__match-info__date__date {
+          color: #fff;
+        }
+      }
+    }
+
+    .livestream-list__pseudo {
+      :deep(.path) {
+        stroke: #fff;
+      }
+    }
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+.worldcup-2025-wrapper {
+  max-width: 600px;
+  margin: auto;
+  background-color: #f2f8fe;
+  border: 1px solid #acd4f6;
+  border-radius: 12px;
+  padding: 8px;
+
+  .title-content {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    .col-title {
+      background-image: url(../../../assets/images/promo/hotpromo/worldcup-2025/title-ribbon.png);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 100% 100%;
+      padding: 2px 12px 2px 8px;
+      color: #ffffff;
+    }
+    .col-record {
+      color: #00a1ff;
+    }
+  }
+
+  .toptitle-row {
+    display: flex;
+    justify-content: space-between;
+
+    .col-desc {
+      color: #333333;
+
+      span {
+        color: #00a1ff;
+      }
+    }
+
+    .col-record {
+      color: #00a1ff;
+    }
+  }
+
+  .current-match-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-image: url(../../../assets/images/promo/hotpromo/worldcup-2025/match-mobile-bg.png);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: cover;
+    border-radius: 16px;
+    padding: 16px 8px 50px;
+    position: relative;
+
+    .match-info {
+      width: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      &--home {
+      }
+      &--away {
+      }
+
+      .info-img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        box-shadow: 0px 3.77px 20.76px 0px rgba(0, 0, 0, 0.1490196078);
+        // padding: 7px;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        img {
+          display: block;
+          width: 40px;
+          margin-bottom: 0;
+        }
+      }
+      .info-txt {
+        display: block;
+        text-align: center;
+        margin-top: 16px;
+      }
+    }
+
+    .match-home-vs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      .vs-title-row {
+        display: flex;
+        align-items: center;
+        line-height: 1;
+        gap: 4px;
+
+        .title-icon {
+          img {
+            display: block;
+            width: 28px;
+            margin: 0;
+          }
+        }
+        .title-txt {
+          color: #333333;
+          font-size: 16px;
+          white-space: nowrap;
+        }
+        .title-status {
+          background: #00a1ff;
+          border-radius: 24px;
+          line-height: 1;
+          font-size: 10px;
+          color: #ffffff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 4px 8px;
+          white-space: nowrap;
+
+          &.ended {
+            background: #ff5e00;
+          }
+
+          &.ongoing {
+            background: #00a1ff;
+          }
+
+          &.notstart {
+            background: #737373;
+          }
+
+          img {
+            display: block;
+            width: 16px;
+            margin: 0;
+          }
+        }
+      }
+      .vs-time {
+        font-size: 14px;
+        color: #333333;
+      }
+      .vs-icon {
+        margin-top: 20px;
+        img {
+          display: block;
+          width: 40px;
+        }
+      }
+
+      .vs-win {
+        margin-top: 10px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .vs-notes {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        background: linear-gradient(
+          90deg,
+          rgba(0, 161, 255, 0) 0%,
+          rgba(0, 161, 255, 0.2) 50%,
+          rgba(0, 161, 255, 0) 100%
+        );
+        color: #737373;
+        font-size: 12px;
+        line-height: 1;
+        padding: 8px 16px;
+        margin-top: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  .title-match-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    .col-txt {
+      display: flex;
+      gap: 6px;
+      font-size: 16px;
+      color: #333333;
+      align-items: center;
+      font-weight: bold;
+      img {
+        display: block;
+        width: 32px;
+        margin-bottom: 6px;
+      }
+    }
+    .col-record {
+      color: #666666;
+      span {
+        color: #00a1ff;
+      }
+    }
+  }
+
+  .match-btn {
+    width: 90px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 60px;
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 20px auto 20px;
+
+    &.disabled {
+      background: linear-gradient(180deg, #e7e7e7 0%, #c9c9c9 100%);
+      color: #818181;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+}
+
+.tnc-wrapper {
+  max-width: 600px;
+  margin: auto;
+  background-color: #f2f8fe;
+  border: 1px solid #acd4f6;
+  border-radius: 12px;
+  padding: 8px;
+  margin-top: 40px;
+  .tnc-title {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: PingFang TC;
+    font-size: 16px;
+    line-height: 1;
+
+    &:before {
+      content: "";
+      background: url("../../../assets/images/promo/hotpromo/worldcup-2025/title-pattern-left.png");
+      background-size: cover;
+      background-position: right center;
+      width: 80px;
+      height: 20px;
+      display: block;
+      margin-right: 6px;
+    }
+    &:after {
+      content: "";
+      background: url("../../../assets/images/promo/hotpromo/worldcup-2025/title-pattern-right.png");
+      background-size: cover;
+      background-position: left center;
+      width: 80px;
+      height: 20px;
+      display: block;
+      margin-left: 6px;
+    }
+  }
+
+  .tnc-content {
+    ol {
+      list-style: none;
+      counter-reset: item;
+      padding: 0 !important;
+
+      li {
+        counter-increment: item;
+        position: relative;
+        padding-left: 24px;
+        margin-bottom: 6px !important;
+
+        &::before {
+          content: counter(item);
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 16px;
+          height: 16px;
+          // background: linear-gradient(180deg, #ffe2b9 0%, #be9457 100%);
+          // color: #653b00;
+          background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+          color: #ffffff;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+.current-match-bet {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+
+  &.special-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    .bet-select {
+      font-size: 14px;
+      &.long-select {
+        grid-column: span 2;
+      }
+
+      &.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  .bet-select {
+    font-size: 18px;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 4px;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    flex-direction: column;
+
+    &.disabled {
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 1 !important;
+    }
+
+    img {
+      display: block;
+      max-width: 80px;
+      margin: 12px 0;
+    }
+
+    .prize-amt {
+      color: #535353;
+      font-size: 14px;
+      span {
+        color: #00a1ff;
+        font-size: 20px;
+      }
+    }
+
+    &.active {
+      background: #00a1ff66;
+      border-color: #00a1ff;
+      &:after {
+        content: "";
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background-image: url(../../../assets/images/promo/hotpromo/worldcup-2025/select-btn-active.svg);
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+    }
+  }
+}
+
+.swiper-container-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    z-index: 10;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px -2.35px 4.7px 0px #6a7f9e66 inset;
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+    color: #ffffff;
+
+    &.swiper-button-disabled {
+      background: #f3f3f3;
+      color: #94a4be;
+      opacity: 1;
+    }
+
+    &:after {
+      font-size: 10px;
+    }
+  }
+
+  .swiper-button-prev {
+    position: absolute;
+    left: -4px;
+    top: 60%;
+    transform: translateY(-50%);
+  }
+
+  .swiper-button-next {
+    position: absolute;
+    right: -4px;
+    top: 60%;
+    transform: translateY(-50%);
+  }
+}
+
+.record-table {
+  border-collapse: collapse;
+  margin: 20px 8px;
+
+  // width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+
+  th {
+    height: 44px;
+    font-size: 14px;
+    // font-weight: 600;
+    color: #fff;
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    vertical-align: middle;
+    text-align: center;
+
+    &:first-child {
+      border-top-left-radius: 6px;
+    }
+    &:last-child {
+      border-top-right-radius: 6px;
+    }
+  }
+
+  tr td {
+    height: 50px;
+    text-align: center;
+    border: solid 1px #acd4f6;
+    width: 20%;
+  }
+}
+
+.record-title {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: PingFang TC;
+  font-size: 16px;
+  line-height: 1;
+
+  &:before {
+    content: "";
+    background: url("../../../assets/images/promo/hotpromo/worldcup-2025/title-pattern-left.png");
+    background-size: cover;
+    background-position: right center;
+    width: 80px;
+    height: 20px;
+    display: block;
+    margin-right: 6px;
+  }
+  &:after {
+    content: "";
+    background: url("../../../assets/images/promo/hotpromo/worldcup-2025/title-pattern-right.png");
+    background-size: cover;
+    background-position: left center;
+    width: 80px;
+    height: 20px;
+    display: block;
+    margin-left: 6px;
+  }
+}
+
+.close-btn {
+  border: 1px solid #00a1ff;
+  border-radius: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 144px;
+  height: 44px;
+  color: #00a1ff;
+  margin: auto auto 20px;
+  cursor: pointer;
+}
+
+.q-dark {
+  .worldcup-2025-wrapper {
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+    border: 1px solid #be9457;
+
+    .title-content {
+      .col-title {
+        background-image: url(../../../assets/images/promo/hotpromo/worldcup-2025/title-ribbon-dark.png);
+        color: #ffffff;
+      }
+      .col-record {
+        color: #be9457;
+      }
+    }
+
+    .toptitle-row {
+      .col-desc {
+        color: #ffffff;
+
+        span {
+          color: #be9457;
+        }
+      }
+
+      .col-record {
+        color: #be9457;
+      }
+    }
+
+    .current-match-container {
+      .match-home-vs {
+        .vs-title-row {
+          .title-icon {
+            img {
+              filter: invert(1);
+            }
+          }
+          .title-txt {
+            color: #ffffff;
+          }
+          .title-status {
+            color: #ffffff;
+            &.ended {
+              background: #ff5e00;
+            }
+
+            &.ongoing {
+              background: #be9457;
+            }
+
+            &.notstart {
+              background: #737373;
+            }
+          }
+        }
+        .vs-time {
+          color: #ffffff;
+        }
+        .vs-icon {
+          img {
+            filter: invert(1);
+          }
+        }
+        .vs-notes {
+          color: #ffffff;
+        }
+      }
+    }
+
+    .title-match-row {
+      .col-txt {
+        color: #ffffff;
+      }
+      .col-record {
+        color: #ffffff;
+        span {
+          color: #be9457;
+        }
+      }
+    }
+
+    .match-btn {
+      background: linear-gradient(180deg, #ffe2b9 0%, #be9457 100%);
+      color: #653b00;
+      border: 1px solid #ffffff;
+
+      &.disabled {
+        background: linear-gradient(180deg, #cbcbcb 0%, #757575 100%);
+        color: #ffffff;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .tnc-wrapper {
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+
+    .tnc-content {
+      ol {
+        li {
+          &::before {
+            background: linear-gradient(180deg, #ffe2b9 0%, #be9457 100%);
+            color: #653b00;
+          }
+        }
+      }
+    }
+  }
+
+  .current-match-bet {
+    .bet-select {
+      background: #304774;
+
+      .prize-amt {
+        color: #ffffff;
+        span {
+          color: #ffdba8;
+        }
+      }
+
+      &.active {
+        background: #be945766;
+        border-color: #be9457;
+        &:after {
+          background-image: url(../../../assets/images/promo/hotpromo/worldcup-2025/select-btn-active-dark.svg);
+        }
+      }
+    }
+  }
+
+  .swiper-container-wrapper {
+    .swiper-button-prev,
+    .swiper-button-next {
+      box-shadow: 0px -0.78px 1.57px 0px #3c3c3c inset;
+      background: linear-gradient(180deg, #ffe2b9 0%, #be9457 100%);
+      color: #653b00;
+
+      &.swiper-button-disabled {
+        background: #2d3e6a;
+        color: #ffffff;
+        opacity: 1;
+      }
+    }
+  }
+
+  .record-table {
+    th {
+      color: #653b00;
+      // background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      background: linear-gradient(180deg, #ffe2b9 0%, #be9457 100%);
+    }
+    tr {
+      color: #ffffff;
+      &:nth-child(odd) {
+        background: transparent;
+      }
+      &:nth-child(even) {
+        background: transparent;
+      }
+
+      td {
+        border: 1px solid #f2f6ac;
+      }
+    }
+  }
+
+  .close-btn {
+    border-color: #be9457;
+    color: #be9457;
+  }
+}
+
+@media (max-width: 420px) {
+  .current-match-bet {
+    &.special-grid {
+      grid-template-columns: repeat(3, 1fr);
+      .bet-select.long-select {
+        grid-column: span 3;
+      }
+    }
+  }
+}
+</style>
