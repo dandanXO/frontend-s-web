@@ -116,4 +116,18 @@ const goToMailDetail = (mail) => {
   height: 600px;
   width: 100%;
 }
+
+.dark {
+  .announcement-content {
+    color: #fff;
+  }
+  .announcement-footer .footer-button {
+    color: #fff;
+    border: 1px solid #fff;
+  }
+
+  .announcement-title {
+    color: #fff;
+  }
+}
 </style>

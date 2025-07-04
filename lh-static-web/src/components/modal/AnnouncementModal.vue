@@ -230,4 +230,17 @@ watch(checked, (val) => {
 ::v-deep(.el-checkbox__input.is-checked + .el-checkbox__label) {
   color: white !important;
 }
+
+:deep(.el-carousel__indicators) {
+  width: 100%;
+  text-align: center;
+}
+
+.dark {
+  .dialog-header {
+    &.only-inbox {
+      background: #1b202c;
+    }
+  }
+}
 </style>
