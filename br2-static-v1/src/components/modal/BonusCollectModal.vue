@@ -22,7 +22,7 @@
               <span>Complete the sign-in get R$588</span>
             </div>
             <div class="col-status">
-              <template v-if="checkIndays.indexOf(currentDay) > -1">
+              <template v-if="checkedInDays.indexOf(currentDay) > -1">
                 <img src="../../assets/images/index/bonus-collect/status-ticked.png" alt="" class="status-ticked" />
               </template>
               <template v-else>
@@ -140,14 +140,14 @@ const gotoCheckin = () => {
 };
 
 const currentDay = ref("");
-const checkIndays= ref([])
+const checkedInDays= ref([])
 const loadCycleCheckIn = () => {
   eventapi
     .get("/session/cycle-check-in?promoCode=br2-daily-check-in")
     .then((res) => {
       if (res.code === 0) {
         currentDay.value = res.data.currentDay;
-        checkIndays.value= res.data.checkInDays;
+        checkedInDays.value= res.data.checkedInDays;
       }
     })
     .catch((e) => {});
