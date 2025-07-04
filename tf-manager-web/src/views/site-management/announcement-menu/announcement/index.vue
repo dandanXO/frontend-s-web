@@ -992,10 +992,10 @@ onMounted(async () => {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.w-e-toolbar .w-e-menu {
-  z-index: auto !important;
+:deep(.w-e-toolbar .w-e-menu) {
+  z-index: unset !important;
 }
-.w-e-toolbar .w-e-droplist {
+:deep(.w-e-toolbar .w-e-droplist) {
   z-index: 1;
 }
 .header-container {
