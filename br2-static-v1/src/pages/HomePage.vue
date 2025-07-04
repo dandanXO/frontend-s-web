@@ -1184,15 +1184,20 @@
 
   <!-- DONT REMOVE THIS GOT USE DE-->
   <SpinLuckyWheelPromoSticky v-show="false" />
-  <LossRebateModal
+  <!-- <LossRebateModal
     @closeDialog="isShowLossRebateModal = false"
     :detail="cashBackDetails"
     v-model="isShowLossRebateModal"
-  />
+  /> -->
   <LoginRebateModal
     @closeDialog="isShowLoginRebateModal = false"
     :detail="loginCashBackDetails"
     v-model="isShowLoginRebateModal"
+  />
+
+  <BonusCollectModal
+    @closeDialog="isShowBonusCollectModal = false"
+    v-model="isShowBonusCollectModal"
   />
 </template>
 
@@ -1232,6 +1237,7 @@ import PopupController from "src/components/PopupController.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import LossRebateModal from "src/components/modal/LossRebateModal.vue";
 import LoginRebateModal from "src/components/modal/LoginRebateModal.vue";
+import BonusCollectModal from "src/components/modal/BonusCollectModal.vue";
 
 const isShowLossRebateModal = ref(false);
 const cashBackDetails = reactive({
@@ -1248,6 +1254,15 @@ const loginCashBackDetails = reactive({
   lossRebateAmount: 0,
   lossRebateClaimed: false
 });
+
+const isShowBonusCollectModal = ref(false);
+
+const loadBonusCollectPopup = () => {
+  const collectBonusPopup = sessionStorage.getItem("IS_COLLECTBONUS_POPUP") ? true : false;
+  if (store.token) {
+    isShowBonusCollectModal.value = collectBonusPopup;
+  }
+};
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -3320,6 +3335,7 @@ onActivated(() => {
     store.getUnreadTotal();
     loadBetCashBackPopup();
     loadLoginCashBackPopup();
+    loadBonusCollectPopup();
   }
 });
 
