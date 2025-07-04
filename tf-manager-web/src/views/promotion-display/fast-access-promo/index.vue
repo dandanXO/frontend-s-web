@@ -377,7 +377,7 @@ const request = reactive({
 const form = reactive({
   id: null,
   promoPageId: null,
-  siteId: null,
+  siteId: store.state.user.siteId || null,
   buttonMode: 'DETAILS',
   countDown: false,
   initApiUrl: null,
