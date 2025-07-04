@@ -9,7 +9,7 @@
             <!-- <div class="left-wing" /> -->
             <div class="id-and-prize">
                 <div class="id">{{ rankingList[1].loginName }}</div>
-                <div class="prize">{{ rankingList[1].amount }}</div>
+                <div class="prize">{{ initList[1].bonus?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</div>
             </div>
             <!-- <div class="right-wing" /> -->
         </div>
@@ -18,7 +18,7 @@
             <!-- <div class="left-wing" /> -->
             <div class="id-and-prize">
                 <div class="id">{{ rankingList[0].loginName }}</div>
-                <div class="prize">{{ rankingList[0].amount }}</div>
+                <div class="prize">{{ initList[0].bonus?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</div>
             </div>
             <!-- <div class="right-wing" /> -->
         </div>
@@ -27,7 +27,7 @@
             <!-- <div class="left-wing" /> -->
             <div class="id-and-prize">
                 <div class="id">{{ rankingList[2].loginName }}</div>
-                <div class="prize">{{ rankingList[2].amount }}</div>
+                <div class="prize">{{ initList[2].bonus?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}</div>
             </div>
             <!-- <div class="right-wing" /> -->
         </div>
@@ -38,7 +38,7 @@
 import { ref, onMounted, watch } from 'vue';
 const confettiCount = 20;
 
-const props = defineProps(['rankingList', 'isLoadingRanking']);
+const props = defineProps(['rankingList', 'isLoadingRanking', 'initList']);
 
 </script>
 <style lang="scss" scoped>

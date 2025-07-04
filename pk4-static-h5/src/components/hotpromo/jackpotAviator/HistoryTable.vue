@@ -20,7 +20,9 @@
         <span v-else>{{ inDialog ? historyListItemIndex + 1 : historyListItemIndex + 4 }}</span>
         </div>
         <div>{{ historyListItem.loginName }}</div>
-        <div class="betVolume">{{ historyListItem.amount?.toFixed(2) }}</div>
+        <div class="betVolume">
+          {{ historyListItem.bonus?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+        </div>
       </div>
     </div>
     
@@ -30,7 +32,7 @@
   </div>
 </template>
 <script setup>
-const props = defineProps(["historyList", "inDialog"]);
+const props = defineProps(["historyList", "inDialog", "initList"]);
 
 const isNotInApp = window.location.pathname === "/promo";
 
@@ -46,13 +48,17 @@ if (isIOS) {
   document.head.appendChild(style);
 }
 const historyList = () => {
-  if (props?.inDialog) {
-    return props?.historyList
-  } else {
-    return props?.historyList?.slice(3);
-  }
-  
-}
+  props?.historyList?.forEach((element, index) => {
+    const initItem = props?.initList?.[index];
+    if (initItem) {
+      element.bonus = initItem.bonus;
+    }
+  });
+
+  return props?.inDialog
+    ? props?.historyList
+    : props?.historyList?.slice(3);
+};
 </script>
 <style lang="scss" scoped>
 @supports (-webkit-overflow-scrolling: touch) and (not (overflow: -webkit-marquee)) {
