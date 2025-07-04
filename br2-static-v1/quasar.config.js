@@ -29,7 +29,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["axios", "cache", "lang"],
+    boot: ["axios", "cache", "lang", "google-analytics"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss"],
@@ -69,8 +69,8 @@ module.exports = configure(function (ctx) {
       minify: true,
       uglifyOptions: {
         compress: {
-          drop_console: true, // Removes all console logs
-        },
+          drop_console: true // Removes all console logs
+        }
       },
 
       // Options below are automatically set depending on the env, set them if you want to override

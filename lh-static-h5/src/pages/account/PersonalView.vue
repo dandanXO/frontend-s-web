@@ -126,7 +126,7 @@
             <q-btn
               class="common-sm-btn"
               :color="$q.dark.isActive ? '' : 'brightbtn'"
-              label="验证"
+              label="绑定"
               @click="goToPage('/account/verifyEmail')"
               style="white-space: nowrap;height: 30px;min-height: 30px;padding: 0;font-size:1rem;"
             />

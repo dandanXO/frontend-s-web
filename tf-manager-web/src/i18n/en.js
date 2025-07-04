@@ -11,6 +11,11 @@ export default {
       SUCCESS: 'Success',
       FAIL: 'Fail'
     },
+    claimStatus: {
+      PENDING: 'Pending',
+      CLAIMED: 'Claimed',
+      CANCEL: 'Cancel'
+    }
   },
   affiliate: {
     commissionModel: {
@@ -3274,6 +3279,7 @@ export default {
     'Register Blacklist': 'Register Blacklist',
     Sport: 'Sport',
     'Member Privilege Claim Status': 'Member Privilege Claim Status',
+    'Member Privilege Voucher': 'Member Privilege Voucher',
     Affiliate: 'Affiliate',
     'Affiliate Amount Adjust': 'Affiliate Amount Adjust',
     'Affiliate Summary': 'Affiliate Summary',

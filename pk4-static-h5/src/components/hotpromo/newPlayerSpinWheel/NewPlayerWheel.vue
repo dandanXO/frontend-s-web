@@ -777,10 +777,19 @@ onMounted(() => {
 </style>
 
 <style lang="scss" scoped>
+.congrats-wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
 .congrats-container {
   background-image: unset;
-  background-color: #1e371f;
-  border: 1px solid #337e3a;
+  background-color: #090F1E;
+  border: 1px solid #0666D3;
+
   border-radius: 10px !important;
   max-width: 350px;
   width: 100%;
@@ -842,6 +851,7 @@ onMounted(() => {
     justify-content: center;
     font-size: 18px;
     font-weight: bold;
+    text-align: center;
   }
 
   .congrats-highlight-txt,
@@ -850,7 +860,7 @@ onMounted(() => {
     font-size: 45px;
     text-align: center;
     // background: linear-gradient(90deg, transparent, #fff96f29, transparent);
-    background-image: url(../../../assets/images/index/modal/blue-congrats-highlight-bg.png);
+    background-image: url(../../../assets/images/index/modal/green-congrats-highlight-bg.png);
     padding: 0 12px;
     background-repeat: no-repeat;
     background-size: 70% 100%;
@@ -878,18 +888,20 @@ onMounted(() => {
 }
 
 .congrats-button-container {
-  position: absolute;
-  bottom: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
+  // position: absolute;
+  // bottom: -60px;
+  // left: 50%;
+  // transform: translateX(-50%);
+  // white-space: nowrap;
+    margin: 20px auto 0;
+    text-align: center;
   .congrats-btn {
-    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
     border-radius: 10px;
     font-weight: 700;
     font-size: 16px;
     line-height: 24px;
-    color: #000a01;
+    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+    color: #ffffff;
   }
 }
 </style>

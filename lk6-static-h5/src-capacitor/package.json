@@ -1,0 +1,25 @@
+{
+  "name": "东赢",
+  "version": "1.0.22",
+  "description": "东赢官网 - 最专业的竞猜网站",
+  "productName": "东赢",
+  "author": "WeiSeng <weiseng@eagrp.net>",
+  "private": true,
+  "scripts": {
+    "update": "npx cap sync && npx cap update android",
+    "buildand": "npx cap sync && npx cap update android && npx cap run android -l",
+    "buildios": "npx cap sync && npx cap update ios && npx cap run ios -l"
+  },
+  "dependencies": {
+    "@capacitor/android": "^5.2.1",
+    "@capacitor/app": "^5.0.0",
+    "@capacitor/browser": "^5.0.0",
+    "@capacitor/clipboard": "^5.0.0",
+    "@capacitor/core": "^5.0.0",
+    "@capacitor/preferences": "^5.0.0",
+    "@capacitor/splash-screen": "^5.0.0",
+    "cordova-plugin-inappbrowser": "^5.0.0",
+    "cordova-plugin-screen-orientation": "^3.0.3",
+    "es6-promise-plugin": "^4.2.2"
+  }
+}

@@ -8,6 +8,66 @@
       </div>
 
       <q-input
+        ref="firstNameRef"
+        outlined
+        v-model="firstName"
+        :placeholder="$t('form.firstName_placeholder')"
+        class="input"
+        :class="{ 'white-txt': !!firstName }"
+        lazy-rules
+        :rules="[
+          (val) => (val && val.trim().length > 0) || $t('form.firstName_rules_01'),
+          (val) => val.trim().length >= 2 || $t('form.firstName_rules_02'),
+          (val) => /^[a-zA-ZÀ-ÿ\s'-]+$/.test(val) || $t('form.firstName_rules_03')
+        ]"
+      >
+        <template v-slot:prepend>
+          <img v-if="!firstName" src="../../../assets/images/auth/profile-icon.png" width="22px" />
+          <img v-else src="../../../assets/images/auth/profile-icon-active.png" width="22px" />
+        </template>
+      </q-input>
+
+      <q-input
+        ref="lastNameRef"
+        outlined
+        v-model="lastName"
+        :placeholder="$t('form.lastName_placeholder')"
+        class="input"
+        :class="{ 'white-txt': !!lastName }"
+        lazy-rules
+        :rules="[
+          (val) => (val && val.trim().length > 0) || $t('form.lastName_rules_01'),
+          (val) => val.trim().length >= 2 || $t('form.lastName_rules_02'),
+          (val) => /^[a-zA-ZÀ-ÿ\s'-]+$/.test(val) || $t('form.lastName_rules_03')
+        ]"
+      >
+        <template v-slot:prepend>
+          <img v-if="!lastName" src="../../../assets/images/auth/profile-icon.png" width="22px" />
+          <img v-else src="../../../assets/images/auth/profile-icon-active.png" width="22px" />
+        </template>
+      </q-input>
+
+      <q-input
+        ref="emailRef"
+        outlined
+        v-model="email"
+        :placeholder="$t('form.email_placeholder')"
+        class="input"
+        :class="{ 'white-txt': !!email }"
+        lazy-rules
+        :rules="[
+          (val) => (val && val.length > 0) || $t('form.email_rules_01'),
+          (val) => val.length >= 6 || $t('form.email_rules_02'),
+          (val) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val) || $t('form.email_rules_03')
+        ]"
+      >
+        <template v-slot:prepend>
+          <img v-if="!email" src="../../../assets/images/auth/email-icon.png" width="22px" />
+          <img v-else src="../../../assets/images/auth/email-icon-active.png" width="22px" />
+        </template>
+      </q-input>
+
+      <q-input
         ref="phoneRef"
         v-model="phone"
         class="input"
@@ -20,9 +80,9 @@
         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
         lazy-rules
         :rules="[
-          (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-          (val) => (val && val.length >= 8 && val.length <= 11) || $t('form.phone_rules_02'),
-          (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04')
+           (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+            (val) => (val.length >= 8 && val.length <= 11) || $t('form.phone_rules_02'),
+            (val) => /^[0-9]*$/.test(val) || $t('form.phone_rules_04')
         ]"
       >
         <template v-slot:prepend>
@@ -69,6 +129,25 @@
         </template>
       </q-input>
 
+      <q-input
+        ref="taxIdRef"
+        outlined
+        v-model="taxId"
+        :placeholder="$t('form.taxId_placeholder')"
+        class="input"
+        :class="{ 'white-txt': !!taxId }"
+        lazy-rules
+        :rules="[
+          (val) => (!!val && val.length > 0) || 'Por favor, insira o número do CPF',
+          (val) => val.length >= 6 || 'O número do CPF deve ter 11 dígitos'
+        ]"
+      >
+        <template v-slot:prepend>
+          <img v-if="!taxId" src="../../../assets/images/auth/tax-icon.png" width="22px" />
+          <img v-else src="../../../assets/images/auth/tax-icon-active.png" width="22px" />
+        </template>
+      </q-input>
+
       <div class="" style="margin-top: 5px" :class="isAgreeReg ? 'checked' : ''">
         <q-checkbox v-model="isAgreeReg" class="reg-checked-box" rounded size="md">
           {{ $t("form.register_agree_01") }}
@@ -76,7 +155,14 @@
         </q-checkbox>
       </div>
 
-      <q-btn unelevated class="bg-greenbtn" :label="$t('header.register')" no-caps padding="12px" @click="register" />
+      <q-btn
+        unelevated
+        class="bg-greenbtn reg-bonus-flag-btn"
+        :label="$t('header.register')"
+        no-caps
+        padding="12px"
+        @click="register"
+      />
     </div>
   </div>
 </template>
@@ -84,7 +170,7 @@
 import { ref, onActivated, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
-import { useQuasar, Platform } from "quasar";
+import { useQuasar, Platform, SessionStorage } from "quasar";
 import { useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
@@ -97,11 +183,22 @@ const router = useRouter();
 
 const phoneRef = ref();
 const passwordRef = ref();
+const emailRef = ref();
+const taxIdRef = ref();
+const firstNameRef = ref();
+const lastNameRef = ref();
+const realNameRef = ref();
 
 const phone = ref("");
 const password = ref("");
 const isShowPassword = ref(false);
 const isAgreeReg = ref(true);
+
+const taxId = ref("");
+const realName = ref("");
+const firstName = ref("");
+const lastName = ref("");
+const email = ref("");
 
 const codeAffiliate = ref("");
 const referrer = ref("");
@@ -117,8 +214,12 @@ let regHost = location.hostname;
 const register = () => {
   phoneRef.value.validate();
   passwordRef.value.validate();
+  firstNameRef.value.validate();
+  lastNameRef.value.validate();
+  emailRef.value.validate();
+  taxIdRef.value.validate();
 
-  if (phoneRef.value.hasError || passwordRef.value.hasError || isAgreeReg.value === false) {
+  if (taxIdRef.value.hasError || firstNameRef.value.hasError || lastNameRef.value.hasError || emailRef.value.hasError || taxIdRef.value.hasError|| phoneRef.value.hasError || passwordRef.value.hasError || isAgreeReg.value === false) {
     $q.loading.hide();
   } else {
     var qs = require("qs");
@@ -169,6 +270,9 @@ const register = () => {
             loginName: phone.value,
             telephone: phone.value,
             password: password.value,
+            taxId: taxId.value,
+            realName: `${firstName.value},${lastName.value}`,
+            email: email.value,
             captchaCode: captchaCode.value,
             codeId: codeId.value,
             codeAffiliate: codeAffiliate.value,
@@ -200,6 +304,12 @@ const register = () => {
             // uiStore.loginView = "";
             isAgreeReg.value = false;
             // location.href = "/";
+
+            SessionStorage.set("user-info", {
+              account: phone.value,
+              type: "register"
+            });
+
             uiStore.loginView = "regSuccess";
           } else {
             $q.notify({
@@ -273,6 +383,13 @@ onMounted(() => {
 }
 .reg-checked-box {
   margin-top: 0;
+}
+
+.reg-bonus-flag-btn {
+  &::after {
+    width: 150px;
+    right: 10px;
+  }
 }
 
 :deep(.reg-checked-box) {

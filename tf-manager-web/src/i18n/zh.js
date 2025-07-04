@@ -11,6 +11,11 @@ export default {
       SUCCESS: '成功',
       FAIL: '失败'
     },
+    claimStatus: {
+      PENDING: '待领取',
+      CLAIMED: '已领取',
+      CANCEL: '已取消'
+    }
   },
   affiliate: {
     commissionModel: {
@@ -3242,6 +3247,7 @@ export default {
     'Register Blacklist': '注册黑名单',
     Sport: '体育',
     'Member Privilege Claim Status': '会员优惠领取状态',
+    'Member Privilege Voucher': '会员优惠券',
     Affiliate: '代理',
     'Affiliate Amount Adjust': '代理平账记录',
     'Affiliate Summary': '代理总结',

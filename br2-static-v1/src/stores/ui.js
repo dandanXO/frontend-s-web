@@ -74,15 +74,23 @@ export const useUI = defineStore("ui-store", {
       console.log(id);
       const index = this.notificationQueue.findIndex((notification) => notification.id === id);
       if (index < 0) return;
+
+      const notification = this.notificationQueue[index];
       this.duringNotificationAnimation = true;
+
       setTimeout(() => {
-        if (type === "confirm" && this.notificationQueue[index]._onConfirm) {
-          this.notificationQueue[index]._onConfirm();
+        if (type === "confirm" && typeof notification._onConfirm === "function") {
+          notification._onConfirm();
         }
-        if (type === "cancel" && this.notificationQueue[index]._onCancel) {
-          this.notificationQueue[index]._onCancel();
+        if (type === "cancel" && typeof notification._onCancel === "function") {
+          notification._onCancel();
         }
-        this.notificationQueue.splice(index, 1);
+
+        const currentIndex = this.notificationQueue.findIndex(n => n.id === id);
+        if (currentIndex >= 0) {
+          this.notificationQueue.splice(currentIndex, 1);
+        }
+
         this.duringNotificationAnimation = false;
       }, 500);
     }

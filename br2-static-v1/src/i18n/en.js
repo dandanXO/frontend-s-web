@@ -1067,7 +1067,7 @@ export default {
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",
-    1304: "This number has already been used",
+    1304: "CPF has already been used",
     1305: "Bank not found",
     1306: "Exceeded daily withdrawal time limit",
     1307: "Exceeded daily withdrawal limit",

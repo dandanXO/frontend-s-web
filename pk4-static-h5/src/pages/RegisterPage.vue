@@ -1029,6 +1029,7 @@ function charType(num) {
 
   :deep(.q-checkbox__bg) {
     border-radius: 4px;
+    background: #e8f0fe;
   }
 
   :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
