@@ -1405,3 +1405,17 @@ build-image-lk6-static-h5:
     - build-lk6-static-h5
 
 #===============================================================================================
+
+build-lk6-static-web:
+  extends: .build-projects
+  variables:
+    PROJECT: lk6-static-web
+
+build-image-lk6-static-web:
+  extends: .docker-build
+  variables:
+    PROJECT: lk6-static-web
+  needs:
+    - build-lk6-static-web
+
+#===============================================================================================
