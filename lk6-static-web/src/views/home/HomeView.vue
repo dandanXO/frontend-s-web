@@ -6,8 +6,8 @@
       <!-- <EurocupHomePageBanner /> -->
       <!-- <Livestream ref="livestreamRef" @livestreamVisible="onLivestreamVisible" /> -->
       <!-- <HomeHotMatch :openGame="openGame" /> -->
-      <HomeDownload></HomeDownload>
       <HomeHotGame></HomeHotGame>
+      <HomeDownload></HomeDownload>
       <HomeService></HomeService>
     </div>
   </div>

@@ -1,7 +1,6 @@
 <template>
   <div class="service-section">
-    <!-- <HomeTitle title="优质服务" subtitle="EXCELLENT SERVICE"></HomeTitle> -->
-    <HomeTitleV2 title="优质服务?" subtitle="EXCELLENT SERVICE"/>
+    <img src="../../../assets/home/service/service-section-title.svg" />
     <div class="service-container">
       <div class="top-container" data-aos="fade-down">
         <div class="counter">
@@ -83,7 +82,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" :src="loadCircleBg()" />
-                <img class="icon" src="../../../assets/home/service/deposit.png" />
+                <img class="icon" src="../../../assets/home/service/deposit.svg" />
               </div>
             </div>
             <div class="right-container">
@@ -100,7 +99,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" :src="loadCircleBg()" />
-                <img class="icon" src="../../../assets/home/service/category.png" />
+                <img class="icon" src="../../../assets/home/service/category.svg" />
               </div>
             </div>
             <div class="right-container">
@@ -116,7 +115,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" :src="loadCircleBg()" />
-                <img class="icon" src="../../../assets/home/service/security.png" />
+                <img class="icon" src="../../../assets/home/service/security.svg" />
               </div>
             </div>
             <div class="right-container">
@@ -133,7 +132,7 @@
             <div class="left-container">
               <div class="circle-wrapper">
                 <img class="circle" :src="loadCircleBg()" />
-                <img class="icon" src="../../../assets/home/service/mobile.png" />
+                <img class="icon" src="../../../assets/home/service/mobile.svg" />
               </div>
             </div>
             <div class="right-container">
@@ -193,7 +192,7 @@ onMounted(() => {});
           border-radius: 50%;
           //border: 3px solid #94baf8;
           //background: linear-gradient(180deg, #93f2ff 3.39%, #3a69f7 100%);
-          background-image: url("../../../assets/home/blue-circle.png");
+          background-image: url("../../../assets/home/service/circle-bg.svg");
           background-repeat: no-repeat;
           background-position: center center;
           background-size: 100% 100%;
@@ -207,10 +206,7 @@ onMounted(() => {});
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            border: 3px solid #fff;
-            background: linear-gradient(180deg, #fafcff 31.57%, #e3eaf8 54.21%, rgba(202, 211, 239, 0) 100%);
-            box-shadow: 0px 4px 20px 0px rgba(255, 255, 255, 0.94) inset;
+            margin-top: 15px;
 
             .type {
               color: #333;
@@ -246,21 +242,23 @@ onMounted(() => {});
         }
 
         .title {
-          color: #44484b;
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 100%;
+          letter-spacing: 0%;
           text-align: center;
-          font-family: PingFang SC;
-          font-size: 1.125rem;
-          font-weight: 400;
-          line-height: normal;
+          color: #3A5178;
+          font-family: 'PingFang SC';
         }
 
         .title-en {
-          color: #44484b;
-          text-align: center;
-          font-family: PingFang SC;
-          font-size: 0.75rem;
           font-weight: 400;
-          line-height: normal;
+          font-size: 12px;
+          line-height: 100%;
+          letter-spacing: 0%;
+          text-align: center;
+          color: #44484B;
+          font-family: 'PingFang SC';
         }
       }
     }
@@ -272,18 +270,15 @@ onMounted(() => {});
       gap: 1.5rem;
 
       .item-wrapper {
-        border-radius: 1.25rem;
-        background: #eef8ff;
-        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.22);
         padding: 0.5rem;
         width: calc((100% - 2rem) / 2);
+        background: url('../../../assets/home/service/item-wrapper-bg.png') center center no-repeat;
+        background-size: 100% 100%;
 
         .item {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           justify-content: center;
-          border-radius: 0.8125rem;
-          border: 1px solid #5c9fff;
           padding: 2rem;
           gap: 16px;
 
@@ -299,75 +294,31 @@ onMounted(() => {});
               }
 
               .icon {
-                height: 80px;
-                width: 80px;
+                height: 40px;
+                width: 40px;
                 position: absolute;
               }
             }
           }
 
           .right-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
             .title {
-              color: #7a80a1;
-              font-size: 20px;
-              margin-bottom: 15px;
               font-weight: 600;
+              font-size: 22px;
+              line-height: 100%;
+              letter-spacing: 5%;
+              color: #3A5178;
             }
             .desc {
-              color: #a4aabb;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-.dark {
-  .service-section {
-    .service-container {
-      .top-container {
-        .counter {
-          .circle {
-            background-image: url("@/assets/home/blue-circle-dark.png");
-
-            .inner-circle {
-              background: #14110d;
-              box-shadow: 0px 4px 20px 0px #0a4479f0 inset;
-
-              .type {
-                color: #dce6f1;
-              }
-              .auto-counter {
-                background: linear-gradient(180deg, #b1ecff 0%, #3ebdf3 100%);
-                background-clip: text;
-                -webkit-text-stroke-width: 0;
-              }
-              .unit {
-                color: $font-3-dark;
-              }
-            }
-          }
-
-          .title,
-          .title-en {
-            color: $font-3-dark;
-          }
-        }
-      }
-
-      .bot-container {
-        .item-wrapper {
-          @include content-block-dark;
-
-          .item {
-            .right-container {
-              .title {
-                color: $active-color-dark;
-              }
-              .desc {
-                color: $font-3-dark;
-              }
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 23px;
+              letter-spacing: 5%;
+              color: #7A80A1;
             }
           }
         }
