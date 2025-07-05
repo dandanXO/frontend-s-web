@@ -31,7 +31,7 @@ export const useUI = defineStore("ui-store", {
       jackpotAmt: 0,
       notificationQueue: [],
       notificationZIndex: 9500,
-      duringNotificationAnimation: false
+      duringNotificationAnimation: false,
     };
   },
   actions: {

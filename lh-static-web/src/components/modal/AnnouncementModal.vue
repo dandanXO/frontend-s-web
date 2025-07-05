@@ -23,8 +23,13 @@
             />
             <p v-else>重要公告</p>
           </div>
+
           <div class="dialog-tab-item" :class="currentTab === 'inbox' ? 'active' : ''" @click="currentTab = 'inbox'">
-            <img v-if="currentTab === 'inbox'" src="../../assets/home/announcement/tab-inbox-active.png" alt="" />
+            <img
+              v-if="currentTab === 'inbox'"
+              :src="require(`../../assets/home/announcement/tab-inbox-active${isDark ? '-dark' : ''}.png`)"
+              alt=""
+            />
             <p v-else>站內信</p>
           </div>
         </div>
@@ -56,6 +61,7 @@
 </template>
 
 <script setup>
+import { useDark } from "@vueuse/core/index";
 import { ref, watch, onMounted } from "vue";
 import InboxComponent from "./InboxComponent.vue";
 import AnnouncementComponent from "./AnnouncementComponent.vue";
@@ -65,6 +71,8 @@ import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
 
 const store = userStore();
+const isDark = useDark();
+
 const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", null);
 
 const visible = ref(false);
@@ -74,28 +82,28 @@ const mailData = ref([]);
 const announceData = ref([]);
 
 onMounted(() => {
-  // if (!store.token) return;
-  //
-  // if (lastAnnouncementDateStr.value) {
-  //   const today = moment();
-  //   const lastAnnouncementDate = moment(lastAnnouncementDateStr.value);
-  //   const diff = today.diff(lastAnnouncementDate, "days");
-  //   if (!diff) return;
-  // }
-  // popupMailBox()
-  //   .then((res) => {
-  //     if (res.code === 0) {
-  //       mailData.value = res.data;
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   })
-  //   .finally(() => {
-  //     if (mailData.value.length > 0) {
-  //       visible.value = true;
-  //     }
-  //   });
+  if (!store.token) return;
+
+  if (lastAnnouncementDateStr.value) {
+    const today = moment();
+    const lastAnnouncementDate = moment(lastAnnouncementDateStr.value);
+    const diff = today.diff(lastAnnouncementDate, "days");
+    if (!diff) return;
+  }
+  popupMailBox()
+    .then((res) => {
+      if (res.code === 0) {
+        mailData.value = res.data;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      if (mailData.value.length > 0) {
+        visible.value = true;
+      }
+    });
 });
 
 watch(
@@ -229,5 +237,22 @@ watch(checked, (val) => {
 
 ::v-deep(.el-checkbox__input.is-checked + .el-checkbox__label) {
   color: white !important;
+}
+
+:deep(.el-carousel__indicators) {
+  width: 100%;
+  text-align: center;
+}
+
+.dark {
+  .dialog-header {
+    &.only-inbox {
+      background: #2d4065;
+    }
+  }
+
+  .dialog-content {
+    background: #2d4065;
+  }
 }
 </style>

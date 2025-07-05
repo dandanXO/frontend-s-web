@@ -11,9 +11,11 @@
     </div>
   </div>
   <GameModal ref="gameMenu" />
+  <AnnouncementModal />
 </template>
 
 <script setup>
+import AnnouncementModal from "@/components/modal/AnnouncementModal.vue";
 import GameModal from "@/components/modal/GameModal.vue";
 import { ref, onMounted } from "vue";
 import HomeBanner from "@/components/home/HomeBanner.vue";

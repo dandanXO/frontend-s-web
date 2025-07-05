@@ -1184,15 +1184,16 @@
 
   <!-- DONT REMOVE THIS GOT USE DE-->
   <SpinLuckyWheelPromoSticky v-show="false" />
-  <LossRebateModal
+  <!-- <LossRebateModal
     @closeDialog="isShowLossRebateModal = false"
     :detail="cashBackDetails"
     v-model="isShowLossRebateModal"
-  />
-  <LoginRebateModal
-    @closeDialog="isShowLoginRebateModal = false"
-    :detail="loginCashBackDetails"
-    v-model="isShowLoginRebateModal"
+  /> -->
+
+
+  <BonusCollectModal
+    @closeDialog="isShowBonusCollectModal = false"
+    v-model="isShowBonusCollectModal"
   />
 </template>
 
@@ -1232,6 +1233,7 @@ import PopupController from "src/components/PopupController.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import LossRebateModal from "src/components/modal/LossRebateModal.vue";
 import LoginRebateModal from "src/components/modal/LoginRebateModal.vue";
+import BonusCollectModal from "src/components/modal/BonusCollectModal.vue";
 
 const isShowLossRebateModal = ref(false);
 const cashBackDetails = reactive({
@@ -1241,13 +1243,16 @@ const cashBackDetails = reactive({
   lossRebateClaimed: false
 });
 
-const isShowLoginRebateModal = ref(false);
-const loginCashBackDetails = reactive({
-  betRebateAmount: 0,
-  betRebateClaimed: false,
-  lossRebateAmount: 0,
-  lossRebateClaimed: false
-});
+
+
+const isShowBonusCollectModal = ref(false);
+
+const loadBonusCollectPopup = () => {
+  const collectBonusPopup = sessionStorage.getItem("IS_COLLECTBONUS_POPUP") ? true : false;
+  if (store.token) {
+    isShowBonusCollectModal.value = collectBonusPopup;
+  }
+};
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -3278,35 +3283,7 @@ const loadBetCashBackPopup = () => {
   }
 };
 
-const loadLoginCashBackPopup = () => {
-  const getTime = sessionStorage.getItem("IS_LOGIN_CASHBACK_POPUP");
-  const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
-  // true ||
-  if (!getTime || getTime > currentTime) {
-    sessionStorage.removeItem("IS_LOGIN_CASHBACK_POPUP");
-    api
-      .get(
-        `/session/member/rebateAndCashback?betRebatePromoCode=br2-daily-bet-rebate&lossRebatePromoCode=br2-loss-rebate&day=0`
-      )
-      .then((res) => {
-        if (res.code === 0) {
-          const { betRebateAmount, betRebateClaimed, lossRebateAmount, lossRebateClaimed } = res.data;
 
-          loginCashBackDetails.betRebateAmount = betRebateAmount;
-          loginCashBackDetails.betRebateClaimed = betRebateClaimed;
-          loginCashBackDetails.lossRebateAmount = lossRebateAmount;
-          loginCashBackDetails.lossRebateClaimed = lossRebateClaimed;
-
-          // true ||
-          isShowLoginRebateModal.value =
-            loginCashBackDetails.betRebateAmount !== 0 || loginCashBackDetails.lossRebateAmount !== 0;
-
-          const after6HoursTime = moment().add(6, "hours").format("YYYY-MM-DD HH:mm:ss");
-          sessionStorage.setItem("IS_LOGIN_CASHBACK_POPUP", JSON.stringify(after6HoursTime));
-        }
-      });
-  }
-};
 
 onActivated(() => {
   if (route.query.login === "true" || route.query.register === "true") {
@@ -3318,8 +3295,11 @@ onActivated(() => {
 
   if (store.hasToken()) {
     store.getUnreadTotal();
-    loadBetCashBackPopup();
-    loadLoginCashBackPopup();
+    // loadBetCashBackPopup();
+
+    loadBonusCollectPopup();
+
+
   }
 });
 
@@ -3361,6 +3341,7 @@ onBeforeUnmount(() => {
   clearInterval(intervalId);
   clearInterval(jackpotTimer);
   clearInterval(jackpotApiTimer);
+  // clearInterval(cashbackTimer)
 });
 </script>
 

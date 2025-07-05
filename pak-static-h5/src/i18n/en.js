@@ -923,6 +923,10 @@ export default {
     claimed: "Claimed",
     bonus_claim_time: "Bonus claim time",
     promoEndsOn: "Promo Ends On",
+    claimPopup: {
+      youWon: 'You won',
+      oneOfTodayWinners: "One of today's 77 lucky winners"
+    },
     earnMoney: {
       earnMoney: "Earn Money",
       congratsOnGetting: "Congratulations on getting"

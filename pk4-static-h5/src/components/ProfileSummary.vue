@@ -41,6 +41,7 @@
           <!-- <span v-if="!ui.loggedIn && !store.hasToken()">PK1.GAME</span> -->
            <!-- <span>PK1.GAME</span> -->
         </div>
+        <ProfileAvatar v-if="store.token" :isHeader="true" @click="router.push('/account')" />
       <div class="profile-menu">
         <img src="../assets/images/auth/icon-more.png" @click="toggleMenuOpen()" />
       </div>
@@ -141,6 +142,7 @@ import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
 import { i18nStore } from "src/router/language";
 import { useThrottleFn } from "@vueuse/core";
+import ProfileAvatar from "./ProfileAvatar.vue";
 
 const i18nStoreLanguage = i18nStore();
 const props = defineProps(["homeProfile", "showRedemption"]);

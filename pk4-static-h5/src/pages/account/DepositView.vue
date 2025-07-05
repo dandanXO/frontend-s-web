@@ -491,6 +491,7 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const isInitialized = ref(false);
 
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
@@ -852,6 +853,9 @@ async function confirmDeposit() {
           if (isFtdPrivilegePayType.value && extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
             form.privilegeId = extraPrivilegeId.value;
           }
+          if (newPlayerDepositBonusConfig.value.selected && newPlayerDepositBonusConfig.value.hasBonus) {
+            form.privilegeId = newPlayerDepositBonusConfig.value.privilegeId;
+          }
 
           const copy = { ...form };
           const data = {};
@@ -1130,6 +1134,13 @@ const goBackPage = () => {
   // }
 };
 
+onActivated(() => {
+  if (!isInitialized.value) return;
+  initPay();
+  refreshNode();
+  loadAppTabs();
+});
+
 onMounted(() => {
   initPay();
   refreshNode();
@@ -1139,6 +1150,7 @@ onMounted(() => {
   if (route.query.isNewPlayer && completedGuide !== "true" && userKYCDialog.value === false) {
     isAdditionalDepositSteps.value = true;
   }
+  isInitialized.value = true;
 });
 const showPaymentCancellationDialog = ref();
 const paymentCancellationAmtLoss = ref(0);

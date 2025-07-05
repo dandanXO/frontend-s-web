@@ -384,7 +384,8 @@ export default {
     paymentChannels: "Canais de Pagamento",
     channelUnderMaintenance: "Este canal está em manutenção",
     accountNumber: "Número da Conta",
-    available: "Disponível"
+    available: "Disponível",
+    requireDeposit: "É necessário ter pelo menos um depósito antes de fazer um saque"
   },
   bank: {
     virtualWallet: "eWallet",
@@ -852,13 +853,18 @@ export default {
 
       description: "Versão em Português do Brasil: Regras da Promoção de Check-in de 7 Dias Descrição da Promoção",
 
-      tnc01: "Esta é uma atividade de check-in contínuo com um ciclo de 7 dias. Ao completar 7 dias de check-in, o ciclo é reiniciado automaticamente no 8º dia.",
-      tnc02: "Os usuários podem realizar o check-in manualmente a cada dia, sendo que cada dia oferece uma recompensa específica.",
-      tnc03: "Caso o usuário interrompa o check-in (ex: fez o check-in no dia 1, não fez no dia 2), no dia 3 ele poderá realizar apenas o check-in referente ao dia 3, sem direito à recompensa do dia 2.",
-      tnc04: "As recompensas devem ser resgatadas manualmente pelo usuário. Recompensas não resgatadas serão consideradas renunciadas.",
+      tnc01:
+        "Esta é uma atividade de check-in contínuo com um ciclo de 7 dias. Ao completar 7 dias de check-in, o ciclo é reiniciado automaticamente no 8º dia.",
+      tnc02:
+        "Os usuários podem realizar o check-in manualmente a cada dia, sendo que cada dia oferece uma recompensa específica.",
+      tnc03:
+        "Caso o usuário interrompa o check-in (ex: fez o check-in no dia 1, não fez no dia 2), no dia 3 ele poderá realizar apenas o check-in referente ao dia 3, sem direito à recompensa do dia 2.",
+      tnc04:
+        "As recompensas devem ser resgatadas manualmente pelo usuário. Recompensas não resgatadas serão consideradas renunciadas.",
       tnc05: "Os bônus recebidos exigem um rollover de 1x antes que possam ser sacados.",
-      tnc06: "A promoção é exclusiva para usuários reais. Caso sejam detectadas operações suspeitas, como múltiplas contas ou atividades não autorizadas, a plataforma se reserva o direito de cancelar o bônus, bloquear a conta ou aplicar outras medidas necessárias.",
-      tnc07: "A plataforma reserva-se o direito exclusivo de interpretação final desta promoção.",
+      tnc06:
+        "A promoção é exclusiva para usuários reais. Caso sejam detectadas operações suspeitas, como múltiplas contas ou atividades não autorizadas, a plataforma se reserva o direito de cancelar o bônus, bloquear a conta ou aplicar outras medidas necessárias.",
+      tnc07: "A plataforma reserva-se o direito exclusivo de interpretação final desta promoção."
     },
     redepositBonus: {
       description: "Receba um bônus extra de 100% no primeiro depósito do dia",
@@ -1024,14 +1030,14 @@ export default {
     lossRebate: {
       description: "Cashback baseado na porcentagem do valor perdido no dia anterior",
       tnc01: "O cashback do dia anterior será creditado automaticamente às 12h (horário de Brasília) todos os dias;",
-      tnc02:
-        ".O valor do resgate é calculado como: valor real do prejuízo × porcentagem de cashback;",
-      tnc03: "Se você não tiver feito nenhuma aposta durante o período da promoção ou tiver lucrado no total, não terá direito ao bônus de resgate;",
-      tnc04:
-        "É necessário ter perdido pelo menos R$10 no dia anterior para poder solicitar o bônus;",
+      tnc02: ".O valor do resgate é calculado como: valor real do prejuízo × porcentagem de cashback;",
+      tnc03:
+        "Se você não tiver feito nenhuma aposta durante o período da promoção ou tiver lucrado no total, não terá direito ao bônus de resgate;",
+      tnc04: "É necessário ter perdido pelo menos R$10 no dia anterior para poder solicitar o bônus;",
       tnc05: "O valor máximo de resgate por pessoa por dia é de R$10.000;",
       tnc06: "O bônus recebido deve ser apostado pelo menos 3 vezes antes de poder ser sacado;",
-      tnc07: "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção."
+      tnc07:
+        "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção."
     }
   },
   maintenance: {

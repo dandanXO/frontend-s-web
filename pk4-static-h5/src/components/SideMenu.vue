@@ -3,7 +3,7 @@
 
   <div class="left-side-menu" @click.stop>
     <div class="topbar">
-      <RouterLink v-if="store.token" to="/vip" style="padding: 0;" no-caps :ripple="false" unelevated>
+      <RouterLink v-if="store.token" to="/account" style="padding: 0;" no-caps :ripple="false" unelevated>
         <div class="profile-pic" :class="store.vip ? 'vip-' + store.vip.replace('VIP', '') : 'vip-0'">
             <q-avatar size="40px">
               <img :src="profileImagePath" />

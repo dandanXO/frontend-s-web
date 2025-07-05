@@ -1128,7 +1128,12 @@ async function removeRedirect(id) {
 }
 
 async function changeRedirectStatus(row) {
-  await updateRedirectStatus(row.id, row.status)
+  try{
+    await updateRedirectStatus(row.id, row.status)
+    ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  }catch(error) {
+    ElMessage({ message: t('message.updateFailed'), type: 'error' })
+  }
 }
 
 function resetQuery() {

@@ -5,7 +5,7 @@
     <div v-else v-for="(e, i) in discountData" :key="`${e}-${i}`" class="discount-table">
       <div class="discount-row discount-row--title">
         <div class="discount-col">
-          <span class="txt-gray">{{ convertToGMT55(e.recordTime) }}</span>
+          <span class="txt-gray">{{ e.recordTime }}</span>
         </div>
       </div>
       <div class="discount-row discount-row--content">
@@ -23,7 +23,7 @@
 import { onActivated, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
-import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
+import { updateDate, convertToGMT8 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 
