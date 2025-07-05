@@ -1,6 +1,6 @@
 <template>
   <div class="download-section">
-    <img src="../../../assets/home/download/download-section-title.svg" width="100%" />
+    <img src="../../../assets/home/download/download-section-title.svg" width="1100px" style="display:flex;margin:0 auto;" />
     <div class="download-container">
       <div class="left-container" data-aos="fade-left">
         <div class="tab-wrapper">
@@ -19,7 +19,7 @@
                 </div>
               </div>
               <div class="dl-wrapper">
-                <VueQRCodeComponent :size="120" :text="ui.downloadUrl" class="dl-frame" />
+                <div class="five-logo" />
                 <div class="link-desc">手机免费下载地址</div>
                 <div class="link">
                   <a :href="ui.downloadUrl" target="_blank">{{ ui.downloadUrl }}</a>
@@ -53,9 +53,8 @@ onMounted(() => {});
 
 <style lang="scss" scoped>
 .download-section {
-  width: 80%;
-  max-width: 1040px;
   margin: 0 auto;
+  width: 1300px;
 
   .download-container {
     display: flex;
@@ -63,17 +62,20 @@ onMounted(() => {});
     justify-content: center;
 
     .right-container {
-      width: 50%;
+      width: 60%;
 
       img {
         // width: 35rem;
+        width: 80%;
+        display: flex;
+        margin: auto;
         position: relative;
         // right: 2.5rem;
       }
     }
 
     .left-container {
-      width: 50%;
+      width: 40%;
 
       .tab-wrapper {
         border-radius: 1.25rem;
@@ -85,7 +87,7 @@ onMounted(() => {});
           padding: 1rem;
           display: flex;
           flex-direction: column;
-          gap: 15px;
+          gap: 20px;
 
           .tab-title {
             font-weight: 700;
@@ -107,7 +109,7 @@ onMounted(() => {});
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            gap: 25px;
+            gap: 10px;
             margin: 1rem 0 0.5rem 0;
 
             .dl-mobile-img {
@@ -119,13 +121,21 @@ onMounted(() => {});
               background-image: url(../../../assets/home/download/qr-frame.svg);
               background-position: center center;
               background-size: 100% 100%;
-              padding: 30px;
-              aspect-ratio: 242/183;
-              width: 300px;
+              width: 196px;
+              height: 254px;
               display: flex;
               flex-direction: column;
               justify-content: center;
               align-items: center;
+
+              .five-logo {
+                background-image: url(../../../assets/home/download/5-logo.svg);
+                background-position: center center;
+                background-size: auto 100%;
+                width: 150px;
+                height: 172px;
+                border-radius: 16px;
+              }
             }
 
             .dl-frame {
@@ -136,6 +146,7 @@ onMounted(() => {});
               border-radius: 16px;
               padding: 25px;
               width: 150px;
+              height: 172px;
               align-items: center;
               justify-content: center;
             }

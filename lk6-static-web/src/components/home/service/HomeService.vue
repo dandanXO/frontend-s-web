@@ -1,6 +1,6 @@
 <template>
   <div class="service-section">
-    <img src="../../../assets/home/service/service-section-title.svg" />
+    <img src="../../../assets/home/service/service-section-title.svg" width="1100px" style="display:flex;margin:0 auto;" />
     <div class="service-container">
       <div class="top-container" data-aos="fade-down">
         <div class="counter">
@@ -169,8 +169,7 @@ onMounted(() => {});
 
 <style scoped lang="scss">
 .service-section {
-  width: 100%;
-  max-width: 1300px;
+  width: 1300px;
   margin: 0 auto;
 
   .service-container {
