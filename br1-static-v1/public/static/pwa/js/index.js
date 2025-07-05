@@ -234,6 +234,26 @@ window.addEventListener("load", () => {
   const hostname = window.location.hostname.replace("www.", "");
   sessionStorage.setItem("IS_PWA", "1");
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const click_id = urlParams.get("click_id");
+
+  if(click_id) {
+    fetch(`https://api.j9zwvu1ogrg.com/event/kwai/content-view?clickId=${click_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": 'BR1'
+      }
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+  }
+
   const fbqId = fbqLists[hostname]?.id;
   if (fbqId) {
     fbq("init", fbqId);
