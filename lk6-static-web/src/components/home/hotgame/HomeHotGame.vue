@@ -1,7 +1,19 @@
 <template>
   <div class="hotgame-section">
-    <!-- <HomeTitle title="热门游戏" subtitle="TOP GAMES"></HomeTitle> -->
-    <HomeTitleV2 title="热门游戏" subtitle="TOP GAMES" />
+    <img src="../../../assets/home/hotgame/hotgame-section-title.svg" width="1100px" style="display:flex;margin:0 auto;" />
+
+    <div class="category-wrapper">
+      <template v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`">
+        <div class="category-item" :class="{ active: hotgame.isShow }" v-if="hotgame.type === 'sport' || hotgame.type === 'live' || hotgame.type === 'poker'" @click="onBannerClick(hotgameIndex)">
+          <img width="40px" height="40px" src="../../../assets/home/hotgame/soccer-icon.png" v-if="hotgame.type === 'sport'" />
+          <img width="40px" height="40px" src="../../../assets/home/hotgame/dice-icon.png" v-if="hotgame.type === 'live'" />
+          <img width="40px" height="40px" src="../../../assets/home/hotgame/card-icon.png" v-if="hotgame.type === 'poker'" />
+          {{ hotgame.title }}
+        </div>
+      </template>
+    </div>
+    
+    
     <div class="hotgame-container">
       <div class="hotgame-wrapper" v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`">
         <div class="hotgame-banner-wrapper">
@@ -35,6 +47,25 @@
         </div>
         <div :class="`hotgame-content-wrapper ${hotgame.isShow ? 'show' : ''}`">
           <div class="left-container">
+             <Transition :key="transitionKey" appear>
+              <img
+                v-if="
+                  hotgame.content &&
+                  hotgame.content[hotgame.currentProvider] &&
+                  hotgame.content[hotgame.currentProvider].charImgPath
+                "
+                :style="[`${hotgame.section === 'esports' ? 'right:12rem;' : ''}`]"
+                :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`"
+                :src="
+                  require(`../../../assets/home/hotgame/content/${hotgame.section}/${
+                    hotgame.content[hotgame.currentProvider].charImgPath
+                  }/character.png`)
+                "
+              />
+            </Transition>
+          </div>
+          <div class="right-container oo">
+            
             <div class="title-wrapper">
               <Transition :key="transitionDesc" name="fade" enter>
                 <div class="title" v-if="hotgame.currentProvider">
@@ -126,27 +157,10 @@
               </p>
               <p class="maintenance-p" v-else>&nbsp;</p>
             </div>
-          </div>
-          <div class="right-container oo">
-            <!-- <div>
+          <!-- <div>
                 {{ hotgame.section }}{{hotgame.content[hotgame.currentProvider]}}
             </div> -->
-            <Transition :key="transitionKey" appear>
-              <img
-                v-if="
-                  hotgame.content &&
-                  hotgame.content[hotgame.currentProvider] &&
-                  hotgame.content[hotgame.currentProvider].charImgPath
-                "
-                :style="[`${hotgame.section === 'esports' ? 'right:12rem;' : ''}`]"
-                :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`"
-                :src="
-                  require(`../../../assets/home/hotgame/content/${hotgame.section}/${
-                    hotgame.content[hotgame.currentProvider].charImgPath
-                  }/character.png`)
-                "
-              />
-            </Transition>
+           
           </div>
         </div>
       </div>
@@ -783,9 +797,46 @@ onMounted(() => {
 $transition_timer: 0.5s;
 
 .hotgame-section {
-  width: 80%;
-  max-width: 1100px;
+  width: 1300px;
   margin: 0 auto;
+
+  .category-wrapper {
+    background: url('../../../assets/home/hotgame/category-bg.png') center center no-repeat;
+    background-size: 100% 100%;
+    width: 613px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    gap: 10px;
+    margin: 0 auto;
+
+    .category-item {
+      background: url('../../../assets/home/hotgame/category-item-bg.png') center center no-repeat;
+      background-size: 100% 100%;
+      width: 190px;
+      height: 53px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      justify-content: center;
+      font-family: 'PingFang SC';
+      font-weight: 600;
+      font-size: 24.84px;
+      line-height: 100%;
+      letter-spacing: 4.35px;
+      text-align: center;
+      color: #35648F;
+      cursor: pointer;
+
+      &:hover, &.active {
+        background: url('../../../assets/home/hotgame/category-item-active-bg.png') center center no-repeat;
+        background-size: 100% 100%;
+        color: #FFFFFF;
+      }
+    }
+  }
 
   .hotgame-container {
     position: relative;
@@ -793,7 +844,6 @@ $transition_timer: 0.5s;
     align-items: center;
     justify-content: center;
     gap: 0.3rem;
-    margin: 2.5rem 0 0 0;
 
     .hotgame-wrapper {
       display: flex;
@@ -802,7 +852,7 @@ $transition_timer: 0.5s;
       height: 600px;
 
       .hotgame-banner-wrapper {
-        display: flex;
+        display: none;
 
         .hotgame-banner {
           width: 65px;
@@ -904,7 +954,6 @@ $transition_timer: 0.5s;
         width: 0;
         height: 0;
         overflow: hidden;
-        background: #edf8fe;
         transition: $transition_timer;
 
         &.show {
@@ -915,7 +964,7 @@ $transition_timer: 0.5s;
           height: 500px;
         }
 
-        .left-container {
+        .right-container {
           display: flex;
           flex-direction: column;
           gap: 0.8rem;
@@ -941,8 +990,7 @@ $transition_timer: 0.5s;
               // font-size: 4.24106rem;
               font-size: 2.7106rem;
               word-break: keep-all;
-              background: linear-gradient(180deg, #ae92ff 0%, #56c2ff 100%);
-
+              background: linear-gradient(180deg, #8EC4FF 0%, #3188FF 100%);
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
               background-clip: text;
@@ -952,8 +1000,7 @@ $transition_timer: 0.5s;
 
             .subtitle {
               font-size: 2.70775rem;
-              background: linear-gradient(180deg, #ae92ff 0%, #56c2ff 100%);
-
+              background: linear-gradient(180deg, #8EC4FF 0%, #3188FF 100%);
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
               background-clip: text;
@@ -1032,14 +1079,12 @@ $transition_timer: 0.5s;
                 height: 2rem;
                 padding: 0.25rem;
                 border-radius: 0.3145rem;
-                border: 1px solid #0e7dff;
-                background: linear-gradient(180deg, #dcebff 0%, #f4f4f4 100%);
-                object-fit: contain;
+                background: url('../../../assets/home/hotgame/item-bg.png') center center no-repeat;
+                background-size: 100% 100%;
 
                 &.active {
-                  border: 0px;
-                  background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
-                  box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
+                  background: url('../../../assets/home/hotgame/item-active-bg.png') center center no-repeat;
+                  background-size: 100% 100%;
                 }
               }
 
@@ -1123,7 +1168,7 @@ $transition_timer: 0.5s;
           }
         }
 
-        .right-container {
+        .left-container {
           display: flex;
           align-items: flex-end;
           position: relative;
@@ -1428,74 +1473,5 @@ $transition_timer: 0.5s;
 .fade-slide-leave-to {
   opacity: 0;
   transform: translateY(100px);
-}
-
-.dark {
-  .hotgame-section {
-    .hotgame-container {
-      .hotgame-wrapper {
-        .hotgame-banner-wrapper {
-          .hotgame-banner {
-            background: linear-gradient(180deg, #00273d 0%, #02132c 100%);
-            box-shadow: 0px -1px 3.66px 0px #11131e inset;
-            color: $font-5-dark;
-
-            &.highlight {
-              background: $active-color-dark-linear;
-              box-shadow: 0px -2px 4.58px 0px #ffdcbb inset;
-              color: $color-white;
-            }
-
-            .hotgame-text {
-              color: unset;
-            }
-          }
-        }
-
-        .hotgame-content-wrapper {
-          @include content-block-dark;
-          background: linear-gradient(180deg, #1b202d 0%, #00010b 100%);
-
-          .left-container {
-            .title-wrapper {
-              .title,
-              .subtitle {
-                background: linear-gradient(180deg, #c2fbfb 0%, #299aad 100%);
-                background-clip: text;
-              }
-            }
-
-            .description {
-              .desc {
-                color: $font-3-dark;
-              }
-            }
-
-            .game-provider-wrapper {
-              .game-provider {
-                .game-provider-img {
-                  background: linear-gradient(180deg, #113765 0%, #212428 100%);
-                  border-color: #36677c;
-                  &.active {
-                    background: linear-gradient(180deg, #38d2da 0%, #1b7893 100%);
-                    border-color: #52e4ed;
-                    box-shadow: 0px 3.35px 3.35px 0px #00000040;
-                  }
-                }
-                .game-provider-text.active {
-                  color: $color-white;
-                }
-              }
-            }
-
-            .game-start-btn {
-              background: linear-gradient(180deg, #3bdce2 0%, #18708e 100%);
-              box-shadow: none;
-            }
-          }
-        }
-      }
-    }
-  }
 }
 </style>
