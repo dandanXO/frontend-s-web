@@ -38,7 +38,7 @@
         <div class="title-img">活动详情</div>
         <div class="little-title">
           <div class="ribbon">活动时间</div>
-          <div class="right">2025年6月27日至7月03日</div>
+          <div class="right">2025年7月8日至7月13日</div>
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
@@ -98,7 +98,7 @@
               <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            会员在TP世界锦标赛 2025 南美赛事中累计有效投注为50,000 元，在次日 24 小时内可获得彩金：288元 
+            会员在TP世界锦标赛 2025 南美赛事中累计有效投注为50,000 元，在次日 24 小时内可获得彩金：288元
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，活动仅计算电竞场馆中TP世界锦标赛 2025 南美赛事，会员在当日TP世界锦标赛 2025 南美赛事中累计有效投注≥1000 元即可获得对应彩金，有效投注次日清零； 
+              活动期间，活动仅计算电竞场馆中TP世界锦标赛 2025 南美赛事，会员在当日TP世界锦标赛 2025 南美赛事中累计有效投注≥1000 元即可获得对应彩金，有效投注次日清零；
               <div class="hint"> 注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
@@ -124,15 +124,15 @@
           </div>
           <div class="item">
             <div class="item-num">4</div>
-            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户； 
+            根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
           </div>
           <div class="item">
             <div class="item-num">5</div>
-            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利； 
+            此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             <div class="item-num">6</div>
-            为避免文字理解差异，东赢电竞保留此活动最终解释权； 
+            为避免文字理解差异，东赢电竞保留此活动最终解释权；
           </div>
         </div>
       </div>
