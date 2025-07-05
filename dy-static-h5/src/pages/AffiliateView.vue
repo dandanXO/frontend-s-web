@@ -55,11 +55,11 @@
           <img src="../assets/images/affiliate/mmlogo.png" alt="丝瓜 Icon" class="contact-icon" />
           <div class="contact-details">
             <span class="contact-name">丝瓜</span>
-            <span class="contact-id">LH1008666</span>
+            <span class="contact-id">LH1008888</span>
           </div>
         </div>
         <div class="contact-actions">
-          <button class="copy-button" @click="copyText('LH1008666')">复制</button>
+          <button class="copy-button" @click="copyText('LH1008888')">复制</button>
           <a target="_blank" class="download-button" href="https://ya.cn/index.html" rel="noopener">下载</a>
         </div>
       </div>
