@@ -234,7 +234,8 @@
               <div class="home-game-boards">
                 <div class="game-list-div">
                   <div v-for="(live, i) in livecasino" :key="i" class="game-item-div">
-                    <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">
+                    <PlatformItem :platform="live" @click="playGame(live.title, live.code, live.gameCode)" />
+                    <!-- <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">
                       <div class="game-board" @click="playGame(live.name, live.code, 'bblive_lobby_app')">
                         <div
                           class="game-bg"
@@ -381,7 +382,7 @@
                           </template>
                         </div>
                       </div>
-                    </template>
+                    </template> -->
                   </div>
                 </div>
               </div>
@@ -623,12 +624,14 @@ import "swiper/css/scrollbar";
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation, Navigation, Pagination]);
 
 import PlatformBlock from "components/platform/PlatformBlock.vue";
+import PlatformItem from "components/platform/PlatformItem.vue";
 import { translateRecord } from "src/directives/translate";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
 import moment from "moment";
 import { useLocalStorage } from "@vueuse/core";
 import GameTypeSwiper from "src/components/home/GameTypeSwiper.vue";
 import { useNotify } from "src/hooks/notify";
+import { LIVE_PLATFORMS } from "src/constant/platform";
 
 export default defineComponent({
   name: "IndexPage",
@@ -638,7 +641,8 @@ export default defineComponent({
     GameModal,
     MarqueeText,
     PlatformBlock,
-    GameTypeSwiper
+    GameTypeSwiper,
+    PlatformItem
   },
   setup() {
     const notify = useNotify();
@@ -1053,11 +1057,12 @@ export default defineComponent({
               }
             }
             if (platTypes.indexOf("LIVE") > -1) {
-              var liveObj = Object.assign({}, element);
+              const matchedPlatformInfo = LIVE_PLATFORMS.find((plat) => plat.code === element.code);
+              var liveObj = Object.assign({}, matchedPlatformInfo, element);
               liveObj.title = getAliasName(element, "LIVE");
               // liveObj.title = translateRecord(liveObj.name);
-              liveObj.icon = "live";
-              liveObj.subtitle = "真人娱乐";
+              // liveObj.icon = "live";
+              // liveObj.subtitle = "真人娱乐";
               livecasino.value.push(liveObj);
 
               if (hotLives.value.indexOf(element.name) > -1) {
