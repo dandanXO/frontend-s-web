@@ -222,24 +222,20 @@
     </div>
 
     <template v-if="bankCardList.length > 0">
-      <div :class="`btn-submit`" @click="submitWithdraw">
-        <q-spinner
-          v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
-          color="white"
-          size="2em"
-          :thickness="2"
-        ></q-spinner>
+      <div
+        class="btn-submit"
+        :class="{
+          disabled: !isLoading && !store.canWithdraw
+        }"
+        @click="submitWithdraw"
+      >
+        <q-spinner v-if="isLoading" color="white" size="2em" :thickness="2"></q-spinner>
         <template v-else>{{ $t("btn.submit") }}</template>
       </div>
     </template>
     <template v-else>
       <div :class="`btn-submit`" @click="submitWithdrawBank">
-        <q-spinner
-          v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
-          color="white"
-          size="2em"
-          :thickness="2"
-        ></q-spinner>
+        <q-spinner v-if="isLoading" color="white" size="2em" :thickness="2"></q-spinner>
         <template v-else>{{ $t("btn.submit") }}</template>
       </div>
     </template>
@@ -247,6 +243,9 @@
     <template v-if="withdrawalMethods.tips">
       <div class="bottom-tnc q-mt-md" v-html="withdrawalMethods.tips"></div>
     </template>
+    <div v-if="!isLoading && !store.canWithdraw" class="withdraw-alert">
+      {{ $t("withdraw.requireDeposit") }}
+    </div>
   </div>
 
   <q-dialog width="100%" v-model="isShowRedirectAddBankModal">
@@ -272,6 +271,8 @@ const $q = useQuasar();
 const store = userStore();
 const route = useRoute();
 const router = useRouter();
+
+const isLoading = computed(() => isLoadingBankCard.value || isLoadingWithdrawalMethod.value || isSubmitDisable.value);
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -838,7 +839,7 @@ const isValidCardAddress = () => {
     }
 
     &.disabled {
-      opacity: 0.7;
+      filter: grayscale(1);
     }
   }
 
@@ -847,6 +848,11 @@ const isValidCardAddress = () => {
     padding: 8px 12px;
     font-size: 12px;
     color: #fbab1b;
+  }
+
+  .withdraw-alert {
+    padding-top: 8px;
+    color: #e03f3f;
   }
 }
 
