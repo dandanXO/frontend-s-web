@@ -1,15 +1,8 @@
 <template>
   <div class="download-section">
-    <!-- <HomeTitle title="APP下载" subtitle="APP DOWNLOAD"></HomeTitle> -->
-    <HomeTitleV2 title="APP下载" subtitle="APP DOWNLOAD" />
+    <img src="../../../assets/home/download/download-section-title.svg" width="100%" />
     <div class="download-container">
       <div class="left-container" data-aos="fade-left">
-        <img src="../../../assets/home/download/download-bg.png" width="100%" />
-      </div>
-
-      <div class="right-container" data-aos="fade-right">
-        <HomeContentTitle title="APP下载"></HomeContentTitle>
-
         <div class="tab-wrapper">
           <div class="dl-tab">
             <div class="tab-title">综合客户端下载</div>
@@ -18,8 +11,12 @@
               投注！
             </div>
             <div class="download">
-              <div class="dl-mobile-img">
-                <img src="../../../assets/home/download/mobile-img2.png" width="100%" />
+              <div class="dl-wrapper">
+                <VueQRCodeComponent :size="120" :text="ui.downloadUrl" class="dl-frame" />
+                <div class="link-desc">手机免费下载地址</div>
+                <div class="link">
+                  <a :href="ui.downloadUrl" target="_blank">{{ ui.downloadUrl }}</a>
+                </div>
               </div>
               <div class="dl-wrapper">
                 <VueQRCodeComponent :size="120" :text="ui.downloadUrl" class="dl-frame" />
@@ -30,69 +27,13 @@
               </div>
             </div>
           </div>
-
-          <!-- <el-tabs class="tab" v-model="activeKey" type="card"> -->
-          <!-- <el-tab-pane name="1" label="全站APP"> -->
-          <!-- <div class="tab-title">综合客户端下载</div>
-              <div class="tab-desc">
-                引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐
-                投注！
-              </div>
-              <div class="download"> -->
-          <!--                <div class="qr-wrapper">-->
-          <!--                  <img src="../../../assets/home/download/app.png" />-->
-          <!--                  <div class="link-desc">扫码进入下载页面</div>-->
-          <!--                  <div class="link">www.leihuo.com</div>-->
-          <!--                </div>-->
-          <!-- <div class="dl-wrapper">
-                  <VueQRCodeComponent :size="140" :text="ui.downloadUrl" />
-                  <div class="link-desc">手机免费下载地址</div>
-                  <div class="link">{{ui.downloadUrl}}</div>
-                </div>
-              </div> -->
-          <!-- </el-tab-pane> -->
-          <!--            <el-tab-pane name="2"  label="电竞APP">-->
-          <!--              <div class="tab-title">电竞App下载</div>-->
-          <!--              <div class="tab-desc">-->
-          <!--                引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐-->
-          <!--                投注！-->
-          <!--              </div>-->
-          <!--              <div class="download">-->
-          <!--                <div class="qr-wrapper">-->
-          <!--                  <img src="../../../assets/home/download/app.png" />-->
-          <!--                  <div class="link-desc">扫码进入下载页面</div>-->
-          <!--                  <div class="link">www.leihuo.com</div>-->
-          <!--                </div>-->
-          <!--                <div class="dl-wrapper">-->
-          <!--                  <img src="../../../assets/home/download/app.png" />-->
-          <!--                  <div class="link-desc">手机免费下载地址</div>-->
-          <!--                  <div class="link">www.leihuo.com</div>-->
-          <!--                </div>-->
-          <!--              </div>-->
-          <!--            </el-tab-pane>-->
-          <!--            <el-tab-pane key="3" label="体育APP" >-->
-          <!--              <div class="tab-title">体育App下载</div>-->
-          <!--              <div class="tab-desc">-->
-          <!--                引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐-->
-          <!--                投注！-->
-          <!--              </div>-->
-          <!--              <div class="download">-->
-          <!--                <div class="qr-wrapper">-->
-          <!--                  <img src="../../../assets/home/download/app.png" />-->
-          <!--                  <div class="link-desc">扫码进入下载页面</div>-->
-          <!--                  <div class="link">www.leihuo.com</div>-->
-          <!--                </div>-->
-          <!--                <div class="dl-wrapper">-->
-          <!--                  <img src="../../../assets/home/download/app.png" />-->
-          <!--                  <div class="link-desc">手机免费下载地址</div>-->
-          <!--                  <div class="link">www.leihuo.com</div>-->
-          <!--                </div>-->
-          <!--              </div>-->
-          <!--            </el-tab-pane>-->
-          <!-- </el-tabs> -->
         </div>
       </div>
-    </div>
+
+      <div class="right-container" data-aos="fade-right">
+        <img src="../../../assets/home/download/download-section-right-decor.png" width="100%" />
+        </div>
+      </div>
   </div>
 </template>
 
@@ -121,7 +62,7 @@ onMounted(() => {});
     align-items: center;
     justify-content: center;
 
-    .left-container {
+    .right-container {
       width: 50%;
 
       img {
@@ -131,44 +72,41 @@ onMounted(() => {});
       }
     }
 
-    .right-container {
+    .left-container {
       width: 50%;
 
       .tab-wrapper {
         border-radius: 1.25rem;
-        background: #fff;
-        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.22);
         padding: 0.5rem;
 
         .dl-tab {
           margin: 6px;
-          border: 1px solid #5c9fff;
           border-radius: 0.8125rem;
           padding: 1rem;
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
 
           .tab-title {
-            color: #7a80a1;
-            font-family: Microsoft YaHei;
-            font-size: 1.79594rem;
             font-weight: 700;
-            line-height: normal;
-            margin-bottom: 1rem;
-            text-align: center;
+            font-size: 40px;
+            line-height: 100%;
+            letter-spacing: 0%;
+            color: #3A5178;
           }
 
           .tab-desc {
-            color: #a4aabb;
-            font-family: Microsoft YaHei;
-            font-size: 0.875rem;
             font-weight: 400;
-            line-height: 1.375rem; /* 157.143% */
-            margin: 1rem;
+            font-size: 20px;
+            line-height: 28px;
+            letter-spacing: 0%;
+            color: #3A5178;
           }
 
           .download {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 25px;
             margin: 1rem 0 0.5rem 0;
 
@@ -178,17 +116,28 @@ onMounted(() => {});
 
             .dl-wrapper {
               width: 40%;
+              background-image: url(../../../assets/home/download/qr-frame.svg);
+              background-position: center center;
+              background-size: 100% 100%;
+              padding: 30px;
+              aspect-ratio: 242/183;
+              width: 300px;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
             }
 
             .dl-frame {
-              background-image: url(../../../assets/home/download/qr-frame.png);
-              background-position: center center;
-              background-size: 100% 100%;
-              padding: 40px 12px 24px;
+              background: linear-gradient(180deg, #9CC9FF 0%, #2194FF 104.03%);
+              border: 0.74px solid #ABD2FF;
+              box-shadow: 0px 3.69px 7.38px 0px #CCEDFF inset;
               display: flex;
+              border-radius: 16px;
+              padding: 25px;
+              width: 150px;
               align-items: center;
               justify-content: center;
-              margin-bottom: 6px;
             }
 
             .qr-wrapper,
@@ -255,36 +204,6 @@ onMounted(() => {});
               font-size: 0.875rem;
               font-weight: 400;
               line-height: normal;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-.dark {
-  .download-section {
-    .download-container {
-      .right-container {
-        .tab-wrapper {
-          @include content-block-dark;
-          .tab-title {
-            color: $active-color-dark;
-          }
-          .tab-desc {
-            color: $font-3-dark;
-          }
-          .dl-tab{
-            .download{
-              .dl-wrapper{
-                .link-desc{
-                  color: $font-3-dark;
-                }
-                .dl-frame {
-                  background-image: url(../../../assets/home/download/qr-frame-dark.png);
-                }
-              }
             }
           }
         }

@@ -43,7 +43,7 @@
         <div class="station-notice-box">
           <img
             class="announcement-img"
-            src="../../../assets/home/announcement/announcement-img.png"
+            src="../../../assets/home/announcement/announcement-img.svg"
             @click="openPopup(announcementList)"
           />
           <div class="station-notice">
@@ -171,9 +171,11 @@ onMounted(() => {
   padding: 5px;
   color: #696d70;
   border-radius: 2.1875rem;
-  background: #fff;
-  box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
-  width: 80%;
+  background: #FEFEFE;
+  box-shadow: 0px 4px 4px 0px #C4D3E280;
+  width: 1300px;
+  height: 50px;
+  border-radius: 7px;
   margin: 0 auto;
 
   .top-bar-inner {
