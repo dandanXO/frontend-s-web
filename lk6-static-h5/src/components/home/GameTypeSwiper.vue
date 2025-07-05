@@ -1,25 +1,11 @@
 <template>
   <swiper
     :modules="[Thumbs, Controller]"
-    slides-per-view="auto"
+    slides-per-view="3"
     :set-wrapper-size="true"
     :scrollbar="{ draggable: true }"
     :mousewheel="true"
     :space-between="8"
-    :breakpoints="{
-      0: {
-        slidesPerView: 5.5,
-        spaceBetween: 8
-      },
-      380: {
-        slidesPerView: 5.5,
-        spaceBetween: 8
-      },
-      440: {
-        slidesPerView: 5.5,
-        spaceBetween: 8
-      }
-    }"
     watch-slides-progress
     class="first-swiper"
     centered-slides
@@ -35,11 +21,14 @@
       :key="i"
     >
       <div
-        class="home-select-slide column items-center justify-center gap-3"
+        class="home-select-slide row items-center align-center justify-center gap-8"
         :class="selectedTab == tab.name ? 'selected' : ''"
         :style="`gap:${tab.gap}px`"
       >
-        <img :style="`margin-top:${tab.mb}px;`" :src="require('../../assets/index/' + tab.icon)" />
+        <img
+          :style="`margin-top:${tab.mb}px;`"
+          :src="require('../../assets/index/' + (selectedTab === tab.name ? tab.iconActive : tab.icon))"
+        />
         <span>{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</span>
       </div>
     </swiper-slide>
@@ -91,19 +80,25 @@ onMounted(() => scrollSlide(selectedTab.value));
 watch(selectedTab, scrollSlide);
 </script>
 <style lang="scss" scoped>
-:deep(.firstSwiper .swiper-wrapper) {
-  background: #fff;
-}
+// :deep(.firstSwiper .swiper-wrapper) {
+//   background: #fff;
+// }
 
 .first-swiper {
-  background: #fff;
+  background: url(../../assets/index/game-type-bg.png) no-repeat center center;
+  background-size: 100% 100%;
+  box-shadow: 0px 0px 5.5px 0px #c6d9ffab;
+  border-radius: 30px;
   justify-content: flex-start;
   align-items: stretch;
+  padding: 4px 5px;
+  margin-bottom: 16px;
 }
 
 .home-select-slide {
-  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
+  background: radial-gradient(103.75% 103.75% at 50% -3.75%, #ffffff 0%, #deecff 100%);
+  border: 1.41px solid #ffffff;
+  border-radius: 30px;
   align-items: center;
   padding: 2px 5px;
   min-height: 46px;
@@ -111,23 +106,20 @@ watch(selectedTab, scrollSlide);
 
   img {
     width: auto;
+    max-width: 25px;
   }
 
   span {
     color: #35648f;
-    font-weight: 500;
-    font-size: 12px;
+    font-weight: 600;
+    font-size: 14px;
   }
 
   &.selected {
-    background: linear-gradient(180deg, #7dd4fd 0, #4c9dec 100%);
+    background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
 
     span {
       color: #fff;
-    }
-
-    img {
-      filter: brightness(0) invert(1);
     }
   }
 }
