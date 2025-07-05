@@ -445,6 +445,10 @@ const onCardChanged = () => {
 const isShowRedirectAddBankModal = ref(false);
 const isSubmitDisable = ref(false);
 const submitWithdraw = () => {
+  if (!store.canWithdraw || isLoading.value) {
+    return;
+  }
+
   isSubmitDisable.value = true;
   if (bankCardList.value.length === 0) {
     isShowRedirectAddBankModal.value = true;
