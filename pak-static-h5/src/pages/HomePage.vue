@@ -1201,7 +1201,7 @@
       <img @click="showClaimPopup.visible = false" class="close-btn" src="../assets/images/index/modal/claim-popup/close-btn.png" />
     </div>
   </q-dialog>
-  
+
 
   <q-dialog
     width="100%"
@@ -4408,11 +4408,13 @@ const claimClaimPopupPrize = () => {
 }
 
 const loadClaimPopup = () => {
-  eventapi.get('/session/privilege-voucher/init').then((res) => {
-    if(res.code === 0 && res.data.bonus > 0) {
-      showClaimPopup.value.visible = true;
-    }
-  })
+  if (store.token) {
+    eventapi.get('/session/privilege-voucher/init').then((res) => {
+      if(res.code === 0 && res.data.bonus > 0) {
+        showClaimPopup.value.visible = true;
+      }
+    })
+  }
 }
 
 onActivated(async () => {
