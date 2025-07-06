@@ -48,26 +48,101 @@
       style="margin-top:20px;"
       :row-style="{width: '100px'}"
     >
-      <el-table-column prop="recordTime" :label="t('fields.recordTime')" width="120" fixed="left" />
+      <el-table-column
+        prop="recordTime"
+        :label="t('fields.recordTime')"
+        width="120"
+        fixed="left"
+      />
+      <el-table-column
+        prop="registerMemberCount"
+        :label="t('fields.registerMember')"
+        width="120"
+        fixed="left"
+      />
       <el-table-column :label="t('fields.depositRetention')">
-        <el-table-column prop="depositDay1" :label="t('fields.retentionDay1')" width="120" />
-        <el-table-column prop="depositDay2" :label="t('fields.retentionDay2')" width="120" />
-        <el-table-column prop="depositDay3" :label="t('fields.retentionDay3')" width="120" />
-        <el-table-column prop="depositDay4" :label="t('fields.retentionDay4')" width="120" />
-        <el-table-column prop="depositDay5" :label="t('fields.retentionDay5')" width="120" />
-        <el-table-column prop="depositDay6" :label="t('fields.retentionDay6')" width="120" />
-        <el-table-column prop="depositDay7" :label="t('fields.retentionDay7')" width="120" />
-        <el-table-column prop="depositDay14" :label="t('fields.retentionDay14')" width="120" />
-        <el-table-column prop="depositDay30" :label="t('fields.retentionDay30')" width="120" />
+        <el-table-column
+          prop="depositDay1"
+          :label="t('fields.retentionDay1')"
+          width="120"
+        />
+        <el-table-column
+          prop="depositDay2"
+          :label="t('fields.retentionDay2')"
+          width="120"
+        />
+        <el-table-column
+          prop="depositDay3"
+          :label="t('fields.retentionDay3')"
+          width="120"
+        />
+        <el-table-column
+          prop="depositDay4"
+          :label="t('fields.retentionDay4')"
+          width="120"
+        />
+        <el-table-column
+          prop="depositDay5"
+          :label="t('fields.retentionDay5')"
+          width="120"
+        />
+        <el-table-column
+          prop="depositDay6"
+          :label="t('fields.retentionDay6')"
+          width="120"
+        />
+        <el-table-column
+          prop="depositDay7"
+          :label="t('fields.retentionDay7')"
+          width="120"
+        />
+        <el-table-column
+          prop="depositDay14"
+          :label="t('fields.retentionDay14')"
+          width="120"
+        />
+        <el-table-column
+          prop="depositDay30"
+          :label="t('fields.retentionDay30')"
+          width="120"
+        />
       </el-table-column>
       <el-table-column :label="t('fields.regLoginRetention')">
-        <el-table-column prop="loginDay1" :label="t('fields.retentionDay1')" width="120" />
-        <el-table-column prop="loginDay2" :label="t('fields.retentionDay2')" width="120" />
-        <el-table-column prop="loginDay3" :label="t('fields.retentionDay3')" width="120" />
-        <el-table-column prop="loginDay4" :label="t('fields.retentionDay4')" width="120" />
-        <el-table-column prop="loginDay5" :label="t('fields.retentionDay5')" width="120" />
-        <el-table-column prop="loginDay6" :label="t('fields.retentionDay6')" width="120" />
-        <el-table-column prop="loginDay7" :label="t('fields.retentionDay7')" width="120" />
+        <el-table-column
+          prop="loginDay1"
+          :label="t('fields.retentionDay1')"
+          width="120"
+        />
+        <el-table-column
+          prop="loginDay2"
+          :label="t('fields.retentionDay2')"
+          width="120"
+        />
+        <el-table-column
+          prop="loginDay3"
+          :label="t('fields.retentionDay3')"
+          width="120"
+        />
+        <el-table-column
+          prop="loginDay4"
+          :label="t('fields.retentionDay4')"
+          width="120"
+        />
+        <el-table-column
+          prop="loginDay5"
+          :label="t('fields.retentionDay5')"
+          width="120"
+        />
+        <el-table-column
+          prop="loginDay6"
+          :label="t('fields.retentionDay6')"
+          width="120"
+        />
+        <el-table-column
+          prop="loginDay7"
+          :label="t('fields.retentionDay7')"
+          width="120"
+        />
       </el-table-column>
     </el-table>
     <el-pagination
@@ -126,6 +201,7 @@ function convertDate(date) {
 }
 
 const shortcuts = getShortcuts(t)
+
 function disabledDate(time) {
   return (
     time.getTime() <
@@ -184,6 +260,7 @@ onMounted(async () => {
   word-break: break-word;
   text-overflow: none;
 }
+
 .warning-row {
   color: #ff0000;
 }
