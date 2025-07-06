@@ -6,7 +6,7 @@
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
-          Duração
+          Período de promoção
         </div>
         <div class="bar-desc">Longo prazo (contínuo)</div>
       </div>
@@ -22,7 +22,7 @@
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-description.svg" />
-          Descrição
+          Detalhes da promoção
         </div>
         <div class="bar-desc">Distribuição de envelopes vermelhos (chuva de dinheiro) em horários programados</div>
       </div>

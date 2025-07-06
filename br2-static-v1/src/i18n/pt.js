@@ -948,14 +948,14 @@ export default {
       only: "Apenas",
       toGo: "para ir"
     },
-    duration: "Duração",
+    duration: "Período de promoção",
     longTerm: "Válida por tempo indeterminado",
-    eligibility: "Elegíveis",
+    eligibility: "Participantes elegíveis",
     successfulDepositMember: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
     betMember: "Todos os membros que realizaram apostas",
     newMember: "Todos os novos membros registrados",
     allMembers: "Todos os membros",
-    desc: "Descrição",
+    desc: "Detalhes da promoção",
     tnc: "Regras da Promoção",
     cashbackWeekly: {
       description: "Cashback semanal com base na sua atividade de apostas e na porcentagem correspondente.",
@@ -1270,18 +1270,15 @@ export default {
   content: {
     nospinleft: "Sem rodadas restantes",
     title1: "O tempo de registo começa a contar a partir do momento em que o registo é concluído.",
-    message1:
-      "Quando o valor acumulado atingir R$100, você poderá solicitar o saque (o saque será feito para a carteira do jogo).",
-    message2: "Quando não houver giros disponíveis, indique um novo jogador para ganhar um giro grátis.",
-    message3: "O evento dura 3 dias. Após o término, o bônus acumulado será reiniciado e o evento começará novamente.",
-    message4:
-      "Cada usuário pode aproveitar uma chance de giro grátis por dia, e o número de giros é reiniciado às 24:00 todos os dias.",
-    message5: "Após a aprovação da solicitação, o bônus será depositado diretamente na sua carteira.",
-    message6: "O bônus precisa ser apostado uma vez antes que possa ser sacado.",
-    message7:
-      "O indicado precisa vincular seu número de telefone e conectá-lo ao código de convite do convidador para ser considerado válido.",
-    message8:
-      "O direito de interpretação do evento pertence à AKB188. Em caso de dúvidas, entre em contato com o atendimento ao cliente.",
+    message1: 'Quando o valor total acumulado atingir R$100, pode proceder ao envio de um pedido de levantamento;',
+    message2: 'Convidar amigos a se registrarem pode acelerar seu progresso para atingir o limite de levantamento;',
+    message3: 'Cada usuário tem o direito de receber uma chance gratuita na loteria por dia;',
+    message4: 'Cada promoção é válida para 3 dias, durante os quais os usuários podem participar múltiplas vezes;',
+    message5: 'Você pode ganhar pontos em dinheiro adicionais, permitindo que você jogue sem nenhum custo e aumente suas chances de ganhar prêmios reais;',
+    message6: 'Se não for retirado dentro 3 dias, o saldo expirará e será invalidado;',
+    message7: 'Esta promoção destina-se exclusivamente a operações manuais realizadas pelo titular da conta. Qualquer divergência em relação às regras pode resultar no cancelamento, dedução ou congelamento do Bônus, ou pode levar à inclusão da conta em uma "Lista Negra";',
+    message8: 'Para evitar eventuais mal-entendidos, a AKB188 reserva-se o direito de fazer a interpretação final desta promoção.',
+
     aviatorPromoIntro:
       "Desfrute da emoção das apostas com o Aviator! O seu Aviator pode ganhar incríveis 3.216x com apenas um clique! O prémio para os 50 melhores é de 1.250.000 PKR!",
     aviatorGoldenEgg:
