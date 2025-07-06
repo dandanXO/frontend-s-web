@@ -83,7 +83,7 @@
           <tr class="highlight">
             <td>10</td>
             <td>5,000,000</td>
-            <td>3.2%</td>
+            <td>3.0%</td>
           </tr>
         </tbody>
       </table>
