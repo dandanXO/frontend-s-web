@@ -86,8 +86,8 @@ export const getVisitorId = async () => {
 
   const fp = await getData({ ignoreCache: true });
 
-  // console.log("VisitorInfo");
-  // console.log(fp);
+  console.log("VisitorInfo");
+  console.log(fp);
   if (fp && fp.visitorId) {
     localStorage.setItem("VISITOR_ID", fp.visitorId);
     return fp.visitorId;
