@@ -869,7 +869,7 @@ export default {
     redepositBonus: {
       description: "Receba um bônus extra de 100% no primeiro depósito do dia",
       tnc01: "Esta promoção é válida para todos os membros que realizarem o primeiro depósito do dia.",
-      tnc02: "O valor do bônus será de 100% do valor depositado, sem limite máximo.",
+      tnc02: "O valor do bônus será de 100% do valor depositado, Recompensa máxima possível 50.",
       tnc03: "O bônus (incluir o principal) requer 12 vezes de apostas válidas para sacar;",
       tnc04:
         "Cada membro pode participar uma vez por dia, sendo o bônus aplicável somente à primeira transação do dia.",
