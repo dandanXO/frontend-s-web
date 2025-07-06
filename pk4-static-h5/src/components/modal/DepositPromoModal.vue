@@ -13,7 +13,7 @@
           <q-checkbox v-model="hideModalForAWeek">Don't remind me again within a week</q-checkbox>
         </div>
       </template>
-      <template v-if="modalType === 'APP_LOGIN_APK'">
+      <!-- <template v-if="modalType === 'APP_LOGIN_APK'">
         <div class="modal-img-2">
           <img :src="require(`../../assets/images/index/deposit-modal/deposit-promo-${modalImageIndex}-${depositOpen ? 'open' : 'close'}.png`)" />
           <div class="modal-btn-2" @click="!depositOpen ? depositOpen = !depositOpen : btnAction()">
@@ -23,7 +23,7 @@
             <img v-if="depositOpen" :src="require(`../../assets/images/index/deposit-modal/deposit-promo-${modalImageIndex}-open-rule.png`)" />
           </div>
         </div>
-      </template>
+      </template> -->
       <!-- <div v-if="[2, 3].includes(modalImageIndex)" class="modal-countdown">
         <img :src="require(`../../assets/images/index/deposit-modal/deposit-promo-${modalImageIndex}-countdown.png`)" />
         <span class="modal-countdown__number" :class="{ 'is-ftd': modalImageIndex === 2 }" :data-stroke="countdown">
@@ -83,7 +83,6 @@ import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { useLocalStorage } from "@vueuse/core";
 const KEY = "PAK_APP_LOGIN_PHONE_BONUS_LAST_CHECK_TIMESTAMP";
-
 /**
  * @typedef {'APP_LOGIN_H5'|'APP_LOGIN_APK'|'FIRST_DEPOSIT'|'FIRST_DEPOSIT_AMOUNT'|'SECONDARY_DEPOSIT_AMOUNT'|'LUCKY_10_DAY'|'PHONE_VERIFIED_NOT_CLAIMED'} ModalType
  */
@@ -384,7 +383,11 @@ const resetModal = () => {
 
 watch(modalType, (val) => {
   if (val) {
-    showModal.value = true;
+    if (isAndroid()) {
+      showModal.value = false;
+    } else {
+      showModal.value = true;
+    }
   }
   // if ([2, 3].includes(modalIndex.value)) {
   //   startCountdown();

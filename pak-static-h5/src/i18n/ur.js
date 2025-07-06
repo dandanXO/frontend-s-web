@@ -105,6 +105,7 @@ export default {
     phone_rules_01: "براہ کرم فون نمبر درج کریں",
     phone_rules_02: "فون نمبر میں 11 ہندسے ہونے چاہئیں",
     phone_rules_03: "فون نمبر '03' سے شروع ہونا چاہئے",
+    phone_rules_04: "نمبر 1 سے 11 ہندسوں کے درمیان ہونا چاہیے",
     password: "پاس ورڈ",
     password_placeholder: "براہ کرم پاس ورڈ درج کریں",
     password_rules_01: "براہ کرم پاس ورڈ درج کریں",
@@ -912,6 +913,10 @@ export default {
     claimed: "دعوت کر لیا",
     bonus_claim_time: "بونس دعوت کا وقت",
     promoEndsOn: "پرومو ختم ہونے کی تاریخ",
+    claimPopup: {
+      youWon: 'آپ جیت گئے',
+      oneOfTodayWinners: 'آج کے 77 خوش نصیب جیتنے والوں میں سے ایک'
+    },
     earnMoney: {
       earnMoney: "پیسہ کمائیں",
       congratsOnGetting: "مبارک ہو، آپ کو یہ حاصل ہوا"

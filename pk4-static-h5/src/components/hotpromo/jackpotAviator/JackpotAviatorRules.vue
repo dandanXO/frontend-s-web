@@ -17,7 +17,7 @@
     </div>
     <!--        <div class="rule-item">{{ $t('hotPromo.jackpotAviator.rules1') }}</div><br/>-->
     <!--        <div class="rule-item">{{ $t('hotPromo.jackpotAviator.rules2') }}</div><br/>-->
-    <div class="rule-item">{{ $t("hotPromo.jackpotAviator.rankingBonusRatio") }}:</div>
+    <div class="rule-item">{{ $t("hotPromo.jackpotAviator.rankingBonus") }}:</div>
     <RankingBonusRatioTable :rankingBonusRatioList="props.rankingBonusRatioList" />
 
     <br />
@@ -83,8 +83,10 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
 <style lang="scss" scoped>
 .rules-container {
   position: fixed;
-  padding: 55px 20px 50px 20px;
-  top: 75px;
+  padding: 70px 20px 150px 20px !important;
+  // top: 75px;
+  top: 135px;
+
   overflow: auto;
   left: 0;
   right: 0;
@@ -99,8 +101,9 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
 
   .back-btn {
     position: absolute;
-    top: 0px;
+    // top: 0px;
     left: 20px;
+    top: 10px;
     width: 33px !important;
     height: 33px !important;
     cursor: pointer;

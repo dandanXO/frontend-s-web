@@ -207,9 +207,11 @@ export default defineComponent({
       checkSessStorageItem();
       checkDarkMode();
       getCustomService();
+      checkSID();
+
       h5Only(() => {
         checkServerStatus();
-        checkSID();
+
         getCSA();
         getAffiliateByDomain();
         onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);

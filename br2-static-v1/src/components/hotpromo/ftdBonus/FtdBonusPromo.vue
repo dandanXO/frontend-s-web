@@ -6,7 +6,7 @@
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
-          Duração
+          Período de promoção
         </div>
         <div class="bar-desc">Válida por tempo indeterminado</div>
       </div>
@@ -22,13 +22,13 @@
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-description.svg" />
-          Descrição
+          Detalhes da promoção
         </div>
         <div class="bar-desc">Os membros podem receber um bônus de 100% sobre o valor do segundo depósito.</div>
       </div>
     </div>
 
-    <div class="promo-subtitle">Regras da Promoção</div>
+    <div class="promo-subtitle">Regras de promoção</div>
 
     <div class="tnc-content">
       <ol>

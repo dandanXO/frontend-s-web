@@ -13,7 +13,7 @@
                     <img v-else-if="rbrListItem.rank === '3'" style="width:35px;margin:0;" src="../../../assets/images/promotion/hotpromo/jackpot-aviator/3rd-place-crown.png" />
                     <span v-else>{{ rbrListItem.rank }}</span>
                 </div>
-                <div class="bonus">{{ rbrListItem.bonusPerc?.toFixed(2) }}%</div>
+                <div class="bonus">{{ rbrListItem.bonus }}</div>
             </div>
         </template>
     </div>

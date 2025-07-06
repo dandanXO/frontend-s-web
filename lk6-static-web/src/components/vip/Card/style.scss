@@ -1,0 +1,36 @@
+// Vip Left Box
+.vip-left-box {
+    --_vip-badge-half: 107.5px;
+
+    display: flex;
+    position: relative;
+    isolation: isolate;
+
+    img {
+        display: block;
+    }
+}
+
+.vip-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.vip-card {
+    margin-left: var(--_vip-badge-half);
+}
+
+.vip-card-content {
+    position: absolute;
+    top: 50%;
+    left: calc(45% + var(--_vip-badge-half));
+    transform: translate(-50%, -50%);
+
+    color: #73561f;
+
+    img {
+        margin-inline: auto;
+        margin-bottom: 30px;
+    }
+}

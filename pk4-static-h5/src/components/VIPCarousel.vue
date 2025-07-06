@@ -21,7 +21,7 @@
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements" v-if="vipIndex !== vipItems.length - 1">
                 <div>
-                   {{ $t("vip.currentValidBets") }}: {{ store.currency.value }} {{ store.getCurrentValidBet() }}
+                   {{ $t("vip.currentValidBets") }}: {{ store.currency.value }} {{ convertToCommaAmount(store.getCurrentValidBet(), false, 0) }}
                 </div>
                 {{ $t("vip.accumulateDeposit") }}
                 {{ props.onlyShowCurrentLevel ? vipItems[vip.vipLevel + 1].ugprade : vipItems[vipIndex + 1].ugprade }}
@@ -683,7 +683,7 @@ $gradients: (
     bottom: 25%;
     font-size: 0.85rem;
     font-weight: bolder;
-    
+    letter-spacing: -0.3px;
     flex-direction: column;
     gap: 0;
     align-items: flex-start;

@@ -11,6 +11,11 @@ export default {
       SUCCESS: '成功',
       FAIL: '失败'
     },
+    claimStatus: {
+      PENDING: '待领取',
+      CLAIMED: '已领取',
+      CANCEL: '已取消'
+    }
   },
   affiliate: {
     commissionModel: {
@@ -2692,13 +2697,24 @@ export default {
     eventCode: '赛事代码',
     roleConfig: '角色设置',
     chatHistory: '聊天记录',
-    loginDay1: '1日前注册活跃用户',
-    loginDay2: '2日前注册活跃用户',
-    loginDay3: '3日前注册活跃用户',
-    loginDay4: '4日前注册活跃用户',
-    loginDay5: '5日前注册活跃用户',
-    loginDay6: '6日前注册活跃用户',
-    loginDay7: '7日前注册活跃用户',
+    loginDay1: '1日',
+    loginDay2: '2日',
+    loginDay3: '3日',
+    loginDay4: '4日',
+    loginDay5: '5日',
+    loginDay6: '6日',
+    loginDay7: '7日',
+    retentionDay1: '2日',
+    retentionDay2: '3日',
+    retentionDay3: '4日',
+    retentionDay4: '5日',
+    retentionDay5: '6日',
+    retentionDay6: '7日',
+    retentionDay7: '8日',
+    retentionDay14: '15日',
+    retentionDay30: '31日',
+    depositRetention: '存款留存',
+    regLoginRetention: '注册回头',
   },
   message: {
     adsStatusOpen: '开',
@@ -3240,6 +3256,7 @@ export default {
     'Register Blacklist': '注册黑名单',
     Sport: '体育',
     'Member Privilege Claim Status': '会员优惠领取状态',
+    'Member Privilege Voucher': '会员优惠券',
     Affiliate: '代理',
     'Affiliate Amount Adjust': '代理平账记录',
     'Affiliate Summary': '代理总结',
@@ -3395,7 +3412,7 @@ export default {
     'Affiliate Deposit Members': '代理报表存款会员',
     'Site Member Report': '会员报表',
     'Deposit Member Detail': '今日充值会员列表',
-    'Site Retention Report': '站点留存报表',
+    'Site Retention Report': '站点留存报表（B9）',
     'Affiliate Retention Report': '代理留存报表',
     System: '系统',
     'Operator Log': '后台日志',
@@ -3540,6 +3557,7 @@ export default {
     'Member Refer Stat Analysis': '邀请返佣分析',
     'Member Refer Relation': '邀请关系查询',
     'Sport Live Match Mars': '体育赛事',
+    'Reg Retention Report': '站点留存报表',
   },
   google: {
     google_auth_menu: '谷歌验证',

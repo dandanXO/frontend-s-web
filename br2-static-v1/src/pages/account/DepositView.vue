@@ -417,7 +417,12 @@ const handleDepositItemClick = (index) => {
 };
 
 const getFtdCommaAmount = (amount) => {
-  return amount;
+  if (amount > 50) {
+return 50
+  } else {
+    return amount;
+  }
+
 };
 
 const get2ndDepoCommaAmount = (amount) => {

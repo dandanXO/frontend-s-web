@@ -13,7 +13,7 @@
     </q-tabs>
 
     <div class="jackpot">
-      <JackpotTicker :timeframe="timeframe" />
+      <!-- <JackpotTicker :timeframe="timeframe" /> -->
 
       <div class="rules-ribbon" @click="mode = 'RULES'">{{ $t("hotPromo.jackpotAviator.rules") }}</div>
       <div class="history-ribbon" @click="isShowHistoryPopup = true">{{ $t("hotPromo.jackpotAviator.history") }}</div>
@@ -51,10 +51,10 @@
         class="bg-greytext text-white popout-close"
         v-close-popup
       />
-      <div class="congrats-highlight">
+      <!-- <div class="congrats-highlight">
         <div class="congrats-title">{{ $t("hotPromo.jackpotAviator.jackpot") }}</div>
         <div class="congrats-prize">{{ store.currency.value }} {{ historyData.jackpotAmount }}</div>
-      </div>
+      </div> -->
 
       <HistoryTable :inDialog="true" :historyList="historyData.rankingList" />
     </div>

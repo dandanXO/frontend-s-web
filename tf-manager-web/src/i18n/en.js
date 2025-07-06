@@ -11,6 +11,11 @@ export default {
       SUCCESS: 'Success',
       FAIL: 'Fail'
     },
+    claimStatus: {
+      PENDING: 'Pending',
+      CLAIMED: 'Claimed',
+      CANCEL: 'Cancel'
+    }
   },
   affiliate: {
     commissionModel: {
@@ -2673,13 +2678,24 @@ export default {
     eventCode: 'Event Code',
     roleConfig: 'Role Config',
     chatHistory: 'Chat History',
-    loginDay1: 'Register Retention Day 1',
-    loginDay2: 'Register Retention Day 2',
-    loginDay3: 'Register Retention Day 3',
-    loginDay4: 'Register Retention Day 4',
-    loginDay5: 'Register Retention Day 5',
-    loginDay6: 'Register Retention Day 6',
-    loginDay7: 'Register Retention Day 7'
+    loginDay1: 'Day 1',
+    loginDay2: 'Day 2',
+    loginDay3: 'Day 3',
+    loginDay4: 'Day 4',
+    loginDay5: 'Day 5',
+    loginDay6: 'Day 6',
+    loginDay7: 'Day 7',
+    retentionDay1: 'Day 2',
+    retentionDay2: 'Day 3',
+    retentionDay3: 'Day 4',
+    retentionDay4: 'Day 5',
+    retentionDay5: 'Day 6',
+    retentionDay6: 'Day 7',
+    retentionDay7: 'Day 8',
+    retentionDay14: 'Day 15',
+    retentionDay30: 'Day 31',
+    depositRetention: 'Deposit Retention',
+    regLoginRetention: 'Register Login Retenion',
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3270,6 +3286,7 @@ export default {
     'Register Blacklist': 'Register Blacklist',
     Sport: 'Sport',
     'Member Privilege Claim Status': 'Member Privilege Claim Status',
+    'Member Privilege Voucher': 'Member Privilege Voucher',
     Affiliate: 'Affiliate',
     'Affiliate Amount Adjust': 'Affiliate Amount Adjust',
     'Affiliate Summary': 'Affiliate Summary',
@@ -3427,7 +3444,7 @@ export default {
     'Platform Game Report': 'Platform Game Report',
     'Site Member Report': 'Member Report',
     'Deposit Member Detail': 'Deposit Member Detail',
-    'Site Retention Report': 'Site Retention Report',
+    'Site Retention Report': 'Site Retention Report(B9)',
     'Affiliate Retention Report': 'Affiliate Retention Report',
     System: 'System',
     'Operator Log': 'Operator Log',
@@ -3571,6 +3588,7 @@ export default {
     'Member Refer Stat Analysis': 'Refer Friend Analysis',
     'Member Refer Relation': 'Refer Relation Query',
     'Sport Live Match Mars': 'Sport Live Match',
+    'Reg Retention Report': 'Reg Retention Report',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

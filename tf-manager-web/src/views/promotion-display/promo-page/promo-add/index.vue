@@ -2321,6 +2321,13 @@ onMounted(async () => {
 .image-input {
   width: 420px;
 }
+
+:deep(.w-e-toolbar .w-e-menu) {
+  z-index: unset !important;
+}
+:deep(.w-e-toolbar .w-e-droplist) {
+  z-index: 1;
+}
 </style>
 
 <style lang="scss">

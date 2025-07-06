@@ -505,7 +505,7 @@
             <!-- <span class="txt-style">Live Casino</span> -->
             <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
             <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
-            <div v-if="category.title === 'Lobby' && category.active">
+            <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div class="all-btn" @click="handleActivateSlide('Live')">
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
@@ -1177,6 +1177,31 @@
     ref="allGames"
     :closeFullGameDialog="closeFullGameDialog"
   ></GameModal>
+
+  <q-dialog
+    width="100%"
+    v-model="showClaimPopup.visible"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+    :persistent="true"
+  >
+    <div class="claim-popup-container" :class="{ ur: languageVal === 'ur' }">
+      <div v-if="showClaimPopup.prize !== 0" class="claimed-reward-wrapper">
+        <img class="claimed-reward" src="../assets/images/index/modal/claim-popup/claimed-reward.png" />
+        <span class="claimed-reward-desc">{{ `${$t('hotPromo.claimPopup.youWon')} ${store.currency.value}${showClaimPopup.prize}!` }}</span>
+        <div class="claimed-reward-highlight">{{ `+${store.currency.value}${showClaimPopup.prize}` }}</div>
+      </div>
+      <div v-else class="claim-reward-wrapper">
+        <img class="unclaimed-reward" src="../assets/images/index/modal/claim-popup/please-claim-reward.png" />
+        <span class="claimed-reward-desc">{{ `${$t('hotPromo.claimPopup.oneOfTodayWinners')}!` }}</span>
+      </div>
+      <img v-if="languageVal === 'ur'" @click="claimClaimPopupPrize" class="claim-reward-btn" :class="{ claimed: showClaimPopup.prize !== 0 }" src="../assets/images/index/modal/claim-popup/receieve-btn-ur.png" />
+      <img v-else @click="claimClaimPopupPrize" class="claim-reward-btn" :class="{ claimed: showClaimPopup.prize !== 0 }" src="../assets/images/index/modal/claim-popup/receieve-btn.png" />
+      <img @click="showClaimPopup.visible = false" class="close-btn" src="../assets/images/index/modal/claim-popup/close-btn.png" />
+    </div>
+  </q-dialog>
+
 
   <q-dialog
     width="100%"
@@ -4172,6 +4197,10 @@ const homePopupFrequency = ref(0);
 const homePopupFrequencyNum = ref(0);
 const homePopupLink = ref("");
 const homePopupLinkOut = ref(false);
+const showClaimPopup = ref({
+  visible: false,
+  prize: 0,
+});
 
 const setExpiryBanner = () => {
   isImportantAnnoucementModal.value = false;
@@ -4369,6 +4398,29 @@ const checkNewPlayerWheelPromoHomePopupCanShow = () => {
     newPlayerPromoHomePopupRef.value.checkIsCanShowPopup();
   }
 };
+
+const claimClaimPopupPrize = () => {
+  if(showClaimPopup.value.prize > 0) {
+    return;
+  }
+
+  eventapi.post('/session/privilege-voucher/claim').then((res) => {
+    if(res.code === 0) {
+      showClaimPopup.value.prize = res.data;
+    }
+  })
+}
+
+const loadClaimPopup = () => {
+  if (store.token) {
+    eventapi.get('/session/privilege-voucher/init').then((res) => {
+      if(res.code === 0 && res.data.bonus > 0) {
+        showClaimPopup.value.visible = true;
+      }
+    })
+  }
+}
+
 onActivated(async () => {
   nextTick(() => {
     if (
@@ -4461,6 +4513,7 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
+  loadClaimPopup();
   ui.shouldFetchDownloadAppUrl = true;
 
   if (store.hasToken() && ui.annoyingType !== "NONE") {
@@ -6765,6 +6818,114 @@ const checkGoogleLoginSetPwd = () => {
   100% {
     bottom: 60%; /* End position */
     right: -7vh; /* Back to the original position on the right */
+  }
+}
+
+.claim-popup-container {
+  background: url('../assets/images/index/modal/claim-popup/claim-popup-bg.png') center center no-repeat;
+  background-size: 100% 100%;
+  aspect-ratio: 1120/1550;
+  width: 350px;
+  height: 485px;
+  position: relative;
+  text-align: center;
+
+  &.ur {
+    background: url('../assets/images/index/modal/claim-popup/claim-popup-bg-ur.png') center center no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .claim-reward {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    width: 220px;
+    aspect-ratio: 393/305;
+  }
+
+  .claimed-reward-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .claimed-reward {
+      width: 150px;
+      aspect-ratio: 393/304;
+    }
+
+    .claimed-reward-highlight {
+      background: url('../assets/images/index/modal/claim-popup/claimed-reward-highlight.png') center center no-repeat;
+      background-size: 100% 100%;
+      aspect-ratio: 358/95;
+      width: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: 'Poppins';
+      font-weight: 900;
+      font-size: 30px;
+      line-height: 100%;
+      letter-spacing: 0px;
+      text-align: center;
+      color: #FFF96F;
+    }
+  }
+
+  .claim-reward-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 250px;
+
+    .unclaimed-reward {
+      width: 215px;
+      aspect-ratio: 393/304;
+    }
+  }
+
+  .claim-reward-btn {
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    width: 130px;
+    height: auto;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+
+    &:active {
+      transform: translate(-50%, -53%);
+    }
+
+    &.claimed {
+      filter: grayscale(1);
+    }
+  }
+
+  .close-btn {
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, 8%);
+    width: 25px;
+    height: auto;
   }
 }
 </style>

@@ -989,7 +989,9 @@ export default defineComponent({
     const homePopupLinkOut = ref(false);
 
     const setExpiryBanner = (path) => {
-      gotoPromo(path);
+      if (path) {
+        gotoPromo(path);
+      }
       isImportantAnnoucementModal.value = false;
     };
 
@@ -1489,6 +1491,7 @@ export default defineComponent({
       if (marqueePseudoRef.value) {
         new ResizeObserver(calculateMarqueeDuration).observe(marqueePseudoRef.value);
       }
+      checkShowImgTop();
     });
 
     watch(() => route.name, checkEdition);
@@ -1518,7 +1521,6 @@ export default defineComponent({
       } else {
         isLogined.value = false;
       }
-      checkShowImgTop();
     });
 
     const runMenuFloat = () => {
@@ -1971,7 +1973,6 @@ export default defineComponent({
       homePopupId,
       homePopupFrequency,
       homePopupFrequencyNum,
-      isImpt,
       isImportantAnnoucementModal,
       getImgPlatformLogo,
       getImgPlatformBg,
