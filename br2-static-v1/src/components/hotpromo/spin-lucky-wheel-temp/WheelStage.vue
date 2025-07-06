@@ -59,7 +59,7 @@
     </div> -->
     <div class="history-component">
         <div class="history-header">
-            <img style="width: 80%;position: relative;top: -6px;" src="./img/N-table-tittle.png"> 
+            <img style="width: 80%;position: relative;top: -6px;" src="./img/N-table-tittle.png">
         </div>
         <div class="history-table-container" ref="historyTableContainer">
           <table>
@@ -104,13 +104,13 @@
         <li>{{ $t("content.message6") }}</li>
         <li>{{ $t("content.message7") }}</li>
         <li>{{ $t("content.message8") }}</li> -->
-        <li>Jogue o jogo Aviator e ganhe prêmios em dinheiro gratuitamente</li>
-        <li> cada 10 apostas no jogo Aviator, você ganha uma chance na roleta. Super prêmio de 100,000 </li>
-        <li>s chances de roleta são válidas apenas no mesmo dia. No dia seguinte, a contagem recomeça. Participe todos os dias!</li>
-        <li> bônus (excluindo o principal) requer 1 vezes de apostas válidas para sacar;</li>
-        <li>Somente o proprietário da conta pode realizar operações manuais normais, caso contrário, o bônus será cancelado ou deduzido, congelado ou até mesmo colocado na lista negra;</li>
-        <li>Para evitar diferenças na compreensão do texto, a plataforma se reserva o direito final de interpretação desta atividade.</li>
-
+        <li>Para cada 10 apostas feitas em jogos Aviator Game, os membros recebem uma rodada de roleta. Quanto mais apostar, maior será o número de rodadas para as quais se qualifica para receber;</li>
+        <li>O número de rodadas de roleta é válido exclusivamente para o dia atual e reiniciado às 00:00, Hora do Brasil, todos os dias. A contagem será retomada no dia seguinte;</li>
+        <li>Não há limitações quanto ao número de vezes que cada Membro pode participar diariamente nesta promoção. Os membros são elegíveis para participar diariamente nesta promoção durante todo o período da promoção;</li>
+        <li>O grande prêmio para as rodadas de roleta é R$10.000;</li>
+        <li>Os ganhos da Roleta requerem apenas uma aposta 1x para levantamento;</li>
+        <li>Esta promoção destina-se exclusivamente a operações manuais realizadas pelo titular da conta. Qualquer divergência em relação às regras pode resultar no cancelamento, dedução ou congelamento do Bônus, ou pode levar à inclusão da conta em uma "Lista Negra";</li>
+        <li>Para evitar eventuais mal-entendidos em relação ao texto, a plataforma reserva-se o direito de fazer a interpretação final desta promoção.</li>
       </ol>
     </div>
 
@@ -337,9 +337,9 @@ const reset = () => {
 
 const handleWheelClick = () => {
   //dan test
-  
+
   if (spinButtonDisable.value || !info.value.availableSpin) return;
-  
+
   eventapi.post("/session/aviator-wheel-bet-count/spin?promoCode=br2-aviator-wheel-bet-count").then((res) => {
     if (res.code == 0) {
       prize.value = res.data;

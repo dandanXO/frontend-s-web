@@ -6,7 +6,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
           {{ $t("hotPromo.duration") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.longTerm") }}</div>
+        <div class="bar-desc">{{ $t("hotPromo.dailySecondDeposit.duration") }}</div>
       </div>
 
       <div class="receive-bar">
@@ -14,7 +14,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
           {{ $t("hotPromo.eligibility") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.successfulDepositMember") }}</div>
+        <div class="bar-desc">{{ $t("hotPromo.dailySecondDeposit.eligible") }}</div>
       </div>
 
       <div class="receive-bar">
@@ -30,7 +30,7 @@
 
     <div class="tnc-content">
       <ol>
-        <li v-for="index in 6" :key="index">
+        <li v-for="index in 8" :key="index">
           {{ $t(`hotPromo.dailySecondDeposit.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
       </ol>
