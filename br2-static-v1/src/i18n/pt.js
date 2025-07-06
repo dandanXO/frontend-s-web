@@ -956,7 +956,7 @@ export default {
     newMember: "Todos os novos membros registrados",
     allMembers: "Todos os membros",
     desc: "Detalhes da promoção",
-    tnc: "Regras da Promoção",
+    tnc: "Regras de promoção",
     cashbackWeekly: {
       description: "Cashback semanal com base na sua atividade de apostas e na porcentagem correspondente.",
       maxCashback: "Máx : {num}%",

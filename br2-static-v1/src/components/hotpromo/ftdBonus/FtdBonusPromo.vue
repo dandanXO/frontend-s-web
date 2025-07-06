@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="promo-subtitle">Regras da Promoção</div>
+    <div class="promo-subtitle">Regras de promoção</div>
 
     <div class="tnc-content">
       <ol>
