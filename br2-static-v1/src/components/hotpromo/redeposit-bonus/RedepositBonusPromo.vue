@@ -7,7 +7,7 @@
           {{ $t("hotPromo.duration") }}
         </div>
         <div class="bar-desc">
-          <div class="bar-desc">{{ $t("hotPromo.longTerm") }}</div>
+          <div class="bar-desc">{{ $t("hotPromo.redepositBonus.duration") }}</div>
         </div>
       </div>
 
@@ -16,7 +16,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
           {{ $t("hotPromo.eligibility") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.allMembers") }}</div>
+        <div class="bar-desc">{{ $t("hotPromo.redepositBonus.eligible") }}</div>
       </div>
 
       <div class="receive-bar">
