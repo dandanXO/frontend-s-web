@@ -77,7 +77,7 @@
 import { ref, onMounted } from "vue";
 import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
-import { useQuasar, Platform } from "quasar";
+import { useQuasar, Platform, SessionStorage } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { Device } from "@capacitor/device";
 import { t } from "src/boot/lang";
@@ -127,15 +127,22 @@ const login = () => {
         .then((res) => {
           sessionStorage.removeItem("REFERRAL_CODE");
 
-          phone.value = "";
-          password.value = "";
-
           if (store.hasToken()) {
+            console.log(store.nickName);
+            SessionStorage.set("user-info", {
+              account: phone.value,
+              type: "login"
+            });
             const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
             router.go(jumpUrl);
           }
 
+          phone.value = "";
+          password.value = "";
+
           uiStore.loginView = "";
+
+          SessionStorage.set("IS_COLLECTBONUS_POPUP", true);
         })
         .catch((e) => {})
         .finally(() => {

@@ -6,7 +6,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
           {{ $t("hotPromo.duration") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.longTerm") }}</div>
+        <div class="bar-desc">{{$t("hotPromo.betCashback.duration") }}</div>
       </div>
 
       <div class="receive-bar">
@@ -14,7 +14,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
           {{ $t("hotPromo.eligibility") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.betMember") }}</div>
+        <div class="bar-desc">{{ $t("hotPromo.betCashback.eligible") }}</div>
       </div>
 
       <div class="receive-bar">
@@ -83,7 +83,7 @@
           <tr class="highlight">
             <td>10</td>
             <td>5,000,000</td>
-            <td>3.2%</td>
+            <td>3.0%</td>
           </tr>
         </tbody>
       </table>
@@ -93,7 +93,7 @@
 
     <div class="tnc-content">
       <ol>
-        <li v-for="index in 6" :key="index">
+        <li v-for="index in 7" :key="index">
           {{ $t(`hotPromo.betCashback.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
       </ol>

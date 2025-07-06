@@ -46,6 +46,8 @@
     />
     <SlotsRebatePromo v-if="list.redirectUrl === 'xf1-slots-rebate'" :promo-code="list.promoCode" />
     <SlotsBonusPromo v-if="list.redirectUrl === 'xf1-slots-bet-bonus'" :promo-code="list.promoCode" />
+     <PPDianZiTianTianSong v-else-if="list.redirectUrl === 'xf-PPdianzitiantiansong'" :promo-code="list.promoCode" />
+
     <div v-if="list.redirectUrl === 'fucaiiphone'" class="promo-4">
       <div class="tabs">
         <q-card-section>
@@ -191,7 +193,9 @@ const LanternFestival2025 = defineAsyncComponent(() =>
   import("../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue")
 );
 const HongBaoYu2025 = defineAsyncComponent(() => import("../components/hotpromo/hongbaoyu2025/HongBaoYu2025.vue"));
-
+const PPDianZiTianTianSong = defineAsyncComponent(() =>
+  import("./hotpromo/ppdianzitiantiansong/PPDianZiTianTianSong.vue")
+);
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -215,7 +219,8 @@ export default defineComponent({
     OfficialGiftPromo,
     DepositAwardPromo,
     SlotsRebatePromo,
-    SlotsBonusPromo
+    SlotsBonusPromo,
+    PPDianZiTianTianSong
   },
   props: {
     list: {

@@ -41,7 +41,7 @@ const localIsShowDialog = ref(props.isShowDialog);
 
 const computedHeaderImg = computed(() => {
   return props.headerImg
-    ? require(`${props.headerImg}`)
+    ? props.headerImg
     : require(`../../assets/images/index/modal/congrats-header.png`);
 });
 
@@ -66,8 +66,8 @@ watch(
 <style lang="scss" scoped>
 .congrats-container {
   background-image: unset;
-  background-color: #1e371f;
-  border: 1px solid #337e3a;
+  background-color: #090F1E;
+  border: 1px solid #2197D8;
   border-radius: 10px !important;
   max-width: 350px;
   width: 100%;
@@ -126,8 +126,8 @@ watch(
     color: #fff96f;
     font-size: 45px;
     text-align: center;
-    background: linear-gradient(90deg, transparent, #fff96f29, transparent);
-    // background-image: url(../../assets/images/index/modal/congrats-highlight-bg.png);
+    // background: linear-gradient(90deg, transparent, #fff96f29, transparent);
+    background-image: url(../../assets/images/index/modal/congrats-highlight-bg.png);
     padding: 0 12px;
     background-repeat: no-repeat;
     background-size: 70% 100%;
@@ -154,12 +154,12 @@ watch(
   transform: translateX(-50%);
   white-space: nowrap;
   .congrats-btn {
-    background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
     border-radius: 10px;
     font-weight: 700;
     font-size: 16px;
     line-height: 24px;
-    color: #000a01;
+    color: #ffffff;
   }
 }
 </style>

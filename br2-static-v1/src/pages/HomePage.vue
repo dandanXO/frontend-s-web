@@ -1184,7 +1184,17 @@
 
   <!-- DONT REMOVE THIS GOT USE DE-->
   <SpinLuckyWheelPromoSticky v-show="false" />
-  <LossRebateModal @closeDialog="isShowLossRebateModal = false;" :detail="cashBackDetails" v-model="isShowLossRebateModal" />
+  <!-- <LossRebateModal
+    @closeDialog="isShowLossRebateModal = false"
+    :detail="cashBackDetails"
+    v-model="isShowLossRebateModal"
+  /> -->
+
+
+  <BonusCollectModal
+    @closeDialog="isShowBonusCollectModal = false"
+    v-model="isShowBonusCollectModal"
+  />
 </template>
 
 <script setup>
@@ -1222,6 +1232,8 @@ import { storeToRefs } from "pinia";
 import PopupController from "src/components/PopupController.vue";
 import MoneyRainModal from "../components/modal/MoneyRainModal.vue";
 import LossRebateModal from "src/components/modal/LossRebateModal.vue";
+import LoginRebateModal from "src/components/modal/LoginRebateModal.vue";
+import BonusCollectModal from "src/components/modal/BonusCollectModal.vue";
 
 const isShowLossRebateModal = ref(false);
 const cashBackDetails = reactive({
@@ -1229,7 +1241,18 @@ const cashBackDetails = reactive({
   betRebateClaimed: false,
   lossRebateAmount: 0,
   lossRebateClaimed: false
-})
+});
+
+
+
+const isShowBonusCollectModal = ref(false);
+
+const loadBonusCollectPopup = () => {
+  const collectBonusPopup = sessionStorage.getItem("IS_COLLECTBONUS_POPUP") ? true : false;
+  if (store.token) {
+    isShowBonusCollectModal.value = collectBonusPopup;
+  }
+};
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -3234,27 +3257,33 @@ const loadBetCashBackPopup = () => {
   const getTime = sessionStorage.getItem("IS_CASHBACK_POPUP");
   const currentTime = moment().format("YYYY-MM-DD HH:mm:ss");
   // true ||
-  if(!getTime || getTime > currentTime) {
-    sessionStorage.removeItem("IS_CASHBACK_POPUP")
-    api.get(`/session/member/rebateAndCashback?betRebatePromoCode=br2-daily-bet-rebate&lossRebatePromoCode=br2-loss-rebate`).then((res) => {
-      console.log(res);
-      if (res.code === 0) {
-        const { betRebateAmount, betRebateClaimed, lossRebateAmount, lossRebateClaimed } = res.data;
+  if (!getTime || getTime > currentTime) {
+    sessionStorage.removeItem("IS_CASHBACK_POPUP");
+    api
+      .get(
+        `/session/member/rebateAndCashback?betRebatePromoCode=br2-daily-bet-rebate&lossRebatePromoCode=br2-loss-rebate`
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.code === 0) {
+          const { betRebateAmount, betRebateClaimed, lossRebateAmount, lossRebateClaimed } = res.data;
 
-        cashBackDetails.betRebateAmount = betRebateAmount;
-        cashBackDetails.betRebateClaimed = betRebateClaimed;
-        cashBackDetails.lossRebateAmount = lossRebateAmount;
-        cashBackDetails.lossRebateClaimed = lossRebateClaimed;
+          cashBackDetails.betRebateAmount = betRebateAmount;
+          cashBackDetails.betRebateClaimed = betRebateClaimed;
+          cashBackDetails.lossRebateAmount = lossRebateAmount;
+          cashBackDetails.lossRebateClaimed = lossRebateClaimed;
 
-        // true ||
-        isShowLossRebateModal.value = (cashBackDetails.betRebateAmount !== 0 || cashBackDetails.lossRebateAmount !== 0);
+          // true ||
+          isShowLossRebateModal.value = cashBackDetails.betRebateAmount !== 0 || cashBackDetails.lossRebateAmount !== 0;
 
-        const after6HoursTime = moment().add(6, "hours").format("YYYY-MM-DD HH:mm:ss");
-        sessionStorage.setItem("IS_CASHBACK_POPUP", JSON.stringify(after6HoursTime));
-      }
-    });
+          const after6HoursTime = moment().add(6, "hours").format("YYYY-MM-DD HH:mm:ss");
+          sessionStorage.setItem("IS_CASHBACK_POPUP", JSON.stringify(after6HoursTime));
+        }
+      });
   }
-}
+};
+
+
 
 onActivated(() => {
   if (route.query.login === "true" || route.query.register === "true") {
@@ -3264,11 +3293,14 @@ onActivated(() => {
   }
   // popupPromo.value = "money-rain";
 
-  if(store.hasToken()){
+  if (store.hasToken()) {
     store.getUnreadTotal();
-    loadBetCashBackPopup();
-  }
+    // loadBetCashBackPopup();
 
+    loadBonusCollectPopup();
+
+
+  }
 });
 
 onMounted(() => {
@@ -3309,6 +3341,7 @@ onBeforeUnmount(() => {
   clearInterval(intervalId);
   clearInterval(jackpotTimer);
   clearInterval(jackpotApiTimer);
+  // clearInterval(cashbackTimer)
 });
 </script>
 
@@ -3475,10 +3508,10 @@ onBeforeUnmount(() => {
   .station-notice-wrapper {
     display: flex;
     background: linear-gradient(
-        270deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.11) 50.48%,
-        rgba(255, 255, 255, 0) 100%
+      270deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.11) 50.48%,
+      rgba(255, 255, 255, 0) 100%
     );
     gap: 10px;
     padding: 2px 10px;

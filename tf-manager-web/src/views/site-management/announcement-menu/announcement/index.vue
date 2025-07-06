@@ -992,6 +992,12 @@ onMounted(async () => {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+:deep(.w-e-toolbar .w-e-menu) {
+  z-index: unset !important;
+}
+:deep(.w-e-toolbar .w-e-droplist) {
+  z-index: 1;
+}
 .header-container {
   margin-bottom: 10px;
 }

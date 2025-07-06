@@ -1018,6 +1018,7 @@ export default defineComponent({
               state.loginForm.site === 'IW2' ||
               state.loginForm.site === 'VNM' ||
               state.loginForm.site === 'BR2' ||
+              state.loginForm.site === 'BR1' ||
               state.loginForm.site === 'KRW'
             ) {
               methods.userLogin()
@@ -1097,6 +1098,7 @@ export default defineComponent({
           state.loginForm.site === 'VNM' ||
           state.loginForm.site === 'KA2' ||
           state.loginForm.site === 'BR2' ||
+          state.loginForm.site === 'BR1' ||
           state.loginForm.site === 'KRW'
         ) {
           router

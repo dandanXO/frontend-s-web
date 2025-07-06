@@ -35,7 +35,7 @@
       </q-carousel-slide>
     </q-carousel>
   </div>
-  <img @click="props.closePopout" class="close-btn" src="../../assets/images/home/site-popout/close-btn.png" />
+  <img @click="$emit('popout-click')" class="close-btn" src="../../assets/images/home/site-popout/close-btn.png" />
 </template>
 
 <script setup>

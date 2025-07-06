@@ -350,13 +350,28 @@ function validate() {
   transferForm.value.validate(async (valid) => {
     if (valid) {
       if (request.times && request.times.length === 2) {
-        form.date = request.times.join(',')
+        const query = {};
+        let timeZone = null
+        if (request.siteId) {
+          timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+        }
+        query.times = JSON.parse(JSON.stringify(request.times));
+        query.times[0] = formatInputTimeZone(query.times[0], timeZone, 'start', 'YYYY-MM-DD');
+        query.times[1] = formatInputTimeZone(query.times[1], timeZone, 'end', 'YYYY-MM-DD');
+        query.times = query.times.join(',')
+        form.date = query.times;
       }
-      await update(form);
-      uiControl.dialogLoading = false;
-      uiControl.dialogVisible = false;
-      await loadTransferRecords();
-      ElMessage({ message: t('message.validateSuccess'), type: "success" });
+
+      try {
+        await update(form);
+        uiControl.dialogLoading = false;
+        uiControl.dialogVisible = false;
+        await loadTransferRecords();
+        ElMessage({ message: t('message.validateSuccess'), type: "success" });
+      } catch (error) {
+      } finally {
+        uiControl.dialogLoading = false;
+      }
     }
     uiControl.dialogLoading = false;
   });

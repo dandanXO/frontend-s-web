@@ -37,6 +37,11 @@
       :promo-param="listParam"
       :promo-code="list.promoCode"
     />
+    <PPDianZiTianTianSong
+      v-if="list.redirectUrl === 'xf-PPdianzitiantiansong'"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
     <AgYuanxiaohongbao v-if="list.redirectUrl === 'xf1-ag-yuanxiaohongbao'" :promo-code="list.promoCode" />
     <div v-if="list.redirectUrl === 'fucaiiphone'" class="promo-4">
       <div class="tabs">
@@ -203,6 +208,7 @@ import SlotsRebatePromo from "../components/hotpromo/slotsrebate/SlotsRebateProm
 import LanternFestival2025 from "../components/hotpromo/lantern-festival-2025/LanternFestival2025.vue";
 import AgYuanxiaohongbao from "../components/hotpromo/agyuanxiaohongbao/AgYuanxiaohongbao.vue";
 const HongBaoYu2025 = defineAsyncComponent(() => import("@/components/hotpromo/hongbaoyu2025/HongBaoYu2025.vue"));
+import PPDianZiTianTianSong from "../components/hotpromo/ppdianzitiantiansong/PPDianZiTianTianSong.vue";
 
 import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
@@ -232,7 +238,8 @@ export default defineComponent({
     SlotsRebatePromo,
     SlotsBonusPromo,
     HongBaoYu2025,
-    OfficialGiftPromo
+    OfficialGiftPromo,
+    PPDianZiTianTianSong
     // DailyBonus
   },
   props: {

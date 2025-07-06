@@ -89,4 +89,18 @@ const handleDetail = () => {
     }
   }
 }
+
+.dark {
+  .announcement-component {
+    background: #2d4065;
+  }
+
+  .announcement-footer {
+    .footer-button {
+      &.detail {
+        background: url("../../assets/home/announcement/blue-bg-title.png");
+      }
+    }
+  }
+}
 </style>
