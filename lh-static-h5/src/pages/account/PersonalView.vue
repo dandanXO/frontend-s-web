@@ -681,5 +681,11 @@ export default defineComponent({
       background: #060d1b5c;
     }
   }
+  .q-date__header {
+    background: #212b43;
+  }
+  .q-date__main {
+    background: #0f182e;
+  }
 }
 </style>
