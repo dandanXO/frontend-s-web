@@ -1182,6 +1182,7 @@ export default {
     10008: "Erro",
     11000: "Falha na submissão do depósito.",
     11003: "Depósito falhou",
+    10031: "Promoção não encontrada",
     11005: "Operações do usuário muito frequentes. Por favor, tente novamente.",
     12100: "Senha de retirada não corresponde",
     12101: "A nova senha de retirada não pode ser igual à antiga",
