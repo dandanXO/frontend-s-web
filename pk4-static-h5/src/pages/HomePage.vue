@@ -1137,7 +1137,7 @@
         </div>
       </template>
     </template>
-          <div class="download-app-buttons">
+          <!-- <div class="download-app-buttons">
             <div class="app app_ios">
               <div class="icon">
                 <img src="../assets/images/index/app-ios.png">
@@ -1165,7 +1165,7 @@
                 <img src="../assets/images/index/btn-right.png">
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="support-button">
             <div class="supp-left">
               <div class="supp-main">{{ $t('home.twentyFourSevenSupport') }}</div>
