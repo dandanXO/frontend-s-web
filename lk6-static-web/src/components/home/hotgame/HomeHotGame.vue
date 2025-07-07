@@ -15,7 +15,9 @@
     
     
     <div class="hotgame-container">
-      <div class="hotgame-wrapper" v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`">
+      <SportsView v-if="currentBannerIndex === 1" />
+
+      <div style="display:none;" class="hotgame-wrapper" v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`">
         <div class="hotgame-banner-wrapper">
           <div
             :class="`hotgame-banner ${hotgameIndex === currentBannerIndex ? 'highlight' : ''}`"
@@ -190,6 +192,7 @@ import {
 } from "@/shared/platformArray";
 import moment from "moment";
 import { useDark } from "@vueuse/core";
+import SportsView from "@/views/SportsView.vue";
 
 const store = userStore();
 const router = useRouter();
@@ -665,7 +668,7 @@ const setCurrentProvider = (element, value) => {
   transitionDesc.value++;
 };
 
-let currentBannerIndex = ref(0);
+let currentBannerIndex = ref(1);
 const setBannerPosition = (index) => {
   hotgameData.value.forEach((e, i) => {
     if (i === index) e.isShow = true;
