@@ -47,7 +47,7 @@
         </template>
       </q-input>
 
-      <q-input
+      <!-- <q-input
         ref="emailRef"
         outlined
         v-model="email"
@@ -65,7 +65,7 @@
           <img v-if="!email" src="../../../assets/images/auth/email-icon.png" width="22px" />
           <img v-else src="../../../assets/images/auth/email-icon-active.png" width="22px" />
         </template>
-      </q-input>
+      </q-input> -->
 
       <q-input
         ref="phoneRef"
@@ -216,10 +216,10 @@ const register = () => {
   passwordRef.value.validate();
   firstNameRef.value.validate();
   lastNameRef.value.validate();
-  emailRef.value.validate();
+  // emailRef.value.validate();
   taxIdRef.value.validate();
 
-  if (taxIdRef.value.hasError || firstNameRef.value.hasError || lastNameRef.value.hasError || emailRef.value.hasError || taxIdRef.value.hasError|| phoneRef.value.hasError || passwordRef.value.hasError || isAgreeReg.value === false) {
+  if (taxIdRef.value.hasError || firstNameRef.value.hasError || lastNameRef.value.hasError || taxIdRef.value.hasError|| phoneRef.value.hasError || passwordRef.value.hasError || isAgreeReg.value === false) {
     $q.loading.hide();
   } else {
     var qs = require("qs");
@@ -272,7 +272,7 @@ const register = () => {
             password: password.value,
             taxId: taxId.value,
             realName: `${firstName.value},${lastName.value}`,
-            email: email.value,
+            // email: email.value,
             captchaCode: captchaCode.value,
             codeId: codeId.value,
             codeAffiliate: codeAffiliate.value,
