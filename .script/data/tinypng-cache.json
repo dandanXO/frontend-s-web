@@ -15476,7 +15476,7 @@
   "lk6-static-h5/src/assets/images/promotion/hotpromo/19/bg.png": "f34f38e042cac52733186865991bd40e",
   "lk6-static-h5/src/assets/images/promotion/hotpromo/19/app-web-img.jpg": "6667260da56ce59863219c177560547c",
   "lk6-static-h5/src/assets/images/promotion/hotpromo/19/app-banner.jpg": "ec91fe5dc024ebdd19b269f6a50db10e",
-  "lk6-static-h5/src/assets/images/promo/promo-item-bg.png": "c0f231513df1b00eec18909fd44bcc74",
+  "lk6-static-h5/src/assets/images/promo/promo-item-bg.png": "c894336ae20a51fa3d36d132085bbdce",
   "lk6-static-h5/src/assets/images/promo/hotpromo/worldcup-2025/title-ribbon.png": "648115fbad0275c87923391fe66b40b8",
   "lk6-static-h5/src/assets/images/promo/hotpromo/worldcup-2025/title-ribbon-dark.png": "267d6ed9ecf13581c6681c5f85ed28cb",
   "lk6-static-h5/src/assets/images/promo/hotpromo/worldcup-2025/title-pattern-right.png": "eacfe922def43e86a100e3a2bb6e784e",
@@ -31708,7 +31708,6 @@
   "affiliate-static-web/src/assets/404-images/404-cloud.png": "cce9455f4a8d38fcc10dcf223257df48",
   "lh-static-web/src/assets/home/announcement/blue-bg-title.png": "a7314ce72eed7d77fab83a8565248030",
   "lh-static-web/src/assets/home/announcement/tab-inbox-active-dark.png": "a4e76461968539a063b03136d1a09075",
-  "affiliate-static-web/src/assets/404-images/404-cloud.png": "cce9455f4a8d38fcc10dcf223257df48",
   "lk6-static-h5/src/assets/index/game-type-bg.png": "5738465c8b24262fd81675a4b9cef096",
   "lk6-static-h5/src/assets/index/home-hot-match-icon.png": "c4f7151e835cdff329dd496cb5e993c1",
   "lk6-static-h5/src/assets/index/slide-baccarat-icon-active.png": "a81c6d23e7f3e06971cf552e7276a8f4",
@@ -31719,5 +31718,5 @@
   "lk6-static-h5/src/assets/index/live/platform-img-eeai.png": "603b99eee01db39ba7ca92a0215b7266",
   "lk6-static-h5/src/assets/index/live/platform-img-mask.png": "f70e99abcf60fa8da15292815511e437",
   "lk6-static-h5/src/assets/index/live/platform-logo-eeai.png": "657534505130e137f65dd4052f99d6d7",
-  "lk6-static-h5/src/assets/index/play-btn-bg.png": "f3e094b5f398c18e91a648a1651227f0"
+  "lk6-static-h5/src/assets/index/play-btn-bg.png": "1c008dcc1f8068752cca6b6095f6c00a"
 }
