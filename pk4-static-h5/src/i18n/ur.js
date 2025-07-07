@@ -70,6 +70,7 @@ export default {
     wallet: "پرس",
     me: "میں",
     account: "اکاؤنٹ",
+    sport: "کھیل",
     more: "مزید",
     dividend: "حصہ",
     announcement: "اعلان"

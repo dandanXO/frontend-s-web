@@ -31,10 +31,10 @@
       </q-route-tab>
       <q-route-tab @click="playGame('BetBy', 'BetBy')" name="betby" :ripple="false">
         <div class="footer-img">
-          <img class="inactive" src="../assets/images/index/menu/icon-betby.png" />
-          <img class="hover" src="../assets/images/index/menu/icon-betby-hover.png" />
+          <img style="min-width: 22px" class="inactive" src="../assets/images/index/menu/icon-betby.png" />
+          <img style="min-width: 22px" class="hover" src="../assets/images/index/menu/icon-betby-hover.png" />
         </div>
-        <span class="footer-label">BetBy</span>
+        <span class="footer-label">{{ $t("bottomNav.sport") }}</span>
       </q-route-tab>
       <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
         <div class="footer-img">

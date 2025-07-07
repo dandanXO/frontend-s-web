@@ -70,6 +70,7 @@ export default {
     earnMoney: "Earn Money",
     wallet: "Wallet",
     me: "Me",
+    sport: "Sports",
     account: "Account",
     more: "More",
     announcement: "Announcement",
