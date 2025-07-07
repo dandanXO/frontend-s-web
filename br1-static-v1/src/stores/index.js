@@ -49,6 +49,7 @@ export const userStore = defineStore("userStore", {
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
       ftdPrivilegeId: "",
+      taxId: "",
       ftd: true,
       spinWheelLuckyPromoInfo: {
         startTime: "",
@@ -222,7 +223,8 @@ export const userStore = defineStore("userStore", {
             evip,
             currentDeposit,
             levelUpDeposit,
-            guest
+            guest,
+            taxId
           } = response.data;
 
           this.id = id;
@@ -240,6 +242,7 @@ export const userStore = defineStore("userStore", {
           this.currentDeposit = parseFloat(currentDeposit);
           this.levelUpDeposit = parseFloat(levelUpDeposit);
           this.guest = guest;
+          this.taxId = taxId;
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
             OneSignal.login(this.nickName);
