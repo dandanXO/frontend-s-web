@@ -1764,7 +1764,7 @@ export default defineComponent({
 
   &__layout {
     margin: 0 auto;
-    z-index: 4000;
+    z-index: 1;
     height: 100%;
 
     max-width: 950px;
@@ -2084,6 +2084,54 @@ export default defineComponent({
   .q-card {
     border-radius: 14px;
     padding: 30px 10px 10px;
+  }
+}
+
+.body--dark {
+  .WAL-start,
+  .WAL__layout {
+    height: calc(100vh - 80px) !important;
+    &.no-footer {
+      height: 100vh !important;
+    }
+  }
+
+  .q-page-container {
+    padding-bottom: 72px;
+  }
+
+  .WAL-start,
+  .WAL__layout {
+    height: calc(100vh - 80px) !important;
+    &.no-footer {
+      height: 100vh !important;
+    }
+  }
+
+  .q-page-container {
+    padding-bottom: 72px;
+  }
+
+  .prechat-section {
+    background: #212b43;
+  }
+
+  .prechat-form {
+    .q-btn::before {
+      background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c);
+      border: 1px solid #4f535a;
+    }
+    .start-chat-btn {
+      background: transparent;
+    }
+  }
+
+  :deep(.q-field.q-field--focused .q-field__control)::before {
+    color: #000 !important;
+  }
+
+  .bg-primary {
+    background: #212b43;
   }
 }
 </style>
