@@ -438,7 +438,7 @@ export default {
     rewards: "Recompensas",
     vipTable_txt:
       "Assim que seus depósitos atenderem aos requisitos de atualização, seu nível VIP será imediatamente atualizado, aumentando seu número de retiradas.",
-    monthlyCumulativeBet: "Aposta Mensal Acumulado para Atualizar Nível VIP",
+    monthlyCumulativeBet: "Aposta Acumulado para Atualizar Nível VIP",
     level: "Nível",
     amount: "Valor",
     turnover: "Volume de Negócios",
