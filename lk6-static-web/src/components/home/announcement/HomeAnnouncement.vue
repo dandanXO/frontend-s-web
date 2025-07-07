@@ -257,6 +257,7 @@ onMounted(() => {
 .marquee-wrapper {
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 
 /* Left and right fade overlays */
@@ -267,7 +268,7 @@ onMounted(() => {
   top: 0;
   width: 40px;
   height: 100%;
-  z-index: 1111111;
+  z-index: 2;
   pointer-events: none;
 }
 

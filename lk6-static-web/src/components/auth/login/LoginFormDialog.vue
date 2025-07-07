@@ -13,7 +13,7 @@
         :src="
           isDark
             ? require('@/assets/home/auth/username-icon-dark.png')
-            : require('@/assets/home/auth/username-icon.png')
+            : require('@/assets/home/auth/username-icon.svg')
         "
       />
 
@@ -28,7 +28,7 @@
         :src="
           isDark
             ? require('@/assets/home/auth/password-icon-dark.png')
-            : require('@/assets/home/auth/password-icon.png')
+            : require('@/assets/home/auth/password-icon.svg')
         "
       />
 
@@ -50,7 +50,7 @@
         :src="
           isDark
             ? require('@/assets/home/auth/verification-icon-dark.png')
-            : require('@/assets/home/auth/verification-icon.png')
+            : require('@/assets/home/auth/verification-icon.svg')
         "
       />
 
@@ -496,4 +496,20 @@ const loginRules = {
     }
   }
 }
+</style>
+
+
+<style lang="scss">
+  .el-overlay:has(.acc-dialog) {
+    background: url("@/assets/home/auth/login-page-bg.jpg");
+    background-size: 100% auto;
+  }
+
+  .acc-dialog-homelogo {
+    display:flex;
+    gap:5px;
+    justify-content:center;
+    align-items:center;
+    margin: 0 auto;
+  }
 </style>

@@ -23,7 +23,7 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/username-icon.svg" />
       <el-form-item label="用户名" prop="loginName">
         <el-input class="wTip" v-model="regForm.loginName" placeholder="4~11位包含字母和数字" clearable>
           <template #append></template>
@@ -32,7 +32,7 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/password-icon.svg" />
       <el-form-item label="密码" prop="password">
         <el-input
           class="wTip"
@@ -48,7 +48,7 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/password-icon.svg" />
       <el-form-item label="确认密码" prop="confirmPwd">
         <el-input
           class="half wTip"
@@ -86,7 +86,7 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.svg" />
       <el-form-item label="验证码" prop="captchaCode">
         <div style="display: flex; width: 100%">
           <el-input

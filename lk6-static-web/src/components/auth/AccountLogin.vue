@@ -1,14 +1,14 @@
 <template>
   <el-form ref="loginRef" :rules="loginRules" :model="loginForm" label-width="70" size="large">
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="../../assets/home/auth/username-icon.png" />
+      <img class="form-field-icon" src="../../assets/home/auth/username-icon.svg" />
       <el-form-item label="用户名" prop="loginName">
         <el-input v-model="loginForm.loginName" placeholder="请输入6-12位非汉字字符" clearable />
       </el-form-item>
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="../../assets/home/auth/password-icon.png" />
+      <img class="form-field-icon" src="../../assets/home/auth/password-icon.svg" />
       <el-form-item label="密码" prop="password">
         <el-input
           v-model="loginForm.password"
@@ -21,7 +21,7 @@
     </div>
 
     <div class="light-bg form-field geetest-captcha-form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.svg" />
       <div class="geetest-captcha-wrapper">
         <div class="geetest-captcha-label">
           <span style="color: red; margin-right: 4px">*</span>
