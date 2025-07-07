@@ -1,6 +1,6 @@
-# BR1 App (br1-h5-project)
+# BR2 App (br2-h5-project)
 
-Brazil H5 APP
+Brazil 2 H5 APP
 - Node Version >= 16.17.0
 - H5 + Android APP
 
