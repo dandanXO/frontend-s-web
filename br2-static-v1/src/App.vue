@@ -388,6 +388,7 @@ export default defineComponent({
     };
 
     onMounted(async () => {
+      console.log("BR2 0707-1")
       // const info = await App.getInfo();
       // console.log("APP Info");
       // console.log(info);
