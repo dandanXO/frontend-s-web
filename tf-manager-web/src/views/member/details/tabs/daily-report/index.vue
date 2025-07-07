@@ -90,47 +90,61 @@
           <span />
         </el-descriptions-item>
       </el-descriptions>
-      <el-descriptions
-        size="small"
+      <div
         v-for="(item, index) in platform.sitePlatform"
         :key="index"
-        :title="item.gameType"
-        :column="2"
-        class="margin-top"
-        style="margin-bottom: 20px;"
-        border
       >
-        <el-descriptions-item
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context-report"
-          v-for="(list, i) in item.list[0]"
-          :key="i"
+        <el-descriptions
+          size="small"
+          :title="item.gameType"
+          :column="2"
+          class="margin-top"
+          style="margin-bottom: 20px;"
+          border
         >
-          <template #label>
-            <div>
-              {{ list.platformName }}
-            </div>
-          </template>
-          <span v-formatter="{data: list.bet, type: 'money'}" />
-          /
-          <span v-formatter="{data: list.payout, type: 'money'}" />
-        </el-descriptions-item>
-        <!-- Add an additional empty el-descriptions-item when there are exactly three records -->
-        <el-descriptions-item
-          v-if="item.list[0].length % 2 !== 0"
-          label-align="left"
-          label-class-name="member-label"
-          class-name="member-context-report"
-        >
-          <template #label>
-            <div>
-              <!-- Placeholder label for the additional empty el-descriptions-item -->
-            </div>
-          </template>
-          <span />
-        </el-descriptions-item>
-      </el-descriptions>
+          <el-descriptions-item
+            label-align="left"
+            label-class-name="member-label"
+            class-name="member-context-report"
+            v-for="(list, i) in item.list[0]"
+            :key="i"
+          >
+            <template #label>
+              <div>
+                {{ list.platformName }}
+              </div>
+            </template>
+            <span v-formatter="{data: list.bet, type: 'money'}" />
+            /
+            <span v-formatter="{data: list.payout, type: 'money'}" />
+          </el-descriptions-item>
+          <!-- Add an additional empty el-descriptions-item when there are exactly three records -->
+          <el-descriptions-item
+            label-align="left"
+            label-class-name="member-label"
+            class-name="member-context-report"
+          >
+            <template #label>
+              {{ t('fields.total') }}
+            </template>
+            <span
+              v-formatter="{data: platform.gameTypeTotal[item.gameType].totalBet, type: 'money'}"
+              class="platform-balance"
+              style="font-weight: 900; font-size: 15px; color: red"
+            >
+              {{ t('fields.totalBet') }}
+            </span>
+            /
+            <span
+              v-formatter="{data: platform.gameTypeTotal[item.gameType].totalPayout, type: 'money'}"
+              class="platform-balance"
+              style="font-weight: 900; font-size: 15px; color: red"
+            >
+              {{ t('fields.totalPayout') }}
+            </span>
+          </el-descriptions-item>
+        </el-descriptions>
+      </div>
     </el-card>
   </div>
 </template>
@@ -157,6 +171,7 @@ const platform = reactive({
   totalBet: 0,
   totalWin: 0,
   totalPayout: 0,
+  gameTypeTotal: {}
 })
 
 const route = useRoute()
@@ -268,6 +283,17 @@ async function loadPlatformSummaryList() {
   platform.totalBet = getTotalBet
   platform.totalPayout = getTotalPayout
   platform.totalWin = getTotalWinLose
+
+  platform.gameTypeTotal = platform.sitePlatform.reduce((acc, item) => {
+    if (!acc[item.gameType]) {
+      acc[item.gameType] = { totalBet: 0, totalPayout: 0 }
+    }
+    item.list[0].forEach(list => {
+      acc[item.gameType].totalBet += list.bet
+      acc[item.gameType].totalPayout += list.payout
+    })
+    return acc
+  }, {})
 }
 
 // function calendarChange(date) {
