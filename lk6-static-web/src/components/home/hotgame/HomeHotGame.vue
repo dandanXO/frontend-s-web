@@ -281,7 +281,7 @@ const hotgameData = ref([
     type: "sport",
     content: {
       isShowSportsIcon: [
-        require("../../../assets/sports/sports-pattern.png")
+        require("../../../assets/sports/sports-pattern.svg")
         // require("../../../assets/home/hotgame/content/sports/icon_basketball.png"),
         // require("../../../assets/home/hotgame/content/sports/icon_football.png"),
         // require("../../../assets/home/hotgame/content/sports/icon_volleyball.png"),
