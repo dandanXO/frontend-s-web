@@ -343,8 +343,8 @@
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../assets/home/auth/login-logo-left.png" height="60px" />
-            <img src="../../assets/home/auth/login-logo-right.svg" height="60px" />
+            <img src="../../assets/home/auth/login-logo-left.png" height="50px" />
+            <img src="../../assets/home/auth/login-logo-right.svg" height="45px" />
           </div>
           <div class="acc-dialog-content">
             <LoginDialog
@@ -2496,6 +2496,8 @@ body {
 
       .acc-dialog-container {
         display: flex;
+        border-radius: 16px;
+        overflow: hidden;
       }
 
       .acc-dialog-left {
@@ -2503,14 +2505,11 @@ body {
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
         overflow: hidden;
 
         .acc-dialog-img {
           max-width: 963px;
           max-height: 896px;
-          border-radius: 20px;
           height: 100%;
 
           img {
@@ -2525,6 +2524,7 @@ body {
       .acc-dialog-right {
         width: 460px;
         padding: 24px 24px 24px 24px;
+        background-color: #F7F9FC;
 
         &.register {
           padding: 12px 24px 0;

@@ -2,5 +2,17 @@
   "btn": {
     "login": "登录",
     "register": "注册"
+  },
+  "form": {
+    "username": "用户名",
+    "password": "密码",
+    "verificationCode": "验证码",
+    "accLogin": "账户登录",
+    "phoneLogin": "手机登录",
+    "forgotPwd": "忘记密码",
+    "acceptTermsAndConditions": "登录即代表同意并遵守",
+    "userAgreement": "用户协议",
+    "goCreateAcc": "去注册",
+    "dontHaveAcc": "没有账号"
   }
 }

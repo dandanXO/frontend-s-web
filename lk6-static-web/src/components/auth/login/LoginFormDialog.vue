@@ -17,7 +17,7 @@
         "
       />
 
-      <el-form-item label="用户名" prop="loginName">
+      <el-form-item :label="$t('form.username')" prop="loginName">
         <el-input v-model="loginForm.loginName" placeholder="请输入4-12位非汉字字符" clearable :disabled="isLoading" />
       </el-form-item>
     </div>
@@ -32,7 +32,7 @@
         "
       />
 
-      <el-form-item label="密码" prop="password">
+      <el-form-item :label="$t('form.password')" prop="password">
         <el-input
           v-model="loginForm.password"
           placeholder="请输入6-12位字母/数字组合"
@@ -57,7 +57,7 @@
       <div class="geetest-captcha-wrapper">
         <div class="geetest-captcha-label">
           <span class="asterisk">*</span>
-          <span class="label-text">验证码</span>
+          <span class="label-text">{{ $t('form.verificationCode') }}</span>
         </div>
         <div id="captchaContainer"></div>
       </div>
@@ -65,17 +65,17 @@
 
     <div class="agreement-and-forget-pwd">
       <div class="agreement-text">
-        登录即代表同意并遵守
-        <span class="underline">《用户协议》</span>
+        {{ $t('form.acceptTermsAndConditions') }}
+        <span class="underline">《{{$t('form.userAgreement')}}》</span>
       </div>
-      <div><a class="forget-pwd-text" @click="openForgotpwdDialog">忘记密码</a></div>
+      <div><a class="forget-pwd-text" @click="openForgotpwdDialog">{{ $t('form.forgotPwd') }}</a></div>
     </div>
 
-    <el-button :loading="isLoading" size="large" class="login-form-submit-btn" @click="submitLogin">登录</el-button>
+    <el-button :loading="isLoading" size="large" class="login-form-submit-btn" @click="submitLogin">{{ $t('btn.login') }}</el-button>
 
     <div class="register-hint">
-      <span class="no-acc">没有账号？</span>
-      <a class="go-reg" @click="openRegDialog">去注册</a>
+      <span class="no-acc">{{$t('form.dontHaveAccount')}}？</span>
+      <a class="go-reg" @click="openRegDialog">{{ $t('form.goCreateAcc') }}</a>
     </div>
   </el-form>
 </template>
@@ -311,11 +311,11 @@ const loginRules = {
     gap: 10px;
     position: relative;
     width: 100%;
-    border: 1px solid rgba(217, 217, 217, 0.3);
-    border-radius: 15px;
+    border-radius: 30px;
     font-size: 14px;
-    background-color: #f7f8fb;
-    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+    background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
+    box-shadow: 0px 2px 2px 0px #FFFFFFCC inset, 0px 2px 0px 0px #C6D9FF;
+
 
     .login-form-field-icon {
       margin: auto;
@@ -393,11 +393,13 @@ const loginRules = {
   }
 
   .login-form-submit-btn {
-    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
     color: #fff;
+    background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94C3FF 0%, #4B91F5 100%);
+    border: 1px solid #FFFFFF;
+    box-shadow: 0px 2px 0px 0px #9AB0FF70;
     font-size: 14px;
-    border-radius: 8px;
+    border-radius: 30px;
+    font-family: "PingFang SC", "Poppins", sans-serif;
 
     &:hover {
       filter: brightness(1.1);
@@ -503,13 +505,17 @@ const loginRules = {
   .el-overlay:has(.acc-dialog) {
     background: url("@/assets/home/auth/login-page-bg.jpg");
     background-size: 100% auto;
-  }
 
-  .acc-dialog-homelogo {
-    display:flex;
-    gap:5px;
-    justify-content:center;
-    align-items:center;
-    margin: 0 auto;
+    .acc-dialog-homelogo {
+      display:flex;
+      gap:5px;
+      justify-content:center;
+      align-items:center;
+      margin: 0 auto;
+    }
+
+    .el-tabs__nav-wrap:after {
+      display: none;
+    }
   }
 </style>

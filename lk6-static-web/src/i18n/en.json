@@ -2,5 +2,17 @@
   "btn": {
     "login": "Login",
     "register": "Register"
+  },
+  "form": {
+    "username": "Username",
+    "password": "Password",
+    "verificationCode": "Verification Code",
+    "accLogin": "Account Login",
+    "phoneLogin": "Phone Login",
+    "forgotPwd": "Forgot Password",
+    "acceptTermsAndConditions": "Accept terms and conditions",
+    "userAgreement": "User Agreement",
+    "goCreateAcc": "Go to register",
+    "dontHaveAcc": "Don't have account"
   }
 }
