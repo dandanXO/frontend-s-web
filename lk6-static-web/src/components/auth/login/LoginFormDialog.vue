@@ -420,72 +420,6 @@ const loginRules = {
     justify-content: flex-end;
   }
 }
-
-.dark {
-  .login-form-dialog-form {
-    .login-form-field {
-      background-color: #273354;
-      box-shadow: none;
-
-      .login-form-field-icon {
-        width: 25px;
-      }
-
-      :deep(.el-form-item__label) {
-        color: #fff;
-      }
-
-      &.geetest-captcha-form-field {
-        .geetest-captcha-wrapper {
-          .geetest-captcha-label {
-            width: 130px;
-
-            .asterisk {
-              color: #e2676a;
-              margin-right: 4px;
-            }
-
-            .label-text {
-              font-size: 12px;
-              color: #fff;
-            }
-          }
-        }
-      }
-    }
-
-    .agreement-and-forget-pwd {
-      .agreement-text {
-        color: #a98f7c;
-      }
-
-      .forget-pwd-text {
-        color: #a98f7c;
-      }
-    }
-  }
-
-  .login-form-submit-btn {
-    background: url("../../../assets/home/auth/login-btn-bg.svg") no-repeat center center;
-    background-size: cover;
-    box-shadow: none;
-    border-radius: 6px;
-    border: 1px solid #3a93ce;
-    margin-top: 20px;
-  }
-
-  .register-hint {
-    justify-content: center;
-
-    .no-acc {
-      color: #a98f7c;
-    }
-
-    .go-reg {
-      color: #3a93ce;
-    }
-  }
-}
 </style>
 
 
@@ -493,14 +427,6 @@ const loginRules = {
   .el-overlay:has(.acc-dialog) {
     background: url("@/assets/home/auth/login-page-bg.jpg");
     background-size: 100% auto;
-
-    .acc-dialog-homelogo {
-      display:flex;
-      gap:5px;
-      justify-content:center;
-      align-items:center;
-      margin: 0 auto;
-    }
 
     .el-tabs__nav-wrap:after {
       display: none;

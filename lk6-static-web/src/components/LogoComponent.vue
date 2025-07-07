@@ -1,0 +1,36 @@
+<template>
+    <div class="acc-dialog-homelogo">
+        <img src="../assets/home/auth/login-logo-left.png" height="45px" class="clover-logo" />
+        <img src="../assets/home/auth/login-logo-right.svg" height="45px" />
+    </div>
+</template>
+
+<style lang="scss" scoped>
+.acc-dialog-homelogo {
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+@keyframes cloverPulse {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        transform: scale(1.05) rotate(2deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.clover-logo {
+    display: inline-block;
+    animation: cloverPulse 3s ease-in-out infinite;
+    transform-origin: center;
+}
+</style>

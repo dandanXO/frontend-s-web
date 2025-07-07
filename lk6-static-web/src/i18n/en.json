@@ -4,8 +4,10 @@
     "register": "Register"
   },
   "form": {
+    "realName": "Real Name",
     "username": "Username",
     "password": "Password",
+    "confirmPassword": "Confirm Password",
     "verificationCode": "Verification Code",
     "accLogin": "Account Login",
     "phoneLogin": "Phone Login",
@@ -16,8 +18,13 @@
     "dontHaveAcc": "Don't have account",
     "phoneNum": "Phone number",
     "loginNameRule01": "Please enter {min}-{max} non symbol characters",
+    "usernameRule01": "Please enter {min}-{max} character/digit combination",
     "passwordRule01": "Please enter {min}-{max} character/digit combination",
     "pleaseEnterField": "Please enter {field}",
-    "lengthMustBeBetween": "Length must be between {min}-{max}"
+    "lengthMustBeBetween": "Length must be between {min}-{max}",
+    "realNameRule01": "Real name must match the name on the withdrawal bank account",
+    "realNameRule02": "Only chinese characters allowed",
+    "optionalEntry": "If not applicable, no need to fill in",
+    "referralCode": "Referral Code"
   }
 }
