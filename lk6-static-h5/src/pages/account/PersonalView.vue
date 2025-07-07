@@ -10,7 +10,6 @@
           placeholder="账号"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || '请输入账号']"
-          label-color=""
           :readonly="personalState.memberInfo.nickName ? true : false"
         >
           <template v-slot:prepend>
@@ -28,7 +27,6 @@
           placeholder="姓名"
           lazy-rules
           :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
-          label-color=""
           :readonly="personalState.memberInfo.realName ? true : false"
         >
           <template v-slot:prepend>
@@ -58,10 +56,20 @@
               width="32px"
               class="date-picker-btn"
             />
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale" :target="datePickerBtnRef">
-              <q-date v-model="formDetail.birthday" mask="DD/MM/YYYY">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="关闭" color="primary" flat />
+            <q-popup-proxy
+              v-model="showDatePickerPopup"
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+              :target="datePickerBtnRef"
+            >
+              <q-date v-model="formDetail.birthday" mask="DD/MM/YYYY" @show="handleDatePickerShow">
+                <div class="date-picker-btn-wrapper row items-center justify-between">
+                  <q-btn class="date-picker-btn__today" flat dense @click="handleTodayClick">此刻</q-btn>
+                  <div class="row items-center gap-8">
+                    <q-btn class="date-picker-btn__close" label="关闭" flat dense @click="handleClosePopupClick" />
+                    <q-btn class="date-picker-btn__confirm" v-close-popup label="确定" flat dense />
+                  </div>
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -220,6 +228,8 @@ export default defineComponent({
     const store = userStore();
 
     const datePickerBtnRef = ref();
+    const initialBirthday = ref()
+    const showDatePickerPopup = ref(false);
 
     const chatPage = computed(() => {
       if (store.chatGuid) {
@@ -499,6 +509,19 @@ export default defineComponent({
         });
     };
 
+    const handleTodayClick = () => {
+      formDetail.birthday = moment().format('DD/MM/YYYY')
+    }
+
+    const handleDatePickerShow = () => {
+      initialBirthday.value = formDetail.birthday;
+    }
+
+    const handleClosePopupClick = () => {
+      formDetail.birthday = initialBirthday.value;
+      showDatePickerPopup.value = false;
+    }
+
     return {
       searchForm,
       personalState,
@@ -541,7 +564,11 @@ export default defineComponent({
       goToVerifyTelephone,
       goToVerifyEmail,
       chatPage,
-      datePickerBtnRef
+      datePickerBtnRef,
+      handleTodayClick,
+      handleDatePickerShow,
+      handleClosePopupClick,
+      showDatePickerPopup
     };
   }
 });
@@ -570,7 +597,6 @@ export default defineComponent({
   }
 
   .q-input {
-    background: #fcfdfe;
     border-radius: 7px;
     .q-field__inner {
       .q-field__control,
@@ -578,6 +604,7 @@ export default defineComponent({
         height: 44px;
       }
       .q-field__control {
+        background: #fcfdfe;
         &::before {
           border-bottom: none;
         }
@@ -622,8 +649,25 @@ export default defineComponent({
   .submit-btn {
     width: 100%;
     background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
+    box-shadow: 0px 2px 0px 0px #9ab0ff70;
     border: 1px solid #ffffff;
     border-radius: 30px;
+    color: #fff;
+  }
+}
+.date-picker-btn-wrapper {
+  .date-picker-btn__today {
+    padding: 2px 12px;
+    background: #f2f3f5;
+    color: #4e5969;
+  }
+  .date-picker-btn__close {
+    padding: 2px 12px;
+    color: #3981ff;
+  }
+  .date-picker-btn__confirm {
+    padding: 2px 12px;
+    background: #3981ff;
     color: #fff;
   }
 }
