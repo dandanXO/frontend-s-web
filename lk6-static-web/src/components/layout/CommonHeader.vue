@@ -2522,7 +2522,7 @@ body {
       }
 
       .acc-dialog-right {
-        width: 460px;
+        width: 550px;
         padding: 24px 24px 24px 24px;
         background-color: #F7F9FC;
 

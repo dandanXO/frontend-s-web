@@ -14,7 +14,7 @@
           <el-tab-pane label="手机登录">
             <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70" size="large">
               <div class="light-bg form-field">
-                <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
+                <img class="form-field-icon" src="@/assets/home/auth/phone-icon.svg" />
                 <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
                   <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号" />
                 </el-form-item>

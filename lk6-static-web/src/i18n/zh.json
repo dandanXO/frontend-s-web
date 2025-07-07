@@ -13,6 +13,11 @@
     "acceptTermsAndConditions": "登录即代表同意并遵守",
     "userAgreement": "用户协议",
     "goCreateAcc": "去注册",
-    "dontHaveAcc": "没有账号"
+    "dontHaveAcc": "没有账号",
+    "phoneNum": "手机号",
+    "loginNameRule01": "请输入{min}-{max}位非汉字字符",
+    "passwordRule01": "请输入{min}-{max}位字母/数字组合",
+    "pleaseEnterField": "请输入 {field}",
+    "lengthMustBeBetween": "长度要在 {min}-{max} 之间"
   }
 }

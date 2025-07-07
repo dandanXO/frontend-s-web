@@ -10,32 +10,24 @@
     <div class="login-form-field">
       <img
         class="login-form-field-icon"
-        :src="
-          isDark
-            ? require('@/assets/home/auth/username-icon-dark.png')
-            : require('@/assets/home/auth/username-icon.svg')
-        "
+        :src="require('@/assets/home/auth/username-icon.svg')"
       />
 
       <el-form-item :label="$t('form.username')" prop="loginName">
-        <el-input v-model="loginForm.loginName" placeholder="请输入4-12位非汉字字符" clearable :disabled="isLoading" />
+        <el-input v-model="loginForm.loginName" :placeholder="$t('form.loginNameRule01', {min: 4, max: 12})" clearable :disabled="isLoading" />
       </el-form-item>
     </div>
 
     <div class="login-form-field">
       <img
         class="login-form-field-icon"
-        :src="
-          isDark
-            ? require('@/assets/home/auth/password-icon-dark.png')
-            : require('@/assets/home/auth/password-icon.svg')
-        "
+        :src="require('@/assets/home/auth/password-icon.svg')"
       />
 
       <el-form-item :label="$t('form.password')" prop="password">
         <el-input
           v-model="loginForm.password"
-          placeholder="请输入6-12位字母/数字组合"
+          :placeholder="$t('form.passwordRule01', {min: 6, max: 12})"
           type="password"
           show-password
           clearable
@@ -47,11 +39,7 @@
     <div class="login-form-field geetest-captcha-form-field">
       <img
         class="login-form-field-icon"
-        :src="
-          isDark
-            ? require('@/assets/home/auth/verification-icon-dark.png')
-            : require('@/assets/home/auth/verification-icon.svg')
-        "
+        :src="require('@/assets/home/auth/verification-icon.svg')"
       />
 
       <div class="geetest-captcha-wrapper">
@@ -74,7 +62,7 @@
     <el-button :loading="isLoading" size="large" class="login-form-submit-btn" @click="submitLogin">{{ $t('btn.login') }}</el-button>
 
     <div class="register-hint">
-      <span class="no-acc">{{$t('form.dontHaveAccount')}}？</span>
+      <span class="no-acc">{{$t('form.dontHaveAcc')}}？</span>
       <a class="go-reg" @click="openRegDialog">{{ $t('form.goCreateAcc') }}</a>
     </div>
   </el-form>
@@ -82,14 +70,14 @@
 
 <script setup>
 import { reactive, ref, onMounted, defineEmits } from "vue";
-import { useDark } from "@vueuse/core";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { useNotify } from "@/hooks/notify";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const props = defineProps(["pageType"]);
 
-const isDark = useDark();
 const loginRef = ref();
 const store = userStore();
 const isLoading = ref(false);
@@ -269,26 +257,26 @@ const loginRules = {
   loginName: [
     {
       required: true,
-      message: "请输入用户名",
+      message: t('form.pleaseEnterField', {field: t('form.username')}),
       trigger: "blur"
     },
     {
       min: 4,
       max: 12,
-      message: "长度要在 4-12 之间",
+      message: t('form.lengthMustBeBetween', {min:4, max:12}),
       trigger: "blur"
     }
   ],
   password: [
     {
       required: true,
-      message: "请输入密码",
+      message: t('form.pleaseEnterField', {field: t('form.password')}),
       trigger: "blur"
     },
     {
       min: 6,
       max: 12,
-      message: "长度要在 6-12 之间",
+      message: t('form.lengthMustBeBetween', {min:6, max:12}),
       trigger: "blur"
     }
   ]
@@ -385,7 +373,7 @@ const loginRules = {
           }
 
           .label-text {
-            font-size: 14px;
+            font-size: 12px;
           }
         }
       }
@@ -399,7 +387,7 @@ const loginRules = {
     box-shadow: 0px 2px 0px 0px #9AB0FF70;
     font-size: 14px;
     border-radius: 30px;
-    font-family: "PingFang SC", "Poppins", sans-serif;
+    font-family: "Poppins", "PingFang SC", sans-serif;
 
     &:hover {
       filter: brightness(1.1);
@@ -458,7 +446,7 @@ const loginRules = {
             }
 
             .label-text {
-              font-size: 14px;
+              font-size: 12px;
               color: #fff;
             }
           }
@@ -516,6 +504,10 @@ const loginRules = {
 
     .el-tabs__nav-wrap:after {
       display: none;
+    }
+
+    .el-form-item__label {
+      font-size: 12px;
     }
   }
 </style>

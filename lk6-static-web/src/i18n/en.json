@@ -13,6 +13,11 @@
     "acceptTermsAndConditions": "Accept terms and conditions",
     "userAgreement": "User Agreement",
     "goCreateAcc": "Go to register",
-    "dontHaveAcc": "Don't have account"
+    "dontHaveAcc": "Don't have account",
+    "phoneNum": "Phone number",
+    "loginNameRule01": "Please enter {min}-{max} non symbol characters",
+    "passwordRule01": "Please enter {min}-{max} character/digit combination",
+    "pleaseEnterField": "Please enter {field}",
+    "lengthMustBeBetween": "Length must be between {min}-{max}"
   }
 }
