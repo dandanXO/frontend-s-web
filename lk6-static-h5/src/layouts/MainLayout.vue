@@ -482,11 +482,11 @@ export default defineComponent({
           prevPage.value = "";
         } else if (route.path === "/promotion") {
           hasPage.value = false;
-          pageName.value = "优惠活动";
+          pageName.value = "优惠";
           prevPage.value = "";
         } else if (route.path === "/promo") {
           hasPage.value = true;
-          pageName.value = "优惠活动";
+          pageName.value = "优惠";
           prevPage.value = "";
           if (route.query.name) {
             if (route.query.fromAccount) {
@@ -525,7 +525,7 @@ export default defineComponent({
         } else if (route.path === "/account/personal") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "个人信息";
+          pageName.value = "帐户信息";
         } else if (route.path === "/account/verifyTelephone") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -807,16 +807,15 @@ svg path {
 }
 
 .page-wrapper {
-  background: linear-gradient(90deg, #57b7fc 0, #cf74ff 100%);
+  background: transparent;
   padding-top: 0px;
   background-size: cover;
 }
 
 .page-title {
-  color: #fff;
+  color: #424f72;
   display: flex;
   padding: 8px;
-  font-weight: 500;
   letter-spacing: 1px;
 }
 </style>
