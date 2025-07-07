@@ -150,11 +150,23 @@
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
+import { i18nStore } from "src/router/language";
 import { userStore } from "stores/index";
 // import { launchSessionGame } from "api/platform/platform";
 // import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated, watch, nextTick } from "vue";
+import {
+  ref,
+  defineExpose,
+  reactive,
+  shallowRef,
+  onActivated,
+  onUnmounted,
+  onDeactivated,
+  watch,
+  nextTick,
+  computed
+} from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
 import { App } from "@capacitor/app";
@@ -190,6 +202,10 @@ const privilegeList = ref([]);
 const selectedPayType = shallowRef("");
 const isPaymentLoading = ref(true);
 const isBetBy = ref(false);
+const isBetByLoad = ref(false);
+const i18nStoreLanguage = i18nStore();
+const langVal = computed(() => i18nStoreLanguage.languageVal);
+
 const isLoading = ref(false);
 const betbyInstance = ref(null);
 const betbyRef = ref(null);
@@ -411,6 +427,14 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
       if (platformCode !== "LuckySport" && platformCode !== "NineW") {
         visible.value = true;
       }
+      if (platformCode === "BetBy" && isBetByLoad.value === false) {
+        console.log("Load BEt By");
+        isBetByLoad.value = true;
+        const script = document.createElement("script");
+        script.src = "https://ui.invisiblesport.com/bt-renderer.min.js";
+        script.async = true;
+        document.head.appendChild(script);
+      }
 
       var way = null;
       if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -474,7 +498,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
               token: srcDoc,
               onTokenExpired: function () {},
               themeName: "default",
-              lang: "en",
+              lang: langVal.value,
               target: betbyRef.value,
               betSlipOffsetTop: 0,
               betslipZIndex: 999,
