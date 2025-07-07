@@ -1,9 +1,9 @@
 .light-bg {
   font-size: 14px;
-  background-color: #f7f8fb;
-  border-radius: 15px;
-  box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+  border-radius: 30px;
   margin-bottom: 10px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
+  box-shadow: 0px 2px 2px 0px #FFFFFFCC inset, 0px 2px 0px 0px #C6D9FF;
 }
 
 .form-field {
@@ -35,11 +35,17 @@
 }
 
 .blue-bg {
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-  box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
   color: #fff;
+  background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94C3FF 0%, #4B91F5 100%);
+  border: 1px solid #FFFFFF;
+  box-shadow: 0px 2px 0px 0px #9AB0FF70;
   font-size: 14px;
-  border-radius: 8px;
+  border-radius: 30px;
+  font-family: "Poppins", "PingFang SC", sans-serif;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
 }
 
 .primary-btn {

@@ -128,7 +128,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 #app {
-  font-family: Jura, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Poppins", "PingFang SC", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

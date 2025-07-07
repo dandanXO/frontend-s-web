@@ -1,6 +1,6 @@
 <template>
   <el-tabs>
-    <el-tab-pane label="账户登录">
+    <el-tab-pane :label="$t('form.accLogin')">
       <LoginFormDialog
         @close-dialog="closeLoginDialog"
         @open-reg-dialog="openRegDialog"
@@ -12,18 +12,18 @@
         @open-forgotpwd-dialog="openForgotpwdDialog"
       /> -->
     </el-tab-pane>
-    <el-tab-pane label="手机登录">
-      <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70" size="large">
+    <el-tab-pane :label="$t('form.phoneLogin')">
+      <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="120" size="large">
         <div class="light-bg form-field">
-          <img class="form-field-icon" src="../assets/home/auth/phone-icon.png" />
-          <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
+          <img class="form-field-icon" src="../assets/home/auth/phone-icon.svg" />
+          <el-form-item tabindex="1" :label="$t('form.phoneNum')" prop="phoneNumber">
             <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号" />
           </el-form-item>
         </div>
 
         <div class="light-bg form-field">
           <img class="form-field-icon" src="../assets/home/auth/verification-icon.svg" />
-          <el-form-item tabindex="2" label="验证码" prop="code">
+          <el-form-item tabindex="2" :label="$t('form.verificationCode')" prop="code">
             <el-row :gutter="10" style="justify-content: center; align-items: center">
               <el-col :span="10">
                 <el-input v-model="loginForm.code" label="验证码" placeholder="手机验证码" @keyup.enter="phoneLogin" />
@@ -47,7 +47,7 @@
 
         <div class="agreement-and-forget-pass">
           <div class="font-gray">登录即代表同意并遵守《用户协议》</div>
-          <div><a @click="openForgotpwdDialog">忘记密码</a></div>
+          <div><a @click="openForgotpwdDialog">{{ $t('form.forgotPwd') }}</a></div>
         </div>
 
         <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="phoneLogin">登录</el-button>

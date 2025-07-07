@@ -1,6 +1,6 @@
 <template>
   <div class="light-bg form-field" v-if="props.type === 'phone'">
-    <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
+    <img class="form-field-icon" src="@/assets/home/auth/phone-icon.svg" />
     <el-form-item tabindex="2" label="手机号" prop="phone">
       <el-row :gutter="10" style="justify-content: center; align-items: center">
         <el-col :span="14">

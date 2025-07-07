@@ -5,7 +5,7 @@
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/lucky-6-logo.svg" />
+          <LogoComponent />
         </router-link>
 
         <div class="navigations">
@@ -342,10 +342,7 @@
           </div>
         </div>
         <div class="acc-dialog-right">
-          <div class="acc-dialog-homelogo">
-            <img src="../../assets/home/auth/login-logo-left.png" height="60px" />
-            <img src="../../assets/home/auth/login-logo-right.svg" height="60px" />
-          </div>
+          <LogoComponent />
           <div class="acc-dialog-content">
             <LoginDialog
               @close-dialog="loginDialogVisible = false"
@@ -360,7 +357,6 @@
     <el-dialog
       class="acc-dialog"
       v-model="registerDialogVisible"
-      width="1200px"
       align-center
       style="max-width: 1200px"
       @close="store.regPageVisible = false"
@@ -368,12 +364,13 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img :src="accDialogImg" />
+            <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
         <div class="acc-dialog-right register">
           <div class="acc-dialog-homelogo">
-            <img src="../../assets/lucky-6-logo.svg" width="150" />
+            <LogoComponent />
           </div>
           <RegisterAccount @close-dialog="registerDialogVisible = false" @open-login-dialog="openLoginDialog" />
         </div>
@@ -494,6 +491,7 @@ import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/
 import floor from "lodash/floor";
 import { loadPromoBanner } from "@/api/index/promo";
 import LocaleChanger from '../LocaleChanger.vue';
+import LogoComponent from '../LogoComponent.vue';
 
 export default defineComponent({
   name: "CommonHeader",
@@ -512,7 +510,8 @@ export default defineComponent({
     ForgotPwdDialog,
     RegisterAccount,
     NewMemberGuide,
-    LocaleChanger
+    LocaleChanger,
+    LogoComponent
   },
   setup() {
     const notify = useNotify();
@@ -2496,6 +2495,8 @@ body {
 
       .acc-dialog-container {
         display: flex;
+        border-radius: 16px;
+        overflow: hidden;
       }
 
       .acc-dialog-left {
@@ -2503,31 +2504,28 @@ body {
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
         overflow: hidden;
 
         .acc-dialog-img {
           max-width: 963px;
           max-height: 896px;
-          border-radius: 20px;
           height: 100%;
 
           img {
             display: block;
             width: 100%;
             height: 100%;
-            object-fit: contain;
           }
         }
       }
 
       .acc-dialog-right {
-        width: 460px;
+        width: 550px;
         padding: 24px 24px 24px 24px;
+        background-color: #F7F9FC;
 
         &.register {
-          padding: 12px 24px 0;
+          padding: 26px 24px 0;
           .primary-btn {
             margin-top: 10px;
           }

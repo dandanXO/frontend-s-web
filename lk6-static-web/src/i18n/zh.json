@@ -2,5 +2,29 @@
   "btn": {
     "login": "登录",
     "register": "注册"
+  },
+  "form": {
+    "realName": "姓名",
+    "username": "用户名",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "verificationCode": "验证码",
+    "accLogin": "账户登录",
+    "phoneLogin": "手机登录",
+    "forgotPwd": "忘记密码",
+    "acceptTermsAndConditions": "登录即代表同意并遵守",
+    "userAgreement": "用户协议",
+    "goCreateAcc": "去注册",
+    "dontHaveAcc": "没有账号",
+    "phoneNum": "手机号",
+    "loginNameRule01": "请输入{min}-{max}位非汉字字符",
+    "usernameRule01": "Please enter {min}-{max} character/digit combination",
+    "passwordRule01": "请输入{min}-{max}位字母/数字组合",
+    "pleaseEnterField": "请输入 {field}",
+    "lengthMustBeBetween": "长度要在 {min}-{max} 之间",
+    "realNameRule01": "姓名必须与提款银行卡账号姓名一致",
+    "realNameRule02": "请输入中文字符",
+    "optionalEntry": "如果没有 无需填写",
+    "referralCode": "推荐码"
   }
 }

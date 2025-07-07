@@ -10,32 +10,24 @@
     <div class="login-form-field">
       <img
         class="login-form-field-icon"
-        :src="
-          isDark
-            ? require('@/assets/home/auth/username-icon-dark.png')
-            : require('@/assets/home/auth/username-icon.svg')
-        "
+        :src="require('@/assets/home/auth/username-icon.svg')"
       />
 
-      <el-form-item label="用户名" prop="loginName">
-        <el-input v-model="loginForm.loginName" placeholder="请输入4-12位非汉字字符" clearable :disabled="isLoading" />
+      <el-form-item :label="$t('form.username')" prop="loginName">
+        <el-input v-model="loginForm.loginName" :placeholder="$t('form.loginNameRule01', {min: 4, max: 12})" clearable :disabled="isLoading" />
       </el-form-item>
     </div>
 
     <div class="login-form-field">
       <img
         class="login-form-field-icon"
-        :src="
-          isDark
-            ? require('@/assets/home/auth/password-icon-dark.png')
-            : require('@/assets/home/auth/password-icon.svg')
-        "
+        :src="require('@/assets/home/auth/password-icon.svg')"
       />
 
-      <el-form-item label="密码" prop="password">
+      <el-form-item :label="$t('form.password')" prop="password">
         <el-input
           v-model="loginForm.password"
-          placeholder="请输入6-12位字母/数字组合"
+          :placeholder="$t('form.passwordRule01', {min: 6, max: 12})"
           type="password"
           show-password
           clearable
@@ -47,17 +39,13 @@
     <div class="login-form-field geetest-captcha-form-field">
       <img
         class="login-form-field-icon"
-        :src="
-          isDark
-            ? require('@/assets/home/auth/verification-icon-dark.png')
-            : require('@/assets/home/auth/verification-icon.svg')
-        "
+        :src="require('@/assets/home/auth/verification-icon.svg')"
       />
 
       <div class="geetest-captcha-wrapper">
         <div class="geetest-captcha-label">
           <span class="asterisk">*</span>
-          <span class="label-text">验证码</span>
+          <span class="label-text">{{ $t('form.verificationCode') }}</span>
         </div>
         <div id="captchaContainer"></div>
       </div>
@@ -65,31 +53,31 @@
 
     <div class="agreement-and-forget-pwd">
       <div class="agreement-text">
-        登录即代表同意并遵守
-        <span class="underline">《用户协议》</span>
+        {{ $t('form.acceptTermsAndConditions') }}
+        <span class="underline">《{{$t('form.userAgreement')}}》</span>
       </div>
-      <div><a class="forget-pwd-text" @click="openForgotpwdDialog">忘记密码</a></div>
+      <div><a class="forget-pwd-text" @click="openForgotpwdDialog">{{ $t('form.forgotPwd') }}</a></div>
     </div>
 
-    <el-button :loading="isLoading" size="large" class="login-form-submit-btn" @click="submitLogin">登录</el-button>
+    <el-button :loading="isLoading" size="large" class="login-form-submit-btn" @click="submitLogin">{{ $t('btn.login') }}</el-button>
 
     <div class="register-hint">
-      <span class="no-acc">没有账号？</span>
-      <a class="go-reg" @click="openRegDialog">去注册</a>
+      <span class="no-acc">{{$t('form.dontHaveAcc')}}？</span>
+      <a class="go-reg" @click="openRegDialog">{{ $t('form.goCreateAcc') }}</a>
     </div>
   </el-form>
 </template>
 
 <script setup>
 import { reactive, ref, onMounted, defineEmits } from "vue";
-import { useDark } from "@vueuse/core";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { useNotify } from "@/hooks/notify";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const props = defineProps(["pageType"]);
 
-const isDark = useDark();
 const loginRef = ref();
 const store = userStore();
 const isLoading = ref(false);
@@ -269,26 +257,26 @@ const loginRules = {
   loginName: [
     {
       required: true,
-      message: "请输入用户名",
+      message: t('form.pleaseEnterField', {field: t('form.username')}),
       trigger: "blur"
     },
     {
       min: 4,
       max: 12,
-      message: "长度要在 4-12 之间",
+      message: t('form.lengthMustBeBetween', {min:4, max:12}),
       trigger: "blur"
     }
   ],
   password: [
     {
       required: true,
-      message: "请输入密码",
+      message: t('form.pleaseEnterField', {field: t('form.password')}),
       trigger: "blur"
     },
     {
       min: 6,
       max: 12,
-      message: "长度要在 6-12 之间",
+      message: t('form.lengthMustBeBetween', {min:6, max:12}),
       trigger: "blur"
     }
   ]
@@ -311,11 +299,11 @@ const loginRules = {
     gap: 10px;
     position: relative;
     width: 100%;
-    border: 1px solid rgba(217, 217, 217, 0.3);
-    border-radius: 15px;
+    border-radius: 30px;
     font-size: 14px;
-    background-color: #f7f8fb;
-    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+    background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
+    box-shadow: 0px 2px 2px 0px #FFFFFFCC inset, 0px 2px 0px 0px #C6D9FF;
+
 
     .login-form-field-icon {
       margin: auto;
@@ -385,7 +373,7 @@ const loginRules = {
           }
 
           .label-text {
-            font-size: 14px;
+            font-size: 12px;
           }
         }
       }
@@ -393,11 +381,13 @@ const loginRules = {
   }
 
   .login-form-submit-btn {
-    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
     color: #fff;
+    background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94C3FF 0%, #4B91F5 100%);
+    border: 1px solid #FFFFFF;
+    box-shadow: 0px 2px 0px 0px #9AB0FF70;
     font-size: 14px;
-    border-radius: 8px;
+    border-radius: 30px;
+    font-family: "Poppins", "PingFang SC", sans-serif;
 
     &:hover {
       filter: brightness(1.1);
@@ -430,72 +420,6 @@ const loginRules = {
     justify-content: flex-end;
   }
 }
-
-.dark {
-  .login-form-dialog-form {
-    .login-form-field {
-      background-color: #273354;
-      box-shadow: none;
-
-      .login-form-field-icon {
-        width: 25px;
-      }
-
-      :deep(.el-form-item__label) {
-        color: #fff;
-      }
-
-      &.geetest-captcha-form-field {
-        .geetest-captcha-wrapper {
-          .geetest-captcha-label {
-            width: 130px;
-
-            .asterisk {
-              color: #e2676a;
-              margin-right: 4px;
-            }
-
-            .label-text {
-              font-size: 14px;
-              color: #fff;
-            }
-          }
-        }
-      }
-    }
-
-    .agreement-and-forget-pwd {
-      .agreement-text {
-        color: #a98f7c;
-      }
-
-      .forget-pwd-text {
-        color: #a98f7c;
-      }
-    }
-  }
-
-  .login-form-submit-btn {
-    background: url("../../../assets/home/auth/login-btn-bg.svg") no-repeat center center;
-    background-size: cover;
-    box-shadow: none;
-    border-radius: 6px;
-    border: 1px solid #3a93ce;
-    margin-top: 20px;
-  }
-
-  .register-hint {
-    justify-content: center;
-
-    .no-acc {
-      color: #a98f7c;
-    }
-
-    .go-reg {
-      color: #3a93ce;
-    }
-  }
-}
 </style>
 
 
@@ -503,13 +427,13 @@ const loginRules = {
   .el-overlay:has(.acc-dialog) {
     background: url("@/assets/home/auth/login-page-bg.jpg");
     background-size: 100% auto;
-  }
 
-  .acc-dialog-homelogo {
-    display:flex;
-    gap:5px;
-    justify-content:center;
-    align-items:center;
-    margin: 0 auto;
+    .el-tabs__nav-wrap:after {
+      display: none;
+    }
+
+    .el-form-item__label {
+      font-size: 12px;
+    }
   }
 </style>
