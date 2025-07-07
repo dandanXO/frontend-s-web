@@ -43,22 +43,25 @@
         <div class="station-notice-box">
           <img
             class="announcement-img"
-            src="../../../assets/home/announcement/announcement-img.svg"
+            src="../../../assets/home/announcement/announcement-img.png"
             @click="openPopup(announcementList)"
           />
           <div class="station-notice">
-            <Vue3Marquee
-              :clone="false"
-              :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 1 + 10 : 70"
-            >
-              <div
-                v-for="(word, index) in announcementList"
-                :key="index"
-                v-html="word.content"
-                @click="openPopup(word)"
-                class="station-notice-item"
-              ></div>
-            </Vue3Marquee>
+            <div v-if="!announcementList.length">暂无公告</div>
+            <div v-else class="marquee-wrapper">
+              <Vue3Marquee
+                :clone="false"
+                :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 1 + 10 : 70"
+              >
+                <div
+                  v-for="(word, index) in announcementList"
+                  :key="index"
+                  v-html="word.content"
+                  @click="openPopup(word)"
+                  class="station-notice-item"
+                ></div>
+              </Vue3Marquee>
+            </div>
           </div>
         </div>
       </div>
@@ -118,11 +121,15 @@ const openPopup = (noticeType) => {
 
 const calculateMaxContentLength = () => {
   let maxLength = 0;
-  for (const announcement of announcementList.value) {
-    if (announcement.content.length > maxLength) {
-      maxLength = announcement.content.length;
+
+  if(announcementList.value) {
+    for (const announcement of announcementList.value) {
+      if (announcement.content.length > maxLength) {
+        maxLength = announcement.content.length;
+      }
     }
   }
+
   return maxLength;
 };
 
@@ -200,7 +207,9 @@ onMounted(() => {
         overflow: hidden;
 
         .announcement-img {
+          aspect-ratio: 119/126;
           width: 36px;
+          animation: pulse 2.5s ease-in-out infinite;
         }
 
         .station-notice {
@@ -234,27 +243,42 @@ onMounted(() => {
   }
 }
 
-.dark {
-  .top-bar-wrapper {
-    background: linear-gradient(180deg, #2a2e3b 0%, #1f3342 100%);
-    box-shadow: none;
-    .top-bar-inner {
-      .station-notice-container {
-        .station-notice-box {
-          .station-notice {
-            .station-notice-item {
-              color: $font-3-dark;
-            }
-          }
-        }
-      }
-    }
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
   }
-
-  .announcement-content {
-    .announcement-p {
-      color: $font-3-dark;
-    }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.85;
   }
 }
+
+.marquee-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left and right fade overlays */
+.marquee-wrapper::before,
+.marquee-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  z-index: 1111111;
+  pointer-events: none;
+}
+
+.marquee-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, #fff 0%, transparent 100%);
+}
+
+.marquee-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, #fff 0%, transparent 100%);
+}
+
 </style>

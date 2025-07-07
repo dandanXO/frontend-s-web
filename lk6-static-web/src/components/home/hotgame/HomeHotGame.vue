@@ -770,8 +770,8 @@ const checkPlatforms = () => {
     });
   });
   hotgameData.value.forEach((hot) => {
-    hot.currentPlat = hot.content.providerList[0];
-    hot.currentProvider = hot.currentPlat.code.toLowerCase();
+    // hot.currentPlat = hot.content.providerList[0];
+    // hot.currentProvider = hot.currentPlat.code.toLowerCase();
   });
   console.log(hotgameData.value);
 };
