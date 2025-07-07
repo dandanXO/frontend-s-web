@@ -391,46 +391,115 @@
             <div v-if="selectedTab === 'baccarat'" id="id-baccarat-slide" class="sport-slides home-swiper-slide">
               <div class="home-game-boards">
                 <div class="game-list-div">
-                  <div v-for="(sp, i) in baccarat" :key="i" class="game-item-div">
-                    <div class="game-board" @click="playGame(sp.name, sp.code, sp.gameCode)">
-                      <!--                      <img class="game-bg"-->
-                      <!--                           :src="require(`../assets/index/${sp.icon}/slide-${sp.icon}-${sp.name.toLowerCase()}.png`)"/>-->
-                      <!--                      -->
-                      <div
-                        class="game-bg"
-                        :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/index/${sp.icon}/slide-${
-                                sp.icon
-                              }-${sp.name.toLowerCase()}.png`)})`;
-                            } catch (e) {
-                              return '';
-                            }
-                          })()
+                  <template v-for="(platform, index) in [baccarat, roulette, luckyLace]" :key="index">
+                    <div class="game-list-inner-div">
+                      <div class="game-list-header-wrapper">
+                        <div class="game-list-header__title-wrapper">
+                          <template v-if="index === 0">
+                            <img src="../assets/index/baccarat/baccarat-header.png" />
+                            百家乐
+                          </template>
+                          <template v-else-if="index === 1">
+                            <img src="../assets/index/baccarat/roulette-header.png" />
+                            轮盘
+                          </template>
+                          <template v-else-if="index === 2">
+                            <img src="../assets/index/baccarat/lucky-lace-header.png" />
+                            幸运蕾丝
+                          </template>
+                        </div>
+                        <div class="game-list-header__action-wrapper">
+                          <q-btn class="game-list-header__all-btn" rounded dense>全部</q-btn>
+                          <q-btn
+                            class="game-list-header__navigation-btn"
+                            dense
+                            :disable="getNavigationButtonStatus(index, 'prev')"
+                            @click="handleSlidePrevClick(index)"
+                          >
+                            <q-icon name="keyboard_arrow_left" />
+                          </q-btn>
+                          <q-btn
+                            class="game-list-header__navigation-btn"
+                            dense
+                            :disable="getNavigationButtonStatus(index, 'next')"
+                            @click="handleSlideNextClick(index)"
+                          >
+                            <q-icon name="keyboard_arrow_right" />
+                          </q-btn>
+                        </div>
+                      </div>
+                      <swiper
+                        :slides-per-view="3"
+                        :slides-per-group="2"
+                        :grid="{
+                          rows: 2,
+                          fill: 'row'
                         }"
-                      ></div>
-
-                      <div class="game-title">
-                        <span>体育赛事</span>
-                        <h3>{{ sp.title }}</h3>
-                      </div>
-
-                      <div class="maintenance-box" v-if="sp.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="sp.maintenanceStartTime && sp.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(sp.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
+                        :modules="[Grid]"
+                        :space-between="6"
+                        @swiper="(swiper) => setBaccaratSwiper(swiper, index)"
+                      >
+                        <swiper-slide
+                          v-for="(game, gameIndex) in platform"
+                          class="game-slide"
+                          :key="`${index}-${gameIndex}`"
+                        >
+                          <div
+                            class="game-bg"
+                            :style="{
+                              backgroundImage: (() => {
+                                try {
+                                  return `url(${require(`../assets/index/baccarat/slide-${index}-img.png`)})`;
+                                } catch (e) {
+                                  return '';
+                                }
+                              })()
+                            }"
+                          ></div>
+                        </swiper-slide>
+                      </swiper>
                     </div>
-                  </div>
+                  </template>
+                  <!-- <div v-for="(sp, i) in baccarat" :key="i" class="game-item-div"> -->
+                  <!-- <div class="game-board" @click="playGame(sp.name, sp.code, sp.gameCode)"> -->
+                  <!-- <img class="game-bg" -->
+                  <!-- :src="require(`../assets/index/${sp.icon}/slide-${sp.icon}-${sp.name.toLowerCase()}.png`)"/> -->
+
+                  <!-- <div -->
+                  <!-- class="game-bg" -->
+                  <!-- :style="{ -->
+                  <!-- backgroundImage: (() => { -->
+                  <!-- try { -->
+                  <!-- return `url(${require(`../assets/index/${sp.icon}/slide-${ -->
+                  <!-- sp.icon -->
+                  <!-- }-${sp.name.toLowerCase()}.png`)})`; -->
+                  <!-- } catch (e) { -->
+                  <!-- return ''; -->
+                  <!-- } -->
+                  <!-- })() -->
+                  <!-- }" -->
+                  <!-- ></div> -->
+                  <!--  -->
+                  <!-- <div class="game-title"> -->
+                  <!-- <span>体育赛事</span> -->
+                  <!-- <h3>{{ sp.title }}</h3> -->
+                  <!-- </div> -->
+                  <!--  -->
+                  <!-- <div class="maintenance-box" v-if="sp.underMaintenance"> -->
+                  <!-- <p>维护中</p> -->
+                  <!-- <template v-if="sp.maintenanceStartTime && sp.maintenanceEndTime"> -->
+                  <!-- <div class="small-size q-mt-md">维护时间：</div> -->
+                  <!-- <p class="small-size"> -->
+                  <!-- {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }} -->
+                  <!-- </p> -->
+                  <!-- <p class="small-size">-</p> -->
+                  <!-- <p class="small-size"> -->
+                  <!-- {{ moment(sp.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }} -->
+                  <!-- </p> -->
+                  <!-- </template> -->
+                  <!-- </div> -->
+                  <!-- </div> -->
+                  <!-- </div> -->
                 </div>
               </div>
             </div>
@@ -654,6 +723,9 @@ export default defineComponent({
     const secondSwiper = ref(null);
     const slotSwiper = ref(null);
     const slotSwiper2 = ref(null);
+    const baccaratSwiper = ref(null);
+    const rouletteSwiper = ref(null);
+    const luckyLaceSwiper = ref(null);
 
     const setFirstSwiper = (swiper) => {
       firstSwiper.value = swiper;
@@ -666,6 +738,20 @@ export default defineComponent({
     };
     const setSlotSwiper2 = (swiper) => {
       slotSwiper2.value = swiper;
+    };
+
+    const setBaccaratSwiper = (swiper, index) => {
+      switch (index) {
+        case 0:
+          baccaratSwiper.value = swiper;
+          break;
+        case 1:
+          rouletteSwiper.value = swiper;
+          break;
+        case 2:
+          luckyLaceSwiper.value = swiper;
+          break;
+      }
     };
 
     const setSelectedSwiper = (tab) => {
@@ -757,6 +843,8 @@ export default defineComponent({
     const slot = ref([]);
     const fishing = ref([]);
     const baccarat = ref([]);
+    const roulette = ref([]);
+    const luckyLace = ref([]);
 
     const slot_odds = computed(() => {
       var filtered = slot.value.filter(function (element, index, array) {
@@ -1160,14 +1248,66 @@ export default defineComponent({
                 hotgames.value.push(lottObj);
               }
             }
-            if (platTypes.indexOf("BACCARAT") > -1) {
-              var bacObj = Object.assign({}, element);
-              // bacObj.title = translateRecord(bacObj.name);
-              bacObj.title = getAliasName(element, "BACCARAT");
-              bacObj.icon = "baccarat";
-              bacObj.subtitle = "百家乐";
-              baccarat.value.push(bacObj);
-            }
+            // TODO: check logic
+            // if (platTypes.indexOf("BACCARAT") > -1) {
+            //   var bacObj = Object.assign({}, element);
+            //   // bacObj.title = translateRecord(bacObj.name);
+            //   bacObj.title = getAliasName(element, "BACCARAT");
+            //   bacObj.icon = "baccarat";
+            //   bacObj.subtitle = "百家乐";
+            //   baccarat.value.push(bacObj);
+            // }
+          });
+
+          baccarat.value = Array(16).fill({
+            id: 175,
+            name: "EEAI",
+            code: "EEAI",
+            status: "OPEN",
+            walletType: "SEAMLESS",
+            gameType: "LIVE",
+            followType: "FOLLOW",
+            underMaintenance: false,
+            maintenanceStartTime: null,
+            maintenanceEndTime: null,
+            alias: "EEAI真人",
+            sequence: 5,
+            platformLabel: "",
+            showLogo: 0
+          });
+
+          roulette.value = Array(16).fill({
+            id: 175,
+            name: "EEAI",
+            code: "EEAI",
+            status: "OPEN",
+            walletType: "SEAMLESS",
+            gameType: "LIVE",
+            followType: "FOLLOW",
+            underMaintenance: false,
+            maintenanceStartTime: null,
+            maintenanceEndTime: null,
+            alias: "EEAI真人",
+            sequence: 5,
+            platformLabel: "",
+            showLogo: 0
+          });
+
+          luckyLace.value = Array(16).fill({
+            id: 175,
+            name: "EEAI",
+            code: "EEAI",
+            status: "OPEN",
+            walletType: "SEAMLESS",
+            gameType: "LIVE",
+            followType: "FOLLOW",
+            underMaintenance: false,
+            maintenanceStartTime: null,
+            maintenanceEndTime: null,
+            alias: "EEAI真人",
+            sequence: 5,
+            platformLabel: "",
+            showLogo: 0
           });
 
           slot.value.sort((a, b) => a.num - b.num);
@@ -1653,6 +1793,38 @@ export default defineComponent({
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
 
+    const getSwiperInstance = (index) => {
+      switch (index) {
+        case 0:
+          return baccaratSwiper.value;
+        case 1:
+          return rouletteSwiper.value;
+        case 2:
+          return luckyLaceSwiper.value;
+      }
+      return null;
+    };
+
+    const getNavigationButtonStatus = (index, type) => {
+      const _swiper = getSwiperInstance(index);
+      if (!_swiper) return;
+      if (type === "prev") {
+        return _swiper.isBeginning;
+      } else {
+        return _swiper.isEnd;
+      }
+    };
+    const handleSlideNextClick = (index) => {
+      const _swiper = getSwiperInstance(index);
+      if (!_swiper) return;
+      _swiper.slideNext();
+    };
+    const handleSlidePrevClick = (index) => {
+      const _swiper = getSwiperInstance(index);
+      if (!_swiper) return;
+      _swiper.slidePrev();
+    };
+
     return {
       imageLoading,
       slide: ref(0),
@@ -1702,6 +1874,8 @@ export default defineComponent({
       slot,
       livecasino,
       baccarat,
+      roulette,
+      luckyLace,
       hotgames,
       poker,
       fishing,
@@ -1768,7 +1942,11 @@ export default defineComponent({
       hideFloatPromo,
       movePromoFab,
       moveDomainFab,
-      gotoFloatPromo
+      gotoFloatPromo,
+      setBaccaratSwiper,
+      getNavigationButtonStatus,
+      handleSlideNextClick,
+      handleSlidePrevClick
     };
   }
 });
@@ -2100,6 +2278,63 @@ export default defineComponent({
           &:active {
             filter: brightness(1.15);
             transform: translate(1px, 1px);
+          }
+        }
+      }
+
+      .game-list-inner-div {
+        margin-bottom: 14px;
+        .game-list-header-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 16px;
+          font-weight: 600;
+          color: #0e365b;
+
+          .game-list-header__title-wrapper {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            img {
+              margin-right: 4px;
+              max-width: 22px;
+            }
+          }
+
+          .game-list-header__action-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            .game-list-header__all-btn {
+              padding: 1px 12px;
+            }
+
+            .game-list-header__navigation-btn {
+              min-width: 18px;
+              min-height: 18px;
+              border-radius: 50%;
+
+              &.disabled {
+                color: #c9c9c9;
+              }
+
+              .q-icon {
+                font-size: 18px;
+              }
+            }
+
+            .q-btn {
+              background: #edf5ff;
+            }
+          }
+        }
+        .game-slide {
+          .game-bg {
+            background-size: 100% 100%;
+            aspect-ratio: 110 / 145;
+            background-repeat: no-repeat;
           }
         }
       }
