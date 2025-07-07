@@ -30,7 +30,7 @@ if(sessionStorage.getItem('memberType') === 'streamer'){
     ],
   },
   {
-    label: '後台管理',
+    label: '后台管理',
     icon: 'pi pi-home',
     items: [
       {

@@ -1,161 +1,155 @@
 <template>
-  <div class="p-3 chat-history-page">
-    <div class="flex gap-3 mb-4 align-items-center">
-      <label for="stream-select" class="font-bold">{{ t('fields.stream') }}:</label>
-      <Dropdown
-        id="stream-select"
-        v-model="selectedStreamId"
-        :options="streamList"
-        optionLabel="titleWithId"
-        optionValue="id"
-        :placeholder="t('fields.stream')"
-        :filter="true"
-        class="w-full md:w-20rem"
-        @change="loadChatHistory"
-      />
-    </div>
-
-    <DataTable :value="chatList" :loading="loading" class="p-datatable-sm" style="margin-top: 20px">
-      <Column field="name" :header="t('fields.name')" style="width: 200px;" />
-      <Column field="content" :header="t('fields.content')" />
-      <Column :header="t('fields.operate')" style="width: 220px;">
-        <template #body="slotProps">
-          <div class="p-button-group">
-            <Button
-              v-if="!slotProps.data.blocked"
-              :label="t('fields.block')"
-              icon="pi pi-ban"
-              severity="danger"
-              size="small"
-              @click="showBlockDialog(slotProps.data.name)"
-            />
-            <template v-else>
-              <Button
-                :label="t('fields.extendBlock')"
-                icon="pi pi-clock"
-                severity="info"
-                size="small"
-                @click="showBlockDialog(slotProps.data.name)"
-              />
-              <Button
-                :label="t('fields.unblock')"
-                icon="pi pi-check"
-                severity="success"
-                size="small"
-                @click="unblockUser(slotProps.data.name)"
-              />
+    <div class="card">
+        <!-- Stream History List -->
+        <DataTable
+            :value="page.records"
+            :loading="page.loading"
+            responsiveLayout="scroll"
+            scrollable
+            scrollWidth="100%"
+            fit
+        >
+            <template #header>
+                <InputText :size="'small'" v-model="request.title" :placeholder="t('fields.title')" style="margin-right: 10px;" />
+                <InputText :size="'small'" v-model="request.homeTeamName" :placeholder="t('fields.homeTeam')" style="margin-right: 10px;" />
+                <InputText :size="'small'" v-model="request.awayTeamName" :placeholder="t('fields.awayTeam')" style="margin-right: 10px;" />
+                <Button :size="'small'" :label="t('fields.search')" severity="success" @click="loadStreamList" style="margin-right: 10px;" />
+                <Button :size="'small'" :label="t('fields.reset')" severity="warn" @click="resetQuery" style="margin-right: 10px;" />
             </template>
-          </div>
-        </template>
-      </Column>
-    </DataTable>
-
-    <Paginator
-      v-if="page.total > 0"
-      :rows="page.size"
-      :totalRecords="page.total"
-      :first="(page.current - 1) * page.size"
-      @page="onPageChange"
-      template="PrevPageLink CurrentPageReport NextPageLink"
-      currentPageReportTemplate="{currentPage} of {totalPages}"
-      class="mt-4 pagination"
-    />
-
-    <Dialog
-      v-model:visible="dialog.visible"
-      modal
-      :style="{ width: '400px' }"
-      :header="' '"
-    >
-      <div class="p-fluid">
-        <div class="field">
-          <label for="loginName" class="font-bold"> {{ t('fields.loginName') }}</label>
-          <InputText id="loginName" v-model="dialog.form.loginName" disabled />
-        </div>
-        <div class="field">
-          <label for="blockDuration" class="font-bold"> {{ t('fields.blockDuration') }}</label>
-          <div class="grid">
-            <div class="col-6">
-              <InputNumber
-                id="blockDuration"
-                v-model="dialog.form.duration"
-                :min="1"
-                :max="unitMaxMap[dialog.form.unit] || 60"
-                :useGrouping="false"
-              />
-            </div>
-            <div class="col-6">
-              <Dropdown
-                v-model="dialog.form.unit"
-                :options="durationUnits"
-                optionLabel="label"
-                optionValue="value"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <template #footer>
-        <Button
-          :label="t('fields.cancel')"
-          icon="pi pi-times"
-          text
-          severity="danger"
-          @click="dialog.visible = false"
+            <Column field="title" :header="t('fields.title')" minWidth="250" />
+            <Column :header="t('fields.homeTeam')" minWidth="250">
+                <template #body="slotProps">
+                    <div>
+                        {{ slotProps.data.homeNameZh || slotProps.data.homeNameEn }}
+                    </div>
+                </template>
+            </Column>
+            <Column :header="t('fields.awayTeam')" minWidth="250">
+                <template #body="slotProps">
+                    <div>
+                        {{ slotProps.data.awayNameZh || slotProps.data.awayNameEn }}
+                    </div>
+                </template>
+            </Column>
+            <Column :header="t('fields.operator')" minWidth="250">
+                <template #body="slotProps">
+                    <div>
+                        <Button :size="'small'" :label="t('fields.chatHistory')" severity="info" @click="showChatHistory(slotProps.data)" />
+                    </div>
+                </template>
+            </Column>
+        </DataTable>
+        <Paginator
+            :rows="request.size"
+            :totalRecords="page.total"
+            :rowsPerPageOptions="[10, 20, 50]"
+            :first="(request.current - 1) * request.size"
+            template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+            @page="changePage"
+            class="p-mt-2"
         />
-        <Button
-          :label="t('fields.confirm')"
-          icon="pi pi-check"
-          severity="primary"
-          @click="submitBlock"
+
+        <Dialog
+            :header="t('fields.chatHistory')"
+            v-model:visible="uiControl.dialogVisible"
+            modal
+            class="p-dialog-md live-event-dialog"
+            appendTo="body"
+            :style="{ width: '80vw' }"
+        >
+            
+            <DataTable
+                :value="chatPage.records"
+                :loading="chatPage.loading"
+                responsiveLayout="scroll"
+                scrollable
+                scrollWidth="100%"
+            >
+                <Column field="name" :header="t('fields.name')" minWidth="150" />
+                <Column field="content" :header="t('fields.content')" minWidth="150" />
+                <Column :header="t('fields.operator')" minWidth="150">
+                    <template #body="slotProps">
+                        <div v-if="!slotProps.data.blocked">
+                            <form>
+                                <label style="margin-right: 10px;">{{ t('fields.blockDuration') }}</label>
+                                <InputNumber v-model="form.duration" :min="1" :max="unitMaxMap[form.unit] || 60" inputStyle="width: 100px;" style="margin-right: 10px;" />
+                                <Dropdown
+                                    v-model="form.unit"
+                                    :options="durationUnits"
+                                    optionLabel="label"
+                                    optionValue="value"
+                                    style="width: 100px; margin-right: 10px;"
+                                />
+                                <Button icon="pi pi-lock" severity="info" size="small" :label="t('fields.block')" @click="blockUser(slotProps.data)" style="margin-right: 10px;" />
+                            </form>
+                        </div>      
+                        <div v-else>
+                            <Button icon="pi pi-check" severity="success" size="small" :label="t('fields.unblock')" @click="unblockUser(slotProps.data)" style="margin-right: 10px;" />
+                        </div>
+                    </template>
+                </Column>
+            </DataTable>
+            <Paginator
+            :rows="chatRequest.size"
+            :totalRecords="chatPage.total"
+            :rowsPerPageOptions="[10, 20, 50]"
+            :first="(chatRequest.current - 1) * chatRequest.size"
+            template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+            @page="changeChatPage"
+            class="p-mt-2"
         />
-      </template>
-    </Dialog>
-  </div>
+        </Dialog>
+
+    </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
-import { useI18n } from 'vue-i18n';
-import dayjs from 'dayjs';
-
+import { onMounted, reactive, ref } from 'vue';
 import { DashboardService } from '@/service/DashboardService'
+import { useI18n } from 'vue-i18n'
+import { useUserStore } from '@/stores/userStore.js'
+import dayjs from 'dayjs'
+import { useToast } from 'primevue/usetoast';
 
-// PrimeVue Components
-import Dropdown from 'primevue/dropdown';
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import Button from 'primevue/button';
-import Paginator from 'primevue/paginator';
-import Dialog from 'primevue/dialog';
-import InputText from 'primevue/inputtext';
-import InputNumber from 'primevue/inputnumber';
-import { useToast } from 'primevue/usetoast'; // For notifications
+const { t } = useI18n()
+const store = useUserStore()
+const toast = useToast();
 
-const { t } = useI18n();
-const toast = useToast(); // Initialize PrimeVue Toast
+const uiControl = reactive({
+    dialogVisible: false,
+})
 
-const streamList = ref([]);
-const chatList = ref([]);
-const selectedStreamId = ref(null);
-const loading = ref(false);
+const request = reactive({
+  siteId: store.siteId,
+  size: 30,
+  current: 1,
+  title: null,
+  homeTeamName: null,
+  awayTeamName: null,
+});
 
 const page = reactive({
-  total: 0,
-  current: 1, // PrimeVue Paginator uses 0-based first, but our logic here uses 1-based current page for `getChatHistory`
-  size: 20
+    pages: 0,
+    records: [],
+    total: 0,
+    current: 1,
+    loading: false,
+})
+
+const chatRequest = reactive({
+  streamId: null,
+  loginName: null,
+  size: 30,
+  current: 1,
 });
 
-const dialog = reactive({
-  visible: false,
-  form: {
-    loginName: '',
-    duration: 10,
-    unit: 'minute'
-  }
+const chatPage = reactive({
+  pages: 0,
+  records: [],
+  loading: false,
 });
 
-const unitMaxMap = { 
+const unitMaxMap = {
   minute: 60,
   hour: 24,
   day: 30,
@@ -163,153 +157,117 @@ const unitMaxMap = {
   month: 6
 };
 
-// Dropdown options for block duration unit
+const form = reactive({
+  loginName: null,
+  duration: null,
+  unit: null,
+})
+
 const durationUnits = ref([
-  { label: '分鐘', value: 'minute' },
-  { label: '小時', value: 'hour' },
-  { label: '天', value: 'day' },
-  { label: '週', value: 'week' },
-  { label: '月', value: 'month' }
+  { label: t('fields.minutes'), value: 'minute' },
+  { label: t('fields.hours'), value: 'hour' },
+  { label: t('fields.days'), value: 'day' },
+  { label: t('fields.weeks'), value: 'week' },
+  { label: t('fields.months'), value: 'month' }
 ]);
 
-async function loadStreams() {
-  try {
-    const res = await DashboardService.getStreamListv1();
-    console.log(res)
-    streamList.value = res.map(s => ({
-      ...s,
-      titleWithId: `${s.title} (${s.streamId})` // Create a combined label for the dropdown
-    }));
-    
-  } catch (error) {
-    console.error('Failed to load streams:', error);
-    toast.add({ severity: 'error', summary: '錯誤', detail: '無法載入串流列表', life: 3000 });
-  }
+const { getStreamHistoryList, getChatHistoryv2, blockUserApiV1, unblockUserApiV2 } = DashboardService
+
+
+function changePage(event) {
+  request.current = event.page + 1;
+  request.size = event.rows;
+  loadStreamList();
 }
 
-async function loadChatHistory() {
-  if (!selectedStreamId.value) {
-    chatList.value = [];
-    page.total = 0;
-    return;
-  }
-  loading.value = true;
+function changeChatPage(event) {
+  chatRequest.current = event.page + 1;
+  chatRequest.size = event.rows;
+  loadChatHistory(chatRequest.streamId);
+}
 
-  try {
+function resetQuery() {
+    request.title = null
+    request.homeTeamName = null
+    request.awayTeamName = null
+    loadStreamList()
+}
+
+function showChatHistory(data) {
+    uiControl.dialogVisible = true
+    chatRequest.streamId = data.id
+    loadChatHistory(data.id)
+}
+
+async function loadChatHistory(id) {
+    chatRequest.streamId = id
+    chatPage.loading = true
+
     const query = new URLSearchParams({
-      current: page.current,
-      size: page.size
+        current: chatRequest.current,
+        size: chatRequest.size
     });
 
-    const res = await DashboardService.getChatHistoryv2(`?${query.toString()}`, { streamId: selectedStreamId.value });
-    console.log(res,'dan2')
-    chatList.value = res.records;
-    page.total = res.total;
-  } catch (error) {
-    console.error('Failed to load chat history:', error);
-    toast.add({ severity: 'error', summary: '錯誤', detail: '無法載入聊天記錄', life: 3000 });
-    chatList.value = [];
-    page.total = 0;
-  } finally {
-    loading.value = false;
-  }
+    try {
+        const response = await getChatHistoryv2(`?${query.toString()}`, chatRequest);
+        const data = response?.data || response;
+        chatPage.pages = data?.pages || 0;
+        chatPage.records = data?.records || [];
+    } catch (error) {
+        console.error("Failed to load chat history:", error);
+    } finally {
+        chatPage.loading = false;
+    }
 }
 
-// PrimeVue Paginator uses an event object with `page` and `rows`
-function onPageChange(event) {
-  // `event.page` is 0-based, convert to 1-based for your API
-  page.current = event.page + 1;
-  page.size = event.rows; // Update page size if it changed (though not directly used here)
-  loadChatHistory();
+async function loadStreamList() {
+  page.loading = true
+  const { data : res } = await getStreamHistoryList(request);
+  page.records = res.records || []
+  page.total = res.total || 0
+  page.pages = res.pages || 0
+  page.current = res.current || 1
+  page.loading = false
 }
 
-function showBlockDialog(name) {
-  dialog.form.loginName = name;
-  dialog.form.duration = 10;
-  dialog.form.unit = 'minute';
-  dialog.visible = true;
+async function blockUser(data) {
+    form.loginName = data.name
+
+    if (!form.loginName || !form.duration || !form.unit) {
+        toast.add({ severity: 'warn', summary: 'warn', detail: t('message.validateBlockReasonRequired'), life: 3000 });
+        return;
+    }
+
+    const blockTime = dayjs().add(form.duration, form.unit).format('YYYY-MM-DD HH:mm:ss');
+
+    try {
+        await blockUserApiV1({ loginName: form.loginName, blockTime });
+        toast.add({ severity: 'success', summary: 'success', detail: t('fields.blockSuccess'), life: 3000 });
+        form.loginName = ''; 
+        loadChatHistory(chatRequest.streamId);
+    } catch (error) {
+        toast.add({ severity: 'error', summary: 'error', detail: t('fields.blockFailed'), life: 3000 });
+    }
 }
 
-async function submitBlock() {
-  const blockTime = dayjs().add(dialog.form.duration, dialog.form.unit).format('YYYY-MM-DD HH:mm:ss');
-  try {
-    await DashboardService.blockUserApi({ loginName: dialog.form.loginName, blockTime });
-    toast.add({ severity: 'success', summary: '成功', detail: t('成功'), life: 3000 });
-    dialog.visible = false;
-    loadChatHistory();
-  } catch (error) {
-    console.error('Block user failed:', error);
-    toast.add({ severity: 'error', summary: '错误', detail: '封锁用户失败', life: 3000 });
-  }
-}
+async function unblockUser(data) {
+    const loginName = data.name
 
-async function unblockUser(loginName) {
-  try {
-    await DashboardService.unblockUserApiV2({ loginName });
-    toast.add({ severity: 'success', summary: '成功', detail: t('成功'), life: 3000 });
-    loadChatHistory();
-  } catch (error) {
-    console.error('Unblock user failed:', error);
-    toast.add({ severity: 'error', summary: '錯誤', detail: '解除封鎖失敗', life: 3000 });
-  }
+    try {
+        await unblockUserApiV2({ loginName });
+        toast.add({ severity: 'success', summary: 'success', detail: t('fields.unblockSuccess'), life: 3000 });
+        loadChatHistory(chatRequest.streamId);
+    } catch (error) {
+        console.error('Unblock user failed:', error);
+        toast.add({ severity: 'error', summary: 'error', detail: t('message.unblockFailed'), life: 3000 });
+    }
 }
 
 onMounted(() => {
-  loadStreams();
-});
+    loadStreamList()
+})
 </script>
 
 <style scoped>
-/* Basic styling for the page layout */
-.chat-history-page {
-  padding: 1rem;
-}
 
-/* Flex utilities from PrimeFlex (if you have it) */
-.flex {
-  display: flex;
-}
-.align-items-center {
-  align-items: center;
-}
-.gap-3 {
-  gap: 1rem;
-}
-.mb-4 {
-  margin-bottom: 1.5rem;
-}
-.mt-4 {
-  margin-top: 1.5rem;
-}
-.w-full {
-  width: 100%;
-}
-.md\:w-20rem {
-  width: 20rem; /* Example width for medium screens */
-}
-
-/* PrimeVue specific overrides if needed (optional) */
-/* .p-datatable-sm applies compact styling */
-/* .p-button-group for grouping buttons */
-/* .p-fluid for form field spacing within dialog */
-
-/* Adjusting styles for the number input and dropdown within the grid */
-.p-fluid .p-inputnumber,
-.p-fluid .p-dropdown {
-  width: 100%; /* Ensure they fill their column */
-}
-
-/* Adjust button group spacing */
-.p-button-group .p-button {
-  margin-right: 0.5rem; /* Small gap between buttons in the group */
-}
-.p-button-group .p-button:last-child {
-  margin-right: 0;
-}
-
-/* Paginator alignment */
-.pagination {
-  display: flex;
-  justify-content: flex-end; /* Align to the right */
-}
 </style>

@@ -141,7 +141,7 @@ async function loadBlockList() {
     page.total = res.data.total;       // 更新總筆數
   } catch (error) {
     console.error('載入封鎖列表失敗:', error);
-    toast.add({ severity: 'error', summary: '錯誤', detail: '無法載入封鎖列表', life: 3000 });
+    toast.add({ severity: 'error', summary: 'error', detail: t('fields.unableLoadBlockList'), life: 3000 });
   } finally {
     loading.value = false; // 載入結束，關閉轉圈圈
   }
@@ -151,7 +151,7 @@ async function loadBlockList() {
 async function blockUser() {
   // 檢查用戶名稱、時長、單位有沒有填
   if (!form.loginName || !form.duration || !form.unit) {
-    toast.add({ severity: 'warn', summary: '警告', detail: '請填寫完整的封鎖資訊', life: 3000 });
+    toast.add({ severity: 'warn', summary: 'warn', detail: t('message.validateBlockReasonRequired'), life: 3000 });
     return;
   }
 
@@ -161,12 +161,12 @@ async function blockUser() {
   try {
     // 呼叫 API 封鎖用戶
     await DashboardService.blockUserApiV1({ loginName: form.loginName, blockTime });
-    toast.add({ severity: 'success', summary: '成功', detail: t('封鎖成功'), life: 3000 });
+    toast.add({ severity: 'success', summary: 'success', detail: t('fields.blockSuccess'), life: 3000 });
     form.loginName = ''; // 封鎖成功後清空用戶名稱輸入框
     loadBlockList();     // 重新載入封鎖列表，顯示最新狀態
   } catch (error) {
     console.error('封鎖用戶失敗:', error);
-    toast.add({ severity: 'error', summary: '錯誤', detail: '封鎖用戶失敗，請稍後再試', life: 3000 });
+    toast.add({ severity: 'error', summary: 'error', detail: t('fields.blockFailed'), life: 3000 });
   }
 }
 
@@ -175,11 +175,11 @@ async function unblockUser(loginName) {
   try {
     // 呼叫 API 解除封鎖
     await DashboardService.unblockUserApi({ loginName });
-    toast.add({ severity: 'success', summary: '成功', detail: t('封鎖成功'), life: 3000 });
+    toast.add({ severity: 'success', summary: 'success', detail: t('fields.unblockSuccess'), life: 3000 });
     loadBlockList(); // 重新載入封鎖列表，顯示最新狀態
   } catch (error) {
     console.error('解除封鎖用戶失敗:', error);
-    toast.add({ severity: 'error', summary: '錯誤', detail: '解除封鎖用戶失敗，請稍後再試', life: 3000 });
+    toast.add({ severity: 'error', summary: 'error', detail: t('fields.unblockFailed'), life: 3000 });
   }
 }
 

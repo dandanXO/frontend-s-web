@@ -10,12 +10,12 @@
           <!-- 新增登入API選擇 -->
           <RadioButtonGroup v-model="loginMode" name="loginMode" class="login-radio-button" style="margin-bottom: 16px;">
             <div class="flex items-center gap-2">
-              <RadioButton inputId="login-v1" value="v1" />
-              <label for="login-v1">直播主登入</label>
+              <RadioButton inputId="login-v1" value="v1" style="margin-right: 10px;" />
+              <label for="login-v1"> {{ t('fields.streamerLogin') }}</label>
             </div>
             <div class="flex items-center gap-2">
-              <RadioButton inputId="login-v2" value="v2" />
-              <label for="login-v2">管理员登入</label>
+              <RadioButton inputId="login-v2" value="v2" style="margin-right: 10px;" />
+              <label for="login-v2"> {{ t('fields.adminLogin') }}</label>
             </div>
           </RadioButtonGroup>
           <Form

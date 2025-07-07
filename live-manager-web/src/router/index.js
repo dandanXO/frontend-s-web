@@ -27,7 +27,7 @@ const router = createRouter({
     },
     {
       path: '/sensitive-word',
-      name: '後台管理',
+      name: '后台管理',
       component: () => import('../views/Sensitive-word/SensitiveWordView.vue'),
       children: [
         {

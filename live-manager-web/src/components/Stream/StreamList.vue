@@ -16,7 +16,7 @@
           <!-- 搜尋框 -->
           <InputText
             v-model="filters['global'].value"
-            placeholder="關鍵詞搜索"
+            :placeholder="t('fields.search')"
             :size="'small'"
             class="search-input"
           />
@@ -25,7 +25,7 @@
             :size="'small'"
             type="button"
             icon="pi pi-refresh"
-            label="重新載入"
+            :label="t('fields.refresh')"
             severity="info"
             @click="fetchStreams"
             :loading="loading"
@@ -34,7 +34,7 @@
             :size="'small'"
             type="button"
             icon="pi pi-refresh"
-            label="清除"
+            :label="t('fields.reset')"
             severity="warn"
             @click="clearFilter"
             :loading="loading"
@@ -42,43 +42,43 @@
         </div>
       </template>
 
-      <Column field="eventTitle" header="標題" sortable>
+      <Column field="eventTitle" :header="t('fields.title')" sortable>
         <template #body="slotProps">
           {{ slotProps.data.eventTitle }}
         </template>
       </Column>
 
-      <Column field="homeName" header="主隊" sortable>
+      <Column field="homeName" :header="t('fields.homeTeam')" sortable>
         <template #body="slotProps">
           {{ slotProps.data.homeName }}
         </template>
       </Column>
 
-      <Column field="awayName" header="客隊" sortable>
+      <Column field="awayName" :header="t('fields.awayTeam')" sortable>
         <template #body="slotProps">
           {{ slotProps.data.awayName }}
         </template>
       </Column>
 
-      <Column field="startTime" header="比賽時間" sortable>
+      <Column field="startTime" :header="t('fields.matchTime')" sortable>
         <template #body="slotProps">
           {{ formatDateTime(slotProps.data.startTime) }}
         </template>
       </Column>
 
-      <Column field="eventStatus" header="比賽狀態" sortable>
+      <Column field="eventStatus" :header="t('fields.status')" sortable>
         <template #body="slotProps">
           {{ getStatusLabel(slotProps.data.eventStatus) }}
         </template>
       </Column>
 
-      <Column field="streamerName" header="主播" sortable>
+      <Column field="streamerName" :header="t('fields.streamer')" sortable>
         <template #body="slotProps">
           {{ slotProps.data.streamerName || '未分配' }}
         </template>
       </Column>
 
-      <Column field="streamerStatus" header="直播主狀態" sortable>
+      <Column field="streamerStatus" :header="t('fields.streamerStatus')" sortable>
         <template #body="slotProps">
           <Tag
             :severity="getStreamerStatusSeverity(slotProps.data.streamerStatus)"
@@ -86,7 +86,7 @@
           />
         </template>
       </Column>
-      <Column header="操作">
+      <Column :header="t('fields.operate')">
         <template #body="slotProps">
           <Button
             :size="'small'"
@@ -168,6 +168,8 @@ import InputText from 'primevue/inputtext'
 import Dialog from 'primevue/dialog'
 import Tag from 'primevue/tag'
 import { useToast } from 'primevue/usetoast'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const toast = useToast()
 
 const route = useRoute()
@@ -271,12 +273,12 @@ const formatDateTime = (timestamp) => {
 // 獲取狀態標籤
 const getStatusLabel = (status) => {
   const statusMap = {
-    0: '準備中',
-    1: '進行中',
-    2: '已結束',
-    3: '其他',
+    0: t('fields.prepare'),
+    1: t('fields.inProgress'),
+    2: t('fields.end'),
+    3: t('fields.other'),
   }
-  return statusMap[status] || '未知狀態'
+  return statusMap[status] || t('fields.unknownStatus')
 }
 
 // 獲取狀態樣式
@@ -297,10 +299,10 @@ const getStatusSeverity = (status) => {
 // 獲取直播主狀態標籤
 const getStreamerStatusLabel = (status) => {
   const statusMap = {
-    0: '停止直播',
-    1: '開始直播',
+    0: t('fields.stopLiveStream'),
+    1: t('fields.startLiveStream'),
   }
-  return statusMap[status] || '未知狀態'
+  return statusMap[status] || t('fields.unknownStatus')
 }
 
 // 獲取直播主狀態樣式
@@ -318,7 +320,7 @@ const canPreview = (status) => {
 
 // 獲取預覽按鈕提示
 const getPreviewTooltip = (status) => {
-  return canPreview(status) ? '點擊預覽' : '當前狀態無法預覽'
+  return canPreview(status) ? t('fields.clickPreview') : t('fields.cannotPreview')
 }
 
 // 查看直播
@@ -343,18 +345,18 @@ const viewStream = (stream) => {
 
 const editRoomTitle = async (stream) => {
   try {
-    const { value } = await ElMessageBox.prompt('請輸入新的房間標題', '修改房間標題', {
-      confirmButtonText: '確認',
-      cancelButtonText: '取消',
+    const { value } = await ElMessageBox.prompt(t('fields.enterNewRoomTitle'), t('fields.editRoomTitle'), {
+      confirmButtonText: t('fields.confirm'),
+      cancelButtonText: t('fields.cancel'),
       inputValue: stream.roomTitle,
     })
     const result = await DashboardService.updateRoomTitle(stream.streamerStreamId, value)
     if (result) {
-      ElMessage.success('房間標題更新成功')
+      ElMessage.success(t('message.roomTitleUpdatedSuccess'))
       fetchStreams()
     }
   } catch (err) {
-    console.log('取消修改房間標題')
+    console.log(t('message.cancelEditRoomTitle'))
   }
 }
 

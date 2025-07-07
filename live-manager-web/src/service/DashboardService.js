@@ -911,12 +911,24 @@ export const DashboardService = {
   // delete sport live match mars
   deleteSportLiveMatchMars(data) {
     const token = sessionStorage.getItem('token')
-    console.log("data", data.join(","))
     return api.post('/session/live-match-mars?_method=DELETE', { ids: data.join(",") }, {
       headers: {
         token: `${token}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     })
-  }
+  },
+
+  // get stream history list 
+  getStreamHistoryList(query) {
+    const token = sessionStorage.getItem('token');
+    return api
+      .get(`/session/live-sport/stream/stream-list`, {
+        params: query,
+        headers: {
+          token: `${token}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+  },
 }
