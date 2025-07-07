@@ -669,7 +669,7 @@ export default defineComponent({
           overflow: hidden;
           cursor: pointer;
           background: url(../assets/promo/front-bg.jpg) no-repeat center center;
-          background-size: 100% auto;
+          background-size: 100% 100%;
           box-shadow: 0px 4px 26px 0px #00000026;
           border: 2.88px solid #FFFFFF;
           border-radius: 28px;
