@@ -54,7 +54,7 @@
     @keydown.enter.prevent
   >
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.svg" />
       <el-form-item tabindex="3" label="验证码" prop="captchaCode">
         <div style="display: flex; width: 100%">
           <el-input

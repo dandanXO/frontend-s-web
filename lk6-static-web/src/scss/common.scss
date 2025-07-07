@@ -43,6 +43,14 @@
 }
 
 @font-face {
+  font-family: "Poppins";
+  src: url("@/assets/fonts/Poppins.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "DIN";
   src: url("@/assets/fonts/DIN Bold.ttf");
   font-weight: normal;
@@ -110,7 +118,7 @@ body {
   font-size: 16px;
   line-height: 1.5;
   min-width: $maxwidth;
-  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei",
+  font-family: "PingFang SC", "Poppins", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei",
     "WenQuanYi Micro Hei", sans-serif;
   background: #f5f6f8;
   a {

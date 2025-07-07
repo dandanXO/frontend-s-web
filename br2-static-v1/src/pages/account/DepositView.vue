@@ -426,7 +426,7 @@ return 50
 };
 
 const get2ndDepoCommaAmount = (amount) => {
-  if (amount < 2880) {
+  if (amount < 1440) {
     return parseFloat(amount * 0.2).toFixed(2);
   } else {
     return 288;

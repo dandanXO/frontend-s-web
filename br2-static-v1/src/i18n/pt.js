@@ -990,6 +990,7 @@ export default {
       description:
         "Faça o upgrade para o nível VIP correspondente com base no valor acumulado de apostas na conta do membro.",
       bet: "APOSTA",
+      termsAndConditions: "Terms and Conditions",
       vipLevel: "VIP Nível",
       tnc01:
         "A partir da primeira aposta válida feita pelo membro após concluir o primeiro depósito com sucesso, o valor acumulado das apostas válidas será usado para determinar a elevação de nível VIP, conforme os limites abaixo:",
@@ -1182,6 +1183,7 @@ export default {
     10008: "Erro",
     11000: "Falha na submissão do depósito.",
     11003: "Depósito falhou",
+    10031: "Promoção não encontrada",
     11005: "Operações do usuário muito frequentes. Por favor, tente novamente.",
     12100: "Senha de retirada não corresponde",
     12101: "A nova senha de retirada não pode ser igual à antiga",

@@ -1,7 +1,7 @@
 <template>
   <el-form ref="forgotPwdFormRef" :rules="forgotPwdFormRules" :model="forgotPwdForm" label-width="90" size="large">
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/username-icon.svg" />
       <el-form-item label="用户名" prop="loginName">
         <el-input v-model="forgotPwdForm.loginName" placeholder="请输入4-12位非汉字字符" clearable />
       </el-form-item>
@@ -30,7 +30,7 @@
     v-if="forgotPwdPostVerifyForm.codeId"
   >
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.svg" />
       <el-form-item label="验证码" prop="code">
         <div style="display: flex; width: 100%">
           <el-input v-model="forgotPwdPostVerifyForm.code" label="验证码" placeholder="验证码"></el-input>
@@ -39,7 +39,7 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/password-icon.svg" />
       <el-form-item label="密码" prop="password">
         <el-input
           class="wTip"
@@ -55,7 +55,7 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/password-icon.svg" />
       <el-form-item label="确认密码" prop="confirmPwd">
         <el-input
           class="half wTip"

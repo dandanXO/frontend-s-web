@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
+    <!-- <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
 
     <div class="tnc-content">
       <ol>
@@ -36,7 +36,7 @@
           {{ $t(`hotPromo.redepositBonus.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
       </ol>
-    </div>
+    </div> -->
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">

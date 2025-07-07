@@ -102,7 +102,7 @@ onUnmounted(() => {
 .spin-lucky-wheel-promo-wrapper {
   margin-top: -14px;
   background-image: url(./img/N-bg-1.png);
-  background-size: contain;
+  background-size: 100% auto;
   background-position: top;
   background-repeat: no-repeat;
   .q-inner-loading {

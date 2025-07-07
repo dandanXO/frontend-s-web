@@ -64,7 +64,7 @@ body {
 }
 
 .q-page-container {
-  background: #fff;
+  background: linear-gradient(180deg, #e4eef9 0%, #f1f5fb 100%);
   min-height: calc(100vh - 49px);
   //box-shadow:0px 0px 4px rgba(0,0,0,0.25);
   /* Overwrite Quasars padding-top calculation by code to avoid wrong offset in iOS PWA when
@@ -123,9 +123,9 @@ body.platform-ios .q-dialog__inner--minimized > div {
     svg,
     img {
       display: block;
-      width: 30px;
+      width: 20px;
       padding-left: 10px;
-      fill: #ffffff;
+      fill: #424f72;
     }
   }
 }
@@ -443,4 +443,185 @@ a:visited {
   .q-icon {
     margin-right: 3px !important;
   }
+}
+
+.modal-common-div {
+  .modalcontent {
+    background: url(../assets/images/index/common-modal-bg.png) no-repeat center top;
+    background-size: 100%;
+    background-color: #fff;
+    height: auto;
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px 6px 16px;
+    overflow: visible;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: url(../assets/images/index/common-modal-decorator.png) no-repeat center center;
+      background-size: 100% 100%;
+      aspect-ratio: 1;
+      width: 95px;
+    }
+  }
+
+  .headers {
+    width: calc(100% - 16px);
+    margin: auto;
+    border-radius: 10px 10px 0px 0px;
+    box-sizing: border-box;
+    height: 55px;
+    line-height: 55px;
+    color: #424f72;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    > .q-btn {
+      margin-left: auto;
+    }
+
+    .black-titles,
+    .titles {
+      left: 50%;
+      position: absolute;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  .black-titles {
+    color: $accent;
+    font-size: 1rem;
+  }
+
+  .contents {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 12px 15px;
+    text-align: center;
+    color: #424f72;
+    font-size: 1.2rem;
+
+    .dialog-content-icon {
+      width: 2.5rem;
+      margin-bottom: 12px;
+    }
+
+    .contentfonts {
+      text-align: center;
+      color: #333;
+      font-size: 16px;
+      margin: 37px 0 20.5px 0;
+    }
+
+    .inputs {
+      width: 292px;
+      height: 36px;
+      border-radius: 4px 4px;
+      border: 1px solid #666;
+      box-sizing: border-box;
+      margin: 0 auto;
+      padding-left: 20px;
+
+      .van-field__control {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  .btnsreas {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    margin-top: 20px;
+    gap: 15px;
+
+    .cacnels {
+      flex: 1;
+      box-sizing: border-box;
+      text-align: center;
+      letter-spacing: 1px;
+      max-width: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 8px;
+    }
+
+    .confirmsbtns {
+      flex: 1;
+      box-sizing: border-box;
+      text-align: center;
+      max-width: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+.common-md-btn {
+  background-color: transparent;
+  background-image: url("../assets/images/common/common-md-btn.png");
+  background-size: 100% 100%;
+  aspect-ratio: 286/96;
+  font-size: 1.2rem;
+  width: 95px;
+  color: $white;
+  border-radius: 10px;
+  box-shadow: 0px -0.87px 3.47px 0px #ffffff;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
+}
+
+.common-md-white-btn {
+  background-color: transparent;
+  background-image: url("../assets/images/common/common-md-white-btn.png");
+  background-size: 100% 100%;
+  aspect-ratio: 286/96;
+  font-size: 1.2rem;
+  width: 115px;
+  color: #7a80a1;
+  border-radius: 10px;
+  box-shadow: 0px -0.87px 3.47px 0px #ffffff;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
+}
+
+a,
+a:visited,
+a:active,
+a:focus {
+  text-decoration: none;
 }

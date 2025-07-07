@@ -30,13 +30,13 @@
                           <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">
                             {{ getPromoLabel(promo.labelType) }}
                           </div>
-                          <div
-                            class="promo-item-date"
-                            v-if="parsedParam(promo.param).date"
-                            v-html="parsedParam(promo.param).date"
-                          />
                         </div>
 
+                        <div
+                          class="promo-item-date"
+                          v-if="parsedParam(promo.param).date"
+                          v-html="parsedParam(promo.param).date"
+                        />
                         <div class="promo-item-title" v-html="promo.title"></div>
                         <div
                           class="promo-item-deal"
@@ -44,7 +44,8 @@
                           v-html="parsedParam(promo.param).sub"
                         />
                         <div>
-                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />
+                          <!-- <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" /> -->
+                          <RedirectButton class="promo-item-btn">查看详情</RedirectButton>
                         </div>
 
                         <div class="promo-item-side-img">
@@ -92,12 +93,17 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024' || selectedPromo?.redirectUrl === 'bounty-blast-premier'" />
+              <BlastPremierMarquee
+                v-if="
+                  selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024' ||
+                  selectedPromo?.redirectUrl === 'bounty-blast-premier'
+                "
+              />
               <div
                 class="inner"
                 :class="{
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
-                   cs2:
+                  cs2:
                     selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
                     selectedPromo.promoCode === 'dy2-cs2-blast-2024' ||
                     selectedPromo.promoCode === 'dy2-blast-premier-treasure',
@@ -107,15 +113,15 @@
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
                   lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
                   'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
-                  'bbdacha-cs2': selectedPromo.promoCode ==='dy2-duan-wu-rewards'
+                  'bbdacha-cs2': selectedPromo.promoCode === 'dy2-duan-wu-rewards'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
                     ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
                     : 'none',
-                  margin: selectedPromo.promoCode ==='dy2-duan-wu-rewards' ? '' : '20px auto',
+                  margin: selectedPromo.promoCode === 'dy2-duan-wu-rewards' ? '' : '20px auto',
                   'max-width': '1400px',
-                  width:  selectedPromo.promoCode ==='dy2-duan-wu-rewards' ? '100%' :'95%'
+                  width: selectedPromo.promoCode === 'dy2-duan-wu-rewards' ? '100%' : '95%'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
@@ -297,6 +303,7 @@ import BlastAustin from "src/components/hotpromo/blast-austin/BlastAustin.vue";
 import TorontoMasters from "src/components/hotpromo/toronto-masters/TorontoMasters.vue";
 import Fifa2025Promo from "src/components/hotpromo/fifa-2025/Fifa2025Promo.vue";
 import Dy2DailySlotBonus from "src/components/hotpromo/dy2-daily-slot-bonus/Dy2DailySlotBonus.vue";
+import RedirectButton from "src/components/RedirectButton.vue";
 
 export default defineComponent({
   name: "PromoView",
@@ -308,7 +315,8 @@ export default defineComponent({
     BlastAustin,
     TorontoMasters,
     Fifa2025Promo,
-    Dy2DailySlotBonus
+    Dy2DailySlotBonus,
+    RedirectButton
   },
   setup() {
     const store = userStore();
@@ -698,6 +706,7 @@ export default defineComponent({
           position: relative;
           border-radius: 12px;
           min-height: 150px;
+          box-shadow: 0px 0px 5.9px 0px #93c7ff69;
 
           .promo-label {
             height: 24px;
@@ -733,17 +742,16 @@ export default defineComponent({
           }
 
           .promo-item-date {
-            color: #606479;
+            color: #7a80a1;
+            font-weight: 400;
             font-size: 0.825rem;
-            font-weight: bold;
-            padding-left: 12px;
             // position: absolute;
             // top: 5px;
             // left: 100px;
           }
 
           .promo-item-title {
-            color: $primary;
+            color: #7a80a1;
             font-weight: bold;
             font-size: 1rem;
             max-width: 160px;
@@ -754,7 +762,7 @@ export default defineComponent({
           }
 
           .promo-item-deal {
-            color: #a4aabb;
+            color: #7a80a1;
             font-weight: bold;
             font-size: 0.875rem;
             max-width: 160px;
@@ -771,10 +779,8 @@ export default defineComponent({
           .promo-item-btn {
             padding-left: 16px;
             padding-right: 16px;
-            border-radius: 8px;
             font-size: 0.75rem;
             margin-top: 6px;
-            background: linear-gradient(270deg, #3080f4, #70b1ff);
           }
 
           .promo-item-side-img {
@@ -1092,8 +1098,8 @@ export default defineComponent({
 .promo {
   .q-tabs {
     // background: rgba(113, 125, 146, 0.2);
-    background: #ffffff;
-    box-shadow: 0px 0px 25px -15px #000;
+    background: transparent;
+    // box-shadow: 0px 0px 25px -15px #000;
     // width: 100%;
     // margin: 0 auto;
     margin: 10px;
@@ -1106,7 +1112,7 @@ export default defineComponent({
   .q-tab {
     min-height: unset;
     border-radius: 50px;
-    color: #414c74;
+    color: #7a80a1;
     padding: 2px 10px 0;
     background: transparent;
   }
@@ -1117,8 +1123,8 @@ export default defineComponent({
   }
 
   .q-tab--active {
-    background: linear-gradient(90deg, #57b7fc 0, #cf74ff 100%);
-    color: #ffffff;
+    // background: linear-gradient(90deg, #57b7fc 0, #cf74ff 100%);
+    color: #468cff;
   }
 
   .q-tab__label {
@@ -1128,11 +1134,11 @@ export default defineComponent({
   }
 
   .q-tab--active .q-tab__indicator {
-    display: none;
-    background: url("../assets/images/promotion/tab_bg.png") no-repeat center center;
-    background-size: 20px 10px;
+    // display: none;
+    // background: url("../assets/images/promotion/tab_bg.png") no-repeat center center;
+    // background-size: 20px 10px;
     width: 100%;
-    height: 10px;
+    height: 2px;
     // background: salmon !important;
   }
 
