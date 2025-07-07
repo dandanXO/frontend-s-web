@@ -3315,7 +3315,7 @@ onMounted(() => {
   loadTADAFishGameList();
   loadCustomerAddress();
   checkHbPromo();
-  checkSpinLuckyWheelPromo();
+  // checkSpinLuckyWheelPromo();
   getJackpotAmt();
 
   jackpotApiTimer = setInterval(getJackpotAmt, 5000);
