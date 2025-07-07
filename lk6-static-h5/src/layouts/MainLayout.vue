@@ -525,7 +525,7 @@ export default defineComponent({
         } else if (route.path === "/account/personal") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "个人信息";
+          pageName.value = "帐户信息";
         } else if (route.path === "/account/verifyTelephone") {
           prevPage.value = "account";
           hasPage.value = true;

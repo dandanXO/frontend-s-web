@@ -219,7 +219,7 @@
         <router-link to="/account/inbox">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-notice-icon.png" />
-            <div class="acct-nav-label">消息中心</div>
+            <div class="acct-nav-label">消息提醒</div>
             <div class="unread" v-if="store.unreadInboxMail > 0">
               {{ store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString() }}
             </div>
@@ -271,7 +271,7 @@
         <router-link to="/account/invite#summon-share">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-summon-share-icon.png" />
-            <div class="acct-nav-label">召回奖金</div>
+            <div class="acct-nav-label">精英召回</div>
           </div>
         </router-link>
 
