@@ -59,15 +59,15 @@
       </div>
     </div>
 
-    <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
+    <!-- <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div> -->
 
-    <div class="tnc-content">
+    <!-- <div class="tnc-content">
       <ol>
         <li v-for="index in 7" :key="index">
           {{ $t(`hotPromo.signIn7Days.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
       </ol>
-    </div>
+    </div> -->
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
