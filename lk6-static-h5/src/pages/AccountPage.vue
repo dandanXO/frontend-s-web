@@ -1,272 +1,290 @@
 <template>
   <q-page>
-    <div class="acc-head"></div>
     <div class="profile">
       <div class="left">
-        <div class="avatar">
-          <img src="../assets/images/account/avatar.png" />
+        <div class="avatar" @click="updateProfilePhoto">
+          <img v-if="!store.profilePhoto" src="../assets/images/account/avatar.png" />
+          <img
+            v-if="store.profilePhoto && store.profilePhoto.includes('default')"
+            :src="require(`../assets/images/profile/${store.profilePhoto}.png`)"
+          />
+          <img
+            v-if="store.profilePhoto && !store.profilePhoto.includes('default')"
+            :src="imageDir + store.profilePhoto + '?v=' + timestamp"
+          />
         </div>
         <div class="pro-details">
           <span class="nickname-span">{{ store.nickName }}</span>
-          <!-- <span v-if="vipLevel === 1">
-            <img id="personal_vip_img" src="../assets/vip/vip_text_1.png" />
-          </span>
-          <span v-else-if="vipLevel === 2">
-            <img id="personal_vip_img" src="../assets/vip/vip_text_2.png" />
-          </span>
-          <span v-else-if="vipLevel === 3">
-            <img id="personal_vip_img" src="../assets/vip/vip_text_3.png" />
-          </span>
-          <span v-else-if="vipLevel === 4">
-            <img id="personal_vip_img" src="../assets/vip/vip_text_4.png" />
-          </span>
-          <span v-else-if="vipLevel === 5">
-            <img id="personal_vip_img" src="../assets/vip/vip_text_5.png" />
-          </span>
-          <span v-else-if="vipLevel === 6">
-            <img id="personal_vip_img" src="../assets/vip/vip_text_6.png" />
-          </span>
-          <span v-else-if="vipLevel === 7">
-            <img id="personal_vip_img" src="../assets/vip/vip_text_7.png" />
-          </span>
-          <span v-else-if="vipLevel === 8">
-            <img id="personal_vip_img" src="../assets/vip/vip_text_8.png" />
-          </span>
-          <span v-else-if="vipLevel === 9">
-            <img id="personal_vip_img" src="../assets/vip/vip_text_9.png" />
-          </span>
-          <span v-else-if="vipLevel === 10">
-            <img id="personal_vip_img" src="../assets/vip/vip_text_10.png" />
-          </span>
-          <span v-else-if="vipLevel === 11">
-            <img id="personal_vip_img" src="../assets/vip/vip_text_11.png" />
-          </span>
-          <span v-else-if="vipLevel === 12">
-            <img id="personal_vip_img" src="../assets/vip/vip_text_12.png" />
-          </span> -->
 
-          <span v-if="store.evip">
-            专属网址:
-            <a style="text-decoration: none; color: #000000; font-size: 17px" :href="selfTgurl" target="_blank">
-              {{ store.evip }}
-            </a>
-          </span>
-          <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
+          <!-- <span class="join-span">加入雷火电竞第一天</span> -->
+          <!--          <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>-->
         </div>
       </div>
-      <router-link to="/liveChat" class="livechat cs-web-id">在线客服</router-link>
+      <!-- <div class="right">
+        <div class="custom-service" @click="handleClickCustomService">
+          <img src="../assets/images/account/custom-service.png" alt="" />
+          <span>专属客服</span>
+        </div>
+      </div> -->
     </div>
+
     <div class="vipcard">
       <q-card-section class="top-section">
         <!-- <div class="name">{{ header }}</div> -->
         <q-card-section class="acct-section">
           <div class="left-sect">
             <div class="label">
-              <img src="../assets/images/account/wallet.svg" />
-              中心钱包:
+              <!-- <img
+                v-if="$q.dark.isActive"
+                src="../assets/images/account/account-wallet-icon-dark.png"
+                style="display: none"
+              /> -->
+              <img src="../assets/images/account/account-wallet-icon.png" />
+              <span>中心钱包</span>
+              <div class="refresh-btn" @click="getBalance">
+                <img src="../assets/images/account/account-refresh-btn.png" />
+              </div>
             </div>
-            <div class="amt" @click="getBalance">
-              {{ !isLoadingBalance ? mainWallet : "加载中..." }}
-              <img class="svg" src="~assets/account/refresh-line.svg" />
+            <div class="amt">
+              {{ !isLoadingBalance ? "¥" + mainWallet : "加载中..." }}
             </div>
           </div>
           <div class="right-sect">
-            <q-btn
-              label="存款"
-              rounded
-              color="primary"
-              style="width: 80px; font-size: 16px; height: 36px; min-height: 36px"
-              @click="openDeposit"
-            />
+            <q-btn label="存款" class="btn-main btn-pointer deposit-btn" style="" @click="openDeposit" />
 
-            <q-btn
-              label="提款"
-              rounded
-              color="secondary"
-              style="width: 80px; font-size: 16px; height: 36px; min-height: 36px"
-              to="finance/withdraw"
-            />
+            <q-btn label="提款" class="btn-main btn-pointer" style="" @click="openWithdraw" />
 
-            <q-btn
-              label="转账"
-              rounded
-              color="accent"
-              style="width: 80px; font-size: 16px; height: 36px; min-height: 36px"
-              to="account/transfer"
-            />
+            <q-btn label="转账" class="btn-main btn-pointer" style="" @click="openTransfer" />
+          </div>
+        </q-card-section>
+        <hr v-if="$q.dark.isActive" style="width: 100%; border: 1px solid #3b5385; margin: 5px 0 15px 0" />
+        <q-card-section class="acct-btm-section">
+          <div class="vip-level-detail">
+            <div class="vip-link">{{ store.vip }}</div>
+
+            <div class="vip-progress">
+              <q-linear-progress size="10px" :value="store.vipProgress" />
+            </div>
+
+            <div class="vip-link">{{ updatedVip() }}</div>
+          </div>
+          <div class="vip-info-div">
+            <!-- <div class="vip-left">
+              VIP等级：
+              <div class="vip-level">
+                {{ store.vip }}
+              </div>
+            </div> -->
+
+            <div class="vip-txt-left" :class="isHideLevelUp && 'opacity-0'">
+              <div>晋级流水（元）</div>
+              <div v-if="store.currentBetAmt !== ''">
+                <div v-if="store.currentBetAmt <= store.currentUpgradeBetAmt">
+                  {{ formatNumber(store.currentBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}
+                </div>
+                <div v-else>
+                  {{ formatNumber(store.currentUpgradeBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}
+                </div>
+              </div>
+              <div v-else>计算中...</div>
+            </div>
+
+            <router-link to="/account/vip?from=account">
+              <div class="vip-right btn-pointer">
+                更多VIP特权
+                <!-- <img v-if="$q.dark.isActive" src="../assets/images/account/account-right-small-dark.svg" /> -->
+                <img src="../assets/images/account/account-right-small.png" />
+              </div>
+            </router-link>
+          </div>
+
+          <!-- <div class="eshare-div">
+            <span v-if="store.evip">
+              专属网址:
+              <a class="share-link" :href="store.evip" target="_blank">
+                {{ store.evip }}
+              </a>
+              <img
+                class="copy-btn btn-pointer"
+                src="../assets/images/account/account-copy-icon.png"
+                @click="copyLink"
+              />
+            </span>
+          </div> -->
+          <div class="list-reward-wapper" style="display: none">
+            <div class="list-reward-received">
+              <div class="list-item collected">
+                <div><img src="../assets/images/account/list-tick.png" /></div>
+                <div>每周红包</div>
+              </div>
+              <div class="list-item collected">
+                <div><img src="../assets/images/account/list-tick.png" /></div>
+                <div>晋级礼金</div>
+              </div>
+              <div class="list-item">
+                <div><img src="../assets/images/account/list-cross.png" /></div>
+                <div>专属豪礼</div>
+              </div>
+              <div class="list-item">
+                <div><img src="../assets/images/account/list-cross.png" /></div>
+                <div>生日礼金</div>
+              </div>
+            </div>
           </div>
         </q-card-section>
 
         <!-- <q-separator /> -->
 
-        <q-card class="bluecard vip-info-board" @click="goToVip">
-          <div class="vipline q-mt-sm">
-            <div class="circle">
-              <span class="bigV">v</span>
-              <span class="small">{{ vipLevel }}</span>
-            </div>
-            <div class="middle">
-              <div class="row items-center justify-between">
-                <div class="left">晋级流水（元）</div>
-                <div v-if="store.currentBetAmt !== ''">
-                  <div v-if="store.currentBetAmt <= store.currentUpgradeBetAmt">
-                    {{ formatNumber(store.currentBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}
-                  </div>
-                  <div v-else>
-                    {{ formatNumber(store.currentUpgradeBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}
-                  </div>
-                </div>
-                <div v-else>计算中...</div>
-              </div>
+        <!-- <q-card class="bluecard vip-info-board" @click="goToVip"> -->
+        <!-- <div class="vipline q-mt-sm"> -->
+        <!-- <div class="circle"> -->
+        <!-- <span class="bigV">v</span> -->
+        <!-- <span class="small">{{ vipLevel }}</span> -->
+        <!-- </div> -->
+        <!-- <div class="middle"> -->
+        <!-- <div class="row items-center justify-between"> -->
+        <!-- <div class="left">成长值</div> -->
+        <!-- <div class="right">{{ store.currentDeposit }}/{{ store.levelUpDeposit }}</div> -->
+        <!-- </div> -->
 
-              <q-linear-progress :value="vip_progress" rounded class="q-mt-xs" color="white" />
-            </div>
-            <div class="circle">
-              <span class="bigV">v</span>
-              <span class="small">{{ vipLevel + 1 }}</span>
-            </div>
-          </div>
+        <!-- <q-linear-progress :value="vip_progress" rounded class="q-mt-xs" color="white" /> -->
+        <!-- </div> -->
+        <!-- <div class="circle"> -->
+        <!-- <span class="bigV">v</span> -->
+        <!-- <span class="small">{{ vipLevel + 1 }}</span> -->
+        <!-- </div> -->
+        <!-- </div> -->
 
-          <div class="vip-get-div row justify-between items-center q-mt-sm">
-            <div class="vip-getpromo-div">
-              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
-              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />
-              <span>晋级礼金</span>
-            </div>
-            <div class="vip-getpromo-div">
-              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+        <!-- <div class="vip-get-div row justify-between items-center q-mt-sm"> -->
+        <!-- <div class="vip-getpromo-div"> -->
+        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
+        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
+        <!-- <span>晋级礼包</span> -->
+        <!-- </div> -->
+        <!-- <div class="vip-getpromo-div"> -->
+        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
 
-              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />
-              <span>生日礼金</span>
-            </div>
-            <div class="vip-getpromo-div">
-              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
+        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
+        <!-- <span>生日礼金</span> -->
+        <!-- </div> -->
+        <!-- <div class="vip-getpromo-div"> -->
+        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
 
-              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />
-              <span>会员日红包</span>
-            </div>
-            <div class="vip-getpromo-div">
-              <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon>
-              <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" />
-              <span>专属活动</span>
-            </div>
-          </div>
-        </q-card>
-        <!-- <q-card-section class="bot-section">
-          <router-link to="/" @click="openDeposit" class="button">
-            <img src="../assets/images/index/deposit_icon.png" />
-            存款
-          </router-link>
-          <router-link to="finance/withdraw" class="button">
-            <img src="../assets/images/index/withdrawal_icon.png" />
-            提款
-          </router-link>
-          <router-link to="account/transfer" class="button">
-            <img src="../assets/images/index/transfer_icon.png" />
-            转账
-          </router-link>
-          <router-link to="account/vip" class="button">
-            <img src="../assets/images/account/vip_icon.png" />
-            VIP详情
-          </router-link>
-        </q-card-section> -->
+        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
+        <!-- <span>每月活动</span> -->
+        <!-- </div> -->
+        <!-- <div class="vip-getpromo-div"> -->
+        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
+        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
+        <!-- <span>专属活动</span> -->
+        <!-- </div> -->
+        <!-- </div> -->
+        <!-- </q-card> -->
       </q-card-section>
-    </div>
-
-    <div class="privilege-vip-div">
-      <router-link to="/account/vip?redirect=account">
-        <img src="../assets/account/vip_button_icon.png" alt="" />
-      </router-link>
     </div>
 
     <q-item-section class="acct-nav">
       <div class="acct-title">
-        <div class="acct-title-1">我的功能</div>
-        <!-- <div id="vipDomain" class="vipurl">专属网址：{{ store.evip }}</div> -->
+        <div class="acct-title-1">功能区</div>
       </div>
       <div class="acct-menu" id="id-acct-menu">
-        <router-link to="/account/records">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_record.svg" />
-            <div class="acct-nav-label">交易记录</div>
-          </div>
-        </router-link>
-        <router-link to="/account/invite">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_share.svg" />
-            <div class="acct-nav-label">推广赚钱</div>
-          </div>
-        </router-link>
-        <router-link to="/promo?redirect=account">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_promo.svg" />
-            <div class="acct-nav-label">优惠领取</div>
-          </div>
-        </router-link>
         <router-link to="/account/personal">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_personal.svg" />
-            <div class="acct-nav-label">个人信息</div>
+            <img src="../assets/images/account/account-personal-icon.png" />
+            <div class="acct-nav-label">账户信息</div>
           </div>
         </router-link>
-        <router-link to="/account/changePwd">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_changePwd.svg" />
-            <div class="acct-nav-label">修改密码</div>
-          </div>
-        </router-link>
+
         <router-link to="/account/withdraw">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_bank.svg" />
+            <img src="../assets/images/account/account-bank-icon.png" />
             <div class="acct-nav-label">银行信息</div>
           </div>
         </router-link>
-        <router-link v-if="!store.isApp()" to="/account/download">
+
+        <router-link to="/account/records">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_download.svg" />
-            <div class="acct-nav-label">下载中心</div>
+            <img src="../assets/images/account/account-record-icon.png" />
+            <div class="acct-nav-label">交易信息</div>
           </div>
         </router-link>
-        <router-link to="/account/announcement">
+
+        <router-link to="/account/records/bet">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_announcement.svg" />
-            <div class="acct-nav-label">系统公告</div>
+            <img src="../assets/images/account/account-record-bet-icon.png" />
+            <div class="acct-nav-label">投注记录</div>
           </div>
         </router-link>
+
         <router-link to="/account/inbox">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_mailbox.svg" />
-            <div class="acct-nav-label">
-              消息中心 {{ store.unreadInboxMail > 0 ? `(${store.unreadInboxMail})` : "" }}
+            <img src="../assets/images/account/account-notice-icon.png" />
+            <div class="acct-nav-label">消息中心</div>
+            <div class="unread" v-if="store.unreadInboxMail > 0">
+              {{ store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString() }}
             </div>
-            <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
-        <router-link to="/account/mail">
+
+        <router-link to="/account/letters">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_mailbox.svg" />
-            <div class="acct-nav-label">反馈奖励</div>
-            <!--            ({{ store.unreadInboxMail }})-->
+            <img src="../assets/images/account/user-feedback-icon.png" />
+            <div class="acct-nav-label">意见反馈</div>
           </div>
         </router-link>
-        <router-link to="/affiliate">
-          <!--        <a href="https://dy2-affiliate.mndofithly.com/" target="_blank">-->
+
+        <router-link to="/account/vip?from=account">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/menu_affiliate.svg" />
-            <div class="acct-nav-label">加盟</div>
+            <img src="../assets/images/account/account-vip-icon.png" />
+            <div class="acct-nav-label">VIP 特权</div>
           </div>
         </router-link>
-        <!--        </a>-->
-        <!--        <a @click="logout">-->
-        <!--          <div class="acct-nav-item">-->
-        <!--            <img src="../assets/account/btn-logout.png"/>-->
-        <!--            <div class="acct-nav-label">退出</div>-->
-        <!--          </div>-->
-        <!--        </a>-->
+
+        <router-link to="/account/changePwd">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-changepwd-icon.png" />
+            <div class="acct-nav-label">修改密码</div>
+          </div>
+        </router-link>
       </div>
     </q-item-section>
 
-    <q-card class="card-account-banner" v-if="btm_banners.length > 0">
+    <q-item-section class="acct-nav">
+      <div class="acct-title">
+        <div class="acct-title-1">热门推荐</div>
+      </div>
+      <div class="acct-menu" id="id-acct-menu">
+        <router-link to="/promo">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-promo-icon.png" />
+            <div class="acct-nav-label">优惠活动</div>
+          </div>
+        </router-link>
+
+        <router-link to="/account/invite">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-share-icon.png" />
+            <div class="acct-nav-label">推广赚钱</div>
+          </div>
+        </router-link>
+
+        <router-link to="/account/invite#summon-share">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-summon-share-icon.png" />
+            <div class="acct-nav-label">召回奖金</div>
+          </div>
+        </router-link>
+
+        <router-link to="/affiliate">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-affiliate-icon.png" />
+            <div class="acct-nav-label">合作加盟</div>
+          </div>
+        </router-link>
+      </div>
+    </q-item-section>
+
+    <q-card class="card-account-banner">
       <q-card-section>
         <q-carousel
           class="account"
@@ -278,6 +296,7 @@
           transition-prev="slide-right"
           animated
           infinite
+          height="150px"
         >
           <template v-slot:navigation-icon="{ active, onClick }">
             <q-btn
@@ -303,40 +322,199 @@
             :key="i"
             :name="i"
             class="column no-wrap flex-center"
-            :img-src="imgURL + banner.mobileImageUrl"
+            :img-src="
+              imgURL +
+              ($q.dark.isActive && banner.mobileImageUrlDark ? banner.mobileImageUrlDark : banner.mobileImageUrl)
+            "
             @click="gotoPromo(banner)"
           ></q-carousel-slide>
         </q-carousel>
       </q-card-section>
     </q-card>
-    <a @click="logout">
-      <div class="acct-logout">
-        <img src="../assets/images/account/menu_logout.svg" />
+
+    <a @click="isLogoutModal = true">
+      <div class="acct-logout btn-pointer">
         <div class="acct-nav-label">退出登录</div>
+        <!-- <img v-if="$q.dark.isActive" src="../assets/images/account/account-logout-icon-dark.svg" /> -->
+        <img src="../assets/images/account/account-logout-icon.png" />
       </div>
     </a>
   </q-page>
+
+  <q-dialog
+    width="100%"
+    class="modal-common-div"
+    v-model="isLogoutModal"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="modalcontent">
+      <div class="headers">
+        <div class="titles">系统提示</div>
+        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+      </div>
+      <div class="contents">确认要退出登录吗？</div>
+      <div class="btnsreas">
+        <div class="confirmsbtns common-md-btn" @click="logout">确定</div>
+        <div class="cacnels common-md-white-btn" @click="isLogoutModal = false">取消</div>
+      </div>
+    </q-card>
+  </q-dialog>
+  <q-dialog v-model="profileDialogVisible" persistent class="profile-dialog">
+    <q-card style="flex-direction: column; display: flex">
+      <div class="header">
+        修改头像
+        <q-btn dense flat icon="close" v-close-popup>
+          <q-tooltip>Close</q-tooltip>
+        </q-btn>
+      </div>
+
+      <div class="grid-container">
+        <div
+          class="grid-item"
+          v-for="(profImg, profIndex) in 13"
+          :key="profIndex"
+          :class="{ selected: selectedImage === 'default-' + (profIndex + 1) }"
+          @click="selectImage('default-' + (profIndex + 1))"
+        >
+          <img :src="require(`../assets/images/profile/default-${profIndex + 1}.png`)" />
+        </div>
+        <div class="grid-item">
+          <div
+            @click="updateDialogVisible = true"
+            style="
+              border-radius: 50%;
+              width: 100px;
+              height: 100px;
+              background: #e7f3ff;
+              color: #a4aabb;
+              font-size: 80px;
+              cursor: pointer;
+              padding-bottom: 10px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            "
+          >
+            +
+          </div>
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <q-btn :loading="submitPhotoLoading" class="submitImgBtn" @click="submitPhoto">确认</q-btn>
+      </div>
+    </q-card>
+  </q-dialog>
+  <q-dialog v-model="updateDialogVisible" persistent class="profile-dialog">
+    <q-card style="flex-direction: column; display: flex">
+      <div class="header">
+        修改头像
+        <q-btn dense flat icon="close" v-close-popup>
+          <q-tooltip>Close</q-tooltip>
+        </q-btn>
+      </div>
+
+      <div class="uploader">
+        <div class="leftBox">
+          <el-form-item class="upload-box" v-if="!uploadedImage.url" style="margin: 0" prop="path">
+            <input
+              id="uploadFile"
+              type="file"
+              ref="inputImage"
+              style="display: none"
+              accept="image/*"
+              @change="attachImage"
+            />
+            <div @click="$refs.inputImage.click()" class="upload-btn">上传头像</div>
+            上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于1MB
+          </el-form-item>
+          <cropper
+            v-if="uploadedImage.url"
+            background-class="cropper-background"
+            ref="cropperRef"
+            class="cropper"
+            :src="
+              uploadedImage.url
+                ? uploadedImage.url
+                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH_pqa6TIV5oR8BeTCCNhAbkqIrri2Xi8qbMusW_ulvA&s'
+            "
+            circle-stencil
+            :stencil-props="{
+              handlers: {},
+              movable: false,
+              resizable: false,
+              aspectRatio: 1 / 1
+            }"
+            :stencil-size="{
+              width: 150,
+              height: 150
+            }"
+            image-restriction="stencil"
+            @change="change"
+          />
+        </div>
+        <div class="rightBox">
+          <div class="cropped_title">头像预览</div>
+          <div v-if="!croppedImg" class="croppedImgHolder"></div>
+          <img v-if="croppedImg" style="border-radius: 50%; width: 150px; height: 150px" :src="croppedImg" />
+        </div>
+      </div>
+      <div v-if="croppedImg" class="dialog-footer">
+        <q-btn :loading="isLoadingUpload" class="submitImgBtn" @click="saveCroppedImage()">保存</q-btn>
+      </div>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
-import { defineComponent, ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-// import { App } from "@capacitor/app";
+import { useLocalStorage, useSessionStorage } from "@vueuse/core";
 import { api } from "boot/axios";
-import { useLocalStorage } from "@vueuse/core";
-
+import { useQuasar } from "quasar";
+import { Cropper } from "vue-advanced-cropper";
+import "vue-advanced-cropper/dist/style.css";
+import "vue-advanced-cropper/dist/theme.compact.css";
+import moment from "moment";
+import { useNotify } from "src/hooks/notify";
 export default defineComponent({
   name: "AccountPage",
+  components: {
+    Cropper
+  },
   setup() {
-    const router = useRouter();
+    const notify = useNotify();
+    const timestamp = moment().unix();
+    const cropperRef = ref(null);
+    const croppedImg = ref(null);
+    const getImageFromCropper = () => {
+      if (cropperRef.value) {
+        // Access the cropper instance using the value of cropperRef
+        const { coordinates, canvas } = cropperRef.value.getResult();
+        croppedImg.value = canvas.toDataURL("image/jpeg", 0.6);
+      }
+    };
+    const change = ({ coordinates, canvas }) => {
+      console.log(coordinates, canvas);
+      getImageFromCropper();
+    };
+    const inputImage = ref(null);
     const store = userStore();
+    const router = useRouter();
+    const $q = useQuasar();
+
+    const isLogoutModal = ref(false);
+    const isHideLevelUp = ref(false);
+
     const logout = () => {
       store.memberLogout().then(() => {
         router.push("/");
       });
     };
-    const appVersionNo = ref(null);
+
+    // const appVersionNo = ref(null);
     const vipLevel = computed(() => {
       if (store.vip == "VIP0") {
         return 0;
@@ -367,16 +545,7 @@ export default defineComponent({
       }
       return store.vip;
     });
-    
-    const vip_progress = computed(() => {
-      const bet = Number(store.currentBetAmt);
-      const upgrade = Number(store.currentUpgradeBetAmt);
-
-      if (isNaN(bet) || isNaN(upgrade) || upgrade <= 0) {
-        return 0;
-      }
-      return Math.min(bet / upgrade, 1);
-    });
+    const vip_progress = ref(store.currentDeposit / store.levelUpDeposit);
     const goToVip = () => {
       router.push("/account/vip?redirect=account");
     };
@@ -399,37 +568,54 @@ export default defineComponent({
 
     const selfTgurl = ref("https://" + store.evip);
 
+    const copyLink = () => {
+      const copyText = store.evip;
+      const textarea = document.createElement("textarea");
+      textarea.value = copyText;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+
+      notify({
+        type: "success",
+        message: "已复制专属网址"
+      });
+    };
+    onActivated(() => {
+      store.getUnreadTotal();
+    });
     onMounted(() => {
       getBalance();
       store.getBalance();
       store.getVIPInfo();
-      // store.getUnreadTotal();
       // getVersionNo();
       getPromoImage();
       if (store.isApp()) {
         var btmSwiper = document.getElementById("id-acct-menu");
         btmSwiper.classList.add("shorter-menu");
       }
+      // getVipProgress();
+      if (store.profilePhoto && store.profilePhoto.includes("default")) {
+        selectedImage.value = store.profilePhoto;
+      }
     });
 
-    const formatNumber = (numberString) => {
-      const number = parseFloat(numberString);
-      if (!isNaN(number)) {
-        return number.toLocaleString("en-US");
-      }
-      return "";
-    };
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+    const imageDir = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/profile/";
     const btm_banners = ref([]);
     const getPromoImage = () => {
       api
         .get("/opt-session/promo/banner?category=CENTERPROMO")
         .then((res) => {
           if (res.code === 0) {
-            btm_banners.value = res.data;
-            if (btm_banners.value.length === 1) {
-              btm_banners.value.push(res.data[0]);
-            }
+            btm_banners.value = res.data.filter((promo) => {
+              if ($q.dark.isActive) {
+                return promo.mobileImageUrlDark;
+              }
+
+              return promo;
+            });
           }
         })
         .catch(() => {});
@@ -447,16 +633,219 @@ export default defineComponent({
       localStorage.setItem("isOpenFromAccount", JSON.stringify(true));
       router.push("finance/deposit");
     };
+    const openWithdraw = () => {
+      router.push("finance/withdraw");
+    };
+    const openTransfer = () => {
+      router.push("account/transfer");
+    };
     const getBalance = () => {
       isLoadingBalance.value = true;
       store.getBalance().then(() => {
         isLoadingBalance.value = false;
       });
+      //123
       timerBalance.value = setInterval(function () {
         if (store.hasToken()) {
           store.getBalance();
         }
       }, 20000);
+    };
+
+    const formatNumber = (numberString) => {
+      const number = parseFloat(numberString);
+      if (!isNaN(number)) {
+        return number.toLocaleString("en-US");
+      }
+      return "";
+    };
+
+    const updatedVip = () => {
+      const currentVip = parseInt(store.vip.match(/\d+/)[0]);
+      const updatedVip = currentVip + 1;
+
+      if (currentVip < 12) {
+        return "VIP" + updatedVip.toString();
+      } else {
+        // getVipProgress(true);
+        isHideLevelUp.value = true;
+        return "已满级";
+      }
+    };
+
+    const getVipProgress = (max) => {
+      // if (max) {
+      //   store.vipProgress = parseFloat(store.currentUpgradeBetAmt) / parseFloat(store.currentUpgradeBetAmt);
+      // } else {
+      //   store.vipProgress = parseFloat(store.currentBetAmt) / parseFloat(store.currentUpgradeBetAmt);
+      // }
+    };
+    const submitPhotoLoading = ref(false);
+    var qs = require("qs");
+    const selectedImage = ref(null);
+    const profileDialogVisible = ref(false);
+    const uploadedImage = reactive({
+      url: null
+    });
+    const imageForm = reactive({
+      path: null
+    });
+    const isLoadingUpload = ref(false);
+    const updateProfilePhoto = () => {
+      // if (!(store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
+      //   return;
+      // }
+
+      profileDialogVisible.value = true;
+    };
+    const selectImage = (item) => {
+      selectedImage.value = item;
+    };
+    const onShowProfile = () => {
+      // if (!(store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
+      //   return;
+      // }
+
+      imageForm.path = null;
+      inputImage.value = null;
+      uploadedImage.url = null;
+      croppedImg.value = null;
+      profileDialogVisible.value = true;
+    };
+    async function saveCroppedImage() {
+      isLoadingUpload.value = true;
+      if (croppedImg.value) {
+        const data = await attachPhoto(croppedImg.value);
+        if (data.code === 0) {
+          selectedImage.value = data.data;
+          inputImage.value = "";
+          isLoadingUpload.value = false;
+
+          submitPhoto();
+        } else {
+          // Handle case when croppedImg is not available
+          console.error("No cropped image available");
+          isLoadingUpload.value = false;
+        }
+      }
+    }
+
+    async function attachImage(event) {
+      console.log(event.target.files[0].size);
+      // if (event.target.files[0].size > 1000000) {
+      //   return notify({
+      //     type: "error",
+      //      //     message: "图片必须小于1MB,请重新上传",
+      //      //   });
+      // } else {
+      const file = event.target.files[0];
+      uploadedImage.url = URL.createObjectURL(file);
+      // }
+    }
+
+    function isBase64(str) {
+      // Regular expression to match Base64 encoding pattern
+      const base64Regex = /^(data:image\/\w+;base64,)?([A-Za-z0-9+/]+={0,2})(\s|$)/;
+
+      // Test if the string matches the Base64 pattern
+      return base64Regex.test(str);
+    }
+    async function attachPhoto(fileImg) {
+      var file = null;
+      if (typeof fileImg === "string" && isBase64(fileImg)) {
+        console.log("Treating input as base64");
+        // Extract the MIME type from the base64 string
+        const mimeType = fileImg.split(";")[0].split(":")[1];
+        var data = fileImg.replace(/^data:image\/\w+;base64,/, "");
+        // Decode the Base64 string
+        const byteCharacters = atob(data);
+        const byteNumbers = new Array(byteCharacters.length);
+
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        // Convert to an ArrayBuffer
+        const byteArray = new Uint8Array(byteNumbers);
+
+        // Create a Blob from the ArrayBuffer
+        const blob = new Blob([byteArray], { type: mimeType });
+
+        // Create a File object from the Blob
+        file = new File([blob], "image." + mimeType.split("/")[1], { type: mimeType });
+      } else {
+        file = fileImg;
+      }
+      // Use the File object for further processing
+      const allowFileTypes = ["image/jpeg", "image/png", "image/gif"];
+      const dir = "temp";
+
+      if (!file || !allowFileTypes.includes(file.type)) {
+        notify({
+          type: "error",
+          message: "照片格式错误"
+        });
+
+        isLoadingUpload.value = false;
+        return null; // Exit the function if file is not valid
+      }
+      if (file && file.size > 1000000) {
+        notify({
+          type: "error",
+          message: "上传的图片已大于1mb，请刷新页面重新上传"
+        });
+        isLoadingUpload.value = false;
+        return null; // Exit the function if file is not valid
+      }
+
+      var formData = new FormData();
+      formData.append("files", file);
+      formData.append("dir", dir);
+      formData.append("overwrite", false);
+      selectedImage.value = URL.createObjectURL(file); // Set the URL for preview
+      var rstUrl = localStorage.getItem("LH_H5_RST_URL");
+      if (!rstUrl) {
+        rstUrl = process.env.RST_API.split(",")[0];
+      }
+      try {
+        const response = await fetch(`${rstUrl}/session/profile-photo/upload`, {
+          method: "POST",
+          body: formData,
+          headers: {
+            token: `${store.token}`
+          }
+        });
+        return await response.json();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    const updateDialogVisible = ref(false);
+    const submitPhoto = async () => {
+      submitPhotoLoading.value = true;
+      if (!selectedImage.value) {
+        return notify({
+          type: "error",
+          message: "请选择图片"
+        });
+      }
+      await api.post("/session/profile-photo/save", qs.stringify({ imageUuid: selectedImage.value })).then((data) => {
+        // Handle response here
+        store.profilePhoto = data.data;
+        notify({
+          type: "success",
+          message: "修改成功"
+        });
+        submitPhotoLoading.value = false;
+        profileDialogVisible.value = false;
+        isLoadingUpload.value = false;
+        updateDialogVisible.value = false;
+        window.location.reload();
+      });
+    };
+
+    const customService = useSessionStorage("CUSTOM_SERVICE", "");
+    const handleClickCustomService = () => {
+      router.push("/promo?name=lh-official-gift");
     };
     return {
       header: "Account",
@@ -466,33 +855,51 @@ export default defineComponent({
       vipLevel,
       store,
       openDeposit,
-      appVersionNo,
+      openWithdraw,
+      openTransfer,
       isLoadingBalance,
       selfTgurl,
       vip_progress,
       goToVip,
       btm_banners,
       imgURL,
+      imageDir,
       gotoPromo,
       slide: ref(0),
-      formatNumber
+      isLogoutModal,
+      copyLink,
+      getVipProgress,
+      formatNumber,
+      updatedVip,
+      isHideLevelUp,
+      updateProfilePhoto,
+      profileDialogVisible,
+      selectedImage,
+      selectImage,
+      submitPhoto,
+      updateDialogVisible,
+      uploadedImage,
+      onShowProfile,
+      saveCroppedImage,
+      attachImage,
+      croppedImg,
+      attachPhoto,
+      cropperRef,
+      change,
+      timestamp,
+      isLoadingUpload,
+      handleClickCustomService
     };
   }
 });
 </script>
-<style scoped lang="scss">
-.acc-head {
-  background: url(../assets/images/common/bgheader.png) no-repeat center center;
-  background-size: cover;
-  height: 0px;
-}
 
+<style scoped lang="scss">
 .profile {
-  background: #fff;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 15px;
+  align-items: center;
+  padding: 8px 15px 4px;
   gap: 10px;
   width: 100%;
 
@@ -506,34 +913,61 @@ export default defineComponent({
   }
 
   .avatar {
-    width: 60px;
+    width: 50px;
+    height: 50px;
     max-width: 60px;
     min-width: 60px;
+    max-height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    img {
-      width: 100%;
-    }
-
     flex: 1;
+    img {
+      width: 50px;
+      height: 50px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+    }
+  }
+
+  .right {
+    .custom-service {
+      width: 84px;
+      height: 24px;
+      border-radius: 8px;
+      background: linear-gradient(106.6deg, #5db5ff 35.17%, #4b0fff 101.26%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      font-size: 12px;
+      color: white;
+      cursor: pointer;
+    }
   }
 
   .pro-details {
     flex: 3;
-    font-size: 14px;
-    line-height: 17px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    justify-content: space-evenly;
+    gap: 6px;
 
     .nickname-span {
-      font-size: 18px;
-      line-height: 21px;
+      color: #333333;
+      font-size: 1.15rem;
+      line-height: 1.15rem;
       font-weight: 700;
       word-break: break-all;
     }
+
+    // .join-span {
+    //   font-size: 0.9rem;
+    //   line-height: 0.9rem;
+    //   color: $font-1;
+    // }
   }
 
   .livechat {
@@ -551,30 +985,41 @@ export default defineComponent({
 }
 
 .vipcard {
-  margin: 15px auto;
+  margin: 5px auto;
   border-radius: 15px;
-  width: 95%;
+  width: calc(100% - 2em);
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
   background: #f5f5f5;
+  overflow: hidden;
 
   .q-card__section--vert {
     padding: 0;
-
-    > div {
-      flex: 1;
-    }
   }
 
-  .q-card__actions .q-btn {
-    min-width: 60px;
+  .btn-main {
+    background-image: url("../assets/images/account/account-btn.png");
+    background-size: 100% 100%;
+    color: #fff;
+    width: 60px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 1rem;
+    aspect-ratio: 122/68;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    box-shadow: 0px -0.5px 2px 0px #ffffff;
+    border-radius: 45.9px;
   }
 
   .top-section {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background: linear-gradient(90deg, #333333 1.5%, #6b6b6b 100%);
     align-items: center;
-    padding: 15px;
+    padding: 10px 14px;
   }
 
   .acct-section {
@@ -582,44 +1027,42 @@ export default defineComponent({
     text-align: left;
     justify-content: space-evenly;
     align-items: flex-start;
-    // border-bottom: 1px solid #2e3445;
     width: 100%;
-    color: #000000;
-    margin-bottom: 12px;
+    color: #a4aabb;
+    margin-bottom: 8px;
+
+    > div {
+      flex: 1;
+    }
 
     .left-sect {
       flex-wrap: nowrap;
 
       .label {
-        font-size: 14px;
-        line-height: 17px;
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        padding-top: 5px;
-        gap: 5px;
+        padding-top: 0px;
+        gap: 8px;
 
-        svg {
-          fill: #0089ed;
+        span {
+          font-size: 1rem;
+          line-height: 1rem;
         }
 
         img {
           display: block;
+          width: 15px;
           margin-bottom: 3px;
         }
       }
     }
 
     .right-sect {
-      //border: 1px solid #0089ED;
-      //background-image: linear-gradient(180deg, #52ACFF 0, #3559DA 100%),
-      //linear-gradient(#52ACFF, #3559DA);
-      //padding: 5px 15px;
       display: flex;
       justify-content: space-between;
-      //border-radius: 20px;
-      max-width: 260px;
-      gap: 6px;
+      max-width: 220px;
+      gap: 20px;
 
       a {
         font-size: 16px;
@@ -632,7 +1075,9 @@ export default defineComponent({
   }
 
   .amt {
-    font-size: 24px;
+    color: $white;
+    font-size: 1rem;
+    font-weight: bold;
     width: calc(100% - 25px);
     margin-left: 25px;
     display: flex;
@@ -640,109 +1085,103 @@ export default defineComponent({
     gap: 10px;
 
     img {
-      height: 20px;
-      fill: #434343;
+      height: 1.2rem;
     }
   }
 
-  .bluecard {
-    width: 98%;
-    margin: 0 0px !important;
-    background: url(../assets/images/common/bgheader.png) no-repeat top right;
-    padding: 20px 15px;
-    background-size: 100% 100%;
+  .acct-btm-section {
     display: flex;
+    width: 100%;
     flex-direction: column;
-    gap: 15px;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
 
-    .vipline {
+    .vip-info-div {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 5px;
+      align-items: center;
+      width: 100%;
+      margin-top: 4px;
 
-      .middle {
-        color: #fff;
-        flex: 6;
-      }
-
-      .circle {
-        border: 1px solid #ffffff;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
+      .vip-txt-left {
         display: flex;
-        justify-content: center;
+        color: #a4aabb;
+        font-size: 0.875rem;
+
+        &.opacity-0 {
+          opacity: 0;
+        }
+      }
+
+      .vip-left {
+        display: flex;
+        justify-content: space-between;
         align-items: center;
-        color: #ffffff;
-        background: linear-gradient(180deg, #aad6ff, #0075e1);
+        gap: 13px;
+        color: #a4aabb;
+        font-size: 1.2rem;
 
-        .bigV {
-          font-weight: 700;
-          font-size: 25px;
-          line-height: 13px;
+        // .vip-level {
+        //   background-image: url("../assets/images/account/account-vip-tab.png");
+        //   width: 90px;
+        //   aspect-ratio: 168/45;
+        //   background-size: 100% 100%;
+        //   background-repeat: no-repeat;
+        //   text-align: center;
+        //   color: $white;
+        //   font-size: 1.2rem;
+        //   font-style: italic;
+        //   padding-left: 28px;
+        //   padding-right: 10px;
+        // }
+      }
+
+      .vip-right {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 6px;
+
+        color: #a4aabb;
+        font-size: 0.875rem;
+
+        img {
+          width: 7px;
         }
-
-        .small {
-          font-size: 13px;
-          line-height: 13px;
-        }
-      }
-    }
-  }
-
-  .bot-section {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-    padding: 0px 20px 10px;
-
-    .button {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 5px;
-      font-size: 11px;
-      line-height: 25px;
-      text-decoration: none;
-      color: #000;
-
-      img {
-        height: 30px;
       }
     }
 
-    .q-btn__content {
-      font-size: 12px;
-      color: #000;
-      display: flex;
-      flex-direction: column;
+    .eshare-div {
+      margin-right: auto;
+      width: 100%;
+      color: #7a80a1;
+      font-size: 1.2rem;
 
-      svg {
-        fill: #ffffff;
-        width: 25px;
-        display: block;
-        padding: 0;
+      > span {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 14px;
+      }
+
+      .copy-btn {
+        width: 20px;
+      }
+
+      .share-link {
+        color: $white;
+        text-decoration: none;
       }
     }
-  }
-}
-
-.privilege-vip-div {
-  width: 95%;
-  margin: 10px auto 16px;
-
-  img {
-    width: 100%;
   }
 }
 
 .acct-nav {
-  width: 95%;
-  margin: 10px auto;
-  padding: 5px;
-  gap: 10px;
+  width: calc(100% - 2em);
+  margin: 0px auto;
+  padding: 0px;
+  gap: 0px;
 
   a {
     padding: 5px;
@@ -751,47 +1190,70 @@ export default defineComponent({
 
   .acct-title {
     display: flex;
+    padding: 12px 4px 8px;
     margin-top: 4px;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    color: #000;
-    // .acct-header-icon
+    width: 100%;
+    color: #424f72;
+    // background-color: $lightblue;
+    background: rgba(203, 229, 255, 1);
+    border-radius: 20px 20px 0 0;
+    position: relative;
+    &:before {
+      background: #458bff;
+      width: 5px;
+      height: 20px;
+      left: 0;
+      top: 5px;
+      bottom: 0;
+      margin: auto;
+      content: "";
+      position: absolute;
+    }
 
     .acct-title-1 {
       display: flex;
       align-items: center;
       gap: 6px;
       font-weight: bold;
-      font-size: 16px;
+      padding-left: 10px;
+      font-size: 1.2rem;
+      color: #0e436c;
+    }
 
-      // &:before {
-      //   content: "";
-      //   // background: #33bcd4;
-      //   height: 19px;
-      //   width: 10px;
-      //   background: url(../assets/images/account/personal_menu_title_icon.png)
-      //     no-repeat center;
-      //   background-size: 100%;
-      //   display: inline-block;
-      //   margin-left: -5px;
-      // }
+    .acct-title-link {
+      background: linear-gradient(271.61deg, #0d8be6 22.35%, #68e4eb 100%);
+      color: #ffffff;
+      position: absolute;
+      top: 0;
+      right: 0;
+      border-top-right-radius: 12px;
+      border-bottom-left-radius: 12px;
+      width: 120px;
+      height: 30px;
+      padding-left: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
     }
   }
 
   .acct-menu {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    grid-gap: 30px;
-    gap: 20px;
-    row-gap: 20px;
+    grid-gap: 0px;
+    gap: 0px;
+    row-gap: 0px;
     height: auto;
+    max-height: 180px;
+
     margin-bottom: 10px;
-    // display: flex;
-    // justify-content: space-between;
-    // flex-wrap: wrap;
-    // gap: 6%;
+    background-color: $white;
+    border-radius: 0px 0px 20px 20px;
+    padding: 15px 0;
+    box-shadow: 0px -4px 4px 0px #c3d4e6 inset;
 
     &.shorter-menu {
       grid-template-rows: repeat(2, 1fr);
@@ -799,25 +1261,46 @@ export default defineComponent({
 
     a {
       text-decoration: none;
-      font-size: 14px;
       height: 80px;
       display: block;
 
       .acct-nav-item {
-        font-size: 14px;
+        font-size: 1rem;
         gap: 5px;
         cursor: pointer;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        color: #000;
         text-decoration: none;
+        padding: 6px;
+        border-radius: 4px;
+        position: relative;
+
+        .acct-nav-label {
+          white-space: nowrap;
+          color: #7a80a1;
+        }
+        .unread {
+          position: absolute;
+          border-radius: 50%;
+          background: #ff0000;
+          left: 70%;
+          top: -3px;
+          color: #ffffff;
+          padding: 1px 5px;
+          font-size: 10px;
+        }
 
         img {
-          height: 50px;
+          height: 32px;
           fill: white;
           padding: 0;
+        }
+
+        &:active {
+          background: rgba(0, 0, 0, 0.2);
+          filter: brightness(0.9);
         }
       }
     }
@@ -826,20 +1309,25 @@ export default defineComponent({
 
 .acct-logout {
   padding: 12px;
-  border: 1px solid #0089ed;
+  box-shadow: 0px -2px 8px 0px #c3d4e6 inset;
   text-align: center;
-  font-size: 20px;
-  color: #0089ed;
-  border-radius: 30px;
+  font-size: 1.2rem;
+  background: $white;
+  color: #7a80a1;
+  border-radius: 20px;
   line-height: 15px;
-  width: 90%;
+  width: calc(100% - 2em);
   letter-spacing: 1px;
-  margin: 20px auto 40px;
+  margin: 6px auto 30px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
+
+  img {
+    width: 25px;
+  }
 }
 
 .vip-badge {
@@ -848,38 +1336,12 @@ export default defineComponent({
   top: -40px;
 }
 
-.vip-info-board {
-  margin-top: 10px !important;
-
-  .vip-getpromo-div {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 4px;
-
-    .getpromo-icon {
-      width: 16px;
-      background: #fff;
-      border-radius: 50%;
-      height: 16px;
-      line-height: 16px;
-    }
-
-    img {
-      width: 16px;
-    }
-
-    span {
-      color: #fff;
-      font-size: 15px;
-      text-decoration: none;
-    }
-  }
-}
-
 .card-account-banner {
-  margin: 10px 10px 0px;
-  border-radius: 10px 10px 0px 0px;
+  width: calc(100% - 2rem);
+  margin: auto;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  overflow: hidden;
 
   .account-banner-img {
     width: 100%;
@@ -891,6 +1353,227 @@ export default defineComponent({
   height: 14px;
 }
 
+.list-reward-wapper {
+  overflow: hidden; /* Hide horizontal scrollbar from the wrapper */
+  width: 100%;
+}
+
+.list-reward-received {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto; /* Make the section scrollable horizontally */
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  // padding-bottom: 16px; /* Add padding to ensure space for scrollbar */
+}
+.list-reward-received::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for WebKit (Chrome, Safari) */
+}
+
+.list-item {
+  border-radius: 24px;
+  height: 25px;
+  padding-left: 5px;
+  padding-right: 9px;
+  min-width: 80px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.875rem;
+  color: #ffffff;
+  background: rgba(207, 235, 255, 0.25);
+  opacity: 0.5;
+
+  &.collected {
+    opacity: 1;
+  }
+
+  img {
+    width: 15px;
+    display: block;
+  }
+}
+
+.vip-level-detail {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.vip-progress {
+  width: 100%;
+  margin: 0 6px;
+
+  :deep(.q-linear-progress) {
+    border-radius: 30px;
+  }
+
+  :deep(.q-linear-progress__model) {
+    background: linear-gradient(180deg, #32a9ff 0%, #3b5afe 100%);
+  }
+
+  :deep(.q-linear-progress__track) {
+    opacity: 1;
+    background: linear-gradient(180deg, #f8ffff 0%, #85e2ff 100%);
+  }
+}
+.vip-link {
+  background: linear-gradient(180deg, #32a9ff 0%, #3b5afe 100%);
+  min-width: 60px;
+  height: 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 0.875rem;
+  padding-left: 10px;
+  margin-left: 10px;
+  position: relative;
+  line-height: 1;
+  padding-top: 2px;
+
+  &:before {
+    content: "";
+    background-image: url("../assets/images/account/vip-diamond.png");
+    background-size: 100% 100%;
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 25px;
+    height: 21px;
+  }
+}
+
+// .body--dark {
+//   .profile {
+//     .pro-details {
+//       .nickname-span {
+//         // color: $font-3-dark;
+//       }
+//     }
+//   }
+
+//   .acct-nav {
+//     .acct-menu {
+//       @include content-block-dark;
+//       background: transparent;
+//       max-height: 280px;
+//     }
+//   }
+
+//   .acct-section {
+//     .left-sect {
+//       .label {
+//         color: #fff;
+//         font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+//           sans-serif;
+//       }
+
+//       .amt {
+//         margin-left: 0;
+//         margin-top: 5px;
+//         letter-spacing: 2px;
+//         font-size: 1.5rem;
+//       }
+//     }
+//   }
+
+//   .acct-logout {
+//     @include content-block-dark;
+//     background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
+//     background-size: cover;
+//     box-shadow: none;
+//     border-radius: 4px;
+//     border: 1px solid #3a93ce;
+
+//     .acct-nav-label {
+//       color: #fff;
+//     }
+//   }
+
+//   .vipcard {
+//     background: none;
+//     border-radius: 4px;
+//     overflow: hidden;
+
+//     .top-section {
+//       background: linear-gradient(180deg, #384e79 0%, #212e4b 100%);
+//     }
+//     .btn-main {
+//       // background-image: url("../assets/images/account/account-btn-dark.png");
+//       background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
+//       background-size: cover;
+//       box-shadow: none;
+//       border-radius: 4px;
+//       border: 1px solid #3a93ce;
+//     }
+
+//     .acct-btm-section {
+//       gap: 12px;
+
+//       .vip-info-div {
+//         .vip-right {
+//           color: #fff;
+//           font-size: 18px;
+//           font-family: "YouSheBiaoTiHei";
+//           background: url("../assets/images/account/vip-right-bg-dark.svg") no-repeat center center;
+//           background-size: 100% 100%;
+//           padding: 4px 10px 4px 20px;
+//           margin-right: -14px;
+//           margin-bottom: -12px;
+
+//           img {
+//             width: 9px;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   .acct-nav {
+//     .acct-title {
+//       background: #ffffff1a;
+//       &::before {
+//         background: $primary-dark;
+//       }
+//       .acct-title-1 {
+//         color: $white;
+//       }
+//     }
+//   }
+
+//   .profile-dialog {
+//     .q-card {
+//       box-shadow: none;
+//     }
+//     .submitImgBtn {
+//       background-image: url("../assets/images/download/active-tab-bg-dark.png");
+//     }
+//   }
+
+//   .vip-link {
+//     background: none;
+//     &::before {
+//       background-image: url("../assets/images/account/vip-diamond-dark.svg");
+//       height: 58px;
+//       width: 58px;
+//       left: -25px;
+//       top: -17px;
+//     }
+//   }
+
+//   .vip-progress {
+//     :deep(.q-linear-progress__model) {
+//       background: #d0a383;
+//     }
+//     :deep(.q-linear-progress__track) {
+//       background: #d0a38333;
+//     }
+//   }
+// }
+
 @media (max-width: 430px) {
   .acct-nav {
     .acct-menu {
@@ -898,25 +1581,183 @@ export default defineComponent({
     }
   }
 
-  .vipcard .acct-section {
-    flex-direction: column;
-    gap: 8px;
-  }
   .vipcard .acct-section .right-sect {
-    width: 100%;
-    text-align: center;
+    gap: 10px;
   }
 
-  .q-carousel.home {
+  .vipcard .btn-main {
+    min-height: 14px;
+    width: 50px;
+  }
+
+  .profile .avatar {
+    max-width: 50px;
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 380px) {
   .acct-nav {
     .acct-menu {
-      grid-template-columns: repeat(3, 1fr);
-      height: 380px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
     }
   }
+  .acct-nav .acct-menu a .acct-nav-item img {
+    height: 32px;
+  }
+}
+.profile-dialog .q-card {
+  box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
+  border-radius: 10px;
+}
+.profile-dialog .header {
+  font-size: 20px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.profile-dialog .submitImgBtn {
+  background-image: url("../assets/images/download/active-tab-bg.png");
+  background-size: 100% 100%;
+  color: #ffffff;
+  width: 100px;
+  margin: 20px auto;
+  display: block;
+  box-shadow: none;
+  &:before {
+    box-shadow: none;
+  }
+}
+.grid-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  transition: transform 0.5s;
+  img {
+    width: 80px;
+    cursor: pointer;
+  }
+}
+
+.grid-item .el-image:hover {
+  cursor: pointer;
+}
+
+.grid-item.selected {
+  position: relative;
+  color: #ffffff;
+  img {
+    border: 3px solid #33bc03;
+    border-radius: 50%;
+  }
+  &:after {
+    content: "✓";
+    position: absolute;
+    background: #33bc03;
+    font-size: 13px;
+    width: 20px;
+    height: 20px;
+    right: 0px;
+    bottom: 5px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+}
+.uploader {
+  display: flex;
+  gap: 10px;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  margin: 10px 50px 20px;
+  .leftBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+    .upload-box {
+      gap: 10px;
+      padding: 10px;
+      width: 200px;
+      height: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #a4aabb;
+      background: #e7f3ff;
+      border-radius: 20px;
+      flex-direction: column;
+      text-align: center;
+      .el-form-item__content {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        padding: 50px 0;
+        text-align: center;
+        gap: 10px;
+      }
+
+      .upload-btn {
+        cursor: pointer;
+        padding: 8px 20px;
+        background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+
+        box-shadow: 0px -0.96px 3.51px 0px #a2bff4 inset;
+      }
+    }
+  }
+  .rightBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    .cropped_title {
+      color: #7a80a1;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 28px;
+      text-align: center;
+    }
+    .croppedImgHolder {
+      border: 3px dotted #7a80a1;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+  }
+}
+.cropper {
+  height: 150px;
+  width: 150px;
+  border-radius: 10px;
+  background: aliceblue;
+}
+.vue-preview__wrapper {
+  border-radius: 20px;
+}
+.vue-bounding-box {
+  border-radius: 50%;
+}
+.cropper-background {
+  background: aliceblue;
 }
 </style>
