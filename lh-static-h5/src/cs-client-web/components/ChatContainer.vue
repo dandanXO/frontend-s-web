@@ -2126,10 +2126,6 @@ export default defineComponent({
     }
   }
 
-  :deep(.q-field.q-field--focused .q-field__control)::before {
-    color: #000 !important;
-  }
-
   .bg-primary {
     background: #212b43;
   }

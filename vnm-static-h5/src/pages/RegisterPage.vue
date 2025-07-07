@@ -12,8 +12,9 @@
           :placeholder="$t('lang.username')"
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_username'),
-            (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11'),
-            (val) => /^[a-zA-Z0-9]*$/.test(val) || $t('lang.no_special_characters')
+            (val) => /^[^0]/.test(val) || $t('lang.username_cannot_start_with_0'),
+            (val) => /^[a-zA-Z0-9]*$/.test(val) || $t('lang.no_special_characters'),
+            (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11')
           ]"
           color="white"
         >
