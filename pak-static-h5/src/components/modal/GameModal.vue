@@ -489,6 +489,10 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
           isLoading.value = false;
           if (platformCode === "BetBy") {
             isBetBy.value = true;
+
+            const topActionsEl = document.querySelector(".topActions");
+            const headerHeight = topActionsEl ? topActionsEl.offsetHeight : 0;
+
             await nextTick();
             // debugger;
             // betbyItem.style.display = "flex";
@@ -496,15 +500,20 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
             betbyInstance.value = new BTRenderer().initialize({
               brand_id: "2547441365755760643",
               token: srcDoc,
-              onTokenExpired: function () {},
               themeName: "default",
               lang: langVal.value,
               target: betbyRef.value,
-              betSlipOffsetTop: 0,
+              stickyTop: headerHeight,
+              betSlipOffsetTop: headerHeight,
               betslipZIndex: 999,
               onLogin: function () {},
               onRegister: function () {},
-              onSessionRefresh: function () {}
+              onSessionRefresh: function () {
+                console.log("onSessionRefresh");
+              },
+              onTokenExpired: function (e) {
+                console.log("onTokenExpired" + e);
+              }
             });
             console.log(betbyInstance.value);
           } else if (firstFourChars === "http") {
