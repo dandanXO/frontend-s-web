@@ -102,14 +102,15 @@
         </div>
 
         <div v-if="!store.token" class="right-contents">
+          <LocaleChanger />
           <!-- <router-link to="/login" class="action-btn">
             <a class="header-btn btn-color-blue">登录</a>
           </router-link>
           <router-link to="/register" class="action-btn">
             <a class="header-btn btn-color-white">注册</a>
           </router-link> -->
-          <a class="standard-button btn-color-blue" @click="loginDialogVisible = true">登录</a>
-          <a class="standard-button btn-color-white" @click="registerDialogVisible = true">注册</a>
+          <a class="standard-button btn-color-blue" @click="loginDialogVisible = true">{{ $t('btn.login') }}</a>
+          <a class="standard-button btn-color-white" @click="registerDialogVisible = true">{{ $t('btn.register') }}</a>
         </div>
 
         <div v-if="store.token" class="profile-actions">
@@ -329,7 +330,6 @@
     <el-dialog
       class="acc-dialog"
       v-model="loginDialogVisible"
-      width="1088px"
       align-center
       style="max-width: 1088px"
       @close="store.loginPageVisible = false"
@@ -337,12 +337,14 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img :src="accDialogImg" />
+            <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../assets/lh-logo.svg" width="150" />
+            <img src="../../assets/home/auth/login-logo-left.png" height="60px" />
+            <img src="../../assets/home/auth/login-logo-right.svg" height="60px" />
           </div>
           <div class="acc-dialog-content">
             <LoginDialog
@@ -491,6 +493,7 @@ import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import floor from "lodash/floor";
 import { loadPromoBanner } from "@/api/index/promo";
+import LocaleChanger from '../LocaleChanger.vue';
 
 export default defineComponent({
   name: "CommonHeader",
@@ -508,7 +511,8 @@ export default defineComponent({
     LoginDialog,
     ForgotPwdDialog,
     RegisterAccount,
-    NewMemberGuide
+    NewMemberGuide,
+    LocaleChanger
   },
   setup() {
     const notify = useNotify();
@@ -2501,8 +2505,6 @@ body {
         background-color: transparent;
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
-        // background-color: #ffffff;
-        border-radius: 20px;
         overflow: hidden;
 
         .acc-dialog-img {
@@ -2611,6 +2613,7 @@ body {
   // margin-left: 2rem;
   display: flex;
   gap: 1rem;
+  align-items: center;
 }
 
 .header-menu-item {
@@ -2696,149 +2699,6 @@ body {
 
     &.active {
       color: #468cff;
-    }
-  }
-}
-
-.dark {
-  .acc-dialog.el-dialog {
-    --el-dialog-bg-color: linear-gradient(180deg, #191b27 0%, #0a0c16 100%);
-
-    .el-dialog__header {
-      .el-dialog__close {
-        color: $color-white !important;
-      }
-    }
-
-    .el-dialog__body {
-      .acc-dialog-left {
-        background-size: 100% 100%;
-        background-position: center center;
-      }
-    }
-  }
-
-  .header-container {
-    .top-nav-wrapper {
-      background: $background-dark;
-      box-shadow: $shadow-header-dark;
-      .top-nav-inner {
-        .navigations {
-          .header-menu-item {
-            color: $font-4-dark;
-            &.active {
-              .nav-title {
-                color: $active-color-dark;
-              }
-              &::after {
-                background: $active-color-dark;
-              }
-            }
-            > a {
-              .nav-title {
-                color: #7a91a1;
-              }
-              &:hover {
-                .nav-title {
-                  color: $active-color-dark;
-                }
-                // .hover-icon {
-
-                // }
-                // :last-child {
-                //   color: $active-color-dark;
-                // }
-              }
-            }
-          }
-
-          .sub-menu {
-            background: $background-content-block-dark;
-            box-shadow: 0px -8px 8px 0px #1f2836 inset, 0px 4px 0px 0px #142b41;
-          }
-
-          &.second-nav {
-            .header-menu-item {
-              > a {
-                cursor: pointer;
-                color: $font-3-dark;
-                .hover-icon {
-                  filter: brightness(0) saturate(100%) invert(78%) sepia(31%) saturate(266%) hue-rotate(168deg)
-                    brightness(92%) contrast(82%);
-                }
-
-                &:hover {
-                  .hover-icon {
-                    filter: $active-color-dark-filter;
-                  }
-                  span {
-                    color: $active-color-dark;
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        .right-contents {
-          .header-btn {
-            &.btn-color-blue {
-              background: #394a65;
-              box-shadow: none;
-            }
-            &.btn-color-white {
-              background: $active-color-dark-linear;
-              position: relative;
-              box-shadow: 0px 0px 16.4px 0px #00d1ffcc;
-              color: $color-white;
-
-              &::before {
-                @include gradient-border(linear-gradient(180deg, #2ec0ff 0%, #f6ffff 50%, #2ec0ff 100%));
-                border-radius: 2rem;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .profile-actions {
-    .action-btn {
-      color: $font-3-dark;
-
-      .icon-rounded {
-        box-shadow: none;
-        background-color: $background-content-block-lighter-dark;
-        img {
-          filter: $active-color-dark-filter;
-        }
-      }
-      &:hover {
-        color: $active-color-dark;
-      }
-    }
-  }
-
-  .profile-info {
-    .profile-details {
-      .details-name {
-        color: $color-white;
-      }
-      .details-balance {
-        .reload-btn {
-          fill: $active-color-dark;
-        }
-      }
-    }
-  }
-  .profile-info-dropdown-content {
-    .profile-info-dropdown-content-item {
-      color: $font-3-dark;
-
-      &.standard-button {
-        color: $color-white;
-      }
     }
   }
 }

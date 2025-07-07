@@ -22,7 +22,7 @@
         </div>
 
         <div class="light-bg form-field">
-          <img class="form-field-icon" src="../assets/home/auth/verification-icon.png" />
+          <img class="form-field-icon" src="../assets/home/auth/verification-icon.svg" />
           <el-form-item tabindex="2" label="验证码" prop="code">
             <el-row :gutter="10" style="justify-content: center; align-items: center">
               <el-col :span="10">
@@ -81,7 +81,7 @@
       style="padding: 20px"
     >
       <div class="light-bg form-field">
-        <img class="form-field-icon" src="../assets/home/auth/verification-icon.png" />
+        <img class="form-field-icon" src="../assets/home/auth/verification-icon.svg" />
         <el-form-item tabindex="3" label="验证码" prop="captchaCode">
           <div style="display: flex; width: 100%">
             <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />

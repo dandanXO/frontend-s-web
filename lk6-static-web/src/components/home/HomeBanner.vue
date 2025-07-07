@@ -29,12 +29,10 @@
             class="promo-bg isDesktop"
             :style="
               'background-image: url(' +
-              imgURL +
-              (isDark ? banner.desktopImageUrlDark || banner.desktopImageUrl : banner.desktopImageUrl) +
+              imgURL + banner.desktopImageUrl +
               ')'
             "
           ></div>
-          <!--          <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>-->
         </div>
       </a>
     </el-carousel-item>
@@ -93,7 +91,6 @@ const loadBanners = () => {
   loadPromoBanner("HOME")
     .then((res) => {
       isFetchingBanners.value = false;
-
       if (res.code === 0) {
         banners.value = res.data.filter((promo) => {
           if (!promo.showDesktop) return false;
@@ -104,18 +101,19 @@ const loadBanners = () => {
         });
         //No Need liao.
         // if (store.token && (store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
-        //   banners.value.unshift({
-        //     category: "HOME",
+          //   banners.value.unshift({
+            //     category: "HOME",
         //     isLocal: true,
         //     promoPageId: null,
         //     redirectUrl: "lh1-im-sport"
         //   });
         // }
       } else
-        notify({
-          type: "error",
-          message: res.message
-        });
+      notify({
+        type: "error",
+        message: res.message
+      });
+      console.log('here', banners.value);
     })
     .catch(() => {
       isFetchingBanners.value = false;
@@ -253,7 +251,7 @@ watch(
 <style scoped lang="scss">
 .banner-loading {
   width: 100%;
-  height: 632px;
+  height: 450px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -314,20 +312,27 @@ watch(
   }
 }
 
-.dark {
-  .banner-slider {
-    padding-top: 70px;
-    .banner-container {
-      .banner-background {
-        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, transparent 100%);
-      }
-    }
-  }
-}
-
 .close-btn {
   position: absolute;
   bottom: -55px;
   cursor: pointer;
+}
+</style>
+
+<style lang="scss">
+.banner-slider {
+  width: 100%;
+
+  .is-active .el-carousel__button {
+      background: #2E3031;
+      box-shadow: 0 0 0 1px #2E3031;
+      border: 1px solid #2E3031;
+  }
+
+  .el-carousel__indicators--outside button {
+      background-color: #A2B1C3;
+      border: 1px solid #A2B1C3;
+      box-shadow: 0 0 0 1px #A2B1C3;
+  }
 }
 </style>
