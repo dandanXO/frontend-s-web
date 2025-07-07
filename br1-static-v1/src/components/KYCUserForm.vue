@@ -29,6 +29,20 @@
           />
         </div>
       </div>
+
+      <div class="pc-form-item">
+        <div class="pc-form-label">{{ $t("form.cpf") }}</div>
+        <div class="pc-form-input">
+          <q-input
+            filled
+            dense
+            clearable
+            :placeholder="$t('form.cpf_placeholder')"
+            v-model="formDetail.taxId"
+            :rules="[(_) => isValidCpf()]"
+          />
+        </div>
+      </div>
     </div>
 
     <q-btn
@@ -37,7 +51,7 @@
       flat
       no-caps
       class="style-btn-confirm"
-      :disable="!(isValidFirstName() === true && isValidLastName() === true)"
+      :disable="!(isValidFirstName() === true && isValidLastName() === true && isValidCpf() === true)"
       @click="submitKYCNewUser"
     >
       {{ $t("btn.submit") }}
@@ -69,6 +83,14 @@ const isValidFirstName = () => {
     : !namePattern.test(firstName)
     ? t("form.firstName_rules_02")
     : true;
+  return result;
+};
+
+const isValidCpf = () => {
+  const { taxId } = formDetail;
+  const phoneRegex = /^\d{10}$/;
+
+  const result = !taxId ? t("form.cpf_rules_01") : !phoneRegex.test(taxId) ? t("form.cpf_rules_02") : true;
   return result;
 };
 
@@ -112,6 +134,7 @@ const submitKYCNewUser = () => {
 const updateNewUserState = () => {
   const updateInfo = {};
   updateInfo.realName = `${formDetail.firstName},${formDetail.lastName}`;
+  updateInfo.taxId = formDetail.taxId;
 
   api
     .post("/session/account", qs.stringify(updateInfo))
