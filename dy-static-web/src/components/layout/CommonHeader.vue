@@ -767,7 +767,13 @@
       title="公告"
     >
       <el-tabs type="card" class="announcementTabs" v-model="announcementActive" @tab-click="announcementTabChange">
-        <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :name="tab.id" :tab="tab.id" :label="tab.name">
+        <el-tab-pane
+          v-for="(tab, ind) in announcementTypes"
+          :key="tab.id"
+          :name="tab.id"
+          :tab="tab.id"
+          :label="tab.name"
+        >
           <el-collapse accordion v-model="typeActive">
             <template v-for="(ann, idx) in announcementList" :key="idx">
               <template v-if="ann.typeId === tab.id">
@@ -807,7 +813,6 @@ import { useElementSize } from "@vueuse/core";
 import { ArrowDown, Refresh, ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
 import { storeToRefs } from "pinia";
 import GameModal from "@/components/modal/GameModal";
-// import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import moment from "moment";
 import { lsGet, lsStore, lsRemove, getTimeout } from "@/utils/utils";
 import { getUnreadMailTotal } from "@/api/personal/mailbox";
@@ -1542,7 +1547,7 @@ export default defineComponent({
       modalGame.value.open(gameName, code, gameCode);
     };
 
-    const announcementActive = ref("1");
+    const announcementActive = ref(1);
     const announcementList = ref([]);
     const announcementTypes = ref([]);
     const loadAnnouncement = () => {
@@ -1556,7 +1561,7 @@ export default defineComponent({
             }else{
               announcementActive.value = res.data.type[0].id;
             }
-            
+
           }
           announcementList.value = d;
           // announcementList.value = d.announcements
@@ -1584,11 +1589,22 @@ export default defineComponent({
     const noticeTitle = ref("");
     const openPopup = (noticeType) => {
       if (noticeType) {
-        announcementActive.value = "3";
         noticeTitle.value = noticeType.title;
         isStationNotice.value = true;
       }
     };
+
+    //
+    // watch(
+    //   isStationNotice,
+    //   (newValue) => {
+    //     if(newValue===true){
+    //       // alert("THIs")
+    //       console.log(  announcementActive.value)
+    //       announcementActive.value = 31;
+    //     }
+    //   }
+    // );
 
     onActivated(() => {
       store.token && checkMailboxUnread();
