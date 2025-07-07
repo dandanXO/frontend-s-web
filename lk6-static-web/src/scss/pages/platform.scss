@@ -91,7 +91,7 @@
           font-size: 5rem;
           font-weight: 400;
           word-break: keep-all;
-          background: linear-gradient(180deg, #ae92ff 0%, #56c2ff 100%);
+          background: linear-gradient(180deg, #8EC4FF 0%, #3188FF 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -248,18 +248,18 @@
         }
 
         .btn-blue {
-          height: 3rem;
-          min-width: 155px;
-          border-radius: 5rem;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          padding: 0 2rem;
           font-size: 1.25rem;
           color: $color-white;
-          background: $linear-bg;
           cursor: pointer;
           transition: 0.3s all;
+          background: url('../../assets/promo/promo-details-btn-bg.svg') center center no-repeat;
+          background-size: 100% 100%;
+          aspect-ratio: 172 / 48;
+          width: 172px;
+          height: 48px;
 
           &.btn-maintenance {
             background: rgba(0, 0, 0, 0.3);

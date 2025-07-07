@@ -26,8 +26,7 @@
             <div class="platform-item">
               <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
                 <img src="../assets/lucky-6-logo.png" width="176px" height="86px" />
-                <div class="platform-title">
-                </div>
+                <div class="platform-title">{{ item.cnname ?? item.name }}</div>
                 <div class="platform-subtitle">{{ platformName }}</div>
               </div>
 
