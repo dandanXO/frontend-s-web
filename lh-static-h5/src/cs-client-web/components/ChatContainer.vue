@@ -1764,7 +1764,7 @@ export default defineComponent({
 
   &__layout {
     margin: 0 auto;
-    z-index: 4000;
+    z-index: 1;
     height: 100%;
 
     max-width: 950px;
@@ -2088,6 +2088,30 @@ export default defineComponent({
 }
 
 .body--dark {
+  .WAL-start,
+  .WAL__layout {
+    height: calc(100vh - 80px) !important;
+    &.no-footer {
+      height: 100vh !important;
+    }
+  }
+
+  .q-page-container {
+    padding-bottom: 72px;
+  }
+
+  .WAL-start,
+  .WAL__layout {
+    height: calc(100vh - 80px) !important;
+    &.no-footer {
+      height: 100vh !important;
+    }
+  }
+
+  .q-page-container {
+    padding-bottom: 72px;
+  }
+
   .prechat-section {
     background: #212b43;
   }
@@ -2104,6 +2128,10 @@ export default defineComponent({
 
   :deep(.q-field.q-field--focused .q-field__control)::before {
     color: #000 !important;
+  }
+
+  .bg-primary {
+    background: #212b43;
   }
 }
 </style>
