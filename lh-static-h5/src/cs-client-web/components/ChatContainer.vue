@@ -2086,4 +2086,24 @@ export default defineComponent({
     padding: 30px 10px 10px;
   }
 }
+
+.body--dark {
+  .prechat-section {
+    background: #212b43;
+  }
+
+  .prechat-form {
+    .q-btn::before {
+      background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c);
+      border: 1px solid #4f535a;
+    }
+    .start-chat-btn {
+      background: transparent;
+    }
+  }
+
+  :deep(.q-field.q-field--focused .q-field__control)::before {
+    color: #000 !important;
+  }
+}
 </style>

@@ -381,4 +381,11 @@ export default defineComponent({
     font-weight: 600;
   }
 }
+
+.body--dark {
+  .q-toolbar,
+  .q-header {
+    background: #0f182e;
+  }
+}
 </style>
