@@ -15139,8 +15139,8 @@
   "lk6-static-h5/src/assets/login/user-icon.png": "137f41472d346add8e6c4775f3ac340b",
   "lk6-static-h5/src/assets/login/pass-icon.png": "887d200fa344ac2cbde21a0ea3b0fca7",
   "lk6-static-h5/src/assets/login/login-top-cny.png": "2c5170b582a608501e2a6f14974da344",
-  "lk6-static-h5/src/assets/login/login-top-bg.png": "f577c3191baf120752964ae724d3dc74",
-  "lk6-static-h5/src/assets/login/login-logo.png": "9207c3acd1627a0ab8c411458cfcc30a",
+  "lk6-static-h5/src/assets/login/login-top-bg.png": "9a370ace4ea261204143a3f481ce85ad",
+  "lk6-static-h5/src/assets/login/login-logo.png": "1e0dbfcb81f9a1cbcfd9a44c1d24be5a",
   "lk6-static-h5/src/assets/login/lock-icon.png": "091586f022c8450c122bf5d74a1b0c49",
   "lk6-static-h5/src/assets/login/input-close-icon.png": "7ba2f687029a70f0de41fff2f61a3214",
   "lk6-static-h5/src/assets/login/eye-open-icon.png": "aeb35b06dc8fc1afa892d0b4d9445d23",
@@ -31768,5 +31768,7 @@
   "lk6-static-h5/src/assets/index/baccarat/roulette-header.png": "9e5a31d3e292d657bf76d1bc1747803c",
   "lk6-static-h5/src/assets/index/baccarat/slide-0-img.png": "d4eac1b7a352bb4e5e536cc8aecb1fc1",
   "lk6-static-h5/src/assets/index/baccarat/slide-1-img.png": "b9ca29cde95cdeb76722cd332ed38187",
-  "lk6-static-h5/src/assets/index/baccarat/slide-2-img.png": "c75140bfd4fec328f20d027914528dc7"
+  "lk6-static-h5/src/assets/index/baccarat/slide-2-img.png": "c75140bfd4fec328f20d027914528dc7",
+  "lk6-static-h5/src/assets/login/login-bg.png": "d2e2853dad5f3fd9dfa9a653c1ecba20",
+  "lk6-static-h5/public/tac/images/icon.png": "c5754c685d45bdbe4013999b6a759eb4"
 }

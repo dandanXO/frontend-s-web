@@ -95,7 +95,11 @@
       </q-page-container>
     </q-scroll-area> -->
 
-    <q-page-container>
+    <q-page-container
+      :class="{
+        'with-bg': withBgPage
+      }"
+    >
       <router-view v-slot="{ Component }">
         <KeepAlive :max="8" :exclude="excludeAliveComponents">
           <component :is="Component" />
@@ -722,6 +726,7 @@ export default defineComponent({
       }
       return ui.slotLists;
     });
+    const withBgPage = computed(() => !["/login", "/register", "/forgot-account", "/"].includes(route.path));
     // console.log(platformsList.value);
     onMounted(() => {
       checkPlatform();
@@ -757,7 +762,8 @@ export default defineComponent({
         "MoneyChangeRecordView",
         "WithdrawView",
         "ForgotPwdPage"
-      ]
+      ],
+      withBgPage
     };
   }
 });
