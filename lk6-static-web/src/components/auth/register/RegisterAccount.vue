@@ -102,13 +102,13 @@
     </div>
   </el-form>
   <div>
-    <el-button class="blue-bg primary-btn" size="large" @click="submitRegisterForm(registerRef)">注册</el-button>
+    <el-button class="blue-bg primary-btn" size="large" @click="submitRegisterForm(registerRef)">{{ $t('btn.register') }}</el-button>
   </div>
 
   <div style="display:flex;justify-content:center;padding:26px 0;">
     <div style="text-align: center" class="font-gray">
-      已有账号？
-      <a @click="openLoginDialog">去登录</a>
+      {{$t('form.alreadyHaveAcc')}}？
+      <a @click="openLoginDialog">{{ $t('form.goLogin') }}</a>
     </div>
   </div>
 </template>
@@ -170,7 +170,7 @@ let validateName = async (r, v) => {
   const hasNumber = /\d/.test(v); // At least 1 number
 
   if (!(namePattern.test(v) && letterCount && hasNumber)) {
-    return Promise.reject("须以字母开头，并包含至少2个字母和1个数字");
+    return Promise.reject(t('form.usernameRule02', {letterCount: 2, numberCount: 1}));
   }
 
   return Promise.resolve();
@@ -179,9 +179,9 @@ let validateName = async (r, v) => {
 let validatePhoneNumber = async (r, v) => {
   var reg = /^\d+$/;
   if (v === "") {
-    return Promise.reject("请验证您的电话号码");
+    return Promise.reject(t('form.verifyYourPhoneNumber'));
   } else if (!reg.test(v)) {
-    return Promise.reject("电话号码只允许使用数字");
+    return Promise.reject(t('form.onlyNumbersAllowed'));
   } else {
     return Promise.resolve();
   }
@@ -221,9 +221,9 @@ let validatePassStrength = (r, v) => {
 
 let validatePass2 = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请重新输入密码");
+    return Promise.reject(t('form.reEnterPassword'));
   } else if (v !== regForm.password) {
-    return Promise.reject("密码不同");
+    return Promise.reject(t('form.passwordMismatch'));
   } else {
     return Promise.resolve();
   }
@@ -231,7 +231,7 @@ let validatePass2 = async (r, v) => {
 
 let validatePass = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请输入密码");
+    return Promise.reject(t('form.pleaseEnterField', {field: t('form.password')}));
   } else {
     return validatePassStrength(r, v);
   }
@@ -258,13 +258,13 @@ const regRules = {
   loginName: [
     {
       required: true,
-      message: "请输入用户名",
+      message: t('form.pleaseEnterField', {field: t('form.username')}),
       trigger: "blur"
     },
     {
       min: 4,
       max: 11,
-      message: "长度应为 4 至 11",
+      message: t('form.lengthMustBeBetween', {min: 4, max: 11}),
       trigger: "blur"
     },
     {
@@ -275,13 +275,13 @@ const regRules = {
   password: [
     {
       required: true,
-      message: "请输入密码",
+      message: t('form.pleaseEnterField', {field: t('form.password')}),
       trigger: "blur"
     },
     {
       min: 6,
       max: 12,
-      message: "长度应为 6 至 12",
+      message: t('form.lengthMustBeBetween', {min: 6, max: 12}),
       trigger: "blur"
     },
     {
@@ -292,13 +292,13 @@ const regRules = {
   confirmPwd: [
     {
       required: true,
-      message: "请输入密码",
+      message: t('form.pleaseEnterField', {field: t('form.password')}),
       trigger: "blur"
     },
     {
       min: 6,
       max: 12,
-      message: "长度应为 6 至 12",
+      message: t('form.lengthMustBeBetween', {min: 6, max: 12}),
       trigger: "blur"
     },
     {
@@ -315,43 +315,43 @@ const regRules = {
   smsCode: [
     {
       required: true,
-      message: "请输入手机验证码",
+      message: t('form.pleaseEnterField', {field: t('form.smsOtp')}),
       trigger: "blur"
     },
     {
       min: 6,
       max: 6,
-      message: "长度应为 6",
+      message: t('form.lengthMustBe', {num: 6}),
       trigger: "blur"
     }
   ],
   email: [
     {
       required: true,
-      message: "请输入您的邮箱",
+      message: t('form.pleaseEnterField', {field: t('form.email')}),
       trigger: "blur"
     },
     {
       type: "email",
-      message: "电子邮件地址无效",
+      message: t('form.emailRule01'),
       trigger: "blur"
     },
     {
       max: 50,
-      message: "长度应小于 50",
+      message: t('form.lengthLessThan', {num: 50}),
       trigger: "blur"
     }
   ],
   captchaCode: [
     {
       required: true,
-      message: "请输入验证码",
+      message: t('form.pleaseEnterField', {field: t('form.verificationCode')}),
       trigger: "blur"
     },
     {
       min: 4,
       max: 4,
-      message: "长度应为 4",
+      message: t('form.lengthMustBe', {num: 4}),
       trigger: "change"
     }
   ]

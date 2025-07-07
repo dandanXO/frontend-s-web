@@ -1,10 +1,17 @@
 <template>
     <div class="acc-dialog-homelogo">
         <img src="../assets/home/auth/login-logo-left.png" height="45px" class="clover-logo" />
-        <img src="../assets/home/auth/login-logo-right.svg" height="45px" />
+        <img v-if="languageVal === 'en'" src="../assets/home/auth/login-logo-right-en.svg" height="45px" />
+        <img v-else src="../assets/home/auth/login-logo-right.svg" height="45px" />
     </div>
 </template>
+<script setup>
+import { storeToRefs } from 'pinia'
+import { i18nStore } from '@/store/language'
 
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
+</script>
 <style lang="scss" scoped>
 .acc-dialog-homelogo {
     display: flex;
