@@ -968,12 +968,16 @@ svg {
   .q-date {
     background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
     border-radius: 8px;
+    box-shadow: none;
   }
   .q-date__header {
     background: transparent;
   }
   .q-date__main {
     background: transparent;
+  }
+  .q-select__dialog {
+    background: #212e4c;
   }
 }
 
