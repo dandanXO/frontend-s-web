@@ -349,7 +349,7 @@
     :showCancelButton="false"
     :showConfirmButton="false"
   >
-    <q-card style="width: 100%" class="modalcontent">
+    <q-card style="width: 100%" class="modalcontent with-decorator">
       <div class="headers">
         <div class="titles">系统提示</div>
         <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />

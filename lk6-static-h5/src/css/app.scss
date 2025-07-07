@@ -64,7 +64,9 @@ body {
 }
 
 .q-page-container {
-  background: linear-gradient(180deg, #e4eef9 0%, #f1f5fb 100%);
+  background-color: #fff;
+  background: url(../assets/images/bg.png) no-repeat center center;
+  background-size: 100% 100%;
   min-height: calc(100vh - 49px);
   //box-shadow:0px 0px 4px rgba(0,0,0,0.25);
   /* Overwrite Quasars padding-top calculation by code to avoid wrong offset in iOS PWA when
@@ -459,16 +461,19 @@ a:visited {
     align-items: flex-start;
     padding: 10px 6px 16px;
     overflow: visible;
+    min-width: 300px;
 
-    &::before {
-      content: "";
-      position: absolute;
-      top: -40px;
-      left: 0;
-      background: url(../assets/images/index/common-modal-decorator.png) no-repeat center center;
-      background-size: 100% 100%;
-      aspect-ratio: 1;
-      width: 95px;
+    &.with-decorator {
+      &::before {
+        content: "";
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: url(../assets/images/index/common-modal-decorator.png) no-repeat center center;
+        background-size: 100% 100%;
+        aspect-ratio: 1;
+        width: 95px;
+      }
     }
   }
 
@@ -540,6 +545,25 @@ a:visited {
         width: 100%;
       }
     }
+
+    .verification-code-input {
+      border-radius: 7px;
+      .q-field__control {
+        box-shadow: 0px 0px 2.78px 0px #a9c9ea inset;
+        background-color: #f7f8fb;
+      }
+      .q-placeholder {
+        color: #424f72;
+        &::placeholder {
+          color: #a4aabb;
+        }
+      }
+    }
+
+    .verification-img {
+      border-radius: 7px;
+      cursor: pointer;
+    }
   }
 
   .btnsreas {
@@ -573,6 +597,13 @@ a:visited {
       align-items: center;
       justify-content: center;
       letter-spacing: 1px;
+    }
+    .submit-btn {
+      min-width: 112px;
+      background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
+      border: 1px solid #ffffff;
+      border-radius: 30px;
+      color: #fff;
     }
   }
 }

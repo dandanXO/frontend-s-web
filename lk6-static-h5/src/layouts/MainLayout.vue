@@ -529,11 +529,11 @@ export default defineComponent({
         } else if (route.path === "/account/verifyTelephone") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "手机号码";
+          pageName.value = "手机号码绑定";
         } else if (route.path === "/account/verifyEmail") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "邮箱";
+          pageName.value = "邮箱绑定";
         } else if (route.path === "/account/changePwd") {
           prevPage.value = "account";
           hasPage.value = true;
