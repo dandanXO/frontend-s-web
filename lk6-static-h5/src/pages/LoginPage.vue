@@ -99,7 +99,7 @@
                   </q-input>
                 </div>
 
-                <div class="input-field-wrapper">
+                <!-- <div class="input-field-wrapper">
                   <div class="input-field__label required">验证码</div>
 
                   <q-input
@@ -118,13 +118,12 @@
                   >
                     <template v-slot:append>
                       <div id="captchaContainer"></div>
-                      <!-- <img :src="verificationImg" @click="getCode" /> -->
                     </template>
                     <template v-slot:prepend>
                       <img src="../assets/login/veri-icon.svg" width="14" style="margin-right: 8px" />
                     </template>
                   </q-input>
-                </div>
+                </div> -->
               </div>
 
               <div v-if="loginType" class="q-gutter-y-md">
@@ -220,6 +219,7 @@
               flat
             />
           </q-form>
+          <div id="captcha-box" />
         </q-tab-panel>
 
         <q-tab-panel name="register" class="form-container">
@@ -292,6 +292,7 @@ import { useRoute, useRouter } from "vue-router";
 import RegisterPage from "../pages/RegisterPage.vue";
 import qs from "qs";
 import { useLocalStorage } from "@vueuse/core";
+import { getDevice } from "src/boot/utils";
 
 export default defineComponent({
   name: "LoginPage",
@@ -307,7 +308,8 @@ export default defineComponent({
       loginName: "",
       password: "",
       captchaCode: "",
-      codeId: ""
+      codeId: "",
+      summoner: null
     });
     const phoneLoginForm = reactive({
       phoneNumber: "",
@@ -342,14 +344,14 @@ export default defineComponent({
       }
     });
 
-    watch(
-      () => route.path,
-      (newPath) => {
-        if (newPath === "/login") {
-          window.captchaObj.reset();
-        }
-      }
-    );
+    // watch(
+    //   () => route.path,
+    //   (newPath) => {
+    //     if (newPath === "/login") {
+    //       window.captchaObj.reset();
+    //     }
+    //   }
+    // );
 
     const getCode = () => {
       api
@@ -382,76 +384,96 @@ export default defineComponent({
       loginFormRef.value.reset();
     };
 
+    const sidParam = store.visitorId;
+
     const onSubmit = () => {
       (async () => {
-        const sidParam = store.visitorId;
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
-          verificationRef.value.validate();
-          $q.loading.show({
-            message: "登录中"
-          });
-          if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
-            $q.loading.hide();
-          } else {
-            const validate = window?.captchaObj.getValidate();
-            if (!validate) {
-              $q.notify({
-                color: "negative",
-                position: "top",
-                message: "请完成验证码",
-                icon: "report_problem"
-              });
-              $q.loading.hide();
-              return;
-            }
-            store
-              .memberLogin({
-                loginName: loginForm.loginName,
-                password: loginForm.password,
-                sid: sidParam,
-                // captchaCode: loginForm.captchaCode,
-                // codeId: loginForm.codeId,
-                lotNumber: loginForm.lot_number,
-                captchaOutput: loginForm.captcha_output,
-                passToken: loginForm.pass_token,
-                genTime: loginForm.gen_time
-              })
-              .then(() => {
-                $q.loading.hide();
-                sessionStorage.removeItem("REFERRAL_CODE");
+          // verificationRef.value.validate();
+          const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
+          config.loginData = {
+            loginName: loginForm.loginName,
+            password: loginForm.password,
+            sid: sidParam,
+            summoner: loginForm.summoner,
+            way: regDevice,
+            type: "SLIDER"
+          };
 
-                if (isCheckRmb.value) {
-                  localStorage.setItem(
-                    "userpass",
-                    JSON.stringify({
-                      loginName: loginForm.loginName,
-                      password: loginForm.password
-                    })
-                  );
-                } else {
-                  localStorage.removeItem("userpass");
-                }
+          window
+            .initTAC("./tac", config, style)
+            .then((tac) => {
+              tac.init();
+            })
+            .catch((error) => {
+              console.log("initTAC fail:", error);
+            });
 
-                loginFormRef.value.reset();
+          // $q.loading.show({
+          //   message: "登录中"
+          // });
+          // if (loginNameRef.value.hasError || passwordRef.value.hasError) {
+          //   $q.loading.hide();
+          // } else {
+          //   const validate = window?.captchaObj.getValidate();
+          //   if (!validate) {
+          //     $q.notify({
+          //       color: "negative",
+          //       position: "top",
+          //       message: "请完成验证码",
+          //       icon: "report_problem"
+          //     });
+          //     $q.loading.hide();
+          //     return;
+          //   }
+          //   store
+          //     .memberLogin({
+          //       loginName: loginForm.loginName,
+          //       password: loginForm.password,
+          //       sid: sidParam,
+          //       // captchaCode: loginForm.captchaCode,
+          //       // codeId: loginForm.codeId,
+          //       lotNumber: loginForm.lot_number,
+          //       captchaOutput: loginForm.captcha_output,
+          //       passToken: loginForm.pass_token,
+          //       genTime: loginForm.gen_time
+          //     })
+          //     .then(() => {
+          //       $q.loading.hide();
+          //       sessionStorage.removeItem("REFERRAL_CODE");
 
-                if (store.hasToken()) {
-                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.go(jumpUrl);
-                  if (Platform.is.capacitor && Platform.is.ios) {
-                    location.reload();
-                  }
-                } else {
-                  getCode();
-                }
-              })
-              .catch((error) => {
-                window.captchaObj.reset();
-                getCode();
-                $q.loading.hide();
-              });
-          }
+          //       if (isCheckRmb.value) {
+          //         localStorage.setItem(
+          //           "userpass",
+          //           JSON.stringify({
+          //             loginName: loginForm.loginName,
+          //             password: loginForm.password
+          //           })
+          //         );
+          //       } else {
+          //         localStorage.removeItem("userpass");
+          //       }
+
+          //       loginFormRef.value.reset();
+
+          //       if (store.hasToken()) {
+          //         const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+          //         router.go(jumpUrl);
+          //         if (Platform.is.capacitor && Platform.is.ios) {
+          //           location.reload();
+          //         }
+          //       } else {
+          //         getCode();
+          //       }
+          //     })
+          //     .catch((error) => {
+          //       window.captchaObj.reset();
+          //       getCode();
+          //       $q.loading.hide();
+          //     });
+          // }
         } else {
           telephoneRef.value.validate();
           phoneVerificationRef.value.validate();
@@ -667,6 +689,84 @@ export default defineComponent({
         });
     };
 
+    const config = {
+      // 生成接口 (必选项,必须配置, 要符合tianai-captcha默认验证码生成接口规范)
+      requestCaptchaDataUrl: `${api.defaults.baseURL}/member/getCaptcha`,
+      // 验证接口 (必选项,必须配置, 要符合tianai-captcha默认验证码校验接口规范)
+      validCaptchaUrl: `${api.defaults.baseURL}/member/login`,
+      // 验证码绑定的div块 (必选项,必须配置)
+      bindEl: "#captcha-box",
+      // 验证码类型, 登陆信息
+      loginData: {
+        loginName: loginForm.loginName,
+        password: loginForm.password,
+        sid: sidParam,
+        summoner: loginForm.summoner,
+        type: "SLIDER"
+      },
+      requestHeaders: {
+        Authorization: process.env.SITE
+      },
+      // 验证成功回调函数(必选项,必须配置)
+      validSuccess: (res, c, tac) => {
+        // 销毁验证码服务
+        tac.destroyWindow();
+        console.log("验证成功，后端返回的数据为", res);
+        store.token = res.data;
+        store.setToken(res.data);
+        store.getMemberInfo();
+        store.getBalance();
+        // store.getUnreadMail();
+        // 调用具体的login方法
+        const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+
+        if (store.token) {
+          sessionStorage.removeItem("REFERRAL_CODE");
+
+          if (isCheckRmb.value) {
+            localStorage.setItem(
+              "userpass",
+              JSON.stringify({
+                loginName: loginForm.loginName,
+                password: loginForm.password
+              })
+            );
+          } else {
+            localStorage.removeItem("userpass");
+          }
+
+          loginFormRef.value.reset();
+          router.push(jumpUrl);
+        }
+      },
+      // 验证失败的回调函数(可忽略，如果不自定义 validFail 方法时，会使用默认的)
+      validFail: (res, c, tac) => {
+        console.log("验证码验证失败回调...");
+
+        if (res.code === 800) {
+          // 验证失败后重新拉取验证码
+          tac.reloadCaptcha();
+        } else {
+          // 其他错误则关闭验证
+          tac.destroyWindow();
+        }
+      },
+      // 刷新按钮回调事件
+      btnRefreshFun: (el, tac) => {
+        console.log("刷新按钮触发事件...");
+        tac.reloadCaptcha();
+      },
+      // 关闭按钮回调事件
+      btnCloseFun: (el, tac) => {
+        console.log("关闭按钮触发事件...");
+        tac.destroyWindow();
+      }
+    };
+
+    const style = {
+      logoUrl: null
+    };
+
     onMounted(() => {
       getCode();
       const urlParams = new URLSearchParams(window.location.search);
@@ -674,7 +774,7 @@ export default defineComponent({
         tab.value = "register";
       }
       checkRememberPwd();
-      initGeetestCaptcha();
+      // initGeetestCaptcha();
 
       api.get("/opt-session/promo/banner?category=LOGIN").then((res) => {
         loginBannerUrl.value = imgURL + res.data[0].mobileImageUrl;
@@ -1033,5 +1133,13 @@ export default defineComponent({
   .geetest_popup_wrap.geetest_dark.geetest_freeze_wait .geetest_holder .geetest_content .geetest_gradient_bar {
     background-color: #ccc;
   }
+}
+
+#captcha-box {
+  position: fixed;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
