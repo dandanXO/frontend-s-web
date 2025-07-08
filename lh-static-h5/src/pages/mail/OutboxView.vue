@@ -23,14 +23,14 @@
                   color="#0089ED"
                 />
 
-                <div class="read-label" v-if="det.readTime && det.sendTime">
+                <div class="read-label" v-if="det.readTime && det.sendTime && !isMsgRead(det)">
                   <img src="../../assets/images/inbox/read-mail.png" />
                 </div>
                 <div class="read-label" v-else>
                   <img src="../../assets/images/inbox/unread-mail.png" />
                 </div>
 
-                <div class="title-text" :title="det.title" v-html="det.title"></div>
+                <div class="title-text" :class="`${isMsgRead(det)?'title-text-blob':''}`" :title="det.title" v-html="det.title"></div>
                 <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`">
                   <i>{{ formatSendTime(det.sendTime) }}</i>
                 </div>
@@ -158,14 +158,29 @@ const loadOutbox = () => {
     });
 };
 
+const isMsgRead = (m)=>{
+  //判断的方法是： replyMessageContent 不是 null ， 但是 replyMessageReadTime 是 null
+  return m.replyMessageContent && !m.replyMessageReadTime;
+}
+
 const showMailId = ref();
 const openMsg = (mail) => {
-  const { id, readTime } = mail;
+  const { id, replyMessageContent, replyMessageId } = mail;
   showMailId.value = id;
   mail.readTime = moment().format("YYYY-MM-DD");
+  let param = {};
+  if (replyMessageContent) {
+    param = {
+      id: replyMessageId
+    };
+  } else {
+    param = {
+      id: id
+    };
+  }
 
   api
-    .get(`/session/feedback/${id}/read`)
+    .get(`/session/feedback/${param.id}/read`)
     .then((res) => {
       if (res.code === 0) {
         // !readTime &&
@@ -174,6 +189,7 @@ const openMsg = (mail) => {
         //     type: "success"
         //   });
         mail.content = res.data.content;
+        mail.replyMessageReadTime = true
         onLoad();
       }
     })
@@ -246,6 +262,9 @@ onMounted(() => {
         p {
           margin: 0px 0px 0px 0px;
         }
+      }
+      .title-text-blob{
+        font-weight: 700;
       }
 
       .send-time {

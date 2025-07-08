@@ -98,7 +98,8 @@
                 @click="openMsg(item)"
               >
                 <template #title>
-                  <p class="title-p">标题：{{ item.title }}</p>
+                  <div :class="`${isMsgRead(item) ? 'unread-red-point':''}`"></div>
+                  <p class="title-p" :class="{'title-blod': isMsgRead(item)}">标题：{{ item.title }} {{ isMsgRead(item) ? '未讀' : '已讀'}}</p>
                 </template>
                 <div>
                   <div class="content-p">正文：{{ item.content }}</div>
@@ -693,23 +694,38 @@ const mailTabChange = (nk) => {
   }
 };
 
+const isMsgRead = (m)=>{
+  //判断的方法是： replyMessageContent 不是 null ， 但是 replyMessageReadTime 是 null
+  return m.replyMessageContent && !m.replyMessageReadTime;
+}
+
 const openMsg = (m) => {
-  const { id } = m;
+  const { id, replyMessageId, replyMessageContent } = m;
 
   if (m.isOpen === undefined) m.isOpen = false;
   m.isOpen = !m.isOpen;
   m.readTime = true;
-
-  if (!m.content) {
-    readFeedback({ id })
+let param = {};
+  if (replyMessageContent) {
+    param = {
+      id: replyMessageId
+    };
+  } else {
+    param = {
+      id: id
+    };
+  }
+  // if (!m.content) {
+    readFeedback(param)
       .then((res) => {
-        const { code, data } = res;
-        if (code === 0) m.content = data.content;
+        // const { code, data } = res;
+        // if (code === 0) m.content = data.content;
+        m.replyMessageReadTime = true
       })
       .catch((error) => {
         console.log(error);
       });
-  }
+  // }
 };
 
 const formRef = ref();
@@ -1296,6 +1312,19 @@ onUnmounted(() => {
     text-align: left;
     line-height: 18px;
     margin-bottom: 5px;
+    font-weight: 400;
+  }
+  .title-blod{
+    font-weight: bolder;
+  }
+  .unread-red-point{
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    background-color: red;
+    top: 4px;
+    left: 4px;
   }
 
   .content-p {
