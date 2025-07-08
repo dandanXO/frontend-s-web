@@ -343,7 +343,7 @@ import { userStore } from "stores/index";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
 import { useUI } from "stores/ui";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -354,6 +354,12 @@ export default defineComponent({
     });
     onActivated(() => {
       getCode();
+
+      if (isInPwa()) {
+        api.get(`/app/pwa/log?step=OPENREGISTER&siteCode=${process.env.SITE}`).then((res2) => {
+          console.log("OPENREGISTER");
+        });
+      }
     });
     const showHundredDialog = ref(false);
     const showBetRulesDialog = ref(false);
@@ -547,6 +553,12 @@ export default defineComponent({
             regForm.regHost = "app://";
           }
 
+          if (isInPwa()) {
+            api.get(`/app/pwa/log?step=SUBMITREGISTER&siteCode=${process.env.SITE}`).then((res2) => {
+              console.log("SUBMITREGISTER");
+            });
+          }
+
           api
             .post("/member/fbRegister", qs.stringify(regForm))
             .then((ret) => {
@@ -560,6 +572,15 @@ export default defineComponent({
                 //   message: t("lang.register_successful"),
                 //   icon: "check_circle_outline"
                 // });
+
+                //FB Tracking.
+                if (isInPwa()) {
+                  if (store.isFbPixel) {
+                    fbq("track", "CompleteRegistration", {
+                      event_id: regForm.sid
+                    });
+                  }
+                }
 
                 //ADJUST TRACKEVENT.
                 trackRegisterSuccessEvent();

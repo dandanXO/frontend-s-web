@@ -720,7 +720,7 @@ SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 import { Swiper, SwiperSlide } from "swiper/vue";
 import PushNotification from "../components/modal/PushNotification.vue";
 import "swiper/css/pagination";
-import { isAndroid } from "src/boot/utils";
+import { isAndroid, isInPwa } from "src/boot/utils";
 import { useI18n } from "vue-i18n";
 import { EDITION } from "src/constant/edition";
 import GameTab from "src/components/home/GameTab.vue";
@@ -939,7 +939,8 @@ export default defineComponent({
       //Is iOS Webclip App || Is Android Apk
       if (
         (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
-        (Platform.is.android && Platform.is.capacitor)
+        (Platform.is.android && Platform.is.capacitor) ||
+        isInPwa()
       ) {
         isH5.value = false;
       } else {
