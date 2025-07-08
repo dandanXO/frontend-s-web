@@ -1,11 +1,11 @@
 <template>
   <div class="platform-section">
-    <div class="platform-container" :class="platformType === 'slot' ? 'slot-container' : ''">
-      <div class="platform-container-slot" v-if="platformType === 'slot'">
+    <div class="platform-container" :class="platformType === 'poker' ? 'slot-container' : ''">
+      <div class="platform-container-slot" v-if="platformType === 'poker'">
         <img v-if="isDark" src="../assets/slot/slot-top-bg-dark.png" />
         <img v-else src="../assets/slot/slot-top-bg.png" />
       </div>
-      <div class="platform-container-inner" v-if="platformType !== 'slot'">
+      <div class="platform-container-inner" v-if="platformType !== 'poker'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
         <template v-for="(item, index) in platformsListDisplay" :key="index">
           <template v-if="selectedPlat === item.code">
@@ -122,6 +122,23 @@
       <div class="all-game-container">
         <div class="plat-options-wrapper">
           <div class="plat-options-container">
+            <template v-for="(item, index) in fixedPokerPlatforms" :key="index">
+              <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
+              <div
+                class="plat-option"
+                @click="onChangeFixedPokerPlatforms(item)"
+                :class="{ active: selectedFixedPokerPlatforms?.prefix === item.prefix }"
+              >
+                <div class="text">
+                  <span>{{ item.label }}</span>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <div class="plat-options-wrapper" style="display: none;">
+          <div class="plat-options-container">
             <template v-for="(item, index) in platformsListDisplay" :key="index">
               <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
               <div
@@ -129,18 +146,8 @@
                 @click="clickPlat(item)"
                 :class="{ active: selectedPlat === item.code, long: item.code === 'PPFP' }"
               >
-                <!-- <img
-                  :src="
-                  require(`../assets/game/plat-logo-${item.code.toLowerCase()}${
-                    selectedPlat !== item.code ? '-blue' : ''
-                  }.png`)
-                "
-                /> -->
                 <div class="text">
-                  <span v-if="item.code === 'AG'">PA</span>
-                  <span v-else-if="item.code === 'MGP'">MG</span>
-                  <span v-else-if="item.code === 'PPFP'">FP</span>
-                  <span v-else>{{ item.code }}</span>
+                  <span>{{ item.code }}</span>
                 </div>
               </div>
             </template>
@@ -276,31 +283,36 @@ const props = defineProps({
 const filteredPlatforms = ref([]);
 const platformsList = ref([]);
 const platformsListDisplay = ref([]);
+const fixedPokerPlatforms = ref([
+  {
+    prefix: 101,
+    label: '百家乐'
+  },
+  {
+    prefix: 112,
+    label: '幸运轮盘'
+  },
+  {
+    prefix: 103,
+    label: '幸运蕾丝'
+  },
+])
 
 const getPlatList = () => {
-  const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
-  getFn().then((res) => {
-    platformsList.value = res;
+  // const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
+  // getFn().then((res) => {
+  //   platformsList.value = res;
+  //   platformsListDisplay.value = platformsList.value.filter((element) =>
+  //     element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
+  //   );
 
-    // console.log(platformsList.value);
+  //   platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
+  //     const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
+  //     return { ...matchingItem, ...item1 };
+  //   });
 
-    platformsListDisplay.value = platformsList.value.filter((element) =>
-      element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
-    );
-
-    // console.log("Platform");
-    // console.log(platformsListDisplay.value);
-
-    platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
-      const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
-      return { ...matchingItem, ...item1 };
-    });
-
-    // console.log("THIs");
-    // console.log(platformsListDisplay.value);
-
-    setFilteredPlatforms();
-  });
+  //   setFilteredPlatforms();
+  // });
 };
 
 const setFilteredPlatforms = () => {
@@ -329,9 +341,15 @@ const setFilteredPlatforms = () => {
 };
 
 const selectedPlat = ref(null);
+const selectedFixedPokerPlatforms = ref({});
 const setSelectedPlat = () => {
   selectedPlat.value = filteredPlatforms.value.length > 0 ? filteredPlatforms.value[0].code : null;
 };
+
+const onChangeFixedPokerPlatforms = (item) => {
+  selectedFixedPokerPlatforms.value = item;
+  changePage(gamePage.currentPage, gamePage.pageSize);
+}
 
 const clickPlat = (plat) => {
   router.push({ path: route.path, query: { plat: plat.code } });
@@ -364,7 +382,7 @@ const switchPlat = (plat) => {
 };
 
 const getPlatGameList = () => {
-  if (props.platformGameType === "SLOT") {
+  if (props.platformGameType === "LIVE") {
     const getFn = store.token ? getLoggedInPlatformList : getPlatformList;
     getFn()
       .then((data) => {
@@ -373,9 +391,6 @@ const getPlatGameList = () => {
           const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
           return { ...matchingItem, ...item1 };
         });
-
-        // console.log("SLOT")
-        // console.log(platformsListDisplay.value);
 
         if (!route.query.plat) {
           switchPlat(platformsListDisplay.value[0]);
@@ -416,7 +431,7 @@ const searchList = () => {
   // }
 };
 const loadGameList = () => {
-  if (props.platformGameType === "SLOT") {
+  if (props.platformGameType === "LIVE") {
     getPlatformGames(activePlat.value.id, props.platformGameType)
       .then((data) => {
         data.forEach((element) => {
@@ -437,7 +452,7 @@ const loadGameList = () => {
 const changePage = (page, pageSize) => {
   // console.log(page);
   // console.log(pageSize);
-  gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
+  gamePage.gameList = gameListData.value.filter(gameItem => gameItem.code.startsWith(selectedFixedPokerPlatforms.value.prefix)).slice((page - 1) * pageSize, page * pageSize);
 };
 
 const gameCat = ref("allGame");
@@ -445,6 +460,7 @@ const gameCat = ref("allGame");
 onMounted(() => {
   getPlatList();
   getPlatGameList();
+  selectedFixedPokerPlatforms.value = fixedPokerPlatforms.value[0];
 });
 
 watch(
