@@ -226,7 +226,7 @@
           </div>
         </router-link>
 
-        <router-link to="/account/letters">
+        <router-link to="/account/mail">
           <div class="acct-nav-item">
             <img src="../assets/images/account/user-feedback-icon.png" />
             <div class="acct-nav-label">意见反馈</div>
