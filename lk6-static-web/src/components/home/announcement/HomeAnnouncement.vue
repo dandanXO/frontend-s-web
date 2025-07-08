@@ -62,6 +62,7 @@
                 ></div>
               </Vue3Marquee>
             </div>
+            <img src="../../../assets/home/announcement/hot-matches.png" height="30px" />
           </div>
         </div>
       </div>

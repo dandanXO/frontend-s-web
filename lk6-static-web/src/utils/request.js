@@ -29,9 +29,9 @@ const REPLACEMENT_DOMAIN = "random";
 //   var evtSpecialArray = ["https://prk46vfitl.111z35h0mt.com", "https://prkuo09ctl.1rqrhcll8p.com"];
 //   var crtSpecialArray =["https://cauomdoptl.baw7xptuqr1.com", "https://caaukstntl.ectuu384q0h.com"];
 //
-//   var rstApi = getInitApi(rstSpecialArray, "LH_WEB_RST_URL");
-//   var evtApi = getInitApi(evtSpecialArray, "LH_WEB_EVT_URL");
-//   var crtApi = getInitApi(crtSpecialArray, "LH_WEB_CRT_URL");
+//   var rstApi = getInitApi(rstSpecialArray, "LK6_WEB_RST_URL");
+//   var evtApi = getInitApi(evtSpecialArray, "LK6_WEB_EVT_URL");
+//   var crtApi = getInitApi(crtSpecialArray, "LK6_WEB_CRT_URL");
 //
 //   var cdnSpecialArray =["https://url9jr173tl.acj39bv80x.com", "https://url847fkttl.b5chotsxy0.com"];
 //
@@ -50,22 +50,22 @@ if (isGlobalLH) {
   var evtApi = evtGlobalArray[Math.floor(Math.random() * evtGlobalArray.length)];
   var crtApi = crGlobalArray[Math.floor(Math.random() * crGlobalArray.length)];
 
-  localStorage.setItem("LH_WEB_RST_URL", rstApi);
-  localStorage.setItem("LH_WEB_EVT_URL", evtApi);
-  localStorage.setItem("LH_WEB_CRT_URL", crtApi);
+  localStorage.setItem("LK6_WEB_RST_URL", rstApi);
+  localStorage.setItem("LK6_WEB_EVT_URL", evtApi);
+  localStorage.setItem("LK6_WEB_CRT_URL", crtApi);
 } else if (isGlobalAndCN) {
   console.log("IS Global + CN");
   var rstGlobalAndCdnArray = process.env.VUE_APP_GLOBAL_AND_CDN_RST_API.split(",");
   var evtGlobalAndCdnArray = process.env.VUE_APP_GLOBAL_AND_CDN_EVT_API.split(",");
   var crGlobalAndCdnArray = process.env.VUE_APP_GLOBAL_AND_CDN_CR_API.split(",");
 
-  var rstApi = getInitApi(rstGlobalAndCdnArray, "LH_WEB_RST_URL");
-  var evtApi = getInitApi(evtGlobalAndCdnArray, "LH_WEB_EVT_URL");
-  var crtApi = getInitApi(crGlobalAndCdnArray, "LH_WEB_CRT_URL");
+  var rstApi = getInitApi(rstGlobalAndCdnArray, "LK6_WEB_RST_URL");
+  var evtApi = getInitApi(evtGlobalAndCdnArray, "LK6_WEB_EVT_URL");
+  var crtApi = getInitApi(crGlobalAndCdnArray, "LK6_WEB_CRT_URL");
 } else {
-  var rstApi = getInitApi(rstArray, "LH_WEB_RST_URL");
-  var evtApi = getInitApi(evtArray, "LH_WEB_EVT_URL");
-  var crtApi = getInitApi(crArray, "LH_WEB_CRT_URL");
+  var rstApi = getInitApi(rstArray, "LK6_WEB_RST_URL");
+  var evtApi = getInitApi(evtArray, "LK6_WEB_EVT_URL");
+  var crtApi = getInitApi(crArray, "LK6_WEB_CRT_URL");
 }
 
 if (imgCDN.indexOf(REPLACEMENT_DOMAIN) > -1) {

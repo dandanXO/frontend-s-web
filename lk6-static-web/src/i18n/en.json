@@ -1,7 +1,8 @@
 {
   "btn": {
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "en": "English"
   },
   "form": {
     "realName": "Real Name",

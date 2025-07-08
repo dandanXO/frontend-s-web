@@ -12,7 +12,7 @@ import { getVisitorId } from "@/utils/utils";
 import { uiStore } from "@/store/ui";
 import { loadAffiliateByDomain } from "@/api/index/promo";
 import { submitMemberStats } from "@/api/index/site";
-
+import { useColorMode } from '@vueuse/core'
 import NotificationWrapper from "@/components/notification/NotificationWrapper.vue";
 import { useRouter } from "vue-router";
 export default defineComponent({
@@ -20,6 +20,8 @@ export default defineComponent({
     NotificationWrapper
   },
   setup() {
+    const mode = useColorMode()
+    mode.value = 'light'  // This sets and persists light mode
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
     const store = userStore();
