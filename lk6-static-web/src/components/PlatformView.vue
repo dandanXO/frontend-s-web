@@ -381,11 +381,11 @@ const switchPlat = (plat) => {
 };
 
 const getPlatGameList = () => {
-  if (props.platformGameType === "LIVE") {
+  if (props.platformGameType === "BACARRAT") {
     const getFn = store.token ? getLoggedInPlatformList : getPlatformList;
     getFn()
       .then((data) => {
-        platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
+        platformsListDisplay.value = data.filter((element) => element.gameType.includes('LIVE'));
         platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
           const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
           return { ...matchingItem, ...item1 };
@@ -430,8 +430,8 @@ const searchList = () => {
   // }
 };
 const loadGameList = () => {
-  if (props.platformGameType === "LIVE") {
-    getPlatformGames(activePlat.value.id, props.platformGameType)
+  if (props.platformGameType === "BACARRAT") {
+    getPlatformGames(activePlat.value.id, 'LIVE')
       .then((data) => {
         data.forEach((element) => {
           element.default = require("../assets/images/games/aviator/default-poker.png");

@@ -15,7 +15,7 @@ import PlatformView from "@/components/platformview/index";
 import { pokerPlatforms } from "@/shared/platformArray";
 
 const platformType = ref("bacarrat");
-const platformGameType = ref("LIVE");
+const platformGameType = ref("BACARRAT");
 const platformName = ref("BACARRAT");
 const platformPattern = ref(true);
 </script>
