@@ -1,174 +1,166 @@
 <template>
-  <div class="forget-pass-section bg-white">
-    <q-tabs
-      v-model="tab"
-      dense
-      size="lg"
-      class="text-grey"
-      active-color="light-blue-9"
-      indicator-color="light-blue-9"
-      align="justify"
-      @change="goToTab"
-    >
+  <div class="forget-pass-section">
+    <q-tabs v-model="tab" dense size="lg" class="forget-pass-tabs" align="justify" @change="goToTab">
       <q-tab name="phone" label="短信修改密码" />
       <q-tab name="email" label="邮箱修改密码" />
-      <q-tab name="mail" label="邮箱找回账号" />
+      <!-- <q-tab name="mail" label="邮箱找回账号" /> -->
     </q-tabs>
-
-    <q-separator />
 
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="phone">
-        <div class="text-blue-grey" v-if="!isPhoneSent">方式：请输入您需找回登陆密码的用户名和验证手机号码</div>
-
-        <div class="forgetpass-board q-gutter-y-md">
+        <div class="forgetpass-board">
           <q-form v-if="!isPhoneSent" class="rounded-borders" ref="phoneFormRef">
-            <q-row class="row items-baseline justify-start">
-              <q-item-label>
-                <span class="text-red">*&nbsp;</span>
-                用户名:
-              </q-item-label>
-              <q-input
-                ref="userRef"
-                hide-bottom-space
-                type="text"
-                borderless
-                clearable
-                placeholder="请输入用户名"
-                v-model="passwordFormPhone.loginName"
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || '请输入用户名',
-                  (val) => (val && val.length >= 4 && val.length <= 12) || '长度要在 4-12 之间'
-                ]"
-                color="white"
-              ></q-input>
-            </q-row>
+            <div class="forgot-pwd-form-inner-wrapper q-gutter-y-md">
+              <div class="notification-red" v-if="!isPhoneSent">
+                请提供您的用户名以及手机号码，我们会立即将新的密码发送到您的邮箱。
+              </div>
 
-            <q-row class="row items-baseline justify-start">
-              <q-item-label>
-                <span class="text-red">*&nbsp;</span>
-                手机号码:
-              </q-item-label>
-              <q-input
-                ref="phoneRef"
-                hide-bottom-space
-                type="text"
-                borderless
-                clearable
-                v-model="passwordFormPhone.phone"
-                placeholder="请输入手机号码"
-                :rules="[(val) => (val && val.length > 0) || '请输入手机号码', (val) => isValidPhone(val)]"
-                color="white"
-                label-color="secondary"
-              ></q-input>
-            </q-row>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">请输入用户名</div>
+                <q-input
+                  ref="userRef"
+                  hide-bottom-space
+                  type="text"
+                  standout
+                  clearable
+                  placeholder="请输入用户名"
+                  v-model="passwordFormPhone.loginName"
+                  lazy-rules
+                  :rules="[
+                    (val) => (val && val.length > 0) || '请输入用户名',
+                    (val) => (val && val.length >= 4 && val.length <= 12) || '长度要在 4-12 之间'
+                  ]"
+                  color="white"
+                ></q-input>
+              </div>
 
-            <q-row class="row items-baseline justify-start">
-              <q-item-label>
-                <span class="text-red">*&nbsp;</span>
-                验证码
-              </q-item-label>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">请输入手机号码</div>
+                <q-input
+                  ref="phoneRef"
+                  hide-bottom-space
+                  type="text"
+                  standout
+                  clearable
+                  v-model="passwordFormPhone.phone"
+                  placeholder="请输入手机号码"
+                  :rules="[(val) => (val && val.length > 0) || '请输入手机号码', (val) => isValidPhone(val)]"
+                  color="white"
+                  label-color="secondary"
+                ></q-input>
+              </div>
 
-              <q-input
-                standout
-                class="captcha-textfield"
-                bg-color="white"
-                ref="verificationRef"
-                hide-bottom-space
-                type="text"
-                placeholder="请输入验证码"
-                v-model="passwordFormPhone.captchaCode"
-                :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
-                label-color=""
-              >
-                <template v-slot:append>
-                  <img :src="verificationImg" @click="getCode" />
-                </template>
-              </q-input>
-            </q-row>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">验证码</div>
+
+                <q-input
+                  standout
+                  class="captcha-textfield"
+                  ref="verificationRef"
+                  hide-bottom-space
+                  type="text"
+                  placeholder="请输入验证码"
+                  v-model="passwordFormPhone.captchaCode"
+                  :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
+                  label-color=""
+                >
+                  <template v-slot:append>
+                    <img :src="verificationImg" @click="getCode" />
+                  </template>
+                </q-input>
+              </div>
+            </div>
 
             <div class="row justify-between items-center q-mt-md">
               <q-btn
                 @click.prevent="submitSendOtp('phone')"
                 label="提交"
                 width="100%"
-                color="dyblue"
+                class="submit-btn"
                 style="width: 100%"
               />
             </div>
           </q-form>
 
-          <div v-if="isPhoneSent" class="text-blue q-px-md">OTP短信已发送到您的注册手机, 请输入OTP和新密码。</div>
-          <q-form v-if="isPhoneSent" class="q-gutter-y-md rounded-borders form-after-submit">
-            <q-input
-              ref="codeRef"
-              filled
-              hide-bottom-space
-              v-model="verificationPhoneForm.code"
-              label="OTP码"
-              clearable
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入OTP码',
-                (val) => (val && val.length >= 4 && val.length <= 6) || 'OTP长度不符'
-              ]"
-            >
-              <template v-slot:prepend>
-                <q-icon name="qr_code" />
-              </template>
-            </q-input>
-            <q-input
-              ref="newPwdRef"
-              :type="isPwd ? 'password' : 'text'"
-              filled
-              hide-bottom-space
-              v-model="verificationPhoneForm.newPassword"
-              label="新密码"
-              clearable
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入密码',
-                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
-              ]"
-            >
-              <template v-slot:prepend>
-                <q-icon name="lock_open" />
-              </template>
-              <template v-slot:append>
-                <q-icon
-                  color="bright"
-                  :name="isPwd ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  @click="isPwd = !isPwd"
-                />
-              </template>
-            </q-input>
-            <q-input
-              ref="confirmPwdRef"
-              :type="isPwd ? 'password' : 'text'"
-              filled
-              hide-bottom-space
-              v-model="verificationPhoneForm.confirmPwd"
-              label="确认新密码"
-              clearable
-              lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入确认密码',
-                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
-                validatePassNew
-              ]"
-            >
-              <template v-slot:prepend>
-                <q-icon name="lock_open" />
-              </template>
-              <template v-slot:append>
-                <q-icon
-                  color="bright"
-                  :name="isPwd ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  @click="isPwd = !isPwd"
-                />
-              </template>
-            </q-input>
+          <q-form v-if="isPhoneSent" class="rounded-borders form-after-submit">
+            <div class="forgot-pwd-form-inner-wrapper q-gutter-y-md">
+              <div class="notification-blue">OTP短信已发送到您的注册手机, 请输入OTP和新密码。</div>
+
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">OTP码</div>
+                <q-input
+                  ref="codeRef"
+                  hide-bottom-space
+                  v-model="verificationPhoneForm.code"
+                  standout
+                  clearable
+                  :rules="[
+                    (val) => (val && val.length > 0) || '请输入OTP码',
+                    (val) => (val && val.length >= 4 && val.length <= 6) || 'OTP长度不符'
+                  ]"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="qr_code" />
+                  </template>
+                </q-input>
+              </div>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">请输入新密码</div>
+                <q-input
+                  ref="newPwdRef"
+                  :type="isPwd ? 'password' : 'text'"
+                  hide-bottom-space
+                  v-model="verificationPhoneForm.newPassword"
+                  standout
+                  clearable
+                  :rules="[
+                    (val) => (val && val.length > 0) || '请输入密码',
+                    (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
+                  ]"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="lock_open" />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    />
+                  </template>
+                </q-input>
+              </div>
+
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">请再次输入新密码</div>
+                <q-input
+                  ref="confirmPwdRef"
+                  :type="isPwd ? 'password' : 'text'"
+                  hide-bottom-space
+                  v-model="verificationPhoneForm.confirmPwd"
+                  standout
+                  clearable
+                  lazy-rules
+                  :rules="[
+                    (val) => (val && val.length > 0) || '请输入确认密码',
+                    (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
+                    validatePassNew
+                  ]"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="lock_open" />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    />
+                  </template>
+                </q-input>
+              </div>
+            </div>
+
             <div class="row justify-between items-center">
               <q-btn
                 @click.prevent="onVerifyForgotPassword('phone')"
@@ -183,158 +175,161 @@
         </div>
       </q-tab-panel>
       <q-tab-panel name="email">
-        <div class="text-blue-grey" v-if="!isEmailSent">方式：请输入您需找回登陆密码的用户名和验证邮箱</div>
-
         <div class="forgetpass-board q-gutter-y-md">
           <q-form v-if="!isEmailSent" class="rounded-borders" ref="phoneFormRef">
-            <q-row class="row items-baseline justify-start">
-              <q-item-label>
-                <span class="text-red">*&nbsp;</span>
-                用户名:
-              </q-item-label>
-              <q-input
-                ref="userRef2"
-                hide-bottom-space
-                type="text"
-                borderless
-                clearable
-                placeholder="请输入用户名"
-                v-model="passwordFormEmail.loginName"
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || '请输入用户名',
-                  (val) => (val && val.length >= 4 && val.length <= 12) || '长度要在 4-12 之间'
-                ]"
-                color="white"
-              ></q-input>
-            </q-row>
+            <div class="forgot-pwd-form-inner-wrapper q-gutter-y-md">
+              <div class="notification-red" v-if="!isEmailSent">方式：请输入您需找回登陆密码的用户名和验证邮箱</div>
 
-            <q-row class="row items-baseline justify-start">
-              <q-item-label>
-                <span class="text-red">*&nbsp;</span>
-                验证邮箱:
-              </q-item-label>
-              <q-input
-                ref="emailRef"
-                hide-bottom-space
-                type="email"
-                borderless
-                clearable
-                v-model="passwordFormEmail.email"
-                placeholder="请输入验证邮箱"
-                :rules="[(val) => (val && val.length > 0) || '请输入验证邮箱', (val) => isValidEmail(val)]"
-                color="white"
-                label-color="secondary"
-              ></q-input>
-            </q-row>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">请输入用户名</div>
+                <q-input
+                  ref="userRef2"
+                  hide-bottom-space
+                  type="text"
+                  standout
+                  clearable
+                  v-model="passwordFormEmail.loginName"
+                  placeholder="请输入用户名"
+                  lazy-rules
+                  :rules="[
+                    (val) => (val && val.length > 0) || '请输入用户名',
+                    (val) => (val && val.length >= 4 && val.length <= 12) || '长度要在 4-12 之间'
+                  ]"
+                  color="white"
+                ></q-input>
+              </div>
 
-            <q-row class="row items-baseline justify-start">
-              <q-item-label>
-                <span class="text-red">*&nbsp;</span>
-                验证码
-              </q-item-label>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">请输入注册邮箱</div>
+                <q-input
+                  ref="emailRef"
+                  hide-bottom-space
+                  type="email"
+                  standout
+                  clearable
+                  v-model="passwordFormEmail.email"
+                  placeholder="请输入验证邮箱"
+                  :rules="[(val) => (val && val.length > 0) || '请输入验证邮箱', (val) => isValidEmail(val)]"
+                  color="white"
+                  label-color="secondary"
+                ></q-input>
+              </div>
 
-              <q-input
-                standout
-                class="captcha-textfield"
-                bg-color="white"
-                ref="verificationRef"
-                hide-bottom-space
-                type="text"
-                placeholder="请输入验证码"
-                v-model="passwordFormEmail.captchaCode"
-                :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
-                label-color=""
-              >
-                <template v-slot:append>
-                  <img :src="verificationImg" @click="getCode" />
-                </template>
-              </q-input>
-            </q-row>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">验证码</div>
+
+                <q-input
+                  standout
+                  class="captcha-textfield"
+                  ref="verificationRef"
+                  hide-bottom-space
+                  type="text"
+                  placeholder="请输入验证码"
+                  v-model="passwordFormEmail.captchaCode"
+                  :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
+                  label-color=""
+                >
+                  <template v-slot:append>
+                    <img :src="verificationImg" @click="getCode" />
+                  </template>
+                </q-input>
+              </div>
+            </div>
 
             <div class="row justify-between items-center q-mt-md">
               <q-btn
                 @click.prevent="submitSendOtp('email')"
                 label="提交"
                 width="100%"
-                color="dyblue"
+                class="submit-btn"
                 style="width: 100%"
               />
             </div>
           </q-form>
 
-          <div v-if="isEmailSent" class="text-blue q-px-md">验证码已发送到您的注册邮箱，请输入验证码和新密码完成密码修改。</div>
           <q-form v-if="isEmailSent" class="q-gutter-y-md rounded-borders form-after-submit">
-            <q-input
-              ref="codeRef2"
-              filled
-              hide-bottom-space
-              v-model="verificationForm.code"
-              label="验证码"
-              lazy-rules
-              clearable
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入验证码',
-                (val) => (val && val.length >= 4 && val.length <= 6) || 'OTP长度不符'
-              ]"
-            >
-              <template v-slot:prepend>
-                <q-icon name="qr_code" />
-              </template>
-            </q-input>
-            <q-input
-              ref="newPwdRef2"
-              :type="isPwd ? 'password' : 'text'"
-              filled
-              hide-bottom-space
-              v-model="verificationForm.newPassword"
-              label="新密码"
-              clearable
-              lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入密码',
-                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
-              ]"
-            >
-              <template v-slot:prepend>
-                <q-icon name="lock_open" />
-              </template>
-              <template v-slot:append>
-                <q-icon
-                  color="bright"
-                  :name="isPwd ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  @click="isPwd = !isPwd"
-                />
-              </template>
-            </q-input>
-            <q-input
-              ref="confirmPwdRef2"
-              :type="isPwd ? 'password' : 'text'"
-              filled
-              hide-bottom-space
-              v-model="verificationForm.confirmPwd"
-              label="确认新密码"
-              clearable
-              lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入确认密码',
-                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
-                validatePassNew2
-              ]"
-            >
-              <template v-slot:prepend>
-                <q-icon name="lock_open" />
-              </template>
-              <template v-slot:append>
-                <q-icon
-                  color="bright"
-                  :name="isPwd ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  @click="isPwd = !isPwd"
-                />
-              </template>
-            </q-input>
+            <div class="forgot-pwd-form-inner-wrapper q-gutter-y-md">
+              <div v-if="isEmailSent" class="notification-blue">
+                验证码已发送到您的注册邮箱，请输入验证码和新密码完成密码修改。
+              </div>
+
+              <q-input
+                ref="codeRef2"
+                hide-bottom-space
+                v-model="verificationForm.code"
+                placeholder="请输入验证码"
+                lazy-rules
+                standout
+                clearable
+                :rules="[
+                  (val) => (val && val.length > 0) || '请输入验证码',
+                  (val) => (val && val.length >= 4 && val.length <= 6) || 'OTP长度不符'
+                ]"
+              >
+                <template v-slot:prepend>
+                  <q-icon name="qr_code" />
+                </template>
+              </q-input>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">请输入新密码</div>
+                <q-input
+                  ref="newPwdRef2"
+                  :type="isPwd ? 'password' : 'text'"
+                  hide-bottom-space
+                  v-model="verificationForm.newPassword"
+                  placeholder="请输入新密码"
+                  standout
+                  clearable
+                  lazy-rules
+                  :rules="[
+                    (val) => (val && val.length > 0) || '请输入新密码',
+                    (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
+                  ]"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="lock_open" />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    />
+                  </template>
+                </q-input>
+              </div>
+
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">请再次输入密码</div>
+              </div>
+              <q-input
+                ref="confirmPwdRef2"
+                :type="isPwd ? 'password' : 'text'"
+                hide-bottom-space
+                v-model="verificationForm.confirmPwd"
+                placeholder="请再次输入密码"
+                standout
+                clearable
+                lazy-rules
+                :rules="[
+                  (val) => (val && val.length > 0) || '请再次输入密码',
+                  (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
+                  validatePassNew2
+                ]"
+              >
+                <template v-slot:prepend>
+                  <q-icon name="lock_open" />
+                </template>
+                <template v-slot:append>
+                  <q-icon
+                    color="bright"
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
+              </q-input>
+            </div>
             <div class="row justify-between items-center">
               <q-btn
                 @click.prevent="onVerifyForgotPassword('email')"
@@ -351,11 +346,8 @@
       <q-tab-panel name="mail">
         <div class="text-blue-grey">方式：请输入您的注册邮箱</div>
         <q-form v-if="!isEmailSent" class="rounded-borders" ref="passRef">
-          <q-row class="row items-center justify-start">
-            <q-item-label>
-              <span class="text-red">*&nbsp;</span>
-              注册邮箱:
-            </q-item-label>
+          <div class="input-field-wrapper">
+            <div class="input-field__label required">注册邮箱:</div>
 
             <q-input
               ref="emailRef2"
@@ -369,19 +361,15 @@
               :rules="[(val) => (val && val.length > 0) || '请输入电子邮件', isValidEmail]"
               color="white"
             ></q-input>
-          </q-row>
+          </div>
 
-          <q-row class="row items-center justify-start">
-            <q-item-label>
-              <span class="text-red">*&nbsp;</span>
-              验证码
-            </q-item-label>
+          <div class="input-field-wrapper">
+            <div class="input-field__label required">验证码</div>
 
             <q-input
               standout
               hide-bottom-space
               class="captcha-textfield"
-              bg-color="white"
               ref="verificationRef"
               placeholder="请输入验证码"
               type="text"
@@ -392,10 +380,10 @@
                 <img :src="verificationImg" @click="getCode" />
               </template>
             </q-input>
-          </q-row>
+          </div>
 
           <div class="row justify-between items-center q-mt-md">
-            <q-btn @click.prevent="submitForgetPass" label="提交" width="100%" color="dyblue" style="width: 100%" />
+            <q-btn @click.prevent="submitForgetPass" label="提交" width="100%" class="submit-btn" style="width: 100%" />
           </div>
         </q-form>
       </q-tab-panel>
