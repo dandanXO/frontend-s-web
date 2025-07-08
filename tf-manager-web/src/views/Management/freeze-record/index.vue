@@ -285,7 +285,12 @@
         prop="memberId"
         :label="t('fields.memberId')"
         width="250"
-      />
+      >
+        <template #default="scope">
+          <span v-if="scope.row.memberId !== '-1'">{{ scope.row.memberId }}</span>
+          <span v-else style="color: red">{{ t('fields.noData') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="loginName"
         :label="t('fields.loginName')"
@@ -345,7 +350,7 @@ import { formatInputTimeZone } from '@/utils/format-timeZone'
 import { TENANT } from '../../../store/modules/user/action-types'
 // import { title } from '../../../config/vue.custom.config'
 import * as XLSX from 'xlsx'
-import { findIdByLoginName, freezeMemberBatchUpdate } from '../../../api/member'
+import { findIdByLoginNames, freezeMemberBatchUpdate } from '../../../api/member'
 import { ElMessage } from 'element-plus'
 import { required } from '../../../utils/validate'
 
@@ -580,14 +585,26 @@ function importToTable(file) {
             range: 1,
           })
         )
-        for (const d of data) {
-          const { data: id } = await findIdByLoginName(
-            d.loginName,
+        // for (const d of data) {
+        //   const { data: id } = await findIdByLoginName(
+        //     d.loginName,
+        //     importForm.siteId
+        //   )
+        //   d.memberId = id
+        // }
+
+        // split data into list of 50 ids
+        for (let i = 0; i < data.length; i += 50) {
+          const sublist = data.slice(i, i + 50)
+          const chunk = sublist.map(d => d.loginName).join(',')
+          const { data: result} = await findIdByLoginNames(
+            chunk,
             importForm.siteId
           )
-          d.memberId = id
+          for (let j = i; j < i + sublist.length; j++) {
+            data[j].memberId = result[data[j].loginName]
+          }
         }
-        break
       }
       importedPage.records = data
       importedPage.pages = Math.ceil(
@@ -621,7 +638,7 @@ async function confirmImport() {
   importRefForm.value.validate(async valid => {
     if (valid) {
       importedPage.buttonLoading = true
-      const recordCopy = { ...importedPage.records }
+      const recordCopy = importedPage.records.filter(record => record.memberId !== '-1')
       const data = []
       Object.entries(recordCopy).forEach(([key, value]) => {
         const item = {}
