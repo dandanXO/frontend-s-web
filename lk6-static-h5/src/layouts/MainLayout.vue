@@ -451,6 +451,10 @@ export default defineComponent({
               route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform, "SLOT");
             pageName.value = `${platformName}游戏大厅`;
           }
+        } else if (route.path === "/baccarat") {
+          prevPage.value = "";
+          hasPage.value = true;
+          pageName.value = "百家乐";
         } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;

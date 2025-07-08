@@ -181,7 +181,7 @@
               <div class="home-game-boards">
                 <div class="game-list-div">
                   <div v-for="(sp, i) in sport" :key="i" class="game-item-div">
-                    <div class="game-board" @click="playGame(sp.name, sp.code, sp.gameCode)">
+                    <div class="game-board">
                       <!--                      <img class="game-bg"-->
                       <!--                           :src="require(`../assets/index/${sp.icon}/slide-${sp.icon}-${sp.name.toLowerCase()}.png`)"/>-->
                       <!--                      -->
@@ -201,8 +201,11 @@
                       ></div>
 
                       <div class="game-title">
-                        <span>体育赛事</span>
-                        <h3>{{ sp.title }}</h3>
+                        <span class="game-title-1">体育赛事</span>
+                        <h3 class="game-title-2">{{ sp.title }}</h3>
+                        <RedirectButton class="redirect-button" @click="playGame(sp.name, sp.code, sp.gameCode)">
+                          立即投注
+                        </RedirectButton>
                       </div>
 
                       <div class="maintenance-box" v-if="sp.underMaintenance">
@@ -234,7 +237,7 @@
               <div class="home-game-boards">
                 <div class="game-list-div">
                   <div v-for="(live, i) in livecasino" :key="i" class="game-item-div">
-                    <PlatformItem :platform="live" @click="playGame(live.title, live.code, live.gameCode)" />
+                    <PlatformItem :platform="live" @click="playGame(live.title, live.code)" />
                     <!-- <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">
                       <div class="game-board" @click="playGame(live.name, live.code, 'bblive_lobby_app')">
                         <div
@@ -391,7 +394,7 @@
             <div v-if="selectedTab === 'baccarat'" id="id-baccarat-slide" class="sport-slides home-swiper-slide">
               <div class="home-game-boards">
                 <div class="game-list-div">
-                  <template v-for="(platform, index) in [baccarat, roulette, luckyLace]" :key="index">
+                  <template v-for="(platform, index) in baccaratCategoryList" :key="index">
                     <div class="game-list-inner-div">
                       <div class="game-list-header-wrapper">
                         <div class="game-list-header__title-wrapper">
@@ -409,7 +412,9 @@
                           </template>
                         </div>
                         <div class="game-list-header__action-wrapper">
-                          <q-btn class="game-list-header__all-btn" rounded dense>全部</q-btn>
+                          <router-link :to="`/baccarat?platform=EEAI&tab=${platform.name}`">
+                            <q-btn class="game-list-header__all-btn" rounded dense>全部</q-btn>
+                          </router-link>
                           <q-btn
                             class="game-list-header__navigation-btn"
                             dense
@@ -440,7 +445,7 @@
                         @swiper="(swiper) => setBaccaratSwiper(swiper, index)"
                       >
                         <swiper-slide
-                          v-for="(game, gameIndex) in platform"
+                          v-for="(game, gameIndex) in platform.list"
                           class="game-slide"
                           :key="`${index}-${gameIndex}`"
                         >
@@ -452,14 +457,14 @@
                                   return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
                                   try {
-                                    return `url(${require(`../assets/index/baccarat/slide-${index}-img.png`)})`;
+                                    return `url(${require(`../assets/index/baccarat/slide-${platform.name}-img.png`)})`;
                                   } catch (e) {
                                     return '';
                                   }
                                 }
                               })()
                             }"
-                            @click="playGame(game.name, 'EEAI', game.code)"
+                            @click="playGame(game.name, game.platformCode, game.code)"
                           />
                         </swiper-slide>
                       </swiper>
@@ -706,6 +711,7 @@ import { useLocalStorage } from "@vueuse/core";
 import GameTypeSwiper from "src/components/home/GameTypeSwiper.vue";
 import { useNotify } from "src/hooks/notify";
 import { LIVE_PLATFORMS } from "src/constant/platform";
+import RedirectButton from "src/components/RedirectButton.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -716,7 +722,8 @@ export default defineComponent({
     MarqueeText,
     PlatformBlock,
     GameTypeSwiper,
-    PlatformItem
+    PlatformItem,
+    RedirectButton
   },
   setup() {
     const notify = useNotify();
@@ -1068,6 +1075,12 @@ export default defineComponent({
     const hotSports = ref(["IM", "PM"]);
     const hotPokers = ref([""]);
     const hotLotterys = ref([""]);
+
+    const baccaratCategoryList = computed(() => [
+      { name: "baccarat", list: baccarat.value },
+      { name: "roulette", list: roulette.value },
+      { name: "lucky-lace", list: luckyLace.value }
+    ]);
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
@@ -1796,7 +1809,6 @@ export default defineComponent({
             .catch((err) => {})
         )
         .then((res) => {
-          console.log(res);
           res.forEach((item) => {
             if (item.code.startsWith("101")) {
               baccarat.value.push(item);
@@ -1930,7 +1942,8 @@ export default defineComponent({
       setBaccaratSwiper,
       getNavigationButtonStatus,
       handleSlideNextClick,
-      handleSlidePrevClick
+      handleSlidePrevClick,
+      baccaratCategoryList
     };
   }
 });
@@ -2196,12 +2209,16 @@ export default defineComponent({
             position: absolute;
             z-index: 2;
             top: 50%;
-            left: 16%;
+            left: 20%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             color: #7a80a1;
             transform: translate(-50%, -50%);
+
+            .redirect-button {
+              font-size: 12px;
+            }
           }
 
           .maintenance-box {
@@ -2240,7 +2257,7 @@ export default defineComponent({
             background-repeat: no-repeat;
           }
 
-          h3 {
+          .game-title-2 {
             line-height: 1rem;
             font-size: clamp(12px, 4vw, 24px);
             margin-top: 0px;
@@ -2248,9 +2265,9 @@ export default defineComponent({
             letter-spacing: 1px;
           }
 
-          span {
+          .game-title-1 {
             margin-bottom: 7px;
-            font-size: clamp(10px, 3.2vw, 24px);
+            font-size: clamp(12px, 3.2vw, 24px);
             margin-bottom: 5px;
             letter-spacing: 1px;
           }
@@ -2293,6 +2310,10 @@ export default defineComponent({
 
             .game-list-header__all-btn {
               padding: 1px 12px;
+            }
+
+            a {
+              color: inherit;
             }
 
             .game-list-header__navigation-btn {

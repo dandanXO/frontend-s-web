@@ -1,5 +1,5 @@
 <template>
-  <q-btn class="redirect-button" flat>
+  <q-btn class="redirect-button" flat @click="$emit('click')">
     <slot />
   </q-btn>
 </template>

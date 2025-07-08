@@ -304,6 +304,7 @@ import TorontoMasters from "src/components/hotpromo/toronto-masters/TorontoMaste
 import Fifa2025Promo from "src/components/hotpromo/fifa-2025/Fifa2025Promo.vue";
 import Dy2DailySlotBonus from "src/components/hotpromo/dy2-daily-slot-bonus/Dy2DailySlotBonus.vue";
 import RedirectButton from "src/components/RedirectButton.vue";
+import { i18nStore } from "src/router/language";
 
 export default defineComponent({
   name: "PromoView",
@@ -319,6 +320,7 @@ export default defineComponent({
     RedirectButton
   },
   setup() {
+    const {languageVal} = i18nStore()
     const store = userStore();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
@@ -480,7 +482,7 @@ export default defineComponent({
       cached.get(key, () => api.get("/promo/type")).then((res) => {
         promoTypes.value = res.map(({ value, name, iconUrl }) => ({
           name: value,
-          label: name ? JSON.parse(name).H5 : ''
+          label: name ? JSON.parse(name)[languageVal] : ''
         }));
         if (promoTypes.value.length > 0) {
           promoTabActive.value = promoTypes.value[0].name
