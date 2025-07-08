@@ -4296,6 +4296,8 @@ onActivated(async () => {
       isAdditionalReferSteps.value = true;
       disableScroll();
       currentAdditionalStep.value = 1;
+    } else {
+      isAdditionalReferSteps.value = false;
     }
   });
   // alert(currentStep.value);
