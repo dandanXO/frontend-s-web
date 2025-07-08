@@ -24,7 +24,7 @@
 
             <div class="platform-item">
               <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
-                <img src="../assets/lucky-6-logo.png" width="176px" height="86px" />
+                <!-- <img src="../assets/lucky-6-logo.png" width="176px" height="86px" /> -->
                 <div class="platform-title">{{ item.cnname ?? item.name }}</div>
                 <div class="platform-subtitle">{{ platformName }}</div>
               </div>
@@ -87,7 +87,7 @@
               <!--            data-aos-delay="300"-->
               <!--            data-aos-duration="500"-->
               <div class="platform-play-btn" v-if="platformType !== 'slot'">
-                <div
+                <!-- <div
                   class="btn-blue"
                   @click="openGame(getAliasName(item, platformType), item.code, item.gameCode)"
                   :class="item.underMaintenance === true ? 'btn-maintenance' : ''"
@@ -97,7 +97,7 @@
                     维护中
                   </span>
                   <span v-else>进入游戏</span>
-                </div>
+                </div> -->
 
                 <p
                   v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime"
@@ -351,7 +351,10 @@ const onChangeFixedPokerPlatforms = (item) => {
 }
 
 const clickPlat = (plat) => {
-  router.push({ path: route.path, query: { plat: plat.code } });
+  router.push({ path: route.path, query: { plat: plat.code }, scrollBehavior(to, from, savedPosition) {
+    // Return false to prevent scrolling
+    return false
+  } });
   selectedPlat.value = plat.code;
 };
 

@@ -15,7 +15,7 @@ const { languageVal } = storeToRefs(i18nStoreLanguage)
 <style lang="scss" scoped>
 .acc-dialog-homelogo {
     display: flex;
-    gap: 2px;
+    gap: 5px;
     justify-content: center;
     align-items: center;
     margin: 0 auto;

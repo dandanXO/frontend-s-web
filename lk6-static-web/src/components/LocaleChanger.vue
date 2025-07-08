@@ -74,20 +74,20 @@ export default {
   :focus-visible {
     outline: none;
   }
-}
 
-.el-dropdown-menu__item {
-  gap: 5px;
+  .el-dropdown-menu__item {
+    gap: 5px;
 
-  .lang-item {
-    display: grid;
-    grid-template-columns: 0.3fr 0.7fr;
-    width: 100%;
-    gap: 10px;
-  }
+    .lang-item {
+      display: grid;
+      grid-template-columns: 0.3fr 0.7fr;
+      width: 100%;
+      gap: 10px;
+    }
 
-  img {
-    width: 25px;
+    img {
+      width: 25px;
+    }
   }
 }
 

@@ -555,9 +555,11 @@ export default defineComponent({
     const navigations = reactive([
       { code: "home", name: "首页", enName: "Home", path: "/home" },
       // { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
-      { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true, isTest: false },
+      // { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true, isTest: false },
       { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true, isTest: false },
       // { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true, isTest: false },
+      { code: "crown", name: "皇冠", enName: "Crown", path: "/crown", submenu: true, isTest: false },
+      { code: "panda", name: "熊猫", enName: "Panda", path: "/panda", submenu: true, isTest: false },
       { code: "bacarrat", name: "百家乐", enName: "Bacarrat", path: "/bacarrat", submenu: true, isTest: false },
       // { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true, isTest: false },
       // { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: false },
@@ -1904,9 +1906,9 @@ body {
         align-items: center;
         // width: 750px;
         // padding: 0px 16px;
-        gap: 20px;
+        gap: 30px;
         text-align: center;
-        padding: 0px 12px;
+        padding: 0px 30px;
 
         &.second-nav {
           margin-left: auto;
@@ -2669,7 +2671,7 @@ body {
   &.active {
     &:after {
       content: "";
-      background: #468cff;
+      background: transparent;
       width: 80%;
       height: 5px;
       bottom: -24px;
@@ -2717,7 +2719,7 @@ body {
     }
 
     &.active {
-      color: #468cff;
+      color: #259CFC;
     }
   }
 }
