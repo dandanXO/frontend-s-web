@@ -181,29 +181,36 @@ body {
   }
 
   .el-dialog {
-    --el-dialog-header-bg-color: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+    --el-dialog-header-bg-color: transparent;
+    background: url('../assets/images/common/dialog-body-bg.jpg') center center no-repeat !important;
+    background-size: 100% 100%;
   }
 
   .el-dialog__header {
     text-align: left;
-    padding: 0px;
+    padding: 16px 16px 0 16px;
     margin: 0;
     font-size: 0.6rem;
+
     .el-dialog__title {
-      color: #ffffff;
-      font-size: 1rem;
-      line-height: 2.8rem;
-      display: block;
-      margin-left: 10px;
+      font-family: 'PingFang SC';
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 147%;
+      letter-spacing: 1.49px;
+      text-align: center;
     }
     .el-dialog__headerbtn {
-      top: 0px;
+      top: 5px;
+      right: 5px;
       width: 45px;
       height: 45px;
       .el-dialog__close {
         color: #ffffff;
         height: 1.5em;
         width: 1.5em;
+        background: #7A8EB966;
+        border-radius: 100px;
         svg {
           height: 1.5em;
           width: 1.5em;
