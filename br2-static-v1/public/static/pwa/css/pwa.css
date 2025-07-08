@@ -36,13 +36,26 @@ body {
   -webkit-font-smoothing: antialiased;
   line-height: inherit;
   background-color: #131313;
+  position:relative;
+
+  &::before {
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    content: "";
+    background-color: green;
+    z-index: 99;
+  }
 }
 
 .wrapper {
   max-width: 550px;
   margin: 0 auto;
   position: relative;
-  background: url(../images/splash.png) no-repeat center center;
+  background: url(../images/splash2.png) no-repeat center center;
   background-size: cover;
   height: 100vh;
 }
