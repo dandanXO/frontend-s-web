@@ -99,7 +99,7 @@
               >
                 <template #title>
                   <div :class="`${isMsgRead(item) ? 'unread-red-point':''}`"></div>
-                  <p class="title-p" :class="{'title-blod': isMsgRead(item)}">标题：{{ item.title }} {{ isMsgRead(item) ? '未讀' : '已讀'}}</p>
+                  <p class="title-p" :class="{'title-blod': isMsgRead(item)}">标题：{{ item.title }}</p>
                 </template>
                 <div>
                   <div class="content-p">正文：{{ item.content }}</div>
