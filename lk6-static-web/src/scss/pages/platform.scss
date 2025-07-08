@@ -198,6 +198,8 @@
         }
 
         .list-item-btn {
+          background: url('../../assets/home/hotgame/item-bg.png') center center no-repeat;
+          background-size: 100% 100%;
           height: 4rem;
           width: 4rem;
           display: flex;
@@ -210,7 +212,6 @@
           cursor: pointer;
 
           & > span {
-            background: linear-gradient(180deg, #dcebff 0%, #f4f4f4 100%);
             width: 100%;
             height: 100%;
             display: flex;
