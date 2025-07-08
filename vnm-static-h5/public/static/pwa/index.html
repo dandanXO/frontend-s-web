@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TF88</title>
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon" />
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script src="js/oneSignal.js" type="text/javascript"></script>
+  </head>
+
+  <body id="bra-download-pwa">
+    <div class="container" data-type="INSTALL" id="container">
+      <header id="header">
+        <img src="images/header.png" />
+      </header>
+      <main>
+        <div class="header-wrapper">
+          <div class="header__icon">
+            <img alt="TF88" loading="lazy" src="./images/logo.png" class="header__icon--img" />
+            <div class="header__icon--loading" id="iconLoading">
+              <svg viewBox="25 25 50 50">
+                <circle cx="50" cy="50" fill="none" r="20"></circle>
+              </svg>
+            </div>
+          </div>
+          <div class="header__info">
+            <div class="header__info-title">
+              <span>TF88</span>
+              <img alt="terverifikasi" class="header__info-title-tag" loading="lazy" src="./images/verified.png" />
+            </div>
+            <p class="header__info-description">TF88</p>
+            <p class="header__info-progress" id="installProgress">0%</p>
+            <p class="header__info-play">
+              <img class="ic_dun" alt="terverifikasi" loading="lazy" src="./images/ic-dun.png" />
+              Verified by Play Protect
+            </p>
+          </div>
+        </div>
+        <div class="info">
+          <div class="info__view__wrap">
+            <div class="info__view">
+              <div class="info__view-value">
+                <span>4.8</span>
+                <img alt="star" class="ic_x" loading="lazy" src="./images/star.png" />
+              </div>
+              <div class="info__view-label">1.5k reviews</div>
+            </div>
+            <div class="info__view">
+              <div class="info__view-value">100k +</div>
+              <div class="info__view-label">Downloads</div>
+            </div>
+            <div class="info__view">
+              <img alt="editor's choice" class="info__view-choice" loading="lazy" src="./images/check.png" />
+              <div class="info__view-label">Editors' Choice</div>
+            </div>
+          </div>
+        </div>
+        <div class="qrcode-wrapper">
+          <div class="qrcode">
+            <div class="qrcode__hand">
+              <img alt="contoh QR code" class="qrcode__hand-bg" loading="lazy" src="./images/qrcode-in-phone.png" />
+              <img
+                alt="garis pemindaian QR code"
+                class="qrcode__hand-light"
+                loading="lazy"
+                src="./images/scan-line.png"
+              />
+            </div>
+            <div class="qrcode__prop">
+              <div class="qrcode__prop-code">
+                <div class="qrcode__code" id="qrcode"></div>
+                <img alt="bidik QR code" class="qrcode__prop-bg" loading="lazy" src="./images/qrcode-aim.png" />
+              </div>
+              <div class="qrcode__prop-title">Scan the QR code to install</div>
+            </div>
+
+            <img alt="panah ke langkah berikutnya" class="qrcode__arrowhead" loading="lazy" src="./images/arrow.png" />
+
+            <div class="qrcode__phone">
+              <img alt="TF88" class="qrcode__phone-icon" loading="lazy" src="./images/logo.png" />
+              <div class="qrcode__phone-name">TF88</div>
+              <div class="qrcode__phone-btn">Quick Installation</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="install-btn shiny-btn" id="install-btn">
+          <div class="install-btn__ing">
+            <div class="install-btn__ing__rapid">
+              <img alt="petir" class="ic_x" loading="lazy" src="./images/thunder.png" />
+              <span>Quick Installation</span>
+            </div>
+            <div class="install-btn__ing__countdown">
+              <span>Download in</span>
+              <span class="countdown-num" id="countdown">5</span>
+              s
+            </div>
+          </div>
+          <div class="install-btn__play install-btn__view">Play</div>
+          <div class="install-btn__install install-btn__view">Install</div>
+        </div>
+        <div class="share-row">
+          <div class="share-row__item">
+            <img alt="bagikan" loading="lazy" src="./images/share.png" />
+            <div>Share</div>
+          </div>
+          <div class="share-row__item">
+            <img alt="tambahkan ke favorit" loading="lazy" src="./images/bookmark.png" />
+            <div>Add to Wishlist</div>
+          </div>
+        </div>
+
+        <div class="img-scroll">
+          <div class="img-scroll__list" id="scroll-lists">
+            <!--            <div class="img-scroll__view">-->
+            <!--              <img loading="lazy" src="./images/screenshot1.png" />-->
+            <!--            </div>-->
+            <!--            <div class="img-scroll__view">-->
+            <!--              <img loading="lazy" src="./images/screenshot2.png" />-->
+            <!--            </div>-->
+          </div>
+        </div>
+
+        <div class="description">
+          <div class="description__title">About this app</div>
+          <img class="description__right-arrow" loading="lazy" src="./images/description-arrow.png" />
+          <pre class="description__content">
+            TF88 - Nền Tảng Game Trực Tuyến Mang Đến Trải Nghiệm Phong Phú Và Phần Thưởng Hấp Dẫn
+
+            TF88 là một nền tảng game trực tuyến cam kết mang đến cho người dùng đa dạng trải nghiệm giải trí cùng với những phần thưởng giá trị. Không chỉ dừng lại ở việc giải trí, TF88 còn mang đến cơ hội kiếm tiền khi chơi, giúp người dùng vừa thư giãn vừa gia tăng thu nhập.
+
+            Tính Năng Nổi Bật:
+
+            Kho Game Phong Phú:
+            TF88 cung cấp nhiều thể loại game như cá cược thể thao, thể thao điện tử, game bắn cá, game bài và casino trực tuyến để đáp ứng mọi sở thích giải trí. Dù bạn yêu thích những trò chơi chiến thuật đòi hỏi tính toán hay các trò chơi hành động nhanh như e-sports, TF88 đều có lựa chọn phù hợp dành cho bạn.
+
+            Hệ Thống Thưởng Độc Đáo:
+            Nền tảng này đề cao khẩu hiệu "Chơi càng nhiều, thắng càng lớn". Người chơi có thể nhận phần thưởng trong game và quy đổi thành tiền thật. Mỗi lần đặt cược hay thi đấu đều là một cơ hội để kiếm lời, biến việc chơi game thành một hình thức sinh lời thực thụ.
+
+            Nhận Hoa Hồng Khi Mời Bạn Bè:
+            TF88 áp dụng chương trình giới thiệu bạn bè hấp dẫn, giúp người chơi nhận hoa hồng và tiền thưởng khi mời bạn bè tham gia. Mời càng nhiều, thu nhập càng cao – dễ dàng xây dựng đội chơi riêng và tạo ra nguồn thu nhập bền vững.
+
+            Dịch Vụ An Toàn Và Uy Tín:
+            Nền tảng sử dụng công nghệ bảo mật tiên tiến để bảo vệ tài khoản và dữ liệu người dùng. TF88 cũng hỗ trợ nhiều phương thức thanh toán, giúp giao dịch nhanh chóng, an toàn và dễ dàng rút tiền về tài khoản một cách thuận tiện.
+
+            Tham Gia TF88 – Chơi Game Kiếm Tiền Ngay Hôm Nay!
+            Tại TF88, bạn không chỉ là người chơi mà còn là một game thủ chuyên nghiệp có thể kiếm tiền từ đam mê của mình. Đăng ký ngay để trải nghiệm cảm giác hồi hộp từ các trò chơi hấp dẫn và niềm vui khi thu lợi nhuận. Hãy biến thời gian giải trí của bạn trở nên có giá trị hơn!
+            </pre
+          >
+        </div>
+
+        <div class="description">
+          <div class="description__title" style="margin-bottom: 5px; font-size: 14px">Updated on</div>
+          <div class="description__content"></div>
+          <div class="description__label">
+            <div class="description__label-item">Games</div>
+            <div class="description__label-item">Bonuses</div>
+            <div class="description__label-item">Casino</div>
+          </div>
+        </div>
+
+        <div class="description">
+          <div class="description__title">Data safety</div>
+          <img class="description__right-arrow" loading="lazy" src="./images/description-arrow.png" />
+          <pre class="description__content">
+            Safety starts with understanding how developers collect and share your data. Data privacy and security practices may vary based on your use, region, and age. The developer provided this information and may update it over time.
+          </pre>
+          <div class="description__data-safety">
+            <div class="description__data-safety__item">
+              <div class="item-icon">
+                <img alt="data security" loading="lazy" src="./images/data-safety-icon-1.png" />
+              </div>
+              <div class="item-content">
+                <p>No data is shared with third parties</p>
+                <p>
+                  <ins>Learn more</ins>
+                  <span>about how the developer states data sharing</span>
+                </p>
+              </div>
+            </div>
+            <div class="description__data-safety__item">
+              <div class="item-icon">
+                <img alt="data security" loading="lazy" src="./images/data-safety-icon-2.png" />
+              </div>
+              <div class="item-content">
+                <p>This app may collect the following types of data: Location, App activity, and 2 others</p>
+              </div>
+            </div>
+            <div class="description__data-safety__item">
+              <div class="item-icon">
+                <img alt="data security" loading="lazy" src="./images/data-safety-icon-3.png" />
+              </div>
+              <div class="item-content">
+                <p>Data is encrypted during transmission</p>
+              </div>
+            </div>
+            <div class="description__data-safety__item">
+              <div class="item-icon">
+                <img alt="data security" loading="lazy" src="./images/data-safety-icon-4.png" />
+              </div>
+              <div class="item-content">
+                <p>You can request that your data be deleted</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comments">
+          <div class="comments__title">Reviews and Comments</div>
+          <div class="comments__tips">
+            Reviews and comments are verified and created by people who use the same type of device as you.
+          </div>
+
+          <div class="comments__scoring">
+            <div class="comments__scoring-num">
+              <div class="comments__scoring-points">4.8</div>
+              <div class="comments__scoring-star">
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-half.png" />
+              </div>
+              <div class="comments__scoring-people">1.29k reviews</div>
+            </div>
+            <div class="comments__scoring-content">
+              <div class="comments__scoring-item">
+                5
+                <div class="progress">
+                  <div class="progress-bar" style="width: 100%"></div>
+                </div>
+              </div>
+              <div class="comments__scoring-item">
+                4
+                <div class="progress">
+                  <div class="progress-bar" style="width: 30%"></div>
+                </div>
+              </div>
+              <div class="comments__scoring-item">
+                3
+                <div class="progress">
+                  <div class="progress-bar" style="width: 0%"></div>
+                </div>
+              </div>
+              <div class="comments__scoring-item">
+                2
+                <div class="progress">
+                  <div class="progress-bar" style="width: 0%"></div>
+                </div>
+              </div>
+              <div class="comments__scoring-item">
+                1
+                <div class="progress">
+                  <div class="progress-bar" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="comment-list">
+            <div class="comments__list-item">
+              <div class="comments__list-header">
+                <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-1.png" />
+                <div class="comments__list-name">Nguyễn Minh Khoa</div>
+                <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
+              </div>
+              <div class="comments__list-stars">
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <span>September 22, 2023</span>
+              </div>
+              <div class="comments__list-detail">
+                Ứng dụng này rất dễ sử dụng. Ứng dụng chạy mượt mà, không bị giật hay sập, hình ảnh rõ nét, thao tác
+                thoải mái và lối chơi phong phú, đa dạng. Đồng nghiệp của tôi đang sử dụng ứng dụng này. Các bạn có thể
+                thử, anh ấy dùng rất tốt. Tôi khuyên dùng, khuyên dùng, khuyên dùng!!!
+              </div>
+            </div>
+            <div class="comments__list-item">
+              <div class="comments__list-header">
+                <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-2.png" />
+                <div class="comments__list-name">Trần Thị Bích Ngọc</div>
+                <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
+              </div>
+              <div class="comments__list-stars">
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+                <span>August 14, 2023</span>
+              </div>
+              <div class="comments__list-detail">
+                Bạn hoàn toàn có thể tin tưởng vào nền tảng này! Bởi vì tôi đã kiếm được nhiều tiền hơn cả những gì bạn
+                có thể tưởng tượng từ đây! Tôi nhận được rất nhiều lượt quay miễn phí trong game! Giao dịch nạp và rút
+                tiền cực kỳ nhanh, chỉ trong vài giây! Trò chơi này đã mang lại cho tôi rất nhiều tiền và niềm vui trong
+                cuộc sống!
+              </div>
+            </div>
+          </div>
+
+          <div class="comments__list-item">
+            <div class="comments__list-header">
+              <img loading="lazy" class="comments__list-avatar" src="./images/avatar/avatar-3.png" />
+              <div class="comments__list-name">Lê Văn Hùng</div>
+              <img alt="menu" class="comments__list-icon" src="./images/menu.png" />
+            </div>
+            <div class="comments__list-stars">
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-full.png" />
+              <img alt="skor" loading="lazy" class="star" src="./images/score-star-half.png" />
+              <span>August 15, 2023</span>
+            </div>
+            <div class="comments__list-detail">
+              Đây là nền tảng yêu thích nhất của tôi! Có rất nhiều ưu đãi thân thiện với người chơi trên nền tảng này!
+              Ưu đãi mà tôi yêu thích nhất là nhận thưởng miễn phí khi mời bạn bè chơi! Tôi không chỉ được chơi những
+              trò chơi tuyệt vời mà còn trở nên giàu có nhờ đó! Tôi còn có thể nhận các phần thưởng khác nhau mỗi ngày
+              tùy theo cấp độ của mình! Tôi thực sự rất thích TF88.
+            </div>
+          </div>
+        </div>
+
+        <div class="comments__br"></div>
+      </main>
+      <footer class="footer">
+        <div class="footer__section">
+          <div class="footer__section-item">Play Pass</div>
+          <div class="footer__section-item">Play Points</div>
+          <div class="footer__section-item">Gift cards</div>
+          <div class="footer__section-item">Redeem</div>
+          <div class="footer__section-item">Refund policy</div>
+        </div>
+        <div class="footer__section">
+          <div class="footer__section-title">Kids & family</div>
+          <div class="footer__section-item">Parent Guide</div>
+          <div class="footer__section-item">Family sharing</div>
+        </div>
+        <div class="footer__bottom flex items-center">
+          <div class="mr-22">Terms of Service</div>
+          <div class="mr-22">Privacy</div>
+        </div>
+        <div class="footer__bottom flex items-center">
+          <div class="mr-22">Developers</div>
+          <div class="mr-22">All prices include GST.</div>
+        </div>
+        <div class="footer__tips">
+          <p class="contact_each_other">Contact the developer</p>
+        </div>
+      </footer>
+
+      <div class="menus">
+        <div class="menus__placeholder"></div>
+        <div class="menus__body">
+          <div class="menus__item active">
+            <img alt="game" loading="lazy" src="./images/game.png" />
+            <div class="title">Games</div>
+          </div>
+          <div class="menus__item">
+            <img alt="app" loading="lazy" src="./images/app.png" />
+            <div class="title">Apps</div>
+          </div>
+          <div class="menus__item">
+            <img alt="media" loading="lazy" src="./images/media.png" />
+            <div class="title">Movies & TV</div>
+          </div>
+          <div class="menus__item">
+            <img alt="book" loading="lazy" src="./images/book.png" />
+            <div class="title">Books</div>
+          </div>
+          <div class="menus__item">
+            <img alt="kids" loading="lazy" src="./images/kid.png" />
+            <div class="title">Kids</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="loading loading--show" id="loading">
+        <div class="loading__icon">
+          <svg viewBox="25 25 50 50">
+            <circle cx="50" cy="50" fill="none" r="20"></circle>
+          </svg>
+        </div>
+        <div class="loading__text">Loading...</div>
+      </div>
+      <!-- <div class="blank-iframe" id="iframe-container"></div> -->
+    </div>
+
+    <div class="modal-open" style="display: none">
+      <div class="modal-div">
+        <div class="modal-inner">
+          <div class="modal-header">Attention!</div>
+
+          <div class="modal-content">
+            <div class="content-text"><p>Please copy the following URL and paste it into Chrome/Firefox</p></div>
+            <div class="content-logo">
+              <img src="images/browser-chrome.png" alt="" class="logo-android" />
+              <img src="images/browser-firefox.png" alt="" class="logo-android" />
+              <img src="images/browser-safari.png" alt="" class="logo-ios" />
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="modal-input">
+              <div id="id-url-input" class="url-input"></div>
+              <div class="copy-btn-input" id="id-copy-btn">Copy</div>
+            </div>
+            <div class="open-btn" id="id-open-btn">Open in a compatible browser</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ios-modal" style="display: none">
+      <div class="ios-modal-content">
+        <button class="ios-close-btn" id="id-ios-close">✕</button>
+        <div class="ios-modal-title">Install the app</div>
+        <div class="app-info">
+          <!-- <img src="https://via.placeholder.com/50" alt="App Logo" class="app-logo" /> -->
+          <img alt="TF88" loading="lazy" src="./images/logo.png" class="app-logo" />
+          <div>
+            <p class="app-title">TF88</p>
+            <p class="app-url" id="id-url-install">tf88vip.com</p>
+          </div>
+        </div>
+        <ol class="instruction-list">
+          <li>
+            Tap
+            <span class="ios-share-icon"><img alt="share" src="./images/ios-share.svg" /></span>
+            in the browser menu
+          </li>
+          <li>
+            Scroll down and select
+            <b>Add to Home Screen</b>
+          </li>
+          <li>
+            Scroll down and select
+            <span class="ios-share-icon"><img alt="icon" src="./images/logo.png" /></span>
+            the icon on your home screen
+          </li>
+        </ol>
+      </div>
+    </div>
+  </body>
+
+  <% if (!ctx.mode.cordova && !ctx.mode.capacitor) { %>
+  <script>
+    var CWRUMLICENCE = "wS0n2SF8WRCb0fAkjFLvksRizrsrej3YF5G8on9/vKvX3aV9SfN7Or**9q2Y2q**yb";
+  </script>
+  <script
+    src="https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=wS0n2SF8WRCb0fAkjFLvksRizrsrej3YF5G8on9/vKvX3aV9SfN7Or**9q2Y2q**yb"
+    async
+  ></script>
+  <% } %>
+
+  <!-- Facebook Pixel Code -->
+  <script>
+    !(function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n;
+      n.loaded = !0;
+      n.version = "2.0";
+      n.queue = [];
+      t = b.createElement(e);
+      t.async = !0;
+      t.src = v;
+      s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+  </script>
+  <!-- <noscript>
+    <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id={your-pixel-id-goes-here}&ev=PageView&noscript=1"/>
+  </noscript> -->
+  <!-- End Facebook Pixel Code -->
+  <script src="js/qrcode.min.js" type="text/javascript" defer></script>
+  <script src="js/index.js" type="module" defer></script>
+</html>
