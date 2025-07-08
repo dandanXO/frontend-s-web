@@ -116,6 +116,14 @@ export const sportsPlatforms = [
     gameCode: ""
   },
   {
+    code: "CR",
+    cnname: "皇冠体育",
+    image: "cr",
+    message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、 体育资讯，多种投注型，让您乐享其中。",
+    caption: "玩法刺激 即刻结算",
+    gameCode: ""
+  },
+  {
     code: "PM",
     cnname: "熊猫体育",
     image: "db",

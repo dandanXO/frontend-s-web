@@ -634,7 +634,8 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   padding: 20px 0px;
-  background: #fff;
+  background: url('../../assets/images/home/sticky-sidebar/sticky-sidebar-bg.png') center center no-repeat;
+  background-size: 100% 100%;
   height: min-content;
   border-radius: 25px;
   z-index: 1001;
@@ -649,7 +650,7 @@ export default defineComponent({
     width: 100%;
 
     &:hover {
-      background-color: #e5f5ff;
+      background-color: #ffffff68;
     }
 
     img {
@@ -664,18 +665,16 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 15px;
-  padding: 10px 5px;
-  background: #ffffff;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  box-shadow: 0px 0px 8px 0px #00000038;
+  padding: 5px;
+  background: url('../../assets/images/home/sticky-sidebar/sticky-sidebar-bg.png') center center no-repeat;
+  background-size: 100% 100%;
   position: relative;
   transition: 0.3s all;
 
   > div {
     width: 28px;
-    padding: 10px 5px;
-    border-bottom: 1px solid #7a80a14d;
+    padding: 5px;
+    border-bottom: 2px solid #FFFFFFE3;
     transition: 0.3s all;
   }
 
@@ -692,13 +691,14 @@ export default defineComponent({
     transform: translateY(-50%);
     height: 32px;
     width: 16px;
-    background: rgba(255, 255, 255, 1);
+    background: #d9e7ff;
+    border-left: 2px solid #d4e6ff;
     color: #7A80A1;
     font-size: 20px;
     font-weight: lighter;
     padding-left: 4px;
     padding-bottom: 2px;
-    light-height: 20px;
+    line-height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -715,6 +715,12 @@ export default defineComponent({
     > div {
       width: 74px;
     }
+
+    .sticky-sidebar-item {
+      > img {
+        width: 30px;
+      }
+    }
   }
 
   .sticky-sidebar-item {
@@ -725,6 +731,10 @@ export default defineComponent({
     color: #7A80A1;
     gap: 5px;
     cursor: pointer;
+
+    > img {
+      width: 20px;
+    }
 
     &:hover {
       color: #4e93ff;
@@ -765,60 +775,6 @@ export default defineComponent({
   align-items: center;
   gap: 15px;
   transition: 0.3s all;
-}
-
-.dark {
-  .sticky-sidebar-items {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-
-    > :first-child {
-      border-color: #ffffff1a;
-    }
-
-    &::before {
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-    }
-
-    .sticky-sidebar-item {
-      color: $color-white;
-
-      &:hover {
-        // color: rgb(83, 83, 83);
-      }
-
-      img {
-        filter: brightness(0) invert(1);
-      }
-    }
-  }
-
-  .additional-info-items {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-
-    .additional-info-item {
-      color: $color-white;
-
-      &:hover {
-        background: rgba($font-1-dark, 10%);
-      }
-
-      img {
-        filter: brightness(0) invert(1);
-      }
-    }
-  }
-
-  .rocket-wrapper {
-    .close-btn {
-      border-color: $font-3-dark;
-      color: $font-3-dark;
-    }
-  }
 }
 
 .icon-24h {
