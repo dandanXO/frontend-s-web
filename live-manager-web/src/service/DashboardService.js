@@ -931,4 +931,14 @@ export const DashboardService = {
         },
       })
   },
+
+  createSportLiveStream(stream) {
+    const token = sessionStorage.getItem('token')
+    return api.post('/session/live-sport/stream', stream, {
+      headers: {
+        token: `${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+  },
 }

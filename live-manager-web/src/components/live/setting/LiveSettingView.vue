@@ -1,46 +1,221 @@
 <template>
+  <ConfirmDialog /> 
+  <div class="card">
+    <h3 style="margin-bottom: 10px">{{ t('fields.liveSportSupplierStreamManage') }}</h3>
+
+    <div style="display: flex; gap: 10px; margin-top: 10px; margin-bottom: 10px; height: 30px;">
+      <Button icon="pi pi-plus" severity="info" size="small" @click="showDialog('SUPPLIER_CREATE')" style="min-width: 100px">{{ t('fields.add') }}</Button>
+      <Button icon="pi pi-refresh" severity="info" size="small" @click="initialSupplierStreamStatus()" style="min-width: 150px">{{ t('fields.initialSupplierStreamStatus') }}</Button>
+    </div>
+    <DataTable 
+      :value="supplierStreams" 
+      :loading="loading" 
+      :scrollable="true"
+    >
+      <Column field="sourceStreamUrl" style="width: 25%; margin-right: 10px">
+        <template #body="slotProps">  
+          <div v-if="slotProps.data.sourceStreamUrl">
+            <a :href="slotProps.data.sourceStreamUrl" target="_blank">{{ slotProps.data.sourceStreamUrl }}</a>
+            <div style="display: flex; justify-content: flex-end; gap: 10px; align-items: center;">
+              <Button 
+                icon="pi pi-eye" 
+                severity="info" 
+                size="small"
+                @click="openPreview(slotProps.data.sourceStreamUrl)" 
+              />
+              <div class="signal-bars" v-if="monitorScoreMap[slotProps.data.streamId] !== undefined">
+                <span
+                  v-for="n in 5"
+                  :key="n"
+                  class="bar"
+                  size="small"
+                  :class="{active: n <= monitorScoreMap[slotProps.data.streamId]}"
+                />
+              </div>
+            </div>
+          </div>
+          <div v-else>
+            -
+          </div>
+        </template>
+      </Column>
+      <Column :field="t('fields.supplierCdnPushUrl')" :header="t('fields.supplierCdnPushUrl')" style="width: 25%; margin-right: 10px" />
+      <Column :field="t('fields.supplierCdnPullUrl')" :header="t('fields.supplierCdnPullUrl')" style="width: 25%; margin-right: 10px">
+        <template #body="slotProps">
+          <span>
+            {{
+              (() => {
+                try {
+                  return JSON.parse(slotProps.data.supplierCdnPullUrl || '{}')?.original?.hls_url
+                    || JSON.parse(slotProps.data.supplierCdnPullUrl || '{}')?.original?.flv_url
+                    || '-'
+                } catch {
+                  return '-'
+                }
+              })()
+            }}
+          </span>
+        </template>
+      </Column>
+      <Column :field="t('fields.operator')" :header="t('fields.operator')" style="width: 25%;">
+        <template #body="slotProps">
+          <div style="display: flex; gap: 10px; flex-wrap: nowrap; min-width: 0;">
+            <Button icon="pi pi-pencil" style="min-width: 100px; max-width: 100px; white-space: nowrap;" severity="danger" size="small" @click="deleteSupplierStream(slotProps.data.id)">{{ t('fields.delete') }}</Button>
+            <Button icon="pi pi-trash" style="min-width: 100px; max-width: 100px; white-space: nowrap;" severity="success" size="small" @click="setSupplierDefault(slotProps.data.id)">{{ slotProps.data.isDefault === 1 ? t('fields.defaultStream') : t('fields.switch') }}</Button>
+          </div>
+        </template>
+      </Column>
+    </DataTable>
+  </div>
+  <div class="card">
+    <h3 style="margin-bottom: 10px">{{ t('fields.liveSportStreamManage') }}</h3>
+
+    <div>
+      <Button icon="pi pi-plus" severity="info" size="small" @click="showDialog('STREAMER_CREATE')" style="min-width: 100px">{{ t('fields.add') }}</Button>
+    </div>
+    <DataTable 
+      :value="streamerStreams" 
+      :loading="loading" 
+      :scrollable="true"
+
+    >
+      <Column field="streamerName" :header="t('fields.streamer')" style="width: 10%" />
+      <Column field="streamerCdnPushUrl" :header="t('fields.streamerCdnPushUrl')" style="width: 20%; word-break: break-all; white-space: normal; vertical-align: top;" />
+      <Column :header="t('fields.streamerCdnPullUrl')" style="width: 20%; word-break: break-all; white-space: normal; vertical-align: top;">
+        <template #body="slotProps">
+          <span>
+            {{
+              (() => {
+                try {
+                  return JSON.parse(slotProps.data.streamerCdnPullUrl || '{}')?.original?.hls_url || '-'
+                } catch {
+                  return '-'
+                }
+              })()
+            }}
+          </span>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; align-items: center;">
+            <Button icon="pi pi-eye" v-if="JSON.parse(slotProps.data.streamerCdnPullUrl || '{}')?.original?.hls_url" severity="info" size="small" @click="openPreview(slotProps.data.streamerCdnPullUrl)" />
+            <div class="signal-bars" v-if="monitorScoreMap[slotProps.data.streamId] !== undefined">
+              <span
+                v-for="n in 5"
+                :key="n"
+                class="bar"
+                :class="{active: n <= monitorScoreMap[slotProps.data.streamId]}"
+              />
+            </div>
+          </div>
+        </template>
+      </Column>
+      <Column field="roomMessage" :header="t('fields.roomMessage')" style="width: 10%; text-align: center;" />
+      <Column field="scheduledAnnouncement" :header="t('fields.scheduledAnnouncement')" style="width: 10%; text-align: center;" />
+      <Column field="subscribeCount" :header="t('fields.subscribeCount')" style="width: 10%; text-align: center;" />
+      <Column :header="t('fields.operator')" style="width: 20%">
+        <template #body="slotProps">
+          <div style="display: flex; gap: 10px; flex-wrap: nowrap; min-width: 0;">
+            <Button icon="pi pi-pencil" style="min-width: 100px; max-width: 100px; white-space: nowrap;" severity="secondary" size="small" @click="openChatHistory(slotProps.data.id)">{{ t('fields.chatHistory') }}</Button>
+            <Button icon="pi pi-trash" style="min-width: 100px; max-width: 100px; white-space: nowrap;" severity="primary" size="small" @click="showDialog('STREAMER_EDIT', slotProps.data)"> {{ t('fields.edit')  }}</Button>
+            <Button icon="pi pi-trash" style="min-width: 100px; max-width: 100px; white-space: nowrap;" severity="danger" size="small" @click="deleteStream(slotProps.data.id)">{{ t('fields.delete')  }}</Button>
+          </div>
+        </template>
+      </Column>
+    </DataTable>
+  </div>
   <div class="roles-main">
     <Dialog v-model:visible="uiControl.dialogVisible" :header="uiControl.dialogTitle" modal :style="{ width: '780px' }">
-      <form @submit.prevent="submit" class="p-fluid">
+      <form @submit.prevent="submit" ref="formRef" :model="form" :rules="formRules" class="p-fluid">
         <div v-if="uiControl.dialogType === 'SUPPLIER_CREATE'">
-          <label :for="'sourceStreamUrl'">{{ t('fields.sourceStreamUrl') }}</label>
-          <InputText id="sourceStreamUrl" v-model="form.sourceStreamUrl" />
-
-          <div class="field-checkbox">
-            <Checkbox v-model="form.isCdnPush" :binary="true" inputId="isCdnPush" />
+          <div style="margin-bottom: 15px; display: flex; align-items: center">
+            <div style="width: 150px; text-align: right">
+              <label for="sourceStreamUrl" style="margin-right: 20px">{{ t('fields.sourceStreamUrl') }}</label>
+            </div>
+            <InputText id="sourceStreamUrl" v-model="form.sourceStreamUrl" style="min-width: 70%" />
+          </div>
+          
+          <div class="field-checkbox" style="margin-bottom: 15px; display: flex; align-items: center;">
+            <div  style="width: 150px; text-align: right;">
+              <Checkbox v-model="form.isCdnPush" :binary="true" inputId="isCdnPush"  style="margin-right: 20px" />
+            </div>
+            
             <label for="isCdnPush">{{ t('fields.isCdnPush') }}</label>
           </div>
         </div>
-
         <div v-if="uiControl.dialogType === 'STREAMER_CREATE'">
-          <label for="streamerId">{{ t('fields.streamer') }}</label>
-          <Dropdown id="streamerId" v-model="form.streamerId" :options="streamerList" optionLabel="name" optionValue="id" />
+          <div class="p-field">
+            <label for="streamerId">{{ t('fields.streamer') }}</label>
+            <Dropdown id="streamerId" v-model="form.streamerId" :options="streamerList" optionLabel="name" optionValue="id" style="width: 300px;" />
+          </div>
         </div>
 
         <div v-if="uiControl.dialogType.includes('STREAMER_')">
-          <label for="roomMessage">{{ t('fields.roomMessage') }}</label>
-          <Textarea id="roomMessage" v-model="form.roomMessage" rows="3" maxlength="200" />
-          <Button icon="pi pi-smile" class="p-button-sm mt-2" @click="showEmojiPickerForMessage = !showEmojiPickerForMessage">Emoji</Button>
-          <div v-if="showEmojiPickerForMessage"><EmojiPicker @select="insertEmojiToMessage" /></div>
-
-          <label for="roomTitle">{{ t('fields.roomTitle') }}</label>
-          <Textarea id="roomTitle" v-model="form.roomTitle" rows="3" maxlength="200" />
-          <Button icon="pi pi-smile" class="p-button-sm mt-2" @click="showEmojiPicker = !showEmojiPicker">Emoji</Button>
-          <div v-if="showEmojiPicker"><EmojiPicker @select="insertEmoji" /></div>
-
-          <label for="scheduledAnnouncement">{{ t('fields.scheduledAnnouncement') }}</label>
-          <Textarea id="scheduledAnnouncement" v-model="form.scheduledAnnouncement" rows="3" maxlength="200" />
-          <Button icon="pi pi-smile" class="p-button-sm mt-2" @click="showEmojiPickerForScheduled = !showEmojiPickerForScheduled">Emoji</Button>
-          <div v-if="showEmojiPickerForScheduled"><EmojiPicker @select="insertEmojiToScheduled" /></div>
+          <div class="p-field">
+            <label for="roomMessage">{{ t('fields.roomMessage') }}</label>
+            <Textarea id="roomMessage" v-model="form.roomMessage" rows="3" maxlength="200" style="width: 300px;" />
+          </div>
+          <div class="p-field">
+            <label for="emoji"></label>
+            <Button icon="pi pi-smile" class="p-button-sm mt-2" @click="showEmojiPickerForMessage = !showEmojiPickerForMessage" style="width: 80px;">Emoji</Button>
+            <div v-if="showEmojiPickerForMessage"><EmojiPicker @select="insertEmojiToMessage" /></div>
+          </div>
+          <div class="p-field">
+            <label for="roomTitle">{{ t('fields.roomTitle') }}</label>
+            <Textarea id="roomTitle" v-model="form.roomTitle" rows="3" maxlength="200" style="width: 300px;" />
+          </div>
+          <div class="p-field">
+            <label for="emoji"></label>
+            <Button icon="pi pi-smile" class="p-button-sm mt-2" @click="showEmojiPicker = !showEmojiPicker" style="width: 80px;">Emoji</Button>
+            <div v-if="showEmojiPicker"><EmojiPicker @select="insertEmoji" /></div>
+          </div>
+          <div class="p-field">
+            <label for="scheduledAnnouncement">{{ t('fields.scheduledAnnouncement') }}</label>
+            <Textarea id="scheduledAnnouncement" v-model="form.scheduledAnnouncement" rows="3" maxlength="200" style="width: 300px;" />
+          </div>
+          <div class="p-field">
+            <label for="emoji"></label>
+            <Button icon="pi pi-smile" class="p-button-sm mt-2" @click="showEmojiPickerForScheduled = !showEmojiPickerForScheduled" style="width: 80px;">Emoji</Button>
+            <div v-if="showEmojiPickerForScheduled"><EmojiPicker @select="insertEmojiToScheduled" /></div>
+          </div>
         </div>
-
         <div class="dialog-footer">
-          <Button label="{{ t('fields.cancel') }}" @click="uiControl.dialogVisible = false" class="p-button-text" />
-          <Button label="{{ t('fields.confirm') }}" type="submit" icon="pi pi-check" />
+          <Button :label="t('fields.cancel')" @click="uiControl.dialogVisible = false" class="p-button-text" style="margin-right: 10px;" />
+          <Button :label="t('fields.confirm')" type="submit" icon="pi pi-check" />
         </div>
       </form>
     </Dialog>
 
+    <Dialog v-model:visible="chatHistoryDialog.visible" :header="t('fields.chatHistory')" modal :style="{ width: '780px' }">
+      <DataTable :value="chatHistoryDialog.chatList" :loading="chatHistoryDialog.loading" :scrollable="true">
+        <Column field="name" :header="t('fields.name')" />
+        <Column field="content" :header="t('fields.content')" />
+        <Column :header="t('fields.createTime')">
+          <template #body="slotProps">
+            {{ formatTime(slotProps.data.createTime) }}
+          </template>
+        </Column>
+      </DataTable>
+      <Paginator
+        :rows="chatHistoryDialog.page.size"
+        :totalRecords="chatHistoryDialog.page.total"
+        :rowsPerPageOptions="[10, 20, 50]"
+        :first="(chatHistoryDialog.page.current - 1) * chatHistoryDialog.page.size"
+        template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+        @page="handleChatPageChange"
+        class="p-mt-2"
+        />
+    </Dialog>
+
+    <Dialog v-model:visible="previewDialog.visible" :header="t('fields.preview')" modal :style="{ width: '780px' }">
+      <div class="preview-video-container">
+        <video
+          id="preview-player"
+          class="video-js vjs-default-skin"
+          controls
+          preload="auto"
+          width="100%"
+          height="400"
+        />
+      </div>
+    </Dialog>
   </div>
 </template>
 
@@ -58,14 +233,16 @@ import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
 // import 'vue3-emoji-picker/dist/style.css'
 import 'videojs-flvjs-es6'
+import { useUserStore } from "@/stores/userStore";
+
 import flvjs from 'flv.js';
 
 import dayjs from "dayjs";
 
-const { updateSupplierStream, updateSportLiveStream,getStreamers,getSportLiveSupplierStream, getSportLiveStream, deleteSportLiveSupplierStream,deleteSportLiveStream,createSportLiveSupplierStream, getChatHistoryExport,getChatHistory,createSportLiveStream, getLiveMonitorScores } = DashboardService
+const { updateSupplierStream, updateSportLiveStream,getStreamers,getSportLiveSupplierStream, getSportLiveStream, deleteSportLiveSupplierStream,deleteSportLiveStream,createSportLiveSupplierStream, getChatHistoryExport,getChatHistoryv2,createSportLiveStream, getLiveMonitorScores } = DashboardService
 const toast = useToast()
 const confirm = useConfirm()
-
+const store = useUserStore()
 const showEmojiPicker = ref(false)
 const { t } = useI18n();
 const uiControl = reactive({
@@ -111,9 +288,8 @@ async function fetchMonitorScores() {
     ...supplierStreams.value.map(s => s.streamId),
     ...streamerStreams.value.map(s => s.streamId)
   ].filter(Boolean);
-
   if (allStreamIds.length > 0) {
-    const { data } = await getLiveMonitorScores(allStreamIds);
+    const data = await getLiveMonitorScores(allStreamIds);
     monitorScoreMap.value = Object.fromEntries(
       (data || []).map(m => [m.streamName, m.score])
     );
@@ -305,50 +481,48 @@ function onPreviewDialogClose() {
 }
 
 async function supplierCreate() {
-  formRef.value.validate(async (valid) => {
-    if (!valid) return;
-    const payload = {
-      eventId: eventId.value,
-      sourceStreamUrl: form.sourceStreamUrl,
-      isCdnPush: form.isCdnPush
-    };
-    await createSportLiveSupplierStream(payload);
+  if(!form.sourceStreamUrl) {
     toast.add({
-      severity: 'success',
-      summary: t('message.addSuccess'),
+      severity: 'error',
+      summary: t('message.validateSupplierStreamRequired'),
       life: 3000
     });
-    uiControl.dialogVisible = false;
-    await loadEvent();
+  }
+  const payload = {
+    eventId: eventId.value,
+    sourceStreamUrl: form.sourceStreamUrl,
+    isCdnPush: form.isCdnPush
+  };
+  await createSportLiveSupplierStream(payload);
+  toast.add({
+    severity: 'success',
+    summary: t('message.addSuccess'),
+    life: 3000
   });
+  uiControl.dialogVisible = false;
+  await loadEvent();
 }
 
 async function streamerSave() {
-  formRef.value.validate(async (valid) => {
-    if (!valid) return;
-    await createSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, roomMessage: form.roomMessage, scheduledAnnouncement: form.scheduledAnnouncement });
-    toast.add({
-      severity: 'success',
-      summary: t('message.updateSuccess'),
-      life: 3000
-    });
-    uiControl.dialogVisible = false;
-    await loadEvent();
+  await createSportLiveStream({ eventId: eventId.value, liveStreamerId: form.streamerId, status: 0, roomMessage: form.roomMessage, roomTitle: form.roomTitle, scheduledAnnouncement: form.scheduledAnnouncement });
+  toast.add({
+    severity: 'success',
+    summary: t('message.updateSuccess'),
+    life: 3000
   });
+  uiControl.dialogVisible = false;
+  await loadEvent();
 }
 
 async function streamerUpdate() {
-  formRef.value.validate(async (valid) => {
-    if (!valid) return;
-    await updateSportLiveStream({ eventId: eventId.value, status: 0, id: form.id, roomMessage: form.roomMessage, roomTitle: form.roomTitle, scheduledAnnouncement: form.scheduledAnnouncement });
-    toast.add({
-      severity: 'success',
-      summary: t('message.updateSuccess'),
-      life: 3000
-    });
-    uiControl.dialogVisible = false;
-    await loadEvent();
+  await updateSportLiveStream({ eventId: eventId.value, status: 0, id: form.id, roomMessage: form.roomMessage, roomTitle: form.roomTitle, scheduledAnnouncement: form.scheduledAnnouncement });
+  toast.add({
+    severity: 'success',
+    summary: t('message.updateSuccess'),
+    life: 3000
   });
+  uiControl.dialogVisible = false;
+  await loadEvent();
 }
 
 async function loadEvent() {
@@ -382,6 +556,7 @@ function showDialog(type, row) {
     fetchStreamers();
     form.streamerId = null;
     form.id = null;
+    uiControl.dialogTitle = t('fields.add');
   }
 
   if (type === 'STREAMER_EDIT' && row) {
@@ -391,10 +566,13 @@ function showDialog(type, row) {
     form.scheduledAnnouncement = row.scheduledAnnouncement;
     form.roomMessage = row.roomMessage;
     form.roomTitle = row.roomTitle;
+    uiControl.dialogTitle = t('fields.edit');
   }
 
   if (type === 'SUPPLIER_CREATE') {
     form.sourceStreamUrl = '';
+    form.isCdnPush = false;
+    uiControl.dialogTitle = t('fields.add');
   }
 }
 
@@ -459,9 +637,8 @@ function loadChatHistory() {
     current: chatHistoryDialog.page.current,
     size: chatHistoryDialog.page.size
   });
-
   const siteId = 7;
-  getChatHistory(`?${query.toString()}`, { streamId: chatHistoryDialog.streamerId, siteId: siteId })
+  getChatHistoryv2(`?${query.toString()}`, { streamId: chatHistoryDialog.streamerId, siteId: siteId })
     .then(res => {
       chatHistoryDialog.chatList = res.data.records;
       chatHistoryDialog.page.total = res.data.total;
@@ -477,9 +654,10 @@ function handleChatPageChange(page) {
 }
 
 onMounted(async () => {
-  const { data: timeZone } = await SiteService.getSiteTimeZoneById(
+  const { data: timeZone } = SiteService.getSiteTimeZoneById(
     7
   )
+  console.log("store : ", store.siteId)
   timezone.value = timeZone
   request.id = eventId
   await loadEvent();
@@ -525,11 +703,11 @@ onUnmounted(() => {
 }
 
 .signal-bars {
-  display: flex;
-  gap: 2px;
-  align-items: flex-end;
-  height: 14px;
-}
+   display: flex;
+   gap: 2px;
+   align-items: flex-end;
+   height: 14px;
+ }
 .bar {
   width: 4px;
   background: #ccc;
@@ -542,6 +720,18 @@ onUnmounted(() => {
 .bar:nth-child(5) { height: 12px; }
 .bar.active {
   background: #67C23A;
+}
+
+.p-field {
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  margin-bottom: 15px; /* 底部間距 */
+}
+
+.p-field label {
+  flex: 0 0 150px; /* 固定寬度 */
+  text-align: right;
+  margin-right: 20px;
 }
 </style>
 
