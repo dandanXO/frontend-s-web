@@ -380,7 +380,12 @@
           prop="memberId"
           :label="t('fields.memberId')"
           width="300"
-        />
+        >
+          <template #default="scope">
+            <span v-if="scope.row.memberId !== '-1'">{{ scope.row.memberId }}</span>
+            <span v-else style="color: red">{{ t('fields.noData') }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="loginName"
           :label="t('fields.loginName')"
@@ -912,6 +917,7 @@ import {
 } from '../../../api/site'
 import { getReasonsSimple } from '../../../api/site-adjustment-reason'
 import {
+  findIdByLoginNames,
   findIdByLoginName,
   getMemberBalanceByLoginNameSite,
 } from '../../../api/member'
@@ -1753,14 +1759,17 @@ function importToTable(file) {
             range: 1,
           })
         )
-        for (const d of data) {
-          const { data: id } = await findIdByLoginName(
-            d.loginName,
+        for (let i = 0; i < data.length; i += 50) {
+          const sublist = data.slice(i, i + 50)
+          const chunk = sublist.map(d => d.loginName).join(',')
+          const { data: result} = await findIdByLoginNames(
+            chunk,
             importForm.siteId
           )
-          d.memberId = id
+          for (let j = i; j < i + sublist.length; j++) {
+            data[j].memberId = result[data[j].loginName]
+          }
         }
-        break
       }
       importedPage.records = data
       importedPage.pages = Math.ceil(
@@ -1793,7 +1802,7 @@ async function confirmImport() {
   importedPage.buttonLoading = true
   importRefForm.value.validate(async valid => {
     if (valid) {
-      const recordCopy = { ...importedPage.records }
+      const recordCopy = importedPage.records.filter(record => record.memberId !== '-1')
       const data = []
       Object.entries(recordCopy).forEach(([key, value]) => {
         const item = {}
