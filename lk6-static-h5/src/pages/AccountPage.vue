@@ -341,26 +341,16 @@
     </a>
   </q-page>
 
-  <q-dialog
-    width="100%"
-    class="modal-common-div"
+  <CommonModal
     v-model="isLogoutModal"
-    show-cancel-button
-    :showCancelButton="false"
-    :showConfirmButton="false"
-  >
-    <q-card style="width: 100%" class="modalcontent with-decorator">
-      <div class="headers">
-        <div class="titles">系统提示</div>
-        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
-      </div>
-      <div class="contents">确认要退出登录吗？</div>
-      <div class="btnsreas">
-        <div class="confirmsbtns common-md-btn" @click="logout">确定</div>
-        <div class="cacnels common-md-white-btn" @click="isLogoutModal = false">取消</div>
-      </div>
-    </q-card>
-  </q-dialog>
+    title="系统提示"
+    message="确认要退出登录吗？"
+    with-decorator
+    :actions="['confirm', 'cancel']"
+    @confirm="logout"
+    @cancel="isLogoutModal = false"
+  ></CommonModal>
+
   <q-dialog v-model="profileDialogVisible" persistent class="profile-dialog">
     <q-card style="flex-direction: column; display: flex">
       <div class="header">
@@ -479,10 +469,12 @@ import "vue-advanced-cropper/dist/style.css";
 import "vue-advanced-cropper/dist/theme.compact.css";
 import moment from "moment";
 import { useNotify } from "src/hooks/notify";
+import CommonModal from "src/components/CommonModal.vue";
 export default defineComponent({
   name: "AccountPage",
   components: {
-    Cropper
+    Cropper,
+    CommonModal
   },
   setup() {
     const notify = useNotify();

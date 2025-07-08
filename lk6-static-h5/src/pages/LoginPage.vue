@@ -250,35 +250,29 @@
       </div>
     </div>
 
-    <q-dialog v-model="showCaptchaDialog" class="modal-common-div" width="100%" no-backdrop-dismiss>
-      <q-card width="100%" class="modalcontent">
-        <div class="headers">
-          <div class="titles">验证码</div>
-          <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
-        </div>
-
-        <div class="contents">
-          <q-input
-            class="verification-code-input"
-            standout
-            :rules="[(val) => (val && val.length > 3 && val.length < 5) || '请输入验证码']"
-            v-model="innerCaptchaRef"
-            placeholder="请输入验证码"
-            ref="refinnerCaptchaRef"
-          >
-            <template v-slot:append>
-              <img class="verification-img" :src="phoneVerificationImg" title="点击刷新验证码" @click="getCode" />
-            </template>
-          </q-input>
-        </div>
-
-        <div class="btnsreas">
-          <div />
-          <q-btn @click="sendOtpSms" label="提交" color="brightbtn" />
-          <div />
-        </div>
-      </q-card>
-    </q-dialog>
+    <CommonModal
+      v-model="showCaptchaDialog"
+      class="captcha-dialog"
+      no-backdrop-dismiss
+      header="验证码"
+      confirm-btn-text="提交"
+      @confirm="sendOtpSms"
+    >
+      <template #content>
+        <q-input
+          class="verification-code-input"
+          standout
+          :rules="[(val) => (val && val.length > 3 && val.length < 5) || '请输入验证码']"
+          v-model="innerCaptchaRef"
+          placeholder="请输入验证码"
+          ref="refinnerCaptchaRef"
+        >
+          <template v-slot:append>
+            <img class="verification-img" :src="phoneVerificationImg" title="点击刷新验证码" @click="getCode" />
+          </template>
+        </q-input>
+      </template>
+    </CommonModal>
   </div>
 </template>
 
@@ -293,11 +287,13 @@ import RegisterPage from "../pages/RegisterPage.vue";
 import qs from "qs";
 import { useLocalStorage } from "@vueuse/core";
 import { getDevice } from "src/boot/utils";
+import CommonModal from "src/components/CommonModal.vue";
 
 export default defineComponent({
   name: "LoginPage",
   components: {
-    RegisterPage
+    RegisterPage,
+    CommonModal
   },
   setup() {
     const tab = ref("login");
@@ -849,6 +845,7 @@ export default defineComponent({
     color: #424f72 !important;
     &::placeholder {
       color: #a4aabb;
+      opacity: 1;
     }
   }
 
@@ -1141,5 +1138,26 @@ export default defineComponent({
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.captcha-dialog {
+  .verification-code-input {
+    border-radius: 7px;
+    .q-field__control {
+      box-shadow: 0px 0px 2.78px 0px #a9c9ea inset;
+      background-color: #f7f8fb;
+    }
+    .q-placeholder {
+      color: #424f72;
+      &::placeholder {
+        color: #a4aabb;
+        opacity: 1;
+      }
+    }
+  }
+
+  .verification-img {
+    border-radius: 7px;
+    cursor: pointer;
+  }
 }
 </style>

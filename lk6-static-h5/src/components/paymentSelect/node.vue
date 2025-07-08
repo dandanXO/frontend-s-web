@@ -1,8 +1,8 @@
 <template>
   <div class="node" v-if="list && list.length !== 0">
-    <div v-if="level === 1" />
+    <!-- <div v-if="level === 1" /> -->
     <!-- <div class="title" v-else>{{ name }}</div> -->
-    <div class="account-title-container" v-else>
+    <div class="account-title-container">
       <span class="account-title">{{ name }}</span>
     </div>
     <div class="node-content payment-method-wrapper">
@@ -36,17 +36,17 @@
         </div>
       </div>
     </div>
-    <div :key="i + nodeKey" v-for="(item, i) in list">
-      <node
-        @click="clickChildItem(item)"
-        :name="item.nodeName"
-        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
-        v-if="selectItem === item"
-        :level="parseInt(level) + 1"
-        :list="item.children"
-        v-bind="$attrs"
-      />
-    </div>
+  </div>
+  <div :key="i + nodeKey" v-for="(item, i) in list">
+    <node
+      @click="clickChildItem(item)"
+      :name="item.nodeName"
+      :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
+      v-if="selectItem === item"
+      :level="parseInt(level) + 1"
+      :list="item.children"
+      v-bind="$attrs"
+    />
   </div>
 </template>
 
@@ -193,7 +193,7 @@ $node-color: #4ab6fd;
   // flex-wrap: wrap;
   // justify-content: space-evenly;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   margin-bottom: 4px;
   align-items: flex-start;
 
@@ -206,25 +206,23 @@ $node-color: #4ab6fd;
     img {
       max-width: 60px;
       margin-bottom: 10px;
-      width: 100%;
+      width: 50%;
       height: auto;
     }
 
     &.active {
-      .node-txt-img {
-        border-width: 2px;
-        border-style: solid;
-        border-color: #0089ed !important;
+      border-color: #4877f6;
 
+      .node-txt-img {
         &:before {
           display: block;
           content: "";
           position: absolute;
-          top: 0px;
-          left: 0px;
-          background-color: #0089ed;
-          height: 15px;
-          width: 15px;
+          bottom: -2px;
+          right: -2px;
+          // background-color: #0089ed;
+          height: 16px;
+          width: 16px;
           z-index: 3;
           border-radius: 3px;
           background-image: url("../../assets/images/account/CheckBox.svg");
@@ -235,11 +233,6 @@ $node-color: #4ab6fd;
         img {
           // border-color: $node-color;
         }
-      }
-
-      .overflow {
-        color: #0089ed;
-        font-weight: 600;
       }
     }
   }
@@ -262,23 +255,27 @@ $node-color: #4ab6fd;
 }
 
 .node {
-  .node {
-    margin: 0 -30px;
-    padding: 0 30px;
+  background: #fff;
+  padding: 12px;
+  border-radius: 7px;
+  margin-bottom: 12px;
+  // margin: 0 -30px;
+  // padding: 0 30px;
 
-    .account-title-container {
-      // margin: 0 -30px;
-      background: none;
+  .account-title-container {
+    // margin: 0 -30px;
+    background: none;
 
-      .account-title {
-        font-size: 14px;
-        display: block;
-        font-weight: 600;
-        margin-bottom: 12px;
-      }
+    .account-title {
+      font-size: 14px;
+      display: block;
+      font-weight: 600;
+      margin-bottom: 10px;
     }
   }
+}
 
+.node {
   .node-content {
     column-gap: 10px;
     row-gap: 10px;
@@ -292,7 +289,7 @@ $node-color: #4ab6fd;
       display: flex;
       justify-content: center;
       width: 100%;
-      max-width: 4.5rem;
+      // max-width: 4.5rem;
 
       .payment-method-wrapper {
         display: none;
@@ -305,30 +302,29 @@ $node-color: #4ab6fd;
       align-items: center;
       // gap: 5px;
       flex-direction: column;
+      padding: 8px 0 4px;
 
       & > div {
-        font-size: 12px;
-        color: #000;
+        font-size: 10px;
+        color: #424f72;
       }
 
       .node-txt-img {
-        background-color: #f7f7f7;
         display: flex;
         align-items: center;
         justify-content: center;
         //box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-        width: 60px;
-        height: 60px;
-        margin-bottom: 5px;
+        // width: 60px;
+        // height: 60px;
+        // margin-bottom: 5px;
         //border: 1px solid #c2c2c2;
         border-radius: 4px;
 
         img {
           background-color: transparent;
           margin-bottom: 0;
-          padding: 5px;
           display: block;
-          width: 100%;
+          width: 50%;
           height: auto;
         }
       }
@@ -361,6 +357,10 @@ $node-color: #4ab6fd;
 
   .node-item {
     position: relative;
+    box-shadow: 0px 1px 4px 0px #00000033;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
 
     .promo {
       position: absolute;
@@ -389,10 +389,10 @@ $node-color: #4ab6fd;
 }
 
 @media (max-width: 420px) {
-  .node-txt-img {
-    width: 54px !important;
-    height: 54px !important;
-  }
+  // .node-txt-img {
+  //   width: 54px !important;
+  //   height: 54px !important;
+  // }
 }
 
 @media (max-width: 355px) {

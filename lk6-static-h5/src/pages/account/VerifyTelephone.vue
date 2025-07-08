@@ -69,65 +69,38 @@
     </q-form>
   </div>
 
-  <q-dialog v-model="showCaptchaDialog" class="modal-common-div" width="100%" no-backdrop-dismiss>
-    <q-card width="100%" class="modalcontent">
-      <div class="headers">
-        <div class="titles">验证码</div>
-        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
-      </div>
-
-      <div class="contents">
-        <q-input
-          class="verification-code-input"
-          standout
-          :rules="[(val) => (val && val.length > 3 && val.length < 5) || '请输入验证码']"
-          v-model="innerCaptchaRef"
-          placeholder="请输入验证码"
-          ref="refInnerCaptchaCode"
-        >
-          <template v-slot:append>
-            <img class="verification-img" :src="verificationImg" title="点击刷新验证码" @click="getCode" />
-          </template>
-        </q-input>
-      </div>
-
-      <div class="btnsreas">
-        <div />
-        <q-btn size="md" class="submit-btn" @click="onCaptchaSubmit" label="提交" />
-        <div />
-      </div>
-    </q-card>
-  </q-dialog>
-
-  <q-dialog
-    v-model="showUpdateSecuritySuccessDialog"
-    class="modal-common-div"
-    width="100%"
+  <CommonModal
+    v-model="showCaptchaDialog"
+    class="captcha-dialog"
+    confirm-btn-text="提交"
     no-backdrop-dismiss
-    @hide="handleUpdateSecuritySuccessDialogHide"
+    header="验证码"
+    @confirm="onCaptchaSubmit"
   >
-    <q-card width="100%" class="modalcontent">
-      <div class="headers">
-        <div class="titles">验证码</div>
-        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
-      </div>
+    <template #content>
+      <q-input
+        class="verification-code-input"
+        standout
+        :rules="[(val) => (val && val.length > 3 && val.length < 5) || '请输入验证码']"
+        v-model="innerCaptchaRef"
+        placeholder="请输入验证码"
+        ref="refInnerCaptchaCode"
+      >
+        <template v-slot:append>
+          <img class="verification-img" :src="verificationImg" title="点击刷新验证码" @click="getCode" />
+        </template>
+      </q-input>
+    </template>
+  </CommonModal>
 
-      <div class="contents">提交成功</div>
-
-      <div class="btnsreas">
-        <div />
-        <q-btn size="md" class="submit-btn" @click="onCaptchaSubmit" label="提交" />
-        <div />
-      </div>
-    </q-card>
-  </q-dialog>
-
-  <!-- <br />
-  phone: {{ formDetail.phone }}
-  <br />
-  code: {{ formDetail.phoneOtpRef }}
-  <br />
-  codeId: {{ phoneCodeId }} -->
+  <CommonModal
+    v-model="showUpdateSecuritySuccessDialog"
+    no-backdrop-dismiss
+    header="验证码"
+    message="提交成功"
+    @hide="handleUpdateSecuritySuccessDialogHide"
+    @confirm="showUpdateSecuritySuccessDialog = false"
+  />
 </template>
 
 <script setup>
@@ -137,6 +110,7 @@ import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
+import CommonModal from "src/components/CommonModal.vue";
 
 // const isCardActive = ref();
 const qs = require("qs");
@@ -486,5 +460,27 @@ onUnmounted(() => {
 
 .q-toolbar {
   background: #0089ed;
+}
+
+.captcha-dialog {
+  .verification-code-input {
+    border-radius: 7px;
+    .q-field__control {
+      box-shadow: 0px 0px 2.78px 0px #a9c9ea inset;
+      background-color: #f7f8fb;
+    }
+    .q-placeholder {
+      color: #424f72;
+      &::placeholder {
+        color: #a4aabb;
+        opacity: 1;
+      }
+    }
+  }
+
+  .verification-img {
+    border-radius: 7px;
+    cursor: pointer;
+  }
 }
 </style>
