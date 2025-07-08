@@ -76,10 +76,7 @@ export default defineComponent({
 
 <style lang="scss">
 .account-container {
-  background-image: url("../../../assets/images/home/main-bg.jpg");
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-position: top center;
+  background-color: #F3F7FD;
   font-size: 14px;
   padding: 20px;
   // background: #f4f8f9;
@@ -152,9 +149,9 @@ export default defineComponent({
         // height: calc(100% - 50px);
         padding: 20px 40px;
         background-color: #fff;
-        box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
         border-radius: 15px;
         height: 100%;
+        box-shadow: 0px 0px 10px 0px #0000001A;
       }
     }
     .account-menu-container {
@@ -174,7 +171,7 @@ export default defineComponent({
         .account-info-bg {
           background-image: url(../../../assets/images/account/personal-bg.png);
           background-repeat: no-repeat;
-          background-size: cover;
+          background-size: 100% 100%;
           background-position: center center;
           padding: 1.6rem 0;
           display: flex;
@@ -183,6 +180,7 @@ export default defineComponent({
           align-items: center;
           width: 100%;
           height: 100%;
+          border-radius: 15px;
         }
         .account-avatar {
           width: 75px;
@@ -264,57 +262,6 @@ export default defineComponent({
                 width: 7px;
                 height: 27px;
               }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-.dark {
-  .dark-account-container {
-    background-image: none;
-    background: $background-dark;
-
-    .account-container-wrap {
-      .account-menu-container {
-        @include content-block-dark;
-
-        .account-info-wrapper {
-          background: $active-color-dark-linear;
-          box-shadow: none;
-        }
-
-        .web-menu {
-          .account-menu-list {
-            .account-menu-item {
-              color: $font-3-dark;
-
-              &:hover,
-              &.router-link-exact-active {
-                color: $color-white;
-                background: #e7f3ff1a;
-              }
-            }
-          }
-        }
-      }
-
-      .account-content-wrapper {
-        .account-balance,
-        .account-contents {
-          @include content-block-dark;
-        }
-
-        .account-balance {
-          .balance-details {
-            color: $font-3-dark;
-          }
-
-          .balance-container {
-            .trans-tip {
-              color: $font-3-dark;
             }
           }
         }

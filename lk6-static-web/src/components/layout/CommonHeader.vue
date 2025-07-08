@@ -109,7 +109,7 @@
           <router-link to="/register" class="action-btn">
             <a class="header-btn btn-color-white">注册</a>
           </router-link> -->
-          <a class="standard-button btn-color-blue" @click="loginDialogVisible = true">{{ $t('btn.login') }}</a>
+          <a class="standard-button btn-color-aqua" @click="loginDialogVisible = true">{{ $t('btn.login') }}</a>
           <a class="standard-button btn-color-white" @click="registerDialogVisible = true">{{ $t('btn.register') }}</a>
         </div>
 
