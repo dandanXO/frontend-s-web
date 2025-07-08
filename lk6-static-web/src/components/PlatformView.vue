@@ -25,6 +25,7 @@
 
             <div class="platform-item">
               <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
+                <img src="../assets/lucky-6-logo.png" width="176px" height="86px" />
                 <div class="platform-title">{{ item.cnname ?? item.name }}</div>
                 <div class="platform-subtitle">{{ platformName }}</div>
               </div>
@@ -32,7 +33,7 @@
               <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>
 
               <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
-                <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.png')" />
+                <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.svg')" />
               </div>
 
               <div class="platform-list-box">

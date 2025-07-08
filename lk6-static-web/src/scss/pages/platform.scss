@@ -91,7 +91,7 @@
           font-size: 5rem;
           font-weight: 400;
           word-break: keep-all;
-          background: linear-gradient(180deg, #ae92ff 0%, #56c2ff 100%);
+          background: linear-gradient(180deg, #8EC4FF 0%, #3188FF 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -103,7 +103,9 @@
           font-weight: 600;
           font-size: 3rem;
           letter-spacing: 0px;
-          background: linear-gradient(180deg, #ae92ff 0%, #56c2ff 100%);
+          background: linear-gradient(180deg, #8EC4FF 0%, #3188FF 100%);
+          border: 0.38px solid;
+          border-image-source: linear-gradient(180deg, #A2E1FF 0%, #3F6CBA 112.35%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -153,7 +155,8 @@
 
           .list-item-btn {
             border: 0px;
-            background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
+            background: url('../../assets/home/hotgame/item-bg.png') center center no-repeat;
+            background-size: 100% 100%;
             padding: 0.35rem;
 
             animation: scaleUpAbit 0.5s ease-in-out forwards;
@@ -174,9 +177,9 @@
 
           .list-item-btn {
             border: 0px;
-            background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
+            background: url('../../assets/home/hotgame/item-active-bg.png') center center no-repeat;
+            background-size: 100% 100%;
             padding: 0.35rem;
-            box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.3);
 
             & > span {
               background: none;
@@ -195,17 +198,14 @@
         }
 
         .list-item-btn {
-          border: 1px solid #0e7dff;
           height: 4rem;
           width: 4rem;
           display: flex;
           justify-content: center;
           align-items: center;
-          border-radius: 20%;
           padding: 0.2rem;
           position: relative;
           box-sizing: border-box;
-          box-shadow: 0px 10px 10px 0px transparent;
           transition: 0.3s all;
           cursor: pointer;
 
@@ -248,18 +248,18 @@
         }
 
         .btn-blue {
-          height: 3rem;
-          min-width: 155px;
-          border-radius: 5rem;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          padding: 0 2rem;
           font-size: 1.25rem;
           color: $color-white;
-          background: $linear-bg;
           cursor: pointer;
           transition: 0.3s all;
+          background: url('../../assets/promo/promo-details-btn-bg.svg') center center no-repeat;
+          background-size: 100% 100%;
+          aspect-ratio: 172 / 48;
+          width: 172px;
+          height: 48px;
 
           &.btn-maintenance {
             background: rgba(0, 0, 0, 0.3);
