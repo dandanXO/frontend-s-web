@@ -204,19 +204,20 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
-    <q-card style="width: 100%; padding: 20px" class="text-black">
-      <q-card-section class="text-center q-mb-md" style="flex-direction: column">
-        <strong>温馨提示</strong>
-        <br />
-        <br />
-        为保证资金安全，存款前需先验证手机号
-      </q-card-section>
-      <q-card-actions align="right">
-        <router-link to="/account/verifyTelephone">
-          <q-btn label="前往验证" color="dyblue" />
-        </router-link>
-      </q-card-actions>
+  <q-dialog width="100%" v-model="isNewUser" class="modal-common-div" no-backdrop-dismiss no-esc-dismiss>
+    <q-card style="width: 100%; padding: 20px" class="modalcontent">
+      <div class="headers">
+        <div class="titles">温馨提示</div>
+        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+      </div>
+      <div class="contents">为保证资金安全，存款前需先验证手机号</div>
+      <div class="btnsreas">
+        <div />
+        <div class="confirmsbtns common-md-btn">
+          <router-link to="/account/verifyTelephone">前往验证</router-link>
+        </div>
+        <div />
+      </div>
     </q-card>
   </q-dialog>
 
