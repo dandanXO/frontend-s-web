@@ -1899,7 +1899,7 @@ body {
 
         &.second-nav {
           margin-left: auto;
-          margin-right: auto;
+          // margin-right: auto;
           gap: 9px;
           padding-left: 5px;
           padding-right: 5px;
