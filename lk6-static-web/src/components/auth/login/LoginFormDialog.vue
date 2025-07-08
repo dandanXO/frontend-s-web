@@ -36,7 +36,7 @@
       </el-form-item>
     </div>
 
-    <div class="login-form-field geetest-captcha-form-field">
+    <!-- <div class="login-form-field geetest-captcha-form-field">
       <img
         class="login-form-field-icon"
         :src="require('@/assets/home/auth/verification-icon.svg')"
@@ -47,9 +47,9 @@
           <span class="asterisk">*</span>
           <span class="label-text">{{ $t('form.verificationCode') }}</span>
         </div>
-        <div id="captchaContainer"></div>
       </div>
-    </div>
+    </div> -->
+    <div id="captchaContainer"></div>
 
     <div class="agreement-and-forget-pwd">
       <div class="agreement-text">
@@ -65,6 +65,7 @@
       <span class="no-acc">{{$t('form.dontHaveAcc')}}？</span>
       <a class="go-reg" @click="openRegDialog">{{ $t('form.goCreateAcc') }}</a>
     </div>
+    <div id="captcha-box" />
   </el-form>
 </template>
 
@@ -74,6 +75,7 @@ import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { useNotify } from "@/hooks/notify";
 import { useI18n } from "vue-i18n";
+import { getDevice } from "@/utils/utils";
 
 const { t } = useI18n();
 const props = defineProps(["pageType"]);
@@ -161,54 +163,96 @@ const submitLogin = () => {
   isLoading.value = true;
   (async () => {
     const sidParam = store.visitorId;
+    const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
+    
+    // tianai captcha config
+    const config = {
+      // 生成接口 (必选项,必须配置, 要符合tianai-captcha默认验证码生成接口规范)
+      requestCaptchaDataUrl: `${'https://ubysg6a4qi.eioxrlyh06.com'}/member/getCaptcha`,
+      // 验证接口 (必选项,必须配置, 要符合tianai-captcha默认验证码校验接口规范)
+      validCaptchaUrl: `${'https://ubysg6a4qi.eioxrlyh06.com'}/member/login`,
+      // 验证码绑定的div块 (必选项,必须配置)
+      bindEl: "#captcha-box",
+      // 验证码类型, 登陆信息
+      loginData: {
+        loginName: loginForm.loginName,
+        password: loginForm.password,
+        sid: store.visitorId,
+        summoner: loginForm.summoner || null,
+        type: "SLIDER",
+        way: regDevice
+      },
+      requestHeaders: {
+        Authorization: process.env.VUE_APP_SITE
+      },
+      // 验证成功回调函数(必选项,必须配置)
+      validSuccess: (res, c, tac) => {
+        // 销毁验证码服务
+        tac.destroyWindow();
+        console.log("验证成功，后端返回的数据为", res);
+        store.token = res.data;
+        store.getBalance();
+        store.getMemberInfo();
+        store.getUnreadMail();
+
+        const jumpUrl = route.query.redirect
+          ? route.query.redirect.toString()
+          : props.pageType === "view"
+          ? "/"
+          : route.path;
+
+        if (store.token) {
+          router.push(jumpUrl);
+          sessionStorage.removeItem("REFERRAL_CODE");
+          sessionStorage.removeItem("SUMMON_CODE");
+          sessionStorage.setItem("POPUP", "true");
+          loginForm.loginName = null;
+          loginForm.password = null;
+          loginForm.captchaCode = null;
+
+          closeLoginDialog();
+        }
+      },
+      // 验证失败的回调函数(可忽略，如果不自定义 validFail 方法时，会使用默认的)
+      validFail: (res, c, tac) => {
+        console.log("验证码验证失败回调...");
+
+        if (res.code === 800) {
+          // 验证失败后重新拉取验证码
+          tac.reloadCaptcha();
+        } else {
+          // 其他错误则关闭验证
+          tac.destroyWindow();
+        }
+      },
+      // 刷新按钮回调事件
+      btnRefreshFun: (el, tac) => {
+        console.log("刷新按钮触发事件...");
+        tac.reloadCaptcha();
+      },
+      // 关闭按钮回调事件
+      btnCloseFun: (el, tac) => {
+        console.log("关闭按钮触发事件...");
+        tac.destroyWindow();
+      }
+    };
+
+    // tianai captcha style
+    const style = {
+      logoUrl: 'https://lk6-web.psnaback.com/static/img/login-logo-left.3f98a6ca.png'
+    };
+
     loginRef.value
       .validate()
       .then(() => {
-        if (window.captchaObj) {
-          const validate = window.captchaObj.getValidate();
-          if (!validate) {
-            notify({
-              type: "error",
-              message: "请完成验证码"
-            });
-            return;
-          }
-
-          store
-            .memberLogin({
-              loginName: loginForm.loginName,
-              password: loginForm.password,
-              sid: sidParam,
-              summoner: loginForm.summoner,
-              lotNumber: loginForm.lot_number,
-              captchaOutput: loginForm.captcha_output,
-              passToken: loginForm.pass_token,
-              genTime: loginForm.gen_time
-            })
-            .then(() => {
-              const jumpUrl = route.query.redirect
-                ? route.query.redirect.toString()
-                : props.pageType === "view"
-                ? "/"
-                : route.path;
-
-              if (store.token) {
-                router.push(jumpUrl);
-
-                sessionStorage.removeItem("REFERRAL_CODE");
-                sessionStorage.removeItem("SUMMON_CODE");
-                sessionStorage.setItem("POPUP", "true");
-                loginForm.loginName = null;
-                loginForm.password = null;
-                loginForm.captchaCode = null;
-
-                closeLoginDialog();
-              }
-            })
-            .catch((error) => {
-              console.log(error.message);
-            });
-        }
+        window
+          .initTAC("./tac", config, style)
+          .then((tac) => {
+            tac.init();
+          })
+          .catch((error) => {
+            console.log("initTAC fail:", error);
+          });
       })
       .catch(() => {});
     isLoading.value = false;
@@ -224,31 +268,31 @@ const getSummonCode = () => {
 };
 
 onMounted(async () => {
-  try {
-    // Step 1: Load Geetest script
-    await loadScript("https://static.geetest.com/v4/gt4.js");
+  // try {
+  //   // Step 1: Load Geetest script
+  //   await loadScript("https://static.geetest.com/v4/gt4.js");
 
-    // Step 2: Call your backend to get Geetest configuration (fake config for demo)
-    const geetestConfig = {
-      config: {
-        captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
-        language: "zh",
-        nativeButton: {
-          width: "100%",
-          height: "48px"
-        },
-        nextWidth: "200px",
-        product: "float"
-      },
-      handler: captchaHandler
-    };
+  //   // Step 2: Call your backend to get Geetest configuration (fake config for demo)
+  //   const geetestConfig = {
+  //     config: {
+  //       captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
+  //       language: "zh",
+  //       nativeButton: {
+  //         width: "100%",
+  //         height: "48px"
+  //       },
+  //       nextWidth: "200px",
+  //       product: "float"
+  //     },
+  //     handler: captchaHandler
+  //   };
 
-    // Step 3: Initialize Geetest with the config
-    await initGeetest(geetestConfig);
-  } catch (error) {
-    message.value = "Error loading Geetest!";
-    console.error("Geetest loading error:", error);
-  }
+  //   // Step 3: Initialize Geetest with the config
+  //   await initGeetest(geetestConfig);
+  // } catch (error) {
+  //   message.value = "Error loading Geetest!";
+  //   console.error("Geetest loading error:", error);
+  // }
 
   getSummonCode();
 });
@@ -419,6 +463,14 @@ const loginRules = {
     display: flex;
     justify-content: flex-end;
   }
+}
+
+#captcha-box {
+  position: fixed;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
 
