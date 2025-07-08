@@ -36,7 +36,7 @@
 
 @font-face {
   font-family: "PingFang SC";
-  src: url("@/assets/fonts/PingFangSC.ttf");
+  src: url("@/assets/fonts/PingFangNormal.woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -45,14 +45,6 @@
 @font-face {
   font-family: "Poppins";
   src: url("@/assets/fonts/Poppins.ttf");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DIN";
-  src: url("@/assets/fonts/DIN Bold.ttf");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -68,36 +60,6 @@
   src: url("@/assets/fonts/Play-Regular.ttf");
   font-weight: normal;
   font-style: normal;
-}
-@font-face {
-  font-family: "Purple Purse";
-  src: url("@/assets/fonts/PurplePurse-Regular.ttf");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "HYYakuHei800";
-  src: url("@/assets/fonts/HYYakuHei800.ttf");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "HYYakuHei400";
-  src: url("@/assets/fonts/HYYakuHei400.ttf");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "HYYakuHei300";
-  src: url("@/assets/fonts/HYYakuHei300.ttf");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
 }
 
 @font-face {

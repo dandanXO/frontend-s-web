@@ -101,8 +101,9 @@
           </div>
         </div>
 
+        <LocaleChanger />
+
         <div v-if="!store.token" class="right-contents">
-          <LocaleChanger />
           <!-- <router-link to="/login" class="action-btn">
             <a class="header-btn btn-color-blue">登录</a>
           </router-link>
@@ -190,9 +191,9 @@
               <div class="details-name">
                 {{ store.nickName }}
               </div>
-              <div class="account-vip-label">
+              <!-- <div class="account-vip-label">
                 {{ vip }}
-              </div>
+              </div> -->
             </div>
             <a @click="refreshBalance" class="details-balance">
               <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
@@ -1614,6 +1615,9 @@ body {
       width: 100%;
       border-radius: 50%;
       aspect-ratio: 1/1;
+      background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
+      box-shadow: 0px 2px 2px 0px #FFFFFFCC inset;
+      box-shadow: 0px 2px 0px 0px #C6D9FF;
     }
 
     .dropdown-icon {

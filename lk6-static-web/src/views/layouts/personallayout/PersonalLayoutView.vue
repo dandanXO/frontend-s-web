@@ -93,7 +93,7 @@ export default defineComponent({
     margin: 0 auto;
     justify-content: space-between;
     align-items: stretch;
-    gap: 20px;
+    gap: 30px;
     color: #000000;
     .account-box {
       // background-color: #fff;
@@ -110,6 +110,7 @@ export default defineComponent({
       display: flex;
       flex-direction: column;
       gap: 14px;
+      font-family: 'PingFang SC';
       .account-balance {
         font-size: 14px;
         display: flex;
@@ -189,6 +190,9 @@ export default defineComponent({
           cursor: pointer;
           border-radius: 50%;
           overflow: hidden;
+          background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
+          box-shadow: 0px 2px 2px 0px #FFFFFFCC inset;
+          box-shadow: 0px 2px 0px 0px #C6D9FF;
 
           img{
             width: 100%;

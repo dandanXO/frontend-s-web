@@ -79,16 +79,16 @@
             </div>
 
             <div class="btn-confirm">
-              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
+              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="standard-button btn-color-blue">确定</el-button>
             </div>
           </el-space>
 
           <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="实时汇率">
-            <span style="color: #17cd27">1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.label }}</span>
+            <span style="color: #00A478">1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.label }}</span>
           </el-form-item>
 
           <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="预计到账">
-            <span style="color: #17cd27">
+            <span style="color: #00A478">
               {{
                 calculatedMinDeposit && form.localAmount < calculatedMinDeposit
                   ? "0.00"
@@ -846,8 +846,9 @@ onMounted(() => {
   position: relative;
   :deep(.el-input__wrapper),
   :deep(.el-select__wrapper) {
-    background-color: #f7f8fb;
-    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+    background: #F7F8FB;
+    box-shadow: 0px 0px 2.78px 0px #A9C9EA inset;
+
   }
 }
 
@@ -979,30 +980,5 @@ onMounted(() => {
 
 .btn-confirm {
   padding-left: 20px;
-  // margin-bottom: 10px;
-  .el-button {
-    background-image: url(../assets/images/finance/deposit/btn-bg.png) !important;
-    background-size: 100% 100%;
-    &:hover {
-      opacity: 0.9;
-      background-size: 100% 100%;
-    }
-    &:active {
-      filter: brightness(0.85);
-      transform: translate(0px, 1px);
-    }
-  }
-}
-
-.dark {
-  .btn-confirm {
-    .el-button {
-      background: url("../assets/images/home/standard-button-bg.svg") no-repeat center center !important;
-      background-size: cover !important;
-      box-shadow: none;
-      border-radius: 8px;
-      border: 1px solid #3a93ce;
-    }
-  }
 }
 </style>
