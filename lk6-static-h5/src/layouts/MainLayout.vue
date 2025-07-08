@@ -454,7 +454,7 @@ export default defineComponent({
         } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;
-          pageName.value = "找回账号";
+          pageName.value = "忘记密码";
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = "Live Casino";

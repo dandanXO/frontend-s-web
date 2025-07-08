@@ -1035,7 +1035,7 @@ export default defineComponent({
   }
 
   .q-field--standout .q-field__control {
-    background: #f7f8fb;
+    background: #fff;
   }
 
   .q-checkbox__bg {
