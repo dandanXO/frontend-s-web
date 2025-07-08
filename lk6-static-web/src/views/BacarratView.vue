@@ -14,8 +14,8 @@ import { ref } from "vue";
 import PlatformView from "@/components/platformview/index";
 import { pokerPlatforms } from "@/shared/platformArray";
 
-const platformType = ref("poker");
-const platformGameType = ref("POKER");
-const platformName = ref("POKER");
+const platformType = ref("bacarrat");
+const platformGameType = ref("LIVE");
+const platformName = ref("BACARRAT");
 const platformPattern = ref(true);
 </script>
