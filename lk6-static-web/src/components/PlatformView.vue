@@ -1,10 +1,10 @@
 <template>
   <div class="platform-section">
-    <div class="platform-container" :class="platformType === 'poker' ? 'slot-container' : ''">
-      <img src="../assets/slot/slot-top-bg.png" />
-      <div class="platform-container-slot" v-if="platformType === 'poker'">
+    <div class="platform-container" :class="platformType === 'bacarrat' ? 'slot-container' : ''">
+      <img v-if="platformType === 'bacarrat'" src="../assets/slot/slot-top-bg.png" />
+      <div class="platform-container-slot" v-if="platformType === 'bacarrat'">
       </div>
-      <div class="platform-container-inner" v-if="platformType !== 'poker'">
+      <div class="platform-container-inner" v-if="platformType !== 'bacarrat'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
         <template v-for="(item, index) in platformsListDisplay" :key="index">
           <template v-if="selectedPlat === item.code">
@@ -121,12 +121,12 @@
       <div class="all-game-container">
         <div class="plat-options-wrapper">
           <div class="plat-options-container">
-            <template v-for="(item, index) in fixedPokerPlatforms" :key="index">
+            <template v-for="(item, index) in fixedBacarratPlatforms" :key="index">
               <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
               <div
                 class="plat-option"
                 @click="onChangeFixedPokerPlatforms(item)"
-                :class="{ active: selectedFixedPokerPlatforms?.prefix === item.prefix }"
+                :class="{ active: selectedFixedBacarratPlatforms?.prefix === item.prefix }"
               >
                 <div class="text">
                   <span>{{ item.label }}</span>
@@ -282,7 +282,7 @@ const props = defineProps({
 const filteredPlatforms = ref([]);
 const platformsList = ref([]);
 const platformsListDisplay = ref([]);
-const fixedPokerPlatforms = ref([
+const fixedBacarratPlatforms = ref([
   {
     prefix: 101,
     label: '百家乐'
@@ -298,20 +298,20 @@ const fixedPokerPlatforms = ref([
 ])
 
 const getPlatList = () => {
-  // const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
-  // getFn().then((res) => {
-  //   platformsList.value = res;
-  //   platformsListDisplay.value = platformsList.value.filter((element) =>
-  //     element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
-  //   );
+  const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
+  getFn().then((res) => {
+    platformsList.value = res;
+    platformsListDisplay.value = platformsList.value.filter((element) =>
+      element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
+    );
 
-  //   platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
-  //     const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
-  //     return { ...matchingItem, ...item1 };
-  //   });
+    platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
+      const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
+      return { ...matchingItem, ...item1 };
+    });
 
-  //   setFilteredPlatforms();
-  // });
+    setFilteredPlatforms();
+  });
 };
 
 const setFilteredPlatforms = () => {
@@ -340,13 +340,13 @@ const setFilteredPlatforms = () => {
 };
 
 const selectedPlat = ref(null);
-const selectedFixedPokerPlatforms = ref({});
+const selectedFixedBacarratPlatforms = ref({});
 const setSelectedPlat = () => {
   selectedPlat.value = filteredPlatforms.value.length > 0 ? filteredPlatforms.value[0].code : null;
 };
 
 const onChangeFixedPokerPlatforms = (item) => {
-  selectedFixedPokerPlatforms.value = item;
+  selectedFixedBacarratPlatforms.value = item;
   changePage(gamePage.currentPage, gamePage.pageSize);
 }
 
@@ -381,11 +381,11 @@ const switchPlat = (plat) => {
 };
 
 const getPlatGameList = () => {
-  if (props.platformGameType === "LIVE") {
+  if (props.platformGameType === "BACARRAT") {
     const getFn = store.token ? getLoggedInPlatformList : getPlatformList;
     getFn()
       .then((data) => {
-        platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
+        platformsListDisplay.value = data.filter((element) => element.gameType.includes('LIVE'));
         platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
           const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
           return { ...matchingItem, ...item1 };
@@ -430,8 +430,8 @@ const searchList = () => {
   // }
 };
 const loadGameList = () => {
-  if (props.platformGameType === "LIVE") {
-    getPlatformGames(activePlat.value.id, props.platformGameType)
+  if (props.platformGameType === "BACARRAT") {
+    getPlatformGames(activePlat.value.id, 'LIVE')
       .then((data) => {
         data.forEach((element) => {
           element.default = require("../assets/images/games/aviator/default-poker.png");
@@ -451,7 +451,7 @@ const loadGameList = () => {
 const changePage = (page, pageSize) => {
   // console.log(page);
   // console.log(pageSize);
-  gamePage.gameList = gameListData.value.filter(gameItem => gameItem.code.startsWith(selectedFixedPokerPlatforms.value.prefix)).slice((page - 1) * pageSize, page * pageSize);
+  gamePage.gameList = gameListData.value.filter(gameItem => gameItem.code.startsWith(selectedFixedBacarratPlatforms.value.prefix)).slice((page - 1) * pageSize, page * pageSize);
 };
 
 const gameCat = ref("allGame");
@@ -459,7 +459,7 @@ const gameCat = ref("allGame");
 onMounted(() => {
   getPlatList();
   getPlatGameList();
-  selectedFixedPokerPlatforms.value = fixedPokerPlatforms.value[0];
+  selectedFixedBacarratPlatforms.value = fixedBacarratPlatforms.value[0];
 });
 
 watch(
