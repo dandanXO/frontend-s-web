@@ -446,6 +446,94 @@ A plataforma utiliza tecnologia de segurança avançada para proteger as contas 
   ></script>
   <% } %>
 
+  <script src="js/adjust-5.7.1.min.js"></script>
+  <script>
+    (function () {
+      console.log("RUN");
+      var hostname = getDomainWithoutSubdomain();
+      const adCode = "";
+      // hostname= "di1yf4.com";
+
+      // Make the POST request
+      fetch(
+        `https://api.j9zwvu1ogrg.com/app/affiliate/params?domain=${hostname}&siteCode=BR2&affiliateCode=${adCode}`,
+        {
+          method: "GET"
+        }
+      )
+        .then((response) => response.json())
+        .then((res) => {
+          console.log("Success:", res);
+          const { affiliateCode } = res.data;
+          localStorage.setItem("PWA_AFFILIATE_CODE", affiliateCode);
+          // alert(affiliateCode);
+
+          fetch(`https://api.j9zwvu1ogrg.com/app/adjust/params?affiliateCode=${affiliateCode}`, {
+            method: "GET"
+          })
+            .then((response) => response.json())
+            .then((res) => {
+              if (res.code === 0) {
+                const { adjust_app_token } = res.data;
+                // alert(adjust_app_token)
+                Adjust.initSdk({
+                  appToken: adjust_app_token,
+                  environment: "production", // 或 "sandbox"（如果你在测试环境）
+                  logLevel: "verbose",
+                  attributionCallback: function (attribution) {
+                    console.log("Adjust Attribution Data:", attribution);
+                  }
+                });
+
+                setTimeout(() => {
+                  Adjust.waitForWebUUID().then((webUuid) => {
+                    console.log("Web UUID");
+                    console.log(webUuid);
+                  });
+                }, 100);
+              }
+            });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+      // Adjust SDK 初始化
+
+      // 获取 URL 参数，确保 Adjust 解析正确
+      function getUrlParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+      }
+
+      function getDomainWithoutSubdomain() {
+        let hostname = window.location.hostname;
+        let parts = hostname.split(".");
+
+        // 处理 localhost 和 IP
+        if (parts.length <= 2 || /^\d+\.\d+\.\d+\.\d+$/.test(hostname) || hostname === "localhost") {
+          return hostname; // 直接返回 IP 或 localhost
+        }
+
+        return parts.slice(1).join("."); // 去掉第一个 subdomain
+      }
+
+      // 存储 Adjust 相关参数，防止 PWA 跳转时丢失
+      const adjustCampaign = getUrlParam("adjust_campaign");
+      const fbclid = getUrlParam("fbclid");
+
+      if (adjustCampaign) {
+        sessionStorage.setItem("adjust_campaign", adjustCampaign);
+      }
+      if (fbclid) {
+        sessionStorage.setItem("fbclid", fbclid);
+      }
+
+      console.log("Adjust Campaign:", adjustCampaign);
+      console.log("Facebook Click ID:", fbclid);
+    })();
+  </script>
+
   <!-- Facebook Pixel Code -->
   <script>
     !(function (f, b, e, v, n, t, s) {
