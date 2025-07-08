@@ -182,7 +182,6 @@ const isBetByLoad = ref(false);
 const i18nStoreLanguage = i18nStore();
 const langVal = computed(() => i18nStoreLanguage.languageVal);
 
-
 const isLoading = ref(false);
 const betbyInstance = ref(null);
 const betbyRef = ref(null);
@@ -400,15 +399,14 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
       if (platformCode !== "LuckySport") {
         visible.value = true;
       }
-      if (platformCode === "BetBy" && isBetByLoad.value === false) {
-        console.log("Load BEt By");
-        isBetByLoad.value = true;
-        const script = document.createElement("script");
-        script.src = "https://ui.invisiblesport.com/bt-renderer.min.js";
-        script.async = true;
-        document.head.appendChild(script);
-      }
-
+      // if (platformCode === "BetBy" && isBetByLoad.value === false) {
+      //   console.log("Load BEt By");
+      //   isBetByLoad.value = true;
+      //   const script = document.createElement("script");
+      //   script.src = "https://ui.invisiblesport.com/bt-renderer.min.js";
+      //   script.async = true;
+      //   document.head.appendChild(script);
+      // }
 
       var way = null;
       if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -461,36 +459,79 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
           let srcDoc = res.data;
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
           isLoading.value = false;
+
+          // if (platformCode === "BetBy") {
+          //   isBetBy.value = true;
+
+          //   const topActionsEl = document.querySelector(".topActions");
+          //   const headerHeight = topActionsEl ? topActionsEl.offsetHeight : 0;
+
+          //   await nextTick();
+          //   // debugger;
+          //   // betbyItem.style.display = "flex";
+
+          //   betbyInstance.value = new BTRenderer().initialize({
+          //     brand_id: "2547441365755760643",
+          //     token: srcDoc,
+          //     themeName: "default",
+          //     lang:  langVal.value,
+          //     target: betbyRef.value,
+          //     stickyTop: headerHeight,
+          //     betSlipOffsetTop: headerHeight,
+          //     betslipZIndex: 999,
+          //     onLogin: function () {},
+          //     onRegister: function () {},
+          //     onSessionRefresh: function () {
+          //       console.log("onSessionRefresh");
+          //     },
+          //     onTokenExpired: function (e) {
+          //       console.log("onTokenExpired" + e);
+          //     }
+          //   });
+          //   console.log("betbyInstance.value: ", betbyInstance.value);
+          // }
+
           if (platformCode === "BetBy") {
-            isBetBy.value = true;
+            const script = document.createElement("script");
+            script.src = "https://ui.invisiblesport.com/bt-renderer.min.js";
+            script.async = true;
 
-            const topActionsEl = document.querySelector(".topActions");
-            const headerHeight = topActionsEl ? topActionsEl.offsetHeight : 0;
+            script.onload = async () => {
+              isBetBy.value = true;
 
+              const topActionsEl = document.querySelector(".topActions");
+              const headerHeight = topActionsEl ? topActionsEl.offsetHeight : 0;
 
-            await nextTick();
-            // debugger;
-            // betbyItem.style.display = "flex";
+              await nextTick();
 
-            betbyInstance.value = new BTRenderer().initialize({
-              brand_id: "2547441365755760643",
-              token: srcDoc,
-              themeName: "default",
-              lang:  langVal.value,
-              target: betbyRef.value,
-              stickyTop: headerHeight,
-              betSlipOffsetTop: headerHeight,
-              betslipZIndex: 999,
-              onLogin: function () {},
-              onRegister: function () {},
-              onSessionRefresh: function () {
-                console.log("onSessionRefresh");
-              },
-              onTokenExpired: function (e) {
-                console.log("onTokenExpired" + e);
-              }
-            });
-            console.log("betbyInstance.value: ", betbyInstance.value);
+              betbyInstance.value = new BTRenderer().initialize({
+                brand_id: "2547441365755760643",
+                token: srcDoc,
+                themeName: "default",
+                lang: langVal.value,
+                target: betbyRef.value,
+                stickyTop: headerHeight,
+                betSlipOffsetTop: headerHeight,
+                betslipZIndex: 999,
+                onLogin: () => {},
+                onRegister: () => {},
+                onSessionRefresh: () => {
+                  console.log("onSessionRefresh");
+                },
+                onTokenExpired: (e) => {
+                  console.log("onTokenExpired", e);
+                }
+              });
+
+              console.log("betbyInstance.value: ", betbyInstance.value);
+            };
+
+            script.onerror = () => {
+              console.error("Failed to load bt-renderer.min.js");
+            };
+
+            document.head.appendChild(script);
+
           } else if (firstFourChars === "http") {
             if (platformCode === "LuckySport" && gameCode !== "") {
               src.value = srcDoc.replace(gameCode, "");
