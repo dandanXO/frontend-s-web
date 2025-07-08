@@ -133,7 +133,11 @@ export default defineComponent({
       }
     };
 
+
+
+
     const trackH5Affiliate = () => {
+      // const hostname= "ifn31.cc";
       const hostname = window.location.hostname.replace("www.", "");
       const affiliateCodeFromDomain = domainLists[hostname]?.affiliateCode;
       var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || affiliateCodeFromDomain || "076DB8";
@@ -154,16 +158,49 @@ export default defineComponent({
         });
       };
 
+      const trackPwa = async () => {
+        // alert("here");
+        api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
+          console.log("OPEN");
+        });
+
+        var adCode = "";
+        let _affiliateCode = "";
+        // debugger;
+        //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
+        await api
+          .get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${adCode}`)
+          .then((res) => {
+            const { affiliateCode = "", facebookId = "", pushId = "" } = res.data;
+            sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+            _affiliateCode = affiliateCode;
+            console.log("Init FB");
+            if (facebookId) {
+              fbq("init", facebookId);
+              fbq("track", "PageView");
+              store.isFbPixel = true;
+              // sendFacebookInfo();
+            }
+            if (pushId) {
+              // initEngageLabPush(pushId);
+            }
+          });
+
+        api.get(`/app/adjust/params?affiliateCode=${_affiliateCode}`).then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+            if (res.data.adjust_register_event) {
+              ui.adjust_register_event = res.data.adjust_register_event;
+            }
+            affAppToken.value = res.data.adjust_app_token;
+            initAdjustEventTrack();
+          }
+        });
+      }
+
       const isRefreshed = sessionStorage.getItem("PWA_REFRESH_PAGE");
-      if (isInPwa() && !isRefreshed) {
-        document.addEventListener(
-          "pwaEvent",
-          () => {
-            // affiliateCode = sessionStorage.getItem("AFFILIATE_CODE");
-            // track();
-          },
-          { once: true }
-        );
+      if (isInPwa() ) {
+        trackPwa();
       } else {
         track();
       }
