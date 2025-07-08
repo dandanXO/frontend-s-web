@@ -1,7 +1,7 @@
 import { route, store } from "quasar/wrappers";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
-import { isAndroid, isOperaPixelUrl } from "boot/utils";
+import { isAndroid, isOperaPixelUrl, isInPwa } from "boot/utils";
 import { SessionStorage } from "quasar";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
