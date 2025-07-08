@@ -5,7 +5,7 @@ import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
 import i18n from "../i18n/index";
 import axios from "axios";
-import { getRndInteger } from "boot/utils";
+import { getRndInteger, isAndroid, isInPwa } from "boot/utils";
 import { t } from "./lang";
 import { useRoute } from "vue-router";
 
@@ -87,16 +87,26 @@ function getInitApi(apiLinks, urlLsName) {
 
 export default boot(({ app, router }) => {
   const onRequest = (config) => {
-    if (store.token) {
-      api.defaults.headers["token"] = store.token;
-      cashier.defaults.headers["TOKEN"] = store.token;
-      eventapi.defaults.headers["token"] = store.token;
+    let token;
+    if (isAndroid() || isInPwa()) {
+      token = LocalStorage.getItem("TOKEN");
+    } else {
+      token = SessionStorage.getItem("TOKEN");
     }
-    config.headers["Authorization"] = process.env.SITE;
 
-    if (config.data) {
-      config.data = config.data;
+    if (token || store.token) {
+      config.headers.token = token || store.token;
     }
+    // if (store.token) {
+    //   api.defaults.headers["token"] = store.token;
+    //   cashier.defaults.headers["TOKEN"] = store.token;
+    //   eventapi.defaults.headers["token"] = store.token;
+    // }
+    // config.headers["Authorization"] = process.env.SITE;
+
+    // if (config.data) {
+    //   config.data = config.data;
+    // }
     return config;
   };
 
