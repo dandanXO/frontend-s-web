@@ -449,13 +449,18 @@
                             :style="{
                               backgroundImage: (() => {
                                 try {
-                                  return `url(${require(`../assets/index/baccarat/slide-${index}-img.png`)})`;
+                                  return `url(${imgURLGame}${item.icon})`;
                                 } catch (e) {
-                                  return '';
+                                  try {
+                                    return `url(${require(`../assets/index/baccarat/slide-${index}-img.png`)})`;
+                                  } catch (e) {
+                                    return '';
+                                  }
                                 }
                               })()
                             }"
-                          ></div>
+                            @click="playGame(game.name, 'EEAI', game.code)"
+                          />
                         </swiper-slide>
                       </swiper>
                     </div>
@@ -1248,66 +1253,6 @@ export default defineComponent({
                 hotgames.value.push(lottObj);
               }
             }
-            // TODO: check logic
-            // if (platTypes.indexOf("BACCARAT") > -1) {
-            //   var bacObj = Object.assign({}, element);
-            //   // bacObj.title = translateRecord(bacObj.name);
-            //   bacObj.title = getAliasName(element, "BACCARAT");
-            //   bacObj.icon = "baccarat";
-            //   bacObj.subtitle = "百家乐";
-            //   baccarat.value.push(bacObj);
-            // }
-          });
-
-          baccarat.value = Array(16).fill({
-            id: 175,
-            name: "EEAI",
-            code: "EEAI",
-            status: "OPEN",
-            walletType: "SEAMLESS",
-            gameType: "LIVE",
-            followType: "FOLLOW",
-            underMaintenance: false,
-            maintenanceStartTime: null,
-            maintenanceEndTime: null,
-            alias: "EEAI真人",
-            sequence: 5,
-            platformLabel: "",
-            showLogo: 0
-          });
-
-          roulette.value = Array(16).fill({
-            id: 175,
-            name: "EEAI",
-            code: "EEAI",
-            status: "OPEN",
-            walletType: "SEAMLESS",
-            gameType: "LIVE",
-            followType: "FOLLOW",
-            underMaintenance: false,
-            maintenanceStartTime: null,
-            maintenanceEndTime: null,
-            alias: "EEAI真人",
-            sequence: 5,
-            platformLabel: "",
-            showLogo: 0
-          });
-
-          luckyLace.value = Array(16).fill({
-            id: 175,
-            name: "EEAI",
-            code: "EEAI",
-            status: "OPEN",
-            walletType: "SEAMLESS",
-            gameType: "LIVE",
-            followType: "FOLLOW",
-            underMaintenance: false,
-            maintenanceStartTime: null,
-            maintenanceEndTime: null,
-            alias: "EEAI真人",
-            sequence: 5,
-            platformLabel: "",
-            showLogo: 0
           });
 
           slot.value.sort((a, b) => a.num - b.num);
@@ -1484,6 +1429,7 @@ export default defineComponent({
     };
 
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+    const imgURLGame = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/game/";
     const homePopupImg = ref("");
     const isImportantAnnouncementModal = ref(false);
     const homePopupContent = ref("");
@@ -1772,6 +1718,7 @@ export default defineComponent({
 
     onMounted(() => {
       getPlatList();
+      loadEEAILiveGameList();
       store.getUnreadTotal();
       loadAnnouncement();
       checkPlatform();
@@ -1823,6 +1770,43 @@ export default defineComponent({
       const _swiper = getSwiperInstance(index);
       if (!_swiper) return;
       _swiper.slidePrev();
+    };
+
+    const platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
+    const platformGamesApiKey = store.hasToken() ? "LOGGEDPLATFORMGAMES" : "PLATFORMGAMES";
+
+    const loadEEAILiveGameList = () => {
+      const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+      const key = `${platformApiKey}_EEAI_LIVE_GAMES_${regDevice}`;
+      cached
+        .get(key, () =>
+          api
+            .get(platformGamesApiUrl, {
+              params: {
+                platformId: 175,
+                gameType: "LIVE",
+                device: regDevice
+              }
+            })
+            .then((res) => {
+              if (res.code === 0) {
+                return res;
+              }
+            })
+            .catch((err) => {})
+        )
+        .then((res) => {
+          console.log(res);
+          res.forEach((item) => {
+            if (item.code.startsWith("101")) {
+              baccarat.value.push(item);
+            } else if (item.code.startsWith("103")) {
+              roulette.value.push(item);
+            } else if (item.code.startsWith("112")) {
+              luckyLace.value.push(item);
+            }
+          });
+        });
     };
 
     return {
