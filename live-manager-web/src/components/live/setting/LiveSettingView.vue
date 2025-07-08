@@ -155,7 +155,14 @@
           <div class="p-field">
             <label for="emoji"></label>
             <Button icon="pi pi-smile" class="p-button-sm mt-2" @click="showEmojiPickerForMessage = !showEmojiPickerForMessage" style="width: 80px;">Emoji</Button>
-            <div v-if="showEmojiPickerForMessage"><EmojiPicker @select="insertEmojiToMessage" /></div>
+            <div v-if="showEmojiPickerForMessage" style="position: absolute; z-index: 100;">
+              <!-- 遮罩層，點擊時關閉 -->
+              <div
+                style="position: fixed; inset: 0; z-index: 99;"
+                @click="showEmojiPickerForMessage = false"
+              ></div>
+              <EmojiPicker  @select="insertEmojiToMessage" style="position: absolute;z-index: 100;"/>
+            </div>
           </div>
           <div class="p-field">
             <label for="roomTitle">{{ t('fields.roomTitle') }}</label>
@@ -164,7 +171,14 @@
           <div class="p-field">
             <label for="emoji"></label>
             <Button icon="pi pi-smile" class="p-button-sm mt-2" @click="showEmojiPicker = !showEmojiPicker" style="width: 80px;">Emoji</Button>
-            <div v-if="showEmojiPicker"><EmojiPicker @select="insertEmoji" /></div>
+            <div v-if="showEmojiPicker" style="position: absolute; z-index: 100;">
+              <!-- 遮罩層，點擊時關閉 -->
+              <div
+                style="position: fixed; inset: 0; z-index: 99;"
+                @click="showEmojiPicker = false"
+              ></div>
+              <EmojiPicker @select="insertEmoji" style="position: absolute;z-index: 100;"/>
+            </div>
           </div>
           <div class="p-field">
             <label for="scheduledAnnouncement">{{ t('fields.scheduledAnnouncement') }}</label>
@@ -173,7 +187,15 @@
           <div class="p-field">
             <label for="emoji"></label>
             <Button icon="pi pi-smile" class="p-button-sm mt-2" @click="showEmojiPickerForScheduled = !showEmojiPickerForScheduled" style="width: 80px;">Emoji</Button>
-            <div v-if="showEmojiPickerForScheduled"><EmojiPicker @select="insertEmojiToScheduled" /></div>
+            
+            <div v-if="showEmojiPickerForScheduled" style="position: absolute; z-index: 100;">
+              <!-- 遮罩層，點擊時關閉 -->
+              <div
+                style="position: fixed; inset: 0; z-index: 99;"
+                @click="showEmojiPickerForScheduled = false"
+              ></div>
+              <EmojiPicker @select="insertEmojiToScheduled" style="position: absolute;z-index: 100;"/>
+            </div>
           </div>
         </div>
         <div class="dialog-footer">
@@ -231,7 +253,7 @@ import { required } from "@/utils/validate";
 import { useRoute } from "vue-router";
 import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
-// import 'vue3-emoji-picker/dist/style.css'
+import 'vue3-emoji-picker/css'; 
 import 'videojs-flvjs-es6'
 import { useUserStore } from "@/stores/userStore";
 
