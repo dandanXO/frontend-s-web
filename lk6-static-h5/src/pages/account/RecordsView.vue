@@ -2,10 +2,10 @@
   <div>
     <div class="transit-buttons">
       <router-link class="btn" v-for="(trans, i) in transitList" :key="i" :to="`records/${trans.code}`">
-        <img :src="require(`../../assets/records/${trans.icon}-icon.png`)" />
+        <!-- <img :src="require(`../../assets/records/${trans.icon}-icon.png`)" /> -->
         {{ trans.name }}
         <div class="right">
-          <img class="svg" src="~assets/records/arrow-right-s-line.svg" />
+          <img src="~assets/records/arrow-right-s-line.svg" />
         </div>
       </router-link>
     </div>
@@ -67,37 +67,28 @@ const transitList = ref([
   padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 0px;
-  color: #bacef1;
+  gap: 7px;
 
   .btn {
-    border-top: 0.5px solid #0089ed50;
-    color: #333;
+    color: #7a80a1;
     height: 46px;
     text-decoration: none;
     position: relative;
-    background: #ffffff;
+    background: #fcfdfe;
     padding: 10px 20px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 24px;
+    border-radius: 7px;
 
-    img:not(.svg) {
-      width: 22px;
+    img {
+      width: 8px;
     }
 
     .right {
       position: absolute;
       right: 18px;
-
-      svg {
-        fill: #757575;
-      }
-    }
-
-    &:last-child {
-      border-bottom: 0.5px solid #0089ed50;
     }
   }
 }
