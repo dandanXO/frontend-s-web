@@ -6,7 +6,7 @@
           <q-icon name="close" @click="closeTopBox" />
           <img class="headicon" src="../assets/index/logo-char.png" />
           <div class="download-txt-container">
-            <span class="download-title text-bold">东赢 APP</span>
+            <span class="download-title text-bold">幸运6 APP</span>
             <span class="download-content">覆盖全部游戏，体验更流畅，更安全，更快捷</span>
           </div>
           <div class="buttons">
@@ -1952,7 +1952,7 @@ export default defineComponent({
     }
 
     .headicon {
-      width: 50px;
+      width: 36px;
     }
 
     .download-txt-container {
