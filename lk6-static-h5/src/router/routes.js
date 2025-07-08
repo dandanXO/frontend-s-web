@@ -83,6 +83,17 @@ const routes = [
     ]
   },
   {
+    path: "/baccarat",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "baccarat",
+        component: () => import("pages/games/BaccaratView.vue")
+      }
+    ]
+  },
+  {
     path: "/account/vip",
     component: () => import("layouts/MainLayout.vue"),
     children: [

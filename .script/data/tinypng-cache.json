@@ -15153,11 +15153,7 @@
   "lk6-static-h5/src/assets/index/logo.png": "b174e3c0150a924dc197f870ae132db6",
   "lk6-static-h5/src/assets/index/logo-char.png": "fb28a41ff0e1cb7efd96fd114b38d715",
   "lk6-static-h5/src/assets/index/diamon-vip.png": "064bcc0d7ae44aeaa89eecd6b33b314a",
-  "lk6-static-h5/src/assets/index/sport/slide-sport-saba.png": "29b0d1656cf52cf3df371e4aaa7564dc",
-  "lk6-static-h5/src/assets/index/sport/slide-sport-pm.png": "84bc0feab713e9ab7000812f8b544313",
-  "lk6-static-h5/src/assets/index/sport/slide-sport-im.png": "6d4a28704798cc10007e07a9414cbe8e",
-  "lk6-static-h5/src/assets/index/sport/slide-sport-fb.png": "173c56229364e36a509d24a04d29f600",
-  "lk6-static-h5/src/assets/index/sport/slide-sport-cr.png": "29b0d1656cf52cf3df371e4aaa7564dc",
+  "lk6-static-h5/src/assets/index/sport/slide-sport-pm.png": "6782d2496a36dd8ba10d8bc44886fe38",
   "lk6-static-h5/src/assets/index/slot/slot-arrow-right.png": "cc2d8ff836139dd9bb4e90966ca7e270",
   "lk6-static-h5/src/assets/index/slot/slot-arrow-left.png": "b2c12a4324932ddf5ff3f28e56fb90aa",
   "lk6-static-h5/src/assets/index/slot/slide-slot-sw.png": "37e28bfc55a893742cd3550bebde954e",
@@ -31772,5 +31768,10 @@
   "lk6-static-h5/public/tac/images/icon.png": "c5754c685d45bdbe4013999b6a759eb4",
   "lk6-static-h5/src/assets/images/index/primary-btn-lg.png": "c6c9f2f5c60f9d5cb90f409023086721",
   "lk6-static-h5/src/assets/images/index/primary-btn-white-lg.png": "c93fc8a39b594820d6c188fe4dd96d17",
-  "lk6-static-h5/src/assets/images/login/forgot-pwd-bg.png": "efb23acee67e592b750ed16ae32c8833"
+  "lk6-static-h5/src/assets/images/login/forgot-pwd-bg.png": "efb23acee67e592b750ed16ae32c8833",
+  "lk6-static-h5/src/assets/images/games/baccarat/category-bg-active.png": "c143fbdabd750bf43701e4305edd3244",
+  "lk6-static-h5/src/assets/images/games/baccarat/category-bg.png": "f6dd7abfda4612c33304f8a6614dce3b",
+  "lk6-static-h5/src/assets/index/baccarat/slide-baccarat-img.png": "ab22d2c207771029b02f74d61a0d326d",
+  "lk6-static-h5/src/assets/index/baccarat/slide-lucky-lace-img.png": "0a66deee9d59b9a3160d19d3a73d2bd5",
+  "lk6-static-h5/src/assets/index/baccarat/slide-roulette-img.png": "11b59404a3e793c25b9a981f583edb32"
 }
