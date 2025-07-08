@@ -84,6 +84,7 @@ export default {
     display: grid;
     grid-template-columns: 0.3fr 0.7fr;
     width: 100%;
+    gap: 10px;
   }
 
   img {
