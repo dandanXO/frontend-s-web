@@ -4,14 +4,15 @@
       style="width: 100%"
       class="modalcontent"
       :class="{
-        'with-decorator': withDecorator
+        'with-decorator': withDecorator,
+        ...$attrs.class
       }"
     >
       <div class="headers">
         <slot name="header">
           <div class="titles">{{ header }}</div>
         </slot>
-        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+        <q-btn v-if="closable" class="color-font-1" flat v-close-popup round dense icon="close" />
       </div>
       <div class="contents">
         <slot name="content">
@@ -64,6 +65,10 @@ const props = defineProps({
   cancelBtnText: {
     type: String,
     default: ""
+  },
+  closable: {
+    type: Boolean,
+    default: true
   }
 });
 
@@ -132,17 +137,11 @@ const _cancelBtnText = computed(() => {
       margin-left: auto;
     }
 
-    .black-titles,
     .titles {
       left: 50%;
       position: absolute;
       transform: translate(-50%, 0);
     }
-  }
-
-  .black-titles {
-    color: $accent;
-    font-size: 1rem;
   }
 
   .contents {
@@ -152,18 +151,6 @@ const _cancelBtnText = computed(() => {
     text-align: center;
     color: #424f72;
     font-size: 1.2rem;
-
-    .dialog-content-icon {
-      width: 2.5rem;
-      margin-bottom: 12px;
-    }
-
-    .contentfonts {
-      text-align: center;
-      color: #333;
-      font-size: 16px;
-      margin: 37px 0 20.5px 0;
-    }
 
     .inputs {
       width: 292px;
@@ -178,25 +165,6 @@ const _cancelBtnText = computed(() => {
         height: 100%;
         width: 100%;
       }
-    }
-
-    .verification-code-input {
-      border-radius: 7px;
-      .q-field__control {
-        box-shadow: 0px 0px 2.78px 0px #a9c9ea inset;
-        background-color: #f7f8fb;
-      }
-      .q-placeholder {
-        color: #424f72;
-        &::placeholder {
-          color: #a4aabb;
-        }
-      }
-    }
-
-    .verification-img {
-      border-radius: 7px;
-      cursor: pointer;
     }
   }
 
@@ -242,6 +210,9 @@ const _cancelBtnText = computed(() => {
 
     a {
       color: inherit;
+      &:hover {
+        filter: none;
+      }
     }
   }
 }

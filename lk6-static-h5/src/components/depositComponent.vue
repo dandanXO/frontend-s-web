@@ -3,10 +3,10 @@
   <!--  <pre>extensionToken: {{ extensionToken }}</pre>-->
   <!--  <pre>store:{{ store }}</pre>-->
 
-  <div class="q-pa-md deposit-section" style="overflow: auto; background: #fff; margin: 8px 8px">
-    <label class="label">请选择</label>
+  <div class="q-pa-md deposit-section" style="overflow: auto">
+    <!-- <label class="label">支付方式</label> -->
     <div class="node-wrapper q-mt-xs">
-      <Node :level="1" :list="payMethods" ref="paymentNode" @clicked="onSelect" />
+      <Node :level="1" :list="payMethods" name="支付方式" ref="paymentNode" @clicked="onSelect" />
     </div>
 
     <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
@@ -55,138 +55,133 @@
         </div>
       </div>
     </div>
-    <div class="deposit-container" v-else>
-      <label class="label">存款金额</label>
-      <q-form ref="depositForm" class="q-gutter-y-xs">
-        <div class="flex-c-center" v-if="amountList.length === 0">
-          <q-input
-            class="deposit-input"
-            hide-bottom-space
-            ref="depositAmtRef"
-            label="存款金额"
-            name="localAmount"
-            clearable
-            v-model="form.localAmount"
-            placeholder="输入金额"
-            color="blue"
-            :rules="verifyDepositAmount"
-            padding="none"
-          >
-            <template v-slot:prepend>
-              <span style="font-size: 26px" class="text-bright">
-                <template v-if="isUSDT">USDT</template>
-                <template v-else>{{ store.currency.value }}</template>
-              </span>
-            </template>
-          </q-input>
-          <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
-        </div>
-        <div class="flex-c-center" v-else>
+    <template v-else>
+      <div class="deposit-container">
+        <label class="deposit-label">存款金额</label>
+        <q-form ref="depositForm" class="q-gutter-y-xs">
+          <div class="flex-c-center" v-if="amountList.length === 0">
+            <q-input
+              class="deposit-input"
+              hide-bottom-space
+              ref="depositAmtRef"
+              name="localAmount"
+              standout
+              clearable
+              v-model="form.localAmount"
+              placeholder="输入金额"
+              :rules="verifyDepositAmount"
+              padding="none"
+            ></q-input>
+          </div>
+          <div class="flex-c-center" v-else>
+            <q-select
+              class="deposit-input"
+              ref="depositAmtRef"
+              label="选择金额"
+              name="localAmount"
+              standout
+              :options="amountList"
+              v-model="form.localAmount"
+              :rules="verifyDepositAmount"
+              padding="none"
+            >
+              <template v-slot:prepend>
+                <span style="font-size: 26px" class="text-bright">
+                  {{ store.currency.value }}
+                </span>
+              </template>
+            </q-select>
+            <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="存款" />
+          </div>
+
+          <div class="q-mt-sm deposit-limit">
+            单笔存款：{{
+              calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
+            }}
+            -
+            {{
+              activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " "
+            }}
+          </div>
+
+          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md row align-center" label="兑换率">
+            <label class="label">实时汇率：</label>
+            <span class="label-green" style="font-size: 16px; font-weight: 600">
+              1.00 USDT ≈ {{ activeMethod.currencyRate }}
+              {{ store.currency.value }}
+            </span>
+          </div>
+
+          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="预计到账">
+            <label class="label">预计到账：</label>
+            <span class="label-green" style="font-size: 16px; font-weight: 600">
+              {{
+                calculatedMinDeposit && form.localAmount < calculatedMinDeposit
+                  ? "0.00"
+                  : (form.localAmount * activeMethod.currencyRate).toFixed(2)
+              }}
+              {{ store.currency.value }}
+            </span>
+          </div>
+          <BankComponent
+            v-show="selectedPayType && bankCardList.length"
+            ref="payTypeClass"
+            :is="selectedPayType"
+            v-model="form.bankId"
+            :bank-list="bankCardList"
+            @selected="selectedBank"
+            @successful="isDeposited = true"
+          ></BankComponent>
           <q-select
-            class="deposit-input"
-            ref="depositAmtRef"
-            label="选择金额"
-            name="localAmount"
-            filled
-            :options="amountList"
-            v-model="form.localAmount"
-            color=""
-            :rules="verifyDepositAmount"
-            padding="none"
+            ref="offerRef"
+            class="q-mt-md deposit-input"
+            label="选择优惠"
+            standout
+            :options="unselectedPrivileges"
+            v-model="selectedPrivilege"
+            emit-value
+            v-if="hasPrivilege"
+            :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
+            clearable
+            @update:model-value="checkMinDepositAmt"
           >
-            <template v-slot:prepend>
-              <span style="font-size: 26px" class="text-bright">
-                {{ store.currency.value }}
-              </span>
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps">
+                <q-item-section>
+                  <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
+                    {{ scope.opt.name }}
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
             </template>
           </q-select>
-          <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
-        </div>
 
-        <div class="q-mt-sm text-grey text-bold">
-          单笔存款：{{
-            calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
-          }}
-          -
-          {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
-        </div>
+          <div
+            class="rollover-info"
+            v-if="
+              selectedPrivilege &&
+              selectedPrivilege.name &&
+              (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)
+            "
+          >
+            <span v-if="selectedPrivilege.depositMin">
+              优惠最低存款要求：{{ selectedPrivilege.depositMin }}元，&nbsp;&nbsp;&nbsp;
+            </span>
+            <span v-if="selectedPrivilege.gameTypeRollover && selectedPrivilege.gameTypeRollover !== '{}'">
+              {{ getRollOverText(selectedPrivilege.gameTypeRollover) }}
+            </span>
+            <span v-else>流水倍数要求（本金 + 彩金）：{{ selectedPrivilege.rollover }}倍</span>
+          </div>
 
-        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="兑换率">
-          <label class="label">实时汇率</label>
-          <span class="text-positive" style="font-size: 16px; font-weight: 600">
-            1.00 USDT ≈ {{ activeMethod.currencyRate }}
-            {{ store.currency.value }}
-          </span>
-        </div>
-
-        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="预计到账">
-          <label class="label">预计到账</label>
-          <span class="text-positive" style="font-size: 16px; font-weight: 600">
-            {{
-              calculatedMinDeposit && form.localAmount < calculatedMinDeposit
-                ? "0.00"
-                : (form.localAmount * activeMethod.currencyRate).toFixed(2)
-            }}
-            {{ store.currency.value }}
-          </span>
-        </div>
-        <BankComponent
-          v-show="selectedPayType && bankCardList.length"
-          ref="payTypeClass"
-          :is="selectedPayType"
-          v-model="form.bankId"
-          :bank-list="bankCardList"
-          @selected="selectedBank"
-          @successful="isDeposited = true"
-        ></BankComponent>
-        <q-select
-          ref="offerRef"
-          class="q-mt-md"
-          label="选择优惠"
-          filled
-          :options="unselectedPrivileges"
-          v-model="selectedPrivilege"
-          emit-value
-          v-if="hasPrivilege"
-          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
-          clearable
-          @update:model-value="checkMinDepositAmt"
-        >
-          <template v-slot:option="scope">
-            <q-item v-bind="scope.itemProps">
-              <q-item-section>
-                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
-                  {{ scope.opt.name }}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-select>
-
-        <div
-          class="rollover-info"
-          v-if="
-            selectedPrivilege &&
-            selectedPrivilege.name &&
-            (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)
-          "
-        >
-          <span v-if="selectedPrivilege.depositMin">
-            优惠最低存款要求：{{ selectedPrivilege.depositMin }}元，&nbsp;&nbsp;&nbsp;
-          </span>
-          <span v-if="selectedPrivilege.gameTypeRollover && selectedPrivilege.gameTypeRollover !== '{}'">
-            {{ getRollOverText(selectedPrivilege.gameTypeRollover) }}
-          </span>
-          <span v-else>流水倍数要求（本金 + 彩金）：{{ selectedPrivilege.rollover }}倍</span>
-        </div>
-
-        <div class="q-mt-md" v-html="activeMethod.msg"></div>
-        <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
-        <!-- <div class="q-mt-md">
-          <q-btn color="dygreen" :loading="btnLoading" class="fit" @click="confirmDeposit" label="确定存款" />
-        </div> -->
-      </q-form>
-    </div>
+          <div class="q-mt-md" v-html="activeMethod.msg"></div>
+          <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
+          <!-- <div class="q-mt-md">
+            <q-btn color="dygreen" :loading="btnLoading" class="fit" @click="confirmDeposit" label="确定存款" />
+          </div> -->
+        </q-form>
+      </div>
+      <q-btn :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="存款" />
+    </template>
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
@@ -204,22 +199,22 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isNewUser" class="modal-common-div" no-backdrop-dismiss no-esc-dismiss>
-    <q-card style="width: 100%; padding: 20px" class="modalcontent">
-      <div class="headers">
-        <div class="titles">温馨提示</div>
-        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+  <CommonModal
+    v-model="isNewUser"
+    header="温馨提示"
+    message="为保证资金安全，存款前需先验证手机号"
+    no-backdrop-dismiss
+    no-esc-dismiss
+    :closable="true"
+  >
+    <template #action>
+      <div />
+      <div class="confirmsbtns common-md-btn">
+        <router-link to="/account/verifyTelephone">前往验证</router-link>
       </div>
-      <div class="contents">为保证资金安全，存款前需先验证手机号</div>
-      <div class="btnsreas">
-        <div />
-        <div class="confirmsbtns common-md-btn">
-          <router-link to="/account/verifyTelephone">前往验证</router-link>
-        </div>
-        <div />
-      </div>
-    </q-card>
-  </q-dialog>
+      <div />
+    </template>
+  </CommonModal>
 
   <!--  <q-dialog width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>-->
   <!--    <q-card style="width: 100%; padding: 20px; flex-direction:column;" class="text-black">-->
@@ -249,6 +244,7 @@ var qs = require("qs");
 
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
+import CommonModal from "./CommonModal.vue";
 
 const store = userStore();
 const route = useRoute();
@@ -821,15 +817,50 @@ onActivated(() => {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  .deposit-input {
-    width: 70%;
+}
+.deposit-input {
+  width: 100%;
+  border-radius: 7px;
+  overflow: hidden;
+
+  .q-field__inner {
+    .q-field__control,
+    .q-field__marginal {
+      height: 44px;
+    }
+    .q-field__control {
+      background: #fcfdfe;
+      box-shadow: 0px 0px 2.78px 0px #a9c9ea inset;
+
+      &::before {
+        border-bottom: none;
+      }
+
+      .q-field__native,
+      .q-field__append {
+        color: #333;
+        &::placeholder {
+          color: #a4aabb;
+          opacity: 1;
+        }
+      }
+
+      .q-field__label {
+        color: #a4aabb;
+      }
+    }
   }
-  .deposit-btn {
-    width: 25%;
-    height: 56px;
-    font-size: 20px;
-    white-space: nowrap;
-  }
+}
+.deposit-btn {
+  width: 100%;
+  background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
+  border: 1px solid #ffffff;
+  box-shadow: 0px 2px 0px 0px #9ab0ff70;
+  border-radius: 30px;
+  padding: 12px auto;
+  font-size: 16px;
+  white-space: nowrap;
+  color: #fff;
 }
 
 .additional-tips {
@@ -847,10 +878,13 @@ onActivated(() => {
 
 .deposit-section {
   .label {
-    font-weight: 600;
     font-size: 16px;
-    padding-bottom: 6px;
-    display: block;
+    color: #7a80a1;
+  }
+
+  .label-green {
+    font-weight: 600;
+    color: #00b05c;
   }
 
   .confirm-btn {
@@ -866,7 +900,25 @@ onActivated(() => {
 }
 
 .rollover-info {
-  color: #bd4646;
+  color: #ff2c2c;
   font-size: 12px;
+}
+
+.deposit-container {
+  background: #fff;
+  padding: 12px;
+  border-radius: 7px;
+  margin-bottom: 16px;
+
+  .deposit-limit {
+    color: #7a80a1;
+  }
+
+  .deposit-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #424f72;
+  }
 }
 </style>

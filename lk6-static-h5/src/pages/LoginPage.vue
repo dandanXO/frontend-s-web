@@ -252,6 +252,7 @@
 
     <CommonModal
       v-model="showCaptchaDialog"
+      class="captcha-dialog"
       no-backdrop-dismiss
       header="验证码"
       confirm-btn-text="提交"
@@ -844,6 +845,7 @@ export default defineComponent({
     color: #424f72 !important;
     &::placeholder {
       color: #a4aabb;
+      opacity: 1;
     }
   }
 
@@ -1136,5 +1138,26 @@ export default defineComponent({
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.captcha-dialog {
+  .verification-code-input {
+    border-radius: 7px;
+    .q-field__control {
+      box-shadow: 0px 0px 2.78px 0px #a9c9ea inset;
+      background-color: #f7f8fb;
+    }
+    .q-placeholder {
+      color: #424f72;
+      &::placeholder {
+        color: #a4aabb;
+        opacity: 1;
+      }
+    }
+  }
+
+  .verification-img {
+    border-radius: 7px;
+    cursor: pointer;
+  }
 }
 </style>
