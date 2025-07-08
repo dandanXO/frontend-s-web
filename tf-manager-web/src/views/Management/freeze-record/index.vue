@@ -336,6 +336,11 @@
     </router-link>
     <span>{{ t('message.requestExportToExcelDone2') }}</span>
   </el-dialog>
+  <div v-if="uiControl.progress !== 100" class="loading-overlay">
+    <div class="loading-box">
+      <el-progress type="circle" :percentage="uiControl.progress" />
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -415,6 +420,7 @@ const uiControl = reactive({
     { key: 2, name: t('types.memberRequest'), value: 'Member Request' },
     { key: 3, name: t('types.others'), value: 'Others' },
   ],
+  progress: 100
 })
 
 const importForm = reactive({
@@ -594,6 +600,7 @@ function importToTable(file) {
         // }
 
         // split data into list of 50 ids
+        uiControl.progress = 0
         for (let i = 0; i < data.length; i += 50) {
           const sublist = data.slice(i, i + 50)
           const chunk = sublist.map(d => d.loginName).join(',')
@@ -604,6 +611,9 @@ function importToTable(file) {
           for (let j = i; j < i + sublist.length; j++) {
             data[j].memberId = result[data[j].loginName]
           }
+          uiControl.progress = Math.round(
+            ((j + 1) / data.length) * 100
+          )
         }
       }
       importedPage.records = data

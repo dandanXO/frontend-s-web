@@ -889,6 +889,11 @@
       <span style="margin-left: 10px">{{ page.numberOfDeduction }}</span>
     </div>
   </div>
+  <div v-if="uiControl.progress !== 100" class="loading-overlay">
+    <div class="loading-box">
+      <el-progress type="circle" :percentage="uiControl.progress" />
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -1021,7 +1026,8 @@ const uiControl = reactive({
     gameTypeRollover: null,
     gameLists: [],
     selectType: null
-  }
+  },
+  progress: 100
 })
 
 const gameTypes = ref([])
@@ -1759,6 +1765,7 @@ function importToTable(file) {
             range: 1,
           })
         )
+        uiControl.progress = 0
         for (let i = 0; i < data.length; i += 50) {
           const sublist = data.slice(i, i + 50)
           const chunk = sublist.map(d => d.loginName).join(',')
@@ -1768,6 +1775,9 @@ function importToTable(file) {
           )
           for (let j = i; j < i + sublist.length; j++) {
             data[j].memberId = result[data[j].loginName]
+            uiControl.progress = Math.round(
+              ((j + 1) / data.length) * 100
+            )
           }
         }
       }
@@ -1921,5 +1931,26 @@ onMounted(async () => {
   margin-right: 20px;
   float: right;
   font-size: small;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-box {
+  background: white;
+  padding: 20px 40px;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 300px;
 }
 </style>
