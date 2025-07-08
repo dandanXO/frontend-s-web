@@ -1,9 +1,8 @@
 <template>
   <div class="platform-section">
     <div class="platform-container" :class="platformType === 'poker' ? 'slot-container' : ''">
+      <img src="../assets/slot/slot-top-bg.png" />
       <div class="platform-container-slot" v-if="platformType === 'poker'">
-        <img v-if="isDark" src="../assets/slot/slot-top-bg-dark.png" />
-        <img v-else src="../assets/slot/slot-top-bg.png" />
       </div>
       <div class="platform-container-inner" v-if="platformType !== 'poker'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
@@ -195,7 +194,7 @@
                       <img :src="game.default" />
                     </template>
                     <template #error>
-                      <div class="image-slot">
+                      <div class="image-slot" style="width:100%;height:100%;">
                         <img :src="game.default" />
                       </div>
                     </template>
@@ -435,7 +434,7 @@ const loadGameList = () => {
     getPlatformGames(activePlat.value.id, props.platformGameType)
       .then((data) => {
         data.forEach((element) => {
-          element.default = require("../assets/images/games/aviator/default.png");
+          element.default = require("../assets/images/games/aviator/default-poker.png");
           var imageUrl = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
           element.icon = `${imageUrl}/game/${element.icon}`;
         });
