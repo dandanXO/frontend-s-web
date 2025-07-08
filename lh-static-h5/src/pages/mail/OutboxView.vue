@@ -23,14 +23,14 @@
                   color="#0089ED"
                 />
 
-                <div class="read-label" v-if="det.readTime && det.sendTime && !isMsgRead(det)">
+                <div class="read-label" v-if="!isMsgUnread(det)">
                   <img src="../../assets/images/inbox/read-mail.png" />
                 </div>
                 <div class="read-label" v-else>
                   <img src="../../assets/images/inbox/unread-mail.png" />
                 </div>
 
-                <div class="title-text" :class="`${isMsgRead(det)?'title-text-blob':''}`" :title="det.title" v-html="det.title"></div>
+                <div class="title-text" :class="`${isMsgUnread(det)?'title-text-blob':''}`" :title="det.title" v-html="det.title"></div>
                 <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`">
                   <i>{{ formatSendTime(det.sendTime) }}</i>
                 </div>
@@ -158,7 +158,7 @@ const loadOutbox = () => {
     });
 };
 
-const isMsgRead = (m)=>{
+const isMsgUnread = (m)=>{
   //判断的方法是： replyMessageContent 不是 null ， 但是 replyMessageReadTime 是 null
   return m.replyMessageContent && !m.replyMessageReadTime;
 }
