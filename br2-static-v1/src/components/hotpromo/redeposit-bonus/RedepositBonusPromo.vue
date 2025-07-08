@@ -61,47 +61,12 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
-import { api, eventapi } from "boot/axios";
-
-const router = useRouter();
+import { ref } from "vue";
 
 const props = defineProps(["params"]);
-const params = JSON.parse(props.params || "{}");
-
-const loadPromoInit = () => {
-  eventapi
-    .get("/session/deposit-bonus/init?promoCode=br2-redeposit-bonus")
-    .then((res) => {
-      // debugger;
-      if (res.code === 0) {
-        const { data } = res;
-        console.log(data);
-      }
-    })
-    .catch((e) => {});
-};
-
-const claimPromo = () => {
-  eventapi
-    .post("/session/deposit-bonus/claim?promoCode=br2-redeposit-bonus")
-    .then((res) => {
-      // debugger;
-      if (res.code === 0) {
-        showPrizePopup.value = true;
-        prizeAmount.value = res.data;
-      }
-    })
-    .catch((e) => {});
-};
 
 const showPrizePopup = ref(false);
 const prizeAmount = ref();
-
-onMounted(() => {
-  loadPromoInit();
-});
 </script>
 
 <style lang="scss" scoped>
