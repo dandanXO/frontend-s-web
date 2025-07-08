@@ -364,6 +364,7 @@ export const userStore = defineStore("userStore", {
         LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
         LocalStorage.remove("newPlayerGuide");
+        LocalStorage.remove("onAppFirstDeposit");
 
         this.hasUpdatedOneSignal = false;
 

@@ -748,6 +748,7 @@ function checkPrivilege(v) {
 async function loadPrivilege(val) {
   privilegeList.value = [];
   hasPrivilege.value = false;
+  newPlayerDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
     if (res.code === 0) {
       privilegeList.value = res.data.privileges;
@@ -758,14 +759,16 @@ async function loadPrivilege(val) {
         if (p.payTypes.indexOf(val.payType) >= 0) {
           if (p.triggerType == "FREE") {
             freePrivilege.value.push(p);
-          } else if (p.code === "pk4-new-user-roulette") {
-            newPlayerDepositBonusConfig.value = {
-              selected: true,
-              hasBonus: true,
-              privilegeId: p.id
-            };
           } else {
-            unselectedPrivileges.value.push(p);
+              if (p.code === "pk4-new-user-roulette") {
+              newPlayerDepositBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else {
+              unselectedPrivileges.value.push(p);
+            }
           }
         }
       });
