@@ -61,7 +61,7 @@
         <template #body="slotProps">
           <div style="display: flex; gap: 10px; flex-wrap: nowrap; min-width: 0;">
             <Button icon="pi pi-pencil" style="min-width: 100px; max-width: 100px; white-space: nowrap;" severity="danger" size="small" @click="deleteSupplierStream(slotProps.data.id)">{{ t('fields.delete') }}</Button>
-            <Button icon="pi pi-trash" style="min-width: 100px; max-width: 100px; white-space: nowrap;" severity="success" size="small" @click="setSupplierDefault(slotProps.data.id)">{{ slotProps.data.isDefault === 1 ? t('fields.defaultStream') : t('fields.switch') }}</Button>
+            <Button icon="pi pi-trash" style="min-width: 100px; max-width: 100px; white-space: nowrap;" severity="success" :disabled="slotProps.data.isDefault === 1" size="small" @click="setSupplierDefault(slotProps.data.id)">{{ slotProps.data.isDefault === 1 ? t('fields.defaultStream') : t('fields.switch') }}</Button>
           </div>
         </template>
       </Column>

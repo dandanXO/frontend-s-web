@@ -168,7 +168,7 @@
             :src="promoDir2 + form.cover"
             alt="cover preview"
             width="120"
-            height="68"
+            height="80"
             preview
             class="preview"
             style="margin-bottom: 8px; border: 1px solid #ccc"
@@ -193,7 +193,7 @@
       </div>
         <div class="p-field">
           <label for="operator"></label>
-          <Button :label="t('fields.confirm')" icon="pi pi-check" type="submit" class="p-button-primary" />
+          <Button :label="t('fields.confirm')" icon="pi pi-check" severity="info" type="submit" class="p-button-primary" />
           <Button :label="t('fields.cancel')" icon="pi pi-times" class="p-button-secondary" @click="$router.back()" style="margin-left: 10px" />
         </div>
     </form>
@@ -210,12 +210,13 @@ import { required } from '@/utils/validate';
 import { useToast } from 'primevue/usetoast'
 import { useStorage } from '@vueuse/core'
 import { useUserStore } from '@/stores/userStore'
+import { uploadImage } from '@/service/image'
 
-const { getEvents, getTeamById, uploadImage, updateSportLiveEvent } = DashboardService
+const { getEvents, getTeamById, updateSportLiveEvent } = DashboardService
 import dayjs from "dayjs";
 import { liveSportTyps } from "@/utils/live"
 const toast = useToast()
-const TEAMS_PER_VIEW = 20
+const TEAMS_PER_VIEW = 50
 const store = useUserStore()
 const route = useRoute();
 const { t } = useI18n();
@@ -307,24 +308,11 @@ const request = reactive({
   id: null,
 });
 
-// const displayTeams = computed(() => {
-//   const _searchedTeams = searchedTeams.value.map(team => ({ ...team, _sid: `search-${team.id}` }))
-//   const _loadedTeams = loadedTeams.value.map(team => ({ ...team, _sid: `loaded-${team.id}` }));
-//   const allTeams = _searchedTeams.concat(_loadedTeams);
-//   const result = new Map()
-//   allTeams.forEach(team => {
-//     if (result.has(team.id)) return;
-//     result.set(team.id, team);
-//   })
-//   return Array.from(result.values());
-// })
-
 async function attachImage(event) {
   const file = event.files[0];
   if (!file) return;
 
   const data = await attachPhoto(event);
-  console.log("attachImage ::: data : ", data)
   if (data) {
     form.cover = `/live/event/${store.siteId}/${data}`;
   } else {
@@ -334,7 +322,6 @@ async function attachImage(event) {
 
 async function attachPhoto(event) {
   const files = event.files[0];
-  console.log("attachPhoto ::: files : ", files)
   if (!files) return;
 
   const fr = new FileReader();
@@ -351,14 +338,15 @@ async function attachPhoto(event) {
     toast.add({ severity: 'error', summary: t('message.invalidFileType'), life: 3000 })
     return null;
   }
-  console.log("attachPhoto ::: files : ", files)
+
   const formData = new FormData();
   formData.append('files', files);
   formData.append('dir', `live/event/${store.siteId}`);
   formData.append('overwrite', false);
-  console.log("attachPhoto ::: formData : ", formData)
+
   try {
     const response = await uploadImage(formData);
+    console.log('attachPhoto');
     return response.code === 0 ? response.data : null;
   } catch (error) {
     toast.add({ severity: 'error', summary: t('message.failedToUploadImage'), life: 3000 })
