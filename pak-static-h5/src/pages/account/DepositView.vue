@@ -375,21 +375,21 @@
     </div>
   </q-dialog> -->
   <q-dialog width="100%" v-model="showPaymentCancellationDialog">
-  <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
-    <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
-    <div class="popout-dialog-container">
-      <div class="txt-title">{{ $t("notify.cancelPayment") }}</div>
-      <div class="txt-content q-mt-md text-center">
-        {{ $t("notify.cancelPaymentWillLose") }}
-        <br />
-        <div class="bonusAmt">PKR {{ paymentCancellationAmtLoss }}</div>
-      </div>
-      <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
-        <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup @click="confirmLeave" />
-        <q-btn :label="$t('btn.payAgain')" no-caps class="btn-confirm" @click="cancelLeave" v-close-popup />
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px">
+      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("notify.cancelPayment") }}</div>
+        <div class="txt-content q-mt-md text-center">
+          {{ $t("notify.cancelPaymentWillLose") }}
+          <br />
+          <div class="bonusAmt">PKR {{ paymentCancellationAmtLoss }}</div>
+        </div>
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
+          <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup @click="confirmLeave" />
+          <q-btn :label="$t('btn.payAgain')" no-caps class="btn-confirm" @click="cancelLeave" v-close-popup />
+        </div>
       </div>
     </div>
-  </div>
   </q-dialog>
 
   <AdditionalSteps
@@ -402,6 +402,7 @@
 </template>
 
 <script setup>
+import { useUI } from "stores/ui";
 import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, watch, computed, nextTick } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
@@ -537,7 +538,9 @@ const isFtdPrivilegeEnable = ref(false);
 const ftdBonusConfig = ref(DEFAULT_BONUS_CONFIG);
 const secondTimeDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
 const thirdTimeDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
-const newPlayerDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG)
+const newPlayerDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
+
+const ui = useUI();
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
 const isFtdPrivilege = computed(
@@ -564,12 +567,12 @@ const is3rdPrivilege = computed(
     thirdTimeDepositBonusConfig.value.hasBonus
 );
 const isNewPlayerPrivilege = computed(
-  () => 
+  () =>
     selectedPayType.value !== "USDTTRC" &&
     newPlayerDepositBonusConfig.value.selected &&
-    newPlayerDepositBonusConfig.value.hasBonus && 
+    newPlayerDepositBonusConfig.value.hasBonus &&
     isAndroid()
-)
+);
 
 const copyMessage = (position) => {
   let copyText = null;
@@ -683,7 +686,6 @@ const get2ndAmount = (amount) => {
   return rewardMap[amount] || 0;
 };
 
-
 const get3rdAmount = (amount) => {
   const rewardMap = {
     300: 150,
@@ -699,7 +701,6 @@ const get3rdAmount = (amount) => {
   };
   return rewardMap[amount] || 0;
 };
-
 
 const getNewPlayerAmount = (amount) => {
   const rewardMap = {
@@ -1086,6 +1087,8 @@ async function pDepo(deposit) {
                   newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
                 }
               }
+            } else if (ui.annoyingType === "NONE") {
+              window.open(response.requestUrl, "_blank");
             } else {
               const newWin = window.open(`/`);
               if (!newWin) {
@@ -1148,19 +1151,19 @@ async function pDepo(deposit) {
           }
           // if (isAndroid()) {
           // }
-          
-          const onAppFirstDeposit = newPlayerDepositBonusConfig.value?.hasBonus
+
+          const onAppFirstDeposit = newPlayerDepositBonusConfig.value?.hasBonus;
           if (onAppFirstDeposit) {
-            localStorage.setItem('onAppFirstDeposit', JSON.stringify(onAppFirstDeposit));
+            localStorage.setItem("onAppFirstDeposit", JSON.stringify(onAppFirstDeposit));
           }
-          const secondDeposit = secondTimeDepositBonusConfig.value?.hasBonus
+          const secondDeposit = secondTimeDepositBonusConfig.value?.hasBonus;
           if (secondDeposit) {
-            localStorage.setItem('secondDeposit', JSON.stringify(secondDeposit));
+            localStorage.setItem("secondDeposit", JSON.stringify(secondDeposit));
           }
-          
-          const thirdDeposit = thirdTimeDepositBonusConfig.value?.hasBonus
+
+          const thirdDeposit = thirdTimeDepositBonusConfig.value?.hasBonus;
           if (thirdDeposit) {
-            localStorage.setItem('thirdDeposit', JSON.stringify(thirdDeposit));
+            localStorage.setItem("thirdDeposit", JSON.stringify(thirdDeposit));
           }
         }
       } else {
@@ -1307,65 +1310,64 @@ onMounted(() => {
 });
 const showPaymentCancellationDialog = ref();
 const paymentCancellationAmtLoss = ref(0);
-const pendingNext = ref(null)
+const pendingNext = ref(null);
 
 const confirmLeave = () => {
-  showPaymentCancellationDialog.value = false
+  showPaymentCancellationDialog.value = false;
   if (pendingNext.value) {
-    pendingNext.value()
-    pendingNext.value = null
+    pendingNext.value();
+    pendingNext.value = null;
   }
-}
+};
 
 const cancelLeave = () => {
-  showPaymentCancellationDialog.value = false
+  showPaymentCancellationDialog.value = false;
   if (pendingNext.value) {
-    pendingNext.value(false)
-    pendingNext.value = null
+    pendingNext.value(false);
+    pendingNext.value = null;
   }
-}
-const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
-
+};
+const alreadyDeposited = JSON.parse(localStorage.getItem("onAppFirstDeposit"));
 
 onBeforeRouteLeave((to, from, next) => {
-  console.log(from)
-  if (from.path !== '/deposit') {
-    next()
-    return
+  console.log(from);
+  if (from.path !== "/deposit") {
+    next();
+    return;
   }
-  const hasSecond = secondTimeDepositBonusConfig.value?.hasBonus
-  const hasThird = thirdTimeDepositBonusConfig.value?.hasBonus
-  const hasNewPlayerReward = newPlayerDepositBonusConfig.value?.hasBonus
-  
-  const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
-  const secondDeposit = JSON.parse(localStorage.getItem('secondDeposit'));
-  const thirdDeposit = JSON.parse(localStorage.getItem('thirdDeposit'));
+  const hasSecond = secondTimeDepositBonusConfig.value?.hasBonus;
+  const hasThird = thirdTimeDepositBonusConfig.value?.hasBonus;
+  const hasNewPlayerReward = newPlayerDepositBonusConfig.value?.hasBonus;
 
-  if (alreadyDeposited && isAndroid() || secondDeposit || thirdDeposit) {
-    next()
-    return
+  const alreadyDeposited = JSON.parse(localStorage.getItem("onAppFirstDeposit"));
+  const secondDeposit = JSON.parse(localStorage.getItem("secondDeposit"));
+  const thirdDeposit = JSON.parse(localStorage.getItem("thirdDeposit"));
+
+  if ((alreadyDeposited && isAndroid()) || secondDeposit || thirdDeposit) {
+    next();
+    return;
   }
-  if (((hasNewPlayerReward) && isAndroid()) || hasThird || hasSecond) {
+  if ((hasNewPlayerReward && isAndroid()) || hasThird || hasSecond) {
     if (hasNewPlayerReward) {
-      paymentCancellationAmtLoss.value = 38
+      paymentCancellationAmtLoss.value = 38;
     } else if (hasThird) {
-      paymentCancellationAmtLoss.value = 150
+      paymentCancellationAmtLoss.value = 150;
     } else if (hasSecond) {
-      paymentCancellationAmtLoss.value = 100
+      paymentCancellationAmtLoss.value = 100;
     }
-    pendingNext.value = next
-    showPaymentCancellationDialog.value = true
+    pendingNext.value = next;
+    showPaymentCancellationDialog.value = true;
   } else {
-    next()
+    next();
   }
-})
+});
 </script>
 
 <style scoped lang="scss">
 .bonusAmt {
-    font-weight: bold;
-    color: gold;
-    font-size: 25px;
+  font-weight: bold;
+  color: gold;
+  font-size: 25px;
 }
 .deposit-tabs {
   width: 100%;
