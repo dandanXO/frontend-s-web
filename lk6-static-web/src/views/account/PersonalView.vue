@@ -1120,10 +1120,12 @@ export default defineComponent({
       }
 
       :deep(.el-input__wrapper) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
         border-radius: 20px;
-        background: #f7f8fb;
         height: 38px;
+        background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
+        box-shadow: 0px 2px 2px 0px #FFFFFFCC inset;
+        box-shadow: 0px 2px 0px 0px #C6D9FF;
+
       }
 
       .btn-container {
@@ -1196,41 +1198,6 @@ export default defineComponent({
       display: flex;
       justify-content: flex-end;
     }
-  }
-}
-
-.dark {
-  .menu-title-container {
-    .menu-title {
-      color: $color-white;
-    }
-  }
-
-  .personal-container {
-    .personal-wrapper {
-      .tbl-row {
-        .basic-info-cell {
-          color: #fff;
-        }
-      }
-
-      .update-pwd-container {
-        &:deep(.el-input__wrapper) {
-          background-color: $background-content-block-lighter-dark;
-          box-shadow: 0px 0px 8px 0px #0d233a inset;
-        }
-      }
-    }
-  }
-
-  .account-tip-text {
-    color: $font-3-dark;
-  }
-
-  .standard-button.standout {
-    background: #394a65;
-    box-shadow: none;
-    color: $active-color-dark;
   }
 }
 </style>
