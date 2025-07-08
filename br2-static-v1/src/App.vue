@@ -138,7 +138,7 @@ export default defineComponent({
 
     const trackH5Affiliate = () => {
       // const hostname= "ifn31.cc";
-      const hostname = window.location.hostname.replace("www.", "");
+      const hostname = window.location.hostname
       const affiliateCodeFromDomain = domainLists[hostname]?.affiliateCode;
       var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || affiliateCodeFromDomain || "076DB8";
 
