@@ -126,12 +126,12 @@
             </div>
             取款
           </router-link>
-          <router-link to="/center/transfer" class="action-btn">
+          <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-transfer.png" />
             </div>
             转账
-          </router-link>
+          </router-link> -->
         </div>
 
         <div class="profile-info" v-if="store.token">
@@ -167,12 +167,12 @@
                     <span>充值中心</span>
                   </div>
                 </el-dropdown-item>
-                <el-dropdown-item command="transfer">
+                <!-- <el-dropdown-item command="transfer">
                   <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('transfer')" />
                     <span>快速转账</span>
                   </div>
-                </el-dropdown-item>
+                </el-dropdown-item> -->
                 <el-dropdown-item command="promotion">
                   <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('promo')" />
@@ -1462,14 +1462,10 @@ export default defineComponent({
     };
 
     const loadIcon = (name) => {
-      if (isDark.value) {
-        try {
-          return require(`@/assets/images/home/header-dropdown-${name}-icon-dark.png`);
-        } catch (error) {
-          return require(`@/assets/images/home/header-dropdown-${name}-icon.png`);
-        }
-      } else {
+      try {
         return require(`@/assets/images/home/header-dropdown-${name}-icon.png`);
+      } catch (error) {
+        return require(`@/assets/images/home/header-dropdown-personal-icon.png`);
       }
     };
 

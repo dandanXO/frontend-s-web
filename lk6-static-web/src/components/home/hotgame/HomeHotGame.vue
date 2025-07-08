@@ -16,156 +16,8 @@
     
     <div class="hotgame-container">
       <SportsView v-if="currentBannerIndex === 1" />
-
-      <div style="display:none;" class="hotgame-wrapper" v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`">
-        <div class="hotgame-banner-wrapper">
-          <div
-            :class="`hotgame-banner ${hotgameIndex === currentBannerIndex ? 'highlight' : ''}`"
-            @click="onBannerClick(hotgameIndex)"
-          >
-            <img class="hotgame-icon" :src="hotgameIndex === currentBannerIndex ? hotgame.iconActive : hotgame.icon" />
-            <div :class="`hotgame-number ${hotgameIndex === currentBannerIndex ? 'highlight' : ''}`">
-              {{ hotgame.number }}
-            </div>
-            <div class="hotgame-text">
-              <div class="title">{{ hotgame.title }}</div>
-              <div class="subtitle">{{ hotgame.subtitle }}</div>
-            </div>
-            <div class="character-wrapper">
-              <img :class="`character-${hotgame.subtitle.toLowerCase()}`" :src="hotgame.charImgPath" />
-              <!-- <img v-if="
-                hotgame.content &&
-                hotgame.content[hotgame.currentProvider] &&
-                hotgame.content[hotgame.currentProvider].charImgPath
-              "
-              :class="`character-${hotgame.subtitle.toLowerCase()}`"
-              :src="
-                require(`../../../assets/home/hotgame/content/${hotgame.section}/${
-                  hotgame.content[hotgame.currentProvider].charImgPath
-                }/character.png`)
-              " /> -->
-            </div>
-          </div>
-        </div>
-        <div :class="`hotgame-content-wrapper ${hotgame.isShow ? 'show' : ''}`">
-          <div class="left-container">
-             <Transition :key="transitionKey" appear>
-              <img
-                v-if="
-                  hotgame.content &&
-                  hotgame.content[hotgame.currentProvider] &&
-                  hotgame.content[hotgame.currentProvider].charImgPath
-                "
-                :style="[`${hotgame.section === 'esports' ? 'right:12rem;' : ''}`]"
-                :class="`character-${hotgame.subtitle.toLowerCase()}-${hotgame.currentProvider}`"
-                :src="
-                  require(`../../../assets/home/hotgame/content/${hotgame.section}/${
-                    hotgame.content[hotgame.currentProvider].charImgPath
-                  }/character.png`)
-                "
-              />
-            </Transition>
-          </div>
-          <div class="right-container oo">
-            
-            <div class="title-wrapper">
-              <Transition :key="transitionDesc" name="fade" enter>
-                <div class="title" v-if="hotgame.currentProvider">
-                  {{
-                    hotgame.content &&
-                    hotgame.content[hotgame.currentProvider.toLowerCase()] &&
-                    hotgame.content[hotgame.currentProvider.toLowerCase()].title
-                  }}
-                </div>
-              </Transition>
-              <div class="subtitle">
-                {{
-                  hotgame.content &&
-                  hotgame.content[hotgame.currentProvider.toLowerCase()] &&
-                  hotgame.content[hotgame.currentProvider.toLowerCase()].subtitle
-                }}
-              </div>
-              <!-- <div class="subtitle">{{ hotgame.content[hotgame.currentProvider.toLowerCase()] }}</div> -->
-            </div>
-            <div class="description">
-              <div class="desc">
-                {{
-                  hotgame.content &&
-                  hotgame.content[hotgame.currentProvider.toLowerCase()] &&
-                  hotgame.content[hotgame.currentProvider.toLowerCase()].desc
-                }}
-              </div>
-              <!-- <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div> -->
-            </div>
-            <div v-if="hotgame.content.isShowSportsIcon" :class="`game-icon-wrapper ${hotgame.subtitle.toLowerCase()}`">
-              <img
-                v-for="(icon, iconIndex) in hotgame.content.isShowSportsIcon"
-                :key="`${icon}-${iconIndex}`"
-                :src="icon"
-              />
-            </div>
-            <div class="game-provider-wrapper">
-              <div
-                v-for="(provider, providerIndex) in hotgame.content.providerList"
-                :key="`${provider}-${providerIndex}`"
-                class="game-provider"
-                @click="setCurrentProvider(hotgame, provider)"
-              >
-                <img
-                  :class="`game-provider-img ${hotgame.currentPlat === provider ? 'active' : ''}`"
-                  :src="
-                    require(`../../../assets/${hotgame.section}/${
-                      hotgame.section
-                    }-logo-${provider.code.toLowerCase()}.png`)
-                  "
-                />
-                <div :class="`game-provider-text ${hotgame.currentPlat === provider ? 'active' : ''}`">
-                  {{ getAliasName(provider, hotgame.section) }}
-                </div>
-              </div>
-            </div>
-            <template v-if="hotgame.currentPlat?.underMaintenance === true ? 'maintenance' : ''">
-              <el-button size="small" class="common-btn game-start-btn btn-maintenance">
-                <span class="maintenance-state">
-                  <img src="../../../assets/svg/maintenance-icon.svg" />
-                  维护中
-                </span>
-              </el-button>
-            </template>
-            <template v-else>
-              <el-button
-                size="small"
-                class="common-btn game-start-btn"
-                @click="onEnterGameClick(hotgame, hotgame.type)"
-              >
-                {{ hotgame.type !== "slot" ? `进入游戏` : `进入场馆` }}
-              </el-button>
-            </template>
-
-            <div style="height: 50px">
-              <p
-                v-if="
-                  hotgame.currentPlat?.underMaintenance === true &&
-                  hotgame.currentPlat?.maintenanceStartTime &&
-                  hotgame.currentPlat?.maintenanceEndTime
-                "
-                class="maintenance-p"
-              >
-                维护时间:
-                <em>
-                  {{ moment(hotgame.currentPlat?.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                  {{ moment(hotgame.currentPlat?.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
-                </em>
-              </p>
-              <p class="maintenance-p" v-else>&nbsp;</p>
-            </div>
-          <!-- <div>
-                {{ hotgame.section }}{{hotgame.content[hotgame.currentProvider]}}
-            </div> -->
-           
-          </div>
-        </div>
-      </div>
+      <LiveCasinoView v-else-if="currentBannerIndex === 2"/>
+      <PokerView v-else-if="currentBannerIndex === 5" />
     </div>
   </div>
   <GameModal ref="platformGame"></GameModal>
@@ -193,6 +45,8 @@ import {
 import moment from "moment";
 import { useDark } from "@vueuse/core";
 import SportsView from "@/views/SportsView.vue";
+import LiveCasinoView from "@/views/LiveCasinoView.vue";
+import PokerView from "@/views/PokerView.vue";
 
 const store = userStore();
 const router = useRouter();
@@ -368,7 +222,7 @@ const hotgameData = ref([
     section: "live",
     type: "live",
     content: {
-      isShowSportsIcon: [require("../../../assets/live/live-pattern.png")],
+      isShowSportsIcon: [require("../../../assets/live/live-pattern.svg")],
       providerList: [
         // {
         //   key: "ag",
@@ -567,7 +421,7 @@ const hotgameData = ref([
     section: "poker",
     type: "poker",
     content: {
-      isShowSportsIcon: [require("../../../assets/poker/poker-pattern.png")],
+      isShowSportsIcon: [require("../../../assets/poker/poker-pattern.svg")],
       providerList: [
         // {
         //   key: "dat",
