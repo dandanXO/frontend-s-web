@@ -3579,6 +3579,13 @@ onBeforeUnmount(() => {
       letter-spacing: -0.08%;
       border-radius: 4px;
 
+      @media(max-width:390px){
+        width: 12px;
+        height: 18px;
+        font-size: 14px;
+      }
+
+
       > span {
         background: linear-gradient(180deg, #033309 0%, #008b06 51.04%, #033309 100%);
         -webkit-background-clip: text;

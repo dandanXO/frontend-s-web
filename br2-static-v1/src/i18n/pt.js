@@ -1270,6 +1270,8 @@ export default {
     58005: "Parabéns, você completou todas as tarefas"
   },
   content: {
+    message: "Mensagem",
+    register_succes: "Registro bem-sucedido!",
     nospinleft: "Sem rodadas restantes",
     title1: "O tempo de registo começa a contar a partir do momento em que o registo é concluído.",
     message1: 'Quando o valor total acumulado atingir R$100, pode proceder ao envio de um pedido de levantamento;',

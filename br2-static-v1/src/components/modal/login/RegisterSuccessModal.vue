@@ -4,13 +4,13 @@
       <img class="reg-success-bg-img" src="../../../assets/images/auth/register-success-bg.png" />
       <q-btn dense flat icon="close" class="popout-close" v-close-popup @click="handleConfirmRegSuccess" />
       <div class="popout-dialog-container">
-        <div class="txt-title">Message</div>
+        <div class="txt-title">{{ $t('content.message')}}</div>
 
         <img class="reg-success-img" src="../../../assets/images/auth/register-success.png" />
-        <div class="txt-content q-mt-md text-center">Registration Success!</div>
+        <div class="txt-content q-mt-md text-center">{{ $t('content.register_succes')}}</div>
 
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <q-btn class="bg-greenbtn" label="Confirm" no-caps v-close-popup @click="handleConfirmRegSuccess" />
+          <q-btn class="bg-greenbtn" :label="$t('btn.confirm')" no-caps v-close-popup @click="handleConfirmRegSuccess" />
         </div>
       </div>
     </div>
