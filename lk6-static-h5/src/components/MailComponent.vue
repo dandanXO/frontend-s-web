@@ -11,7 +11,7 @@
       </q-tabs>
     </template>
 
-    <q-tab-panels v-model="mailboxMessageTab" animated>
+    <q-tab-panels v-model="mailboxMessageTab" class="mail-tab-panels" animated>
       <q-tab-panel :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
         <div v-if="!loading">
           <div
@@ -24,11 +24,22 @@
             <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="deleteMails(item.type)">
               全部删除
             </q-btn>
+            <q-space />
             <q-toggle v-if="truncatedListByType.length" v-model="allowSelectMultiple" :label="'选择多个'" left-label />
-            <q-btn v-if="hasMailSelected && allowSelectMultiple" class="common-md-white-btn" size="md" @click="readMails(item.type)">
+            <q-btn
+              v-if="hasMailSelected && allowSelectMultiple"
+              class="common-md-white-btn"
+              size="md"
+              @click="readMails(item.type)"
+            >
               已读
             </q-btn>
-            <q-btn v-if="hasMailSelected && allowSelectMultiple" class="common-md-white-btn" size="md" @click="deleteMails(item.type)">
+            <q-btn
+              v-if="hasMailSelected && allowSelectMultiple"
+              class="common-md-white-btn"
+              size="md"
+              @click="deleteMails(item.type)"
+            >
               删除
             </q-btn>
           </div>
@@ -46,18 +57,19 @@
                   <q-checkbox
                     v-if="allowSelectMultiple"
                     rounded
+                    dense
                     :model-value="selectedMailIds[det.id] ?? false"
                     @update:model-value="(newValue) => (selectedMailIds[det.id] = newValue ?? false)"
                     size="sm"
-                    style="font-size: 14px"
+                    style="font-size: 14px; margin-right: 4px"
                     color="#0089ED"
                   />
 
                   <div class="read-label" v-if="det.readTime && det.sendTime">
-                    <img src="../assets/images/inbox/read-mail.png" />
+                    <img src="../assets/images/inbox/read-mail.svg" />
                   </div>
                   <div class="read-label" v-else>
-                    <img src="../assets/images/inbox/unread-mail.png" />
+                    <img src="../assets/images/inbox/unread-mail.svg" />
                   </div>
 
                   <div class="title-text" :title="det.title">{{ det.title }}</div>
@@ -73,10 +85,15 @@
                 </div>
               </div>
               <div v-if="isSelectedMail === det.id && det.content" class="mailcontents">
-                <span style="color: #aaaaaa; font-size: 15px;">正文: </span>
+                <span style="color: #7a80a1; font-size: 15px">正文:</span>
                 <div class="q-pb-sm" v-html="det.content.replace(/\n/g, '<br/>')"></div>
-                <div class="q-pa-md" style="background: #ffffffa5; border-radius: 10px;"  v-if="isSelectedMail === det.id && det.replyMessageContent">
-                <span style="color: #aaaaaa; font-size: 15px;">回复: </span><div v-html="det.replyMessageContent.replace(/\n/g, '<br/>')"></div>
+                <div
+                  class="q-pa-md"
+                  style="background: #ffffffa5; border-radius: 10px"
+                  v-if="isSelectedMail === det.id && det.replyMessageContent"
+                >
+                  <span style="color: #7a80a1; font-size: 15px">回复:</span>
+                  <div v-html="det.replyMessageContent.replace(/\n/g, '<br/>')"></div>
                 </div>
               </div>
               <div v-if="mailType === 'outbox'" class="buttons">
@@ -173,13 +190,13 @@ export default defineComponent({
     const $q = useQuasar();
     const isDeleteMailModal = ref(false);
 
-    const sliceOffset = ref(0)
-    const sliceLimit = 6
+    const sliceOffset = ref(0);
+    const sliceLimit = 6;
     const truncatedList = computed(() => {
-      return props.list.slice(0, sliceOffset.value)
-    })
+      return props.list.slice(0, sliceOffset.value);
+    });
 
-    const truncatedListAll = ref([])
+    const truncatedListAll = ref([]);
     const truncatedListByType = computed(() => {
       return truncatedList.value.filter((listItem) => {
         if (mailboxMessageTab.value === "ALL") {
@@ -189,7 +206,7 @@ export default defineComponent({
       });
     });
 
-    const comList = computed(() => props.list)
+    const comList = computed(() => props.list);
 
     const allowSelectMultiple = ref(false);
     const selectedMailIds = ref({});
@@ -197,11 +214,11 @@ export default defineComponent({
     const onLoad = (index, done) => {
       setTimeout(() => {
         if (sliceOffset.value < props.list.length) {
-          sliceOffset.value += sliceLimit
+          sliceOffset.value += sliceLimit;
         }
-        done()
-      }, 200)
-    }
+        done();
+      }, 200);
+    };
     const isSelectedMail = ref(-1);
     const toggleMail = (mail) => {
       if (isSelectedMail.value !== mail.id) {
@@ -538,6 +555,9 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
       margin-right: 8px;
+      img {
+        width: 18px;
+      }
     }
 
     .title-wrapper {
@@ -551,17 +571,16 @@ export default defineComponent({
         overflow: hidden;
         white-space: nowrap;
         flex: 1;
+
+        color: #7a80a1;
       }
 
       .send-time {
         font-size: 0.8rem;
         font-weight: 400;
         margin: 0 10px;
+        color: #7a80a1;
       }
-    }
-
-    &.unread {
-      font-weight: bold;
     }
   }
 
@@ -586,6 +605,7 @@ export default defineComponent({
     height: auto;
     overflow: hidden;
     overflow-wrap: break-word;
+    color: #7a80a1;
     // text-overflow: ellipsis;
   }
 }
@@ -622,9 +642,20 @@ export default defineComponent({
   margin-right: 5px;
 }
 
-.q-tab {
-  &--active {
-    color: #000;
+.q-tabs {
+  .q-tab {
+    font-weight: 600;
+    color: #7a80a1;
+    &--active {
+      color: #468cff;
+    }
+    &__indicator {
+      background: #468cff;
+    }
   }
+}
+
+.mail-tab-panels {
+  background: transparent;
 }
 </style>

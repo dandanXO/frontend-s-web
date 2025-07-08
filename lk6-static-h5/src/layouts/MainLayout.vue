@@ -573,7 +573,7 @@ export default defineComponent({
         } else if (route.path === "/account/inbox") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "消息中心 ";
+          pageName.value = "消息提醒 ";
           if (route.query.redirect) {
             var redirectPage = route.query.redirect;
             prevPage.value = redirectPage;
