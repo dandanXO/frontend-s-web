@@ -5,13 +5,13 @@
     </el-select> -->
     <el-dropdown>
       <span class="el-dropdown-link">
-        <img :src="require(`../assets/images/common/${languageVal}.svg`)">
+        <!-- <img :src="require(`../assets/images/common/${languageVal}.svg`)"> -->
+        <div class="locale-icon" />
       </span>
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item v-for="(lang, i) in langs" @click="handleLanguage(lang.code)">
             <div class="lang-item">
-              <img :src="require(`../assets/images/common/${lang.code}.svg`)">
               <span>{{ lang.text }}</span>
             </div>
           </el-dropdown-item>
@@ -37,7 +37,7 @@ export default {
     }
     const langs = [
       { code: "en", text: "English" },
-      { code: "zh", text: "中文" },
+      { code: "zh", text: "简体中文" },
     ]
     return {
       languageVal,
@@ -47,12 +47,11 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .locale-changer {
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding: 10px 20px;
 
   img {
     width: 40px;
@@ -90,5 +89,14 @@ export default {
   img {
     width: 25px;
   }
+}
+
+.locale-icon {
+  background: url('../assets/images/home/header-icon-set.svg');
+  background-position: 98% 0%;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  width: 38px;
+  height: 38px;
 }
 </style>

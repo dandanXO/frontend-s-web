@@ -12,6 +12,7 @@
     </div>
   </el-dialog>
 
+  {{ console.log('here', banners) }}
   <div v-if="isFetchingBanners" class="banner-loading">
     <img class="loading-img" src="@/assets/lucky-6-logo.svg" />
   </div>
@@ -94,9 +95,6 @@ const loadBanners = () => {
       if (res.code === 0) {
         banners.value = res.data.filter((promo) => {
           if (!promo.showDesktop) return false;
-          if (isDark.value) {
-            return !["lh1-dark-mode"].includes(promo.redirectUrl) && promo.desktopImageUrlDark;
-          }
           return true;
         });
         //No Need liao.
@@ -113,7 +111,6 @@ const loadBanners = () => {
         type: "error",
         message: res.message
       });
-      console.log('here', banners.value);
     })
     .catch(() => {
       isFetchingBanners.value = false;

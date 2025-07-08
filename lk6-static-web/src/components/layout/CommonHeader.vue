@@ -75,7 +75,7 @@
                       :src="require(`../../assets/images/home/header-download-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'App'"
                     /> -->
-                    <div class="app-icon" v-if="nav.code === 'CS'" />
+                    <div class="cs-icon" v-if="nav.code === 'CS'" />
                     <!-- <img
                       class="hover-icon"
                       :src="require(`../../assets/images/home/header-vip-icon${isDark ? '-dark' : ''}.svg`)"
@@ -87,6 +87,13 @@
               </div>
             </template>
           </template>
+
+          <div class="header-menu-item">
+            <a>
+              <span><LocaleChanger/></span>
+              <span>{{ $t(`btn.${languageVal}`) }}</span>
+            </a>
+          </div>
 
           <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
             <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
@@ -100,8 +107,6 @@
             <AppMenu ref="el" v-if="selectedMenu === 'App'" />
           </div>
         </div>
-
-        <LocaleChanger />
 
         <div v-if="!store.token" class="right-contents">
           <!-- <router-link to="/login" class="action-btn">
@@ -493,6 +498,8 @@ import floor from "lodash/floor";
 import { loadPromoBanner } from "@/api/index/promo";
 import LocaleChanger from '../LocaleChanger.vue';
 import LogoComponent from '../LogoComponent.vue';
+import { i18nStore } from '@/store/language'
+
 
 export default defineComponent({
   name: "CommonHeader",
@@ -515,6 +522,8 @@ export default defineComponent({
     LogoComponent
   },
   setup() {
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
     const notify = useNotify();
 
     const registerTelephoneKey = `registerTelephoneKey`;
@@ -1545,7 +1554,8 @@ export default defineComponent({
       openMiniGame,
       navigations,
       loadIcon,
-      accDialogImg
+      accDialogImg,
+      languageVal
     };
   }
 });
@@ -1909,6 +1919,7 @@ body {
           // padding-top: 10px;
           display: flex;
           flex-direction: column;
+          align-items: center;
           text-decoration: none;
           gap: 5px;
           font-family: 'PingFang SC';
@@ -2621,7 +2632,7 @@ body {
 
   .promotion-icon {
     background: url('../../assets/images/home/header-icon-set.svg');
-    background-position: 5% 0%;
+    background-position: 3% 0%;
     background-size: auto 100%;
     background-repeat: no-repeat;
     width: 38px;
@@ -2630,7 +2641,7 @@ body {
 
   .app-icon {
     background: url('../../assets/images/home/header-icon-set.svg');
-    background-position: 51% 0%;
+    background-position: 34% 0%;
     background-size: auto 100%;
     background-repeat: no-repeat;
     width: 38px;
@@ -2639,7 +2650,16 @@ body {
 
   .cs-icon {
     background: url('../../assets/images/home/header-icon-set.svg');
-    background-position: 51% 0%;
+    background-position: 66% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    width: 38px;
+    height: 38px;
+  }
+
+  .locale-icon {
+    background: url('../../assets/images/home/header-icon-set.svg');
+    background-position: 100% 0%;
     background-size: auto 100%;
     background-repeat: no-repeat;
     width: 38px;
