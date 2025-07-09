@@ -9,11 +9,6 @@ import { useDark } from "@vueuse/core";
 
 const routes = [
   {
-    path: "/login",
-    name: "login",
-    component: () => import(/* webpackChunkName: "Login" */ "../views/layouts/loginview/index")
-  },
-  {
     path: "/register",
     name: "register",
     component: () => import(/* webpackChunkName: "Register" */ "../views/RegisterView.vue")

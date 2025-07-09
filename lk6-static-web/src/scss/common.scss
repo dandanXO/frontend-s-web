@@ -183,7 +183,7 @@ body {
   .el-dialog {
     --el-dialog-header-bg-color: transparent;
     background: url('../assets/images/common/dialog-body-bg.jpg') center center no-repeat !important;
-    background-size: 100% 100%;
+    background-size: 100% 100% !important;
   }
 
   .el-dialog__header {
@@ -211,6 +211,7 @@ body {
         width: 1.5em;
         background: #7A8EB966;
         border-radius: 100px;
+        padding: 2px;
         svg {
           height: 1.5em;
           width: 1.5em;

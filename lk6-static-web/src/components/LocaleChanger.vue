@@ -92,7 +92,7 @@ export default {
 }
 
 .locale-icon {
-  background: url('../assets/images/home/header-icon-set.svg');
+  background: url('../assets/images/home/header-icon-set.png');
   background-position: 98% 0%;
   background-size: auto 100%;
   background-repeat: no-repeat;
