@@ -170,7 +170,7 @@
                     <div class="top-title">{{ selectedPromo.title }}</div>
                   </div> -->
 
-                  <div v-html="selectedPromo.pageContent"></div>
+                  <div v-html="selectedPromo.pageContent"></div>  
                   <!-- <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
                       <div class="date-txt">Promotion Ends</div>
@@ -1208,6 +1208,9 @@ export default defineComponent({
           background-size: contain;
           margin-top: -20px;
           padding-top: 20px;
+          .select-promo-html {
+            display: none;
+          }
         }
         &.isDepositSpinnerRewards {
           border-radius: 0;

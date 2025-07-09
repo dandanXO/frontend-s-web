@@ -4479,6 +4479,8 @@ const showSpinWheel = () => {
         if ((store.canSpinPrivilegeCoupon) && isAndroid()) {
           promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
           popupPromo.value = "newplayer-spin-wheel"
+        } else {
+          promoStore.removeShownFloatingOrDialogList("newplayer-spin-wheel");
         }
       }
     })

@@ -14,7 +14,7 @@
           {{ $t("hotPromo.jackpotAviator.myBets") }}
           <span class="value">{{ props?.rankDetails?.currentBet }}</span>
         </div>
-        <div class="label">{{ `${$t("hotPromo.jackpotAviator.myReward")} ${props?.rankDetails?.rewardPerc}%` }}</div>
+        <div class="label">{{ `${$t("hotPromo.jackpotAviator.myReward")} ${props?.rankDetails?.rewardPerc}` }}</div>
       </div>
       <div class="column">
         <div class="label">{{ $t("hotPromo.jackpotAviator.ranksLeft") }}</div>
