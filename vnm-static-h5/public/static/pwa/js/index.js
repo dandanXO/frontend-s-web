@@ -97,7 +97,7 @@ installBtn.addEventListener("click", async () => {
         if (isIos) {
           document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "flex"));
         } else {
-          window.open("https://www.tf88vip.com/register", "_blank");
+          window.open(`${window.location.origin}/register`, "_blank");
         }
       } else {
         const { outcome } = await deferredPrompt.prompt();
