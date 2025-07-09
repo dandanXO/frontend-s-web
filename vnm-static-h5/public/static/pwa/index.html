@@ -459,6 +459,8 @@
 
   <script src="js/adjust-5.7.1.min.js"></script>
   <script>
+    import { FBQ_INITIALIZED } from "app/public/static/pwa/js/const";
+
     (function () {
       console.log("RUN");
       // var hostname = getDomainWithoutSubdomain();
@@ -476,9 +478,14 @@
         .then((response) => response.json())
         .then((res) => {
           console.log("Success:", res);
-          const { affiliateCode } = res.data;
+          const { affiliateCode, facebookId } = res.data;
           localStorage.setItem("PWA_AFFILIATE_CODE", affiliateCode);
           // alert(affiliateCode);
+          if (facebookId) {
+            fbq("init", facebookId);
+            fbq("track", "PageView");
+            sessionStorage.setItem(FBQ_INITIALIZED, "1");
+          }
 
           fetch(`https://hoka2aq6.30v7gv9f8ge.com/app/adjust/params?affiliateCode=${affiliateCode}`, {
             method: "GET"
