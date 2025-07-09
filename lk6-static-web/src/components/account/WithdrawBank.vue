@@ -129,9 +129,11 @@
           <el-row :gutter="20">
             <el-col :span="6">
               <el-select placeholder="类型" v-model="selectedBankType" style="width: 100%" @change="selectBankType">
-                <el-option v-for="bank in bankTypes" :key="bank.value" :value="bank.value" :label="bank.text">
-                  {{ bank.text }}
-                </el-option>
+                <template v-for="bank in bankTypes">
+                  <el-option :key="bank.value" :value="bank.value" :label="bank.text" v-if="bank.value === 'Crypto'">
+                    {{ bank.text }}
+                  </el-option>
+                </template>
               </el-select>
             </el-col>
             <el-col :span="18">
@@ -181,7 +183,7 @@
         <!--          </el-space>-->
         <!--        </el-form-item>-->
 
-        <el-form-item name="smsCode" prop="smsCode">
+        <el-form-item name="smsCode" prop="smsCode" v-if="store.isRequirePhoneValidation">
           <el-space>
             <el-input
               class="half"
@@ -198,7 +200,7 @@
           </el-space>
         </el-form-item>
 
-        <el-form-item class="txt-center" v-if="isSendOtp">
+        <el-form-item class="txt-center" v-if="isSendOtp || store.isRequirePhoneValidation === false">
           <el-button class="txt-center common-btn" @click="submitBankCard">提交</el-button>
         </el-form-item>
         <span v-if="isEWALLET" class="tip-text">
@@ -1030,7 +1032,8 @@ export default defineComponent({
       initCountdownTimer,
       countdownTimer,
       alipayAvailable,
-      setNewBankTypes
+      setNewBankTypes,
+      store
     };
   }
 });

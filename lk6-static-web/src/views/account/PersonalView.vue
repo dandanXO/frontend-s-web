@@ -416,7 +416,8 @@
         <el-form-item ref="phone" prop="phone">
           <el-input v-model="updatePhoneVerified.phone" placeholder="手机号码" />
         </el-form-item>
-        <el-form-item class="half" ref="verificationCode" prop="verificationCode">
+        <template v-if="isRequirePhoneValidation">
+          <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
             <el-input v-model="updatePhoneVerified.verificationCode" :placeholder="'验证码'" />
             <el-button
@@ -430,6 +431,7 @@
             </el-button>
           </el-space>
         </el-form-item>
+        </template>
         <el-button :loading="loadingPhoneBtn" class="common-btn verification-btn" @click="submitUpdatePhone">
           提交
         </el-button>
@@ -794,7 +796,9 @@ export default defineComponent({
     };
     const submitUpdatePhone = () => {
       loadingPhoneBtn.value = true;
-      updatePhoneFormRef.value
+
+      if(store.isRequirePhoneValidation) {
+        updatePhoneFormRef.value
         .validate()
         .then(() => {
           verificationPhoneDetails.memberInfo.code = updatePhoneVerified.verificationCode;
@@ -816,13 +820,36 @@ export default defineComponent({
             .catch((e) => {
               console.log(e.message);
               // message.error(e.message);
+            }).finally(() => {
+              loadingPhoneBtn.value = false;
             });
         })
         .catch((error) => {
           console.log("error", error);
         });
-
-      loadingPhoneBtn.value = false;
+      } else {
+        updateAccount(toRaw({phone: updatePhoneVerified.phone}))
+            .then((res) => {
+              if (res.code === 0) {
+                notify({
+                  message: "成功",
+                  type: "success"
+                });
+                updatePhoneModalVisible.value = false;
+                store.getMemberInfo();
+                loadInfo();
+                gotoNewplayerPromo();
+              } else {
+                notify.error(res.message);
+              }
+            })
+            .catch((e) => {
+              console.log(e.message);
+              // message.error(e.message);
+            }).finally(() => {
+              loadingPhoneBtn.value = false;
+            });
+      }
     };
     const gotoNewplayerPromo = () => {
       if (useLocalStorage("need-go-back-newplayer").value === "true") {
