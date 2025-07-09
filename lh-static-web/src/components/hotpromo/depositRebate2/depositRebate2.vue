@@ -85,6 +85,12 @@
           <td>≥3000</td>
           <td>188</td>
         </tr>
+        <tr>
+          <td>K豆钱包</td>
+          <td>1.0%</td>
+          <td>≥1000</td>
+          <td>188</td>
+        </tr>
       </tbody>
     </table>
     <div class="similar-title">
@@ -128,14 +134,6 @@ const depositCards = ref([
     lesson: "https://fil2e5sal.vmip991b92n.com/media/intro.mp4"
   },
   // {
-  //   code: "kdou",
-  //   title: "K豆",
-  //   content:
-  //     "充值即送<em>0.5%</em>彩金K豆完全可以满足您不同需求和使用场景。活动期间，每位玩家每笔使用K豆单笔充值成功享受存款金额的0.5%加码彩金，单日优惠最高上限38元！",
-  //   lesson: "https://kdxz1848.com/"
-  // },
-
-  // {
   //   "code": "jdpay",
   //   "title": "JDpay",
   //   "content": "充值即送1.0%彩金 JDpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“JDpay充值\"方式成功存款，即可获得JDpay存款金额的1.0%的彩金返还，单日优惠最高上限200元。",
@@ -156,6 +154,11 @@ const depositCards = ref([
     title: "OKPAY",
     content: `充值即送<em class="light-bg">1.0%</em>彩金，OKPAY超快充值 极致体验，支持：银行卡，支付宝，微信！活动期间，每位玩家每笔使用OKPAY单笔充值≥1000元即可享受存款金额的<em class="light-bg">1.0%</em>加码彩金，单日优惠最高上限188元！`,
     lesson: "https://me-qr.com/l/okpayjiaocheng"
+  },
+  {
+    code: "kdou",
+    title: "K豆钱包",
+    content: `充值即送<em class="light-bg">1.0%</em>彩金，K豆钱包超快充值 极致体验，支持：银行卡，支付宝，微信！活动期间，每位玩家每笔使用K豆钱包单笔充值≥1000元即可享受存款金额的1.0%加码彩金，单日优惠最高上限188元！`
   }
 ]);
 </script>
