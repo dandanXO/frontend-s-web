@@ -93,7 +93,6 @@
           <li>
             <router-link to="/about?id=us">
               <div style="display: flex; align-items: center; gap: 5px">
-                <img src="@/assets/footer/footer-lh-logo.png" />
                 <div>关于</div>
               </div>
             </router-link>

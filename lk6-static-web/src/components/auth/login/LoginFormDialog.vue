@@ -10,7 +10,8 @@
     <div class="login-form-field">
       <img
         class="login-form-field-icon"
-        :src="require('@/assets/home/auth/username-icon.svg')"
+        :src="require('@/assets/home/auth/username-icon.png')"
+        width="35px"
       />
 
       <el-form-item :label="$t('form.username')" prop="loginName">
@@ -21,7 +22,8 @@
     <div class="login-form-field">
       <img
         class="login-form-field-icon"
-        :src="require('@/assets/home/auth/password-icon.svg')"
+        :src="require('@/assets/home/auth/password-icon.png')"
+        width="35px"
       />
 
       <el-form-item :label="$t('form.password')" prop="password">
@@ -35,20 +37,6 @@
         />
       </el-form-item>
     </div>
-
-    <!-- <div class="login-form-field geetest-captcha-form-field">
-      <img
-        class="login-form-field-icon"
-        :src="require('@/assets/home/auth/verification-icon.svg')"
-      />
-
-      <div class="geetest-captcha-wrapper">
-        <div class="geetest-captcha-label">
-          <span class="asterisk">*</span>
-          <span class="label-text">{{ $t('form.verificationCode') }}</span>
-        </div>
-      </div>
-    </div> -->
     <div id="captchaContainer"></div>
 
     <div class="agreement-and-forget-pwd">

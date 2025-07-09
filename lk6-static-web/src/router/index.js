@@ -9,11 +9,6 @@ import { useDark } from "@vueuse/core";
 
 const routes = [
   {
-    path: "/login",
-    name: "login",
-    component: () => import(/* webpackChunkName: "Login" */ "../views/layouts/loginview/index")
-  },
-  {
     path: "/register",
     name: "register",
     component: () => import(/* webpackChunkName: "Register" */ "../views/RegisterView.vue")
@@ -92,11 +87,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/FishingView.vue")
       },
       {
-        path: "/agent",
-        name: "agent",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/agentview/index.vue")
-      },
-      {
         path: "/promotion",
         name: "promotion",
         component: () => import(/* webpackChunkName: "Game" */ "../views/promotion/index.vue")
@@ -105,11 +95,6 @@ const routes = [
         path: "/app",
         name: "app",
         component: () => import(/* webpackChunkName: "Game" */ "../views/AppView.vue")
-      },
-      {
-        path: "/sponsor",
-        name: "sponsor",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/SponsorView.vue")
       },
       {
         path: "/maintenance",
@@ -127,11 +112,6 @@ const routes = [
         component: () => {}
       },
       {
-        path: "/privilege/invite",
-        name: "invite",
-        component: () => import("../views/PrivilegeInvite.vue")
-      },
-      {
         path: "/center",
         name: "center",
         component: PersonalLayoutView,
@@ -147,11 +127,6 @@ const routes = [
         path: "/agent/:affiliateCode",
         name: "agentCode",
         component: () => {}
-      },
-      {
-        path: "/affiliate",
-        name: "affiliate",
-        component: () => import(/* webpackChunkName: "affiliate" */ "../views/agentview/index.vue")
       },
       {
         path: "/app-tutorial",

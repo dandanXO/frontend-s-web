@@ -1,7 +1,7 @@
 <template>
   <el-form ref="registerRef" :rules="regRules" :model="regForm" :label-width="languageVal === 'en' ? 130 : 80" size="large" style="padding-top:16px;">
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="../../../assets/home/auth/username-icon.svg" />
+      <img class="form-field-icon" src="../../../assets/home/auth/username-icon.png" width="35px" />
       <el-form-item :label="$t('form.realName')" prop="realName">
         <el-input
           class="wTip"
@@ -23,7 +23,7 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="../../../assets/home/auth/username-icon.svg" />
+      <img class="form-field-icon" src="../../../assets/home/auth/username-icon.png" />
       <el-form-item :label="$t('form.username')" prop="loginName">
         <el-input class="wTip" v-model="regForm.loginName" :placeholder="$t('form.usernameRule01', {min: 4, max: 11})" clearable>
           <template #append></template>
@@ -32,7 +32,7 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="../../../assets/home/auth/password-icon.svg" />
+      <img class="form-field-icon" src="../../../assets/home/auth/password-icon.png" width="35px" />
       <el-form-item :label="$t('form.password')" prop="password">
         <el-input
           class="wTip"
@@ -48,7 +48,7 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="../../../assets/home/auth/password-icon.svg" />
+      <img class="form-field-icon" src="../../../assets/home/auth/password-icon.png" width="35px" />
       <el-form-item :label="$t('form.confirmPassword')" prop="confirmPwd">
         <el-input
           class="half wTip"
@@ -86,7 +86,7 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="../../../assets/home/auth/verification-icon.svg" />
+      <img class="form-field-icon" src="../../../assets/home/auth/verification-icon.png" width="35px" />
       <el-form-item :label="$t('form.verificationCode')" prop="captchaCode">
         <div style="display: flex; width: 100%">
           <el-input

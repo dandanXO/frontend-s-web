@@ -537,4 +537,19 @@ watch(
     opacity: 1;
   }
 }
+
+.search-input {
+  :deep(.el-input__wrapper) {
+    padding: 8px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    width: 100%;
+    border-radius: 30px;
+    font-size: 14px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
+    box-shadow: 0px 2px 2px 0px rgba(255, 255, 255, 0.8) inset, 0px 2px 0px 0px #C6D9FF;
+  }
+}
 </style>

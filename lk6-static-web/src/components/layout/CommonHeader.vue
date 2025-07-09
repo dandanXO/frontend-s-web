@@ -214,124 +214,8 @@
             </a>
           </div>
         </div>
-
-        <!-- <div v-if="store.token" class="profile-actions">
-          <router-link to="/center/mailbox" class="action-btn-full">
-            <div class="icon-full">
-              <img src="../../assets/images/home/nav-icon-mail.png" />
-              <span class="mail-notify"></span>
-            </div>
-            消息
-          </router-link>
-          <div class="action-btn-full" @click="logoutDialogVisible = true">
-            <div class="icon-full">
-              <img src="../../assets/images/home/nav-icon-logout.png" />
-            </div>
-            退出
-          </div>
-        </div> -->
       </div>
     </div>
-
-    <!-- <el-dialog
-      v-model="loginDialogVisible"
-      title="会员登录"
-      width="50%"
-      align-center
-      style="max-width: 800px"
-      @close="store.loginPageVisible = false"
-    >
-      <span>
-        <el-tabs>
-          <el-tab-pane label="账户登录">
-            <el-form
-              ref="loginRef"
-              :rules="loginRules"
-              :model="loginForm"
-              label-width="100"
-              label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
-            >
-              <el-form-item tabindex="1" label="用户名" prop="loginName">
-                <el-input v-model="loginForm.loginName" placeholder="输入用户名" />
-              </el-form-item>
-              <el-form-item tabindex="2" label="密码" prop="password">
-                <el-input v-model="loginForm.password" placeholder="输入密码" type="password" show-password />
-              </el-form-item>
-              <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-                <el-row :gutter="10" style="justify-content: center; align-items: center">
-                  <el-col :span="12">
-                    <el-input
-                      v-model="loginForm.captchaCode"
-                      label="验证码"
-                      placeholder="验证码"
-                      @keyup.enter="submitLogin"
-                    />
-                  </el-col>
-                  <el-col :span="12">
-                    <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
-                  </el-col>
-                </el-row>
-              </el-form-item>
-              <el-button
-                :loading="loadingBtn"
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 100px"
-                @click="submitLogin"
-              >
-                登录
-              </el-button>
-            </el-form>
-          </el-tab-pane>
-          <el-tab-pane label="手机登录">
-            <el-form
-              ref="mobileLoginRef"
-              :rules="mobileLoginRules"
-              :model="loginForm"
-              label-width="100"
-              label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
-            >
-              <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
-                <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号" />
-              </el-form-item>
-              <el-form-item tabindex="2" label="验证码" prop="code">
-                <el-row :gutter="10" style="justify-content: center; align-items: center">
-                  <el-col :span="12">
-                    <el-input v-model="loginForm.code" label="验证码" placeholder="验证码" @keyup.enter="phoneLogin" />
-                  </el-col>
-                  <el-col :span="12">
-                    <el-button
-                      v-if="loginCountdown === 0"
-                      @click="openCaptchaForm('LOGIN')"
-                      size="small"
-                      color="#3bafda"
-                    >
-                      发送验证码
-                    </el-button>
-                    <el-button v-else disabled size="small" class="common-btn">
-                      已发送（倒数{{ loginCountdown }}秒）
-                    </el-button>
-                  </el-col>
-                </el-row>
-              </el-form-item>
-              <el-button
-                :loading="loadingBtn"
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 100px"
-                @click="phoneLogin"
-              >
-                登录
-              </el-button>
-            </el-form>
-          </el-tab-pane>
-        </el-tabs>
-      </span>
-    </el-dialog> -->
 
     <el-dialog
       class="acc-dialog"
@@ -2641,7 +2525,7 @@ body {
   position: relative;
 
   .promotion-icon {
-    background: url('../../assets/images/home/header-icon-set.svg');
+    background: url('../../assets/images/home/header-icon-set.png');
     background-position: 3% 0%;
     background-size: auto 100%;
     background-repeat: no-repeat;
@@ -2650,7 +2534,7 @@ body {
   }
 
   .app-icon {
-    background: url('../../assets/images/home/header-icon-set.svg');
+    background: url('../../assets/images/home/header-icon-set.png');
     background-position: 34% 0%;
     background-size: auto 100%;
     background-repeat: no-repeat;
@@ -2659,17 +2543,8 @@ body {
   }
 
   .cs-icon {
-    background: url('../../assets/images/home/header-icon-set.svg');
+    background: url('../../assets/images/home/header-icon-set.png');
     background-position: 66% 0%;
-    background-size: auto 100%;
-    background-repeat: no-repeat;
-    width: 38px;
-    height: 38px;
-  }
-
-  .locale-icon {
-    background: url('../../assets/images/home/header-icon-set.svg');
-    background-position: 100% 0%;
     background-size: auto 100%;
     background-repeat: no-repeat;
     width: 38px;
