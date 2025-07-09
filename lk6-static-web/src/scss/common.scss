@@ -607,3 +607,56 @@ body .announcement-modal.el-dialog .el-dialog__body {
   background: #E7F3FF !important;
   color: #424F72;
 }
+
+@keyframes subtlePopWobble {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    transform: translateY(-6px) scale(1.02) rotate(0.5deg);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.01) rotate(-0.5deg);
+  }
+  70% {
+    transform: translateY(-2px) scale(1.005) rotate(0.25deg);
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(0);
+  }
+}
+
+.glow-effect {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    transform: skewX(-20deg);
+    transition: left 2s ease;
+    pointer-events: none;
+  }
+
+  &:hover {
+    &::after {
+      left: 125%;
+    }
+  }
+}
+
+.wobble-effect {
+  transition: transform 0.3s ease;
+  will-change: transform;
+
+  &:hover {
+    animation: subtlePopWobble 0.5s ease forwards;
+  }
+}

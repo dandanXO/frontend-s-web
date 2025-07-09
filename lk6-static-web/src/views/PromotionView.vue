@@ -28,7 +28,7 @@
         </div>
         <div class="promo-list-wrapper">
           <div
-            class="promo-item"
+            class="promo-item glow-effect wobble-effect"
             v-for="(promo, i) in filteredArray"
             :key="i"
             data-aos="zoom-in"
@@ -442,7 +442,6 @@ export default defineComponent({
       overflow: hidden;
 
       img {
-        margin-top: 16px;
         height: 305px;
       }
     }
@@ -1080,16 +1079,6 @@ export default defineComponent({
           }
         }
       }
-    }
-  }
-}
-</style>
-<style lang="scss">
-.football1 {
-  table {
-    th,
-    td {
-      border: 1px solid #dcdce8;
     }
   }
 }
