@@ -686,6 +686,7 @@ body .announcement-modal.el-dialog .el-dialog__body {
 
 .el-table__empty-text {
   min-height: 120px;
+  color: transparent !important;
 
   &::after {
     content: "";
@@ -693,10 +694,9 @@ body .announcement-modal.el-dialog .el-dialog__body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 120px;
+    height: 100px;
     background: url('../assets/images/home/empty-placeholder.png') center center no-repeat;
     background-size: 100% 100%;
-    opacity: 0.6;
     aspect-ratio: 214/242;
   }
 }
