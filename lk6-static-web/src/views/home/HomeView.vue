@@ -45,6 +45,6 @@ onMounted(() => { });
 
 .home-mid-section {
   padding-top: 20px;
-  padding-bottom: 2.5rem;
+  padding-bottom: 80px;
 }
 </style>

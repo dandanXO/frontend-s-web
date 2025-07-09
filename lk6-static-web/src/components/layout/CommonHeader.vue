@@ -1862,7 +1862,9 @@ body {
 
   .top-nav-wrapper {
     padding: 10px;
-    background: linear-gradient(180deg, #EEF9FC 0%, #FBFFFF, 50%, #F8FDFE, 95%, #D6E8F9, 97%, #BED4E9 100%);
+    // background: linear-gradient(180deg, #EEF9FC 0%, #FBFFFF, 50%, #F8FDFE, 95%, #D6E8F9, 97%, #BED4E9 100%);
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(180deg, #EEF9FC 0%, #FBFFFF, 50%, #F8FDFE, 95%, #eff7ff, 97%, #e5eff8 100%);
     position: relative;
 
     .top-nav-inner {
