@@ -134,6 +134,10 @@ export default route(function (/* { store, ssrContext } */) {
       ttq.load("CSLMK0RC77U84I7KJA5G");
       ttq.page();
       user.isTkPixel = true;
+    } else if (window.location.href.indexOf("18v9g.com") > -1) {
+      ttq.load("D1N6SG3C77U77R501U9G");
+      ttq.page();
+      user.isTkPixel = true;
     } else if (
       window.location.href.indexOf("fbiyucw0.cc") > -1 &&
       window.location.href.indexOf("MDM1NjU2NzcwMDI=") > -1
