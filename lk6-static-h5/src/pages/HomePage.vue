@@ -454,7 +454,7 @@
                             :style="{
                               backgroundImage: (() => {
                                 try {
-                                  return `url(${imgURLGame}${item.icon.replace('-', '_')})`;
+                                  return `url(${imgURLGame}${game.icon.replace('-', '_')})`;
                                 } catch (e) {
                                   try {
                                     return `url(${require(`../assets/index/baccarat/slide-${platform.name}-img.png`)})`;
@@ -1946,7 +1946,8 @@ export default defineComponent({
       getNavigationButtonStatus,
       handleSlideNextClick,
       handleSlidePrevClick,
-      baccaratCategoryList
+      baccaratCategoryList,
+      imgURLGame
     };
   }
 });
