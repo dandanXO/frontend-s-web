@@ -220,7 +220,7 @@
             :class="{ 'p-invalid': validationErrors.sportId }"
             filter
           />
-          <small class="p-error" v-if="validationErrors.sportId">1111{{ validationErrors.sportId }}</small>
+          <small class="p-error" v-if="validationErrors.sportId">{{ validationErrors.sportId }}</small>
         </div>
 
         <!-- Title -->
@@ -888,12 +888,36 @@ onUnmounted(() => {
 }
 
 /* PrimeVue P-field for form items */
-.p-field {
+/* .p-field {
   margin-bottom: 1rem;
   label {
     width: 150px;
     display: inline-block;
   }
+} */
+
+.p-field {
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  margin-bottom: 15px; /* 底部間距 */
+}
+
+.p-field label {
+  flex: 0 0 150px; /* 固定寬度 */
+  text-align: right;
+  margin-right: 20px;
+}
+
+.p-field-checkbox {
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  margin-bottom: 15px; /* 底部間距 */
+}
+
+.p-field-checkbox label {
+  flex: 0 0 150px; /* 固定寬度 */
+  text-align: right;
+  margin-right: 20px;
 }
 
 .p-dialog-md {

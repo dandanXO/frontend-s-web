@@ -662,8 +662,8 @@ function loadChatHistory() {
   const siteId = 7;
   getChatHistoryv2(`?${query.toString()}`, { streamId: chatHistoryDialog.streamerId, siteId: siteId })
     .then(res => {
-      chatHistoryDialog.chatList = res.data.records;
-      chatHistoryDialog.page.total = res.data.total;
+      chatHistoryDialog.chatList = res.records;
+      chatHistoryDialog.page.total = res.total;
     })
     .finally(() => {
       chatHistoryDialog.loading = false;
