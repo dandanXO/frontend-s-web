@@ -1201,3 +1201,13 @@ export default defineComponent({
   }
 }
 </style>
+
+<style lang="scss">
+.account-contents .searchbar {    
+  .el-input__wrapper {
+    background: #F7F8FB !important;
+    box-shadow: 0px 0px 2.78px 0px #A9C9EA inset !important;
+    border-radius: 8px !important;
+  }
+}
+</style>
