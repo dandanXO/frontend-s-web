@@ -22,7 +22,9 @@
               }.svg`)
             "
           />
-          <span>百家乐</span>
+          <span>
+            {{ category === "baccarat" ? "百家乐" : category === "roulette" ? "轮盘" : "幸运蕾丝" }}
+          </span>
         </q-btn>
       </div>
       <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 16px)" v-if="!isLoading">
