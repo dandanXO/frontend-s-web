@@ -3,7 +3,7 @@
     <div v-if="isLoading" class="loading">
       <img class="loading-img" src="@/assets/lucky-6-logo.png" />
     </div>
-    <div v-else-if="props.showBanner !== false" class="platform-container" :class="platformType === 'bacarrat' ? 'slot-container' : ''">
+    <div v-else-if="!(platformType === 'bacarrat' && props.hideBanner)" class="platform-container" :class="platformType === 'bacarrat' ? 'slot-container' : ''">
         <img v-if="platformType === 'bacarrat'" src="../assets/slot/slot-top-bg.png" />
         <div class="platform-container-slot" v-if="platformType === 'bacarrat'">
         </div>
@@ -282,7 +282,7 @@ const props = defineProps({
   platformPattern: Boolean,
   platformExpandable: Boolean,
   showPlayBtn: Boolean,
-  showBanner: Boolean
+  hideBanner: Boolean
 });
 
 const filteredPlatforms = ref([]);

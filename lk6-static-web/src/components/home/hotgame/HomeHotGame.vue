@@ -17,7 +17,7 @@
     <div class="hotgame-container">
       <SportsView v-if="currentBannerIndex === 1" />
       <LiveCasinoView v-else-if="currentBannerIndex === 2"/>
-      <BacarratView v-else-if="currentBannerIndex === 5" :showBanner="false" />
+      <BacarratView v-else-if="currentBannerIndex === 5" :hideBanner="true" />
     </div>
   </div>
   <GameModal ref="platformGame"></GameModal>
