@@ -155,10 +155,6 @@ const routes = [
         path: "/promo",
         redirect: "/promotion"
       },
-      {
-        path: "/account/vip",
-        redirect: "/vip"
-      }
     ]
   },
   {
