@@ -117,7 +117,7 @@ export default defineComponent({
     const trackH5Affiliate = () => {
       // const omitSites = ["bw3.genoortisy.com"];
       const hostname = window.location.hostname;
-      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "076DB8";
+      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "";
 
       const trackPwa = async () => {
         api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
