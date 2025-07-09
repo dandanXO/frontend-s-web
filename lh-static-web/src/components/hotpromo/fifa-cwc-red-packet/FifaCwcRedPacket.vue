@@ -42,15 +42,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>2025.7.9 03:00</td>
-              <td>世俱杯半决赛  弗鲁米嫩塞 - 切尔西</td>
-            </tr>
-            <tr>
-              <td>2025.7.10 03:00</td>
-              <td>世俱杯半决赛 巴黎圣日耳曼 - 皇家马德里</td>
-            </tr>
-           
+           <tr>
+            <td>2025.7.10 03:00</td>
+            <td>世俱杯半决赛 巴黎圣日耳曼 - 皇家马德里</td>
+          </tr>
           </tbody>
         </table>
         <div class="livepoker-rebate-game-bottom">
