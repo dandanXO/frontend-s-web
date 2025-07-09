@@ -107,10 +107,14 @@ export default defineComponent({
           });
         }, 100);
       } else {
-        //Normal WEb / H5 / iOS WEbclip.
+        //Normal WEb / H5 / PWa.
         console.log("Init Web Adjust");
         console.log(affAppToken.value);
         const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        const savedAdjustReferrer = sessionStorage.getItem("ADJUST_REFERRER");
+        if (savedAdjustReferrer) {
+          AdjustWeb.setReferrer(encodeURIComponent(savedAdjustReferrer));
+        }
         AdjustWeb.initSdk({
           appToken: affAppToken.value,
           environment: "production",
