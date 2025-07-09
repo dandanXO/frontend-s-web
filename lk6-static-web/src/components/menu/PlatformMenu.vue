@@ -40,7 +40,7 @@
                 />
               </div>
 
-              <div class="platform-menu-btn"><a>进入场馆</a></div>
+              <div class="standard-button btn-color-blue platform-menu-btn"><a>进入场馆</a></div>
             </div>
             <!--      </router-link>-->
           </template>
@@ -105,6 +105,9 @@ const getPlatformList = () => {
       const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
       return { ...matchingItem, ...item1 };
     });
+
+    
+    console.log('here', platformsListDisplay.value)
   });
 };
 

@@ -2,7 +2,7 @@
   <NewMemberGuide :openAppMenu="() => (selectedMenu = 'App')" :closeAppMenu="() => (selectedMenu = '')" />
 
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
-    <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
+    <div class="top-nav-wrapper">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
           <LogoComponent />
@@ -99,7 +99,7 @@
             <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
             <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />
             <EsportsMenu ref="el" v-if="selectedMenu === 'esports'" @load-modal="openGame" />
-            <SportsMenu ref="el" v-if="selectedMenu === 'sports'" @load-modal="openGame" />
+            <SportsMenu ref="el" v-if="selectedMenu === 'panda' || selectedMenu === 'crown'" @load-modal="openGame" />
             <LotteryMenu ref="el" v-if="selectedMenu === 'lottery'" @load-modal="openGame" />
             <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />
             <FishingMenu ref="el" v-if="selectedMenu === 'fish'" @load-modal="openGame" />
@@ -1977,9 +1977,8 @@ body {
 
         .sub-menu {
           transition: $page-trans;
-          background: rgba(239, 242, 245, 0.95);
-          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
-          backdrop-filter: blur(24.5px);
+          background: linear-gradient(180deg, #F8FCFF 0%, #DFECFF 100%);
+          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 1px 0px 0px #a7c2dd;
           overflow: hidden;
           height: 0px;
           position: absolute;
