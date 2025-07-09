@@ -360,10 +360,14 @@ const setSelectedPlat = () => {
 const onChangeFixedPokerPlatforms = (item) => {
   selectedFixedBacarratPlatforms.value = item;
   changePage(gamePage.currentPage, gamePage.pageSize);
+  router.push({ path: route.path, query: { subPlat: props.platformGameType === "BACARRAT" ? item.prefix : undefined }, scrollBehavior(to, from, savedPosition) {
+    // Return false to prevent scrolling
+    return false
+  } });
 }
 
 const clickPlat = (plat) => {
-  router.push({ path: route.path, query: { plat: plat.code }, scrollBehavior(to, from, savedPosition) {
+  router.push({ path: route.path, query: { plat: plat.code, subPlat: props.platformGameType === "BACARRAT" ? selectedFixedBacarratPlatforms.value.prefix : undefined }, scrollBehavior(to, from, savedPosition) {
     // Return false to prevent scrolling
     return false
   } });
@@ -387,7 +391,7 @@ const gamePage = reactive({
 const gameListData = ref([]);
 
 const switchPlat = (plat) => {
-  router.push({ path: route.path, query: { plat: plat.code } });
+  router.push({ path: route.path, query: { plat: plat.code, subPlat: props.platformGameType === "BACARRAT" ? selectedFixedBacarratPlatforms.value.prefix : undefined } });
   activePlat.value = plat;
   // selectedPlat.value = plat.code;
   gamePage.currentPage = 1;
@@ -481,9 +485,9 @@ const changePage = (page, pageSize) => {
 const gameCat = ref("allGame");
 
 onMounted(() => {
+  selectedFixedBacarratPlatforms.value = route.query.subPlat || fixedBacarratPlatforms.value[0];
   getPlatList();
   getPlatGameList();
-  selectedFixedBacarratPlatforms.value = fixedBacarratPlatforms.value[0];
 });
 
 watch(

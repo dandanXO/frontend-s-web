@@ -30,7 +30,7 @@
                   <h2 class="nav-title">{{ nav.enName }}</h2>
                 </a>
                 <a v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
-                  <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
+                  <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase() || route.fullPath === nav.path">
                     <!-- <img
                       class="menu-icon"
                       :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
