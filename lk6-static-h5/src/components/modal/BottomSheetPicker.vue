@@ -103,6 +103,7 @@ const closeDialog = () => {
     position: relative;
     margin: 0;
     max-height: 30dvh;
+    min-height: 175px;
     width: 100%;
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
