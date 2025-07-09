@@ -559,10 +559,10 @@ export default defineComponent({
     }
 
     const checkNewUser = () => {
-      if (!store.phone || !store.realName) {
-        isNewUser.value = true;
-        return false;
-      }
+      // if (!store.phone || !store.realName) {
+      //   isNewUser.value = true;
+      //   return false;
+      // }
 
       return true
     }

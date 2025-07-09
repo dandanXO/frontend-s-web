@@ -71,7 +71,7 @@
               v-model="unbindCardNo"
               :label="unbindCardLabel()"
               color="dyblue"
-              :rules="[(val) => (val && val.length > 0) || '请输入' + unbindCardLabel() ]"
+              :rules="[(val) => (val && val.length > 0) || '请输入' + unbindCardLabel()]"
             />
           </div>
 
@@ -225,9 +225,11 @@
             </template>
             <template v-slot:append>
               <q-btn
-              :label="otpCountdownCount <= 0 ? `获取验证码` : `已发送（倒数${otpCountdownCount}秒)`"
-              color="brightbtn" @click="openPhoneVeriDialog()"
-              :disable="otpCountdownCount > 0" />
+                :label="otpCountdownCount <= 0 ? `获取验证码` : `已发送（倒数${otpCountdownCount}秒)`"
+                color="brightbtn"
+                @click="openPhoneVeriDialog()"
+                :disable="otpCountdownCount > 0"
+              />
             </template>
           </q-input>
 
@@ -258,52 +260,43 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss no-esc-dismiss>
-      <q-card width="100%">
-        <q-card-section style="padding: 10px 5px" class="q-pa-md bg-dyblue text-white">
-          <q-toolbar>
-            <q-toolbar-title>验证码</q-toolbar-title>
-            <q-btn flat v-close-popup round dense icon="close" />
-          </q-toolbar>
-        </q-card-section>
-        <div style="padding: 20px">
-          <q-card-section class="q-mb-md q-pa-md">
-            <q-input
-              ref="refInnerCaptcha"
-              :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
-              v-model="innerCaptchaRef"
-              placeholder="验证码"
-            >
-              <template v-slot:append>
-                <img
-                  :src="phoneVerificationImg"
-                  title="点击刷新验证码"
-                  style="margin-top: 6px; cursor: pointer"
-                  @click="getInnerCode"
-                />
-              </template>
-            </q-input>
-          </q-card-section>
-          <q-btn @click="onCaptchaSubmit" label="发送验证码" color="dyblue" />
-        </div>
-      </q-card>
-    </q-dialog>
+    <CommonModal
+      v-model="showCaptchaDialog"
+      header="验证码"
+      no-backdrop-dismiss
+      no-esc-dismiss
+      confirm-btn-text="发送验证码"
+      @confirm="onCaptchaSubmit"
+    >
+      <template #content>
+        <q-input
+          ref="refInnerCaptcha"
+          :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
+          v-model="innerCaptchaRef"
+          placeholder="验证码"
+        >
+          <template v-slot:append>
+            <img
+              :src="phoneVerificationImg"
+              title="点击刷新验证码"
+              style="margin-top: 6px; cursor: pointer"
+              @click="getInnerCode"
+            />
+          </template>
+        </q-input>
+      </template>
+    </CommonModal>
 
-    <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
-      <q-card style="width: 100%; padding: 20px" class="text-black">
-        <q-card-section class="q-mb-md text-center" style="flex-direction: column">
-          <strong>温馨提示</strong>
-          <br />
-          <br />
-          为保证资金安全，绑卡前需先验证手机号
-        </q-card-section>
-        <q-card-actions align="right">
-          <router-link to="/account/verifyTelephone">
-            <q-btn label="前往验证" color="dyblue" />
-          </router-link>
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+    <CommonModal
+      v-model="isNewUser"
+      header="温馨提示"
+      message="为保证资金安全，绑卡前需先验证手机号"
+      no-backdrop-dismiss
+      no-esc-dismiss
+      confirm-btn-text="前往验证"
+      :closable="false"
+      @confirm="$router.push('/account/verifyTelephone')"
+    />
 
     <!-- <q-dialog
       wrap-class-name="bankModal"
@@ -362,11 +355,13 @@ import {userStore} from "stores/index";
 
 import {useRouter} from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
+import CommonModal from "src/components/CommonModal.vue";
 
 var qs = require("qs");
 export default defineComponent({
   name: "WithdrawBankView",
   components: {
+    CommonModal
   },
   setup() {
     const store = userStore();

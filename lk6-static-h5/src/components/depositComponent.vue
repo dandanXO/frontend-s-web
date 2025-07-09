@@ -205,7 +205,7 @@
     message="为保证资金安全，存款前需先验证手机号"
     no-backdrop-dismiss
     no-esc-dismiss
-    :closable="true"
+    :closable="false"
   >
     <template #action>
       <div />
@@ -254,7 +254,7 @@ const isNewUser = ref(false);
 const isNoBankCard = ref(false);
 const checkNewUser = () => {
   if (store.phone === "" || store.phone === null) {
-    isNewUser.value = true;
+    // isNewUser.value = true;
   }
   // else {
   //   api.get("/session/bankCard").then((response) => {
