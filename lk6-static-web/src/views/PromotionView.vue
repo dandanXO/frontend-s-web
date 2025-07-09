@@ -161,6 +161,7 @@
             }"
             v-if="selectedPromo.promoCode !== 'lh-eurocup-manual' && selectedPromo.pageContent"
           >
+            <div v-html="selectedPromo.pageContent"></div>
           </div>
           <div
             v-if="['lh-cs2-copenhagen-major-2024', 'lh-cs2-blast-2024'].includes(selectedPromo.redirectUrl)"

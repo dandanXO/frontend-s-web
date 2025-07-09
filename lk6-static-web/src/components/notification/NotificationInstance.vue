@@ -53,7 +53,6 @@ onMounted(() => {
   --notification-bg-color: #ffffffcc;
   --notification-box-shadow: #00000026;
   position: fixed;
-  min-width: 260px;
   box-shadow: 0px 0px 10px 0px var(--notification-box-shadow);
   background: var(--notification-bg-color);
   border-radius: 10px;
@@ -65,7 +64,7 @@ onMounted(() => {
   transition: opacity 0.5s ease, top 0.5s ease;
   background: url('../../assets/images/common/dialog-body-bg.jpg') center center no-repeat !important;
   background-size: 100% 100% !important;
-  height: 250px;
+  height: 200px;
   aspect-ratio: 304/213;
   display: flex;
   justify-content: center;
@@ -76,6 +75,7 @@ onMounted(() => {
   &.red-packet {
     --notification-primary-color: #52c41a;
     --notification-primary-bg-color: #f4fcf1;
+    height: 250px;
   }
 
   &.error {
