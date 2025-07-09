@@ -437,7 +437,7 @@
                         :slides-per-view="3"
                         :slides-per-group="2"
                         :grid="{
-                          rows: 2,
+                          rows: platform.list.length > 3 ? 2 : 1,
                           fill: 'row'
                         }"
                         :modules="[Grid]"
@@ -454,7 +454,7 @@
                             :style="{
                               backgroundImage: (() => {
                                 try {
-                                  return `url(${imgURLGame}${item.icon})`;
+                                  return `url(${imgURLGame}${game.icon.replace('-', '_')})`;
                                 } catch (e) {
                                   try {
                                     return `url(${require(`../assets/index/baccarat/slide-${platform.name}-img.png`)})`;
@@ -465,7 +465,22 @@
                               })()
                             }"
                             @click="playGame(game.name, game.platformCode, game.code)"
-                          />
+                          >
+                            <div class="game-title">
+                              <div class="game-title__category">
+                                {{
+                                  platform.name === "baccarat"
+                                    ? "BACCARAT"
+                                    : platform.name === "roulette"
+                                    ? "ROULETTE"
+                                    : "LUCKY LACE"
+                                }}
+                              </div>
+                              <div class="game-title__name">
+                                {{ game.name }}
+                              </div>
+                            </div>
+                          </div>
                         </swiper-slide>
                       </swiper>
                     </div>
@@ -1931,7 +1946,8 @@ export default defineComponent({
       getNavigationButtonStatus,
       handleSlideNextClick,
       handleSlidePrevClick,
-      baccaratCategoryList
+      baccaratCategoryList,
+      imgURLGame
     };
   }
 });
@@ -2325,9 +2341,26 @@ export default defineComponent({
         }
         .game-slide {
           .game-bg {
+            position: relative;
             background-size: 100% 100%;
             aspect-ratio: 110 / 145;
             background-repeat: no-repeat;
+            border-radius: 8px;
+            .game-title {
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translateX(-50%);
+              font-weight: 800;
+              color: #ffffff;
+              text-align: center;
+              .game-title__category {
+                font-size: clamp(10px, 5vw, 22px);
+              }
+              .game-title__name {
+                font-size: clamp(10px, 4vw, 18px);
+              }
+            }
           }
         }
       }
