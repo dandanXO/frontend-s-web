@@ -91,7 +91,7 @@
             <div class="user-icon" />
           </template>
           <template v-slot:hint>
-            <div class="q-mb-xs" style="font-size: 11px; color: #cccccc">{{ $t("lang.real_name_hints") }}</div>
+            <div class="q-mb-xs" style="font-size: 10px; color: #cccccc">{{ $t("lang.real_name_hints") }}</div>
           </template>
         </q-input>
 

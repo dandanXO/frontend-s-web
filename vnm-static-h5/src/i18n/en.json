@@ -116,7 +116,7 @@
     "logout_cancel": "Cancel",
     "please_enter_your_real_name": "Please enter your real name",
     "real_name": "Real name",
-    "real_name_hints": "The name must be consistent with the withdrawal bank card account number",
+    "real_name_hints": "Name must be same with withdrawal bank card account number",
     "real_name_validation": "Name must be at least two characters",
     "please_enter_the_referral_code": "Please enter the referral code",
     "referral_code": "Referral code",
