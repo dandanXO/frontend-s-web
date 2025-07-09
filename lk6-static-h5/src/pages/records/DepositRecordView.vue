@@ -1,5 +1,5 @@
 <template>
-  <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
+  <!-- <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" /> -->
   <div class="table-record">
     <RecordComponent
       ref="recordRef"
@@ -24,7 +24,7 @@ export default defineComponent({
   name: "DepositRecordView",
   components: {
     RecordComponent,
-    RecordDateFilter
+    // RecordDateFilter
   },
   setup() {
     const recordRef = ref();

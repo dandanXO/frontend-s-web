@@ -6,7 +6,7 @@
     </q-inner-loading>
     <div v-if="!loading">
       <q-infinite-scroll @load="onLoad" :offset="250">
-        <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm">
+        <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-md">
           <div class="table-data" v-for="(head, e) in headers" :key="e">
             <div class="label">
               {{ head.label }}
@@ -48,7 +48,7 @@
                       class="items-center justify-start gap-3 row"
                     >
                       <!--                    <img src="../assets/records/info-icon.png"/>-->
-                      <span class="text-black text-bold">
+                      <span>
                         {{ checkRecord(det[obj], recordType) }}
                       </span>
                     </div>
@@ -56,26 +56,24 @@
                       v-else-if="det[obj] == 'SUCCESS' || det[obj] === 2 || det[obj] == 'SUPPLEMENT_SUCCESS'"
                       class="items-center justify-start gap-3 row"
                     >
-                      <img src="../assets/records/success-icon.png" />
-                      <span class="text-positive">
+                      <span class="success">
                         {{ checkRecord(det[obj], recordType) }}
                       </span>
                     </div>
                     <div v-else-if="det[obj] == 'FAIL'" class="items-center justify-start gap-3 row">
-                      <img src="../assets/records/error-icon.png" />
-                      <span class="text-negative">
+                      <span class="failed">
                         {{ checkRecord(det[obj], recordType) }}
                       </span>
                     </div>
                     <div v-else-if="det[obj] == 'CANCEL'" class="items-center justify-start gap-3 row">
                       <img src="../assets/records/warning-icon.png" />
-                      <span class="text-warning">
+                      <span class="warning">
                         {{ checkRecord(det[obj], recordType) }}
                       </span>
                     </div>
                     <div v-else class="items-center justify-start gap-3 row">
                       <!--                    <img src="../assets/records/info-icon.png"/>-->
-                      <span class="text-black text-bold">
+                      <span>
                         {{ checkRecord(det[obj], recordType) }}
                       </span>
                     </div>
@@ -87,18 +85,13 @@
                 <div v-else-if="obj === 'paymentType'">
                   <div class="items-center justify-between row">
                     <div>{{ checkRecord(det[obj]) }}</div>
-                    <div v-if="recordType === 'deposit' && det.status === 'PENDING'" class="buttons">
-                      <q-btn round size="xs" color="bright" class="btn-deposit" @click="feedbackTrans(det)">
-                        <img src="../assets/records/quote-request-icon.png" />
-                      </q-btn>
-                    </div>
                   </div>
                 </div>
                 <div v-else-if="obj === 'gameType'">
                   {{ checkRecord(det[obj]) }}
                 </div>
                 <div v-else-if="obj === 'platform'">
-                  {{ det['alias'] ?? det['obj'] }}
+                  {{ det["alias"] ?? det["obj"] }}
                 </div>
                 <div
                   v-else-if="
@@ -114,63 +107,44 @@
                 <div v-else-if="obj === 'platformCode' || obj === 'financeRemark' || obj === 'subType'">
                   {{ checkRecord(det[obj]) }}
                 </div>
+                <div v-else-if="obj === 'serialNumber'" class="deposit-serial-number">
+                  <div class="ellipsis">{{ det[obj] }}</div>
+                  <q-btn @click="copyText(det.serialNumber, '存款编码')" flat round>
+                    <img src="../assets/records/copy-icon.png" />
+                  </q-btn>
+                </div>
                 <div v-else>
                   {{ det[obj] }}
                 </div>
               </div>
             </template>
           </div>
-                  <div v-if="recordType === 'withdraw' || recordType === 'deposit'" class="buttons"> 
-                       <q-btn
-                          @click="copyText(det.serialNumber, '存款编码')"
-                           outline
-                           size="md"
-                           class="items-center justify-between btn-cfm-deposit bg-greyblue row"
-                           icon="content_copy"
-                           label="复制"
-                         />
-                       <template
-                         v-if="
-                           det.status === 'SUCCESS' &&
-                           (det.currencyName === 'CNY' || det.currencyName === 'AliCNY') &&
-                           det.confirmStatus === 0
-                         "
-                       >
-                         <q-btn
-                           @click="openWithdrawConfirmDialog(det)"
-                           outline
-                           size="md"
-                           class="items-center justify-between btn-cfm-deposit bg-greyblue row"
-                           icon="check_circle"
-                           label="确认到账"
-                         />
-                       </template>
- 
-                       <template v-if="det.status === 'APPLY' || det.status === 'STEP_2'">
-                         <q-btn
-                           @click="openWithdrawCancelDialog(det)"
-                           outline
-                           label="取消"
-                           size="sm"
-                           color="bright"
-                           class="q-mr-sm"
-                         />
-                       </template>
- 
-                       <template
-                         v-if="det.status === 'SUCCESS' && det.currencyName === 'CNY' && det.confirmStatus === 1"
-                       >
-                         <q-btn
-                           disable
-                           outline
-                           round
-                           size="md"
-                           class="btn-deposit"
-                           color="positive"
-                           icon="check_circle"
-                         />
-                       </template>
-                     </div> 
+          <div v-if="recordType === 'withdraw' || recordType === 'deposit'" class="buttons">
+            <q-btn
+              v-if="recordType === 'deposit' && det.status === 'PENDING'"
+              class="action-btn"
+              @click="feedbackTrans(det)"
+            >
+              催单
+            </q-btn>
+            <template
+              v-if="
+                det.status === 'SUCCESS' &&
+                (det.currencyName === 'CNY' || det.currencyName === 'AliCNY') &&
+                det.confirmStatus === 0
+              "
+            >
+              <q-btn @click="openWithdrawConfirmDialog(det)" class="action-btn" label="确认到账" />
+            </template>
+
+            <template v-if="det.status === 'APPLY' || det.status === 'STEP_2'">
+              <q-btn @click="openWithdrawCancelDialog(det)" class="action-btn" label="取消" />
+            </template>
+
+            <!-- <template v-if="det.status === 'SUCCESS' && det.currencyName === 'CNY' && det.confirmStatus === 1">
+              <q-btn disable outline round size="md" class="btn-deposit" color="positive" icon="check_circle" />
+            </template> -->
+          </div>
         </q-card>
 
         <template v-slot:loading>
@@ -183,7 +157,7 @@
             <div class="justify-center row q-my-md" v-if="!isEnded">
               <q-spinner-dots color="primary" size="40px" />
             </div>
-            <span style="padding: 4px 0px; line-height: 36px" >没有更多数据了</span>
+            <span style="padding: 4px 0px; line-height: 36px">没有更多数据了</span>
           </div>
         </template>
       </q-infinite-scroll>
@@ -192,78 +166,69 @@
 
   <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
 
-  <q-dialog v-model="reminderDialog" width="100%" no-backdrop-dismiss no-esc-dismis>
-    <q-card class="text-black bg-white reminder-dialog-card" style="width: 100%; padding: 0px 0px 20px">
-      <q-card-section>
-        <q-toolbar>
-          <q-toolbar-title>催单</q-toolbar-title>
-          <q-btn flat v-close-popup round dense icon="close" />
-        </q-toolbar>
-      </q-card-section>
-      <q-card-section>
-        <q-form
-          ref="formRef"
-          v-model="reminderForm"
-          hide-required-mark
-          name="basic"
-          colon
-          autocomplete="off"
-          label-align="left"
-          label-cols="5"
-          class="reminder-dialog-form"
-        >
-          <q-input
-            label="存款编码"
-            filled
-            v-model="reminderForm.orderNo"
-            color="primary"
-            padding="none"
-            readonly
-            disable
-          />
-          <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
-          <q-input
-            type="textarea"
-            v-model="reminderForm.memberRemark"
-            label="备注"
-            filled
-            autogrow
-            color="primary"
-            class="q-mt-md"
-            :rows="2"
-            :max-rows="5"
-          />
-          <q-btn class="common-btn q-mt-md" color="dyblue" label="提交" @click="submitReminder" />
-        </q-form>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+  <CommonModal
+    v-model="reminderDialog"
+    no-backdrop-dismiss
+    no-esc-dismiss
+    header="催单"
+    confirm-btn-text="提交"
+    @confirm="submitReminder"
+  >
+    <template #content>
+      <q-form
+        ref="formRef"
+        v-model="reminderForm"
+        hide-required-mark
+        name="basic"
+        colon
+        autocomplete="off"
+        label-align="left"
+        label-cols="5"
+        class="reminder-dialog-form"
+      >
+        <q-input
+          label="存款编码"
+          standout
+          v-model="reminderForm.orderNo"
+          color="primary"
+          padding="none"
+          readonly
+          disable
+        />
+        <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
+        <q-input
+          type="textarea"
+          v-model="reminderForm.memberRemark"
+          label="备注"
+          standout
+          autogrow
+          color="primary"
+          class="q-mt-md"
+          :rows="2"
+          :max-rows="5"
+        />
+      </q-form>
+    </template>
+  </CommonModal>
 
-  <q-dialog width="100%" v-model="isConfirmWithdraw">
-    <q-card style="width: 100%; padding: 20px; text-align: center" class="text-black bg-white">
-      <q-card-section class="q-mb-md">
-        系统提示
-        <br />
-        <br />
-        确认到账
-      </q-card-section>
-      <q-btn @click="openWithdrawConfirm()" label="确认" color="dyblue" style="margin-right: 8px" />
-      <q-btn @click="isConfirmWithdraw = false" label="取消" color="warning" />
-    </q-card>
-  </q-dialog>
+  <CommonModal
+    v-model="isConfirmWithdraw"
+    header="系统提示"
+    message="确认到账"
+    with-decorator
+    :actions="['confirm', 'cancel']"
+    @confirm="openWithdrawConfirm"
+    @cancel="isConfirmWithdraw = false"
+  />
 
-  <q-dialog width="100%" v-model="isCancelWithdraw">
-    <q-card style="width: 100%; padding: 20px" class="text-black bg-white">
-      <q-card-section class="q-mb-md">
-        系统提示
-        <br />
-        <br />
-        确认取消提款
-      </q-card-section>
-      <q-btn @click="openWithdrawCancel()" label="确认" color="brightbtn" style="margin-right: 8px" />
-      <q-btn @click="isCancelWithdraw = false" label="取消" color="warning" />
-    </q-card>
-  </q-dialog>
+  <CommonModal
+    v-model="isCancelWithdraw"
+    header="系统提示"
+    message="确认取消提款"
+    :actions="['confirm', 'cancel']"
+    @confirm="openWithdrawCancel"
+    @cancel="isCancelWithdraw = false"
+  />
 </template>
 <script>
 import { defineComponent, onMounted, ref, reactive } from "vue";
@@ -273,10 +238,12 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { translateRecord } from "../directives/translate.js";
 import { useUI } from "stores/ui";
+import CommonModal from "./CommonModal.vue";
 
 export default defineComponent({
   components: {
-    FileUpload
+    FileUpload,
+    CommonModal
   },
   props: {
     list: {
@@ -322,21 +289,19 @@ export default defineComponent({
     const passDet = ref(null);
 
     const onLoad = (index, done) => {
-      
       comList.value = props.list;
       // console.log("onLoad");
       // console.log(comList.value);
       setTimeout(() => {
-        console.log('inin',comList.value.length,props.isEnded)
-        truncatedList.value = []
+        truncatedList.value = [];
         if (!props.isEnded) {
           if (comList.value.length) {
-            var slicedArray = comList.value
+            var slicedArray = comList.value;
             slicedArray.forEach((element) => {
               truncatedList.value.push(element);
             });
             done();
-          } else if (comList.value.length === 0 ) {
+          } else if (comList.value.length === 0) {
             // context.emit("loadnewdata");
             // done();
           }
@@ -553,17 +518,49 @@ export default defineComponent({
   margin: 0 0 10px;
 
   .label {
-    color: #0089ed;
+    color: #7a80a1;
     flex: 1;
     align-items: center;
     display: flex;
     justify-content: flex-start;
+    min-width: max-content;
   }
 
   .desc {
     flex: 4;
     word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     letter-spacing: 1px;
+    color: #7a80a1;
+
+    > div {
+      word-break: break-all;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .success {
+      color: #00ffc2;
+    }
+
+    .failed {
+      color: #f53434;
+    }
+
+    .deposit-serial-number {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      .q-btn {
+        padding: 0;
+      }
+      img {
+        max-width: 20px;
+      }
+    }
   }
 }
 
@@ -572,10 +569,27 @@ export default defineComponent({
 }
 
 .buttons {
-  text-align: right;
   display: flex;
   gap: 10px;
-  justify-content: flex-end;
+  justify-content: center;
+
+  .action-btn {
+    background-image: url("../assets/images/index/primary-btn.png");
+    background-size: 100% 100%;
+    color: #fff;
+    width: 87px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 14px;
+    aspect-ratio: 87/32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    box-shadow: 0px -0.87px 3.47px 0px #ffffff;
+    border-radius: 45.9px;
+    margin-right: 5px;
+  }
 }
 
 .btn-deposit {

@@ -1,5 +1,5 @@
 <template>
-  <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
+  <!-- <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" /> -->
   <div class="table-record">
     <RecordComponent
       ref="recordRef"
@@ -25,7 +25,7 @@ export default defineComponent({
   name: "MoneyChangeRecordView",
   components: {
     RecordComponent,
-    RecordDateFilter
+    // RecordDateFilter
   },
   setup() {
     const visible = ref(true);
