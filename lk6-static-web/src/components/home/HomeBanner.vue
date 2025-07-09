@@ -13,7 +13,7 @@
   </el-dialog>
   
   <div v-if="isFetchingBanners" class="banner-loading">
-    <img class="loading-img" src="@/assets/lucky-6-logo.svg" />
+    <img class="loading-img" src="@/assets/lucky-6-logo.png" />
   </div>
 
   <transition name="stomp">
