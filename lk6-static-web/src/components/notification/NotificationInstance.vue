@@ -65,8 +65,8 @@ onMounted(() => {
   transition: opacity 0.5s ease, top 0.5s ease;
   background: url('../../assets/images/common/dialog-body-bg.jpg') center center no-repeat !important;
   background-size: 100% 100% !important;
-  width: 304px;
-  height: 213px;
+  height: 250px;
+  aspect-ratio: 304/213;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,15 +93,15 @@ onMounted(() => {
       position: relative;
 
       img {
-        width: 191px;
+        width: 150px;
       }
       .red-packet-label {
         position: absolute;
-        bottom: 40px;
+        top: 40px;
         font-size: 18px;
         font-weight: 700;
         line-height: 23.94px;
-        color: #ffefd0;
+        color: #B63615;
       }
     }
   }
