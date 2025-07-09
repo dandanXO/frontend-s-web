@@ -170,7 +170,7 @@ onMounted(() => {
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
-        gap: 5px;
+        gap: 15px;
         width: 300px;
         height: 145px;
         position: relative;
@@ -186,16 +186,21 @@ onMounted(() => {
         }
 
         .hot-match-name {
-          font-size: 18px;
+          font-size: 15px;
         }
 
         .hot-match-scores {
-          display: flex;
-          align-items: center;
           gap: 10px;
-
+          height: 70px;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
           .hot-match-time {
             width: 85px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
             .bet-btn {
               position: absolute;
@@ -224,8 +229,10 @@ onMounted(() => {
             line-height: 15px;
             color: #fff;
             text-align: center;
-            gap: 10px;
+            // gap: 10px;
             width: 80px;
+            gap: 5px;
+            height: 80px;
           }
 
           .hot-match-img {
