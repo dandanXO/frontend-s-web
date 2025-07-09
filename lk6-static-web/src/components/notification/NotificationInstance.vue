@@ -61,9 +61,16 @@ onMounted(() => {
   transform: translate(-50%, -50%);
   top: 50vh;
   left: 50vw;
-  font-family: Microsoft YaHei UI;
   color: var(--notification-primary-color);
   transition: opacity 0.5s ease, top 0.5s ease;
+  background: url('../../assets/images/common/dialog-body-bg.jpg') center center no-repeat !important;
+  background-size: 100% 100% !important;
+  width: 304px;
+  height: 213px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
   &.success,
   &.red-packet {
@@ -117,7 +124,6 @@ onMounted(() => {
     font-size: 16px;
     line-height: 21.28px;
     text-align: center;
-    background-color: var(--notification-primary-bg-color);
     img {
       width: 21px;
     }

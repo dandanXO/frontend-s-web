@@ -180,6 +180,21 @@ body {
     border-bottom: none;
   }
 
+  .el-message-box {
+    background: url('../assets/images/common/dialog-body-bg.jpg') center center no-repeat !important;
+    background-size: 100% 100% !important;
+    border-radius: 16px;
+
+    .el-button {
+      color: $color-white;
+        background: url('../assets/images/common/blue-btn-bg.svg') center center no-repeat;
+        background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94C3FF 0%, #4B91F5 100%);
+        border: 1px solid #FFFFFF;
+        box-shadow: 0px 2px 0px 0px #9AB0FF70;
+        background-size: 100% 100%; 
+    }
+  }
+
   .el-dialog {
     --el-dialog-header-bg-color: transparent;
     background: url('../assets/images/common/dialog-body-bg.jpg') center center no-repeat !important;
@@ -188,17 +203,18 @@ body {
 
   .el-dialog__header {
     text-align: left;
-    padding: 16px 16px 0 16px;
+    padding: 20px 20px 0 20px;
     margin: 0;
     font-size: 0.6rem;
 
     .el-dialog__title {
       font-family: 'PingFang SC';
       font-weight: 600;
-      font-size: 20px;
+      font-size: 18px;
       line-height: 147%;
       letter-spacing: 1.49px;
       text-align: center;
+      color: #4C4C6C;
     }
     .el-dialog__headerbtn {
       top: 5px;
@@ -221,6 +237,13 @@ body {
       &:hover .el-dialog__close {
         color: $color-white;
       }
+    }
+  }
+
+  .el-dialog__body {
+    .el-input__wrapper {
+      background: #F7F8FB;
+      box-shadow: 0px 0px 2.78px 0px #A9C9EA inset;
     }
   }
 
@@ -278,7 +301,7 @@ body {
     padding: 0px;
 
     .el-dialog__body {
-      padding: 16px;
+      padding: 20px;
     }
     .el-dialog__footer {
       padding-bottom: 15px;
@@ -395,18 +418,16 @@ body {
   border-radius: 50px;
   color: $color-white;
   gap: 10px;
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-  box-shadow: 0px -2px 5px 0px #b1d7ff inset;
-  box-shadow: 0px -1px 4px 0px #5894ff inset;
+  background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94C3FF 0%, #4B91F5 100%);
+  border: 1px solid #FFFFFF;
+  box-shadow: 0px 2px 0px 0px #9AB0FF70;
   color: #fff;
   cursor: pointer;
   border: 0;
 
   &.outline {
-    background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-    box-shadow: 0px 2px 4px 0px #bbdcff inset;
-    box-shadow: 0px -1px 4px 0px #a2bff4 inset;
-    color: #468cff;
+    background: linear-gradient(180deg, #F4F7FB 0%, #C5DCF8 100%);
+    color: #7A8EB9;
   }
   // &--small {
   //   padding: 3px;
@@ -504,9 +525,8 @@ body {
   }
 
   &.btn-color-white {
-    background: url('../assets/images/common/white-btn-bg.svg') center center no-repeat;
-    background-size: 100% 100%; 
-    color: $font-1;
+    background: linear-gradient(180deg, #F4F7FB 0%, #C5DCF8 100%);
+    color: #7A8EB9;
   }
 }
 
