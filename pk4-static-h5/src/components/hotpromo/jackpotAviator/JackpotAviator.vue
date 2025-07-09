@@ -1,5 +1,6 @@
 <template>
   <template v-if="mode === 'MAIN'">
+    <div class="my-bg">
     <q-tabs
       v-model="timeframe"
       class="timeframe-tabs q-mb-lg"
@@ -18,9 +19,9 @@
       <div class="rules-ribbon" @click="mode = 'RULES'">{{ $t("hotPromo.jackpotAviator.rules") }}</div>
       <div class="history-ribbon" @click="isShowHistoryPopup = true">{{ $t("hotPromo.jackpotAviator.history") }}</div>
 
-      <div class="receive-btn" @click="onClickReceive">
+      <!-- <div class="receive-btn" @click="onClickReceive">
         {{ $t("hotPromo.jackpotAviator.receive") }}
-      </div>
+      </div> -->
     </div>
 
     <template v-if="isLoadingRanking">
@@ -35,10 +36,10 @@
     </template>
 
     <RankDetails :rankDetails="rankDetails" :isLoadingRanking="isLoadingRanking" />
+  </div>
   </template>
   <template v-else-if="mode === 'RULES'">
     <JackpotAviatorRules :onClickBackBtn="() => (mode = 'MAIN')" :rankingBonusRatioList="rankingBonusRatioList" :rules="rulesList" />
-    {{ props.list }}
   </template>
 
   <q-dialog width="100%" v-model="isShowHistoryPopup">
@@ -174,14 +175,20 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+.my-bg {
+  background: url("../../../assets/images/promotion/hotpromo/jackpot-aviator/main-bg.jpg") no-repeat bottom center;
+  background-size: cover;
+  background-position: 0 -200px
+}
 .jackpot {
-  background: url("../../../assets/images/promotion/hotpromo/jackpot-aviator/jackpot-bg.gif") no-repeat 0% 25%;
+  
+  // background: url("../../../assets/images/promotion/hotpromo/jackpot-aviator/jackpot-bg.gif") no-repeat 0% 25%;
   // aspect-ratio: 1125/500;
   background-size: cover;
   
-  min-height: 420px;
+  min-height: 260px;
   position: relative;
-  margin-top: -30px;
+  // margin-top: -30px;
 
   .rules-ribbon {
     // background-color: #30af88;
@@ -193,7 +200,7 @@ onMounted(() => {
     position: absolute;
     width: 74px;
     height: 23px;
-    top: 150px;
+    top: 50px;
     left: -10px;
     padding-left: 10px;
     gap: 5px;
@@ -212,7 +219,7 @@ onMounted(() => {
     position: absolute;
     width: 74px;
     height: 26px;
-    top: 180px;
+    top: 80px;
     left: -10px;
     padding-left: 10px;
     gap: 5px;
