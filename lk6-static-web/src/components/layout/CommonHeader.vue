@@ -2,7 +2,7 @@
   <NewMemberGuide :openAppMenu="() => (selectedMenu = 'App')" :closeAppMenu="() => (selectedMenu = '')" />
 
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
-    <div class="top-nav-wrapper">
+    <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
           <LogoComponent />
