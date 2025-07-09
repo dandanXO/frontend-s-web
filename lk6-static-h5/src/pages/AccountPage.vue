@@ -54,12 +54,12 @@
 
             <q-btn label="提款" class="btn-main btn-pointer" style="" @click="openWithdraw" />
 
-            <q-btn label="转账" class="btn-main btn-pointer" style="" @click="openTransfer" />
+            <!-- <q-btn label="转账" class="btn-main btn-pointer" style="" @click="openTransfer" /> -->
           </div>
         </q-card-section>
         <hr v-if="$q.dark.isActive" style="width: 100%; border: 1px solid #3b5385; margin: 5px 0 15px 0" />
         <q-card-section class="acct-btm-section">
-          <div class="vip-level-detail">
+          <!-- <div class="vip-level-detail">
             <div class="vip-link">{{ store.vip }}</div>
 
             <div class="vip-progress">
@@ -67,7 +67,7 @@
             </div>
 
             <div class="vip-link">{{ updatedVip() }}</div>
-          </div>
+          </div> -->
           <div class="vip-info-div">
             <!-- <div class="vip-left">
               VIP等级：
@@ -76,7 +76,7 @@
               </div>
             </div> -->
 
-            <div class="vip-txt-left" :class="isHideLevelUp && 'opacity-0'">
+            <!-- <div class="vip-txt-left" :class="isHideLevelUp && 'opacity-0'">
               <div>晋级流水（元）</div>
               <div v-if="store.currentBetAmt !== ''">
                 <div v-if="store.currentBetAmt <= store.currentUpgradeBetAmt">
@@ -92,10 +92,9 @@
             <router-link to="/account/vip?from=account">
               <div class="vip-right btn-pointer">
                 更多VIP特权
-                <!-- <img v-if="$q.dark.isActive" src="../assets/images/account/account-right-small-dark.svg" /> -->
                 <img src="../assets/images/account/account-right-small.png" />
               </div>
-            </router-link>
+            </router-link> -->
           </div>
 
           <!-- <div class="eshare-div">
@@ -132,54 +131,6 @@
             </div>
           </div>
         </q-card-section>
-
-        <!-- <q-separator /> -->
-
-        <!-- <q-card class="bluecard vip-info-board" @click="goToVip"> -->
-        <!-- <div class="vipline q-mt-sm"> -->
-        <!-- <div class="circle"> -->
-        <!-- <span class="bigV">v</span> -->
-        <!-- <span class="small">{{ vipLevel }}</span> -->
-        <!-- </div> -->
-        <!-- <div class="middle"> -->
-        <!-- <div class="row items-center justify-between"> -->
-        <!-- <div class="left">成长值</div> -->
-        <!-- <div class="right">{{ store.currentDeposit }}/{{ store.levelUpDeposit }}</div> -->
-        <!-- </div> -->
-
-        <!-- <q-linear-progress :value="vip_progress" rounded class="q-mt-xs" color="white" /> -->
-        <!-- </div> -->
-        <!-- <div class="circle"> -->
-        <!-- <span class="bigV">v</span> -->
-        <!-- <span class="small">{{ vipLevel + 1 }}</span> -->
-        <!-- </div> -->
-        <!-- </div> -->
-
-        <!-- <div class="vip-get-div row justify-between items-center q-mt-sm"> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>晋级礼包</span> -->
-        <!-- </div> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>生日礼金</span> -->
-        <!-- </div> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>每月活动</span> -->
-        <!-- </div> -->
-        <!-- <div class="vip-getpromo-div"> -->
-        <!-- <q-icon v-if="vipLevel < 2" size="13px" name="close" class="getpromo-icon" rounded></q-icon> -->
-        <!-- <img v-if="vipLevel >= 2" src="../assets/account/vip-tick-icon.png" /> -->
-        <!-- <span>专属活动</span> -->
-        <!-- </div> -->
-        <!-- </div> -->
-        <!-- </q-card> -->
       </q-card-section>
     </div>
 
@@ -226,19 +177,19 @@
           </div>
         </router-link>
 
-        <router-link to="/account/mail">
+        <!-- <router-link to="/account/mail">
           <div class="acct-nav-item">
             <img src="../assets/images/account/user-feedback-icon.png" />
             <div class="acct-nav-label">意见反馈</div>
           </div>
-        </router-link>
+        </router-link> -->
 
-        <router-link to="/account/vip?from=account">
+        <!-- <router-link to="/account/vip?from=account">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-vip-icon.png" />
             <div class="acct-nav-label">VIP 特权</div>
           </div>
-        </router-link>
+        </router-link> -->
 
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
@@ -261,26 +212,26 @@
           </div>
         </router-link>
 
-        <router-link to="/account/invite">
+        <!-- <router-link to="/account/invite">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-share-icon.png" />
             <div class="acct-nav-label">推广赚钱</div>
           </div>
-        </router-link>
+        </router-link> -->
 
-        <router-link to="/account/invite#summon-share">
+        <!-- <router-link to="/account/invite#summon-share">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-summon-share-icon.png" />
             <div class="acct-nav-label">精英召回</div>
           </div>
-        </router-link>
+        </router-link> -->
 
-        <router-link to="/affiliate">
+        <!-- <router-link to="/affiliate">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-affiliate-icon.png" />
             <div class="acct-nav-label">合作加盟</div>
           </div>
-        </router-link>
+        </router-link> -->
       </div>
     </q-item-section>
 
@@ -1437,134 +1388,6 @@ export default defineComponent({
     height: 21px;
   }
 }
-
-// .body--dark {
-//   .profile {
-//     .pro-details {
-//       .nickname-span {
-//         // color: $font-3-dark;
-//       }
-//     }
-//   }
-
-//   .acct-nav {
-//     .acct-menu {
-//       @include content-block-dark;
-//       background: transparent;
-//       max-height: 280px;
-//     }
-//   }
-
-//   .acct-section {
-//     .left-sect {
-//       .label {
-//         color: #fff;
-//         font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
-//           sans-serif;
-//       }
-
-//       .amt {
-//         margin-left: 0;
-//         margin-top: 5px;
-//         letter-spacing: 2px;
-//         font-size: 1.5rem;
-//       }
-//     }
-//   }
-
-//   .acct-logout {
-//     @include content-block-dark;
-//     background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
-//     background-size: cover;
-//     box-shadow: none;
-//     border-radius: 4px;
-//     border: 1px solid #3a93ce;
-
-//     .acct-nav-label {
-//       color: #fff;
-//     }
-//   }
-
-//   .vipcard {
-//     background: none;
-//     border-radius: 4px;
-//     overflow: hidden;
-
-//     .top-section {
-//       background: linear-gradient(180deg, #384e79 0%, #212e4b 100%);
-//     }
-//     .btn-main {
-//       // background-image: url("../assets/images/account/account-btn-dark.png");
-//       background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
-//       background-size: cover;
-//       box-shadow: none;
-//       border-radius: 4px;
-//       border: 1px solid #3a93ce;
-//     }
-
-//     .acct-btm-section {
-//       gap: 12px;
-
-//       .vip-info-div {
-//         .vip-right {
-//           color: #fff;
-//           font-size: 18px;
-//           font-family: "YouSheBiaoTiHei";
-//           background: url("../assets/images/account/vip-right-bg-dark.svg") no-repeat center center;
-//           background-size: 100% 100%;
-//           padding: 4px 10px 4px 20px;
-//           margin-right: -14px;
-//           margin-bottom: -12px;
-
-//           img {
-//             width: 9px;
-//           }
-//         }
-//       }
-//     }
-//   }
-
-//   .acct-nav {
-//     .acct-title {
-//       background: #ffffff1a;
-//       &::before {
-//         background: $primary-dark;
-//       }
-//       .acct-title-1 {
-//         color: $white;
-//       }
-//     }
-//   }
-
-//   .profile-dialog {
-//     .q-card {
-//       box-shadow: none;
-//     }
-//     .submitImgBtn {
-//       background-image: url("../assets/images/download/active-tab-bg-dark.png");
-//     }
-//   }
-
-//   .vip-link {
-//     background: none;
-//     &::before {
-//       background-image: url("../assets/images/account/vip-diamond-dark.svg");
-//       height: 58px;
-//       width: 58px;
-//       left: -25px;
-//       top: -17px;
-//     }
-//   }
-
-//   .vip-progress {
-//     :deep(.q-linear-progress__model) {
-//       background: #d0a383;
-//     }
-//     :deep(.q-linear-progress__track) {
-//       background: #d0a38333;
-//     }
-//   }
-// }
 
 @media (max-width: 430px) {
   .acct-nav {
