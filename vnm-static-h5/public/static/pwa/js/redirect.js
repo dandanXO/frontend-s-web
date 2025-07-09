@@ -4,8 +4,8 @@ export function getRedirectInfo() {
   const hostname = window.location.hostname.replace("www.", "");
   const origin = window.location.origin;
   const searchParams = new URLSearchParams(window.location.search);
-  const affiliateCodeFromDomain = domainLists[hostname]?.affiliateCode;
-  const affiliateCode = searchParams.get("p0") || searchParams.get("id") || affiliateCodeFromDomain || "77A4DF";
+  const savedAffiliateCode = localStorage.getItem("PWA_AFFILIATE_CODE");
+  const affiliateCode = searchParams.get("p0") || searchParams.get("id") || savedAffiliateCode || "";
   try {
     const savedRedirectInfo = JSON.parse(localStorage.getItem(PWA_DATA_KEY));
     if (!savedRedirectInfo) throw new Error();
