@@ -13,7 +13,7 @@
     </q-tabs>
 
     <div class="jackpot">
-      <!-- <JackpotTicker :timeframe="timeframe" /> -->
+      <JackpotTicker :timeframe="timeframe" />
 
       <div class="rules-ribbon" @click="mode = 'RULES'">{{ $t("hotPromo.jackpotAviator.rules") }}</div>
       <div class="history-ribbon" @click="isShowHistoryPopup = true">{{ $t("hotPromo.jackpotAviator.history") }}</div>
