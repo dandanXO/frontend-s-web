@@ -285,17 +285,19 @@ const fetchStreams = async () => {
     //   eventTime: [formatDate(filters.value.startDate) || defaultStartDate, formatDate(filters.value.endDate) || defaultEndDate],
     // }
 
+    const query = {}
     if (request.eventTime && request.eventTime.length === 2) {
       const [startTime, endTime] = request.eventTime;
       const formattedRange = [
-      dayjs(startTime).format('YYYY-MM-DD 00:00:00'),
-      dayjs(endTime).format('YYYY-MM-DD 23:59:59'),
+        dayjs(startTime).format('YYYY-MM-DD 00:00:00'),
+        dayjs(endTime).format('YYYY-MM-DD 23:59:59'),
       ];
-      request.eventTime = formattedRange
+      query.eventTime = formattedRange
+      // request.eventTime = formattedRange
     }
   
     const dataMethod = DashboardService.getLiveSportMonitorList
-    const response = await dataMethod(request)
+    const response = await dataMethod(query)
     streams.value = response
   } catch (error) {
     console.error('獲取直播列表失敗:', error)
