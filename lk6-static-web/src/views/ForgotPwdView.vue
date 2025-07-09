@@ -2,7 +2,7 @@
   <div class="forgot-pwd-page-container">
     <div class="center">
       <div class="logo">
-        <img src="../assets/lucky-6-logo.png" />
+        <LogoComponent />
       </div>
       <div class="card-bg">
         <el-tabs>
@@ -24,6 +24,7 @@
 <script setup>
 import EmailFindPwd from "@/components/auth/EmailFindPwd.vue";
 import PhoneOrEmailFindPwd from "@/components/auth/PhoneOrEmailFindPwd.vue";
+import LogoComponent from "@/components/LogoComponent.vue";
 </script>
 
 <style lang="scss">
@@ -90,32 +91,5 @@ import PhoneOrEmailFindPwd from "@/components/auth/PhoneOrEmailFindPwd.vue";
   box-shadow: 0px 0px 10px 0px #0000001a;
   padding: 50px;
   border-radius: 10px;
-}
-
-.dark {
-  .forgot-pwd-page-container {
-    background: url("@/assets/home/auth/login-page-bg-dark.png") no-repeat top center;
-    background-size: cover;
-
-    .el-tabs__nav {
-      box-shadow: none;
-      border: 1px solid $background-content-block-lighter-dark;
-    }
-
-    .el-tabs--top {
-      .el-tabs__item.is-top {
-        color: $active-color-dark;
-        &.is-active {
-          color: $color-white;
-          background: $active-color-dark-linear;
-          box-shadow: $active-color-dark-shadow;
-        }
-      }
-    }
-  }
-
-  .card-bg {
-    @include content-block-dark;
-  }
 }
 </style>
