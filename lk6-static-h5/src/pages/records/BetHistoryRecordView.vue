@@ -87,37 +87,12 @@
       :isEnded="isEnded"
     />
 
-    <q-dialog v-model="showPlatformSelectorDialog" position="bottom" class="platform-selector-dialog">
-      <q-card class="platform-selector-card">
-        <q-card-actions>
-          <q-btn flat dense class="platform-selector-action__cancel" @click="handlePendingPlatformCancelClick">
-            取消
-          </q-btn>
-          <q-space />
-          <q-btn flat dense class="platform-selector-action__confirm" @click="handlePendingPlatformConfirmClick">
-            确认
-          </q-btn>
-        </q-card-actions>
-        <q-separator />
-        <q-card-section>
-          <q-list separator>
-            <q-item
-              v-for="item in platformsList"
-              :key="item.value"
-              :class="{
-                selected: pendingPlatform && pendingPlatform.value === item.value
-              }"
-              clickable
-              @click="pendingPlatform = item"
-            >
-              <q-item-section>
-                <q-item-label>{{ item.label }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+    <BottomSheetPicker
+      v-model="showPlatformSelectorDialog"
+      :list="platformsList"
+      :current="pendingPlatform"
+      @confirm="handlePendingPlatformConfirmClick"
+    />
   </div>
 </template>
 
@@ -128,6 +103,7 @@ import { cached } from "boot/cache";
 import { userStore } from "src/stores";
 import moment from "moment/moment";
 import RecordComponent from "../../components/RecordComponent.vue";
+import BottomSheetPicker from "src/components/modal/BottomSheetPicker.vue";
 
 const store = userStore();
 const visible = ref(true);
@@ -149,7 +125,6 @@ var endDate = ref(moment().format("YYYY-MM-DD"));
 var startDate = ref(moment().add(-7, "days").format("YYYY-MM-DD"));
 var current = ref(1);
 var maxPage = ref(0);
-const pendingPlatform = ref(null);
 
 const platformsList = ref([]);
 const platform = ref("");
@@ -282,22 +257,11 @@ const tableHeaders = [
 ];
 
 const handlePlatformSelectionClick = () => {
-  pendingPlatform.value = platform.value || platformsList.value[0];
   showPlatformSelectorDialog.value = true;
 };
 
-const handlePendingPlatformCancelClick = () => {
-  pendingPlatform.value = null;
-  closePlatformSelectionDialog();
-};
-const handlePendingPlatformConfirmClick = () => {
-  platform.value = pendingPlatform.value;
-  pendingPlatform.value = null;
-  closePlatformSelectionDialog();
-};
-
-const closePlatformSelectionDialog = () => {
-  showPlatformSelectorDialog.value = false;
+const handlePendingPlatformConfirmClick = (selected) => {
+  platform.value = selected;
 };
 
 onMounted(async () => {
@@ -397,52 +361,5 @@ onMounted(async () => {
 
 .payout-total {
   width: 240px;
-}
-
-.platform-selector-dialog {
-  .platform-selector-card {
-    position: relative;
-    margin: 0;
-    max-height: 30dvh;
-    border-top-left-radius: 7px;
-    border-top-right-radius: 7px;
-
-    .q-card__actions {
-      position: sticky;
-      top: 0;
-      z-index: 1;
-      background: #fcfdfe;
-      font-weight: 600;
-      .platform-selector-action__cancel {
-        color: #7a80a1;
-      }
-      .platform-selector-action__confirm {
-        color: #468cff;
-      }
-    }
-
-    .q-separator {
-      background: #ecedf0;
-    }
-
-    .q-card__section {
-      padding: 0 16px;
-      .q-list {
-        &.q-list--separator {
-          .q-item-type {
-            border-color: #ecedf0;
-          }
-        }
-        .q-item {
-          color: #424f7280;
-          text-align: center;
-
-          &.selected {
-            color: #424f72;
-          }
-        }
-      }
-    }
-  }
 }
 </style>

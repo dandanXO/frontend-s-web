@@ -27,6 +27,7 @@
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
         </div>
         <div class="header-right">
+          <LocaleSelector />
           <!-- <span class="memorable-url">易记网址：{{ memorableUrl }}</span>
           <button class="copy-btn" @click="handleCopyMemorableUrlClick">🔍</button> -->
           <router-link class="notification-section" to="/account/inbox?redirect=home">
@@ -539,7 +540,7 @@
   </q-page-sticky>
 
   <GameModal ref="allGames"></GameModal>
-  <announcementModal />
+  <AnnouncementModal />
 
   <CommonModal v-model="isStationNotice" class="station-notice-dialog" header="公告" :actions="[]">
     <template #content>
@@ -725,6 +726,7 @@ import { useNotify } from "src/hooks/notify";
 import { LIVE_PLATFORMS } from "src/constant/platform";
 import RedirectButton from "src/components/RedirectButton.vue";
 import CommonModal from "src/components/CommonModal.vue";
+import LocaleSelector from "src/components/LocaleSelector.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -738,7 +740,8 @@ export default defineComponent({
     PlatformItem,
     RedirectButton,
     CommonModal,
-    AnnouncementModal
+    AnnouncementModal,
+    LocaleSelector
   },
   setup() {
     const notify = useNotify();
@@ -2059,6 +2062,10 @@ export default defineComponent({
 
     .notification-section {
       position: relative;
+
+      img {
+        display: block;
+      }
 
       .notification-dot {
         position: absolute;
