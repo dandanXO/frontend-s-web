@@ -545,7 +545,7 @@
             position: absolute;
             height: 100%;
             width: 100%;
-            box-shadow: 0 0 90px #fff inset;
+            background-color: #000000B2;
             background-image: url(../../assets/game/play.png);
             background-repeat: no-repeat;
             background-position: center center;
@@ -554,6 +554,7 @@
             transition: all 0.3s ease-out;
             left: 0;
             z-index: 1;
+            border-radius: 1rem;
           }
 
           &:hover {
@@ -562,12 +563,13 @@
               position: absolute;
               height: 100%;
               width: 100%;
-              box-shadow: 0 0 20px #fff inset;
+              background-color: #000000B2;
               // background-image: url(../../assets/game/play.png);
               background-repeat: no-repeat;
               background-position: center center;
-              background-size: 25%;
+              background-size: 70%;
               opacity: 1;
+              border-radius: 1rem;
             }
 
             img {
