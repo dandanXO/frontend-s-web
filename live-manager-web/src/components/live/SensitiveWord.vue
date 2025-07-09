@@ -4,10 +4,10 @@
     <div class="header-container">
       <div class="search">
         <Button
-          :label="t('fields.search')"
-          icon="pi pi-search"
+          :label="t('fields.refresh')"
+          icon="pi pi-refresh"
           class="p-button-sm"
-          severity="success"
+          severity="warn"
           @click="loadList()"
         />
         <Button
@@ -224,7 +224,7 @@ async function submit() {
 function confirmDelete(id) {
   confirm.require({
     message: t('message.confirmDelete'),
-    header: t('fields.deleteConfirmation'), // Assuming you have this translation
+    header: t('fields.confirmDelete'), // Assuming you have this translation
     icon: 'pi pi-exclamation-triangle',
     accept: async () => {
       try {
@@ -265,7 +265,15 @@ function changePage(event) {
 
 /* PrimeVue P-field for form items */
 .p-field {
-  margin-bottom: 1rem;
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  margin-bottom: 15px; /* 底部間距 */
+}
+
+.p-field label {
+  flex: 0 0 150px; /* 固定寬度 */
+  text-align: right;
+  margin-right: 20px;
 }
 
 .p-dialog-md {

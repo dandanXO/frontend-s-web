@@ -132,21 +132,21 @@
         <div style="width: 600px">
           <InputText
             id="name"
-            :class="{ 'p-invalid': fieldErrors.newPassword }"
+            :class="{ 'p-invalid': fieldErrors.name }"
             autocomplete="new-password"
             style="width: 100%"
             v-model="form.name"
-            @blur="validateField('newPassword')"
-            @input="clearFieldError('newPassword')"
+            @blur="validateField('name')"
+            @input="clearFieldError('name')"
           />
           <Message
-            v-if="fieldErrors.newPassword"
+            v-if="fieldErrors.name"
             severity="error"
             size="small"
             variant="simple"
             class="mt-1"
           >
-            {{ fieldErrors.newPassword }}
+            {{ fieldErrors.name }}
           </Message>
         </div>
       </div>
@@ -167,21 +167,21 @@
           <InputText
             id="loginName"
             class="w-full"
-            :class="{ 'p-invalid': fieldErrors.confirmPassword }"
+            :class="{ 'p-invalid': fieldErrors.loginName }"
             autocomplete="new-password"
             style="width: 100%"
             v-model="form.loginName"
-            @blur="validateField('confirmPassword')"
-            @input="clearFieldError('confirmPassword')"
+            @blur="validateField('loginName')"
+            @input="clearFieldError('loginName')"
           />
           <Message
-            v-if="fieldErrors.confirmPassword"
+            v-if="fieldErrors.loginName"
             severity="error"
             size="small"
             variant="simple"
             class="mt-1"
           >
-            {{ fieldErrors.confirmPassword }}
+            {{ fieldErrors.loginName }}
           </Message>
         </div>
       </div>
@@ -398,11 +398,13 @@ import { useToast } from 'primevue/usetoast'
 import { uploadImage } from '@/service/image'
 import { useStorage } from '@vueuse/core'
 import { useConfirm } from 'primevue/useconfirm'
-const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/promo/'
+import { useUserStore } from '@/store/user'
+const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/streamer/'
 const { getSportLiveStreamer, updateSportLiveStreamer, deleteSportLiveStreamer,createSiteImage,createSportLiveStreamer } = DashboardService
 const { t } = useI18n()
 const toast = useToast()
 const confirm = useConfirm()
+const store = useUserStore()
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -444,6 +446,8 @@ const changePasswordDialog = reactive({
 })
 
 const fieldErrors = reactive({
+  name: '',
+  loginName: '',
   newPassword: '',
   confirmPassword: '',
 })
@@ -853,7 +857,7 @@ async function submitImageUpload() {
   imageForm.name = generateRandomString(8)
   imageForm.path = form.avatar
   imageForm.category = 'PROMO'
-  imageForm.siteId = 7
+  imageForm.siteId = store.siteId
   console.log('submitImageUpload');
   
 
