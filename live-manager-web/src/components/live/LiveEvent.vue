@@ -123,9 +123,9 @@
       <Column field="liveStatus" :header="t('fields.status')" style="min-width: 120px">
         <template #body="slotProps">
           <Tag v-if="slotProps.data.liveStatus === 2" severity="success">{{ t('status.uefaMatch.ENDED') }}</Tag>
-          <Tag v-else-if="slotProps.data.liveStatus === 1" severity="warning">{{ t('status.uefaMatch.ONGOING') }}</Tag>
+          <Tag v-else-if="slotProps.data.liveStatus === 1" severity="warn">{{ t('status.uefaMatch.ONGOING') }}</Tag>
           <Tag v-else-if="slotProps.data.liveStatus === 3" severity="danger">{{ t('status.uefaMatch.CANCEL') }}</Tag>
-          <Tag v-else severity="info">{{ t('status.uefaMatch.PENDING') }}</Tag>
+          <Tag v-else severity="secondary">{{ t('status.uefaMatch.PENDING') }}</Tag>
         </template>
       </Column>
       <Column field="eventStartTime" :header="t('fields.matchTime')" style="min-width: 200px">
@@ -974,7 +974,7 @@ watch(() => uiForm.eventStartTime, (newValue) => {
 }, { immediate: true });
 
 watch(() => uiForm.eventEndTime, (newValue) => {
-  form.eventStartTime = formatToStartOfDayString(newValue);
+  form.eventEndTime = formatToStartOfDayString(newValue);
 }, { immediate: true });
 
 

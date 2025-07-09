@@ -157,45 +157,45 @@
         <template #body="slotProps">
           <Tag
             v-if="slotProps.data.status === 'upcoming'"
-            severity="warning"
-            :value="t('status.namiMatch.NOT_STARTED')"
+            severity="warn"
+            :value="t('status.marsMatch.NOT_STARTED')"
           />
           <Tag
             v-else-if="slotProps.data.status === 'live'"
             severity="success"
-            :value="t('status.namiMatch.ONGOING')"
+            :value="t('status.marsMatch.ONGOING')"
           />
           <Tag
             v-else-if="slotProps.data.status === 'past'"
             severity="danger"
-            :value="t('status.namiMatch.ENDED')"
+            :value="t('status.marsMatch.ENDED')"
           />
           <Tag
             v-else-if="slotProps.data.status === 'delete'"
             severity="danger"
-            :value="t('status.namiMatch.DELETE')"
+            :value="t('status.marsMatch.DELETE')"
           />
           <Tag
             v-else-if="slotProps.data.status === 'cancel'"
-            severity="warning"
-            :value="t('status.namiMatch.CANCEL')"
+            severity="warn"
+            :value="t('status.marsMatch.CANCEL')"
           />
           <Tag
             v-else-if="slotProps.data.status === 'delayed'"
             severity="danger"
-            :value="t('status.namiMatch.DELAYED')"
+            :value="t('status.marsMatch.DELAYED')"
           />
           <Tag
             v-else-if="slotProps.data.status === 'abandoned'"
             severity="danger"
-            :value="t('status.namiMatch.ABANDONED')"
+            :value="t('status.marsMatch.ABANDONED')"
           />
           <Tag
             v-else-if="slotProps.data.status === 'pending'"
             severity="danger"
-            :value="t('status.namiMatch.PENDING')"
+            :value="t('status.marsMatch.PENDING')"
           />
-          <Tag v-else severity="default" :value="t('status.namiMatch.OTHER')" />
+          <Tag v-else severity="default" :value="t('status.marsMatch.OTHER')" />
         </template>
       </Column>
       <Column field="status" :header="t('fields.operate')" sortable style="min-width: 300px; display: flex; justify-content: center;">
@@ -489,6 +489,7 @@ async function refreshLiveUrl(id){
     toast.add({
       severity: 'error',
       summary: t('fields.failedGetUrl'),
+      life: 3000,
     })
   }
   loadMatchMars()

@@ -159,12 +159,12 @@
           />
           <Tag
             v-else-if="slotProps.data.statusId === 1"
-            severity="warning"
+            severity="warn"
             :value="t('status.namiMatch.NOT_STARTED')"
           />
           <Tag
             v-else-if="slotProps.data.statusId === 2"
-            severity="success"
+            severity="warn"
             :value="t('status.namiMatch.ONGOING')"
           />
           <Tag
@@ -270,7 +270,7 @@
         <el-tag v-else-if="currentRow.statusId === 1" type="warning">{{
           t('status.namiMatch.NOT_STARTED')
         }}</el-tag>
-        <el-tag v-else-if="currentRow.statusId === 2" type="success">{{
+        <el-tag v-else-if="currentRow.statusId === 2" type="warn">{{
           t('status.namiMatch.ONGOING')
         }}</el-tag>
         <el-tag v-else-if="currentRow.statusId === 3" type="danger">{{
