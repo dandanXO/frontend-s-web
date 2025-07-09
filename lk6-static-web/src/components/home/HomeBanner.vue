@@ -12,7 +12,6 @@
     </div>
   </el-dialog>
 
-  {{ console.log('here', banners) }}
   <div v-if="isFetchingBanners" class="banner-loading">
     <img class="loading-img" src="@/assets/lucky-6-logo.svg" />
   </div>

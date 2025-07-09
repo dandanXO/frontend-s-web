@@ -12,8 +12,8 @@
             </div>
             <div class="download">
               <div class="dl-wrapper">
-                <VueQRCodeComponent :size="120" :text="ui.downloadUrl" class="dl-frame" />
-                <div class="link-desc">手机免费下载地址</div>
+                <VueQRCodeComponent :size="90" :text="ui.downloadUrl" class="dl-frame" />
+                <div class="link-desc">扫码进入下载页面</div>
                 <div class="link">
                   <a :href="ui.downloadUrl" target="_blank">{{ ui.downloadUrl }}</a>
                 </div>
@@ -54,7 +54,7 @@ onMounted(() => {});
 <style lang="scss" scoped>
 .download-section {
   margin: 0 auto;
-  width: 1300px;
+  width: 1200px;
 
   .download-container {
     display: flex;
@@ -103,6 +103,7 @@ onMounted(() => {});
             line-height: 28px;
             letter-spacing: 0%;
             color: #3A5178;
+            max-width: 400px;
           }
 
           .download {
@@ -129,12 +130,13 @@ onMounted(() => {});
               align-items: center;
 
               .five-logo {
-                background-image: url(../../../assets/home/download/5-logo.svg);
+                background-image: url(../../../assets/home/download/5-logo.png);
                 background-position: center center;
                 background-size: auto 100%;
-                width: 150px;
-                height: 172px;
+                width: 120px;
+                height: 120px;
                 border-radius: 16px;
+                margin-bottom: 20px;
               }
             }
 
@@ -145,10 +147,11 @@ onMounted(() => {});
               display: flex;
               border-radius: 16px;
               padding: 25px;
-              width: 150px;
-              height: 172px;
+              width: 120px;
+              height: 120px;
               align-items: center;
               justify-content: center;
+              margin-bottom: 20px;
             }
 
             .qr-wrapper,

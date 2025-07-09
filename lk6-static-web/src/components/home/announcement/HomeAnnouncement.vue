@@ -176,13 +176,12 @@ onMounted(() => {
 }
 
 .top-bar-wrapper {
-  padding: 5px;
   color: #696d70;
   border-radius: 2.1875rem;
   background: #FEFEFE;
   box-shadow: 0px 4px 4px 0px #C4D3E280;
   width: 1300px;
-  height: 50px;
+  height: 45px;
   border-radius: 7px;
   margin: 0 auto;
 
@@ -204,7 +203,7 @@ onMounted(() => {
       .station-notice-box {
         display: flex;
         gap: 5px;
-        padding: 0 10px 0 5px;
+        padding: 0 10px 0 10px;
         overflow: hidden;
 
         .announcement-img {
@@ -225,6 +224,11 @@ onMounted(() => {
             margin-right: 50px;
             font-size: 15px;
             line-height: 15px;
+
+             p {
+              margin: 0;
+              padding: 0;
+            }
           }
         }
       }

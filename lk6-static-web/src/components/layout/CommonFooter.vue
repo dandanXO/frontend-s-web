@@ -2,29 +2,6 @@
   <footer class="footer">
     <div class="top-footer">
       <div class="top-footer-inner">
-        <!-- <div class="top-ft-left">
-        <div class="icon firefox" @mouseover="isFireFox = true" @mouseout="isFireFox = false" :class="{hovering: isFireFox}"></div>
-        <div class="icon chrome" @mouseover="isChrome = true" @mouseout="isChrome = false" :class="{hovering: isChrome}"></div>
-        <div class="brush"><RiStarFill /><i class="remixicon-star-s-fill" style="font-size: 22px;"></i>一键收藏网站</div>
-      </div> -->
-        <div class="top-ft-rgt">
-          <!-- <span class="s1">博彩责任：</span>
-          <span class="footPayIcon gameCore" title="GameCore"></span>
-          <span class="footPayIcon eighteenadd" title="18+"></span> -->
-          <span class="s1">推荐浏览器：</span>
-          <span class="recBrowser bchrome" title="Chrome"></span>
-          <span class="recBrowser bfirefox" title="Firefox"></span>
-        </div>
-        <div class="top-ft-rgt">
-          <span class="s1">合作伙伴:</span>
-          <span class="hzhb-icon ag" title="ag"></span>
-          <span class="hzhb-icon sw" title="sw"></span>
-          <span class="hzhb-icon pt" title="pt"></span>
-          <span class="hzhb-icon cq" title="cq"></span>
-          <span class="hzhb-icon mg" title="mg"></span>
-          <span class="hzhb-icon bbin" title="bbin"></span>
-          <span class="hzhb-icon xj" title="xj"></span>
-        </div>
         <div class="top-ft-rgt">
           <span class="s1">支付方式：</span>
           <span class="footPayIcon usdt" title="USDT"></span>
@@ -38,12 +15,39 @@
           <!--          <span class="footPayIcon chineseBank" title="中国银联"></span>-->
           <!--          <span class="footPayIcon fastBank" title="本地银行转账"></span>-->
         </div>
+        <div class="top-ft-rgt">
+          <!-- <span class="s1">博彩责任：</span>
+          <span class="footPayIcon gameCore" title="GameCore"></span>
+          <span class="footPayIcon eighteenadd" title="18+"></span> -->
+          <span class="s1">推荐浏览器：</span>
+          <span class="recBrowser bchrome" title="Chrome"></span>
+          <span class="recBrowser bfirefox" title="Firefox"></span>
+        </div>
+      </div>
+      <div class="top-footer-inner">
+        <!-- <div class="top-ft-left">
+        <div class="icon firefox" @mouseover="isFireFox = true" @mouseout="isFireFox = false" :class="{hovering: isFireFox}"></div>
+        <div class="icon chrome" @mouseover="isChrome = true" @mouseout="isChrome = false" :class="{hovering: isChrome}"></div>
+        <div class="brush"><RiStarFill /><i class="remixicon-star-s-fill" style="font-size: 22px;"></i>一键收藏网站</div>
+      </div> -->
+        
+        <div class="top-ft-rgt">
+          <span class="s1">合作伙伴:</span>
+          <span class="hzhb-icon ag" title="ag"></span>
+          <span class="hzhb-icon sw" title="sw"></span>
+          <span class="hzhb-icon pt" title="pt"></span>
+          <span class="hzhb-icon cq" title="cq"></span>
+          <span class="hzhb-icon mg" title="mg"></span>
+          <span class="hzhb-icon bbin" title="bbin"></span>
+          <span class="hzhb-icon xj" title="xj"></span>
+        </div>
+
       </div>
     </div>
     <div class="bottom-footer">
-      <div class="sitemap" style="display: none">
+      <div class="sitemap">
         <ul class="index_bottom_des">
-          <li>关于雷火</li>
+          <li>关于幸运6</li>
           <li><router-link to="/promotion">优惠活动</router-link></li>
           <li @click="openRegPage">免费开户</li>
           <!--              <li><router-link to="/agent">代理加盟</router-link></li>-->
@@ -75,8 +79,7 @@
           </li>
           <li>
             <a
-              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE"
-            >
+              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE">
               IE9浏览器
             </a>
           </li>
@@ -85,13 +88,13 @@
           </li>
         </ul>
       </div>
-      <div class="bottom-footer-inner">
+      <div class="bottom-footer-inner" style="display:none;">
         <ul>
           <li>
             <router-link to="/about?id=us">
               <div style="display: flex; align-items: center; gap: 5px">
                 <img src="@/assets/footer/footer-lh-logo.png" />
-                <div>关于雷火</div>
+                <div>关于</div>
               </div>
             </router-link>
           </li>
@@ -142,108 +145,139 @@ export default defineComponent({
 <style scoped lang="scss">
 .footer {
   font-size: 0.8rem;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.3);
+
   .top-footer {
     .top-footer-inner {
-      border-bottom: 1px solid $font-1;
+      border-bottom: 1px solid #5D6D86;
       background-color: $footer-black;
       margin: 0 auto;
       display: flex;
       gap: 25px;
-      justify-content: center;
-      padding: 10px 0;
+      justify-content: flex-start;
+      padding: 20px 30%;
+
       .top-ft-left {
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 10px;
+
         .icon {
-          width: 40px;
-          height: 40px;
+          width: 30px;
+          height: 30px;
           background-repeat: no-repeat;
           background-image: url("../../assets/footer/download.png");
+          background-size: 100% 100%;
           cursor: pointer;
+
           &.firefox {
             background-position: -40px -160px;
+
             &.hovering {
               background-position-x: -137px;
             }
           }
+
           &.chrome {
             background-position: -40px -110px;
+
             &.hovering {
               background-position-x: -137px;
             }
           }
         }
       }
+
       .top-ft-rgt {
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        gap: 10px;
+        gap: 20px;
+
         .s1 {
           color: #ffffff;
-          font-size: 16px;
-          min-width: 100px;
+          font-size: 14px;
+          min-width: 80px;
         }
+
         .footPayIcon {
           height: 40px;
           cursor: pointer;
+
           &.numberpay {
-            width: 40px;
+            width: 30px;
+            height: 30px;
             background-repeat: no-repeat;
             background-image: url("../../assets/footer/number.png");
+            background-size: 100% 100%;
 
             &:hover,
             &:active {
               background-image: url("../../assets/footer/number-active.png");
             }
           }
+
           &.usdt {
             border-radius: 4px;
-            width: 40px;
+            width: 30px;
+            height: 30px;
             background-repeat: no-repeat;
             background-image: url("../../assets/footer/usdt.png");
+            background-size: 100% 100%;
 
             &:hover,
             &:active {
               background-image: url("../../assets/footer/usdt-active.png");
             }
           }
+
           &.unionpay {
-            width: 64px;
+            width: 50px;
+            height: 30px;
             background-image: url("../../assets/footer/union.png");
+            background-size: 100% 100%;
 
             &:hover,
             &:active {
               background-image: url("../../assets/footer/union-active.png");
             }
           }
+
           &.alipayf {
             border-radius: 4px;
-            width: 40px;
+            width: 30px;
+            height: 30px;
             background-repeat: no-repeat;
             background-image: url("../../assets/footer/zhifu.png");
+            background-size: 100% 100%;
+
             &:hover {
               background-image: url("../../assets/footer/zhifu-active.png");
             }
           }
+
           &.wechat {
-            width: 48px;
+            width: 35px;
+            height: 30px;
             background-repeat: no-repeat;
             background-position: initial;
             background-image: url("../../assets/footer/wechat.png");
+            background-size: 100% 100%;
             filter: grayscale(100%);
 
             &:hover {
               filter: none;
             }
           }
+
           &.qq {
-            width: 36px;
+            width: 30px;
+            height: 30px;
             background-repeat: no-repeat;
             background-position: initial;
             background-image: url("../../assets/footer/qq.png");
+            background-size: 100% 100%;
             filter: grayscale(130%);
 
             &:hover {
@@ -254,27 +288,34 @@ export default defineComponent({
           &.visa {
             width: 55px;
             background-position: -266px -2px;
+
             &:hover {
               background-position-y: -48px;
             }
           }
+
           &.masterCard {
             width: 55px;
             background-position: -348px -2px;
+
             &:hover {
               background-position-y: -48px;
             }
           }
+
           &.chineseBank {
             width: 77px;
             background-position: -422px -2px;
+
             &:hover {
               background-position-y: -48px;
             }
           }
+
           &.fastBank {
             width: 67px;
             background-position: -602px -2px;
+
             &:hover {
               background-position-y: -48px;
             }
@@ -283,13 +324,16 @@ export default defineComponent({
           &.gameCore {
             width: 30px;
             background-position: 450px 0px;
+
             &:hover {
               background-position-y: -46px;
             }
           }
+
           &.eighteenadd {
             width: 30px;
             background-position: 380px -2px;
+
             &:hover {
               background-position-y: -48px;
             }
@@ -297,80 +341,100 @@ export default defineComponent({
         }
 
         .hzhb-icon {
-          width: 55px;
+          width: 45px;
           height: 40px;
           background-image: url(../../assets/footer/footer-hzhb.png);
           background-position-y: -2px;
           cursor: pointer;
+
           &.ag {
-            width: 55px;
-            background-position: -10px -10px;
+            width: 45px;
+            background-position: -17px -10px;
+
             &:hover {
               background-position-y: -60px;
             }
           }
+
           &.sw {
-            width: 55px;
-            background-position: -70px -10px;
+            width: 35px;
+            background-position: -82px -10px;
+
             &:hover {
               background-position-y: -60px;
             }
           }
+
           &.pt {
-            width: 55px;
-            background-position: -130px -10px;
+            width: 45px;
+            background-position: -135px -10px;
+
             &:hover {
               background-position-y: -60px;
             }
           }
+
           &.cq {
-            width: 55px;
-            background-position: -190px -10px;
+            width: 35px;
+            background-position: -203px -10px;
+
             &:hover {
               background-position-y: -60px;
             }
           }
+
           &.mg {
-            width: 55px;
-            background-position: -250px -10px;
+            width: 35px;
+            background-position: -260px -10px;
+
             &:hover {
               background-position-y: -60px;
             }
           }
+
           &.bbin {
-            width: 55px;
-            background-position: -310px -10px;
+            width: 40px;
+            background-position: -322px -10px;
+
             &:hover {
               background-position-y: -60px;
             }
           }
+
           &.xj {
-            width: 55px;
-            background-position: -370px -10px;
+            width: 40px;
+            background-position: -385px -10px;
+
             &:hover {
               background-position-y: -60px;
             }
           }
         }
+
         .recBrowser {
-          width: 40px;
-          height: 40px;
+          width: 30px;
+          height: 30px;
           background-image: url(../../assets/footer/download.png);
           background-position-y: -2px;
+
           &.bchrome {
-            background-position: -40px -110px;
+            background-position: -42px -116px;
+
             &:hover {
-              background-position-x: -137px;
+              background-position-x: -139px;
             }
           }
+
           &.bfirefox {
-            background-position: -40px -160px;
+            background-position: -41px -166px;
+
             &:hover {
-              background-position-x: -137px;
+              background-position-x: -138px;
             }
           }
         }
       }
+
       .brush {
         width: 130px;
         height: 40px;
@@ -382,6 +446,7 @@ export default defineComponent({
         cursor: pointer;
         font-size: 0.8rem;
         color: #c2c2c2;
+
         svg {
           width: 20px;
           fill: #c2c2c2;
@@ -389,14 +454,17 @@ export default defineComponent({
       }
     }
   }
+
   .bottom-footer {
     background: $footer-black;
+
     .bottom-footer-inner {
       color: #ffffff;
       display: flex;
       width: 1000px;
       margin: 0 auto;
       flex-direction: column;
+
       ul {
         width: 100%;
         display: flex;
@@ -405,6 +473,7 @@ export default defineComponent({
         list-style-type: none;
         margin: 0;
         padding: 0;
+
         li {
           a {
             display: block;
@@ -415,13 +484,14 @@ export default defineComponent({
         }
       }
     }
+
     .sitemap {
-      max-width: $maxwidth;
       margin: 0px auto;
-      padding: 20px 0;
+      padding: 20px 30%;
       display: flex;
-      justify-content: space-evenly;
+      justify-content: space-between;
       align-items: flex-start;
+
       ul {
         display: flex;
         flex-direction: column;
@@ -430,25 +500,28 @@ export default defineComponent({
         gap: 5px;
         margin: 0;
         padding: 0;
+
         li {
           list-style: none;
           cursor: pointer;
-          font-size: 12px;
-          color: #899dc7;
+          font-size: 13px;
+          color: #B3C2E1;
           letter-spacing: -0.46px;
+
           &:first-child {
-            font-family: PingFangSC-Semibold;
             font-size: 14px;
             color: #fff;
             letter-spacing: -0.45px;
           }
+
           a {
             text-decoration: none;
-            color: #899dc7;
+            color: #B3C2E1;
           }
         }
       }
     }
+
     .tagline {
       padding: 10px;
       text-align: center;
@@ -472,13 +545,16 @@ export default defineComponent({
         }
       }
     }
+
     .bottom-footer {
       background: #010105;
+
       .bottom-footer-inner {
         ul {
           li {
             a {
               color: $font-3-dark;
+
               &:hover {
                 color: $color-white;
               }
