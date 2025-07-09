@@ -92,11 +92,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/promotion/index.vue")
       },
       {
-        path: "/app",
-        name: "app",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/AppView.vue")
-      },
-      {
         path: "/maintenance",
         name: "maintenance",
         component: () => import(/* webpackChunkName: "Maintenance" */ "../views/MaintenanceView.vue")
@@ -190,6 +185,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const store = userStore();
   const isDark = useDark();
+
   if (to.name === "agentCode") {
     sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
     sessionStorage.removeItem("REFERRAL_CODE");

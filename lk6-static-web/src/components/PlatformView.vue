@@ -363,7 +363,7 @@ const onChangeFixedPokerPlatforms = (item) => {
 }
 
 const clickPlat = (plat) => {
-  router.push({ path: route.path, query: { plat: plat.code }, scrollBehavior(to, from, savedPosition) {
+  router.push({ path: route.path, scrollBehavior(to, from, savedPosition) {
     // Return false to prevent scrolling
     return false
   } });
@@ -387,7 +387,7 @@ const gamePage = reactive({
 const gameListData = ref([]);
 
 const switchPlat = (plat) => {
-  router.push({ path: route.path, query: { plat: plat.code } });
+  router.push({ path: route.path });
   activePlat.value = plat;
   // selectedPlat.value = plat.code;
   gamePage.currentPage = 1;
