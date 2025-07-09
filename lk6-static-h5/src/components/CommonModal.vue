@@ -1,7 +1,7 @@
 <template>
   <q-dialog v-model="model" v-bind="$attrs" v-on="$attrs" class="modal-common-div">
     <q-card
-      style="width: 100%"
+      style="width: max-content; max-width: 90%"
       class="modalcontent"
       :class="{
         'with-decorator': withDecorator,
@@ -12,7 +12,7 @@
         <slot name="header">
           <div class="titles">{{ header }}</div>
         </slot>
-        <q-btn v-if="closable" class="color-font-1" flat v-close-popup round dense icon="close" />
+        <q-btn v-if="closable" class="color-font-1" flat round dense icon="close" @click="$emit('cancel')" />
       </div>
       <div class="contents">
         <slot name="content">
