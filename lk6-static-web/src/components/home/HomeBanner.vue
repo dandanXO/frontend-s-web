@@ -11,32 +11,35 @@
       <img class="close-btn" src="../../assets/images/home/site-popout/close-btn.png" alt="" @click="handleClose" />
     </div>
   </el-dialog>
-
+  
   <div v-if="isFetchingBanners" class="banner-loading">
     <img class="loading-img" src="@/assets/lucky-6-logo.svg" />
   </div>
-  <el-carousel
-    v-else-if="banners?.length > 0"
-    class="banner-slider"
-    indicator-position="outside"
-    :autoplay="true"
-    :interval="5000"
-  >
-    <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
-      <a @click="goBannerPage(banner.redirectUrl)">
-        <div class="banner-background">
-          <div
-            class="promo-bg isDesktop"
-            :style="
-              'background-image: url(' +
-              imgURL + banner.desktopImageUrl +
-              ')'
-            "
-          ></div>
-        </div>
-      </a>
-    </el-carousel-item>
-  </el-carousel>
+
+  <transition name="stomp">
+    <el-carousel
+      v-if="!isFetchingBanners && banners?.length"
+      class="banner-slider"
+      indicator-position="outside"
+      :autoplay="true"
+      :interval="5000"
+    >
+      <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
+        <a @click="goBannerPage(banner.redirectUrl)">
+          <div class="banner-background">
+            <div
+              class="promo-bg isDesktop"
+              :style="
+                'background-image: url(' +
+                imgURL + banner.desktopImageUrl +
+                ')'
+              "
+            ></div>
+          </div>
+        </a>
+      </el-carousel-item>
+    </el-carousel>
+  </transition>
   <GameModal ref="allGames"></GameModal>
 </template>
 
@@ -330,5 +333,29 @@ watch(
       border: 1px solid #A2B1C3;
       box-shadow: 0 0 0 1px #A2B1C3;
   }
+}
+
+@keyframes stompIn {
+  0% {
+    transform: scale(0.95) translateY(-40px);
+    opacity: 0;
+    box-shadow: none;
+  }
+  60% {
+    transform: scale(1.03) translateY(5px);
+    opacity: 1;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  80% {
+    transform: scale(0.98) translateY(-2px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.stomp-enter-active {
+  animation: stompIn 0.6s ease-out;
 }
 </style>

@@ -43,10 +43,11 @@
         <div class="station-notice-box">
           <img
             class="announcement-img"
+            :class="{ loading: isLoading }"
             src="../../../assets/home/announcement/announcement-img.png"
             @click="openPopup(announcementList)"
           />
-          <div class="station-notice">
+          <div v-if="isLoading === false" class="station-notice">
             <div v-if="!announcementList.length">暂无公告</div>
             <div v-else class="marquee-wrapper">
               <Vue3Marquee
@@ -82,7 +83,11 @@ const typeActive = ref("");
 const announcementActive = ref("");
 const announcementList = ref([]);
 const announcementTypes = ref([]);
+const isLoading = ref(false);
+
 const loadAnnouncement = () => {
+  isLoading.value = true;
+
   getAnnouncement().then((res) => {
     if (res.code === 0) {
       const d = res.data.announcements;
@@ -99,6 +104,10 @@ const loadAnnouncement = () => {
         message: res.message
       });
     }
+  }).catch(() => {
+    isLoading.value = false;
+  }).finally(() => {
+    isLoading.value = false;
   });
 };
 
@@ -184,6 +193,7 @@ onMounted(() => {
   height: 45px;
   border-radius: 7px;
   margin: 0 auto;
+  animation: expandBackground 0.5s ease-out forwards;
 
   .top-bar-inner {
     max-width: $maxwidth;
@@ -205,11 +215,16 @@ onMounted(() => {
         gap: 5px;
         padding: 0 10px 0 10px;
         overflow: hidden;
+        justify-content: space-around;
 
         .announcement-img {
           aspect-ratio: 119/126;
           width: 36px;
           animation: pulse 2.5s ease-in-out infinite;
+          
+          &.loading {
+            animation: spin 1s linear infinite;
+          }
         }
 
         .station-notice {
@@ -287,4 +302,20 @@ onMounted(() => {
   background: linear-gradient(to left, #fff 0%, transparent 100%);
 }
 
+/* White background expansion */
+@keyframes expandBackground {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>

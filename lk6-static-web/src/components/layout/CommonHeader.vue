@@ -1918,6 +1918,12 @@ body {
           gap: 9px;
           padding-left: 5px;
           padding-right: 5px;
+
+          a > span > div {
+            &:hover {
+              animation: rumble 0.3s ease-in-out;
+            }
+          }
         }
         a {
           // padding-top: 10px;
@@ -1941,6 +1947,7 @@ body {
 
           &:hover {
             //filter: brightness(0.85);
+            
 
             .nav-title {
               color: #333;
@@ -2793,5 +2800,12 @@ body {
   background: #7a8eb966;
   border-radius: 25px;
   top: 8px;
+}
+
+@keyframes rumble {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-1px); }
 }
 </style>
