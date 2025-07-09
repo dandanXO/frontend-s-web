@@ -414,16 +414,3 @@ const submitPostVerifyForm = () => {
   }
 }
 </style>
-
-<style scoped lang="scss">
-.dark {
-  .blue-bg {
-    background-image: none !important;
-    background: url("../../assets/images/home/standard-button-bg.svg") no-repeat center center !important;
-    background-size: cover !important;
-    box-shadow: none;
-    border-radius: 6px;
-    border: 1px solid #3A93CE;
-  }
-}
-</style>

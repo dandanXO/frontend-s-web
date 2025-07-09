@@ -304,12 +304,13 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img :src="accDialogImg" />
+            <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../assets/lucky-6-logo.svg" width="150" />
+            <LogoComponent />
           </div>
           <div class="acc-dialog-content">
             <ForgotPwdDialog @close-dialog="forgetPassDialogVisible = false" @open-login-dialog="openLoginDialog" />
