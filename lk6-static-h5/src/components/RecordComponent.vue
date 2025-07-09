@@ -157,7 +157,7 @@
             <div class="justify-center row q-my-md" v-if="!isEnded">
               <q-spinner-dots color="primary" size="40px" />
             </div>
-            <span style="padding: 4px 0px; line-height: 36px">没有更多数据了</span>
+            <span style="padding: 4px 0px; line-height: 36px; color: #7a80a1">没有更多数据了</span>
           </div>
         </template>
       </q-infinite-scroll>
