@@ -247,11 +247,23 @@
             <div class="detail-block-content">
               <span class="detail-block-content-description">添加以下您的雷火专属 VIP 客服：福利咨询，专属服务，赛事推荐专属红包</span>
               <div class="detail-block-content-voxis">
-                <img src="../../../components/hotpromo/officialGift/img/voxis.svg" />
-                <span class="detail-block-content-voxis__url">Amico 客服号：{{ paramsObj.voxis_url_1 }}</span>
-                <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_url_1)">复制</button>
-                <span class="detail-block-content-voxis__url">{{ paramsObj.voxis_url_2 }}</span>
-                <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_url_2)">复制</button>
+                <div style="
+                      width: 42%;
+                      display: inline-flex;
+                  ">
+                  <img src="../../../components/hotpromo/officialGift/img/voxis.svg" />
+                  <p style="margin:0px;" class="detail-block-content-voxis__url">Amico 客服号：</p>
+                </div>
+                <div style="width: 70%;">
+                  <div style="display: flex;">
+                    <span class="detail-block-content-voxis__url">{{ paramsObj.voxis_url_1 }}</span>
+                    <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_url_1)">复制</button>
+                  </div>
+                  <div style="display: flex; margin-top: 2px;">
+                    <span class="detail-block-content-voxis__url">{{ paramsObj.voxis_url_2 }}</span>
+                    <button class="detail-block-content-voxis__btn" @click="() => handleCopyClick(paramsObj.voxis_url_2)">复制</button>
+                  </div>
+                </div>
               </div>
               <div class="detail-block-content-voxis">
                 <img src="../../../components/hotpromo/officialGift/img/voxis.svg" />
