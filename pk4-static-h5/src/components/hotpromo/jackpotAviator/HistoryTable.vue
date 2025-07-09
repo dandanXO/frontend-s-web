@@ -72,7 +72,7 @@ const historyList = () => {
   border-radius: 5px;
   overflow: hidden;
   margin: 0;
-    padding-top: 45px;
+    padding-top: 25px;
   // padding-bottom: 0px;
   // padding-bottom: 15px;
   .item {
@@ -151,7 +151,8 @@ const historyList = () => {
 }
 
 .scrollable {
-  max-height: 500px;
+  // max-height: 500px;
+  max-height: calc(100dvh - 540px);
   overflow: auto;
 }
 @media (min-width: 500px) {
