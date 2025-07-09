@@ -175,7 +175,7 @@ const router = createRouter({
     // console.log(savedPosition);
     if (savedPosition && savedPosition.top) {
       return { left: 0, top: savedPosition.top };
-    } else if (to.path !== "/slot" && !(to.path === '/home' && to?.query?.hasOwnProperty('plat'))) {
+    } else if (to.path !== "/slot" && to.path !== '/home') {
       return { left: 0, top: 0 };
     }
   },
