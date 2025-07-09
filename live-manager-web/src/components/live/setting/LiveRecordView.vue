@@ -35,7 +35,7 @@
           optionLabel="nameZh"
           optionValue="id"
           filter
-          :placeholder="form.homeName || t('fields.enterOrSelectTeam')"
+          :placeholder="form.homeName || t('fields.pleaseChoose')"
           style="width: 300px"
           @change="(val) => handleTeamSelect(val, 'home')"
           @filter="(event) => searchTeams(event, 'home')"
@@ -62,7 +62,7 @@
           optionLabel="nameZh"
           optionValue="id"
           filter
-          :placeholder="form.awayName || t('fields.enterOrSelectTeam')"
+          :placeholder="form.awayName || t('fields.pleaseChoose')"
           style="width: 300px"
           @change="(val) => handleTeamSelect(val, 'away')"
           @filter="(event) => searchTeams(event, 'away')"
