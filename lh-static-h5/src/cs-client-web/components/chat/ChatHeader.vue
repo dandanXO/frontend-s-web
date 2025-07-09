@@ -24,7 +24,7 @@
         <q-badge rounded :color="localStatusColor" />
         <q-badge @click="pingServer" rounded :color="restIndColor" />
         <q-badge rounded :color="wsIndColor" />
-        <q-badge rounded :color="wsIndColor" />
+        <q-badge rounded :color="isCsPingColor" />
       </div>
 
       <q-btn v-if="isChatStarted" @click="handleOnModal" flat>
