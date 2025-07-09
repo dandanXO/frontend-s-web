@@ -2,46 +2,32 @@
   <div class="acct-balances q-ma-sm q-pa-sm">
     <div class="top-balance">
       <div class="mainbal">
-        <!--        <div class="icon">-->
-        <!--          <img src="../assets/images/finance/withdraw/wallet.png"/>-->
-        <!--        </div>-->
+        <div class="icon">
+          <img src="../assets/images/account/account-wallet-icon.png" />
+          <div class="label">中心钱包</div>
+        </div>
         <div class="wallet">
-          <div class="label">我的钱包</div>
-          <div class="wallet-amt-div row justify-between items-center">
-            <div class="balamt text-dark" @click="loadBalance">
-              <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance.toFixed(2) }}</span>
-              <span v-if="isLoadingBalance">加载中...</span>
-            </div>
-            <div @click="loadBalance" class="icon">
-              <!--              <q-icon name="refresh" ></q-icon>-->
-              <img src="../assets/account/finance/refresh-icon.png" />
-            </div>
+          <div class="balamt text-black" @click="loadBalance">
+            <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance.toFixed(2) }}</span>
+            <span v-if="isLoadingBalance">加载中...</span>
           </div>
         </div>
       </div>
       <div class="refreshItems">
-        <div v-if="!isRefreshingBalance" class="refreshAll" @click="refreshBalance('all')">
-          <div class="icon">
-            <img src="../assets/account/finance/refresh-btn-blue.png" />
-          </div>
-          <div class="label">一键刷新</div>
+        <div v-if="!isRefreshingBalance" class="refreshAll common-md-btn" @click="refreshBalance('all')">
+          <div class="label">刷新余额</div>
         </div>
-        <div class="refreshAll" v-else>请稍等{{ seconds }}秒</div>
-        <div v-if="!isTransferring" class="transferAll" @click="transferOutAll">
-          <div class="icon">
-            <img src="../assets/images/finance/withdraw/transfer_icon.png" />
-          </div>
+        <div v-else class="show-sec">请稍等{{ seconds }}秒</div>
+        <div v-if="isTransfer && !isTransferring" class="transferAll common-md-white-btn" @click="transferOutAll">
           <div class="label">一键转出</div>
         </div>
-        <div class="transferAll" v-else>转出中...</div>
+        <div v-else>转出中...</div>
       </div>
     </div>
-
-    <div class="text-grey-8 q-pa-sm text-center">除了以下平台需要转账，其它游戏平台都无需转账即可游戏</div>
+    <!--    <div v-if="isTransfer" class="text-brand q-pa-sm">除了以下平台需要转账，其它游戏平台都无需转账即可游戏</div>-->
     <div class="balance-transfer-button">
       <q-toggle
         v-model="isTransferRef"
-        class="wtf"
         :label="`自动平台转账: ${isTransfer ? '已开启' : '已关闭'}`"
         left-label
         @update:model-value="updateAutoTransfer($event)"
@@ -49,53 +35,49 @@
       ></q-toggle>
     </div>
     <q-separator style="margin-bottom: 10px" />
-    <div class="transfer-plat-wrapper" :style="isExpanded ? `height: auto;` : 'height: 80px;'">
+    <div class="transfer-plat-wrapper" :style="isExpanded ? `height: ${transferBox}px` : 'height: 80px;'">
       <div class="transfer-plat-inner">
         <div class="transfer-plat-item" v-for="p in props.platforms" :key="p.id" @click="refreshBalance(p.code)">
           <div class="flex-box flex-justify-space transfer-balance-box">
             <div class="platform-details">
               <div class="name-wrapper">
-                <div class="plat-name">{{ platformNames[p.code] }}</div>
+                <div class="plat-name">{{ p.name }}</div>
               </div>
               <div class="balance-wrapper">
-                <span class="text-bold row justify-center items-center gap-5 no-wrap" v-if="p.isLoading">
-                  <img style="margin-bottom: 5px; width: 14px" src="../assets/account/finance/refresh-btn-blue.png" />
-                  加载中...
-                </span>
+                <span class="text-bold" v-if="p.isLoading">加载中...</span>
                 <span class="text-bold" v-else-if="p.isTransferring">转出中...</span>
-                <span class="text-bold" v-else>
-                  {{ store.currency.value }}
-                  {{ p.amount ? Number(p.amount).toFixed(2) : (0.0).toFixed(2) }}
+                <span v-else>
+                  {{ store.currency.value }} {{ p.amount ? Number(p.amount).toFixed(2) : (0.0).toFixed(2) }}
                 </span>
               </div>
             </div>
           </div>
 
           <!-- <div
-              class="flex-box flex-wrap transfer-action-box"
+            class="flex-box flex-wrap transfer-action-box"
+          >
+            <q-form
+              ref="formRef"
+              :hideRequiredMark="true"
+              :model="transferInfo"
+              :rules="rules"
+              :label-col="{ span: 4 }"
+              type="vertical"
             >
-              <q-form
-                ref="formRef"
-                :hideRequiredMark="true"
-                :model="transferInfo"
-                :rules="rules"
-                :label-col="{ span: 4 }"
-                type="vertical"
-              >
-                 <q-input
-                    v-model:value="transferInfo.amount"
-                    placeholder="Amount"
-                  />
-              </q-form>
-            </div> -->
+               <q-input
+                  v-model:value="transferInfo.amount"
+                  placeholder="Amount"
+                />
+            </q-form>
+          </div> -->
         </div>
       </div>
     </div>
-    <div @click="showPlatform" v-if="!isExpanded" class="showall text-center text-blue-6 q-pt-md">
+    <div @click="showPlatform" v-if="!isExpanded" class="showall text-center q-pt-md">
       显示所有场馆
       <q-icon name="expand_more" />
     </div>
-    <div @click="showPlatform" v-if="isExpanded" class="showall text-center text-blue-6 q-pt-md">
+    <div @click="showPlatform" v-if="isExpanded" class="showall text-center q-pt-md">
       收起所有场馆
       <q-icon name="expand_less" />
     </div>
@@ -113,11 +95,14 @@ import { ref, reactive, onMounted, watch } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
+import { useNotify } from "src/hooks/notify";
+
+const notify = useNotify();
 
 const isLoadingBalance = ref(false);
 const isRefreshingBalance = ref(true);
 const isTransferring = ref(false);
-const seconds = ref(5);
+const seconds = ref(10);
 const store = userStore();
 const isExpanded = ref(false);
 const transferRef = ref();
@@ -156,19 +141,6 @@ const showPlatform = () => {
 //         refreshBalance('all')
 //     })
 // };
-const platformNames = {
-  AG: "PA",
-  BBINDY: "BBIN",
-  KY: "开元棋牌",
-  LEG: "乐游棋牌",
-  DT: "大唐棋牌",
-  TCG: "TCG彩票",
-  SGWin: "双赢彩票",
-  PT: "PT电子",
-  PG: "PG电子",
-  AGF: "PA捕鱼",
-  PMFISH: "DB捕鱼"
-};
 const loadBalance = () => {
   isLoadingBalance.value = true;
   store.getBalance().then((res) => {
@@ -215,8 +187,8 @@ const transferOutAll = () => {
 const refreshBalance = (plat) => {
   if (plat === "all") {
     isRefreshingBalance.value = true;
-    seconds.value = 5;
-    // setTimer();
+    seconds.value = 10;
+    setTimer();
     loadBalance();
     props.platforms.forEach((platform) => {
       platform.isLoading = true;
@@ -230,12 +202,10 @@ const refreshBalance = (plat) => {
             }
           })
           .catch((e) => {
-            // $q.notify({
-            // color: "negative",
-            // position: "top",
-            // message: e.message,
-            // icon: "report_problem"
-            // })
+            // notify({
+            // type: "error",
+            //            // message: e.message,
+            //            // })
             platform.isLoading = false;
           });
       }
@@ -253,11 +223,9 @@ const refreshBalance = (plat) => {
         }
       })
       .catch((e) => {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: e.message,
-          icon: "report_problem"
+        notify({
+          type: "error",
+          message: e.message
         });
         platform.isLoading = false;
       });
@@ -276,76 +244,53 @@ onMounted(() => {
   if (isRefreshingBalance.value) {
     setTimer();
   }
+
+  isExpanded.value = true;
+  transferBox.value = 160;
 });
 </script>
 <style scoped lang="scss">
 .acct-balances {
-  //background: ;
+  width: 100%;
+  margin: auto;
+  background: #fcfdfe;
+  box-shadow: none;
+  border-radius: 10px;
+  padding: 15px 12px 20px;
 
   .top-balance {
-    padding: 0 0 4px;
+    padding: 0 0 10px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 5px;
-    color: #000000;
+    color: #333333;
 
     .mainbal {
-      //border-right: 1px solid #c8c7cc;
+      border-right: 1px solid #c8c7cc;
       display: flex;
-      width: 100%;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       flex: 1;
-      gap: 15px;
+      gap: 4px;
 
       .icon {
-        width: 20px;
-        margin-right: 16px;
-
-        &:active {
-          filter: brightness(0.85);
-        }
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 1rem;
 
         img {
-          width: 100%;
+          width: 20px;
         }
       }
 
       .wallet {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        border: 1px solid #c2c2c2;
-        border-radius: 12px;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 6px;
-        padding: 10px 20px 12px;
-
-        .wallet-amt-div {
-          width: 100%;
-          background: #d9d9d950;
-          padding: 8px 6px;
-          border-radius: 50px;
-          height: 40px;
-          align-items: center;
-        }
-
         .balamt {
-          margin-left: 6px;
-          font-size: 19px;
+          font-size: 1.2rem;
           font-weight: bold;
-
-          span {
-            color: #000;
-          }
-        }
-
-        .label {
-          font-weight: 600;
-          font-size: 16px;
         }
       }
     }
@@ -355,27 +300,20 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: row;
-      margin: 8px auto 8px;
-      width: 100%;
-      font-weight: 600;
-      font-size: 16px;
+      gap: 0.75rem;
+
+      .show-sec {
+        white-space: nowrap;
+      }
 
       .refreshAll {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 15px;
-        width: 50%;
-
-        .label {
-          font-weight: 600;
-          font-size: 16px;
-        }
 
         .icon {
-          width: 25px;
-          height: 25px;
+          width: 23px;
 
           img {
             width: 100%;
@@ -388,16 +326,9 @@ onMounted(() => {
         justify-content: center;
         align-items: center;
         gap: 15px;
-        width: 50%;
-
-        .label {
-          font-weight: 600;
-          font-size: 16px;
-        }
 
         .icon {
-          width: 25px;
-          height: 25px;
+          width: 23px;
 
           img {
             width: 100%;
@@ -415,41 +346,37 @@ onMounted(() => {
 
     .transfer-plat-inner {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       width: 100%;
-      .transfer-balance-box {
-        flex: 1;
-        padding: 5px;
-      }
+
       .transfer-plat-item {
         height: 80px;
         display: flex;
         justify-content: center;
         align-items: center;
         overflow: hidden;
+        border-bottom: 1px solid #606e7b;
 
         .platform-details {
           display: flex;
           justify-content: center;
           align-items: center;
           flex-direction: column;
-          border: 1px solid #c2c2c2;
-          padding: 10px 20px;
-          border-radius: 12px;
 
           .name-wrapper {
             word-break: break-all;
+            color: $dark;
 
             .plat-name {
-              color: #000;
               overflow: hidden;
               height: 25px;
-              font-weight: 700;
+              font-size: 1rem;
             }
           }
 
           .balance-wrapper {
-            color: #33bcd4;
+            color: $primary;
+            font-size: 1rem;
           }
         }
       }
@@ -457,22 +384,10 @@ onMounted(() => {
   }
 
   .showall {
-    border-bottom: 1px solid #c8c7cc;
+    border-top: 1px solid #c8c7cc;
     cursor: pointer;
-    font-size: 16px;
-    padding-bottom: 12px;
-  }
-}
-
-@media (max-width: 440px) {
-  .acct-balances .transfer-plat-wrapper .transfer-plat-inner {
-    grid-template-columns: repeat(3, 1fr);
-
-    .transfer-plat-item {
-      .platform-details {
-        padding: 10px 10px;
-      }
-    }
+    color: #333333;
+    font-size: 1rem;
   }
 }
 

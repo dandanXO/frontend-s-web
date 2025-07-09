@@ -525,53 +525,39 @@
 
   <GameModal ref="allGames"></GameModal>
 
-  <q-dialog class="station-notice-dialog" width="100%" v-model="isStationNotice">
-    <q-card
-      style="width: 85%; border-radius: 12px; position: relative; padding: 20px 12px 12px 12px"
-      class="bg-[#0000001A] text-black"
-    >
-      <q-card-section class="q-mb-md" style="display: flex; flex-direction: column">
-        <q-tabs
-          v-model="activeKey"
-          dense
-          align="justify"
-          active-class="tab-active"
-          content-class="tabs-wrapper"
-          indicator-color="transparent"
-        >
-          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
-        </q-tabs>
+  <CommonModal v-model="isStationNotice" class="station-notice-dialog" header="公告" :actions="[]">
+    <template #content>
+      <q-tabs v-model="activeKey" class="station-notice-tabs">
+        <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
+      </q-tabs>
 
-        <q-separator />
+      <q-tab-panels v-model="activeKey" animated>
+        <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
+          <q-list style="min-height: 65vh">
+            <div v-for="(ann, idx) in announcementList" :key="idx">
+              <span v-if="ann.typeId === tab.id">
+                <q-expansion-item
+                  style="max-height: 65vh; overflow: auto; color: #6c6c6e"
+                  expand-icon-class="text-grey-5"
+                  group="somegroup"
+                  icon="notifications_none"
+                  :label="ann.title"
+                >
+                  <q-card>
+                    <q-card-section style="color: #9f9f9f">
+                      {{ ann.content }}
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
 
-        <q-tab-panels v-model="activeKey" animated>
-          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
-            <q-list style="min-height: 65vh">
-              <div v-for="(ann, idx) in announcementList" :key="idx">
-                <span v-if="ann.typeId === tab.id">
-                  <q-expansion-item
-                    style="max-height: 65vh; overflow: auto; color: #6c6c6e"
-                    expand-icon-class="text-grey-5"
-                    group="somegroup"
-                    icon="notifications_none"
-                    :label="ann.title"
-                  >
-                    <q-card>
-                      <q-card-section style="color: #9f9f9f">
-                        {{ ann.content }}
-                      </q-card-section>
-                    </q-card>
-                  </q-expansion-item>
-
-                  <q-separator></q-separator>
-                </span>
-              </div>
-            </q-list>
-          </q-tab-panel>
-        </q-tab-panels>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+                <q-separator></q-separator>
+              </span>
+            </div>
+          </q-list>
+        </q-tab-panel>
+      </q-tab-panels>
+    </template>
+  </CommonModal>
 
   <q-page-sticky v-if="showDomain" position="bottom-right" :offset="domainPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingDomainFab" v-touch-pan.prevent.mouse="moveDomainFab">
@@ -712,6 +698,7 @@ import GameTypeSwiper from "src/components/home/GameTypeSwiper.vue";
 import { useNotify } from "src/hooks/notify";
 import { LIVE_PLATFORMS } from "src/constant/platform";
 import RedirectButton from "src/components/RedirectButton.vue";
+import CommonModal from "src/components/CommonModal.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -723,7 +710,8 @@ export default defineComponent({
     PlatformBlock,
     GameTypeSwiper,
     PlatformItem,
-    RedirectButton
+    RedirectButton,
+    CommonModal
   },
   setup() {
     const notify = useNotify();
@@ -2914,12 +2902,28 @@ export default defineComponent({
 }
 
 .station-notice-dialog {
-  :deep(.q-card) {
-    width: 80%;
-  }
-  :deep(.q-tabs__content) {
-    background: #ececec;
+  .station-notice-tabs {
+    background: linear-gradient(180deg, #ffffff 0%, #e3efff 100%);
+    box-shadow: 0px 2px 2px 0px #ffffffcc inset, 0px 0px 5.5px 0px #c6d9ffab;
+    border-radius: 30px;
     padding: 5px 8px;
+
+    .q-tab {
+      background: radial-gradient(103.75% 103.75% at 50% -3.75%, #ffffff 0%, #deecff 100%);
+      border: 1.41px solid #ffffff;
+      box-shadow: 0px 0px 5.5px 0px #c6d9ffab;
+      font-weight: 600;
+      color: #35648f;
+
+      &.q-tab--active {
+        background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
+        color: #ffffff;
+      }
+    }
+
+    .q-tab__indicator {
+      display: none;
+    }
   }
 }
 

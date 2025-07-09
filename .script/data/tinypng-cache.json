@@ -15707,7 +15707,7 @@
   "lk6-static-h5/src/assets/images/finance/withdraw/withdraw-remaining-bg.png": "c5c90a57f873d8b4be06288c01667a41",
   "lk6-static-h5/src/assets/images/finance/withdraw/wallet.png": "515db2740f6f232bd3eb671b04f8cc39",
   "lk6-static-h5/src/assets/images/finance/withdraw/transfer_icon.png": "6f677250f977c8c45f1ebbffd8773b7e",
-  "lk6-static-h5/src/assets/images/finance/withdraw/rocket-icon.png": "ea617e65ba247a11e97a7c3a77ce363d",
+  "lk6-static-h5/src/assets/images/finance/withdraw/rocket-icon.png": "ea7444c56d5a15e42c9d01cb53ab1a09",
   "lk6-static-h5/src/assets/images/finance/withdraw/refresh.png": "d4072b8466a0bf1417b5718d1f5d234c",
   "lk6-static-h5/src/assets/images/finance/withdraw/nonactive-btn.png": "158211227f0e89c68fdb903c385973a5",
   "lk6-static-h5/src/assets/images/finance/withdraw/arrow_right.png": "65a46aa9a4b1ad72151eff6769e224b9",
@@ -31771,5 +31771,7 @@
   "lk6-static-h5/src/assets/images/games/baccarat/category-bg.png": "f6dd7abfda4612c33304f8a6614dce3b",
   "lk6-static-h5/src/assets/index/baccarat/slide-baccarat-img.png": "ab22d2c207771029b02f74d61a0d326d",
   "lk6-static-h5/src/assets/index/baccarat/slide-lucky-lace-img.png": "0a66deee9d59b9a3160d19d3a73d2bd5",
-  "lk6-static-h5/src/assets/index/baccarat/slide-roulette-img.png": "11b59404a3e793c25b9a981f583edb32"
+  "lk6-static-h5/src/assets/index/baccarat/slide-roulette-img.png": "11b59404a3e793c25b9a981f583edb32",
+  "lk6-static-h5/src/assets/images/account/transfer-arrow.png": "bbf157535041311a6bf7ca873c880495",
+  "lk6-static-h5/src/assets/index/sport/slide-sport-cr.png": "82845cb611943b04bba5abd042953f6a"
 }

@@ -2,15 +2,15 @@
   <div class="withdraw-section">
     <div class="title-wrapper q-pa-md" style="padding-bottom: 0px">
       <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
-      <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" color="brightbtn" @click="handleUpgradeClick">
+      <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" flat @click="handleUpgradeClick">
         <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
         <span>升级快速提款</span>
       </q-btn>
     </div>
     <!--    <AcctBal :platforms="platforms" />-->
-    <div class="q-pa-md bg-white q-mx-sm q-my-md">
+    <div class="q-pa-md">
       <div class="account-content last">
-        <label class="label">选择提款方式</label>
+        <!-- <label class="label">选择提款方式</label> -->
 
         <div class="withdrawalmethod">
           <div
@@ -32,20 +32,28 @@
           </div>
         </div>
 
-        <q-separator style="margin-top: 12px; margin-bottom: 15px" />
+        <!-- <q-separator style="margin-top: 12px; margin-bottom: 15px" /> -->
 
-        <label class="label">{{ chooseLabel() }}</label>
+        <div class="main-wallet">
+          <div class="desc">主钱包</div>
+          <div class="amount">
+            {{ convertToCommaAmount(store.balance) }}
+          </div>
+          <q-btn class="refresh-btn" flat @click="store.getBalance">一键刷新</q-btn>
+        </div>
+
+        <!-- <label class="label">{{ chooseLabel() }}</label> -->
         <q-form>
           <q-select
             v-show="isLoaded"
+            class="withdraw-input"
             hide-bottom-space
-            filled
+            standout
             ref="cardRef"
             v-model="withdrawInfo.cardId"
             option-value="id"
             emit-value
             :label="'选择' + chooseLabel()"
-            color="black"
             :options="withdrawState.bankCardList"
             map-options
             :rules="[(val) => !!val || '请选择' + chooseLabel()]"
@@ -89,15 +97,16 @@
             </template>
           </q-select>
 
-          <q-separator style="margin-top: 14px; margin-bottom: 14px" />
+          <!-- <q-separator style="margin-top: 14px; margin-bottom: 14px" /> -->
 
-          <label class="label">提款金额</label>
+          <!-- <label class="label">提款金额</label> -->
           <q-input
+            class="withdraw-input"
             hide-bottom-space
             ref="amountRef"
             v-model="withdrawInfo.amount"
-            label="金额"
-            color="black"
+            standout
+            placeholder="请输入金额"
             :rules="[
               (val) => (val && val.length > 0) || '请输入提款金额',
               (val) => val >= selectedWithdrawalMethod.withdrawMin || '请输入正确的提款金额',
@@ -108,21 +117,15 @@
             clearable
           >
             <template v-slot:prepend>
-              <span style="font-size: 26px" class="text-bright">
-                {{ store.currency.value }}
-              </span>
+              <span style="font-size: 14px">取款金额</span>
             </template>
-            <template v-slot:append>
+            <!-- <template v-slot:append>
               <span style="font-size: 26px" class="text-bright">
                 <q-btn class="bigamount-btn" @click="updateWithdrawAmt" label="全额提款" color="dyblue" />
               </span>
-            </template>
+            </template> -->
           </q-input>
-          <div
-            class="q-mt-md q-mb-md text-center text-grey text-bold q-pb-md"
-            style="border-bottom: 1px solid #434343"
-            v-show="selectedWithdrawalMethod"
-          >
+          <div class="q-mt-md q-mb-md" style="color: #7a80a1" v-show="selectedWithdrawalMethod">
             <!-- <div v-if="!isShowRemainingDialog && isAutoWithdrawal && selectedWithdrawalMethod.currencyId" class="upgraded-helper-text">
               <span>可提余额：{{ selectedWithdrawalMethod.withdrawableBalance }}{{ store.currency.label }}</span>
               <span>剩余流水：{{ selectedWithdrawalMethod.remainWagers }}{{ store.currency.label }}</span>
@@ -170,11 +173,7 @@
           <div v-else-if="isEWALLET && !!selectedWithdrawalMethod.url">
             <span class="tip-text">*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</span>
             <div class="q-mt-md q-mb-md text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
-              <q-btn
-                style="border: 1px solid #000000; color: #000000"
-                @click="openEWalletTutorial"
-                :label="tutorialLabel()"
-              />
+              <q-btn class="tutorial-btn" flat @click="openEWalletTutorial" :label="tutorialLabel()" />
             </div>
           </div>
 
@@ -224,70 +223,40 @@
       </div>
     </div>
 
-    <q-dialog v-model="hasWithdrawCard" persistent no-backdrop-dismiss no-esc-dismiss>
-      <q-card style="width: 100%; padding: 10px; flex-direction: column" class="text-black">
-        <q-card-section class="q-mb-md">
-          <div class="text-h6 text-center">请先绑定银行卡</div>
-        </q-card-section>
-
-        <div class="flex flex-center">
-          <router-link to="/account">
-            <q-btn class="q-mr-md" label="取消" />
-          </router-link>
-          <router-link to="/account/withdraw">
-            <q-btn color="dyblue" label="绑定" />
-          </router-link>
+    <CommonModal
+      v-model="hasWithdrawCard"
+      persistent
+      no-backdrop-dismiss
+      no-esc-dismiss
+      header="请先绑定银行卡"
+      :closable="false"
+    >
+      <template #action>
+        <div class="cacnels common-md-white-btn">
+          <router-link to="/account">取消</router-link>
         </div>
-      </q-card>
-    </q-dialog>
-    <q-dialog v-model="isShowWithdrawErrorBlock" persistent no-backdrop-dismiss no-esc-dismiss>
-      <q-card style="width: 100%; max-width: 290px; padding: 15px; flex-direction: column" class="text-black">
-        <q-card-section class="q-mb-md">
-          <!-- <div class="text-h6 text-center">请先完成上比提款</div> -->
-          您需要在交易记录-提款记录中点击 "确认到账" 完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!
-        </q-card-section>
-
-        <div class="flex flex-center">
-          <div>
-            <q-btn style="width: 100px" @click="isShowWithdrawErrorBlock = false" class="q-mr-md" label="取消" />
-          </div>
-          <router-link to="/account/records/withdraw">
-            <q-btn style="width: 100px" color="dyblue" label="前往确认" />
-          </router-link>
+        <div class="confirmsbtns common-md-btn">
+          <router-link to="/account/withdraw">绑定</router-link>
         </div>
-      </q-card>
-    </q-dialog>
+      </template>
+    </CommonModal>
 
-    <!-- <q-dialog width="100%" v-model="isNewUser" no-backdrop-dismiss no-esc-dismiss>
-      <q-card style="width: 100%; padding: 20px">
-        <q-card-section class="q-mb-md flex-direction-column">
-          <strong style="display: inline-block; padding-bottom: 16px; font-size: 20px">完成以下认证才可以提款</strong>
-          <div v-if="!store.realName" style="margin: 16px 0">
-            <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between">
-              <div class="">
-                <p style="margin: 0; color: #fff; font-size: 16px">提款需要绑定真实姓名</p>
-                <div style="font-size: 12px; color: #d1d1d1">为了您的资金安全，银行卡姓名需一致</div>
-              </div>
+    <CommonModal
+      v-model="isShowWithdrawErrorBlock"
+      persistent
+      no-backdrop-dismiss
+      no-esc-dismiss
+      message="您需要在交易记录-提款记录中点击“确认到账”完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!"
+      :closable="false"
+    >
+      <template #action>
+        <div class="cacnels common-md-white-btn" @click="isShowWithdrawErrorBlock = false">取消</div>
+        <div class="confirmsbtns common-md-btn">
+          <router-link to="/account/records/withdraw">前往确认</router-link>
+        </div>
+      </template>
+    </CommonModal>
 
-              <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
-            </div>
-          </div>
-
-          <div v-if="!store.phone">
-            <div style="display: flex; gap: 12px; align-items: center; justify-content: space-between">
-              <div class="">
-                <p style="margin: 0; color: #333; font-size: 16px">提款需要绑定手机号</p>
-                <div style="font-size: 12px; color: #333">为了您的资金安全，请绑定手机号</div>
-              </div>
-              <q-btn @click="router.push('/account/personal')" color="brightbtn" label="去绑定" />
-            </div>
-          </div>
-        </q-card-section>
-        <q-card-actions align="right">
-          <q-btn style="width: 100%" label="暂不认证" color="brightbtn" @click="isNewUser = false" />
-        </q-card-actions>
-      </q-card>
-    </q-dialog> -->
     <WithdrawRemainingDialog v-if="isShowRemainingDialog" v-model="isShowRemainingDialog" />
   </div>
 </template>
@@ -302,10 +271,12 @@ import AcctBal from "../../components/AcctBal.vue";
 import { useLocalStorage } from "@vueuse/core";
 import {useRouter} from "vue-router";
 import WithdrawRemainingDialog from "src/components/WithdrawRemainingDialog.vue";
+import { convertToCommaAmount } from "src/boot/utils";
+import CommonModal from "src/components/CommonModal.vue";
 
 export default defineComponent({
   name: "WithdrawView",
-  components: {AcctBal, WithdrawRemainingDialog},
+  components: {AcctBal, WithdrawRemainingDialog, CommonModal},
   setup() {
     const store = userStore();
     const $q = useQuasar();
@@ -588,10 +559,10 @@ export default defineComponent({
     }
 
     const checkNewUser = () => {
-      if (!store.phone || !store.realName) {
-        isNewUser.value = true;
-        return false;
-      }
+      // if (!store.phone || !store.realName) {
+      //   isNewUser.value = true;
+      //   return false;
+      // }
 
       return true
     }
@@ -629,7 +600,8 @@ export default defineComponent({
       isNewUser,
       router,
       isShowRemainingDialog,
-      isShowWithdrawErrorBlock
+      isShowWithdrawErrorBlock,
+      convertToCommaAmount
     };
   }
 });
@@ -641,24 +613,27 @@ export default defineComponent({
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     text-align: center;
-    overflow-x: auto;
-    padding: 5px 5px 10px;
-    grid-gap: 10px;
+    padding: 5px 16px 10px;
+    grid-gap: 20px 10px;
+    margin-bottom: 16px;
 
     .withdraw-type-item {
       // display: flex;
       // justify-content: center;
+      box-shadow: 0px 1px 4px 0px #00000033;
+      background: #fff;
+      padding: 8px 0 6px;
       width: 100%;
-      max-width: 4.5rem;
-
+      border: 2px solid transparent;
+      border-radius: 6px;
       position: relative;
       cursor: pointer;
 
       .promo-label {
         position: absolute;
-        bottom: 6px;
+        top: 0;
         left: 50%;
-        transform: translate(-50%);
+        transform: translate(-50%, -50%);
         //width: 50px;
         width: 80%;
         max-width: 4.2rem;
@@ -671,12 +646,17 @@ export default defineComponent({
       }
 
       .withdraw-img {
-        border: 2px solid #d7d7d7;
-        border-radius: 6px;
-        margin-bottom: 10px;
-        padding: 4px;
+        width: 100%;
+        padding: 0 4px;
         display: flex;
         align-items: center;
+
+        img {
+          width: 100%;
+          max-width: 50%;
+          margin: 0 auto;
+          padding: 0;
+        }
       }
 
       img {
@@ -685,13 +665,11 @@ export default defineComponent({
       }
 
       &.active {
+        border: 2px solid #4873f1;
         // background: #212534;
         // color: #db7e42;
         // box-shadow: none;
         // filter: drop-shadow(0px 0px 3px #ffffff);
-        .withdraw-img {
-          border: 2px solid #4873f1;
-        }
 
         .promo-img {
           border: none;
@@ -756,11 +734,12 @@ export default defineComponent({
   }
 
   .submit-btn {
-    background: linear-gradient(180deg, #52acff 0%, #3559da 100%);
-    height: 45px;
-    letter-spacing: 1px;
+    background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
+    border: 1px solid #ffffff;
+    border-radius: 30px;
+    height: 48px;
+    font-size: 16px;
     color: #fff;
-    border-radius: 12px;
   }
 }
 
@@ -772,8 +751,12 @@ export default defineComponent({
   display: flex;
   align-items: center;
   gap: 1rem;
+  color: #333333;
   .upgrade-btn {
+    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 118.52%);
+    border-radius: 20px;
     padding: 1px 12px;
+    color: #fff;
     img {
       height: 30px;
     }
@@ -789,5 +772,107 @@ export default defineComponent({
 
 .flex-direction-column {
   flex-direction: column;
+}
+
+.main-wallet {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fcfdfe;
+  border-radius: 7px;
+  padding: 12px;
+  margin-bottom: 12px;
+
+  .desc {
+    color: #333333;
+  }
+  .amount {
+    color: #00a0ea;
+    flex: 1;
+  }
+  .refresh-btn {
+    background-image: url("../../assets/images/index/primary-btn.png");
+    background-size: 100% 100%;
+    color: #fff;
+    width: 87px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 12px;
+    aspect-ratio: 87/32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    box-shadow: 0px -0.87px 3.47px 0px #ffffff;
+    border-radius: 45.9px;
+    margin-right: 5px;
+  }
+}
+
+.withdraw-input {
+  width: 100%;
+  border-radius: 7px;
+  overflow: hidden;
+  margin-bottom: 12px;
+
+  &.q-input {
+    :deep(.q-field__inner) {
+      .q-field__control {
+        .q-field__control-container {
+          padding-top: 0;
+        }
+
+        .q-field__native,
+        .q-field__append,
+        .q-field__prepend {
+          color: #333;
+          &::placeholder {
+            color: #a4aabb;
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  :deep(.q-field__inner) {
+    .q-field__control,
+    .q-field__marginal {
+      height: 44px;
+      min-height: 44px;
+    }
+    .q-field__control {
+      background: #fcfdfe;
+      box-shadow: none;
+
+      &::before {
+        border-bottom: none;
+      }
+
+      .q-field__control-container {
+        padding-top: 4px;
+      }
+
+      .q-field__native,
+      .q-field__append,
+      .q-field__prepend {
+        color: #333;
+        &::placeholder {
+          color: #333333;
+          opacity: 1;
+        }
+      }
+
+      .q-field__label {
+        top: 14px;
+        font-size: 14px;
+        color: #333333;
+      }
+    }
+  }
+}
+
+.tutorial-btn {
+  color: #458bff;
 }
 </style>
