@@ -459,8 +459,6 @@
 
   <script src="js/adjust-5.7.1.min.js"></script>
   <script>
-    import { FBQ_INITIALIZED } from "app/public/static/pwa/js/const";
-
     (function () {
       console.log("RUN");
       // var hostname = getDomainWithoutSubdomain();
@@ -484,7 +482,7 @@
           if (facebookId) {
             fbq("init", facebookId);
             fbq("track", "PageView");
-            sessionStorage.setItem(FBQ_INITIALIZED, "1");
+            sessionStorage.setItem("BRA_FBQ_INITIALIZED", "1");
           }
 
           fetch(`https://hoka2aq6.30v7gv9f8ge.com/app/adjust/params?affiliateCode=${affiliateCode}`, {
