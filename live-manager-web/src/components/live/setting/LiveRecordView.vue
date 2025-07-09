@@ -222,12 +222,8 @@ const route = useRoute();
 const { t } = useI18n();
 
 const eventId = Number(route.query.id);
-const formRef = ref(null);
 const teams = ref([]);
 const loadedTeams = ref([]);
-const displayTeams = ref([]);
-const hasMoreTeams = ref(true);
-const searchedTeams = ref([]);
 const teamSelectorStatus = ref(null)
 const teamSelectorBottomRef = ref(null);
 const teamSelectorScrollObserver = ref(null);
@@ -236,14 +232,8 @@ const teamSelectorScrollObserver = ref(null);
 const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/promo/'
 const promoDir2 = useStorage('IMAGE_CDN', '', sessionStorage).value
 
-const homeLoadedTeams = ref([]);
-const awayLoadedTeams = ref([]);
 const homeDisplayTeams = ref([]);
 const awayDisplayTeams = ref([]);
-const homeHasMoreTeams = ref(true);
-const awayHasMoreTeams = ref(true);
-const homeLoaderRef = ref(null);
-const awayLoaderRef = ref(null);
 
 const uiControl = reactive({
   sport: liveSportTyps,
@@ -375,7 +365,7 @@ async function loadTeams() {
 // 初始化分页加载（home 或 away）
 const loadInitialTeams = (type) => {
   const displayTeams = type === 'home' ? homeDisplayTeams : awayDisplayTeams;
-  displayTeams.value = teams.value
+  displayTeams.value = teams.value.slice(0, TEAMS_PER_VIEW)
 };
 
 // 搜索过滤

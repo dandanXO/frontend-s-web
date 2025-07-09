@@ -218,6 +218,7 @@
             :placeholder="t('fields.sportType')"
             class="w-full"
             :class="{ 'p-invalid': validationErrors.sportId }"
+            @change="loadTeams(form.sportId)"
             filter
           />
           <small class="p-error" v-if="validationErrors.sportId">{{ validationErrors.sportId }}</small>
@@ -235,7 +236,61 @@
           <small class="p-error" v-if="validationErrors.title">{{ validationErrors.title }}</small>
         </div>
 
-        <!-- Home Team -->
+        <!-- Home Team Selector -->
+        <div class="p-field">
+          <label for="homeTeam">{{ t('fields.homeTeam') }}</label>
+          <Dropdown
+            v-model="form.homeId"
+            :options="homeDisplayTeams"
+            optionLabel="nameZh"
+            optionValue="id"
+            filter
+            :placeholder="form.homeName || t('fields.enterOrSelectTeam')"
+            style="width: 300px"
+            @change="(val) => handleTeamSelect(val, 'home')"
+            @filter="(event) => searchTeams(event, 'home')"
+            @blur="handleBlur('home')" 
+          >
+            <template #option="slotProps">
+              <div style="display: flex; align-items: center">
+                <img
+                  :src="(slotProps.option.icon?.startsWith('http') ? slotProps.option.icon : promoDir + slotProps.option.icon)"
+                  style="width: 20px; height: 20px; margin-right: 10px"
+                />
+                {{ slotProps.option.nameZh }}
+              </div>
+            </template>
+          </Dropdown>
+        </div>
+
+        <!-- Away Team Selector -->
+        <div class="p-field">
+          <label for="awayTeam">{{ t('fields.awayTeam') }}</label>
+          <Dropdown
+            v-model="form.awayId"
+            :options="awayDisplayTeams"
+            optionLabel="nameZh"
+            optionValue="id"
+            filter
+            :placeholder="form.awayName || t('fields.enterOrSelectTeam')"
+            style="width: 300px"
+            @change="(val) => handleTeamSelect(val, 'away')"
+            @filter="(event) => searchTeams(event, 'away')"
+            @blur="handleBlur('away')" 
+          >
+            <template #option="slotProps">
+              <div style="display: flex; align-items: center">
+                <img
+                  :src="(slotProps.option.icon?.startsWith('http') ? slotProps.option.icon : promoDir + slotProps.option.icon)"
+                  style="width: 20px; height: 20px; margin-right: 10px"
+                />
+                {{ slotProps.option.nameZh }}
+              </div>
+            </template>
+          </Dropdown>
+        </div>
+
+<!-- Home Team 
         <div class="p-field">
           <label :for="t('fields.homeTeam')">{{ t('fields.homeTeam') }}</label>
           <AutoComplete
@@ -278,8 +333,8 @@
           </AutoComplete>
           <small class="p-error" v-if="validationErrors.homeId">{{ validationErrors.homeId }}</small>
         </div>
-
-        <!-- Away Team -->
+-->
+<!-- Away Team 
         <div class="p-field">
           <label :for="t('fields.awayTeam')">{{ t('fields.awayTeam') }}</label>
           <AutoComplete
@@ -323,6 +378,7 @@
           </AutoComplete>
           <small class="p-error" v-if="validationErrors.awayId">{{ validationErrors.awayId }}</small>
         </div>
+-->
 
         <!-- Sequence -->
         <div class="p-field">
@@ -420,6 +476,7 @@
               @change="attachImage"
               class="mt-3"
             >
+
           </div>
           <small class="p-error" v-if="validationErrors.cover">{{ validationErrors.cover }}</small>
         </div>
@@ -464,7 +521,7 @@ import Paginator from 'primevue/paginator';
 import DatePicker from 'primevue/datepicker';
 
 const store = useUserStore()
-const TEAMS_PER_VIEW = 20
+const TEAMS_PER_VIEW = 50
 const { t } = useI18n();
 const confirm = useConfirm();
 const toast = useToast();
@@ -482,6 +539,8 @@ const getEndOfDayDate = (date) => {
 const formatToStartOfDayString = (date) => {
   return dayjs(date).format('YYYY-MM-DD HH:mm:ss');
 };
+const homeDisplayTeams = ref([]);
+const awayDisplayTeams = ref([]);
 const uiControl = reactive({
   eventStartTime:  getStartOfDayDate(new Date()),
   eventEndTime: getEndOfDayDate(new Date()),
@@ -641,6 +700,58 @@ async function loadEventWithSite(sportId, target) {
   handleTeamSelectorFocus(target)
 }
 
+async function loadTeams(sportId) {
+  const { data } = await DashboardService.getTeamById(sportId);
+  teams.value = data;
+  loadInitialTeams('home');
+  loadInitialTeams('away');
+}
+
+// 初始化分页加载（home 或 away）
+const loadInitialTeams = (type) => {
+  const displayTeams = type === 'home' ? homeDisplayTeams : awayDisplayTeams;
+  displayTeams.value = teams.value.slice(0, TEAMS_PER_VIEW)
+};
+
+// 搜索过滤
+const searchTeams = (event, type) => {
+  const displayTeams = type === 'home' ? homeDisplayTeams : awayDisplayTeams;
+  if (!event.value) {
+    displayTeams.value = teams.value.slice(0, TEAMS_PER_VIEW);
+  } else {
+    displayTeams.value = teams.value.filter(team =>
+      team.nameZh.toLowerCase().includes(event.value.toLowerCase())
+    );
+  }
+};
+
+// 处理选中队伍
+const handleTeamSelect = (val, type) => {
+  if (type === 'home') {
+    const match = teams.value.find(t => t.id === val.value);
+    form.homeName = match ? match.nameZh : val.value;
+    form.homeId = match ? match.id : null;
+  } else {
+    const match = teams.value.find(t => t.id === val.value);
+    form.awayName = match ? match.nameZh : val.value;
+    form.awayId = match ? match.id : null;
+  }
+};
+
+const handleBlur = (type) => {
+  if (type === 'home') {
+    // 如果未选中队伍且输入框有值，保存到 homeName
+    if (!form.homeId && form.homeName) {
+      form.homeName = form.homeName.trim();
+    }
+  } else {
+    // 如果未选中队伍且输入框有值，保存到 awayName
+    if (!form.awayId && form.awayName) {
+      form.awayName = form.awayName.trim();
+    }
+  }
+};
+
 async function loadList() {
   page.loading = true;
   try {
@@ -755,15 +866,25 @@ async function submit() {
     return;
   }
 
+  if (isInTeamList(form.homeId)) {
+    form.homeId = form.homeId;
+  } else if (form.homeName) {
+    form.homeName = form.homeName;
+  }
 
-  if (!isInTeamList(form.homeId)) {
-    form.homeName = form.homeId
-    form.homeId = null
+  if (isInTeamList(form.awayId)) {
+    form.awayId = form.awayId;
+  } else if (form.awayName) {
+    form.awayName = form.awayName;
   }
-  if (!isInTeamList(form.awayId)) {
-    form.awayName = form.awayId
-    form.awayId = null
-  }
+  // if (!isInTeamList(form.homeId)) {
+  //   form.homeName = form.homeId
+  //   form.homeId = null
+  // }
+  // if (!isInTeamList(form.awayId)) {
+  //   form.awayName = form.awayId
+  //   form.awayId = null
+  // }
 
   form.icon = form.icon?.startsWith('http')
     ? store.siteId + '/' + form.icon.split('/').pop()
@@ -826,19 +947,19 @@ const afterTeamSelectorChanged = () => {
   })
 }
 
-const searchTeams = (obj) => {
-  const query = obj.query || ''
-  if (!query) {
-    searchedTeams.value = []
-  } else {
-    searchedTeams.value = teams.list.filter(team => {
-      return (
-        team.nameZh?.toLowerCase().includes(query.toLowerCase()) ||
-        team.nameEn?.toLowerCase().includes(query.toLowerCase())
-      )
-    })
-  }
-}
+// const searchTeams = (obj) => {
+//   const query = obj.query || ''
+//   if (!query) {
+//     searchedTeams.value = []
+//   } else {
+//     searchedTeams.value = teams.list.filter(team => {
+//       return (
+//         team.nameZh?.toLowerCase().includes(query.toLowerCase()) ||
+//         team.nameEn?.toLowerCase().includes(query.toLowerCase())
+//       )
+//     })
+//   }
+// }
 
 watch(() => uiControl.eventStartTime, (newValue) => {
   request.eventStartTime[0] = formatToStartOfDayString(newValue);
