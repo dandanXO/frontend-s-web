@@ -25,11 +25,11 @@
       @mouseover="stickyHovered = true"
       @mouseleave="stickyHovered = false"
     >
-      <div class="sticky-sidebar-item" @click="handleDarkModeClick">
+      <!-- <div class="sticky-sidebar-item" @click="handleDarkModeClick">
         <img v-if="isDark" src="@/assets/images/home/sticky-sidebar/light-mode-icon.svg" />
         <img v-else src="@/assets/images/home/sticky-sidebar/dark-mode-icon.svg" />
         <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">{{ isDark ? "白天" : "夜间" }}模式</div>
-      </div>
+      </div> -->
       <!-- <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
         <img src="../../assets/images/home/sticky-sidebar/hot-promo-icon.svg" />
         <div>热门活动</div>

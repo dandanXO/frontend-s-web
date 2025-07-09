@@ -2,7 +2,7 @@
   <div class="forgot-pwd-page-container">
     <div class="center">
       <div class="logo">
-        <img src="@/assets/app/logo.png" />
+        <img src="../assets/lucky-6-logo.png" />
       </div>
       <div class="card-bg">
         <el-tabs>

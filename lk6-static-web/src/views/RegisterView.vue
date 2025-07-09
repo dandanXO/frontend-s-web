@@ -3,7 +3,7 @@
     <div class="center">
       <router-link to="/">
         <div class="logo">
-          <img src="@/assets/app/logo.png" />
+          <img src="../assets/lucky-6-logo.png" />
         </div>
       </router-link>
 
