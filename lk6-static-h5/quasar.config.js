@@ -148,16 +148,16 @@ module.exports = configure(function (ctx) {
       chainWebpack(chain) {
         chain.module.rules.delete("images");
 
-        if (process.env.NODE_ENV === "production" && isImageCompress) {
-          chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [
-            {
-              test: /\.(jpe?g|png|gif|svg)$/i,
-              pngquant: {
-                quality: "85"
-              }
-            }
-          ]);
-        }
+        // if (process.env.NODE_ENV === "production" && isImageCompress) {
+        //   chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [
+        //     {
+        //       test: /\.(jpe?g|png|gif|svg)$/i,
+        //       pngquant: {
+        //         quality: "85"
+        //       }
+        //     }
+        //   ]);
+        // }
         // chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
       },
       afterBuild({ cfg }) {
@@ -240,8 +240,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `东赢 App`,
-        short_name: `东赢 App`,
+        name: `LK6 App`,
+        short_name: `LK6 App`,
         description: `APP`,
         display: "standalone",
         orientation: "portrait",
@@ -286,7 +286,7 @@ module.exports = configure(function (ctx) {
     capacitor: {
       hideSplashscreen: true,
       // (Optional) If not present, will look for package.json > name
-      appName: "东赢", // string
+      appName: "幸运6", // string
       backButtonExit: "*"
     },
 
