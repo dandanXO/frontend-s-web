@@ -321,6 +321,8 @@
 <script setup>
 import { computed } from "vue";
 import { writeClipboard } from "boot/utils";
+import { useNotify } from "src/hooks/notify";
+import { Platform } from "quasar";
 
 const props = defineProps({
   params: String
