@@ -17,7 +17,7 @@
     <div class="hotgame-container">
       <SportsView v-if="currentBannerIndex === 1" />
       <LiveCasinoView v-else-if="currentBannerIndex === 2"/>
-      <PokerView v-else-if="currentBannerIndex === 5" />
+      <BacarratView v-else-if="currentBannerIndex === 5" :hideBanner="true" />
     </div>
   </div>
   <GameModal ref="platformGame"></GameModal>
@@ -47,6 +47,7 @@ import { useDark } from "@vueuse/core";
 import SportsView from "@/views/SportsView.vue";
 import LiveCasinoView from "@/views/LiveCasinoView.vue";
 import PokerView from "@/views/PokerView.vue";
+import BacarratView from "@/views/BacarratView.vue";
 
 const store = userStore();
 const router = useRouter();

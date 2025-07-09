@@ -6,6 +6,7 @@
     :platformName="platformName"
     :platformPattern="platformPattern"
     :platformExpandable="true"
+    :hideBanner="props.hideBanner"
   />
 </template>
 
@@ -18,4 +19,6 @@ const platformType = ref("bacarrat");
 const platformGameType = ref("BACARRAT");
 const platformName = ref("BACARRAT");
 const platformPattern = ref(true);
+
+const props = defineProps(['hideBanner']);
 </script>

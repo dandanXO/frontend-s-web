@@ -57,12 +57,14 @@ const routes = [
       {
         path: "/sports",
         name: "sports",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue")
+        component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue"),
+        props: { showPlayBtn: true }
       },
       {
         path: "/live-casino",
         name: "live",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/LiveCasinoView.vue")
+        component: () => import(/* webpackChunkName: "Game" */ "../views/LiveCasinoView.vue"),
+        props: { showPlayBtn: true }
       },
       {
         path: "/lottery",

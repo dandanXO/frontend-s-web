@@ -1,9 +1,12 @@
 <template>
   <div class="platform-section">
-    <div class="platform-container" :class="platformType === 'bacarrat' ? 'slot-container' : ''">
-      <img v-if="platformType === 'bacarrat'" src="../assets/slot/slot-top-bg.png" />
-      <div class="platform-container-slot" v-if="platformType === 'bacarrat'">
-      </div>
+    <div v-if="isLoading" class="loading">
+      <img class="loading-img" src="@/assets/lucky-6-logo.png" />
+    </div>
+    <div v-else-if="!(platformType === 'bacarrat' && props.hideBanner)" class="platform-container" :class="platformType === 'bacarrat' ? 'slot-container' : ''">
+        <img v-if="platformType === 'bacarrat'" src="../assets/slot/slot-top-bg.png" />
+        <div class="platform-container-slot" v-if="platformType === 'bacarrat'">
+        </div>
       <div class="platform-container-inner" v-if="platformType !== 'bacarrat'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
         <template v-for="(item, index) in platformsListDisplay" :key="index">
@@ -87,7 +90,8 @@
               <!--            data-aos-delay="300"-->
               <!--            data-aos-duration="500"-->
               <div class="platform-play-btn" v-if="platformType !== 'slot'">
-                <!-- <div
+                <div
+                  v-if="props.showPlayBtn"
                   class="btn-blue"
                   @click="openGame(getAliasName(item, platformType), item.code, item.gameCode)"
                   :class="item.underMaintenance === true ? 'btn-maintenance' : ''"
@@ -97,7 +101,7 @@
                     维护中
                   </span>
                   <span v-else>进入游戏</span>
-                </div> -->
+                </div>
 
                 <p
                   v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime"
@@ -268,7 +272,7 @@ const platformGame = ref(null);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
-const isDark = useDark();
+const isLoading = ref(false);
 
 const props = defineProps({
   platforms: Array,
@@ -276,7 +280,9 @@ const props = defineProps({
   platformGameType: String,
   platformName: String,
   platformPattern: Boolean,
-  platformExpandable: Boolean
+  platformExpandable: Boolean,
+  showPlayBtn: Boolean,
+  hideBanner: Boolean
 });
 
 const filteredPlatforms = ref([]);
@@ -298,6 +304,8 @@ const fixedBacarratPlatforms = ref([
 ])
 
 const getPlatList = () => {
+  isLoading.value = true;
+  
   const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
   getFn().then((res) => {
     platformsList.value = res;
@@ -311,6 +319,10 @@ const getPlatList = () => {
     });
 
     setFilteredPlatforms();
+  }).catch(() => {
+    isLoading.value = false;
+  }).finally(() => {
+    isLoading.value = false;
   });
 };
 
@@ -386,6 +398,8 @@ const switchPlat = (plat) => {
 const getPlatGameList = () => {
   if (props.platformGameType === "BACARRAT") {
     const getFn = store.token ? getLoggedInPlatformList : getPlatformList;
+    isLoading.value = true;
+
     getFn()
       .then((data) => {
         platformsListDisplay.value = data.filter((element) => element.gameType.includes('LIVE'));
@@ -406,6 +420,9 @@ const getPlatGameList = () => {
       })
       .catch((err) => {
         console.log(err.message);
+        isLoading.value = false;
+      }).finally(() => {
+        isLoading.value = false;
       });
   }
 };
@@ -434,6 +451,7 @@ const searchList = () => {
 };
 const loadGameList = () => {
   if (props.platformGameType === "BACARRAT") {
+    isLoading.value = true;
     getPlatformGames(activePlat.value.id, 'LIVE')
       .then((data) => {
         data.forEach((element) => {
@@ -447,6 +465,9 @@ const loadGameList = () => {
       })
       .catch((err) => {
         console.log(err.message);
+        isLoading.value = false;
+      }).finally(() => {
+        isLoading.value = false;
       });
   }
 };
@@ -482,3 +503,38 @@ watch(
 </script>
 
 <style scoped lang="scss" src="../scss/pages/platform.scss" />
+
+<style lang="scss" scoped>
+.loading {
+  width: 100%;
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    to bottom,
+    rgba(240, 248, 255, 0.8196078431) 0%,
+    rgb(240 248 255 / 50%) 80%,
+    rgb(240 248 255 / 0%) 100%
+  );
+
+  .loading-img {
+    animation-name: fade-in-out;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    width: 100px;
+  }
+}
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+</style>
