@@ -37,7 +37,8 @@
     <RankDetails :rankDetails="rankDetails" :isLoadingRanking="isLoadingRanking" />
   </template>
   <template v-else-if="mode === 'RULES'">
-    <JackpotAviatorRules :onClickBackBtn="() => (mode = 'MAIN')" :rankingBonusRatioList="rankingBonusRatioList" />
+    <JackpotAviatorRules :onClickBackBtn="() => (mode = 'MAIN')" :rankingBonusRatioList="rankingBonusRatioList" :rules="rulesList" />
+    {{ props.list }}
   </template>
 
   <q-dialog width="100%" v-model="isShowHistoryPopup">
@@ -87,6 +88,9 @@ const historyData = ref({});
 const rankingBonusRatioList = ref([]);
 const rankDetails = ref({});
 const isLoadingRanking = ref(false);
+
+const props = defineProps(["list"]);
+const rulesList = props.list.pageContent
 
 const onClickReceive = () => {
   const endpoint =
