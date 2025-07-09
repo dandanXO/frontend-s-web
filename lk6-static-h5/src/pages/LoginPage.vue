@@ -4,6 +4,10 @@
       <img src="../assets/login/login-logo.png" height="100%" />
     </div>
 
+    <router-link class="back-to-home" to="/">
+      <img src="../assets/images/login/home-icon.svg" />
+    </router-link>
+
     <div class="top-image-div">
       <img src="../assets/login/login-top-bg.png" />
     </div>
@@ -824,6 +828,15 @@ export default defineComponent({
   background-size: 100% 100%;
   //min-height: 100vh;
   overflow: auto;
+
+  .back-to-home {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    img {
+      width: 24px;
+    }
+  }
 
   .top-image-div {
     margin: 0 16px 16px;
