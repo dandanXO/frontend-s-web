@@ -456,6 +456,17 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/account/withdraw/crypto",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/BindCryptoView.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/center/:path",
     redirect: (to) => {
       const path = to.params.path;

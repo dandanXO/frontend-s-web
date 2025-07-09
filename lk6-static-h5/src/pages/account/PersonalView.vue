@@ -257,7 +257,7 @@ export default defineComponent({
 
       isEditEmail.value = (formDetail.emailVerified === false) ? true : false;
       isEditBirthday.value = (formDetail.birthday == "") ? true : false;
-      isEditPhone.value = (formDetail.phoneVerified === false) ? true : false;
+      // isEditPhone.value = (formDetail.phoneVerified === false) ? true : false;
     };
 
     const canEdit = computed(() => {

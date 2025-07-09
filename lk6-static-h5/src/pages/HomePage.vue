@@ -135,14 +135,14 @@
               <img src="../assets/index/home-withdrawal-icon.svg" alt="" width="100%" />
               <p>提款</p>
             </router-link>
-            <router-link class="text-center cash-button" :unelevated="true" to="/account/transfer?redirect=home">
+            <!-- <router-link class="text-center cash-button" :unelevated="true" to="/account/transfer?redirect=home">
               <img src="../assets/index/home-transfer-icon.svg" alt="" width="100%" />
               <p>转帐</p>
-            </router-link>
-            <router-link class="text-center cash-button" :unelevated="true" to="/account/vip?redirect=home">
+            </router-link> -->
+            <!-- <router-link class="text-center cash-button" :unelevated="true" to="/account/vip?redirect=home">
               <img src="../assets/index/home-vip-icon.svg" alt="" width="100%" />
               <p>VIP</p>
-            </router-link>
+            </router-link> -->
           </div>
         </div>
       </div>
