@@ -14,6 +14,7 @@ import { isAndroid, isHuaweiPhone } from "boot/utils";
 import axios from "axios";
 import { getVisitorId } from "boot/utils";
 import { useUI } from "stores/ui";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "App",
@@ -24,6 +25,7 @@ export default defineComponent({
     const store = userStore();
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(false);
+    const { t } = useI18n();
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
 
@@ -154,7 +156,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "您账户已在其他设备登录。请注意是否由本人登录，如有异常请及时修改密码。",
+          message: t("common.notification.tokenLogged.message"),
           icon: "report_problem"
         });
       }
@@ -177,7 +179,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      console.log("lk6-static-h5 0704")
+      console.log("lk6-static-h5 0704");
 
       checkServerStatus();
       checkSID();

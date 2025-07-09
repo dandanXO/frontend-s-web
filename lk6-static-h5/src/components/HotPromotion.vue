@@ -82,13 +82,13 @@
     <q-card class="win-rebate-model">
       <q-card-section class="items-center row">
         <div class="bonus-svg-div">
-          <span class="bonus-text">恭喜获得奖金</span>
+          <span class="bonus-text">{{ $t("common.notification.claimed") }}</span>
           <span class="claim-amt">{{ claimMsg }}</span>
         </div>
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn flat label="确定" color="primary" v-close-popup />
+        <q-btn flat :label="$t('btn.confirm')" color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -101,6 +101,7 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
 const BlastPremierPromo = defineAsyncComponent(() => import("./hotpromo/BlastPremierPromo/BlastPremierPromo.vue"));
 const YaLLa2025 = defineAsyncComponent(() => import("./hotpromo/YaLLa2025/YaLLa2025.vue"));
@@ -291,6 +292,7 @@ export default defineComponent({
     const $q = useQuasar();
     const store = userStore();
     var qs = require("qs");
+    const { t } = useI18n();
 
     const isClaimModal = ref(false);
     const claimMsg = ref("");
@@ -299,18 +301,18 @@ export default defineComponent({
       if (!store.token) {
         $q.dialog({
           class: "q-px-md q-pt-md",
-          title: "系统提示",
-          message: "请登录后再操作",
+          title: t("common.notification.loginRequired.title"),
+          message: t("common.notification.loginRequired.message"),
           ok: {
             push: true,
             color: "dyblue",
-            label: "去登录",
+            label: t("btn.goLogin"),
             tabindex: 1
           },
           cancel: {
             push: true,
             color: "warning",
-            label: "取消",
+            label: t("btn.cancel"),
             tabindex: 0
           },
           persistent: true
@@ -352,18 +354,18 @@ export default defineComponent({
       if (!store.token) {
         $q.dialog({
           class: "q-px-md q-pt-md",
-          title: "系统提示",
-          message: "请登录后再操作",
+          title: t("common.notification.loginRequired.title"),
+          message: t("common.notification.loginRequired.message"),
           ok: {
             push: true,
             color: "dyblue",
-            label: "去登录",
+            label: t("btn.goLogin"),
             tabindex: 1
           },
           cancel: {
             push: true,
             color: "warning",
-            label: "取消",
+            label: t("btn.cancel"),
             tabindex: 0
           },
           persistent: true

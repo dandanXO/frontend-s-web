@@ -8,7 +8,7 @@
       <!-- The daily reload bonus will be automatically created to the member's
         main wallet once the deposit is successful. -->
       <!-- 存款成功后，每日充值奖金将自动创建到会员的主钱包中。 -->
-      <q-btn class="claim-btn" :loading="loadingClaim" @click="$emit('daily-slot')">点击领取</q-btn>
+      <q-btn class="claim-btn" :loading="loadingClaim" @click="$emit('daily-slot')">{{ $t("btn.clickToClaim") }}</q-btn>
     </div>
   </div>
 </template>
