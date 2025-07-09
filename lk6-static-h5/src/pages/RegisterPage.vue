@@ -163,8 +163,7 @@
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || '请输入姓名',
-            (val) => (val && val.length >= 2 && val.length <= 12) || '用户名个数必须在2和12之间',
-            isValidName
+            (val) => (val && val.length >= 2 && val.length <= 12) || '用户名个数必须在2和12之间'
           ]"
         >
           <template v-slot:prepend>

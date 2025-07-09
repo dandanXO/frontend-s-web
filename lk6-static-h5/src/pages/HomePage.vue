@@ -539,6 +539,7 @@
   </q-page-sticky>
 
   <GameModal ref="allGames"></GameModal>
+  <announcementModal />
 
   <CommonModal v-model="isStationNotice" class="station-notice-dialog" header="公告" :actions="[]">
     <template #content>
@@ -688,6 +689,7 @@ import { cached } from "boot/cache";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
+import AnnouncementModal from "components/modal/AnnouncementModal";
 import MarqueeText from "vue-marquee-text-component";
 
 import { useUI } from "stores/ui";
@@ -726,7 +728,8 @@ export default defineComponent({
     GameTypeSwiper,
     PlatformItem,
     RedirectButton,
-    CommonModal
+    CommonModal,
+    AnnouncementModal
   },
   setup() {
     const notify = useNotify();

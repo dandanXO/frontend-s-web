@@ -336,7 +336,7 @@ export default defineComponent({
 
     watch(tab, (newVal) => {
       if (newVal === "login") {
-        initGeetestCaptcha();
+        // initGeetestCaptcha();
       }
     });
 
@@ -387,6 +387,9 @@ export default defineComponent({
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
+          if (loginNameRef.value.hasError || passwordRef.value.hasError) {
+            return;
+          }
           // verificationRef.value.validate();
           const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
           config.loginData = {
