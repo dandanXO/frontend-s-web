@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="amt">
-              {{ !isLoadingBalance ? "¥" + mainWallet : "加载中..." }}
+              {{ !isLoadingBalance ? `${store.currency.value} ${mainWallet}` : "加载中..." }}
             </div>
           </div>
           <div class="right-sect">
@@ -235,7 +235,7 @@
       </div>
     </q-item-section>
 
-    <q-card class="card-account-banner">
+    <q-card v-if="btm_banners.length" class="card-account-banner">
       <q-card-section>
         <q-carousel
           class="account"

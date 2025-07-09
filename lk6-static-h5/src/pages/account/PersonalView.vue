@@ -26,7 +26,7 @@
           v-model="formDetail.realName"
           placeholder="姓名"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
+          :rules="[(val) => (val && val.length > 0) || '请输入姓名']"
           :readonly="personalState.memberInfo.realName ? true : false"
         >
           <template v-slot:prepend>
