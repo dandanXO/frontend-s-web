@@ -32,31 +32,40 @@
             :key="index"
             :data-id="index"
             @click="openGame(game.name, game.code, selectedCat.status)"
-            style="height: 140px"
           >
-            <transition name="in-view">
-              <q-list class="q-col-gutter-none">
-                <q-img
-                  loading="lazy"
-                  :src="game.icon"
-                  :placeholder-src="game.default"
-                  fit="cover"
-                  height="100px"
-                  spinner-color="white"
-                  position="50% 20%"
-                  style="border-radius: 10px; overflow: hidden"
-                  :imgClass="selectedCat.code === 'PG' ? 'zoomin' : ''"
-                >
-                  <template v-slot:loading>
-                    <img
-                      :src="game.default"
-                      style="width: 100%; height: 100px; border-radius: 15px; overflow: hidden"
-                    />
-                  </template>
-                </q-img>
-                <div class="slot-name">{{ game.name }}</div>
-              </q-list>
-            </transition>
+            <div class="game-wrapper q-col-gutter-none">
+              <q-img
+                loading="lazy"
+                :src="game.icon"
+                :placeholder-src="game.default"
+                fit="cover"
+                spinner-color="white"
+                position="50% 20%"
+                style="border-radius: 10px; overflow: hidden"
+                :imgClass="selectedCat.code === 'PG' ? 'zoomin' : ''"
+                :ratio="173 / 229"
+              >
+                <template v-slot:loading>
+                  <img :src="game.default" style="width: 100%; height: 100px; border-radius: 15px; overflow: hidden" />
+                </template>
+              </q-img>
+              <div class="slot-name">
+                <div class="game-title__category">
+                  {{
+                    currentCategory === "baccarat"
+                      ? "BACCARAT"
+                      : currentCategory === "roulette"
+                      ? "ROULETTE"
+                      : "LUCKY LACE"
+                  }}
+                </div>
+                <div class="game-title__name">
+                  {{ game.name }}
+                </div>
+              </div>
+            </div>
+            <!-- <transition name="in-view">
+            </transition> -->
           </div>
         </div>
         <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
@@ -208,7 +217,7 @@ const loadGameList = () => {
     )
     .then((res) => {
       res.forEach((item) => {
-        item.icon = `${imgURL}/game/${item.icon}`;
+        item.icon = `${imgURL}/game/${item.icon.replace("-", "_")}`;
         if (item.code.startsWith("101")) {
           item.default = require("../../assets/index/baccarat/slide-baccarat-img.png");
           baccarat.value.push(item);
@@ -360,11 +369,23 @@ onMounted(() => {
       position: relative;
     }
 
-    .slot-name {
-      font-size: 16px;
-      font-weight: 600;
-      text-align: center;
-      word-break: break-all;
+    .game-wrapper {
+      position: relative;
+      .slot-name {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        font-weight: 800;
+        color: #ffffff;
+        text-align: center;
+        .game-title__category {
+          font-size: clamp(8px, 3vw, 14px);
+        }
+        .game-title__name {
+          font-size: clamp(6px, 2.4vw, 12px);
+        }
+      }
     }
   }
 }
