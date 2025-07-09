@@ -6,4 +6,8 @@ export const domainLists = {};
 
 export const affiliateLists = {};
 
-export const fbqLists = {};
+export const fbqLists = {
+  "xxy9p.cc": {
+    id: "754930463734142"
+  }
+};
