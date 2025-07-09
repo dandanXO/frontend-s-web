@@ -295,14 +295,8 @@ import { SessionStorage } from "quasar";
 import LocalStorage from "boot/local-storage";
 import HotPromotion from "components/HotPromotion";
 // import HotPromotion from 'components/HotPromotion'
-import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import { useLocalStorage } from "@vueuse/core";
-import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
-import MesaPromo from "src/components/hotpromo/mesa/MesaPromo.vue";
-import BlastAustin from "src/components/hotpromo/blast-austin/BlastAustin.vue";
-import TorontoMasters from "src/components/hotpromo/toronto-masters/TorontoMasters.vue";
-import Fifa2025Promo from "src/components/hotpromo/fifa-2025/Fifa2025Promo.vue";
-import Dy2DailySlotBonus from "src/components/hotpromo/dy2-daily-slot-bonus/Dy2DailySlotBonus.vue";
+
 import RedirectButton from "src/components/RedirectButton.vue";
 import { i18nStore } from "src/router/language";
 
@@ -310,13 +304,7 @@ export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
-    BlastPremierMarquee,
-    NBAWaterBattle,
-    MesaPromo,
-    BlastAustin,
-    TorontoMasters,
-    Fifa2025Promo,
-    Dy2DailySlotBonus,
+
     RedirectButton
   },
   setup() {
