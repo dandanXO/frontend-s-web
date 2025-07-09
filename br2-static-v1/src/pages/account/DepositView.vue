@@ -417,14 +417,19 @@ const handleDepositItemClick = (index) => {
 };
 
 const getFtdCommaAmount = (amount) => {
-  return amount;
+  if (amount > 50) {
+    return 50
+  } else {
+    return amount;
+  }
+
 };
 
 const get2ndDepoCommaAmount = (amount) => {
-  if (amount < 2880) {
+  if (amount < 1440) {
     return parseFloat(amount * 0.2).toFixed(2);
   } else {
-    return 288;
+    return "288.00";
   }
 };
 

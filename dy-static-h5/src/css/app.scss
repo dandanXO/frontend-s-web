@@ -21,6 +21,8 @@ body {
   background: #ffffff;
 }
 
+
+
 .q-layout,
 .q-header,
 .q-footer,
@@ -83,6 +85,22 @@ body {
 
 body.body--dark {
   background: #11131f;
+}
+
+body.body-applinks {
+  .q-page-container {
+    &::before {
+      position: absolute;
+      left: 1px;
+      top: 1px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      content: "";
+      background-color: green;
+      z-index: 99;
+    }
+  }
 }
 
 body.body--dark .q-header {

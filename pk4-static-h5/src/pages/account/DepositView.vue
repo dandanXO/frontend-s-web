@@ -491,6 +491,7 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const isInitialized = ref(false);
 
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
@@ -747,6 +748,7 @@ function checkPrivilege(v) {
 async function loadPrivilege(val) {
   privilegeList.value = [];
   hasPrivilege.value = false;
+  newPlayerDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
     if (res.code === 0) {
       privilegeList.value = res.data.privileges;
@@ -757,14 +759,16 @@ async function loadPrivilege(val) {
         if (p.payTypes.indexOf(val.payType) >= 0) {
           if (p.triggerType == "FREE") {
             freePrivilege.value.push(p);
-          } else if (p.code === "pk4-new-user-roulette") {
-            newPlayerDepositBonusConfig.value = {
-              selected: true,
-              hasBonus: true,
-              privilegeId: p.id
-            };
           } else {
-            unselectedPrivileges.value.push(p);
+              if (p.code === "pk4-new-user-roulette") {
+              newPlayerDepositBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else {
+              unselectedPrivileges.value.push(p);
+            }
           }
         }
       });
@@ -851,6 +855,9 @@ async function confirmDeposit() {
 
           if (isFtdPrivilegePayType.value && extraPrivilegeId.value && isFtdPrivilegeEnable.value) {
             form.privilegeId = extraPrivilegeId.value;
+          }
+          if (newPlayerDepositBonusConfig.value.selected && newPlayerDepositBonusConfig.value.hasBonus) {
+            form.privilegeId = newPlayerDepositBonusConfig.value.privilegeId;
           }
 
           const copy = { ...form };
@@ -1130,6 +1137,13 @@ const goBackPage = () => {
   // }
 };
 
+onActivated(() => {
+  if (!isInitialized.value) return;
+  initPay();
+  refreshNode();
+  loadAppTabs();
+});
+
 onMounted(() => {
   initPay();
   refreshNode();
@@ -1139,6 +1153,7 @@ onMounted(() => {
   if (route.query.isNewPlayer && completedGuide !== "true" && userKYCDialog.value === false) {
     isAdditionalDepositSteps.value = true;
   }
+  isInitialized.value = true;
 });
 const showPaymentCancellationDialog = ref();
 const paymentCancellationAmtLoss = ref(0);

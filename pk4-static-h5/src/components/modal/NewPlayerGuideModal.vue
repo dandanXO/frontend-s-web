@@ -24,11 +24,20 @@
           </div>
           <div class="main-box">
             <div class="inner" v-if="!isVideo">
-              <div v-if="index + 1 === 1" class="language" @click="gotoLang()">
+              <!-- <div v-if="index + 1 === 1" class="language" @click="gotoLang()">
                 {{ $t("sideNav.language") }}
                 <span class="pen"><img src="../../assets/images/newplayerguide/edit.png" /></span>
-              </div>
+              </div> -->
 
+              <a v-if="index + 1 === 1" @click="gotoLang()" class="side-menu-item">
+                <div class="item-icon__language">
+                  {{ $t('lang.langVal') }}
+                  <div class="icon-flag">
+                    <img :src="require(`../../assets/images/auth/country-flag-circle-${$t('lang.langVal')}.png`)" class="flag" />
+                  </div>
+                </div>
+                <!-- {{ $t("sideNav.language") }} -->
+              </a>
               <div v-if="index + 1 === 6" class="congrats-step">
                 <div class="txt">{{ step.instruction }}</div>
                 <div class="amt">RS {{ step.earnableAmt }}</div>
@@ -45,7 +54,7 @@
               <div v-if="index + 1 === 1">
                 <div class="welcome">
                   {{ t("playerGuide.welcomeMessage") }}
-                  <span class="yellow">B9GAME!</span>
+                  <span class="yellow">PK1.GAME!</span>
                   {{ t("playerGuide.teachingHowToEarn") }}
                   <!-- Welcome to <span class="yellow">B9GAME!</span> Let us teach you how to make money easily! -->
                 </div>
@@ -262,7 +271,7 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
 
-      <div class="popout-dialog-container">
+      <div class="popout-dialog-container" style="background: #b5c3ff;">
         <div class="txt-title">{{ $t("playerGuide.shareandearn") }}</div>
         <!-- <div class="txt-content q-mt-md text-center">Share and Earn</div> -->
         <div class="modal-invite-share-social">
@@ -569,6 +578,10 @@ watch(
       if (completedReferGuide !== "true") {
         emit("update:showSteps", 4);
       }
+      
+      if (completedReferGuide === "true") {
+        emit("update:showSteps", 4);
+      }
     }
   },
   { immediate: true }
@@ -652,7 +665,7 @@ defineExpose({ showVideo });
     top: 50px;
     right: 0;
     width: 10vh;
-    max-width: 65px;
+    max-width: 75px;
     z-index: 99;
     img {
       width: 100%;
@@ -663,7 +676,6 @@ defineExpose({ showVideo });
       .svc-txt {
         position: absolute;
         bottom: 6px;
-        color: #1dab98;
         -webkit-text-stroke: 0.5px white;
         right: 0;
         left: 0;
@@ -672,6 +684,7 @@ defineExpose({ showVideo });
         font-family: "Poppins";
         font-weight: 900;
         letter-spacing: -1px;
+        color: #0569d7;
       }
     }
   }
@@ -690,8 +703,16 @@ defineExpose({ showVideo });
       width: 80%;
     }
 
+    &.step-3 .main-box .other-steps .midimg {
+      img {
+        margin-bottom: -50px;
+      }
+    }
     &.step-2 .main-box .other-steps .midimg {
       margin: -10px auto -35px;
+      img {
+        width: 20vh;
+      }
     }
     &.step-2 .mid-content {
       margin-top: -30px;
@@ -706,23 +727,28 @@ defineExpose({ showVideo });
       .title {
         position: absolute;
         font-family: Inter;
-        font-weight: 700;
+        font-weight: 800;
         // font-size: 5.6vw;
         font-size: 25px;
         line-height: 30px;
         // line-height: 71.12px;
         text-align: center;
         color: #ffffff;
-        text-shadow: -1px -1px 0 #215f25, 1px -1px 0 #215f25, -1px 1px 0 #215f25, 1px 1px 0 #215f25;
         text-transform: uppercase;
-        bottom: 14%;
+        bottom: 8%;
         width: 80%;
         margin: 0 auto;
         left: 0;
         right: 0;
-
+        background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        -webkit-text-stroke: .2px;
+          letter-spacing: -1px;
+        filter: drop-shadow(0px 4.08px 0px 0px #00000026);
         @media screen and (min-width: 500px) {
-          bottom: 17%;
+          bottom: 3%;
           font-size: 30px;
         }
       }
@@ -734,13 +760,17 @@ defineExpose({ showVideo });
       .inner {
         width: 100%;
       }
-      background: linear-gradient(325.86deg, rgba(14, 30, 8, 0.85) 5.38%, rgba(27, 96, 38, 0.85) 98.11%);
+      // background: linear-gradient(325.86deg, rgba(14, 30, 8, 0.85) 5.38%, rgba(27, 96, 38, 0.85) 98.11%);
       box-shadow: 0px 0px 37.43px 0px #b479ff40 inset;
       backdrop-filter: blur(10px);
-      border: 1px solid #24ee89;
-      padding: 25px 10px 15px;
-      // margin: -45px auto 0;
-      margin: -30px auto 0;
+      background: linear-gradient(231.79deg, #D8F3FA 5.22%, #E4F4FF 53.35%, #D8F3FA 95.86%);
+      // border: 1px solid #24ee89;
+      // padding: 25px 10px 15px;
+      // // margin: -45px auto 0;
+      // margin: -30px auto 0;
+      
+      margin: -65px auto 0;
+      padding: 65px 10px 15px;
       border-radius: 16px;
       display: flex;
       // gap: 15px;
@@ -794,7 +824,7 @@ defineExpose({ showVideo });
       .other-steps {
         .midimg {
           text-align: center;
-          width: 35vh;
+          width: 38vh;
           margin: 0 auto;
           max-width: 100%;
           margin-bottom: -20px;
@@ -805,12 +835,14 @@ defineExpose({ showVideo });
         }
         .mid-content {
           min-height: 45px;
-          background: linear-gradient(
-            270deg,
-            rgba(69, 181, 121, 0) 0%,
-            rgba(69, 181, 121, 0.5) 46.5%,
-            rgba(69, 181, 121, 0) 100%
-          );
+          // background: linear-gradient(
+          //   270deg,
+          //   rgba(69, 181, 121, 0) 0%,
+          //   rgba(69, 181, 121, 0.5) 46.5%,
+          //   rgba(69, 181, 121, 0) 100%
+          // );
+          background: linear-gradient(270deg, rgba(6, 107, 216, 0) 0%, #066BD8 46.5%, rgba(6, 107, 216, 0) 100%);
+         
           display: none;
           &.show {
             display: flex;
@@ -823,15 +855,40 @@ defineExpose({ showVideo });
           font-family: Poppins;
           font-weight: 700;
           .ins {
-            color: #90e974;
+            color: #ffffff;
             font-size: 1.5vh;
             line-height: 1.8vh;
           }
           .amt {
-            color: #ffc664;
+            color: #A600FF;
 
             font-size: 2vh;
             line-height: 2.5vh;
+          }
+        }
+      }
+      .side-menu-item {
+        display: flex;
+        justify-content: flex-end;
+      }
+      .item-icon__language {
+        margin-right: 15px;
+        display: flex;
+        justify-content: center;
+        text-transform: uppercase;
+        background: #BCDCFF;
+        padding: 5px 5px;
+        align-items: center;
+        border-radius: 4px;
+        color: #333333;
+        font-weight: bold;
+        img {
+          display: block;
+          width: 100%;
+
+          &.flag {
+            margin-left: 10px;
+            width: 18px;
           }
         }
       }
@@ -868,10 +925,9 @@ defineExpose({ showVideo });
         }
       }
       .welcome {
-        color: #caffd0;
-        text-shadow: 0px 2px 0px #1d7920;
+        color: #066BD8;
         .yellow {
-          color: #ffc664;
+          color: #A600FF;
         }
         font-family: "Poppins";
         font-weight: 900;
@@ -906,18 +962,33 @@ defineExpose({ showVideo });
           height: 66px;
           z-index: 9999;
           border-radius: 10px;
-          width: 47%;
+          // width: 47%;
           margin: 0 auto;
-          left: -29%;
+          // left: -29%;
           right: 0;
+          // top: 134%;
+          
+          height: 50px;
+          left: -53%;
+          
           top: 134%;
-          border: 2px dotted #08f437;
-          box-shadow: 0px 0px 20px 0px #00e60091;
+          width: 50%;
+          // border: 2px dotted #08f437;
+          // box-shadow: 0px 0px 20px 0px #00e60091;
+          
+          border: 2px dotted #0084FF;
+          box-shadow: 0 0 20px 0 rgb(0 112 230 / 57%);
           pointer-events: none;
           @media screen and (min-width: 500px) {
-            top: 123%;
-            width: 50%;
-            height: 60px;
+            // top: 123%;
+            // width: 50%;
+            // height: 60px;
+            
+        height: 44px;
+        top: 127%;
+        width: 44%;
+        left: -49%;
+
           }
 
           @supports (-webkit-touch-callout: none) {
@@ -930,11 +1001,18 @@ defineExpose({ showVideo });
           // display: flex;
           // justify-content: flex-start;
           // align-self: flex-start;
-          margin: 10px auto 0 0;
+          margin: 15px auto 0 0;
           font-weight: bold;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #000;
+          text-transform: uppercase;
+          font-weight: 700;
+          font-family: 'Inter';
           img {
             max-width: 12px;
-            margin-right: 10px;
+            margin-right: 5px;
           }
         }
         .hotitems {
@@ -999,6 +1077,8 @@ defineExpose({ showVideo });
         .dep-step {
           display: flex;
           // gap: 10px;
+          color: #000000;
+          font-weight: 600;
           justify-content: flex-start;
           align-items: center;
           img {
@@ -1013,6 +1093,8 @@ defineExpose({ showVideo });
         flex-direction: column;
         margin: 10px auto;
         font-size: 12px;
+        color: #000000;
+        font-weight: bold;
 
         > * {
           margin-top: 5px;
@@ -1026,9 +1108,11 @@ defineExpose({ showVideo });
               margin-right: 10px;
             }
           }
-
+          .purple {
+            color: #A600FF;
+          }
           .yellow {
-            color: #ffc664;
+            color: #FF6F00;
           }
           img {
             width: 2.5vh;
@@ -1056,19 +1140,22 @@ defineExpose({ showVideo });
           // height: 50px;
           height: 35px;
           line-height: 25px;
+          color: #ffffff;
         }
         .link-copy {
+          border-radius: 4px;
+          color: #fff;
           cursor: pointer;
-          color: #0f0b0b;
-          background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
           display: flex;
+          font-weight: 700;
           justify-content: center;
-          align-items: center;
-          width: 120px;
-          font-weight: bold;
-          border-radius: 12px;
           letter-spacing: -1px;
           padding: 4px;
+          width: 120px;
+          margin: auto 8px auto;
+          max-height: 25px;
+          font-size: 10px;
+          background: #ffffff33;
         }
       }
 
@@ -1100,7 +1187,7 @@ defineExpose({ showVideo });
         font-size: 1.5vh;
         line-height: 2vh;
         .yellow {
-          color: #ffe500;
+          color: #A600FF;
         }
       }
       .withdraw-steps {
@@ -1112,6 +1199,8 @@ defineExpose({ showVideo });
           font-weight: bold;
           display: flex;
           font-size: 10px;
+          color: #333333;
+          font-weight: bold;
           // gap: 10px;
           justify-content: flex-start;
           align-items: center;
@@ -1127,15 +1216,15 @@ defineExpose({ showVideo });
         align-self: flex-end;
         align-items: center;
         gap: 5px;
-        color: #f3d235cc;
-        border-bottom: 1px solid #f3d235cc;
+        color: #FF6F00;
+        border-bottom: 1px solid #FF6F00;
         font-family: Poppins;
         font-weight: 700;
         // font-size: 1.5vh;
         // line-height: 2vh;
         font-size: 8px;
         line-height: 18px;
-        padding-bottom: 5px;
+        padding-bottom: 0;
         cursor: pointer;
 
         img {
@@ -1143,7 +1232,8 @@ defineExpose({ showVideo });
         }
       }
       .video-portion {
-        margin: 45px auto 0;
+        // margin: 45px auto 0;
+        color: #000000;
       }
       .step-no {
         color: #90e974;
@@ -1155,27 +1245,31 @@ defineExpose({ showVideo });
         justify-content: center;
         align-items: center;
         // gap: 20px;
+        width: 100%;
+
         :not(:last-child) {
-          margin-right: 15px;
+          margin-right: 5px;
         }
 
       }
       .next-button {
         text-transform: uppercase;
         cursor: pointer;
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+
+        // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
         padding: 10px;
         font-family: Poppins;
-        font-weight: 700;
+        font-weight: 600;
         // font-size: 2vh;
         // line-height: 2vh;
-        padding: 15px 10px;
-        font-size: 15px;
+        padding: 8px 10px;
+        font-size: 12px;
         line-height: 18px;
         // padding: 8px 30px;
         letter-spacing: 0px;
         text-align: center;
-        color: #000000;
+        color: #ffffff;
         border-radius: 8px;
         margin: 0 auto;
         position: relative;
@@ -1183,22 +1277,24 @@ defineExpose({ showVideo });
         justify-content: center;
         align-items: center;
         gap: 10px;
+        width: 100%;
+        max-width: 150px;
       }
       .bottom-button {
         cursor: pointer;
-        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        background: #BCDCFF;
         padding: 10px;
         font-family: Poppins;
-        font-weight: 700;
+        font-weight: 600;
         // font-size: 2vh;
         // line-height: 2vh;
-        padding: 15px 10px;
-        font-size: 15px;
+        padding: 8px 10px;
+        font-size: 12px;
         line-height: 18px;
         // padding: 8px 30px;
         letter-spacing: 0px;
         text-align: center;
-        color: #000000;
+        color: #333333;
         border-radius: 8px;
         margin: 0 auto;
         position: relative;
@@ -1206,6 +1302,8 @@ defineExpose({ showVideo });
         justify-content: center;
         align-items: center;
         gap: 10px;
+        width: 100%;
+        max-width: 150px;
         img {
           width: 25px;
         }

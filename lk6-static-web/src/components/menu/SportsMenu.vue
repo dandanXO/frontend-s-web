@@ -1,0 +1,23 @@
+<template>
+  <PlatformMenu
+    :platforms="sportsPlatforms"
+    :platformGameType="platformGameType"
+    :platformType="platformType"
+    platformName="sports"
+    @load-game="openGame"
+  />
+</template>
+
+<script setup>
+import { ref, defineEmits } from "vue";
+import PlatformMenu from "@/components/menu/platformmenu/index.vue";
+import { sportsPlatforms } from "@/shared/platformArray";
+
+console.log('here', sportsPlatforms)
+const emits = defineEmits(["load-modal"]);
+const platformType = ref("sports");
+const platformGameType = ref("SPORT");
+const openGame = (gameName, code, gameCode) => {
+  emits("load-modal", gameName, code, gameCode);
+};
+</script>

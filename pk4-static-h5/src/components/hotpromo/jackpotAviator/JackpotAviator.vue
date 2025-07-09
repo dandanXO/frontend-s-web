@@ -37,7 +37,8 @@
     <RankDetails :rankDetails="rankDetails" :isLoadingRanking="isLoadingRanking" />
   </template>
   <template v-else-if="mode === 'RULES'">
-    <JackpotAviatorRules :onClickBackBtn="() => (mode = 'MAIN')" :rankingBonusRatioList="rankingBonusRatioList" />
+    <JackpotAviatorRules :onClickBackBtn="() => (mode = 'MAIN')" :rankingBonusRatioList="rankingBonusRatioList" :rules="rulesList" />
+    {{ props.list }}
   </template>
 
   <q-dialog width="100%" v-model="isShowHistoryPopup">
@@ -51,10 +52,10 @@
         class="bg-greytext text-white popout-close"
         v-close-popup
       />
-      <div class="congrats-highlight">
+      <!-- <div class="congrats-highlight">
         <div class="congrats-title">{{ $t("hotPromo.jackpotAviator.jackpot") }}</div>
         <div class="congrats-prize">{{ store.currency.value }} {{ historyData.jackpotAmount }}</div>
-      </div>
+      </div> -->
 
       <HistoryTable :inDialog="true" :historyList="historyData.rankingList" />
     </div>
@@ -87,6 +88,9 @@ const historyData = ref({});
 const rankingBonusRatioList = ref([]);
 const rankDetails = ref({});
 const isLoadingRanking = ref(false);
+
+const props = defineProps(["list"]);
+const rulesList = props.list.pageContent
 
 const onClickReceive = () => {
   const endpoint =

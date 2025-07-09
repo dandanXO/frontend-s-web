@@ -10,7 +10,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
           {{ $t("hotPromo.duration") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.longTerm") }}</div>
+        <div class="bar-desc">{{ $t("hotPromo.lossRebate.duration") }}</div>
       </div>
 
       <div class="receive-bar">
@@ -18,7 +18,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
           {{ $t("hotPromo.eligibility") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.successfulDepositMember") }}</div>
+        <div class="bar-desc">{{ $t("hotPromo.lossRebate.eligible") }}</div>
       </div>
 
       <div class="receive-bar">
@@ -30,15 +30,15 @@
       </div>
     </div>
 
-    <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
+    <!-- <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
 
     <div class="tnc-content">
       <ol>
-        <li v-for="index in 7" :key="index">
+        <li v-for="index in 9" :key="index">
           {{ $t(`hotPromo.lossRebate.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
       </ol>
-    </div>
+    </div> -->
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">

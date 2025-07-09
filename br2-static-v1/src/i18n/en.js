@@ -373,7 +373,8 @@ export default {
     withdrawCurrency: "Withdraw Currency",
     paymentChannels: "Payment Channels",
     channelUnderMaintenance: "This channel is under maintenance",
-    accountNumber: "Account Number"
+    accountNumber: "Account Number",
+    requireDeposit: "A deposit is required before a withdrawal can be made"
   },
   bank: {
     virtualWallet: "eWallet",
@@ -832,13 +833,16 @@ export default {
       signIn: "Sign in",
       signedIn: "Signed in",
       description: "Brazilian Portuguese Version: 7-Day Check-in Promotion Rules Description",
-      tnc01: "This is a continuous 7-day check-in activity. Upon completing 7 check-in days, the cycle automatically restarts on the 8th day.",
+      tnc01:
+        "This is a continuous 7-day check-in activity. Upon completing 7 check-in days, the cycle automatically restarts on the 8th day.",
       tnc02: "Users can check in manually each day, with each day offering a specific reward.",
-      tnc03: "If the user misses a check-in (e.g., checked in on day 1 but not on day 2), on day 3 they can only check in for day 3, without being eligible for the day 2 reward.",
+      tnc03:
+        "If the user misses a check-in (e.g., checked in on day 1 but not on day 2), on day 3 they can only check in for day 3, without being eligible for the day 2 reward.",
       tnc04: "Rewards must be claimed manually by the user. Unclaimed rewards will be considered forfeited.",
       tnc05: "Received bonuses require a 1x rollover before they can be withdrawn.",
-      tnc06: "The promotion is exclusive to real users. If suspicious activity is detected, such as multiple accounts or unauthorized behavior, the platform reserves the right to cancel the bonus, block the account, or apply other necessary measures.",
-      tnc07: "The platform reserves the exclusive right to the final interpretation of this promotion.",
+      tnc06:
+        "The promotion is exclusive to real users. If suspicious activity is detected, such as multiple accounts or unauthorized behavior, the platform reserves the right to cancel the bonus, block the account, or apply other necessary measures.",
+      tnc07: "The platform reserves the exclusive right to the final interpretation of this promotion."
     },
     redepositBonus: {
       description: "Receive an extra 100% bonus on your first deposit of the day",
@@ -1187,7 +1191,8 @@ export default {
     title1: "The registration time starts from the time the registration is completed.",
     message1:
       "When the accumulated amount reaches R$100, you can apply for withdrawal (withdrawal is to the game wallet)",
-    message2: "When there are no spins available, re-refer a new player to get a free spin.",
+    message2:
+      "Invite friends to register and make a deposit — this can significantly speed up your progress toward the maximum withdrawal limit!",
     message3:
       "The event lasts for 3 days. After the event, the accumulated bonus will be reset and the event will start again",
     message4:

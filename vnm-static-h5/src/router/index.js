@@ -1,7 +1,7 @@
 import { route, store } from "quasar/wrappers";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
-import { isAndroid, isOperaPixelUrl } from "boot/utils";
+import { isAndroid, isOperaPixelUrl, isInPwa } from "boot/utils";
 import { SessionStorage } from "quasar";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
@@ -51,6 +51,10 @@ export default route(function (/* { store, ssrContext } */) {
       ui.showFooter();
     }
 
+    if (to.query.adjust_referrer) {
+      sessionStorage.setItem("ADJUST_REFERRER", to.query.adjust_referrer);
+    }
+
     if (to.path === "/promoapp") {
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
@@ -91,6 +95,12 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
+      if (isInPwa()) {
+        sessionStorage.setItem("PWA_REFRESH_PAGE", "1");
+        const pwaEvent = new CustomEvent("pwaEvent");
+        document.dispatchEvent(pwaEvent);
+      }
+
       const { homeName } = to.params;
       if (homeName) {
         if (homeName === "homeslot") {

@@ -1153,6 +1153,7 @@ export default {
       rank: "Rank",
       dailyOrWeekly: "Daily/Weekly",
       rankingBonusRatio: "Ranking Bonus Ratio",
+      rankingBonus: "Ranking Bonus",
       myBets: "My Bets",
       myReward: "My Rewards",
       ranksLeft: "Ranks Left",

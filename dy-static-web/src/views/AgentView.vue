@@ -40,7 +40,14 @@
                 <span ref="contact2" class="contact-text" style="font-size: 10px">cid.1b8d9a018a52a8f5</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('2')">{{ copybtntxt2 }}</button>
-                  <a target="_blank" class="download-btn" href="https://www.skype.com/zh-Hans/get-skype/" rel="noopener">下载</a>
+                  <a
+                    target="_blank"
+                    class="download-btn"
+                    href="https://www.skype.com/zh-Hans/get-skype/"
+                    rel="noopener"
+                  >
+                    下载
+                  </a>
                 </div>
               </div>
               <div class="contact-box telegram-buttons">
@@ -48,7 +55,7 @@
                   <img src="../assets/images/affiliate/icon-bubble.png" />
                 </div>
                 <div class="contact-name">丝瓜</div>
-                <span ref="contact3" class="contact-text">LH1008666</span>
+                <span ref="contact3" class="contact-text">LH1008888</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('3')">{{ copybtntxt3 }}</button>
                   <a target="_blank" class="download-btn" href="https://ya.cn/index.html" rel="noopener">下载</a>

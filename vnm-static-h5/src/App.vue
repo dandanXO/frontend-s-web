@@ -8,7 +8,7 @@ import { Platform, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 import axios from "axios";
 import { getVisitorId } from "boot/utils";
 import { useUI } from "src/stores/ui";
@@ -82,23 +82,29 @@ export default defineComponent({
         console.log("Init Web Adjust");
         console.log(affAppToken.value);
         const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+        const savedAdjustReferrer = sessionStorage.getItem("ADJUST_REFERRER");
+        if (savedAdjustReferrer) {
+          AdjustWeb.setReferrer(encodeURIComponent(savedAdjustReferrer));
+        }
         AdjustWeb.initSdk({
           appToken: affAppToken.value,
           environment: "production",
+          logLevel: "verbose",
           attributionCallback: function (e, attribution) {
             // e: internal event name, can be ignored
             // attribution: details about the changed attribution
             console.log("CALLBACK");
             console.log(attribution);
-            store.aaid = attribution && attribution.adid ? attribution.adid : "";
+            // store.aaid = attribution && attribution.adid ? attribution.adid : "";
           }
         });
         setTimeout(() => {
-          const attribution = AdjustWeb.getAttribution();
-          console.log("Web Adid");
-          console.log(attribution);
-          store.aaid = attribution ? attribution.adid : "";
-        }, 500);
+          AdjustWeb.waitForWebUUID().then((webUuid) => {
+            console.log("Web UUID");
+            console.log(webUuid);
+            store.aaid = webUuid ? webUuid : "";
+          });
+        }, 100);
       }
     };
 
@@ -112,38 +118,80 @@ export default defineComponent({
 
     const trackH5Affiliate = () => {
       // const omitSites = ["bw3.genoortisy.com"];
+      const hostname = window.location.hostname;
+      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || "";
 
-      var affiliateCode = "";
-      // if (omitSites.includes(window.location.host)) {
-      //   affiliateCode = "E4B265";
-      // } else {
-      //   affiliateCode = "3B1BFB";
-      // }
+      const trackPwa = async () => {
+        api.get(`/app/pwa/log?step=OPEN&siteCode=${process.env.SITE}`).then((res2) => {
+          console.log("OPEN");
+        });
 
-      if (affiliateCode) {
-        sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-        api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
+        var adCode = "";
+        let _affiliateCode = "";
+        // debugger;
+        //Use thisApi to get AffiliateCode/FbPixelId/ WebPushId for PWA.
+        await api
+          .get(`/app/affiliate/params?domain=${hostname}&siteCode=${process.env.SITE}&affiliateCode=${adCode}`)
+          .then((res) => {
+            const { affiliateCode = "", facebookId = "", pushId = "" } = res.data;
+            sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+            _affiliateCode = affiliateCode;
+            console.log("Init FB");
+            if (facebookId) {
+              fbq("init", facebookId);
+              fbq("track", "PageView");
+              store.isFbPixel = true;
+              // sendFacebookInfo();
+            }
+            if (pushId) {
+              // initEngageLabPush(pushId);
+            }
+          });
+
+        api.get(`/app/adjust/params?affiliateCode=${_affiliateCode}`).then((res) => {
           if (res.code === 0) {
             sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-            // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-            // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
             if (res.data.adjust_register_event) {
               ui.adjust_register_event = res.data.adjust_register_event;
             }
-            if (res.data.adjust_open_app_event) {
-              ui.adjust_open_app_event = res.data.adjust_open_app_event;
-            }
-            if (res.data.adjust_register_fail_event) {
-              ui.adjust_register_fail_event = res.data.adjust_register_fail_event;
-            }
-            if (res.data.adjust_click_register_event) {
-              ui.adjust_click_register_event = res.data.adjust_click_register_event;
-            }
             affAppToken.value = res.data.adjust_app_token;
             initAdjustEventTrack();
-            // alert(affAppToken.value);
           }
         });
+      };
+
+      const track = () => {
+        if (affiliateCode) {
+          sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+          api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
+            if (res.code === 0) {
+              sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+              // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+              // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+              if (res.data.adjust_register_event) {
+                ui.adjust_register_event = res.data.adjust_register_event;
+              }
+              if (res.data.adjust_open_app_event) {
+                ui.adjust_open_app_event = res.data.adjust_open_app_event;
+              }
+              if (res.data.adjust_register_fail_event) {
+                ui.adjust_register_fail_event = res.data.adjust_register_fail_event;
+              }
+              if (res.data.adjust_click_register_event) {
+                ui.adjust_click_register_event = res.data.adjust_click_register_event;
+              }
+              affAppToken.value = res.data.adjust_app_token;
+              initAdjustEventTrack();
+              // alert(affAppToken.value);
+            }
+          });
+        }
+      };
+
+      if (isInPwa()) {
+        trackPwa();
+      } else {
+        track();
       }
     };
 
@@ -252,7 +300,7 @@ export default defineComponent({
       checkSID();
       getAppInfo();
 
-      if (isAndroid()) {
+      if (isAndroid() && !isInPwa()) {
         document.addEventListener(
           "deviceready",
           () => {

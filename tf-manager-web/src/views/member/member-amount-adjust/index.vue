@@ -380,7 +380,12 @@
           prop="memberId"
           :label="t('fields.memberId')"
           width="300"
-        />
+        >
+          <template #default="scope">
+            <span v-if="scope.row.memberId !== '-1'">{{ scope.row.memberId }}</span>
+            <span v-else style="color: red">{{ t('fields.noData') }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="loginName"
           :label="t('fields.loginName')"
@@ -884,6 +889,11 @@
       <span style="margin-left: 10px">{{ page.numberOfDeduction }}</span>
     </div>
   </div>
+  <div v-if="uiControl.progress !== 100" class="loading-overlay">
+    <div class="loading-box">
+      <el-progress type="circle" :percentage="uiControl.progress" />
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -912,6 +922,7 @@ import {
 } from '../../../api/site'
 import { getReasonsSimple } from '../../../api/site-adjustment-reason'
 import {
+  findIdByLoginNames,
   findIdByLoginName,
   getMemberBalanceByLoginNameSite,
 } from '../../../api/member'
@@ -1015,7 +1026,8 @@ const uiControl = reactive({
     gameTypeRollover: null,
     gameLists: [],
     selectType: null
-  }
+  },
+  progress: 100
 })
 
 const gameTypes = ref([])
@@ -1753,14 +1765,21 @@ function importToTable(file) {
             range: 1,
           })
         )
-        for (const d of data) {
-          const { data: id } = await findIdByLoginName(
-            d.loginName,
+        uiControl.progress = 0
+        for (let i = 0; i < data.length; i += 50) {
+          const sublist = data.slice(i, i + 50)
+          const chunk = sublist.map(d => d.loginName).join(',')
+          const { data: result} = await findIdByLoginNames(
+            chunk,
             importForm.siteId
           )
-          d.memberId = id
+          for (let j = i; j < i + sublist.length; j++) {
+            data[j].memberId = result[data[j].loginName]
+            uiControl.progress = Math.round(
+              ((j + 1) / data.length) * 100
+            )
+          }
         }
-        break
       }
       importedPage.records = data
       importedPage.pages = Math.ceil(
@@ -1793,7 +1812,7 @@ async function confirmImport() {
   importedPage.buttonLoading = true
   importRefForm.value.validate(async valid => {
     if (valid) {
-      const recordCopy = { ...importedPage.records }
+      const recordCopy = importedPage.records.filter(record => record.memberId !== '-1')
       const data = []
       Object.entries(recordCopy).forEach(([key, value]) => {
         const item = {}
@@ -1912,5 +1931,26 @@ onMounted(async () => {
   margin-right: 20px;
   float: right;
   font-size: small;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-box {
+  background: white;
+  padding: 20px 40px;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 300px;
 }
 </style>

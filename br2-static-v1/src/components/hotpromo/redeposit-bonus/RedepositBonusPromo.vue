@@ -7,7 +7,7 @@
           {{ $t("hotPromo.duration") }}
         </div>
         <div class="bar-desc">
-          <div class="bar-desc">{{ $t("hotPromo.longTerm") }}</div>
+          <div class="bar-desc">{{ $t("hotPromo.redepositBonus.duration") }}</div>
         </div>
       </div>
 
@@ -16,7 +16,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
           {{ $t("hotPromo.eligibility") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.allMembers") }}</div>
+        <div class="bar-desc">{{ $t("hotPromo.redepositBonus.eligible") }}</div>
       </div>
 
       <div class="receive-bar">
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
+    <!-- <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
 
     <div class="tnc-content">
       <ol>
@@ -36,7 +36,7 @@
           {{ $t(`hotPromo.redepositBonus.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
       </ol>
-    </div>
+    </div> -->
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
@@ -61,47 +61,12 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
-import { api, eventapi } from "boot/axios";
-
-const router = useRouter();
+import { ref } from "vue";
 
 const props = defineProps(["params"]);
-const params = JSON.parse(props.params || "{}");
-
-const loadPromoInit = () => {
-  eventapi
-    .get("/session/deposit-bonus/init?promoCode=br2-redeposit-bonus")
-    .then((res) => {
-      // debugger;
-      if (res.code === 0) {
-        const { data } = res;
-        console.log(data);
-      }
-    })
-    .catch((e) => {});
-};
-
-const claimPromo = () => {
-  eventapi
-    .post("/session/deposit-bonus/claim?promoCode=br2-redeposit-bonus")
-    .then((res) => {
-      // debugger;
-      if (res.code === 0) {
-        showPrizePopup.value = true;
-        prizeAmount.value = res.data;
-      }
-    })
-    .catch((e) => {});
-};
 
 const showPrizePopup = ref(false);
 const prizeAmount = ref();
-
-onMounted(() => {
-  loadPromoInit();
-});
 </script>
 
 <style lang="scss" scoped>

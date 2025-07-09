@@ -1,0 +1,400 @@
+.vip-container {
+  min-height: 100vh;
+
+
+
+  .banner-container {
+    //background: url("../../assets/vip/banner.png") no-repeat center center;
+    background-size: cover;
+    margin-bottom: -200px;
+    padding-top: 100px;
+    padding-bottom: 200px;
+    // width: 1920px;
+    // height: 450px;
+    font-size: 30px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 300px;
+    display: flex;
+
+    .btn-wrapper {
+      width: 95%;
+      max-width: 1400px;
+      margin: auto;
+      position: relative;
+
+      .center {
+        text-transform: uppercase;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #ffffff;
+
+        .page-headline {
+          font-size: 150px;
+          line-height: 150px;
+        }
+
+        .page-subline {
+          font-size: 25px;
+          line-height: 25px;
+          margin-bottom: 20px;
+        }
+
+        .page-blend {
+          background-image: linear-gradient(to right, #de4545, #db7e42);
+          color: #ffffff;
+          font-size: 60px;
+          line-height: 60px;
+          padding: 15px;
+          border-radius: 20px;
+          margin-bottom: 10px;
+          width: 100%;
+          max-width: 460px;
+
+          .pesos {
+            font-family: sans-serif;
+            font-weight: bold;
+          }
+        }
+
+        .page-liner {
+          font-size: 20px;
+          text-transform: none;
+        }
+
+        img {
+          max-width: unset;
+        }
+
+        .common-btn.getnow {
+          background: #ffffff;
+          color: #000000;
+          border: transparent;
+
+          &:hover {
+            background: #ffd800;
+          }
+        }
+      }
+    }
+
+    // .jp-container {
+    //   display: flex;
+    //   justify-content: center;
+    //   text-align: center;
+    //   font-size: 110px;
+    //   margin-top: 30px;
+    //   color: #1bcef1;
+    //   font-family: jp;
+    //   font-weight: 600;
+    //   line-height: 120px;
+
+    //   .jp-number-item {
+    //     width: 96px;
+    //     height: 120px;
+    //     // background-image: url("../../assets/images/games/casino/jp_bg.png");
+    //     background-repeat: no-repeat;
+    //     background-size: 100% 100%;
+    //   }
+    // }
+  }
+
+  .inner-vip-mobile {
+    display: none;
+  }
+
+  .vipitem {
+    position: relative;
+    display: flex;
+    // background: url("../../assets/vip/vip_04.png") no-repeat top center;
+    background-size: contain;
+    width: 320px;
+    padding: 40px 0;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+
+    .viplevelcard {
+      // padding: 10px;
+      width: 70%;
+      height: 150px;
+      background: url("../../assets/vip/vip_logo_bg.png") no-repeat center center;
+      background-size: contain;
+      position: relative;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      padding: 35px 10px 10px 65px;
+
+      .vip-badgelevel {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .vip-badge {
+          flex: 1;
+          position: absolute;
+          // width: 2.66rem;
+          top: -10px;
+          left: -50px;
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .vip-text {
+          flex: 2;
+
+          img {
+            width: 100%;
+            max-width: 73px;
+          }
+        }
+      }
+
+      .vip-badgecontent {
+        margin-top: 5px;
+        font-size: 11px;
+        color: #73561f;
+
+        span {
+          display: block;
+          line-height: 200%;
+        }
+
+        // position: absolute;
+        // right: 20px;
+        // bottom: 20px;
+      }
+    }
+
+    .vipcontents {
+      padding-top: 60px;
+      // background: #2b2b4b;
+      color: #ffffff;
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      // border-top: 2px solid #db7e42;
+      // border-bottom: 2px solid #db7e42;
+      .title {
+        font-size: 18px;
+        line-height: 36px;
+      }
+
+      .inner-vip {
+        background-color: #303450;
+        width: 100%;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-evenly;
+        font-size: 45px;
+        line-height: 53px;
+        font-family: "Arial";
+      }
+
+      .second-vip {
+        // background: #2b2b4b;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        font-size: 45px;
+        line-height: 53px;
+
+        div {
+          flex: 1;
+        }
+
+        .common-btn {
+          padding: 5px 10px;
+          font-size: 12px;
+          line-height: 20px;
+          margin: 0 30px 30px;
+        }
+      }
+    }
+  }
+
+  .vip-benefits {
+    padding: 10px;
+    font-size: 0.75rem;
+    background: #eaeef2;
+
+    .bft-title {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      color: #3a3a3a;
+      font-weight: bold;
+      gap: 10px;
+
+      &:before {
+        content: "";
+        width: 10px;
+        height: 19px;
+        display: inline-block;
+        background-image: url(../../assets/vip/privilege.png);
+        background-position: center center;
+        background-size: 100%;
+      }
+    }
+
+    .bft-row {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .bft-row-cnt {
+        background: #fff;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #3a3a3a;
+
+        .left {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 40px;
+
+          .icon {
+            width: 40px;
+            min-width: 40px;
+
+            img {
+              flex: 1;
+              width: 100%;
+              display: block;
+            }
+          }
+
+          .text {
+          }
+        }
+
+        .btn {
+        }
+      }
+    }
+
+    .bft-promo-row {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+
+      .bft-promo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        width: calc(33.33% - 10px);
+
+        .promo-percent {
+          color: #ccb455;
+          text-align: center;
+          font-weight: 700;
+          font-size: 25px;
+        }
+
+        .promo-title {
+          color: #3a3a3a;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+  .vip-program {
+    .game-title {
+      margin-bottom: 30px;
+    }
+
+    margin: 50px auto;
+    max-width: 1080px;
+    width: 95%;
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      border: 1px solid #db7e42;
+      border-radius: 10px;
+      margin-bottom: 10px;
+
+      .common-btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background: transparent;
+
+        &.active {
+          background-image: linear-gradient(to right, #de4545, #db7e42);
+        }
+      }
+    }
+
+    :deep(.ant-table-thead > tr > th) {
+      text-align: center;
+
+      &:nth-child(odd) {
+        background: #2b2b4b;
+      }
+    }
+
+    :deep(.ant-table-tbody > tr > td) {
+      &:nth-child(odd) {
+        background: #2b2b4b;
+      }
+    }
+
+    .note {
+      color: #db7d42;
+      margin-top: 5px;
+      display: block;
+    }
+  }
+
+  .q-tab-panel {
+    padding: 8px;
+  }
+
+  table {
+    text-align: center;
+    font-size: 10px;
+    color: #52697e;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 10px;
+
+    thead {
+      background-color: #7197ff;
+
+      th {
+        color: #ffffff;
+      }
+    }
+
+    tbody {
+      td {
+        border: 1px solid #bac8dc;
+      }
+    }
+  }
+
+  .terms-conditions {
+    color: #52697e;
+    font-size: 0.8rem;
+
+    .title {
+      color: #3865e8;
+    }
+  }
+}

@@ -57,3 +57,12 @@ export const getChatHistory = (query, body) => {
 export const getChatHistoryExport = (query) => {
   return https().request('/live-sport/chat/export', Method.GET, query, ContentType.form)
 };
+
+export const getStreamHistoryList = (request) => {
+  return https().request(
+    '/live-sport/stream/stream-list',
+    Method.GET,
+    request,
+    ContentType.form
+  )
+};

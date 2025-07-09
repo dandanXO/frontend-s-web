@@ -384,7 +384,8 @@ export default {
     paymentChannels: "Canais de Pagamento",
     channelUnderMaintenance: "Este canal está em manutenção",
     accountNumber: "Número da Conta",
-    available: "Disponível"
+    available: "Disponível",
+    requireDeposit: "É necessário ter pelo menos um depósito antes de fazer um saque"
   },
   bank: {
     virtualWallet: "eWallet",
@@ -437,7 +438,7 @@ export default {
     rewards: "Recompensas",
     vipTable_txt:
       "Assim que seus depósitos atenderem aos requisitos de atualização, seu nível VIP será imediatamente atualizado, aumentando seu número de retiradas.",
-    monthlyCumulativeBet: "Aposta Mensal Acumulado para Atualizar Nível VIP",
+    monthlyCumulativeBet: "Aposta Acumulado para Atualizar Nível VIP",
     level: "Nível",
     amount: "Valor",
     turnover: "Volume de Negócios",
@@ -852,24 +853,36 @@ export default {
 
       description: "Versão em Português do Brasil: Regras da Promoção de Check-in de 7 Dias Descrição da Promoção",
 
-      tnc01: "Esta é uma atividade de check-in contínuo com um ciclo de 7 dias. Ao completar 7 dias de check-in, o ciclo é reiniciado automaticamente no 8º dia.",
-      tnc02: "Os usuários podem realizar o check-in manualmente a cada dia, sendo que cada dia oferece uma recompensa específica.",
-      tnc03: "Caso o usuário interrompa o check-in (ex: fez o check-in no dia 1, não fez no dia 2), no dia 3 ele poderá realizar apenas o check-in referente ao dia 3, sem direito à recompensa do dia 2.",
-      tnc04: "As recompensas devem ser resgatadas manualmente pelo usuário. Recompensas não resgatadas serão consideradas renunciadas.",
+      tnc01:
+        "Esta é uma atividade de check-in contínuo com um ciclo de 7 dias. Ao completar 7 dias de check-in, o ciclo é reiniciado automaticamente no 8º dia.",
+      tnc02:
+        "Os usuários podem realizar o check-in manualmente a cada dia, sendo que cada dia oferece uma recompensa específica.",
+      tnc03:
+        "Caso o usuário interrompa o check-in (ex: fez o check-in no dia 1, não fez no dia 2), no dia 3 ele poderá realizar apenas o check-in referente ao dia 3, sem direito à recompensa do dia 2.",
+      tnc04:
+        "As recompensas devem ser resgatadas manualmente pelo usuário. Recompensas não resgatadas serão consideradas renunciadas.",
       tnc05: "Os bônus recebidos exigem um rollover de 1x antes que possam ser sacados.",
-      tnc06: "A promoção é exclusiva para usuários reais. Caso sejam detectadas operações suspeitas, como múltiplas contas ou atividades não autorizadas, a plataforma se reserva o direito de cancelar o bônus, bloquear a conta ou aplicar outras medidas necessárias.",
-      tnc07: "A plataforma reserva-se o direito exclusivo de interpretação final desta promoção.",
+      tnc06:
+        "A promoção é exclusiva para usuários reais. Caso sejam detectadas operações suspeitas, como múltiplas contas ou atividades não autorizadas, a plataforma se reserva o direito de cancelar o bônus, bloquear a conta ou aplicar outras medidas necessárias.",
+      tnc07: "A plataforma reserva-se o direito exclusivo de interpretação final desta promoção."
     },
     redepositBonus: {
-      description: "Receba um bônus extra de 100% no primeiro depósito do dia",
-      tnc01: "Esta promoção é válida para todos os membros que realizarem o primeiro depósito do dia.",
-      tnc02: "O valor do bônus será de 100% do valor depositado, sem limite máximo.",
-      tnc03: "O bônus (incluir o principal) requer 12 vezes de apostas válidas para sacar;",
+      duration: "Em curso",
+      eligible: "Todos os membros ",
+      description:
+        "Aproveite um Bônus adicional de 100% no seu primeiro depósito todos os dias, recompensa máxima possível 50.",
+      tnc01:
+        "O primeiro depósito do dia efetuado por cada membro é elegível para um Bônus de 100%, recompensa máxima possível 50.;",
+      tnc02:
+        "Após concluir com sucesso seu primeiro depósito do dia, você receberá um Bônus adicional de 100%. recompensa máxima possível 50 - quanto mais você depositar, maior será sua recompensa!",
+      tnc03:
+        'Para participar, por favor selecione "100% FTD" ao efetuar o seu depósito. O Bônus e o montante depositado serão creditados simultaneamente na sua carteira principal. Exemplo: se depositar R $50, e selecionar "100% FTD", o valor real creditado será R$100.se depositar R $100, e selecionar "100% FTD", o valor real creditado será R$150;',
       tnc04:
-        "Cada membro pode participar uma vez por dia, sendo o bônus aplicável somente à primeira transação do dia.",
+        "O montante depositado e o Bônus devem ser apostados um mínimo de 12 vezes antes de serem elegíveis para levantamento;",
       tnc05:
-        "Apenas o titular da conta pode realizar a operação de recebimento do bônus. Em caso de comportamento irregular, o bônus poderá ser cancelado, deduzido, congelado ou a conta adicionada à lista negra.",
-      tnc06: "A plataforma reserva-se o direito final de interpretação desta promoção."
+        'Esta promoção destina-se exclusivamente a operações manuais realizadas pelo titular da conta. Qualquer divergência em relação às regras pode resultar no cancelamento, dedução ou congelamento do Bônus, ou pode levar à inclusão da conta em uma "Lista Negra";',
+      tnc06:
+        "Para evitar eventuais mal-entendidos, a AKB188 reserva-se o direito de fazer a interpretação final desta promoção."
     },
     megaSharingWheel: {
       wheelTitle: "Roleta Mega Compartilhada",
@@ -935,15 +948,15 @@ export default {
       only: "Apenas",
       toGo: "para ir"
     },
-    duration: "Duração",
+    duration: "Período de promoção",
     longTerm: "Válida por tempo indeterminado",
-    eligibility: "Elegíveis",
+    eligibility: "Participantes elegíveis",
     successfulDepositMember: "Todos os membros que já fizeram pelo menos um depósito com sucesso",
     betMember: "Todos os membros que realizaram apostas",
     newMember: "Todos os novos membros registrados",
     allMembers: "Todos os membros",
-    desc: "Descrição",
-    tnc: "Regras da Promoção",
+    desc: "Detalhes da promoção",
+    tnc: "Regras de promoção",
     cashbackWeekly: {
       description: "Cashback semanal com base na sua atividade de apostas e na porcentagem correspondente.",
       maxCashback: "Máx : {num}%",
@@ -977,6 +990,7 @@ export default {
       description:
         "Faça o upgrade para o nível VIP correspondente com base no valor acumulado de apostas na conta do membro.",
       bet: "APOSTA",
+      termsAndConditions: "Terms and Conditions",
       vipLevel: "VIP Nível",
       tnc01:
         "A partir da primeira aposta válida feita pelo membro após concluir o primeiro depósito com sucesso, o valor acumulado das apostas válidas será usado para determinar a elevação de nível VIP, conforme os limites abaixo:",
@@ -999,39 +1013,65 @@ export default {
       tnc07: "Para evitar qualquer mal-entendido, a AKB188 reserva-se o direito final de interpretação desta promoção."
     },
     dailySecondDeposit: {
-      description: "O primeiro depósito do dia dá direito a 20% de bônus sobre o valor depositado",
-      tnc01: "Esta promoção é válida para todos os depósitos realizados após o primeiro no mesmo dia.",
-      tnc02: "Cada depósito subsequente dará direito a um bônus de 20%, com um limite de R$ 288 por depósito.",
-      tnc03: "O bônus (incluir o principal) requer 12 vezes de apostas válidas para sacar;",
-      tnc04: "Todos os depósitos adicionais do dia são elegíveis, sem limite de quantidade de participações por dia.",
+      duration: "Em curso",
+      eligible: "Todos os membros ",
+      description:
+        "Depois de completar o seu primeiro depósito do dia, você pode fazer depósitos adicionais para receber um Bônus de 20% de cada vez, sem limite para o número de depósitos.",
+      tnc01:
+        "Cada Membro tem o direito de reclamar o Bônus de recarga várias vezes por dia, sem restrições quanto ao número de depósitos;",
+      tnc02:
+        "Depois de completar com sucesso o seu primeiro depósito do dia, você é elegível para receber um Bônus de 20% em cada depósito subsequente.",
+      tnc03: "O montante mínimo do depósito é R$10;",
+      tnc04: "O Bônus máximo de recarga é R$288;",
       tnc05:
-        "Apenas o titular da conta pode realizar a operação de recebimento do bônus. Em caso de comportamento irregular, o bônus poderá ser cancelado, deduzido, congelado ou a conta adicionada à lista negra.",
-      tnc06: "A plataforma reserva-se o direito final de interpretação desta promoção."
+        'Para participar, selecione o código promocional "20% RDB" ao efetuar o seu depósito. O Bônus e o montante depositado serão creditados simultaneamente na sua carteira principal. Exemplo: se depositar R$100, e selecionar "20% RDB", o valor real creditado será R$120;',
+      tnc06:
+        "O montante depositado e o Bônus devem ser apostados um mínimo de 12 vezes antes de serem elegíveis para levantamento;",
+      tnc07:
+        'Esta promoção destina-se exclusivamente a operações manuais realizadas pelo titular da conta. Qualquer divergência em relação às regras pode resultar no cancelamento, dedução ou congelamento do Bônus, ou pode levar à inclusão da conta em uma "Lista Negra";',
+      tnc08:
+        "Para evitar eventuais mal-entendidos, a AKB188 reserva-se o direito de fazer a interpretação final desta promoção."
     },
     betCashback: {
-      description: "Cashback diário com base no valor apostado e na porcentagem correspondente",
-      tnc01: "O cashback do dia anterior será creditado automaticamente às 18h (horário de Brasília) todos os dias;",
-      tnc02: "O valor do cashback é calculado como: valor apostado no dia anterior × porcentagem de reembolso;",
-      tnc03: "Quanto maior o valor apostado, maior a porcentagem de cashback, podendo chegar a até 3.2%;",
-      tnc04: "Sem limite máximo para o valor de cashback;",
-      tnc05: "O bônus de cashback deve ser apostado pelo menos 1 vez antes de poder ser sacado;",
+      duration: "Em curso",
+      eligible: "Todos os membros com registro de depósito",
+      description:
+        "Aproveite um desconto ilimitado diário de 3% - Quanto mais apostar, maiores serão os seus retornos!",
+      tnc01:
+        "Os Bônus de desconto para apostas feitas no dia anterior são distribuídos automaticamente todos os dias às 6h, horário do Brasil;",
+      tnc02:
+        "O valor do seu desconto para o dia é calculado multiplicando o valor da aposta válida para o dia anterior pela percentagem do desconto;",
+      tnc03: "Quanto maior o valor da sua aposta, maior a percentagem do seu desconto, limitada a um máximo de 3%;",
+      tnc04: "Não há limite máximo para o Bônus de desconto;",
+      tnc05: "O Bônus de desconto deve ser apostado um mínimo de 1 vez antes de ser elegível para levantamento;",
       tnc06:
-        "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção.",
+        'Esta promoção destina-se exclusivamente a operações manuais realizadas pelo titular da conta. Qualquer divergência em relação às regras pode resultar no cancelamento, dedução ou congelamento do Bônus, ou pode levar à inclusão da conta em uma "Lista Negra";',
+      tnc07:
+        "Para evitar eventuais mal-entendidos, a AKB188 reserva-se o direito de fazer a interpretação final desta promoção.",
       thead1: "Nível",
       thead2: "Volume de Transações",
       thead3: "Taxa de Retorno"
     },
     lossRebate: {
-      description: "Cashback baseado na porcentagem do valor perdido no dia anterior",
-      tnc01: "O cashback do dia anterior será creditado automaticamente às 12h (horário de Brasília) todos os dias;",
+      duration: "Em curso",
+      eligible: "Todos os membros com registro de depósito",
+      description:
+        "Todos os dias, os membros têm direito a receber um reembolso de 15% sobre as perdas líquidas incorridas no dia anterior",
+      tnc01: "Você pode receber diariamente 15% de suas perdas líquidas incorridas no dia anterior;",
       tnc02:
-        ".O valor do resgate é calculado como: valor real do prejuízo × porcentagem de cashback;",
-      tnc03: "Se você não tiver feito nenhuma aposta durante o período da promoção ou tiver lucrado no total, não terá direito ao bônus de resgate;",
+        "O período de reclamação desta Promoção começa diariamente após as 12h, horário do Brasil. Quaisquer Bônus que não sejam reclamados serão considerados perdidos;",
+      tnc03:
+        "As suas perdas líquidas reais multiplicadas pela porcentagem de reembolso são iguais ao Bônus de resgate que você pode reivindicar;",
       tnc04:
-        "É necessário ter perdido pelo menos R$10 no dia anterior para poder solicitar o bônus;",
-      tnc05: "O valor máximo de resgate por pessoa por dia é de R$10.000;",
-      tnc06: "O bônus recebido deve ser apostado pelo menos 3 vezes antes de poder ser sacado;",
-      tnc07: "Para evitar divergências de interpretação, a plataforma AKB188 reserva-se o direito de explicação final desta promoção."
+        "Se você não fizer nenhuma aposta durante o período de reembolso, ou se seus ganhos totais superarem suas perdas no dia anterior, não se qualificará para o Bônus de resgate;",
+      tnc05:
+        "Se suas perdas líquidas forem iguais ou superiores a R$10, você é elegível para reivindicar o Bônus de resgate;",
+      tnc06: "O Bônus máximo de resgate diário permitido para cada indivíduo é de R$10.000;",
+      tnc07: "O Bônus de resgate deve ser apostado um mínimo de 3 vezes antes de ser elegível para levantamento;",
+      tnc08:
+        'Esta promoção destina-se exclusivamente a operações manuais realizadas pelo titular da conta. Qualquer divergência em relação às regras pode resultar no cancelamento, dedução ou congelamento do Bônus, ou pode levar à inclusão da conta em uma "Lista Negra";',
+      tnc09:
+        "Para evitar eventuais mal-entendidos, a AKB188 reserva-se o direito de fazer a interpretação final desta promoção."
     }
   },
   maintenance: {
@@ -1143,6 +1183,7 @@ export default {
     10008: "Erro",
     11000: "Falha na submissão do depósito.",
     11003: "Depósito falhou",
+    10031: "Promoção não encontrada",
     11005: "Operações do usuário muito frequentes. Por favor, tente novamente.",
     12100: "Senha de retirada não corresponde",
     12101: "A nova senha de retirada não pode ser igual à antiga",
@@ -1229,20 +1270,23 @@ export default {
     58005: "Parabéns, você completou todas as tarefas"
   },
   content: {
+    message: "Mensagem",
+    register_succes: "Registro bem-sucedido!",
     nospinleft: "Sem rodadas restantes",
     title1: "O tempo de registo começa a contar a partir do momento em que o registo é concluído.",
-    message1:
-      "Quando o valor acumulado atingir R$100, você poderá solicitar o saque (o saque será feito para a carteira do jogo).",
-    message2: "Quando não houver giros disponíveis, indique um novo jogador para ganhar um giro grátis.",
-    message3: "O evento dura 3 dias. Após o término, o bônus acumulado será reiniciado e o evento começará novamente.",
-    message4:
-      "Cada usuário pode aproveitar uma chance de giro grátis por dia, e o número de giros é reiniciado às 24:00 todos os dias.",
-    message5: "Após a aprovação da solicitação, o bônus será depositado diretamente na sua carteira.",
-    message6: "O bônus precisa ser apostado uma vez antes que possa ser sacado.",
+    message1: "Quando o valor total acumulado atingir R$100, pode proceder ao envio de um pedido de levantamento;",
+    message2:
+      "Convide amigos para se registrarem e fazerem um depósito — isso pode acelerar significativamente seu progresso rumo ao limite máximo de levantamento!",
+    message3: "Cada usuário tem o direito de receber uma chance gratuita na loteria por dia;",
+    message4: "Cada promoção é válida para 3 dias, durante os quais os usuários podem participar múltiplas vezes;",
+    message5:
+      "Você pode ganhar pontos em dinheiro adicionais, permitindo que você jogue sem nenhum custo e aumente suas chances de ganhar prêmios reais;",
+    message6: "Se não for retirado dentro 3 dias, o saldo expirará e será invalidado;",
     message7:
-      "O indicado precisa vincular seu número de telefone e conectá-lo ao código de convite do convidador para ser considerado válido.",
+      'Esta promoção destina-se exclusivamente a operações manuais realizadas pelo titular da conta. Qualquer divergência em relação às regras pode resultar no cancelamento, dedução ou congelamento do Bônus, ou pode levar à inclusão da conta em uma "Lista Negra";',
     message8:
-      "O direito de interpretação do evento pertence à AKB188. Em caso de dúvidas, entre em contato com o atendimento ao cliente.",
+      "Para evitar eventuais mal-entendidos, a AKB188 reserva-se o direito de fazer a interpretação final desta promoção.",
+
     aviatorPromoIntro:
       "Desfrute da emoção das apostas com o Aviator! O seu Aviator pode ganhar incríveis 3.216x com apenas um clique! O prémio para os 50 melhores é de 1.250.000 PKR!",
     aviatorGoldenEgg:

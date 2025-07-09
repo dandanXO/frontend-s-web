@@ -156,3 +156,11 @@ aside {
 .el-checkbox{
   height: 20px !important;
 }
+
+
+.w-e-toolbar .w-e-menu {
+  z-index: unset !important;
+}
+.w-e-toolbar .w-e-droplist {
+  z-index: 1;
+}

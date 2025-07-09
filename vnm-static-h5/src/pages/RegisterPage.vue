@@ -12,8 +12,9 @@
           :placeholder="$t('lang.username')"
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_enter_username'),
-            (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11'),
-            (val) => /^[a-zA-Z0-9]*$/.test(val) || $t('lang.no_special_characters')
+            (val) => /^[^0]/.test(val) || $t('lang.username_cannot_start_with_0'),
+            (val) => /^[a-zA-Z0-9]*$/.test(val) || $t('lang.no_special_characters'),
+            (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11')
           ]"
           color="white"
         >
@@ -90,7 +91,7 @@
             <div class="user-icon" />
           </template>
           <template v-slot:hint>
-            <div class="q-mb-xs" style="font-size: 11px; color: #cccccc">{{ $t("lang.real_name_hints") }}</div>
+            <div class="q-mb-xs" style="font-size: 10px; color: #cccccc">{{ $t("lang.real_name_hints") }}</div>
           </template>
         </q-input>
 
@@ -342,7 +343,7 @@ import { userStore } from "stores/index";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
 import { useUI } from "stores/ui";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -353,6 +354,12 @@ export default defineComponent({
     });
     onActivated(() => {
       getCode();
+
+      if (isInPwa()) {
+        api.get(`/app/pwa/log?step=OPENREGISTER&siteCode=${process.env.SITE}`).then((res2) => {
+          console.log("OPENREGISTER");
+        });
+      }
     });
     const showHundredDialog = ref(false);
     const showBetRulesDialog = ref(false);
@@ -546,6 +553,12 @@ export default defineComponent({
             regForm.regHost = "app://";
           }
 
+          if (isInPwa()) {
+            api.get(`/app/pwa/log?step=SUBMITREGISTER&siteCode=${process.env.SITE}`).then((res2) => {
+              console.log("SUBMITREGISTER");
+            });
+          }
+
           api
             .post("/member/fbRegister", qs.stringify(regForm))
             .then((ret) => {
@@ -559,6 +572,15 @@ export default defineComponent({
                 //   message: t("lang.register_successful"),
                 //   icon: "check_circle_outline"
                 // });
+
+                //FB Tracking.
+                if (isInPwa()) {
+                  if (store.isFbPixel) {
+                    fbq("track", "CompleteRegistration", {
+                      event_id: regForm.sid
+                    });
+                  }
+                }
 
                 //ADJUST TRACKEVENT.
                 trackRegisterSuccessEvent();

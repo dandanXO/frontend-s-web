@@ -578,10 +578,18 @@ async function removeAdsPopout(adspopout) {
 }
 
 async function changeAdsStatus(row) {
-  await updateAdsPopoupStatus(row.id, row.status, row.siteType).catch(async function() {
+  try{
+    
+    await updateAdsPopoupStatus(row.id, row.status, row.siteType)
+    ElMessage({ message: t('message.updateSuccess'), type: 'success' })
     await loadAdsPopoutList();
-  })
-  await loadAdsPopoutList();
+    
+  }catch(error) {
+    await loadAdsPopoutList();
+    ElMessage({ message: t('message.updateFailed'), type: 'error' })
+    return;
+  }
+  
 }
 
 onMounted(async () => {

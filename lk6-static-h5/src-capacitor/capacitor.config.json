@@ -1,0 +1,7 @@
+{
+  "appId": "com.dy.client",
+  "appName": "东赢",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

@@ -6,7 +6,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
           {{ $t("hotPromo.duration") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.longTerm") }}</div>
+        <div class="bar-desc">{{ $t("hotPromo.dailySecondDeposit.duration") }}</div>
       </div>
 
       <div class="receive-bar">
@@ -14,7 +14,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
           {{ $t("hotPromo.eligibility") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.successfulDepositMember") }}</div>
+        <div class="bar-desc">{{ $t("hotPromo.dailySecondDeposit.eligible") }}</div>
       </div>
 
       <div class="receive-bar">
@@ -26,15 +26,15 @@
       </div>
     </div>
 
-    <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
+    <!-- <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
 
     <div class="tnc-content">
       <ol>
-        <li v-for="index in 6" :key="index">
+        <li v-for="index in 8" :key="index">
           {{ $t(`hotPromo.dailySecondDeposit.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
       </ol>
-    </div>
+    </div> -->
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
@@ -59,59 +59,10 @@
 </template>
 
 <script setup>
-import { userStore } from "src/stores";
-import { computed, ref, onMounted } from "vue";
-import { api, eventapi } from "boot/axios";
-import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
-
-const store = userStore();
-const $q = useQuasar();
-
-const maximumCashbackRate = ref(25);
-const promoInfo = ref({});
-
-const isClaimable = ref(false);
-
-const loadPromoInit = () => {
-  eventapi
-    .get("/session/deposit-bonus/init?promoCode=br2-redeposit-bonus")
-    .then((res) => {
-      // debugger;
-      if (res.code === 0) {
-        const { data } = res;
-        isClaimable.value = !!data.bonus;
-      }
-    })
-    .catch((e) => {});
-};
-
-const router= useRouter();
-
-const claimPromo = () => {
-  router.push("/deposit")
-  // eventapi
-  //   .post("/session/deposit-bonus/claim?promoCode=br2-redeposit-bonus")
-  //   .then((res) => {
-  //     if (res.code === 0) {
-  //       $q.notify({
-  //         message: t("content.receiveSuccessfully"),
-  //         color: "positive",
-  //         position: "top"
-  //       });
-  //       isClaimable.value = false;
-  //       store.getBalance();
-  //     }
-  //   })
-  //   .catch((e) => {});
-};
+import { ref } from "vue";
 
 const showPrizePopup = ref(false);
 const prizeAmount = ref();
-
-onMounted(() => {
-  loadPromoInit();
-});
 </script>
 <style lang="scss" scoped>
 .receive-bar-container {

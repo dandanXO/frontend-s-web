@@ -6,7 +6,7 @@
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
-          Duração
+          Período de promoção
         </div>
         <div class="bar-desc">Válida por tempo indeterminado</div>
       </div>
@@ -22,13 +22,13 @@
       <div class="receive-bar">
         <div class="bar-ribbon">
           <img src="../../../assets/images/promotion/receive-earn/icon-description.svg" />
-          Descrição
+          Detalhes da promoção
         </div>
         <div class="bar-desc">Os membros podem receber um bônus de 100% sobre o valor do segundo depósito.</div>
       </div>
     </div>
 
-    <div class="promo-subtitle">Regras da Promoção</div>
+    <div class="promo-subtitle">Regras de promoção</div>
 
     <div class="tnc-content">
       <ol>
@@ -70,27 +70,11 @@
 </template>
 
 <script setup>
-import { userStore } from "src/stores";
-import { computed, ref, onMounted } from "vue";
-import { api, eventapi } from "boot/axios";
-import { useRouter } from "vue-router";
+import { ref } from "vue";
+import { eventapi } from "boot/axios";
 
-const promoInfo = ref({});
-
-const loadPromoInit = () => {
-  eventapi
-    .get("/session/deposit-bonus/init?promoCode=br2-ftd-bonus")
-    .then((res) => {
-      // debugger;
-      if (res.code === 0) {
-        const { data } = res;
-        promoInfo.value = data;
-      }
-    })
-    .catch((e) => {});
-};
-
-const router= useRouter();
+const showPrizePopup = ref(false);
+const prizeAmount = ref();
 
 const claimPromo = () => {
   // router.push("/deposit")
@@ -105,13 +89,6 @@ const claimPromo = () => {
     })
     .catch((e) => {});
 };
-
-const showPrizePopup = ref(false);
-const prizeAmount = ref();
-
-onMounted(() => {
-  loadPromoInit();
-});
 </script>
 
 <style lang="scss" scoped>
