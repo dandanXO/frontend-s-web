@@ -51,6 +51,10 @@ export default route(function (/* { store, ssrContext } */) {
       ui.showFooter();
     }
 
+    if (to.query.adjust_referrer) {
+      sessionStorage.setItem("ADJUST_REFERRER", to.query.adjust_referrer);
+    }
+
     if (to.path === "/promoapp") {
       if (isAndroid()) {
         localStorage.setItem("TOKEN", to.query.token);
