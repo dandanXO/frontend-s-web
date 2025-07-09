@@ -138,6 +138,10 @@ export default route(function (/* { store, ssrContext } */) {
       ttq.load("D1N6SG3C77U77R501U9G");
       ttq.page();
       user.isTkPixel = true;
+    } else if (window.location.href.indexOf("cj8he5.com") > -1) {
+      ttq.load("D1N7MJRC77U41SK2M5OG");
+      ttq.page();
+      user.isTkPixel = true;
     } else if (
       window.location.href.indexOf("fbiyucw0.cc") > -1 &&
       window.location.href.indexOf("MDM1NjU2NzcwMDI=") > -1
