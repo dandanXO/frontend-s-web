@@ -173,6 +173,11 @@ body {
         box-shadow: 0px 2px 0px 0px #9AB0FF70;
         background-size: 100% 100%; 
     }
+
+    .el-button.cancel-btn {
+      background: linear-gradient(180deg, #F4F7FB 0%, #C5DCF8 100%);
+      color: #7A8EB9;
+    }
   }
 
   .el-dialog {
@@ -446,9 +451,6 @@ body {
   padding: 3px;
   background: #4e5efb;
 }
-.el-button > span {
-  color: #ffffff;
-}
 .common-btn + .common-btn {
   margin-left: 10px;
 }
@@ -570,12 +572,6 @@ button {
 .notification-enter-from,
 .notification-leave-to {
   opacity: 0;
-}
-
-.el-button.cancel-btn {
-  span {
-    color: #424f72;
-  }
 }
 
 .fill-468cff {
