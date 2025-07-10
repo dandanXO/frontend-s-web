@@ -215,17 +215,11 @@
                 </div>
 
                 <div class="slot-details">
+                  <div class="slot-type">
+                    {{ selectedFixedBacarratPlatforms?.type }}
+                  </div>
                   <div class="slot-name">
                     {{ game.name }}
-                  </div>
-
-                  <div class="slot-fav">
-                    <!--                  <el-icon>-->
-                    <!--                    <RiHeartLine />-->
-                    <!--                  </el-icon>-->
-                    <!--                  <el-icon>-->
-                    <!--                    <RiHeartFill />-->
-                    <!--                  </el-icon>-->
                   </div>
                 </div>
 
@@ -304,15 +298,18 @@ const platformsListDisplay = ref([]);
 const fixedBacarratPlatforms = ref([
   {
     prefix: 101,
-    label: '百家乐'
+    label: '百家乐',
+    type: 'BACARRAT'
   },
   {
     prefix: 112,
-    label: '幸运轮盘'
+    label: '幸运轮盘',
+    type: 'ROULETTE'
   },
   {
     prefix: 103,
-    label: '幸运蕾丝'
+    label: '幸运蕾丝',
+    type: 'LUCKY LACE'
   },
 ])
 
