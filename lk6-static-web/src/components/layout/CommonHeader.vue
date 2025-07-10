@@ -69,6 +69,22 @@
             </a>
           </div>
 
+          <template  v-if="store.token">
+            <div class="header-menu-item">
+              <router-link to="/center/deposit" class="action-btn">
+                <span><img src="../../assets/images/home/deposit-icon.png" width="38px" height="38px"/></span>
+                <span>{{ $t('menu.deposit') }}</span>
+              </router-link>
+            </div>
+
+            <div class="header-menu-item">
+              <router-link to="/center/withdraw" class="action-btn">
+                <span><img src="../../assets/images/home/withdraw-icon.png" width="38px" height="38px" /></span>
+                <span>{{ $t('menu.withdraw') }}</span>
+              </router-link>
+            </div>
+          </template>
+
           <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
             <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
             <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />
@@ -88,27 +104,6 @@
           </router-link> -->
           <a class="standard-button btn-color-aqua" @click="loginDialogVisible = true">{{ $t('btn.login') }}</a>
           <a class="standard-button btn-color-white" @click="registerDialogVisible = true">{{ $t('btn.register') }}</a>
-        </div>
-
-        <div v-if="store.token" class="profile-actions">
-          <router-link to="/center/deposit" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-deposit.png" />
-            </div>
-            {{ $t('menu.deposit') }}
-          </router-link>
-          <router-link to="/center/withdraw" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-withdraw.png" />
-            </div>
-             {{ $t('menu.withdraw') }}
-          </router-link>
-          <!-- <router-link to="/center/transfer" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-transfer.png" />
-            </div>
-            转账
-          </router-link> -->
         </div>
 
         <div class="profile-info" v-if="store.token">
@@ -1605,19 +1600,8 @@ body {
       }
     }
 
-    .icon-rounded {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      box-shadow: 0px 2px 5px 0px #bbdcff inset;
-    }
-
     img {
       display: block;
-      width: 16px;
     }
   }
 
