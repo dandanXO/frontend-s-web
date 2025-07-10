@@ -22,7 +22,7 @@
     "alreadyHaveAcc": "已有账号",
     "phoneNum": "手机号",
     "loginNameRule01": "请输入{min}-{max}位非汉字字符",
-    "usernameRule01": "Please enter {min}-{max} character/digit combination",
+    "usernameRule01": "请输入 {min}-{max} 位字符或数字的组合",
     "usernameRule02": "须以字母开头，并包含至少{letterCount}个字母和{numberCount}个数字",
     "passwordRule01": "请输入{min}-{max}位字母/数字组合",
     "pleaseEnterField": "请输入 {field}",
