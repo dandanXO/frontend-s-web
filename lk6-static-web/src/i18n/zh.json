@@ -46,11 +46,17 @@
       "live": "真人",
       "crown": "皇冠",
       "panda": "熊猫",
+      "sport": "体育",
       "bacarrat": "百家乐",
       "deposit": "存款",
       "withdraw": "取款",
       "assets": "总资产",
-      "loading": "加载中"
+      "loading": "加载中",
+      "all": "全部",
+      "transactionRecords": "交易记录",
+      "personalCentre": "个人资料",
+      "messageCentre": "消息中心",
+      "welcome": "欢迎您"
     },
     "download": {
       "title": "综合客户端下载",
@@ -74,5 +80,31 @@
     "tagline03_desc": "独家开发,采用128位加密技术和严格的安全管理体系, 客户资金得到最完善的保障,让您全情尽享娱乐、赛事投注、 无后顾之忧!",
     "tagline04_title": "三端任您选择",
     "tagline04_desc": "引领市场的卓越技术,自主研发了全套终端应用,让您 随时随地,娱乐投注随心所欲! 7x24小时在线客服提供最贴心、最优质的服务。"
+  },
+  "promotion": {
+    "new": "New 最新",
+    "hot": "HOT 热门",
+    "recommended": "RECOMMEND 推荐",
+    "daily": "DAILY 日常",
+    "newbie": "NEWBIE 新人",
+    "time": "TIME 限时",
+    "checkDetails": "查看详情"
+  },
+  "personal": {
+    "basicInfo": "基本资料",
+    "nickName": "昵称",
+    "name": "姓名",
+    "birthday": "生日",
+    "phone": "电话",
+    "bind": "绑定",
+    "personalCentre": "个人中心",
+    "changePassword": "修改密码",
+    "oldPassword": "旧密码",
+    "newPassword": "新密码",
+    "confirmPassword": "确认密码",
+    "reset": "重新填写",
+    "confirm": "确认修改",
+    "supportTagline": "如果您需要修改个人资料，请您联系我们的",
+    "onlineSupport": "在线客服"
   }
 }

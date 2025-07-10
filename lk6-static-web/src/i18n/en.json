@@ -47,11 +47,17 @@
     "live": "Live",
     "crown": "Crown",
     "panda": "Panda",
+    "sport": "Sport",
     "bacarrat": "Bacarrat",
     "deposit": "Deposit",
     "withdraw": "Withdraw",
     "assets": "Assets",
-    "loading": "Loading"
+    "loading": "Loading",
+    "all": "All",
+    "transactionRecords": "Transaction Records",
+    "personalCentre": "Personal Centre",
+    "messageCentre": "Message Centre",
+    "welcome": "Welcome"
   },
   "download": {
     "title": "Comprehensive client download",
@@ -77,5 +83,31 @@
 
   "tagline04_title": "Seamless Access Across All Devices",
   "tagline04_desc": "Powered by industry-leading technology, our fully self-developed suite of terminal applications lets you play and bet anytime, anywhere—on web, H5, iOS, or Android. Our 24/7 customer support team is always here to deliver premium, personalized service."
+  },
+  "promotion": {
+    "new": "New",
+    "hot": "HOT",
+    "recommended": "RECOMMEND",
+    "daily": "DAILY",
+    "newbie": "NEWBIE",
+    "time": "TIME",
+    "checkDetails": "Details"
+  },
+  "personal": {
+    "basicInfo": "Basic Info",
+    "nickName": "Nickname",
+    "name": "Name",
+    "birthday": "Birthday",
+    "phone": "Phone",
+    "bind": "Bind",
+    "personalCentre": "Personal Centre",
+    "changePassword": "Change Password",
+    "oldPassword": "Old Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "reset": "Reset",
+    "confirm": "Confirm",
+    "supportTagline": "If you need to update your personal information, please contact our customer service team",
+    "onlineSupport": "Online Support"
   }
 }

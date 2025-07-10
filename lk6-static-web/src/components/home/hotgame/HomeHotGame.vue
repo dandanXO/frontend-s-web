@@ -46,7 +46,9 @@ import { useDark } from "@vueuse/core";
 import SportsView from "@/views/SportsView.vue";
 import LiveCasinoView from "@/views/LiveCasinoView.vue";
 import BacarratView from "@/views/BacarratView.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
 const store = userStore();
@@ -60,7 +62,7 @@ const hotgameData = ref([
     number: "02",
     icon: require("../../../assets/home/hotgame/banner/sports/icon.png"),
     iconActive: require("../../../assets/home/hotgame/banner/sports/icon-active.png"),
-    title: "体育",
+    title: t('menu.sport'),
     subtitle: "SPORTS",
     charImgPath: require("../../../assets/home/hotgame/banner/sports/character.png"),
     isShow: false,
@@ -145,7 +147,7 @@ const hotgameData = ref([
     number: "03",
     icon: require("../../../assets/home/hotgame/banner/casino/icon.png"),
     iconActive: require("../../../assets/home/hotgame/banner/casino/icon-active.png"),
-    title: "真人",
+    title: t('menu.live'),
     subtitle: "CASINO",
     charImgPath: require("../../../assets/home/hotgame/banner/casino/character.png"),
     isShow: false,
@@ -240,7 +242,7 @@ const hotgameData = ref([
     number: "06",
     icon: require("../../../assets/home/hotgame/banner/board/icon.png"),
     iconActive: require("../../../assets/home/hotgame/banner/board/icon-active.png"),
-    title: "百家乐",
+    title: t('menu.bacarrat'),
     subtitle: "BOARD",
     charImgPath: require("../../../assets/home/hotgame/banner/board/character.png"),
     isShow: false,
