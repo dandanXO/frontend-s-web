@@ -121,7 +121,7 @@ const betRebateAmount= ref(0);
 
 const closePopup = () => {
   emit("closeDialog");
-  SessionStorage.remove("IS_COLLECTBONUS_POPUP");
+  uiStore.isShowBonusCollectModal = false;
 };
 
 const isBonusCollectModal = computed({
@@ -135,12 +135,12 @@ const goLogin = () => {
 
 const gotoDepositPage = () => {
   router.push("/deposit");
-  SessionStorage.remove("IS_COLLECTBONUS_POPUP");
+  uiStore.isShowBonusCollectModal = false;
 };
 
 const gotoCheckin = () => {
   router.push("/promo?name=br2-checkin-bonus");
-  SessionStorage.remove("IS_COLLECTBONUS_POPUP");
+  uiStore.isShowBonusCollectModal = false;
 };
 
 const currentDay = ref("");
