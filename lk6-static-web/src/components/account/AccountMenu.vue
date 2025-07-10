@@ -242,7 +242,7 @@ const menuItems = ref([
   // { route: "/vip", label: "VIP特权", icon: "vip" },
   // { route: "/center/promo", label: "优惠领取", icon: "promo" },
   { route: "/center/feedback", label: "反馈奖励", icon: "feedback" },
-  { route: "/center/share", label: "推广赚钱", icon: "transitrecord" }
+  // { route: "/center/share", label: "推广赚钱", icon: "transitrecord" }
 ]);
 
 const checkMailboxUnread = () => {

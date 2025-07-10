@@ -15,9 +15,9 @@
     
     
     <div class="hotgame-container">
-      <SportsView v-if="currentBannerIndex === 1" />
-      <LiveCasinoView v-else-if="currentBannerIndex === 2"/>
-      <BacarratView v-else-if="currentBannerIndex === 5" :hideBanner="true" />
+      <SportsView v-if="currentBannerIndex === 0" />
+      <LiveCasinoView v-else-if="currentBannerIndex === 1"/>
+      <BacarratView v-else-if="currentBannerIndex === 2" :hideBanner="true" />
     </div>
   </div>
   <GameModal ref="platformGame"></GameModal>
@@ -56,75 +56,6 @@ const platformGame = ref();
 const isDark = useDark();
 
 const hotgameData = ref([
-  {
-    number: "01",
-    icon: require("../../../assets/home/hotgame/banner/esports/icon.png"),
-    iconActive: require("../../../assets/home/hotgame/banner/esports/icon-active.png"),
-    title: "电子竞技",
-    subtitle: "ESPORTS",
-    charImgPath: require("../../../assets/home/hotgame/banner/esports/character.png"),
-    isShow: false,
-    path: "/eSports",
-    currentProvider: "lh",
-    section: "esports",
-    type: "esport",
-    content: {
-      isShowSportsIcon: [
-        require("../../../assets/home/hotgame/content/esports/icon_cs.png"),
-        require("../../../assets/home/hotgame/content/esports/icon_dota2.png"),
-        require("../../../assets/home/hotgame/content/esports/icon_lol.png"),
-        require("../../../assets/home/hotgame/content/esports/icon_pubg.png"),
-        require("../../../assets/home/hotgame/content/esports/icon_valorant.png"),
-        require("../../../assets/home/hotgame/content/esports/icon_sc2.png")
-      ],
-      providerList: [
-        // {
-        //   key: "lh",
-        //   name: "雷火电竞",
-        //   icon: require("../../../assets/home/hotgame/content/esports/provider_lh.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "im",
-        //   name: "IM电竞",
-        //   icon: require("../../../assets/home/hotgame/content/esports/provider_im.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "ia",
-        //   name: "IA电竞",
-        //   icon: require("../../../assets/home/hotgame/content/esports/provider_ia.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "rg",
-        //   name: "RG电竞",
-        //   icon: require("../../../assets/home/hotgame/content/esports/provider_rg.png"),
-        //   providerInfo: {}
-        // }
-      ]
-      // lh: {
-      //   title: "雷火电竞",
-      //   subtitle: "ESPORTS",
-      //   charImgPath: require("../../../assets/home/hotgame/content/esports/lh/character.png")
-      // },
-      // im: {
-      //   title: "IM电竞",
-      //   subtitle: "ESPORTS",
-      //   charImgPath: require("../../../assets/home/hotgame/content/esports/im/character.png")
-      // },
-      // ia: {
-      //   title: "IA电竞",
-      //   subtitle: "ESPORTS",
-      //   charImgPath: require("../../../assets/home/hotgame/content/esports/ia/character.png")
-      // },
-      // rg: {
-      //   title: "RG电竞",
-      //   subtitle: "ESPORTS",
-      //   charImgPath: require("../../../assets/home/hotgame/content/esports/rg/character.png")
-      // }
-    }
-  },
   {
     number: "02",
     icon: require("../../../assets/home/hotgame/banner/sports/icon.png"),
@@ -306,110 +237,6 @@ const hotgameData = ref([
     }
   },
   {
-    number: "04",
-    icon: require("../../../assets/home/hotgame/banner/lottery/icon.png"),
-    iconActive: require("../../../assets/home/hotgame/banner/lottery/icon-active.png"),
-    title: "彩票投注",
-    subtitle: "LOTTERY",
-    charImgPath: require("../../../assets/home/hotgame/banner/lottery/character.png"),
-
-    isShow: false,
-    path: "/lottery",
-    currentProvider: "lh",
-    section: "lottery",
-    type: "lottery",
-    content: {
-      isShowSportsIcon: [
-        require("../../../assets/lottery/lottery-pattern.png")
-        // require("../../../assets/home/hotgame/content/sports/icon_basketball.png"),
-        // require("../../../assets/home/hotgame/content/sports/icon_football.png"),
-        // require("../../../assets/home/hotgame/content/sports/icon_volleyball.png"),
-        // require("../../../assets/home/hotgame/content/sports/icon_tennis.png"),
-        // require("../../../assets/home/hotgame/content/sports/icon_union.png"),
-        // require("../../../assets/home/hotgame/content/sports/icon_american_footerball.png"),
-        // require("../../../assets/home/hotgame/content/sports/icon_shuttlecock.png"),
-        // require("../../../assets/home/hotgame/content/sports/icon_badminton.png"),
-        // require("../../../assets/home/hotgame/content/sports/icon_table_tennis.png"),
-        // require("../../../assets/home/hotgame/content/sports/icon_hockey.png")
-      ],
-      providerList: [
-        // {
-        //   key: "lh",
-        //   name: "雷火彩票",
-        //   icon: require("../../../assets/home/hotgame/content/lottery/provider_lh.png"),
-        //   providerInfo: {}
-        // }
-      ]
-      // lh: {
-      //   title: "雷火彩票",
-      //   subtitle: "LOTTERY",
-      //   charImgPath: require("../../../assets/home/hotgame/content/lottery/lh/character.png")
-      // }
-    }
-  },
-  {
-    number: "05",
-    icon: require("../../../assets/home/hotgame/banner/slots/icon.png"),
-    iconActive: require("../../../assets/home/hotgame/banner/slots/icon-active.png"),
-    title: "电子游艺",
-    subtitle: "SLOTS",
-    charImgPath: require("../../../assets/home/hotgame/banner/slots/character.png"),
-    isShow: false,
-    path: "/slot",
-    currentProvider: "pg",
-    section: "slot",
-    type: "slot",
-    content: {
-      isShowSportsIcon: [require("../../../assets/slot/slot-pattern.png")],
-      providerList: [
-        // {
-        //   key: "pg",
-        //   name: "PG电子",
-        //   icon: require("../../../assets/home/hotgame/content/slot/provider_pg.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "sw",
-        //   name: "SW电子",
-        //   icon: require("../../../assets/home/hotgame/content/slot/provider_sw.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "pt",
-        //   name: "PT电子",
-        //   icon: require("../../../assets/home/hotgame/content/slot/provider_pt.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "evo",
-        //   name: "EVO电子",
-        //   icon: require("../../../assets/home/hotgame/content/slot/provider_evo.png"),
-        //   providerInfo: {}
-        // }
-      ]
-      // pg: {
-      //   title: "PG电子",
-      //   subtitle: "SLOT",
-      //   charImgPath: require("../../../assets/home/hotgame/content/slot/pg/character.png")
-      // },
-      // sw: {
-      //   title: "SW电子",
-      //   subtitle: "SLOT",
-      //   charImgPath: require("../../../assets/home/hotgame/content/slot/sw/character.png")
-      // },
-      // pt: {
-      //   title: "PT电子",
-      //   subtitle: "SLOT",
-      //   charImgPath: require("../../../assets/home/hotgame/content/slot/pt/character.png")
-      // },
-      // evo: {
-      //   title: "EVO电子",
-      //   subtitle: "SLOT",
-      //   charImgPath: require("../../../assets/home/hotgame/content/slot/evo/character.png")
-      // }
-    }
-  },
-  {
     number: "06",
     icon: require("../../../assets/home/hotgame/banner/board/icon.png"),
     iconActive: require("../../../assets/home/hotgame/banner/board/icon-active.png"),
@@ -470,46 +297,6 @@ const hotgameData = ref([
       //   charImgPath: require("../../../assets/home/hotgame/content/board/leyou/character.png")
       // }
     }
-  },
-  {
-    number: "07",
-    icon: require("../../../assets/home/hotgame/banner/fishing/icon.png"),
-    iconActive: require("../../../assets/home/hotgame/banner/fishing/icon-active.png"),
-    title: "捕鱼游戏",
-    subtitle: "FISHING",
-    charImgPath: require("../../../assets/home/hotgame/banner/fishing/character.png"),
-    isShow: false,
-    path: "/fishing",
-    currentProvider: "ag",
-    section: "fishing",
-    type: "fish",
-    content: {
-      isShowSportsIcon: [require("../../../assets/fishing/fishing-pattern.png")],
-      providerList: [
-        // {
-        //   key: "ag",
-        //   name: "AG捕鱼",
-        //   icon: require("../../../assets/home/hotgame/content/fishing/provider_ag.png"),
-        //   providerInfo: {}
-        // },
-        // {
-        //   key: "mw",
-        //   name: "决战中途岛",
-        //   icon: require("../../../assets/home/hotgame/content/fishing/provider_mw.png"),
-        //   providerInfo: {}
-        // }
-      ]
-      // ag: {
-      //   title: "AG捕鱼",
-      //   subtitle: "FISHING",
-      //   charImgPath: require("../../../assets/home/hotgame/content/fishing/ag/character.png")
-      // },
-      // mw: {
-      //   title: "决战中途岛",
-      //   subtitle: "FISHING",
-      //   charImgPath: require("../../../assets/home/hotgame/content/fishing/mw/character.png")
-      // }
-    }
   }
 ]);
 
@@ -523,7 +310,7 @@ const setCurrentProvider = (element, value) => {
   transitionDesc.value++;
 };
 
-let currentBannerIndex = ref(1);
+let currentBannerIndex = ref(0);
 const setBannerPosition = (index) => {
   hotgameData.value.forEach((e, i) => {
     if (i === index) e.isShow = true;
