@@ -350,6 +350,8 @@ onMounted(() => {
       padding: 3px 0;
       line-height: 1;
       color: #0e365b;
+      max-width: 80px;
+      font-size: 9px;
 
       &.activated {
         background-image: url(../../assets/images/games/baccarat/category-bg-active.png);
@@ -376,7 +378,7 @@ onMounted(() => {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
     gap: 10px;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
 
     :deep(.zoomin) {

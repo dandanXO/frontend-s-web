@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <div style="height: 48px; text-align: center; margin: 25px 0px" v-if="tab === 'login'">
+    <div style="height: 48px; text-align: center; margin: 10px 0px" v-if="tab === 'login'">
       <img src="../assets/login/login-logo.png" height="100%" />
     </div>
 
@@ -228,6 +228,7 @@
               size="16px"
               flat
             />
+            
           </q-form>
           <div id="captcha-box" />
         </q-tab-panel>
@@ -239,14 +240,14 @@
     </div>
 
     <div class="login-bottom-section">
-      <div class="row justify-center items-center full-width q-mb-md" v-show="tab === 'login'">
-        <!-- <router-link class="txt-tip" to="/">
+      <!-- <div class="row justify-center items-center full-width q-mb-md" v-show="tab === 'login'">
+        <router-link class="txt-tip" to="/">
           <div class="row items-center gap-8">
             <img src="../assets/login/home-icon.svg" width="16px" />
             <span style="color: #458bff">先去逛逛</span>
           </div>
-        </router-link> -->
-      </div>
+        </router-link>
+      </div> -->
       <!--  -->
       <div class="row justify-center items-center full-width q-mb-md">
         <router-link class="txt-tip" to="/liveChat">
@@ -914,7 +915,7 @@ export default defineComponent({
   .form-container {
     width: 100%;
     margin: auto;
-    padding: 16px 0px;
+    padding: 16px 0px 0;
 
     > .q-tab-panel {
     }

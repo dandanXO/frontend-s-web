@@ -47,6 +47,8 @@
                 {{ $t("btn.register") }}
               </q-btn>
             </router-link>
+            
+            <LocaleSelector style="margin-right: -10px;" />
           </template>
         </div>
       </div>
@@ -92,7 +94,8 @@
             v-for="(banner, i) in banners"
             :key="i"
             :name="i"
-            class="column no-wrap flex-center"
+            class="flex-center"
+            style="background-size: cover;"
             :img-src="imgURL + banner.mobileImageUrl"
             @click="gotoPromo(banner)"
           ></q-carousel-slide>
@@ -2216,7 +2219,7 @@ export default defineComponent({
 
 .home-top-slider {
   border-radius: 8px;
-  padding: 4px 10px;
+  padding: 10px;
 }
 
 .secondSwiper {
@@ -2300,14 +2303,17 @@ export default defineComponent({
           .game-title {
             position: absolute;
             z-index: 2;
-            bottom: 14%;
-            left: 20%;
+            // top: 50%;
+            // left: 20%;
+            // top: 60%;
+            // left: 19%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             color: #7a80a1;
-            transform: translate(-50%);
-
+            // transform: translate(-50%);            
+            bottom: 20px;
+            left: 25px;
             .redirect-button {
               font-size: 12px;
             }
@@ -2445,6 +2451,7 @@ export default defineComponent({
               text-align: center;
               .game-title__category {
                 font-size: clamp(10px, 5vw, 22px);
+                line-height: 20px;
               }
               .game-title__name {
                 font-size: clamp(10px, 4vw, 18px);
@@ -2614,13 +2621,21 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
     }
-
+    .annList {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     span {
       display: inline-block;
       margin-right: 10px;
       cursor: pointer;
       color: #000;
-      margin-bottom: -20px;
+      height: 20px;
+      overflow: hidden;
+      display: block;
+      // &.content {
+      // }
     }
 
     .notice {
@@ -2969,7 +2984,8 @@ export default defineComponent({
 
   .home-quick-link-section {
     flex: 1;
-    gap: 10%;
+    gap: 20px;
+    min-width: 140px;
   }
 
   .home-login-section {

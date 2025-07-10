@@ -168,7 +168,7 @@ img.svg {
   height: auto;
   aspect-ratio: 1040/ 438;
   max-height: 400px;
-  border-radius: 8px;
+  border-radius: 15px;
   box-shadow: none;
 
   .q-panel > div {
@@ -178,7 +178,7 @@ img.svg {
   }
 
   .q-carousel__navigation--bottom {
-    bottom: 30px;
+    bottom: 10px;
   }
 }
 
@@ -234,7 +234,7 @@ img.svg {
 
     img {
       height: 38px;
-      margin-bottom: 8px;
+      // margin-bottom: 8px;
 
       &.inactive {
         display: block;
