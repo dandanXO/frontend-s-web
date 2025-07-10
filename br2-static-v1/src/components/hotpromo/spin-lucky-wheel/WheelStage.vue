@@ -93,26 +93,6 @@
       </div>
     </div>
 
-    <div class="block-wrapper">
-      <div class="title-wrapper">
-        {{ $t("hotPromo.activityRules") }}
-        <!-- <img
-          style="width: 100%; max-width: 250px; padding: 0 0 5px 0"
-          src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/activity-rules-title.png"
-        /> -->
-      </div>
-      <ol>
-        <li>{{ $t("content.message1") }}</li>
-        <li>{{ $t("content.message2") }}</li>
-        <li>{{ $t("content.message3") }}</li>
-        <li>{{ $t("content.message4") }}</li>
-        <li>{{ $t("content.message5") }}</li>
-        <li>{{ $t("content.message6") }}</li>
-        <li>{{ $t("content.message7") }}</li>
-        <li>{{ $t("content.message8") }}</li>
-      </ol>
-    </div>
-
     <q-dialog v-model="showWithdrawDialog">
       <div class="withdraw-container">
         <img
@@ -459,6 +439,11 @@ onUnmounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+.block-wrapper {
+  max-width: 350px;
+  margin: 0 auto;
+  margin-top: 25px;
+}
 .wheel-stage-wrapper {
   // height: 710px;
   max-width: 350px;

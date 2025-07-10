@@ -60,10 +60,12 @@ const loadData = async () => {
     switch (res.data.currentBonusType) {
       case "REDPACKET":
         stage.value = "envelope";
+        ui.isShowSpinWheelPromoRules = false;
         ui.promoBg = "spin-lucky-wheel-envelope";
         break;
       case "SPIN":
         stage.value = "wheel";
+        ui.isShowSpinWheelPromoRules = true;
         ui.promoBg = "spin-lucky-wheel";
         break;
     }
@@ -80,6 +82,7 @@ const handleEnvelopClick = async () => {
   resetPromoBg();
   await loadData();
   stage.value = "wheel";
+  ui.isShowSpinWheelPromoRules = true;
   wheelstage.value.updateCountdownTime();
 };
 

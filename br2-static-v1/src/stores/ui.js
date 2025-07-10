@@ -32,6 +32,7 @@ export const useUI = defineStore("ui-store", {
       notificationQueue: [],
       notificationZIndex: 9500,
       duringNotificationAnimation: false,
+      isShowSpinWheelPromoRules: false
     };
   },
   actions: {
