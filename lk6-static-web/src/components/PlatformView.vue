@@ -28,11 +28,11 @@
             <div class="platform-item">
               <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
                 <!-- <img src="../assets/lucky-6-logo.png" width="176px" height="86px" /> -->
-                <div class="platform-title">{{ item.cnname ?? item.name }}</div>
+                <div class="platform-title">{{  languageVal === 'en' ? (item.name ?? item.enname) : item.cnname }}</div>
                 <div class="platform-subtitle">{{ platformName }}</div>
               </div>
-
-              <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>
+              
+              <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200">{{ languageVal === 'en' ? item.enMessage : item.message }}</div>
 
               <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
                 <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.svg')" />
@@ -267,7 +267,11 @@ import { Search } from "@element-plus/icons-vue";
 import GameModal from "@/components/modal/GameModal";
 import moment from "moment/moment";
 import { useDark, useLocalStorage } from "@vueuse/core";
+import { storeToRefs } from 'pinia'
+import { i18nStore } from '@/store/language'
 
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 const platformGame = ref(null);
 const route = useRoute();
 const router = useRouter();
@@ -438,7 +442,7 @@ const getAliasName = (plat, platformType) => {
     }
     return plat.alias;
   } else {
-    return plat.cnname;
+    return languageVal, languageVal.value === 'en' ? (plat.enname ?? plat.name) : plat.cnname;
   }
 };
 

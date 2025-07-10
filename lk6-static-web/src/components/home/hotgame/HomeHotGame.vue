@@ -9,7 +9,7 @@
           <img width="40px" height="40px" src="../../../assets/home/hotgame/soccer-icon.png" v-if="hotgame.type === 'sport'" />
           <img width="40px" height="40px" src="../../../assets/home/hotgame/dice-icon.png" v-if="hotgame.type === 'live'" />
           <img width="40px" height="40px" src="../../../assets/home/hotgame/card-icon.png" v-if="hotgame.type === 'poker'" />
-          {{ hotgame.title }}
+          {{ $t(hotgame.title) }}
         </div>
       </template>
     </div>
@@ -62,7 +62,7 @@ const hotgameData = ref([
     number: "02",
     icon: require("../../../assets/home/hotgame/banner/sports/icon.png"),
     iconActive: require("../../../assets/home/hotgame/banner/sports/icon-active.png"),
-    title: t('menu.sport'),
+    title: 'menu.sport',
     subtitle: "SPORTS",
     charImgPath: require("../../../assets/home/hotgame/banner/sports/character.png"),
     isShow: false,
@@ -147,7 +147,7 @@ const hotgameData = ref([
     number: "03",
     icon: require("../../../assets/home/hotgame/banner/casino/icon.png"),
     iconActive: require("../../../assets/home/hotgame/banner/casino/icon-active.png"),
-    title: t('menu.live'),
+    title: 'menu.live',
     subtitle: "CASINO",
     charImgPath: require("../../../assets/home/hotgame/banner/casino/character.png"),
     isShow: false,
@@ -242,7 +242,7 @@ const hotgameData = ref([
     number: "06",
     icon: require("../../../assets/home/hotgame/banner/board/icon.png"),
     iconActive: require("../../../assets/home/hotgame/banner/board/icon-active.png"),
-    title: t('menu.bacarrat'),
+    title: 'menu.bacarrat',
     subtitle: "BOARD",
     charImgPath: require("../../../assets/home/hotgame/banner/board/character.png"),
     isShow: false,
