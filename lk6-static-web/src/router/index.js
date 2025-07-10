@@ -32,19 +32,20 @@ const routes = [
       {
         path: "/crown",
         name: "crown",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue")
+        component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue"),
+        props: { showPlayBtn: true, fullpage: true }
       },
       {
         path: "/panda",
         name: "panda",
         component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue"),
-        props: { showPlayBtn: true }
+        props: { showPlayBtn: true, fullpage: true }
       },
       {
         path: "/live-casino",
         name: "live",
         component: () => import(/* webpackChunkName: "Game" */ "../views/LiveCasinoView.vue"),
-        props: { showPlayBtn: true }
+        props: { showPlayBtn: true, fullpage: true }
       },
       {
         path: "/lottery/SGWin",

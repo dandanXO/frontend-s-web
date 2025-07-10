@@ -1,9 +1,9 @@
 <template>
-  <div class="platform-section">
+  <div class="platform-section" >
     <div v-if="isLoading" class="loading">
       <img class="loading-img" src="@/assets/lucky-6-logo.png" />
     </div>
-    <div v-else-if="!(platformType === 'bacarrat' && props.hideBanner)" class="platform-container" :class="platformType === 'bacarrat' ? 'slot-container' : ''">
+    <div v-else-if="!(platformType === 'bacarrat' && props.hideBanner)" class="platform-container" :class="{fullpage: props.fullpage,  ['slot-container']: platformType === 'bacarrat'}">
         <template v-if="platformType === 'bacarrat'">
           <img v-if="languageVal === 'en'" src="../assets/slot/slot-top-bg-en.png" style="width: 100%;height: auto;aspect-ratio: 3840 / 800;" />
           <img  v-else src="../assets/slot/slot-top-bg.png" style="width: 100%;height: auto;aspect-ratio: 3840 / 800;" />
@@ -289,7 +289,8 @@ const props = defineProps({
   platformPattern: Boolean,
   platformExpandable: Boolean,
   showPlayBtn: Boolean,
-  hideBanner: Boolean
+  hideBanner: Boolean,
+  fullpage: Boolean
 });
 
 const filteredPlatforms = ref([]);

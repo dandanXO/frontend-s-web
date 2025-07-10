@@ -4,12 +4,7 @@
   background-size: 100% auto;
   background-position: top center;
   padding-top: 0px;
-  padding-bottom: 10px;
   width: 100%;
-  min-height: calc(100dvh - 85px - 313px);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
 }
 
 .platform-container-slot {
@@ -28,6 +23,13 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+
+  &.fullpage {
+    min-height: calc(100dvh - 85px - 313px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
 
   &.slot-container {
     min-height: 300px;
