@@ -127,14 +127,18 @@ const login = () => {
         .then((res) => {
           sessionStorage.removeItem("REFERRAL_CODE");
 
+          store.getMemberInfo();
+
           if (store.hasToken()) {
+            store.getUnreadTotal();
+
             console.log(store.nickName);
             SessionStorage.set("user-info", {
               account: phone.value,
               type: "login"
             });
-            const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
-            router.go(jumpUrl);
+            // const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
+            // router.replace(jumpUrl);
           }
 
           phone.value = "";
@@ -142,7 +146,7 @@ const login = () => {
 
           uiStore.loginView = "";
 
-          SessionStorage.set("IS_COLLECTBONUS_POPUP", true);
+          uiStore.isShowBonusCollectModal = true;
         })
         .catch((e) => {})
         .finally(() => {

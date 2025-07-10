@@ -311,7 +311,7 @@ const register = () => {
             });
 
             uiStore.loginView = "";
-            uiStore.isShowRegAccSuccess = true;
+            uiStore.isShowRegAccSuccessModal = true;
           } else {
             $q.notify({
               color: "negative",
