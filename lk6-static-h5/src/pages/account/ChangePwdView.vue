@@ -82,7 +82,7 @@
         lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || $t('changePassword.form.newPasswordConfirm.error.required'),
-          (val) => val === updatePwdInfo.password || $t('changePassword.form.newPasswordConfirm.match')
+          (val) => val === updatePwdInfo.password || $t('changePassword.form.newPasswordConfirm.error.match')
         ]"
         label-
       >

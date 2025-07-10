@@ -10,11 +10,18 @@ export const i18nStore = defineStore("i18nStore", () => {
   const isLangInitialized = ref(false);
   const $q = useQuasar();
 
-  function setLanguage(l) {
+  async function setLanguage(l) {
+    try {
+      const quasarLang = l === "zh" ? "zh-CN" : l === "en" ? "en-US" : l;
+      const langPack = await import(`quasar/lang/${quasarLang}`);
+
+      $q.lang.set(langPack.default);
+    } catch (e) {
+      console.error("Error setting Quasar language:", e);
+    }
     languageVal.value = l;
     // when vue-i18n is being used with legacy: false, note that i18n.global.locale is a ref, so we must set it via .value:
     vueI18n.global.locale.value = l;
-
     // otherwise - when using legacy: true, we set it like this:
     // vueI18n.global.locale = l;
     localStorage.setItem("languageLocale", l);
@@ -23,8 +30,6 @@ export const i18nStore = defineStore("i18nStore", () => {
   const initializeLang = (lang) => {
     setLanguage(lang);
     isLangInitialized.value = true;
-    $q.lang.set(lang);
-    console.log($q.lang);
   };
   return { languageVal, setLanguage, isLangInitialized, initializeLang };
 });

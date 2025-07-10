@@ -50,13 +50,7 @@
             </div>
           </div>
           <div class="right-sect">
-            <q-btn
-              :label="$t('btn.deposit')"
-              class="btn-main btn-pointer deposit-btn"
-              flat
-              style=""
-              @click="openDeposit"
-            />
+            <q-btn :label="$t('btn.deposit')" class="btn-main btn-pointer" flat style="" @click="openDeposit" />
 
             <q-btn :label="$t('btn.withdraw')" class="btn-main btn-pointer" flat style="" @click="openWithdraw" />
 

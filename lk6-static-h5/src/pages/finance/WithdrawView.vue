@@ -856,10 +856,19 @@ export default defineComponent({
     }
   }
 
+  &.q-field--float {
+    --test: 132;
+    :deep(.q-field__inner) {
+      .q-field__label {
+        transform: translateY(-70%) scale(0.75);
+      }
+    }
+  }
+
   :deep(.q-field__inner) {
     .q-field__control,
     .q-field__marginal {
-      height: 44px;
+      height: 56px;
       min-height: 44px;
     }
     .q-field__control {
@@ -871,7 +880,7 @@ export default defineComponent({
       }
 
       .q-field__control-container {
-        padding-top: 4px;
+        padding-top: 10px;
       }
 
       .q-field__native,
@@ -885,7 +894,6 @@ export default defineComponent({
       }
 
       .q-field__label {
-        top: 14px;
         font-size: 14px;
         color: #333333;
       }
