@@ -482,5 +482,10 @@ const loginRules = {
     .el-dialog__header.show-close {
       padding: 0;
     }
+
+    .el-input__wrapper {
+      box-shadow: none !important;
+      background: none !important;
+    }
   }
 </style>
