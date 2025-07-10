@@ -2,11 +2,13 @@ import { ref } from "vue";
 import vueI18n from "../i18n";
 import { defineStore } from "pinia";
 import { DEFAULT_LANG } from "src/constant/lang";
+import { useQuasar } from "quasar";
 
 export const i18nStore = defineStore("i18nStore", () => {
   const languageLocale = localStorage.getItem("languageLocale") || DEFAULT_LANG;
   const languageVal = ref(languageLocale);
   const isLangInitialized = ref(false);
+  const $q = useQuasar();
 
   function setLanguage(l) {
     languageVal.value = l;
@@ -21,6 +23,8 @@ export const i18nStore = defineStore("i18nStore", () => {
   const initializeLang = (lang) => {
     setLanguage(lang);
     isLangInitialized.value = true;
+    $q.lang.set(lang);
+    console.log($q.lang);
   };
   return { languageVal, setLanguage, isLangInitialized, initializeLang };
 });

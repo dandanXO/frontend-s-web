@@ -141,9 +141,9 @@
     </q-item-section>
 
     <q-item-section class="acct-nav">
-      <div class="acct-title">
+      <!-- <div class="acct-title">
         <div class="acct-title-1">{{ $t("account.hot.title") }}</div>
-      </div>
+      </div> -->
       <!-- <div class="acct-menu" id="id-acct-menu"> -->
       <!-- <router-link to="/promo">
           <div class="acct-nav-item">
@@ -872,7 +872,7 @@ export default defineComponent({
 }
 
 .vipcard {
-  margin: 5px auto;
+  margin: 5px auto 13px;
   border-radius: 15px;
   width: calc(100% - 2em);
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
@@ -888,15 +888,17 @@ export default defineComponent({
     background-size: 100% 100%;
     color: #fff;
     // width: 60px;
+    min-width: 42px;
     text-align: center;
     white-space: nowrap;
-    font-size: 1rem;
-    padding: 5px 11px;
+    font-size: 10px;
+    padding: 2px 11px;
     // aspect-ratio: 122/68;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 30px;
+    // height: 23px;
+    min-height: unset;
     // box-shadow: 0px -0.5px 2px 0px #ffffff;
     font-size: 12px;
     border-radius: 60px;
@@ -941,15 +943,15 @@ export default defineComponent({
 
         img {
           display: block;
-          width: 15px;
-          margin-bottom: 3px;
+          max-width: 20px;
+          // margin-bottom: 3px;
         }
       }
     }
 
     .right-sect {
       display: flex;
-      justify-content: space-between;
+      justify-content: end;
       max-width: 220px;
       gap: 20px;
 
@@ -968,7 +970,7 @@ export default defineComponent({
     font-size: 1rem;
     font-weight: bold;
     width: calc(100% - 25px);
-    margin-left: 25px;
+    margin-left: 18px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -1141,11 +1143,11 @@ export default defineComponent({
     height: auto;
     // max-height: 180px;
 
-    margin-bottom: 10px;
-    background-color: $white;
+    margin-bottom: 13px;
+    background-color: #fcfdfe;
     border-radius: 0px 0px 20px 20px;
     padding: 15px 0;
-    box-shadow: 0px -4px 4px 0px #c3d4e6 inset;
+    // box-shadow: 0px -4px 4px 0px #c3d4e6 inset;
 
     &.shorter-menu {
       grid-template-rows: repeat(2, 1fr);
@@ -1201,12 +1203,12 @@ export default defineComponent({
 
 .acct-logout {
   padding: 12px;
-  box-shadow: 0px -2px 8px 0px #c3d4e6 inset;
+  // box-shadow: 0px -2px 8px 0px #c3d4e6 inset;
   text-align: center;
   font-size: 1.2rem;
-  background: $white;
+  background: #fcfdfe;
   color: #7a80a1;
-  border-radius: 20px;
+  border-radius: 7px;
   line-height: 15px;
   width: calc(100% - 2em);
   letter-spacing: 1px;
@@ -1232,7 +1234,7 @@ export default defineComponent({
   width: calc(100% - 2rem);
   border: 1px solid #cfddfd;
   margin: auto;
-  margin-bottom: 10px;
+  margin-bottom: 13px;
   border-radius: 10px;
   overflow: hidden;
 

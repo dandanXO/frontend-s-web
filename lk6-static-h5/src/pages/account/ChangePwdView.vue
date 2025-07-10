@@ -22,15 +22,15 @@
           <img
             v-if="!isPwd"
             @click="isPwd = !isPwd"
-            src="../../assets/login/eye-line.png"
-            style="margin-right: 3px"
+            src="../../assets/login/eye-line.svg"
+            style="margin-right: 12px"
             width="20"
           />
           <img
             v-if="isPwd"
             @click="isPwd = !isPwd"
-            src="../../assets/login/eye-close-line.png"
-            style="margin-right: 3px"
+            src="../../assets/login/eye-close-line.svg"
+            style="margin-right: 12px"
             width="20"
           />
         </template>
@@ -51,15 +51,15 @@
           <img
             v-if="!isPwd2"
             @click="isPwd2 = !isPwd2"
-            src="../../assets/login/eye-line.png"
-            style="margin-right: 3px"
+            src="../../assets/login/eye-line.svg"
+            style="margin-right: 12px"
             width="20"
           />
           <img
             v-if="isPwd2"
             @click="isPwd2 = !isPwd2"
-            src="../../assets/login/eye-close-line.png"
-            style="margin-right: 3px"
+            src="../../assets/login/eye-close-line.svg"
+            style="margin-right: 12px"
             width="20"
           />
 
@@ -90,15 +90,15 @@
           <img
             v-if="!isPwd3"
             @click="isPwd3 = !isPwd3"
-            src="../../assets/login/eye-line.png"
-            style="margin-right: 3px"
+            src="../../assets/login/eye-line.svg"
+            style="margin-right: 12px"
             width="20"
           />
           <img
             v-if="isPwd3"
             @click="isPwd3 = !isPwd3"
-            src="../../assets/login/eye-close-line.png"
-            style="margin-right: 3px"
+            src="../../assets/login/eye-close-line.svg"
+            style="margin-right: 12px"
             width="20"
           />
         </template>
@@ -109,7 +109,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted} from "vue";
+import {defineComponent, reactive, ref, onMounted, onDeactivated} from "vue";
 import moment from "moment";
 import {api} from "boot/axios"
 import {useQuasar} from "quasar"
@@ -188,6 +188,16 @@ export default defineComponent({
         });
       }
     };
+
+    onDeactivated(() => {
+      // Reset the form when the component is deactivated
+      updatePwdInfo.oldPassword = "";
+      updatePwdInfo.password = "";
+      updatePwdInfo.confirmNewPwd = "";
+      oldPasswordRef.value.resetValidation();
+      passwordRef.value.resetValidation();
+      confirmPasswordRef.value.resetValidation();
+    });
 
     return {
       personalState,

@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div id="id-sticky-header" :class="!isH5 || isShowDownload == false ? 'sticky-header' : ''">
-      <div v-if="isH5 && isShowDownload" class="download-top-container">
+      <!-- <div v-if="isH5 && isShowDownload" class="download-top-container">
         <div class="download-top-box">
           <q-icon name="close" @click="closeTopBox" />
           <img class="headicon" src="../assets/index/logo-char.png" />
@@ -20,9 +20,9 @@
             />
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="home-header-section" style="height: 50px; padding: 1px 10px">
+      <div class="home-header-section" style="height: 50px">
         <div class="header-left">
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
         </div>
@@ -111,7 +111,8 @@
               </span>
             </div>
           </marquee-text>
-          <img src="../assets/index/home-hot-match-icon.png" width="62px" />
+          <img v-if="languageVal === 'zh'" src="../assets/index/home-hot-match-icon-zh.png" width="62px" />
+          <img v-else-if="languageVal === 'en'" src="../assets/index/home-hot-match-icon-en.png" width="62px" />
         </div>
       </div>
 
@@ -752,6 +753,8 @@ import RedirectButton from "src/components/RedirectButton.vue";
 import CommonModal from "src/components/CommonModal.vue";
 import LocaleSelector from "src/components/LocaleSelector.vue";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
 
 export default defineComponent({
   name: "IndexPage",
@@ -769,6 +772,7 @@ export default defineComponent({
     LocaleSelector
   },
   setup() {
+    const { languageVal } = storeToRefs(i18nStore());
     const { t } = useI18n();
     const notify = useNotify();
 
@@ -1985,7 +1989,8 @@ export default defineComponent({
       handleSlideNextClick,
       handleSlidePrevClick,
       baccaratCategoryList,
-      imgURLGame
+      imgURLGame,
+      languageVal
     };
   }
 });
@@ -2061,7 +2066,7 @@ export default defineComponent({
 }
 
 .home-header-section {
-  padding: 1px 0px;
+  padding: 8px 10px 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
