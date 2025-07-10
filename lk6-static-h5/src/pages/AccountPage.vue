@@ -228,7 +228,7 @@
 
   <CommonModal
     v-model="isLogoutModal"
-    :title="$t('account.notification.logoutConfirm.title')"
+    :header="$t('account.notification.logoutConfirm.title')"
     :message="$t('account.notification.logoutConfirm.message')"
     with-decorator
     :actions="['confirm', 'cancel']"
