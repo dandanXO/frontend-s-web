@@ -5,11 +5,11 @@
         <div class="top-ft-rgt">
           <span class="s1">支付方式：</span>
           <span class="footPayIcon usdt" title="USDT"></span>
-          <span class="footPayIcon unionpay" title="中国银联"></span>
+          <!-- <span class="footPayIcon unionpay" title="中国银联"></span>
           <span class="footPayIcon numberpay" title="数字人民币"></span>
           <span class="footPayIcon alipayf" title="支付宝"></span>
           <span class="footPayIcon wechat" title="Wechat"></span>
-          <span class="footPayIcon qq" title="QQ"></span>
+          <span class="footPayIcon qq" title="QQ"></span> -->
           <!--          <span class="footPayIcon visa" title="VISA"></span>-->
           <!--          <span class="footPayIcon masterCard" title="MasterCard"></span>-->
           <!--          <span class="footPayIcon chineseBank" title="中国银联"></span>-->
@@ -33,13 +33,9 @@
         
         <div class="top-ft-rgt">
           <span class="s1">合作伙伴:</span>
-          <span class="hzhb-icon ag" title="ag"></span>
-          <span class="hzhb-icon sw" title="sw"></span>
-          <span class="hzhb-icon pt" title="pt"></span>
-          <span class="hzhb-icon cq" title="cq"></span>
-          <span class="hzhb-icon mg" title="mg"></span>
-          <span class="hzhb-icon bbin" title="bbin"></span>
-          <span class="hzhb-icon xj" title="xj"></span>
+          <span class="hzhb-icon eeai" title="eeai"></span>
+          <span class="hzhb-icon cr" title="cr"></span>
+          <span class="hzhb-icon pm" title="pm"></span>
         </div>
 
       </div>
@@ -54,37 +50,20 @@
         </ul>
         <ul class="index_bottom_des">
           <li>产品服务</li>
-          <li><router-link to="/sports">体育</router-link></li>
-          <li><router-link to="/fishing">捕鱼</router-link></li>
-          <li><router-link to="/slot">电子游戏</router-link></li>
-          <li><router-link to="/live-casino">真人娱乐</router-link></li>
+          <li><router-link to="/live-casino">真人</router-link></li>
+          <li><router-link to="/crown">皇冠</router-link></li>
+          <li><router-link to="/panda">熊猫</router-link></li>
+          <li><router-link to="/bacarrat">百家乐</router-link></li>
         </ul>
-        <ul class="index_bottom_des">
-          <li>帮助中心</li>
-          <li><router-link to="/about?id=finance">存款指南</router-link></li>
-          <li><router-link to="/about?id=privacy">新手学堂</router-link></li>
-          <li><router-link to="/about?id=service">常见问题</router-link></li>
-          <li><router-link to="/about?id=service">游戏规则</router-link></li>
-        </ul>
-        <!-- <ul class="index_bottom_des">
-              <li>设为首页</li>
-              <li @click="addToBookmark">加入收藏</li>
-          </ul> -->
         <ul class="index_bottom_des">
           <li>浏览器下载</li>
           <li>
-            <a href="https://s3-ap-northeast-1.amazonaws.com/brows/googlechromestandaloneenterprise64.msi">
+            <a href="https://www.google.com/intl/en_sg/chrome/">
               谷歌浏览器
             </a>
           </li>
           <li>
-            <a
-              href="http://download.microsoft.com/download/A/C/9/AC924EA1-9F39-4DFD-99DF-2C1DEB922174/EIE11/WOL/EIE11_EN-US_WOL_WIN764.EXE">
-              IE9浏览器
-            </a>
-          </li>
-          <li>
-            <a href="http://download.firefox.com.cn/releases-sha2/stub/official/zh-CN/Firefox-latest.exe">火狐浏览器</a>
+            <a href="https://www.mozilla.org/en-US/firefox/new/">火狐浏览器</a>
           </li>
         </ul>
       </div>
@@ -345,6 +324,42 @@ export default defineComponent({
           background-image: url(../../assets/footer/footer-hzhb.png);
           background-position-y: -2px;
           cursor: pointer;
+
+          &.eeai {
+            width: 70px;
+            background: url(../../assets/live/live-logo-eeai.svg) center center no-repeat;
+            background-size: 100% 100%;
+            filter: grayscale(1);
+            aspect-ratio: 189/62;
+
+            &:hover {
+              filter: grayscale(0);
+            }
+          }
+
+          &.cr {
+            width: 70px;
+            background: url(../../assets/sports/sports-logo-cr.svg) center center no-repeat;
+            background-size: 100% 100%;
+            filter: grayscale(1);
+            aspect-ratio: 197/65;
+
+            &:hover {
+              filter: grayscale(0);
+            }
+          }
+
+          &.pm {
+            width: 90px;
+            background: url(../../assets/sports/sports-logo-pm.svg) center center no-repeat;
+            background-size: 100% 100%;
+            filter: grayscale(1);
+            aspect-ratio: 236/60;
+
+            &:hover {
+              filter: grayscale(0);
+            }
+          }
 
           &.ag {
             width: 45px;
