@@ -1,6 +1,6 @@
 <template>
   <el-form ref="registerRef" :rules="regRules" :model="regForm" :label-width="languageVal === 'en' ? 130 : 80" size="large" style="padding-top:16px;">
-    <div class="light-bg form-field">
+    <!-- <div class="light-bg form-field">
       <img class="form-field-icon" src="../../../assets/home/auth/username-icon.png" width="35px" />
       <el-form-item :label="$t('form.realName')" prop="realName">
         <el-input
@@ -20,7 +20,7 @@
           <template #append></template>
         </el-input>
       </el-form-item>
-    </div>
+    </div> -->
 
     <div class="light-bg form-field">
       <img class="form-field-icon" src="../../../assets/home/auth/username-icon.png" width="35px" />
@@ -238,23 +238,23 @@ let validatePass = async (r, v) => {
 };
 
 const regRules = {
-  realName: [
-    {
-      required: true,
-      message: t('form.pleaseEnterField', {field: t('form.realName')}),
-      trigger: "blur"
-    },
-    {
-      min: 2,
-      max: 12,
-      message: t('form.lengthMustBeBetween', {min: 2, max: 12}),
-      trigger: "blur"
-    },
-    {
-      validator: validateRealName,
-      trigger: "change"
-    }
-  ],
+  // realName: [
+  //   {
+  //     required: true,
+  //     message: t('form.pleaseEnterField', {field: t('form.realName')}),
+  //     trigger: "blur"
+  //   },
+  //   {
+  //     min: 2,
+  //     max: 12,
+  //     message: t('form.lengthMustBeBetween', {min: 2, max: 12}),
+  //     trigger: "blur"
+  //   },
+  //   {
+  //     validator: validateRealName,
+  //     trigger: "change"
+  //   }
+  // ],
   loginName: [
     {
       required: true,
@@ -441,7 +441,7 @@ const submitRegisterForm = async (elForm) => {
 };
 
 const regForm = reactive({
-  realName: "",
+  // realName: "",
   loginName: "",
   password: "",
   confirmPwd: "",

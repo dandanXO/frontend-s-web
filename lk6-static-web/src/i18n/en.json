@@ -113,5 +113,13 @@
     "confirm": "Confirm",
     "supportTagline": "If you need to update your personal information, please contact our customer service team",
     "onlineSupport": "Online Support"
+  },
+  "tianaiCaptcha": {
+    "tipsError": "Verification failed, please try again!",
+    "tipsSuccess": "Verification succeeded, took {s} seconds",
+    "sliderTitle": "Drag the slider to complete the puzzle",
+    "concatTitle": "Drag the slider to complete the puzzle",
+    "imageClickTitle": "Please click the images in the correct order",
+    "rotate_title": "Drag the slider to complete the puzzle"
   }
 }
