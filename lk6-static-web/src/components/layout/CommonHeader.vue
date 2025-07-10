@@ -1,6 +1,4 @@
 <template>
-  <NewMemberGuide :openAppMenu="() => (selectedMenu = 'App')" :closeAppMenu="() => (selectedMenu = '')" />
-
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
@@ -98,11 +96,8 @@
           <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
             <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
             <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />
-            <EsportsMenu ref="el" v-if="selectedMenu === 'esports'" @load-modal="openGame" />
             <SportsMenu ref="el" v-if="selectedMenu === 'panda' || selectedMenu === 'crown'" @load-modal="openGame" />
-            <LotteryMenu ref="el" v-if="selectedMenu === 'lottery'" @load-modal="openGame" />
             <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />
-            <FishingMenu ref="el" v-if="selectedMenu === 'fish'" @load-modal="openGame" />
             <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
             <AppMenu ref="el" v-if="selectedMenu === 'App'" />
           </div>
@@ -348,7 +343,6 @@
 </template>
 
 <script lang="js">
-import NewMemberGuide from '@/components/home/NewMemberGuide.vue'
 import "vue3-carousel/dist/carousel.css";
 import { defineComponent, onMounted, ref, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -358,12 +352,9 @@ import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
 import { useNotify } from "@/hooks/notify";
 import GameMenu from "@/components/menu/GameMenu.vue";
-import EsportsMenu from "@/components/menu/EsportsMenu.vue";
 import SportsMenu from "@/components/menu/SportsMenu.vue";
 import LiveCasinoMenu from "@/components/menu/LiveCasinoMenu.vue";
-import LotteryMenu from "@/components/menu/LotteryMenu.vue";
 import PokerMenu from "@/components/menu/PokerMenu.vue";
-import FishingMenu from "@/components/menu/FishingMenu.vue";
 import PromotionMenu from "@/components/menu/PromotionMenu.vue";
 import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
@@ -390,19 +381,15 @@ export default defineComponent({
   name: "CommonHeader",
   components: {
     GameMenu,
-    EsportsMenu,
     SportsMenu,
     LiveCasinoMenu,
-    LotteryMenu,
     PokerMenu,
-    FishingMenu,
     PromotionMenu,
     AppMenu,
     GameModal,
     LoginDialog,
     ForgotPwdDialog,
     RegisterAccount,
-    NewMemberGuide,
     LocaleChanger,
     LogoComponent
   },
@@ -2040,86 +2027,6 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
-
-    // &.slot-ag {
-    //   background-image: url("../../../assets/game/header_slot_ag.png");
-    // }
-
-    // &.slot-pt {
-    //   background-image: url("../../../assets/game/header_slot_pt.png");
-    // }
-
-    // &.slot-sw {
-    //   background-image: url("../../../assets/game/header_slot_sw.png");
-    // }
-
-    // &.slot-bbin {
-    //   background-image: url("../../../assets/game/header_slot_bbin.png");
-    // }
-
-    // &.slot-pg {
-    //   background-image: url("../../../assets/game/header_slot_pg.png");
-    // }
-
-    // &.slot-mg {
-    //   background-image: url("../../../assets/game/header_slot_mg.png");
-    // }
-
-    // &.slot-cq {
-    //   background-image: url("../../../assets/game/header_slot_cq.png");
-    // }
-
-    // &.fish-ag {
-    //   background-image: url("../../../assets/fishing/ag_fish_king.png");
-    // }
-
-    // &.fish-sg {
-    //   background-image: url("../../../assets/fishing/sg_fish_king.png");
-    // }
-
-    // &.fish-at {
-    //   background-image: url("../../../assets/fishing/at_fish_king.png");
-    // }
-
-    // &.fish-gps {
-    //   background-image: url("../../../assets/fishing/gps_fish_king.png");
-    // }
-
-    // &.live-ag {
-    //   background-image: url("../../../assets/live/live_ag.png");
-    // }
-
-    // &.live-allbet {
-    //   background-image: url("../../../assets/live/live_allbet.png");
-    // }
-
-    // &.live-bbin {
-    //   background-image: url("../../../assets/live/live_bbin.png");
-    // }
-
-    // &.live-pm {
-    //   background-image: url("../../../assets/live/live_pm.png");
-    // }
-
-    // &.live-bg {
-    //   background-image: url("../../../assets/live/live_bg.png");
-    // }
-
-    // &.live-sexy {
-    //   background-image: url("../../../assets/live/live_sexy.png");
-    // }
-
-    // &.lottery-tcg {
-    //   background-image: url("../../../assets/lottery/lottery_tcg.webp");
-    // }
-
-    // &.lottery-bbin {
-    //   background-image: url("../../../assets/lottery/lottery_bbin.webp");
-    // }
-
-    // &.lottery-sgwin {
-    //   background-image: url("../../../assets/lottery/lottery_sgwin.webp");
-    // }
   }
 
   &.games,
@@ -2462,22 +2369,6 @@ body {
     }
   }
 }
-
-// .register-dialog {
-//   .el-dialog__header .el-dialog__headerbtn {
-//     .el-dialog {
-//       &__close {
-//         color: #000000;
-//         opacity: 0.5;
-
-//         &:hover {
-//           opacity: 1;
-//           color: #000000;
-//         }
-//       }
-//     }
-//   }
-// }
 
 .mailbox-notify {
   position: relative;

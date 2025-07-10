@@ -151,18 +151,9 @@
 
 <script setup>
 import { onMounted } from "vue";
-import HomeTitle from "@/atoms/HomeTitle.vue";
-import HomeTitleV2 from "@/atoms/HomeTitleV2.vue";
 import Vue3Autocounter  from "vue3-autocounter";
-import { useDark } from "@vueuse/core";
 
-const isDark = useDark();
-
-const loadCircleBg = () => {
-  return isDark.value
-    ? require("../../../assets/home/service/circle-bg-dark.png")
-    : require("../../../assets/home/service/circle-bg.png");
-};
+const loadCircleBg = () => require("../../../assets/home/service/circle-bg.png");
 
 onMounted(() => {});
 </script>

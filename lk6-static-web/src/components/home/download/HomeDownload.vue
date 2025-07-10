@@ -39,9 +39,6 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import HomeTitle from "@/atoms/HomeTitle.vue";
-import HomeTitleV2 from "@/atoms/HomeTitleV2.vue";
-import HomeContentTitle from "@/atoms/HomeContentTitle.vue";
 import { uiStore } from "@/store/ui";
 import VueQRCodeComponent from "vue-qrcode-component";
 
