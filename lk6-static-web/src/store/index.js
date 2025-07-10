@@ -25,7 +25,7 @@ export const userStore = defineStore("userStore", {
       balance: 0,
       vip: "",
       evip: "",
-      currency: { value: "￥", label: "RMB" },
+      currency: { value: "USDT", label: "USDT" },
       loginPageVisible: false,
       regPageVisible: false,
       currentDeposit: "0.0000",

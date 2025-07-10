@@ -449,6 +449,7 @@ const getAliasName = (plat, platformType) => {
     }
     return plat.alias;
   } else {
+    console.log('here', plat)
     return languageVal, languageVal.value === 'en' ? (plat.enname ?? plat.name) : plat.cnname;
   }
 };
