@@ -38,6 +38,41 @@
     "onlyNumbersAllowed": "电话号码只允许使用数字",
     "smsOtp": "手机验证码",
     "email": "邮箱",
-    "emailRule01": "电子邮件地址无效"
+    "emailRule01": "电子邮件地址无效",
+    "menu": {
+      "promotion": "优惠",
+      "customerService": "客服",
+      "home": "首页",
+      "live": "真人",
+      "crown": "皇冠",
+      "panda": "熊猫",
+      "bacarrat": "百家乐",
+      "deposit": "存款",
+      "withdraw": "取款",
+      "assets": "总资产",
+      "loading": "加载中"
+    },
+    "download": {
+      "title": "综合客户端下载",
+      "desc": "引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐投注！",
+      "scan": "扫码进入下载页面",
+      "download": "手机免费下载地址"
+    }
+  },
+  "service": {
+    "seconds": "秒",
+    "partners": "家",
+    "averageDepositTime": "平均存款时间",
+    "coopPaymentPlatform": "合作支付平台",
+    "averageWithdrawTime": "平均取款时间",
+    "coopGamingPlatform": "合作游戏平台",
+    "tagline01_title": "极速存取转款",
+    "tagline01_desc": "最新技术自主研发的财务处理系统真正做到极速存、取、转 独家网络优化技术,为您提供一流的游戏体验,最大优化网络延迟。",
+    "tagline02_title": "海量赛事种类",
+    "tagline02_desc": "每天为您提供近干场精彩体育赛事,更有真人、彩票、 电子游戏等多种娱乐方式选择,让您拥有完美游戏体验。",
+    "tagline03_title": "加密安全管理",
+    "tagline03_desc": "独家开发,采用128位加密技术和严格的安全管理体系, 客户资金得到最完善的保障,让您全情尽享娱乐、赛事投注、 无后顾之忧!",
+    "tagline04_title": "三端任您选择",
+    "tagline04_desc": "引领市场的卓越技术,自主研发了全套终端应用,让您 随时随地,娱乐投注随心所欲! 7x24小时在线客服提供最贴心、最优质的服务。"
   }
 }

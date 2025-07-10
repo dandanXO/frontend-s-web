@@ -1,26 +1,28 @@
 <template>
   <div class="download-section">
-    <img src="../../../assets/home/download/download-section-title.svg" width="1100px" style="display:flex;margin:0 auto;" />
+    <img v-if="languageVal === 'en'" src="../../../assets/home/download/download-section-title-en.svg" width="1100px"
+      style="display:flex;margin:0 auto;" />
+    <img v-else src="../../../assets/home/download/download-section-title.svg" width="1100px"
+      style="display:flex;margin:0 auto;" />
     <div class="download-container">
       <div class="left-container" data-aos="fade-left">
         <div class="tab-wrapper">
           <div class="dl-tab">
-            <div class="tab-title">综合客户端下载</div>
+            <div class="tab-title">{{ $t('download.title') }}</div>
             <div class="tab-desc">
-              引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐
-              投注！
+              {{ $t('download.desc') }}
             </div>
             <div class="download">
               <div class="dl-wrapper">
                 <VueQRCodeComponent :size="90" :text="ui.downloadUrl" class="dl-frame" />
-                <div class="link-desc">扫码进入下载页面</div>
+                <div class="link-desc">{{ $t('download.scan') }}</div>
                 <div class="link">
                   <a :href="ui.downloadUrl" target="_blank">{{ ui.downloadUrl }}</a>
                 </div>
               </div>
               <div class="dl-wrapper">
                 <div class="five-logo" />
-                <div class="link-desc">手机免费下载地址</div>
+                <div class="link-desc">{{ $t('download.download') }}</div>
                 <div class="link">
                   <a :href="ui.downloadUrl" target="_blank">{{ ui.downloadUrl }}</a>
                 </div>
@@ -32,8 +34,8 @@
 
       <div class="right-container" data-aos="fade-right">
         <img src="../../../assets/home/download/download-section-right-decor.png" width="100%" />
-        </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -41,11 +43,16 @@
 import { onMounted, ref } from "vue";
 import { uiStore } from "@/store/ui";
 import VueQRCodeComponent from "vue-qrcode-component";
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
+
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 
 const activeKey = ref("1");
 const ui = uiStore();
 
-onMounted(() => {});
+onMounted(() => { });
 </script>
 
 <style lang="scss" scoped>
@@ -153,14 +160,6 @@ onMounted(() => {});
 
             .qr-wrapper,
             .dl-wrapper {
-              // border-radius: 0.875rem;
-              // background: #e3f5ff;
-              // text-align: center;
-              // padding: 0.5rem 1rem;
-              // display: flex;
-              // flex-direction: column;
-              // align-items: center;
-              // gap: 3px;
 
               div {
                 text-align: center;
@@ -175,7 +174,8 @@ onMounted(() => {});
                 font-family: PingFang SC;
                 font-size: 1rem;
                 font-weight: 400;
-                line-height: 116.5%; /* 1.165rem */
+                line-height: 116.5%;
+                /* 1.165rem */
                 margin: 0.25rem 0;
               }
 
@@ -186,35 +186,9 @@ onMounted(() => {});
                 text-align: center;
                 margin: 0 auto;
                 font-weight: 400;
-                line-height: 116.5%; /* 1.165rem */
+                line-height: 116.5%;
+                /* 1.165rem */
               }
-            }
-
-            .qr-wrapper {
-            }
-            .dl-wrapper {
-            }
-          }
-
-          .tab {
-            border-radius: 0.8125rem;
-            border: 1px solid #5c9fff;
-            padding: 1rem;
-
-            .el-tabs__header {
-              border-bottom: unset;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              border-radius: 3.0625rem;
-              background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-              box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
-              padding: 0.25rem 0;
-              color: #468cff;
-              font-family: Microsoft YaHei;
-              font-size: 0.875rem;
-              font-weight: 400;
-              line-height: normal;
             }
           }
         }
