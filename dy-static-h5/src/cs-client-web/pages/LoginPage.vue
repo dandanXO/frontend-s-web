@@ -129,17 +129,16 @@ export default defineComponent({
     };
 
     const pingCs = () => {
-      // authAPI.pingCs().then((res) => {
-      //   if (res.status === 200) {
-      //     isCsPingColor.value = "green";
-      //   }
-      // });
-
-
-      axios.get( "https://api.psnaback.com/cs/ws/ping").then((res) => {
-        console.log(res);
-
+      authAPI.pingCs().then((res) => {
+        if (res.status === 200) {
+          isCsPingColor.value = "green";
+        }
       });
+
+      // axios.get( "https://api.psnaback.com/cs/ws/ping").then((res) => {
+      //   console.log(res);
+      //
+      // });
     };
 
     onActivated(async () => {
