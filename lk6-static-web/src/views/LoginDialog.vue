@@ -308,11 +308,6 @@ onMounted(() => {
       justify-content: flex-start;
     }
 
-    .el-input__wrapper {
-      box-shadow: none;
-      background: none;
-    }
-
     .el-form-item.is-error {
       margin-bottom: 15px;
     }

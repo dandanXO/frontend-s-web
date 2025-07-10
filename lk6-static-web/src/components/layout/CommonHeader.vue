@@ -30,7 +30,11 @@
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="nav.hasicon">
               <div class="header-menu-item">
-                <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
+                <a v-if="nav.code === 'CS'" @click="store.openLiveChat">
+                  <span><div class="cs-icon" /></span>
+                  <span>{{ $t('menu.customerService') }}</span>
+                </a>
+                <router-link v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
                   <span>
                     <div class="promotion-icon" v-if="nav.code === 'Promotion'" />
                     <!-- <img
@@ -62,6 +66,22 @@
             </template>
           </template>
 
+          <template  v-if="store.token">
+            <div class="header-menu-item">
+              <router-link to="/center/deposit" class="action-btn">
+                <span><img src="../../assets/images/home/deposit-icon.png" width="38px" height="38px"/></span>
+                <span>{{ $t('menu.deposit') }}</span>
+              </router-link>
+            </div>
+
+            <div class="header-menu-item">
+              <router-link to="/center/withdraw" class="action-btn">
+                <span><img src="../../assets/images/home/withdraw-icon.png" width="38px" height="38px" /></span>
+                <span>{{ $t('menu.withdraw') }}</span>
+              </router-link>
+            </div>
+          </template>
+
           <div class="header-menu-item">
             <a>
               <span><LocaleChanger/></span>
@@ -73,7 +93,7 @@
             <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
             <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />
             <SportsMenu ref="el" v-if="selectedMenu === 'panda' || selectedMenu === 'crown'" @load-modal="openGame" />
-            <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />
+            <PokerMenu ref="el" v-if="selectedMenu === 'bacarrat'" @load-modal="openGame" />
             <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
             <AppMenu ref="el" v-if="selectedMenu === 'App'" />
           </div>
@@ -88,27 +108,6 @@
           </router-link> -->
           <a class="standard-button btn-color-aqua" @click="loginDialogVisible = true">{{ $t('btn.login') }}</a>
           <a class="standard-button btn-color-white" @click="registerDialogVisible = true">{{ $t('btn.register') }}</a>
-        </div>
-
-        <div v-if="store.token" class="profile-actions">
-          <router-link to="/center/deposit" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-deposit.png" />
-            </div>
-            {{ $t('menu.deposit') }}
-          </router-link>
-          <router-link to="/center/withdraw" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-withdraw.png" />
-            </div>
-             {{ $t('menu.withdraw') }}
-          </router-link>
-          <!-- <router-link to="/center/transfer" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-transfer.png" />
-            </div>
-            转账
-          </router-link> -->
         </div>
 
         <div class="profile-info" v-if="store.token">
@@ -1605,19 +1604,8 @@ body {
       }
     }
 
-    .icon-rounded {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      box-shadow: 0px 2px 5px 0px #bbdcff inset;
-    }
-
     img {
       display: block;
-      width: 16px;
     }
   }
 
@@ -1778,7 +1766,7 @@ body {
           padding-left: 5px;
           padding-right: 5px;
 
-          a > span > div {
+          a > span > div, a > span > img {
             &:hover {
               animation: rumble 0.3s ease-in-out;
             }
@@ -1837,7 +1825,6 @@ body {
         .sub-menu {
           transition: $page-trans;
           background: linear-gradient(180deg, #F8FCFF 0%, #DFECFF 100%);
-          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 1px 0px 0px #a7c2dd;
           overflow: hidden;
           height: 0px;
           position: absolute;

@@ -1,10 +1,13 @@
 <template>
-  <div class="platform-section">
+  <div class="platform-section" >
     <div v-if="isLoading" class="loading">
       <img class="loading-img" src="@/assets/lucky-6-logo.png" />
     </div>
-    <div v-else-if="!(platformType === 'bacarrat' && props.hideBanner)" class="platform-container" :class="platformType === 'bacarrat' ? 'slot-container' : ''">
-        <img v-if="platformType === 'bacarrat'" src="../assets/slot/slot-top-bg.png" style="width: 100%;height: auto;aspect-ratio: 3840 / 800;" />
+    <div v-else-if="!(platformType === 'bacarrat' && props.hideBanner)" class="platform-container" :class="{fullpage: props.fullpage,  ['slot-container']: platformType === 'bacarrat'}">
+        <template v-if="platformType === 'bacarrat'">
+          <img v-if="languageVal === 'en'" src="../assets/slot/slot-top-bg-en.png" style="width: 100%;height: auto;aspect-ratio: 3840 / 800;" />
+          <img  v-else src="../assets/slot/slot-top-bg.png" style="width: 100%;height: auto;aspect-ratio: 3840 / 800;" />
+        </template>
         <div class="platform-container-slot" v-if="platformType === 'bacarrat'">
         </div>
       <div class="platform-container-inner" v-if="platformType !== 'bacarrat'">
@@ -132,15 +135,17 @@
 
     <div class="margin-center game-container" v-if="platformExpandable">
       <div class="all-game-container">
-        <div class="plat-options-wrapper">
-          <div class="plat-options-container">
-            <template v-for="(item, index) in fixedBacarratPlatforms" :key="index">
-              <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
-              <div
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;">
+          <div style="visibility: hidden;"></div>
+          <div class="plat-options-wrapper">
+            <div class="plat-options-container">
+              <template v-for="(item, index) in fixedBacarratPlatforms" :key="index">
+                <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
+                  <div
                 class="plat-option"
                 @click="onChangeFixedPokerPlatforms(item)"
                 :class="{ active: selectedFixedBacarratPlatforms?.prefix === item.prefix }"
-              >
+                >
                 <div class="text">
                   <span>{{ item.label }}</span>
                 </div>
@@ -148,7 +153,25 @@
             </template>
           </div>
         </div>
-
+        
+        <div class="search-container">
+          <el-input
+          class="search-input"
+          v-model="gamePage.searchKey"
+          @input="searchList()"
+          placeholder="输入查找游戏名"
+          clearable
+          @clear="searchList()"
+          >
+          <template #suffix>
+            <el-icon :width="15" @click="searchList()">
+              <Search />
+            </el-icon>
+          </template>
+        </el-input>
+      </div>
+    </div>
+      
         <div class="plat-options-wrapper" style="display: none;">
           <div class="plat-options-container">
             <template v-for="(item, index) in platformsListDisplay" :key="index">
@@ -167,29 +190,6 @@
         </div>
 
         <div class="plat-games-container">
-          <div class="grid-items flex-box flex-align-center search-container web-only-box">
-            <!--          <el-tabs v-model="gameCat" @tab-click="handleClick" class="game-cat-tabs">-->
-            <!--            <el-tab-pane label="全部游戏" name="allGame"></el-tab-pane>-->
-            <!--            <el-tab-pane label="热门游戏" name="hotGame"></el-tab-pane>-->
-            <!--            <el-tab-pane label="最新游戏" name="newGame"></el-tab-pane>-->
-            <!--          </el-tabs>-->
-
-            <el-input
-              class="search-input"
-              v-model="gamePage.searchKey"
-              @input="searchList()"
-              placeholder="输入查找游戏名"
-              clearable
-              @clear="searchList()"
-            >
-              <template #suffix>
-                <el-icon :width="15" @click="searchList()">
-                  <Search />
-                </el-icon>
-              </template>
-            </el-input>
-          </div>
-
           <div class="game-list-wrapper">
             <div
               class="game-slot animate__animated animate__fadeInRight"
@@ -291,7 +291,8 @@ const props = defineProps({
   platformPattern: Boolean,
   platformExpandable: Boolean,
   showPlayBtn: Boolean,
-  hideBanner: Boolean
+  hideBanner: Boolean,
+  fullpage: Boolean
 });
 
 const filteredPlatforms = ref([]);
@@ -450,6 +451,7 @@ const getAliasName = (plat, platformType) => {
     }
     return plat.alias;
   } else {
+    console.log('here', plat)
     return languageVal, languageVal.value === 'en' ? (plat.enname ?? plat.name) : plat.cnname;
   }
 };
@@ -493,7 +495,13 @@ const changePage = (page, pageSize) => {
 const gameCat = ref("allGame");
 
 onMounted(() => {
-  selectedFixedBacarratPlatforms.value = fixedBacarratPlatforms.value[0];
+  if(route.name === 'roulette') {
+    onChangeFixedPokerPlatforms(fixedBacarratPlatforms.value[1]);
+  } else if(route.name === 'lucky-lace') {
+    onChangeFixedPokerPlatforms(fixedBacarratPlatforms.value[2]);
+  } else {
+    onChangeFixedPokerPlatforms(fixedBacarratPlatforms.value[0]);
+  }
   getPlatList();
   getPlatGameList();
 });
@@ -512,6 +520,16 @@ watch(
     }
   }
 );
+
+watch(() => route.name, () => {
+  if(route.name === 'roulette') {
+    onChangeFixedPokerPlatforms(fixedBacarratPlatforms.value[1]);
+  } else if(route.name === 'lucky-lace') {
+    onChangeFixedPokerPlatforms(fixedBacarratPlatforms.value[2]);
+  } else {
+    onChangeFixedPokerPlatforms(fixedBacarratPlatforms.value[0]);
+  }
+})
 </script>
 
 <style scoped lang="scss" src="../scss/pages/platform.scss" />
@@ -557,5 +575,9 @@ watch(
     background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
     box-shadow: 0px 2px 2px 0px rgba(255, 255, 255, 0.8) inset, 0px 2px 0px 0px #C6D9FF;
   }
+}
+
+.slot-container {
+  height: 291px;
 }
 </style>

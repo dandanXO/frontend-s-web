@@ -107,7 +107,20 @@ const getPlatformList = () => {
     });
 
     
-    console.log('here', platformsListDisplay.value)
+    if(props.platformType === "live") {
+      const bacarratPlatforms = [{
+        cnname: "百家乐",
+        code: "bacarrat",
+      },{
+        cnname: "轮盘",
+        code: "roulette",
+      },{
+        cnname: "幸运蕾丝",
+        code: "lucky-lace",
+      }];
+
+      platformsListDisplay.value = bacarratPlatforms
+    }
   });
 };
 
@@ -119,6 +132,11 @@ const router = useRouter();
 const gotoGame = (item, platformType) => {
   // debugger;
   // console.log(platformType);
+  if(['bacarrat', 'roulette', 'lucky-lace'].includes(item.code)) {
+    router.push(`/${item.code}`);
+    return;
+  }
+  
   if (platformType === "slot") {
     router.push(`/slot?plat=${item.code}`);
   } else {
