@@ -444,12 +444,13 @@ const loginRules = {
 
     .underline {
       text-decoration: underline;
+      color: #5F8AEE;
     }
   }
 
   .register-hint {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
   }
 }
 
@@ -474,6 +475,12 @@ const loginRules = {
 
     .el-form-item__label {
       font-size: 12px;
+    }
+  }
+
+  .acc-dialog {
+    .el-dialog__header.show-close {
+      padding: 0;
     }
   }
 </style>

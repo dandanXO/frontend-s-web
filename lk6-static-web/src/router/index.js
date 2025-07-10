@@ -62,6 +62,16 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/BacarratView.vue")
       },
       {
+        path: "/roulette",
+        name: "roulette",
+        component: () => import(/* webpackChunkName: "Game" */ "../views/BacarratView.vue")
+      },
+      {
+        path: "/lucky-lace",
+        name: "lucky-lace",
+        component: () => import(/* webpackChunkName: "Game" */ "../views/BacarratView.vue")
+      },
+      {
         path: "/fishing",
         name: "fishing",
         component: () => import(/* webpackChunkName: "Game" */ "../views/FishingView.vue")

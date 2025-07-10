@@ -7,6 +7,9 @@
   padding-bottom: 10px;
   width: 100%;
   min-height: calc(100dvh - 85px - 313px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .platform-container-slot {
@@ -450,8 +453,9 @@
     }
 
     .plat-options-container {
+      height: 60px;
       display: flex;
-      gap: 20px;
+      gap: 10px;
       justify-content: center;
       align-items: center;
       padding: 10px;
@@ -503,12 +507,12 @@
 
     .search-container {
       display: flex;
-      // margin-top: 2rem;
-      padding: 1rem;
+      padding: 10px;
       justify-content: space-between;
-      position: absolute;
       right: 15px;
       top: 15px;
+      margin: auto;
+      max-width: 250px;
 
       .search-input {
         // padding: 20px 20px 20px 30px;
