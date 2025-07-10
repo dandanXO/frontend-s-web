@@ -32,7 +32,7 @@
             <div class="login-form-inner-wrapper">
               <div v-if="!loginType" class="q-gutter-y-md">
                 <div class="input-field-wrapper">
-                  <div class="input-field__label required">用户名</div>
+                  <div class="input-field__label required">{{ $t("login.form.userName.label") }}</div>
                   <q-input
                     height="32px"
                     rounded
@@ -41,10 +41,12 @@
                     hide-bottom-space
                     ref="loginNameRef"
                     v-model="loginForm.loginName"
-                    placeholder="请输入用户名"
+                    :placeholder="$t('login.form.userName.placeholder')"
                     :rules="[
-                      (val) => (val && val.length > 0) || '请输入用户名',
-                      (val) => (val && val.length >= 4 && val.length <= 12) || '长度要在 4-12 之间'
+                      (val) => (val && val.length > 0) || $t('login.form.userName.error.required'),
+                      (val) =>
+                        (val && val.length >= 4 && val.length <= 12) ||
+                        $t('login.form.userName.error.length', { min: 4, max: 12 })
                     ]"
                     label-color=""
                     autocomplete="username"
@@ -61,7 +63,7 @@
                 </div>
 
                 <div class="input-field-wrapper">
-                  <div class="input-field__label required">密码</div>
+                  <div class="input-field__label required">{{ $t("login.form.password.label") }}</div>
 
                   <q-input
                     height="32px"
@@ -71,9 +73,9 @@
                     ref="passwordRef"
                     hide-bottom-space
                     v-model="loginForm.password"
-                    placeholder="请输入密码"
+                    :placeholder="$t('login.form.password.placeholder')"
                     :type="isPwd ? 'password' : 'text'"
-                    :rules="[(val) => (val && val.length > 0) || '请输入用户密码']"
+                    :rules="[(val) => (val && val.length > 0) || $t('login.form.password.error.required')]"
                     label-color=""
                     autocomplete="current-password"
                   >
@@ -132,7 +134,7 @@
 
               <div v-if="loginType" class="q-gutter-y-md">
                 <div class="input-field-wrapper">
-                  <div class="input-field__label required">手机号</div>
+                  <div class="input-field__label required">{{ $t("login.form.phone.label") }}</div>
                   <q-input
                     height="32px"
                     rounded
@@ -143,8 +145,8 @@
                     ref="telephoneRef"
                     v-model="phoneLoginForm.phoneNumber"
                     :readonly="phoneLoginForm.smsCodeId ? true : false"
-                    placeholder="请输入手机号码"
-                    :rules="[(val) => (val && val.length > 0) || '请输入电话号码']"
+                    :placeholder="$t('login.form.phone.placeholder')"
+                    :rules="[(val) => (val && val.length > 0) || $t('login.form.phone.error.required')]"
                     color="white"
                     autocomplete="username"
                   >
@@ -154,7 +156,7 @@
                   </q-input>
                 </div>
                 <div class="input-field-wrapper">
-                  <div class="input-field__label required">验证码</div>
+                  <div class="input-field__label required">{{ $t("login.form.otp.label") }}</div>
                   <q-input
                     @pressEnter="alert('ah')"
                     ref="phoneVerificationRef"
@@ -165,12 +167,16 @@
                     hide-bottom-space
                     type="text"
                     v-model="phoneLoginForm.code"
-                    placeholder="请输入短信验证码"
-                    :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']"
+                    :placeholder="$t('login.form.otp.placeholder')"
+                    :rules="[(val) => (val && val.length > 3) || $t('login.form.otp.error.required')]"
                   >
                     <template v-slot:append>
                       <q-btn class="verification-btn" :disable="otpCountdownCount > 0" @click="toggleInnerCode">
-                        {{ otpCountdownCount <= 0 ? `发送验证码` : `已发送（${otpCountdownCount}秒)` }}
+                        {{
+                          otpCountdownCount <= 0
+                            ? $t("login.form.otp.append.sendable")
+                            : $t("login.form.otp.append.sent", { second: otpCountdownCount })
+                        }}
                       </q-btn>
                     </template>
                     <template v-slot:prepend>
@@ -183,18 +189,18 @@
               <div class="forgetpass-div">
                 <div class="align-right">
                   <span class="txt-tip" style="color: #0089ed" @click="loginType = !loginType">
-                    {{ loginType ? "用户名登录" : "手机号登录" }}
+                    {{ loginType ? $t("login.userNameLogin") : $t("login.phoneLogin") }}
                   </span>
                 </div>
 
                 <router-link class="txt-tip align-right" style="margin-left: auto" to="/forgot-account">
-                  <span>忘记密码？</span>
+                  <span>{{ $t("login.forgotPassword") }}</span>
                 </router-link>
 
                 <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
                   <q-checkbox
                     v-model="isCheckRmb"
-                    label="记住密码"
+                    :label="$t('login.rememberPassword')"
                     size="20px"
                     style="font-size: 14px"
                     color="light-blue-9"
@@ -207,7 +213,7 @@
               @click.prevent="onSubmit"
               type="submit"
               class="login-btn q-mt-md"
-              label="登录"
+              :label="$t('btn.login')"
               width="100%"
               size="16px"
               :loading="isLoading"
@@ -217,7 +223,7 @@
               @click.prevent="tab = 'register'"
               type="button"
               class="register-btn q-mt-md"
-              label="注册"
+              :label="$t('btn.register')"
               width="100%"
               size="16px"
               flat
@@ -247,7 +253,7 @@
           <!-- <div style="width: 60px; height: 1px; background-color: #7a80a199"></div> -->
           <div class="row items-center gap-8">
             <!-- <img src="../assets/login/service-icon.svg" width="16px" /> -->
-            <span style="color: #458bff">联系客服</span>
+            <span style="color: #458bff">{{ $t("login.cs") }}</span>
           </div>
           <!-- <div style="width: 60px; height: 1px; background-color: #7a80a199"></div> -->
         </router-link>
@@ -258,21 +264,28 @@
       v-model="showCaptchaDialog"
       class="captcha-dialog"
       no-backdrop-dismiss
-      header="验证码"
-      confirm-btn-text="提交"
+      :header="$t('login.notification.verificationCode.title')"
+      :confirm-btn-text="$t('btn.submit')"
       @confirm="sendOtpSms"
     >
       <template #content>
         <q-input
           class="verification-code-input"
           standout
-          :rules="[(val) => (val && val.length > 3 && val.length < 5) || '请输入验证码']"
+          :rules="[
+            (val) => (val && val.length > 3 && val.length < 5) || $t('login.form.verificationCode.error.format')
+          ]"
           v-model="innerCaptchaRef"
-          placeholder="请输入验证码"
+          :placeholder="$t('login.form.verificationCode.placeholder')"
           ref="refinnerCaptchaRef"
         >
           <template v-slot:append>
-            <img class="verification-img" :src="phoneVerificationImg" title="点击刷新验证码" @click="getCode" />
+            <img
+              class="verification-img"
+              :src="phoneVerificationImg"
+              :title="$t('login.form.verificationCode.imgTitle')"
+              @click="getCode"
+            />
           </template>
         </q-input>
       </template>
@@ -282,7 +295,7 @@
 
 <script>
 /* eslint-disable */
-import { defineComponent, ref, reactive, onMounted, watch } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
@@ -292,6 +305,7 @@ import qs from "qs";
 import { useLocalStorage } from "@vueuse/core";
 import { getDevice } from "src/boot/utils";
 import CommonModal from "src/components/CommonModal.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "LoginPage",
@@ -300,6 +314,7 @@ export default defineComponent({
     CommonModal
   },
   setup() {
+    const { t } = useI18n();
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
@@ -481,7 +496,7 @@ export default defineComponent({
           telephoneRef.value.validate();
           phoneVerificationRef.value.validate();
           $q.loading.show({
-            message: "登录中"
+            message: $t("login.loggingIn")
           });
           if (telephoneRef.value.hasError || phoneVerificationRef.value.hasError) {
             $q.loading.hide();
@@ -561,7 +576,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "手机号码不能为空",
+          message: t("login.form.phone.error.error"),
           icon: "report_problem"
         });
         return;
@@ -570,7 +585,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "验证码错误",
+          message: t("login.form.otp.error.error"),
           icon: "report_problem"
         });
         return;
@@ -587,7 +602,7 @@ export default defineComponent({
         )
         .then((res) => {
           getCode();
-          let message = res.message || "发送手机验证码成功",
+          let message = res.message || t("login.notification.sentOtp.message"),
             color = "positive";
 
           if (res.code === 0) {
@@ -770,12 +785,17 @@ export default defineComponent({
       logoUrl: null
     };
 
-    onMounted(() => {
-      getCode();
+    onActivated(() => {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
         tab.value = "register";
+      } else {
+        tab.value = "login";
       }
+    });
+
+    onMounted(() => {
+      getCode();
       checkRememberPwd();
       // initGeetestCaptcha();
 

@@ -271,12 +271,12 @@
       <q-card-section class="q-mb-md gologin-popup">
         <strong>
           <img class="svg" src="~assets/promo/error-warning-line.svg" />
-          系统提示
+          {{ $t("common.notification.loginRequired.title") }}
         </strong>
-        请登录后再操作
+        {{ $t("common.notification.loginRequired.message") }}
       </q-card-section>
       <router-link to="/login?redirect=/promo">
-        <q-btn label="确认" color="dyblue" />
+        <q-btn :label="$t('btn.confirm')" color="dyblue" />
       </router-link>
     </q-card>
   </q-dialog>
@@ -299,6 +299,7 @@ import { useLocalStorage } from "@vueuse/core";
 
 import RedirectButton from "src/components/RedirectButton.vue";
 import { i18nStore } from "src/router/language";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PromoView",
@@ -308,6 +309,7 @@ export default defineComponent({
     RedirectButton
   },
   setup() {
+    const {t} = useI18n();
     const {languageVal} = i18nStore()
     const store = userStore();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
@@ -321,21 +323,21 @@ export default defineComponent({
     const getPromoLabel = (labelType) => {
       switch (labelType) {
         case 0:
-          return "最新";
+          return t('promo.label.new');
         case 1:
-          return "热门";
+          return t('promo.label.hot');
         case 2:
-          return "正常";
+          return t('promo.label.normal');
         case 3:
-          return "推荐";
+          return t('promo.label.recommend');
         case 4:
-          return "日常";
+          return t('promo.label.daily');
         case 5:
-          return "新人";
+          return t('promo.label.newUser');
         case 6:
-          return "限时";
+          return t('promo.label.timeLimited');
         case 7:
-          return "精选";
+          return t('promo.label.selected');
         default:
           return "";
       }
@@ -350,37 +352,7 @@ export default defineComponent({
     const ui = useUI();
     const isDisplayLogin = ref(false);
 
-    // const tab = ref("all");
-    // const tabItems = [
-    //   { name: "all", label: "全部" },
-    //   { name: "welcome", label: "新人" },
-    //   { name: "esport", label: "电竞" },
-    //   {
-    //     name: "sport",
-    //     label: "体育"
-    //   },
-    //   { name: "live casino", label: "真人" },
-    //   {
-    //     name: "slot game",
-    //     label: "电游"
-    //   },
-    //   {
-    //     name: "vip",
-    //     label: "VIP"
-    //   },
-    //   {
-    //     name: "limited",
-    //     label: "限时"
-    //   },
-    //   {
-    //     name: "ftd",
-    //     label: "充提"
-    //   }
-    //   // {
-    //   //   name: "other",
-    //   //   label: "其它"
-    //   // }
-    // ];
+
 
     watch(
       () => route.query,

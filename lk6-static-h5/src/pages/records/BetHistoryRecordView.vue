@@ -1,76 +1,49 @@
 <template>
   <div class="table-record">
     <div class="search-bar">
-      <div class="flex-div">区间</div>
+      <div class="flex-div">{{ $t("record.filter.range") }}</div>
       <div class="flex-div">
         <q-btn class="date-btn" flat>
           {{ startDate }}
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
             <q-date v-model="startDate" mask="YYYY-MM-DD">
               <div class="row items-center justify-end">
-                <q-btn v-close-popup label="关闭" color="primary" flat />
+                <q-btn v-close-popup :label="$t('btn.close')" color="primary" flat />
               </div>
             </q-date>
           </q-popup-proxy>
         </q-btn>
-        <!-- <q-input standout v-model="startDate">
-          <template v-slot:append>
-            <q-icon name="event" class="cursor-pointer">
-            </q-icon>
-          </template>
-        </q-input> -->
+
         <q-separator style="flex: 1" />
         <q-btn class="date-btn" flat>
           {{ endDate }}
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
             <q-date v-model="endDate" mask="YYYY-MM-DD">
               <div class="row items-center justify-end">
-                <q-btn v-close-popup label="关闭" color="primary" flat />
+                <q-btn v-close-popup :label="$t('btn.close')" color="primary" flat />
               </div>
             </q-date>
           </q-popup-proxy>
         </q-btn>
-        <!-- <q-input standout v-model="endDate">
-          <template v-slot:append>
-            <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                <q-date v-model="endDate" mask="YYYY-MM-DD">
-                  <div class="row items-center justify-end">
-                    <q-btn v-close-popup label="关闭" color="primary" flat />
-                  </div>
-                </q-date>
-              </q-popup-proxy>
-            </q-icon>
-          </template>
-        </q-input> -->
       </div>
-      <div class="flex-div">平台</div>
+      <div class="flex-div">{{ t("record.filter.platform") }}</div>
       <div class="flex-div">
         <div class="platform-selector" @click="handlePlatformSelectionClick">
           {{ currentPlatformText }}
           <img src="../../assets/records/arrow-right-s-line.svg" />
         </div>
-        <!-- <q-select
-          clearable
-          rounded
-          outlined
-          dense
-          color="primary"
-          v-model="platform"
-          :options="platformsList"
-          placeholder="选择平台"
-          map-options
-          @clear="platform = ''"
-          @update:model-value="searchRecord"
-        ></q-select> -->
       </div>
       <div class="flex-div">
-        <q-btn class="search-btn" @click="searchRecord">搜寻</q-btn>
+        <q-btn class="search-btn" @click="searchRecord">{{ $t("btn.search") }}</q-btn>
       </div>
     </div>
     <div class="payout-total">
-      <div>总投注: {{ totalBetRecord.totalBet }}</div>
-      <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
+      <div>
+        {{ $t("record.filter.totalBet", { amount: totalBetRecord.totalBet }) }}
+      </div>
+      <div>
+        {{ $t("record.filter.totalPayout", { amount: totalBetRecord.totalPayout }) }}
+      </div>
       <!-- <div>总有效投注: {{ totalBetRecord.totalValidBet }}</div> -->
     </div>
     <!--    <div class="select-btn">-->
@@ -104,7 +77,9 @@ import { userStore } from "src/stores";
 import moment from "moment/moment";
 import RecordComponent from "../../components/RecordComponent.vue";
 import BottomSheetPicker from "src/components/modal/BottomSheetPicker.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const store = userStore();
 const visible = ref(true);
 const tableData = ref([]);
@@ -137,7 +112,7 @@ const totalBetRecord = reactive({
 
 const currentPlatformText = computed(() => {
   if (!platform.value) {
-    return "全部平台";
+    return t("record.filter.allPlatform");
   } else {
     return platform.value.label;
   }
@@ -211,7 +186,7 @@ const loadPlatformLists = () => {
     )
     .then((data) => {
       platformsList.value.push({
-        label: "全部平台",
+        label: t("record.filter.allPlatform"),
         value: ""
       });
 
@@ -225,36 +200,36 @@ const loadPlatformLists = () => {
     });
 };
 
-const tableHeaders = [
+const tableHeaders = computed(() => [
   {
     key: "transactionId",
-    label: "注单号"
+    label: t("record.table.bet.header.transactionId")
   },
   {
     key: "betTime",
-    label: "游戏时间"
+    label: t("record.table.bet.header.betTime")
   },
   {
     key: "platform",
-    label: "游戏平台"
+    label: t("record.table.bet.header.platform")
   },
   {
     key: "bet",
-    label: "投注"
+    label: t("record.table.bet.header.bet")
   },
   {
     key: "payout",
-    label: "派彩"
+    label: t("record.table.bet.header.payout")
   },
   {
     key: "gameType",
-    label: "游戏类型"
+    label: t("record.table.bet.header.gameType")
   },
   {
     key: "status",
-    label: "投注状态"
+    label: t("record.table.bet.header.status")
   }
-];
+]);
 
 const handlePlatformSelectionClick = () => {
   showPlatformSelectorDialog.value = true;

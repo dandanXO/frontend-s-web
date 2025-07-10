@@ -2,7 +2,7 @@
   <q-form ref="regFormRef" class="rounded-borders" @submit="onSubmit">
     <div class="login-form-inner-wrapper q-gutter-y-md">
       <div class="input-field-wrapper">
-        <div class="input-field__label required">请输入账号</div>
+        <div class="input-field__label required">{{ $t("register.form.userName.label") }}</div>
         <q-input
           height="32px"
           rounded
@@ -11,14 +11,14 @@
           hide-bottom-space
           ref="loginNameRef"
           v-model="regForm.loginName"
-          placeholder="4~11位包含字母和数字"
+          :placeholder="$t('register.form.userName.placeholder', { min: 4, max: 11 })"
           lazy-rules
           :rules="[
-            (val) => (val && val.length > 0) || '请输入用户名',
-            (val) => (val && val.length >= 4 && val.length <= 11) || '用户名个数必须在4和11之间',
-            (val) => (val && /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val)) || '须以字母开头，并包含至少2个字母和1个数字',
-            (val) => (val && (val.match(/[a-zA-Z]/g) || []).length >= 2) || '须以字母开头，并包含至少2个字母和1个数字',
-            (val) => (val && /\d/.test(val)) || '须以字母开头，并包含至少2个字母和1个数字'
+            (val) => (val && val.length > 0) || $t('register.form.userName.error.required'),
+            (val) => (val && val.length >= 4 && val.length <= 11) || $t('register.form.userName.error.length'),
+            (val) => (val && /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val)) || $t('register.form.userName.error.format'),
+            (val) => (val && (val.match(/[a-zA-Z]/g) || []).length >= 2) || $t('register.form.userName.error.format'),
+            (val) => (val && /\d/.test(val)) || $t('register.form.userName.error.format')
           ]"
         >
           <template v-slot:prepend>
@@ -33,7 +33,7 @@
       </div>
 
       <div class="input-field-wrapper">
-        <div class="input-field__label required">请输入密码</div>
+        <div class="input-field__label required">{{ $t("register.form.password.label") }}</div>
         <q-input
           height="32px"
           rounded
@@ -42,12 +42,13 @@
           ref="pwdRef"
           hide-bottom-space
           v-model="regForm.password"
-          placeholder="请输入密码"
+          :placeholder="$t('register.form.password.placeholder')"
           lazy-rules
           :type="isPwd ? 'password' : 'text'"
           :rules="[
-            (val) => (val && val.length > 0) || '请输入密码',
-            (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
+            (val) => (val && val.length > 0) || $t('register.form.password.error.required'),
+            (val) =>
+              (val.length > 5 && val.length <= 12) || $t('register.form.password.error.length', { min: 6, max: 12 })
           ]"
         >
           <template v-slot:prepend>
@@ -104,7 +105,7 @@
         <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>
       </div> -->
       <div class="input-field-wrapper">
-        <div class="input-field__label required">请再次输入密码</div>
+        <div class="input-field__label required">{{ $t("register.form.passwordConfirm.label") }}</div>
 
         <q-input
           height="32px"
@@ -115,12 +116,14 @@
           hide-bottom-space
           :type="isCfmPwd ? 'password' : 'text'"
           v-model="regForm.confirmPwd"
-          placeholder="请再次输入密码"
+          :placeholder="$t('register.form.passwordConfirm.placeholder')"
           lazy-rules
           :rules="[
-            (val) => (val && val.length > 0) || '请输入确认密码',
-            (val) => val === regForm.password || '密码不一样',
-            (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
+            (val) => (val && val.length > 0) || $t('register.form.passwordConfirm.error.required'),
+            (val) => val === regForm.password || $t('register.form.passwordConfirm.error.match'),
+            (val) =>
+              (val.length > 5 && val.length <= 12) ||
+              $t('register.form.passwordConfirm.error.length', { min: 6, max: 12 })
           ]"
         >
           <template v-slot:prepend>
@@ -150,7 +153,7 @@
       </div>
 
       <div class="input-field-wrapper">
-        <div class="input-field__label">请输入真实姓名</div>
+        <div class="input-field__label">{{ $t("register.form.realName.label") }}</div>
         <q-input
           height="32px"
           rounded
@@ -159,11 +162,13 @@
           ref="realNameRef"
           hide-bottom-space
           v-model="regForm.realName"
-          placeholder="姓名必须与提款银行卡账号一致"
+          :placeholder="$t('register.form.realName.placeholder')"
           lazy-rules
           :rules="[
-            (val) => (val && val.length > 0) || '请输入姓名',
-            (val) => (val && val.length >= 2 && val.length <= 12) || '用户名个数必须在2和12之间'
+            (val) => (val && val.length > 0) || t('register.form.realName.error.required'),
+            (val) =>
+              (val && val.length >= 2 && val.length <= 12) ||
+              t('register.form.realName.error.required', { min: 2, max: 12 })
           ]"
         >
           <template v-slot:prepend>
@@ -178,7 +183,7 @@
       </div>
 
       <div class="input-field-wrapper">
-        <div class="input-field__label">验证码</div>
+        <div class="input-field__label">{{ $t("register.form.verificationCode.label") }}</div>
 
         <q-input
           height="32px"
@@ -190,9 +195,11 @@
           hide-bottom-space
           type="text"
           v-model="regForm.captchaCode"
-          placeholder="验证码"
+          :placeholder="$t('register.form.verificationCode.placeholder')"
           lazy-rules
-          :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
+          :rules="[
+            (val) => (val && val.length > 3 && val.length < 5) || $t('register.form.verificationCode.error.format')
+          ]"
         >
           <template v-slot:append>
             <img :src="verificationImg" @click="getCode()" />
@@ -204,7 +211,7 @@
       </div>
 
       <div class="input-field-wrapper">
-        <div class="input-field__label">请输入推荐码</div>
+        <div class="input-field__label">{{ $t("register.form.affiliateCode.label") }}</div>
         <q-input
           height="32px"
           rounded
@@ -214,7 +221,7 @@
           ref="affiliateCodeRef"
           hide-bottom-space
           v-model="regForm.codeAffiliate"
-          placeholder="若不是合营下会员无需填写"
+          :placeholder="$t('register.form.affiliateCode.placeholder')"
           :readonly="hasAffiliate === true ? true : false"
         >
           <template v-slot:prepend>
@@ -225,13 +232,20 @@
     </div>
 
     <div class="row justify-between items-center">
-      <q-btn @click.prevent="onSubmit" type="submit" class="login-btn q-mt-md" label="注册" width="100%" size="16px" />
+      <q-btn
+        @click.prevent="onSubmit"
+        type="submit"
+        class="login-btn q-mt-md"
+        :label="$t('btn.register')"
+        width="100%"
+        size="16px"
+      />
 
       <q-btn
         @click.prevent="changeTab"
         type="button"
         class="register-btn q-mt-md"
-        label="登录"
+        :label="$t('btn.login')"
         width="100%"
         size="16px"
       />
@@ -245,11 +259,13 @@ import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "RegisterPage",
   emits: ["changeTab"],
   setup(props, context) {
+    const { t } = useI18n();
     onMounted(() => {
       getCode();
       getReferralCode();
@@ -359,7 +375,7 @@ export default defineComponent({
       realNameRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
-        message: "注册中"
+        message: t("register.registering")
       });
       if (
         loginNameRef.value.hasError ||
@@ -398,7 +414,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "注册成功",
+                  message: t("register.notification.registerSuccess.message"),
                   icon: "check_circle_outline"
                 });
                 store.autoLogin(res.data);

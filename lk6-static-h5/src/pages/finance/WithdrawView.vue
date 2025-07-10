@@ -1,10 +1,10 @@
 <template>
   <div class="withdraw-section">
     <div class="title-wrapper q-pa-md" style="padding-bottom: 0px">
-      <span>{{ isAutoWithdrawal ? "快速提款" : "提款" }}</span>
+      <span>{{ isAutoWithdrawal ? $t("withdraw.autoWithdraw") : $t("withdraw.withdraw") }}</span>
       <q-btn v-if="!isAutoWithdrawal" class="upgrade-btn" flat @click="handleUpgradeClick">
         <img src="../../assets/images/finance/withdraw/rocket-icon.png" />
-        <span>升级快速提款</span>
+        <span>{{ $t("withdraw.upgradeToAutoWithdraw") }}</span>
       </q-btn>
     </div>
     <!--    <AcctBal :platforms="platforms" />-->
@@ -35,11 +35,11 @@
         <!-- <q-separator style="margin-top: 12px; margin-bottom: 15px" /> -->
 
         <div class="main-wallet">
-          <div class="desc">主钱包</div>
+          <div class="desc">{{ $t("withdraw.wallet") }}</div>
           <div class="amount">
             {{ convertToCommaAmount(store.balance) }}
           </div>
-          <q-btn class="refresh-btn" flat @click="store.getBalance">一键刷新</q-btn>
+          <q-btn class="refresh-btn" flat @click="store.getBalance">{{ $t("withdraw.refresh") }}</q-btn>
         </div>
 
         <!-- <label class="label">{{ chooseLabel() }}</label> -->
@@ -53,18 +53,28 @@
             v-model="withdrawInfo.cardId"
             option-value="id"
             emit-value
-            :label="'选择' + chooseLabel()"
+            :label="$t('withdraw.form.card.label', { card: chooseCard() })"
             :options="withdrawState.bankCardList"
             map-options
-            :rules="[(val) => !!val || '请选择' + chooseLabel()]"
+            :rules="[(val) => !!val || $t('withdraw.form.card.error.required', { card: chooseCard() })]"
           >
             <template v-slot:no-option>
               <q-item>
                 <q-item-section class="text-grey">
-                  {{ "没有可用的" + chooseCard() }}
-                  <router-link class="text-bright" to="/account/withdraw">
-                    {{ isUSDT || isEWALLET ? "加" + chooseCard() : "绑定" + chooseCard() }}
-                  </router-link>
+                  <i18n-t keypath="withdraw.form.card.option.empty">
+                    <template #card>
+                      {{ chooseCard() }}
+                    </template>
+                    <template #link>
+                      <router-link class="text-bright" to="/account/withdraw">
+                        {{
+                          isUSDT || isEWALLET
+                            ? $t("withdraw.form.card.option.add", { card: chooseCard() })
+                            : $t("withdraw.form.card.option.bind", { card: chooseCard() })
+                        }}
+                      </router-link>
+                    </template>
+                  </i18n-t>
                 </q-item-section>
               </q-item>
             </template>
@@ -106,18 +116,20 @@
             ref="amountRef"
             v-model="withdrawInfo.amount"
             standout
-            placeholder="请输入金额"
+            :placeholder="$t('withdraw.form.amount.placeholder')"
             :rules="[
-              (val) => (val && val.length > 0) || '请输入提款金额',
-              (val) => val >= selectedWithdrawalMethod.withdrawMin || '请输入正确的提款金额',
-              (val) => val <= selectedWithdrawalMethod.withdrawMax || '请输入正确的提款金额',
-              (val) => (val && /^\d+$/.test(val)) || '提款金额不能有小数',
-              !isUSDT ? (val) => (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数' : true
+              (val) => (val && val.length > 0) || $t('withdraw.form.amount.error.required'),
+              (val) => val >= selectedWithdrawalMethod.withdrawMin || $t('withdraw.form.amount.error.outOfRange'),
+              (val) => val <= selectedWithdrawalMethod.withdrawMax || $t('withdraw.form.amount.error.outOfRange'),
+              (val) => (val && /^\d+$/.test(val)) || $t('withdraw.form.amount.error.decimal'),
+              !isUSDT
+                ? (val) => (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || $t('withdraw.form.amount.error.positive')
+                : true
             ]"
             clearable
           >
             <template v-slot:prepend>
-              <span style="font-size: 14px">取款金额</span>
+              <span style="font-size: 14px">{{ $t("withdraw.form.amount.label") }}</span>
             </template>
             <!-- <template v-slot:append>
               <span style="font-size: 26px" class="text-bright">
@@ -132,31 +144,37 @@
             </div> -->
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
-                "单笔提款: " +
-                selectedWithdrawalMethod.withdrawMin +
-                `${store.currency.value} - ` +
-                selectedWithdrawalMethod.withdrawMax +
-                store.currency.value
+                $t("withdraw.limit.oneTime", {
+                  min: selectedWithdrawalMethod.withdrawMin,
+                  max: selectedWithdrawalMethod.withdrawMax,
+                  currency: store.currency.value
+                })
               }}
+
               <br style="margin-top: 10px" />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-              {{ "今日提款: " + selectedWithdrawalMethod.withdrawMaxAmount + ` ${store.currency.value}` }}
+              {{
+                $t("withdraw.limit.amount", {
+                  amount: selectedWithdrawalMethod.withdrawMaxAmount,
+                  currency: store.currency.value
+                })
+              }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
-              {{ " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次" }}
+              {{ $t("withdraw.limit.times", { times: selectedWithdrawalMethod.withdrawMaxTimes }) }}
             </template>
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
             <div class="q-my-md" style="display: flex; justify-content: center; align-items: center">
-              <span style="flex: 1">实施汇率：</span>
+              <span style="flex: 1">{{ $t("withdraw.exchangeRate") }}</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
             <div class="q-mt-md" style="display: flex; justify-content: center; align-items: center">
-              <span style="flex: 1">预计到帐：</span>
+              <span style="flex: 1">{{ $t("withdraw.expectedAmount") }}</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 {{
                   selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
@@ -178,7 +196,7 @@
           </div>
 
           <div class="q-mt-md" style="color: #00b05c" v-if="selectedWithdrawalMethod.withdrawFee">
-            *提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT
+            {{ $t("withdraw.withdrawFee", { fee: selectedWithdrawalMethod.withdrawFee, curry: "USDT" }) }}
           </div>
           <!-- <a-form-item
             class="select"
@@ -206,7 +224,7 @@
               @click="submitWithdraw"
               :loading="withdrawLoading"
               :disable="withdrawLoading"
-              label="立即提款"
+              :label="$t('btn.withdrawNow')"
             />
           </div>
           <div class="q-py-md text-orange">
@@ -228,15 +246,15 @@
       persistent
       no-backdrop-dismiss
       no-esc-dismiss
-      header="请先绑定银行卡"
+      :header="$t('withdraw.notification.bindBankCard.title')"
       :closable="false"
     >
       <template #action>
         <div class="cacnels common-md-white-btn">
-          <router-link to="/account">取消</router-link>
+          <router-link to="/account">{{ $t("btn.cancel") }}</router-link>
         </div>
         <div class="confirmsbtns common-md-btn">
-          <router-link to="/account/withdraw">绑定</router-link>
+          <router-link to="/account/withdraw">{{ $t("btn.bind") }}</router-link>
         </div>
       </template>
     </CommonModal>
@@ -246,13 +264,13 @@
       persistent
       no-backdrop-dismiss
       no-esc-dismiss
-      message="您需要在交易记录-提款记录中点击“确认到账”完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!"
+      :message="$t('withdraw.notification.withdrawBlocked.message')"
       :closable="false"
     >
       <template #action>
-        <div class="cacnels common-md-white-btn" @click="isShowWithdrawErrorBlock = false">取消</div>
+        <div class="cacnels common-md-white-btn" @click="isShowWithdrawErrorBlock = false">{{ $t("btn.cancel") }}</div>
         <div class="confirmsbtns common-md-btn">
-          <router-link to="/account/records/withdraw">前往确认</router-link>
+          <router-link to="/account/records/withdraw">{{ $t("btn.toConfirm") }}</router-link>
         </div>
       </template>
     </CommonModal>
@@ -273,11 +291,14 @@ import {useRouter} from "vue-router";
 import WithdrawRemainingDialog from "src/components/WithdrawRemainingDialog.vue";
 import { convertToCommaAmount } from "src/boot/utils";
 import CommonModal from "src/components/CommonModal.vue";
+import { useI18n } from "vue-i18n";
+import { curry } from "lodash";
 
 export default defineComponent({
   name: "WithdrawView",
   components: {AcctBal, WithdrawRemainingDialog, CommonModal},
   setup() {
+    const {t} = useI18n();
     const store = userStore();
     const $q = useQuasar();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
@@ -355,7 +376,7 @@ export default defineComponent({
       cardRef.value.validate();
       amountRef.value.validate();
       $q.loading.show({
-        message: "确认中。。。"
+        message: t('withdraw.confirming')
       });
       withdrawLoading.value = true;
       if (cardRef.value.hasError || amountRef.value.hasError) {
@@ -372,7 +393,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "提交成功",
+              message: t('withdraw.notification.submitWithdraw.message'),
               icon: "check_circle_outline"
             });
             getWithdrawalMethods();
@@ -492,25 +513,25 @@ export default defineComponent({
 
     const chooseLabel = () => {
       if (isUSDT.value) {
-        return '钱包地址'
+        return t('withdraw.label.crypto');
       } else if (isEWALLET.value) {
-        return '电子钱包'
+        return t('withdraw.label.ewallet');
       } else if (isALIPAY.value) {
-        return '支付宝'
+        return t('withdraw.label.alipay');
       } else {
-        return '银行卡'
+        return t('withdraw.label.bankCard');
       }
     }
 
     const chooseCard = () => {
       if (isUSDT.value) {
-        return '虚拟钱包'
+        return t('withdraw.card.crypto');
       } else if (isEWALLET.value) {
-        return '电子钱包'
+        return t('withdraw.card.ewallet');
       } else if (isALIPAY.value) {
-        return '支付宝卡'
+        return t('withdraw.card.alipay');
       } else {
-        return '银行卡片'
+        return t('withdraw.card.bankCard');
       }
     }
     const tutorialLabel = () => {
@@ -536,14 +557,14 @@ export default defineComponent({
 
     const handleUpgradeClick = () => {
       $q.loading.show({
-        message: "升级中。。。"
+        message: t('withdraw.upgrading')
       });
       api.get("/session/updateAutoWithdraw").then(async (res) => {
         if(res.code === 0) {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "成功升级为快速提款!",
+            message: t('withdraw.notification.upgradeToAutoWithdraw.message'),
             icon: "check_circle_outline"
           });
           await store.getMemberInfo()

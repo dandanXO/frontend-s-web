@@ -32,8 +32,8 @@
   </q-dialog>
 </template>
 <script setup>
-import { i18nStore } from "src/router/language";
 import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps({
   cancelBtnText: {
@@ -65,10 +65,10 @@ const props = defineProps({
 const emit = defineEmits(["cancel", "confirm"]);
 const model = defineModel();
 
-const {} = i18nStore();
+const { t } = useI18n();
 
-const _cancelBtnText = computed(() => props.cancelBtnText || "取消");
-const _confirmBtnText = computed(() => props.confirmBtnText || "确认");
+const _cancelBtnText = computed(() => props.cancelBtnText || t("btn.cancel"));
+const _confirmBtnText = computed(() => props.confirmBtnText || t("btn.confirm"));
 
 const selectedItem = ref(null);
 

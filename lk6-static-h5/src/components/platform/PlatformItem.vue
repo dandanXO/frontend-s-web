@@ -5,7 +5,7 @@
     </div>
     <img class="platform-item-logo" :src="require(`../../assets/index/live/platform-logo-${platform.logo}.png`)" />
     <div class="platform-item-bottom-wrapper">
-      <RedirectButton class="platform-item-play-btn" @click="$emit('click')">立即投注</RedirectButton>
+      <RedirectButton class="platform-item-play-btn" @click="$emit('click')">{{ $t("btn.betNow") }}</RedirectButton>
       <div class="platform-item-desc">
         {{ platform.message }}
       </div>

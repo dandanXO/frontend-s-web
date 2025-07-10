@@ -7,14 +7,14 @@
           class="q-pb-xs"
           hide-bottom-space
           v-model="formDetail.nickName"
-          placeholder="账号"
+          :placeholder="$t('personal.form.userName.placeholder')"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '请输入账号']"
+          :rules="[(val) => (val && val.length > 0) || $t('personal.form.userName.error.required')]"
           :readonly="personalState.memberInfo.nickName ? true : false"
         >
           <template v-slot:prepend>
             <!-- <q-icon name="person_outline" /> -->
-            <label class="header-label">账号&#12288;&#12288;</label>
+            <label class="header-label">{{ $t("personal.form.userName.label") }}&#12288;&#12288;</label>
           </template>
         </q-input>
       </div>
@@ -24,14 +24,14 @@
           class="q-pb-xs"
           hide-bottom-space
           v-model="formDetail.realName"
-          placeholder="姓名"
+          :placeholder="$t('personal.form.realName.placeholder')"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '请输入姓名']"
+          :rules="[(val) => (val && val.length > 0) || $t('personal.form.realName.error.required')]"
           :readonly="personalState.memberInfo.realName ? true : false"
         >
           <template v-slot:prepend>
             <!-- <q-icon name="badge" class="material-icons-outlined" /> -->
-            <label class="header-label">姓名&#12288;&#12288;</label>
+            <label class="header-label">{{ $t("personal.form.realName.label") }}&#12288;&#12288;</label>
           </template>
         </q-input>
       </div>
@@ -41,13 +41,13 @@
           label-color=""
           lazy-rules
           hide-bottom-space
-          placeholder="DD/MM/YYYY"
+          :placeholder="$t('personal.form.birth.placeholder')"
           v-model="formDetail.birthday"
-          :rules="[(val) => (val && val.length > 0) || '请输入生日', isValidBirth]"
+          :rules="[(val) => (val && val.length > 0) || $t('personal.form.birth.error.required'), isValidBirth]"
         >
           <template v-slot:prepend>
             <!-- <q-icon name="cake" class="material-icons-outlined" /> -->
-            <label class="header-label">生日&#12288;&#12288;</label>
+            <label class="header-label">{{ $t("personal.form.birth.label") }}&#12288;&#12288;</label>
           </template>
           <template v-slot:append>
             <img
@@ -65,10 +65,16 @@
             >
               <q-date v-model="formDetail.birthday" mask="DD/MM/YYYY" @show="handleDatePickerShow">
                 <div class="date-picker-btn-wrapper row items-center justify-between">
-                  <q-btn class="date-picker-btn__today" flat dense @click="handleTodayClick">此刻</q-btn>
+                  <q-btn class="date-picker-btn__today" flat dense @click="handleTodayClick">{{ $t("btn.now") }}</q-btn>
                   <div class="row items-center gap-8">
-                    <q-btn class="date-picker-btn__close" label="关闭" flat dense @click="handleClosePopupClick" />
-                    <q-btn class="date-picker-btn__confirm" v-close-popup label="确定" flat dense />
+                    <q-btn
+                      class="date-picker-btn__close"
+                      :label="$t('btn.close')"
+                      flat
+                      dense
+                      @click="handleClosePopupClick"
+                    />
+                    <q-btn class="date-picker-btn__confirm" v-close-popup :label="$t('btn.confirm')" flat dense />
                   </div>
                 </div>
               </q-date>
@@ -82,9 +88,9 @@
           class="q-pb-xs"
           hide-bottom-space
           v-model="formDetail.email"
-          placeholder="邮箱"
+          :placeholder="$t('personal.form.email.placeholder')"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
+          :rules="[(val) => (val && val.length > 0) || $t('personal.form.email.error.required')]"
           label-color=""
           color=""
           readonly
@@ -93,12 +99,12 @@
         >
           <template v-slot:append v-if="isEditEmail">
             <router-link to="/account/verifyEmail">
-              <q-btn class="verification-btn">验证</q-btn>
+              <q-btn class="verification-btn">{{ $t("btn.verify") }}</q-btn>
             </router-link>
           </template>
           <template v-slot:prepend>
             <!-- <q-icon name="mail" class="material-icons-outlined" /> -->
-            <label class="header-label">邮箱地址</label>
+            <label class="header-label">{{ $t("personal.form.email.label") }}</label>
           </template>
         </q-input>
       </div>
@@ -109,7 +115,7 @@
           hide-bottom-space
           v-model="formDetail.phone"
           type="tel"
-          placeholder="电话"
+          :placeholder="$t('personal.form.phone.placeholder')"
           lazy-rules
           :rules="[(_) => isValidPhone()]"
           label-color=""
@@ -120,12 +126,12 @@
         >
           <template v-slot:append v-if="isEditPhone">
             <router-link to="/account/verifyTelephone">
-              <q-btn class="verification-btn">验证</q-btn>
+              <q-btn class="verification-btn">{{ $t("btn.verify") }}</q-btn>
             </router-link>
           </template>
           <template v-slot:prepend>
             <!-- <q-icon name="phone_in_talk" class="material-icons-outlined" /> -->
-            <label class="header-label">电话&#12288;&#12288;</label>
+            <label class="header-label">{{ $t("personal.form.phone.label") }}&#12288;&#12288;</label>
           </template>
         </q-input>
       </div>
@@ -157,12 +163,13 @@
       </q-input> -->
 
       <div class="notification-text">
-        信息更新后将无法更改，如需帮助请
-        <router-link class="notification-text__link" :to="chatPage">联系客服</router-link>
+        <i18n-t keypath="personal.alert">
+          <router-link class="notification-text__link" :to="chatPage">{{ $t("personal.cs") }}</router-link>
+        </i18n-t>
       </div>
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" class="submit-btn" @click="updateState" label="提交" />
+        <q-btn size="md" class="submit-btn" @click="updateState" :label="$t('btn.submit')" />
       </div>
     </q-form>
   </div>
@@ -170,13 +177,13 @@
   <q-dialog width="100%" v-model="showCaptchaDialog">
     <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
       <q-card-section class="q-mb-md" style="flex-direction: column; display: flex">
-        <strong>系统提示</strong>
+        <strong>{{ $t("common.notification.loginRequired.title") }}</strong>
         <br />
         <br />
-        请登录后再操作
+        {{ $t("common.notification.loginRequired.message") }}
       </q-card-section>
       <router-link to="/login?redirect=/promo">
-        <q-btn label="确认" color="dyblue" />
+        <q-btn :label="$t('btn.confirm')" color="dyblue" />
       </router-link>
     </q-card>
   </q-dialog>
@@ -210,10 +217,12 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
 import {useRouter} from "vue-router";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PersonalView",
   setup() {
+    const {t} = useI18n();
     // const isCardActive = ref();
     const qs = require("qs");
     const $q = useQuasar();
@@ -475,7 +484,7 @@ export default defineComponent({
       console.log("Bir");
       console.log(formDetail.birthday);
 
-      const result = !reg.test(formDetail.birthday) ? "请输入正确的日期" : true;
+      const result = !reg.test(formDetail.birthday) ? t('personal.form.birth.error.format') : true;
 
       return result;
     }
@@ -616,11 +625,12 @@ export default defineComponent({
     background-image: url("../../assets/images/account/account-btn.png");
     background-size: 100% 100%;
     color: #fff;
-    width: 60px;
+    // width: 60px;
+    padding: 2px 11px;
     text-align: center;
     white-space: nowrap;
     font-size: 1rem;
-    aspect-ratio: 122/68;
+    // aspect-ratio: 122/68;
     display: flex;
     align-items: center;
     justify-content: center;

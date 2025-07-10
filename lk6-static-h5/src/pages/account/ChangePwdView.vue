@@ -8,9 +8,9 @@
         class="q-pb-xs"
         hide-bottom-space
         :type="isPwd ? 'password' : 'text'"
-        placeholder="请输入旧密码"
+        :placeholder="$t('changePassword.form.oldPassword.placeholder')"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入旧密码']"
+        :rules="[(val) => (val && val.length > 0) || $t('changePassword.form.oldPassword.error.required')]"
       >
         <template v-slot:append>
           <!--          <q-icon-->
@@ -42,9 +42,9 @@
         class="q-pb-xs"
         hide-bottom-space
         :type="isPwd2 ? 'password' : 'text'"
-        placeholder="请输入新密码"
+        :placeholder="$t('changePassword.form.newPassword.placeholder')"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入新密码']"
+        :rules="[(val) => (val && val.length > 0) || $t('changePassword.form.newPassword.error.required')]"
         label-
       >
         <template v-slot:append>
@@ -78,11 +78,11 @@
         class="q-pb-xs"
         hide-bottom-space
         :type="isPwd3 ? 'password' : 'text'"
-        placeholder="请再次输入新密码"
+        :placeholder="$t('changePassword.form.newPasswordConfirm.placeholder')"
         lazy-rules
         :rules="[
-          (val) => (val && val.length > 0) || '请再次输入新密码',
-          (val) => val === updatePwdInfo.password || '确认密码与新密码不符合'
+          (val) => (val && val.length > 0) || $t('changePassword.form.newPasswordConfirm.error.required'),
+          (val) => val === updatePwdInfo.password || $t('changePassword.form.newPasswordConfirm.match')
         ]"
         label-
       >
@@ -103,7 +103,7 @@
           />
         </template>
       </q-input>
-      <q-btn type="submit" class="submit-btn" label="修改密码" width="100%" />
+      <q-btn type="submit" class="submit-btn" :label="$t('changePassword.btn')" width="100%" />
     </q-form>
   </div>
 </template>
@@ -115,11 +115,13 @@ import {api} from "boot/axios"
 import {useQuasar} from "quasar"
 import {userStore} from "src/stores"
 import {useRouter} from "vue-router";
+import { useI18n } from "vue-i18n";
 
 
 export default defineComponent({
   name: "PersonalView",
   setup() {
+    const {t} = useI18n();
     // const isCardActive = ref();
     const isPwd = ref(true);
     const isPwd2= ref(true);
@@ -169,7 +171,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "密码修改成功",
+              message: t('changePassword.notification.changePasswordSuccess.message'),
               icon: "check_circle_outline"
             });
             router.go(-1);

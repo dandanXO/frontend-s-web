@@ -1,1043 +1,901 @@
 export default {
   lang: {
-    langVal: "en",
-    language: "Language"
+    langVal: "en"
   },
-  header: {
-    login: "Login",
-    register: "Register",
-    download: "Download",
-    getFreeSpins: "Get free spins on the APP",
-    getFreeCash: "Free Rs 100 Better Experience!",
-    withdraw: "Withdraw",
-    personalCenter: "Personal Center",
-    deposit: "Deposit",
-    bank: "Bank",
-    addCrypto: "Add crypto",
-    addVirtualWallet: "Add Virtual Wallet",
-    addBankCard: "Add Bank Card",
-    message: "Message",
-    feedback: "Feedback",
-    feedbackDetail: "Feedback Detail",
-    postComment: "Post Comment",
-    record: "Record",
-    records: "Records",
-    order: "Order",
-    discount: "Discount",
-    earnMoney: "Earn Money",
-    language: "Language",
-    dailyActivity: "Daily Activity",
-    vipPrivileges: "VIP Privileges",
-    forgotAccount: "Forgot Account",
-    promotion: "Promotion",
-    withdrawal: "Withdrawal",
-    transfer: "Transfer",
-    transit: "Transit",
-    personalInformation: "Personal Information",
-    verifyMobileNumber: "Verify Mobile Number",
-    email: "E-mail",
-    changePassword: "Change Password",
-    referral: "Referral",
-    announcement: "Announcement",
-    mail: "Mail",
-    inbox: "Inbox",
-    outbox: "Outbox",
-    bankDetail: "Bank Detail",
-    promotionClaim: "Promotion Claim",
-    affiliate: "Affiliate",
-    bankInformation: "Bank Information",
-    depositRecord: "Deposit Record",
-    withdrawalRecord: "Withdrawal Record",
-    transferRecord: "Transfer Record",
-    promotionRecord: "Promotion Record",
-    betRecord: "Bet Record",
-    referralRecord: "Referral Record",
-    interestProfit: "Interest Profit",
-    spinnerRules: "Rules",
-    spinnerHistory: "History",
-    effectiveRevenueFAQ: "Effective Revenue FAQ",
-    customerServiceVerifer: "Customer Service Verifier",
-    termsAndConditions: "Terms and Conditions"
-  },
-  bottomNav: {
-    home: "Home",
-    promo: "Promotion",
-    earnMoney: "Earn Money",
-    wallet: "Wallet",
-    me: "Me",
-    account: "Account",
-    more: "More"
-  },
-  modal: {
-    addToHomeScreen: {
-      addToHomeScreenBonus: "We would like to add it to your home screen for the latest free bets and bonus updates",
-      continueToUseH5: "Continue to use H5",
-      appAndWeb: "App + Web",
-      app: "App",
-      addToHomeScreen: "Add to Home Screen",
-      enjoyMoreBenefits: "Enjoy more benefits!"
+  common: {
+    error: "Error",
+    loading: "Loading...",
+    noMoreData: "No more data",
+    noData: "No data available",
+    uploadImg: "Upload Image",
+    notification: {
+      loginRequired: {
+        title: "System Alert",
+        message: "Please log in to proceed"
+      },
+      copySuccess: {
+        message: "{str} copied successfully"
+      },
+      copyError: {
+        message: "Failed to copy {str}"
+      },
+      tokenLogged: {
+        message:
+          "Your account has been logged in on another device. If this wasn't you, please change your password immediately."
+      },
+      claimed: {
+        message: "Congratulations on winning a bonus"
+      },
+      uploadSuccess: {
+        message: "{name} uploaded successfully"
+      },
+      uploadError: {
+        message: "{name} upload failed. Please try again later."
+      },
+      uploadFileRequired: {
+        message: "Please upload an image"
+      },
+      success: {
+        message: "Operation successful"
+      }
     },
-    homeCodeBonus: {
-      congratsWonFreeCash: "Congratulations, you've won free cash!",
-      enterCodeToClaim: "Please enter the cash redemption code to claim it."
-    },
-    appLoginBonus: {
-      validatePhoneAndEmail: "Please bind your phone first",
-      loginTomorrow: "Please log in tomorrow to claim your mystery reward.",
-      claimBonus: "You’ve received {amount}rs bonus!"
+    gameType: {
+      sport: "Sport",
+      esports: "Esports",
+      slot: "Slots",
+      live: "Live Casino",
+      poker: "Poker",
+      fish: "Fishing",
+      lottery: "Lottery",
+      casual: "Casual",
+      baccarat: "Baccarat",
+      roulette: "Roulette",
+      luckyLace: "Lucky Lace",
+      any: "Any Type",
+      vsport: "Virtual Sports",
+      miniGame: "Mini Game",
+      cockfight: "Cockfight",
+      numberGame: "Number Game"
     }
-  },
-  form: {
-    get_code: "Get Code",
-    otp_form: "OTP Number",
-    insert_otp_num: "Please insert OTP number",
-    otp_must_have_6: "The OTP number must have 6 digits",
-    enter_otp_num: "Enter your OTP number",
-    refresh_veri_code: "Refresh Verification Code",
-    send_otp: "Send OTP",
-
-    register_in_progress: "Registering in progress",
-    fill_in_otp: "Please fill OTP number",
-    register_success: "Registered successfully",
-    phone_cannot_empty: "Phone number cannot be empty",
-    otp_sent_phone_success: "OTP sent to phone successfully",
-    google_login_success: "Google login successfully",
-    phone: "Phone",
-    verifyPhone: "Verify phone number",
-    phone_placeholder: "Please enter your mobile number",
-    phone_rules_01: "Please insert Phone number",
-    phone_rules_02: "The phone number must have 11 digits",
-    phone_rules_03: "The phone number must start with '03'",
-    phone_rules_04: "The number must be between 1 and 11 digits",
-    password: "Password",
-    password_placeholder: "Please enter password",
-    password_rules_01: "Please insert password",
-    password_rules_02: "The characters of password must be above 6",
-    forgotPassword: "Forgot Password",
-    forgotPassword_desc: "Please provide email, we will send OTP to your registered email.",
-    forgotPasswordPhone_desc: "Please provide phone number, we will send OTP to your registered phone.",
-    register_agree_01: "I have Agree To The ",
-    register_agree_02: "Use Privacy Agreement",
-    email: "Email",
-    email_placeholder: "Please enter email",
-    email_rules_01: "Please insert email",
-    email_rules_02: "Please enter valid email",
-    send: "Send",
-    verificationCode: "Verification Code",
-    verificationCode_placeholder: "Please enter verification code",
-    verificationCode_rules_01: "Please insert verification code",
-    otp_sent_title: "OTP has been sent to your email, please enter the OTP and new password.",
-    otp_phone_sent_title: "OTP has been sent to your phone, please enter the OTP and new password.",
-    otp: "OTP",
-    otp_placeholder: "Please enter OTP",
-    otp_rules_01: "Please insert OTP",
-    newPassword: "New Password",
-    newPassword_placeholder: "Please enter new password",
-    newPassword_rules_01: "Please insert new password",
-    newPassword_rules_02: "The characters of new password must be above 5",
-    newPassword_rules_03: "The characters of new password must be below 13",
-    confirmPassword: "Confirm Password",
-    confirmPassword_placeholder: "Please enter confirm password",
-    confirmNewPassword: "Confirm New Password",
-    confirmNewPassword_placeholder: "Please enter new confirm password",
-    confirmNewPassword_rules_01: "Please insert new confirm password",
-    confirmNewPassword_rules_02: "Confirm password does not match",
-    depositAmount: "Amount",
-    depositAmount_placeholder: "Please enter the amount",
-    depositAmount_rules_01: "Deposit should be between ",
-    withdrawChoose_placeholder: "Choose account",
-    withdrawChoose_rules_01: "Please Select A Virtual Account",
-    withdrawalAmount: "Withdrawal Amount",
-    withdrawalAmount_placeholder: "Withdrawal Amount",
-    withdrawalAmount_rules_01: "Please Enter Withdraw Amount",
-    withdrawalAmount_rules_02: "Withdraw Amount Must Be Greater Than 0",
-    withdrawalAmount_rules_03: "Withdraw Amount Insufficient",
-    withdrawalAmount_rules_04: "Withdraw Amount Must In Between",
-    withdrawalAmount_rules_05: "Withdraw Amount Must Not Have Decimals",
-    realTimeExchangeRates: "Real Time Exchange Rates",
-    estimatedArrival: "Estimated arrival",
-    usdtSpecialNote:
-      "*Special note: The third party automatically charges a handling fee of {fee} USDT for withdrawing coins!",
-    fullName: "Full Name",
-    fullName_placeholder: "Enter your full name",
-    fullName_rules_01: "Please insert your full name",
-    fullName_rules_02: "Please enter a Valid full name",
-    setPassword: "Set Password",
-    changePassword: "Change Password",
-    currentPassword: "Current Password",
-    currentPassword_placeholder: "Enter Current Password",
-    currentPassword_rules_01: "Please insert current password",
-    pleaseCompleteKYC: "Please Complete KYC",
-    bindEmail: "Bind Email",
-    linkedEmail: "Linked Email",
-    otpVerification: "OTP Verification",
-    code: "Code",
-    code_placeholder: "Enter verification code",
-    code_rules_01: "Verification code is required",
-    captchaCodeCheck: "Captcha Code Check",
-    captchaCode: "Captcha Code",
-    identity: "Identity ID",
-    captchaCode_placeholder: "Enter Captcha Code",
-    captchaCode_rules_01: "Please insert captcha code",
-    captchaCode_rules_02: "Captcha code length is 4 characters",
-    cryptoType: "Crypto Type",
-    cryptoAccount: "Crypto Account",
-    cryptoAccount_placeholder: "Please insert crypto account",
-    cryptoAccount_rules_01: "Please insert crypto account",
-    cryptoAccount_rules_02: "Crypto account must start with 'T'",
-    cryptoAccount_rules_03: "Crypto account must have 34 characters",
-    cryptoAccount_rules_04: "Crypto account must start with '0x'",
-    cryptoAccount_rules_05: "Crypto account must have 42 characters",
-    cryptoAccount_rules_06: "Crypto account cannot have decimal points",
-    virtualWalletType: "Virtual Wallet Type",
-    virtualWallet: "Virtual Wallet",
-    virtualWallet_placeholder: "Please insert virtual wallet",
-    virtualWallet_rules_01: "Please insert virtual wallet",
-    virtualWallet_id_rule: "Please insert 13 digits Identity ID",
-    virtualWallet_rules_02: "The phone number must start with '03'",
-    virtualWallet_rules_03: "The eWallet must have 11 digits",
-    virtualWallet_rules_04: "The eWallet cannot have decimal points",
-    virtualWallet_warmReminder:
-      "Warm reminder: If the cardholder's name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
-    virtualWallet_warmReminder_02:
-      "Warm reminder: The Identity ID must match the real identity information (13-digit CNIC), otherwise, you will not be able to receive the withdrawal amount. Thank you. ",
-    virtualWallet_untie: "Please enter untie eWallet",
-    bankCard: "Bank Card",
-    bankCard_untie: "Please enter untie bank card",
-    notMatch: " not match",
-    feedbackType: "Feedback type",
-    feedbackType_select: "Please select the opinion type",
-    feedbackType_pleaseSelect: "Please select ",
-    subjectTitle: "Subject title",
-    subjectTitle_placeholder: "Please enter subject title",
-    subjectTitle_rules_01: "Please enter subject title",
-    subjectTitle_rules_02: "Subject title length is 200 words or less",
-    uploadImage: "Upload image",
-    content: "Content",
-    content_placeholder: "Please enter content",
-    content_rules_01: "Please enter content",
-    content_rules_02: "Content length is 500 words or less",
-    exchangeTitle: "Enter redemption code",
-    redemptionCode: "Enter redemption code",
-    redemptionCode_rule_01: "Please insert redemption code",
-    redemptionCode_placeholder: "Pleases Enter redemption code",
-    redemptionInvalidCode:
-      "The code is invalid. Please check our official WhatsApp channel for the correct promo code to redeem.",
-    redemptionAlreadyRedeemed:
-      "You have already participated in this redemption. Please wait for the next free redemption code release on our official WhatsApp channel.",
-    redemptionFullyRedeemed:
-      "The code has been fully redeemed. Please follow our official WhatsApp channel to claim the next free code in time.",
-    redemptionBtmText:
-      "Redemption Process: If you don't have a redemption code, check the official channel below for the latest promotions. Once you have a code, enter it above to redeem! ",
-    transferTitle: "Transfer",
-    uplineId: "Upline",
-    uplineId_placeholder: "Please Enter The Upline ID",
-    uplineId_rule_01: "Please Enter The Upline ID",
-    downlineId: "Downline",
-    downlineId_placeholder: "Please Enter The Downline ID",
-    downlineId_rule_01: "Please Enter The Downline ID",
-    amount: "Amount",
-    amount_placeholder: "Please Enter Amount",
-    amount_rule_01: "Please Enter Amount",
-    all: "All",
-    telegramDiscordId: "Telegram Discord ID",
-    telegramDiscordId_placeholder: "Enter the Telegram Discord ID",
-    telegramDiscordId_rules_01: "Please insert the Telegram Discord ID",
-    redemptionBonusAmount: "Bonus amount",
-    followSteps: "Please follow the steps below:",
-    subscribeWhatsapp:
-      "Subscribe to the official WhatsApp channel to receive your reward code. (Limited quantity, first come first served!)",
-    enterBonusCode:
-      "Enter the bonus code on this page. Once redeemed, the bonus will be credited directly to your account and can be used immediately.",
-    redeemWithinValidity: "Redeem the code within the validity period.",
-    wagerRequirement: "Wager 1x the bonus amount before withdrawing your winnings.",
-    redemptionFailure: "Redemption may fail if eligibility conditions are not met. System verification is final.",
-    accountOwnerOnly: "Only the account owner can redeem the code.",
-    unauthorizedMethods:
-      "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus.",
-    real_name_placeholder: "Please enter your real name",
-    real_name_rules_01: "Please insert your real name",
-    birthday_placeholder: "Please enter your birthday",
-    birthday_rules_01: "Please insert your birthday",
-    address: "Address",
-    address_placeholder: "Please enter your address",
-    address_rules_01: "Please insert your address",
-    country_code_placeholder: "Input country code to search",
-    country_code_rules_01: "Please select country code"
   },
   btn: {
+    cancel: "Cancel",
+    goLogin: "Go to Login",
+    confirm: "Confirm",
+    deposit: "Deposit",
+    copy: "Copy",
+    reminderRequest: "Request Reminder",
+    confirmFund: "Confirm Receipt",
+    submit: "Submit",
+    clickToClaim: "Click to Claim",
+    complete: "Complete",
+    back: "Back",
+    refresh: "Refresh",
+    betNow: "Bet Now",
+    close: "Close",
+    search: "Search",
+    withdraw: "Withdraw",
+    transfer: "Transfer",
+    save: "Save",
     login: "Login",
     register: "Register",
-    confirm: "Confirm",
-    submit: "Submit",
-    forgetPwd: "Forget Password",
-    areyounew: "Are you new to B9?",
-    alreadyhaveacct: "Already have an account?",
-    addNewAccount: "Add New Account",
-    updated: "Updated",
-    updating: "Updating...",
-    addCrypto: "Add crypto",
-    addVirtualWallet: "Add virtual wallet",
-    addBankCard: "Add bank card",
-    untie: "Untie",
-    more: "More",
-    postComments: "Post Comments",
-    post: "Post",
-    loading: "Loading",
-    loading_plsWait: "Loading... Please wait...",
-    cancel: "Cancel",
-    exit: "Exit",
-    signOut: "Sign Out",
-    back: "Back",
-    moreGames: "More Games",
-    addCash: "Add Cash",
-    search: "Search",
-    downloadApp: "Download App",
+    toConfirm: "To Confirm",
+    bind: "Bind",
+    unbind: "Unbind",
+    withdrawNow: "Withdraw Now",
+    now: "Now",
+    verify: "Verify",
+    download: "Download",
     downloadNow: "Download Now",
-    recharge: "Recharge",
-    getInterestProfit: "Get Interest Profit",
-    claim: "Claim",
-    receive: "Receive",
-    completed: "Completed",
-    deposit: "Deposit",
-    betting: "Betting",
-    share: "Share",
-    close: "Close",
-    details: "Details",
-    transfer: "Transfer",
-    signinWithGoogle: "Google",
-    goNow: "Go Now",
-    playReal: "Play real",
-    freeTrial: "Free trial",
-    sendOtp: "Send OTP",
-    check: "Check",
-    payAgain: "Pay again"
-  },
-  notify: {
-    cancelPayment: "Cancel Payment",
-    cancelPaymentWillLose: "Cancel of payment will lose",
-    loggingIn: "Logging in...",
-    loggingOut: "Logging out...",
-    phoneVerifySuccessful: "Phone verified successfully",
-    emailAlreadyUsed: "Email already used. Please try another email.",
-    bankAddedSuccessfully: "Bank card added successfully",
-    virtualWalletAddedSuccessfully: "Virtual wallet added successfully",
-    cryptoAccountAddedSuccessfully: "Crypto account added successfully",
-    newpasswordupdated: "New password updated successfully",
-    withdrewSuccessfully: "Withdraw successfully",
-    noRecord: "No Record",
-    haventFoundAnyRecord: "Haven't found any record",
-    updatedSuccessfully: "Updated successfully",
-    emailVerificationSent: "Email verification sent",
-    messageSent: "Message Sent",
-    feedbackSentSuccess: "Your feedback has been sent successfully!",
-    quitGameMessage_01: "Are you sure want to quit? Click Confirm to quit the game.",
-    quitGameMessage_02: "Trial Complete! Want to Win Real Cash?",
-    quitGameMessage_03: "Make your first deposit now and start playing for real rewards!",
-    signOutMessage: "Are you sure you want to sign out?",
-    plsLoginToContinue: "Please login to continue",
-    copiedSuccessfully: "Copied Successfully",
-    claimedSuccessfully: "Claimed Successfully",
-    smsSent: "SMS OTP has been sent successfully",
-    tryagain: "Please try again after {seconds} seconds",
-    submitting: "Submitting...",
-    sendingVerificationCode: "Sending verification code...",
-    passwordResetCompleted: "Password reset completed"
-  },
-  sideNav: {
-    inviteToEarn: "Invite to Earn",
-    shareYourExclusiveQRCode: "share your exclusive QR code",
-    slots: "Slots",
-    livecasino: "Live Casino",
-    fishing: "Fishing",
-    poker: "Poker",
-    sport: "Sport",
-    esport: "E-sports",
-    livesupport: "Live Support",
-    feedback: "Feedback",
-    telegram: "Telegram",
-    whatsapp: "WhatsApp",
-    language: "Language",
-    downloadApp: "Download APP",
-    appDownload: "APP download",
-    experienceOneStopGaming: "Experience one-stop gaming!",
-    customerServiceVerifier: "Customer Service Verifier",
-    recoverPwd: "Recover your password",
-    license: {
-      curacao: {
-        title: "Regulated & Licensed",
-        description: "by the Government of Curacao"
-      }
-    },
-    termsAndConditions: "Terms and Conditions",
-    legalLicense: "Legal License"
-  },
-  home: {
-    menu_all: "ALL",
-    menu_lobby: "Lobby",
-    menu_hot: "Hot",
-    menu_live: "Live",
-    menu_fish: "Fish",
-    menu_slot: "Slot",
-    menu_poker: "Poker",
-    menu_sport: "Sport",
-    cat_hotgames: "Hot Games",
-    cat_livecasino: "Live Casino",
-    cat_slotsgame: "Slots Game",
-    cat_fishing: "Fishing",
-    cat_poker: "Poker",
-    cat_sport: "Sport",
-    cashGift: "Cash Gifts",
-    welcomeNewPlayer: "Welcome New Players",
-    MegaSharingRoulette: "Mega Sharing Roulette",
-    spinLuckyWheel: "Spin Lucky Wheel"
-  },
-  settings: {
-    totalScore: "Total Score",
-    withdraw: "Withdraw",
-    deposit: "Deposit",
-    promo: "Promotion",
-    otherServices: "Other Services",
-    personalCenter: "Personal Center",
-    record: "Record",
-    discount: "Discount",
-    bank: "Bank",
-    order: "Order",
-    message: "Message",
-    feedback: "Feedback",
-    vip: "VIP",
-    charity: "Charity",
-    logout: "LOG OUT",
-    depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts",
-    interestProfit: "Interest Profit",
-    exchange: "Exchange",
-    transfer: "Transfer"
+    all: "All"
   },
   deposit: {
-    selectAmount: "Select Amount",
-    minimum_amt_requirement: "Minimum Deposit of 1000, No Maximum Limit.",
-    please_pay_exact_amt: "Please pay the exact discounted amount to ensure automatic crediting.",
-    depositTutorial: "Deposit Tutorial",
-    select_privilege: "Select Privilege",
-    incorrectPrivilege: "The deposit promotion you submitted is incorrect. Please try submitting the deposit again.",
-    useFtdPrivilege: "Use Slot First Deposit Privilege",
-    useFtdBonus: "First Deposit Bonus",
-    use2ndBonus: "2nd Deposit Bonus",
-    use3rdBonus: "3rd Deposit Bonus",
-    appDepositBonus: "App Deposit Bonus",
-    unlimited: "Unlimited",
-    wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
-    wagerRequirementEg: "Eg. Deposit 100 Rs, require 1,000 Rs wager",
-    rechargeTutorial: "Recharge tutorial",
-    picture: "Picture",
-    video: "Video",
-    mindepositnotcredit: "Minimum deposit: 10USDT, deposits less than 10USDT will not be credited.",
-    depositnotrecovered:
-      "Do not deposit any non-currency assets to the above address, or the assets will not be recovered.",
-    operatingSafe:
-      "Please confirm that the operating environment is safe to avoid information being tampered with or leaked.",
-    transferAmountMatch:
-      "The transfer amount must match the order you created, otherwise the money cannot be credited successfully.",
-    donotcanceldeposit: "Note: do not cancel the deposit order after the money has been transferred.",
-    fillinwallet: "Fill in the correct wallet account number",
-    fillincnic: "Fill in the correct CNIC number",
-    submittedAmtConsistent:
-      "The submitted amount must be consistent with the payment amount, otherwise it will not be automatically credited."
+    paymentWay: "Payment Method",
+    depositAmountInput: {
+      label: "Deposit Amount",
+      placeholder: "Enter amount",
+      error: {
+        outOfRange: "Amount must be between {min} - {max}",
+        required: "Please enter amount",
+        notNumber: "Amount must be an integer"
+      }
+    },
+    depositAmountSelect: {
+      placeholder: "Select amount"
+    },
+    singleDeposit: "Single deposit: {min} - {max}",
+    exchangeRate: "Current Exchange Rate:",
+    expectedAmount: "Expected Credit:",
+    privilege: {
+      placeholder: "Choose Promo",
+      min: "Minimum deposit for bonus: {min} {currency},",
+      rolloverGameTitle: "Rollover Requirement (deposit + bonus):",
+      rolloverGame: "{game} {rollover}×",
+      rollover: "Rollover Requirement (deposit + bonus): {rollover}×"
+    },
+    notification: {
+      popupBlocked: {
+        message: "Unable to open payment page. Please allow pop-ups in your browser settings and try again."
+      }
+    }
   },
   withdraw: {
-    cashBalance: "Cash Balance",
-    withdrawable: "Withdrawable",
-    withdrewAmount: "Withdrew Amount",
-    withdrawMaxTimes: "Remaining Withdrawal Attempts",
-    dailyLimit: "Daily Limit",
-    remainWagers: "Remain Wagers",
-    withdrawTutorial: "Withdraw Tutorial",
-    withdrawalMethodInMaintenance:
-      "This channel is currently under maintenance from {startTime} to {endTime}. Please use other channels for withdrawal operations. Thank you!",
-    noAcctAvailable: "No account available",
-    addAcct: "Add account",
-    picture: "Picture",
-    video: "Video",
-    checkReceivingLimit:
-      "Please ensure that your wallet has sufficient receiving limit before making a withdrawal to avoid transaction failure.",
-    bindCardCorrectFormat: "Bind your wallet/bank card using the correct format.",
-    dailyWalletLimit:
-      "Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.",
-    donotexceeddaily:
-      "Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for withdrawals.",
-    blockchainwithdrawfast: "For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast."
+    withdraw: "Withdraw",
+    autoWithdraw: "Fast Withdraw",
+    upgradeToAutoWithdraw: "Upgrade to Fast Withdraw",
+    wallet: "Main Wallet",
+    refresh: "One‑Click Refresh",
+    upgrading: "Upgrading...",
+    confirming: "Confirming...",
+    withdrawFee: "*Withdrawal fee: {fee} {currency}",
+    expectedAmount: "Expected Amount:",
+    exchangeRate: "Current Exchange Rate:",
+    limit: {
+      amount: "Today's withdrawal limit: {amount} {currency}",
+      times: "Remaining: {times} times",
+      oneTime: "Single withdrawal: {min} {currency} - {max} {currency}"
+    },
+    remaining: {
+      title: "Conditions to complete",
+      desc: "If you have questions, please contact customer service.\n*If the system is delayed, please try again in 10 minutes!",
+      rolloverRequired: "Complete {0} more turnover to unlock fast withdraw",
+      table: {
+        header: {
+          bet: "Betting Required",
+          transaction: "Turnover Progress",
+          status: "Status"
+        }
+      }
+    },
+    label: {
+      crypto: "Wallet Address",
+      ewallet: "E‑Wallet",
+      alipay: "Alipay",
+      bankCard: "Bank Card"
+    },
+    card: {
+      crypto: "Crypto Wallet",
+      ewallet: "E‑Wallet",
+      alipay: "Alipay Account",
+      bankCard: "Bank Card"
+    },
+    form: {
+      card: {
+        label: "Select {card}",
+        error: {
+          required: "Please select {card}"
+        },
+        option: {
+          empty: "No {card} available{link}",
+          add: "Add {card}",
+          bind: "Bind {card}"
+        }
+      },
+      amount: {
+        placeholder: "Enter withdrawal amount",
+        label: "Withdrawal Amount",
+        error: {
+          required: "Please enter amount",
+          positive: "Amount must be positive",
+          decimal: "Amount must be a whole number",
+          outOfRange: "Enter a valid amount"
+        }
+      }
+    },
+    notification: {
+      withdrawable: {
+        message: "Congratulations, you have met turnover requirements and can withdraw!"
+      },
+      upgradeToAutoWithdraw: {
+        message: "Successfully upgraded to Fast Withdraw!"
+      },
+      submitWithdraw: {
+        message: "Submission successful"
+      },
+      withdrawBlocked: {
+        message:
+          "Please confirm your last withdrawal in Transaction → Withdrawal Records before submitting a new one. Thank you!"
+      },
+      bindBankCard: {
+        title: "Please bind a bank card first"
+      }
+    }
   },
   bank: {
-    virtualWallet: "eWallet",
-    virtualAccount: "eWallet Account"
-  },
-  order: {
-    withdrawal: "Withdrawal",
-    recharge: "Recharge"
-  },
-  interestProfit: {
-    depositOverview: "Deposit overview",
-    unexpiredEarnings: "Unexpired earnings",
-    cumulativeIncome: "Cumulative income",
-    storageTime: "Storage time (Days)",
-    storageTime_required: "Storage time is required",
-    deposit: "Deposit",
-    deposit_required: "Deposit is required",
-    rates: "Rates",
-    rates_required: "Rates is required",
-    trialCalculation: "Trial calculation",
-    annualInterestRate: "Interest rate",
-    distributeInterest: "Distribute interest",
-    pending: "Pending",
-    ended: "Ended",
-    details: "Details",
-    collect: "Collect",
-    noData: "No data",
-    depositAmount: "Deposit Amount",
-    depositDuration: "Deposit Duration",
-    placeTime: "Place Time",
-    matureTime: "Mature Time",
-    status: "Status",
-    confirm: "Confirm"
-  },
-  vip: {
-    unlimited: "Unlimited",
-    receiveMonthlyRewards: "Receive monthly rewards",
-    received: "Received",
-    receive: "Receive",
-    accumulateDeposit: "Accummulate Deposit",
-    reward: "Reward",
-    levelUpgrade: "Level Upgrade",
-    monthly: "Monthly",
-    dailyWithdrawal: "Daily Withdrawal",
-    limit: "Limit",
-    vipStatus_txt: "VIP status can be upgraded by accumulating monthly deposits",
-    upgrade: "Upgrade",
-    experience: "Experience",
-    dailyWithdrawalTimes: "Daily Withdrawal Frequency",
-    rewards: "Rewards",
-    vipTable_txt:
-      "Once your deposits meet the upgrade requirements, your VIP level will be immediately upgraded, increasing your number of withdrawals.",
-    accumulate: "Accumulate",
-    invites: "Invites",
-    extra: "Extra",
-    rewardss: "Rewards"
-  },
-  earnMoney: {
-    title: "Bonus Pot Arrived",
-    noDataAvailable: "No Data available",
-    person: "person",
-    youSuccessfullyInvited: "You successfully invited",
-    level: "Level",
-    only: "Only",
-    awayFrom: "away from",
-    tabs: {
-      reward: "Reward",
-      teamManagement: "Team management",
-      teamBetting: "Team betting",
-      profitAndLoss: "User profit and loss"
+    addCrypto: "+ Add Crypto Account",
+    bankType: {
+      bankCard: "Bank Card Number",
+      crypto: "Crypto Account",
+      ewallet: "E‑Wallet",
+      alipay: "Alipay ID"
     },
-    reward: {
-      award: "Award",
-      title: "Invitation Rewards",
-      bettingCommission: "Betting Commission",
-      depositCommission: "Deposit Commission",
-      myTotalIncome: "My Total Income",
-      myTotalNumberOfInvites: "My Total Number Of Invites",
-      invite: "Invitation Bonus",
-      topUp: "Deposit Bonus",
-      bet: "Bet Bonus",
-      eligibleRefer: "Eligible Refer",
-      inviteFriendsViaLink: "Invite friends via link",
-      howToGetInvitationBonus: "How to get invitation bonus",
-      inviteList_01: "Invite friends via invitation link",
-      inviteList_02: "Register via link",
-      inviteList_03: "Complete deposit after registration",
-      copyLink: "Copy Link",
-      level: "Level",
-      totalNoOfValidPlayersInvited: "Total number of valid invited players",
-      invitationRewards: "Invitation rewards",
-      note: "Note:",
-      friendCount: "Friend Count",
-      inviteBonus: "Invite Bonus",
-      totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
-      player: "Player",
-      money: "Money",
-      eligibility_tips: "1. Invitee's deposit must be ≥ 300.",
-      betting_tips:
-        "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
-      deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
-      multiple_acc_hint: `2. It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
-    Reward distribution time: Between 3:00 PM and 6:00 PM Pakistan time on the next day. The rewards will be credited to the account during this time frame.
-    `,
-      shareTitle: "B9GAME Share and Earn",
-      shareText:
-        "B9GAME Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
-      betting_table: {
-        header: {
-          description: "Description",
-          commission: "Three-Level Commission"
-        },
-        row1: {
-          description: "Invite players to place bets (win or lose) to earn rewards",
-          commission: "0.6%"
-        },
-        row2: {
-          description: "First-Level Commission",
-          commission: "0.3%"
-        },
-        row3: {
-          description: "Second-Level Commission",
-          commission: "0.2%"
-        },
-        row4: {
-          description: "Third-Level Commission",
-          commission: "0.1%"
-        }
-      },
-      deposit_table: {
-        header: {
-          description: "Description",
-          commission: "Deposit Commission"
-        },
-        row1: {
-          description: "Invite players to make their first deposit and receive a reward.",
-          commission: "5%"
+    form: {
+      bankCard: {
+        error: {
+          required: "Please enter {label}"
         }
       }
     },
-    teamManagement: {
-      searchField: {
-        downLine: {
-          all: "All Down Lines",
-          direct: "Direct Down Lines"
-        },
-        username: {
-          placeholder: "User name"
-        },
-        searchButton: "SEARCH"
-      },
-      table: {
-        id: "ID",
-        downlineMember: "Downline Member",
-        todayRegCount: "Today Register Count",
-        ytdRegCount: "Yesterday Register Count",
-        downlineDepositMember: "Downline Deposit Member",
-        vip: "VIP",
-        uplineLoginName: "Upline Username",
-        type: "Types",
-        username: "Username",
-        emark: "Emarks",
-        upLine: "Upline Agent",
-        registrationDate: "Registration Date",
-        balance: "Balance",
-        lastLogin: "Last Login Time",
-        lastDeposit: "Last Deposit Time",
-        action: "Action"
-      }
-    },
-    teamBetting: {
-      searchField: {
-        date: {
-          today: "Today",
-          yesterday: "Yesterday"
-        },
-        gameType: {
-          label: "Game Type",
-          options: {
-            slot: "Slot",
-            live: "Live Casino",
-            sport: "Sports",
-            fish: "Fish",
-            poker: "Poker"
-          }
-        },
-        searchButton: "Search"
-      },
-      table: {
-        vendor: "Vendor",
-        gameType: "Game Type",
-        betAmount: "Bet Amount",
-        winning: "Winning",
-        validBet: "Valid Bet",
-        balance: "Win/Loss",
-        rounds: "Rounds",
-        player: "Player",
-        platform: "Platform",
-        players: "Players",
-        bet: "Bet",
-        payout: "Payout"
-      }
-    },
-    profitAndLoss: {
-      searchField: {
-        date: {
-          today: "Today",
-          yesterday: "Yesterday",
-          "7day": "7-Days"
-        },
-        username: {
-          placeholder: "User name"
-        },
-        searchButton: "SEARCH",
-        radio: {
-          allLevels: "All Levels",
-          threeLevels: "3 levels"
-        }
-      },
-      table: {
-        username: "Username",
-        deposit: "Deposit",
-        withdraw: "Withdraw",
-        bonus: "Bonus",
-        validBet: "Valid Bet",
-        balance: "Win/Loss",
-        rebate: "Player Rebate",
-        referral: "Referral",
-        profitAndLoss: "Profit And Loss",
-        ftdamount: "FTD Amount",
-        ftdcount: "FTD Count",
-        depositcount: "Deposit Count",
-        depositFee: "Deposit Fee",
-        bet: "Bet",
-        payout: "Payout"
-      },
-      sums: {
-        bet: "Bet",
-        betamount: "Bet Amount",
-        depositcount: "Deposit Count",
-        validBet: "Valid Bet",
-        bonus: "Bonus",
-        payout: "Payout",
-        deposit: "Deposit",
-        withdraw: "Withdraw",
-        firstdepositcount: "First Deposit Count"
+    notification: {
+      unbindBankCard: {
+        title: "Please enter the password to unbind {label}"
       }
     }
   },
-  records: {
-    date: "Date",
-    beforeBalance: "Before Balance",
-    afterBalance: "After Balance",
-    payout: "Payout",
-    gamePlatform: "Game Platform",
-    bet: "Bet",
-    settle: "Settle",
-    settled: "Settled",
-    betAndSettle: "Bet and Settle",
-    cancel: "Cancel",
-    rollback: "Rollback",
-    patch: "Patch",
-    unsettled: "Unsettled",
-    jackpot: "Jackpot",
-    bonus: "Bonus",
-    amount: "Amount",
-    applying: "Applying",
-    failed: "Failed",
-    Success: "Success",
-    underReview: "Under Review",
-    toBePaid: "To be paid",
-    paymentOnGoing: "Payment on going",
-    automaticPayment: "Automatic Payment",
-    suspend: "Suspend",
-    pending: "Pending",
-    success: "Success",
-    supplementSuccess: "Supplement Success",
-    closed: "Closed",
-    orderNo: "Order Number",
-    bank: "BANK",
-    noRecord: "No record",
-    noMoreRecord: "No more record",
-    bytoday: "Today",
-    byyesterday: "Yesterday",
-    all: "All",
-    turnover_requi: "TurnOver Requirement",
-    sending: "Sending",
-    waitCallback: "Waiting for callback",
-    paying: "Paying",
-    waitingAutoPay: "Awaiting Auto Payment",
-    failReview: "Failed Review",
-    waitingRetry: "Waiting for retry"
+  mail: {
+    readAll: "Mark All Read",
+    deleteAll: "Delete All",
+    delete: "Delete",
+    read: "Read",
+    sentTime: "Sent: {time}",
+    content: "Content:",
+    reply: "Reply:",
+    selectMultiple: "Select Multiple",
+    category: {
+      activity: "Activity",
+      announcement: "Announcement",
+      payment: "Payment",
+      notification: "Notification",
+      all: "All"
+    },
+    notification: {
+      deleteConfirm: {
+        title: "Are you sure?",
+        message: "Delete selected messages?"
+      },
+      readSelectedSuccess: {
+        message: "Selected marked as read"
+      },
+      readSuccess: {
+        message: "Message marked as read"
+      },
+      readAllSuccess: {
+        message: "All messages marked as read"
+      },
+      deleteSelectedSuccess: {
+        message: "Selected messages deleted"
+      },
+      deleteAllSuccess: {
+        message: "All messages deleted"
+      }
+    }
   },
-  appUpdate: {
-    updateHeader: "Update Announcement",
-    isOutdatedAppContent_01: "Your App Version Is Outdated,",
-    isOutdatedAppContent_02: "Please Update The App Now",
-    newAppVersionContent_01: "New Version Detected, Do You Want To Update?",
-    cancel: "Cancel",
-    updateNow: "Update now"
+  record: {
+    betId: "Bet ID",
+    serialNumber: {
+      deposit: "Deposit Code"
+    },
+    table: {
+      withdraw: {
+        header: {
+          serialNumber: "Withdrawal Code",
+          amount: "Amount",
+          status: "Status",
+          withdrawDate: "Date"
+        }
+      },
+      transfer: {
+        header: {
+          serialNumber: "Transaction Code",
+          type: "Change Type",
+          platform: "Platform",
+          amount: "Amount",
+          status: "Status",
+          transferDate: "Date"
+        }
+      },
+      promo: {
+        header: {
+          serialNumber: "Code",
+          privilegeName: "Promo Name",
+          amount: "Amount",
+          recordTime: "Time"
+        }
+      },
+      deposit: {
+        header: {
+          serialNumber: "Deposit Code",
+          depositAmount: "Amount",
+          status: "Status",
+          depositDate: "Date",
+          paymentType: "Payment Type"
+        }
+      },
+      bet: {
+        header: {
+          transactionId: "Bet ID",
+          betTime: "Time",
+          platform: "Platform",
+          bet: "Bet",
+          payout: "Payout",
+          gameType: "Game Type",
+          status: "Status"
+        }
+      },
+      reminderRequired: {
+        header: {
+          orderNo: "Order No.",
+          status: "Status",
+          financeRemark: "Finance Note",
+          feedbackTime: "Feedback Time",
+          type: "Type"
+        }
+      }
+    },
+    filter: {
+      range: "Date Range",
+      platform: "Platform",
+      totalBet: "Total Bet: {amount}",
+      totalPayout: "Total Payout: {amount}",
+      allPlatform: "All Platforms"
+    },
+    list: {
+      deposit: "Deposit Records",
+      withdraw: "Withdrawal Records",
+      moneyChange: "Account Changes",
+      promo: "Promo Records",
+      bet: "Betting Records",
+      reminderRequest: "Reminder Requests"
+    },
+    notification: {
+      reminderRequest: {
+        title: "Reminder Request",
+        content: {
+          serialNumber: "Deposit Code",
+          remark: "Remark"
+        }
+      },
+      confirmFund: {
+        title: "System Alert",
+        message: "Confirm receipt"
+      },
+      cancelWithdraw: {
+        title: "System Alert",
+        message: "Confirm cancellation"
+      },
+      cancelWithdrawSuccess: {
+        message: "Withdrawal canceled"
+      },
+      confirmFundSuccess: {
+        message: "Receipt confirmed"
+      },
+      reminderRequestLimit: {
+        message: "You already have 3 pending reminders."
+      },
+      reminderRequestSuccess: {
+        message: "Reminder submitted successfully!"
+      }
+    },
+    field: {
+      vipRebate: "VIP Rebate",
+      withdrawFail: "Withdrawal Failed",
+      withdrawTransfer: "Transfer Out",
+      withdraw: "Withdraw",
+      depositTransfer: "Transfer In",
+      depositMoneyChange: "Transfer",
+      deposit: "Deposit",
+      promo: "Promotion",
+      apply: "Processing",
+      fail: "Failed",
+      success: "Successful",
+      step1: "Processing",
+      step2: "Pending Payment",
+      step3: "Paying",
+      step4: "Auto Payment",
+      step5: "Please contact customer service for the reason",
+      autoPay: "Auto Payment",
+      bank: "VIP Card Transfer",
+      usdtErc: "USDT ERC",
+      usdtTrc: "USDT TRC",
+      offline: "Offline Card Transfer",
+      union: "UnionPay Express",
+      quickPayment: "Small Amount Transfer",
+      specialPayment: "Online Banking Transfer",
+      alipay: "Alipay Card Transfer",
+      alipayCode: "Alipay",
+      wechatCode: "WeChat Pay",
+      qqCode: "QQ Pay",
+      kdPay: "K Beans",
+      blbPay: "808 Wallet",
+      ddPay: "DingTalk",
+      hbPay: "He Bao",
+      szPay: "Digital RMB",
+      cardPay: "Prepaid Card Payment",
+      onlineCode: "Cloud QuickPass",
+      dyPay: "Douyin",
+      autoPay: "Auto Payment",
+      pending: "Paying",
+      success: "Successful",
+      supplementSuccess: "Successful",
+      closed: "Closed",
+      waitingCallback: "Auto Paying",
+      settled: "Settled",
+      rec1Reminder: "In Progress",
+      rec1: "Deposit",
+      rec2Reminder: "Completed",
+      rec2: "Withdrawal",
+      bet: "Bet",
+      settle: "Settle",
+      betNSettle: "Bet and Settle",
+      cancel: "Cancel",
+      patch: "Patch",
+      transfer: "Transfer",
+      adjust: "Amount Adjustment"
+    }
   },
-  bankCard: {
-    bankAccountNum: "Bank Account Number",
-    pleaseEnterCardAccount: "Please enter bank account number",
-    bankCardMust16NumberandAbove: "Bank account number must be between 13 and 20 numbers",
-    bankCardDisallowDecimal: "Bank account number cannot have decimal points",
-    nameofCardAcc: "Card Account Name",
-    insertCardAccName: "Please insert card account name",
-    insertTelephone: "Please insert telephone number",
-    pleaseEnterTelephone: "Please enter a valid telephone number",
-    otp: "OTP",
-    insertVerificationCode: "Insert verifcation code",
-    pleaseEnterVerificationCode: "Please enter verifcation code.",
-    pleaseEnterOtp: "Please enter the OTP sent to your phone",
-    verificationCodeLengthError: "Length should be 4 characters",
-    otpLengthError: "OTP number should be 6 characters",
-    sendOtp: "Send OTP",
-    getOtp: "Get OTP",
-    telephone: "Mobile number",
-    captchaSuccess:
-      "Operation successful, please check the verification code sent to your phone! (Valid for 5 minutes.)",
-    captchaFailedMessage: "Verification code check failed, please refresh the page",
-    clickAndEnterPhoneCode:
-      "Please click to get the verification code and enter the code sent to your registered phone number"
+  announcement: {
+    title: {
+      announcement: "Important Announcement",
+      inbox: "In‑App Messages"
+    },
+    dontRemindToday: "Don't remind again today",
+    btn: {
+      cs: "Contact Support",
+      detail: "View Details"
+    }
+  },
+  layout: {
+    header: {
+      lobby: "{name} Game Lobby",
+      baccarat: "Baccarat",
+      forgotPassword: "Forgot Password",
+      live: "Live Casino",
+      esport: "Esports",
+      sport: "Sports",
+      poker: "Poker",
+      fish: "Fishing",
+      deposit: "Deposit",
+      promo: "Promotions",
+      withdraw: "Withdraw",
+      transfer: "Transfer",
+      records: "Records",
+      transit: "Transfer Records",
+      personal: "Account Info",
+      verifyTelephone: "Bind Phone Number",
+      verifyEmail: "Bind Email",
+      changePwd: "Change Password",
+      download: "Download",
+      invite: "Invite Friends",
+      invite2: "Invite Friends",
+      hongbaoyu: "Red Packet Rain",
+      announcement: "Announcements",
+      mail: "Feedback",
+      inbox: "Notifications",
+      outbox: "My Feedback",
+      mailWrite: "Submit Feedback",
+      withdrawBank: "Bank Details",
+      promotion: "Claim Promo",
+      affiliate: "Affiliate",
+      bankInfo: "Bank Details",
+      depositRecord: "Deposit History",
+      withdrawRecord: "Withdrawal History",
+      transferRecord: "Account Changes",
+      promoRecord: "Promo History",
+      betRecord: "Betting History",
+      remindRecord: "Reminder History",
+      help: "Rescue Fund History",
+      inviteRecord: "Referral History",
+      vip: "VIP Benefits",
+      bindCrypto: "Bind Crypto Account",
+      changePassword: "Change Password"
+    },
+    footer: {
+      home: "Home",
+      promo: "Promotions",
+      liveChat: "Support",
+      me: "Me"
+    }
+  },
+  account: {
+    wallet: "Main Wallet",
+    feature: {
+      title: "Features",
+      personal: "Account Info",
+      bank: "Bank Details",
+      record: "Transaction Info",
+      betRecord: "Betting History",
+      inbox: "Notifications",
+      changePassword: "Change Password"
+    },
+    hot: {
+      title: "Hot Picks",
+      promo: "Promos"
+    },
+    logout: "Log Out",
+    notification: {
+      logoutConfirm: {
+        title: "Are you sure?",
+        message: "Do you really want to log out?"
+      },
+      changProfile: {
+        title: "Change Avatar",
+        upload: {
+          title: "Upload Avatar",
+          desc: "Supports jpg, jpeg, png, bmp under 1 MB"
+        },
+        preview: "Avatar Preview"
+      },
+      copyCustomUrlSuccess: {
+        message: "Custom URL copied"
+      },
+      imgFormatError: {
+        message: "Invalid image format"
+      },
+      imgSizeLimit: {
+        message: "Image exceeds {size}, please refresh and try again"
+      },
+      noImg: {
+        message: "Please select an image"
+      },
+      changeProfileSuccess: {
+        message: "Profile updated successfully"
+      }
+    }
+  },
+  forgotPassword: {
+    tab: {
+      changePasswordByPhone: "Reset via SMS",
+      changePasswordByEmail: "Reset via Email"
+    },
+    form: {
+      preparePhoneOtp: "Enter your username and phone number; we will send a new password via email.",
+      otpSentPhone: "OTP sent to your registered phone. Please enter OTP and new password.",
+      prepareEmailOtp: "Please enter username and registered email to reset password.",
+      otpSentEmail: "OTP sent to your email. Enter OTP and new password to complete.",
+      otp: {
+        label: "OTP Code",
+        placeholder: "Enter OTP",
+        error: {
+          required: "Enter OTP",
+          length: "Invalid OTP length"
+        }
+      },
+      password: {
+        label: "New Password",
+        placeholder: "Enter new password",
+        error: {
+          required: "Enter password",
+          length: "Password must be {min} to {max} characters"
+        }
+      },
+      passwordConfirm: {
+        label: "Confirm Password",
+        placeholder: "Re‑enter new password",
+        error: {
+          required: "Confirm password",
+          length: "Password must be {min} to {max} characters",
+          match: "Passwords do not match"
+        }
+      },
+      userName: {
+        label: "Username",
+        placeholder: "Enter username",
+        error: {
+          required: "Enter username",
+          length: "Username must be {min} to {max} characters"
+        }
+      },
+      phone: {
+        label: "Phone Number",
+        placeholder: "Enter phone number",
+        error: {
+          required: "Enter phone number",
+          format: "Invalid phone number",
+          error: "Phone number error"
+        }
+      },
+      verificationCode: {
+        label: "Enter Code",
+        placeholder: "Enter code",
+        error: {
+          format: "Code must be 4 characters"
+        }
+      },
+      email: {
+        label: "Email",
+        placeholder: "Enter registered email",
+        error: {
+          required: "Enter email",
+          format: "Invalid email address"
+        }
+      }
+    },
+    notification: {
+      sendingOtp: {
+        message: "Sending OTP..."
+      },
+      otpVerified: {
+        message: "OTP verified, please enter new password"
+      },
+      submitting: {
+        message: "Submitting..."
+      },
+      passwordChanged: {
+        message: "Password changed successfully"
+      }
+    }
   },
   promo: {
-    all: "ALL",
-    earn: "EARN",
-    hot: "HOT",
-    new_user: "NEW USER",
-    sports: "SPORTS",
-    live: "LIVE",
-    slot: "SLOT",
-    vip: "VIP"
-  },
-  message: {
-    activity: "Activity",
-    payment: "Payment",
-    system: "System",
-    noMessage: "No messages",
-    visitLink: "Visit link"
-  },
-  customerServiceVerifier: {
-    mainTitle: "B9.GAME",
-    subTitle: "Customer Service Verifier",
-    contentPara01:
-      "To prevent scams using B9.GAME's list, you can verify the Telegram or Discord account you are chatting&nbsp;with ",
-    contentPara02: "Please enter the agent account ID and click the Check button"
-  },
-  playerGuide: {
-    welcomeMessage: "Welcome to",
-    teachingHowToEarn: "Let us teach you how to make money easily!",
-    welcome: "Welcome!",
-    completeRegistration: "Complete registration and log in successfully",
-    startNow: "START NOW",
-    hotGames: "Hot Games",
-    experienceGame: "Experience the game and try it out without recharging",
-    tryItOut: "TRY IT OUT",
-    watchGameTutorial: "Watch the game tutorial video",
-    recharging: "Recharging",
-    rechargeDownloadApp: "After recharging, download the app and log in to get 28 extra bonuses",
-    depositNow: "DEPOSIT NOW",
-    depositTutorial: "Deposit Tutorial",
-    inviteFriends: "Invite Friends",
-    inviteReward: "How to earn money by sharing invitations",
-    shareNow: "SHARE NOW",
-    referTutorial: "Refer Tutorial",
-    withdrawal: "Withdrawal",
-    unlockTasks: "Unlock subsequent invitation reward tasks",
-    withdrawNow: "WITHDRAW NOW",
-    withdrawTutorial: "Withdraw Tutorial",
-    congratulations: "Congratulations!",
-    completeNoviceMission: "Congratulations on completing the novice mission!",
-    startGame: "START GAME",
-    expertGameplayGuide: "Watch the expert gameplay guide",
-    maxReward: "For every person invited, the maximum reward is",
-    rs: "RS",
-    extraBonus: "extra bonus for invited users' first deposit",
-    lifetimeCommission: "Lifetime commission for invited users",
-    commissionDetails: "(regardless of winning or losing)",
-    arrivalTime: "Reminder of arrival time (usually",
-    minutes: "minutes)",
-    successfulWithdrawal: "Reminder of successful withdrawal (a prompt pops up after the funds arrive)",
-    shareandearn: "Share and Earn",
-    noSupport: "Your browser does not support the video tag.",
-    linkCopied: "Link copied to clipboard",
-    copyFailed: "Failed to copy link",
-    next: "Next",
-    service: "Service",
-    deposit1: "Click on wallet in the menu",
-    deposit2: "Select deposit tab",
-    deposit3: "Select bank",
-    deposit4: "Update amount and click Submit",
-    refer1: "How to earn money by sharing invitations",
-    refer2: "Click on earn money in the menu",
-    refer3: "Invite friends through the link",
-    withdraw1: "Click on wallet in the bottom menu",
-    withdraw2: "Select withdrawal tab",
-    withdraw3: "Enter withdrawal amount",
-    withdraw4: "Confirm withdrawal request",
-    bankTransfer: "Bank transfer",
-    digitalCurrency: "digital currency",
-    bankAccountWithdrawal: "Bank account withdrawal",
-    digitalCurrencyWithdrawal: "digital currency withdrawal"
-  },
-  hotPromo: {
-    unusedCoupons: "You still have unused coupons from last time, continue to use them?",
-    name: "Name",
-    date: "Date",
-    amount: "Amount",
-    list_of_winners: "List of Winners",
-    terms_and_Conditions: "Terms and Conditions",
-    on_other_days_three_times_daily: "On Other Days, Three Times Daily",
-    every_friday_saturday_and_sunday: "Every Friday, Saturday, and Sunday",
-    starts_now: "Starts now",
-    starts_at: "Starts at",
-    rewind_time: "Rewind time",
-    events: "Events",
-    ranking_and_bonus: "Ranking and Bonus",
-    activities: "Activities",
-    current_valid_bets: "Current Valid Bets",
-    remainingTimes: "Remaining times",
-    promoExclusionNotice: "Notice: This promotion is not counted towards CASINO and SPORTS wager!",
-    deposit: "Deposit",
-    dailyWagerCount: "Number of daily wager",
-    deposits_of_the_day: "Deposits of the day",
-    currentSignIn: "Current Sign-in",
-    consecutiveDepositBonus:
-      "The more consecutive days of deposit requirements you complete, the more extra bonus you will get.",
-    save_image: "Save Image",
-    share: "Share",
-    CASH_OUT_COSTS: "CASH OUT COSTS",
-    invitation_wins: "Invitation wins",
-    next_round: "Next Round",
-    countdown: "Countdown",
-    invitationRecords: "Invitation records",
-    lotteryRecords: "Lottery records",
-    noRecords: "No Records",
-    activityRules: "Activity rules",
-    record: "Record",
-    rules: "Rules",
-    countdown_to_next_free_spins: "Countdown to next free spins",
-    this_round_has_ended: "This round has ended.",
-    invite_to_earn_spin: "Invite to earn spin",
-    time: "time",
-    rotate: "rotate",
-    no_records: "No records",
-    receive: "Receive",
-    received: "Received",
-    time_left: "time left",
-    go_withdraw_now: "Go withdraw now",
-    rs: "RS",
-    withdraw_money_over_rs: "Withdraw money over Rs",
-    claim_now: "Claim now",
-    claimed: "Claimed",
-    bonus_claim_time: "Bonus claim time",
-    promoEndsOn: "Promo Ends On",
-    claimPopup: {
-      youWon: 'You won',
-      oneOfTodayWinners: "One of today's 77 lucky winners"
-    },
-    earnMoney: {
-      earnMoney: "Earn Money",
-      congratsOnGetting: "Congratulations on getting"
-    },
-    aviatorWheel: {
-      remainingDrawTimes: "Remaining draw times",
-      congratulations: "Congratulations"
-    },
-    ftdDepositBonus: "First Time Deposit Bonus",
-    redemptionCode: "Redemption Code",
-    newplayerGuide: "New Player Guide",
-    depositSpinWheel: {
-      instruction: "Complete the deposit task to participate in the wheel activity and get a bonus of up to ",
-      depositNow: "Deposit Now",
-      upto: "UP to",
-      remainingTimes: "Remaining times",
-      depositSpin: "Deposit Rs {min} to get 1 spin.",
-      spin: "Spin",
-      rules: "Rules",
-      activityRules: "Activity rules",
-      rule_01:
-        "The activity includes four types of carousels: Silver, Gold, Diamond, and Special. You can unlock different levels of carousels by recharging. The higher the level, the more generous the rewards will be.",
-      rule_02: "Every draw has a 100% chance of winning a prize.",
-      rule_03: "All rewards will be deposited directly into your wallet.",
-      rule_04: "The bonus requires one turnover to withdraw.",
-      rule_05:
-        "The right to interpret this event belongs to B9.game. If you have any questions, please contact customer service.",
-      silver: "Silver",
-      gold: "Gold",
-      diamond: "Diamond",
-      supreme: "Supreme"
-    },
-    signIn7Days: {
-      continuousSignIn: "Continuous sign-in:",
-      expired: "Expired",
-      day: "day",
-      days: "days",
-      signIn: "Sign in",
-      signedIn: "Signed in"
-    },
-    megaSharingWheel: {
-      wheelTitle: "Mega Sharing Roulette",
-      missionTitle: "Rewards",
-      invitersUsersDeposit: "Inviter's Deposit Count ≥ ",
-      invitersUsersValidBet: "Inviter's Valid Bet ≥ ",
-      EligibleInvitedUsers: "Eligible Invited Users ≥ ",
-      missionDescription: "Finish the task to claim your ticket",
-      timeLimited: "Time-limited",
-      day: "Days",
-      hour: "Hours",
-      minute: "Min",
-      second: "Sec",
-      rewardClaimed: "Reward has already been claimed"
-    },
-    jackpotAviator: {
+    label: {
+      new: "New",
+      hot: "Hot",
+      normal: "Standard",
+      recommend: "Recommended",
       daily: "Daily",
-      weekly: "Weekly",
-      rules: "Rules",
-      history: "History",
-      receive: "Receive",
-      ranking: "Ranking",
-      username: "Username",
-      betVolume: "Bet Volume",
-      rank: "Rank",
-      rankingBonusRatio: "Ranking Bonus Ratio",
-      myBets: "My Bets",
-      myReward: "My Rewards",
-      ranksLeft: "Ranks Left",
-      jackpot: "Jackpot",
-      noRank: "No Rank",
-      activityRules: "Activity rules",
-      termsConditions: "Terms & Conditions",
-      rules1:
-        "Daily Ranking Rewards: 1.5% of the platform's total daily pilot revenue will be included in the daily prize pool. This pool will be automatically distributed to players daily based on their positions in the daily rankings.",
-      rules2:
-        "Weekly Ranking Rewards: 0.6% of the platform's total weekly revenue will contribute to the weekly prize pool. This pool will be automatically distributed to players weekly based on their positions in the weekly rankings.",
-      activityRules1:
-        "Players' rankings on the daily leaderboard, and overall ranking are based on their corresponding total bet amount.",
-      activityRules2: "Rewards will be displayed on the leaderboard event page.",
-      activityRules3:
-        "The daily leaderboard is calculated from 00:00 to 24:00 local time. Daily rewards will be issued within half an hour after the end of the daily leaderboard and can be claimed manually on the promotions page.",
-      activityRules4:
-        "The weekly ranking is calculated from 00:00 local time on Monday to 24:00 local time on Sunday. Weekly rewards will be issued within half an hour after the end of the weekly cycle and can be claimed manually on the promotions page.",
-      termsCondition1:
-        "Before applying for rewards, players must provide their phone number and bank account information. The phone number, IP address, and bank account information must match the region and personal data. Any abnormal behavior by the player will result in the cancellation of their bonuses or earnings.",
-      termsCondition2:
-        "Players who open multiple accounts or fraudulent accounts will lose their eligibility to participate in events due to improper behavior on the platform, and the related accounts will be frozen.",
-      termsCondition3: "Please be sure to read these terms and conditions carefully before participating in this event."
-    },
-    goldenEgg: {
-      ranking: "Ranking",
-      userName: "Username",
-      betVolume: "Bet Volume"
-    },
-    spinReferWheel: {
-      paymentRequestSubmitted: "Payment request submitted",
-      stillNeedToMakeWithdrawal: "Still need to make withdrawal",
-      willBePaidToYourRsAccount: "will be paid to your RS account",
-      inviteFriendsToHelp: "Invite Friends To Help",
-      referFriendToRegister: "Refer a friend to register, deposit and verify your phone to win free spins",
-      only: "Only",
-      toGo: "to go"
+      newUser: "New User",
+      timeLimited: "Limited Time",
+      selected: "Selected"
     }
   },
-  maintenance: {
-    underMaintenance: "Under maintenance",
-    content01: "Our website is currently undergoing maintenance...",
-    from: "From",
-    to: "To",
-    content02: "During this period, all games and services will be unavailable.",
-    content03: "We sincerely apologize for any inconvenience this may cause and appreciate your patience!"
+  bindCrypto: {
+    form: {
+      cardNumber: {
+        label: "Crypto Account",
+        placeholder: "Enter crypto account",
+        error: {
+          required: "Enter crypto account",
+          format: "Invalid crypto account format",
+          length: "Length must be {min} to {max} characters"
+        }
+      },
+      type: {
+        label: "Crypto Type"
+      },
+      category: {
+        label: "Protocol"
+      }
+    }
+  },
+  login: {
+    userNameLogin: "Username Login",
+    phoneLogin: "Phone Login",
+    forgotPassword: "Forgot password?",
+    rememberPassword: "Remember me",
+    cs: "Contact Support",
+    loggingIn: "Logging in...",
+    form: {
+      userName: {
+        label: "Username",
+        placeholder: "Enter username",
+        error: {
+          required: "Enter username",
+          length: "Length must be {min} to {max}"
+        }
+      },
+      password: {
+        label: "Password",
+        placeholder: "Enter password",
+        error: {
+          required: "Enter password"
+        }
+      },
+      phone: {
+        label: "Phone Number",
+        placeholder: "Enter phone number",
+        error: {
+          required: "Enter phone number",
+          format: "Invalid phone number",
+          error: "Phone number error"
+        }
+      },
+      otp: {
+        label: "SMS Code",
+        placeholder: "Enter SMS code",
+        error: {
+          required: "Enter SMS code",
+          error: "Code error"
+        },
+        append: {
+          sendable: "Send Code",
+          sent: "Sent ({second}s)"
+        }
+      },
+      verificationCode: {
+        label: "Captcha",
+        placeholder: "Enter captcha",
+        imgTitle: "Click to refresh",
+        error: {
+          format: "Invalid captcha"
+        }
+      }
+    },
+    notification: {
+      verification: {
+        title: "Captcha Verification"
+      },
+      sentOtp: {
+        message: "SMS code sent successfully"
+      }
+    }
+  },
+  register: {
+    registering: "Registering...",
+    form: {
+      userName: {
+        label: "Username",
+        placeholder: "{min}–{max} chars, letters & numbers",
+        error: {
+          required: "Enter username",
+          length: "Username must be {min} to {max} chars",
+          format: "Start with letter, include ≥2 letters & ≥1 number"
+        }
+      },
+      password: {
+        label: "Password",
+        placeholder: "Enter password",
+        error: {
+          required: "Enter password",
+          length: "Password must be {min} to {max} chars"
+        }
+      },
+      passwordConfirm: {
+        label: "Confirm Password",
+        placeholder: "Re‑enter password",
+        error: {
+          required: "Confirm password",
+          length: "Password must be {min} to {max} chars",
+          match: "Passwords must match"
+        }
+      },
+      realName: {
+        label: "Full Name",
+        placeholder: "Must match bank card name",
+        error: {
+          required: "Enter full name",
+          length: "Name must be {min} to {max} chars"
+        }
+      },
+      verificationCode: {
+        label: "Captcha Code",
+        placeholder: "Enter code",
+        imgTitle: "Click to refresh",
+        error: {
+          format: "Code must be 4 characters"
+        }
+      },
+      affiliateCode: {
+        label: "Referral Code",
+        placeholder: "Optional"
+      }
+    },
+    notification: {
+      registerSuccess: {
+        message: "Registration successful"
+      }
+    }
+  },
+  changePassword: {
+    btn: "Change Password",
+    form: {
+      oldPassword: {
+        placeholder: "Enter old password",
+        error: {
+          required: "Enter old password",
+          length: "Password must be {min} to {max} chars"
+        }
+      },
+      newPassword: {
+        placeholder: "Enter new password",
+        error: {
+          required: "Enter new password",
+          length: "Password must be {min} to {max} chars"
+        }
+      },
+      newPasswordConfirm: {
+        placeholder: "Confirm new password",
+        error: {
+          required: "Confirm new password",
+          length: "Password must be {min} to {max} chars",
+          match: "Confirmation does not match"
+        }
+      }
+    },
+    notification: {
+      changePasswordSuccess: {
+        message: "Password changed successfully"
+      }
+    }
+  },
+  verifyEmail: {
+    form: {
+      email: {
+        label: "Email Address",
+        placeholder: "Enter email",
+        error: {
+          required: "Enter email",
+          format: "Invalid email address"
+        },
+        append: {
+          sendable: "Send Code",
+          sent: "Sent ({second}s)"
+        }
+      },
+      otp: {
+        label: "Verification Code",
+        placeholder: "Enter email code",
+        imgTitle: "Click to refresh",
+        error: {
+          required: "Enter code"
+        }
+      }
+    },
+    notification: {
+      captcha: {
+        title: "Captcha",
+        message: "Submitted"
+      },
+      otpSent: {
+        message: "Verification code sent to your email."
+      }
+    }
+  },
+  personal: {
+    alert: "Once updated, info cannot be changed. For help, {0}",
+    cs: "contact support",
+    form: {
+      userName: {
+        label: "Username",
+        placeholder: "Username",
+        error: {
+          required: "Enter username"
+        }
+      },
+      realName: {
+        label: "Full Name",
+        placeholder: "Enter full name",
+        error: {
+          required: "Enter full name",
+          length: "Name must be {min} to {max} chars"
+        }
+      },
+      birth: {
+        label: "Birthdate",
+        placeholder: "DD/MM/YYYY",
+        error: {
+          required: "Select birthdate",
+          format: "Enter a valid date"
+        }
+      },
+      email: {
+        label: "Email",
+        placeholder: "Email",
+        error: {
+          required: "Enter email",
+          format: "Invalid email"
+        }
+      },
+      phone: {
+        label: "Phone Number",
+        placeholder: "Phone number",
+        error: {
+          required: "Enter phone number",
+          format: "Invalid phone number"
+        }
+      }
+    }
+  },
+  home: {
+    downloadApp: {
+      appName: "Lucky6 APP",
+      desc: "All games covered. Smoother, safer, faster experience."
+    },
+    authSection: {
+      notLogin1: "You are not logged in",
+      notLogin2: "Login/Register to view"
+    },
+    game: {
+      maintenance: "Under maintenance",
+      maintenanceTime: "Maintenance: {start} - {end}"
+    },
+    notification: {
+      announcement: {
+        title: "Announcement"
+      },
+      newVersion: {
+        title: "Update Available",
+        message: "New version detected. Do you want to update?"
+      }
+    }
   },
   error: {
     101: "Platform not found",
@@ -1197,29 +1055,5 @@ export default {
     58003: "Event have expired",
     58004: "Cannot Participate. Previous Tasks Has Failed to Accomplish.",
     58005: "Congrats, You have Completed All Tasks"
-  },
-  content: {
-    nospinleft: "No spins left",
-    title1: "The registration time starts from the time the registration is completed.",
-    message1: "Once your accumulated amount reaches 1000 PKR, you can withdraw.",
-    message2: "When you have no spins left, invite new players to register and deposit to earn additional free spins.",
-    message3:
-      "The event lasts for 3 days. After the event ends, accumulated rewards will be reset and the event will restart.",
-    message4: "Each user can enjoy one free spin per day, which will be added at 00:00 daily.",
-    message5:
-      "The invitee must verify their phone number and must not have a duplicate IP address to qualify for the referral reward.",
-    aviatorPromoIntro:
-      "Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! The prize pool for the top 50 is 1,250,000 PKR!",
-    aviatorGoldenEgg:
-      "When betting in Aviator every day, when the effective betting amount reaches 888 PKR, you can get the chance to smash the golden egg (SUNEHRI ANDY). Maximum reward: 88,888 PKR, the probability of winning is 3.6%",
-    aviatorTopTurnover:
-      "When betting on Aviator, the player with the highest cumulative turnover will qualify for first place.",
-    cashRainIntro: "Each round of cash rain freely distributes 666,666 PKR.",
-    cashRainMaxPerRound: "Maximum cashback amount per round: 66,666 PKR.",
-    cashRainFreeDistribution: "Each round freely distributes cashback.",
-    cashRainClaimCondition:
-      "Deposit ≥ PKR 300 on the same day and complete daily bets totaling ≥ PKR 350 to claim your free bonus.",
-    cashRainUsage: "The received money can be directly used for playing games or withdrawing.",
-    cashRainVIP: "The higher the VIP membership level, the greater the amount received."
   }
 };
