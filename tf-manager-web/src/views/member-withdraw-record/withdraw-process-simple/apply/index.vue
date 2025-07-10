@@ -119,6 +119,7 @@
         {{ t('fields.bulkWithdraw') }}
       </el-button>
       <el-button
+        v-if="hasPermission(['sys:withdraw:simple:pending'])"
         ref="suspendBtnRef"
         size="mini"
         type="danger"
@@ -267,7 +268,7 @@
             >
               {{ t('fields.fail') }}
             </el-button>
-            <el-button ref="suspendBtnsRef" size="mini" type="danger" @click="toPending(scope.row)" @keydown.enter.prevent>
+            <el-button v-if="hasPermission(['sys:withdraw:simple:pending'])" ref="suspendBtnsRef" size="mini" type="danger" @click="toPending(scope.row)" @keydown.enter.prevent>
               {{ t('fields.toSuspend') }}
             </el-button>
           </template>
