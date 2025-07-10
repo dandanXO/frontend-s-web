@@ -34,17 +34,16 @@
       src="../../../assets/images/promotion/hotpromo/jackpot-aviator/activity-rules-title.png"
     /> -->
 
-    <div class="rule-common-title">
+    <!-- <div class="rule-common-title">
       {{ $t("hotPromo.jackpotAviator.activityRules") }}
     </div>
     <ol class="rules">
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules1") }}</li>
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules2") }}</li>
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules3") }}</li>
-      <!-- <li class="rule-item">{{ $t("hotPromo.jackpotAviator.activityRules4") }}</li> -->
     </ol>
 
-    <br />
+    <br /> -->
 
     <!-- <img
       v-if="langVal === 'ur'"
@@ -57,14 +56,16 @@
       src="../../../assets/images/promotion/hotpromo/jackpot-aviator/terms-conditions-title.png"
     /> -->
 
-    <div class="rule-common-title">
+    <!-- <div class="rule-common-title">
       {{ $t("hotPromo.jackpotAviator.termsConditions") }}
     </div>
     <ol class="rules">
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.termsCondition1") }}</li>
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.termsCondition2") }}</li>
       <li class="rule-item">{{ $t("hotPromo.jackpotAviator.termsCondition3") }}</li>
-    </ol>
+    </ol> -->
+
+    <div v-html="promoContent"></div>
   </div>
 </template>
 
@@ -73,7 +74,7 @@ import { ref, computed } from "vue";
 import { i18nStore } from "src/router/language";
 import RankingBonusRatioTable from "./RankingBonusRatioTable.vue";
 
-const props = defineProps(["onClickBackBtn", "rankingBonusRatioList"]);
+const props = defineProps(["onClickBackBtn", "rankingBonusRatioList", "promoContent"]);
 
 const i18nStoreLanguage = i18nStore();
 
