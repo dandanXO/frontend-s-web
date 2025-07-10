@@ -420,6 +420,19 @@ export default defineComponent({
             type: "SLIDER"
           };
 
+          const style = {
+            logoUrl: null,
+            i18n: {
+              tips_error: t("tianaiCaptcha.tipsError"),
+              tips_success: t("tianaiCaptcha.tipsSuccess"),
+              slider_title: t("tianaiCaptcha.sliderTitle"),
+              concat_title: t("tianaiCaptcha.concatTitle"),
+              image_click_title: t("tianaiCaptcha.imageClickTitle"),
+              rotate_title: t("tianaiCaptcha.rotateTitle")
+            }
+          };
+          console.log(style);
+
           window
             .initTAC("./tac", config, style)
             .then((tac) => {
@@ -725,6 +738,9 @@ export default defineComponent({
       requestHeaders: {
         Authorization: process.env.SITE
       },
+      translate: (code) => {
+        return t(`error.${code}`);
+      },
       // 验证成功回调函数(必选项,必须配置)
       validSuccess: (res, c, tac) => {
         // 销毁验证码服务
@@ -759,6 +775,7 @@ export default defineComponent({
       },
       // 验证失败的回调函数(可忽略，如果不自定义 validFail 方法时，会使用默认的)
       validFail: (res, c, tac) => {
+        console.log(tac);
         console.log("验证码验证失败回调...");
 
         if (res.code === 800) {
@@ -779,10 +796,6 @@ export default defineComponent({
         console.log("关闭按钮触发事件...");
         tac.destroyWindow();
       }
-    };
-
-    const style = {
-      logoUrl: null
     };
 
     onActivated(() => {

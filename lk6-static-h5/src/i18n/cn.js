@@ -896,6 +896,14 @@ export default {
       }
     }
   },
+  tianaiCaptcha: {
+    tipsError: "验证失败，请重新尝试!",
+    tipsSuccess: "验证成功,耗时{s}秒",
+    sliderTitle: "拖动滑块完成拼图",
+    concatTitle: "拖动滑块完成拼图",
+    imageClickTitle: "请依次点击下列图片",
+    rotate_title: "拖动滑块完成拼图"
+  },
   error: {
     101: "未找到平台",
     102: "平台已关闭",

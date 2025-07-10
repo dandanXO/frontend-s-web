@@ -897,6 +897,14 @@ export default {
       }
     }
   },
+  tianaiCaptcha: {
+    tipsError: "Verification failed, please try again!",
+    tipsSuccess: "Verification succeeded, took {s} seconds",
+    sliderTitle: "Drag the slider to complete the puzzle",
+    concatTitle: "Drag the slider to complete the puzzle",
+    imageClickTitle: "Please click the images in the correct order",
+    rotate_title: "Drag the slider to complete the puzzle"
+  },
   error: {
     101: "Platform not found",
     102: "Platform is closed",
