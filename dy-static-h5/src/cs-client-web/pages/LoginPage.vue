@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 /* eslint-disable */
 import { defineComponent, onBeforeMount, onActivated, ref, nextTick, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -127,10 +129,16 @@ export default defineComponent({
     };
 
     const pingCs = () => {
-      authAPI.pingCs().then((res) => {
-        if (res.status === 200) {
-          isCsPingColor.value = "green";
-        }
+      // authAPI.pingCs().then((res) => {
+      //   if (res.status === 200) {
+      //     isCsPingColor.value = "green";
+      //   }
+      // });
+
+
+      axios.get( "https://api.psnaback.com/cs/ws/ping").then((res) => {
+        console.log(res);
+
       });
     };
 

@@ -153,6 +153,9 @@ export default defineComponent({
       };
 
       const fbc3 = getFbclid();
+      if(fbc3){
+        sessionStorage.setItem("fbc3", fbc3);
+      }
 
       const getFbClientId = () => {
         let result = /_fbp=(fb\.1\.\d+\.\d+)/.exec(window.document.cookie);
@@ -193,32 +196,32 @@ export default defineComponent({
       var rstApi = rstArray[getRndInteger(0, rstArray.length)];
 
       // Make the POST request
-      fetch(`${rstApi}/app/facebookInfo`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: payload.toString()
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Success:", data);
-          const randomValue = Math.floor(Math.random() * (999 - 300 + 1)) + 300;
-          // if (data.data.sendEvent === "ftd") {
-          //   fbq(
-          //     "track",
-          //     "Purchase",
-          //     {
-          //       currency: "PKR",
-          //       value: randomValue
-          //     },
-          //     { eventID: randUuid }
-          //   );
-          // }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      // fetch(`${rstApi}/app/facebookInfo`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/x-www-form-urlencoded"
+      //   },
+      //   body: payload.toString()
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     console.log("Success:", data);
+      //     const randomValue = Math.floor(Math.random() * (999 - 300 + 1)) + 300;
+      //     // if (data.data.sendEvent === "ftd") {
+      //     //   fbq(
+      //     //     "track",
+      //     //     "Purchase",
+      //     //     {
+      //     //       currency: "PKR",
+      //     //       value: randomValue
+      //     //     },
+      //     //     { eventID: randUuid }
+      //     //   );
+      //     // }
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error:", error);
+      //   });
     };
 
 
