@@ -294,6 +294,7 @@ export default boot(({ app, router }) => {
           message: translatedMessage + ` (${errorType} ${res.code})` || t("common.error")
         });
       }
+      const translatedMessage = t(`error.${res.code}`);
       throw new Error(translatedMessage + ` (${errorType} ${res.code})` || t("common.error"));
     } else {
       Loading.hide();
