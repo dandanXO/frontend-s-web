@@ -8,7 +8,7 @@ export const uploadImage = (formData) => {
   }
   const baseApi = globals
   
-
+  console.log("baseApi : ", baseApi)
   return fetch(baseApi + '/image/uploadBanner', requestOptions)
     .then((response) => {
       return response.json()
