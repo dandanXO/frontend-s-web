@@ -6,7 +6,7 @@
   <div class="q-pa-md deposit-section" style="overflow: auto">
     <!-- <label class="label">支付方式</label> -->
     <div class="node-wrapper q-mt-xs">
-      <Node :level="1" :list="payMethods" name="支付方式" ref="paymentNode" @clicked="onSelect" />
+      <Node :level="1" :list="payMethods" :name="$t('deposit.paymentWay')" ref="paymentNode" @clicked="onSelect" />
     </div>
 
     <div v-if="isDisplay" class="inner-cont" style="overflow: auto">
@@ -57,7 +57,7 @@
     </div>
     <template v-else>
       <div class="deposit-container">
-        <label class="deposit-label">存款金额</label>
+        <label class="deposit-label">{{ $t("deposit.depositAmountInput.label") }}</label>
         <q-form ref="depositForm" class="q-gutter-y-xs">
           <div class="flex-c-center" v-if="amountList.length === 0">
             <q-input
@@ -68,7 +68,7 @@
               standout
               clearable
               v-model="form.localAmount"
-              placeholder="输入金额"
+              :placeholder="$t('deposit.depositAmountInput.placeholder')"
               :rules="verifyDepositAmount"
               padding="none"
             ></q-input>
@@ -77,7 +77,7 @@
             <q-select
               class="deposit-input"
               ref="depositAmtRef"
-              label="选择金额"
+              :label="$t('deposit.depositAmountSelect.placeholder')"
               name="localAmount"
               standout
               :options="amountList"
@@ -91,29 +91,36 @@
                 </span>
               </template>
             </q-select>
-            <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="存款" />
+            <q-btn
+              color="dygreen"
+              :loading="btnLoading"
+              class="deposit-btn"
+              @click="confirmDeposit"
+              :label="$t('btn.deposit')"
+            />
           </div>
 
           <div class="q-mt-sm deposit-limit">
-            单笔存款：{{
-              calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
-            }}
-            -
             {{
-              activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " "
+              $t("deposit.singleDeposit", {
+                min: calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0,
+                max: activeMethod.depositMax
+                  ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
+                  : " "
+              })
             }}
           </div>
 
-          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md row align-center" label="兑换率">
-            <label class="label">实时汇率：</label>
+          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md row align-center">
+            <label class="label">{{ $t("deposit.exchangeRate") }}</label>
             <span class="label-green" style="font-size: 16px; font-weight: 600">
               1.00 USDT ≈ {{ activeMethod.currencyRate }}
               {{ store.currency.value }}
             </span>
           </div>
 
-          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="预计到账">
-            <label class="label">预计到账：</label>
+          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md">
+            <label class="label">{{ $t("deposit.expectedAmount") }}</label>
             <span class="label-green" style="font-size: 16px; font-weight: 600">
               {{
                 calculatedMinDeposit && form.localAmount < calculatedMinDeposit
@@ -135,7 +142,7 @@
           <q-select
             ref="offerRef"
             class="q-mt-md deposit-input"
-            label="选择优惠"
+            :label="$t('deposit.privilege.placeholder')"
             standout
             :options="unselectedPrivileges"
             v-model="selectedPrivilege"
@@ -165,12 +172,16 @@
             "
           >
             <span v-if="selectedPrivilege.depositMin">
-              优惠最低存款要求：{{ selectedPrivilege.depositMin }}元，&nbsp;&nbsp;&nbsp;
+              {{
+                $t("deposit.privilege.min", { min: selectedPrivilege.depositMin, currency: store.currency.value })
+              }}&nbsp;&nbsp;&nbsp;
             </span>
             <span v-if="selectedPrivilege.gameTypeRollover && selectedPrivilege.gameTypeRollover !== '{}'">
               {{ getRollOverText(selectedPrivilege.gameTypeRollover) }}
             </span>
-            <span v-else>流水倍数要求（本金 + 彩金）：{{ selectedPrivilege.rollover }}倍</span>
+            <span v-else>
+              {{ $t("deposit.privilege.rollover", { rollover: selectedPrivilege.rollover }) }}
+            </span>
           </div>
 
           <div class="q-mt-md" v-html="activeMethod.msg"></div>
@@ -180,7 +191,7 @@
           </div> -->
         </q-form>
       </div>
-      <q-btn :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="存款" />
+      <q-btn :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" :label="$t('btn.deposit')" />
     </template>
   </div>
 
@@ -199,7 +210,7 @@
     </q-card>
   </q-dialog>
 
-  <CommonModal
+  <!-- <CommonModal
     v-model="isNewUser"
     header="温馨提示"
     message="为保证资金安全，存款前需先验证手机号"
@@ -214,7 +225,7 @@
       </div>
       <div />
     </template>
-  </CommonModal>
+  </CommonModal> -->
 
   <!--  <q-dialog width="100%" v-model="isNoBankCard" no-backdrop-dismiss no-esc-dismiss>-->
   <!--    <q-card style="width: 100%; padding: 20px; flex-direction:column;" class="text-black">-->
@@ -245,6 +256,9 @@ var qs = require("qs");
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import CommonModal from "./CommonModal.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const store = userStore();
 const route = useRoute();
@@ -325,14 +339,20 @@ const blurCode = () => {
 };
 
 const verifyDepositAmount = ref([
-  (val) => !!val || "请输入金额",
-  (val) => (val && /^\d+$/.test(val)) || (val && isUSDT.value) || "存款金额不能带有小数",
+  (val) => !!val || t("deposit.depositAmountInput.error.required"),
+  (val) => (val && /^\d+$/.test(val)) || (val && isUSDT.value) || t("deposit.depositAmountInput.error.notNumber"),
   (val) =>
     val >= calculatedMinDeposit.value ||
-    "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
+    t("deposit.depositAmountInput.error.outOfRange", {
+      min: calculatedMinDeposit.value,
+      max: activeMethod.value.depositMax
+    }),
   (val) =>
     val < activeMethod.value.depositMax + 1 ||
-    "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
+    t("deposit.depositAmountInput.error.outOfRange", {
+      min: calculatedMinDeposit.value,
+      max: activeMethod.value.depositMax
+    })
 ]);
 
 const form = reactive({
@@ -352,7 +372,7 @@ const calculatedMinDeposit = ref("");
 
 function initPay() {
   $q.loading.show({
-    message: "加载数据中... 请稍等..."
+    message: t("common.loading")
   });
 
   payMethods.value = [];
@@ -387,7 +407,7 @@ async function loadPrivilege(val) {
   freePrivilege.value = null;
   hasPrivilege.value = false;
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
-    if (res.code === 0) {
+    if (res.code === 0 && res.data.privileges.length) {
       privilegeList.value = res.data.privileges;
       hasPrivilege.value = true;
       unselectedPrivileges.value = [];
@@ -617,7 +637,7 @@ async function pDepo(deposit) {
                 $q.notify({
                   color: "negative",
                   position: "top",
-                  message: '无法打开充值页面。请检查游览器是否拦截弹窗页面，并修改为"允许弹窗"后再进行充值操作。',
+                  message: t("deposit.notification.popupBlocked.message"),
                   icon: "report_problem"
                 });
                 btnLoading.value = false;
@@ -727,31 +747,47 @@ const checkExtension = () => {
 const getRollOverText = (rolltext) => {
   const thetext = JSON.parse(rolltext);
 
-  var fulltext = "流水倍数要求（本金 + 彩金）：";
+  var fulltext = t("deposit.privilege.rolloverGameTitle");
   var rolloverlists = [];
   if (thetext.sport) {
-    rolloverlists.push("体育" + thetext.sport + "倍");
+    rolloverlists.push(
+      t("deposit.privilege.rolloverGame", { game: $t("common.gameType.sport"), rollover: thetext.sport })
+    );
   }
   if (thetext.esport) {
-    rolloverlists.push("电竞" + thetext.esport + "倍");
+    rolloverlists.push(
+      t("deposit.privilege.rolloverGame", { game: $t("common.gameType.esport"), rollover: thetext.esport })
+    );
   }
   if (thetext.slot) {
-    rolloverlists.push("电子" + thetext.slot + "倍");
+    rolloverlists.push(
+      t("deposit.privilege.rolloverGame", { game: $t("common.gameType.slot"), rollover: thetext.slot })
+    );
   }
   if (thetext.live) {
-    rolloverlists.push("真人" + thetext.live + "倍");
+    rolloverlists.push(
+      t("deposit.privilege.rolloverGame", { game: $t("common.gameType.live"), rollover: thetext.live })
+    );
   }
   if (thetext.poker) {
-    rolloverlists.push("棋牌" + thetext.poker + "倍");
+    rolloverlists.push(
+      t("deposit.privilege.rolloverGame", { game: $t("common.gameType.poker"), rollover: thetext.poker })
+    );
   }
   if (thetext.fish) {
-    rolloverlists.push("捕鱼" + thetext.fish + "倍");
+    rolloverlists.push(
+      t("deposit.privilege.rolloverGame", { game: $t("common.gameType.fish"), rollover: thetext.fish })
+    );
   }
   if (thetext.lottery) {
-    rolloverlists.push("彩票" + thetext.lottery + "倍");
+    rolloverlists.push(
+      t("deposit.privilege.rolloverGame", { game: $t("common.gameType.lottery"), rollover: thetext.lottery })
+    );
   }
   if (thetext.casual) {
-    rolloverlists.push("小游戏" + thetext.casual + "倍");
+    rolloverlists.push(
+      t("deposit.privilege.rolloverGame", { game: $t("common.gameType.casual"), rollover: thetext.casual })
+    );
   }
   fulltext += rolloverlists.join("，");
   return fulltext;

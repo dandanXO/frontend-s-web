@@ -134,14 +134,14 @@
               {{
                 "单笔提款: " +
                 selectedWithdrawalMethod.withdrawMin +
-                "RMB - " +
+                `${store.currency.value} - ` +
                 selectedWithdrawalMethod.withdrawMax +
-                "RMB"
+                store.currency.value
               }}
               <br style="margin-top: 10px" />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-              {{ "今日提款: " + selectedWithdrawalMethod.withdrawMaxAmount + "RMB" }}
+              {{ "今日提款: " + selectedWithdrawalMethod.withdrawMaxAmount + ` ${store.currency.value}` }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
               {{ " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次" }}
@@ -177,7 +177,7 @@
             </div>
           </div>
 
-          <div class="q-mt-md text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">
+          <div class="q-mt-md" style="color: #00b05c" v-if="selectedWithdrawalMethod.withdrawFee">
             *提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT
           </div>
           <!-- <a-form-item

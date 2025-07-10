@@ -1,57 +1,77 @@
 <template>
   <div class="table-record">
-    <div class="flex-div">
-      <span class="select-stage">选择平台：</span>
-      <q-select
-        clearable
-        rounded
-        outlined
-        dense
-        color="primary"
-        style="width: 320px; margin: 10px auto 8px; color: #000"
-        v-model="platform"
-        :options="platformsList"
-        placeholder="选择平台"
-        map-options
-        @clear="platform = ''"
-        @update:model-value="searchRecord"
-      ></q-select>
-
-      <div class="payout-total">
-        <div>总投注: {{ totalBetRecord.totalBet }}</div>
-        <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
-        <div>总有效投注: {{ totalBetRecord.totalValidBet }}</div>
+    <div class="search-bar">
+      <div class="flex-div">区间</div>
+      <div class="flex-div">
+        <q-btn class="date-btn" flat>
+          {{ startDate }}
+          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-date v-model="startDate" mask="YYYY-MM-DD">
+              <div class="row items-center justify-end">
+                <q-btn v-close-popup label="关闭" color="primary" flat />
+              </div>
+            </q-date>
+          </q-popup-proxy>
+        </q-btn>
+        <!-- <q-input standout v-model="startDate">
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+            </q-icon>
+          </template>
+        </q-input> -->
+        <q-separator style="flex: 1" />
+        <q-btn class="date-btn" flat>
+          {{ endDate }}
+          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-date v-model="endDate" mask="YYYY-MM-DD">
+              <div class="row items-center justify-end">
+                <q-btn v-close-popup label="关闭" color="primary" flat />
+              </div>
+            </q-date>
+          </q-popup-proxy>
+        </q-btn>
+        <!-- <q-input standout v-model="endDate">
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="endDate" mask="YYYY-MM-DD">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="关闭" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input> -->
+      </div>
+      <div class="flex-div">平台</div>
+      <div class="flex-div">
+        <div class="platform-selector" @click="handlePlatformSelectionClick">
+          {{ currentPlatformText }}
+          <img src="../../assets/records/arrow-right-s-line.svg" />
+        </div>
+        <!-- <q-select
+          clearable
+          rounded
+          outlined
+          dense
+          color="primary"
+          v-model="platform"
+          :options="platformsList"
+          placeholder="选择平台"
+          map-options
+          @clear="platform = ''"
+          @update:model-value="searchRecord"
+        ></q-select> -->
+      </div>
+      <div class="flex-div">
+        <q-btn class="search-btn" @click="searchRecord">搜寻</q-btn>
       </div>
     </div>
-    <div class="flex-div">
-      <span>开始：</span>
-      <q-input rounded outlined dense v-model="startDate">
-        <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="startDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="关闭" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-      <span>结束：</span>
-      <q-input rounded outlined dense v-model="endDate">
-        <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="endDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="关闭" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
+    <div class="payout-total">
+      <div>总投注: {{ totalBetRecord.totalBet }}</div>
+      <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
+      <!-- <div>总有效投注: {{ totalBetRecord.totalValidBet }}</div> -->
     </div>
     <!--    <div class="select-btn">-->
     <!--      <q-btn class="common-large-btn" label="点击选择平台" @click="showSelection" />-->
@@ -66,16 +86,24 @@
       @loadnewdata="loadNewData"
       :isEnded="isEnded"
     />
+
+    <BottomSheetPicker
+      v-model="showPlatformSelectorDialog"
+      :list="platformsList"
+      :current="pendingPlatform"
+      @confirm="handlePendingPlatformConfirmClick"
+    />
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref, reactive, onActivated } from "vue";
+import { onMounted, ref, reactive, onActivated, computed } from "vue";
 import { api } from "boot/axios";
 import { cached } from "boot/cache";
 import { userStore } from "src/stores";
 import moment from "moment/moment";
 import RecordComponent from "../../components/RecordComponent.vue";
+import BottomSheetPicker from "src/components/modal/BottomSheetPicker.vue";
 
 const store = userStore();
 const visible = ref(true);
@@ -89,11 +117,12 @@ const searchRecord = () => {
 };
 
 const isEnded = ref(false);
+const showPlatformSelectorDialog = ref(false);
 
 var apiUrl = "/session/member/gameBetRecordWithType";
 
-var endDate = reactive(moment().format("YYYY-MM-DD"));
-var startDate = reactive(moment().add(-7, "days").format("YYYY-MM-DD"));
+var endDate = ref(moment().format("YYYY-MM-DD"));
+var startDate = ref(moment().add(-7, "days").format("YYYY-MM-DD"));
 var current = ref(1);
 var maxPage = ref(0);
 
@@ -105,6 +134,15 @@ const totalBetRecord = reactive({
   totalPayout: 0,
   totalValidBet: 0
 });
+
+const currentPlatformText = computed(() => {
+  if (!platform.value) {
+    return "全部平台";
+  } else {
+    return platform.value.label;
+  }
+});
+
 const loadNewData = () => {
   if (maxPage.value > current.value) {
     current.value++;
@@ -123,8 +161,8 @@ const loadDepositTable = (isNew) => {
   }
 
   let paramData = {
-    startDate: startDate,
-    endDate: endDate,
+    startDate: startDate.value,
+    endDate: endDate.value,
     platform: "",
     gameType: "",
     platformName: "",
@@ -218,19 +256,82 @@ const tableHeaders = [
   }
 ];
 
+const handlePlatformSelectionClick = () => {
+  showPlatformSelectorDialog.value = true;
+};
+
+const handlePendingPlatformConfirmClick = (selected) => {
+  platform.value = selected;
+};
+
 onMounted(async () => {
   await loadPlatformLists();
 
-  const startMonth = moment(startDate).format("MM");
-  const endMonth = moment(endDate).format("MM");
+  const startMonth = moment(startDate.value).format("MM");
+  const endMonth = moment(endDate.value).format("MM");
   if (startMonth !== endMonth) {
     // If startDate and endDate are in the same month, take the latest month's data
-    const latestMonthEnd = moment(endDate).endOf("month").format("YYYY-MM-DD");
-    startDate = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
+    const latestMonthEnd = moment(endDate.value).endOf("month").format("YYYY-MM-DD");
+    startDate.value = moment(latestMonthEnd).startOf("month").format("YYYY-MM-DD");
   }
   await loadDepositTable(true);
 });
 </script>
+<style lang="scss" scoped>
+.table-record {
+  padding: 0 16px;
+  .search-bar {
+    background: #fcfdfe;
+    padding: 12px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+
+    .flex-div {
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+      .platform-selector {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 7px 14px;
+        background: #f7f8fb;
+        box-shadow: 0px 0px 2.78px 0px #a9c9ea inset;
+        border-radius: 7px;
+        color: #424f72;
+      }
+      .search-btn {
+        width: 100%;
+        background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
+        border: 1px solid #ffffff;
+        box-shadow: 0px 2px 0px 0px #9ab0ff70;
+        border-radius: 30px;
+        padding: 12px 0;
+        font-size: 16px;
+        white-space: nowrap;
+        color: #fff;
+      }
+
+      .date-btn {
+        flex-basis: 45%;
+        background: #f7f8fb;
+        box-shadow: 0px 0px 2.78px 0px #a9c9ea inset;
+        border-radius: 7px;
+        padding: 7px 0;
+        color: #424f72;
+      }
+    }
+  }
+
+  .payout-total {
+    color: #7a80a1;
+    > div {
+      margin-bottom: 12px;
+    }
+  }
+}
+</style>
 <style lang="scss">
 .payout-total {
   margin-left: 24px;
@@ -241,6 +342,7 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 5px;
 
   span {
     font-size: 14px;

@@ -2,7 +2,7 @@
   <div>
     <q-inner-loading :showing="loading">
       <q-spinner-gears size="50px" color="brand" />
-      <div class="label">加载中</div>
+      <div class="label">{{ $t("common.loading") }}</div>
     </q-inner-loading>
     <div v-if="!loading">
       <q-infinite-scroll @load="onLoad" :offset="250">
@@ -33,8 +33,8 @@
                   </div>
                 </div>
                 <div v-else-if="obj === 'betId'">
-                  <q-link @click="copyText(det[obj], '注单号')">
-                    <span style="color: #468cff">复制</span>
+                  <q-link @click="copyText(det[obj], $t('record.betId'))">
+                    <span style="color: #468cff">{{ $t("btn.copy") }}</span>
                     {{ det[obj].slice(0, 1) }}...
                     <q-tooltip anchor="center start" self="center middle" :offset="[-180, 10]">
                       {{ det[obj] }}
@@ -109,7 +109,7 @@
                 </div>
                 <div v-else-if="obj === 'serialNumber'" class="deposit-serial-number">
                   <div class="ellipsis">{{ det[obj] }}</div>
-                  <q-btn @click="copyText(det.serialNumber, '存款编码')" flat round>
+                  <q-btn @click="copyText(det.serialNumber, $t('record.serialNumber.deposit'))" flat round>
                     <img src="../assets/records/copy-icon.png" />
                   </q-btn>
                 </div>
@@ -125,7 +125,7 @@
               class="action-btn"
               @click="feedbackTrans(det)"
             >
-              催单
+              {{ $t("btn.reminderRequest") }}
             </q-btn>
             <template
               v-if="
@@ -134,11 +134,11 @@
                 det.confirmStatus === 0
               "
             >
-              <q-btn @click="openWithdrawConfirmDialog(det)" class="action-btn" label="确认到账" />
+              <q-btn @click="openWithdrawConfirmDialog(det)" class="action-btn" :label="$t('btn.confirmFund')" />
             </template>
 
             <template v-if="det.status === 'APPLY' || det.status === 'STEP_2'">
-              <q-btn @click="openWithdrawCancelDialog(det)" class="action-btn" label="取消" />
+              <q-btn @click="openWithdrawCancelDialog(det)" class="action-btn" :label="$t('btn.cancel')" />
             </template>
 
             <!-- <template v-if="det.status === 'SUCCESS' && det.currencyName === 'CNY' && det.confirmStatus === 1">
@@ -157,7 +157,7 @@
             <div class="justify-center row q-my-md" v-if="!isEnded">
               <q-spinner-dots color="primary" size="40px" />
             </div>
-            <span style="padding: 4px 0px; line-height: 36px">没有更多数据了</span>
+            <span style="padding: 4px 0px; line-height: 36px; color: #7a80a1">{{ $t("common.noMoreData") }}</span>
           </div>
         </template>
       </q-infinite-scroll>
@@ -170,8 +170,8 @@
     v-model="reminderDialog"
     no-backdrop-dismiss
     no-esc-dismiss
-    header="催单"
-    confirm-btn-text="提交"
+    :header="$t('')"
+    :confirm-btn-text="$t('record.notification.reminderRequest.title')"
     @confirm="submitReminder"
   >
     <template #content>
@@ -187,7 +187,7 @@
         class="reminder-dialog-form"
       >
         <q-input
-          label="存款编码"
+          :label="$t('record.notification.reminderRequest.content.serialNumber')"
           standout
           v-model="reminderForm.orderNo"
           color="primary"
@@ -199,7 +199,7 @@
         <q-input
           type="textarea"
           v-model="reminderForm.memberRemark"
-          label="备注"
+          :label="$t('record.notification.reminderRequest.content.remark')"
           standout
           autogrow
           color="primary"
@@ -213,8 +213,8 @@
 
   <CommonModal
     v-model="isConfirmWithdraw"
-    header="系统提示"
-    message="确认到账"
+    :header="$t('record.notification.confirmFund.title')"
+    :message="$t('record.notification.confirmFund.message')"
     with-decorator
     :actions="['confirm', 'cancel']"
     @confirm="openWithdrawConfirm"
@@ -223,8 +223,8 @@
 
   <CommonModal
     v-model="isCancelWithdraw"
-    header="系统提示"
-    message="确认取消提款"
+    :header="$t('record.notification.cancelWithdraw.title')"
+    :message="$t('record.notification.cancelWithdraw.message')"
     :actions="['confirm', 'cancel']"
     @confirm="openWithdrawCancel"
     @cancel="isCancelWithdraw = false"
@@ -239,6 +239,7 @@ import { useQuasar } from "quasar";
 import { translateRecord } from "../directives/translate.js";
 import { useUI } from "stores/ui";
 import CommonModal from "./CommonModal.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   components: {
@@ -287,6 +288,7 @@ export default defineComponent({
     const isConfirmWithdraw = ref(false);
     const isCancelWithdraw = ref(false);
     const passDet = ref(null);
+    const { t } = useI18n();
 
     const onLoad = (index, done) => {
       comList.value = props.list;
@@ -334,7 +336,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "已经取消提款",
+              message: t("record.notification.cancelWithdrawSuccess.message"),
               icon: "check_circle_outline"
             });
           }
@@ -373,7 +375,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "已经确认到账",
+              message: t("record.notification.confirmFundSuccess.message"),
               icon: "check_circle_outline"
             });
           }
@@ -404,7 +406,7 @@ export default defineComponent({
         $q.notify({
           color: "positive",
           position: "top",
-          message: `${msgTitle}复制成功！`,
+          message: t("common.copySuccess.message", { str: msgTitle }),
           icon: "check_circle_outline"
         });
       }, 100);
@@ -437,7 +439,7 @@ export default defineComponent({
             $q.notify({
               color: "negative",
               position: "top",
-              message: "已有3个正在催收催单。",
+              message: t("record.notification.reminderRequestLimit.message"),
               icon: "report_problem"
             });
           }
@@ -456,7 +458,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "bottom",
-          message: "请上传图片",
+          message: t("common.uploadFileRequired.message"),
           icon: "report_problem"
         });
         return;
@@ -469,7 +471,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "催单提交成功！",
+            message: t("record.notification.reminderRequestSuccess.message"),
             icon: "check_circle_outline"
           });
           reminderDialog.value = false;

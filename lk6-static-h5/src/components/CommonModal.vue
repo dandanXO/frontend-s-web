@@ -45,6 +45,7 @@
 </template>
 <script setup>
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 defineOptions({
   inheritAttrs: false
@@ -88,14 +89,16 @@ const props = defineProps({
 defineEmits(["cancel", "confirm"]);
 const model = defineModel();
 
+const { t } = useI18n();
+
 const _confirmBtnText = computed(() => {
   // TODO: use i18n
-  return props.confirmBtnText || "确定";
+  return props.confirmBtnText || t("btn.confirm");
 });
 
 const _cancelBtnText = computed(() => {
   // TODO: use i18n
-  return props.confirmBtnText || "取消";
+  return props.confirmBtnText || t("btn.cancel");
 });
 </script>
 <style lang="scss">

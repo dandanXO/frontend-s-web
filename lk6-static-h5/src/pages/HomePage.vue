@@ -27,6 +27,7 @@
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
         </div>
         <div class="header-right">
+          <LocaleSelector />
           <!-- <span class="memorable-url">易记网址：{{ memorableUrl }}</span>
           <button class="copy-btn" @click="handleCopyMemorableUrlClick">🔍</button> -->
           <router-link class="notification-section" to="/account/inbox?redirect=home">
@@ -116,9 +117,9 @@
               <div class="welcome-liner">
                 {{ store.nickName }}
               </div>
-              <div class="badge-div">
+              <!-- <div class="badge-div">
                 {{ store.vip }}
-              </div>
+              </div> -->
             </div>
             <div class="row items-center justify-start gap-10" style="width: 100%">
               <span class="balance-text text-positive" v-if="isLoadingBalance" style="font-size: 20px">加载中...</span>
@@ -539,6 +540,7 @@
   </q-page-sticky>
 
   <GameModal ref="allGames"></GameModal>
+  <AnnouncementModal />
 
   <CommonModal v-model="isStationNotice" class="station-notice-dialog" header="公告" :actions="[]">
     <template #content>
@@ -560,7 +562,7 @@
                 >
                   <q-card>
                     <q-card-section style="color: #9f9f9f">
-                      {{ ann.content }}
+                      <div v-html="ann.content" />
                     </q-card-section>
                   </q-card>
                 </q-expansion-item>
@@ -629,10 +631,19 @@
     </div>
   </q-page-sticky>
 
-  <q-dialog
+  <CommonModal
+    v-model="isAppUpdateModal"
+    header="更新公告"
+    message="检测到新版本，你是否要更新？"
+    :actions="['confirm', 'cancel']"
+    @confirm="openDownloadPage"
+    @cancel="cancelUpdate"
+  />
+
+  <!-- <q-dialog
     width="100%"
     class="modal-update-div"
-    v-model="isAppUpdateModal"
+
     show-cancel-button
     :showCancelButton="false"
     :showConfirmButton="false"
@@ -649,7 +660,7 @@
         </div>
       </div>
     </q-card>
-  </q-dialog>
+  </q-dialog> -->
 
   <!-- <q-dialog width="100%" v-model="isFirstView">
     <q-card style="width: 70%; max-width: 290px; margin: 0 auto" class="bg-white text-black">
@@ -688,6 +699,7 @@ import { cached } from "boot/cache";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
+import AnnouncementModal from "components/modal/AnnouncementModal";
 import MarqueeText from "vue-marquee-text-component";
 
 import { useUI } from "stores/ui";
@@ -714,6 +726,7 @@ import { useNotify } from "src/hooks/notify";
 import { LIVE_PLATFORMS } from "src/constant/platform";
 import RedirectButton from "src/components/RedirectButton.vue";
 import CommonModal from "src/components/CommonModal.vue";
+import LocaleSelector from "src/components/LocaleSelector.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -726,7 +739,9 @@ export default defineComponent({
     GameTypeSwiper,
     PlatformItem,
     RedirectButton,
-    CommonModal
+    CommonModal,
+    AnnouncementModal,
+    LocaleSelector
   },
   setup() {
     const notify = useNotify();
@@ -2047,6 +2062,10 @@ export default defineComponent({
 
     .notification-section {
       position: relative;
+
+      img {
+        display: block;
+      }
 
       .notification-dot {
         position: absolute;
