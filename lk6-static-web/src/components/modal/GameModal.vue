@@ -553,6 +553,13 @@ defineExpose({
     word-break: break-all;
     white-space: normal;
     // width: 55px;
+
+    color: $color-white;
+    background: url('../../assets/images/common/blue-btn-bg.svg') center center no-repeat;
+    background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94C3FF 0%, #4B91F5 100%);
+    border: 1px solid #FFFFFF;
+    box-shadow: 0px 2px 0px 0px #9AB0FF70;
+    background-size: 100% 100%; 
   }
 }
 

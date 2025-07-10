@@ -286,14 +286,15 @@ export default boot(({ app, router }) => {
           LocalStorage.remove("TOKEN");
           window.location.href = "/";
         }
+        const translatedMessage = t(`error.${res.code}`);
         Notify.create({
           type: "negative",
           timeout: 1000,
           position: "top",
-          message: res.message + ` (${errorType} ${res.code})` || t("common.error")
+          message: translatedMessage + ` (${errorType} ${res.code})` || t("common.error")
         });
       }
-      throw new Error(res.message + ` (${errorType} ${res.code})` || t("common.error"));
+      throw new Error(translatedMessage + ` (${errorType} ${res.code})` || t("common.error"));
     } else {
       Loading.hide();
       return res;
