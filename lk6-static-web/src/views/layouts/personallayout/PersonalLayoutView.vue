@@ -245,8 +245,8 @@ export default defineComponent({
             transition: 0.3s all;
 
             img {
-              height: 28px;
-              width: 28px;
+              height: 40px;
+              width: 40px;
             }
             &:hover,
             &.router-link-exact-active {
