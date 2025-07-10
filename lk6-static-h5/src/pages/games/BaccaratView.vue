@@ -33,7 +33,7 @@
           </span>
         </q-btn>
       </div>
-      <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 16px)" v-if="!isLoading">
+      <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 16px)">
         <div class="grid" style="padding-bottom: 20px">
           <div
             v-for="(game, index) in currentGameList"
@@ -336,7 +336,7 @@ onMounted(() => {
       background-size: 100% 100%;
       border-radius: 16px;
       padding: 3px 0;
-      font-size: 1rem;
+      line-height: 1;
       color: #0e365b;
 
       &.activated {
@@ -362,7 +362,7 @@ onMounted(() => {
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
     gap: 10px;
     width: 90%;
     margin: 0 auto;

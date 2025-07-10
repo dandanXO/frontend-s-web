@@ -62,15 +62,15 @@
             <img
               v-if="!isPwd"
               @click="isPwd = !isPwd"
-              src="../assets/login/eye-line.png"
-              style="margin-right: 3px"
+              src="../assets/login/eye-line.svg"
+              style="margin-right: 12px"
               width="20"
             />
             <img
               v-if="isPwd"
               @click="isPwd = !isPwd"
-              src="../assets/login/eye-close-line.png"
-              style="margin-right: 3px"
+              src="../assets/login/eye-close-line.svg"
+              style="margin-right: 12px"
               width="20"
             />
 
@@ -137,15 +137,15 @@
             <img
               v-if="!isCfmPwd"
               @click="isCfmPwd = !isCfmPwd"
-              src="../assets/login/eye-line.png"
-              style="margin-right: 3px"
+              src="../assets/login/eye-line.svg"
+              style="margin-right: 12px"
               width="20"
             />
             <img
               v-if="isCfmPwd"
               @click="isCfmPwd = !isCfmPwd"
-              src="../assets/login/eye-close-line.png"
-              style="margin-right: 3px"
+              src="../assets/login/eye-close-line.svg"
+              style="margin-right: 12px"
               width="20"
             />
           </template>

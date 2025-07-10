@@ -101,8 +101,8 @@ watch(selectedTab, scrollSlide);
   border-radius: 30px;
   align-items: center;
   padding: 2px 5px;
-  min-height: 46px;
-  margin: 5px 0;
+  min-height: 30px;
+  margin: 2px 0;
 
   img {
     width: auto;

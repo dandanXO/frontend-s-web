@@ -170,8 +170,8 @@
     v-model="reminderDialog"
     no-backdrop-dismiss
     no-esc-dismiss
-    :header="$t('')"
-    :confirm-btn-text="$t('record.notification.reminderRequest.title')"
+    :header="$t('record.notification.reminderRequest.title')"
+    :confirm-btn-text="$t('btn.reminderRequest')"
     @confirm="submitReminder"
   >
     <template #content>
@@ -406,7 +406,7 @@ export default defineComponent({
         $q.notify({
           color: "positive",
           position: "top",
-          message: t("common.copySuccess.message", { str: msgTitle }),
+          message: t("common.notification.copySuccess.message", { str: msgTitle }),
           icon: "check_circle_outline"
         });
       }, 100);
