@@ -62,13 +62,6 @@
             </template>
           </template>
 
-          <div class="header-menu-item">
-            <a>
-              <span><LocaleChanger/></span>
-              <span>{{ $t(`btn.${languageVal}`) }}</span>
-            </a>
-          </div>
-
           <template  v-if="store.token">
             <div class="header-menu-item">
               <router-link to="/center/deposit" class="action-btn">
@@ -84,6 +77,13 @@
               </router-link>
             </div>
           </template>
+
+          <div class="header-menu-item">
+            <a>
+              <span><LocaleChanger/></span>
+              <span>{{ $t(`btn.${languageVal}`) }}</span>
+            </a>
+          </div>
 
           <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
             <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
