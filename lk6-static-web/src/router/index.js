@@ -35,13 +35,13 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/SlotView.vue")
       },
       {
-        path: "/esports",
-        name: "esports",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/eSportsView.vue")
+        path: "/crown",
+        name: "crown",
+        component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue")
       },
       {
-        path: "/sports",
-        name: "sports",
+        path: "/panda",
+        name: "panda",
         component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue"),
         props: { showPlayBtn: true }
       },

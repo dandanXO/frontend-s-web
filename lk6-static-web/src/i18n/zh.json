@@ -38,32 +38,32 @@
     "onlyNumbersAllowed": "电话号码只允许使用数字",
     "smsOtp": "手机验证码",
     "email": "邮箱",
-    "emailRule01": "电子邮件地址无效",
-    "menu": {
-      "promotion": "优惠",
-      "customerService": "客服",
-      "home": "首页",
-      "live": "真人",
-      "crown": "皇冠",
-      "panda": "熊猫",
-      "sport": "体育",
-      "bacarrat": "百家乐",
-      "deposit": "存款",
-      "withdraw": "取款",
-      "assets": "总资产",
-      "loading": "加载中",
-      "all": "全部",
-      "transactionRecords": "交易记录",
-      "personalCentre": "个人资料",
-      "messageCentre": "消息中心",
-      "welcome": "欢迎您"
-    },
-    "download": {
-      "title": "综合客户端下载",
-      "desc": "引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐投注！",
-      "scan": "扫码进入下载页面",
-      "download": "手机免费下载地址"
-    }
+    "emailRule01": "电子邮件地址无效"
+  },
+  "menu": {
+    "promotion": "优惠",
+    "customerService": "客服",
+    "home": "首页",
+    "live": "真人",
+    "crown": "皇冠",
+    "panda": "熊猫",
+    "sport": "体育",
+    "bacarrat": "百家乐",
+    "deposit": "存款",
+    "withdraw": "取款",
+    "assets": "总资产",
+    "loading": "加载中",
+    "all": "全部",
+    "transactionRecords": "交易记录",
+    "personalCentre": "个人资料",
+    "messageCentre": "消息中心",
+    "welcome": "欢迎您"
+  },
+  "download": {
+    "title": "综合客户端下载",
+    "desc": "引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐投注！",
+    "scan": "扫码进入下载页面",
+    "download": "手机免费下载地址"
   },
   "service": {
     "seconds": "秒",

@@ -13,36 +13,12 @@
                 class="header-menu-item"
                 :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }"
               >
-                <!-- <img
-                  v-if="nav.code === 'sports'"
-                  class="hot-label"
-                  :src="require(`../../assets/images/home/menu/hot-game-label.png`)"
-                /> -->
-                <a
-                  v-if="nav.code === 'minigame'"
-                  @click="openMiniGame"
-                  @mouseup="selectedMenu = ''"
-                  @mouseover="showSubMenu(nav)"
-                >
-                  <h2 class="nav-title cn">{{ nav.name }}</h2>
-                  <h2 class="nav-title">{{ nav.enName }}</h2>
-                </a>
-                <a v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
+                <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase() || route.fullPath === nav.path">
-                    <!-- <img
-                      class="menu-icon"
-                      :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
-                    /> -->
-                    <h2 class="nav-title cn active">{{ nav.name }}</h2>
-                    <h2 class="nav-title active">{{ nav.enName }}</h2>
+                    <h2 class="nav-title cn active">{{ $t(nav.name) }}</h2>
                   </template>
                   <template v-else>
-                    <!-- <img
-                      class="menu-icon"
-                      :src="require(`../../assets/images/home/menu/${nav.code}-icon${isDark ? '-dark' : ''}.png`)"
-                    /> -->
-                    <h2 class="nav-title cn">{{ nav.name }}</h2>
-                    <h2 class="nav-title">{{ nav.enName }}</h2>
+                    <h2 class="nav-title cn">{{ $t(nav.name) }}</h2>
                   </template>
                 </a>
               </div>
@@ -80,7 +56,7 @@
                       v-if="nav.code === 'VIP'"
                     /> -->
                   </span>
-                  <span>{{ nav.name }}</span>
+                  <span>{{ $t(nav.name) }}</span>
                 </router-link>
               </div>
             </template>
@@ -427,21 +403,21 @@ export default defineComponent({
     const store = userStore();
 
     const navigations = reactive([
-      { code: "home", name: t('menu.home'), enName: t('menu.home'), path: "/home" },
+      { code: "home", name: 'menu.home', enName: t('menu.home'), path: "/home" },
       // { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
       // { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true, isTest: false },
-      { code: "live", name: t('menu.live'), enName:t('menu.live'), path: "/live-casino", submenu: true, isTest: false },
+      { code: "live", name: 'menu.live', enName:t('menu.live'), path: "/live-casino", submenu: true, isTest: false },
       // { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true, isTest: false },
-      { code: "crown", name: t('menu.crown'), enName: t('menu.crown'), path: "/sports?plat=CR", submenu: true, isTest: false },
-      { code: "panda", name: t('menu.panda'), enName: t('menu.panda'), path: "/sports?plat=PM", submenu: true, isTest: false },
-      { code: "bacarrat", name: t('menu.bacarrat'), enName: t('menu.bacarrat'), path: "/bacarrat", submenu: true, isTest: false },
+      { code: "crown", name: 'menu.crown', enName: t('menu.crown'), path: "/crown?plat=CR", submenu: true, isTest: false },
+      { code: "panda", name: 'menu.panda', enName: t('menu.panda'), path: "/panda?plat=PM", submenu: true, isTest: false },
+      { code: "bacarrat", name: 'menu.bacarrat', enName: t('menu.bacarrat'), path: "/bacarrat", submenu: true, isTest: false },
       // { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true, isTest: false },
       // { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: false },
       // { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
       // { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
       {
         code: "Promotion",
-        name: t('menu.promotion'),
+        name: 'menu.promotion',
         enName: t('menu.promotion'),
         path: "/promotion",
         submenu: false,
@@ -451,7 +427,7 @@ export default defineComponent({
       // { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true, isTest: false },
       { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true, isTest: false },
       // { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false },
-      { code: "CS", name: t('menu.customerService'), enName: t('menu.customerService'), path: "/cs", hasicon: true, isTest: false }
+      { code: "CS", name: 'menu.customerService', enName: t('menu.customerService'), path: "/cs", hasicon: true, isTest: false }
     ]);
     const { token } = storeToRefs(store);
     const router = useRouter();
