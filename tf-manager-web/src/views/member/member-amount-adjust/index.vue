@@ -1744,6 +1744,7 @@ function chooseFile() {
 }
 
 function importToTable(file) {
+  console.log("table")
   importedPage.loading = true
   importedPage.buttonLoading = false
   const files = file.target.files[0]
@@ -1758,33 +1759,38 @@ function importToTable(file) {
       const { result } = event.target
       const workbook = XLSX.read(result, { type: 'binary' })
       let data = []
-      for (const sheet in workbook.Sheets) {
-        data = data.concat(
-          XLSX.utils.sheet_to_json(workbook.Sheets[sheet], {
-            header: IMPORT_AMOUNT_ADJUST_LIST_JSON,
-            range: 1,
-          })
-        )
-        uiControl.progress = 0
-        for (let i = 0; i < data.length; i += 50) {
-          const sublist = data.slice(i, i + 50)
-          const chunk = sublist.map(d => d.loginName).join(',')
-          const { data: result} = await findIdByLoginNames(
-            chunk,
-            importForm.siteId
+      try {
+        for (const sheet in workbook.Sheets) {
+          data = data.concat(
+            XLSX.utils.sheet_to_json(workbook.Sheets[sheet], {
+              header: IMPORT_AMOUNT_ADJUST_LIST_JSON,
+              range: 1,
+            })
           )
-          for (let j = i; j < i + sublist.length; j++) {
-            data[j].memberId = result[data[j].loginName]
-            uiControl.progress = Math.round(
-              ((j + 1) / data.length) * 100
-            )
-          }
+            uiControl.progress = 0
+            for (let i = 0; i < data.length; i += 50) {
+              const sublist = data.slice(i, i + 50)
+              const chunk = sublist.map(d => d.loginName).join(',')
+              
+                const { data: result} = await findIdByLoginNames(
+                  chunk,
+                  importForm.siteId
+                )
+                for (let j = i; j < i + sublist.length; j++) {
+                  data[j].memberId = result[data[j].loginName]
+                  uiControl.progress = Math.round(
+                    ((j + 1) / data.length) * 100
+                  )
+                }
+            }
         }
+        importedPage.records = data
+        importedPage.pages = Math.ceil(
+          importedPage.records.length / importedPage.size
+        )
+      }catch (error) {
+        uiControl.progress = 100
       }
-      importedPage.records = data
-      importedPage.pages = Math.ceil(
-        importedPage.records.length / importedPage.size
-      )
     }
     fileReader.readAsBinaryString(files)
     document.getElementById('importFile').value = ''
