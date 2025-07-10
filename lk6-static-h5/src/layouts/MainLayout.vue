@@ -60,7 +60,7 @@
           {{ $t("layout.footer.promo") }}
         </q-route-tab>
 
-        <q-route-tab :to="chatPage" name="chat">
+        <q-route-tab to="" name="chat" @click="handleLiveChatClick">
           <img class="inactive" src="../assets/images/index/menu/ft-livechat.svg" />
           <img class="hover filtericon" src="../assets/images/index/menu/ft-livechat.svg" />
           {{ $t("layout.footer.liveChat") }}
@@ -447,6 +447,13 @@ export default defineComponent({
       }
     ]);
 
+    const handleLiveChatClick = () => {
+      window.open(
+        "https://8xjp0t3ydi.ipbr7k9r.com/chatwindow.aspx?siteId=65001994&planId=099fb0e7-cad5-43d0-aa03-2ed2257e0e12",
+        "_blank"
+      );
+    };
+
     const platformsList = computed(() => {
       if (ui.slotLists.length === 0) {
         return platformsFixed.value;
@@ -490,7 +497,8 @@ export default defineComponent({
         "WithdrawView",
         "ForgotPwdPage"
       ],
-      withBgPage
+      withBgPage,
+      handleLiveChatClick
     };
   }
 });
