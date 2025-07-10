@@ -14,18 +14,18 @@ export default [
     meta: { requiresAuth: true },
     component: () => import(/* webpackChunkName: "mailbox" */ "../views/account/MailboxView.vue")
   },
-  {
-    path: "feedback",
-    name: "feedback",
-    meta: { requiresAuth: true },
-    component: () => import(/* webpackChunkName: "feedback" */ "../views/account/FeedbackView.vue")
-  },
-  {
-    path: "share",
-    name: "share",
-    meta: { requiresAuth: true },
-    component: () => import(/* webpackChunkName: "share" */ "../views/account/ShareView.vue")
-  },
+  // {
+  //   path: "feedback",
+  //   name: "feedback",
+  //   meta: { requiresAuth: true },
+  //   component: () => import(/* webpackChunkName: "feedback" */ "../views/account/FeedbackView.vue")
+  // },
+  // {
+  //   path: "share",
+  //   name: "share",
+  //   meta: { requiresAuth: true },
+  //   component: () => import(/* webpackChunkName: "share" */ "../views/account/ShareView.vue")
+  // },
   {
     path: "security-verified",
     name: "security-verified",

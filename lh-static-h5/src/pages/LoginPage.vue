@@ -26,7 +26,7 @@
 
       <q-form ref="loginFormRef" @submit="onSubmit" class="login-form" :class="{ ['phone-login']: loginType }">
         <div class="tabs-wrapper" v-if="$q.dark.isActive">
-          <div class="tab-wrapper" @click="loginType = undefined" :class="{ active: !loginType }">
+          <div class="tab-wrapper" @click="loginType = false" :class="{ active: !loginType }">
             <div class="tab">用户名登录</div>
             <div v-show="!loginType" class="active-tab-border" />
           </div>

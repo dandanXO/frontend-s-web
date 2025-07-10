@@ -10,8 +10,13 @@
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
       <el-form-item :label="$t('login.password')" prop="password">
-        <el-input v-model="loginForm.password" :placeholder="$t('login.password')" type="password" show-password
-          clearable />
+        <el-input
+          v-model="loginForm.password"
+          :placeholder="$t('login.password')"
+          type="password"
+          show-password
+          clearable
+        />
       </el-form-item>
     </div>
 
@@ -19,8 +24,13 @@
       <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
       <el-form-item :label="$t('login.captcha')" prop="captchaCode">
         <div style="display: flex; width: 100%">
-          <el-input v-model="loginForm.captchaCode" :label="$t('login.captcha')" :placeholder="$t('login.captcha')"
-            @keyup.enter="submitLogin" clearable></el-input>
+          <el-input
+            v-model="loginForm.captchaCode"
+            :label="$t('login.captcha')"
+            :placeholder="$t('login.captcha')"
+            @keyup.enter="submitLogin"
+            clearable
+          ></el-input>
           <img style="width: 100px" :src="verificationImg" @click="getCode" />
         </div>
       </el-form-item>
@@ -69,6 +79,20 @@ const loginRules = {
     {
       required: true,
       message: t("placeholder.usernamereq"),
+      trigger: "blur"
+    },
+    {
+      validator: (rule, value, callback) => {
+        if (!value) {
+          callback();
+        } else if (/^0/.test(value)) {
+          callback(new Error(t("placeholder.username_cannot_start_with_0")));
+        } else if (!/^[a-zA-Z0-9]+$/.test(value)) {
+          callback(new Error(t("placeholder.no_special_characters")));
+        } else {
+          callback();
+        }
+      },
       trigger: "blur"
     },
     {
@@ -141,8 +165,8 @@ const submitLogin = () => {
             const jumpUrl = route.query.redirect
               ? route.query.redirect.toString()
               : props.pageType === "view"
-                ? "/"
-                : route.path;
+              ? "/"
+              : route.path;
             if (store.token) {
               router.push(jumpUrl);
 
@@ -165,7 +189,7 @@ const submitLogin = () => {
             getCode();
           });
       })
-      .catch(() => { });
+      .catch(() => {});
     loadingBtn.value = false;
   })();
 };

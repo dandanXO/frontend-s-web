@@ -11,34 +11,35 @@
       <img class="close-btn" src="../../assets/images/home/site-popout/close-btn.png" alt="" @click="handleClose" />
     </div>
   </el-dialog>
-
+  
   <div v-if="isFetchingBanners" class="banner-loading">
-    <img class="loading-img" src="@/assets/lucky-6-logo.svg" />
+    <img class="loading-img" src="@/assets/lucky-6-logo.png" />
   </div>
-  <el-carousel
-    v-else-if="banners?.length > 0"
-    class="banner-slider"
-    indicator-position="outside"
-    :autoplay="true"
-    :interval="5000"
-  >
-    <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
-      <a @click="goBannerPage(banner.redirectUrl)">
-        <div class="banner-background">
-          <div
-            class="promo-bg isDesktop"
-            :style="
-              'background-image: url(' +
-              imgURL +
-              (isDark ? banner.desktopImageUrlDark || banner.desktopImageUrl : banner.desktopImageUrl) +
-              ')'
-            "
-          ></div>
-          <!--          <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>-->
-        </div>
-      </a>
-    </el-carousel-item>
-  </el-carousel>
+
+  <transition name="stomp">
+    <el-carousel
+      v-if="!isFetchingBanners && banners?.length"
+      class="banner-slider"
+      indicator-position="outside"
+      :autoplay="true"
+      :interval="5000"
+    >
+      <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
+        <a @click="goBannerPage(banner.redirectUrl)">
+          <div class="banner-background">
+            <div
+              class="promo-bg isDesktop"
+              :style="
+                'background-image: url(' +
+                imgURL + banner.desktopImageUrl +
+                ')'
+              "
+            ></div>
+          </div>
+        </a>
+      </el-carousel-item>
+    </el-carousel>
+  </transition>
   <GameModal ref="allGames"></GameModal>
 </template>
 
@@ -93,29 +94,25 @@ const loadBanners = () => {
   loadPromoBanner("HOME")
     .then((res) => {
       isFetchingBanners.value = false;
-
       if (res.code === 0) {
         banners.value = res.data.filter((promo) => {
           if (!promo.showDesktop) return false;
-          if (isDark.value) {
-            return !["lh1-dark-mode"].includes(promo.redirectUrl) && promo.desktopImageUrlDark;
-          }
           return true;
         });
         //No Need liao.
         // if (store.token && (store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
-        //   banners.value.unshift({
-        //     category: "HOME",
+          //   banners.value.unshift({
+            //     category: "HOME",
         //     isLocal: true,
         //     promoPageId: null,
         //     redirectUrl: "lh1-im-sport"
         //   });
         // }
       } else
-        notify({
-          type: "error",
-          message: res.message
-        });
+      notify({
+        type: "error",
+        message: res.message
+      });
     })
     .catch(() => {
       isFetchingBanners.value = false;
@@ -253,7 +250,7 @@ watch(
 <style scoped lang="scss">
 .banner-loading {
   width: 100%;
-  height: 632px;
+  height: 450px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -314,20 +311,51 @@ watch(
   }
 }
 
-.dark {
-  .banner-slider {
-    padding-top: 70px;
-    .banner-container {
-      .banner-background {
-        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, transparent 100%);
-      }
-    }
-  }
-}
-
 .close-btn {
   position: absolute;
   bottom: -55px;
   cursor: pointer;
+}
+</style>
+
+<style lang="scss">
+.banner-slider {
+  width: 100%;
+
+  .is-active .el-carousel__button {
+      background: #2E3031;
+      box-shadow: 0 0 0 1px #2E3031;
+      border: 1px solid #2E3031;
+  }
+
+  .el-carousel__indicators--outside button {
+      background-color: #A2B1C3;
+      border: 1px solid #A2B1C3;
+      box-shadow: 0 0 0 1px #A2B1C3;
+  }
+}
+
+@keyframes stompIn {
+  0% {
+    transform: scale(0.95) translateY(-40px);
+    opacity: 0;
+    box-shadow: none;
+  }
+  60% {
+    transform: scale(1.03) translateY(5px);
+    opacity: 1;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  80% {
+    transform: scale(0.98) translateY(-2px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.stomp-enter-active {
+  animation: stompIn 0.6s ease-out;
 }
 </style>

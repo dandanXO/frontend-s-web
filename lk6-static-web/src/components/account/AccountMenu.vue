@@ -14,7 +14,7 @@
           />
         </div>
         <div class="account-name">欢迎您 {{ loginName }}</div>
-        <span class="account-vip-label">{{ vip }}</span>
+        <!-- <span class="account-vip-label">{{ vip }}</span> -->
         <div @click="refreshBalance" class="account-details-balance">
           <span>总资产:</span>
           <span class="amount">
@@ -239,10 +239,10 @@ const menuItems = ref([
   { route: "/center/personal", label: "个人资料", icon: "personal" },
   // { route: "/center/withdrawbank", label: "银行卡管理", icon: "transitrecord" },
   { route: "/center/mailbox", label: "消息中心", icon: "inbox" },
-  { route: "/vip", label: "VIP特权", icon: "vip" },
+  // { route: "/vip", label: "VIP特权", icon: "vip" },
   // { route: "/center/promo", label: "优惠领取", icon: "promo" },
   { route: "/center/feedback", label: "反馈奖励", icon: "feedback" },
-  { route: "/center/share", label: "推广赚钱", icon: "transitrecord" }
+  // { route: "/center/share", label: "推广赚钱", icon: "transitrecord" }
 ]);
 
 const checkMailboxUnread = () => {
@@ -398,35 +398,9 @@ onMounted(() => {
 });
 
 const loadMenuItemIcon = (icon) => {
-  if (isDark.value) {
-    try {
-      return require(`@/assets/images/account/menu-icon-${icon}-dark.png`);
-    } catch (e) {
-      return require(`@/assets/images/account/menu-icon-${icon}.png`);
-    }
-  } else {
-    return require(`@/assets/images/account/menu-icon-${icon}.png`);
-  }
+  return require(`@/assets/images/account/menu-icon-${icon}.svg`);
 };
 </script>
-<style scoped lang="scss">
-.dark {
-  .account-container {
-    .account-container-wrap {
-      .profile-actions {
-        .action-btn {
-          .icon-rounded {
-            img {
-              filter: brightness(0) saturate(100%) invert(44%) sepia(45%) saturate(828%) hue-rotate(146deg)
-                brightness(85%) contrast(83%);
-            }
-          }
-        }
-      }
-    }
-  }
-}
-</style>
 <style lang="scss" scoped>
 .account-container {
   background-size: cover;

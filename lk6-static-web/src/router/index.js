@@ -9,11 +9,6 @@ import { useDark } from "@vueuse/core";
 
 const routes = [
   {
-    path: "/login",
-    name: "login",
-    component: () => import(/* webpackChunkName: "Login" */ "../views/layouts/loginview/index")
-  },
-  {
     path: "/register",
     name: "register",
     component: () => import(/* webpackChunkName: "Register" */ "../views/RegisterView.vue")
@@ -35,19 +30,9 @@ const routes = [
         component: HomeView
       },
       {
-        path: "/welcome",
-        name: "welcome",
-        component: () => import(/* webpackChunkName: "Welcome" */ "../views/WelcomeView.vue")
-      },
-      {
         path: "/slot",
         name: "slot",
         component: () => import(/* webpackChunkName: "Game" */ "../views/SlotView.vue")
-      },
-      {
-        path: "/about",
-        name: "about",
-        component: () => import(/* webpackChunkName: "About" */ "../views/AboutView.vue")
       },
       {
         path: "/esports",
@@ -57,12 +42,14 @@ const routes = [
       {
         path: "/sports",
         name: "sports",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue")
+        component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue"),
+        props: { showPlayBtn: true }
       },
       {
         path: "/live-casino",
         name: "live",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/LiveCasinoView.vue")
+        component: () => import(/* webpackChunkName: "Game" */ "../views/LiveCasinoView.vue"),
+        props: { showPlayBtn: true }
       },
       {
         path: "/lottery",
@@ -80,34 +67,19 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/PokerView.vue")
       },
       {
+        path: "/bacarrat",
+        name: "bacarrat",
+        component: () => import(/* webpackChunkName: "Game" */ "../views/BacarratView.vue")
+      },
+      {
         path: "/fishing",
         name: "fishing",
         component: () => import(/* webpackChunkName: "Game" */ "../views/FishingView.vue")
       },
       {
-        path: "/agent",
-        name: "agent",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/agentview/index.vue")
-      },
-      {
         path: "/promotion",
         name: "promotion",
         component: () => import(/* webpackChunkName: "Game" */ "../views/promotion/index.vue")
-      },
-      {
-        path: "/app",
-        name: "app",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/AppView.vue")
-      },
-      {
-        path: "/sponsor",
-        name: "sponsor",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/SponsorView.vue")
-      },
-      {
-        path: "/vip",
-        name: "vip",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/VIPView.vue")
       },
       {
         path: "/maintenance",
@@ -125,11 +97,6 @@ const routes = [
         component: () => {}
       },
       {
-        path: "/privilege/invite",
-        name: "invite",
-        component: () => import("../views/PrivilegeInvite.vue")
-      },
-      {
         path: "/center",
         name: "center",
         component: PersonalLayoutView,
@@ -145,11 +112,6 @@ const routes = [
         path: "/agent/:affiliateCode",
         name: "agentCode",
         component: () => {}
-      },
-      {
-        path: "/affiliate",
-        name: "affiliate",
-        component: () => import(/* webpackChunkName: "affiliate" */ "../views/agentview/index.vue")
       },
       {
         path: "/app-tutorial",
@@ -178,10 +140,6 @@ const routes = [
         path: "/promo",
         redirect: "/promotion"
       },
-      {
-        path: "/account/vip",
-        redirect: "/vip"
-      }
     ]
   },
   {
@@ -207,7 +165,7 @@ const router = createRouter({
     // console.log(savedPosition);
     if (savedPosition && savedPosition.top) {
       return { left: 0, top: savedPosition.top };
-    } else if (to.path !== "/slot") {
+    } else if (to.path !== "/slot" && to.path !== '/home') {
       return { left: 0, top: 0 };
     }
   },
@@ -217,6 +175,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const store = userStore();
   const isDark = useDark();
+
   if (to.name === "agentCode") {
     sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
     sessionStorage.removeItem("REFERRAL_CODE");

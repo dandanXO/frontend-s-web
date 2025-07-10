@@ -1,65 +1,11 @@
 <template>
   <el-tabs>
-    <el-tab-pane label="账户登录">
+    <el-tab-pane :label="$t('form.accLogin')">
       <LoginFormDialog
         @close-dialog="closeLoginDialog"
         @open-reg-dialog="openRegDialog"
         @open-forgotpwd-dialog="openForgotpwdDialog"
       />
-      <!-- <AccountLogin
-        @close-dialog="closeLoginDialog"
-        @open-reg-dialog="openRegDialog"
-        @open-forgotpwd-dialog="openForgotpwdDialog"
-      /> -->
-    </el-tab-pane>
-    <el-tab-pane label="手机登录">
-      <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70" size="large">
-        <div class="light-bg form-field">
-          <img class="form-field-icon" src="../assets/home/auth/phone-icon.png" />
-          <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
-            <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号" />
-          </el-form-item>
-        </div>
-
-        <div class="light-bg form-field">
-          <img class="form-field-icon" src="../assets/home/auth/verification-icon.png" />
-          <el-form-item tabindex="2" label="验证码" prop="code">
-            <el-row :gutter="10" style="justify-content: center; align-items: center">
-              <el-col :span="10">
-                <el-input v-model="loginForm.code" label="验证码" placeholder="手机验证码" @keyup.enter="phoneLogin" />
-              </el-col>
-              <el-col :span="14">
-                <el-button
-                  v-if="loginCountdown === 0"
-                  @click="openCaptchaForm('LOGIN')"
-                  size="small"
-                  color="#3bafda"
-                  style="width: 100%; min-height: 30px; font-size: 12px"
-                  class="blue-bg"
-                >
-                  获取验证码
-                </el-button>
-                <el-button v-else disabled size="small" class="blue-bg">已发送（倒数{{ loginCountdown }}秒）</el-button>
-              </el-col>
-            </el-row>
-          </el-form-item>
-        </div>
-
-        <div class="agreement-and-forget-pass">
-          <div class="font-gray">登录即代表同意并遵守《用户协议》</div>
-          <div><a @click="openForgotpwdDialog">忘记密码</a></div>
-        </div>
-
-        <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="phoneLogin">登录</el-button>
-      </el-form>
-
-      <div class="flex-div">
-        <div style="visibility: hidden"><a @click="closeLoginDialog">先去逛逛</a></div>
-        <div style="text-align: left" class="font-gray">
-          没有账号？
-          <a @click="openRegDialog">去注册</a>
-        </div>
-      </div>
     </el-tab-pane>
   </el-tabs>
 
@@ -81,7 +27,7 @@
       style="padding: 20px"
     >
       <div class="light-bg form-field">
-        <img class="form-field-icon" src="../assets/home/auth/verification-icon.png" />
+        <img class="form-field-icon" src="../assets/home/auth/verification-icon.png" width="35px" />
         <el-form-item tabindex="3" label="验证码" prop="captchaCode">
           <div style="display: flex; width: 100%">
             <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码" @keyup.enter="sendOtp" />
@@ -100,10 +46,14 @@ import { ref, onMounted, reactive, defineEmits } from "vue";
 import { getVerificationCode } from "@/api/index/login";
 import { userStore } from "@/store";
 import { sendSms } from "@/api/personal/personal";
-import AccountLogin from "@/components/auth/login/index.vue";
 import { useNotify } from "@/hooks/notify";
 import { useRoute, useRouter } from "vue-router";
 import LoginFormDialog from "@/components/auth/login/LoginFormDialog.vue";
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
+
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 const notify = useNotify();
 
 const captchaRules = {

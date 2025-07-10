@@ -1,5 +1,5 @@
 <template>
-  <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
+  <!-- <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" /> -->
   <div class="table-record">
     <RecordComponent
       ref="recordRef"
@@ -24,7 +24,7 @@ export default defineComponent({
   name: "WithdrawRecordView",
   components: {
     RecordComponent,
-    RecordDateFilter
+    // RecordDateFilter
   },
   setup() {
 
@@ -97,7 +97,7 @@ export default defineComponent({
     const tableHeaders = ([
       {
         key: "serialNumber",
-        label: "单号"
+        label: "提款编码"
       },
       {
         key: "withdrawAmount",
@@ -131,7 +131,7 @@ export default defineComponent({
     });
 
     return {
-      
+
       tableData,
       visible,
       tableHeaders,

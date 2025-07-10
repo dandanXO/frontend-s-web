@@ -27,125 +27,10 @@
         </div>
       </div>
     </div>
-
-    <div class="promo-subtitle">{{ $t("hotPromo.vipPlanBettingUpgrade.termsAndConditions") }}</div>
-
-    <div class="tnc-content">
-      <ol>
-        <li>
-          {{ $t("hotPromo.vipPlanBettingUpgrade.tnc01") }}
-          <table class="promo-table">
-            <thead>
-              <tr>
-                <th>{{ $t("hotPromo.vipPlanBettingUpgrade.bet") }}</th>
-                <th>{{ $t("hotPromo.vipPlanBettingUpgrade.vipLevel") }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>0+</td>
-                <td>
-                  <div class="vip-level-td">
-                    <img class="vip-badge" src="../../../assets/images/vip/badge/vip_1.png" />
-                    <div>VIP 1</div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>500.00</td>
-                <td>
-                  <div class="vip-level-td">
-                    <img class="vip-badge" src="../../../assets/images/vip/badge/vip_2.png" />
-                    <div>VIP 2</div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>2000.00</td>
-                <td>
-                  <div class="vip-level-td">
-                    <img class="vip-badge" src="../../../assets/images/vip/badge/vip_3.png" />
-                    <div>VIP 3</div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>8000.00</td>
-                <td>
-                  <div class="vip-level-td">
-                    <img class="vip-badge" src="../../../assets/images/vip/badge/vip_4.png" />
-                    <div>VIP 4</div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>4000.00</td>
-                <td>
-                  <div class="vip-level-td">
-                    <img class="vip-badge" src="../../../assets/images/vip/badge/vip_5.png" />
-                    <div>VIP 5</div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>12000.00</td>
-                <td>
-                  <div class="vip-level-td">
-                    <img class="vip-badge" src="../../../assets/images/vip/badge/vip_6.png" />
-                    <div>VIP 6</div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>50000.00</td>
-                <td>
-                  <div class="vip-level-td">
-                    <img class="vip-badge" src="../../../assets/images/vip/badge/vip_7.png" />
-                    <div>VIP 7</div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>1500000.00</td>
-                <td>
-                  <div class="vip-level-td">
-                    <img class="vip-badge" src="../../../assets/images/vip/badge/vip_8.png" />
-                    <div>VIP 8</div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>3000000.00</td>
-                <td>
-                  <div class="vip-level-td">
-                    <img class="vip-badge" src="../../../assets/images/vip/badge/vip_9.png" />
-                    <div>VIP 9</div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><span style="color: #ff9500">6000000.00</span></td>
-                <td>
-                  <div class="vip-level-td">
-                    <img class="vip-badge" src="../../../assets/images/vip/badge/vip_10.png" />
-                    <div>VIP 10</div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </li>
-        <li>
-          {{ $t("hotPromo.vipPlanBettingUpgrade.tnc02") }}
-        </li>
-        <li>
-          {{ $t("hotPromo.vipPlanBettingUpgrade.tnc03") }}
-        </li>
-        <li>{{ $t("hotPromo.vipPlanBettingUpgrade.tnc04") }}</li>
-      </ol>
-    </div>
   </div>
 </template>
+
+<script setup></script>
 
 <style lang="scss" scoped>
 .receive-bar-container {
@@ -186,7 +71,7 @@
   }
 }
 
-.promo-subtitle {
+.promo-subtitle-new {
   // padding: 0 24px;
   margin-top: 24px;
   text-transform: uppercase;
@@ -200,10 +85,8 @@
   display: flex;
   justify-content: center;
 
-  &:before {
-    content: "";
-    background: url(../../../assets/images/promotion/receive-earn/promo-subtitle-icon.png);
-    width: 25px;
+  .tac-title-icon-left {
+    width: 25px !important;
     height: 9px;
     display: block;
     background-size: 100% 100%;
@@ -211,10 +94,8 @@
     margin-top: 4px;
   }
 
-  &:after {
-    content: "";
-    background: url(../../../assets/images/promotion/receive-earn/promo-subtitle-icon.png);
-    width: 25px;
+  .tac-title-icon-right {
+    width: 25px !important;
     height: 9px;
     display: block;
     background-size: 100% 100%;
@@ -302,6 +183,7 @@
   align-items: center;
   justify-content: center;
   .vip-badge {
+    width: 25px !important;
     height: 25px;
     margin-right: 4px;
     margin-top: 2px;

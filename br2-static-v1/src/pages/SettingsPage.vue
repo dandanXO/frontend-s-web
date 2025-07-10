@@ -25,7 +25,17 @@
           </div>
           <div class="top-name">
             <div class="top-name-details">
-              <div>{{ store.phone }}</div>
+              <div class="flex">
+                <div>{{ store.nickName }}</div>
+                <div @click="copyText(store.nickName)" class="">
+                  <img
+                    class="copy-btn btn-pointer"
+                    src="../assets/images/account/content-copy.svg"
+                    size="24px"
+                    fill="#fff"
+                  />
+                </div>
+              </div>
               <div>{{ store.realName }}</div>
             </div>
             <div class="top-copy-id">
@@ -197,6 +207,7 @@
       </div>
     </div>
   </q-dialog>
+  <q-input style="width: 100%; opacity: 0; position: relative; top: -9999px;" filled color="white" ref="copyinput" v-model="text_copied" />
 </template>
 
 <script setup>
@@ -275,7 +286,28 @@ const loadBanner = () => {
     }
   });
 };
+const copyinput = ref(null);
+const text_copied = ref("");
+const copyText = (text) => {
+  text_copied.value = text;
+  console.log(text_copied.value);
 
+  setTimeout(() => {
+    const copyText = copyinput.value;
+    console.log(copyText);
+
+    copyText.select();
+    document.execCommand("copy");
+    console.log("Copied");
+
+    $q.notify({
+      color: "positive",
+      position: "top",
+      message: t("notify.serialNumberCopied"),
+      icon: "check_circle_outline"
+    });
+  }, 100);
+};
 const logout = () => {
   loadingLogout.value = true;
 
@@ -566,5 +598,9 @@ const logout = () => {
 
 .q-page {
   min-height: 0 !important;
+}
+
+.copy-btn {
+  filter: brightness(0) invert(1);
 }
 </style>

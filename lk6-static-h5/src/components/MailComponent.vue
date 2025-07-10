@@ -11,7 +11,7 @@
       </q-tabs>
     </template>
 
-    <q-tab-panels v-model="mailboxMessageTab" animated>
+    <q-tab-panels v-model="mailboxMessageTab" class="mail-tab-panels" animated>
       <q-tab-panel :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
         <div v-if="!loading">
           <div
@@ -19,17 +19,33 @@
             v-if="props.type !== 'outbox' && truncatedListByType && truncatedListByType.length"
           >
             <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="readMails(item.type)">
-              全部已读
+              {{ $t("mail.readAll") }}
             </q-btn>
             <q-btn v-if="truncatedListByType.length" class="common-md-btn" size="md" @click="deleteMails(item.type)">
-              全部删除
+              {{ $t("mail.deleteAll") }}
             </q-btn>
-            <q-toggle v-if="truncatedListByType.length" v-model="allowSelectMultiple" :label="'选择多个'" left-label />
-            <q-btn v-if="hasMailSelected && allowSelectMultiple" class="common-md-white-btn" size="md" @click="readMails(item.type)">
-              已读
+            <q-space />
+            <q-toggle
+              v-if="truncatedListByType.length"
+              v-model="allowSelectMultiple"
+              :label="$t('mail.selectMultiple')"
+              left-label
+            />
+            <q-btn
+              v-if="hasMailSelected && allowSelectMultiple"
+              class="common-md-white-btn"
+              size="md"
+              @click="readMails(item.type)"
+            >
+              {{ $t("mail.read") }}
             </q-btn>
-            <q-btn v-if="hasMailSelected && allowSelectMultiple" class="common-md-white-btn" size="md" @click="deleteMails(item.type)">
-              删除
+            <q-btn
+              v-if="hasMailSelected && allowSelectMultiple"
+              class="common-md-white-btn"
+              size="md"
+              @click="deleteMails(item.type)"
+            >
+              {{ $t("mail.delete") }}
             </q-btn>
           </div>
           <q-infinite-scroll @load="onLoad" :offset="150">
@@ -46,22 +62,28 @@
                   <q-checkbox
                     v-if="allowSelectMultiple"
                     rounded
+                    dense
                     :model-value="selectedMailIds[det.id] ?? false"
                     @update:model-value="(newValue) => (selectedMailIds[det.id] = newValue ?? false)"
                     size="sm"
-                    style="font-size: 14px"
+                    style="font-size: 14px; margin-right: 4px"
                     color="#0089ED"
                   />
 
                   <div class="read-label" v-if="det.readTime && det.sendTime">
-                    <img src="../assets/images/inbox/read-mail.png" />
+                    <img src="../assets/images/inbox/read-mail.svg" />
                   </div>
                   <div class="read-label" v-else>
-                    <img src="../assets/images/inbox/unread-mail.png" />
+                    <img src="../assets/images/inbox/unread-mail.svg" />
                   </div>
 
                   <div class="title-text" :title="det.title">{{ det.title }}</div>
-                  <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`">
+                  <div
+                    v-if="det.sendTime"
+                    class="send-time"
+                    :title="$t('mail.sentTime', { time: formatSendTime(det.sendTime) })"
+                  >
+                    {{ humanDatetime(det.sendTime) }}
                     <i>{{ formatSendTime(det.sendTime) }}</i>
                   </div>
                   <div class="right-title">
@@ -73,15 +95,20 @@
                 </div>
               </div>
               <div v-if="isSelectedMail === det.id && det.content" class="mailcontents">
-                <span style="color: #aaaaaa; font-size: 15px;">正文: </span>
+                <span style="color: #7a80a1; font-size: 15px">{{ $t("mail.content") }}</span>
                 <div class="q-pb-sm" v-html="det.content.replace(/\n/g, '<br/>')"></div>
-                <div class="q-pa-md" style="background: #ffffffa5; border-radius: 10px;"  v-if="isSelectedMail === det.id && det.replyMessageContent">
-                <span style="color: #aaaaaa; font-size: 15px;">回复: </span><div v-html="det.replyMessageContent.replace(/\n/g, '<br/>')"></div>
+                <div
+                  class="q-pa-md"
+                  style="background: #ffffffa5; border-radius: 10px"
+                  v-if="isSelectedMail === det.id && det.replyMessageContent"
+                >
+                  <span style="color: #7a80a1; font-size: 15px">{{ $t("mail.reply") }}</span>
+                  <div v-html="det.replyMessageContent.replace(/\n/g, '<br/>')"></div>
                 </div>
               </div>
               <div v-if="mailType === 'outbox'" class="buttons">
-                <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />
-                <q-btn outline label="复制" size="sm" color="bright" />
+                <q-btn outline :label="$t('btn.reminderRequest')" size="sm" color="bright" class="q-mr-sm" />
+                <q-btn outline :label="$t('btn.copy')" size="sm" color="bright" />
               </div>
             </q-card>
 
@@ -92,7 +119,7 @@
                 </div>
               </div>
               <div v-else class="q-pa-md" style="text-align: center">
-                {{ truncatedList.length === 0 ? "暂无数据" : "暂无更多数据了" }}
+                {{ truncatedList.length === 0 ? $t("common.noData") : $t("common.noMoreData") }}
               </div>
             </template>
           </q-infinite-scroll>
@@ -101,26 +128,20 @@
         <div class="loading-container" v-else>
           <q-inner-loading :showing="loading">
             <q-spinner-gears size="50px" color="brand" />
-            <div class="label">加载中</div>
+            <div class="label">{{ $t("common.loading") }}</div>
           </q-inner-loading>
         </div>
       </q-tab-panel>
     </q-tab-panels>
 
-    <q-dialog width="100%" v-model="isDeleteMailModal">
-      <q-card style="width: 100%; padding: 20px" class="text-black">
-        <q-card-section class="q-mb-md text-center" style="flex-direction: column">
-          <strong>温馨提示</strong>
-          <br />
-          <br />
-          确认删除信息？
-        </q-card-section>
-        <q-card-actions align="center">
-          <q-btn class="common-md-btn" size="md" @click="confirmDeleteMails(type)" label="确认" />
-          <q-btn class="common-md-white-btn" size="md" @click="isDeleteMailModal = false" label="取消" />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+    <CommonModal
+      v-model="isDeleteMailModal"
+      :header="$t('mail.notification.deleteConfirm.title')"
+      :message="$t('mail.notification.deleteConfirm.message')"
+      :actions="['confirm', 'cancel']"
+      @confirm="confirmDeleteMails(type)"
+      @cancel="isDeleteMailModal = false"
+    />
   </q-page>
 </template>
 <script>
@@ -129,8 +150,13 @@ import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import qs from "qs";
+import CommonModal from "./CommonModal.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
+  components: {
+    CommonModal
+  },
   props: {
     list: {
       type: Array,
@@ -159,12 +185,13 @@ export default defineComponent({
   },
   emits: ["readMsg"],
   setup(props, context) {
-    const mailboxMessageTypeData = ref([
-      { num: 2, type: "ACTIVITY", name: "活动" },
-      { num: 3, type: "ANNOUNCEMENT", name: "公告" },
-      { num: 4, type: "PAYMENT", name: "充提" },
-      { num: 1, type: "NOTIFICATION", name: "通知" },
-      { num: 5, type: "ALL", name: "全部" }
+    const { t } = useI18n();
+    const mailboxMessageTypeData = computed(() => [
+      { num: 2, type: "ACTIVITY", name: t("mail.category.activity") },
+      { num: 3, type: "ANNOUNCEMENT", name: t("mail.category.announcement") },
+      { num: 4, type: "PAYMENT", name: t("mail.category.payment") },
+      { num: 1, type: "NOTIFICATION", name: t("mail.category.notification") },
+      { num: 5, type: "ALL", name: t("mail.category.all") }
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
     if (props.type === "outbox") {
@@ -173,13 +200,13 @@ export default defineComponent({
     const $q = useQuasar();
     const isDeleteMailModal = ref(false);
 
-    const sliceOffset = ref(0)
-    const sliceLimit = 6
+    const sliceOffset = ref(0);
+    const sliceLimit = 6;
     const truncatedList = computed(() => {
-      return props.list.slice(0, sliceOffset.value)
-    })
+      return props.list.slice(0, sliceOffset.value);
+    });
 
-    const truncatedListAll = ref([])
+    const truncatedListAll = ref([]);
     const truncatedListByType = computed(() => {
       return truncatedList.value.filter((listItem) => {
         if (mailboxMessageTab.value === "ALL") {
@@ -189,7 +216,7 @@ export default defineComponent({
       });
     });
 
-    const comList = computed(() => props.list)
+    const comList = computed(() => props.list);
 
     const allowSelectMultiple = ref(false);
     const selectedMailIds = ref({});
@@ -197,11 +224,11 @@ export default defineComponent({
     const onLoad = (index, done) => {
       setTimeout(() => {
         if (sliceOffset.value < props.list.length) {
-          sliceOffset.value += sliceLimit
+          sliceOffset.value += sliceLimit;
         }
-        done()
-      }, 200)
-    }
+        done();
+      }, 200);
+    };
     const isSelectedMail = ref(-1);
     const toggleMail = (mail) => {
       if (isSelectedMail.value !== mail.id) {
@@ -228,7 +255,7 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               $q.notify({
-                message: "读取已选择的消息",
+                message: t("mail.notification.readSelectedSuccess.message"),
                 type: "success"
               });
 
@@ -257,7 +284,7 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               $q.notify({
-                message: "全部消息已读",
+                message: t("mail.notification.readAllSuccess.message"),
                 type: "success"
               });
 
@@ -284,7 +311,7 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               $q.notify({
-                message: "全部消息已读",
+                message: t("mail.notification.readAllSuccess.message"),
                 type: "success"
               });
 
@@ -334,7 +361,7 @@ export default defineComponent({
             if (res.code === 0) {
               !readTime &&
                 $q.notify({
-                  message: "已读消息",
+                  message: t("mail.notification.readSuccess.message"),
                   type: "success"
                 });
               mail.content = res.data.content;
@@ -356,7 +383,7 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               $q.notify({
-                message: "已读消息",
+                message: t("mail.notification.readSuccess.message"),
                 type: "success"
               });
               onLoad();
@@ -396,7 +423,7 @@ export default defineComponent({
               truncatedList.value = truncatedList.value.filter((mail) => !selectedMailIds.value[mail.id]);
 
               notify({
-                message: "删除已选择的消息",
+                message: t("mail.notification.deleteSelectedSuccess.message"),
                 type: "success"
               });
               onLoad();
@@ -422,7 +449,7 @@ export default defineComponent({
             truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
             if (res.code === 0) {
               notify({
-                message: "已删除全部消息",
+                message: t("mail.notification.deleteAllSuccess.message"),
                 type: "success"
               });
               onLoad();
@@ -443,7 +470,7 @@ export default defineComponent({
             truncatedList.value = truncatedList.value.filter((item) => item.type !== msgType.value);
             if (res.code === 0) {
               notify({
-                message: "已删除全部消息",
+                message: t("mail.notification.deleteAllSuccess.message"),
                 type: "success"
               });
               onLoad();
@@ -538,6 +565,9 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
       margin-right: 8px;
+      img {
+        width: 18px;
+      }
     }
 
     .title-wrapper {
@@ -551,17 +581,16 @@ export default defineComponent({
         overflow: hidden;
         white-space: nowrap;
         flex: 1;
+
+        color: #7a80a1;
       }
 
       .send-time {
         font-size: 0.8rem;
         font-weight: 400;
         margin: 0 10px;
+        color: #7a80a1;
       }
-    }
-
-    &.unread {
-      font-weight: bold;
     }
   }
 
@@ -586,6 +615,7 @@ export default defineComponent({
     height: auto;
     overflow: hidden;
     overflow-wrap: break-word;
+    color: #7a80a1;
     // text-overflow: ellipsis;
   }
 }
@@ -622,9 +652,20 @@ export default defineComponent({
   margin-right: 5px;
 }
 
-.q-tab {
-  &--active {
-    color: #000;
+.q-tabs {
+  .q-tab {
+    font-weight: 600;
+    color: #7a80a1;
+    &--active {
+      color: #468cff;
+    }
+    &__indicator {
+      background: #468cff;
+    }
   }
+}
+
+.mail-tab-panels {
+  background: transparent;
 }
 </style>

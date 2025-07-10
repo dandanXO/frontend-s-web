@@ -1,17 +1,17 @@
 <template>
-  <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="80" size="large">
+  <el-form ref="registerRef" :rules="regRules" :model="regForm" :label-width="languageVal === 'en' ? 130 : 80" size="large" style="padding-top:16px;">
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/name-icon.png" />
-      <el-form-item label="姓名" prop="realName">
+      <img class="form-field-icon" src="../../../assets/home/auth/username-icon.png" width="35px" />
+      <el-form-item :label="$t('form.realName')" prop="realName">
         <el-input
           class="wTip"
           v-model="regForm.realName"
-          placeholder="输入姓名"
+          :placeholder="$t('form.pleaseEnterField', {field: $t('form.realName')})"
           :rules="[
-            { required: true, message: '姓名必须与提款银行卡账号姓名一致' },
+            { required: true, message: $t('form.realNameRule01') },
             {
               pattern: /^[\u4e00-\u9fa5·]+$/,
-              message: '请输入中文字符',
+              message: $t('form.realNameRule02'),
               trigger: 'change'
             }
           ]"
@@ -23,21 +23,21 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
-      <el-form-item label="用户名" prop="loginName">
-        <el-input class="wTip" v-model="regForm.loginName" placeholder="4~11位包含字母和数字" clearable>
+      <img class="form-field-icon" src="../../../assets/home/auth/username-icon.png" />
+      <el-form-item :label="$t('form.username')" prop="loginName">
+        <el-input class="wTip" v-model="regForm.loginName" :placeholder="$t('form.usernameRule01', {min: 4, max: 11})" clearable>
           <template #append></template>
         </el-input>
       </el-form-item>
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
-      <el-form-item label="密码" prop="password">
+      <img class="form-field-icon" src="../../../assets/home/auth/password-icon.png" width="35px" />
+      <el-form-item :label="$t('form.password')" prop="password">
         <el-input
           class="wTip"
           v-model="regForm.password"
-          placeholder="请输入6-12位密码"
+          :placeholder="$t('form.passwordRule01', {min: 6, max: 12})"
           type="password"
           show-password
           clearable
@@ -48,12 +48,12 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
-      <el-form-item label="确认密码" prop="confirmPwd">
+      <img class="form-field-icon" src="../../../assets/home/auth/password-icon.png" width="35px" />
+      <el-form-item :label="$t('form.confirmPassword')" prop="confirmPwd">
         <el-input
           class="half wTip"
           v-model="regForm.confirmPwd"
-          placeholder="请输入确认密码"
+          :placeholder="$t('form.pleaseEnterField', {field: $t('form.confirmPassword')})"
           type="password"
           show-password
           clearable
@@ -64,20 +64,20 @@
     </div>
 
     <div class="light-bg form-field" v-if="!hasReferSummon">
-      <img class="form-field-icon" src="@/assets/home/auth/referral-icon.png" />
-      <el-form-item label="推荐码" prop="codeAffiliate">
+      <img class="form-field-icon" src="../../../assets/home/auth/referral-icon.svg" />
+      <el-form-item :label="$t('form.referralCode')" prop="codeAffiliate">
         <el-input
           v-if="!hasAffiliate"
           class="half"
           v-model="regForm.codeAffiliate"
-          placeholder="如果没有 无需填写"
+          :placeholder="$t('form.optionalEntry')"
           clearable
         />
         <el-input
           v-else
           class="half"
           v-model="regForm.codeAffiliate"
-          placeholder="如果没有 无需填写"
+          :placeholder="$t('form.optionalEntry')"
           readonly
           disabled
           clearable
@@ -86,14 +86,14 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
-      <el-form-item label="验证码" prop="captchaCode">
+      <img class="form-field-icon" src="../../../assets/home/auth/verification-icon.png" width="35px" />
+      <el-form-item :label="$t('form.verificationCode')" prop="captchaCode">
         <div style="display: flex; width: 100%">
           <el-input
             @keyup.enter="submitRegisterForm(registerRef)"
             v-model="regForm.captchaCode"
-            label="验证码"
-            placeholder="请输入验证码"
+            :label="$t('form.verificationCode')"
+            :placeholder="$t('form.pleaseEnterField', {field: $t('form.verificationCode')})"
             clearable
           />
           <img style="width: 90px" :src="verificationImg" @click="getCode" />
@@ -101,21 +101,14 @@
       </el-form-item>
     </div>
   </el-form>
-  <!-- <div>
-      <el-button class="blue-bg primary-btn" size="large" @click="resetRegForm(registerRef)">重新填写</el-button>
-  </div> -->
   <div>
-    <el-button class="blue-bg primary-btn" size="large" @click="submitRegisterForm(registerRef)">注册</el-button>
+    <el-button class="blue-bg primary-btn" size="large" @click="submitRegisterForm(registerRef)">{{ $t('btn.register') }}</el-button>
   </div>
 
-  <div class="flex-div">
-    <div style="visibility: hidden">
-      <a @click="closeRegDialog">先去逛逛</a>
-    </div>
-
+  <div style="display:flex;justify-content:center;padding:26px 0;">
     <div style="text-align: center" class="font-gray">
-      已有账号？
-      <a @click="openLoginDialog">去登录</a>
+      {{$t('form.alreadyHaveAcc')}}？
+      <a @click="openLoginDialog">{{ $t('form.goLogin') }}</a>
     </div>
   </div>
 </template>
@@ -127,7 +120,13 @@ import { useRoute, useRouter } from "vue-router";
 import { lsGet } from "@/utils/utils";
 import { getVerificationCode, register } from "@/api/index/login";
 import { useNotify } from "@/hooks/notify";
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 const store = userStore();
 const notify = useNotify();
 const registerTelephoneKey = `registerTelephoneKey`;
@@ -146,11 +145,6 @@ const checkReferSummonCode = () => {
   }
 };
 
-const resetRegForm = (formEl) => {
-  if (!formEl) return;
-  formEl.resetFields();
-};
-
 function charType(num) {
   if (num >= 48 && num <= 57) {
     return 1;
@@ -164,15 +158,6 @@ function charType(num) {
   return 8;
 }
 
-const checkName = (v) => {
-  const alphanumeric = /^[\p{L}\p{N}]*$/u;
-  return v.match(alphanumeric);
-};
-const checkName2 = (v) => {
-  const alphaRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/;
-  return v.match(alphaRegex);
-};
-
 const checkRealName = (v) => {
   // const alphanumeric = /^[\p{L}\p{N}]*$/u;
   const chineseCharOnly = /^[\u4e00-\u9fa5·]+$/;
@@ -185,7 +170,7 @@ let validateName = async (r, v) => {
   const hasNumber = /\d/.test(v); // At least 1 number
 
   if (!(namePattern.test(v) && letterCount && hasNumber)) {
-    return Promise.reject("须以字母开头，并包含至少2个字母和1个数字");
+    return Promise.reject(t('form.usernameRule02', {letterCount: 2, numberCount: 1}));
   }
 
   return Promise.resolve();
@@ -194,9 +179,9 @@ let validateName = async (r, v) => {
 let validatePhoneNumber = async (r, v) => {
   var reg = /^\d+$/;
   if (v === "") {
-    return Promise.reject("请验证您的电话号码");
+    return Promise.reject(t('form.verifyYourPhoneNumber'));
   } else if (!reg.test(v)) {
-    return Promise.reject("电话号码只允许使用数字");
+    return Promise.reject(t('form.onlyNumbersAllowed'));
   } else {
     return Promise.resolve();
   }
@@ -204,9 +189,9 @@ let validatePhoneNumber = async (r, v) => {
 
 let validateRealName = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请输入登姓名");
+    return Promise.reject(t('form.pleaseEnterField', {field: t('form.realName')}));
   } else if (!checkRealName(v)) {
-    return Promise.reject("请输入中文字符");
+    return Promise.reject(t('form.realNameRule02'));
   } else {
     return Promise.resolve();
   }
@@ -236,9 +221,9 @@ let validatePassStrength = (r, v) => {
 
 let validatePass2 = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请重新输入密码");
+    return Promise.reject(t('form.reEnterPassword'));
   } else if (v !== regForm.password) {
-    return Promise.reject("密码不同");
+    return Promise.reject(t('form.passwordMismatch'));
   } else {
     return Promise.resolve();
   }
@@ -246,7 +231,7 @@ let validatePass2 = async (r, v) => {
 
 let validatePass = async (r, v) => {
   if (v === "") {
-    return Promise.reject("请输入密码");
+    return Promise.reject(t('form.pleaseEnterField', {field: t('form.password')}));
   } else {
     return validatePassStrength(r, v);
   }
@@ -256,13 +241,13 @@ const regRules = {
   realName: [
     {
       required: true,
-      message: "请输入姓名",
+      message: t('form.pleaseEnterField', {field: t('form.realName')}),
       trigger: "blur"
     },
     {
       min: 2,
       max: 12,
-      message: "长度应为 2 至 12",
+      message: t('form.lengthMustBeBetween', {min: 2, max: 12}),
       trigger: "blur"
     },
     {
@@ -273,13 +258,13 @@ const regRules = {
   loginName: [
     {
       required: true,
-      message: "请输入用户名",
+      message: t('form.pleaseEnterField', {field: t('form.username')}),
       trigger: "blur"
     },
     {
       min: 4,
       max: 11,
-      message: "长度应为 4 至 11",
+      message: t('form.lengthMustBeBetween', {min: 4, max: 11}),
       trigger: "blur"
     },
     {
@@ -290,13 +275,13 @@ const regRules = {
   password: [
     {
       required: true,
-      message: "请输入密码",
+      message: t('form.pleaseEnterField', {field: t('form.password')}),
       trigger: "blur"
     },
     {
       min: 6,
       max: 12,
-      message: "长度应为 6 至 12",
+      message: t('form.lengthMustBeBetween', {min: 6, max: 12}),
       trigger: "blur"
     },
     {
@@ -307,13 +292,13 @@ const regRules = {
   confirmPwd: [
     {
       required: true,
-      message: "请输入密码",
+      message: t('form.pleaseEnterField', {field: t('form.password')}),
       trigger: "blur"
     },
     {
       min: 6,
       max: 12,
-      message: "长度应为 6 至 12",
+      message: t('form.lengthMustBeBetween', {min: 6, max: 12}),
       trigger: "blur"
     },
     {
@@ -330,43 +315,43 @@ const regRules = {
   smsCode: [
     {
       required: true,
-      message: "请输入手机验证码",
+      message: t('form.pleaseEnterField', {field: t('form.smsOtp')}),
       trigger: "blur"
     },
     {
       min: 6,
       max: 6,
-      message: "长度应为 6",
+      message: t('form.lengthMustBe', {num: 6}),
       trigger: "blur"
     }
   ],
   email: [
     {
       required: true,
-      message: "请输入您的邮箱",
+      message: t('form.pleaseEnterField', {field: t('form.email')}),
       trigger: "blur"
     },
     {
       type: "email",
-      message: "电子邮件地址无效",
+      message: t('form.emailRule01'),
       trigger: "blur"
     },
     {
       max: 50,
-      message: "长度应小于 50",
+      message: t('form.lengthLessThan', {num: 50}),
       trigger: "blur"
     }
   ],
   captchaCode: [
     {
       required: true,
-      message: "请输入验证码",
+      message: t('form.pleaseEnterField', {field: t('form.verificationCode')}),
       trigger: "blur"
     },
     {
       min: 4,
       max: 4,
-      message: "长度应为 4",
+      message: t('form.lengthMustBe', {num: 4}),
       trigger: "change"
     }
   ]

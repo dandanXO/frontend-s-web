@@ -89,7 +89,7 @@
       </table>
     </div>
 
-    <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
+    <!-- <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
 
     <div class="tnc-content">
       <ol>
@@ -97,7 +97,7 @@
           {{ $t(`hotPromo.betCashback.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
       </ol>
-    </div>
+    </div> -->
   </div>
 </template>
 

@@ -201,7 +201,7 @@ export default defineComponent({
       const fbclid2 = window.localStorage.getItem("fbclid");
 
       const fbc = fbclid;
-      const siteCode = "PAK";
+      const siteCode = "PK4";
 
       const getCookie = (name) => {
         const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));

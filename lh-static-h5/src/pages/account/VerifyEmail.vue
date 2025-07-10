@@ -47,14 +47,18 @@
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
-    <q-card width="100%">
-      <q-card-section class="q-pa-md bg-brightbtn text-white">
+    <q-card width="100%" class="modalcontent">
+      <!-- <q-card-section class="q-pa-md bg-brightbtn text-white">
         <q-toolbar>
           <q-toolbar-title>验证码</q-toolbar-title>
           <q-btn flat v-close-popup round dense icon="close" />
         </q-toolbar>
-      </q-card-section>
+      </q-card-section> -->
       <div class="q-px-lg q-pt-sm q-pb-lg">
+        <div class="headers">
+          <div class="titles">验证码</div>
+          <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+        </div>
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="innerCaptchaRef" placeholder="验证码">
             <template v-slot:append>
@@ -70,7 +74,9 @@
             </template>
           </q-input>
         </q-card-section>
-        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="brightbtn" />
+        <div class="send-otp-btn">
+          <q-btn @click="onCaptchaSubmit" label="发送验证码" color="brightbtn" />
+        </div>
       </div>
     </q-card>
   </q-dialog>
@@ -389,6 +395,23 @@ export default defineComponent({
 });
 </script>
 <style lang="scss">
+.modalcontent {
+  box-shadow: none;
+  .headers {
+    display: flex;
+    width: 100%;
+  }
+  .titles {
+    width: 100%;
+    align-self: center;
+    text-align: center;
+  }
+  .send-otp-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
 .personal-account {
   padding: 10px;
 
@@ -407,5 +430,10 @@ export default defineComponent({
 
 .q-toolbar {
   background: #33bcd4;
+}
+.body--dark {
+  .modalcontent {
+    background: linear-gradient(180deg, #384e79 2.08%, #2c3d61 47.5%, #212e4c 100%);
+  }
 }
 </style>

@@ -6,7 +6,7 @@
         <div class="counter">
           <div class="circle">
             <div class="inner-circle">
-              <div class="type">CURRENT SPEED</div>
+              <!-- <div class="type">CURRENT SPEED</div> -->
               <Vue3Autocounter
                 class="auto-counter"
                 :startAmount="0"
@@ -24,7 +24,7 @@
         <div class="counter">
           <div class="circle">
             <div class="inner-circle">
-              <div class="type">TOTALLY AMOUNT</div>
+              <!-- <div class="type">TOTALLY AMOUNT</div> -->
               <Vue3Autocounter
                 class="auto-counter"
                 :startAmount="0"
@@ -42,7 +42,7 @@
         <div class="counter">
           <div class="circle">
             <div class="inner-circle">
-              <div class="type">CURRENT SPEED</div>
+              <!-- <div class="type">CURRENT SPEED</div> -->
               <Vue3Autocounter
                 class="auto-counter"
                 :startAmount="0"
@@ -60,7 +60,7 @@
         <div class="counter">
           <div class="circle">
             <div class="inner-circle">
-              <div class="type">TOTALLY AMOUNT</div>
+              <!-- <div class="type">TOTALLY AMOUNT</div> -->
               <Vue3Autocounter
                 class="auto-counter"
                 :startAmount="0"
@@ -151,18 +151,9 @@
 
 <script setup>
 import { onMounted } from "vue";
-import HomeTitle from "@/atoms/HomeTitle.vue";
-import HomeTitleV2 from "@/atoms/HomeTitleV2.vue";
 import Vue3Autocounter  from "vue3-autocounter";
-import { useDark } from "@vueuse/core";
 
-const isDark = useDark();
-
-const loadCircleBg = () => {
-  return isDark.value
-    ? require("../../../assets/home/service/circle-bg-dark.png")
-    : require("../../../assets/home/service/circle-bg.png");
-};
+const loadCircleBg = () => require("../../../assets/home/service/circle-bg.png");
 
 onMounted(() => {});
 </script>
@@ -218,7 +209,7 @@ onMounted(() => {});
               filter: drop-shadow(0px 2px #c4effa);
               font-family: FZHanZhenGuangBiaoS-GB;
               font-size: 2.82869rem;
-              font-weight: 600;
+              font-weight: 400;
               line-height: normal;
               letter-spacing: 0.14144rem;
               background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
@@ -276,10 +267,10 @@ onMounted(() => {});
 
         .item {
           display: flex;
-          align-items: flex-start;
+          align-items: center;
           justify-content: center;
           padding: 2rem;
-          gap: 16px;
+          gap: 20px;
 
           .left-container {
             .circle-wrapper {

@@ -729,7 +729,7 @@ const ruleType = reactive({
     { key: 16, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 1 + t('withdrawRuleType.week') + ')', value: '#betCountByPlatform_7' },
     { key: 17, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 2 + t('withdrawRuleType.week') + ')', value: '#betCountByPlatform_14' },
     { key: 18, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 1 + t('withdrawRuleType.month') + ')', value: '#betCountByPlatform_30' },
-    { key: 19, name: t('withdrawRuleType.balanceThresholdMultiplier'), value: '#balanceThresholdMultiplier<' },
+    { key: 19, name: t('withdrawRuleType.balanceThresholdMultiplier'), value: '#balance<#totalDeposit*' },
   ],
 })
 
@@ -903,6 +903,7 @@ function getValueList(str) {
   const conditionRegex = /(#\w+)\s*(<=|>=|==|<|>)\s*(-?\d+(?:\.\d+)?)/g;
   const matchesRegex = /\(([^)]+)\)\s+matches\s+'(.*)'/g;
   const platformRegex = /#betCountByPlatform_([a-zA-Z0-9_]+)_(\d+)/g;
+  const balanceThresholdRegex = /#balance<#totalDeposit\*\s*(-?\d+(?:\.\d+)?)/g;
   const results = [];
   let match;
   if (!str) {
@@ -927,6 +928,11 @@ function getValueList(str) {
       const numericPart = match[2];
       const variable = '#betCountByPlatform_' + numericPart;
       const value = platformList;
+      results.push({ variable, operator: '', value });
+    }
+    while ((match = balanceThresholdRegex.exec(conditionStr)) !== null) {
+      const variable = '#balance<#totalDeposit*';
+      const value = parseFloat(match[1]);
       results.push({ variable, operator: '', value });
     }
   }
@@ -1180,15 +1186,25 @@ function createConditionString(data) {
   const conditions = data.map(item => {
     const variable = item.variable.trim();
     const value = item.value;
-    if (variable !== '' && value !== null) {
+    if (variable !== '' && value !== null && value !== undefined) {
       if (variable.includes('matches')) {
+        if (Array.isArray(value) && value.length === 0) {
+          return null;
+        }
         return `(',' + '${value}' + ',') ${variable}`;
       }
       if (variable.startsWith("#betCountByPlatform_") && value instanceof Array) {
+        if (value.length === 0) {
+          return null;
+        }
         const parts = variable.split('_');
         const platforms = value.join('_');
         const numberPart = parts[parts.length - 1];
         return `#betCountByPlatform_${platforms}_${numberPart}`;
+      }
+      // Handle balanceThresholdMultiplier rule - no space between variable and value
+      if (variable === '#balance<#totalDeposit*') {
+        return `${variable}${value}`;
       }
       return `${variable} ${value}`;
     }

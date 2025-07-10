@@ -377,7 +377,7 @@ export default defineComponent({
 
     onMounted(async () => {
       // const info = await App.getInfo();
-      // console.log("APP Info");
+      console.log("BR1 0707");
       // console.log(info);
       // checkSID();
       // getCSA();

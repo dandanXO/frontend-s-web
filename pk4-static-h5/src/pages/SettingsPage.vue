@@ -43,7 +43,7 @@
           <img src="../assets/images/account/total-score.png" />
           {{ $t("settings.totalScore") }}
         </div>
-        <div class="score-amount">{{ store.balance.toFixed(2) }}</div>
+        <div class="score-amount">{{ store.balance.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }) }}</div>
       </div>
       <!-- <div class="top-section-inner">
       </div> -->

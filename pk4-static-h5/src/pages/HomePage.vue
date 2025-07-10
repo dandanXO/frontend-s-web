@@ -1137,7 +1137,7 @@
         </div>
       </template>
     </template>
-          <div class="download-app-buttons">
+          <!-- <div class="download-app-buttons">
             <div class="app app_ios">
               <div class="icon">
                 <img src="../assets/images/index/app-ios.png">
@@ -1165,7 +1165,7 @@
                 <img src="../assets/images/index/btn-right.png">
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="support-button">
             <div class="supp-left">
               <div class="supp-main">{{ $t('home.twentyFourSevenSupport') }}</div>
@@ -4296,6 +4296,8 @@ onActivated(async () => {
       isAdditionalReferSteps.value = true;
       disableScroll();
       currentAdditionalStep.value = 1;
+    } else {
+      isAdditionalReferSteps.value = false;
     }
   });
   // alert(currentStep.value);
@@ -4477,6 +4479,8 @@ const showSpinWheel = () => {
         if ((store.canSpinPrivilegeCoupon) && isAndroid()) {
           promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
           popupPromo.value = "newplayer-spin-wheel"
+        } else {
+          promoStore.removeShownFloatingOrDialogList("newplayer-spin-wheel");
         }
       }
     })

@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div>
     <div class="menu-title-container">
       <span class="menu-title">
         {{ isAutoWithdrawal ? "快速提款" : "提款" }}
@@ -9,10 +9,10 @@
         :loading="loadingBtn"
         :disable="loadingBtn"
         size="large"
-        class="common-btn upgrade-btn"
+        class="standard-button btn-color-blue upgrade-btn"
         @click="handleUpgradeClick"
       >
-        <img src="@/assets/images/finance/withdraw/rocket-icon.png" />
+        <img src="@/assets/images/finance/withdraw/rocket-icon.svg" />
         <span>升级快速提款</span>
       </el-button>
     </div>
@@ -91,7 +91,7 @@
               :loading="loadingBtn"
               :disable="loadingBtn"
               size="large"
-              class="common-btn withdraw-btn"
+              class="standard-button btn-color-blue"
               @click="submitWithraw"
             >
               确定
@@ -185,7 +185,7 @@
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET && selectedWithdrawalMethod.url">
           <span class="tip-text">*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</span>
-          <el-button class="common-btn" v-if="selectedWithdrawalMethod.code !== 'SZPAY'" @click="openEWalletTutorial">
+          <el-button class="standard-button btn-color-blue" v-if="selectedWithdrawalMethod.code !== 'SZPAY'" @click="openEWalletTutorial">
             <span>{{ tutorialLabel }}</span>
           </el-button>
         </div>
@@ -625,7 +625,7 @@ export default defineComponent({
       }
 
       .withdraw-tip {
-        color: #ff7f10;
+        color: #FFC024;
         margin-top: 15px;
       }
 
@@ -655,6 +655,7 @@ export default defineComponent({
       display: flex;
       justify-content: center;
       align-items: center;
+      border-radius: 2px;
       // &::before,
       // &::after {
       //   content: "";
@@ -704,9 +705,11 @@ export default defineComponent({
       cursor: pointer;
       justify-content: center;
       min-width: 6rem;
-      background-color: #f7f8fb;
+      background: #F7F8FB;
       border-radius: 15px;
-      box-shadow: inset 0 0 8px 0 #a9c9ea;
+      box-shadow: 0px 0px 2.78px 0px #A9C9EA inset;
+      width: 140px;
+      height: 101px;
       margin-bottom: 30px;
       border: 2px solid transparent;
       flex-direction: column;
@@ -741,7 +744,7 @@ export default defineComponent({
       }
 
       &.active {
-        border: 2px solid #468cff;
+        border: 2px solid #468CFF;
         box-shadow: unset;
         // border-bottom: 4px solid #1bcef1;
         // border: 1px solid #ffd800;
@@ -829,8 +832,8 @@ export default defineComponent({
 
   :deep(.el-input__wrapper),
   :deep(.el-select__wrapper) {
-    background-color: #f7f8fb;
-    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+    background: #F7F8FB;
+    box-shadow: 0px 0px 2.78px 0px #A9C9EA inset;
   }
 }
 </style>
@@ -993,7 +996,7 @@ export default defineComponent({
   border-radius: 8px;
   align-self: center;
   img {
-    height: 25px;
+    height: 55px;
   }
   span {
     line-height: 25px;
@@ -1013,52 +1016,7 @@ export default defineComponent({
   }
 }
 
-.dark {
-  .card {
-    @include content-block-dark;
-    color: $font-3-dark;
-    background-color: #17223e;
-  }
 
-  .menu-title-container {
-    .menu-title {
-      color: $color-white;
-    }
-  }
-
-  .account-container {
-    .account-content-wrapper {
-      .step-item {
-        background: linear-gradient(90deg, #344468 0%, #1a2338 100%);
-        border: 1px solid #78abdb;
-      }
-      .withdraw-type-item {
-        border: unset;
-        box-shadow: unset;
-        background-color: $background-content-block-lighter-dark;
-        border: 2px solid transparent;
-
-        &.active {
-          border: 2px solid #a98f7c;
-
-          &:before {
-            width: 25px;
-            height: 25px;
-            background-image: url("../../assets/svg/checkmark-dark.svg");
-          }
-        }
-      }
-    }
-  }
-
-  .withdraw-form {
-    :deep(.el-input__wrapper),
-    :deep(.el-select__wrapper) {
-      background-color: $background-content-block-lighter-dark;
-      box-shadow: none;
-    }
-  }
-}
 .withdraw-remaining-dialog__buttons {
   display: flex;
   width: 100%;
