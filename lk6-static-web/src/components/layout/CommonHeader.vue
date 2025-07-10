@@ -135,13 +135,13 @@
                 <el-dropdown-item command="personal">
                   <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('personal')" />
-                    <span>个人信息</span>
+                    <span>{{ $t('menu.personalInfo') }}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
                   <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('deposit')" />
-                    <span>充值中心</span>
+                    <span>{{ $t('menu.depositCentre') }}</span>
                   </div>
                 </el-dropdown-item>
                 <!-- <el-dropdown-item command="transfer">
@@ -153,7 +153,7 @@
                 <el-dropdown-item command="promotion">
                   <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('promo')" />
-                    <span>优惠领取</span>
+                    <span>{{ $t('menu.promoClaim') }}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
@@ -1514,8 +1514,11 @@ body {
     }
 
     .details-name {
-      color: $font-1;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: #3483FC;
     }
 
     .account-vip-label {
@@ -1539,9 +1542,15 @@ body {
 
       .assets-text {
         white-space: nowrap;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 100%;
+        letter-spacing: 0%;
+
       }
 
       .amount {
+        font-family: 'PingFang SC';
         margin-right: 0.5rem;
         white-space: nowrap;
       }

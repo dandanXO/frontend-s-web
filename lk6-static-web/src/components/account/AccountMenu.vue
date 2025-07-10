@@ -47,7 +47,7 @@
         <div class="account-menu-list">
           <router-link v-for="item in menuItems" :key="item.route" :to="item.route" class="account-menu-item">
             <img class="account-avatar" :src="loadMenuItemIcon(item.icon)" />
-            {{ item.label }}
+            {{ $t(item.label) }}
 
             <div v-if="item.icon === 'inbox' && store.unreadTotal > 0" class="unread-total">
               <span>{{ store.unreadTotal }}</span>
@@ -230,11 +230,11 @@ const menuItems = ref([
   // { route: "/center/deposit", label: "充值中心", icon: "transitrecord" },
   // { route: "/center/withdraw", label: "快速提款", icon: "transitrecord" },
   // { route: "/center/transfer", label: "快速转账", icon: "transitrecord" },
-  { route: "/center/transit-record", label: t('menu.transactionRecords'), icon: "transitrecord" },
+  { route: "/center/transit-record", label: 'menu.transactionRecords', icon: "transitrecord" },
   // { route: "/center/transit-record?type=6", label: "投注记录", icon: "betrecord" },
-  { route: "/center/personal", label: t('menu.personalCentre'), icon: "personal" },
+  { route: "/center/personal", label: 'menu.personalCentre', icon: "personal" },
   // { route: "/center/withdrawbank", label: "银行卡管理", icon: "transitrecord" },
-  { route: "/center/mailbox", label: t('menu.messageCentre'), icon: "inbox" },
+  { route: "/center/mailbox", label: 'menu.messageCentre', icon: "inbox" },
   // { route: "/vip", label: "VIP特权", icon: "vip" },
   // { route: "/center/promo", label: "优惠领取", icon: "promo" },
   // { route: "/center/feedback", label: "反馈奖励", icon: "feedback" },

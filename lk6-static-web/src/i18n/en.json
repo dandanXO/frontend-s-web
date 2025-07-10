@@ -57,7 +57,10 @@
     "transactionRecords": "Transaction Records",
     "personalCentre": "Personal Centre",
     "messageCentre": "Message Centre",
-    "welcome": "Welcome"
+    "welcome": "Welcome",
+    "personalInfo": "Personal Info",
+    "depositCentre": "Deposit Centre",
+    "promoClaim": "Promo Claim"
   },
   "download": {
     "title": "Comprehensive client download",

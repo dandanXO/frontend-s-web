@@ -4,7 +4,7 @@
       <img class="loading-img" src="@/assets/lucky-6-logo.png" />
     </div>
     <div v-else-if="!(platformType === 'bacarrat' && props.hideBanner)" class="platform-container" :class="platformType === 'bacarrat' ? 'slot-container' : ''">
-        <img v-if="platformType === 'bacarrat'" src="../assets/slot/slot-top-bg.png" />
+        <img v-if="platformType === 'bacarrat'" src="../assets/slot/slot-top-bg.png" style="width: 100%;height: auto;aspect-ratio: 3840 / 800;" />
         <div class="platform-container-slot" v-if="platformType === 'bacarrat'">
         </div>
       <div class="platform-container-inner" v-if="platformType !== 'bacarrat'">
@@ -28,7 +28,16 @@
             <div class="platform-item">
               <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
                 <!-- <img src="../assets/lucky-6-logo.png" width="176px" height="86px" /> -->
-                <div class="platform-title">{{  languageVal === 'en' ? (item.name ?? item.enname) : item.cnname }}</div>
+                <!-- <div class="platform-title">{{  languageVal === 'en' ? (item.name ?? item.enname) : item.cnname }}</div> -->
+                <img :src="require('../assets/' +
+                      platformType +
+                      '/' +
+                      platformType +
+                      '-logo-' +
+                      item.code.toLowerCase() +
+                      '.svg')
+                  "
+                />
                 <div class="platform-subtitle">{{ platformName }}</div>
               </div>
               
@@ -515,12 +524,6 @@ watch(
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(
-    to bottom,
-    rgba(240, 248, 255, 0.8196078431) 0%,
-    rgb(240 248 255 / 50%) 80%,
-    rgb(240 248 255 / 0%) 100%
-  );
 
   .loading-img {
     animation-name: fade-in-out;

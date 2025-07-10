@@ -57,7 +57,10 @@
     "transactionRecords": "交易记录",
     "personalCentre": "个人资料",
     "messageCentre": "消息中心",
-    "welcome": "欢迎您"
+    "welcome": "欢迎您",
+    "personalInfo": "个人信息",
+    "depositCentre": "充值中心",
+    "promoClaim": "优惠领取"
   },
   "download": {
     "title": "综合客户端下载",
