@@ -13,7 +13,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -26,7 +25,6 @@
           style="width: 120px;margin-left:10px"
           default-first-option
           @focus="loadSites"
-          @change="filterPayTypeByCurrency(request.siteId)"
         >
           <el-option
             v-for="item in siteList.list"
@@ -35,22 +33,6 @@
             :value="item.id"
           />
         </el-select> -->
-        <el-select
-          filterable
-          clearable
-          v-model="request.withdrawCode"
-          size="small"
-          :placeholder="t('fields.paymentType')"
-          class="filter-item"
-          style="width: 150px;margin-left:10px"
-        >
-          <el-option
-            v-for="item in list.filteredPayTypes"
-            :key="item.id"
-            :label="item.code"
-            :value="item.code"
-          />
-        </el-select>
         <el-input
           v-model="request.serialNumber"
           style="width: 300px; margin-left: 10px"
@@ -95,40 +77,19 @@
         />
       </div>
     </div>
+
     <div class="btn-group">
       <el-button
-        v-permission="['sys:withdraw:simple:approve']"
-        ref="checkBtnRef"
         size="mini"
         type="primary"
-        :disabled="uiControl.toApproveBtn"
-        @click="toCheck()"
+        :disabled="uiControl.toApplyBtn"
+        @click="reconfirmToApply()"
         @keydown.enter.prevent
       >
-        {{ t('fields.bulkApprove') }}
-      </el-button>
-      <el-button
-        v-if="hasPermission(['sys:withdraw:simple:bulk-withdraw'])"
-        ref="checkBtnRef"
-        size="mini"
-        type="primary"
-        :disabled="uiControl.toApproveBtn"
-        @click="showDialog('AUTOPAY')"
-        @keydown.enter.prevent
-      >
-        {{ t('fields.bulkWithdraw') }}
-      </el-button>
-      <el-button
-        ref="suspendBtnRef"
-        size="mini"
-        type="danger"
-        :disabled="uiControl.toApproveBtn"
-        @click="toPending()"
-        @keydown.enter.prevent
-      >
-        {{ t('fields.toSuspend') }}
+        {{ t('fields.toApplying') }}
       </el-button>
     </div>
+
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
         height="600"
@@ -140,6 +101,26 @@
         :empty-text="t('fields.noData')"
       >
         <el-table-column type="selection" width="40" />
+        <el-table-column
+          prop="withdrawType"
+          :label="t('fields.withdrawType')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span>{{ t('withdrawType.' + scope.row.withdrawType) }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="withdrawReviewType"
+          :label="t('fields.withdrawReviewType')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span>{{ t('withdrawReviewType.' + scope.row.withdrawReviewType) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="serialNumber"
           :label="t('fields.serialNo')"
@@ -162,52 +143,20 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="afterBalance"
-          :label="t('fields.balance')"
+          prop="realName"
+          :label="t('fields.realName')"
           align="center"
-          min-width="120"
+          min-width="110"
+        />
+        <el-table-column
+          prop="financial"
+          :label="t('fields.financialLevel')"
+          align="center"
+          min-width="110"
         >
           <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.afterBalance, type: 'money'}"
-            />
+            <span :style="{color: scope.row.financialColor}">{{ scope.row.financial }}</span>
           </template>
-        </el-table-column>
-        <el-table-column
-          prop="withdrawAmount"
-          :label="t('fields.withdrawAmount')"
-          align="center"
-          min-width="120"
-        >
-          <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="withdrawDate"
-          :label="t('fields.withdrawDate')"
-          align="center"
-          min-width="150"
-        >
-          <template #default="scope">
-            <span v-if="scope.row.withdrawDate === null">-</span>
-            <span
-              v-if="scope.row.withdrawDate !== null"
-              v-formatter="{data: scope.row.withdrawDate, timeZone: scope.row.timeZone, type: 'date'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="status"
-          :label="t('fields.status')"
-          align="center"
-          width="160"
-        >
-          <el-tag>{{ t('withdrawStatus.APPLY') }}</el-tag>
         </el-table-column>
         <el-table-column
           prop="cardAccount"
@@ -228,21 +177,78 @@
           min-width="120"
         />
         <el-table-column
-          prop="cardAddress"
-          :label="t('fields.cardAddress')"
+          prop="currencyCode"
+          :label="t('fields.currency')"
+          align="center"
+          min-width="80"
+        />
+        <el-table-column
+          prop="currencyRate"
+          :label="t('fields.currencyRate')"
+          align="center"
+          min-width="100"
+        />
+        <el-table-column
+          prop="withdrawName"
+          :label="t('fields.withdrawName')"
           align="center"
           min-width="120"
         />
         <el-table-column
-          prop="riskLevel"
-          :label="t('fields.riskLevel')"
+          prop="withdrawCode"
+          :label="t('fields.withdrawCode')"
+          align="center"
+          min-width="120"
+        />
+        <el-table-column
+          prop="withdrawAmount"
+          :label="t('fields.withdrawAmount')"
           align="center"
           min-width="120"
         >
           <template #default="scope">
-            <span :style="{color: scope.row.riskLevelColor}">{{ scope.row.riskLevel }}</span>
+            $
+            <span
+              v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
+            />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="localCurrencyAmount"
+          :label="t('fields.localCurrencyAmount')"
+          align="center"
+          min-width="180"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{
+                data: scope.row.localCurrencyAmount,
+                type: 'money',
+              }"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="withdrawDate"
+          :label="t('fields.withdrawDate')"
+          align="center"
+          min-width="150"
+        >
+          <template #default="scope">
+            <span v-if="scope.row.withdrawDate === null">-</span>
+            <span
+              v-if="scope.row.withdrawDate !== null"
+              v-formatter="{data: scope.row.withdrawDate, timeZone: scope.row.timeZone, type: 'date'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="vip"
+          :label="t('fields.vipLevel')"
+          align="center"
+          min-width="80"
+        />
         <el-table-column
           prop="walletType"
           :label="t('fields.walletType')"
@@ -252,30 +258,19 @@
         <el-table-column
           :label="t('fields.operate')"
           align="center"
-          min-width="300"
+          min-width="180"
           fixed="right"
         >
           <template #default="scope">
-            <el-button ref="checkBtnsRef" size="mini" type="primary" @click="toCheck(scope.row)" @keydown.enter.prevent v-permission="['sys:withdraw:simple:approve']">
-              {{ t('fields.approve') }}
-            </el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="toFail(scope.row)" @keydown.enter.prevent
-              v-permission="['sys:withdraw:simple:fail']"
-            >
-              {{ t('fields.fail') }}
-            </el-button>
-            <el-button ref="suspendBtnsRef" size="mini" type="danger" @click="toPending(scope.row)" @keydown.enter.prevent>
-              {{ t('fields.toSuspend') }}
+            <el-button size="mini" type="primary" @click="reconfirmToApply(scope.row)" @keydown.enter.prevent>
+              {{ t('fields.toApplying') }}
             </el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-pagination
         :total="page.total"
-        :page-sizes="[50, 100, 150]"
+        :page-sizes="[20, 50, 100, 150]"
         layout="total,sizes,prev, pager, next"
         style="margin-top: 10px"
         v-model:page-size="request.size"
@@ -292,8 +287,8 @@
         <span v-formatter="{data: page.totalAmount, type: 'money'}" />
       </div>
     </el-card>
+
     <el-dialog
-      v-if="uiControl.dialogType === 'SEARCH'"
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
@@ -319,7 +314,6 @@
             :end-placeholder="t('fields.endDate')"
             style="width: 250px"
             :shortcuts="shortcuts"
-            :disabled-date="disabledDate"
             :editable="false"
             :clearable="false"
             :default-time="defaultTime"
@@ -419,150 +413,29 @@
         </div>
       </el-form>
     </el-dialog>
-    <el-dialog
-      v-if="uiControl.dialogType !== 'SEARCH'"
-      :title="uiControl.dialogTitle"
-      v-model="uiControl.dialogVisible"
-      append-to-body
-      width="580px"
-    >
-      <el-form
-        v-if="uiControl.dialogType === 'FAIL'"
-        ref="toFailForm"
-        :model="failForm"
-        :rules="failFormRules"
-        :inline="true"
-        size="small"
-        label-width="150px"
-      >
-        <el-form-item :label="t('fields.reasonType')" prop="reasonType">
-          <el-select
-            v-model="failForm.reasonType"
-            size="small"
-            :placeholder="t('fields.reasonType')"
-            class="filter-item"
-            style="width: 300px;"
-            default-first-option
-            @focus="loadReasonTypes"
-          >
-            <el-option
-              v-for="item in reasonTypeList.list"
-              :key="item.id"
-              :label="item.value"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="t('fields.reasonTemplate')" prop="reasonTemplate">
-          <el-select
-            v-model="failForm.reasonTemplate"
-            size="small"
-            :placeholder="t('fields.reasonTemplate')"
-            class="filter-item"
-            style="width: 300px;"
-            default-first-option
-            @focus="loadReasonTemplates"
-            @change="populateFailReason($event)"
-          >
-            <el-option
-              v-for="item in reasonTemplateList.list"
-              :key="item.id"
-              :label="item.value"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="t('fields.failReason')" prop="failReason">
-          <el-input
-            type="textarea"
-            v-model="failForm.failReason"
-            :rows="6"
-            style="width: 300px;"
-            maxlength="500"
-            show-word-limit
-          />
-        </el-form-item>
-        <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button :disabled="clickedFail" type="primary" @click="fail">
-            {{ t('fields.confirm') }}
-          </el-button>
-        </div>
-      </el-form>
-      <el-form
-        v-if="uiControl.dialogType === 'AUTOPAY'"
-        ref="toFailForm"
-        :model="autopayForm"
-        :inline="true"
-        size="small"
-        label-width="150px"
-      >
-        <el-form-item
-          :label="t('fields.withdrawPlatform')"
-          prop="withdrawPlatformId"
-          required
-        >
-          <el-select
-            v-model="autopayForm.withdrawPlatformId"
-            size="small"
-            :placeholder="t('fields.withdrawPlatform')"
-            class="filter-item"
-            style="width: 300px;"
-          >
-            <el-option
-              v-for="item in withdrawPlatformList.list"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="toAutoPay" :disabled="uiControl.clickedAutoPay">
-            {{ t('fields.confirm') }}
-          </el-button>
-        </div>
-      </el-form>
-    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
-import moment from 'moment'
+/* import moment from 'moment' */
 import { getVipList } from '../../../../api/vip'
 import { getFinancialLevels } from '../../../../api/financial-level'
 import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
-  autoWithdrawToFail,
-  fromApplyToAutopay,
-  fromApplyToAutopayBatch,
-  fromApplyToPending,
-  getMemberWithdrawRecordApplySimple
+  getMemberWithdrawRecordPending,
+  fromPendingToApply,
 } from '../../../../api/member-withdraw-record'
-import { getSiteListSimple } from "@/api/site"
 import { ElMessage } from 'element-plus'
 import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
-import { getConfigList } from '../../../../api/config'
-import { formatInputTimeZone } from "@/utils/format-timeZone"
-import { isPak } from '@/utils/site'
-import { getWithdrawPlatformsSimpleBySiteId } from "../../../../api/withdraw-platform";
-import { getActivePaymentTypes } from "../../../../api/payment-type";
-import { getCurrencyNames } from "../../../../api/currency";
-
-const checkBtnRef = ref();
-const checkBtnsRef = ref();
-const suspendBtnRef = ref();
-const suspendBtnsRef = ref();
+import { getSiteListSimple } from "@/api/site";
+import { useReconfirm } from '@/hook/reconfirm'
 const store = useStore();
 const { t } = useI18n();
 const searchForm = ref(null)
-const toFailForm = ref(null)
-const clickedFail = ref(null)
 const vipList = reactive({
   list: [],
 })
@@ -572,12 +445,9 @@ const financialList = reactive({
 const bankList = reactive({
   list: [],
 })
-const withdrawPlatformList = reactive({
+const siteList = reactive({
   list: [],
 })
-
-let timeZone = null;
-
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
@@ -587,8 +457,7 @@ const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
   dialogType: 'SEARCH',
-  toApproveBtn: true,
-  clickedAutoPay: false,
+  toApplyBtn: true,
 })
 
 let chooseRecord = []
@@ -597,12 +466,8 @@ const startDate = new Date()
 startDate.setDate(startDate.getDate() - 7)
 const defaultStartDate = convertDateToStart(startDate);
 const defaultEndDate = convertDateToEnd(new Date());
-const siteList = reactive({
-  list: [],
-});
-
 const request = reactive({
-  size: 50,
+  size: 20,
   current: 1,
   withdrawDate: [defaultStartDate, defaultEndDate],
   serialNumber: null,
@@ -614,42 +479,17 @@ const request = reactive({
   maxWithdrawAmount: null,
   vipId: null,
   siteId: null,
-  doris: false,
-  withdrawCode: null,
-  notEqualRiskId: null,
+  doris: false
 })
-const failForm = reactive({
-  id: null,
-  reasonType: [],
-  reasonTemplate: [],
-  failReason: null,
-  withdrawDate: ''
-})
-const autopayForm = reactive({
-  withdrawPlatformId: null,
-})
-const reasonTypeList = reactive({
-  list: [],
-})
-const reasonTemplateList = reactive({
-  list: [],
-})
-const list = reactive({
-  payTypes: [],
-  filteredPayTypes: [],
-  siteCurrencyIds: [],
-})
-const currencyNames = reactive({
-  list: []
-})
-function disabledDate(time) {
+
+/* function disabledDate(time) {
   return (
     time.getTime() <=
       moment(new Date())
         .subtract(1, 'weeks')
         .format('x') || time.getTime() > new Date().getTime()
   )
-}
+} */
 
 function resetQuery() {
   request.withdrawDate = [defaultStartDate, defaultEndDate]
@@ -666,10 +506,11 @@ function resetQuery() {
 
 function handleSelectionChange(val) {
   chooseRecord = val
-  if (chooseRecord.length > 50) {
-    uiControl.toApproveBtn = true
-    ElMessage.warning("最多只能选择五十条记录");
-  } else uiControl.toApproveBtn = chooseRecord.length === 0;
+  if (chooseRecord.length === 0) {
+    uiControl.toApplyBtn = true
+  } else {
+    uiControl.toApplyBtn = false
+  }
 }
 
 const page = reactive({
@@ -691,11 +532,6 @@ async function loadVips() {
   if (!request.vipId) {
     request.vipId = vipList.list[0].id
   }
-}
-
-async function loadSites() {
-  const { data: site } = await getSiteListSimple()
-  siteList.list = site
 }
 
 async function loadFinancialLevels() {
@@ -724,57 +560,9 @@ async function loadBanks() {
   }
 }
 
-async function loadReasonTypes() {
-  const { data: reasonType } = await getConfigList(
-    'cancel_type',
-    request.siteId ? request.siteId : null
-  )
-  reasonTypeList.list = reasonType
-}
-
-async function loadReasonTemplates() {
-  const { data: reasonTemplate } = await getConfigList(
-    'cancel_cause',
-    request.siteId ? request.siteId : null
-  )
-  reasonTemplateList.list = reasonTemplate
-}
-
-async function loadWithdrawPlatform() {
-  const { data: ret } = await getWithdrawPlatformsSimpleBySiteId(request.siteId);
-  withdrawPlatformList.list = ret
-}
-
-async function loadCurrencyNames() {
-  const { data: ret } = await getCurrencyNames();
-  currencyNames.list = ret;
-}
-
-async function loadPayTypes() {
-  const { data: payType } = await getActivePaymentTypes()
-  list.payTypes = payType
-}
-
-function filterPayTypeByCurrency(siteId) {
-  const currentSite = siteList.list.find(s => s.id === siteId)
-  const currencyCodeList = currentSite.currency.split(',').map(currencyName => currencyName)
-  console.log(currencyCodeList)
-  list.siteCurrencyIds = [
-    ...currencyCodeList.map(currencyName => {
-      const currency = currencyNames.list.find(c => c.currencyCode.toUpperCase() === currencyName.toUpperCase())
-      return currency ? currency.id : null;
-    }).filter(Boolean)
-  ]
-  console.log(list.siteCurrencyIds)
-  list.filteredPayTypes = list.payTypes.filter(payTypeByCurrencyID)
-  console.log(list.filteredPayTypes)
-}
-
-function payTypeByCurrencyID (record) {
-  if (record.currencyIds) {
-    const currencyIdsList = record.currencyIds.split(',')
-    return currencyIdsList.filter(currencyId => list.siteCurrencyIds.includes(parseInt(currencyId))).length > 0
-  }
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
 }
 
 async function loadRecord() {
@@ -787,17 +575,13 @@ async function loadRecord() {
       query[key] = value
     }
   })
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.withdrawDate !== null) {
     if (request.withdrawDate.length === 2) {
-      query.withdrawDate = JSON.parse(JSON.stringify(request.withdrawDate));
-      query.withdrawDate[0] = formatInputTimeZone(query.withdrawDate[0], timeZone);
-      query.withdrawDate[1] = formatInputTimeZone(query.withdrawDate[1], timeZone);
-      query.withdrawDate = query.withdrawDate.join(',')
+      query.withdrawDate = request.withdrawDate.join(',')
     }
   }
   query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
-  const { data: ret } = await getMemberWithdrawRecordApplySimple(query)
+  const { data: ret } = await getMemberWithdrawRecordPending(query)
   page.pages = ret.pages
   ret.records.forEach(data => {
     data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
@@ -807,6 +591,7 @@ async function loadRecord() {
   page.records = ret.records
   page.total = ret.total
   if (page.records.length !== 0) {
+    query.status = 'PENDING'
     page.totalAmount = ret.sums.withdrawAmount
   } else {
     page.totalAmount = 0
@@ -815,123 +600,33 @@ async function loadRecord() {
   page.loading = false
 }
 
-async function toCheck(memberWithdrawRecord) {
-  page.loading = true
+const reconfirmToApply = useReconfirm(toApply)
+
+async function toApply(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
-    await fromApplyToAutopay(memberWithdrawRecord.id, 0, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
+    await fromPendingToApply([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
   } else {
-    await Promise.all(chooseRecord.map(async (a) => {
-      await fromApplyToAutopay(a.id, 0, a.withdrawDate, a.siteId);
-    }));
-    uiControl.toApproveBtn = true
+    await fromPendingToApply(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   }
   await loadRecord()
-  page.loading = false
-  ElMessage({ message: t('message.updateWithdraw'), type: 'success' })
-  checkBtnRef.value.blur();
-  checkBtnsRef.value.blur();
+  ElMessage({ message: t('message.updateToApplySuccess'), type: 'success' })
 }
 
-async function toAutoPay() {
-  toFailForm.value.validate(async valid => {
-    if (valid) {
-      uiControl.clickedAutoPay = true
-      await fromApplyToAutopayBatch(
-        chooseRecord.map(a => ({
-          id: a.id,
-          withdrawPlatformId: autopayForm.withdrawPlatformId,
-          withdrawDate: a.withdrawDate,
-          siteId: request.siteId
-        }))
-      )
-      uiControl.toApproveBtn = true
-      await loadRecord()
-      ElMessage({ message: t('message.updateWithdraw'), type: 'success' })
-    }
-  })
-}
-
-async function toFail(memberWithdrawRecord) {
-  if (isPak(request.siteId)) {
-    showDialog('FAIL', memberWithdrawRecord)
-  } else {
-    await autoWithdrawToFail(memberWithdrawRecord.id, 'Auto Withdraw Fail', 'Auto Withdraw Fail', memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
-    await loadRecord()
-    ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
-  }
-}
-
-async function toPending(memberWithdrawRecord) {
-  page.loading = true
-  if (memberWithdrawRecord) {
-    await fromApplyToPending([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
-  } else {
-    await fromApplyToPending(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
-  }
-  page.loading = false
-  await loadRecord()
-  ElMessage({ message: t('message.updateToSuspendSuccess'), type: 'success' })
-  suspendBtnRef.value.blur();
-  suspendBtnsRef.value.blur();
-}
-
-async function showDialog(type, memberWithdrawRecord) {
-  if (type === 'FAIL') {
-    if (toFailForm.value) {
-      toFailForm.value.resetFields()
-    }
-    failForm.id = memberWithdrawRecord.id
-    failForm.withdrawDate = memberWithdrawRecord.withdrawDate
-    await loadReasonTypes()
-    failForm.reasonType = reasonTypeList.list[0].value
-    uiControl.dialogTitle = t('fields.failReason')
-  } else if (type === "AUTOPAY") {
-    uiControl.clickedAutoPay = false
-    if (toFailForm.value) {
-      toFailForm.value.resetFields()
-    }
-    await loadWithdrawPlatform()
-    uiControl.dialogTitle = t('fields.autopay')
-  } else if (type === 'SEARCH') {
+async function showDialog(type) {
+  if (type === 'SEARCH') {
     uiControl.dialogTitle = t('fields.advancedSearch')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
 }
 
-async function fail() {
-  toFailForm.value.validate(async valid => {
-    if (valid) {
-      clickedFail.value = true
-      await autoWithdrawToFail(
-        failForm.id,
-        failForm.reasonType,
-        failForm.failReason,
-        failForm.withdrawDate,
-        request.siteId
-      )
-      uiControl.dialogVisible = false
-      clickedFail.value = false
-      await loadRecord()
-      ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
-    }
-  })
-}
-
-onMounted(async () => {
+onMounted(async() => {
   await loadSites()
   request.siteId = store.state.user.siteId
-  const { data: config } = await getConfigList("withdraw_risk_apply", request.siteId);
-  if (config.length !== 0) {
-    request.notEqualRiskId = config[0].value
-  }
   loadVips()
   loadFinancialLevels()
   loadBanks()
   loadRecord()
-  await loadCurrencyNames();
-  await loadPayTypes();
-  filterPayTypeByCurrency(request.siteId)
 })
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
