@@ -222,7 +222,7 @@
                       ></div>
 
                       <div class="game-title">
-                        <span class="game-title-1">体育赛事</span>
+                        <span class="game-title-1">SPORTS</span>
                         <h3 class="game-title-2">{{ sp.title }}</h3>
                         <RedirectButton class="redirect-button" @click="playGame(sp.name, sp.code, sp.gameCode)">
                           {{ $t("btn.betNow") }}
@@ -501,7 +501,7 @@
                                 }}
                               </div>
                               <div class="game-title__name">
-                                {{ game.name }}
+                                {{ game.name[languageVal] }}
                               </div>
                             </div>
                           </div>
@@ -1858,12 +1858,20 @@ export default defineComponent({
         )
         .then((res) => {
           res.forEach((item) => {
+            const [zhName, enName] = item.name.split("@");
+            const gameItem = {
+              ...item,
+              name: {
+                en: enName,
+                zh: zhName
+              }
+            };
             if (item.code.startsWith("101")) {
-              baccarat.value.push(item);
+              baccarat.value.push(gameItem);
             } else if (item.code.startsWith("103")) {
-              roulette.value.push(item);
+              roulette.value.push(gameItem);
             } else if (item.code.startsWith("112")) {
-              luckyLace.value.push(item);
+              luckyLace.value.push(gameItem);
             }
           });
         });
@@ -2288,13 +2296,13 @@ export default defineComponent({
           .game-title {
             position: absolute;
             z-index: 2;
-            top: 50%;
+            bottom: 14%;
             left: 20%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             color: #7a80a1;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%);
 
             .redirect-button {
               font-size: 12px;
@@ -2338,16 +2346,17 @@ export default defineComponent({
           }
 
           .game-title-2 {
-            line-height: 1rem;
-            font-size: clamp(12px, 4vw, 24px);
+            line-height: 1;
+            font-size: clamp(12px, 4.8vw, 18px);
             margin-top: 0px;
             font-weight: 600;
             letter-spacing: 1px;
+            margin-bottom: 14%;
           }
 
           .game-title-1 {
             margin-bottom: 7px;
-            font-size: clamp(12px, 3.2vw, 24px);
+            font-size: clamp(12px, 3.2vw, 12px);
             margin-bottom: 5px;
             letter-spacing: 1px;
           }
@@ -2953,7 +2962,7 @@ export default defineComponent({
 
   .home-quick-link-section {
     flex: 1;
-    gap: 24px;
+    gap: 10%;
   }
 
   .home-login-section {
