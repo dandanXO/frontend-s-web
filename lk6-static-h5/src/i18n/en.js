@@ -124,7 +124,7 @@ export default {
     autoWithdraw: "Fast Withdraw",
     upgradeToAutoWithdraw: "Upgrade to Fast Withdraw",
     wallet: "Main Wallet",
-    refresh: "One‑Click Refresh",
+    refresh: "Refresh",
     upgrading: "Upgrading...",
     confirming: "Confirming...",
     withdrawFee: "*Withdrawal fee: {fee} {currency}",
@@ -223,7 +223,7 @@ export default {
     }
   },
   mail: {
-    readAll: "Mark All Read",
+    readAll: "Read ALL",
     deleteAll: "Delete All",
     delete: "Delete",
     read: "Read",
