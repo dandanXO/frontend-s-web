@@ -2945,7 +2945,7 @@ export default defineComponent({
   margin-bottom: 16px;
 
   .home-auth-subsection {
-    flex: 3;
+    flex: 1;
     border-width: 0 1px 0 0;
     border-style: dashed;
     border-color: #a0a0a0;
