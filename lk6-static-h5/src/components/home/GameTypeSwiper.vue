@@ -29,7 +29,7 @@
           :style="`margin-top:${tab.mb}px;`"
           :src="require('../../assets/index/' + (selectedTab === tab.name ? tab.iconActive : tab.icon))"
         />
-        <span>{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</span>
+        <span>{{ tab.label }}</span>
       </div>
     </swiper-slide>
   </swiper>

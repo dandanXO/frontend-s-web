@@ -40,21 +40,27 @@
                 style="display: none"
               /> -->
               <img src="../assets/images/account/account-wallet-icon.png" />
-              <span>中心钱包</span>
+              <span>{{ $t("account.wallet") }}</span>
               <div class="refresh-btn" @click="getBalance">
                 <img src="../assets/images/account/account-refresh-btn.png" />
               </div>
             </div>
             <div class="amt">
-              {{ !isLoadingBalance ? `${store.currency.value} ${mainWallet}` : "加载中..." }}
+              {{ !isLoadingBalance ? `${store.currency.value} ${mainWallet}` : $t("common.loading") }}
             </div>
           </div>
           <div class="right-sect">
-            <q-btn label="存款" class="btn-main btn-pointer deposit-btn" style="" @click="openDeposit" />
+            <q-btn
+              :label="$t('btn.deposit')"
+              class="btn-main btn-pointer deposit-btn"
+              flat
+              style=""
+              @click="openDeposit"
+            />
 
-            <q-btn label="提款" class="btn-main btn-pointer" style="" @click="openWithdraw" />
+            <q-btn :label="$t('btn.withdraw')" class="btn-main btn-pointer" flat style="" @click="openWithdraw" />
 
-            <!-- <q-btn label="转账" class="btn-main btn-pointer" style="" @click="openTransfer" /> -->
+            <!-- <q-btn l:label="$t('btn.transfer')" class="btn-main btn-pointer" style="" @click="openTransfer" /> -->
           </div>
         </q-card-section>
         <hr v-if="$q.dark.isActive" style="width: 100%; border: 1px solid #3b5385; margin: 5px 0 15px 0" />
@@ -110,7 +116,7 @@
               />
             </span>
           </div> -->
-          <div class="list-reward-wapper" style="display: none">
+          <!-- <div class="list-reward-wapper" style="display: none">
             <div class="list-reward-received">
               <div class="list-item collected">
                 <div><img src="../assets/images/account/list-tick.png" /></div>
@@ -129,48 +135,48 @@
                 <div>生日礼金</div>
               </div>
             </div>
-          </div>
+          </div> -->
         </q-card-section>
       </q-card-section>
     </div>
 
     <q-item-section class="acct-nav">
       <div class="acct-title">
-        <div class="acct-title-1">功能区</div>
+        <div class="acct-title-1">{{ $t("account.feature.title") }}</div>
       </div>
       <div class="acct-menu" id="id-acct-menu">
         <router-link to="/account/personal">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-personal-icon.png" />
-            <div class="acct-nav-label">账户信息</div>
+            <div class="acct-nav-label">{{ $t("account.feature.personal") }}</div>
           </div>
         </router-link>
 
         <router-link to="/account/withdraw">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-bank-icon.png" />
-            <div class="acct-nav-label">银行信息</div>
+            <div class="acct-nav-label">{{ $t("account.feature.bank") }}</div>
           </div>
         </router-link>
 
         <router-link to="/account/records">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-record-icon.png" />
-            <div class="acct-nav-label">交易信息</div>
+            <div class="acct-nav-label">{{ $t("account.feature.record") }}</div>
           </div>
         </router-link>
 
         <router-link to="/account/records/bet">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-record-bet-icon.png" />
-            <div class="acct-nav-label">投注记录</div>
+            <div class="acct-nav-label">{{ $t("account.feature.betRecord") }}</div>
           </div>
         </router-link>
 
         <router-link to="/account/inbox">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-notice-icon.png" />
-            <div class="acct-nav-label">消息提醒</div>
+            <div class="acct-nav-label">{{ $t("account.feature.inbox") }}</div>
             <div class="unread" v-if="store.unreadInboxMail > 0">
               {{ store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString() }}
             </div>
@@ -194,7 +200,7 @@
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-changepwd-icon.png" />
-            <div class="acct-nav-label">修改密码</div>
+            <div class="acct-nav-label">{{ $t("account.feature.changePassword") }}</div>
           </div>
         </router-link>
       </div>
@@ -202,13 +208,13 @@
 
     <q-item-section class="acct-nav">
       <div class="acct-title">
-        <div class="acct-title-1">热门推荐</div>
+        <div class="acct-title-1">{{ $t("account.hot.title") }}</div>
       </div>
       <div class="acct-menu" id="id-acct-menu">
         <router-link to="/promo">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-promo-icon.png" />
-            <div class="acct-nav-label">优惠活动</div>
+            <div class="acct-nav-label">{{ $t("account.hot.promo") }}</div>
           </div>
         </router-link>
 
@@ -285,7 +291,7 @@
 
     <a @click="isLogoutModal = true">
       <div class="acct-logout btn-pointer">
-        <div class="acct-nav-label">退出登录</div>
+        <div class="acct-nav-label">{{ $t("account.logout") }}</div>
         <!-- <img v-if="$q.dark.isActive" src="../assets/images/account/account-logout-icon-dark.svg" /> -->
         <img src="../assets/images/account/account-logout-icon.png" />
       </div>
@@ -294,8 +300,8 @@
 
   <CommonModal
     v-model="isLogoutModal"
-    title="系统提示"
-    message="确认要退出登录吗？"
+    :title="$t('account.notification.logoutConfirm.title')"
+    :message="$t('account.notification.logoutConfirm.message')"
     with-decorator
     :actions="['confirm', 'cancel']"
     @confirm="logout"
@@ -305,7 +311,7 @@
   <q-dialog v-model="profileDialogVisible" persistent class="profile-dialog">
     <q-card style="flex-direction: column; display: flex">
       <div class="header">
-        修改头像
+        {{ $t("account.notification.changProfile.title") }}
         <q-btn dense flat icon="close" v-close-popup>
           <q-tooltip>Close</q-tooltip>
         </q-btn>
@@ -343,14 +349,14 @@
         </div>
       </div>
       <div class="dialog-footer">
-        <q-btn :loading="submitPhotoLoading" class="submitImgBtn" @click="submitPhoto">确认</q-btn>
+        <q-btn :loading="submitPhotoLoading" class="submitImgBtn" @click="submitPhoto">{{ $t("btn.confirm") }}</q-btn>
       </div>
     </q-card>
   </q-dialog>
   <q-dialog v-model="updateDialogVisible" persistent class="profile-dialog">
     <q-card style="flex-direction: column; display: flex">
       <div class="header">
-        修改头像
+        {{ $t("account.notification.changProfile.title") }}
         <q-btn dense flat icon="close" v-close-popup>
           <q-tooltip>Close</q-tooltip>
         </q-btn>
@@ -367,8 +373,10 @@
               accept="image/*"
               @change="attachImage"
             />
-            <div @click="$refs.inputImage.click()" class="upload-btn">上传头像</div>
-            上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于1MB
+            <div @click="$refs.inputImage.click()" class="upload-btn">
+              {{ $t("account.notification.changProfile.upload.title") }}
+            </div>
+            {{ $t("account.notification.changProfile.upload.desc") }}
           </el-form-item>
           <cropper
             v-if="uploadedImage.url"
@@ -396,13 +404,13 @@
           />
         </div>
         <div class="rightBox">
-          <div class="cropped_title">头像预览</div>
+          <div class="cropped_title">{{ $t("account.notification.changProfile.preview") }}</div>
           <div v-if="!croppedImg" class="croppedImgHolder"></div>
           <img v-if="croppedImg" style="border-radius: 50%; width: 150px; height: 150px" :src="croppedImg" />
         </div>
       </div>
       <div v-if="croppedImg" class="dialog-footer">
-        <q-btn :loading="isLoadingUpload" class="submitImgBtn" @click="saveCroppedImage()">保存</q-btn>
+        <q-btn :loading="isLoadingUpload" class="submitImgBtn" @click="saveCroppedImage()">{{ $t("btn.save") }}</q-btn>
       </div>
     </q-card>
   </q-dialog>
@@ -421,6 +429,7 @@ import "vue-advanced-cropper/dist/theme.compact.css";
 import moment from "moment";
 import { useNotify } from "src/hooks/notify";
 import CommonModal from "src/components/CommonModal.vue";
+import { useI18n } from "vue-i18n";
 export default defineComponent({
   name: "AccountPage",
   components: {
@@ -428,6 +437,7 @@ export default defineComponent({
     CommonModal
   },
   setup() {
+    const { t } = useI18n();
     const notify = useNotify();
     const timestamp = moment().unix();
     const cropperRef = ref(null);
@@ -522,7 +532,7 @@ export default defineComponent({
 
       notify({
         type: "success",
-        message: "已复制专属网址"
+        message: t("account.notification.copyCustomUrlSuccess.message")
       });
     };
     onActivated(() => {
@@ -725,7 +735,7 @@ export default defineComponent({
       if (!file || !allowFileTypes.includes(file.type)) {
         notify({
           type: "error",
-          message: "照片格式错误"
+          message: t("account.notification.imgFormatError.message")
         });
 
         isLoadingUpload.value = false;
@@ -734,7 +744,7 @@ export default defineComponent({
       if (file && file.size > 1000000) {
         notify({
           type: "error",
-          message: "上传的图片已大于1mb，请刷新页面重新上传"
+          message: t("account.notification.imgSizeLimit.message", { size: "1mb" })
         });
         isLoadingUpload.value = false;
         return null; // Exit the function if file is not valid
@@ -768,7 +778,7 @@ export default defineComponent({
       if (!selectedImage.value) {
         return notify({
           type: "error",
-          message: "请选择图片"
+          message: t("account.notification.noImg.message")
         });
       }
       await api.post("/session/profile-photo/save", qs.stringify({ imageUuid: selectedImage.value })).then((data) => {
@@ -776,7 +786,7 @@ export default defineComponent({
         store.profilePhoto = data.data;
         notify({
           type: "success",
-          message: "修改成功"
+          message: t("account.notification.changeProfileSuccess.message")
         });
         submitPhotoLoading.value = false;
         profileDialogVisible.value = false;
@@ -943,17 +953,19 @@ export default defineComponent({
     background-image: url("../assets/images/account/account-btn.png");
     background-size: 100% 100%;
     color: #fff;
-    width: 60px;
+    // width: 60px;
     text-align: center;
     white-space: nowrap;
     font-size: 1rem;
-    aspect-ratio: 122/68;
+    padding: 5px 11px;
+    // aspect-ratio: 122/68;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 30px;
-    box-shadow: 0px -0.5px 2px 0px #ffffff;
-    border-radius: 45.9px;
+    // box-shadow: 0px -0.5px 2px 0px #ffffff;
+    font-size: 12px;
+    border-radius: 60px;
   }
 
   .top-section {
@@ -1184,13 +1196,16 @@ export default defineComponent({
   }
 
   .acct-menu {
+    // display: flex;
+    // align-items: center;
+    // flex-wrap: wrap;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 0px;
     gap: 0px;
     row-gap: 0px;
     height: auto;
-    max-height: 180px;
+    // max-height: 180px;
 
     margin-bottom: 10px;
     background-color: $white;
@@ -1204,11 +1219,11 @@ export default defineComponent({
 
     a {
       text-decoration: none;
-      height: 80px;
+      // height: 80px;
       display: block;
 
       .acct-nav-item {
-        font-size: 1rem;
+        font-size: 12px;
         gap: 5px;
         cursor: pointer;
         display: flex;
@@ -1221,7 +1236,7 @@ export default defineComponent({
         position: relative;
 
         .acct-nav-label {
-          white-space: nowrap;
+          // white-space: nowrap;
           color: #7a80a1;
         }
         .unread {
@@ -1401,8 +1416,7 @@ export default defineComponent({
   }
 
   .vipcard .btn-main {
-    min-height: 14px;
-    width: 50px;
+    font-size: 10px;
   }
 
   .profile .avatar {

@@ -14,11 +14,11 @@
         <div class="announcement-content" v-html="item.content"></div>
         <div class="announcement-footer">
           <div class="footer-button" @click="handleService">
-            联系客服
+            {{ $t("announcement.btn.cs") }}
             <img src="../../assets/images/home/announcement/arrow-right.svg" alt="" />
           </div>
           <div class="footer-button" @click="handleDetail(item)">
-            查看详情
+            {{ $t("announcement.btn.detail") }}
             <img src="../../assets/images/home/announcement/arrow-right.svg" alt="" />
           </div>
         </div>

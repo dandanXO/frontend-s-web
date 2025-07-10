@@ -521,15 +521,15 @@ export default defineComponent({
 
   .label {
     color: #7a80a1;
-    flex: 1;
+    flex: 3;
     align-items: center;
     display: flex;
     justify-content: flex-start;
-    min-width: max-content;
+    // min-width: max-content;
   }
 
   .desc {
-    flex: 4;
+    flex: 8;
     word-break: break-all;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -579,11 +579,12 @@ export default defineComponent({
     background-image: url("../assets/images/index/primary-btn.png");
     background-size: 100% 100%;
     color: #fff;
-    width: 87px;
+    // width: 87px;
+    padding: 5px 11px;
     text-align: center;
     white-space: nowrap;
     font-size: 14px;
-    aspect-ratio: 87/32;
+    // aspect-ratio: 87/32;
     display: flex;
     align-items: center;
     justify-content: center;

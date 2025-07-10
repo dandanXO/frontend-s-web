@@ -6,15 +6,15 @@
           <q-icon name="close" @click="closeTopBox" />
           <img class="headicon" src="../assets/index/logo-char.png" />
           <div class="download-txt-container">
-            <span class="download-title text-bold">幸运6 APP</span>
-            <span class="download-content">覆盖全部游戏，体验更流畅，更安全，更快捷</span>
+            <span class="download-title text-bold">{{ $t("home.downloadApp.appName") }}</span>
+            <span class="download-content">{{ $t("home.downloadApp.desc") }}</span>
           </div>
           <div class="buttons">
             <q-btn
               rounded
               size="12px"
               @click="openDownloadAppLink"
-              label="立即下载"
+              :label="$t('btn.downloadNow')"
               color="primary"
               class="top-btn no-shadow"
             />
@@ -27,13 +27,27 @@
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
         </div>
         <div class="header-right">
-          <LocaleSelector />
-          <!-- <span class="memorable-url">易记网址：{{ memorableUrl }}</span>
-          <button class="copy-btn" @click="handleCopyMemorableUrlClick">🔍</button> -->
-          <router-link class="notification-section" to="/account/inbox?redirect=home">
-            <img src="../assets/index/home-notification-icon.svg" alt="" />
-            <div class="notification-dot" v-if="store.unreadInboxMail > 0"></div>
-          </router-link>
+          <template v-if="store.token">
+            <LocaleSelector />
+            <!-- <span class="memorable-url">易记网址：{{ memorableUrl }}</span>
+            <button class="copy-btn" @click="handleCopyMemorableUrlClick">🔍</button> -->
+            <router-link class="notification-section" to="/account/inbox?redirect=home">
+              <img src="../assets/index/home-notification-icon.svg" alt="" />
+              <div class="notification-dot" v-if="store.unreadInboxMail > 0"></div>
+            </router-link>
+          </template>
+          <template v-else>
+            <router-link to="/login">
+              <q-btn class="login-btn">
+                {{ $t("btn.login") }}
+              </q-btn>
+            </router-link>
+            <router-link to="/register">
+              <q-btn class="register-btn">
+                {{ $t("btn.register") }}
+              </q-btn>
+            </router-link>
+          </template>
         </div>
       </div>
 
@@ -109,8 +123,8 @@
             to="/login"
             style="text-decoration: none"
           >
-            <div style="color: #333333">您还未登录</div>
-            <div style="color: #96a9bb">登录/注册后查看</div>
+            <div style="color: #333333">{{ $t("home.authSection.notLogin1") }}</div>
+            <div style="color: #96a9bb">{{ $t("home.authSection.notLogin2") }}</div>
           </router-link>
           <div v-else class="column justify-start home-login-section">
             <div class="row">
@@ -122,7 +136,9 @@
               </div> -->
             </div>
             <div class="row items-center justify-start gap-10" style="width: 100%">
-              <span class="balance-text text-positive" v-if="isLoadingBalance" style="font-size: 20px">加载中...</span>
+              <span class="balance-text text-positive" v-if="isLoadingBalance" style="font-size: 20px">
+                {{ $t("common.loading") }}
+              </span>
               <span class="balance-text" v-if="!isLoadingBalance">{{ mainWallet.toFixed(2) }}</span>
             </div>
           </div>
@@ -130,11 +146,11 @@
           <div class="row gap-8 justify-between home-quick-link-section">
             <router-link class="text-center cash-button" :unelevated="true" to="/finance/deposit?redirect=home">
               <img src="../assets/index/home-deposit-icon.svg" alt="" width="100%" />
-              <p>存款</p>
+              <p>{{ $t("btn.deposit") }}</p>
             </router-link>
             <router-link class="text-center cash-button" :unelevated="true" to="/finance/withdraw?redirect=home">
               <img src="../assets/index/home-withdrawal-icon.svg" alt="" width="100%" />
-              <p>提款</p>
+              <p>{{ $t("btn.withdraw") }}</p>
             </router-link>
             <!-- <router-link class="text-center cash-button" :unelevated="true" to="/account/transfer?redirect=home">
               <img src="../assets/index/home-transfer-icon.svg" alt="" width="100%" />
@@ -205,22 +221,25 @@
                         <span class="game-title-1">体育赛事</span>
                         <h3 class="game-title-2">{{ sp.title }}</h3>
                         <RedirectButton class="redirect-button" @click="playGame(sp.name, sp.code, sp.gameCode)">
-                          立即投注
+                          {{ $t("btn.betNow") }}
                         </RedirectButton>
                       </div>
 
                       <div class="maintenance-box" v-if="sp.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="sp.maintenanceStartTime && sp.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
+                        <p>{{ $t("home.game.maintenance") }}</p>
+                        <i18n-t
+                          v-if="sp.maintenanceStartTime && sp.maintenanceEndTime"
+                          keypath="home.game.maintenanceTime"
+                          tag="div"
+                          class="small-size q-mt-md"
+                        >
+                          <template #start>
                             {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
+                          </template>
+                          <template #end>
                             {{ moment(sp.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
+                          </template>
+                        </i18n-t>
                       </div>
                     </div>
                   </div>
@@ -401,20 +420,20 @@
                         <div class="game-list-header__title-wrapper">
                           <template v-if="index === 0">
                             <img src="../assets/index/baccarat/baccarat-header.png" />
-                            百家乐
+                            {{ $t("common.gameType.baccarat") }}
                           </template>
                           <template v-else-if="index === 1">
                             <img src="../assets/index/baccarat/roulette-header.png" />
-                            轮盘
+                            {{ $t("common.gameType.roulette") }}
                           </template>
                           <template v-else-if="index === 2">
                             <img src="../assets/index/baccarat/lucky-lace-header.png" />
-                            幸运蕾丝
+                            {{ $t("common.gameType.luckyLace") }}
                           </template>
                         </div>
                         <div class="game-list-header__action-wrapper">
                           <router-link :to="`/baccarat?platform=EEAI&tab=${platform.name}`">
-                            <q-btn class="game-list-header__all-btn" rounded dense>全部</q-btn>
+                            <q-btn class="game-list-header__all-btn" rounded dense>{{ $t("btn.all") }}</q-btn>
                           </router-link>
                           <q-btn
                             class="game-list-header__navigation-btn"
@@ -542,7 +561,12 @@
   <GameModal ref="allGames"></GameModal>
   <AnnouncementModal />
 
-  <CommonModal v-model="isStationNotice" class="station-notice-dialog" header="公告" :actions="[]">
+  <CommonModal
+    v-model="isStationNotice"
+    class="station-notice-dialog"
+    :header="$t('home.notification.announcement.title')"
+    :actions="[]"
+  >
     <template #content>
       <q-tabs v-model="activeKey" class="station-notice-tabs">
         <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
@@ -633,8 +657,8 @@
 
   <CommonModal
     v-model="isAppUpdateModal"
-    header="更新公告"
-    message="检测到新版本，你是否要更新？"
+    :header="$t('home.notification.newVersion.title')"
+    :message="$t('home.notification.newVersion.message')"
     :actions="['confirm', 'cancel']"
     @confirm="openDownloadPage"
     @cancel="cancelUpdate"
@@ -727,6 +751,7 @@ import { LIVE_PLATFORMS } from "src/constant/platform";
 import RedirectButton from "src/components/RedirectButton.vue";
 import CommonModal from "src/components/CommonModal.vue";
 import LocaleSelector from "src/components/LocaleSelector.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "IndexPage",
@@ -744,6 +769,7 @@ export default defineComponent({
     LocaleSelector
   },
   setup() {
+    const { t } = useI18n();
     const notify = useNotify();
 
     const isFirstView = ref(false);
@@ -834,13 +860,12 @@ export default defineComponent({
     };
     const selectedTab = ref("sport");
     const game_bg_color = ref([]);
-    const tabs = ref([
+    const tabs = computed(() => [
       {
         name: "sport",
         icon: "slide-sport-icon.png",
         iconActive: "slide-sport-icon-active.png",
-        label: "体育",
-        labelact: "体育",
+        label: t("common.gameType.sport"),
         mb: 0,
         gap: 8
       },
@@ -848,8 +873,7 @@ export default defineComponent({
         name: "live",
         icon: "slide-live-icon.png",
         iconActive: "slide-live-icon-active.png",
-        label: "真人",
-        labelact: "真人",
+        label: t("common.gameType.live"),
         mb: 0,
         gap: 8
       },
@@ -858,8 +882,7 @@ export default defineComponent({
         name: "baccarat",
         icon: "slide-baccarat-icon.png",
         iconActive: "slide-baccarat-icon-active.png",
-        label: "百家乐",
-        labelact: "百家乐",
+        label: t("common.gameType.baccarat"),
         mb: 0,
         gap: 8
       }
@@ -2088,6 +2111,32 @@ export default defineComponent({
       border: none;
       margin-right: 10px;
     }
+
+    .login-btn,
+    .register-btn {
+      background-size: 100% 100%;
+      width: 87px;
+      text-align: center;
+      white-space: nowrap;
+      font-size: 12px;
+      aspect-ratio: 87/32;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      box-shadow: 0px -0.87px 3.47px 0px #ffffff;
+      border-radius: 45.9px;
+      margin-right: 5px;
+    }
+
+    .login-btn {
+      background-image: url("../assets/images/index/primary-btn.png");
+      color: #fff;
+    }
+    .register-btn {
+      background-image: url("../assets/images/index/primary-white-btn.png");
+      color: #47537f;
+    }
   }
 
   .home-select-slide {
@@ -2904,9 +2953,14 @@ export default defineComponent({
 
   .cash-button {
     text-decoration: none;
-    width: 36px;
+    // width: 36px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img {
+      max-width: 36px;
+    }
 
     > p {
       font-size: 14px;

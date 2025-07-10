@@ -23,7 +23,13 @@
             "
           />
           <span>
-            {{ category === "baccarat" ? "百家乐" : category === "roulette" ? "轮盘" : "幸运蕾丝" }}
+            {{
+              category === "baccarat"
+                ? $t("common.gameType.baccarat")
+                : category === "roulette"
+                ? $t("common.gameType.roulette")
+                : $t("common.gameType.luckyLace")
+            }}
           </span>
         </q-btn>
       </div>
