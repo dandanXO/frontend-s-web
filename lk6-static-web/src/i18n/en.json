@@ -2,7 +2,8 @@
   "btn": {
     "login": "Login",
     "register": "Register",
-    "en": "English"
+    "en": "English",
+    "enterGame": "Enter Game"
   },
   "form": {
     "realName": "Real Name",
