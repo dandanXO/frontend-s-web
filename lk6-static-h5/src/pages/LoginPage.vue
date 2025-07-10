@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <div style="height: 48px; text-align: center; margin: 25px 0px">
+    <div style="height: 48px; text-align: center; margin: 25px 0px" v-if="tab === 'login'">
       <img src="../assets/login/login-logo.png" height="100%" />
     </div>
 
@@ -8,7 +8,7 @@
       <img src="../assets/images/login/home-icon.svg" />
     </router-link>
 
-    <div class="top-image-div">
+    <div class="top-image-div" v-if="tab === 'login'">
       <img src="../assets/login/login-top-bg.png" />
     </div>
 
@@ -220,7 +220,7 @@
             />
 
             <q-btn
-              @click.prevent="tab = 'register'"
+              @click.prevent="goToRegister"
               type="button"
               class="register-btn q-mt-md"
               :label="$t('btn.register')"
@@ -531,8 +531,13 @@ export default defineComponent({
     };
 
     const changeLoginTab = () => {
-      tab.value = "login";
+      // tab.value = "login";
+      router.push("/register")
     };
+
+    const goToRegister = () => {
+      router.push("/register")
+    }
 
     const otpCountdownCount = ref(0);
 
@@ -832,6 +837,7 @@ export default defineComponent({
       getCode,
       isCheckRmb,
       changeLoginTab,
+      goToRegister,
       phoneLoginForm,
       sendOtpSms,
       toggleInnerCode,
@@ -852,7 +858,7 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .login-container {
   padding-top: 12px;
   height: 100dvh;

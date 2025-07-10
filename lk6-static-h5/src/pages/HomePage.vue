@@ -140,11 +140,14 @@
               <span class="balance-text text-positive" v-if="isLoadingBalance" style="font-size: 20px">
                 {{ $t("common.loading") }}
               </span>
-              <span class="balance-text" v-if="!isLoadingBalance">{{ mainWallet.toFixed(2) }}</span>
+              <span class="balance-text" v-if="!isLoadingBalance">
+                {{ mainWallet.toFixed(2) }}{{ store.currency.value }}
+              </span>
             </div>
+            <img class="crypto-icon" src="../assets/images/index/crypto-icon.svg" />
           </div>
 
-          <div class="row gap-8 justify-between home-quick-link-section">
+          <div class="row justify-end home-quick-link-section">
             <router-link class="text-center cash-button" :unelevated="true" to="/finance/deposit?redirect=home">
               <img src="../assets/index/home-deposit-icon.svg" alt="" width="100%" />
               <p>{{ $t("btn.deposit") }}</p>
@@ -2949,11 +2952,22 @@ export default defineComponent({
   }
 
   .home-quick-link-section {
-    flex: 6;
+    flex: 1;
+    gap: 24px;
   }
 
   .home-login-section {
-    flex: 3;
+    position: relative;
+    background: radial-gradient(103.75% 103.75% at 50% -3.75%, #ffffff 0%, #deecff 100%);
+    border-radius: 10px;
+    border: 1.41px solid #ffffff;
+    padding: 16px;
+    flex: 1;
+    .crypto-icon {
+      position: absolute;
+      right: 8px;
+      bottom: 16px;
+    }
   }
 
   .cash-button {
@@ -2964,7 +2978,8 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     img {
-      max-width: 36px;
+      max-width: 60px;
+      margin-bottom: 5px;
     }
 
     > p {
@@ -2976,10 +2991,11 @@ export default defineComponent({
 
   .welcome-liner {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     display: flex;
     align-items: center;
     margin-right: 5px;
+    color: #35648f;
   }
 
   .badge-div {
@@ -2992,10 +3008,9 @@ export default defineComponent({
   }
 
   .balance-text {
-    font-size: 24px;
+    font-size: 16px;
     line-height: 24px;
-    font-weight: 500;
-    min-width: 50px;
+    font-weight: 600;
   }
 }
 
