@@ -48,7 +48,7 @@
               {{ $t("mail.delete") }}
             </q-btn>
           </div>
-          <q-infinite-scroll @load="onLoad" :offset="150">
+          <q-infinite-scroll @load="onLoad" :offset="200">
             <q-card
               v-for="(det, n) in truncatedListByType"
               :key="n"
@@ -77,7 +77,7 @@
                     <img src="../assets/images/inbox/unread-mail.svg" />
                   </div>
 
-                  <div class="title-text" :title="det.title">{{ det.title }}</div>
+                  <div v-html="det.title" class="title-text" :title="det.title"></div>
                   <div
                     v-if="det.sendTime"
                     class="send-time"
@@ -152,6 +152,7 @@ import { useQuasar } from "quasar";
 import qs from "qs";
 import CommonModal from "./CommonModal.vue";
 import { useI18n } from "vue-i18n";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   components: {
@@ -186,6 +187,7 @@ export default defineComponent({
   emits: ["readMsg"],
   setup(props, context) {
     const { t } = useI18n();
+    const notify = useNotify();
     const mailboxMessageTypeData = computed(() => [
       { num: 2, type: "ACTIVITY", name: t("mail.category.activity") },
       { num: 3, type: "ANNOUNCEMENT", name: t("mail.category.announcement") },
@@ -202,9 +204,10 @@ export default defineComponent({
 
     const sliceOffset = ref(0);
     const sliceLimit = 6;
-    const truncatedList = computed(() => {
-      return props.list.slice(0, sliceOffset.value);
-    });
+    const truncatedList = ref([]);
+    // computed(() => {
+    //   return props.list.slice(0, sliceOffset.value);
+    // });
 
     const truncatedListAll = ref([]);
     const truncatedListByType = computed(() => {
@@ -216,17 +219,28 @@ export default defineComponent({
       });
     });
 
-    const comList = computed(() => props.list);
+    const comList = ref([]);
 
     const allowSelectMultiple = ref(false);
     const selectedMailIds = ref({});
     const hasMailSelected = computed(() => Object.values(selectedMailIds.value).includes(true));
+
     const onLoad = (index, done) => {
+      comList.value = props.list;
       setTimeout(() => {
-        if (sliceOffset.value < props.list.length) {
-          sliceOffset.value += sliceLimit;
+        if (comList.value.length) {
+          const sliceArray = comList.value.splice(0, 6);
+          sliceArray.forEach((element) => {
+            truncatedList.value.push(element);
+          });
+          done();
         }
-        done();
+        // if (sliceOffset.value < props.list.length) {
+        //   sliceOffset.value += sliceLimit;
+        //   done && done();
+        // } else {
+        //   done && done(true);
+        // }
       }, 200);
     };
     const isSelectedMail = ref(-1);
@@ -247,7 +261,7 @@ export default defineComponent({
         const formattedIds = messagesIdArr.join(",");
         api
           .post(
-            "/session/inbox/readMultiple",
+            "/session/pm/inbox/readMultiple",
             qs.stringify({
               ids: formattedIds
             })
@@ -276,7 +290,7 @@ export default defineComponent({
       } else if (type !== "ALL") {
         api
           .post(
-            "/session/inbox/readAll",
+            "/session/pm/inbox/readAll",
             qs.stringify({
               type: type
             })
@@ -307,7 +321,7 @@ export default defineComponent({
           });
       } else {
         api
-          .post("/session/inbox/readAll")
+          .post("/session/pm/inbox/readAll")
           .then((res) => {
             if (res.code === 0) {
               $q.notify({
@@ -375,7 +389,7 @@ export default defineComponent({
       } else if (!readTime) {
         api
           .post(
-            "/session/inbox/read",
+            "/session/pm/inbox/read",
             qs.stringify({
               id: id
             })
@@ -411,7 +425,7 @@ export default defineComponent({
         const formattedIds = mailIdArr.join(",");
         api
           .post(
-            "/session/inbox/deleteMultiple",
+            "/session/pm/inbox/deleteMultiple",
             qs.stringify({
               ids: formattedIds
             })
@@ -438,7 +452,7 @@ export default defineComponent({
       } else if (msgType.value !== null) {
         api
           .post(
-            "/session/inbox/deleteAll",
+            "/session/pm/inbox/deleteAll",
             qs.stringify({
               type: msgType.value
             })
@@ -463,7 +477,7 @@ export default defineComponent({
           });
       } else {
         api
-          .post("/session/inbox/deleteAll")
+          .post("/session/pm/inbox/deleteAll")
           .then((res) => {
             isDeleteMailModal.value = false;
 
@@ -487,18 +501,18 @@ export default defineComponent({
 
     const hasUnreadMessages = (type) => {
       if (type === "ALL") {
-        return truncatedListAll.value.some((item) => item.readTime === null);
+        return truncatedList.value.some((item) => item.readTime === null);
       }
-      return truncatedListAll.value.some((item) => item.type === type && item.readTime === null);
+      return truncatedList.value.some((item) => item.type === type && item.readTime === null);
     };
 
     watch(mailboxMessageTab, (newType) => {
-      truncatedList.value = [];
+      // truncatedList.value = [];
       context.emit("tabChange", newType);
     });
 
     onMounted(() => {
-      onLoad();
+      // onLoad();
     });
     return {
       humanDatetime(ts) {
@@ -581,8 +595,10 @@ export default defineComponent({
         overflow: hidden;
         white-space: nowrap;
         flex: 1;
-
         color: #7a80a1;
+        :deep(p) {
+          margin: 0;
+        }
       }
 
       .send-time {

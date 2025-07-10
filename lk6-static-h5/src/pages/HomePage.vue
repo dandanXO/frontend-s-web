@@ -106,9 +106,13 @@
           </div>
           <marquee-text :repeat="5" :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 4 : 70">
             <div v-if="announcementList">
-              <span style="color: #7a80a1" v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-                {{ a.content }}
-              </span>
+              <span
+                style="color: #7a80a1"
+                v-for="(a, i) in announcementList"
+                :key="i"
+                v-html="a.content"
+                @click="openPopup(a)"
+              />
             </div>
           </marquee-text>
           <img v-if="languageVal === 'zh'" src="../assets/index/home-hot-match-icon-zh.png" width="62px" />
@@ -2612,13 +2616,16 @@ export default defineComponent({
     }
 
     span {
+      display: inline-block;
       margin-right: 10px;
       cursor: pointer;
       color: #000;
+      margin-bottom: -20px;
     }
 
     .notice {
       img {
+        display: block;
         width: 19px;
       }
     }
