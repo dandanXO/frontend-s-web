@@ -39,5 +39,43 @@
     "smsOtp": "SMS OTP",
     "email": "E-mail",
     "emailRule01": "Invalid email address"
+  },
+  "menu": {
+    "promotion": "Promo",
+    "customerService": "Support",
+    "home": "Home",
+    "live": "Live",
+    "crown": "Crown",
+    "panda": "Panda",
+    "bacarrat": "Bacarrat",
+    "deposit": "Deposit",
+    "withdraw": "Withdraw",
+    "assets": "Assets",
+    "loading": "Loading"
+  },
+  "download": {
+    "title": "Comprehensive client download",
+    "desc": "Powered by industry-leading technology, we've independently developed a full suite of terminal applications—bringing you seamless access via Web, H5, and native iOS and Android apps. Enjoy entertainment and betting anytime, anywhere!",
+    "scan": "Scan to download",
+    "download": "Free download link for mobile"
+  },
+  "service": {
+    "seconds": "Seconds",
+    "partners": "Partners",
+    "averageDepositTime": "Average Deposit Time",
+    "coopPaymentPlatform": "Cooperative Payment Platform",
+    "averageWithdrawTime": "Average time To Withdraw",
+    "coopGamingPlatform": "Cooperative Gaming Platform",
+  "tagline01_title": "Lightning-Fast Transactions",
+  "tagline01_desc": "Our independently developed financial processing system uses cutting-edge technology to deliver truly instant deposits, withdrawals, and transfers. With exclusive network optimization, we ensure a top-tier gaming experience and minimal latency.",
+
+  "tagline02_title": "Massive Variety of Events",
+  "tagline02_desc": "Enjoy access to thousands of thrilling sports events every day, along with live casino games, lotteries, and electronic games. A wide range of entertainment options ensures a flawless and immersive gaming experience.",
+
+  "tagline03_title": "Encrypted Security Management",
+  "tagline03_desc": "Exclusively developed with 128-bit encryption and a rigorous security management system, your funds are fully protected. Enjoy entertainment and betting with total peace of mind.",
+
+  "tagline04_title": "Seamless Access Across All Devices",
+  "tagline04_desc": "Powered by industry-leading technology, our fully self-developed suite of terminal applications lets you play and bet anytime, anywhere—on web, H5, iOS, or Android. Our 24/7 customer support team is always here to deliver premium, personalized service."
   }
 }

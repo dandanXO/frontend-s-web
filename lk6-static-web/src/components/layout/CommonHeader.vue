@@ -119,13 +119,13 @@
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-deposit.png" />
             </div>
-            存款
+            {{ $t('menu.deposit') }}
           </router-link>
           <router-link to="/center/withdraw" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-withdraw.png" />
             </div>
-            取款
+             {{ $t('menu.withdraw') }}
           </router-link>
           <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
@@ -197,9 +197,9 @@
             </div>
             <a @click="refreshBalance" class="details-balance">
               <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
-                <span class="assets-text">总资产：</span>
+                <span class="assets-text">{{$t('menu.assets')}}：</span>
                 <span class="amount">
-                  <span v-if="isLoadingBalance">加载中...</span>
+                  <span v-if="isLoadingBalance">{{ $t('menu.loading') }}...</span>
                   <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ floor(store.balance, 2) }}</span>
                 </span>
               </div>
@@ -375,6 +375,7 @@ import { loadPromoBanner } from "@/api/index/promo";
 import LocaleChanger from '../LocaleChanger.vue';
 import LogoComponent from '../LogoComponent.vue';
 import { i18nStore } from '@/store/language'
+import { useI18n } from "vue-i18n";
 
 
 export default defineComponent({
@@ -394,6 +395,7 @@ export default defineComponent({
     LogoComponent
   },
   setup() {
+    const { t } = useI18n();
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
     const notify = useNotify();
@@ -425,22 +427,22 @@ export default defineComponent({
     const store = userStore();
 
     const navigations = reactive([
-      { code: "home", name: "首页", enName: "Home", path: "/home" },
+      { code: "home", name: t('menu.home'), enName: t('menu.home'), path: "/home" },
       // { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
       // { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true, isTest: false },
-      { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true, isTest: false },
+      { code: "live", name: t('menu.live'), enName:t('menu.live'), path: "/live-casino", submenu: true, isTest: false },
       // { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true, isTest: false },
-      { code: "crown", name: "皇冠", enName: "Crown", path: "/sports?plat=CR", submenu: true, isTest: false },
-      { code: "panda", name: "熊猫", enName: "Panda", path: "/sports?plat=PM", submenu: true, isTest: false },
-      { code: "bacarrat", name: "百家乐", enName: "Bacarrat", path: "/bacarrat", submenu: true, isTest: false },
+      { code: "crown", name: t('menu.crown'), enName: t('menu.crown'), path: "/sports?plat=CR", submenu: true, isTest: false },
+      { code: "panda", name: t('menu.panda'), enName: t('menu.panda'), path: "/sports?plat=PM", submenu: true, isTest: false },
+      { code: "bacarrat", name: t('menu.bacarrat'), enName: t('menu.bacarrat'), path: "/bacarrat", submenu: true, isTest: false },
       // { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true, isTest: false },
       // { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: false },
       // { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
       // { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
       {
         code: "Promotion",
-        name: "优惠",
-        enName: "Promotion",
+        name: t('menu.promotion'),
+        enName: t('menu.promotion'),
         path: "/promotion",
         submenu: false,
         hasicon: true,
@@ -449,7 +451,7 @@ export default defineComponent({
       // { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true, isTest: false },
       { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true, isTest: false },
       // { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false },
-      { code: "CS", name: "客服", enName: "CS", path: "/cs", hasicon: true, isTest: false }
+      { code: "CS", name: t('menu.customerService'), enName: t('menu.customerService'), path: "/cs", hasicon: true, isTest: false }
     ]);
     const { token } = storeToRefs(store);
     const router = useRouter();

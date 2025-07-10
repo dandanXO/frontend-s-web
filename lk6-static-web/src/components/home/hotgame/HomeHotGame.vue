@@ -1,6 +1,7 @@
 <template>
   <div class="hotgame-section">
-    <img src="../../../assets/home/hotgame/hotgame-section-title.svg" width="1100px" style="display:flex;margin:0 auto;" />
+    <img v-if="languageVal === 'en'" src="../../../assets/home/hotgame/hotgame-section-title-en.svg" width="1100px" style="display:flex;margin:0 auto;" />
+    <img v-else src="../../../assets/home/hotgame/hotgame-section-title.svg" width="1100px" style="display:flex;margin:0 auto;" />
 
     <div class="category-wrapper">
       <template v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`">
@@ -30,7 +31,8 @@ import { getPlatformList, getLoggedInPlatformList } from "@/api/platform/platfor
 import { userStore } from "@/store";
 import GameModal from "@/components/modal/GameModal";
 import * as _ from "lodash";
-
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
 import {
   eSportsPlatforms,
   fishingPlatforms,
@@ -43,9 +45,10 @@ import {
 import { useDark } from "@vueuse/core";
 import SportsView from "@/views/SportsView.vue";
 import LiveCasinoView from "@/views/LiveCasinoView.vue";
-import PokerView from "@/views/PokerView.vue";
 import BacarratView from "@/views/BacarratView.vue";
 
+const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
 const store = userStore();
 const router = useRouter();
 const platformGame = ref();
