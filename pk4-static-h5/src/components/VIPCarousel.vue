@@ -19,14 +19,14 @@
           </div>
           <div v-if="vip.vipLevel !== 12">
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
-              <div class="upgrade-requirements" v-if="vipIndex !== vipItems.length - 1">
+              <!-- <div class="upgrade-requirements" v-if="vipIndex !== vipItems.length - 1">
                 <div>
                    {{ $t("vip.currentValidBets") }}: {{ store.currency.value }} {{ convertToCommaAmount(store.getCurrentValidBet(), false, 0) }}
                 </div>
                 {{ $t("vip.accumulateDeposit") }}
                 {{ props.onlyShowCurrentLevel ? vipItems[vip.vipLevel + 1].ugprade : vipItems[vipIndex + 1].ugprade }}
-                <!-- {{ convertToCommaAmount(store.levelUpDeposit, null, 0) }} -->
-              </div>
+                <!- {{ convertToCommaAmount(store.levelUpDeposit, null, 0) }} ->
+              </div> -->
 
               <div class="progress-bar-container">
                 <div class="progress-bar-outer-bar" v-if="vipIndex !== vipItems.length - 1">
@@ -60,9 +60,62 @@
       <Navigation />
     </template>
   </Carousel>
+  
+    <template v-if="!props.onlyShowCurrentLevel && vipBonusList.length > 0">
+      <div class="bet-deposit-box">
+        <div class="bet-deposit-item current-valid-bets">
+          <div class="item-title">{{ $t("vip.currentValidBets") }}</div>
+          <div class="item-amt">{{store.currency.value}}{{ convertToCommaAmount(currentBetAmount, false, 0) }}</div>
+      </div>
+      
+      <div class="bet-deposit-item accumulate-bonus">
+        <div class="item-title">{{ $t("vip.accumulateDeposit") }}</div>
+        <div class="item-amt">{{store.currency.value}}{{ convertToCommaAmount(currentDepositAmount, null, 0) }}</div>
+      </div>
+      </div>
+      <div class="upgrade-monthly-bonus">
+        <div class="monthly-img">
+          <img src="../assets/images/vip/blue-money.png" width="120" />
+        </div>
+        <div class="monthly-txt">
+          <div class="monthly-txt-title">
+          {{ $t("vip.upgradeBonus") }}
+          </div>
+          
+          <div class="monthly-txt-amt">
+            {{store.currency.value}} {{ vipBonusList[vipCarouselIndex].upgradePrize || 0 }}
+          </div>
+
+        </div>
+        <div class="monthly-btn" @click="getUpgradeBonus(vipBonusList[vipCarouselIndex].vipLevel)" :class="vipBonusList[vipCarouselIndex].upgradeClaimStatus !== 'CAN_CLAIM' && 'disable'">
+          <span v-if="vipBonusList[vipCarouselIndex].upgradeClaimStatus === 'CLAIMED'">{{ $t("vip.received") }}</span>
+          <span v-else>{{ $t("vip.receive") }}</span>
+        </div>
+      </div>
+      <div class="upgrade-monthly-bonus">
+        <div class="monthly-img">
+          <img src="../assets/images/vip/red-money.png" width="120" />
+        </div>
+        <div class="monthly-txt">
+        <div class="monthly-txt-title">
+          {{ $t("vip.monthlyBonus") }}
+          </div>
+          
+          <div class="monthly-txt-amt">
+            {{store.currency.value}} {{ vipBonusList[vipCarouselIndex].monthlyPrize || 0 }}
+          </div>
+        </div>
+        <div class="monthly-btn" @click="getMonthlyVip" 
+          :class="(vipLevel === 0 || vipLevel !== vipBonusList[vipCarouselIndex].vipLevel || !monthlyVipReceive) ? 'disable' : ''">
+          <span v-if="!monthlyVipReceive && vipLevel === vipBonusList[vipCarouselIndex]">{{ $t("vip.received") }}</span>
+          <span v-else>{{ $t("vip.receive") }}</span>
+        </div>
+      </div>
+    </template>
 </template>
 <script setup>
 import { defineModel, watch, onMounted, ref, computed, nextTick } from "vue";
+import { eventapi } from "boot/axios";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 import { userStore } from "stores/index";
@@ -420,6 +473,96 @@ watch(
   { immediate: true }
 );
 
+const monthlyVipReceive = ref(false);
+const upgradeBonusReceive = ref(false);
+const currentBetAmount = ref(0);
+const currentDepositAmount = ref(0);
+const vipBonusList = ref([]);
+
+const checkVipReceive = () => {
+  eventapi
+    .get("/session/privi/vip/upgrade-init")
+    .then((res) => {
+      vipBonusList.value = res.data.vipBonusVOList;
+      currentBetAmount.value = res.data.currentBetAmount;
+      currentDepositAmount.value = res.data.currentDepositAmount;
+    })
+    .catch((err) => {
+      console.log(err.message);
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: err.message,
+        icon: "report_problem"
+      });
+    });
+    
+  eventapi
+    .get("/session/privi/vip/monthly-can-claim")
+    .then((res) => {
+      console.log(res);
+      monthlyVipReceive.value = res.data;
+      // monthlyVipReceiveAmt.value = res.data.
+    })
+    .catch((err) => {
+      console.log(err.message);
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: err.message,
+        icon: "report_problem"
+      });
+    });
+}
+
+const getUpgradeBonus = (vipLevel) => {
+  eventapi
+    .put(`/session/privi/vip/upgrade-claim?vipLevel=${vipLevel}`, )
+    .then((res) => {
+      if (res.code === 0) {
+        $q.notify({
+          message: t("header.sucessClaimed") + store.currency.value + res.data,
+          color: "positive",
+          position: "top",
+          timeout: 2000
+        });
+      }
+      checkVipReceive();
+    })
+    .catch((err) => {
+      console.log(err.message);
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: err.message,
+      //   icon: "report_problem"
+      // });
+    });
+};
+
+const getMonthlyVip = () => {
+  eventapi
+    .put("/session/privi/vip/monthly-claim")
+    .then((res) => {
+      if (res.code === 0) {
+        $q.notify({
+          message: t("header.sucessClaimed") + store.currency.value  + res.data,
+          color: "positive",
+          position: "top",
+          timeout: 2000
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: err.message,
+      //   icon: "report_problem"
+      // });
+    });
+};
 onMounted(() => {
   store.getMemberInfo().then(() => {
     const vipLevelNum = Number(store.vip.replace("VIP", ""));
@@ -441,6 +584,7 @@ onMounted(() => {
     }
 
     vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
+    checkVipReceive();
   });
 });
 </script>
@@ -791,7 +935,9 @@ $gradients: (
 }
 
 .carousel__slide {
-  padding: 5px 18px 30px;
+  // padding: 5px 18px 30px;
+  
+    padding: 5px 0px 5px 18px;
 
   &.carousel__slide--next .vipitem,
   &.carousel__slide--prev .vipitem {
