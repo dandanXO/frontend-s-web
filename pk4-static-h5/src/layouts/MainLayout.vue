@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh Lpr fFf">
     <div v-if="hasPage">
-      <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
+      <q-card-section v-if="!hasPage" class="items-center justify-between top-section" horizontal>
         <div class="logo">
           <router-link to="/"><img src="../assets/logo.png" /></router-link>
         </div>

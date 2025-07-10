@@ -413,6 +413,17 @@ const routes = [
   //   meta: { requiresAuth: true }
   // },
   {
+    path: "/gamePlay",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/gamePlay/indexPage.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/deposit",
     component: () => import("layouts/MainLayout.vue"),
     children: [

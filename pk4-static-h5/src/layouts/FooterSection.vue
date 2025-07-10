@@ -29,7 +29,7 @@
         </div>
         <span class="footer-label">{{ $t("bottomNav.earnMoney") }}</span>
       </q-route-tab>
-      <q-route-tab @click="playGame('BetBy', 'BetBy')" name="betby" :ripple="false">
+      <q-route-tab :to="`/gamePlay?gameName=BetBy`" name="gamePlay" id="gamePlay" :ripple="false">
         <div class="footer-img">
           <img style="min-width: 22px" class="inactive" src="../assets/images/index/menu/icon-betby.png" />
           <img style="min-width: 22px" class="hover" src="../assets/images/index/menu/icon-betby-hover.png" />
@@ -63,12 +63,13 @@
 <script setup>
 import { ref } from "vue";
 import { useUI } from "stores/ui";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { userStore } from "src/stores";
 import GameModal from "components/modal/GameModal";
 
 const ui = useUI();
 const route = useRoute();
+const router = useRouter()
 const tab = ref("home");
 const store = userStore();
 
