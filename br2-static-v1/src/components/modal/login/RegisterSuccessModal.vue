@@ -19,14 +19,18 @@
 <script setup>
 import { computed } from "vue";
 import { useUI } from "stores/ui";
+import { userStore } from "stores/index";
 
 const isShowRegisterSuccessDialog = computed(() => {
   return uiStore.loginView === "regSuccess";
 });
+
+const store = userStore();
 const uiStore = useUI();
 
 const handleConfirmRegSuccess = () => {
-  location.href = "/";
+  // location.href = "/";
+  store.getMemberInfo();
   uiStore.loginView = "";
 };
 </script>
