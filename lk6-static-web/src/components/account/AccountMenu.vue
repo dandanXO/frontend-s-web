@@ -13,12 +13,12 @@
             :src="imageDir + store.profilePhoto + '?v=' + timestamp"
           />
         </div>
-        <div class="account-name">欢迎您 {{ loginName }}</div>
+        <div class="account-name">{{ $t('menu.welcome') }} {{ loginName }}</div>
         <!-- <span class="account-vip-label">{{ vip }}</span> -->
         <div @click="refreshBalance" class="account-details-balance">
-          <span>总资产:</span>
+          <span>{{ $t('menu.assets') }}:</span>
           <span class="amount">
-            <span v-if="isLoadingBalance">加载中...</span>
+            <span v-if="isLoadingBalance">{{ $t('menu.loading') }}...</span>
             <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ floor(store.balance, 2) }}</span>
           </span>
           <el-icon style="cursor: pointer">
@@ -31,19 +31,13 @@
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-deposit.png" />
             </div>
-            存款
+            {{ $t('menu.deposit') }}
           </router-link>
           <router-link to="/center/withdraw" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-withdraw.png" />
             </div>
-            取款
-          </router-link>
-          <router-link to="/center/transfer" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-transfer.png" />
-            </div>
-            转账
+            {{ $t('menu.withdraw') }}
           </router-link>
         </div>
       </div>
@@ -184,11 +178,13 @@ import "vue-advanced-cropper/dist/theme.compact.css";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import floor from "lodash/floor";
 import { useNotify } from "@/hooks/notify";
+import { useI18n } from "vue-i18n";
 
 components: {
   Cropper, CircleStencil;
 }
 
+const { t } = useI18n();
 const isDark = useDark();
 const notify = useNotify();
 
@@ -234,14 +230,14 @@ const menuItems = ref([
   // { route: "/center/deposit", label: "充值中心", icon: "transitrecord" },
   // { route: "/center/withdraw", label: "快速提款", icon: "transitrecord" },
   // { route: "/center/transfer", label: "快速转账", icon: "transitrecord" },
-  { route: "/center/transit-record", label: "交易记录", icon: "transitrecord" },
+  { route: "/center/transit-record", label: t('menu.transactionRecords'), icon: "transitrecord" },
   // { route: "/center/transit-record?type=6", label: "投注记录", icon: "betrecord" },
-  { route: "/center/personal", label: "个人资料", icon: "personal" },
+  { route: "/center/personal", label: t('menu.personalCentre'), icon: "personal" },
   // { route: "/center/withdrawbank", label: "银行卡管理", icon: "transitrecord" },
-  { route: "/center/mailbox", label: "消息中心", icon: "inbox" },
+  { route: "/center/mailbox", label: t('menu.messageCentre'), icon: "inbox" },
   // { route: "/vip", label: "VIP特权", icon: "vip" },
   // { route: "/center/promo", label: "优惠领取", icon: "promo" },
-  { route: "/center/feedback", label: "反馈奖励", icon: "feedback" },
+  // { route: "/center/feedback", label: "反馈奖励", icon: "feedback" },
   // { route: "/center/share", label: "推广赚钱", icon: "transitrecord" }
 ]);
 

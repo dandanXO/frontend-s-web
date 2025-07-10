@@ -23,7 +23,7 @@
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="../../../assets/home/auth/username-icon.png" />
+      <img class="form-field-icon" src="../../../assets/home/auth/username-icon.png" width="35px" />
       <el-form-item :label="$t('form.username')" prop="loginName">
         <el-input class="wTip" v-model="regForm.loginName" :placeholder="$t('form.usernameRule01', {min: 4, max: 11})" clearable>
           <template #append></template>
@@ -500,6 +500,11 @@ onMounted(() => {
 
   .el-form-item.is-error {
     margin-bottom: 15px;
+  }
+
+  .el-input__wrapper {
+    background: none !important;
+    box-shadow: none !important;
   }
 }
 </style>
