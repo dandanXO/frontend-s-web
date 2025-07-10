@@ -2,7 +2,8 @@
   <div class="promo-container">
     <div class="promo-banner" v-if="!isPromoDetail">
       <div class="promo-banner-image">
-        <img src="../assets/promo/top-banner-light.png" />
+        <img v-if="languageVal === 'en'" src="../assets/promo/top-banner-light-en.png" />
+        <img v-else src="../assets/promo/top-banner-light.png" />
       </div>
     </div>
     <div class="all-promotions" v-if="!isPromoDetail">
@@ -623,6 +624,7 @@ export default defineComponent({
               color: #7A80A1;
               font-size: 18px;
               font-weight: 700;
+              white-space: nowrap;
             }
 
             &:before {

@@ -30,11 +30,6 @@ const routes = [
         component: HomeView
       },
       {
-        path: "/slot",
-        name: "slot",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/SlotView.vue")
-      },
-      {
         path: "/crown",
         name: "crown",
         component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue")
@@ -50,11 +45,6 @@ const routes = [
         name: "live",
         component: () => import(/* webpackChunkName: "Game" */ "../views/LiveCasinoView.vue"),
         props: { showPlayBtn: true }
-      },
-      {
-        path: "/lottery",
-        name: "lottery",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/LotteryView.vue")
       },
       {
         path: "/lottery/SGWin",

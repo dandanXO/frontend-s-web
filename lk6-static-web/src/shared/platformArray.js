@@ -100,7 +100,8 @@ export const liveCasinoPlatforms = [
     message:
       "EEAI真人带你畅玩百家乐、骰宝、轮盘、牛牛、炸金花等多款热门真人视讯游戏，最美荷官实时在线陪伴，让你感受最真实的现场魅力！",
     caption: "",
-    gameCode: ""
+    gameCode: "",
+    enMessage: "EEAI Live brings you an immersive experience with popular live dealer games. Enjoy real-time interaction with the most charming live dealers and feel the thrill of an authentic casino atmosphere!"
   }
 ];
 
@@ -120,16 +121,20 @@ export const sportsPlatforms = [
     cnname: "皇冠体育",
     image: "cr",
     message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、 体育资讯，多种投注型，让您乐享其中。",
+    enMessage: "Stay ahead with expert odds trend analysis and real-time updates on the hottest events and sports news. With diverse betting options, the excitement never stops",
     caption: "玩法刺激 即刻结算",
-    gameCode: ""
+    gameCode: "",
+    enname: "Crown Sport"
   },
   {
     code: "PM",
     cnname: "熊猫体育",
     image: "db",
     message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、 体育资讯，多种投注型，让您乐享其中。",
+    enMessage: "Stay ahead with expert odds trend analysis and real-time updates on the hottest events and sports news. With diverse betting options, the excitement never stops",
     caption: "玩法刺激 即刻结算",
-    gameCode: ""
+    gameCode: "",
+    enname: "Panda Sport"
   },
   {
     code: "SABA",
