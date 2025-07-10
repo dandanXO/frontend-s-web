@@ -119,7 +119,7 @@
                   >
                     <HotPromotion :list="selectedPromo" />
                   </div>
-                  <div v-if="selectedPromo.redirectUrl !== 'spin-lucky-wheel'">
+                  <div v-if="selectedPromo.redirectUrl !== 'spin-lucky-wheel' || ui.isShowSpinWheelPromoRules">
                     <div v-html="selectedPromo.pageContent"></div>
                   </div>
 
