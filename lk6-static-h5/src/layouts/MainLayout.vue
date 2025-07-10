@@ -174,7 +174,11 @@ export default defineComponent({
           prevPage.value = "";
           hasPage.value = true;
           pageName.value = t("layout.header.baccarat");
-        } else if (route.path === "/forgot-account") {
+        } else if (route.path === "/register") {
+          prevPage.value = "";
+          hasPage.value = true;
+          pageName.value = t("btn.register");
+        }else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;
           pageName.value = t("layout.header.forgotPassword");
