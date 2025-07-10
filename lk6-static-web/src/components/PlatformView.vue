@@ -41,7 +41,7 @@
                 <div class="platform-subtitle">{{ platformName }}</div>
               </div>
               
-              <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200">{{ languageVal === 'en' ? item.enMessage : item.message }}</div>
+              <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200">{{ $t(item.message) }}</div>
 
               <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
                 <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.svg')" />
@@ -272,7 +272,9 @@ import moment from "moment/moment";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import { storeToRefs } from 'pinia'
 import { i18nStore } from '@/store/language'
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
 const platformGame = ref(null);
@@ -298,17 +300,17 @@ const platformsListDisplay = ref([]);
 const fixedBacarratPlatforms = ref([
   {
     prefix: 101,
-    label: '百家乐',
+    label: t('menu.bacarrat'),
     type: 'BACARRAT'
   },
   {
     prefix: 112,
-    label: '幸运轮盘',
+    label: t('menu.lucky_roulette'),
     type: 'ROULETTE'
   },
   {
     prefix: 103,
-    label: '幸运蕾丝',
+    label: t('menu.lucky_lace'),
     type: 'LUCKY LACE'
   },
 ])

@@ -1,10 +1,10 @@
-// live casino
+
 export const liveCasinoPlatforms = [
   {
     code: "AR",
     cnname: "AR真人",
     image: "ar",
-    message: "真实赌场环境，美艳荷官与您互动，咪牌百家乐，体验包桌尊贵服务，给您亲临现场般的游戏体验。",
+    message: 'liveCasinoPlatforms.message1',
     caption: "",
     gameCode: ""
   },
@@ -12,7 +12,7 @@ export const liveCasinoPlatforms = [
     code: "AG",
     cnname: "PA真人",
     image: "ag",
-    message: "真实赌场环境，美艳荷官与您互动，咪牌百家乐，体验包桌尊贵服务，给您亲临现场般的游戏体验。",
+    message: 'liveCasinoPlatforms.message2',
     caption: "",
     gameCode: ""
   },
@@ -20,8 +20,7 @@ export const liveCasinoPlatforms = [
     code: "PMLIVE",
     cnname: "DB真人",
     image: "db",
-    message:
-      "互动娱乐在线直播平台，让玩家游戏的同时，观赏美女主播表演、参与互动游戏。设有多个真人荷官桌台，包括：百家乐、竞咪、龙虎、骰宝、轮盘等多款游戏。",
+    message: 'liveCasinoPlatforms.message3',
     caption: "",
     gameCode: ""
   },
@@ -29,8 +28,7 @@ export const liveCasinoPlatforms = [
     code: "BG",
     cnname: "BG真人",
     image: "bg",
-    message:
-      "最美荷官在线互动，带您玩转百家乐、骰宝、轮盘、牛牛、炸金花等多款真人视讯游戏, 国际标准、公平公正，极致享受。",
+    message: 'liveCasinoPlatforms.message4',
     caption: "",
     gameCode: ""
   },
@@ -38,7 +36,7 @@ export const liveCasinoPlatforms = [
     code: "Evo",
     cnname: "EVO真人",
     image: "evo",
-    message: "真实赌场环境，美艳荷官与您互动，顶级娱乐百家乐、骰宝、牛牛、轮盘...等多项经典游戏。",
+    message: 'liveCasinoPlatforms.message5',
     caption: "",
     gameCode: ""
   },
@@ -46,8 +44,7 @@ export const liveCasinoPlatforms = [
     code: "BBINDY",
     cnname: "BBIN真人",
     image: "bbin",
-    message:
-      "顶级娱乐百家乐、骰宝、牛牛、轮盘...等多项经典游戏，实时下注的刺激开牌反馈，多位真人荷官全年无休的紧密互动，让您感受贵宾般的尊爵待遇。",
+    message: 'liveCasinoPlatforms.message6',
     caption: "",
     gameCode: "bblive_lobby_pc"
   },
@@ -55,7 +52,7 @@ export const liveCasinoPlatforms = [
     code: "BBIN",
     cnname: "BBIN真人",
     image: "bbin",
-    message: "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
+    message: 'liveCasinoPlatforms.message7',
     caption: "",
     gameCode: ""
   },
@@ -63,8 +60,7 @@ export const liveCasinoPlatforms = [
     code: "ALLBET",
     cnname: "欧博真人",
     image: "allbet",
-    message:
-      "更加符合亚洲人审美的美女荷官，还有中国美女直播陪玩，互动，聊天。玩法多样竞咪互动百家乐、六张牌先发、自主切牌、荷官一对一玩牌等多款火爆新款游戏。",
+    message: 'liveCasinoPlatforms.message8',
     caption: "",
     gameCode: ""
   },
@@ -72,7 +68,7 @@ export const liveCasinoPlatforms = [
     code: "EBET",
     cnname: "EBET真人",
     image: "ebet",
-    message: "全球首创6张牌先发、VIP包桌、咪牌百家乐、智控模式百家乐及竞咪互动百家乐等游戏，多终端兼容，让您享受不停。",
+    message: 'liveCasinoPlatforms.message9',
     caption: "",
     gameCode: ""
   },
@@ -80,8 +76,7 @@ export const liveCasinoPlatforms = [
     code: "FBLive",
     cnname: "FB真人",
     image: "fblive",
-    message:
-      "全球首创多款娱乐游戏，包括极速轮盘、定制化VIP包厢、实时互动百家乐以及多种创新玩法。多平台无缝兼容，让您畅享极致娱乐体验，感受前所未有的刺激与乐趣！",
+    message: 'liveCasinoPlatforms.message10',
     caption: "",
     gameCode: ""
   },
@@ -89,7 +84,7 @@ export const liveCasinoPlatforms = [
     code: "WE",
     cnname: "WE真人",
     image: "we",
-    message: "百家乐、骰宝、轮盘、牛牛、炸金花等多款真人视讯游戏，多位真人荷官全年无休的紧密互动，最美荷官在线互动。",
+    message: 'liveCasinoPlatforms.message11',
     caption: "",
     gameCode: ""
   },
@@ -97,8 +92,7 @@ export const liveCasinoPlatforms = [
     code: "EEAI",
     cnname: "EEAI真人",
     image: "eeai",
-    message:
-      "EEAI真人带你畅玩百家乐、骰宝、轮盘、牛牛、炸金花等多款热门真人视讯游戏，最美荷官实时在线陪伴，让你感受最真实的现场魅力！",
+    message: 'liveCasinoPlatforms.message12',
     caption: "",
     gameCode: "",
     enMessage: "EEAI Live brings you an immersive experience with popular live dealer games. Enjoy real-time interaction with the most charming live dealers and feel the thrill of an authentic casino atmosphere!"
@@ -111,8 +105,7 @@ export const sportsPlatforms = [
     code: "IM",
     cnname: "IM体育",
     image: "im",
-    message:
-      "盘口趋势、热点赛事、体育资讯及时掌握，多种投注类型，让您乐享其中 创新功能提前兑现，无需等待即可提前结算，止损机制让您百无禁忌",
+    message:"sportsPlatforms.message1",
     caption: "高赔稳定 滚球首选",
     gameCode: ""
   },
@@ -120,7 +113,7 @@ export const sportsPlatforms = [
     code: "CR",
     cnname: "皇冠体育",
     image: "cr",
-    message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、 体育资讯，多种投注型，让您乐享其中。",
+    message:"sportsPlatforms.message2",
     enMessage: "Stay ahead with expert odds trend analysis and real-time updates on the hottest events and sports news. With diverse betting options, the excitement never stops",
     caption: "玩法刺激 即刻结算",
     gameCode: "",
@@ -130,7 +123,7 @@ export const sportsPlatforms = [
     code: "PM",
     cnname: "熊猫体育",
     image: "db",
-    message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、 体育资讯，多种投注型，让您乐享其中。",
+    message:"sportsPlatforms.message3",
     enMessage: "Stay ahead with expert odds trend analysis and real-time updates on the hottest events and sports news. With diverse betting options, the excitement never stops",
     caption: "玩法刺激 即刻结算",
     gameCode: "",
@@ -140,8 +133,7 @@ export const sportsPlatforms = [
     code: "SABA",
     cnname: "沙巴体育",
     image: "saba",
-    message:
-      "覆盖世界各地大小赛事，提供让球、大小、半全场、 波胆、单双、总入球、连串过关等多元竞猜， 沙巴体育不会让您错过任何自己最喜爱的体育赛事",
+    message:"sportsPlatforms.message4",
     caption: "赛事丰富 创新玩法",
     gameCode: ""
   },
@@ -149,7 +141,7 @@ export const sportsPlatforms = [
     code: "PINNACLE",
     cnname: "AP体育",
     image: "pinnacle",
-    message: "25年专业体育品牌，行业标杆，提供最优质赔率水位，业界超高限额，畅享独一无二投注体验",
+    message:"sportsPlatforms.message5",
     caption: "水位顶尖 盘口齐全",
     gameCode: ""
   },
@@ -157,7 +149,7 @@ export const sportsPlatforms = [
     code: "FB",
     cnname: "FB体育",
     image: "fb",
-    message: "奇幻赛事，特别投注，各种趣味玩法，最全赛事覆盖助你花式收米赢到人生巅峰",
+    message:"sportsPlatforms.message6",
     caption: "极速结算 高水体验",
     gameCode: ""
   }
@@ -177,8 +169,7 @@ export const eSportsPlatforms = [
     code: "TFGaming",
     cnname: "雷火电竞",
     image: "lh",
-    message:
-      "提供所有大型赛事，超过百场比赛及上万盘口。拥有令人惊叹的视觉界面及高效的用户体验，所以能让您轻松上手，一目了然，轻松投注。",
+    message:"eSportsPlatforms.message1",
     caption: "电竞先驱 实时滚球",
     gameCode: ""
   },
@@ -186,7 +177,7 @@ export const eSportsPlatforms = [
     code: "IM",
     cnname: "IM电竞",
     image: "im",
-    message: "一款关于电竞游戏直播平台，这里提供了丰富的赛事信息，覆盖了众多热门游戏，游戏爱好者的首选投注平台。",
+    message:"eSportsPlatforms.message2",
     caption: "专业电竞 即时结算",
     gameCode: ""
   },
@@ -194,7 +185,7 @@ export const eSportsPlatforms = [
     code: "IMES",
     cnname: "IM电竞",
     image: "im",
-    message: "一款关于电竞游戏直播平台，这里提供了丰富的赛事信息，覆盖了众多热门游戏，游戏爱好者的首选投注平台。",
+    message:"eSportsPlatforms.message3",
     caption: "策略为王，胜者为尊",
     gameCode: ""
   },
@@ -202,7 +193,7 @@ export const eSportsPlatforms = [
     code: "RG",
     cnname: "RG电竞",
     image: "rg",
-    message: "汇集全球主流电竞赛事，提供全网最佳赔率，多样盘口、提前结算等多样玩法，与您共享电竞狂欢。",
+    message:"eSportsPlatforms.message4",
     caption: "竞技无畏，势不可挡",
     gameCode: ""
   },
@@ -210,8 +201,7 @@ export const eSportsPlatforms = [
     code: "IA",
     cnname: "小艾电竞",
     image: "ai",
-    message:
-      "最新颖的电子竞技玩法,走在前沿的电子竞技赛事盘口，英雄联盟、刀塔、反恐、星际等多样竞技赛事,享受电子竞技的快感。",
+    message:"eSportsPlatforms.message5",
     caption: "崭新玩法 输赢即现",
     gameCode: ""
   },
@@ -219,8 +209,7 @@ export const eSportsPlatforms = [
     code: "PMES",
     cnname: "DB电竞",
     image: "pm",
-    message:
-      "体验最前沿的电子竞技玩法，涵盖英雄联盟、DOTA、反恐精英、星际争霸等多种赛事，让你尽享电竞赛事的激情与快感，走在电竞潮流的尖端。",
+    message:"eSportsPlatforms.message6",
     caption: "赛事齐全 秒结高赔",
     gameCode: ""
   }
@@ -240,7 +229,7 @@ export const slotPlatforms = [
     code: "PG",
     cnname: "PG电子",
     image: "pg",
-    message: "经典多元化,公平安全游戏环境,畅想数千款电子游戏,天天高额大奖。 ",
+    message: "slotPlatforms.message1",
     caption: "",
     gameCode: ""
   },
@@ -248,7 +237,7 @@ export const slotPlatforms = [
     code: "SW",
     cnname: "SW电子",
     image: "sw",
-    message: "经典多元化,公平安全游戏环境,畅想数千款电子游戏,天天高额大奖。 ",
+    message: "slotPlatforms.message2",
     caption: "",
     gameCode: ""
   },
@@ -256,7 +245,7 @@ export const slotPlatforms = [
     code: "PT",
     cnname: "PT电子",
     image: "pt",
-    message: "精选全球千种游戏任您畅玩，为玩家提供极致的游戏体验。触手可及的千万累计奖池，等您—触即发! ",
+    message: "slotPlatforms.message3",
     caption: "",
     gameCode: ""
   },
@@ -264,7 +253,7 @@ export const slotPlatforms = [
     code: "PP",
     cnname: "PP电子",
     image: "pp",
-    message: "",
+    message: "slotPlatforms.message4",
     caption: "",
     gameCode: ""
   },
@@ -272,7 +261,7 @@ export const slotPlatforms = [
     code: "PPFP",
     cnname: "FP 电子",
     image: "PPFP",
-    message: "",
+    message: "slotPlatforms.message5",
     caption: "",
     gameCode: ""
   },
@@ -290,7 +279,7 @@ export const slotPlatforms = [
     name: "MGP",
     cnname: "MG电子",
     image: "mg",
-    message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发! ",
+    message: "slotPlatforms.message6",
     caption: "",
     gameCode: ""
   },
@@ -299,7 +288,7 @@ export const slotPlatforms = [
     name: "XIN",
     cnname: "PA电子",
     image: "ag",
-    message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发! ",
+    message: "slotPlatforms.message7",
     caption: "",
     gameCode: ""
   },
@@ -307,7 +296,7 @@ export const slotPlatforms = [
     code: "BBINDY",
     cnname: "BBIN电子",
     image: "bbin",
-    message: "拥有丰富的游戏类型及功能，提供多种玩法与电子游戏试玩，带给玩家惊艳的游戏体验，游戏总数近千款！ ",
+    message: "slotPlatforms.message8",
     caption: "",
     gameCode: ""
   }
@@ -345,7 +334,7 @@ export const pokerPlatforms = [
     code: "DT",
     cnname: "大唐棋牌",
     image: "dt",
-    message: "万人在线，公平公正，3D立体画面，炫酷特效，完美的棋牌体验，从天而降的彩金，等您来赢",
+    message: "pokerPlatforms.message1",
     caption: "",
     gameCode: ""
   },
@@ -353,8 +342,7 @@ export const pokerPlatforms = [
     code: "KY",
     cnname: "开元棋牌",
     image: "ky",
-    message:
-      "提供市面上热门游戏种类，选择全面多元，应有尽有玩家能不断游戏不感无趣！抢庄牛牛、龙虎斗，多款棋牌任君选，好友相约竞技，游戏改变生活",
+    message: "pokerPlatforms.message2",
     caption: "",
     gameCode: "ky_lobby"
   },
@@ -362,7 +350,7 @@ export const pokerPlatforms = [
     code: "LEG",
     cnname: "乐游棋牌",
     image: "ly",
-    message: "欧洲最高级别安全认证，热门棋牌品类丰富，聆听悦耳音乐，感受非同凡响极致体验，让游戏改变生活",
+    message: "pokerPlatforms.message3",
     caption: "",
     gameCode: ""
   },
@@ -370,8 +358,7 @@ export const pokerPlatforms = [
     code: "GFLC",
     cnname: "高登棋牌",
     image: "gd",
-    message:
-      "上万人实时对战竞技，炸金花、斗地主、万人牛牛等多项爆款游戏，简单又丰富的玩法，精致的游戏体验，满足你的大胆野心，随时准备一战成名",
+  message: "pokerPlatforms.message4",
     caption: "",
     gameCode: "lobby"
   }
@@ -383,7 +370,7 @@ export const lotteryPlatforms = [
     code: "BBINDY",
     cnname: "BBIN彩票",
     image: "bbin",
-    message: "专注于彩票游戏行业多年，拥有经典彩种，超多独家创新玩法，让您在购买彩票的同时，享受游戏的快感。",
+    message: "lotteryPlatforms.message1",
     caption: "",
     gameCode: ""
   },
@@ -391,8 +378,7 @@ export const lotteryPlatforms = [
     code: "TCG",
     cnname: "TCG彩票",
     image: "tcg",
-    message:
-      "忠于匠心精神打造40多款彩票，支持覆盖各种传统盘/双面盘等多种投注玩法，秉持行业最高赔率，全天24小时开奖不间断。任君挑选。",
+   message: "lotteryPlatforms.message2",
     caption: "",
     gameCode: ""
   },
@@ -400,8 +386,7 @@ export const lotteryPlatforms = [
     code: "PMLOTTERY",
     cnname: "多宝彩票",
     image: "pml",
-    message:
-      "多宝彩票深耕彩票行业多年，提供丰富多样的彩种选择，涵盖经典玩法与独家创新模式。凭借强大的技术支持和稳定的开奖系统，秒开秒结，让您尽享极致购彩体验。",
+    message: "lotteryPlatforms.message3",
     caption: "",
     gameCode: ""
   }
@@ -413,8 +398,7 @@ export const fishingPlatforms = [
     code: "PMFISH",
     cnname: "DB捕鱼",
     image: "db",
-    message:
-      "最受欢迎的DB捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+    message:"fishingPlatforms.message1",
     caption: "",
     gameCode: ""
   },
@@ -422,8 +406,7 @@ export const fishingPlatforms = [
     code: "AGF",
     cnname: "PA捕鱼王",
     image: "ag",
-    message:
-      "火爆PA捕鱼，畅享极致射击快感！高清画质打造沉浸式海底世界，丰富鱼种千变万化，超高爆率畅快收金，多人竞技欢乐无穷，尽享捕鱼巅峰体验！",
+    message:"fishingPlatforms.message2",
     caption: "",
     gameCode: "HMPL"
   },
@@ -431,7 +414,7 @@ export const fishingPlatforms = [
     code: "GPS",
     cnname: "GPS决战中途岛",
     image: "gps",
-    message: "炫彩3D精致画面，身临其境海天—色;超高爆率燃爆全屏，招财游戏—炮千金;多人同台趣味比拼，休闲集结快乐出击 ",
+    message:"fishingPlatforms.message3",
     caption: "",
     gameCode: 7202
   }

@@ -50,6 +50,8 @@
     "panda": "Panda",
     "sport": "Sport",
     "bacarrat": "Bacarrat",
+    "lucky_roulette":"Lucky roulette",
+    "lucky_lace":"Lucky lace",
     "deposit": "Deposit",
     "withdraw": "Withdraw",
     "assets": "Assets",
@@ -113,5 +115,61 @@
     "confirm": "Confirm",
     "supportTagline": "If you need to update your personal information, please contact our customer service team",
     "onlineSupport": "Online Support"
-  }
+  },
+  "liveCasinoPlatforms": {
+      "message1": "Authentic casino environment with beautiful dealers interacting with you, squeeze baccarat, and VIP table service for an immersive gaming experience.",
+      "message2": "Authentic casino environment with beautiful dealers interacting with you, squeeze baccarat, and VIP table service for an immersive gaming experience.",
+      "message3": "An interactive entertainment live streaming platform, allowing players to watch beautiful live streamers perform and participate in interactive games while playing. Features multiple live dealer tables, including Baccarat, Bidding Baccarat, Dragon Tiger, Sic Bo, Roulette, and more.",
+      "message4": "The most beautiful dealers interact online, leading you to play various live video games like Baccarat, Sic Bo, Roulette, Niu Niu, and Golden Flower, all with international standards, fairness, and ultimate enjoyment.",
+      "message5": "Authentic casino environment, beautiful dealers interacting with you, offering top-tier entertainment with classic games like Baccarat, Sic Bo, Niu Niu, Roulette, and more.",
+      "message6": "Top-tier entertainment with classic games like Baccarat, Sic Bo, Niu Niu, Roulette, and more. Experience the thrill of real-time betting and card reveal feedback, with multiple live dealers interacting closely year-round, giving you a VIP treatment.",
+      "message7": "Globally pioneering games like 6-card pre-deal, VIP private tables, squeeze baccarat, intelligent control baccarat, and interactive bidding baccarat. Multi-terminal compatibility ensures non-stop enjoyment.",
+      "message8": "Beautiful dealers who better suit Asian aesthetics, with Chinese beauties livestreaming, playing, interacting, and chatting with you. Diverse gameplay includes interactive bidding baccarat, 6-card pre-deal, self-cutting cards, one-on-one dealer play, and many other popular new games.",
+      "message9": "Globally pioneering games like 6-card pre-deal, VIP private tables, squeeze baccarat, intelligent control baccarat, and interactive bidding baccarat. Multi-terminal compatibility ensures non-stop enjoyment.",
+      "message10": "Globally pioneering multiple entertainment games, including speed roulette, customized VIP private rooms, real-time interactive baccarat, and various innovative gameplays. Seamless multi-platform compatibility lets you enjoy the ultimate entertainment experience and feel unprecedented excitement and fun!",
+      "message11": "Live video games like Baccarat, Sic Bo, Roulette, Niu Niu, and Golden Flower, with multiple live dealers interacting closely year-round, featuring the most beautiful dealers online.",
+      "message12": "EEAI Live brings you an immersive experience with popular live dealer games. Enjoy real-time interaction with the most charming live dealers and feel the thrill of an authentic casino atmosphere!"
+    },
+    "sportsPlatforms": {
+      "message1": "Stay updated on odds trends, hot events, and sports news. Enjoy various betting types. Innovative early cash-out feature allows for early settlement without waiting, and stop-loss mechanisms eliminate all worries.",
+      "message2": "Stay ahead with expert odds trend analysis and real-time updates on the hottest events and sports news. With diverse betting options, the excitement never stops.",
+      "message3": "Stay ahead with expert odds trend analysis and real-time updates on the hottest events and sports news. With diverse betting options, the excitement never stops.",
+      "message4": "Covering major and minor events worldwide, offering diverse betting options such as handicaps, over/under, half/full time, correct score, odd/even, total goals, and parlays. Saba Sports ensures you never miss your favorite sporting events.",
+      "message5": "A 25-year professional sports brand, an industry benchmark, providing the highest quality odds and water levels, ultra-high limits in the industry, and an unparalleled betting experience.",
+      "message6": "Fantastic events, special bets, and various fun gameplays. The most comprehensive event coverage helps you win big and reach the pinnacle of life."
+    },
+    "eSportsPlatforms": {
+      "message1": "Offers all major events, with over a hundred matches and tens of thousands of odds. Features an astonishing visual interface and efficient user experience, making it easy to get started, clear at a glance, and simple to bet.",
+      "message2": "An esports game live streaming platform offering rich event information covering many popular games, making it the preferred betting platform for gaming enthusiasts.",
+      "message3": "An esports game live streaming platform offering rich event information covering many popular games, making it the preferred betting platform for gaming enthusiasts.",
+      "message4": "Gathers mainstream esports events globally, providing the best odds across the network, diverse handicaps, early cash-out, and other various gameplays to share the esports carnival with you.",
+      "message5": "The newest esports gameplay, at the forefront of esports event odds. Enjoy the thrill of esports with various competitive events such as League of Legends, Dota, Counter-Strike, and StarCraft.",
+      "message6": "Experience the cutting-edge of esports gameplay, covering various events like League of Legends, DOTA, Counter-Strike, StarCraft, and more, allowing you to fully enjoy the passion and thrill of esports events and stay at the forefront of the esports trend."
+    },
+    "slotPlatforms": {
+      "message1": "Classic and diverse, offering a fair and secure gaming environment. Enjoy thousands of electronic games with high daily jackpots.",
+      "message2": "Classic and diverse, offering a fair and secure gaming environment. Enjoy thousands of electronic games with high daily jackpots.",
+      "message3": "Selects thousands of games worldwide for you to enjoy, providing players with the ultimate gaming experience. Millions of accumulated jackpots are within reach, waiting for you to trigger!",
+      "message4": "",
+      "message5": "",
+      "message6": "Committed to innovation and creating masterpieces, featuring the most vibrant electronic game visuals and the most thrilling gaming experience. All types of slot machines are available, with jackpots waiting for you to trigger!",
+      "message7": "Committed to innovation and creating masterpieces, featuring the most vibrant electronic game visuals and the most thrilling gaming experience. All types of slot machines are available, with jackpots waiting for you to trigger!",
+      "message8": "Boasts a rich variety of game types and features, offering diverse gameplay and free trials of electronic games, providing players with an astonishing gaming experience, with nearly a thousand games in total!"
+    },
+    "pokerPlatforms": {
+      "message1": "Tens of thousands of players online, fair and just, with 3D vivid graphics and dazzling special effects. A perfect poker experience with falling jackpots, waiting for you to win.",
+      "message2": "Offers popular game types on the market, with comprehensive and diverse choices. Players can continuously play without getting bored! Grab the Bank Niu Niu, Dragon Tiger, and many other card games to choose from. Invite friends to compete, and let games change your life.",
+      "message3": "Europe's highest level of security certification, a rich variety of popular poker games. Listen to pleasant music, experience an extraordinary ultimate thrill, and let games change your life.",
+      "message4": "Tens of thousands of people battle in real-time. Exploding games like Golden Flower, Dou Dizhu, and Ten Thousand Person Niu Niu. Simple yet rich gameplay and a refined gaming experience satisfy your bold ambitions, always ready to make a name for yourself."
+    },
+    "lotteryPlatforms": {
+      "message1": "Focusing on the lottery game industry for many years, offering classic lottery types and many exclusive innovative gameplays, allowing you to enjoy the thrill of the game while purchasing lottery tickets.",
+      "message2": "Dedicated to craftsmanship, creating over 40 lottery games. Supports various betting methods, including traditional and double-sided bets, adhering to the industry's highest odds, with 24/7 uninterrupted draws. Plenty to choose from.",
+      "message3": "Duobao Lottery has been deeply rooted in the lottery industry for many years, offering a rich variety of lottery options, covering classic gameplay and exclusive innovative modes. With strong technical support and a stable drawing system, instant draws and settlements ensure you enjoy the ultimate lottery experience."
+    },
+    "fishingPlatforms": {
+      "message1": "The most popular DB Fishing, with a simple yet varied game design and multiple styles to choose from. The game is fun and addictive, making it an excellent choice for entertainment.",
+      "message2": "Explosive PA Fishing, enjoy the ultimate shooting thrill! High-definition graphics create an immersive underwater world, with rich and diverse fish species, super high payout rates for quick gold collection, and endless fun in multiplayer competitions. Enjoy the peak fishing experience!",
+      "message3": "Dazzling 3D exquisite graphics, an immersive sea and sky view; ultra-high burst rate ignites the entire screen, wealth-attracting games with a single shot worth a thousand gold; multiple players compete for fun, a casual gathering for a happy outing."
+    }
 }

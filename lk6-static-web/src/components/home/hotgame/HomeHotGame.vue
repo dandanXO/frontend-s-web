@@ -382,7 +382,7 @@ const updatePlatforms = (platforms, item, keyModifier) => {
     const newObject = {
       title: p.cnname,
       subtitle: item.subtitle,
-      desc: p.message,
+      desc: t(p.message),
       charImgPath: p.image
     };
     item.content[p.code.toLowerCase() + keyModifier] = newObject;
