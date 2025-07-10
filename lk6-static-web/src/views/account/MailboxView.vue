@@ -403,6 +403,7 @@ const readMultipleMsg = () => {
 };
 
 const openMsg = (mail, idx) => {
+  console.log('here', mail, idx)
   const { id, readTime } = mail;
 
   showMailId.value = idx;
@@ -628,10 +629,7 @@ onMounted(() => {
   .title-text {
     font-weight: normal;
     font-family: 'PingFang SC';
-
-    p {
-      margin: 0px;
-    }
+    max-height: 45px;
 
     &.unread {
       font-weight: bold;
@@ -840,6 +838,13 @@ onMounted(() => {
   .el-collapse-item__title {
     display: flex;
     align-items: center;
+  }
+}
+
+.title-text {
+  p {
+    margin: 0px;
+    line-height: 45px;
   }
 }
 </style>

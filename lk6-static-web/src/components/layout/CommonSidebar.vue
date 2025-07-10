@@ -670,6 +670,7 @@ export default defineComponent({
   background-size: 100% 100%;
   position: relative;
   transition: 0.3s all;
+  font-family: 'PingFang SC';
 
   > div {
     width: 28px;
@@ -691,9 +692,8 @@ export default defineComponent({
     transform: translateY(-50%);
     height: 32px;
     width: 16px;
-    background: #d9e7ff;
-    border-left: 2px solid #d4e6ff;
-    color: #7A80A1;
+    background: #d9e7ff94;
+    color: #333;
     font-size: 20px;
     font-weight: lighter;
     padding-left: 4px;
@@ -728,7 +728,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #7A80A1;
+    color: #333333;
     gap: 5px;
     cursor: pointer;
 
