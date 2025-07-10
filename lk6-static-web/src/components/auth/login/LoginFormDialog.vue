@@ -325,7 +325,7 @@ const loginRules = {
   .login-form-field {
     display: grid;
     grid-template-columns: 40px 1fr;
-    padding: 8px 15px;
+    padding: 0px 15px;
     justify-content: center;
     align-items: center;
     gap: 10px;
@@ -429,6 +429,7 @@ const loginRules = {
   .agreement-and-forget-pwd {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
 
     .agreement-text {
       color: #555;
