@@ -237,10 +237,10 @@ const getFbValue = () => {
     return result[1];
   };
 
-  const fbc1 = () => {
+  const fbc1 = (() => {
     const rawFbp = getCookie("_fbc");
     return rawFbp ? rawFbp : null;
-  };
+  })();
 
   const fbp1 = (() => {
     const rawFbp = getCookie("_fbp");
@@ -318,6 +318,7 @@ const register = () => {
         regHost = "app://";
       }
 
+      // debugger;
       getFbValue();
 
       api
