@@ -64,79 +64,6 @@
           </div>
         </q-card-section>
         <hr v-if="$q.dark.isActive" style="width: 100%; border: 1px solid #3b5385; margin: 5px 0 15px 0" />
-        <q-card-section class="acct-btm-section">
-          <!-- <div class="vip-level-detail">
-            <div class="vip-link">{{ store.vip }}</div>
-
-            <div class="vip-progress">
-              <q-linear-progress size="10px" :value="store.vipProgress" />
-            </div>
-
-            <div class="vip-link">{{ updatedVip() }}</div>
-          </div> -->
-          <div class="vip-info-div">
-            <!-- <div class="vip-left">
-              VIP等级：
-              <div class="vip-level">
-                {{ store.vip }}
-              </div>
-            </div> -->
-
-            <!-- <div class="vip-txt-left" :class="isHideLevelUp && 'opacity-0'">
-              <div>晋级流水（元）</div>
-              <div v-if="store.currentBetAmt !== ''">
-                <div v-if="store.currentBetAmt <= store.currentUpgradeBetAmt">
-                  {{ formatNumber(store.currentBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}
-                </div>
-                <div v-else>
-                  {{ formatNumber(store.currentUpgradeBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}
-                </div>
-              </div>
-              <div v-else>计算中...</div>
-            </div>
-
-            <router-link to="/account/vip?from=account">
-              <div class="vip-right btn-pointer">
-                更多VIP特权
-                <img src="../assets/images/account/account-right-small.png" />
-              </div>
-            </router-link> -->
-          </div>
-
-          <!-- <div class="eshare-div">
-            <span v-if="store.evip">
-              专属网址:
-              <a class="share-link" :href="store.evip" target="_blank">
-                {{ store.evip }}
-              </a>
-              <img
-                class="copy-btn btn-pointer"
-                src="../assets/images/account/account-copy-icon.png"
-                @click="copyLink"
-              />
-            </span>
-          </div> -->
-          <!-- <div class="list-reward-wapper" style="display: none">
-            <div class="list-reward-received">
-              <div class="list-item collected">
-                <div><img src="../assets/images/account/list-tick.png" /></div>
-                <div>每周红包</div>
-              </div>
-              <div class="list-item collected">
-                <div><img src="../assets/images/account/list-tick.png" /></div>
-                <div>晋级礼金</div>
-              </div>
-              <div class="list-item">
-                <div><img src="../assets/images/account/list-cross.png" /></div>
-                <div>专属豪礼</div>
-              </div>
-              <div class="list-item">
-                <div><img src="../assets/images/account/list-cross.png" /></div>
-                <div>生日礼金</div>
-              </div>
-            </div>
-          </div> -->
-        </q-card-section>
       </q-card-section>
     </div>
 
@@ -203,6 +130,13 @@
             <div class="acct-nav-label">{{ $t("account.feature.changePassword") }}</div>
           </div>
         </router-link>
+
+        <router-link to="/promo">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-promo-icon.png" />
+            <div class="acct-nav-label">{{ $t("account.hot.promo") }}</div>
+          </div>
+        </router-link>
       </div>
     </q-item-section>
 
@@ -210,35 +144,35 @@
       <div class="acct-title">
         <div class="acct-title-1">{{ $t("account.hot.title") }}</div>
       </div>
-      <div class="acct-menu" id="id-acct-menu">
-        <router-link to="/promo">
+      <!-- <div class="acct-menu" id="id-acct-menu"> -->
+      <!-- <router-link to="/promo">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-promo-icon.png" />
             <div class="acct-nav-label">{{ $t("account.hot.promo") }}</div>
           </div>
-        </router-link>
+        </router-link> -->
 
-        <!-- <router-link to="/account/invite">
+      <!-- <router-link to="/account/invite">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-share-icon.png" />
             <div class="acct-nav-label">推广赚钱</div>
           </div>
         </router-link> -->
 
-        <!-- <router-link to="/account/invite#summon-share">
+      <!-- <router-link to="/account/invite#summon-share">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-summon-share-icon.png" />
             <div class="acct-nav-label">精英召回</div>
           </div>
         </router-link> -->
 
-        <!-- <router-link to="/affiliate">
+      <!-- <router-link to="/affiliate">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-affiliate-icon.png" />
             <div class="acct-nav-label">合作加盟</div>
           </div>
         </router-link> -->
-      </div>
+      <!-- </div> -->
     </q-item-section>
 
     <q-card v-if="btm_banners.length" class="card-account-banner">
@@ -981,10 +915,10 @@ export default defineComponent({
     display: flex;
     text-align: left;
     justify-content: space-evenly;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
     color: #a4aabb;
-    margin-bottom: 8px;
+    // margin-bottom: 8px;
 
     > div {
       flex: 1;
@@ -1296,6 +1230,7 @@ export default defineComponent({
 
 .card-account-banner {
   width: calc(100% - 2rem);
+  border: 1px solid #cfddfd;
   margin: auto;
   margin-bottom: 10px;
   border-radius: 10px;

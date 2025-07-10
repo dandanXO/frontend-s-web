@@ -420,19 +420,6 @@ export default defineComponent({
             type: "SLIDER"
           };
 
-          const style = {
-            logoUrl: null,
-            i18n: {
-              tips_error: t("tianaiCaptcha.tipsError"),
-              tips_success: t("tianaiCaptcha.tipsSuccess"),
-              slider_title: t("tianaiCaptcha.sliderTitle"),
-              concat_title: t("tianaiCaptcha.concatTitle"),
-              image_click_title: t("tianaiCaptcha.imageClickTitle"),
-              rotate_title: t("tianaiCaptcha.rotateTitle")
-            }
-          };
-          console.log(style);
-
           window
             .initTAC("./tac", config, style)
             .then((tac) => {
@@ -795,6 +782,18 @@ export default defineComponent({
       btnCloseFun: (el, tac) => {
         console.log("关闭按钮触发事件...");
         tac.destroyWindow();
+      }
+    };
+
+    const style = {
+      logoUrl: null,
+      i18n: {
+        tips_error: t("tianaiCaptcha.tipsError"),
+        tips_success: t("tianaiCaptcha.tipsSuccess"),
+        slider_title: t("tianaiCaptcha.sliderTitle"),
+        concat_title: t("tianaiCaptcha.concatTitle"),
+        image_click_title: t("tianaiCaptcha.imageClickTitle"),
+        rotate_title: t("tianaiCaptcha.rotateTitle")
       }
     };
 
