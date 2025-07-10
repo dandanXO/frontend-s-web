@@ -109,7 +109,7 @@
                     <img src="../assets/svg/maintenance-icon.svg" />
                     维护中
                   </span>
-                  <span v-else>进入游戏</span>
+                  <span v-else>{{ $t('btn.enterGame') }}</span>
                 </div>
 
                 <p
