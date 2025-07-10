@@ -13,7 +13,7 @@
         </div>
         <div class="top" :class="{ hide: localType === 'refer' && localStep === 3 }">
           <img :src="require(`../../assets/images/newplayerguide/step-top-${localTypeStep()}.png`)" />
-          <div class="title" v-if="localType === 'withdraw'">{{ $t("playerGuide.recharging") }}</div>
+          <div class="title" v-if="localType === 'withdraw'">{{ $t("playerGuide.withdrawal") }}</div>
           <div class="title" v-else-if="localType === 'deposit'">{{ $t("playerGuide.depositNow") }}</div>
           <div class="title" v-else>{{ $t("playerGuide.inviteFriends") }}</div>
         </div>
@@ -481,7 +481,8 @@ onMounted(() => {
       height: 33vw;
       max-height: 145px;
       min-height: 125px;
-      top: 85px;
+      // top: 85px;      
+      top: 130px;
       bottom: unset;
       left: 0;
       right: 0;
@@ -489,7 +490,7 @@ onMounted(() => {
       .inner-line {
         &:after {
           right: 15vh;
-          top: 0;
+          top: 20px;
         }
       }
     }

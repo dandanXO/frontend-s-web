@@ -11,7 +11,7 @@
       />
       <span class="piggy-bank-claim-item">Total</span>
       <div class="piggy-bank-linear-bg-text piggy-bank-claim-item">
-        <div class="piggy-bank-linear-bg-text__text">Rs {{ cashbackGet }}</div>
+        <div class="piggy-bank-linear-bg-text__text">Rs {{ cashback }}</div>
       </div>
       <div class="piggy-bank-claim-prize">
         <img
@@ -39,7 +39,7 @@
             src="../../../assets/images/promotion/hotpromo/piggy-bank/dialog-decorator.png"
           />
           <div class="piggy-bank-linear-bg-text dialog piggy-bank-dialog-item">
-            <div class="piggy-bank-linear-bg-text__text">RS {{ cashback }}</div>
+            <div class="piggy-bank-linear-bg-text__text">RS {{ cashbackGet }}</div>
           </div>
           <div class="piggy-bank-dialog-prize">
             <img

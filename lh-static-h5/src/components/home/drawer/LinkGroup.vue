@@ -4,6 +4,7 @@
       <div class="link-content-wrapper">
         <img style="width: 20xp; height: 20px" :src="$q.dark.isActive ? link.iconDark : link.icon" />
         <span>{{ link.label }}</span>
+        <div class="unread" v-if="link.href === '/account/inbox' && store.unreadInboxMail > 0" />
       </div>
     </linkable-button>
   </div>
@@ -22,7 +23,10 @@ import LinkCustomerDarkServiceImg from "assets/images/home/link-customer-service
 import LinkCustomerService2Img from "assets/images/home/link-customer-service2.svg";
 import LinkCustomerDarkService2Img from "assets/images/home/link-customer-service2-dark.svg";
 
+import { userStore } from "stores/index";
+
 const customService = useSessionStorage("CUSTOM_SERVICE", "");
+const store = userStore();
 
 const links = ref([
   {
@@ -50,12 +54,24 @@ const links = ref([
       background-color: #4877f60d;
     }
   }
+
+  .unread {
+    position: absolute;
+    border-radius: 50%;
+    background: #ff0000;
+    left: 12px;
+    top: -3px;
+    color: #ffffff;
+    height: 10px;
+    width: 10px;
+  }
 }
 
 .link-content-wrapper {
   display: flex;
   gap: 16px;
   align-items: center;
+  position: relative;
   img {
     max-width: 20px;
   }

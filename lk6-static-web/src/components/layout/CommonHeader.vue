@@ -1,11 +1,9 @@
 <template>
-  <NewMemberGuide :openAppMenu="() => (selectedMenu = 'App')" :closeAppMenu="() => (selectedMenu = '')" />
-
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
-          <img class="logo" src="../../assets/lucky-6-logo.svg" />
+          <LogoComponent />
         </router-link>
 
         <div class="navigations">
@@ -30,7 +28,7 @@
                   <h2 class="nav-title">{{ nav.enName }}</h2>
                 </a>
                 <a v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
-                  <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
+                  <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase() || route.fullPath === nav.path">
                     <!-- <img
                       class="menu-icon"
                       :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
@@ -75,7 +73,7 @@
                       :src="require(`../../assets/images/home/header-download-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'App'"
                     /> -->
-                    <div class="app-icon" v-if="nav.code === 'CS'" />
+                    <div class="cs-icon" v-if="nav.code === 'CS'" />
                     <!-- <img
                       class="hover-icon"
                       :src="require(`../../assets/images/home/header-vip-icon${isDark ? '-dark' : ''}.svg`)"
@@ -88,14 +86,18 @@
             </template>
           </template>
 
+          <div class="header-menu-item">
+            <a>
+              <span><LocaleChanger/></span>
+              <span>{{ $t(`btn.${languageVal}`) }}</span>
+            </a>
+          </div>
+
           <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
             <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
             <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />
-            <EsportsMenu ref="el" v-if="selectedMenu === 'esports'" @load-modal="openGame" />
-            <SportsMenu ref="el" v-if="selectedMenu === 'sports'" @load-modal="openGame" />
-            <LotteryMenu ref="el" v-if="selectedMenu === 'lottery'" @load-modal="openGame" />
+            <SportsMenu ref="el" v-if="selectedMenu === 'panda' || selectedMenu === 'crown'" @load-modal="openGame" />
             <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />
-            <FishingMenu ref="el" v-if="selectedMenu === 'fish'" @load-modal="openGame" />
             <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
             <AppMenu ref="el" v-if="selectedMenu === 'App'" />
           </div>
@@ -108,8 +110,8 @@
           <router-link to="/register" class="action-btn">
             <a class="header-btn btn-color-white">注册</a>
           </router-link> -->
-          <a class="standard-button btn-color-blue" @click="loginDialogVisible = true">登录</a>
-          <a class="standard-button btn-color-white" @click="registerDialogVisible = true">注册</a>
+          <a class="standard-button btn-color-aqua" @click="loginDialogVisible = true">{{ $t('btn.login') }}</a>
+          <a class="standard-button btn-color-white" @click="registerDialogVisible = true">{{ $t('btn.register') }}</a>
         </div>
 
         <div v-if="store.token" class="profile-actions">
@@ -125,12 +127,12 @@
             </div>
             取款
           </router-link>
-          <router-link to="/center/transfer" class="action-btn">
+          <!-- <router-link to="/center/transfer" class="action-btn">
             <div class="icon-rounded">
               <img src="../../assets/images/home/profile-action-transfer.png" />
             </div>
             转账
-          </router-link>
+          </router-link> -->
         </div>
 
         <div class="profile-info" v-if="store.token">
@@ -166,12 +168,12 @@
                     <span>充值中心</span>
                   </div>
                 </el-dropdown-item>
-                <el-dropdown-item command="transfer">
+                <!-- <el-dropdown-item command="transfer">
                   <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('transfer')" />
                     <span>快速转账</span>
                   </div>
-                </el-dropdown-item>
+                </el-dropdown-item> -->
                 <el-dropdown-item command="promotion">
                   <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('promo')" />
@@ -189,9 +191,9 @@
               <div class="details-name">
                 {{ store.nickName }}
               </div>
-              <div class="account-vip-label">
+              <!-- <div class="account-vip-label">
                 {{ vip }}
-              </div>
+              </div> -->
             </div>
             <a @click="refreshBalance" class="details-balance">
               <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
@@ -207,129 +209,12 @@
             </a>
           </div>
         </div>
-
-        <!-- <div v-if="store.token" class="profile-actions">
-          <router-link to="/center/mailbox" class="action-btn-full">
-            <div class="icon-full">
-              <img src="../../assets/images/home/nav-icon-mail.png" />
-              <span class="mail-notify"></span>
-            </div>
-            消息
-          </router-link>
-          <div class="action-btn-full" @click="logoutDialogVisible = true">
-            <div class="icon-full">
-              <img src="../../assets/images/home/nav-icon-logout.png" />
-            </div>
-            退出
-          </div>
-        </div> -->
       </div>
     </div>
-
-    <!-- <el-dialog
-      v-model="loginDialogVisible"
-      title="会员登录"
-      width="50%"
-      align-center
-      style="max-width: 800px"
-      @close="store.loginPageVisible = false"
-    >
-      <span>
-        <el-tabs>
-          <el-tab-pane label="账户登录">
-            <el-form
-              ref="loginRef"
-              :rules="loginRules"
-              :model="loginForm"
-              label-width="100"
-              label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
-            >
-              <el-form-item tabindex="1" label="用户名" prop="loginName">
-                <el-input v-model="loginForm.loginName" placeholder="输入用户名" />
-              </el-form-item>
-              <el-form-item tabindex="2" label="密码" prop="password">
-                <el-input v-model="loginForm.password" placeholder="输入密码" type="password" show-password />
-              </el-form-item>
-              <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-                <el-row :gutter="10" style="justify-content: center; align-items: center">
-                  <el-col :span="12">
-                    <el-input
-                      v-model="loginForm.captchaCode"
-                      label="验证码"
-                      placeholder="验证码"
-                      @keyup.enter="submitLogin"
-                    />
-                  </el-col>
-                  <el-col :span="12">
-                    <img style="width: 50%; margin-top: 6px" :src="verificationImg" @click="getCode" />
-                  </el-col>
-                </el-row>
-              </el-form-item>
-              <el-button
-                :loading="loadingBtn"
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 100px"
-                @click="submitLogin"
-              >
-                登录
-              </el-button>
-            </el-form>
-          </el-tab-pane>
-          <el-tab-pane label="手机登录">
-            <el-form
-              ref="mobileLoginRef"
-              :rules="mobileLoginRules"
-              :model="loginForm"
-              label-width="100"
-              label-suffix=":"
-              style="width: 100%; max-width: 400px; margin: 50px auto"
-            >
-              <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
-                <el-input v-model="loginForm.phoneNumber" placeholder="输入手机号" />
-              </el-form-item>
-              <el-form-item tabindex="2" label="验证码" prop="code">
-                <el-row :gutter="10" style="justify-content: center; align-items: center">
-                  <el-col :span="12">
-                    <el-input v-model="loginForm.code" label="验证码" placeholder="验证码" @keyup.enter="phoneLogin" />
-                  </el-col>
-                  <el-col :span="12">
-                    <el-button
-                      v-if="loginCountdown === 0"
-                      @click="openCaptchaForm('LOGIN')"
-                      size="small"
-                      color="#3bafda"
-                    >
-                      发送验证码
-                    </el-button>
-                    <el-button v-else disabled size="small" class="common-btn">
-                      已发送（倒数{{ loginCountdown }}秒）
-                    </el-button>
-                  </el-col>
-                </el-row>
-              </el-form-item>
-              <el-button
-                :loading="loadingBtn"
-                size="large"
-                color="#3bafda"
-                class="common-btn"
-                style="margin-left: 100px"
-                @click="phoneLogin"
-              >
-                登录
-              </el-button>
-            </el-form>
-          </el-tab-pane>
-        </el-tabs>
-      </span>
-    </el-dialog> -->
 
     <el-dialog
       class="acc-dialog"
       v-model="loginDialogVisible"
-      width="1088px"
       align-center
       style="max-width: 1088px"
       @close="store.loginPageVisible = false"
@@ -337,13 +222,12 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img :src="accDialogImg" />
+            <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
         <div class="acc-dialog-right">
-          <div class="acc-dialog-homelogo">
-            <img src="../../assets/lh-logo.svg" width="150" />
-          </div>
+          <LogoComponent />
           <div class="acc-dialog-content">
             <LoginDialog
               @close-dialog="loginDialogVisible = false"
@@ -358,7 +242,6 @@
     <el-dialog
       class="acc-dialog"
       v-model="registerDialogVisible"
-      width="1200px"
       align-center
       style="max-width: 1200px"
       @close="store.regPageVisible = false"
@@ -366,12 +249,13 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img :src="accDialogImg" />
+            <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
         <div class="acc-dialog-right register">
           <div class="acc-dialog-homelogo">
-            <img src="../../assets/lucky-6-logo.svg" width="150" />
+            <LogoComponent />
           </div>
           <RegisterAccount @close-dialog="registerDialogVisible = false" @open-login-dialog="openLoginDialog" />
         </div>
@@ -415,12 +299,13 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img :src="accDialogImg" />
+            <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-homelogo">
-            <img src="../../assets/lucky-6-logo.svg" width="150" />
+            <LogoComponent />
           </div>
           <div class="acc-dialog-content">
             <ForgotPwdDialog @close-dialog="forgetPassDialogVisible = false" @open-login-dialog="openLoginDialog" />
@@ -458,7 +343,6 @@
 </template>
 
 <script lang="js">
-import NewMemberGuide from '@/components/home/NewMemberGuide.vue'
 import "vue3-carousel/dist/carousel.css";
 import { defineComponent, onMounted, ref, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -468,12 +352,9 @@ import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
 import { useNotify } from "@/hooks/notify";
 import GameMenu from "@/components/menu/GameMenu.vue";
-import EsportsMenu from "@/components/menu/EsportsMenu.vue";
 import SportsMenu from "@/components/menu/SportsMenu.vue";
 import LiveCasinoMenu from "@/components/menu/LiveCasinoMenu.vue";
-import LotteryMenu from "@/components/menu/LotteryMenu.vue";
 import PokerMenu from "@/components/menu/PokerMenu.vue";
-import FishingMenu from "@/components/menu/FishingMenu.vue";
 import PromotionMenu from "@/components/menu/PromotionMenu.vue";
 import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
@@ -491,26 +372,30 @@ import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import floor from "lodash/floor";
 import { loadPromoBanner } from "@/api/index/promo";
+import LocaleChanger from '../LocaleChanger.vue';
+import LogoComponent from '../LogoComponent.vue';
+import { i18nStore } from '@/store/language'
+
 
 export default defineComponent({
   name: "CommonHeader",
   components: {
     GameMenu,
-    EsportsMenu,
     SportsMenu,
     LiveCasinoMenu,
-    LotteryMenu,
     PokerMenu,
-    FishingMenu,
     PromotionMenu,
     AppMenu,
     GameModal,
     LoginDialog,
     ForgotPwdDialog,
     RegisterAccount,
-    NewMemberGuide
+    LocaleChanger,
+    LogoComponent
   },
   setup() {
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
     const notify = useNotify();
 
     const registerTelephoneKey = `registerTelephoneKey`;
@@ -541,14 +426,17 @@ export default defineComponent({
 
     const navigations = reactive([
       { code: "home", name: "首页", enName: "Home", path: "/home" },
-      { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
-      { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true, isTest: false },
+      // { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
+      // { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true, isTest: false },
       { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true, isTest: false },
-      { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true, isTest: false },
-      { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true, isTest: false },
-      { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: false },
-      { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
-      { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
+      // { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true, isTest: false },
+      { code: "crown", name: "皇冠", enName: "Crown", path: "/sports?plat=CR", submenu: true, isTest: false },
+      { code: "panda", name: "熊猫", enName: "Panda", path: "/sports?plat=PM", submenu: true, isTest: false },
+      { code: "bacarrat", name: "百家乐", enName: "Bacarrat", path: "/bacarrat", submenu: true, isTest: false },
+      // { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true, isTest: false },
+      // { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: false },
+      // { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
+      // { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
       {
         code: "Promotion",
         name: "优惠",
@@ -1459,14 +1347,10 @@ export default defineComponent({
     };
 
     const loadIcon = (name) => {
-      if (isDark.value) {
-        try {
-          return require(`@/assets/images/home/header-dropdown-${name}-icon-dark.png`);
-        } catch (error) {
-          return require(`@/assets/images/home/header-dropdown-${name}-icon.png`);
-        }
-      } else {
+      try {
         return require(`@/assets/images/home/header-dropdown-${name}-icon.png`);
+      } catch (error) {
+        return require(`@/assets/images/home/header-dropdown-personal-icon.png`);
       }
     };
 
@@ -1544,7 +1428,8 @@ export default defineComponent({
       openMiniGame,
       navigations,
       loadIcon,
-      accDialogImg
+      accDialogImg,
+      languageVal
     };
   }
 });
@@ -1615,6 +1500,9 @@ body {
       width: 100%;
       border-radius: 50%;
       aspect-ratio: 1/1;
+      background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
+      box-shadow: 0px 2px 2px 0px #FFFFFFCC inset;
+      box-shadow: 0px 2px 0px 0px #C6D9FF;
     }
 
     .dropdown-icon {
@@ -1846,7 +1734,9 @@ body {
 
   .top-nav-wrapper {
     padding: 10px;
-    background: linear-gradient(180deg, #EEF9FC 0%, #FBFFFF, 50%, #F8FDFE, 95%, #D6E8F9, 97%, #BED4E9 100%);
+    // background: linear-gradient(180deg, #EEF9FC 0%, #FBFFFF, 50%, #F8FDFE, 95%, #D6E8F9, 97%, #BED4E9 100%);
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(180deg, #EEF9FC 0%, #FBFFFF, 50%, #F8FDFE, 95%, #eff7ff, 97%, #e5eff8 100%);
     position: relative;
 
     .top-nav-inner {
@@ -1890,21 +1780,28 @@ body {
         align-items: center;
         // width: 750px;
         // padding: 0px 16px;
-        gap: 20px;
+        gap: 30px;
         text-align: center;
-        padding: 0px 12px;
+        padding: 0px 30px;
 
         &.second-nav {
           margin-left: auto;
-          margin-right: auto;
+          // margin-right: auto;
           gap: 9px;
           padding-left: 5px;
           padding-right: 5px;
+
+          a > span > div {
+            &:hover {
+              animation: rumble 0.3s ease-in-out;
+            }
+          }
         }
         a {
           // padding-top: 10px;
           display: flex;
           flex-direction: column;
+          align-items: center;
           text-decoration: none;
           gap: 5px;
           font-family: 'PingFang SC';
@@ -1922,6 +1819,7 @@ body {
 
           &:hover {
             //filter: brightness(0.85);
+            
 
             .nav-title {
               color: #333;
@@ -1951,9 +1849,8 @@ body {
 
         .sub-menu {
           transition: $page-trans;
-          background: rgba(239, 242, 245, 0.95);
-          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
-          backdrop-filter: blur(24.5px);
+          background: linear-gradient(180deg, #F8FCFF 0%, #DFECFF 100%);
+          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 1px 0px 0px #a7c2dd;
           overflow: hidden;
           height: 0px;
           position: absolute;
@@ -2130,86 +2027,6 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
-
-    // &.slot-ag {
-    //   background-image: url("../../../assets/game/header_slot_ag.png");
-    // }
-
-    // &.slot-pt {
-    //   background-image: url("../../../assets/game/header_slot_pt.png");
-    // }
-
-    // &.slot-sw {
-    //   background-image: url("../../../assets/game/header_slot_sw.png");
-    // }
-
-    // &.slot-bbin {
-    //   background-image: url("../../../assets/game/header_slot_bbin.png");
-    // }
-
-    // &.slot-pg {
-    //   background-image: url("../../../assets/game/header_slot_pg.png");
-    // }
-
-    // &.slot-mg {
-    //   background-image: url("../../../assets/game/header_slot_mg.png");
-    // }
-
-    // &.slot-cq {
-    //   background-image: url("../../../assets/game/header_slot_cq.png");
-    // }
-
-    // &.fish-ag {
-    //   background-image: url("../../../assets/fishing/ag_fish_king.png");
-    // }
-
-    // &.fish-sg {
-    //   background-image: url("../../../assets/fishing/sg_fish_king.png");
-    // }
-
-    // &.fish-at {
-    //   background-image: url("../../../assets/fishing/at_fish_king.png");
-    // }
-
-    // &.fish-gps {
-    //   background-image: url("../../../assets/fishing/gps_fish_king.png");
-    // }
-
-    // &.live-ag {
-    //   background-image: url("../../../assets/live/live_ag.png");
-    // }
-
-    // &.live-allbet {
-    //   background-image: url("../../../assets/live/live_allbet.png");
-    // }
-
-    // &.live-bbin {
-    //   background-image: url("../../../assets/live/live_bbin.png");
-    // }
-
-    // &.live-pm {
-    //   background-image: url("../../../assets/live/live_pm.png");
-    // }
-
-    // &.live-bg {
-    //   background-image: url("../../../assets/live/live_bg.png");
-    // }
-
-    // &.live-sexy {
-    //   background-image: url("../../../assets/live/live_sexy.png");
-    // }
-
-    // &.lottery-tcg {
-    //   background-image: url("../../../assets/lottery/lottery_tcg.webp");
-    // }
-
-    // &.lottery-bbin {
-    //   background-image: url("../../../assets/lottery/lottery_bbin.webp");
-    // }
-
-    // &.lottery-sgwin {
-    //   background-image: url("../../../assets/lottery/lottery_sgwin.webp");
-    // }
   }
 
   &.games,
@@ -2492,6 +2309,8 @@ body {
 
       .acc-dialog-container {
         display: flex;
+        border-radius: 16px;
+        overflow: hidden;
       }
 
       .acc-dialog-left {
@@ -2499,33 +2318,28 @@ body {
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-        // background-color: #ffffff;
-        border-radius: 20px;
         overflow: hidden;
 
         .acc-dialog-img {
           max-width: 963px;
           max-height: 896px;
-          border-radius: 20px;
           height: 100%;
 
           img {
             display: block;
             width: 100%;
             height: 100%;
-            object-fit: contain;
           }
         }
       }
 
       .acc-dialog-right {
-        width: 460px;
+        width: 550px;
         padding: 24px 24px 24px 24px;
+        background-color: #F7F9FC;
 
         &.register {
-          padding: 12px 24px 0;
+          padding: 26px 24px 0;
           .primary-btn {
             margin-top: 10px;
           }
@@ -2555,22 +2369,6 @@ body {
     }
   }
 }
-
-// .register-dialog {
-//   .el-dialog__header .el-dialog__headerbtn {
-//     .el-dialog {
-//       &__close {
-//         color: #000000;
-//         opacity: 0.5;
-
-//         &:hover {
-//           opacity: 1;
-//           color: #000000;
-//         }
-//       }
-//     }
-//   }
-// }
 
 .mailbox-notify {
   position: relative;
@@ -2611,6 +2409,7 @@ body {
   // margin-left: 2rem;
   display: flex;
   gap: 1rem;
+  align-items: center;
 }
 
 .header-menu-item {
@@ -2618,8 +2417,8 @@ body {
   position: relative;
 
   .promotion-icon {
-    background: url('../../assets/images/home/header-icon-set.svg');
-    background-position: 5% 0%;
+    background: url('../../assets/images/home/header-icon-set.png');
+    background-position: 3% 0%;
     background-size: auto 100%;
     background-repeat: no-repeat;
     width: 38px;
@@ -2627,8 +2426,8 @@ body {
   }
 
   .app-icon {
-    background: url('../../assets/images/home/header-icon-set.svg');
-    background-position: 51% 0%;
+    background: url('../../assets/images/home/header-icon-set.png');
+    background-position: 34% 0%;
     background-size: auto 100%;
     background-repeat: no-repeat;
     width: 38px;
@@ -2636,8 +2435,8 @@ body {
   }
 
   .cs-icon {
-    background: url('../../assets/images/home/header-icon-set.svg');
-    background-position: 51% 0%;
+    background: url('../../assets/images/home/header-icon-set.png');
+    background-position: 66% 0%;
     background-size: auto 100%;
     background-repeat: no-repeat;
     width: 38px;
@@ -2647,7 +2446,7 @@ body {
   &.active {
     &:after {
       content: "";
-      background: #468cff;
+      background: transparent;
       width: 80%;
       height: 5px;
       bottom: -24px;
@@ -2695,150 +2494,7 @@ body {
     }
 
     &.active {
-      color: #468cff;
-    }
-  }
-}
-
-.dark {
-  .acc-dialog.el-dialog {
-    --el-dialog-bg-color: linear-gradient(180deg, #191b27 0%, #0a0c16 100%);
-
-    .el-dialog__header {
-      .el-dialog__close {
-        color: $color-white !important;
-      }
-    }
-
-    .el-dialog__body {
-      .acc-dialog-left {
-        background-size: 100% 100%;
-        background-position: center center;
-      }
-    }
-  }
-
-  .header-container {
-    .top-nav-wrapper {
-      background: $background-dark;
-      box-shadow: $shadow-header-dark;
-      .top-nav-inner {
-        .navigations {
-          .header-menu-item {
-            color: $font-4-dark;
-            &.active {
-              .nav-title {
-                color: $active-color-dark;
-              }
-              &::after {
-                background: $active-color-dark;
-              }
-            }
-            > a {
-              .nav-title {
-                color: #7a91a1;
-              }
-              &:hover {
-                .nav-title {
-                  color: $active-color-dark;
-                }
-                // .hover-icon {
-
-                // }
-                // :last-child {
-                //   color: $active-color-dark;
-                // }
-              }
-            }
-          }
-
-          .sub-menu {
-            background: $background-content-block-dark;
-            box-shadow: 0px -8px 8px 0px #1f2836 inset, 0px 4px 0px 0px #142b41;
-          }
-
-          &.second-nav {
-            .header-menu-item {
-              > a {
-                cursor: pointer;
-                color: $font-3-dark;
-                .hover-icon {
-                  filter: brightness(0) saturate(100%) invert(78%) sepia(31%) saturate(266%) hue-rotate(168deg)
-                    brightness(92%) contrast(82%);
-                }
-
-                &:hover {
-                  .hover-icon {
-                    filter: $active-color-dark-filter;
-                  }
-                  span {
-                    color: $active-color-dark;
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        .right-contents {
-          .header-btn {
-            &.btn-color-blue {
-              background: #394a65;
-              box-shadow: none;
-            }
-            &.btn-color-white {
-              background: $active-color-dark-linear;
-              position: relative;
-              box-shadow: 0px 0px 16.4px 0px #00d1ffcc;
-              color: $color-white;
-
-              &::before {
-                @include gradient-border(linear-gradient(180deg, #2ec0ff 0%, #f6ffff 50%, #2ec0ff 100%));
-                border-radius: 2rem;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .profile-actions {
-    .action-btn {
-      color: $font-3-dark;
-
-      .icon-rounded {
-        box-shadow: none;
-        background-color: $background-content-block-lighter-dark;
-        img {
-          filter: $active-color-dark-filter;
-        }
-      }
-      &:hover {
-        color: $active-color-dark;
-      }
-    }
-  }
-
-  .profile-info {
-    .profile-details {
-      .details-name {
-        color: $color-white;
-      }
-      .details-balance {
-        .reload-btn {
-          fill: $active-color-dark;
-        }
-      }
-    }
-  }
-  .profile-info-dropdown-content {
-    .profile-info-dropdown-content-item {
-      color: $font-3-dark;
-
-      &.standard-button {
-        color: $color-white;
-      }
+      color: #259CFC;
     }
   }
 }
@@ -2910,5 +2566,12 @@ body {
   background: #7a8eb966;
   border-radius: 25px;
   top: 8px;
+}
+
+@keyframes rumble {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-1px); }
 }
 </style>

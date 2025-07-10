@@ -438,7 +438,7 @@ export default {
     rewards: "Recompensas",
     vipTable_txt:
       "Assim que seus depósitos atenderem aos requisitos de atualização, seu nível VIP será imediatamente atualizado, aumentando seu número de retiradas.",
-    monthlyCumulativeBet: "Aposta Mensal Acumulado para Atualizar Nível VIP",
+    monthlyCumulativeBet: "Aposta Acumulado para Atualizar Nível VIP",
     level: "Nível",
     amount: "Valor",
     turnover: "Volume de Negócios",
@@ -990,6 +990,7 @@ export default {
       description:
         "Faça o upgrade para o nível VIP correspondente com base no valor acumulado de apostas na conta do membro.",
       bet: "APOSTA",
+      termsAndConditions: "Terms and Conditions",
       vipLevel: "VIP Nível",
       tnc01:
         "A partir da primeira aposta válida feita pelo membro após concluir o primeiro depósito com sucesso, o valor acumulado das apostas válidas será usado para determinar a elevação de nível VIP, conforme os limites abaixo:",
@@ -1182,6 +1183,7 @@ export default {
     10008: "Erro",
     11000: "Falha na submissão do depósito.",
     11003: "Depósito falhou",
+    10031: "Promoção não encontrada",
     11005: "Operações do usuário muito frequentes. Por favor, tente novamente.",
     12100: "Senha de retirada não corresponde",
     12101: "A nova senha de retirada não pode ser igual à antiga",
@@ -1268,16 +1270,22 @@ export default {
     58005: "Parabéns, você completou todas as tarefas"
   },
   content: {
+    message: "Mensagem",
+    register_succes: "Registro bem-sucedido!",
     nospinleft: "Sem rodadas restantes",
     title1: "O tempo de registo começa a contar a partir do momento em que o registo é concluído.",
-    message1: 'Quando o valor total acumulado atingir R$100, pode proceder ao envio de um pedido de levantamento;',
-    message2: 'Convidar amigos a se registrarem pode acelerar seu progresso para atingir o limite de levantamento;',
-    message3: 'Cada usuário tem o direito de receber uma chance gratuita na loteria por dia;',
-    message4: 'Cada promoção é válida para 3 dias, durante os quais os usuários podem participar múltiplas vezes;',
-    message5: 'Você pode ganhar pontos em dinheiro adicionais, permitindo que você jogue sem nenhum custo e aumente suas chances de ganhar prêmios reais;',
-    message6: 'Se não for retirado dentro 3 dias, o saldo expirará e será invalidado;',
-    message7: 'Esta promoção destina-se exclusivamente a operações manuais realizadas pelo titular da conta. Qualquer divergência em relação às regras pode resultar no cancelamento, dedução ou congelamento do Bônus, ou pode levar à inclusão da conta em uma "Lista Negra";',
-    message8: 'Para evitar eventuais mal-entendidos, a AKB188 reserva-se o direito de fazer a interpretação final desta promoção.',
+    message1: "Quando o valor total acumulado atingir R$100, pode proceder ao envio de um pedido de levantamento;",
+    message2:
+      "Convide amigos para se registrarem e fazerem um depósito — isso pode acelerar significativamente seu progresso rumo ao limite máximo de levantamento!",
+    message3: "Cada usuário tem o direito de receber uma chance gratuita na loteria por dia;",
+    message4: "Cada promoção é válida para 3 dias, durante os quais os usuários podem participar múltiplas vezes;",
+    message5:
+      "Você pode ganhar pontos em dinheiro adicionais, permitindo que você jogue sem nenhum custo e aumente suas chances de ganhar prêmios reais;",
+    message6: "Se não for retirado dentro 3 dias, o saldo expirará e será invalidado;",
+    message7:
+      'Esta promoção destina-se exclusivamente a operações manuais realizadas pelo titular da conta. Qualquer divergência em relação às regras pode resultar no cancelamento, dedução ou congelamento do Bônus, ou pode levar à inclusão da conta em uma "Lista Negra";',
+    message8:
+      "Para evitar eventuais mal-entendidos, a AKB188 reserva-se o direito de fazer a interpretação final desta promoção.",
 
     aviatorPromoIntro:
       "Desfrute da emoção das apostas com o Aviator! O seu Aviator pode ganhar incríveis 3.216x com apenas um clique! O prémio para os 50 melhores é de 1.250.000 PKR!",

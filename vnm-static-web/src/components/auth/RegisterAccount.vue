@@ -266,6 +266,20 @@ const regRules = {
   ],
   loginName: [
     {
+      validator: (rule, value, callback) => {
+        if (!value) {
+          callback();
+        } else if (/^0/.test(value)) {
+          callback(new Error(t("placeholder.username_cannot_start_with_0")));
+        } else if (!/^[a-zA-Z0-9]+$/.test(value)) {
+          callback(new Error(t("placeholder.no_special_characters")));
+        } else {
+          callback();
+        }
+      },
+      trigger: "blur"
+    },
+    {
       min: 6,
       max: 11,
       message: t("placeholder.between612"),

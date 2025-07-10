@@ -684,4 +684,10 @@ p {
     color: forestgreen !important;
   }
 }
+
+.body--dark {
+  .q-scrollarea {
+    background: #212b43 !important;
+  }
+}
 </style>

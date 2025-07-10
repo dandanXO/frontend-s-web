@@ -142,6 +142,7 @@ function isNonNumericString(value) {
 }
 
 export const isInPwa = () => {
+  // return true;
   if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
     return true;
   } else {

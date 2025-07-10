@@ -47,7 +47,7 @@
         </template>
       </q-input>
 
-      <q-input
+      <!-- <q-input
         ref="emailRef"
         outlined
         v-model="email"
@@ -65,7 +65,7 @@
           <img v-if="!email" src="../../../assets/images/auth/email-icon.png" width="22px" />
           <img v-else src="../../../assets/images/auth/email-icon-active.png" width="22px" />
         </template>
-      </q-input>
+      </q-input> -->
 
       <q-input
         ref="phoneRef"
@@ -139,7 +139,8 @@
         lazy-rules
         :rules="[
           (val) => (!!val && val.length > 0) || 'Por favor, insira o número do CPF',
-          (val) => val.length >= 6 || 'O número do CPF deve ter 11 dígitos'
+          (val) => val.length >= 6 || 'O número do CPF deve ter 11 dígitos',
+          (val) => validateCPF(val) || 'Formato do número do CPF está incorreto.'
         ]"
       >
         <template v-slot:prepend>
@@ -216,10 +217,10 @@ const register = () => {
   passwordRef.value.validate();
   firstNameRef.value.validate();
   lastNameRef.value.validate();
-  emailRef.value.validate();
+  // emailRef.value.validate();
   taxIdRef.value.validate();
 
-  if (taxIdRef.value.hasError || firstNameRef.value.hasError || lastNameRef.value.hasError || emailRef.value.hasError || taxIdRef.value.hasError|| phoneRef.value.hasError || passwordRef.value.hasError || isAgreeReg.value === false) {
+  if (taxIdRef.value.hasError || firstNameRef.value.hasError || lastNameRef.value.hasError || taxIdRef.value.hasError|| phoneRef.value.hasError || passwordRef.value.hasError || isAgreeReg.value === false) {
     $q.loading.hide();
   } else {
     var qs = require("qs");
@@ -272,7 +273,7 @@ const register = () => {
             password: password.value,
             taxId: taxId.value,
             realName: `${firstName.value},${lastName.value}`,
-            email: email.value,
+            // email: email.value,
             captchaCode: captchaCode.value,
             codeId: codeId.value,
             codeAffiliate: codeAffiliate.value,
@@ -341,6 +342,35 @@ const trackRegisterSuccessEvent = () => {
     });
   }
 };
+
+const validateCPF = (input_cpf) => {
+  if (!input_cpf) return false;
+
+  const input = input_cpf.toString().replace(/\D/g, ''); // 去除非数字
+  if (input.length !== 11 || /^(\d)\1{10}$/.test(input)) return false; // 排除重复数字
+
+  const pesosA = [10, 9, 8, 7, 6, 5, 4, 3, 2];
+  const pesosB = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2];
+
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    sum += parseInt(input[i]) * pesosA[i];
+  }
+
+  let x1 = sum % 11;
+  x1 = (x1 < 2) ? 0 : 11 - x1;
+
+  sum = 0;
+  for (let i = 0; i < 10; i++) {
+    sum += parseInt(input[i]) * pesosB[i];
+  }
+
+  let x2 = sum % 11;
+  x2 = (x2 < 2) ? 0 : 11 - x2;
+
+  return x1 === parseInt(input[9]) && x2 === parseInt(input[10]);
+}
+
 
 const getCode = () => {
   // api

@@ -416,7 +416,8 @@
         <el-form-item ref="phone" prop="phone">
           <el-input v-model="updatePhoneVerified.phone" placeholder="手机号码" />
         </el-form-item>
-        <el-form-item class="half" ref="verificationCode" prop="verificationCode">
+        <template v-if="isRequirePhoneValidation">
+          <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
             <el-input v-model="updatePhoneVerified.verificationCode" :placeholder="'验证码'" />
             <el-button
@@ -430,6 +431,7 @@
             </el-button>
           </el-space>
         </el-form-item>
+        </template>
         <el-button :loading="loadingPhoneBtn" class="common-btn verification-btn" @click="submitUpdatePhone">
           提交
         </el-button>
@@ -794,7 +796,9 @@ export default defineComponent({
     };
     const submitUpdatePhone = () => {
       loadingPhoneBtn.value = true;
-      updatePhoneFormRef.value
+
+      if(store.isRequirePhoneValidation) {
+        updatePhoneFormRef.value
         .validate()
         .then(() => {
           verificationPhoneDetails.memberInfo.code = updatePhoneVerified.verificationCode;
@@ -816,13 +820,36 @@ export default defineComponent({
             .catch((e) => {
               console.log(e.message);
               // message.error(e.message);
+            }).finally(() => {
+              loadingPhoneBtn.value = false;
             });
         })
         .catch((error) => {
           console.log("error", error);
         });
-
-      loadingPhoneBtn.value = false;
+      } else {
+        updateAccount(toRaw({phone: updatePhoneVerified.phone}))
+            .then((res) => {
+              if (res.code === 0) {
+                notify({
+                  message: "成功",
+                  type: "success"
+                });
+                updatePhoneModalVisible.value = false;
+                store.getMemberInfo();
+                loadInfo();
+                gotoNewplayerPromo();
+              } else {
+                notify.error(res.message);
+              }
+            })
+            .catch((e) => {
+              console.log(e.message);
+              // message.error(e.message);
+            }).finally(() => {
+              loadingPhoneBtn.value = false;
+            });
+      }
     };
     const gotoNewplayerPromo = () => {
       if (useLocalStorage("need-go-back-newplayer").value === "true") {
@@ -1120,10 +1147,12 @@ export default defineComponent({
       }
 
       :deep(.el-input__wrapper) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
         border-radius: 20px;
-        background: #f7f8fb;
         height: 38px;
+        background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
+        box-shadow: 0px 2px 2px 0px #FFFFFFCC inset;
+        box-shadow: 0px 2px 0px 0px #C6D9FF;
+
       }
 
       .btn-container {
@@ -1198,39 +1227,14 @@ export default defineComponent({
     }
   }
 }
+</style>
 
-.dark {
-  .menu-title-container {
-    .menu-title {
-      color: $color-white;
-    }
-  }
-
-  .personal-container {
-    .personal-wrapper {
-      .tbl-row {
-        .basic-info-cell {
-          color: #fff;
-        }
-      }
-
-      .update-pwd-container {
-        &:deep(.el-input__wrapper) {
-          background-color: $background-content-block-lighter-dark;
-          box-shadow: 0px 0px 8px 0px #0d233a inset;
-        }
-      }
-    }
-  }
-
-  .account-tip-text {
-    color: $font-3-dark;
-  }
-
-  .standard-button.standout {
-    background: #394a65;
-    box-shadow: none;
-    color: $active-color-dark;
+<style lang="scss">
+.account-contents .searchbar {    
+  .el-input__wrapper {
+    background: #F7F8FB !important;
+    box-shadow: 0px 0px 2.78px 0px #A9C9EA inset !important;
+    border-radius: 8px !important;
   }
 }
 </style>

@@ -7,6 +7,7 @@ import { doIt } from "boot/action";
 import { useQuasar, Platform } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "src/stores";
+import { useI18n } from "vue-i18n";
 
 const qs = require("qs");
 
@@ -85,11 +86,12 @@ function postMessage(item1, item2) {
 const $q = useQuasar();
 const router = useRouter();
 const store = userStore();
+const { t } = useI18n();
 
 onMounted(async () => {
   await store.getMemberInfo();
   $q.loading.show({
-    message: "加载中..."
+    message: t("common.loading")
   });
   if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit") {
     let params = localStorage.getItem("formDetails");

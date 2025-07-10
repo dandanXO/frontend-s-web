@@ -322,19 +322,16 @@ $node-color: #4873f1;
       text-align: center;
       padding: 10px 5px;
       cursor: pointer;
-      // background: #2b2b4b;
-      // box-shadow: 6px 6px #161b23;
+      background: #F7F8FB;
+      box-shadow: 0px 0px 2.78px 0px #A9C9EA inset;
+      width: 140px;
+      height: 101px;
 
       &:hover {
       }
       &.active {
-        // background-color: #1c1c32;
-        // border-radius: 6px;
-        border: solid 2px #468cff;
-        box-shadow: unset;
-        background-color: #f7f8fb;
-        // box-shadow: none;
-        // filter: drop-shadow(0px 0px 3px #ffffff);
+        background-color: #FFFFFF;
+        border: 2px solid #468CFF;
       }
     }
     .node-item {
@@ -382,53 +379,7 @@ $node-color: #4873f1;
       }
     }
   }
-  // .node-content {
-  //   display: flex;
-  //   align-items: stretch;
-  //   flex-wrap: wrap;
-  //   padding: 5px 0;
-  //   justify-content: flex-start;
-  //   position: relative;
-  //   width: 100%;
-  //   margin: 20px auto;
-  //   background: #23263c;
-  // }
-  // .node {
-  //   .node-content {
-  //     .payment-method-item {
-  //       text-align: center;
-  //       padding: 10px 8px;
-  //       cursor: pointer;
-  //       background-color: #161b23;
-  //       border-radius: 6px;
-  //       border: solid 1px #484460;
-  //       &:hover {
-  //       }
-  //       &.active {
-  //         background: #161b23;
-  //         border-color: $node-color;
-  //       }
-  //     }
-  //     .node-item {
-  //       display: flex;
-  //       justify-content: center;
-  //       width: 10rem;
-  //       .payment-method-wrapper {
-  //         display: none;
-  //       }
-  //     }
-  //     .node-text {
-  //       display: flex;
-  //       justify-content: center;
-  //       align-items: center;
-  //       img {
-  //         max-width: 1.5rem;
-  //         margin-bottom: 0;
-  //         margin-right: 20px;
-  //       }
-  //     }
-  //   }
-  // }
+ 
   .icons {
     text-align: right;
     display: flex;
@@ -515,43 +466,6 @@ $node-color: #4873f1;
     .node {
       .account-title-container {
         margin: 0 -10px;
-      }
-    }
-  }
-}
-
-.dark {
-  .node {
-    strong,
-    .account-title {
-      color: $font-3-dark;
-    }
-
-    .node-content {
-      .payment-method-item {
-        box-shadow: none;
-        border: 2px solid transparent;
-
-        &.active {
-          border: 2px solid #a98f7c;
-          background-color: $background-content-block-lighter-dark;
-
-          &:before {
-            background-image: url("../../assets/svg/checkmark-dark.svg");
-          }
-        }
-      }
-
-      .node-text {
-        > div {
-          color: $font-3-dark;
-        }
-
-        .node-txt-img {
-          img {
-            background-color: transparent;
-          }
-        }
       }
     }
   }

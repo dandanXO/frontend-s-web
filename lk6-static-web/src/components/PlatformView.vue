@@ -1,11 +1,13 @@
 <template>
   <div class="platform-section">
-    <div class="platform-container" :class="platformType === 'slot' ? 'slot-container' : ''">
-      <div class="platform-container-slot" v-if="platformType === 'slot'">
-        <img v-if="isDark" src="../assets/slot/slot-top-bg-dark.png" />
-        <img v-else src="../assets/slot/slot-top-bg.png" />
-      </div>
-      <div class="platform-container-inner" v-if="platformType !== 'slot'">
+    <div v-if="isLoading" class="loading">
+      <img class="loading-img" src="@/assets/lucky-6-logo.png" />
+    </div>
+    <div v-else-if="!(platformType === 'bacarrat' && props.hideBanner)" class="platform-container" :class="platformType === 'bacarrat' ? 'slot-container' : ''">
+        <img v-if="platformType === 'bacarrat'" src="../assets/slot/slot-top-bg.png" />
+        <div class="platform-container-slot" v-if="platformType === 'bacarrat'">
+        </div>
+      <div class="platform-container-inner" v-if="platformType !== 'bacarrat'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
         <template v-for="(item, index) in platformsListDisplay" :key="index">
           <template v-if="selectedPlat === item.code">
@@ -25,6 +27,7 @@
 
             <div class="platform-item">
               <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
+                <!-- <img src="../assets/lucky-6-logo.png" width="176px" height="86px" /> -->
                 <div class="platform-title">{{ item.cnname ?? item.name }}</div>
                 <div class="platform-subtitle">{{ platformName }}</div>
               </div>
@@ -32,7 +35,7 @@
               <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>
 
               <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
-                <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.png')" />
+                <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.svg')" />
               </div>
 
               <div class="platform-list-box">
@@ -88,6 +91,7 @@
               <!--            data-aos-duration="500"-->
               <div class="platform-play-btn" v-if="platformType !== 'slot'">
                 <div
+                  v-if="props.showPlayBtn"
                   class="btn-blue"
                   @click="openGame(getAliasName(item, platformType), item.code, item.gameCode)"
                   :class="item.underMaintenance === true ? 'btn-maintenance' : ''"
@@ -121,6 +125,23 @@
       <div class="all-game-container">
         <div class="plat-options-wrapper">
           <div class="plat-options-container">
+            <template v-for="(item, index) in fixedBacarratPlatforms" :key="index">
+              <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
+              <div
+                class="plat-option"
+                @click="onChangeFixedPokerPlatforms(item)"
+                :class="{ active: selectedFixedBacarratPlatforms?.prefix === item.prefix }"
+              >
+                <div class="text">
+                  <span>{{ item.label }}</span>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <div class="plat-options-wrapper" style="display: none;">
+          <div class="plat-options-container">
             <template v-for="(item, index) in platformsListDisplay" :key="index">
               <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
               <div
@@ -128,18 +149,8 @@
                 @click="clickPlat(item)"
                 :class="{ active: selectedPlat === item.code, long: item.code === 'PPFP' }"
               >
-                <!-- <img
-                  :src="
-                  require(`../assets/game/plat-logo-${item.code.toLowerCase()}${
-                    selectedPlat !== item.code ? '-blue' : ''
-                  }.png`)
-                "
-                /> -->
                 <div class="text">
-                  <span v-if="item.code === 'AG'">PA</span>
-                  <span v-else-if="item.code === 'MGP'">MG</span>
-                  <span v-else-if="item.code === 'PPFP'">FP</span>
-                  <span v-else>{{ item.code }}</span>
+                  <span>{{ item.code }}</span>
                 </div>
               </div>
             </template>
@@ -187,7 +198,7 @@
                       <img :src="game.default" />
                     </template>
                     <template #error>
-                      <div class="image-slot">
+                      <div class="image-slot" style="width:100%;height:100%;">
                         <img :src="game.default" />
                       </div>
                     </template>
@@ -261,7 +272,7 @@ const platformGame = ref(null);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
-const isDark = useDark();
+const isLoading = ref(false);
 
 const props = defineProps({
   platforms: Array,
@@ -269,36 +280,49 @@ const props = defineProps({
   platformGameType: String,
   platformName: String,
   platformPattern: Boolean,
-  platformExpandable: Boolean
+  platformExpandable: Boolean,
+  showPlayBtn: Boolean,
+  hideBanner: Boolean
 });
 
 const filteredPlatforms = ref([]);
 const platformsList = ref([]);
 const platformsListDisplay = ref([]);
+const fixedBacarratPlatforms = ref([
+  {
+    prefix: 101,
+    label: '百家乐'
+  },
+  {
+    prefix: 112,
+    label: '幸运轮盘'
+  },
+  {
+    prefix: 103,
+    label: '幸运蕾丝'
+  },
+])
 
 const getPlatList = () => {
+  isLoading.value = true;
+  
   const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
   getFn().then((res) => {
     platformsList.value = res;
-
-    // console.log(platformsList.value);
-
     platformsListDisplay.value = platformsList.value.filter((element) =>
       element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
     );
-
-    // console.log("Platform");
-    // console.log(platformsListDisplay.value);
 
     platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
       const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
       return { ...matchingItem, ...item1 };
     });
 
-    // console.log("THIs");
-    // console.log(platformsListDisplay.value);
-
     setFilteredPlatforms();
+  }).catch(() => {
+    isLoading.value = false;
+  }).finally(() => {
+    isLoading.value = false;
   });
 };
 
@@ -328,12 +352,21 @@ const setFilteredPlatforms = () => {
 };
 
 const selectedPlat = ref(null);
+const selectedFixedBacarratPlatforms = ref({});
 const setSelectedPlat = () => {
   selectedPlat.value = filteredPlatforms.value.length > 0 ? filteredPlatforms.value[0].code : null;
 };
 
+const onChangeFixedPokerPlatforms = (item) => {
+  selectedFixedBacarratPlatforms.value = item;
+  changePage(gamePage.currentPage, gamePage.pageSize);
+}
+
 const clickPlat = (plat) => {
-  router.push({ path: route.path, query: { plat: plat.code } });
+  router.push({ path: route.path, scrollBehavior(to, from, savedPosition) {
+    // Return false to prevent scrolling
+    return false
+  } });
   selectedPlat.value = plat.code;
 };
 
@@ -354,7 +387,7 @@ const gamePage = reactive({
 const gameListData = ref([]);
 
 const switchPlat = (plat) => {
-  router.push({ path: route.path, query: { plat: plat.code } });
+  router.push({ path: route.path });
   activePlat.value = plat;
   // selectedPlat.value = plat.code;
   gamePage.currentPage = 1;
@@ -363,18 +396,17 @@ const switchPlat = (plat) => {
 };
 
 const getPlatGameList = () => {
-  if (props.platformGameType === "SLOT") {
+  if (props.platformGameType === "BACARRAT") {
     const getFn = store.token ? getLoggedInPlatformList : getPlatformList;
+    isLoading.value = true;
+
     getFn()
       .then((data) => {
-        platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
+        platformsListDisplay.value = data.filter((element) => element.gameType.includes('LIVE'));
         platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
           const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
           return { ...matchingItem, ...item1 };
         });
-
-        // console.log("SLOT")
-        // console.log(platformsListDisplay.value);
 
         if (!route.query.plat) {
           switchPlat(platformsListDisplay.value[0]);
@@ -388,6 +420,9 @@ const getPlatGameList = () => {
       })
       .catch((err) => {
         console.log(err.message);
+        isLoading.value = false;
+      }).finally(() => {
+        isLoading.value = false;
       });
   }
 };
@@ -415,11 +450,12 @@ const searchList = () => {
   // }
 };
 const loadGameList = () => {
-  if (props.platformGameType === "SLOT") {
-    getPlatformGames(activePlat.value.id, props.platformGameType)
+  if (props.platformGameType === "BACARRAT") {
+    isLoading.value = true;
+    getPlatformGames(activePlat.value.id, 'LIVE')
       .then((data) => {
         data.forEach((element) => {
-          element.default = require("../assets/images/games/aviator/default.png");
+          element.default = require("../assets/images/games/aviator/default-poker.png");
           var imageUrl = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value;
           element.icon = `${imageUrl}/game/${element.icon}`;
         });
@@ -429,6 +465,9 @@ const loadGameList = () => {
       })
       .catch((err) => {
         console.log(err.message);
+        isLoading.value = false;
+      }).finally(() => {
+        isLoading.value = false;
       });
   }
 };
@@ -436,12 +475,13 @@ const loadGameList = () => {
 const changePage = (page, pageSize) => {
   // console.log(page);
   // console.log(pageSize);
-  gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
+  gamePage.gameList = gameListData.value.filter(gameItem => gameItem.code.startsWith(selectedFixedBacarratPlatforms.value.prefix)).slice((page - 1) * pageSize, page * pageSize);
 };
 
 const gameCat = ref("allGame");
 
 onMounted(() => {
+  selectedFixedBacarratPlatforms.value = fixedBacarratPlatforms.value[0];
   getPlatList();
   getPlatGameList();
 });
@@ -463,3 +503,53 @@ watch(
 </script>
 
 <style scoped lang="scss" src="../scss/pages/platform.scss" />
+
+<style lang="scss" scoped>
+.loading {
+  width: 100%;
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    to bottom,
+    rgba(240, 248, 255, 0.8196078431) 0%,
+    rgb(240 248 255 / 50%) 80%,
+    rgb(240 248 255 / 0%) 100%
+  );
+
+  .loading-img {
+    animation-name: fade-in-out;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    width: 100px;
+  }
+}
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.search-input {
+  :deep(.el-input__wrapper) {
+    padding: 8px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    width: 100%;
+    border-radius: 30px;
+    font-size: 14px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
+    box-shadow: 0px 2px 2px 0px rgba(255, 255, 255, 0.8) inset, 0px 2px 0px 0px #C6D9FF;
+  }
+}
+</style>

@@ -83,6 +83,17 @@ const routes = [
     ]
   },
   {
+    path: "/baccarat",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "baccarat",
+        component: () => import("pages/games/BaccaratView.vue")
+      }
+    ]
+  },
+  {
     path: "/account/vip",
     component: () => import("layouts/MainLayout.vue"),
     children: [
@@ -440,6 +451,17 @@ const routes = [
       {
         path: "",
         component: () => import("pages/finance/WithdrawView.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/withdraw/crypto",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/BindCryptoView.vue")
       }
     ],
     meta: { requiresAuth: true }

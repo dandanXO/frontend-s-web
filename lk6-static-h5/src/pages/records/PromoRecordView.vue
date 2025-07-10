@@ -1,6 +1,6 @@
 <!-- NOT USING -->
 <template>
-  <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
+  <!-- <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" /> -->
   <div class="table-record">
     <RecordComponent
       ref="recordRef"
@@ -25,7 +25,7 @@ export default defineComponent({
   name: "PromoRecordView",
   components: {
     RecordComponent,
-    RecordDateFilter
+    // RecordDateFilter
   },
   setup() {
 

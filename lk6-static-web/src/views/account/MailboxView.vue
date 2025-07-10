@@ -627,6 +627,7 @@ onMounted(() => {
 
   .title-text {
     font-weight: normal;
+    font-family: 'PingFang SC';
 
     p {
       margin: 0px;
@@ -646,6 +647,7 @@ onMounted(() => {
     font-weight: 600;
     color: $font-1;
     font-size: 1rem;
+    box-shadow: 0px 0px 2.78px 0px #A9C9EA inset;
   }
 
   :deep(.el-collapse-item__content) {

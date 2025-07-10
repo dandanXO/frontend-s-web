@@ -5,6 +5,7 @@
     :platformType="platformType"
     :platformName="platformName"
     :platformPattern="platformPattern"
+    :showPlayBtn="props.showPlayBtn"
   />
 </template>
 
@@ -17,4 +18,6 @@ const platformType = ref("live");
 const platformGameType = ref("LIVE");
 const platformName = ref("LIVE CASINO");
 const platformPattern = ref(true);
+
+const props = defineProps(['showPlayBtn']);
 </script>

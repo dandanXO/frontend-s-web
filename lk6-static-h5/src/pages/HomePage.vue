@@ -6,7 +6,7 @@
           <q-icon name="close" @click="closeTopBox" />
           <img class="headicon" src="../assets/index/logo-char.png" />
           <div class="download-txt-container">
-            <span class="download-title text-bold">东赢 APP</span>
+            <span class="download-title text-bold">幸运6 APP</span>
             <span class="download-content">覆盖全部游戏，体验更流畅，更安全，更快捷</span>
           </div>
           <div class="buttons">
@@ -27,6 +27,7 @@
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
         </div>
         <div class="header-right">
+          <LocaleSelector />
           <!-- <span class="memorable-url">易记网址：{{ memorableUrl }}</span>
           <button class="copy-btn" @click="handleCopyMemorableUrlClick">🔍</button> -->
           <router-link class="notification-section" to="/account/inbox?redirect=home">
@@ -116,9 +117,9 @@
               <div class="welcome-liner">
                 {{ store.nickName }}
               </div>
-              <div class="badge-div">
+              <!-- <div class="badge-div">
                 {{ store.vip }}
-              </div>
+              </div> -->
             </div>
             <div class="row items-center justify-start gap-10" style="width: 100%">
               <span class="balance-text text-positive" v-if="isLoadingBalance" style="font-size: 20px">加载中...</span>
@@ -135,14 +136,14 @@
               <img src="../assets/index/home-withdrawal-icon.svg" alt="" width="100%" />
               <p>提款</p>
             </router-link>
-            <router-link class="text-center cash-button" :unelevated="true" to="/account/transfer?redirect=home">
+            <!-- <router-link class="text-center cash-button" :unelevated="true" to="/account/transfer?redirect=home">
               <img src="../assets/index/home-transfer-icon.svg" alt="" width="100%" />
               <p>转帐</p>
-            </router-link>
-            <router-link class="text-center cash-button" :unelevated="true" to="/account/vip?redirect=home">
+            </router-link> -->
+            <!-- <router-link class="text-center cash-button" :unelevated="true" to="/account/vip?redirect=home">
               <img src="../assets/index/home-vip-icon.svg" alt="" width="100%" />
               <p>VIP</p>
-            </router-link>
+            </router-link> -->
           </div>
         </div>
       </div>
@@ -181,7 +182,7 @@
               <div class="home-game-boards">
                 <div class="game-list-div">
                   <div v-for="(sp, i) in sport" :key="i" class="game-item-div">
-                    <div class="game-board" @click="playGame(sp.name, sp.code, sp.gameCode)">
+                    <div class="game-board">
                       <!--                      <img class="game-bg"-->
                       <!--                           :src="require(`../assets/index/${sp.icon}/slide-${sp.icon}-${sp.name.toLowerCase()}.png`)"/>-->
                       <!--                      -->
@@ -201,8 +202,11 @@
                       ></div>
 
                       <div class="game-title">
-                        <span>体育赛事</span>
-                        <h3>{{ sp.title }}</h3>
+                        <span class="game-title-1">体育赛事</span>
+                        <h3 class="game-title-2">{{ sp.title }}</h3>
+                        <RedirectButton class="redirect-button" @click="playGame(sp.name, sp.code, sp.gameCode)">
+                          立即投注
+                        </RedirectButton>
                       </div>
 
                       <div class="maintenance-box" v-if="sp.underMaintenance">
@@ -234,7 +238,7 @@
               <div class="home-game-boards">
                 <div class="game-list-div">
                   <div v-for="(live, i) in livecasino" :key="i" class="game-item-div">
-                    <PlatformItem :platform="live" @click="playGame(live.title, live.code, live.gameCode)" />
+                    <PlatformItem :platform="live" @click="playGame(live.title, live.code)" />
                     <!-- <template v-if="live.code === 'BBINDY' && live.name === 'BBIN'">
                       <div class="game-board" @click="playGame(live.name, live.code, 'bblive_lobby_app')">
                         <div
@@ -391,46 +395,137 @@
             <div v-if="selectedTab === 'baccarat'" id="id-baccarat-slide" class="sport-slides home-swiper-slide">
               <div class="home-game-boards">
                 <div class="game-list-div">
-                  <div v-for="(sp, i) in baccarat" :key="i" class="game-item-div">
-                    <div class="game-board" @click="playGame(sp.name, sp.code, sp.gameCode)">
-                      <!--                      <img class="game-bg"-->
-                      <!--                           :src="require(`../assets/index/${sp.icon}/slide-${sp.icon}-${sp.name.toLowerCase()}.png`)"/>-->
-                      <!--                      -->
-                      <div
-                        class="game-bg"
-                        :style="{
-                          backgroundImage: (() => {
-                            try {
-                              return `url(${require(`../assets/index/${sp.icon}/slide-${
-                                sp.icon
-                              }-${sp.name.toLowerCase()}.png`)})`;
-                            } catch (e) {
-                              return '';
-                            }
-                          })()
+                  <template v-for="(platform, index) in baccaratCategoryList" :key="index">
+                    <div class="game-list-inner-div">
+                      <div class="game-list-header-wrapper">
+                        <div class="game-list-header__title-wrapper">
+                          <template v-if="index === 0">
+                            <img src="../assets/index/baccarat/baccarat-header.png" />
+                            百家乐
+                          </template>
+                          <template v-else-if="index === 1">
+                            <img src="../assets/index/baccarat/roulette-header.png" />
+                            轮盘
+                          </template>
+                          <template v-else-if="index === 2">
+                            <img src="../assets/index/baccarat/lucky-lace-header.png" />
+                            幸运蕾丝
+                          </template>
+                        </div>
+                        <div class="game-list-header__action-wrapper">
+                          <router-link :to="`/baccarat?platform=EEAI&tab=${platform.name}`">
+                            <q-btn class="game-list-header__all-btn" rounded dense>全部</q-btn>
+                          </router-link>
+                          <q-btn
+                            class="game-list-header__navigation-btn"
+                            dense
+                            :disable="getNavigationButtonStatus(index, 'prev')"
+                            @click="handleSlidePrevClick(index)"
+                          >
+                            <q-icon name="keyboard_arrow_left" />
+                          </q-btn>
+                          <q-btn
+                            class="game-list-header__navigation-btn"
+                            dense
+                            :disable="getNavigationButtonStatus(index, 'next')"
+                            @click="handleSlideNextClick(index)"
+                          >
+                            <q-icon name="keyboard_arrow_right" />
+                          </q-btn>
+                        </div>
+                      </div>
+                      <swiper
+                        :slides-per-view="3"
+                        :slides-per-group="2"
+                        :grid="{
+                          rows: platform.list.length > 3 ? 2 : 1,
+                          fill: 'row'
                         }"
-                      ></div>
-
-                      <div class="game-title">
-                        <span>体育赛事</span>
-                        <h3>{{ sp.title }}</h3>
-                      </div>
-
-                      <div class="maintenance-box" v-if="sp.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="sp.maintenanceStartTime && sp.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
-                            {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
-                            {{ moment(sp.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
-                      </div>
+                        :modules="[Grid]"
+                        :space-between="6"
+                        @swiper="(swiper) => setBaccaratSwiper(swiper, index)"
+                      >
+                        <swiper-slide
+                          v-for="(game, gameIndex) in platform.list"
+                          class="game-slide"
+                          :key="`${index}-${gameIndex}`"
+                        >
+                          <div
+                            class="game-bg"
+                            :style="{
+                              backgroundImage: (() => {
+                                try {
+                                  return `url(${imgURLGame}${game.icon.replace('-', '_')})`;
+                                } catch (e) {
+                                  try {
+                                    return `url(${require(`../assets/index/baccarat/slide-${platform.name}-img.png`)})`;
+                                  } catch (e) {
+                                    return '';
+                                  }
+                                }
+                              })()
+                            }"
+                            @click="playGame(game.name, game.platformCode, game.code)"
+                          >
+                            <div class="game-title">
+                              <div class="game-title__category">
+                                {{
+                                  platform.name === "baccarat"
+                                    ? "BACCARAT"
+                                    : platform.name === "roulette"
+                                    ? "ROULETTE"
+                                    : "LUCKY LACE"
+                                }}
+                              </div>
+                              <div class="game-title__name">
+                                {{ game.name }}
+                              </div>
+                            </div>
+                          </div>
+                        </swiper-slide>
+                      </swiper>
                     </div>
-                  </div>
+                  </template>
+                  <!-- <div v-for="(sp, i) in baccarat" :key="i" class="game-item-div"> -->
+                  <!-- <div class="game-board" @click="playGame(sp.name, sp.code, sp.gameCode)"> -->
+                  <!-- <img class="game-bg" -->
+                  <!-- :src="require(`../assets/index/${sp.icon}/slide-${sp.icon}-${sp.name.toLowerCase()}.png`)"/> -->
+
+                  <!-- <div -->
+                  <!-- class="game-bg" -->
+                  <!-- :style="{ -->
+                  <!-- backgroundImage: (() => { -->
+                  <!-- try { -->
+                  <!-- return `url(${require(`../assets/index/${sp.icon}/slide-${ -->
+                  <!-- sp.icon -->
+                  <!-- }-${sp.name.toLowerCase()}.png`)})`; -->
+                  <!-- } catch (e) { -->
+                  <!-- return ''; -->
+                  <!-- } -->
+                  <!-- })() -->
+                  <!-- }" -->
+                  <!-- ></div> -->
+                  <!--  -->
+                  <!-- <div class="game-title"> -->
+                  <!-- <span>体育赛事</span> -->
+                  <!-- <h3>{{ sp.title }}</h3> -->
+                  <!-- </div> -->
+                  <!--  -->
+                  <!-- <div class="maintenance-box" v-if="sp.underMaintenance"> -->
+                  <!-- <p>维护中</p> -->
+                  <!-- <template v-if="sp.maintenanceStartTime && sp.maintenanceEndTime"> -->
+                  <!-- <div class="small-size q-mt-md">维护时间：</div> -->
+                  <!-- <p class="small-size"> -->
+                  <!-- {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }} -->
+                  <!-- </p> -->
+                  <!-- <p class="small-size">-</p> -->
+                  <!-- <p class="small-size"> -->
+                  <!-- {{ moment(sp.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }} -->
+                  <!-- </p> -->
+                  <!-- </template> -->
+                  <!-- </div> -->
+                  <!-- </div> -->
+                  <!-- </div> -->
                 </div>
               </div>
             </div>
@@ -445,54 +540,41 @@
   </q-page-sticky>
 
   <GameModal ref="allGames"></GameModal>
+  <AnnouncementModal />
 
-  <q-dialog class="station-notice-dialog" width="100%" v-model="isStationNotice">
-    <q-card
-      style="width: 85%; border-radius: 12px; position: relative; padding: 20px 12px 12px 12px"
-      class="bg-[#0000001A] text-black"
-    >
-      <q-card-section class="q-mb-md" style="display: flex; flex-direction: column">
-        <q-tabs
-          v-model="activeKey"
-          dense
-          align="justify"
-          active-class="tab-active"
-          content-class="tabs-wrapper"
-          indicator-color="transparent"
-        >
-          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
-        </q-tabs>
+  <CommonModal v-model="isStationNotice" class="station-notice-dialog" header="公告" :actions="[]">
+    <template #content>
+      <q-tabs v-model="activeKey" class="station-notice-tabs">
+        <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
+      </q-tabs>
 
-        <q-separator />
+      <q-tab-panels v-model="activeKey" animated>
+        <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
+          <q-list style="min-height: 65vh">
+            <div v-for="(ann, idx) in announcementList" :key="idx">
+              <span v-if="ann.typeId === tab.id">
+                <q-expansion-item
+                  style="max-height: 65vh; overflow: auto; color: #6c6c6e"
+                  expand-icon-class="text-grey-5"
+                  group="somegroup"
+                  icon="notifications_none"
+                  :label="ann.title"
+                >
+                  <q-card>
+                    <q-card-section style="color: #9f9f9f">
+                      <div v-html="ann.content" />
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
 
-        <q-tab-panels v-model="activeKey" animated>
-          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
-            <q-list style="min-height: 65vh">
-              <div v-for="(ann, idx) in announcementList" :key="idx">
-                <span v-if="ann.typeId === tab.id">
-                  <q-expansion-item
-                    style="max-height: 65vh; overflow: auto; color: #6c6c6e"
-                    expand-icon-class="text-grey-5"
-                    group="somegroup"
-                    icon="notifications_none"
-                    :label="ann.title"
-                  >
-                    <q-card>
-                      <q-card-section style="color: #9f9f9f">
-                        {{ ann.content }}
-                      </q-card-section>
-                    </q-card>
-                  </q-expansion-item>
-
-                  <q-separator></q-separator>
-                </span>
-              </div>
-            </q-list>
-          </q-tab-panel>
-        </q-tab-panels>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+                <q-separator></q-separator>
+              </span>
+            </div>
+          </q-list>
+        </q-tab-panel>
+      </q-tab-panels>
+    </template>
+  </CommonModal>
 
   <q-page-sticky v-if="showDomain" position="bottom-right" :offset="domainPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingDomainFab" v-touch-pan.prevent.mouse="moveDomainFab">
@@ -549,10 +631,19 @@
     </div>
   </q-page-sticky>
 
-  <q-dialog
+  <CommonModal
+    v-model="isAppUpdateModal"
+    header="更新公告"
+    message="检测到新版本，你是否要更新？"
+    :actions="['confirm', 'cancel']"
+    @confirm="openDownloadPage"
+    @cancel="cancelUpdate"
+  />
+
+  <!-- <q-dialog
     width="100%"
     class="modal-update-div"
-    v-model="isAppUpdateModal"
+
     show-cancel-button
     :showCancelButton="false"
     :showConfirmButton="false"
@@ -569,7 +660,7 @@
         </div>
       </div>
     </q-card>
-  </q-dialog>
+  </q-dialog> -->
 
   <!-- <q-dialog width="100%" v-model="isFirstView">
     <q-card style="width: 70%; max-width: 290px; margin: 0 auto" class="bg-white text-black">
@@ -608,6 +699,7 @@ import { cached } from "boot/cache";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
+import AnnouncementModal from "components/modal/AnnouncementModal";
 import MarqueeText from "vue-marquee-text-component";
 
 import { useUI } from "stores/ui";
@@ -632,6 +724,9 @@ import { useLocalStorage } from "@vueuse/core";
 import GameTypeSwiper from "src/components/home/GameTypeSwiper.vue";
 import { useNotify } from "src/hooks/notify";
 import { LIVE_PLATFORMS } from "src/constant/platform";
+import RedirectButton from "src/components/RedirectButton.vue";
+import CommonModal from "src/components/CommonModal.vue";
+import LocaleSelector from "src/components/LocaleSelector.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -642,7 +737,11 @@ export default defineComponent({
     MarqueeText,
     PlatformBlock,
     GameTypeSwiper,
-    PlatformItem
+    PlatformItem,
+    RedirectButton,
+    CommonModal,
+    AnnouncementModal,
+    LocaleSelector
   },
   setup() {
     const notify = useNotify();
@@ -654,6 +753,9 @@ export default defineComponent({
     const secondSwiper = ref(null);
     const slotSwiper = ref(null);
     const slotSwiper2 = ref(null);
+    const baccaratSwiper = ref(null);
+    const rouletteSwiper = ref(null);
+    const luckyLaceSwiper = ref(null);
 
     const setFirstSwiper = (swiper) => {
       firstSwiper.value = swiper;
@@ -666,6 +768,20 @@ export default defineComponent({
     };
     const setSlotSwiper2 = (swiper) => {
       slotSwiper2.value = swiper;
+    };
+
+    const setBaccaratSwiper = (swiper, index) => {
+      switch (index) {
+        case 0:
+          baccaratSwiper.value = swiper;
+          break;
+        case 1:
+          rouletteSwiper.value = swiper;
+          break;
+        case 2:
+          luckyLaceSwiper.value = swiper;
+          break;
+      }
     };
 
     const setSelectedSwiper = (tab) => {
@@ -757,6 +873,8 @@ export default defineComponent({
     const slot = ref([]);
     const fishing = ref([]);
     const baccarat = ref([]);
+    const roulette = ref([]);
+    const luckyLace = ref([]);
 
     const slot_odds = computed(() => {
       var filtered = slot.value.filter(function (element, index, array) {
@@ -976,6 +1094,12 @@ export default defineComponent({
     const hotPokers = ref([""]);
     const hotLotterys = ref([""]);
 
+    const baccaratCategoryList = computed(() => [
+      { name: "baccarat", list: baccarat.value },
+      { name: "roulette", list: roulette.value },
+      { name: "lucky-lace", list: luckyLace.value }
+    ]);
+
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
     const getPlatList = () => {
@@ -1160,14 +1284,6 @@ export default defineComponent({
                 hotgames.value.push(lottObj);
               }
             }
-            if (platTypes.indexOf("BACCARAT") > -1) {
-              var bacObj = Object.assign({}, element);
-              // bacObj.title = translateRecord(bacObj.name);
-              bacObj.title = getAliasName(element, "BACCARAT");
-              bacObj.icon = "baccarat";
-              bacObj.subtitle = "百家乐";
-              baccarat.value.push(bacObj);
-            }
           });
 
           slot.value.sort((a, b) => a.num - b.num);
@@ -1344,6 +1460,7 @@ export default defineComponent({
     };
 
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+    const imgURLGame = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/game/";
     const homePopupImg = ref("");
     const isImportantAnnouncementModal = ref(false);
     const homePopupContent = ref("");
@@ -1632,6 +1749,7 @@ export default defineComponent({
 
     onMounted(() => {
       getPlatList();
+      loadEEAILiveGameList();
       store.getUnreadTotal();
       loadAnnouncement();
       checkPlatform();
@@ -1652,6 +1770,74 @@ export default defineComponent({
     });
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
+
+    const getSwiperInstance = (index) => {
+      switch (index) {
+        case 0:
+          return baccaratSwiper.value;
+        case 1:
+          return rouletteSwiper.value;
+        case 2:
+          return luckyLaceSwiper.value;
+      }
+      return null;
+    };
+
+    const getNavigationButtonStatus = (index, type) => {
+      const _swiper = getSwiperInstance(index);
+      if (!_swiper) return;
+      if (type === "prev") {
+        return _swiper.isBeginning;
+      } else {
+        return _swiper.isEnd;
+      }
+    };
+    const handleSlideNextClick = (index) => {
+      const _swiper = getSwiperInstance(index);
+      if (!_swiper) return;
+      _swiper.slideNext();
+    };
+    const handleSlidePrevClick = (index) => {
+      const _swiper = getSwiperInstance(index);
+      if (!_swiper) return;
+      _swiper.slidePrev();
+    };
+
+    const platformGamesApiUrl = store.hasToken() ? "/session/loggedInPlatformGames" : "/platformGames";
+    const platformGamesApiKey = store.hasToken() ? "LOGGEDPLATFORMGAMES" : "PLATFORMGAMES";
+
+    const loadEEAILiveGameList = () => {
+      const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+      const key = `${platformApiKey}_EEAI_LIVE_GAMES_${regDevice}`;
+      cached
+        .get(key, () =>
+          api
+            .get(platformGamesApiUrl, {
+              params: {
+                platformId: 175,
+                gameType: "LIVE",
+                device: regDevice
+              }
+            })
+            .then((res) => {
+              if (res.code === 0) {
+                return res;
+              }
+            })
+            .catch((err) => {})
+        )
+        .then((res) => {
+          res.forEach((item) => {
+            if (item.code.startsWith("101")) {
+              baccarat.value.push(item);
+            } else if (item.code.startsWith("103")) {
+              roulette.value.push(item);
+            } else if (item.code.startsWith("112")) {
+              luckyLace.value.push(item);
+            }
+          });
+        });
+    };
 
     return {
       imageLoading,
@@ -1702,6 +1888,8 @@ export default defineComponent({
       slot,
       livecasino,
       baccarat,
+      roulette,
+      luckyLace,
       hotgames,
       poker,
       fishing,
@@ -1768,7 +1956,13 @@ export default defineComponent({
       hideFloatPromo,
       movePromoFab,
       moveDomainFab,
-      gotoFloatPromo
+      gotoFloatPromo,
+      setBaccaratSwiper,
+      getNavigationButtonStatus,
+      handleSlideNextClick,
+      handleSlidePrevClick,
+      baccaratCategoryList,
+      imgURLGame
     };
   }
 });
@@ -1790,7 +1984,7 @@ export default defineComponent({
     }
 
     .headicon {
-      width: 50px;
+      width: 36px;
     }
 
     .download-txt-container {
@@ -1868,6 +2062,10 @@ export default defineComponent({
 
     .notification-section {
       position: relative;
+
+      img {
+        display: block;
+      }
 
       .notification-dot {
         position: absolute;
@@ -2034,12 +2232,16 @@ export default defineComponent({
             position: absolute;
             z-index: 2;
             top: 50%;
-            left: 16%;
+            left: 20%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             color: #7a80a1;
             transform: translate(-50%, -50%);
+
+            .redirect-button {
+              font-size: 12px;
+            }
           }
 
           .maintenance-box {
@@ -2078,7 +2280,7 @@ export default defineComponent({
             background-repeat: no-repeat;
           }
 
-          h3 {
+          .game-title-2 {
             line-height: 1rem;
             font-size: clamp(12px, 4vw, 24px);
             margin-top: 0px;
@@ -2086,9 +2288,9 @@ export default defineComponent({
             letter-spacing: 1px;
           }
 
-          span {
+          .game-title-1 {
             margin-bottom: 7px;
-            font-size: clamp(10px, 3.2vw, 24px);
+            font-size: clamp(12px, 3.2vw, 24px);
             margin-bottom: 5px;
             letter-spacing: 1px;
           }
@@ -2100,6 +2302,84 @@ export default defineComponent({
           &:active {
             filter: brightness(1.15);
             transform: translate(1px, 1px);
+          }
+        }
+      }
+
+      .game-list-inner-div {
+        margin-bottom: 14px;
+        .game-list-header-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 16px;
+          font-weight: 600;
+          color: #0e365b;
+
+          .game-list-header__title-wrapper {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            img {
+              margin-right: 4px;
+              max-width: 22px;
+            }
+          }
+
+          .game-list-header__action-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            .game-list-header__all-btn {
+              padding: 1px 12px;
+            }
+
+            a {
+              color: inherit;
+            }
+
+            .game-list-header__navigation-btn {
+              min-width: 18px;
+              min-height: 18px;
+              border-radius: 50%;
+
+              &.disabled {
+                color: #c9c9c9;
+              }
+
+              .q-icon {
+                font-size: 18px;
+              }
+            }
+
+            .q-btn {
+              background: #edf5ff;
+            }
+          }
+        }
+        .game-slide {
+          .game-bg {
+            position: relative;
+            background-size: 100% 100%;
+            aspect-ratio: 110 / 145;
+            background-repeat: no-repeat;
+            border-radius: 8px;
+            .game-title {
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translateX(-50%);
+              font-weight: 800;
+              color: #ffffff;
+              text-align: center;
+              .game-title__category {
+                font-size: clamp(10px, 5vw, 22px);
+              }
+              .game-title__name {
+                font-size: clamp(10px, 4vw, 18px);
+              }
+            }
           }
         }
       }
@@ -2674,12 +2954,28 @@ export default defineComponent({
 }
 
 .station-notice-dialog {
-  :deep(.q-card) {
-    width: 80%;
-  }
-  :deep(.q-tabs__content) {
-    background: #ececec;
+  .station-notice-tabs {
+    background: linear-gradient(180deg, #ffffff 0%, #e3efff 100%);
+    box-shadow: 0px 2px 2px 0px #ffffffcc inset, 0px 0px 5.5px 0px #c6d9ffab;
+    border-radius: 30px;
     padding: 5px 8px;
+
+    .q-tab {
+      background: radial-gradient(103.75% 103.75% at 50% -3.75%, #ffffff 0%, #deecff 100%);
+      border: 1.41px solid #ffffff;
+      box-shadow: 0px 0px 5.5px 0px #c6d9ffab;
+      font-weight: 600;
+      color: #35648f;
+
+      &.q-tab--active {
+        background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
+        color: #ffffff;
+      }
+    }
+
+    .q-tab__indicator {
+      display: none;
+    }
   }
 }
 

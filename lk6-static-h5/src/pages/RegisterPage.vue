@@ -1,225 +1,238 @@
 <template>
-  <q-form ref="regFormRef" class="q-gutter-y-md rounded-borders" @submit="onSubmit">
-    <q-input
-      height="32px"
-      rounded
-      standout
-      bg-color="grey-2"
-      hide-bottom-space
-      ref="loginNameRef"
-      v-model="regForm.loginName"
-      placeholder="4~11位包含字母和数字"
-      lazy-rules
-      :rules="[
-          (val) => (val && val.length > 0) || '请输入用户名',
-          (val) => (val && val.length >= 4 && val.length <= 11) || '用户名个数必须在4和11之间',
-          (val) => (val && /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val)) || '须以字母开头，并包含至少2个字母和1个数字',
-          (val) => (val && (val.match(/[a-zA-Z]/g) || []).length >= 2) || '须以字母开头，并包含至少2个字母和1个数字',
-          (val) => (val && /\d/.test(val)) || '须以字母开头，并包含至少2个字母和1个数字'
-      ]"
-    >
-      <template v-slot:prepend>
-        <img src="../assets/login/user-icon.svg" width="14" />
-        <span style="color: #424F72; font-size: 14px; margin-left: 8px;">用户名</span>
-      </template>
-      <template v-slot:append>
-        <img @click="clearLoginName" src="../assets/login/input-close-icon.png" style="margin-right: 3px" width="20" />
-      </template>
-    </q-input>
+  <q-form ref="regFormRef" class="rounded-borders" @submit="onSubmit">
+    <div class="login-form-inner-wrapper q-gutter-y-md">
+      <div class="input-field-wrapper">
+        <div class="input-field__label required">请输入账号</div>
+        <q-input
+          height="32px"
+          rounded
+          standout
+          bg-color="grey-2"
+          hide-bottom-space
+          ref="loginNameRef"
+          v-model="regForm.loginName"
+          placeholder="4~11位包含字母和数字"
+          lazy-rules
+          :rules="[
+            (val) => (val && val.length > 0) || '请输入用户名',
+            (val) => (val && val.length >= 4 && val.length <= 11) || '用户名个数必须在4和11之间',
+            (val) => (val && /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val)) || '须以字母开头，并包含至少2个字母和1个数字',
+            (val) => (val && (val.match(/[a-zA-Z]/g) || []).length >= 2) || '须以字母开头，并包含至少2个字母和1个数字',
+            (val) => (val && /\d/.test(val)) || '须以字母开头，并包含至少2个字母和1个数字'
+          ]"
+        >
+          <template v-slot:prepend>
+            <img src="../assets/login/user-icon.svg" width="14" />
+          </template>
+          <template v-slot:append>
+            <q-btn flat round @click="clearLoginName">
+              <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+            </q-btn>
+          </template>
+        </q-input>
+      </div>
 
-    <q-input
-      height="32px"
-      rounded
-      standout
-      bg-color="grey-2"
-      clearable
-      ref="pwdRef"
-      hide-bottom-space
-      v-model="regForm.password"
-      placeholder="请输入密码"
-      lazy-rules
-      :type="isPwd ? 'password' : 'text'"
-      :rules="[
-        (val) => (val && val.length > 0) || '请输入密码',
-        (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
-      ]"
-    >
-      <template v-slot:prepend>
-        <img src="../assets/login/pass-icon.svg" width="14" />
-        <span style="color: #424F72; font-size: 14px; margin-left: 8px;">密码</span>
-      </template>
-      <template v-slot:append>
-        <img
-          v-if="!isPwd"
-          @click="isPwd = !isPwd"
-          src="../assets/login/eye-line.png"
-          style="margin-right: 3px"
-          width="20"
-        />
-        <img
-          v-if="isPwd"
-          @click="isPwd = !isPwd"
-          src="../assets/login/eye-close-line.png"
-          style="margin-right: 3px"
-          width="20"
-        />
+      <div class="input-field-wrapper">
+        <div class="input-field__label required">请输入密码</div>
+        <q-input
+          height="32px"
+          rounded
+          standout
+          bg-color="grey-2"
+          ref="pwdRef"
+          hide-bottom-space
+          v-model="regForm.password"
+          placeholder="请输入密码"
+          lazy-rules
+          :type="isPwd ? 'password' : 'text'"
+          :rules="[
+            (val) => (val && val.length > 0) || '请输入密码',
+            (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
+          ]"
+        >
+          <template v-slot:prepend>
+            <img src="../assets/login/pass-icon.svg" width="14" />
+          </template>
+          <template v-slot:append>
+            <q-btn v-if="regForm.password" flat round @click="clearPwName">
+              <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+            </q-btn>
 
-        <!--        <q-icon-->
-        <!--            color="dark"-->
-        <!--            :name="isPwd ? 'visibility_off' : 'visibility'"-->
-        <!--            class="cursor-pointer"-->
-        <!--            @click="isPwd = !isPwd"-->
-        <!--        />-->
-      </template>
-    </q-input>
-    <div v-if="regForm.password" class="password-str-div">
-      <span
-        :class="{
-          'weak-pwd': pwdStrength == 'weak',
-          'normal-pwd': pwdStrength == 'normal',
-          'strong-pwd': pwdStrength == 'strong'
-        }"
-      >
-        弱
-      </span>
-      <span
-        :class="{
-          'normal-pwd': pwdStrength == 'normal',
-          'strong-pwd': pwdStrength == 'strong'
-        }"
-      >
-        好
-      </span>
-      <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>
+            <img
+              v-if="!isPwd"
+              @click="isPwd = !isPwd"
+              src="../assets/login/eye-line.png"
+              style="margin-right: 3px"
+              width="20"
+            />
+            <img
+              v-if="isPwd"
+              @click="isPwd = !isPwd"
+              src="../assets/login/eye-close-line.png"
+              style="margin-right: 3px"
+              width="20"
+            />
+
+            <!--        <q-icon-->
+            <!--            color="dark"-->
+            <!--            :name="isPwd ? 'visibility_off' : 'visibility'"-->
+            <!--            class="cursor-pointer"-->
+            <!--            @click="isPwd = !isPwd"-->
+            <!--        />-->
+          </template>
+        </q-input>
+      </div>
+
+      <!-- <div v-if="regForm.password" class="password-str-div">
+        <span
+          :class="{
+            'weak-pwd': pwdStrength == 'weak',
+            'normal-pwd': pwdStrength == 'normal',
+            'strong-pwd': pwdStrength == 'strong'
+          }"
+        >
+          弱
+        </span>
+        <span
+          :class="{
+            'normal-pwd': pwdStrength == 'normal',
+            'strong-pwd': pwdStrength == 'strong'
+          }"
+        >
+          好
+        </span>
+        <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>
+      </div> -->
+      <div class="input-field-wrapper">
+        <div class="input-field__label required">请再次输入密码</div>
+
+        <q-input
+          height="32px"
+          rounded
+          standout
+          bg-color="grey-2"
+          ref="confirmPwdRef"
+          hide-bottom-space
+          :type="isCfmPwd ? 'password' : 'text'"
+          v-model="regForm.confirmPwd"
+          placeholder="请再次输入密码"
+          lazy-rules
+          :rules="[
+            (val) => (val && val.length > 0) || '请输入确认密码',
+            (val) => val === regForm.password || '密码不一样',
+            (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
+          ]"
+        >
+          <template v-slot:prepend>
+            <img src="../assets/login/pass-icon.svg" width="14" />
+          </template>
+          <template v-slot:append>
+            <q-btn v-if="regForm.confirmPwd" flat round @click="clearPwConfirmName">
+              <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+            </q-btn>
+
+            <img
+              v-if="!isCfmPwd"
+              @click="isCfmPwd = !isCfmPwd"
+              src="../assets/login/eye-line.png"
+              style="margin-right: 3px"
+              width="20"
+            />
+            <img
+              v-if="isCfmPwd"
+              @click="isCfmPwd = !isCfmPwd"
+              src="../assets/login/eye-close-line.png"
+              style="margin-right: 3px"
+              width="20"
+            />
+          </template>
+        </q-input>
+      </div>
+
+      <div class="input-field-wrapper">
+        <div class="input-field__label">请输入真实姓名</div>
+        <q-input
+          height="32px"
+          rounded
+          standout
+          bg-color="grey-2"
+          ref="realNameRef"
+          hide-bottom-space
+          v-model="regForm.realName"
+          placeholder="姓名必须与提款银行卡账号一致"
+          lazy-rules
+          :rules="[
+            (val) => (val && val.length > 0) || '请输入姓名',
+            (val) => (val && val.length >= 2 && val.length <= 12) || '用户名个数必须在2和12之间'
+          ]"
+        >
+          <template v-slot:prepend>
+            <img src="../assets/login/user-icon.svg" width="14" />
+          </template>
+          <template v-slot:append>
+            <q-btn flat round @click="clearRealName">
+              <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+            </q-btn>
+          </template>
+        </q-input>
+      </div>
+
+      <div class="input-field-wrapper">
+        <div class="input-field__label">验证码</div>
+
+        <q-input
+          height="32px"
+          rounded
+          standout
+          bg-color="grey-2"
+          clearable
+          ref="verificationRef"
+          hide-bottom-space
+          type="text"
+          v-model="regForm.captchaCode"
+          placeholder="验证码"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
+        >
+          <template v-slot:append>
+            <img :src="verificationImg" @click="getCode()" />
+          </template>
+          <template v-slot:prepend>
+            <img src="../assets/login/veri-icon.svg" width="14" style="margin-right: 8px" />
+          </template>
+        </q-input>
+      </div>
+
+      <div class="input-field-wrapper">
+        <div class="input-field__label">请输入推荐码</div>
+        <q-input
+          height="32px"
+          rounded
+          standout
+          bg-color="grey-2"
+          clearable
+          ref="affiliateCodeRef"
+          hide-bottom-space
+          v-model="regForm.codeAffiliate"
+          placeholder="若不是合营下会员无需填写"
+          :readonly="hasAffiliate === true ? true : false"
+        >
+          <template v-slot:prepend>
+            <img src="../assets/login/veri-icon.svg" width="14" />
+          </template>
+        </q-input>
+      </div>
     </div>
 
-    <q-input
-      height="32px"
-      rounded
-      standout
-      bg-color="grey-2"
-      clearable
-      ref="confirmPwdRef"
-      hide-bottom-space
-      :type="isCfmPwd ? 'password' : 'text'"
-      v-model="regForm.confirmPwd"
-      placeholder="请再次输入密码"
-      lazy-rules
-      :rules="[
-        (val) => (val && val.length > 0) || '请输入确认密码',
-        (val) => val === regForm.password || '密码不一样',
-        (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
-      ]"
-    >
-      <template v-slot:prepend>
-        <img src="../assets/login/pass-icon.svg" width="14" />
-        <span style="color: #424F72; font-size: 14px; margin-left: 8px;">确认密码</span>
-      </template>
-      <template v-slot:append>
-        <img
-          v-if="!isCfmPwd"
-          @click="isCfmPwd = !isCfmPwd"
-          src="../assets/login/eye-line.png"
-          style="margin-right: 3px"
-          width="20"
-        />
-        <img
-          v-if="isCfmPwd"
-          @click="isCfmPwd = !isCfmPwd"
-          src="../assets/login/eye-close-line.png"
-          style="margin-right: 3px"
-          width="20"
-        />
-      </template>
-    </q-input>
-
-    <q-input
-      height="32px"
-      rounded
-      standout
-      bg-color="grey-2"
-      ref="realNameRef"
-      hide-bottom-space
-      v-model="regForm.realName"
-      placeholder="姓名必须与提款银行卡账号一致"
-      lazy-rules
-      :rules="[
-        (val) => (val && val.length > 0) || '请输入姓名',
-        (val) => (val && val.length >= 2 && val.length <= 12) || '用户名个数必须在2和12之间',
-        isValidName
-      ]"
-    >
-      <template v-slot:prepend>
-        <img src="../assets/login/user-icon.svg" width="14" />
-        <span style="color: #424F72; font-size: 14px; margin-left: 8px;">姓名</span>
-      </template>
-      <template v-slot:append>
-        <img @click="clearRealName" src="../assets/login/input-close-icon.png" style="margin-right: 3px" width="20" />
-      </template>
-    </q-input>
-
-    <q-input
-      height="32px"
-      rounded
-      standout
-      bg-color="grey-2"
-      clearable
-      ref="verificationRef"
-      hide-bottom-space
-      type="text"
-      v-model="regForm.captchaCode"
-      placeholder="验证码"
-      lazy-rules
-      :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
-    >
-      <template v-slot:append>
-        <img :src="verificationImg" @click="getCode()" />
-      </template>
-      <template v-slot:prepend>
-        <img src="../assets/login/veri-icon.svg" width="14" />
-        <span style="color: #424F72; font-size: 14px; margin-left: 8px;">验证码</span>
-      </template>
-    </q-input>
-
-    <q-input
-      height="32px"
-      rounded
-      standout
-      bg-color="grey-2"
-      clearable
-      ref="affiliateCodeRef"
-      hide-bottom-space
-      v-model="regForm.codeAffiliate"
-      placeholder="若不是合营下会员无需填写"
-      :readonly="hasAffiliate === true ? true : false"
-    >
-      <template v-slot:prepend>
-        <img src="../assets/login/veri-icon.svg" width="14" />
-        <span style="color: #424F72; font-size: 14px; margin-left: 8px;">推荐码</span>
-      </template>
-    </q-input>
-
     <div class="row justify-between items-center">
-      <q-btn
-        @click.prevent="onSubmit"
-        type="submit"
-        class="q-mt-md"
-        label="注册"
-        width="100%"
-        color="primary"
-        style="width: 100%; letter-spacing: 2px"
-        size="16px"
-      />
+      <q-btn @click.prevent="onSubmit" type="submit" class="login-btn q-mt-md" label="注册" width="100%" size="16px" />
 
       <q-btn
         @click.prevent="changeTab"
         type="button"
-        class="q-mt-md"
+        class="register-btn q-mt-md"
         label="登录"
         width="100%"
-        color="white"
-        text-color="#4A4A4A"
-        style="width: 100%; letter-spacing: 2px; box-shadow: 0px -2px 4px 0px #5A9DFF80 inset;"
         size="16px"
       />
     </div>
@@ -298,6 +311,16 @@ export default defineComponent({
 
     const clearRealName = () => {
       regForm.realName = "";
+      regFormRef.value.reset();
+    };
+
+    const clearPwName = () => {
+      regForm.password = "";
+      regFormRef.value.reset();
+    };
+
+    const clearPwConfirmName = () => {
+      regForm.password = "";
       regFormRef.value.reset();
     };
 
@@ -410,8 +433,8 @@ export default defineComponent({
     };
 
     const changeTab = () => {
-      context.emit('changeTab')
-    }
+      context.emit("changeTab");
+    };
 
     watch(
       () => regForm.password,
@@ -474,7 +497,9 @@ export default defineComponent({
       hasAffiliate,
       getAffiliateCode,
       changeTab,
-      validLoginName
+      validLoginName,
+      clearPwName,
+      clearPwConfirmName
     };
   }
 });

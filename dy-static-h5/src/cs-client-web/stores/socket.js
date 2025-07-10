@@ -17,6 +17,7 @@ export const useSocketStore = defineStore("socket", {
     // 连接状态
     isConnected: false,
     isInternet: false,
+    isCsPingColor: "red",
     // 消息内容
     message: "",
     // 重新连接错误
