@@ -187,11 +187,11 @@
               </div>
 
               <div class="forgetpass-div">
-                <div class="align-right">
+                <!-- <div class="align-right">
                   <span class="txt-tip" style="color: #0089ed" @click="loginType = !loginType">
                     {{ loginType ? $t("login.userNameLogin") : $t("login.phoneLogin") }}
                   </span>
-                </div>
+                </div> -->
 
                 <router-link class="txt-tip align-right" style="margin-left: auto" to="/forgot-account">
                   <span>{{ $t("login.forgotPassword") }}</span>
@@ -532,12 +532,12 @@ export default defineComponent({
 
     const changeLoginTab = () => {
       // tab.value = "login";
-      router.push("/register")
+      router.push("/register");
     };
 
     const goToRegister = () => {
-      router.push("/register")
-    }
+      router.push("/register");
+    };
 
     const otpCountdownCount = ref(0);
 
