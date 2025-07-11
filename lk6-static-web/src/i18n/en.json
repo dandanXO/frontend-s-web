@@ -4,7 +4,11 @@
     "register": "Register",
     "en": "English",
     "enterGame": "Enter Game",
-    "enterDojo": "Enter Dojo"
+    "enterDojo": "Enter Dojo",
+    "search": "Search",
+    "edit": "Edit",
+    "submit": "Submit",
+    "bind": "Bind"
   },
   "form": {
     "realName": "Real Name",
@@ -47,7 +51,16 @@
     "addWithdrawCryptoAccount": "Add Crypto Account",
     "bindWithdrawCryptoAccount": "Bind Crypto Account",
     "enterSearchGameName": "Enter game name for search",
-    "accountBalance": "Account Balance"
+    "accountBalance": "Account Balance",
+    "unlinkBankCardRecord": "Unlink Bank Card Record",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "bankName": "Crypto Acc",
+    "cardNumber": "Acc No.",
+    "cardAddress": "Address",
+    "bindTime": "Bind Time",
+    "unbindTime": "Unbind Time",
+    "gender": "Gender"
   },
   "menu": {
     "promotion": "Promo",

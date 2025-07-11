@@ -148,7 +148,7 @@
               <div class="info-tbl-row">
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">邮箱：</div>
+                    <div class="basic-info-cell title">{{$t('form.email')}}：</div>
                     <div v-if="personalState.memberInfo.email" class="basic-info-cell content">
                       {{ personalState.memberInfo.email }}
                     </div>
@@ -174,7 +174,7 @@
                         type="button"
                         @click="updateSecurityModal"
                       >
-                        验证
+                        {{ $t('btn.bind') }}
                       </button>
                     </div>
                   </div>
@@ -182,7 +182,7 @@
 
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">性别：</div>
+                    <div class="basic-info-cell title">{{$t('form.gender')}}：</div>
                     <div v-if="personalState.memberInfo.gender" class="basic-info-cell content">
                       {{ personalState.memberInfo.gender === "Male" ? "男" : "女" }}
                     </div>
@@ -207,7 +207,7 @@
                 v-if="isEdit"
                 @click="updateState"
               >
-                提交
+                {{ $t('btn.submit') }}
               </el-button>
 
               <button
@@ -220,7 +220,7 @@
                 "
                 @click="isEdit = !isEdit"
               >
-                编辑
+                {{ $t('btn.edit') }}
               </button>
             </div>
           </div>
@@ -239,7 +239,9 @@
                   style="width: 200px"
                   type="password"
                   v-model="updatePwdInfo.oldPassword"
-                  :placeholder="'请输入旧密码'"
+                  :placeholder="$t('form.pleaseEnterField', {
+            field: $t('personal.oldPassword')
+          })"
                   clearable
                   show-password
                 />
@@ -250,7 +252,9 @@
                   style="width: 200px"
                   type="password"
                   v-model="updatePwdInfo.password"
-                  :placeholder="'请输入新密码'"
+                  :placeholder="$t('form.pleaseEnterField', {
+            field: $t('personal.newPassword')
+          })"
                   clearable
                   show-password
                 />
@@ -260,7 +264,9 @@
                   style="width: 200px"
                   type="password"
                   v-model="updatePwdInfo.confirmPassword"
-                  :placeholder="'请再次输入新密码'"
+                  :placeholder="$t('form.pleaseEnterField', {
+            field: $t('personal.confirmPassword')
+          })"
                   clearable
                   show-password
                 />
@@ -491,6 +497,7 @@ import WithdrawBank from "@/components/account/WithdrawBank.vue";
 import { useRouter } from "vue-router";
 import { ElMessageBox } from "element-plus";
 import { useLocalStorage } from "@vueuse/core";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PersonalView",
@@ -498,6 +505,7 @@ export default defineComponent({
     WithdrawBank
   },
   setup() {
+    const { t } = useI18n();
     const notify = useNotify();
     // Send Verification Code
     const emailKey = `emailKey`;
@@ -999,7 +1007,9 @@ export default defineComponent({
       oldPassword: [
         {
           required: true,
-          message: "请输入旧密码",
+          message: t('form.pleaseEnterField', {
+            field: t('personal.oldPassword')
+          }),
           trigger: "blur"
         },
         {

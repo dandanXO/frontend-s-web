@@ -4,7 +4,11 @@
     "register": "注册",
     "zh": "简体中文",
     "enterGame": "进入游戏",
-    "enterDojo": "进入场馆"
+    "enterDojo": "进入场馆",
+    "search": "搜索",
+    "edit": "编辑",
+    "submit": "提交",
+    "bind": "绑定"
   },
   "form": {
     "realName": "姓名",
@@ -47,7 +51,16 @@
     "addWithdrawCryptoAccount": "添加虚拟币账户",
     "bindWithdrawCryptoAccount": "绑定虚拟币账户",
     "enterSearchGameName": "输入查找游戏名",
-    "accountBalance": "账户余额"
+    "accountBalance": "账户余额",
+    "unlinkBankCardRecord": "解绑银行卡记录",
+    "startDate": "开始日期",
+    "endDate": "结束日期",
+    "bankName": "虚拟币账户",
+    "cardNumber": "账户",
+    "cardAddress": "地址",
+    "bindTime": "绑定时间",
+    "unbindTime": "解绑时间",
+    "gender": "性别"
   },
   "menu": {
     "promotion": "优惠",

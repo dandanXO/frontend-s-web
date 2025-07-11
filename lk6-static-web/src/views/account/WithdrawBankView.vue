@@ -43,34 +43,34 @@
       </div>
     </div>
     <div class="account-title-container bindunbind">
-      <span class="account-title">解绑银行卡记录</span>
+      <span class="account-title">{{ $t('form.unlinkBankCardRecord') }}</span>
     </div>
     <div class="account-content last bindunbind">
       <div class="searchbar">
         <el-form layout="inline" :model="searchForm">
           <div class="left">
-            <el-form-item label="开始日期">
+            <el-form-item :label="$t('form.startDate')">
               <el-date-picker
                 v-model="searchForm.startDate"
                 show-time
                 type="date"
-                placeholder="开始日期"
+                :placeholder="$t('form.startDate')"
                 valueFormat="YYYY-MM-DD"
                 format="YYYY-MM-DD"
               />
             </el-form-item>
-            <el-form-item label="结束日期">
+            <el-form-item :label="$t('form.endDate')">
               <el-date-picker
                 v-model="searchForm.endDate"
                 show-time
                 type="date"
-                placeholder="结束日期"
+                :placeholder="$t('form.endDate')"
                 valueFormat="YYYY-MM-DD"
                 format="YYYY-MM-DD"
               />
             </el-form-item>
             <el-form-item>
-              <el-button class="common-btn" @click="searchRecord()">搜索</el-button>
+              <el-button class="common-btn" @click="searchRecord()">{{ $t('btn.search') }}</el-button>
             </el-form-item>
           </div>
         </el-form>
