@@ -285,7 +285,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             }
           })
           .then((response) => {
-            console.log(response);
             $q.loading.hide();
 
             let srcData = response.data;
