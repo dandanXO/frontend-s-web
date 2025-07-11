@@ -45,7 +45,8 @@
     "contactSupport": "联系客服",
     "withdrawCryptoAccount": "提款虚拟币账户",
     "addWithdrawCryptoAccount": "添加虚拟币账户",
-    "bindWithdrawCryptoAccount": "绑定虚拟币账户"
+    "bindWithdrawCryptoAccount": "绑定虚拟币账户",
+    "enterSearchGameName": "输入查找游戏名"
   },
   "menu": {
     "promotion": "优惠",

@@ -45,7 +45,8 @@
     "contactSupport": "Contact Support",
     "withdrawCryptoAccount": "Withdraw Crypto Account",
     "addWithdrawCryptoAccount": "Add Crypto Account",
-    "bindWithdrawCryptoAccount": "Bind Crypto Account"
+    "bindWithdrawCryptoAccount": "Bind Crypto Account",
+    "enterSearchGameName": "Enter game name for search"
   },
   "menu": {
     "promotion": "Promo",
