@@ -18,23 +18,23 @@
           </template>
         </q-input>
       </div>
-      <div class="mb-12">
-        <q-input
-          ref="realNameRef"
-          class="q-pb-xs"
-          hide-bottom-space
-          v-model="formDetail.realName"
-          :placeholder="$t('personal.form.realName.placeholder')"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || $t('personal.form.realName.error.required')]"
-          :readonly="personalState.memberInfo.realName ? true : false"
-        >
-          <template v-slot:prepend>
-            <!-- <q-icon name="badge" class="material-icons-outlined" /> -->
-            <label class="header-label">{{ $t("personal.form.realName.label") }}&#12288;&#12288;</label>
-          </template>
-        </q-input>
-      </div>
+<!--      <div class="mb-12">-->
+<!--        <q-input-->
+<!--          ref="realNameRef"-->
+<!--          class="q-pb-xs"-->
+<!--          hide-bottom-space-->
+<!--          v-model="formDetail.realName"-->
+<!--          :placeholder="$t('personal.form.realName.placeholder')"-->
+<!--          lazy-rules-->
+<!--          :rules="[(val) => (val && val.length > 0) || $t('personal.form.realName.error.required')]"-->
+<!--          :readonly="personalState.memberInfo.realName ? true : false"-->
+<!--        >-->
+<!--          <template v-slot:prepend>-->
+<!--            &lt;!&ndash; <q-icon name="badge" class="material-icons-outlined" /> &ndash;&gt;-->
+<!--            <label class="header-label">{{ $t("personal.form.realName.label") }}&#12288;&#12288;</label>-->
+<!--          </template>-->
+<!--        </q-input>-->
+<!--      </div>-->
       <div class="mb-12">
         <q-input
           ref="birthdayRef"
@@ -164,7 +164,7 @@
 
       <div class="notification-text">
         <i18n-t keypath="personal.alert">
-          <router-link class="notification-text__link" :to="chatPage">{{ $t("personal.cs") }}</router-link>
+          <div class="notification-text__link" @click="chatPage">{{ $t("personal.cs") }}</div>
         </i18n-t>
       </div>
 
@@ -240,16 +240,12 @@ export default defineComponent({
     const initialBirthday = ref()
     const showDatePickerPopup = ref(false);
 
-    const chatPage = computed(() => {
-      if (store.chatGuid) {
-        let url = `/liveChat/chat?uid=${store.chatGuid}`;
-        if (store.token) {
-          url += `&token=${store.token}`;
-        }
-        return url;
-      }
-      return "/liveChat";
-    });
+    const chatPage =() => {
+      window.open(
+        "https://8xjp0t3ydi.ipbr7k9r.com/chatwindow.aspx?siteId=65001994&planId=099fb0e7-cad5-43d0-aa03-2ed2257e0e12",
+        "_blank"
+      );
+    };
 
     const loadInfo = () => {
       personalState.memberInfo = userStore();
@@ -651,6 +647,7 @@ export default defineComponent({
     .notification-text__link {
       text-decoration: underline;
       color: #458bff;
+      display: inline-block;
     }
   }
   .date-picker-btn {
