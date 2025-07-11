@@ -28,7 +28,8 @@
             </div>
           </div>
         </div>
-        <div class="promo-list-wrapper">
+        <LoadingComponent v-if="isLoading" />
+        <div class="promo-list-wrapper" v-else>
           <div
             class="promo-item glow-effect wobble-effect"
             v-for="(promo, i) in filteredArray"
@@ -199,11 +200,13 @@ import { useLocalStorage } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
+import LoadingComponent from "@/components/menu/LoadingComponent.vue";
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
+    LoadingComponent
   },
   setup() {
     const i18nStoreLanguage = i18nStore()
@@ -243,7 +246,7 @@ export default defineComponent({
     const router = useRouter();
 
     const notify = useNotify();
-
+    const isLoading = ref(false);
     const countDay = ref(5);
     const euroCupStartDate = moment("2024-06-15");
     countDay.value = euroCupStartDate.diff(moment(), "days");
@@ -309,6 +312,8 @@ export default defineComponent({
       }
     };
     const loadAll = async () => {
+      isLoading.value = true;
+      
       await loadPromoTypes().then((res) => {
         if (res.length > 0) {
           // promoTypes.value = [];
@@ -325,6 +330,7 @@ export default defineComponent({
         } else {
           console.warn('No promo types loaded, using default promo types.');
         }
+        isLoading.value = false;
       });
       loadPromo()
         .then((res) => {
@@ -361,6 +367,9 @@ export default defineComponent({
         })
         .catch((e) => {
           console.log("error", e);
+          isLoading.value = false;
+        }).finally(() => {
+          isLoading.value = false;
         });
       switchPromoType(promoState.active);
     };
@@ -422,7 +431,8 @@ export default defineComponent({
       imgURL,
       getPromoLabel,
       countDay,
-      languageVal
+      languageVal,
+      isLoading
     };
   }
 });
