@@ -450,7 +450,7 @@ export default defineComponent({
     };
 
     const getImageLink = (linkId) => {
-      reminderForm.photos = `/${linkId}`;
+      reminderForm.photos = linkId;
     };
 
     const submitReminder = () => {
@@ -460,7 +460,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "bottom",
-          message: t("common.uploadFileRequired.message"),
+          message: t("common.notification.uploadFileRequired.message"),
           icon: "report_problem"
         });
         return;
