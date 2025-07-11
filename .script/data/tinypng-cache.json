@@ -15066,7 +15066,7 @@
   "lk6-static-h5/src/assets/index/slide-sport-icon.png": "8cd39a05018ca9a905d3ae95d937b288",
   "lk6-static-h5/src/assets/index/slide-live-icon.png": "62964e905c02e0afbe9e36085168fc05",
   "lk6-static-h5/src/assets/index/refresh-bal-icon.png": "0737318a226a5fe3e124564f76ec2df7",
-  "lk6-static-h5/src/assets/index/logo.png": "b174e3c0150a924dc197f870ae132db6",
+  "lk6-static-h5/src/assets/index/logo.png": "b1d2c09345a517786408e586c83e8000",
   "lk6-static-h5/src/assets/index/logo-char.png": "fb28a41ff0e1cb7efd96fd114b38d715",
   "lk6-static-h5/src/assets/index/diamon-vip.png": "064bcc0d7ae44aeaa89eecd6b33b314a",
   "lk6-static-h5/src/assets/index/sport/slide-sport-pm.png": "a710e5ce594b9aa9ba296052bec4bbab",
@@ -31479,5 +31479,15 @@
   "lk6-static-h5/src/assets/images/home/announcement/tab-inbox-active.png": "fa175445d92dc2e8f3df8769585058fb",
   "lk6-static-h5/src/assets/images/index/primary-white-btn.png": "f4273d6b8028ea6f28a0fac947b4338b",
   "lk6-static-h5/src/assets/index/home-hot-match-icon-en.png": "507f1ca3005c48a4fbc6ee50bb947e31",
-  "lk6-static-h5/src/assets/index/home-hot-match-icon-zh.png": "94b50de47484d4b9a54bc09d414205d3"
+  "lk6-static-h5/src/assets/index/home-hot-match-icon-zh.png": "94b50de47484d4b9a54bc09d414205d3",
+  "lk6-static-h5/src/assets/images/index/menu/ft-home-active.png": "7dd45fe9c9290c196fca7b43884dc10e",
+  "lk6-static-h5/src/assets/images/index/menu/ft-home.png": "576dca6e16dc4bc55b5197240209582b",
+  "lk6-static-h5/src/assets/images/index/menu/ft-livechat-active.png": "da417b87bda9ed70150a8dd79c906898",
+  "lk6-static-h5/src/assets/images/index/menu/ft-livechat.png": "42e8fc68d6830333d3ea5801a89f9b3f",
+  "lk6-static-h5/src/assets/images/index/menu/ft-me-active.png": "93480262f7ffc1e731e9be0e4efd0fbd",
+  "lk6-static-h5/src/assets/images/index/menu/ft-me.png": "d7c57a75a25d363f41fa849f354803e9",
+  "lk6-static-h5/src/assets/images/index/menu/ft-promo-active.png": "ad31dd4e889b32e35b20bc9c681ee989",
+  "lk6-static-h5/src/assets/images/index/menu/ft-promo.png": "8538d186fbcb6c91496890302fcc35d8",
+  "lk6-static-h5/src/assets/index/home-deposit-icon.png": "5b4b15ba3d43583706c376bb4a375ed1",
+  "lk6-static-h5/src/assets/index/home-withdrawal-icon.png": "242be4599717daa3de9a0bcd4355cedc"
 }

@@ -1,7 +1,6 @@
 <template>
   <q-layout view="hHh Lpr fFf">
-    <q-header v-if="hasPage" class="page-wrapper"
-         >
+    <q-header v-if="hasPage" class="page-wrapper">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
           <router-link to="/">
@@ -50,26 +49,26 @@
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-primary text-white" :breakpoint="0" align="justify">
         <q-route-tab to="/" name="home" exact>
-          <img class="inactive" src="../assets/images/index/menu/ft-home.svg" />
-          <img class="hover" src="../assets/images/index/menu/ft-home-active.svg" />
+          <img class="inactive" src="../assets/images/index/menu/ft-home.png" />
+          <img class="hover" src="../assets/images/index/menu/ft-home-active.png" />
           {{ $t("layout.footer.home") }}
         </q-route-tab>
 
         <q-route-tab to="/promo" name="promo">
-          <img class="inactive" src="../assets/images/index/menu/ft-promo.svg" />
-          <img class="hover" src="../assets/images/index/menu/ft-promo-active.svg" />
+          <img class="inactive" src="../assets/images/index/menu/ft-promo.png" />
+          <img class="hover" src="../assets/images/index/menu/ft-promo-active.png" />
           {{ $t("layout.footer.promo") }}
         </q-route-tab>
 
         <q-route-tab to="" name="chat" @click="handleLiveChatClick">
-          <img class="inactive" src="../assets/images/index/menu/ft-livechat.svg" />
-          <img class="hover filtericon" src="../assets/images/index/menu/ft-livechat.svg" />
+          <img class="inactive" src="../assets/images/index/menu/ft-livechat.png" />
+          <img class="hover filtericon" src="../assets/images/index/menu/ft-livechat.png" />
           {{ $t("layout.footer.liveChat") }}
         </q-route-tab>
 
         <q-route-tab to="/account" name="account">
-          <img class="inactive" src="../assets/images/index/menu/ft-me.svg" />
-          <img class="hover" src="../assets/images/index/menu/ft-me-active.svg" />
+          <img class="inactive" src="../assets/images/index/menu/ft-me.png" />
+          <img class="hover" src="../assets/images/index/menu/ft-me-active.png" />
           {{ $t("layout.footer.me") }}
         </q-route-tab>
       </q-tabs>
@@ -179,7 +178,7 @@ export default defineComponent({
           prevPage.value = "";
           hasPage.value = true;
           pageName.value = t("btn.register");
-        }else if (route.path === "/forgot-account") {
+        } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;
           pageName.value = t("layout.header.forgotPassword");
@@ -556,7 +555,6 @@ svg path {
   background: transparent;
   padding-top: 0px;
   background-size: cover;
-
 }
 
 .page-title {
