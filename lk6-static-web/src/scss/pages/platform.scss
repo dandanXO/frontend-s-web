@@ -595,6 +595,7 @@
               }
             }
           }
+          
 
           .slot-img {
             width: 100%;
@@ -654,6 +655,20 @@
             font-size: 25px;
             line-height: 30px;
             font-family: sans-serif;
+          }
+        }
+
+        &.en {
+            a {
+            &::before {
+              background-image: url(../../assets/game/play-en.png);
+              background-repeat: no-repeat;
+              background-position: center center;
+              background-size: 70%;
+            }
+
+            &:hover {
+            }
           }
         }
       }
