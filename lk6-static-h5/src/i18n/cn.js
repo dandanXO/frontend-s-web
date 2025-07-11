@@ -649,6 +649,7 @@ export default {
     userNameLogin: "用户名登录",
     phoneLogin: "手机号码登录",
     forgotPassword: "忘记密码？",
+    forgotPasswordTip: "请联系客服找回密码 {0}",
     rememberPassword: "记住密码",
     cs: "联系客服",
     loggingIn: "登录中...",
@@ -899,7 +900,7 @@ export default {
   },
   tianaiCaptcha: {
     tipsError: "验证失败，请重新尝试!",
-    tipsSuccess: "验证成功,耗时{s}秒",
+    tipsSuccess: "验证成功,耗时%s秒",
     sliderTitle: "拖动滑块完成拼图",
     concatTitle: "拖动滑块完成拼图",
     imageClickTitle: "请依次点击下列图片",

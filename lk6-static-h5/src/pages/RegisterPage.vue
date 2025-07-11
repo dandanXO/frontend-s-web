@@ -3,7 +3,7 @@
     <div class="form-container">
       <q-form ref="regFormRef" class="rounded-borders" @submit="onSubmit">
         <div class="login-form-inner-wrapper q-gutter-y-md">
-          <div class="input-field-wrapper" style="margin-top: 0px;">
+          <div class="input-field-wrapper" style="margin-top: 0px">
             <div class="input-field__label required">{{ $t("register.form.userName.label") }}</div>
             <q-input
               height="32px"
@@ -15,12 +15,13 @@
               :placeholder="$t('register.form.userName.placeholder', { min: 4, max: 11 })"
               lazy-rules
               :rules="[
-            (val) => (val && val.length > 0) || $t('register.form.userName.error.required'),
-            (val) => (val && val.length >= 4 && val.length <= 11) || $t('register.form.userName.error.length'),
-            (val) => (val && /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val)) || $t('register.form.userName.error.format'),
-            (val) => (val && (val.match(/[a-zA-Z]/g) || []).length >= 2) || $t('register.form.userName.error.format'),
-            (val) => (val && /\d/.test(val)) || $t('register.form.userName.error.format')
-          ]"
+                (val) => (val && val.length > 0) || $t('register.form.userName.error.required'),
+                (val) => (val && val.length >= 4 && val.length <= 11) || $t('register.form.userName.error.length'),
+                (val) => (val && /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val)) || $t('register.form.userName.error.format'),
+                (val) =>
+                  (val && (val.match(/[a-zA-Z]/g) || []).length >= 2) || $t('register.form.userName.error.format'),
+                (val) => (val && /\d/.test(val)) || $t('register.form.userName.error.format')
+              ]"
             >
               <template v-slot:prepend>
                 <img src="../assets/login/user-icon.svg" width="14" />
@@ -46,10 +47,10 @@
               lazy-rules
               :type="isPwd ? 'password' : 'text'"
               :rules="[
-            (val) => (val && val.length > 0) || $t('register.form.password.error.required'),
-            (val) =>
-              (val.length > 5 && val.length <= 12) || $t('register.form.password.error.length', { min: 6, max: 12 })
-          ]"
+                (val) => (val && val.length > 0) || $t('register.form.password.error.required'),
+                (val) =>
+                  (val.length > 5 && val.length <= 12) || $t('register.form.password.error.length', { min: 6, max: 12 })
+              ]"
             >
               <template v-slot:prepend>
                 <img src="../assets/login/pass-icon.svg" width="14" />
@@ -118,12 +119,12 @@
               :placeholder="$t('register.form.passwordConfirm.placeholder')"
               lazy-rules
               :rules="[
-            (val) => (val && val.length > 0) || $t('register.form.passwordConfirm.error.required'),
-            (val) => val === regForm.password || $t('register.form.passwordConfirm.error.match'),
-            (val) =>
-              (val.length > 5 && val.length <= 12) ||
-              $t('register.form.passwordConfirm.error.length', { min: 6, max: 12 })
-          ]"
+                (val) => (val && val.length > 0) || $t('register.form.passwordConfirm.error.required'),
+                (val) => val === regForm.password || $t('register.form.passwordConfirm.error.match'),
+                (val) =>
+                  (val.length > 5 && val.length <= 12) ||
+                  $t('register.form.passwordConfirm.error.length', { min: 6, max: 12 })
+              ]"
             >
               <template v-slot:prepend>
                 <img src="../assets/login/pass-icon.svg" width="14" />
@@ -151,36 +152,36 @@
             </q-input>
           </div>
 
-<!--          <div class="input-field-wrapper">-->
-<!--            <div class="input-field__label">{{ $t("register.form.realName.label") }}</div>-->
-<!--            <q-input-->
-<!--              height="32px"-->
-<!--              standout-->
-<!--              bg-color="grey-2"-->
-<!--              ref="realNameRef"-->
-<!--              hide-bottom-space-->
-<!--              v-model="regForm.realName"-->
-<!--              :placeholder="$t('register.form.realName.placeholder')"-->
-<!--              lazy-rules-->
-<!--              :rules="[-->
-<!--            (val) => (val && val.length > 0) || t('register.form.realName.error.required'),-->
-<!--            (val) =>-->
-<!--              (val && val.length >= 2 && val.length <= 12) ||-->
-<!--              t('register.form.realName.error.required', { min: 2, max: 12 })-->
-<!--          ]"-->
-<!--            >-->
-<!--              <template v-slot:prepend>-->
-<!--                <img src="../assets/login/user-icon.svg" width="14" />-->
-<!--              </template>-->
-<!--              <template v-slot:append>-->
-<!--                <q-btn flat round @click="clearRealName">-->
-<!--                  <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />-->
-<!--                </q-btn>-->
-<!--              </template>-->
-<!--            </q-input>-->
-<!--          </div>-->
+          <!--          <div class="input-field-wrapper">-->
+          <!--            <div class="input-field__label">{{ $t("register.form.realName.label") }}</div>-->
+          <!--            <q-input-->
+          <!--              height="32px"-->
+          <!--              standout-->
+          <!--              bg-color="grey-2"-->
+          <!--              ref="realNameRef"-->
+          <!--              hide-bottom-space-->
+          <!--              v-model="regForm.realName"-->
+          <!--              :placeholder="$t('register.form.realName.placeholder')"-->
+          <!--              lazy-rules-->
+          <!--              :rules="[-->
+          <!--            (val) => (val && val.length > 0) || t('register.form.realName.error.required'),-->
+          <!--            (val) =>-->
+          <!--              (val && val.length >= 2 && val.length <= 12) ||-->
+          <!--              t('register.form.realName.error.required', { min: 2, max: 12 })-->
+          <!--          ]"-->
+          <!--            >-->
+          <!--              <template v-slot:prepend>-->
+          <!--                <img src="../assets/login/user-icon.svg" width="14" />-->
+          <!--              </template>-->
+          <!--              <template v-slot:append>-->
+          <!--                <q-btn flat round @click="clearRealName">-->
+          <!--                  <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />-->
+          <!--                </q-btn>-->
+          <!--              </template>-->
+          <!--            </q-input>-->
+          <!--          </div>-->
 
-          <div class="input-field-wrapper">
+          <!-- <div class="input-field-wrapper">
             <div class="input-field__label">{{ $t("register.form.verificationCode.label") }}</div>
 
             <q-input
@@ -195,8 +196,8 @@
               :placeholder="$t('register.form.verificationCode.placeholder')"
               lazy-rules
               :rules="[
-            (val) => (val && val.length > 3 && val.length < 5) || $t('register.form.verificationCode.error.format')
-          ]"
+                (val) => (val && val.length > 3 && val.length < 5) || $t('register.form.verificationCode.error.format')
+              ]"
             >
               <template v-slot:append>
                 <img :src="verificationImg" @click="getCode()" />
@@ -205,7 +206,7 @@
                 <img src="../assets/login/veri-icon.svg" width="14" style="margin-right: 8px" />
               </template>
             </q-input>
-          </div>
+          </div> -->
 
           <div class="input-field-wrapper">
             <div class="input-field__label">{{ $t("register.form.affiliateCode.label") }}</div>
@@ -237,21 +238,23 @@
             size="16px"
           />
 
-          <span class="login-click" @click="changeTab">{{ $t('login.alreadyGotAcc') }}<span class="text-blue-a1">{{ $t('login.loginnow') }}</span></span>
-<!--          <q-btn-->
-<!--            @click.prevent="changeTab"-->
-<!--            type="button"-->
-<!--            class="register-btn q-mt-md"-->
-<!--            :label="$t('btn.login')"-->
-<!--            width="100%"-->
-<!--            size="16px"-->
-<!--          />-->
+          <span class="login-click" @click="changeTab">
+            {{ $t("login.alreadyGotAcc") }}
+            <span class="text-blue-a1">{{ $t("login.loginnow") }}</span>
+          </span>
+          <!--          <q-btn-->
+          <!--            @click.prevent="changeTab"-->
+          <!--            type="button"-->
+          <!--            class="register-btn q-mt-md"-->
+          <!--            :label="$t('btn.login')"-->
+          <!--            width="100%"-->
+          <!--            size="16px"-->
+          <!--          />-->
         </div>
       </q-form>
     </div>
-
+    <div id="captcha-box" />
   </div>
-
 </template>
 
 <script>
@@ -367,6 +370,8 @@ export default defineComponent({
       return namePattern.test(regForm.loginName) || "用户名不允许使用特殊字符";
     };
 
+    const sidParam = store.visitorId;
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -374,85 +379,190 @@ export default defineComponent({
       // telRef.value.validate();
       // emailRef.value.validate();
       // realNameRef.value.validate();
-      verificationRef.value.validate();
-      $q.loading.show({
-        message: t("register.registering")
-      });
-      if (
-        loginNameRef.value.hasError ||
-        pwdRef.value.hasError ||
-        confirmPwdRef.value.hasError ||
-        // telRef.value.hasError ||
-        // emailRef.value.hasError ||
-        // realNameRef.value.hasError ||
-        verificationRef.value.hasError
-      ) {
-        $q.loading.hide();
-      } else {
-        var qs = require("qs");
-        const sidParam = store.visitorId;
-        (async () => {
-          regForm.sid = sidParam;
-          regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
-          if ("standalone" in window.navigator && window.navigator.standalone) {
-            regForm.regDevice = "IOS";
-          } else {
-            regForm.regDevice = Platform.is.mobile ? "H5" : "WEB";
-            if (Platform.is.capacitor) {
-              if (Platform.is.android) {
-                regForm.regDevice = "ANDROID";
-              }
-            }
-          }
-          api
-            .post("/member/fbRegister", qs.stringify(regForm))
-            // .post("/member/register", qs.stringify(regForm))
-            .then((ret) => {
-              const res = ret;
-              // console.log("RET");
-              // console.log(ret);
-              if (res.code === 0) {
-                $q.notify({
-                  color: "positive",
-                  position: "top",
-                  message: t("register.notification.registerSuccess.message"),
-                  icon: "check_circle_outline"
-                });
-                store.autoLogin(res.data);
-                sessionStorage.removeItem("REFERRAL_CODE");
-                // debugger;
-                if (store.hasToken()) {
-                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.go(jumpUrl);
-                  if (Platform.is.capacitor && Platform.is.ios) {
-                    location.reload();
-                  }
-                }
-                // context.emit("changeTab");
-                // router.push({ path: "/" });
-
-                sessionStorage.removeItem("REFERRAL_CODE");
-              } else {
-                $q.notify({
-                  color: "negative",
-                  position: "top",
-                  message: res.message,
-                  icon: "report_problem"
-                });
-              }
-              $q.loading.hide();
-            })
-            .catch((error) => {
-              $q.loading.hide();
-            });
-          getCode();
-        })();
+      // verificationRef.value.validate();
+      if (loginNameRef.value.hasError || pwdRef.value.hasError || confirmPwdRef.value.hasError) {
+        return;
       }
+      const regDevice = Platform.is.mobile ? "H5" : "WEB";
+      config.loginData = {
+        loginName: regForm.loginName,
+        realName: regForm.loginName,
+        sid: sidParam,
+        codeAffiliate: regForm.codeAffiliate,
+        regHost: regForm.regHost,
+        regDevice: regDevice,
+        password: regForm.password,
+        confirmPwd: regForm.confirmPwd,
+        type: "SLIDER"
+      };
+      window
+        .initTAC("./tac", config, style)
+        .then((tac) => {
+          tac.init();
+        })
+        .catch((error) => {
+          console.log("initTAC fail:", error);
+        });
+      // $q.loading.show({
+      //   message: t("register.registering")
+      // });
+      // if (
+      //   loginNameRef.value.hasError ||
+      //   pwdRef.value.hasError ||
+      //   confirmPwdRef.value.hasError ||
+      //   // telRef.value.hasError ||
+      //   // emailRef.value.hasError ||
+      //   // realNameRef.value.hasError ||
+      //   verificationRef.value.hasError
+      // ) {
+      //   $q.loading.hide();
+      // } else {
+      //   var qs = require("qs");
+      //   const sidParam = store.visitorId;
+      //   (async () => {
+      //     regForm.realName = regForm.loginName;
+      //     regForm.sid = sidParam;
+      //     regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
+      //     if ("standalone" in window.navigator && window.navigator.standalone) {
+      //       regForm.regDevice = "IOS";
+      //     } else {
+      //       regForm.regDevice = Platform.is.mobile ? "H5" : "WEB";
+      //       if (Platform.is.capacitor) {
+      //         if (Platform.is.android) {
+      //           regForm.regDevice = "ANDROID";
+      //         }
+      //       }
+      //     }
+      //     api
+      //       .post("/member/fbRegister", qs.stringify(regForm))
+      //       // .post("/member/register", qs.stringify(regForm))
+      //       .then((ret) => {
+      //         const res = ret;
+      //         // console.log("RET");
+      //         // console.log(ret);
+      //         if (res.code === 0) {
+      //           $q.notify({
+      //             color: "positive",
+      //             position: "top",
+      //             message: t("register.notification.registerSuccess.message"),
+      //             icon: "check_circle_outline"
+      //           });
+      //           store.autoLogin(res.data);
+      //           sessionStorage.removeItem("REFERRAL_CODE");
+      //           // debugger;
+      //           if (store.hasToken()) {
+      //             const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+      //             router.go(jumpUrl);
+      //             if (Platform.is.capacitor && Platform.is.ios) {
+      //               location.reload();
+      //             }
+      //           }
+      //           // context.emit("changeTab");
+      //           // router.push({ path: "/" });
+
+      //           sessionStorage.removeItem("REFERRAL_CODE");
+      //         } else {
+      //           $q.notify({
+      //             color: "negative",
+      //             position: "top",
+      //             message: res.message,
+      //             icon: "report_problem"
+      //           });
+      //         }
+      //         $q.loading.hide();
+      //       })
+      //       .catch((error) => {
+      //         $q.loading.hide();
+      //       });
+      //     getCode();
+      //   })();
+      // }
     };
 
     const changeTab = () => {
       // context.emit("changeTab");
-      router.push("/login")
+      router.push("/login");
+    };
+
+    const config = {
+      // 生成接口 (必选项,必须配置, 要符合tianai-captcha默认验证码生成接口规范)
+      requestCaptchaDataUrl: `${api.defaults.baseURL}/member/getCaptcha`,
+      // 验证接口 (必选项,必须配置, 要符合tianai-captcha默认验证码校验接口规范)
+      validCaptchaUrl: `${api.defaults.baseURL}/member/fbRegister`,
+      // 验证码绑定的div块 (必选项,必须配置)
+      bindEl: "#captcha-box",
+      // 验证码类型, 登陆信息
+      loginData: {
+        loginName: regForm.loginName,
+        password: regForm.password,
+        sid: sidParam,
+        summoner: regForm.summoner,
+        type: "SLIDER"
+      },
+      requestHeaders: {
+        Authorization: process.env.SITE
+      },
+      translate: (code) => {
+        return t(`error.${code}`);
+      },
+      // 验证成功回调函数(必选项,必须配置)
+      validSuccess: (res, c, tac) => {
+        // 销毁验证码服务
+        tac.destroyWindow();
+        console.log("验证成功，后端返回的数据为", res);
+        store.token = res.data;
+        store.setToken(res.data);
+        store.getMemberInfo();
+        store.getBalance();
+        // store.getUnreadMail();
+        // 调用具体的login方法
+        const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+
+        if (store.token) {
+          sessionStorage.removeItem("REFERRAL_CODE");
+
+          regFormRef.value.reset();
+          router.push(jumpUrl);
+          if (Platform.is.capacitor && Platform.is.ios) {
+            location.reload();
+          }
+        }
+      },
+      // 验证失败的回调函数(可忽略，如果不自定义 validFail 方法时，会使用默认的)
+      validFail: (res, c, tac) => {
+        console.log(tac);
+        console.log("验证码验证失败回调...");
+
+        if (res.code === 800) {
+          // 验证失败后重新拉取验证码
+          tac.reloadCaptcha();
+        } else {
+          // 其他错误则关闭验证
+          tac.destroyWindow();
+        }
+      },
+      // 刷新按钮回调事件
+      btnRefreshFun: (el, tac) => {
+        console.log("刷新按钮触发事件...");
+        tac.reloadCaptcha();
+      },
+      // 关闭按钮回调事件
+      btnCloseFun: (el, tac) => {
+        console.log("关闭按钮触发事件...");
+        tac.destroyWindow();
+      }
+    };
+
+    const style = {
+      logoUrl: null,
+      i18n: {
+        tips_error: t("tianaiCaptcha.tipsError"),
+        tips_success: t("tianaiCaptcha.tipsSuccess"),
+        slider_title: t("tianaiCaptcha.sliderTitle"),
+        concat_title: t("tianaiCaptcha.concatTitle"),
+        image_click_title: t("tianaiCaptcha.imageClickTitle"),
+        rotate_title: t("tianaiCaptcha.rotateTitle")
+      }
     };
 
     watch(
@@ -599,7 +709,7 @@ function charType(num) {
 
     .q-field__control {
       height: 45px;
-      border-radius:8px;
+      border-radius: 8px;
 
       .q-field__marginal {
         height: 45px;
@@ -816,12 +926,11 @@ function charType(num) {
     margin-right: 5px;
   }
 
-  .register-btn-lists{
+  .register-btn-lists {
     width: calc(100% - 32px);
     margin: auto;
   }
 }
-
 
 .page-header {
   background-image: linear-gradient(to right, #de4545, #db7e42);
@@ -882,28 +991,25 @@ function charType(num) {
   }
 }
 
-.login-click{
-  width:50%;
+.login-click {
+  width: 50%;
   text-align: center;
   margin: 20px auto;
 }
 
-.text-blue-a1{
-  color: #1E86FF;
+.text-blue-a1 {
+  color: #1e86ff;
 }
 
-:deep(.q-field--standout .q-field__control){
-  border: 1px solid #ECEDF0;
+:deep(.q-field--standout .q-field__control) {
+  border: 1px solid #ecedf0;
   border-radius: 8px;
-  box-shadow: 0px 0px 5px 0px #86B8FF inset;
+  box-shadow: 0px 0px 5px 0px #86b8ff inset;
   background: #fff;
-  box-shadow: 0px 2px 0px 0px #9AB0FF70;
-
+  box-shadow: 0px 2px 0px 0px #9ab0ff70;
 }
 
-:deep(.q-field--standout.q-field--highlighted .q-field__native){
+:deep(.q-field--standout.q-field--highlighted .q-field__native) {
   color: #000;
 }
-
 </style>
-

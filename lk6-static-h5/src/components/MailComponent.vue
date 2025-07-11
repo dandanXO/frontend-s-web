@@ -77,7 +77,7 @@
                     <img src="../assets/images/inbox/unread-mail.svg" />
                   </div>
 
-                  <div v-html="det.title" class="title-text" :title="det.title"></div>
+                  <div class="title-text" :title="det.title">{{ det.strTitle }}</div>
                   <div
                     v-if="det.sendTime"
                     class="send-time"

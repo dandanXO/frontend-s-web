@@ -94,6 +94,8 @@ const handleDetail = (mail) => {
   font-weight: 600;
   color: black;
   margin-bottom: 10px;
+  max-height: calc(24px * 3);
+  overflow: auto;
 }
 
 .announcement-content {
