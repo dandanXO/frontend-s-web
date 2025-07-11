@@ -19,14 +19,14 @@
           </div>
           <div v-if="vip.vipLevel !== 12">
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
-              <!-- <div class="upgrade-requirements" v-if="vipIndex !== vipItems.length - 1">
+              <div class="upgrade-requirements" v-if="vipIndex !== vipItems.length - 1 && onlyShowCurrentLevel">
                 <div>
-                   {{ $t("vip.currentValidBets") }}: {{ store.currency.value }} {{ convertToCommaAmount(store.getCurrentValidBet(), false, 0) }}
+                   {{ $t("vip.currentValidBets") }} {{ store.currency.value }} {{ convertToCommaAmount(currentBetAmount, false, 0) }}
                 </div>
                 {{ $t("vip.accumulateDeposit") }}
-                {{ props.onlyShowCurrentLevel ? vipItems[vip.vipLevel + 1].ugprade : vipItems[vipIndex + 1].ugprade }}
-                <!- {{ convertToCommaAmount(store.levelUpDeposit, null, 0) }} ->
-              </div> -->
+                <!-- {{ props.onlyShowCurrentLevel ? vipItems[vip.vipLevel + 1].ugprade : vipItems[vipIndex + 1].ugprade }} -->
+                {{ store.currency.value }} {{ convertToCommaAmount(currentDepositAmount, null, 0) }}
+              </div>
 
               <div class="progress-bar-container">
                 <div class="progress-bar-outer-bar" v-if="vipIndex !== vipItems.length - 1">
