@@ -47,8 +47,8 @@
                 {{ $t("btn.register") }}
               </q-btn>
             </router-link>
-            
-            <LocaleSelector style="margin-right: -10px;" />
+
+            <LocaleSelector style="margin-right: -10px" />
           </template>
         </div>
       </div>
@@ -95,7 +95,7 @@
             :key="i"
             :name="i"
             class="flex-center"
-            style="background-size: cover;"
+            style="background-size: cover"
             :img-src="imgURL + banner.mobileImageUrl"
             @click="gotoPromo(banner)"
           ></q-carousel-slide>
@@ -2084,7 +2084,7 @@ export default defineComponent({
 }
 
 .home-header-section {
-  padding: 8px 10px 0;
+  padding: 0 10px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -2311,7 +2311,7 @@ export default defineComponent({
             flex-direction: column;
             justify-content: space-between;
             color: #7a80a1;
-            // transform: translate(-50%);            
+            // transform: translate(-50%);
             bottom: 20px;
             left: 25px;
             .redirect-button {
@@ -2350,6 +2350,7 @@ export default defineComponent({
           }
 
           .game-bg {
+            box-shadow: 0px 0px 5.9px 0px #93c7ff69;
             background-size: 100% 100%;
             aspect-ratio: 345/142;
             background-repeat: no-repeat;
@@ -2599,7 +2600,7 @@ export default defineComponent({
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
 
 .midd {
-  margin: 10px auto;
+  margin: 0 auto 10px;
   height: 30px;
   position: relative;
   overflow: hidden;
@@ -2973,7 +2974,7 @@ export default defineComponent({
   background: linear-gradient(180deg, #f8fcff 0%, #dfecff 194.05%);
   padding: 16px;
   color: #7a80a1;
-  margin-bottom: 16px;
+  margin-bottom: 15px;
 
   .home-auth-subsection {
     flex: 1;
