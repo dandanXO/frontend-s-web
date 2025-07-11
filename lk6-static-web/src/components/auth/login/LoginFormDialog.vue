@@ -170,6 +170,9 @@ const submitLogin = () => {
         type: "SLIDER",
         way: regDevice
       },
+      translate: (code) => {
+        return t(`error.${code}`);
+      },
       requestHeaders: {
         Authorization: process.env.VUE_APP_SITE
       },
@@ -227,8 +230,17 @@ const submitLogin = () => {
 
     // tianai captcha style
     const style = {
-      logoUrl: 'https://lk6-web.psnaback.com/static/img/login-logo-left.3f98a6ca.png'
+      logoUrl: 'https://lk6-web.psnaback.com/static/img/login-logo-left.3f98a6ca.png',
+      i18n: {
+        tips_error: t("tianaiCaptcha.tipsError"),
+        tips_success: t("tianaiCaptcha.tipsSuccess"),
+        slider_title: t("tianaiCaptcha.sliderTitle"),
+        concat_title: t("tianaiCaptcha.concatTitle"),
+        image_click_title: t("tianaiCaptcha.imageClickTitle"),
+        rotate_title: t("tianaiCaptcha.rotateTitle")
+      }
     };
+
 
     loginRef.value
       .validate()

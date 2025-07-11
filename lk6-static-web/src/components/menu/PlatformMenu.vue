@@ -61,7 +61,8 @@ const props = defineProps({
   platforms: Array,
   platformName: String,
   platformType: String,
-  platformGameType: String
+  platformGameType: String,
+  isBacarrat: Boolean
 });
 const emits = defineEmits(["load-game"]);
 const store = userStore();
@@ -107,7 +108,7 @@ const getPlatformList = () => {
     });
 
     
-    if(props.platformType === "live") {
+    if(props.isBacarrat) {
       const bacarratPlatforms = [{
         cnname: "百家乐",
         code: "bacarrat",

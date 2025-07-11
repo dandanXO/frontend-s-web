@@ -205,7 +205,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, watch } from "vue";
+import { reactive, ref, onMounted, watch, onDeactivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -214,7 +214,7 @@ import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "src/hooks/notify";
 import { useI18n } from "vue-i18n";
 
-const { t } = useI18n;
+const { t } = useI18n();
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
@@ -449,6 +449,24 @@ watch(
     }
   }
 );
+
+onDeactivated(() => {
+  // Reset the form when the component is deactivated
+  bankCardInfo.cardNumber = "";
+  bankCardInfo.cardAccount = store.realName;
+  bankCardInfo.cardAddress = "";
+  bankCardInfo.telephone = store.phone;
+  bankCardInfo.smsCode = "";
+  bankCardInfo.smsCodeId = "";
+  bankCardInfo.bankId = undefined;
+  bankCardInfo.currencyId = "";
+  innerCaptchaCode.value = "";
+  innerCodeId.value = "";
+  otpCountdownCount.value = 0;
+  isOtpSent.value = false;
+  bankCardRef.value?.resetValidation();
+  cardNumberRef.value?.resetValidation();
+});
 
 onMounted(() => {
   loadBankCards();

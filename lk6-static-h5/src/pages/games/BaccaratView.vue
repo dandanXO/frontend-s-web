@@ -68,7 +68,7 @@
                   }}
                 </div>
                 <div class="game-title__name">
-                  {{ game.name }}
+                  {{ game.name[languageVal] }}
                 </div>
               </div>
             </div>
@@ -97,8 +97,11 @@ import { scroll, SessionStorage } from "quasar";
 import { isAndroid } from "boot/utils";
 import { userStore } from "src/stores";
 import { useLocalStorage } from "@vueuse/core";
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
 
 const qs = require("qs");
+const { languageVal } = storeToRefs(i18nStore());
 
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
 const $q = useQuasar();
@@ -225,16 +228,25 @@ const loadGameList = () => {
     )
     .then((res) => {
       res.forEach((item) => {
-        item.icon = `${imgURL}/game/${item.icon.replace("-", "_")}`;
+        const [zhName, enName] = item.name.split("@");
+        const icon = `${imgURL}/game/${item.icon.replace("-", "_")}`;
+        const gameItem = {
+          ...item,
+          icon,
+          name: {
+            en: enName,
+            zh: zhName
+          }
+        };
         if (item.code.startsWith("101")) {
-          item.default = require("../../assets/index/baccarat/slide-baccarat-img.png");
-          baccarat.value.push(item);
+          gameItem.default = require("../../assets/index/baccarat/slide-baccarat-img.png");
+          baccarat.value.push(gameItem);
         } else if (item.code.startsWith("103")) {
-          item.default = require("../../assets/index/baccarat/slide-roulette-img.png");
-          roulette.value.push(item);
+          gameItem.default = require("../../assets/index/baccarat/slide-roulette-img.png");
+          roulette.value.push(gameItem);
         } else if (item.code.startsWith("112")) {
-          item.default = require("../../assets/index/baccarat/slide-lucky-lace-img.png");
-          luckyLace.value.push(item);
+          gameItem.default = require("../../assets/index/baccarat/slide-lucky-lace-img.png");
+          luckyLace.value.push(gameItem);
         }
       });
       // res.forEach(element => {
@@ -338,6 +350,8 @@ onMounted(() => {
       padding: 3px 0;
       line-height: 1;
       color: #0e365b;
+      max-width: 80px;
+      font-size: 9px;
 
       &.activated {
         background-image: url(../../assets/images/games/baccarat/category-bg-active.png);
@@ -364,7 +378,7 @@ onMounted(() => {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
     gap: 10px;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
 
     :deep(.zoomin) {

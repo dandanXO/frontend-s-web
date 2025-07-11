@@ -1,6 +1,6 @@
 <template>
   <div class="table-record">
-    <MailComponent :loading="visible" :list="mailData" :type="tab" @tabChange="handleTabChange" />
+    <MailComponent :loading="visible" :list="mailData" :type="tab" />
   </div>
 </template>
 <script setup>
@@ -26,25 +26,32 @@ const mailData = ref([]);
 const mailboxData = reactive({
   type: null,
   orderBy: "sendTime",
-  messageType: tab.value
+  messageType: tab.value,
+  current: 1
 });
-const loadInbox = (tab) => {
-  visible.value = true;
-  mailData.value = [];
-  tab = tab === "ALL" ? "" : tab;
-
+const loadInbox = () => {
+  console.log(1);
   api
-    .get("/session/inbox", {
+    .get("/session/pm/inbox", {
       params: {
         type: mailboxData.type,
         orderBy: mailboxData.orderBy,
-        messageType: mailboxData.messageType
+        current: mailboxData.current
+        // messageType: mailboxData.messageType
       }
     })
     .then((response) => {
       if (response.code === 0) {
-        mailData.value = response.data.records;
+        if (mailData.value.length === 0) {
+          mailData.value = response.data.records;
+        } else {
+          mailData.value.push(...response.data.records);
+        }
         visible.value = false;
+        if (response.data.current < response.data.pages) {
+          mailboxData.catch++;
+          loadInbox();
+        }
       }
     })
     .catch((error) => {
@@ -63,7 +70,7 @@ const handleTabChange = (type) => {
 };
 
 onMounted(() => {
-  loadInbox(tab.value);
+  loadInbox();
 });
 </script>
 

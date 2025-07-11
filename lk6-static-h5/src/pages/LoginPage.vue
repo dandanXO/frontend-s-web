@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <div style="height: 48px; text-align: center; margin: 25px 0px">
+    <div style="height: 48px; text-align: center; margin: 10px 0px" v-if="tab === 'login'">
       <img src="../assets/login/login-logo.png" height="100%" />
     </div>
 
@@ -8,7 +8,7 @@
       <img src="../assets/images/login/home-icon.svg" />
     </router-link>
 
-    <div class="top-image-div">
+    <div class="top-image-div" v-if="tab === 'login'">
       <img src="../assets/login/login-top-bg.png" />
     </div>
 
@@ -187,11 +187,11 @@
               </div>
 
               <div class="forgetpass-div">
-                <div class="align-right">
+                <!-- <div class="align-right">
                   <span class="txt-tip" style="color: #0089ed" @click="loginType = !loginType">
                     {{ loginType ? $t("login.userNameLogin") : $t("login.phoneLogin") }}
                   </span>
-                </div>
+                </div> -->
 
                 <router-link class="txt-tip align-right" style="margin-left: auto" to="/forgot-account">
                   <span>{{ $t("login.forgotPassword") }}</span>
@@ -220,7 +220,7 @@
             />
 
             <q-btn
-              @click.prevent="tab = 'register'"
+              @click.prevent="goToRegister"
               type="button"
               class="register-btn q-mt-md"
               :label="$t('btn.register')"
@@ -228,6 +228,7 @@
               size="16px"
               flat
             />
+            
           </q-form>
           <div id="captcha-box" />
         </q-tab-panel>
@@ -239,14 +240,14 @@
     </div>
 
     <div class="login-bottom-section">
-      <div class="row justify-center items-center full-width q-mb-md" v-show="tab === 'login'">
-        <!-- <router-link class="txt-tip" to="/">
+      <!-- <div class="row justify-center items-center full-width q-mb-md" v-show="tab === 'login'">
+        <router-link class="txt-tip" to="/">
           <div class="row items-center gap-8">
             <img src="../assets/login/home-icon.svg" width="16px" />
             <span style="color: #458bff">先去逛逛</span>
           </div>
-        </router-link> -->
-      </div>
+        </router-link>
+      </div> -->
       <!--  -->
       <div class="row justify-center items-center full-width q-mb-md">
         <router-link class="txt-tip" to="/liveChat">
@@ -531,7 +532,12 @@ export default defineComponent({
     };
 
     const changeLoginTab = () => {
-      tab.value = "login";
+      // tab.value = "login";
+      router.push("/register");
+    };
+
+    const goToRegister = () => {
+      router.push("/register");
     };
 
     const otpCountdownCount = ref(0);
@@ -832,6 +838,7 @@ export default defineComponent({
       getCode,
       isCheckRmb,
       changeLoginTab,
+      goToRegister,
       phoneLoginForm,
       sendOtpSms,
       toggleInnerCode,
@@ -852,7 +859,7 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .login-container {
   padding-top: 12px;
   height: 100dvh;
@@ -908,7 +915,7 @@ export default defineComponent({
   .form-container {
     width: 100%;
     margin: auto;
-    padding: 16px 0px;
+    padding: 16px 0px 0;
 
     > .q-tab-panel {
     }

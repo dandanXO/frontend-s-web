@@ -4480,7 +4480,6 @@ const showSpinWheel = () => {
           promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
           popupPromo.value = "newplayer-spin-wheel"
         } else {
-          promoStore.removeShownFloatingOrDialogList("newplayer-spin-wheel");
         }
       }
     })
@@ -4776,7 +4775,8 @@ const checkGoogleLoginSetPwd = () => {
 }
 :deep(.hometop-banner.swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction) {
     width: unset;
-    left: 13%;
+    left: unset;
+    right: 13%;
     background: #FFFFFF33;
     border-radius: 10px;
     padding: 0 8px;
@@ -4789,6 +4789,7 @@ const checkGoogleLoginSetPwd = () => {
   background: #ffffff;
 }
 .hometop-banner {
+  margin-top: 10px;
   .swiper-slide-prev, .swiper-slide-next {
     transform: scale(.9);
 
@@ -4800,6 +4801,7 @@ const checkGoogleLoginSetPwd = () => {
   border-radius: 25px;
   img {
     width: 100%;
+    display: block;
   }
 }
 }

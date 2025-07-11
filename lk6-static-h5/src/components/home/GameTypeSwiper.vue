@@ -23,7 +23,7 @@
       <div
         class="home-select-slide row items-center align-center justify-center gap-8"
         :class="selectedTab == tab.name ? 'selected' : ''"
-        :style="`gap:${tab.gap}px`"
+        
       >
         <img
           :style="`margin-top:${tab.mb}px;`"
@@ -103,7 +103,7 @@ watch(selectedTab, scrollSlide);
   padding: 2px 5px;
   min-height: 30px;
   margin: 2px 0;
-
+  flex-wrap: nowrap;
   img {
     width: auto;
     max-width: 25px;
@@ -112,7 +112,7 @@ watch(selectedTab, scrollSlide);
   span {
     color: #35648f;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 11px;
   }
 
   &.selected {

@@ -50,13 +50,7 @@
             </div>
           </div>
           <div class="right-sect">
-            <q-btn
-              :label="$t('btn.deposit')"
-              class="btn-main btn-pointer deposit-btn"
-              flat
-              style=""
-              @click="openDeposit"
-            />
+            <q-btn :label="$t('btn.deposit')" class="btn-main btn-pointer" flat style="" @click="openDeposit" />
 
             <q-btn :label="$t('btn.withdraw')" class="btn-main btn-pointer" flat style="" @click="openWithdraw" />
 
@@ -234,7 +228,7 @@
 
   <CommonModal
     v-model="isLogoutModal"
-    :title="$t('account.notification.logoutConfirm.title')"
+    :header="$t('account.notification.logoutConfirm.title')"
     :message="$t('account.notification.logoutConfirm.message')"
     with-decorator
     :actions="['confirm', 'cancel']"
@@ -888,11 +882,12 @@ export default defineComponent({
     background-size: 100% 100%;
     color: #fff;
     // width: 60px;
-    min-width: 42px;
+    min-width: 55px;
     text-align: center;
     white-space: nowrap;
     font-size: 10px;
-    padding: 2px 11px;
+    // padding: 2px 11px;
+    padding: 7px 11px;
     // aspect-ratio: 122/68;
     display: flex;
     align-items: center;
@@ -911,6 +906,7 @@ export default defineComponent({
     background: linear-gradient(90deg, #333333 1.5%, #6b6b6b 100%);
     align-items: center;
     padding: 10px 14px;
+    border-radius: 20px;
   }
 
   .acct-section {
@@ -1087,8 +1083,9 @@ export default defineComponent({
     align-items: center;
     width: 100%;
     color: #424f72;
+    
     // background-color: $lightblue;
-    background: rgba(203, 229, 255, 1);
+    background: #E7F3FF;
     border-radius: 20px 20px 0 0;
     position: relative;
     &:before {
@@ -1187,7 +1184,7 @@ export default defineComponent({
         }
 
         img {
-          height: 32px;
+          height: 35px;
           fill: white;
           padding: 0;
         }

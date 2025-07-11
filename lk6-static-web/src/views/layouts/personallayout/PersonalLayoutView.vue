@@ -11,10 +11,10 @@
               <div>账户余额：</div>
               <div class="balance-txt">
                 <span v-if="isLoadingBalance">加载中...</span>
-                <span v-if="!isLoadingBalance">￥{{ floor(store.balance, 2) }}</span>
+                <div v-if="!isLoadingBalance" style="display:flex;align-items:center;gap:5px;"><img src="../../../assets/images/finance/usdt-icon.svg" width="20px" height="20px" /> {{ floor(store.balance, 2) }}</div>
               </div>
               <el-icon><Refresh /></el-icon>
-              <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>
+              <!-- <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div> -->
             </a>
           </div>
           <!--
@@ -25,10 +25,10 @@
             </div>
           </div> -->
 
-          <div class="balance-details">
+          <!-- <div class="balance-details">
             <div>专属网址：</div>
             <a :href="`${evips.web}`">{{ evips.web }}</a>
-          </div>
+          </div> -->
         </div>
         <!-- <div class="account-box account-contents"> -->
         <router-view />
@@ -53,7 +53,6 @@ export default defineComponent({
     Refresh
   },
   setup() {
-
     const isLoadingBalance = ref(false)
     const refreshBalance = () => {
       isLoadingBalance.value = true;

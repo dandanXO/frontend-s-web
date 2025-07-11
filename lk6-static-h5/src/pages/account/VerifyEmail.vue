@@ -2,7 +2,7 @@
   <div class="verify-section">
     <!--    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
-      <div class="flex items-center no-wrap">
+      <div class="flex items-center no-wrap q-mb-md">
         <q-input
           class="q-pb-xs"
           hide-bottom-space

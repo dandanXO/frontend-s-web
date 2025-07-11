@@ -30,7 +30,11 @@
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="nav.hasicon">
               <div class="header-menu-item">
-                <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
+                <a v-if="nav.code === 'CS'" @click="store.openLiveChat">
+                  <span><div class="cs-icon" /></span>
+                  <span>{{ $t('menu.customerService') }}</span>
+                </a>
+                <router-link v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
                   <span>
                     <div class="promotion-icon" v-if="nav.code === 'Promotion'" />
                     <!-- <img
@@ -171,7 +175,7 @@
                 <span class="assets-text">{{$t('menu.assets')}}：</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">{{ $t('menu.loading') }}...</span>
-                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ floor(store.balance, 2) }}</span>
+                  <div v-if="!isLoadingBalance" style="display:flex;align-items:center;gap:5px;"><img src="../../assets/images/finance/usdt-icon.svg" width="20px" height="20px" /> {{ floor(store.balance, 2) }}</div>
                 </span>
               </div>
               <el-icon class="reload-btn">
@@ -1762,7 +1766,7 @@ body {
           padding-left: 5px;
           padding-right: 5px;
 
-          a > span > div {
+          a > span > div, a > span > img {
             &:hover {
               animation: rumble 0.3s ease-in-out;
             }

@@ -261,7 +261,7 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="transfer" label="转账记录">
+        <!-- <el-tab-pane name="transfer" label="转账记录">
           <div>
             <el-form layout="inline" :model="searchForm.transfer">
               <div class="left">
@@ -330,7 +330,7 @@
               :page-size="searchForm[recordActive].size"
             />
           </div>
-        </el-tab-pane>
+        </el-tab-pane> -->
         <el-tab-pane name="rebates" label="优惠记录">
           <div>
             <el-form layout="inline" :model="searchForm.rebates">

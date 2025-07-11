@@ -47,6 +47,8 @@
                 {{ $t("btn.register") }}
               </q-btn>
             </router-link>
+            
+            <LocaleSelector style="margin-right: -10px;" />
           </template>
         </div>
       </div>
@@ -92,7 +94,8 @@
             v-for="(banner, i) in banners"
             :key="i"
             :name="i"
-            class="column no-wrap flex-center"
+            class="flex-center"
+            style="background-size: cover;"
             :img-src="imgURL + banner.mobileImageUrl"
             @click="gotoPromo(banner)"
           ></q-carousel-slide>
@@ -106,9 +109,13 @@
           </div>
           <marquee-text :repeat="5" :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 4 : 70">
             <div v-if="announcementList">
-              <span style="color: #7a80a1" v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-                {{ a.content }}
-              </span>
+              <span
+                style="color: #7a80a1"
+                v-for="(a, i) in announcementList"
+                :key="i"
+                v-html="a.content"
+                @click="openPopup(a)"
+              />
             </div>
           </marquee-text>
           <img v-if="languageVal === 'zh'" src="../assets/index/home-hot-match-icon-zh.png" width="62px" />
@@ -140,11 +147,14 @@
               <span class="balance-text text-positive" v-if="isLoadingBalance" style="font-size: 20px">
                 {{ $t("common.loading") }}
               </span>
-              <span class="balance-text" v-if="!isLoadingBalance">{{ mainWallet.toFixed(2) }}</span>
+              <span class="balance-text" v-if="!isLoadingBalance">
+                {{ mainWallet.toFixed(2) }}{{ store.currency.value }}
+              </span>
             </div>
+            <img class="crypto-icon" src="../assets/images/index/crypto-icon.svg" />
           </div>
 
-          <div class="row gap-8 justify-between home-quick-link-section">
+          <div class="row justify-end home-quick-link-section">
             <router-link class="text-center cash-button" :unelevated="true" to="/finance/deposit?redirect=home">
               <img src="../assets/index/home-deposit-icon.svg" alt="" width="100%" />
               <p>{{ $t("btn.deposit") }}</p>
@@ -219,7 +229,7 @@
                       ></div>
 
                       <div class="game-title">
-                        <span class="game-title-1">体育赛事</span>
+                        <span class="game-title-1">SPORTS</span>
                         <h3 class="game-title-2">{{ sp.title }}</h3>
                         <RedirectButton class="redirect-button" @click="playGame(sp.name, sp.code, sp.gameCode)">
                           {{ $t("btn.betNow") }}
@@ -498,7 +508,7 @@
                                 }}
                               </div>
                               <div class="game-title__name">
-                                {{ game.name }}
+                                {{ game.name[languageVal] }}
                               </div>
                             </div>
                           </div>
@@ -1855,12 +1865,20 @@ export default defineComponent({
         )
         .then((res) => {
           res.forEach((item) => {
+            const [zhName, enName] = item.name.split("@");
+            const gameItem = {
+              ...item,
+              name: {
+                en: enName,
+                zh: zhName
+              }
+            };
             if (item.code.startsWith("101")) {
-              baccarat.value.push(item);
+              baccarat.value.push(gameItem);
             } else if (item.code.startsWith("103")) {
-              roulette.value.push(item);
+              roulette.value.push(gameItem);
             } else if (item.code.startsWith("112")) {
-              luckyLace.value.push(item);
+              luckyLace.value.push(gameItem);
             }
           });
         });
@@ -2201,7 +2219,7 @@ export default defineComponent({
 
 .home-top-slider {
   border-radius: 8px;
-  padding: 4px 10px;
+  padding: 10px;
 }
 
 .secondSwiper {
@@ -2285,14 +2303,17 @@ export default defineComponent({
           .game-title {
             position: absolute;
             z-index: 2;
-            top: 50%;
-            left: 20%;
+            // top: 50%;
+            // left: 20%;
+            // top: 60%;
+            // left: 19%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             color: #7a80a1;
-            transform: translate(-50%, -50%);
-
+            // transform: translate(-50%);            
+            bottom: 20px;
+            left: 25px;
             .redirect-button {
               font-size: 12px;
             }
@@ -2335,16 +2356,17 @@ export default defineComponent({
           }
 
           .game-title-2 {
-            line-height: 1rem;
-            font-size: clamp(12px, 4vw, 24px);
+            line-height: 1;
+            font-size: clamp(12px, 4.8vw, 18px);
             margin-top: 0px;
             font-weight: 600;
             letter-spacing: 1px;
+            margin-bottom: 14%;
           }
 
           .game-title-1 {
             margin-bottom: 7px;
-            font-size: clamp(12px, 3.2vw, 24px);
+            font-size: clamp(12px, 3.2vw, 12px);
             margin-bottom: 5px;
             letter-spacing: 1px;
           }
@@ -2429,6 +2451,7 @@ export default defineComponent({
               text-align: center;
               .game-title__category {
                 font-size: clamp(10px, 5vw, 22px);
+                line-height: 20px;
               }
               .game-title__name {
                 font-size: clamp(10px, 4vw, 18px);
@@ -2598,15 +2621,26 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
     }
-
+    .annList {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     span {
+      display: inline-block;
       margin-right: 10px;
       cursor: pointer;
       color: #000;
+      height: 20px;
+      overflow: hidden;
+      display: block;
+      // &.content {
+      // }
     }
 
     .notice {
       img {
+        display: block;
         width: 19px;
       }
     }
@@ -2942,18 +2976,30 @@ export default defineComponent({
   margin-bottom: 16px;
 
   .home-auth-subsection {
-    flex: 3;
+    flex: 1;
     border-width: 0 1px 0 0;
     border-style: dashed;
     border-color: #a0a0a0;
   }
 
   .home-quick-link-section {
-    flex: 6;
+    flex: 1;
+    gap: 20px;
+    min-width: 140px;
   }
 
   .home-login-section {
-    flex: 3;
+    position: relative;
+    background: radial-gradient(103.75% 103.75% at 50% -3.75%, #ffffff 0%, #deecff 100%);
+    border-radius: 10px;
+    border: 1.41px solid #ffffff;
+    padding: 16px;
+    flex: 1;
+    .crypto-icon {
+      position: absolute;
+      right: 8px;
+      bottom: 16px;
+    }
   }
 
   .cash-button {
@@ -2964,7 +3010,8 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     img {
-      max-width: 36px;
+      max-width: 60px;
+      margin-bottom: 5px;
     }
 
     > p {
@@ -2976,10 +3023,11 @@ export default defineComponent({
 
   .welcome-liner {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     display: flex;
     align-items: center;
     margin-right: 5px;
+    color: #35648f;
   }
 
   .badge-div {
@@ -2992,10 +3040,9 @@ export default defineComponent({
   }
 
   .balance-text {
-    font-size: 24px;
+    font-size: 16px;
     line-height: 24px;
-    font-weight: 500;
-    min-width: 50px;
+    font-weight: 600;
   }
 }
 

@@ -83,9 +83,9 @@
             </div>
           </el-space>
 
-          <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="实时汇率">
+          <!-- <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="实时汇率">
             <span style="color: #00A478">1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.label }}</span>
-          </el-form-item>
+          </el-form-item> -->
 
           <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="预计到账">
             <span style="color: #00A478">

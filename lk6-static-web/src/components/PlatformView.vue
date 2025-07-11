@@ -1,9 +1,9 @@
 <template>
-  <div class="platform-section">
+  <div class="platform-section" >
     <div v-if="isLoading" class="loading">
       <img class="loading-img" src="@/assets/lucky-6-logo.png" />
     </div>
-    <div v-else-if="!(platformType === 'bacarrat' && props.hideBanner)" class="platform-container" :class="platformType === 'bacarrat' ? 'slot-container' : ''">
+    <div v-else-if="!(platformType === 'bacarrat' && props.hideBanner)" class="platform-container" :class="{fullpage: props.fullpage,  ['slot-container']: platformType === 'bacarrat'}">
         <template v-if="platformType === 'bacarrat'">
           <img v-if="languageVal === 'en'" src="../assets/slot/slot-top-bg-en.png" style="width: 100%;height: auto;aspect-ratio: 3840 / 800;" />
           <img  v-else src="../assets/slot/slot-top-bg.png" style="width: 100%;height: auto;aspect-ratio: 3840 / 800;" />
@@ -44,7 +44,7 @@
                 <div class="platform-subtitle">{{ platformName }}</div>
               </div>
               
-              <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200">{{ languageVal === 'en' ? item.enMessage : item.message }}</div>
+              <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200">{{ $t(item.message) }}</div>
 
               <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
                 <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.svg')" />
@@ -219,7 +219,7 @@
                     {{ selectedFixedBacarratPlatforms?.type }}
                   </div>
                   <div class="slot-name">
-                    {{ game.name }}
+                    {{ game.name.includes('@') ? game.name.split('@')[languageVal === 'en' ? 1 : 0] : game.name }}
                   </div>
                 </div>
 
@@ -272,7 +272,9 @@ import moment from "moment/moment";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import { storeToRefs } from 'pinia'
 import { i18nStore } from '@/store/language'
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
 const platformGame = ref(null);
@@ -289,7 +291,8 @@ const props = defineProps({
   platformPattern: Boolean,
   platformExpandable: Boolean,
   showPlayBtn: Boolean,
-  hideBanner: Boolean
+  hideBanner: Boolean,
+  fullpage: Boolean
 });
 
 const filteredPlatforms = ref([]);
@@ -298,17 +301,17 @@ const platformsListDisplay = ref([]);
 const fixedBacarratPlatforms = ref([
   {
     prefix: 101,
-    label: '百家乐',
+    label: t('menu.bacarrat'),
     type: 'BACARRAT'
   },
   {
     prefix: 112,
-    label: '幸运轮盘',
+    label: t('menu.lucky_roulette'),
     type: 'ROULETTE'
   },
   {
     prefix: 103,
-    label: '幸运蕾丝',
+    label: t('menu.lucky_lace'),
     type: 'LUCKY LACE'
   },
 ])
@@ -448,6 +451,7 @@ const getAliasName = (plat, platformType) => {
     }
     return plat.alias;
   } else {
+    console.log('here', plat)
     return languageVal, languageVal.value === 'en' ? (plat.enname ?? plat.name) : plat.cnname;
   }
 };

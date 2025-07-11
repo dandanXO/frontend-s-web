@@ -1,256 +1,262 @@
 <template>
-  <q-form ref="regFormRef" class="rounded-borders" @submit="onSubmit">
-    <div class="login-form-inner-wrapper q-gutter-y-md">
-      <div class="input-field-wrapper">
-        <div class="input-field__label required">{{ $t("register.form.userName.label") }}</div>
-        <q-input
-          height="32px"
-          rounded
-          standout
-          bg-color="grey-2"
-          hide-bottom-space
-          ref="loginNameRef"
-          v-model="regForm.loginName"
-          :placeholder="$t('register.form.userName.placeholder', { min: 4, max: 11 })"
-          lazy-rules
-          :rules="[
+  <div class="login-container">
+    <div class="form-container">
+      <q-form ref="regFormRef" class="rounded-borders" @submit="onSubmit">
+        <div class="login-form-inner-wrapper q-gutter-y-md">
+          <div class="input-field-wrapper">
+            <div class="input-field__label required">{{ $t("register.form.userName.label") }}</div>
+            <q-input
+              height="32px"
+              rounded
+              standout
+              bg-color="grey-2"
+              hide-bottom-space
+              ref="loginNameRef"
+              v-model="regForm.loginName"
+              :placeholder="$t('register.form.userName.placeholder', { min: 4, max: 11 })"
+              lazy-rules
+              :rules="[
             (val) => (val && val.length > 0) || $t('register.form.userName.error.required'),
             (val) => (val && val.length >= 4 && val.length <= 11) || $t('register.form.userName.error.length'),
             (val) => (val && /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val)) || $t('register.form.userName.error.format'),
             (val) => (val && (val.match(/[a-zA-Z]/g) || []).length >= 2) || $t('register.form.userName.error.format'),
             (val) => (val && /\d/.test(val)) || $t('register.form.userName.error.format')
           ]"
-        >
-          <template v-slot:prepend>
-            <img src="../assets/login/user-icon.svg" width="14" />
-          </template>
-          <template v-slot:append>
-            <q-btn flat round @click="clearLoginName">
-              <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
-            </q-btn>
-          </template>
-        </q-input>
-      </div>
+            >
+              <template v-slot:prepend>
+                <img src="../assets/login/user-icon.svg" width="14" />
+              </template>
+              <template v-slot:append>
+                <q-btn flat round @click="clearLoginName">
+                  <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+                </q-btn>
+              </template>
+            </q-input>
+          </div>
 
-      <div class="input-field-wrapper">
-        <div class="input-field__label required">{{ $t("register.form.password.label") }}</div>
-        <q-input
-          height="32px"
-          rounded
-          standout
-          bg-color="grey-2"
-          ref="pwdRef"
-          hide-bottom-space
-          v-model="regForm.password"
-          :placeholder="$t('register.form.password.placeholder')"
-          lazy-rules
-          :type="isPwd ? 'password' : 'text'"
-          :rules="[
+          <div class="input-field-wrapper">
+            <div class="input-field__label required">{{ $t("register.form.password.label") }}</div>
+            <q-input
+              height="32px"
+              rounded
+              standout
+              bg-color="grey-2"
+              ref="pwdRef"
+              hide-bottom-space
+              v-model="regForm.password"
+              :placeholder="$t('register.form.password.placeholder')"
+              lazy-rules
+              :type="isPwd ? 'password' : 'text'"
+              :rules="[
             (val) => (val && val.length > 0) || $t('register.form.password.error.required'),
             (val) =>
               (val.length > 5 && val.length <= 12) || $t('register.form.password.error.length', { min: 6, max: 12 })
           ]"
-        >
-          <template v-slot:prepend>
-            <img src="../assets/login/pass-icon.svg" width="14" />
-          </template>
-          <template v-slot:append>
-            <q-btn v-if="regForm.password" flat round @click="clearPwName">
-              <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
-            </q-btn>
+            >
+              <template v-slot:prepend>
+                <img src="../assets/login/pass-icon.svg" width="14" />
+              </template>
+              <template v-slot:append>
+                <q-btn v-if="regForm.password" flat round @click="clearPwName">
+                  <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+                </q-btn>
 
-            <img
-              v-if="!isPwd"
-              @click="isPwd = !isPwd"
-              src="../assets/login/eye-line.svg"
-              style="margin-right: 12px"
-              width="20"
-            />
-            <img
-              v-if="isPwd"
-              @click="isPwd = !isPwd"
-              src="../assets/login/eye-close-line.svg"
-              style="margin-right: 12px"
-              width="20"
-            />
+                <img
+                  v-if="!isPwd"
+                  @click="isPwd = !isPwd"
+                  src="../assets/login/eye-line.svg"
+                  style="margin-right: 12px"
+                  width="20"
+                />
+                <img
+                  v-if="isPwd"
+                  @click="isPwd = !isPwd"
+                  src="../assets/login/eye-close-line.svg"
+                  style="margin-right: 12px"
+                  width="20"
+                />
 
-            <!--        <q-icon-->
-            <!--            color="dark"-->
-            <!--            :name="isPwd ? 'visibility_off' : 'visibility'"-->
-            <!--            class="cursor-pointer"-->
-            <!--            @click="isPwd = !isPwd"-->
-            <!--        />-->
-          </template>
-        </q-input>
-      </div>
+                <!--        <q-icon-->
+                <!--            color="dark"-->
+                <!--            :name="isPwd ? 'visibility_off' : 'visibility'"-->
+                <!--            class="cursor-pointer"-->
+                <!--            @click="isPwd = !isPwd"-->
+                <!--        />-->
+              </template>
+            </q-input>
+          </div>
 
-      <!-- <div v-if="regForm.password" class="password-str-div">
-        <span
-          :class="{
-            'weak-pwd': pwdStrength == 'weak',
-            'normal-pwd': pwdStrength == 'normal',
-            'strong-pwd': pwdStrength == 'strong'
-          }"
-        >
-          弱
-        </span>
-        <span
-          :class="{
-            'normal-pwd': pwdStrength == 'normal',
-            'strong-pwd': pwdStrength == 'strong'
-          }"
-        >
-          好
-        </span>
-        <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>
-      </div> -->
-      <div class="input-field-wrapper">
-        <div class="input-field__label required">{{ $t("register.form.passwordConfirm.label") }}</div>
+          <!-- <div v-if="regForm.password" class="password-str-div">
+            <span
+              :class="{
+                'weak-pwd': pwdStrength == 'weak',
+                'normal-pwd': pwdStrength == 'normal',
+                'strong-pwd': pwdStrength == 'strong'
+              }"
+            >
+              弱
+            </span>
+            <span
+              :class="{
+                'normal-pwd': pwdStrength == 'normal',
+                'strong-pwd': pwdStrength == 'strong'
+              }"
+            >
+              好
+            </span>
+            <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>
+          </div> -->
+          <div class="input-field-wrapper">
+            <div class="input-field__label required">{{ $t("register.form.passwordConfirm.label") }}</div>
 
-        <q-input
-          height="32px"
-          rounded
-          standout
-          bg-color="grey-2"
-          ref="confirmPwdRef"
-          hide-bottom-space
-          :type="isCfmPwd ? 'password' : 'text'"
-          v-model="regForm.confirmPwd"
-          :placeholder="$t('register.form.passwordConfirm.placeholder')"
-          lazy-rules
-          :rules="[
+            <q-input
+              height="32px"
+              rounded
+              standout
+              bg-color="grey-2"
+              ref="confirmPwdRef"
+              hide-bottom-space
+              :type="isCfmPwd ? 'password' : 'text'"
+              v-model="regForm.confirmPwd"
+              :placeholder="$t('register.form.passwordConfirm.placeholder')"
+              lazy-rules
+              :rules="[
             (val) => (val && val.length > 0) || $t('register.form.passwordConfirm.error.required'),
             (val) => val === regForm.password || $t('register.form.passwordConfirm.error.match'),
             (val) =>
               (val.length > 5 && val.length <= 12) ||
               $t('register.form.passwordConfirm.error.length', { min: 6, max: 12 })
           ]"
-        >
-          <template v-slot:prepend>
-            <img src="../assets/login/pass-icon.svg" width="14" />
-          </template>
-          <template v-slot:append>
-            <q-btn v-if="regForm.confirmPwd" flat round @click="clearPwConfirmName">
-              <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
-            </q-btn>
+            >
+              <template v-slot:prepend>
+                <img src="../assets/login/pass-icon.svg" width="14" />
+              </template>
+              <template v-slot:append>
+                <q-btn v-if="regForm.confirmPwd" flat round @click="clearPwConfirmName">
+                  <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+                </q-btn>
 
-            <img
-              v-if="!isCfmPwd"
-              @click="isCfmPwd = !isCfmPwd"
-              src="../assets/login/eye-line.svg"
-              style="margin-right: 12px"
-              width="20"
-            />
-            <img
-              v-if="isCfmPwd"
-              @click="isCfmPwd = !isCfmPwd"
-              src="../assets/login/eye-close-line.svg"
-              style="margin-right: 12px"
-              width="20"
-            />
-          </template>
-        </q-input>
-      </div>
+                <img
+                  v-if="!isCfmPwd"
+                  @click="isCfmPwd = !isCfmPwd"
+                  src="../assets/login/eye-line.svg"
+                  style="margin-right: 12px"
+                  width="20"
+                />
+                <img
+                  v-if="isCfmPwd"
+                  @click="isCfmPwd = !isCfmPwd"
+                  src="../assets/login/eye-close-line.svg"
+                  style="margin-right: 12px"
+                  width="20"
+                />
+              </template>
+            </q-input>
+          </div>
 
-      <div class="input-field-wrapper">
-        <div class="input-field__label">{{ $t("register.form.realName.label") }}</div>
-        <q-input
-          height="32px"
-          rounded
-          standout
-          bg-color="grey-2"
-          ref="realNameRef"
-          hide-bottom-space
-          v-model="regForm.realName"
-          :placeholder="$t('register.form.realName.placeholder')"
-          lazy-rules
-          :rules="[
+          <div class="input-field-wrapper">
+            <div class="input-field__label">{{ $t("register.form.realName.label") }}</div>
+            <q-input
+              height="32px"
+              rounded
+              standout
+              bg-color="grey-2"
+              ref="realNameRef"
+              hide-bottom-space
+              v-model="regForm.realName"
+              :placeholder="$t('register.form.realName.placeholder')"
+              lazy-rules
+              :rules="[
             (val) => (val && val.length > 0) || t('register.form.realName.error.required'),
             (val) =>
               (val && val.length >= 2 && val.length <= 12) ||
               t('register.form.realName.error.required', { min: 2, max: 12 })
           ]"
-        >
-          <template v-slot:prepend>
-            <img src="../assets/login/user-icon.svg" width="14" />
-          </template>
-          <template v-slot:append>
-            <q-btn flat round @click="clearRealName">
-              <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
-            </q-btn>
-          </template>
-        </q-input>
-      </div>
+            >
+              <template v-slot:prepend>
+                <img src="../assets/login/user-icon.svg" width="14" />
+              </template>
+              <template v-slot:append>
+                <q-btn flat round @click="clearRealName">
+                  <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+                </q-btn>
+              </template>
+            </q-input>
+          </div>
 
-      <div class="input-field-wrapper">
-        <div class="input-field__label">{{ $t("register.form.verificationCode.label") }}</div>
+          <div class="input-field-wrapper">
+            <div class="input-field__label">{{ $t("register.form.verificationCode.label") }}</div>
 
-        <q-input
-          height="32px"
-          rounded
-          standout
-          bg-color="grey-2"
-          clearable
-          ref="verificationRef"
-          hide-bottom-space
-          type="text"
-          v-model="regForm.captchaCode"
-          :placeholder="$t('register.form.verificationCode.placeholder')"
-          lazy-rules
-          :rules="[
+            <q-input
+              height="32px"
+              rounded
+              standout
+              bg-color="grey-2"
+              clearable
+              ref="verificationRef"
+              hide-bottom-space
+              type="text"
+              v-model="regForm.captchaCode"
+              :placeholder="$t('register.form.verificationCode.placeholder')"
+              lazy-rules
+              :rules="[
             (val) => (val && val.length > 3 && val.length < 5) || $t('register.form.verificationCode.error.format')
           ]"
-        >
-          <template v-slot:append>
-            <img :src="verificationImg" @click="getCode()" />
-          </template>
-          <template v-slot:prepend>
-            <img src="../assets/login/veri-icon.svg" width="14" style="margin-right: 8px" />
-          </template>
-        </q-input>
-      </div>
+            >
+              <template v-slot:append>
+                <img :src="verificationImg" @click="getCode()" />
+              </template>
+              <template v-slot:prepend>
+                <img src="../assets/login/veri-icon.svg" width="14" style="margin-right: 8px" />
+              </template>
+            </q-input>
+          </div>
 
-      <div class="input-field-wrapper">
-        <div class="input-field__label">{{ $t("register.form.affiliateCode.label") }}</div>
-        <q-input
-          height="32px"
-          rounded
-          standout
-          bg-color="grey-2"
-          clearable
-          ref="affiliateCodeRef"
-          hide-bottom-space
-          v-model="regForm.codeAffiliate"
-          :placeholder="$t('register.form.affiliateCode.placeholder')"
-          :readonly="hasAffiliate === true ? true : false"
-        >
-          <template v-slot:prepend>
-            <img src="../assets/login/veri-icon.svg" width="14" />
-          </template>
-        </q-input>
-      </div>
+          <div class="input-field-wrapper">
+            <div class="input-field__label">{{ $t("register.form.affiliateCode.label") }}</div>
+            <q-input
+              height="32px"
+              rounded
+              standout
+              bg-color="grey-2"
+              clearable
+              ref="affiliateCodeRef"
+              hide-bottom-space
+              v-model="regForm.codeAffiliate"
+              :placeholder="$t('register.form.affiliateCode.placeholder')"
+              :readonly="hasAffiliate === true ? true : false"
+            >
+              <template v-slot:prepend>
+                <img src="../assets/login/veri-icon.svg" width="14" />
+              </template>
+            </q-input>
+          </div>
+        </div>
+
+        <div class="row justify-between items-center register-btn-lists">
+          <q-btn
+            @click.prevent="onSubmit"
+            type="submit"
+            class="login-btn q-mt-md"
+            :label="$t('btn.register')"
+            width="100%"
+            size="16px"
+          />
+
+          <q-btn
+            @click.prevent="changeTab"
+            type="button"
+            class="register-btn q-mt-md"
+            :label="$t('btn.login')"
+            width="100%"
+            size="16px"
+          />
+        </div>
+      </q-form>
     </div>
 
-    <div class="row justify-between items-center">
-      <q-btn
-        @click.prevent="onSubmit"
-        type="submit"
-        class="login-btn q-mt-md"
-        :label="$t('btn.register')"
-        width="100%"
-        size="16px"
-      />
+  </div>
 
-      <q-btn
-        @click.prevent="changeTab"
-        type="button"
-        class="register-btn q-mt-md"
-        :label="$t('btn.login')"
-        width="100%"
-        size="16px"
-      />
-    </div>
-  </q-form>
 </template>
 
 <script>
@@ -449,7 +455,8 @@ export default defineComponent({
     };
 
     const changeTab = () => {
-      context.emit("changeTab");
+      // context.emit("changeTab");
+      router.push("/login")
     };
 
     watch(
@@ -533,7 +540,292 @@ function charType(num) {
   return 8;
 }
 </script>
-<style lang="scss">
+<style scoped lang="scss">
+.login-container {
+  padding-top: 12px;
+  height: 100dvh;
+  background: url(../assets/login/register-bg.png) no-repeat center center;
+  background-size: 100% 100%;
+  //min-height: 100vh;
+  overflow: auto;
+
+  .back-to-home {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    img {
+      width: 24px;
+    }
+  }
+
+  .top-image-div {
+    margin: 0 16px 16px;
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .login-tab-div {
+    padding: 0px 16px;
+    margin-bottom: 32px;
+  }
+
+  .q-tab {
+    min-height: 36px;
+    background: #eee;
+    color: #333;
+  }
+
+  .q-field__native.q-placeholder,
+  .q-field__append {
+    color: #424f72 !important;
+    &::placeholder {
+      color: #a4aabb;
+      opacity: 1;
+    }
+  }
+
+  .q-tabs {
+    background: rgba(113, 125, 146, 0.2);
+    border-radius: 30px;
+    width: 90%;
+    margin: 0 auto;
+    box-shadow: 3px 3px 3px 0 rgba(66, 91, 186, 0.2);
+  }
+
+  .form-container {
+    width: 100%;
+    margin: auto;
+    padding: 0px 0px 16px;
+
+    > .q-tab-panel {
+    }
+
+    .q-field__control {
+      height: 45px;
+      border-radius:8px;
+
+      .q-field__marginal {
+        height: 45px;
+      }
+    }
+
+    .captcha-input {
+      .q-field__control {
+        padding-right: 0;
+      }
+      .q-field__control-container {
+        display: none;
+        .col,
+        .col-xs {
+          flex: unset;
+        }
+      }
+      .q-field__append.q-field__marginal {
+        width: 100%;
+        padding-left: 0;
+      }
+      .q-field__prepend.q-field__marginal > span {
+        width: 56px !important;
+      }
+      .q-field__prepend {
+        padding-right: 0;
+      }
+    }
+
+    #captchaContainer {
+      width: 100%;
+    }
+
+    .geetest_captcha.geetest_customTheme .geetest_holder .geetest_content,
+    .geetest_popup_wrap.geetest_customTheme .geetest_holder .geetest_content,
+    .q-field--standout.q-field--readonly .q-field__control:before {
+      border: none;
+    }
+
+    .login-form-inner-wrapper {
+      background: #ffffff80;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 24px 12px;
+      backdrop-filter: blur(2px);
+      border-image: linear-gradient(105.76deg, #ffffff 20.95%, #c6d9ff 100.21%) 1;
+      mask: linear-gradient(black, black);
+      width: calc(100% - 32px);
+      margin: 0 auto;
+    }
+    .login-btn {
+      width: 100%;
+      letter-spacing: 2px;
+      background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
+      border: 1px solid #ffffff;
+      border-radius: 30px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .register-btn {
+      width: 100%;
+      letter-spacing: 2px;
+      background: linear-gradient(180deg, #f4f7fb 0%, #c5dcf8 100%);
+      border-radius: 30px;
+      font-weight: 600;
+      color: #424f72;
+    }
+  }
+  .q-field__prepend {
+    padding-right: 20px;
+  }
+
+  .login-bottom-section {
+    > div {
+      gap: 40px;
+    }
+
+    .mid-gap {
+      width: 2px;
+      background: rgba(0, 0, 0, 0.5);
+      filter: brightness(0.7);
+      height: 16px;
+    }
+
+    span {
+      color: #434343;
+    }
+  }
+
+  .q-tab__content {
+    width: 100%;
+  }
+
+  .q-tab--active .q-tab__indicator {
+    height: 100%;
+    background: #0089ed;
+    //background: linear-gradient(180deg, #fd3b2a 0%, #ac260b 100%);
+    border-radius: 30px;
+  }
+
+  .q-tab__label {
+    z-index: 1;
+  }
+
+  .q-tab-panels {
+    background: none;
+  }
+
+  .align-right {
+    text-align: right;
+    // color: #acacac;
+    color: #333;
+    margin-left: 4px;
+  }
+
+  .txt-tip {
+    color: #434343;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .forgetpass-div {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 8px);
+    margin: 15px auto 0px;
+    gap: 10px;
+
+    .mui-row {
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #666;
+
+      &.checked {
+        color: #0089ed;
+      }
+
+      &:active {
+        filter: brightness(0.8);
+      }
+    }
+
+    a,
+    a:visited,
+    a:active,
+    a:hover {
+      text-decoration: none;
+      color: #0089ed;
+    }
+  }
+
+  .q-field--standout.q-field--rounded .q-field__control {
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px 0px #86b8ff inset, 0px 2px 0px 0px #9ab0ff70;
+  }
+
+  .q-field--standout .q-field__control {
+    background: #fff;
+  }
+
+  .q-checkbox__bg {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .q-checkbox__label {
+    margin-left: 8px;
+  }
+
+  .input-field-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    .input-field__label {
+      font-size: 12px;
+      color: #424f72;
+      &.required {
+        &::after {
+          content: "*";
+          color: #ff0d0d;
+        }
+      }
+    }
+  }
+
+  .verification-btn {
+    background-image: url("../assets/images/index/primary-btn.png");
+    background-size: 100% 100%;
+    color: #fff;
+    width: 87px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 12px;
+    aspect-ratio: 87/32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    box-shadow: 0px -0.87px 3.47px 0px #ffffff;
+    border-radius: 45.9px;
+    margin-right: 5px;
+  }
+
+  .register-btn-lists{
+    width: calc(100% - 32px);
+    margin: auto;
+  }
+}
+
+
 .page-header {
   background-image: linear-gradient(to right, #de4545, #db7e42);
   -webkit-background-clip: text;

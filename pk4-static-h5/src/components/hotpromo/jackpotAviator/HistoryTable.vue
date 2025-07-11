@@ -91,7 +91,7 @@ const historyList = () => {
       color: #ffffff;
       height: 22px;
       font-size: 12px;
-      background-color: #730319 !important;
+      background-color: #00186a !important;
       &:hover {
         color: unset;
         .betVolume {
@@ -110,10 +110,10 @@ const historyList = () => {
     &.isOwn {
     //   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
       // background: linear-gradient(90deg, #0287f2, #0664d2);
-      background: #cba46b !important;
+      background: #6b89cb !important;
       color: #fff;
       .betVolume {
-        color: #3c0e10;
+        color: #0e103c;
       }
     }
 
@@ -129,11 +129,11 @@ const historyList = () => {
     }
 
     &:nth-child(odd) {
-      background-color: #1c1716;
+      background-color: #20232c;
     }
 
     &:nth-child(even) {
-      background: #332e2d;
+      background: #2d2d33;
     }
     &:hover {
       // background: linear-gradient(180deg, #730319 0%, #da093a 100%);
@@ -154,6 +154,8 @@ const historyList = () => {
   // max-height: 500px;
   max-height: calc(100dvh - 540px);
   overflow: auto;
+    min-height: 115px;
+    background: #090f1e;
 }
 @media (min-width: 500px) {
   .history-list {

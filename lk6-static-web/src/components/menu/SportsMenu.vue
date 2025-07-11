@@ -10,7 +10,7 @@
 
 <script setup>
 import { ref, defineEmits } from "vue";
-import PlatformMenu from "@/components/menu/platformmenu/index.vue";
+import PlatformMenu from "@/components/menu/PlatformMenu.vue";
 import { sportsPlatforms } from "@/shared/platformArray";
 
 console.log('here', sportsPlatforms)

@@ -239,12 +239,12 @@ const getFbValue = () => {
 
   const fbc1 = (() => {
     const rawFbp = getCookie("_fbc");
-    return rawFbp ? rawFbp : null;
+    return rawFbp ? rawFbp.split(".").pop() : null;
   })();
 
   const fbp1 = (() => {
     const rawFbp = getCookie("_fbp");
-    return rawFbp ? rawFbp : null;
+    return rawFbp ? rawFbp.split(".").pop() : null;
   })();
 
   const fbp2 = (() => {
