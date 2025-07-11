@@ -1,8 +1,6 @@
 <template>
   <div class="platform-section">
-    <div v-if="isLoading" class="loading">
-      <img class="loading-img" src="@/assets/lucky-6-logo.png" />
-    </div>
+    <LoadingComponent v-if="isLoading" />
     <div v-else-if="!(platformType === 'bacarrat' && props.hideBanner)" class="platform-container"
       :class="{ fullpage: props.fullpage, ['slot-container']: platformType === 'bacarrat' }">
       <template v-if="platformType === 'bacarrat'">
@@ -202,6 +200,7 @@ import { useDark, useLocalStorage } from "@vueuse/core";
 import { storeToRefs } from 'pinia'
 import { i18nStore } from '@/store/language'
 import { useI18n } from "vue-i18n";
+import LoadingComponent from "./menu/LoadingComponent.vue";
 
 const { t } = useI18n();
 const i18nStoreLanguage = i18nStore()
@@ -356,6 +355,11 @@ const setFilteredPlatforms = () => {
 const selectedPlat = ref(null);
 const selectedFixedBacarratPlatforms = ref({});
 const setSelectedPlat = () => {
+  if(route.name === 'panda') {
+    const panda = filteredPlatforms.value.find((platItem) => platItem.code === 'PM');
+    return panda && clickPlat(panda);
+  }
+
   selectedPlat.value = filteredPlatforms.value.length > 0 ? filteredPlatforms.value[0].code : null;
 };
 
