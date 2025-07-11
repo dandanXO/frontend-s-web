@@ -135,7 +135,8 @@ const closeLoginDialog = () => {
 };
 
 const openForgotpwdDialog = () => {
-  emits("open-forgotpwd-dialog");
+  store.openLiveChat();
+  // emits("open-forgotpwd-dialog");
 };
 
 const openRegDialog = () => {
