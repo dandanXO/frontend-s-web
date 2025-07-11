@@ -81,9 +81,9 @@
     >
       <Column field="streamerName" :header="t('fields.streamer')" style="width: 10%" />
       <Column field="streamerCdnPushUrl" :header="t('fields.streamerCdnPushUrl')" style="width: 20%; word-break: break-all; white-space: normal; vertical-align: top;" />
-      <Column :header="t('fields.streamerCdnPullUrl')" style="width: 20%; word-break: break-all; white-space: normal; vertical-align: top;">
+      <Column :header="t('fields.streamerCdnPullUrl')" style="width: 20%;">
         <template #body="slotProps">
-          <span>
+          <span style="word-break: break-all; white-space: normal; vertical-align: top;">
             {{
               (() => {
                 try {
