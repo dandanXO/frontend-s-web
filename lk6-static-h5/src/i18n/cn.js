@@ -261,9 +261,7 @@ export default {
   },
   record: {
     betId: "注单号",
-    serialNumber: {
-      deposit: "存款编码"
-    },
+    serialNumber: "编码",
     table: {
       withdraw: {
         header: {
@@ -275,12 +273,13 @@ export default {
       },
       transfer: {
         header: {
-          serialNumber: "转账编码",
-          type: "帐变类型",
-          platform: "游戏平台",
+          serialNumber: "编码",
+          type: "账变类型",
+          platform: "平台",
           amount: "金额",
+          subType: "账变子类型",
           status: "状态",
-          transferDate: "时间"
+          recordTime: "时间"
         }
       },
       promo: {

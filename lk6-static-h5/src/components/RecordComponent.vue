@@ -109,7 +109,7 @@
                 </div>
                 <div v-else-if="obj === 'serialNumber'" class="deposit-serial-number">
                   <div class="ellipsis">{{ det[obj] }}</div>
-                  <q-btn @click="copyText(det.serialNumber, $t('record.serialNumber.deposit'))" flat round>
+                  <q-btn @click="copyText(det.serialNumber, $t('record.serialNumber'))" flat round>
                     <img src="../assets/records/copy-icon.png" />
                   </q-btn>
                 </div>
@@ -157,7 +157,9 @@
             <div class="justify-center row q-my-md" v-if="!isEnded">
               <q-spinner-dots color="primary" size="40px" />
             </div>
-            <span style="padding: 4px 0px; line-height: 36px; color: #7a80a1">{{ $t("common.noMoreData") }}</span>
+            <span v-else style="padding: 4px 0px; line-height: 36px; color: #7a80a1">
+              {{ $t("common.noMoreData") }}
+            </span>
           </div>
         </template>
       </q-infinite-scroll>
@@ -296,7 +298,7 @@ export default defineComponent({
       // console.log(comList.value);
       setTimeout(() => {
         truncatedList.value = [];
-        if (!props.isEnded) {
+        if (!props.isEnded || comList.value.length > 0) {
           if (comList.value.length) {
             var slicedArray = comList.value;
             slicedArray.forEach((element) => {
@@ -304,11 +306,11 @@ export default defineComponent({
             });
             done();
           } else if (comList.value.length === 0) {
-            // context.emit("loadnewdata");
-            // done();
+            context.emit("loadnewdata");
+            done();
           }
         }
-      }, 30);
+      }, 100);
     };
 
     const openWithdrawConfirmDialog = (det) => {

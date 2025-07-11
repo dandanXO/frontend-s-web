@@ -30,7 +30,7 @@ export default defineComponent({
       uploadFile(newValue);
     });
     const uploadFile = async (uploadedItem) => {
-      var rstUrl = localStorage.getItem("DY_H5_RST_URL");
+      var rstUrl = localStorage.getItem("LK_H5_RST_URL");
       if (!rstUrl) {
         rstUrl = process.env.RST_API.split(",")[0];
       }
