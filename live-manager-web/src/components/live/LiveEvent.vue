@@ -30,8 +30,15 @@
             class="p-inputtext-sm"
             style="width: 180px"
           />
-
-          <DatePicker
+          <Calendar
+              id="matchTime"
+              v-model="request.matchTime"
+              selectionMode="range"
+              hourFormat="24"
+              dateFormat="yy-mm-dd"
+              fluid
+          />
+          <!-- <DatePicker
             id="eventStartTime"
             v-model="uiControl.eventStartTime"
             showTime
@@ -48,7 +55,7 @@
             hourFormat="24"
             dateFormat="yy-mm-dd"
             fluid
-            placeholder="請選擇結束時間" />
+            placeholder="請選擇結束時間" /> -->
 
           <Button
             :label="t('fields.search')"
@@ -576,6 +583,7 @@ const request = reactive({
   liveStatus: null,
   title: null,
   eventStartTime: [],
+  matchTime: [new Date(), new Date()],
 });
 
 const timezone = ref(null)
@@ -755,6 +763,11 @@ const handleBlur = (type) => {
 async function loadList() {
   page.loading = true;
   try {
+    if (request.matchTime && request.matchTime.length === 2) {
+      const [startTime, endTime] = request.matchTime;
+      request.eventStartTime[0] = dayjs(startTime).format('YYYY-MM-DD 00:00:00')
+      request.eventStartTime[1] = dayjs(endTime).format('YYYY-MM-DD 23:59:59')
+    }
     const res = await DashboardService.getSportLiveEvents({ ...request });
     page.records = res.data.records || [];
     page.total = res.data.total || 0;
@@ -777,6 +790,7 @@ function resetQuery() {
   request.sportId = null
   request.nameEn = null
   request.title = null
+  request.matchTime = [new Date(), new Date()]
 }
 
 

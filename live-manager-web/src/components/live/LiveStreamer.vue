@@ -398,7 +398,7 @@ import { useToast } from 'primevue/usetoast'
 import { uploadImage } from '@/service/image'
 import { useStorage } from '@vueuse/core'
 import { useConfirm } from 'primevue/useconfirm'
-import { useUserStore } from '@/store/user'
+import { useUserStore } from '@/stores/userStore.js'
 const promoDir = useStorage('IMAGE_CDN', '', sessionStorage).value + '/streamer/'
 const { getSportLiveStreamer, updateSportLiveStreamer, deleteSportLiveStreamer,createSiteImage,createSportLiveStreamer } = DashboardService
 const { t } = useI18n()
@@ -925,6 +925,7 @@ function deleteStreamer(teamId) {
           severity: 'error',
           summary: t('message.deleteFailed'),
           detail: err.message,
+          life: 3000,
         })
       }
     },

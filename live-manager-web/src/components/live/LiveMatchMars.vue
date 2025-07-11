@@ -470,6 +470,7 @@ async function handleCopy() {
     toast.add({
       severity: 'error',
       summary: t('fields.copyFailed'),
+      life: 3000,
     })
   }
 }
@@ -502,6 +503,7 @@ async function handleDelete() {
     toast.add({
       severity: 'error',
       summary: t('fields.pleaseSelectMatch'),
+      life: 3000,
     })
     return
   }
@@ -545,6 +547,7 @@ async function handleDelete() {
             severity: 'error',
             summary: t('message.deleteFailed'),
             detail: err.message,
+            life: 3000,
           })
         }
       },

@@ -1,4 +1,5 @@
 <template>
+  <Button @click="handleBack" size="small" style="margin-bottom: 10px">{{ t('fields.back') }}</Button>
   <TabView>
     <TabPanel :header="t('fields.sportLiveEventSetting')">
       <SettingTab />
@@ -30,9 +31,18 @@ export default defineComponent({
 
     }
 
+    const handleBack = () => {
+      console.log("handleBack")
+      // 返回上一页
+      router.go(-1);
+      // 或者导航到指定路径
+      // router.push('/live-sport');
+    };
+
     return {
       activeName,
       onTabChange,
+      handleBack,
       t
     }
   }

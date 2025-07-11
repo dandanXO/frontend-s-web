@@ -388,6 +388,7 @@ async function deleteTeam(teamId) {
           severity: 'error',
           summary: t('message.deleteFailed'),
           detail: err.message,
+          life: 3000,
         })
       }
     },

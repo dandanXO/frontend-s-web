@@ -818,7 +818,7 @@ export const DashboardService = {
   },
   getChatHistoryExport (query) {
     const token = sessionStorage.getItem('token');
-    return api.get('/live-sport/chat/export', {
+    return api.get('/session/live-sport/chat/export', {
       params: query,
       headers: {
         token: token,

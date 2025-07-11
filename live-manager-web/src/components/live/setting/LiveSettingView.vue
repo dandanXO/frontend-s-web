@@ -206,6 +206,10 @@
     </Dialog>
 
     <Dialog v-model:visible="chatHistoryDialog.visible" :header="t('fields.chatHistory')" modal :style="{ width: '780px' }">
+      <div>
+        <Button icon="pi pi-download" severity="info" size="small" @click="requestExportExcel(chatHistoryDialog.streamerId)" style="width: 150px; margin-bottom: 10px">
+          {{ t('fields.exportToExcel') }}</Button>
+      </div>
       <DataTable :value="chatHistoryDialog.chatList" :loading="chatHistoryDialog.loading" :scrollable="true">
         <Column field="name" :header="t('fields.name')" />
         <Column field="content" :header="t('fields.content')" />
@@ -238,6 +242,15 @@
         />
       </div>
     </Dialog>
+
+    <Dialog v-model:visible="uiControl.messageVisible" :header="t('fields.exportToExcel')" modal :style="{ width: '780px' }">
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </Dialog>
   </div>
 </template>
 
@@ -256,7 +269,7 @@ import 'video.js/dist/video-js.css'
 import 'vue3-emoji-picker/css'; 
 import 'videojs-flvjs-es6'
 import { useUserStore } from "@/stores/userStore";
-
+import { utils, writeFileXLSX } from 'xlsx';
 import flvjs from 'flv.js';
 
 import dayjs from "dayjs";
@@ -273,7 +286,7 @@ const uiControl = reactive({
   dialogType: 'SUPPLIER_CREATE' | 'STREAMER_CREATE' | 'STREAMER_EDIT',
   editBtn: true,
   removeBtn: true,
-  dialogLoading: false
+  dialogLoading: false,
 });
 const route = useRoute()
 const eventId = ref(Number(route.query.id))
@@ -638,12 +651,21 @@ const chatHistoryDialog = reactive({
 async function requestExportExcel(streamerId) {
   const query = {};
   query.streamId = streamerId;
-  query.siteId = 7;
+  query.siteId = store.siteId;
 
   const { data: ret } = await getChatHistoryExport(query)
-  if (ret) {
-    uiControl.messageVisible = true;
-  }
+  const formattedData = ret.map(item => ({
+    ...item,
+    createTime: formatTime(item.createTime) // 调用格式化函数
+  }));
+
+  const ws = utils.json_to_sheet(formattedData);
+  const wb = utils.book_new();
+  utils.book_append_sheet(wb, ws, "Chat History");
+  let fileName = `chat_history_${dayjs().format('YYYY-MM-DD_HH-mm-ss')}.xlsx`;
+  writeFileXLSX(wb, fileName);
+
+  console.log("ret : ", ret)
 }
 
 function openChatHistory(streamerId) {
@@ -659,7 +681,7 @@ function loadChatHistory() {
     current: chatHistoryDialog.page.current,
     size: chatHistoryDialog.page.size
   });
-  const siteId = 7;
+  const siteId = store.siteId;
   getChatHistoryv2(`?${query.toString()}`, { streamId: chatHistoryDialog.streamerId, siteId: siteId })
     .then(res => {
       chatHistoryDialog.chatList = res.records;
@@ -677,9 +699,8 @@ function handleChatPageChange(page) {
 
 onMounted(async () => {
   const { data: timeZone } = SiteService.getSiteTimeZoneById(
-    7
+    store.siteId
   )
-  console.log("store : ", store.siteId)
   timezone.value = timeZone
   request.id = eventId
   await loadEvent();
