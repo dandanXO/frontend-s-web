@@ -250,14 +250,14 @@
       </div> -->
       <!--  -->
       <div class="row justify-center items-center full-width q-mb-md">
-        <router-link class="txt-tip" to="/liveChat">
+        <div class="txt-tip" @click="goToLiveChat">
           <!-- <div style="width: 60px; height: 1px; background-color: #7a80a199"></div> -->
           <div class="row items-center gap-8">
             <!-- <img src="../assets/login/service-icon.svg" width="16px" /> -->
             <span style="color: #458bff">{{ $t("login.cs") }}</span>
           </div>
           <!-- <div style="width: 60px; height: 1px; background-color: #7a80a199"></div> -->
-        </router-link>
+        </div>
       </div>
     </div>
 
@@ -577,6 +577,13 @@ export default defineComponent({
         });
     };
 
+    const goToLiveChat = () => {
+      window.open(
+        "https://8xjp0t3ydi.ipbr7k9r.com/chatwindow.aspx?siteId=65001994&planId=099fb0e7-cad5-43d0-aa03-2ed2257e0e12",
+        "_blank"
+      );
+    }
+
     const sendOtpSms = () => {
       if (!phoneLoginForm.phoneNumber) {
         $q.notify({
@@ -847,6 +854,7 @@ export default defineComponent({
       innerCaptchaRef,
       innerCaptchaCodeId,
       showCaptchaDialog,
+      goToLiveChat,
       phoneVerificationImg,
       getInnerCode,
       refinnerCaptchaRef,
