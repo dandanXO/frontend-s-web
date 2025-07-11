@@ -2215,7 +2215,7 @@ export default {
     enterNewRoomTitle: '请输入新的房间标题',
     editRoomTitle: '修改房间标题',
     playInfo: '播放资讯',
-    
+    preview: '预览',
   },
   message: {
     adsStatusOpen: '开',

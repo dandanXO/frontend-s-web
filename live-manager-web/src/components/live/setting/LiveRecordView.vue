@@ -187,7 +187,7 @@
             accept="image/*"
             :maxFileSize="1000000"
             @select="attachImage"
-            chooseLabel="Upload Cover"
+            :chooseLabel="t('fields.upload')"
           />
         </div>
       </div>
