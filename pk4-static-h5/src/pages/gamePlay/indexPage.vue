@@ -144,7 +144,7 @@
 import { i18nStore } from "src/router/language";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef, computed, watch, nextTick, onMounted } from "vue";
+import { ref, defineExpose, reactive, shallowRef, computed, watch, nextTick, onMounted, onActivated } from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
 import { App } from "@capacitor/app";
@@ -304,9 +304,9 @@ const closeDialog =  async () => {
 
   // 使用router 操作 後續 bottom bar會產生bug
   // router.replace('/home')
-  // router.push('/home')
+  router.push('/home')
   
-  window.location.href = `${window.location.origin}/home#Lobby`
+  // window.location.href = `${window.location.origin}/home#Lobby`
 };
 
 const goToDeposit = () => {
@@ -628,12 +628,13 @@ const refreshBalance = () => {
   }
 };
 
-watch(
-  () => route.path,
-  (val) => {
-    if (val !== "/home") closeDialog();
-  }
-);
+// watch(
+//   () => route.path,
+//   (val) => {
+//     // if (val !== "/home") closeDialog();
+//   }
+// );
+
 onMounted(()=>{
     // dan test
     if(route.query.gameName){

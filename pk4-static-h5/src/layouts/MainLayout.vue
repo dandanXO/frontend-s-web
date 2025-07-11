@@ -80,11 +80,22 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view v-slot="{ Component }">
+      <!-- <router-view v-slot="{ Component }">
         <component v-if="isGuessRoute" :is="Component" />
         <KeepAlive v-else :max="8">
           <component :is="Component" />
         </KeepAlive>
+      </router-view> -->
+      <router-view v-slot="{ Component }">
+        <div v-if="$route.meta.keepAlive != false">
+          <KeepAlive :max="8">
+            <component :is="Component" :key="$route.name" />
+          </KeepAlive>
+        </div>
+
+        <div v-else>
+          <component :is="Component" :key="$route.name" />
+        </div>
       </router-view>
     </q-page-container>
 

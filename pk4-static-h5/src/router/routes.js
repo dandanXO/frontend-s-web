@@ -421,7 +421,7 @@ const routes = [
         component: () => import("pages/gamePlay/indexPage.vue")
       }
     ],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, keepAlive: false  }
   },
   {
     path: "/deposit",
