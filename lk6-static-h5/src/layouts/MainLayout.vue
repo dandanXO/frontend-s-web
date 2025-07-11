@@ -1,6 +1,12 @@
 <template>
   <q-layout view="hHh Lpr fFf">
-    <q-header v-if="hasPage" class="page-wrapper">
+    <q-header
+      v-if="hasPage"
+      class="page-wrapper"
+      :class="{
+        'is-scrolled': isScrolled
+      }"
+    >
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
           <router-link to="/">
@@ -465,10 +471,14 @@ export default defineComponent({
       return ui.slotLists;
     });
     const withBgPage = computed(() => !["/login", "/register", "/forgot-account", "/"].includes(route.path));
+    const isScrolled = ref(false);
     // console.log(platformsList.value);
     onMounted(() => {
       checkPlatform();
       checkRoute();
+      window.addEventListener("scroll", () => {
+        isScrolled.value = window.scrollY > 0;
+      });
       // loadTrackingScript();
     });
     return {
@@ -502,7 +512,8 @@ export default defineComponent({
         "ForgotPwdPage"
       ],
       withBgPage,
-      handleLiveChatClick
+      handleLiveChatClick,
+      isScrolled
     };
   }
 });
@@ -555,6 +566,11 @@ svg path {
   background: transparent;
   padding-top: 0px;
   background-size: cover;
+
+  &.is-scrolled {
+    background: #fcfdfe;
+    box-shadow: 0px 4px 4px 0px #00000040;
+  }
 }
 
 .page-title {

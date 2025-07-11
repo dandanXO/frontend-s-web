@@ -18,23 +18,23 @@
           </template>
         </q-input>
       </div>
-<!--      <div class="mb-12">-->
-<!--        <q-input-->
-<!--          ref="realNameRef"-->
-<!--          class="q-pb-xs"-->
-<!--          hide-bottom-space-->
-<!--          v-model="formDetail.realName"-->
-<!--          :placeholder="$t('personal.form.realName.placeholder')"-->
-<!--          lazy-rules-->
-<!--          :rules="[(val) => (val && val.length > 0) || $t('personal.form.realName.error.required')]"-->
-<!--          :readonly="personalState.memberInfo.realName ? true : false"-->
-<!--        >-->
-<!--          <template v-slot:prepend>-->
-<!--            &lt;!&ndash; <q-icon name="badge" class="material-icons-outlined" /> &ndash;&gt;-->
-<!--            <label class="header-label">{{ $t("personal.form.realName.label") }}&#12288;&#12288;</label>-->
-<!--          </template>-->
-<!--        </q-input>-->
-<!--      </div>-->
+      <div class="mb-12">
+        <q-input
+          ref="realNameRef"
+          class="q-pb-xs"
+          hide-bottom-space
+          v-model="formDetail.realName"
+          :placeholder="$t('personal.form.realName.placeholder')"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || $t('personal.form.realName.error.required')]"
+          :readonly="personalState.memberInfo.realName ? true : false"
+        >
+          <template v-slot:prepend>
+            <!-- <q-icon name="badge" class="material-icons-outlined" /> -->
+            <label class="header-label">{{ $t("personal.form.realName.label") }}&#12288;&#12288;</label>
+          </template>
+        </q-input>
+      </div>
       <div class="mb-12">
         <q-input
           ref="birthdayRef"
@@ -109,32 +109,32 @@
         </q-input>
       </div>
 
-      <div class="flex items-center no-wrap mb-12">
-        <q-input
-          class="q-pb-xs"
-          hide-bottom-space
-          v-model="formDetail.phone"
-          type="tel"
-          :placeholder="$t('personal.form.phone.placeholder')"
-          lazy-rules
-          :rules="[(_) => isValidPhone()]"
-          label-color=""
-          color=""
-          readonly
-          style="width: 100%"
-          @click="isEditPhone ? goToVerifyTelephone() : ''"
-        >
-          <template v-slot:append v-if="isEditPhone">
-            <router-link to="/account/verifyTelephone">
-              <q-btn class="verification-btn">{{ $t("btn.verify") }}</q-btn>
-            </router-link>
-          </template>
-          <template v-slot:prepend>
-            <!-- <q-icon name="phone_in_talk" class="material-icons-outlined" /> -->
-            <label class="header-label">{{ $t("personal.form.phone.label") }}&#12288;&#12288;</label>
-          </template>
-        </q-input>
-      </div>
+      <!-- <div class="flex items-center no-wrap mb-12"> -->
+      <!-- <q-input -->
+      <!-- class="q-pb-xs" -->
+      <!-- hide-bottom-space -->
+      <!-- v-model="formDetail.phone" -->
+      <!-- type="tel" -->
+      <!-- :placeholder="$t('personal.form.phone.placeholder')" -->
+      <!-- lazy-rules -->
+      <!-- :rules="[(_) => isValidPhone()]" -->
+      <!-- label-color="" -->
+      <!-- color="" -->
+      <!-- readonly -->
+      <!-- style="width: 100%" -->
+      <!-- @click="isEditPhone ? goToVerifyTelephone() : ''" -->
+      <!-- > -->
+      <!-- <template v-slot:append v-if="isEditPhone"> -->
+      <!-- <router-link to="/account/verifyTelephone"> -->
+      <!-- <q-btn class="verification-btn">{{ $t("btn.verify") }}</q-btn> -->
+      <!-- </router-link> -->
+      <!-- </template> -->
+      <!-- <template v-slot:prepend> -->
+      <!-- <q-icon name="phone_in_talk" class="material-icons-outlined" /> -->
+      <!-- <label class="header-label">{{ $t("personal.form.phone.label") }}&#12288;&#12288;</label> -->
+      <!-- </template> -->
+      <!-- </q-input> -->
+      <!-- </div> -->
 
       <!-- <q-input
         v-if="!formDetail.phoneVerified"

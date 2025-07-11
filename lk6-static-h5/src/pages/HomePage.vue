@@ -118,8 +118,8 @@
               />
             </div>
           </marquee-text>
-          <img v-if="languageVal === 'zh'" src="../assets/index/home-hot-match-icon-zh.png" width="62px" />
-          <img v-else-if="languageVal === 'en'" src="../assets/index/home-hot-match-icon-en.png" width="62px" />
+          <!-- <img v-if="languageVal === 'zh'" src="../assets/index/home-hot-match-icon-zh.png" width="62px" />
+          <img v-else-if="languageVal === 'en'" src="../assets/index/home-hot-match-icon-en.png" width="62px" /> -->
         </div>
       </div>
 

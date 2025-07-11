@@ -386,7 +386,7 @@ export default defineComponent({
       const regDevice = Platform.is.mobile ? "H5" : "WEB";
       config.loginData = {
         loginName: regForm.loginName,
-        realName: regForm.loginName,
+        // realName: regForm.loginName,
         sid: sidParam,
         codeAffiliate: regForm.codeAffiliate,
         regHost: regForm.regHost,
