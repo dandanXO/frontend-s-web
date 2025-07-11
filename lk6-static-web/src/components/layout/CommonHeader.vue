@@ -175,7 +175,7 @@
                 <span class="assets-text">{{$t('menu.assets')}}：</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">{{ $t('menu.loading') }}...</span>
-                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ floor(store.balance, 2) }}</span>
+                  <div v-if="!isLoadingBalance" style="display:flex;align-items:center;gap:5px;"><img src="../../assets/images/finance/usdt-icon.svg" width="20px" height="20px" /> {{ floor(store.balance, 2) }}</div>
                 </span>
               </div>
               <el-icon class="reload-btn">

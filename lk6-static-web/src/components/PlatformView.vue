@@ -219,7 +219,7 @@
                     {{ selectedFixedBacarratPlatforms?.type }}
                   </div>
                   <div class="slot-name">
-                    {{ game.name }}
+                    {{ game.name.includes('@') ? game.name.split('@')[languageVal === 'en' ? 1 : 0] : game.name }}
                   </div>
                 </div>
 
