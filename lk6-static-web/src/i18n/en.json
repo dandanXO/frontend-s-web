@@ -46,7 +46,8 @@
     "withdrawCryptoAccount": "Withdraw Crypto Account",
     "addWithdrawCryptoAccount": "Add Crypto Account",
     "bindWithdrawCryptoAccount": "Bind Crypto Account",
-    "enterSearchGameName": "Enter game name for search"
+    "enterSearchGameName": "Enter game name for search",
+    "accountBalance": "Account Balance"
   },
   "menu": {
     "promotion": "Promo",
@@ -70,7 +71,12 @@
     "welcome": "Welcome",
     "personalInfo": "Personal Info",
     "depositCentre": "Deposit Centre",
-    "promoClaim": "Promo Claim"
+    "promoClaim": "Promo Claim",
+    "notification": "Notification",
+    "match": "Match",
+    "event": "Event",
+    "announcement": "Announcement",
+    "transaction": "Deposit/Withdrawal"
   },
   "download": {
     "title": "Comprehensive client download",

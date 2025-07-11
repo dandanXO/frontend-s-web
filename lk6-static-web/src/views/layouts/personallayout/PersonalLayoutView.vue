@@ -8,7 +8,7 @@
         <div class="account-box account-balance">
           <div class="balance-details">
             <a @click="refreshBalance" class="balance-container">
-              <div>账户余额：</div>
+              <div>{{$t('form.accountBalance')}}：</div>
               <div class="balance-txt">
                 <span v-if="isLoadingBalance">加载中...</span>
                 <div v-if="!isLoadingBalance" style="display:flex;align-items:center;gap:5px;"><img src="../../../assets/images/finance/usdt-icon.svg" width="20px" height="20px" /> {{ floor(store.balance, 2) }}</div>
