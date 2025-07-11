@@ -42,7 +42,7 @@ const initData = () => {
   const endpoint = "/session/lucky-day/init?promoCode=pak-lucky-10-day-bonus";
 
   eventapi.get(endpoint).then((res) => {
-    if (res.code == 0) {
+    if (res.code === 0) {
       isClaimable.value = res?.data?.isClaimable;
     }
   });
@@ -52,7 +52,7 @@ const refreshBalance = () => {
 };
 
 onMounted(() => {
-  initData();
+  if (store.token) initData();
 });
 </script>
 <style lang="scss" scoped>
