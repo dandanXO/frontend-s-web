@@ -85,22 +85,22 @@
           <div class="footer-title q-mt-sm">{{ $t("hotPromo.terms_and_Conditions") }}:</div>
           <div class="footer-content">
             {{ $t("content.cashRainIntro") }}
-            
+
             <br />
             {{ $t("content.cashRainMaxPerRound") }}
-            
+
             <br />
             {{ $t("content.cashRainFreeDistribution") }}
-            
+
             <br />
             {{ $t("content.cashRainClaimCondition") }}
-            
+
             <br />
             {{ $t("content.cashRainUsage") }}
-            
+
             <br />
             {{ $t("content.cashRainVIP") }}
-            
+
           </div>
         </div>
       </div>
@@ -214,7 +214,7 @@
     </div>
     <img @click="closeModalHandler" class="return-enveloper-btn" src="../../assets/images/index/money-rain/return-red-envelope-btn.png" />
   </div>
-  
+
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
     <div class="congrats-wrapper">
@@ -437,7 +437,7 @@ onMounted(() => {
   letter-spacing: 0px;
   text-align: center;
   color: #FFD288;
-  
+
 }
 .congrats-container {
   position: relative;
