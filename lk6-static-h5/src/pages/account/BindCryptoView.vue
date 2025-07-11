@@ -244,7 +244,7 @@ const phoneVerificationRef = ref();
 const bankCardInfo = reactive({
   bankId: undefined,
   cardNumber: "",
-  cardAccount: store.realName,
+  cardAccount: store.nickName,
   cardAddress: "",
   telephone: store.phone,
   smsCode: "",
