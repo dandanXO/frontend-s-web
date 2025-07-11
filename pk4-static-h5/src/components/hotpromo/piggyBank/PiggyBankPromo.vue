@@ -11,14 +11,14 @@
       />
       <span class="piggy-bank-claim-item">Total</span>
       <div class="piggy-bank-linear-bg-text piggy-bank-claim-item">
-        <div class="piggy-bank-linear-bg-text__text">Rs {{ cashback }}</div>
+        <div class="piggy-bank-linear-bg-text__text">Rs {{ cashback.toFixed(2) }}</div>
       </div>
       <div class="piggy-bank-claim-prize">
         <img
           class="piggy-bank-claim-prize-icon"
           src="../../../assets/images/promotion/hotpromo/piggy-bank/icon-cash.png"
         />
-        CASH：Rs{{yesterdayLoss}}
+        CASH：Rs{{yesterdayLoss.toFixed(2)}}
       </div>
       <q-btn class="piggy-bank-claim-btn" @click="claimApi">Receive</q-btn>
     </div>
@@ -39,14 +39,14 @@
             src="../../../assets/images/promotion/hotpromo/piggy-bank/dialog-decorator.png"
           />
           <div class="piggy-bank-linear-bg-text dialog piggy-bank-dialog-item">
-            <div class="piggy-bank-linear-bg-text__text">RS {{ cashbackGet }}</div>
+            <div class="piggy-bank-linear-bg-text__text">RS {{ cashbackGet.toFixed(2) }}</div>
           </div>
           <div class="piggy-bank-dialog-prize">
             <img
               class="piggy-bank-dialog-prize-icon"
               src="../../../assets/images/promotion/hotpromo/piggy-bank/icon-cash.png"
             />
-            CASH：Rs{{yesterdayLoss}}
+            CASH：Rs{{yesterdayLoss.toFixed(2)}}
           </div>
           <q-btn class="piggy-bank-dialog-btn" v-close-popup></q-btn>
         </div>
