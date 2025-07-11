@@ -51,8 +51,8 @@
         <ul class="index_bottom_des">
           <li>产品服务</li>
           <li><router-link to="/live-casino">真人</router-link></li>
-          <li><router-link to="/crown">皇冠</router-link></li>
-          <li><router-link to="/panda">熊猫</router-link></li>
+          <li><router-link to="/crown?plat=CR">皇冠</router-link></li>
+          <li><router-link to="/panda?plat=PM">熊猫</router-link></li>
           <li><router-link to="/bacarrat">百家乐</router-link></li>
         </ul>
         <ul class="index_bottom_des">
