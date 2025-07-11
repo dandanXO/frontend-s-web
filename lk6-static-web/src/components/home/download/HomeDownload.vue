@@ -70,7 +70,6 @@ onMounted(() => { });
 
       img {
         // width: 35rem;
-        width: 80%;
         display: flex;
         margin: auto;
         position: relative;
