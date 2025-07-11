@@ -38,6 +38,9 @@
           <q-badge v-if="isNewPlayerPrivilege" color="green" floating rounded>
             {{ getNewPlayerAmount(item.amount) }}
           </q-badge>
+          <q-badge v-if="isJazzcashCryptoPrivilege || isUsdtPrivilege" color="green" floating rounded>
+            {{ getJazzcashUsdtAmt(item.amount) }}
+          </q-badge>
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -113,6 +116,12 @@
               v-model="newPlayerDepositBonusConfig.selected"
               v-else-if="newPlayerDepositBonusConfig.hasBonus && !isUSDT && isAndroid()"
             >
+              {{ $t("deposit.appDepositBonus") }}
+            </q-checkbox>
+            <q-checkbox v-model="jazzcashBonusConfig.selected" v-else-if="jazzcashBonusConfig.hasBonus">
+              {{ $t("deposit.appDepositBonus") }}
+            </q-checkbox>
+            <q-checkbox v-model="usdtBonusConfig.selected" v-else-if="usdtBonusConfig.hasBonus">
               {{ $t("deposit.appDepositBonus") }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
@@ -429,6 +438,10 @@ const DEFAULT_BONUS_CONFIG = {
   privilegeId: null
 };
 
+const calcAmountPercentage = (amount, percentageNum) => {
+  return (amount * percentageNum) / 100;
+};
+
 const closePlayerGuide = () => {
   isAdditionalDepositSteps.value = false;
   if (currentDepStep.value === 4) {
@@ -539,6 +552,8 @@ const ftdBonusConfig = ref(DEFAULT_BONUS_CONFIG);
 const secondTimeDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
 const thirdTimeDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
 const newPlayerDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
+const jazzcashBonusConfig = ref(DEFAULT_BONUS_CONFIG);
+const usdtBonusConfig = ref(DEFAULT_BONUS_CONFIG);
 
 const ui = useUI();
 
@@ -572,6 +587,12 @@ const isNewPlayerPrivilege = computed(
     newPlayerDepositBonusConfig.value.selected &&
     newPlayerDepositBonusConfig.value.hasBonus &&
     isAndroid()
+);
+const isJazzcashCryptoPrivilege = computed(
+  () => selectedPayType.value === "JAZZCASH" && jazzcashBonusConfig.value.selected && jazzcashBonusConfig.value.hasBonus
+);
+const isUsdtPrivilege = computed(
+  () => selectedPayType.value === "USDTTRC" && usdtBonusConfig.value.selected && usdtBonusConfig.value.hasBonus
 );
 
 const copyMessage = (position) => {
@@ -718,6 +739,53 @@ const getNewPlayerAmount = (amount) => {
   return rewardMap[amount] || 0;
 };
 
+const getJazzcashUsdtAmt = (item) => {
+  const priv = privilegeList.value.find((p) => p.payTypes.split(",").includes(selectedPayType.value));
+  let amount = 0;
+  if (priv) {
+    if (!priv.param) {
+      if (priv.bonusType === "RATIO") {
+        amount = item * priv.bonusAmount;
+      } else {
+        // FIXED
+        amount = priv.bonusAmount;
+      }
+    } else {
+      if (priv.bonusType === "RATIO") {
+        const privMatch = priv.param.ratio.find((p) => {
+          const min = Number(p.min);
+          const max = Number(p.max);
+          return item >= min && item < max;
+        });
+        if (privMatch) {
+          amount = privMatch.ratio * item;
+        }
+      } else {
+        // FIXED
+        const privMatch = findBonusFromMinOnly(priv.param.fixed, item);
+        if (privMatch) {
+          amount = privMatch.fixed;
+        }
+      }
+    }
+  }
+
+  function findBonusFromMinOnly(bonusList, item) {
+    for (let i = 0; i < bonusList.length; i++) {
+      const current = bonusList[i];
+      const next = bonusList[i + 1];
+
+      if (!next || (item >= current.min && item < next.min)) {
+        return current;
+      }
+    }
+
+    return null;
+  }
+
+  return convertToCommaAmount(amount, false, 0);
+};
+
 const handleDepositNodeClick = (item) => {
   activeMethod.value = item;
 };
@@ -853,9 +921,12 @@ async function loadPrivilege(val) {
   secondTimeDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
   thirdTimeDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
   newPlayerDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
+  jazzcashBonusConfig.value = DEFAULT_BONUS_CONFIG;
+  usdtBonusConfig.value = DEFAULT_BONUS_CONFIG;
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
     if (res.code === 0) {
       privilegeList.value = res.data.privileges;
+
       hasPrivilege.value = true;
       unselectedPrivileges.value = [];
       freePrivilege.value = [];
@@ -884,6 +955,18 @@ async function loadPrivilege(val) {
               };
             } else if (p.code === "pak-new-user-roulette") {
               newPlayerDepositBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else if (p.code === "pak-jazzcash-bonus") {
+              jazzcashBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else if (p.code === "PAKUSDT") {
+              usdtBonusConfig.value = {
                 selected: true,
                 hasBonus: true,
                 privilegeId: p.id
@@ -991,6 +1074,12 @@ async function confirmDeposit() {
           }
           if (newPlayerDepositBonusConfig.value.selected && newPlayerDepositBonusConfig.value.hasBonus) {
             form.privilegeId = newPlayerDepositBonusConfig.value.privilegeId;
+          }
+          if (jazzcashBonusConfig.value.selected && jazzcashBonusConfig.value.hasBonus) {
+            form.privilegeId = jazzcashBonusConfig.value.privilegeId;
+          }
+          if (usdtBonusConfig.value.selected && usdtBonusConfig.value.hasBonus) {
+            form.privilegeId = usdtBonusConfig.value.privilegeId;
           }
 
           const copy = { ...form };
