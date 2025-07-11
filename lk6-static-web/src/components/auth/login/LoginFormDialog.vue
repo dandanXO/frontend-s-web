@@ -172,7 +172,6 @@ const submitLogin = () => {
       bindEl: "#captcha-box",
       // 验证码类型, 登陆信息
       loginData: {
-        realName: loginForm.loginName,
         loginName: loginForm.loginName,
         password: loginForm.password,
         sid: store.visitorId,

@@ -665,15 +665,9 @@ body .announcement-modal.el-dialog .el-dialog__body {
   color: transparent !important;
 
   &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 100px;
-    background: url('../assets/images/home/empty-placeholder.png') center center no-repeat;
-    background-size: 100% 100%;
-    aspect-ratio: 214/242;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 

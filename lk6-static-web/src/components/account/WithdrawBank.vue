@@ -53,34 +53,34 @@
       </div>
     </div>
     <div class="account-title-container bindunbind">
-      <span class="account-title">解绑银行卡记录</span>
+      <span class="account-title">{{ $t('form.unlinkBankCardRecord') }}</span>
     </div>
     <div class="account-content last bindunbind">
       <div class="searchbar">
         <el-form layout="inline" :model="searchForm">
           <div class="left">
-            <el-form-item label="开始日期">
+            <el-form-item :label="$t('form.startDate')">
               <el-date-picker
                 v-model="searchForm.startDate"
                 show-time
                 type="date"
-                placeholder="开始日期"
+                :placeholder="$t('form.startDate')"
                 valueFormat="YYYY-MM-DD"
                 format="YYYY-MM-DD"
               />
             </el-form-item>
-            <el-form-item label="结束日期">
+            <el-form-item :label="$t('form.endDate')">
               <el-date-picker
                 v-model="searchForm.endDate"
                 show-time
                 type="date"
-                placeholder="结束日期"
+                :placeholder="$t('form.endDate')"
                 valueFormat="YYYY-MM-DD"
                 format="YYYY-MM-DD"
               />
             </el-form-item>
             <el-form-item>
-              <button class="standard-button btn-color-blue" type="button" @click="searchRecord()">搜索</button>
+              <button class="standard-button btn-color-blue" type="button" @click="searchRecord()">{{ $t('btn.search') }}</button>
             </el-form-item>
           </div>
         </el-form>
@@ -93,7 +93,11 @@
           ></el-table> -->
 
         <el-table :data="dataSource" style="width: 100%" empty-text="暂无数据" v-loading="tblLoading">
-          <el-table-column v-for="tbl in columns" :key="tbl.key" :prop="tbl.dataIndex" :label="tbl.title">
+          <template #empty>
+            <img v-if="languageVal === 'en'" src="../../assets/images/home/empty-placeholder-en.png" style="aspect-ratio: 214/242;height:100px;"/>
+            <img v-else src="../../assets/images/home/empty-placeholder.png" style="aspect-ratio: 214/242;height:100px;"/>
+          </template>
+          <el-table-column v-for="tbl in columns" :key="tbl.key" :prop="tbl.dataIndex" :label="$t(`form.${tbl.key}`)">
             <template #default="scope">
               <template v-if="tbl.dataIndex === 'bankName'">
                 {{ getOptionLabel(scope.row.bankName) }}
@@ -267,6 +271,8 @@ import { InfoFilled } from "@element-plus/icons-vue";
 import moment from "moment";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: "WithdrawBankView",
@@ -275,6 +281,8 @@ export default defineComponent({
     InfoFilled
   },
   setup() {
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
     const notify = useNotify();
     let validateEmptyCardNo = async (r, v) => {
       if (selectedBankType.value === "Bank") {
@@ -1030,7 +1038,8 @@ export default defineComponent({
       countdownTimer,
       alipayAvailable,
       setNewBankTypes,
-      store
+      store,
+      languageVal
     };
   }
 });
