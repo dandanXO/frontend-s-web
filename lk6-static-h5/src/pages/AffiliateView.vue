@@ -141,6 +141,7 @@
           <div class="affiliate-subtitle">佣金计算 (以下为示例)</div>
           <div class="affiliate-inner">
             <table>
+              <tbody>
               <tr>
                 <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
                   平台输赢
@@ -175,6 +176,7 @@
                 <td class="result">代理佣金</td>
                 <td class="result">3,150</td>
               </tr>
+              </tbody>
             </table>
           </div>
         </div>
