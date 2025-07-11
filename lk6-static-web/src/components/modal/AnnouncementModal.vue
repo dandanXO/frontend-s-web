@@ -44,10 +44,8 @@
         </div>
 
         <div class="dialog-action-row">
-          <div class="dialog-action-item close-icon" @click="visible = false">
-            <el-icon size="32px">
-              <img src="../../assets/home/close-circle-fill.svg" />
-            </el-icon>
+          <div class="dialog-action-item" @click="visible = false">
+            <img src="../../assets/home/close-circle-fill.svg" width="32px" height="32px" />
           </div>
         </div>
       </div>
@@ -222,7 +220,6 @@ watch(checked, (val) => {
       border-radius: 50%;
       background: #ffffff99;
       border: 1px solid #ffffffb2;
-      fill: black;
     }
   }
 }
