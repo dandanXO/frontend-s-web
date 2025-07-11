@@ -373,7 +373,7 @@ export default defineComponent({
       confirmPwdRef.value.validate();
       // telRef.value.validate();
       // emailRef.value.validate();
-      realNameRef.value.validate();
+      // realNameRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
         message: t("register.registering")
@@ -384,7 +384,7 @@ export default defineComponent({
         confirmPwdRef.value.hasError ||
         // telRef.value.hasError ||
         // emailRef.value.hasError ||
-        realNameRef.value.hasError ||
+        // realNameRef.value.hasError ||
         verificationRef.value.hasError
       ) {
         $q.loading.hide();
@@ -420,6 +420,7 @@ export default defineComponent({
                 });
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
+                // debugger;
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
                   router.go(jumpUrl);
