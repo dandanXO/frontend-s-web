@@ -243,14 +243,6 @@
       </div>
     </Dialog>
 
-    <Dialog v-model:visible="uiControl.messageVisible" :header="t('fields.exportToExcel')" modal :style="{ width: '780px' }">
-      <router-link :to="`/site-management/download-manager`">
-        <el-link type="primary">
-          {{ t('menu.DownloadManager') }}
-        </el-link>
-      </router-link>
-      <span>{{ t('message.requestExportToExcelDone2') }}</span>
-    </Dialog>
   </div>
 </template>
 
