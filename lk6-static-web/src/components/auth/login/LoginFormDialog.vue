@@ -44,7 +44,15 @@
         {{ $t('form.acceptTermsAndConditions') }}
         <span class="underline">《{{$t('form.userAgreement')}}》</span>
       </div>
-      <div><a class="forget-pwd-text" @click="openForgotpwdDialog">{{ $t('form.forgotPwd') }}</a></div>
+      <div>
+        <el-tooltip placement="top" effect="dark">
+          <template #content>
+            {{ $t('form.contactSupportForgetPassword') }}
+            <a @click="store.openLiveChat">{{ $t('form.contactSupport') }}</a>
+          </template>
+          <a class="forget-pwd-text">{{ $t('form.forgotPwd') }}</a>
+        </el-tooltip>
+      </div>
     </div>
 
     <el-button :loading="isLoading" size="large" class="login-form-submit-btn" @click="submitLogin">{{ $t('btn.login') }}</el-button>
@@ -153,17 +161,18 @@ const submitLogin = () => {
   (async () => {
     const sidParam = store.visitorId;
     const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
-    
+    let rstUrl = localStorage.getItem("LK6_WEB_RST_URL") || process.env.VUE_APP_RST_API.split(",")[0];
     // tianai captcha config
     const config = {
       // 生成接口 (必选项,必须配置, 要符合tianai-captcha默认验证码生成接口规范)
-      requestCaptchaDataUrl: `${'https://ubysg6a4qi.eioxrlyh06.com'}/member/getCaptcha`,
+      requestCaptchaDataUrl: `${rstUrl}/member/getCaptcha`,
       // 验证接口 (必选项,必须配置, 要符合tianai-captcha默认验证码校验接口规范)
-      validCaptchaUrl: `${'https://ubysg6a4qi.eioxrlyh06.com'}/member/login`,
+      validCaptchaUrl: `${rstUrl}/member/login`,
       // 验证码绑定的div块 (必选项,必须配置)
       bindEl: "#captcha-box",
       // 验证码类型, 登陆信息
       loginData: {
+        realName: loginForm.loginName,
         loginName: loginForm.loginName,
         password: loginForm.password,
         sid: store.visitorId,

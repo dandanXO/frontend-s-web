@@ -583,10 +583,10 @@ export default defineComponent({
     const banksList = ref([]);
     const bankCardModal = () => {
       store.getMemberInfo().then(() => {
-        if (!store.realName || store.realName == "") {
-          notify({ type: "error", message: "真实姓名不可为空" });
-          return;
-        } else {
+        // if (!store.realName || store.realName == "") {
+        //   notify({ type: "error", message: "真实姓名不可为空" });
+        //   return;
+        // } else {
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";
           bankCardInfo.cardAccount = store.realName;
@@ -613,7 +613,7 @@ export default defineComponent({
                 console.log("error", e);
               });
           }
-        }
+        // }
       });
     };
 

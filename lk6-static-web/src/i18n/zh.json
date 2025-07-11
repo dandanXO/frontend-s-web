@@ -40,7 +40,9 @@
     "onlyNumbersAllowed": "电话号码只允许使用数字",
     "smsOtp": "手机验证码",
     "email": "邮箱",
-    "emailRule01": "电子邮件地址无效"
+    "emailRule01": "电子邮件地址无效",
+    "contactSupportForgetPassword": "请联系客服找回密码",
+    "contactSupport": "联系客服"
   },
   "menu": {
     "promotion": "优惠",
