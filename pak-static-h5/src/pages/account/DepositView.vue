@@ -438,10 +438,6 @@ const DEFAULT_BONUS_CONFIG = {
   privilegeId: null
 };
 
-const calcAmountPercentage = (amount, percentageNum) => {
-  return (amount * percentageNum) / 100;
-};
-
 const closePlayerGuide = () => {
   isAdditionalDepositSteps.value = false;
   if (currentDepStep.value === 4) {
