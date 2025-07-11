@@ -513,13 +513,18 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
                 stickyTop: headerHeight,
                 betSlipOffsetTop: headerHeight,
                 betslipZIndex: 999,
-                onLogin: () => {},
-                onRegister: () => {},
-                onSessionRefresh: () => {
-                  console.log("onSessionRefresh");
+                onRecharge: function() {
+                  router.push("/deposit?from=/home")
                 },
-                onTokenExpired: (e) => {
-                  console.log("onTokenExpired", e);
+                onSessionRefresh: function() {
+                  console.log("onSessionRefresh");
+                  window.location.reload();
+                },
+                onTokenExpired: ()=>{
+                  return new Promise((resolve, reject) => {
+                    visible.value = false;
+                    startGame(gameName, platformCode, gameCode, gameType, demo);
+                  });
                 }
               });
 

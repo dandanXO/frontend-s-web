@@ -506,13 +506,18 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
               stickyTop: headerHeight,
               betSlipOffsetTop: headerHeight,
               betslipZIndex: 999,
-              onLogin: function () {},
-              onRegister: function () {},
+              onRecharge: function () {
+                router.push("/deposit?from=/home");
+              },
               onSessionRefresh: function () {
                 console.log("onSessionRefresh");
+                window.location.reload();
               },
-              onTokenExpired: function (e) {
-                console.log("onTokenExpired" + e);
+              onTokenExpired: () => {
+                return new Promise((resolve, reject) => {
+                  visible.value = false;
+                  startGame(gameName, platformCode, gameCode, gameType, demo);
+                });
               }
             });
             console.log(betbyInstance.value);

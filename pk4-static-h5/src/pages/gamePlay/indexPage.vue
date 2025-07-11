@@ -286,7 +286,7 @@ const submitTransfer = (amount) => {
     });
 };
 const closeDialog =  async () => {
-  
+
   visible.value = false;
 
   src.value = "";
@@ -305,7 +305,7 @@ const closeDialog =  async () => {
   // 使用router 操作 後續 bottom bar會產生bug
   // router.replace('/home')
   router.push('/home')
-  
+
   // window.location.href = `${window.location.origin}/home#Lobby`
 };
 
@@ -399,15 +399,15 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
   // buttonInIFrame.style.visible = visible;
   //   console.log(iframe)
   title.value = gameName;
-  
+
   if (store.memberType !== "TEST" && gameType === "TEST") {
     visibleComingSoon.value = true;
   } else {
-  
+
     const _isPlatformAllowNonLogin = isPlatformAllowNonLogin(demo);
     if (store.hasToken() || _isPlatformAllowNonLogin) {
       if (platformCode !== "LuckySport") {
-  
+
         visible.value = true;
       }
       // if (platformCode === "BetBy" && isBetByLoad.value === false) {
@@ -444,7 +444,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
         isMobile: Platform.is.mobile ? true : false,
         way: way
       };
-      
+
       if (_isPlatformAllowNonLogin || _isFromNewPlayerGuide) {
         try {
           const demoInfo = JSON.parse(demo);
@@ -522,13 +522,18 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
                 stickyTop: headerHeight,
                 betSlipOffsetTop: headerHeight,
                 betslipZIndex: 999,
-                onLogin: () => {},
-                onRegister: () => {},
-                onSessionRefresh: () => {
-                  console.log("onSessionRefresh");
+                onRecharge: function() {
+                  router.push("/deposit?from=/home")
                 },
-                onTokenExpired: (e) => {
-                  console.log("onTokenExpired", e);
+                onSessionRefresh: function() {
+                  console.log("onSessionRefresh");
+                  window.location.reload();
+                },
+                onTokenExpired: ()=>{
+                  return new Promise((resolve, reject) => {
+                    visible.value = false;
+                    startGame(gameName, platformCode, gameCode, gameType, demo);
+                  });
                 }
               });
 
@@ -643,7 +648,7 @@ onMounted(()=>{
     }else{
       console.error('wrong game')
     }
-    
+
 })
 
 defineExpose({
