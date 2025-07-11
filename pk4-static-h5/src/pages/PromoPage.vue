@@ -100,7 +100,7 @@
                 v-if="
                   selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
                   selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
-                  selectedPromo.redirectUrl !== 'pak-welcome-new-players' && 
+                  selectedPromo.redirectUrl !== 'pk4-welcome-new-players' && 
                   selectedPromo.redirectUrl !== 'pk4-month-beginning-deposit-rebate' && 
                   selectedPromo.redirectUrl !== 'pk4-app-login-phone-bonus' && 
                   selectedPromo.redirectUrl !== 'pk4-piggy-bank'
@@ -132,7 +132,7 @@
                   isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
                   isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
                   isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards',
-                  isNewPlayerSpinWheel: selectedPromo.redirectUrl === 'pak-welcome-new-players',
+                  isNewPlayerSpinWheel: selectedPromo.redirectUrl === 'pk4-welcome-new-players',
                   isSpinLuckyWheel:
                     selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope',
                   isMonthlyBeginningDepositRebate: selectedPromo.redirectUrl === 'pk4-month-beginning-deposit-rebate',
@@ -449,6 +449,8 @@ export default defineComponent({
       } else {
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({ path: "/vip" });
+        } else if (promo.redirectUrl && promo.redirectUrl.includes("page-invite")) {
+          router.push({ path: "/earn-money" });
         } else {
           if (promo.redirectUrl === "pak-redpacketrain") {
             isMoneyRainModal.value = true;
@@ -1222,6 +1224,11 @@ export default defineComponent({
             display: none;
           }
         }
+        &.isNewPlayerSpinWheel {
+          margin: 0;
+          width: 100%;
+          padding: 25px;
+        }
         &.isNewPlayerAccDeposit {
           width: 100%;
 
@@ -1307,7 +1314,8 @@ export default defineComponent({
             padding: 5px;
             text-align: center;
 
-            background: linear-gradient(180deg, #21ef89 0%, #33562d 100%);
+            // background: linear-gradient(180deg, #21ef89 0%, #33562d 100%);
+            background: linear-gradient(180deg, #214def, #3978fe);
 
             &:first-child {
               border-top-left-radius: 8px;
@@ -1321,7 +1329,7 @@ export default defineComponent({
           td {
             padding: 5px;
             text-align: center;
-            background-color: #1c241b;
+            background-color: #5278cd1a;
             border: 1px solid #2e3039;
           }
         }

@@ -91,7 +91,7 @@ const historyList = () => {
       color: #ffffff;
       height: 22px;
       font-size: 12px;
-      background-color: #00186a !important;
+      background: linear-gradient(180deg, #214aef, #161a8c) !important;
       &:hover {
         color: unset;
         .betVolume {
