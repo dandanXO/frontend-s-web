@@ -1215,7 +1215,11 @@ export default defineComponent({
       }
       .online-content {
         &.spin-lucky-wheel {
-          display: none;
+          // display: none;
+          .block-wrapper {
+            margin: 0 auto;
+            max-width: 370px;
+          }
         }
         &.pk2-deposit-wheel {
           display: none;
@@ -1223,7 +1227,7 @@ export default defineComponent({
         &.new-player-acc-deposit {
           width: 90%;
           margin: 0 auto;
-          }
+        }
       }
     }
   }
