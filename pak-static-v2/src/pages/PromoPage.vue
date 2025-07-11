@@ -102,7 +102,7 @@
                 </div>
               </div>
 
-              <div class="inner" 
+              <div class="inner"
               :class="{
                   isJackpotAviator: selectedPromo.redirectUrl === 'pk2-jackpot-aviator',
                   isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
@@ -185,7 +185,7 @@
   </q-dialog>
 
   <q-dialog v-model="isMoneyRainModal" width="100%">
-    <MoneyRainModal :promoContent="promoModalContent" />
+    <MoneyRainModal />
     <q-btn icon="close" round dense v-close-popup @click="backToPromoList()" class="money-rain-close" />
   </q-dialog>
 
@@ -369,7 +369,6 @@ export default defineComponent({
     }
 
     const isMoneyRainModal = ref(false);
-    const promoModalContent = ref('');
 
     const showPromoDetails = (promo) => {
       if (!store.token) {
@@ -386,7 +385,6 @@ export default defineComponent({
         } else {
           if (promo.redirectUrl === "pk2-redpacketrain") {
             isMoneyRainModal.value = true;
-            promoModalContent.value = promo.pageContent
           } else {
             if (extensionState.value) {
               isPromoDetail.value = true;
@@ -721,8 +719,7 @@ export default defineComponent({
       isMoneyRainModal,
       isFetchingPromo,
       extensionState,
-      isOpenExtension,
-      promoModalContent
+      isOpenExtension
       // MediaSettingsComponent
     }
   },
@@ -1218,11 +1215,7 @@ export default defineComponent({
       }
       .online-content {
         &.spin-lucky-wheel {
-          // display: none;
-          .block-wrapper {
-            margin: 0 auto;
-            max-width: 370px;
-          }
+          display: none;
         }
         &.pk2-deposit-wheel {
           display: none;
@@ -1230,7 +1223,7 @@ export default defineComponent({
         &.new-player-acc-deposit {
           width: 90%;
           margin: 0 auto;
-        }
+          }
       }
     }
   }

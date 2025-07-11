@@ -219,7 +219,7 @@
   </q-dialog>
 
   <q-dialog v-model="isMoneyRainModal" width="100%">
-    <MoneyRainModal @closeModal="isMoneyRainModal = false" :promoContent="promoModalContent" />
+    <MoneyRainModal @closeModal="isMoneyRainModal = false" />
     <q-btn icon="close" round dense v-close-popup @click="backToPromoList()" class="money-rain-close" />
   </q-dialog>
 
@@ -438,7 +438,6 @@ export default defineComponent({
     };
 
     const isMoneyRainModal = ref(false);
-    const promoModalContent = ref('');
     const isMegaSharingWheelModal = ref(false);
 
     const showPromoDetails = (promo) => {
@@ -457,7 +456,6 @@ export default defineComponent({
         } else {
           if (promo.redirectUrl === "pak-redpacketrain") {
             isMoneyRainModal.value = true;
-            promoModalContent.value = promo.pageContent
           } else if (promo.redirectUrl === "pak-mega-sharing-wheel") {
             isMegaSharingWheelModal.value = true;
             popupPromo.value = "mega-sharing-wheel"
@@ -803,8 +801,7 @@ export default defineComponent({
       isMegaSharingWheelModal,
       popupPromo,
       HotPromotion,
-      moment,
-      promoModalContent
+      moment
       // MediaSettingsComponent
     };
   }

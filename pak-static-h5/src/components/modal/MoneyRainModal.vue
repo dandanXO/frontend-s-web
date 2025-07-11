@@ -57,9 +57,7 @@
             </q-btn>
           </div>
         </div>
-
-        <div v-html="promoContent"></div>
-        <!-- <div class="content-timing">
+        <div class="content-timing">
           <div class="timing-head">{{ $t("hotPromo.every_friday_saturday_and_sunday") }}</div>
           <div class="timing-body">
             <span>00:00-00:59</span>
@@ -77,9 +75,13 @@
             <span>12:00-12:59</span>
             <span>20:00-20:59</span>
           </div>
-        </div> -->
+        </div>
 
-        <!-- <div class="content-footer">
+        <div class="content-footer">
+          <!-- <div class="footer-title">
+            Limited to
+            <span>3000 Participants</span>
+          </div> -->
           <div class="footer-title q-mt-sm">{{ $t("hotPromo.terms_and_Conditions") }}:</div>
           <div class="footer-content">
             {{ $t("content.cashRainIntro") }}
@@ -98,8 +100,9 @@
 
             <br />
             {{ $t("content.cashRainVIP") }}
+
           </div>
-        </div> -->
+        </div>
       </div>
 
       <div class="rain-money-tab-content" v-show="moneyRainTab === 'records'">
@@ -211,7 +214,7 @@
     </div>
     <img @click="closeModalHandler" class="return-enveloper-btn" src="../../assets/images/index/money-rain/return-red-envelope-btn.png" />
   </div>
-  
+
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
     <div class="congrats-wrapper">
@@ -236,8 +239,6 @@ import { onMounted, ref, reactive, defineEmits } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-
-const props = defineProps(["promoContent"]);
 
 const router = useRouter();
 const store = userStore();
@@ -436,7 +437,7 @@ onMounted(() => {
   letter-spacing: 0px;
   text-align: center;
   color: #FFD288;
-  
+
 }
 .congrats-container {
   position: relative;
@@ -467,6 +468,7 @@ onMounted(() => {
     letter-spacing: 0%;
     text-align: center;
     color: #ffffff;
+
   }
 }
 .table-container {
