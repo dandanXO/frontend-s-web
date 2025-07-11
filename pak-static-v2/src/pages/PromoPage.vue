@@ -185,7 +185,7 @@
   </q-dialog>
 
   <q-dialog v-model="isMoneyRainModal" width="100%">
-    <MoneyRainModal />
+    <MoneyRainModal :promoContent="promoModalContent" />
     <q-btn icon="close" round dense v-close-popup @click="backToPromoList()" class="money-rain-close" />
   </q-dialog>
 
@@ -369,6 +369,7 @@ export default defineComponent({
     }
 
     const isMoneyRainModal = ref(false);
+    const promoModalContent = ref('');
 
     const showPromoDetails = (promo) => {
       if (!store.token) {
@@ -385,6 +386,7 @@ export default defineComponent({
         } else {
           if (promo.redirectUrl === "pk2-redpacketrain") {
             isMoneyRainModal.value = true;
+            promoModalContent.value = promo.pageContent
           } else {
             if (extensionState.value) {
               isPromoDetail.value = true;
@@ -719,7 +721,8 @@ export default defineComponent({
       isMoneyRainModal,
       isFetchingPromo,
       extensionState,
-      isOpenExtension
+      isOpenExtension,
+      promoModalContent
       // MediaSettingsComponent
     }
   },
