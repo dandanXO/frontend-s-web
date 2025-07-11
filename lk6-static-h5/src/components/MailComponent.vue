@@ -77,7 +77,7 @@
                     <img src="../assets/images/inbox/unread-mail.svg" />
                   </div>
 
-                  <div v-html="det.title" class="title-text" :title="det.title"></div>
+                  <div class="title-text" :title="det.title">{{ det.strTitle }}</div>
                   <div
                     v-if="det.sendTime"
                     class="send-time"
@@ -150,6 +150,7 @@ import moment from "moment";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import qs from "qs";
+import { useRoute } from "vue-router";
 import CommonModal from "./CommonModal.vue";
 import { useI18n } from "vue-i18n";
 import { useNotify } from "src/hooks/notify";
@@ -188,6 +189,7 @@ export default defineComponent({
   setup(props, context) {
     const { t } = useI18n();
     const notify = useNotify();
+    const route= useRoute();
     const mailboxMessageTypeData = computed(() => [
       { num: 2, type: "ACTIVITY", name: t("mail.category.activity") },
       { num: 3, type: "ANNOUNCEMENT", name: t("mail.category.announcement") },
@@ -196,9 +198,15 @@ export default defineComponent({
       { num: 5, type: "ALL", name: t("mail.category.all") }
     ]);
     const mailboxMessageTab = ref(mailboxMessageTypeData.value[0].type);
+    if(route.query.type){
+      mailboxMessageTab.value = route.query.type;
+    }
     if (props.type === "outbox") {
       mailboxMessageTab.value = mailboxMessageTypeData.value[4].type;
     }
+    const isSelectedMail = ref(-1);
+    const isLoading = ref(false);
+
     const $q = useQuasar();
     const isDeleteMailModal = ref(false);
 
@@ -243,7 +251,7 @@ export default defineComponent({
         // }
       }, 200);
     };
-    const isSelectedMail = ref(-1);
+
     const toggleMail = (mail) => {
       if (isSelectedMail.value !== mail.id) {
         isSelectedMail.value = mail.id;

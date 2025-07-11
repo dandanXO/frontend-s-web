@@ -645,11 +645,12 @@ export default {
     }
   },
   login: {
-    alreadygotAcc: "I Already have account,",
+    alreadyGotAcc: "I Already have account,",
     loginnow: "Login Now",
     userNameLogin: "Username Login",
     phoneLogin: "Phone Login",
     forgotPassword: "Forgot password?",
+    forgotPasswordTip: "Please contact support to recover your password {0}",
     rememberPassword: "Remember me",
     cs: "Contact Support",
     loggingIn: "Logging in...",
@@ -899,7 +900,7 @@ export default {
   },
   tianaiCaptcha: {
     tipsError: "Verification failed, please try again!",
-    tipsSuccess: "Verification succeeded, took {s} seconds",
+    tipsSuccess: "Verification succeeded, took %s seconds",
     sliderTitle: "Drag the slider to complete the puzzle",
     concatTitle: "Drag the slider to complete the puzzle",
     imageClickTitle: "Please click the images in the correct order",

@@ -193,9 +193,21 @@
                   </span>
                 </div> -->
 
-                <router-link class="txt-tip align-right text-gray-a1" style="margin-left: auto" to="/forgot-account">
+                <q-btn class="forgot-password-btn" style="margin-left: auto" flat dense no-caps>
                   <span>{{ $t("login.forgotPassword") }}</span>
-                </router-link>
+                  <q-popup-proxy class="forgot-password-tip">
+                    <i18n-t keypath="login.forgotPasswordTip" tag="span">
+                      <a
+                        class="txt-tip"
+                        href="https://8xjp0t3ydi.ipbr7k9r.com/chatwindow.aspx?siteId=65001994&planId=099fb0e7-cad5-43d0-aa03-2ed2257e0e12"
+                        target="_blank"
+                      >
+                        <span style="color: #94c3ff">{{ $t("login.cs") }}</span>
+                      </a>
+                    </i18n-t>
+                  </q-popup-proxy>
+                </q-btn>
+                <div ref="forgotPasswordRef" />
 
                 <div class="mui-row text-gray-a1" :class="isCheckRmb ? 'checked' : ''">
                   <q-checkbox
@@ -228,7 +240,6 @@
               size="16px"
               flat
             />
-
           </q-form>
           <div id="captcha-box" />
         </q-tab-panel>
@@ -250,14 +261,13 @@
       </div> -->
       <!--  -->
       <div class="row justify-center items-center full-width q-mb-md">
-        <div class="txt-tip" @click="goToLiveChat">
-          <!-- <div style="width: 60px; height: 1px; background-color: #7a80a199"></div> -->
-          <div class="row items-center gap-8">
-            <!-- <img src="../assets/login/service-icon.svg" width="16px" /> -->
-            <span style="color: #458bff">{{ $t("login.cs") }}</span>
-          </div>
-          <!-- <div style="width: 60px; height: 1px; background-color: #7a80a199"></div> -->
-        </div>
+        <a
+          class="txt-tip"
+          href="https://8xjp0t3ydi.ipbr7k9r.com/chatwindow.aspx?siteId=65001994&planId=099fb0e7-cad5-43d0-aa03-2ed2257e0e12"
+          target="_blank"
+        >
+          <span style="color: #458bff">{{ $t("login.cs") }}</span>
+        </a>
       </div>
     </div>
 
@@ -577,13 +587,6 @@ export default defineComponent({
         });
     };
 
-    const goToLiveChat = () => {
-      window.open(
-        "https://8xjp0t3ydi.ipbr7k9r.com/chatwindow.aspx?siteId=65001994&planId=099fb0e7-cad5-43d0-aa03-2ed2257e0e12",
-        "_blank"
-      );
-    }
-
     const sendOtpSms = () => {
       if (!phoneLoginForm.phoneNumber) {
         $q.notify({
@@ -854,7 +857,6 @@ export default defineComponent({
       innerCaptchaRef,
       innerCaptchaCodeId,
       showCaptchaDialog,
-      goToLiveChat,
       phoneVerificationImg,
       getInnerCode,
       refinnerCaptchaRef,
@@ -1071,10 +1073,10 @@ export default defineComponent({
       justify-content: center;
       gap: 10px;
       font-size: 13px;
-      color: #7A80A1;
+      color: #7a80a1;
 
       &.checked {
-        color: #7A80A1;
+        color: #7a80a1;
       }
 
       &:active {
@@ -1087,7 +1089,7 @@ export default defineComponent({
     a:active,
     a:hover {
       text-decoration: none;
-      color: #7A80A1;
+      color: #7a80a1;
     }
   }
 
@@ -1150,21 +1152,20 @@ export default defineComponent({
   background: transparent;
 }
 
-:deep(.q-field--standout .q-field__control){
-  border: 1px solid #ECEDF0;
+:deep(.q-field--standout .q-field__control) {
+  border: 1px solid #ecedf0;
   border-radius: 8px;
-  box-shadow: 0px 0px 5px 0px #86B8FF inset;
+  box-shadow: 0px 0px 5px 0px #86b8ff inset;
   background: #fff;
-  box-shadow: 0px 2px 0px 0px #9AB0FF70;
-
+  box-shadow: 0px 2px 0px 0px #9ab0ff70;
 }
 
-:deep(.q-field--standout.q-field--highlighted .q-field__native){
+:deep(.q-field--standout.q-field--highlighted .q-field__native) {
   color: #000;
 }
 
-.text-gray-a1{
-  color: #7A80A1;
+.text-gray-a1 {
+  color: #7a80a1;
 }
 
 #captchaContainer {
@@ -1214,13 +1215,6 @@ export default defineComponent({
   }
 }
 
-#captcha-box {
-  position: fixed;
-  z-index: 1000;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 .captcha-dialog {
   .verification-code-input {
     border-radius: 7px;
@@ -1241,5 +1235,9 @@ export default defineComponent({
     border-radius: 7px;
     cursor: pointer;
   }
+}
+.forgot-password-btn {
+  font-size: 14px;
+  color: #7a80a1;
 }
 </style>

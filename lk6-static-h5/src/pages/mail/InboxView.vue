@@ -42,10 +42,25 @@ const loadInbox = () => {
     })
     .then((response) => {
       if (response.code === 0) {
+        const processedRecords = response.data.records.map((record) => {
+          const wrapperDom = document.createElement("div");
+          wrapperDom.innerHTML = record.title;
+
+          const lines = Array.from(wrapperDom.querySelectorAll("p")).map((p) => {
+            const text = p.textContent || "";
+            return text;
+          });
+
+          const strTitle = lines.join("\n");
+          return {
+            ...record,
+            strTitle
+          };
+        });
         if (mailData.value.length === 0) {
-          mailData.value = response.data.records;
+          mailData.value = processedRecords;
         } else {
-          mailData.value.push(...response.data.records);
+          mailData.value.push(...processedRecords);
         }
         visible.value = false;
         if (response.data.current < response.data.pages) {
