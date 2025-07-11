@@ -6,11 +6,8 @@
         <div style="display: flex; justify-content: center">
           <template v-for="(item, index) in platformsListDisplay" :key="index">
             <!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
-            <div
-              class="platform-menu-item"
-              @click="gotoGame(item, platformType)"
-              :class="item.underMaintenance === true ? 'maintenance' : ''"
-            >
+            <div class="platform-menu-item" @click="gotoGame(item, platformType)"
+              :class="item.underMaintenance === true ? 'maintenance' : ''">
               <div class="maintenance-box" v-if="item.underMaintenance === true">
                 <p>维护中</p>
                 <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
@@ -27,17 +24,7 @@
               <div class="platform-menu-title" v-html="item.cnname" />
               <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
               <div class="platform-menu-img">
-                <img
-                  :src="
-                    require('../../assets/' +
-                      props.platformType +
-                      '/' +
-                      props.platformType +
-                      '-item-' +
-                      item.code.toLowerCase() +
-                      '.png')
-                  "
-                />
+                <img :src="renderPlatformMenuImg(item)" />
               </div>
 
               <div class="standard-button btn-color-blue platform-menu-btn"><a>进入场馆</a></div>
@@ -82,6 +69,21 @@ const platformsListDisplayByChunk = computed(() => {
   return [];
 });
 
+const renderPlatformMenuImg = (item) => {
+  try {
+    return require('../../assets/' +
+      props.platformType +
+      '/' +
+      props.platformType +
+      '-item-' +
+      item.code.toLowerCase() +
+      '.png')
+
+  } catch (error) {
+    return require('../../assets/lucky-6-logo.png');
+  }
+}
+
 const arrowStatus = computed(() => {
   if (
     (props.platformType === "esports" && props.platforms.length - 2 > 5) ||
@@ -107,15 +109,15 @@ const getPlatformList = () => {
       return { ...matchingItem, ...item1 };
     });
 
-    
-    if(props.isBacarrat) {
+
+    if (props.isBacarrat) {
       const bacarratPlatforms = [{
         cnname: "百家乐",
         code: "bacarrat",
-      },{
+      }, {
         cnname: "轮盘",
         code: "roulette",
-      },{
+      }, {
         cnname: "幸运蕾丝",
         code: "lucky-lace",
       }];
@@ -133,11 +135,11 @@ const router = useRouter();
 const gotoGame = (item, platformType) => {
   // debugger;
   // console.log(platformType);
-  if(['bacarrat', 'roulette', 'lucky-lace'].includes(item.code)) {
+  if (['bacarrat', 'roulette', 'lucky-lace'].includes(item.code)) {
     router.push(`/${item.code}`);
     return;
   }
-  
+
   if (platformType === "slot") {
     router.push(`/slot?plat=${item.code}`);
   } else {
@@ -199,6 +201,7 @@ onMounted(() => {
 :deep(.el-carousel__arrow--left) {
   left: 0px;
 }
+
 :deep(.el-carousel__arrow--right) {
   right: 0px;
 }
@@ -222,6 +225,7 @@ onMounted(() => {
       color: #fff;
     }
   }
+
   &:active,
   &:focus {
     background-image: none;
@@ -241,6 +245,7 @@ onMounted(() => {
 :deep(.el-carousel__indicators) {
   display: none;
 }
+
 #platform-menu-live {
   :deep(.el-carousel__indicators) {
     display: initial;
