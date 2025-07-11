@@ -403,7 +403,6 @@ const readMultipleMsg = () => {
 };
 
 const openMsg = (mail, idx) => {
-  console.log('here', mail, idx)
   const { id, readTime } = mail;
 
   showMailId.value = idx;

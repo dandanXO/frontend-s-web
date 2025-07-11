@@ -3,7 +3,8 @@
     "login": "Login",
     "register": "Register",
     "en": "English",
-    "enterGame": "Enter Game"
+    "enterGame": "Enter Game",
+    "enterDojo": "Enter Dojo"
   },
   "form": {
     "realName": "Real Name",
@@ -174,7 +175,7 @@
     },
   "tianaiCaptcha": {
     "tipsError": "Verification failed, please try again!",
-    "tipsSuccess": "Verification succeeded, took {s} seconds",
+    "tipsSuccess": "Verification succeeded, took %s seconds",
     "sliderTitle": "Drag the slider to complete the puzzle",
     "concatTitle": "Drag the slider to complete the puzzle",
     "imageClickTitle": "Please click the images in the correct order",

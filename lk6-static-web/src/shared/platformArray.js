@@ -116,6 +116,7 @@ export const sportsPlatforms = [
     message:"sportsPlatforms.message2",
     enMessage: "Stay ahead with expert odds trend analysis and real-time updates on the hottest events and sports news. With diverse betting options, the excitement never stops",
     caption: "玩法刺激 即刻结算",
+    enCaption: "Exciting gameplay, instant settlement.",
     gameCode: "",
     enname: "Crown Sport"
   },
@@ -126,6 +127,7 @@ export const sportsPlatforms = [
     message:"sportsPlatforms.message3",
     enMessage: "Stay ahead with expert odds trend analysis and real-time updates on the hottest events and sports news. With diverse betting options, the excitement never stops",
     caption: "玩法刺激 即刻结算",
+    enCaption: "Exciting gameplay, instant settlement.",
     gameCode: "",
     enname: "Panda Sport"
   },
