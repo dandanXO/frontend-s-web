@@ -1,6 +1,7 @@
 <template>
   <q-layout view="hHh Lpr fFf">
-    <q-header v-if="hasPage" class="page-wrapper">
+    <q-header v-if="hasPage" class="page-wrapper"
+         >
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
           <router-link to="/">
@@ -555,6 +556,7 @@ svg path {
   background: transparent;
   padding-top: 0px;
   background-size: cover;
+
 }
 
 .page-title {

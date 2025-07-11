@@ -3,11 +3,10 @@
     <div class="form-container">
       <q-form ref="regFormRef" class="rounded-borders" @submit="onSubmit">
         <div class="login-form-inner-wrapper q-gutter-y-md">
-          <div class="input-field-wrapper">
+          <div class="input-field-wrapper" style="margin-top: 0px;">
             <div class="input-field__label required">{{ $t("register.form.userName.label") }}</div>
             <q-input
               height="32px"
-              rounded
               standout
               bg-color="grey-2"
               hide-bottom-space
@@ -38,7 +37,6 @@
             <div class="input-field__label required">{{ $t("register.form.password.label") }}</div>
             <q-input
               height="32px"
-              rounded
               standout
               bg-color="grey-2"
               ref="pwdRef"
@@ -111,7 +109,6 @@
 
             <q-input
               height="32px"
-              rounded
               standout
               bg-color="grey-2"
               ref="confirmPwdRef"
@@ -154,42 +151,40 @@
             </q-input>
           </div>
 
-          <div class="input-field-wrapper">
-            <div class="input-field__label">{{ $t("register.form.realName.label") }}</div>
-            <q-input
-              height="32px"
-              rounded
-              standout
-              bg-color="grey-2"
-              ref="realNameRef"
-              hide-bottom-space
-              v-model="regForm.realName"
-              :placeholder="$t('register.form.realName.placeholder')"
-              lazy-rules
-              :rules="[
-            (val) => (val && val.length > 0) || t('register.form.realName.error.required'),
-            (val) =>
-              (val && val.length >= 2 && val.length <= 12) ||
-              t('register.form.realName.error.required', { min: 2, max: 12 })
-          ]"
-            >
-              <template v-slot:prepend>
-                <img src="../assets/login/user-icon.svg" width="14" />
-              </template>
-              <template v-slot:append>
-                <q-btn flat round @click="clearRealName">
-                  <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
-                </q-btn>
-              </template>
-            </q-input>
-          </div>
+<!--          <div class="input-field-wrapper">-->
+<!--            <div class="input-field__label">{{ $t("register.form.realName.label") }}</div>-->
+<!--            <q-input-->
+<!--              height="32px"-->
+<!--              standout-->
+<!--              bg-color="grey-2"-->
+<!--              ref="realNameRef"-->
+<!--              hide-bottom-space-->
+<!--              v-model="regForm.realName"-->
+<!--              :placeholder="$t('register.form.realName.placeholder')"-->
+<!--              lazy-rules-->
+<!--              :rules="[-->
+<!--            (val) => (val && val.length > 0) || t('register.form.realName.error.required'),-->
+<!--            (val) =>-->
+<!--              (val && val.length >= 2 && val.length <= 12) ||-->
+<!--              t('register.form.realName.error.required', { min: 2, max: 12 })-->
+<!--          ]"-->
+<!--            >-->
+<!--              <template v-slot:prepend>-->
+<!--                <img src="../assets/login/user-icon.svg" width="14" />-->
+<!--              </template>-->
+<!--              <template v-slot:append>-->
+<!--                <q-btn flat round @click="clearRealName">-->
+<!--                  <img src="../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />-->
+<!--                </q-btn>-->
+<!--              </template>-->
+<!--            </q-input>-->
+<!--          </div>-->
 
           <div class="input-field-wrapper">
             <div class="input-field__label">{{ $t("register.form.verificationCode.label") }}</div>
 
             <q-input
               height="32px"
-              rounded
               standout
               bg-color="grey-2"
               clearable
@@ -216,7 +211,6 @@
             <div class="input-field__label">{{ $t("register.form.affiliateCode.label") }}</div>
             <q-input
               height="32px"
-              rounded
               standout
               bg-color="grey-2"
               clearable
@@ -238,19 +232,20 @@
             @click.prevent="onSubmit"
             type="submit"
             class="login-btn q-mt-md"
-            :label="$t('btn.register')"
+            :label="$t('btn.registernow')"
             width="100%"
             size="16px"
           />
 
-          <q-btn
-            @click.prevent="changeTab"
-            type="button"
-            class="register-btn q-mt-md"
-            :label="$t('btn.login')"
-            width="100%"
-            size="16px"
-          />
+          <span class="login-click" @click="changeTab">{{ $t('login.alreadyGotAcc') }}<span class="text-blue-a1">{{ $t('login.loginnow') }}</span></span>
+<!--          <q-btn-->
+<!--            @click.prevent="changeTab"-->
+<!--            type="button"-->
+<!--            class="register-btn q-mt-md"-->
+<!--            :label="$t('btn.login')"-->
+<!--            width="100%"-->
+<!--            size="16px"-->
+<!--          />-->
         </div>
       </q-form>
     </div>
@@ -660,6 +655,7 @@ function charType(num) {
       background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
       border: 1px solid #ffffff;
       border-radius: 30px;
+      height: 48px;
       font-weight: 600;
       color: white;
     }
@@ -884,4 +880,29 @@ function charType(num) {
     font-weight: 600;
   }
 }
+
+.login-click{
+  width:50%;
+  text-align: center;
+  margin: 20px auto;
+}
+
+.text-blue-a1{
+  color: #1E86FF;
+}
+
+:deep(.q-field--standout .q-field__control){
+  border: 1px solid #ECEDF0;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px 0px #86B8FF inset;
+  background: #fff;
+  box-shadow: 0px 2px 0px 0px #9AB0FF70;
+
+}
+
+:deep(.q-field--standout.q-field--highlighted .q-field__native){
+  color: #000;
+}
+
 </style>
+

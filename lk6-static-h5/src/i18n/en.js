@@ -79,6 +79,7 @@ export default {
     save: "Save",
     login: "Login",
     register: "Register",
+    registernow: "Register Now",
     toConfirm: "To Confirm",
     bind: "Bind",
     unbind: "Unbind",
@@ -403,9 +404,7 @@ export default {
       cardPay: "Prepaid Card Payment",
       onlineCode: "Cloud QuickPass",
       dyPay: "Douyin",
-      autoPay: "Auto Payment",
       pending: "Paying",
-      success: "Successful",
       supplementSuccess: "Successful",
       closed: "Closed",
       waitingCallback: "Auto Paying",
@@ -647,6 +646,8 @@ export default {
     }
   },
   login: {
+    alreadygotAcc: "I Already have account,",
+    loginnow: "Login Now",
     userNameLogin: "Username Login",
     phoneLogin: "Phone Login",
     forgotPassword: "Forgot password?",
