@@ -119,10 +119,10 @@
               {{ $t("deposit.appDepositBonus") }}
             </q-checkbox>
             <q-checkbox v-model="jazzcashBonusConfig.selected" v-else-if="jazzcashBonusConfig.hasBonus">
-              {{ $t("deposit.appDepositBonus") }}
+              {{ getJazzcashUsdtCheckboxLabel }}
             </q-checkbox>
             <q-checkbox v-model="usdtBonusConfig.selected" v-else-if="usdtBonusConfig.hasBonus">
-              {{ $t("deposit.appDepositBonus") }}
+              {{ getJazzcashUsdtCheckboxLabel }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
@@ -734,6 +734,11 @@ const getNewPlayerAmount = (amount) => {
   };
   return rewardMap[amount] || 0;
 };
+
+const getJazzcashUsdtCheckboxLabel = computed(() => {
+  const priv = privilegeList.value.find((p) => p.payTypes.split(",").includes(selectedPayType.value));
+  return priv.name;
+});
 
 const getJazzcashUsdtAmt = (item) => {
   const priv = privilegeList.value.find((p) => p.payTypes.split(",").includes(selectedPayType.value));
