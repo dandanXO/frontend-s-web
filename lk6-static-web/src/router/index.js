@@ -30,31 +30,22 @@ const routes = [
         component: HomeView
       },
       {
-        path: "/slot",
-        name: "slot",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/SlotView.vue")
-      },
-      {
-        path: "/esports",
-        name: "esports",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/eSportsView.vue")
-      },
-      {
-        path: "/sports",
-        name: "sports",
+        path: "/crown",
+        name: "crown",
         component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue"),
-        props: { showPlayBtn: true }
+        props: { showPlayBtn: true, fullpage: true }
+      },
+      {
+        path: "/panda",
+        name: "panda",
+        component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue"),
+        props: { showPlayBtn: true, fullpage: true }
       },
       {
         path: "/live-casino",
         name: "live",
         component: () => import(/* webpackChunkName: "Game" */ "../views/LiveCasinoView.vue"),
-        props: { showPlayBtn: true }
-      },
-      {
-        path: "/lottery",
-        name: "lottery",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/LotteryView.vue")
+        props: { showPlayBtn: true, fullpage: true }
       },
       {
         path: "/lottery/SGWin",
@@ -69,6 +60,16 @@ const routes = [
       {
         path: "/bacarrat",
         name: "bacarrat",
+        component: () => import(/* webpackChunkName: "Game" */ "../views/BacarratView.vue")
+      },
+      {
+        path: "/roulette",
+        name: "roulette",
+        component: () => import(/* webpackChunkName: "Game" */ "../views/BacarratView.vue")
+      },
+      {
+        path: "/lucky-lace",
+        name: "lucky-lace",
         component: () => import(/* webpackChunkName: "Game" */ "../views/BacarratView.vue")
       },
       {

@@ -118,6 +118,17 @@
       >
         {{ t('fields.bulkWithdraw') }}
       </el-button>
+      <el-button
+        v-if="hasPermission(['sys:withdraw:simple:pending'])"
+        ref="suspendBtnRef"
+        size="mini"
+        type="danger"
+        :disabled="uiControl.toApproveBtn"
+        @click="toPending()"
+        @keydown.enter.prevent
+      >
+        {{ t('fields.toSuspend') }}
+      </el-button>
     </div>
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
@@ -256,6 +267,9 @@
               v-permission="['sys:withdraw:simple:fail']"
             >
               {{ t('fields.fail') }}
+            </el-button>
+            <el-button v-if="hasPermission(['sys:withdraw:simple:pending'])" ref="suspendBtnsRef" size="mini" type="danger" @click="toPending(scope.row)" @keydown.enter.prevent>
+              {{ t('fields.toSuspend') }}
             </el-button>
           </template>
         </el-table-column>
@@ -525,6 +539,7 @@ import {
   autoWithdrawToFail,
   fromApplyToAutopay,
   fromApplyToAutopayBatch,
+  fromApplyToPending,
   getMemberWithdrawRecordApplySimple
 } from '../../../../api/member-withdraw-record'
 import { getSiteListSimple } from "@/api/site"
@@ -542,6 +557,8 @@ import { getCurrencyNames } from "../../../../api/currency";
 
 const checkBtnRef = ref();
 const checkBtnsRef = ref();
+const suspendBtnRef = ref();
+const suspendBtnsRef = ref();
 const store = useStore();
 const { t } = useI18n();
 const searchForm = ref(null)
@@ -843,6 +860,20 @@ async function toFail(memberWithdrawRecord) {
     await loadRecord()
     ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
   }
+}
+
+async function toPending(memberWithdrawRecord) {
+  page.loading = true
+  if (memberWithdrawRecord) {
+    await fromApplyToPending([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
+  } else {
+    await fromApplyToPending(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
+  }
+  page.loading = false
+  await loadRecord()
+  ElMessage({ message: t('message.updateToSuspendSuccess'), type: 'success' })
+  suspendBtnRef.value.blur();
+  suspendBtnsRef.value.blur();
 }
 
 async function showDialog(type, memberWithdrawRecord) {

@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <div style="height: 48px; text-align: center; margin: 25px 0px">
+    <div style="height: 48px; text-align: center; margin: 10px 0px" v-if="tab === 'login'">
       <img src="../assets/login/login-logo.png" height="100%" />
     </div>
 
@@ -8,7 +8,7 @@
       <img src="../assets/images/login/home-icon.svg" />
     </router-link>
 
-    <div class="top-image-div">
+    <div class="top-image-div" v-if="tab === 'login'">
       <img src="../assets/login/login-top-bg.png" />
     </div>
 
@@ -32,7 +32,7 @@
             <div class="login-form-inner-wrapper">
               <div v-if="!loginType" class="q-gutter-y-md">
                 <div class="input-field-wrapper">
-                  <div class="input-field__label required">用户名</div>
+                  <div class="input-field__label required">{{ $t("login.form.userName.label") }}</div>
                   <q-input
                     height="32px"
                     rounded
@@ -41,10 +41,12 @@
                     hide-bottom-space
                     ref="loginNameRef"
                     v-model="loginForm.loginName"
-                    placeholder="请输入用户名"
+                    :placeholder="$t('login.form.userName.placeholder')"
                     :rules="[
-                      (val) => (val && val.length > 0) || '请输入用户名',
-                      (val) => (val && val.length >= 4 && val.length <= 12) || '长度要在 4-12 之间'
+                      (val) => (val && val.length > 0) || $t('login.form.userName.error.required'),
+                      (val) =>
+                        (val && val.length >= 4 && val.length <= 12) ||
+                        $t('login.form.userName.error.length', { min: 4, max: 12 })
                     ]"
                     label-color=""
                     autocomplete="username"
@@ -61,7 +63,7 @@
                 </div>
 
                 <div class="input-field-wrapper">
-                  <div class="input-field__label required">密码</div>
+                  <div class="input-field__label required">{{ $t("login.form.password.label") }}</div>
 
                   <q-input
                     height="32px"
@@ -71,9 +73,9 @@
                     ref="passwordRef"
                     hide-bottom-space
                     v-model="loginForm.password"
-                    placeholder="请输入密码"
+                    :placeholder="$t('login.form.password.placeholder')"
                     :type="isPwd ? 'password' : 'text'"
-                    :rules="[(val) => (val && val.length > 0) || '请输入用户密码']"
+                    :rules="[(val) => (val && val.length > 0) || $t('login.form.password.error.required')]"
                     label-color=""
                     autocomplete="current-password"
                   >
@@ -88,15 +90,15 @@
                       <img
                         v-if="!isPwd"
                         @click="isPwd = !isPwd"
-                        src="../assets/login/eye-line.png"
-                        style="margin-right: 3px"
+                        src="../assets/login/eye-line.svg"
+                        style="margin-right: 12px"
                         width="20"
                       />
                       <img
                         v-if="isPwd"
                         @click="isPwd = !isPwd"
-                        src="../assets/login/eye-close-line.png"
-                        style="margin-right: 3px"
+                        src="../assets/login/eye-close-line.svg"
+                        style="margin-right: 12px"
                         width="20"
                       />
                     </template>
@@ -132,7 +134,7 @@
 
               <div v-if="loginType" class="q-gutter-y-md">
                 <div class="input-field-wrapper">
-                  <div class="input-field__label required">手机号</div>
+                  <div class="input-field__label required">{{ $t("login.form.phone.label") }}</div>
                   <q-input
                     height="32px"
                     rounded
@@ -143,8 +145,8 @@
                     ref="telephoneRef"
                     v-model="phoneLoginForm.phoneNumber"
                     :readonly="phoneLoginForm.smsCodeId ? true : false"
-                    placeholder="请输入手机号码"
-                    :rules="[(val) => (val && val.length > 0) || '请输入电话号码']"
+                    :placeholder="$t('login.form.phone.placeholder')"
+                    :rules="[(val) => (val && val.length > 0) || $t('login.form.phone.error.required')]"
                     color="white"
                     autocomplete="username"
                   >
@@ -154,7 +156,7 @@
                   </q-input>
                 </div>
                 <div class="input-field-wrapper">
-                  <div class="input-field__label required">验证码</div>
+                  <div class="input-field__label required">{{ $t("login.form.otp.label") }}</div>
                   <q-input
                     @pressEnter="alert('ah')"
                     ref="phoneVerificationRef"
@@ -165,12 +167,16 @@
                     hide-bottom-space
                     type="text"
                     v-model="phoneLoginForm.code"
-                    placeholder="请输入短信验证码"
-                    :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']"
+                    :placeholder="$t('login.form.otp.placeholder')"
+                    :rules="[(val) => (val && val.length > 3) || $t('login.form.otp.error.required')]"
                   >
                     <template v-slot:append>
                       <q-btn class="verification-btn" :disable="otpCountdownCount > 0" @click="toggleInnerCode">
-                        {{ otpCountdownCount <= 0 ? `发送验证码` : `已发送（${otpCountdownCount}秒)` }}
+                        {{
+                          otpCountdownCount <= 0
+                            ? $t("login.form.otp.append.sendable")
+                            : $t("login.form.otp.append.sent", { second: otpCountdownCount })
+                        }}
                       </q-btn>
                     </template>
                     <template v-slot:prepend>
@@ -181,20 +187,20 @@
               </div>
 
               <div class="forgetpass-div">
-                <div class="align-right">
+                <!-- <div class="align-right">
                   <span class="txt-tip" style="color: #0089ed" @click="loginType = !loginType">
-                    {{ loginType ? "用户名登录" : "手机号登录" }}
+                    {{ loginType ? $t("login.userNameLogin") : $t("login.phoneLogin") }}
                   </span>
-                </div>
+                </div> -->
 
-                <router-link class="txt-tip align-right" style="margin-left: auto" to="/forgot-account">
-                  <span>忘记密码？</span>
+                <router-link class="txt-tip align-right text-gray-a1" style="margin-left: auto" to="/forgot-account">
+                  <span>{{ $t("login.forgotPassword") }}</span>
                 </router-link>
 
-                <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
+                <div class="mui-row text-gray-a1" :class="isCheckRmb ? 'checked' : ''">
                   <q-checkbox
                     v-model="isCheckRmb"
-                    label="记住密码"
+                    :label="$t('login.rememberPassword')"
                     size="20px"
                     style="font-size: 14px"
                     color="light-blue-9"
@@ -207,21 +213,22 @@
               @click.prevent="onSubmit"
               type="submit"
               class="login-btn q-mt-md"
-              label="登录"
+              :label="$t('btn.login')"
               width="100%"
               size="16px"
               :loading="isLoading"
             />
 
             <q-btn
-              @click.prevent="tab = 'register'"
+              @click.prevent="goToRegister"
               type="button"
               class="register-btn q-mt-md"
-              label="注册"
+              :label="$t('btn.register')"
               width="100%"
               size="16px"
               flat
             />
+
           </q-form>
           <div id="captcha-box" />
         </q-tab-panel>
@@ -233,21 +240,21 @@
     </div>
 
     <div class="login-bottom-section">
-      <div class="row justify-center items-center full-width q-mb-md" v-show="tab === 'login'">
-        <!-- <router-link class="txt-tip" to="/">
+      <!-- <div class="row justify-center items-center full-width q-mb-md" v-show="tab === 'login'">
+        <router-link class="txt-tip" to="/">
           <div class="row items-center gap-8">
             <img src="../assets/login/home-icon.svg" width="16px" />
             <span style="color: #458bff">先去逛逛</span>
           </div>
-        </router-link> -->
-      </div>
+        </router-link>
+      </div> -->
       <!--  -->
       <div class="row justify-center items-center full-width q-mb-md">
         <router-link class="txt-tip" to="/liveChat">
           <!-- <div style="width: 60px; height: 1px; background-color: #7a80a199"></div> -->
           <div class="row items-center gap-8">
             <!-- <img src="../assets/login/service-icon.svg" width="16px" /> -->
-            <span style="color: #458bff">联系客服</span>
+            <span style="color: #458bff">{{ $t("login.cs") }}</span>
           </div>
           <!-- <div style="width: 60px; height: 1px; background-color: #7a80a199"></div> -->
         </router-link>
@@ -258,21 +265,28 @@
       v-model="showCaptchaDialog"
       class="captcha-dialog"
       no-backdrop-dismiss
-      header="验证码"
-      confirm-btn-text="提交"
+      :header="$t('login.notification.verificationCode.title')"
+      :confirm-btn-text="$t('btn.submit')"
       @confirm="sendOtpSms"
     >
       <template #content>
         <q-input
           class="verification-code-input"
           standout
-          :rules="[(val) => (val && val.length > 3 && val.length < 5) || '请输入验证码']"
+          :rules="[
+            (val) => (val && val.length > 3 && val.length < 5) || $t('login.form.verificationCode.error.format')
+          ]"
           v-model="innerCaptchaRef"
-          placeholder="请输入验证码"
+          :placeholder="$t('login.form.verificationCode.placeholder')"
           ref="refinnerCaptchaRef"
         >
           <template v-slot:append>
-            <img class="verification-img" :src="phoneVerificationImg" title="点击刷新验证码" @click="getCode" />
+            <img
+              class="verification-img"
+              :src="phoneVerificationImg"
+              :title="$t('login.form.verificationCode.imgTitle')"
+              @click="getCode"
+            />
           </template>
         </q-input>
       </template>
@@ -282,7 +296,7 @@
 
 <script>
 /* eslint-disable */
-import { defineComponent, ref, reactive, onMounted, watch } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
@@ -292,6 +306,7 @@ import qs from "qs";
 import { useLocalStorage } from "@vueuse/core";
 import { getDevice } from "src/boot/utils";
 import CommonModal from "src/components/CommonModal.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "LoginPage",
@@ -300,6 +315,7 @@ export default defineComponent({
     CommonModal
   },
   setup() {
+    const { t } = useI18n();
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
@@ -481,7 +497,7 @@ export default defineComponent({
           telephoneRef.value.validate();
           phoneVerificationRef.value.validate();
           $q.loading.show({
-            message: "登录中"
+            message: $t("login.loggingIn")
           });
           if (telephoneRef.value.hasError || phoneVerificationRef.value.hasError) {
             $q.loading.hide();
@@ -516,7 +532,12 @@ export default defineComponent({
     };
 
     const changeLoginTab = () => {
-      tab.value = "login";
+      // tab.value = "login";
+      router.push("/register");
+    };
+
+    const goToRegister = () => {
+      router.push("/register");
     };
 
     const otpCountdownCount = ref(0);
@@ -561,7 +582,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "手机号码不能为空",
+          message: t("login.form.phone.error.error"),
           icon: "report_problem"
         });
         return;
@@ -570,7 +591,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "验证码错误",
+          message: t("login.form.otp.error.error"),
           icon: "report_problem"
         });
         return;
@@ -587,7 +608,7 @@ export default defineComponent({
         )
         .then((res) => {
           getCode();
-          let message = res.message || "发送手机验证码成功",
+          let message = res.message || t("login.notification.sentOtp.message"),
             color = "positive";
 
           if (res.code === 0) {
@@ -710,6 +731,9 @@ export default defineComponent({
       requestHeaders: {
         Authorization: process.env.SITE
       },
+      translate: (code) => {
+        return t(`error.${code}`);
+      },
       // 验证成功回调函数(必选项,必须配置)
       validSuccess: (res, c, tac) => {
         // 销毁验证码服务
@@ -744,6 +768,7 @@ export default defineComponent({
       },
       // 验证失败的回调函数(可忽略，如果不自定义 validFail 方法时，会使用默认的)
       validFail: (res, c, tac) => {
+        console.log(tac);
         console.log("验证码验证失败回调...");
 
         if (res.code === 800) {
@@ -767,15 +792,28 @@ export default defineComponent({
     };
 
     const style = {
-      logoUrl: null
+      logoUrl: null,
+      i18n: {
+        tips_error: t("tianaiCaptcha.tipsError"),
+        tips_success: t("tianaiCaptcha.tipsSuccess"),
+        slider_title: t("tianaiCaptcha.sliderTitle"),
+        concat_title: t("tianaiCaptcha.concatTitle"),
+        image_click_title: t("tianaiCaptcha.imageClickTitle"),
+        rotate_title: t("tianaiCaptcha.rotateTitle")
+      }
     };
 
-    onMounted(() => {
-      getCode();
+    onActivated(() => {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
         tab.value = "register";
+      } else {
+        tab.value = "login";
       }
+    });
+
+    onMounted(() => {
+      getCode();
       checkRememberPwd();
       // initGeetestCaptcha();
 
@@ -800,6 +838,7 @@ export default defineComponent({
       getCode,
       isCheckRmb,
       changeLoginTab,
+      goToRegister,
       phoneLoginForm,
       sendOtpSms,
       toggleInnerCode,
@@ -820,7 +859,7 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .login-container {
   padding-top: 12px;
   height: 100dvh;
@@ -876,7 +915,7 @@ export default defineComponent({
   .form-container {
     width: 100%;
     margin: auto;
-    padding: 16px 0px;
+    padding: 16px 0px 0;
 
     > .q-tab-panel {
     }
@@ -937,6 +976,7 @@ export default defineComponent({
       background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
       border: 1px solid #ffffff;
       border-radius: 30px;
+      height: 48px;
       font-weight: 600;
       color: white;
     }
@@ -947,6 +987,7 @@ export default defineComponent({
       background: linear-gradient(180deg, #f4f7fb 0%, #c5dcf8 100%);
       border-radius: 30px;
       font-weight: 600;
+      height: 48px;
       color: #424f72;
     }
   }
@@ -1022,10 +1063,10 @@ export default defineComponent({
       justify-content: center;
       gap: 10px;
       font-size: 13px;
-      color: #666;
+      color: #7A80A1;
 
       &.checked {
-        color: #0089ed;
+        color: #7A80A1;
       }
 
       &:active {
@@ -1038,7 +1079,7 @@ export default defineComponent({
     a:active,
     a:hover {
       text-decoration: none;
-      color: #0089ed;
+      color: #7A80A1;
     }
   }
 
@@ -1099,6 +1140,23 @@ export default defineComponent({
 
 .q-toolbar {
   background: transparent;
+}
+
+:deep(.q-field--standout .q-field__control){
+  border: 1px solid #ECEDF0;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px 0px #86B8FF inset;
+  background: #fff;
+  box-shadow: 0px 2px 0px 0px #9AB0FF70;
+
+}
+
+:deep(.q-field--standout.q-field--highlighted .q-field__native){
+  color: #000;
+}
+
+.text-gray-a1{
+  color: #7A80A1;
 }
 
 #captchaContainer {

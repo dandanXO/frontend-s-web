@@ -217,6 +217,7 @@ const checkAppLogin = async () => {
 
 const checkLucky10DayPromo = async () => {
   if (!isLuckyDay.value) return;
+  if (!store.hasToken()) return;
   try {
     const res = await eventapi.get("/session/lucky-day/init?promoCode=pak-lucky-10-day-bonus");
     if (res.code === 0 && res.data?.isClaimable) {
@@ -253,9 +254,7 @@ const checkModalType = async () => {
       }
       break;
     case 3:
-      if (
-        combinedStatus.value.canClaimThirdPrivilege && shouldShowModalAgain(modalIndex.value)
-      ) {
+      if (combinedStatus.value.canClaimThirdPrivilege && shouldShowModalAgain(modalIndex.value)) {
         modalType.value = "THIRD_PRIVILEGE";
       } else {
         showNextModal();
@@ -280,16 +279,10 @@ const recheckModalType = async () => {
   if (shouldCheckAppAgain.value && shouldShowModalAgain(1)) {
     await getData(false);
     checkAppLogin();
-  } else if (
-    combinedStatus.value.canClaimSecondPrivilege &&
-    shouldShowModalAgain(2)
-  ) {
+  } else if (combinedStatus.value.canClaimSecondPrivilege && shouldShowModalAgain(2)) {
     modalIndex.value = 2;
     modalType.value = "SECOND_PRIVILEGE";
-  } else if (
-    combinedStatus.value.canClaimThirdPrivilege &&
-    shouldShowModalAgain(3)
-  ) {
+  } else if (combinedStatus.value.canClaimThirdPrivilege && shouldShowModalAgain(3)) {
     modalIndex.value = 3;
     modalType.value = "THIRD_PRIVILEGE";
   } else if (combinedStatus.value.eligibleThirdPrivilege && store.balance < 30 && shouldShowModalAgain(4)) {
@@ -422,7 +415,7 @@ onMounted(() => {
       --countdown-text-shadow-color: #71090b;
 
       &.is-ftd {
-          color: #23B150;
+        color: #23b150;
         &::after {
           --countdown-text-shadow-color: #097109;
         }

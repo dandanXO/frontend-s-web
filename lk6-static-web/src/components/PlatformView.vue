@@ -1,41 +1,35 @@
 <template>
   <div class="platform-section">
-    <div v-if="isLoading" class="loading">
-      <img class="loading-img" src="@/assets/lucky-6-logo.png" />
-    </div>
-    <div v-else-if="!(platformType === 'bacarrat' && props.hideBanner)" class="platform-container" :class="platformType === 'bacarrat' ? 'slot-container' : ''">
-        <img v-if="platformType === 'bacarrat'" src="../assets/slot/slot-top-bg.png" />
-        <div class="platform-container-slot" v-if="platformType === 'bacarrat'">
-        </div>
+    <LoadingComponent v-if="isLoading" />
+    <div v-else-if="!(platformType === 'bacarrat' && props.hideBanner)" class="platform-container"
+      :class="{ fullpage: props.fullpage, ['slot-container']: platformType === 'bacarrat' }">
+      <template v-if="platformType === 'bacarrat'">
+        <img v-if="languageVal === 'en'" src="../assets/slot/slot-top-bg-en.png"
+          style="width: 100%;height: auto;aspect-ratio: 3840 / 800;" />
+        <img v-else src="../assets/slot/slot-top-bg.png" style="width: 100%;height: auto;aspect-ratio: 3840 / 800;" />
+      </template>
+      <div class="platform-container-slot" v-if="platformType === 'bacarrat'">
+      </div>
       <div class="platform-container-inner" v-if="platformType !== 'bacarrat'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
         <template v-for="(item, index) in platformsListDisplay" :key="index">
           <template v-if="selectedPlat === item.code">
             <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000">
-              <img
-                :src="
-                  require('../assets/' +
-                    platformType +
-                    '/' +
-                    platformType +
-                    '-item-' +
-                    item.code.toLowerCase() +
-                    '.png')
-                "
-              />
+              <img :src="renderPlatformItemImg(item, platformType)" />
             </div>
 
             <div class="platform-item">
               <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
                 <!-- <img src="../assets/lucky-6-logo.png" width="176px" height="86px" /> -->
-                <div class="platform-title">{{ item.cnname ?? item.name }}</div>
+                <!-- <div class="platform-title">{{  languageVal === 'en' ? (item.name ?? item.enname) : item.cnname }}</div> -->
+                <img :src="renderPlatformItemLogoImg(item, platformType)" />
                 <div class="platform-subtitle">{{ platformName }}</div>
               </div>
 
-              <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>
+              <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200">{{ $t(item.message) }}</div>
 
               <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
-                <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.svg')" />
+                <img :src="renderPlatformPattern(platformType)" />
               </div>
 
               <div class="platform-list-box">
@@ -46,40 +40,11 @@
                   @click="clickPlat(plat)"
                   :class="{ active: selectedPlat === plat.code }"
                 > -->
-                <span
-                  class="platform-list-item"
-                  v-for="(plat, platIndex) in filteredPlatforms"
-                  :key="platIndex"
-                  @click="clickPlat(plat)"
-                  :class="{ active: selectedPlat === plat.code }"
-                >
+                <span class="platform-list-item" v-for="(plat, platIndex) in filteredPlatforms" :key="platIndex"
+                  @click="clickPlat(plat)" :class="{ active: selectedPlat === plat.code }">
                   <div class="list-item-btn" :id="`id-list-item-${plat.code}`">
                     <span>
-                      <img
-                        v-if="plat.code === 'PMLOTTERY'"
-                        :src="
-                          require('../assets/' +
-                            platformType +
-                            '/' +
-                            platformType +
-                            '-logo-' +
-                            plat.code.toLowerCase() +
-                            (selectedPlat === plat.code ? '-active' : '') +
-                            '.png')
-                        "
-                      />
-                      <img
-                        v-else
-                        :src="
-                          require('../assets/' +
-                            platformType +
-                            '/' +
-                            platformType +
-                            '-logo-' +
-                            plat.code.toLowerCase() +
-                            '.png')
-                        "
-                      />
+                      <img :src="renderPlatformItemLogoSmallImg(plat, platformType)" />
                     </span>
                   </div>
                   <div class="list-item-txt">{{ getAliasName(plat, platformType) }}</div>
@@ -90,23 +55,18 @@
               <!--            data-aos-delay="300"-->
               <!--            data-aos-duration="500"-->
               <div class="platform-play-btn" v-if="platformType !== 'slot'">
-                <div
-                  v-if="props.showPlayBtn"
-                  class="btn-blue"
+                <div v-if="props.showPlayBtn" class="btn-blue"
                   @click="openGame(getAliasName(item, platformType), item.code, item.gameCode)"
-                  :class="item.underMaintenance === true ? 'btn-maintenance' : ''"
-                >
+                  :class="item.underMaintenance === true ? 'btn-maintenance' : ''">
                   <span class="maintenance-state" v-if="item.underMaintenance === true">
                     <img src="../assets/svg/maintenance-icon.svg" />
                     维护中
                   </span>
-                  <span v-else>进入游戏</span>
+                  <span v-else>{{ $t('btn.enterGame') }}</span>
                 </div>
 
-                <p
-                  v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime"
-                  class="maintenance-p"
-                >
+                <p v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime"
+                  class="maintenance-p">
                   维护时间:
                   <em>
                     {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
@@ -123,20 +83,31 @@
 
     <div class="margin-center game-container" v-if="platformExpandable">
       <div class="all-game-container">
-        <div class="plat-options-wrapper">
-          <div class="plat-options-container">
-            <template v-for="(item, index) in fixedBacarratPlatforms" :key="index">
-              <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
-              <div
-                class="plat-option"
-                @click="onChangeFixedPokerPlatforms(item)"
-                :class="{ active: selectedFixedBacarratPlatforms?.prefix === item.prefix }"
-              >
-                <div class="text">
-                  <span>{{ item.label }}</span>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;">
+          <div style="visibility: hidden;"></div>
+          <div class="plat-options-wrapper">
+            <div class="plat-options-container">
+              <template v-for="(item, index) in fixedBacarratPlatforms" :key="index">
+                <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
+                <div class="plat-option" @click="onChangeFixedPokerPlatforms(item)"
+                  :class="{ active: selectedFixedBacarratPlatforms?.prefix === item.prefix }">
+                  <div class="text">
+                    <span>{{ item.label }}</span>
+                  </div>
                 </div>
-              </div>
-            </template>
+              </template>
+            </div>
+          </div>
+
+          <div class="search-container">
+            <el-input class="search-input" v-model="gamePage.searchKey" @input="searchList()" placeholder="输入查找游戏名"
+              clearable @clear="searchList()">
+              <template #suffix>
+                <el-icon :width="15" @click="searchList()">
+                  <Search />
+                </el-icon>
+              </template>
+            </el-input>
           </div>
         </div>
 
@@ -144,11 +115,8 @@
           <div class="plat-options-container">
             <template v-for="(item, index) in platformsListDisplay" :key="index">
               <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
-              <div
-                class="plat-option"
-                @click="clickPlat(item)"
-                :class="{ active: selectedPlat === item.code, long: item.code === 'PPFP' }"
-              >
+              <div class="plat-option" @click="clickPlat(item)"
+                :class="{ active: selectedPlat === item.code, long: item.code === 'PPFP' }">
                 <div class="text">
                   <span>{{ item.code }}</span>
                 </div>
@@ -158,35 +126,9 @@
         </div>
 
         <div class="plat-games-container">
-          <div class="grid-items flex-box flex-align-center search-container web-only-box">
-            <!--          <el-tabs v-model="gameCat" @tab-click="handleClick" class="game-cat-tabs">-->
-            <!--            <el-tab-pane label="全部游戏" name="allGame"></el-tab-pane>-->
-            <!--            <el-tab-pane label="热门游戏" name="hotGame"></el-tab-pane>-->
-            <!--            <el-tab-pane label="最新游戏" name="newGame"></el-tab-pane>-->
-            <!--          </el-tabs>-->
-
-            <el-input
-              class="search-input"
-              v-model="gamePage.searchKey"
-              @input="searchList()"
-              placeholder="输入查找游戏名"
-              clearable
-              @clear="searchList()"
-            >
-              <template #suffix>
-                <el-icon :width="15" @click="searchList()">
-                  <Search />
-                </el-icon>
-              </template>
-            </el-input>
-          </div>
-
           <div class="game-list-wrapper">
-            <div
-              class="game-slot animate__animated animate__fadeInRight"
-              v-for="game in gamePage.gameList"
-              :key="game.id"
-            >
+            <div class="game-slot animate__animated animate__fadeInRight" v-for="game in gamePage.gameList"
+              :key="game.id">
               <a @click="openGame(getAliasName(game, platformType), selectedPlat, game.code)">
                 <div class="slot-img">
                   <div class="slot-tag">
@@ -206,17 +148,11 @@
                 </div>
 
                 <div class="slot-details">
-                  <div class="slot-name">
-                    {{ game.name }}
+                  <div class="slot-type">
+                    {{ selectedFixedBacarratPlatforms?.type }}
                   </div>
-
-                  <div class="slot-fav">
-                    <!--                  <el-icon>-->
-                    <!--                    <RiHeartLine />-->
-                    <!--                  </el-icon>-->
-                    <!--                  <el-icon>-->
-                    <!--                    <RiHeartFill />-->
-                    <!--                  </el-icon>-->
+                  <div class="slot-name">
+                    {{ game.name.includes('@') ? game.name.split('@')[languageVal === 'en' ? 1 : 0] : game.name }}
                   </div>
                 </div>
 
@@ -235,15 +171,9 @@
             </div>
           </div>
           <div class="pagination-wrapper">
-            <el-pagination
-              background
-              layout="prev, pager, next"
-              :total="gamePage.total"
+            <el-pagination background layout="prev, pager, next" :total="gamePage.total"
               @current-change="changePage(gamePage.currentPage, gamePage.pageSize)"
-              v-model:current-page="gamePage.currentPage"
-              v-model:pageSize="gamePage.pageSize"
-              default-page-size="30"
-            />
+              v-model:current-page="gamePage.currentPage" v-model:pageSize="gamePage.pageSize" default-page-size="30" />
           </div>
         </div>
       </div>
@@ -267,7 +197,14 @@ import { Search } from "@element-plus/icons-vue";
 import GameModal from "@/components/modal/GameModal";
 import moment from "moment/moment";
 import { useDark, useLocalStorage } from "@vueuse/core";
+import { storeToRefs } from 'pinia'
+import { i18nStore } from '@/store/language'
+import { useI18n } from "vue-i18n";
+import LoadingComponent from "./menu/LoadingComponent.vue";
 
+const { t } = useI18n();
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 const platformGame = ref(null);
 const route = useRoute();
 const router = useRouter();
@@ -282,7 +219,8 @@ const props = defineProps({
   platformPattern: Boolean,
   platformExpandable: Boolean,
   showPlayBtn: Boolean,
-  hideBanner: Boolean
+  hideBanner: Boolean,
+  fullpage: Boolean
 });
 
 const filteredPlatforms = ref([]);
@@ -291,21 +229,84 @@ const platformsListDisplay = ref([]);
 const fixedBacarratPlatforms = ref([
   {
     prefix: 101,
-    label: '百家乐'
+    label: t('menu.bacarrat'),
+    type: 'BACARRAT'
   },
   {
     prefix: 112,
-    label: '幸运轮盘'
+    label: t('menu.lucky_roulette'),
+    type: 'ROULETTE'
   },
   {
     prefix: 103,
-    label: '幸运蕾丝'
+    label: t('menu.lucky_lace'),
+    type: 'LUCKY LACE'
   },
 ])
 
+const renderPlatformPattern = (platformType) => {
+  try {
+    return require('../assets/' + platformType + '/' + platformType + '-pattern.svg')
+
+  } catch (error) {
+    return require('../assets/sports/sports-pattern.svg');
+  }
+
+}
+
+const renderPlatformItemImg = (item, platformType) => {
+  try {
+    return require('../assets/' +
+      platformType +
+      '/' +
+      platformType +
+      '-item-' +
+      item.code.toLowerCase() +
+      '.png')
+
+
+  } catch (error) {
+    return require('../assets/lucky-6-logo.png');
+  }
+}
+
+const renderPlatformItemLogoImg = (item, platformType) => {
+  try {
+    return require('../assets/' +
+      platformType +
+      '/' +
+      platformType +
+      '-logo-' +
+      item.code.toLowerCase() +
+      '.svg')
+
+
+
+  } catch (error) {
+    return require('../assets/lucky-6-logo.png');
+  }
+}
+
+const renderPlatformItemLogoSmallImg = (item, platformType) => {
+  try {
+    return require('../assets/' +
+      platformType +
+      '/' +
+      platformType +
+      '-logo-' +
+      item.code.toLowerCase() +
+      '.png')
+
+
+
+  } catch (error) {
+    return require('../assets/lucky-6-logo.png');
+  }
+}
+
 const getPlatList = () => {
   isLoading.value = true;
-  
+
   const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
   getFn().then((res) => {
     platformsList.value = res;
@@ -354,6 +355,11 @@ const setFilteredPlatforms = () => {
 const selectedPlat = ref(null);
 const selectedFixedBacarratPlatforms = ref({});
 const setSelectedPlat = () => {
+  if(route.name === 'panda') {
+    const panda = filteredPlatforms.value.find((platItem) => platItem.code === 'PM');
+    return panda && clickPlat(panda);
+  }
+
   selectedPlat.value = filteredPlatforms.value.length > 0 ? filteredPlatforms.value[0].code : null;
 };
 
@@ -363,10 +369,12 @@ const onChangeFixedPokerPlatforms = (item) => {
 }
 
 const clickPlat = (plat) => {
-  router.push({ path: route.path, scrollBehavior(to, from, savedPosition) {
-    // Return false to prevent scrolling
-    return false
-  } });
+  router.push({
+    path: route.path, scrollBehavior(to, from, savedPosition) {
+      // Return false to prevent scrolling
+      return false
+    }
+  });
   selectedPlat.value = plat.code;
 };
 
@@ -438,7 +446,8 @@ const getAliasName = (plat, platformType) => {
     }
     return plat.alias;
   } else {
-    return plat.cnname;
+    console.log('here', plat)
+    return languageVal, languageVal.value === 'en' ? (plat.enname ?? plat.name) : plat.cnname;
   }
 };
 
@@ -481,7 +490,13 @@ const changePage = (page, pageSize) => {
 const gameCat = ref("allGame");
 
 onMounted(() => {
-  selectedFixedBacarratPlatforms.value = fixedBacarratPlatforms.value[0];
+  if (route.name === 'roulette') {
+    onChangeFixedPokerPlatforms(fixedBacarratPlatforms.value[1]);
+  } else if (route.name === 'lucky-lace') {
+    onChangeFixedPokerPlatforms(fixedBacarratPlatforms.value[2]);
+  } else {
+    onChangeFixedPokerPlatforms(fixedBacarratPlatforms.value[0]);
+  }
   getPlatList();
   getPlatGameList();
 });
@@ -500,6 +515,16 @@ watch(
     }
   }
 );
+
+watch(() => route.name, () => {
+  if (route.name === 'roulette') {
+    onChangeFixedPokerPlatforms(fixedBacarratPlatforms.value[1]);
+  } else if (route.name === 'lucky-lace') {
+    onChangeFixedPokerPlatforms(fixedBacarratPlatforms.value[2]);
+  } else {
+    onChangeFixedPokerPlatforms(fixedBacarratPlatforms.value[0]);
+  }
+})
 </script>
 
 <style scoped lang="scss" src="../scss/pages/platform.scss" />
@@ -511,12 +536,6 @@ watch(
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(
-    to bottom,
-    rgba(240, 248, 255, 0.8196078431) 0%,
-    rgb(240 248 255 / 50%) 80%,
-    rgb(240 248 255 / 0%) 100%
-  );
 
   .loading-img {
     animation-name: fade-in-out;
@@ -530,9 +549,11 @@ watch(
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -551,5 +572,9 @@ watch(
     background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
     box-shadow: 0px 2px 2px 0px rgba(255, 255, 255, 0.8) inset, 0px 2px 0px 0px #C6D9FF;
   }
+}
+
+.slot-container {
+  height: 291px;
 }
 </style>

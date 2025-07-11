@@ -642,7 +642,9 @@ export default {
     dailyWithdrawalLimit: "Daily Withdrawal Limit",
     bet: "Bet",
     deposit: "Deposit",
-    currentValidBets: "Current Valid Bets"
+    currentValidBets: "Current Valid Bets",
+    upgradeBonus: "Upgrade Bonus",
+    monthlyBonus: "Monthly Bonus"
   },
   earnMoney: {
     title: "Bonus Pot Arrived",

@@ -26,7 +26,7 @@ export function submitNbaMatch(params) {
       "Content-Type": "application/json"
     }
   };
-  let evtUrl = localStorage.getItem("DY_H5_EVT_URL");
+  let evtUrl = localStorage.getItem("LK_H5_EVT_URL");
 
   return fetch(evtUrl + "/nba-match/submit", requestOptions)
     .then((response) => {

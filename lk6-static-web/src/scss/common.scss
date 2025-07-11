@@ -173,6 +173,11 @@ body {
         box-shadow: 0px 2px 0px 0px #9AB0FF70;
         background-size: 100% 100%; 
     }
+
+    .el-button.cancel-btn {
+      background: linear-gradient(180deg, #F4F7FB 0%, #C5DCF8 100%);
+      color: #7A8EB9;
+    }
   }
 
   .el-dialog {
@@ -446,9 +451,6 @@ body {
   padding: 3px;
   background: #4e5efb;
 }
-.el-button > span {
-  color: #ffffff;
-}
 .common-btn + .common-btn {
   margin-left: 10px;
 }
@@ -572,12 +574,6 @@ button {
   opacity: 0;
 }
 
-.el-button.cancel-btn {
-  span {
-    color: #424f72;
-  }
-}
-
 .fill-468cff {
   filter: brightness(0) saturate(100%) invert(54%) sepia(80%) saturate(3385%) hue-rotate(199deg) brightness(100%)
     contrast(101%);
@@ -679,4 +675,9 @@ body .announcement-modal.el-dialog .el-dialog__body {
     background-size: 100% 100%;
     aspect-ratio: 214/242;
   }
+}
+
+.el-input__wrapper {
+  background: #F7F8FB !important;
+  box-shadow: 0px 0px 2.78px 0px #A9C9EA inset !important;
 }

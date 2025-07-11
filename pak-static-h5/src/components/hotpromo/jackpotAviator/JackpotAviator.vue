@@ -37,7 +37,11 @@
     <RankDetails :isAll="false" :rankDetails="rankDetails" :isLoadingRanking="isLoadingRanking" />
   </template>
   <template v-else-if="mode === 'RULES'">
-    <JackpotAviatorRules :onClickBackBtn="() => (mode = 'MAIN')" :rankingBonusRatioList="rankingBonusRatioList" />
+    <JackpotAviatorRules
+      :onClickBackBtn="() => (mode = 'MAIN')"
+      :rankingBonusRatioList="rankingBonusRatioList"
+      :promoContent="promoContent"
+    />
   </template>
 
   <q-dialog width="100%" v-model="isShowHistoryPopup">
@@ -74,6 +78,8 @@ import HistoryTable from "./HistoryTable.vue";
 import ClaimPrizePopup from "./ClaimPrizePopup.vue";
 import JackpotTicker from "./JackpotTicker.vue";
 import { userStore } from "stores/index";
+
+const props = defineProps(["promoContent"]);
 
 const store = userStore();
 const mode = ref("MAIN");

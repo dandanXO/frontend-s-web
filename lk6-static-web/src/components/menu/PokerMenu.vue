@@ -1,21 +1,22 @@
 <template>
   <PlatformMenu
-    :platforms="pokerPlatforms"
+    :platforms="liveCasinoPlatforms"
     :platformGameType="platformGameType"
     :platformType="platformType"
-    platformName="poker"
+    platformName="live-casino"
     @load-game="openGame"
+    :isBacarrat="true"
   />
 </template>
 
 <script setup>
 import { ref, defineEmits } from "vue";
-import PlatformMenu from "@/components/menu/platformmenu/index.vue";
-import { pokerPlatforms } from "@/shared/platformArray";
+import PlatformMenu from "@/components/menu/PlatformMenu.vue";
+import { liveCasinoPlatforms } from "@/shared/platformArray";
 
 const emits = defineEmits(["load-modal"]);
-const platformType = ref("poker");
-const platformGameType = ref("POKER");
+const platformType = ref("live");
+const platformGameType = ref("LIVE");
 const openGame = (gameName, code, gameCode) => {
   emits("load-modal", gameName, code, gameCode);
 };

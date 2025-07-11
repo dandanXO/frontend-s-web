@@ -23,13 +23,12 @@
       <div
         class="home-select-slide row items-center align-center justify-center gap-8"
         :class="selectedTab == tab.name ? 'selected' : ''"
-        :style="`gap:${tab.gap}px`"
       >
         <img
           :style="`margin-top:${tab.mb}px;`"
           :src="require('../../assets/index/' + (selectedTab === tab.name ? tab.iconActive : tab.icon))"
         />
-        <span>{{ selectedTab !== tab.name ? tab.label : tab.labelact }}</span>
+        <span>{{ tab.label }}</span>
       </div>
     </swiper-slide>
   </swiper>
@@ -92,7 +91,7 @@ watch(selectedTab, scrollSlide);
   justify-content: flex-start;
   align-items: stretch;
   padding: 4px 5px;
-  margin-bottom: 16px;
+  margin-bottom: 15px;
 }
 
 .home-select-slide {
@@ -101,9 +100,9 @@ watch(selectedTab, scrollSlide);
   border-radius: 30px;
   align-items: center;
   padding: 2px 5px;
-  min-height: 46px;
-  margin: 5px 0;
-
+  min-height: 30px;
+  margin: 2px 0;
+  flex-wrap: nowrap;
   img {
     width: auto;
     max-width: 25px;
@@ -112,7 +111,7 @@ watch(selectedTab, scrollSlide);
   span {
     color: #35648f;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 11px;
   }
 
   &.selected {

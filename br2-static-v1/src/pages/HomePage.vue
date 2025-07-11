@@ -1190,11 +1190,7 @@
     v-model="isShowLossRebateModal"
   /> -->
 
-
-  <BonusCollectModal
-    @closeDialog="isShowBonusCollectModal = false"
-    v-model="isShowBonusCollectModal"
-  />
+  <BonusCollectModal @closeDialog="ui.isShowBonusCollectModal = false" v-model="isShowBonusCollectModal" />
 </template>
 
 <script setup>
@@ -1243,16 +1239,9 @@ const cashBackDetails = reactive({
   lossRebateClaimed: false
 });
 
-
-
-const isShowBonusCollectModal = ref(false);
-
-const loadBonusCollectPopup = () => {
-  const collectBonusPopup = sessionStorage.getItem("IS_COLLECTBONUS_POPUP") ? true : false;
-  if (store.token) {
-    isShowBonusCollectModal.value = collectBonusPopup;
-  }
-};
+const isShowBonusCollectModal = computed(() => {
+  return !!store.token && ui.isShowBonusCollectModal;
+});
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -3283,8 +3272,6 @@ const loadBetCashBackPopup = () => {
   }
 };
 
-
-
 onActivated(() => {
   if (route.query.login === "true" || route.query.register === "true") {
     //TODO: change back.
@@ -3296,10 +3283,6 @@ onActivated(() => {
   if (store.hasToken()) {
     store.getUnreadTotal();
     // loadBetCashBackPopup();
-
-    loadBonusCollectPopup();
-
-
   }
 });
 
@@ -3579,12 +3562,11 @@ onBeforeUnmount(() => {
       letter-spacing: -0.08%;
       border-radius: 4px;
 
-      @media(max-width:390px){
+      @media (max-width: 390px) {
         width: 12px;
         height: 18px;
         font-size: 14px;
       }
-
 
       > span {
         background: linear-gradient(180deg, #033309 0%, #008b06 51.04%, #033309 100%);

@@ -13,36 +13,12 @@
                 class="header-menu-item"
                 :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }"
               >
-                <!-- <img
-                  v-if="nav.code === 'sports'"
-                  class="hot-label"
-                  :src="require(`../../assets/images/home/menu/hot-game-label.png`)"
-                /> -->
-                <a
-                  v-if="nav.code === 'minigame'"
-                  @click="openMiniGame"
-                  @mouseup="selectedMenu = ''"
-                  @mouseover="showSubMenu(nav)"
-                >
-                  <h2 class="nav-title cn">{{ nav.name }}</h2>
-                  <h2 class="nav-title">{{ nav.enName }}</h2>
-                </a>
-                <a v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
+                <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase() || route.fullPath === nav.path">
-                    <!-- <img
-                      class="menu-icon"
-                      :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
-                    /> -->
-                    <h2 class="nav-title cn active">{{ nav.name }}</h2>
-                    <h2 class="nav-title active">{{ nav.enName }}</h2>
+                    <h2 class="nav-title cn active">{{ $t(nav.name) }}</h2>
                   </template>
                   <template v-else>
-                    <!-- <img
-                      class="menu-icon"
-                      :src="require(`../../assets/images/home/menu/${nav.code}-icon${isDark ? '-dark' : ''}.png`)"
-                    /> -->
-                    <h2 class="nav-title cn">{{ nav.name }}</h2>
-                    <h2 class="nav-title">{{ nav.enName }}</h2>
+                    <h2 class="nav-title cn">{{ $t(nav.name) }}</h2>
                   </template>
                 </a>
               </div>
@@ -54,7 +30,11 @@
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="nav.hasicon">
               <div class="header-menu-item">
-                <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
+                <a v-if="nav.code === 'CS'" @click="store.openLiveChat">
+                  <span><div class="cs-icon" /></span>
+                  <span>{{ $t('menu.customerService') }}</span>
+                </a>
+                <router-link v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
                   <span>
                     <div class="promotion-icon" v-if="nav.code === 'Promotion'" />
                     <!-- <img
@@ -80,10 +60,26 @@
                       v-if="nav.code === 'VIP'"
                     /> -->
                   </span>
-                  <span>{{ nav.name }}</span>
+                  <span>{{ $t(nav.name) }}</span>
                 </router-link>
               </div>
             </template>
+          </template>
+
+          <template  v-if="store.token">
+            <div class="header-menu-item">
+              <router-link to="/center/deposit" class="action-btn">
+                <span><img src="../../assets/images/home/deposit-icon.png" width="38px" height="38px"/></span>
+                <span>{{ $t('menu.deposit') }}</span>
+              </router-link>
+            </div>
+
+            <div class="header-menu-item">
+              <router-link to="/center/withdraw" class="action-btn">
+                <span><img src="../../assets/images/home/withdraw-icon.png" width="38px" height="38px" /></span>
+                <span>{{ $t('menu.withdraw') }}</span>
+              </router-link>
+            </div>
           </template>
 
           <div class="header-menu-item">
@@ -97,7 +93,7 @@
             <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
             <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />
             <SportsMenu ref="el" v-if="selectedMenu === 'panda' || selectedMenu === 'crown'" @load-modal="openGame" />
-            <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />
+            <PokerMenu ref="el" v-if="selectedMenu === 'bacarrat'" @load-modal="openGame" />
             <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
             <AppMenu ref="el" v-if="selectedMenu === 'App'" />
           </div>
@@ -112,27 +108,6 @@
           </router-link> -->
           <a class="standard-button btn-color-aqua" @click="loginDialogVisible = true">{{ $t('btn.login') }}</a>
           <a class="standard-button btn-color-white" @click="registerDialogVisible = true">{{ $t('btn.register') }}</a>
-        </div>
-
-        <div v-if="store.token" class="profile-actions">
-          <router-link to="/center/deposit" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-deposit.png" />
-            </div>
-            存款
-          </router-link>
-          <router-link to="/center/withdraw" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-withdraw.png" />
-            </div>
-            取款
-          </router-link>
-          <!-- <router-link to="/center/transfer" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-transfer.png" />
-            </div>
-            转账
-          </router-link> -->
         </div>
 
         <div class="profile-info" v-if="store.token">
@@ -159,13 +134,13 @@
                 <el-dropdown-item command="personal">
                   <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('personal')" />
-                    <span>个人信息</span>
+                    <span>{{ $t('menu.personalInfo') }}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
                   <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('deposit')" />
-                    <span>充值中心</span>
+                    <span>{{ $t('menu.depositCentre') }}</span>
                   </div>
                 </el-dropdown-item>
                 <!-- <el-dropdown-item command="transfer">
@@ -177,7 +152,7 @@
                 <el-dropdown-item command="promotion">
                   <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('promo')" />
-                    <span>优惠领取</span>
+                    <span>{{ $t('menu.promoClaim') }}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
@@ -197,10 +172,10 @@
             </div>
             <a @click="refreshBalance" class="details-balance">
               <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
-                <span class="assets-text">总资产：</span>
+                <span class="assets-text">{{$t('menu.assets')}}：</span>
                 <span class="amount">
-                  <span v-if="isLoadingBalance">加载中...</span>
-                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ floor(store.balance, 2) }}</span>
+                  <span v-if="isLoadingBalance">{{ $t('menu.loading') }}...</span>
+                  <div v-if="!isLoadingBalance" style="display:flex;align-items:center;gap:5px;"><img src="../../assets/images/finance/usdt-icon.svg" width="20px" height="20px" /> {{ floor(store.balance, 2) }}</div>
                 </span>
               </div>
               <el-icon class="reload-btn">
@@ -375,6 +350,7 @@ import { loadPromoBanner } from "@/api/index/promo";
 import LocaleChanger from '../LocaleChanger.vue';
 import LogoComponent from '../LogoComponent.vue';
 import { i18nStore } from '@/store/language'
+import { useI18n } from "vue-i18n";
 
 
 export default defineComponent({
@@ -394,6 +370,7 @@ export default defineComponent({
     LogoComponent
   },
   setup() {
+    const { t } = useI18n();
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
     const notify = useNotify();
@@ -425,22 +402,22 @@ export default defineComponent({
     const store = userStore();
 
     const navigations = reactive([
-      { code: "home", name: "首页", enName: "Home", path: "/home" },
+      { code: "home", name: 'menu.home', enName: t('menu.home'), path: "/home" },
       // { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
       // { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true, isTest: false },
-      { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true, isTest: false },
+      { code: "live", name: 'menu.live', enName:t('menu.live'), path: "/live-casino", submenu: true, isTest: false },
       // { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true, isTest: false },
-      { code: "crown", name: "皇冠", enName: "Crown", path: "/sports?plat=CR", submenu: true, isTest: false },
-      { code: "panda", name: "熊猫", enName: "Panda", path: "/sports?plat=PM", submenu: true, isTest: false },
-      { code: "bacarrat", name: "百家乐", enName: "Bacarrat", path: "/bacarrat", submenu: true, isTest: false },
+      { code: "crown", name: 'menu.crown', enName: t('menu.crown'), path: "/crown?plat=CR", submenu: true, isTest: false },
+      { code: "panda", name: 'menu.panda', enName: t('menu.panda'), path: "/panda?plat=PM", submenu: true, isTest: false },
+      { code: "bacarrat", name: 'menu.bacarrat', enName: t('menu.bacarrat'), path: "/bacarrat", submenu: true, isTest: false },
       // { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true, isTest: false },
       // { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: false },
       // { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
       // { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
       {
         code: "Promotion",
-        name: "优惠",
-        enName: "Promotion",
+        name: 'menu.promotion',
+        enName: t('menu.promotion'),
         path: "/promotion",
         submenu: false,
         hasicon: true,
@@ -449,7 +426,7 @@ export default defineComponent({
       // { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true, isTest: false },
       { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true, isTest: false },
       // { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false },
-      { code: "CS", name: "客服", enName: "CS", path: "/cs", hasicon: true, isTest: false }
+      { code: "CS", name: 'menu.customerService', enName: t('menu.customerService'), path: "/cs", hasicon: true, isTest: false }
     ]);
     const { token } = storeToRefs(store);
     const router = useRouter();
@@ -1536,8 +1513,11 @@ body {
     }
 
     .details-name {
-      color: $font-1;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: #3483FC;
     }
 
     .account-vip-label {
@@ -1561,9 +1541,15 @@ body {
 
       .assets-text {
         white-space: nowrap;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 100%;
+        letter-spacing: 0%;
+
       }
 
       .amount {
+        font-family: 'PingFang SC';
         margin-right: 0.5rem;
         white-space: nowrap;
       }
@@ -1618,19 +1604,8 @@ body {
       }
     }
 
-    .icon-rounded {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      box-shadow: 0px 2px 5px 0px #bbdcff inset;
-    }
-
     img {
       display: block;
-      width: 16px;
     }
   }
 
@@ -1791,7 +1766,7 @@ body {
           padding-left: 5px;
           padding-right: 5px;
 
-          a > span > div {
+          a > span > div, a > span > img {
             &:hover {
               animation: rumble 0.3s ease-in-out;
             }
@@ -1850,7 +1825,6 @@ body {
         .sub-menu {
           transition: $page-trans;
           background: linear-gradient(180deg, #F8FCFF 0%, #DFECFF 100%);
-          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 1px 0px 0px #a7c2dd;
           overflow: hidden;
           height: 0px;
           position: absolute;

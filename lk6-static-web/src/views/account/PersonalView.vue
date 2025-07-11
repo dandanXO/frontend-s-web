@@ -1,7 +1,7 @@
 <template>
   <div class="account-box account-contents">
     <div class="menu-title-container">
-      <div class="menu-title">个人中心</div>
+      <div class="menu-title">{{ $t('personal.personalCentre') }}</div>
     </div>
 
     <div class="personal-container">
@@ -10,13 +10,13 @@
           <div class="basic-info">
             <div class="basic-info-table">
               <div class="tbl-row">
-                <div class="basic-info-cell main-title">基本资料</div>
+                <div class="basic-info-cell main-title">{{ $t('personal.basicInfo') }}</div>
               </div>
 
               <div class="info-tbl-row">
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">昵称：</div>
+                    <div class="basic-info-cell title">{{ $t('personal.nickName') }}：</div>
                     <div v-if="personalState.memberInfo.loginName" class="basic-info-cell content">
                       {{ personalState.memberInfo.loginName }}
                     </div>
@@ -25,7 +25,7 @@
 
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">姓名：</div>
+                    <div class="basic-info-cell title">{{ $t('personal.name') }}：</div>
                     <div v-if="personalState.memberInfo.realName" class="basic-info-cell content">
                       {{ personalState.memberInfo.realName }}
                     </div>
@@ -55,7 +55,7 @@
               <div class="info-tbl-row">
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">生日：</div>
+                    <div class="basic-info-cell title">{{ $t('personal.birthday') }}：</div>
                     <div v-if="personalState.memberInfo.birthday" class="basic-info-cell content">
                       {{ personalState.memberInfo.birthday }}
                     </div>
@@ -80,7 +80,7 @@
                 </div>
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">电话：</div>
+                    <div class="basic-info-cell title">{{ $t('personal.phone') }}：</div>
                     <div v-if="personalState.memberInfo.telephone" class="basic-info-cell content">
                       {{ personalState.memberInfo.telephone }}
                     </div>
@@ -106,7 +106,7 @@
                         type="button"
                         @click="updatePhoneModal"
                       >
-                        绑定
+                        {{ $t('personal.bind') }}
                       </button>
                     </div>
                   </div>
@@ -230,11 +230,11 @@
 
           <div class="update-pwd-container">
             <div class="tbl-row">
-              <div class="mb-20 basic-info-cell main-title">修改密码</div>
+              <div class="mb-20 basic-info-cell main-title">{{ $t('personal.changePassword') }}</div>
             </div>
 
             <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
-              <el-form-item ref="refOldPassword" label="旧密码" name="oldPassword" prop="oldPassword">
+              <el-form-item ref="refOldPassword" :label="$t('personal.oldPassword')" name="oldPassword" prop="oldPassword">
                 <el-input
                   style="width: 200px"
                   type="password"
@@ -245,7 +245,7 @@
                 />
               </el-form-item>
 
-              <el-form-item ref="refPassword" label="新密码" name="password" prop="password">
+              <el-form-item ref="refPassword" :label="$t('personal.newPassword')"name="password" prop="password">
                 <el-input
                   style="width: 200px"
                   type="password"
@@ -255,7 +255,7 @@
                   show-password
                 />
               </el-form-item>
-              <el-form-item ref="refConfirmPassword" label="确认密码" name="confirmPassword" prop="confirmPassword">
+              <el-form-item ref="refConfirmPassword" :label="$t('personal.confirmPassword')" name="confirmPassword" prop="confirmPassword">
                 <el-input
                   style="width: 200px"
                   type="password"
@@ -272,7 +272,7 @@
                   type="button"
                   @click="clearPwd"
                 >
-                  重新填写
+                  {{ $t('personal.reset') }}
                 </button>
 
                 <button
@@ -281,7 +281,7 @@
                   type="button"
                   @click="submitUpdatePwd"
                 >
-                  确认修改
+                  {{ $t('personal.confirm') }}
                 </button>
               </div>
             </el-form>
@@ -289,8 +289,8 @@
         </div>
         <div class="account-tip-text">
           <div class="link">
-            如果您需要修改个人资料，请您联系我们的
-            <a @click="store.openLiveChat()">在线客服</a>
+            {{ $t('personal.supportTagline') }}
+            <a @click="store.openLiveChat()">{{ $t('personal.onlineSupport') }}</a>
           </div>
         </div>
       </el-form>

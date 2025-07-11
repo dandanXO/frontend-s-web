@@ -80,7 +80,7 @@
     <div class="bind-wrapper">
       <q-form class="bind-item q-my-sm">
         <q-label>
-          虚拟币账户
+          {{ $t("bindCrypto.form.cardNumber.label") }}
           <em>*</em>
         </q-label>
         <q-input
@@ -90,14 +90,18 @@
           v-model="bankCardInfo.cardNumber"
           class="q-pb-xs"
           hide-bottom-space
-          placeholder="请输入虚拟币账户"
+          :placeholder="$t('bindCrypto.form.cardNumber.placeholder')"
           lazy-rules
           clearable
-          :rules="[(val) => (val && val.length > 0) || '请输入虚拟币账户', validateBankLength, validateCryptoNumber]"
+          :rules="[
+            (val) => (val && val.length > 0) || $t('bindCrypto.form.cardNumber.error.required'),
+            validateBankLength,
+            validateCryptoNumber
+          ]"
         ></q-input>
 
         <q-label>
-          虚拟币种类
+          {{ $t("bindCrypto.form.type.label") }}
           <em>*</em>
         </q-label>
         <div class="type-toggle">
@@ -114,7 +118,7 @@
         </div>
 
         <q-label>
-          协议
+          {{ $t("bindCrypto.form.category.label") }}
           <em>*</em>
         </q-label>
         <div class="category-toggle">
@@ -183,7 +187,7 @@
 
       <!-- <div class="note">温馨提示：若持卡人姓名不符可联系在线客服更正信息，感谢您的支持与 理解！</div> -->
 
-      <q-btn class="submit-btn" label="提交" width="100%" style="width: 100%" @click="submitBankCard()" />
+      <q-btn class="submit-btn" :label="$t('btn.submit')" width="100%" style="width: 100%" @click="submitBankCard()" />
     </div>
   </q-page>
   <q-dialog v-model="gotoNewplayerPromoDialog" persistent>
@@ -201,13 +205,16 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, watch } from "vue";
+import { reactive, ref, onMounted, watch, onDeactivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "src/hooks/notify";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
@@ -246,13 +253,13 @@ const bankCardInfo = reactive({
 });
 
 const validateBankLength = (val) => {
-  return (val.length > 33 && val.length < 37) || "长度应为34到36个字符";
+  return (val.length > 33 && val.length < 37) || t("bindCrypto.form.cardNumber.error.length", { min: 34, max: 36 });
 };
 
 const validateCryptoNumber = (val) => {
   var regex = /^[a-zA-Z0-9]+$/;
 
-  return regex.test(val) || "请输入有效的虚拟账户号码";
+  return regex.test(val) || t("bindCrypto.form.cardNumber.error.format");
 };
 const gotoNewplayerPromoDialog = ref(false);
 
@@ -442,6 +449,24 @@ watch(
     }
   }
 );
+
+onDeactivated(() => {
+  // Reset the form when the component is deactivated
+  bankCardInfo.cardNumber = "";
+  bankCardInfo.cardAccount = store.realName;
+  bankCardInfo.cardAddress = "";
+  bankCardInfo.telephone = store.phone;
+  bankCardInfo.smsCode = "";
+  bankCardInfo.smsCodeId = "";
+  bankCardInfo.bankId = undefined;
+  bankCardInfo.currencyId = "";
+  innerCaptchaCode.value = "";
+  innerCodeId.value = "";
+  otpCountdownCount.value = 0;
+  isOtpSent.value = false;
+  bankCardRef.value?.resetValidation();
+  cardNumberRef.value?.resetValidation();
+});
 
 onMounted(() => {
   loadBankCards();

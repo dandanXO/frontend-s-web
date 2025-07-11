@@ -1,39 +1,55 @@
 <template>
   <q-page>
     <div id="id-sticky-header" :class="!isH5 || isShowDownload == false ? 'sticky-header' : ''">
-      <div v-if="isH5 && isShowDownload" class="download-top-container">
+      <!-- <div v-if="isH5 && isShowDownload" class="download-top-container">
         <div class="download-top-box">
           <q-icon name="close" @click="closeTopBox" />
           <img class="headicon" src="../assets/index/logo-char.png" />
           <div class="download-txt-container">
-            <span class="download-title text-bold">幸运6 APP</span>
-            <span class="download-content">覆盖全部游戏，体验更流畅，更安全，更快捷</span>
+            <span class="download-title text-bold">{{ $t("home.downloadApp.appName") }}</span>
+            <span class="download-content">{{ $t("home.downloadApp.desc") }}</span>
           </div>
           <div class="buttons">
             <q-btn
               rounded
               size="12px"
               @click="openDownloadAppLink"
-              label="立即下载"
+              :label="$t('btn.downloadNow')"
               color="primary"
               class="top-btn no-shadow"
             />
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="home-header-section" style="height: 50px; padding: 1px 10px">
+      <div class="home-header-section" style="height: 50px">
         <div class="header-left">
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
         </div>
         <div class="header-right">
-          <LocaleSelector />
-          <!-- <span class="memorable-url">易记网址：{{ memorableUrl }}</span>
-          <button class="copy-btn" @click="handleCopyMemorableUrlClick">🔍</button> -->
-          <router-link class="notification-section" to="/account/inbox?redirect=home">
-            <img src="../assets/index/home-notification-icon.svg" alt="" />
-            <div class="notification-dot" v-if="store.unreadInboxMail > 0"></div>
-          </router-link>
+          <template v-if="store.token">
+            <LocaleSelector />
+            <!-- <span class="memorable-url">易记网址：{{ memorableUrl }}</span>
+            <button class="copy-btn" @click="handleCopyMemorableUrlClick">🔍</button> -->
+            <router-link class="notification-section" to="/account/inbox?redirect=home">
+              <img src="../assets/index/home-notification-icon.svg" alt="" />
+              <div class="notification-dot" v-if="store.unreadInboxMail > 0"></div>
+            </router-link>
+          </template>
+          <template v-else>
+            <router-link to="/login">
+              <q-btn class="login-btn">
+                {{ $t("btn.login") }}
+              </q-btn>
+            </router-link>
+            <router-link to="/register">
+              <q-btn class="register-btn">
+                {{ $t("btn.register") }}
+              </q-btn>
+            </router-link>
+
+            <LocaleSelector style="margin-right: -10px" />
+          </template>
         </div>
       </div>
 
@@ -78,7 +94,8 @@
             v-for="(banner, i) in banners"
             :key="i"
             :name="i"
-            class="column no-wrap flex-center"
+            class="flex-center"
+            style="background-size: cover"
             :img-src="imgURL + banner.mobileImageUrl"
             @click="gotoPromo(banner)"
           ></q-carousel-slide>
@@ -92,12 +109,17 @@
           </div>
           <marquee-text :repeat="5" :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 4 : 70">
             <div v-if="announcementList">
-              <span style="color: #7a80a1" v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-                {{ a.content }}
-              </span>
+              <span
+                style="color: #7a80a1"
+                v-for="(a, i) in announcementList"
+                :key="i"
+                v-html="a.content"
+                @click="openPopup(a)"
+              />
             </div>
           </marquee-text>
-          <img src="../assets/index/home-hot-match-icon.png" width="62px" />
+          <img v-if="languageVal === 'zh'" src="../assets/index/home-hot-match-icon-zh.png" width="62px" />
+          <img v-else-if="languageVal === 'en'" src="../assets/index/home-hot-match-icon-en.png" width="62px" />
         </div>
       </div>
 
@@ -109,8 +131,8 @@
             to="/login"
             style="text-decoration: none"
           >
-            <div style="color: #333333">您还未登录</div>
-            <div style="color: #96a9bb">登录/注册后查看</div>
+            <div style="color: #333333">{{ $t("home.authSection.notLogin1") }}</div>
+            <div style="color: #96a9bb">{{ $t("home.authSection.notLogin2") }}</div>
           </router-link>
           <div v-else class="column justify-start home-login-section">
             <div class="row">
@@ -122,19 +144,24 @@
               </div> -->
             </div>
             <div class="row items-center justify-start gap-10" style="width: 100%">
-              <span class="balance-text text-positive" v-if="isLoadingBalance" style="font-size: 20px">加载中...</span>
-              <span class="balance-text" v-if="!isLoadingBalance">{{ mainWallet.toFixed(2) }}</span>
+              <span class="balance-text text-positive" v-if="isLoadingBalance" style="font-size: 20px">
+                {{ $t("common.loading") }}
+              </span>
+              <span class="balance-text" v-if="!isLoadingBalance">
+                {{ mainWallet.toFixed(2) }}{{ store.currency.value }}
+              </span>
             </div>
+            <img class="crypto-icon" src="../assets/images/index/crypto-icon.svg" />
           </div>
 
-          <div class="row gap-8 justify-between home-quick-link-section">
+          <div class="row justify-end home-quick-link-section">
             <router-link class="text-center cash-button" :unelevated="true" to="/finance/deposit?redirect=home">
               <img src="../assets/index/home-deposit-icon.svg" alt="" width="100%" />
-              <p>存款</p>
+              <p>{{ $t("btn.deposit") }}</p>
             </router-link>
             <router-link class="text-center cash-button" :unelevated="true" to="/finance/withdraw?redirect=home">
               <img src="../assets/index/home-withdrawal-icon.svg" alt="" width="100%" />
-              <p>提款</p>
+              <p>{{ $t("btn.withdraw") }}</p>
             </router-link>
             <!-- <router-link class="text-center cash-button" :unelevated="true" to="/account/transfer?redirect=home">
               <img src="../assets/index/home-transfer-icon.svg" alt="" width="100%" />
@@ -202,25 +229,28 @@
                       ></div>
 
                       <div class="game-title">
-                        <span class="game-title-1">体育赛事</span>
-                        <h3 class="game-title-2">{{ sp.title }}</h3>
+                        <span class="game-title-1">SPORTS</span>
+                        <h3 class="game-title-2">{{ sp.title[languageVal] || sp.title.default }}</h3>
                         <RedirectButton class="redirect-button" @click="playGame(sp.name, sp.code, sp.gameCode)">
-                          立即投注
+                          {{ $t("btn.betNow") }}
                         </RedirectButton>
                       </div>
 
                       <div class="maintenance-box" v-if="sp.underMaintenance">
-                        <p>维护中</p>
-                        <template v-if="sp.maintenanceStartTime && sp.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间：</div>
-                          <p class="small-size">
+                        <p>{{ $t("home.game.maintenance") }}</p>
+                        <i18n-t
+                          v-if="sp.maintenanceStartTime && sp.maintenanceEndTime"
+                          keypath="home.game.maintenanceTime"
+                          tag="div"
+                          class="small-size q-mt-md"
+                        >
+                          <template #start>
                             {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                          <p class="small-size">-</p>
-                          <p class="small-size">
+                          </template>
+                          <template #end>
                             {{ moment(sp.maintenanceEndTime).format("YYYY/MM/DD hh:mm:ss A") }}
-                          </p>
-                        </template>
+                          </template>
+                        </i18n-t>
                       </div>
                     </div>
                   </div>
@@ -401,20 +431,20 @@
                         <div class="game-list-header__title-wrapper">
                           <template v-if="index === 0">
                             <img src="../assets/index/baccarat/baccarat-header.png" />
-                            百家乐
+                            {{ $t("common.gameType.baccarat") }}
                           </template>
                           <template v-else-if="index === 1">
                             <img src="../assets/index/baccarat/roulette-header.png" />
-                            轮盘
+                            {{ $t("common.gameType.roulette") }}
                           </template>
                           <template v-else-if="index === 2">
                             <img src="../assets/index/baccarat/lucky-lace-header.png" />
-                            幸运蕾丝
+                            {{ $t("common.gameType.luckyLace") }}
                           </template>
                         </div>
                         <div class="game-list-header__action-wrapper">
                           <router-link :to="`/baccarat?platform=EEAI&tab=${platform.name}`">
-                            <q-btn class="game-list-header__all-btn" rounded dense>全部</q-btn>
+                            <q-btn class="game-list-header__all-btn" rounded dense>{{ $t("btn.all") }}</q-btn>
                           </router-link>
                           <q-btn
                             class="game-list-header__navigation-btn"
@@ -478,7 +508,7 @@
                                 }}
                               </div>
                               <div class="game-title__name">
-                                {{ game.name }}
+                                {{ game.name[languageVal] }}
                               </div>
                             </div>
                           </div>
@@ -542,7 +572,12 @@
   <GameModal ref="allGames"></GameModal>
   <AnnouncementModal />
 
-  <CommonModal v-model="isStationNotice" class="station-notice-dialog" header="公告" :actions="[]">
+  <CommonModal
+    v-model="isStationNotice"
+    class="station-notice-dialog"
+    :header="$t('home.notification.announcement.title')"
+    :actions="[]"
+  >
     <template #content>
       <q-tabs v-model="activeKey" class="station-notice-tabs">
         <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
@@ -633,8 +668,8 @@
 
   <CommonModal
     v-model="isAppUpdateModal"
-    header="更新公告"
-    message="检测到新版本，你是否要更新？"
+    :header="$t('home.notification.newVersion.title')"
+    :message="$t('home.notification.newVersion.message')"
     :actions="['confirm', 'cancel']"
     @confirm="openDownloadPage"
     @cancel="cancelUpdate"
@@ -727,6 +762,9 @@ import { LIVE_PLATFORMS } from "src/constant/platform";
 import RedirectButton from "src/components/RedirectButton.vue";
 import CommonModal from "src/components/CommonModal.vue";
 import LocaleSelector from "src/components/LocaleSelector.vue";
+import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
 
 export default defineComponent({
   name: "IndexPage",
@@ -744,6 +782,8 @@ export default defineComponent({
     LocaleSelector
   },
   setup() {
+    const { languageVal } = storeToRefs(i18nStore());
+    const { t } = useI18n();
     const notify = useNotify();
 
     const isFirstView = ref(false);
@@ -834,13 +874,12 @@ export default defineComponent({
     };
     const selectedTab = ref("sport");
     const game_bg_color = ref([]);
-    const tabs = ref([
+    const tabs = computed(() => [
       {
         name: "sport",
         icon: "slide-sport-icon.png",
         iconActive: "slide-sport-icon-active.png",
-        label: "体育",
-        labelact: "体育",
+        label: t("common.gameType.sport"),
         mb: 0,
         gap: 8
       },
@@ -848,8 +887,7 @@ export default defineComponent({
         name: "live",
         icon: "slide-live-icon.png",
         iconActive: "slide-live-icon-active.png",
-        label: "真人",
-        labelact: "真人",
+        label: t("common.gameType.live"),
         mb: 0,
         gap: 8
       },
@@ -858,8 +896,7 @@ export default defineComponent({
         name: "baccarat",
         icon: "slide-baccarat-icon.png",
         iconActive: "slide-baccarat-icon-active.png",
-        label: "百家乐",
-        labelact: "百家乐",
+        label: t("common.gameType.baccarat"),
         mb: 0,
         gap: 8
       }
@@ -1296,17 +1333,23 @@ export default defineComponent({
 
     const getAliasName = (plat, platformType) => {
       // console.log(plat);
-      if (plat.alias?.includes("、")) {
-        const aliass = plat.alias.split("、");
-        const gameTypes = plat.gameType.split(",");
-        const itemIndex = gameTypes.indexOf(platformType);
+      if (plat.alias?.includes("|")) {
+        const [zh, en] = plat.alias.split("|");
+        return {
+          zh,
+          en,
+          default: plat.alias
+        };
+
+        // const gameTypes = plat.gameType.split(",");
+        // const itemIndex = gameTypes.indexOf(platformType);
         // console.log(platformType);
         // console.log(aliass);
         // console.log(aliass[itemIndex]);
 
         return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
       }
-      return plat.alias;
+      return { default: plat.alias };
     };
     const liveTabs = ref("");
     const searchList = () => {
@@ -1828,12 +1871,20 @@ export default defineComponent({
         )
         .then((res) => {
           res.forEach((item) => {
+            const [zhName, enName] = item.name.split("@");
+            const gameItem = {
+              ...item,
+              name: {
+                en: enName,
+                zh: zhName
+              }
+            };
             if (item.code.startsWith("101")) {
-              baccarat.value.push(item);
+              baccarat.value.push(gameItem);
             } else if (item.code.startsWith("103")) {
-              roulette.value.push(item);
+              roulette.value.push(gameItem);
             } else if (item.code.startsWith("112")) {
-              luckyLace.value.push(item);
+              luckyLace.value.push(gameItem);
             }
           });
         });
@@ -1962,7 +2013,8 @@ export default defineComponent({
       handleSlideNextClick,
       handleSlidePrevClick,
       baccaratCategoryList,
-      imgURLGame
+      imgURLGame,
+      languageVal
     };
   }
 });
@@ -2038,7 +2090,7 @@ export default defineComponent({
 }
 
 .home-header-section {
-  padding: 1px 0px;
+  padding: 0 10px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -2087,6 +2139,32 @@ export default defineComponent({
       background: transparent;
       border: none;
       margin-right: 10px;
+    }
+
+    .login-btn,
+    .register-btn {
+      background-size: 100% 100%;
+      width: 87px;
+      text-align: center;
+      white-space: nowrap;
+      font-size: 12px;
+      aspect-ratio: 87/32;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      box-shadow: 0px -0.87px 3.47px 0px #ffffff;
+      border-radius: 45.9px;
+      margin-right: 5px;
+    }
+
+    .login-btn {
+      background-image: url("../assets/images/index/primary-btn.png");
+      color: #fff;
+    }
+    .register-btn {
+      background-image: url("../assets/images/index/primary-white-btn.png");
+      color: #47537f;
     }
   }
 
@@ -2147,7 +2225,7 @@ export default defineComponent({
 
 .home-top-slider {
   border-radius: 8px;
-  padding: 4px 10px;
+  padding: 10px;
 }
 
 .secondSwiper {
@@ -2231,14 +2309,17 @@ export default defineComponent({
           .game-title {
             position: absolute;
             z-index: 2;
-            top: 50%;
-            left: 20%;
+            // top: 50%;
+            // left: 20%;
+            // top: 60%;
+            // left: 19%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             color: #7a80a1;
-            transform: translate(-50%, -50%);
-
+            // transform: translate(-50%);
+            bottom: 20px;
+            left: 25px;
             .redirect-button {
               font-size: 12px;
             }
@@ -2275,22 +2356,24 @@ export default defineComponent({
           }
 
           .game-bg {
+            box-shadow: 0px 0px 5.9px 0px #93c7ff69;
             background-size: 100% 100%;
             aspect-ratio: 345/142;
             background-repeat: no-repeat;
           }
 
           .game-title-2 {
-            line-height: 1rem;
-            font-size: clamp(12px, 4vw, 24px);
+            line-height: 1;
+            font-size: clamp(12px, 4.8vw, 18px);
             margin-top: 0px;
             font-weight: 600;
             letter-spacing: 1px;
+            margin-bottom: 14%;
           }
 
           .game-title-1 {
             margin-bottom: 7px;
-            font-size: clamp(12px, 3.2vw, 24px);
+            font-size: clamp(12px, 3.2vw, 12px);
             margin-bottom: 5px;
             letter-spacing: 1px;
           }
@@ -2375,6 +2458,7 @@ export default defineComponent({
               text-align: center;
               .game-title__category {
                 font-size: clamp(10px, 5vw, 22px);
+                line-height: 20px;
               }
               .game-title__name {
                 font-size: clamp(10px, 4vw, 18px);
@@ -2522,7 +2606,7 @@ export default defineComponent({
 @import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
 
 .midd {
-  margin: 10px auto;
+  margin: 0 auto 10px;
   height: 30px;
   position: relative;
   overflow: hidden;
@@ -2544,15 +2628,26 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
     }
-
+    .annList {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     span {
+      display: inline-block;
       margin-right: 10px;
       cursor: pointer;
       color: #000;
+      height: 20px;
+      overflow: hidden;
+      display: block;
+      // &.content {
+      // }
     }
 
     .notice {
       img {
+        display: block;
         width: 19px;
       }
     }
@@ -2885,28 +2980,46 @@ export default defineComponent({
   background: linear-gradient(180deg, #f8fcff 0%, #dfecff 194.05%);
   padding: 16px;
   color: #7a80a1;
-  margin-bottom: 16px;
+  margin-bottom: 15px;
 
   .home-auth-subsection {
-    flex: 3;
+    flex: 1;
     border-width: 0 1px 0 0;
     border-style: dashed;
     border-color: #a0a0a0;
   }
 
   .home-quick-link-section {
-    flex: 6;
+    flex: 1;
+    gap: 20px;
+    min-width: 140px;
   }
 
   .home-login-section {
-    flex: 3;
+    position: relative;
+    background: radial-gradient(103.75% 103.75% at 50% -3.75%, #ffffff 0%, #deecff 100%);
+    border-radius: 10px;
+    border: 1.41px solid #ffffff;
+    padding: 16px;
+    flex: 1;
+    .crypto-icon {
+      position: absolute;
+      right: 8px;
+      bottom: 16px;
+    }
   }
 
   .cash-button {
     text-decoration: none;
-    width: 36px;
+    // width: 36px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img {
+      max-width: 60px;
+      margin-bottom: 5px;
+    }
 
     > p {
       font-size: 14px;
@@ -2917,10 +3030,11 @@ export default defineComponent({
 
   .welcome-liner {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     display: flex;
     align-items: center;
     margin-right: 5px;
+    color: #35648f;
   }
 
   .badge-div {
@@ -2933,10 +3047,9 @@ export default defineComponent({
   }
 
   .balance-text {
-    font-size: 24px;
+    font-size: 16px;
     line-height: 24px;
-    font-weight: 500;
-    min-width: 50px;
+    font-weight: 600;
   }
 }
 
@@ -2989,26 +3102,25 @@ export default defineComponent({
     height: unset !important;
     background-color: transparent !important;
   }
-}
-
-.close-btn {
-  width: 14px;
-  min-width: 14px;
-  height: 14px;
-  min-height: 14px;
-  border-radius: 50%;
-  border: 1px solid #333333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 1;
-  font-size: 6px;
-  font-weight: bold;
-  margin-left: 24px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 400;
+  .close-btn {
+    width: 14px;
+    min-width: 14px;
+    height: 14px;
+    min-height: 14px;
+    border-radius: 50%;
+    border: 1px solid #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    font-size: 6px;
+    font-weight: bold;
+    margin-left: 24px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 400;
+  }
 }
 
 .rocket-wrapper {

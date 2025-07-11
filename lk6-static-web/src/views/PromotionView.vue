@@ -2,7 +2,8 @@
   <div class="promo-container">
     <div class="promo-banner" v-if="!isPromoDetail">
       <div class="promo-banner-image">
-        <img src="../assets/promo/top-banner-light.png" />
+        <img v-if="languageVal === 'en'" src="../assets/promo/top-banner-light-en.png" />
+        <img v-else src="../assets/promo/top-banner-light.png" />
       </div>
     </div>
     <div class="all-promotions" v-if="!isPromoDetail">
@@ -10,7 +11,8 @@
         <div class="promo-type-wrapper">
           <div>
             <div class="type-list">
-              <img src="../assets/promo/menu-title.svg" />
+              <img v-if="languageVal === 'en'" src="../assets/promo/menu-title-en.svg" />
+              <img v-else src="../assets/promo/menu-title.svg" />
               <div
                 class="type-item"
                 v-for="p in promoTypes"
@@ -26,7 +28,8 @@
             </div>
           </div>
         </div>
-        <div class="promo-list-wrapper">
+        <LoadingComponent v-if="isLoading" />
+        <div class="promo-list-wrapper" v-else>
           <div
             class="promo-item glow-effect wobble-effect"
             v-for="(promo, i) in filteredArray"
@@ -49,7 +52,7 @@
                   <!-- <div class="front-date">{{ JSON.parse(promo.param).date }}</div> -->
                   <div class="front-title">{{ promo.title }}</div>
                   <div class="front-sub">{{ JSON.parse(promo.param).sub }}</div>
-                  <div class="front-btn">查看详情</div>
+                  <div class="front-btn">{{ $t('promotion.checkDetails') }}</div>
                 </div>
                 <div class="promo-bg">
                   <img class="promo-content isDesktop" :src="imgURL + promo.desktopImgUrl" />
@@ -186,24 +189,29 @@
 
 <script lang="js">
 import { useNotify } from "@/hooks/notify";
-import { ref, defineComponent, onMounted, reactive, watch, computed, defineAsyncComponent } from "vue";
+import { ref, defineComponent, onMounted, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { loadPromo, loadPromoTypes } from "@/api/index/promo.js";
 import { userStore } from "@/store";
 import moment from "moment";
-import { useDark } from "@vueuse/core";
 
 import HotPromotion from "@/components/HotPromotion.vue";
 import { useLocalStorage } from "@vueuse/core";
+import { useI18n } from "vue-i18n";
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
+import LoadingComponent from "@/components/menu/LoadingComponent.vue";
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
+    LoadingComponent
   },
   setup() {
-    const isDark = useDark();
-
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
+    const { t } = useI18n();
     const store = userStore();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
@@ -213,14 +221,14 @@ export default defineComponent({
     });
     const isPromoFound= ref(false);
     const promoTypes = ref([
-      { code: "ALL", img: "all", label: "全站优惠" },
+      { code: "ALL", img: "all", label: `${t('menu.all')} ${t('menu.promotion')}` },
       // { code: "WELCOME", img: "welcome", label: "新人优惠" },
       // { code: "HOT", img: "hot", label: "热门活动" },
       // { code: "ESPORT", img: "esport", label: "电竞活动" },
-      { code: "SPORT", img: "sport", label: "体育优惠" },
-      { code: "LIVE CASINO", img: "live", label: "真人优惠" },
+      { code: "SPORT", img: "sport", label: `${t('menu.sport')} ${t('menu.promotion')}` },
+      { code: "LIVE CASINO", img: "live", label:`${t('menu.live')} ${t('menu.promotion')}` },
       // { code: "SLOT GAME", img: "slot", label: "电游活动" },
-      { code: "POKER", img: "poker", label: "百家乐优惠" },
+      { code: "POKER", img: "poker", label: `${t('menu.bacarrat')} ${t('menu.promotion')}` },
       // { code: "FISH", img: 'fish', label: '捕鱼'},
       // { code: "FTD", img: "deposit", label: "存款优惠" },
       // { code: "VIP", img: "vip", label: "VIP 特权" }
@@ -238,7 +246,7 @@ export default defineComponent({
     const router = useRouter();
 
     const notify = useNotify();
-
+    const isLoading = ref(false);
     const countDay = ref(5);
     const euroCupStartDate = moment("2024-06-15");
     countDay.value = euroCupStartDate.diff(moment(), "days");
@@ -304,6 +312,8 @@ export default defineComponent({
       }
     };
     const loadAll = async () => {
+      isLoading.value = true;
+      
       await loadPromoTypes().then((res) => {
         if (res.length > 0) {
           // promoTypes.value = [];
@@ -320,6 +330,7 @@ export default defineComponent({
         } else {
           console.warn('No promo types loaded, using default promo types.');
         }
+        isLoading.value = false;
       });
       loadPromo()
         .then((res) => {
@@ -356,6 +367,9 @@ export default defineComponent({
         })
         .catch((e) => {
           console.log("error", e);
+          isLoading.value = false;
+        }).finally(() => {
+          isLoading.value = false;
         });
       switchPromoType(promoState.active);
     };
@@ -370,17 +384,17 @@ export default defineComponent({
     const getPromoLabel = (labelType) => {
       switch (labelType) {
         case 0:
-          return "NEW 最新";
+          return t('promotion.new');
         case 1:
-          return "HOT 热门";
+          return  t('promotion.hot');
         case 3:
-          return "RECOMMEND 推荐";
+          return  t('promotion.recommended');
         case 4:
-          return "DAILY 日常";
+          return  t('promotion.daily')
         case 5:
-          return "NEWBIE 新人";
+          return  t('promotion.newbie');
         case 6:
-          return "TIME 限时";
+          return  t('promotion.time');
         default:
           return "";
       }
@@ -417,7 +431,8 @@ export default defineComponent({
       imgURL,
       getPromoLabel,
       countDay,
-      isDark
+      languageVal,
+      isLoading
     };
   }
 });
@@ -619,6 +634,7 @@ export default defineComponent({
               color: #7A80A1;
               font-size: 18px;
               font-weight: 700;
+              white-space: nowrap;
             }
 
             &:before {

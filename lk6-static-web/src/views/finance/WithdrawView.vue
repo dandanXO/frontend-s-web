@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="card">
     <div class="menu-title-container">
       <span class="menu-title">
         {{ isAutoWithdrawal ? "快速提款" : "提款" }}
@@ -130,11 +130,11 @@
             <!--            </div>-->
           </el-col>
         </el-row>
-        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
+        <!-- <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
           <span style="color: #17cd27">
             1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.label }}
           </span>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item
           class="select"
           prop="cardId"

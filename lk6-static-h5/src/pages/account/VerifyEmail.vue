@@ -2,7 +2,7 @@
   <div class="verify-section">
     <!--    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
-      <div class="flex items-center no-wrap">
+      <div class="flex items-center no-wrap q-mb-md">
         <q-input
           class="q-pb-xs"
           hide-bottom-space
@@ -10,14 +10,14 @@
           clearable
           lazy-rules
           ref="emailRef"
-          :rules="[(val) => (val && val.length > 0) || '请输入邮箱', isValidEmail]"
+          :rules="[(val) => (val && val.length > 0) || t('verifyEmail.form.email.error.required'), isValidEmail]"
           :readonly="showVerifyBtn ? false : true"
           style="width: 100%"
-          placeholder="请输入Email"
+          :placeholder="$t('verifyEmail.form.email.placeholder')"
         >
           <template v-slot:prepend>
             <!-- <q-icon name="person_outline" /> -->
-            <label class="header-label">邮箱地址</label>
+            <label class="header-label">{{ $t("verifyEmail.form.email.label") }}</label>
           </template>
           <template v-slot:append>
             <q-btn
@@ -25,7 +25,11 @@
               :disable="!showVerifyBtn && otpCountdownCount > 0"
               @click="openVerificationDialog"
             >
-              {{ showVerifyBtn && otpCountdownCount <= 0 ? `发送验证码` : `已发送（${otpCountdownCount}秒)` }}
+              {{
+                showVerifyBtn && otpCountdownCount <= 0
+                  ? $t("verifyEmail.form.email.append.sendable")
+                  : $t("verifyEmail.form.email.append.sent", { second: otpCountdownCount })
+              }}
             </q-btn>
           </template>
         </q-input>
@@ -38,20 +42,20 @@
         v-model="formDetail.emailOtpRef"
         type="tel"
         lazy-rules
-        :rules="[(val) => (val && val.length > 5 && val.length < 7) || '请输入邮箱验证码']"
+        :rules="[(val) => (val && val.length > 5 && val.length < 7) || $t('verifyEmail.form.otp.error.required')]"
         label-color=""
         color=""
         style="width: 100%"
-        placeholder="请输入Email验证码"
+        :placeholder="$t('verifyEmail.form.otp.placeholder')"
       >
         <template v-slot:prepend>
           <!-- <q-icon name="person_outline" /> -->
-          <label class="header-label">验证码&#12288;</label>
+          <label class="header-label">{{ $t("verifyEmail.form.otp.label") }}</label>
         </template>
       </q-input>
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" class="submit-btn" @click="submitUpdateSecurity" label="提交" />
+        <q-btn size="md" class="submit-btn" @click="submitUpdateSecurity" :label="$t('btn.submit')" />
       </div>
     </q-form>
   </div>
@@ -60,21 +64,26 @@
     v-model="showCaptchaDialog"
     class="captcha-dialog"
     no-backdrop-dismiss
-    header="验证码"
-    confirm-btn-text="提交"
+    :header="$t('verifyEmail.notification.captcha.title')"
+    :confirm-btn-text="$t('btn.confirm')"
     @confirm="onCaptchaSubmit"
   >
     <template #content>
       <q-input
         class="verification-code-input"
         standout
-        :rules="[(val) => (val && val.length > 3 && val.length < 5) || '请输入验证码']"
+        :rules="[(val) => (val && val.length > 3 && val.length < 5) || $t('verifyEmail.form.otp.error.required')]"
         v-model="innerCaptchaRef"
-        placeholder="请输入验证码"
+        :placeholder="$t('verifyEmail.form.otp.placeholder')"
         ref="refInnerCaptchaCode"
       >
         <template v-slot:append>
-          <img class="verification-img" :src="verificationImg" title="点击刷新验证码" @click="getCode" />
+          <img
+            class="verification-img"
+            :src="verificationImg"
+            :title="$t('verifyEmail.form.otp.imgTitle')"
+            @click="getCode"
+          />
         </template>
       </q-input>
     </template>
@@ -83,8 +92,8 @@
   <CommonModal
     v-model="showUpdateSecuritySuccessDialog"
     no-backdrop-dismiss
-    header="验证码"
-    message="提交成功"
+    :header="$t('verifyEmail.notification.captcha.title')"
+    :message="$t('verifyEmail.notification.captcha.message')"
     @hide="handleUpdateSecuritySuccessDialogHide"
     @confirm="showUpdateSecuritySuccessDialog = false"
   />
@@ -98,6 +107,7 @@ import {useRoute, useRouter} from "vue-router";
 import {useQuasar} from "quasar";
 import {userStore} from "src/stores";
 import CommonModal from "src/components/CommonModal.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PersonalView",
@@ -105,6 +115,7 @@ export default defineComponent({
     CommonModal
   },
   setup() {
+    const {t} = useI18n();
     // const isCardActive = ref();
     const qs = require("qs");
     const router = useRouter();
@@ -170,7 +181,7 @@ export default defineComponent({
     const isValidEmail = () => {
       const emailPattern =
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
-      return emailPattern.test(formDetail.email) || "请输入正确的邮箱";
+      return emailPattern.test(formDetail.email) || t('verifyEmail.form.email.error.format');
     };
 
     const otpCountdownCount = ref(0);
@@ -218,7 +229,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "验证码已发送至您的邮箱。",
+            message: t('verifyEmail.notification.emailSent.message'),
             icon: "check_circle_outline"
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId;
@@ -324,7 +335,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "邮箱不能为空",
+          message: t('verifyEmail.form.email.error.required'),
           icon: "report_problem"
         });
         getCode();
@@ -334,7 +345,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "验证码必须为4个字符串",
+          message: t('verifyEmail.form.otp.error.required'),
           icon: "report_problem"
         });
         getCode();
@@ -347,7 +358,7 @@ export default defineComponent({
         codeId: updateSecurityVerified.codeId
       }))
           .then(res => {
-            let message = res.message || "发送邮箱验证码成功",
+            let message = res.message || t('verifyEmail.notification.captcha.message'),
                 color = "positive";
 
             if (res.code === 0) {

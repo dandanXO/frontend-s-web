@@ -448,7 +448,7 @@ export default defineComponent({
         router.push(`/login`);
       } else {
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
-          router.push({ path: "/account/vip" });
+          router.push({ path: "/vip" });
         } else {
           if (promo.redirectUrl === "pak-redpacketrain") {
             isMoneyRainModal.value = true;

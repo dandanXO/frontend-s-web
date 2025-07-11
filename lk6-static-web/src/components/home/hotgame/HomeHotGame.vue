@@ -1,6 +1,7 @@
 <template>
   <div class="hotgame-section">
-    <img src="../../../assets/home/hotgame/hotgame-section-title.svg" width="1100px" style="display:flex;margin:0 auto;" />
+    <img v-if="languageVal === 'en'" src="../../../assets/home/hotgame/hotgame-section-title-en.svg" width="1100px" style="display:flex;margin:0 auto;" />
+    <img v-else src="../../../assets/home/hotgame/hotgame-section-title.svg" width="1100px" style="display:flex;margin:0 auto;" />
 
     <div class="category-wrapper">
       <template v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`">
@@ -8,15 +9,15 @@
           <img width="40px" height="40px" src="../../../assets/home/hotgame/soccer-icon.png" v-if="hotgame.type === 'sport'" />
           <img width="40px" height="40px" src="../../../assets/home/hotgame/dice-icon.png" v-if="hotgame.type === 'live'" />
           <img width="40px" height="40px" src="../../../assets/home/hotgame/card-icon.png" v-if="hotgame.type === 'poker'" />
-          {{ hotgame.title }}
+          {{ $t(hotgame.title) }}
         </div>
       </template>
     </div>
     
     
     <div class="hotgame-container">
-      <SportsView v-if="currentBannerIndex === 0" />
-      <LiveCasinoView v-else-if="currentBannerIndex === 1"/>
+      <SportsView v-if="currentBannerIndex === 0" :showPlayBtn="true" />
+      <LiveCasinoView v-else-if="currentBannerIndex === 1" :showPlayBtn="true"/>
       <BacarratView v-else-if="currentBannerIndex === 2" :hideBanner="true" />
     </div>
   </div>
@@ -30,7 +31,8 @@ import { getPlatformList, getLoggedInPlatformList } from "@/api/platform/platfor
 import { userStore } from "@/store";
 import GameModal from "@/components/modal/GameModal";
 import * as _ from "lodash";
-
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
 import {
   eSportsPlatforms,
   fishingPlatforms,
@@ -43,9 +45,12 @@ import {
 import { useDark } from "@vueuse/core";
 import SportsView from "@/views/SportsView.vue";
 import LiveCasinoView from "@/views/LiveCasinoView.vue";
-import PokerView from "@/views/PokerView.vue";
 import BacarratView from "@/views/BacarratView.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
+const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
 const store = userStore();
 const router = useRouter();
 const platformGame = ref();
@@ -57,7 +62,7 @@ const hotgameData = ref([
     number: "02",
     icon: require("../../../assets/home/hotgame/banner/sports/icon.png"),
     iconActive: require("../../../assets/home/hotgame/banner/sports/icon-active.png"),
-    title: "体育",
+    title: 'menu.sport',
     subtitle: "SPORTS",
     charImgPath: require("../../../assets/home/hotgame/banner/sports/character.png"),
     isShow: false,
@@ -142,7 +147,7 @@ const hotgameData = ref([
     number: "03",
     icon: require("../../../assets/home/hotgame/banner/casino/icon.png"),
     iconActive: require("../../../assets/home/hotgame/banner/casino/icon-active.png"),
-    title: "真人",
+    title: 'menu.live',
     subtitle: "CASINO",
     charImgPath: require("../../../assets/home/hotgame/banner/casino/character.png"),
     isShow: false,
@@ -237,7 +242,7 @@ const hotgameData = ref([
     number: "06",
     icon: require("../../../assets/home/hotgame/banner/board/icon.png"),
     iconActive: require("../../../assets/home/hotgame/banner/board/icon-active.png"),
-    title: "百家乐",
+    title: 'menu.bacarrat',
     subtitle: "BOARD",
     charImgPath: require("../../../assets/home/hotgame/banner/board/character.png"),
     isShow: false,
@@ -377,7 +382,7 @@ const updatePlatforms = (platforms, item, keyModifier) => {
     const newObject = {
       title: p.cnname,
       subtitle: item.subtitle,
-      desc: p.message,
+      desc: t(p.message),
       charImgPath: p.image
     };
     item.content[p.code.toLowerCase() + keyModifier] = newObject;

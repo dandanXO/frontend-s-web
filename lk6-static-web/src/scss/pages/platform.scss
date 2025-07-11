@@ -4,7 +4,6 @@
   background-size: 100% auto;
   background-position: top center;
   padding-top: 0px;
-  padding-bottom: 10px;
   width: 100%;
 }
 
@@ -24,6 +23,13 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+
+  &.fullpage {
+    min-height: calc(100dvh - 85px - 313px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
 
   &.slot-container {
     min-height: 300px;
@@ -117,7 +123,7 @@
       .platform-txt-box {
         color: $font-3;
         margin-top: 1rem;
-        max-width: 300px;
+        max-width: 500px;
         min-width: 45px;
         height: 70px;
       }
@@ -137,7 +143,7 @@
         margin-bottom: 1.5rem;
         display: grid;
         grid-template-columns: repeat(5, 5rem);
-        grid-gap: 1rem;
+        grid-gap: 1.5rem;
       }
 
       .platform-list-item {
@@ -449,8 +455,9 @@
     }
 
     .plat-options-container {
+      height: 60px;
       display: flex;
-      gap: 20px;
+      gap: 10px;
       justify-content: center;
       align-items: center;
       padding: 10px;
@@ -473,6 +480,7 @@
       background: url('../../assets/home/hotgame/category-item-bg.png') center center no-repeat;
       background-size: 100% 100%;
       transition: 0.3s all;
+      white-space: nowrap;
       .text {
         color: #35648F;
         font-size: 20px;
@@ -502,12 +510,12 @@
 
     .search-container {
       display: flex;
-      // margin-top: 2rem;
-      padding: 1rem;
+      padding: 10px;
       justify-content: space-between;
-      position: absolute;
       right: 15px;
       top: 15px;
+      margin: auto;
+      max-width: 250px;
 
       .search-input {
         // padding: 20px 20px 20px 30px;
@@ -618,13 +626,17 @@
             left: 50%;
             transform: translate(-50%, 0%);
             white-space: nowrap;
-            flex-direction: column-reverse;
+            flex-direction: column;
+            padding: 0.5rem 1rem;
           }
 
           .slot-name {
-            padding: 0.5rem 1rem;
             color: #FFFFFF;
             position: relative;
+            font-weight: 900;
+            font-size: 23px;
+            line-height: 30px;
+            letter-spacing: -1px;
 
             img {
               width: 90px;
@@ -634,40 +646,14 @@
             }
           }
 
-          .slot-fav {
-            display: block;
-            position: relative;
-            z-index: 5;
-            width: 2rem;
-            height: 2rem;
-
-            i {
-              font-size: 1.5rem;
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              color: $font-grey;
-
-              &:last-child {
-                // display: none;
-                opacity: 0;
-                font-size: 1.75rem;
-                transition: 0.3s all;
-              }
-            }
-
-            &:hover,
-            &.fav-on {
-              i {
-                color: $color-danger;
-
-                &:last-child {
-                  // display: block;
-                  opacity: 1;
-                }
-              }
-            }
+          .slot-type {
+            letter-spacing: -1px;
+            font-weight: 900;
+            color: #fff;
+            text-align: center;
+            font-size: 25px;
+            line-height: 30px;
+            font-family: sans-serif;
           }
         }
       }

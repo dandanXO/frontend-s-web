@@ -25,7 +25,7 @@ export const userStore = defineStore("userStore", {
       balance: 0,
       vip: "",
       evip: "",
-      currency: { value: "￥", label: "RMB" },
+      currency: { value: "USDT", label: "USDT" },
       loginPageVisible: false,
       regPageVisible: false,
       currentDeposit: "0.0000",
@@ -188,7 +188,7 @@ export const userStore = defineStore("userStore", {
       const left = (screen.width - 350) * 2;
       const top = (screen.height - 650) / 4;
 
-      const url = `https://${window.location.host}/live-chat/live-chat?token=${token}`;
+      const url = `https://8xjp0t3ydi.ipbr7k9r.com/chatwindow.aspx?siteId=65001994&planId=099fb0e7-cad5-43d0-aa03-2ed2257e0e12`;
       window.open(url, "_blank", `resizable=yes, width=${width}, height=${height}, top=${top}, left=${left}`);
     }
   }

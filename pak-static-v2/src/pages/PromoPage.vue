@@ -102,7 +102,7 @@
                 </div>
               </div>
 
-              <div class="inner" 
+              <div class="inner"
               :class="{
                   isJackpotAviator: selectedPromo.redirectUrl === 'pk2-jackpot-aviator',
                   isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',

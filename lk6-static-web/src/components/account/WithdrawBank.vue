@@ -8,14 +8,14 @@
 
       <div class="flex-wrap flex-box bank-card-list">
         <div
-          class="bank-card-item active"
-          :class="{
-            USDT: bc.bankName === 'GCASH'
-          }"
+        class="bank-card-item active"
+        :class="{
+          USDT: bc.bankName === 'USDTTRC'
+        }"
           @click="showCard(bc, index)"
           v-for="(bc, index) in personalState.bankCardList"
           :key="bc.id"
-        >
+          >
           <div class="card-details">
             <div class="card-bank-icon">
               <img :src="imgURL + bc.bankIcon" />
@@ -585,9 +585,6 @@ export default defineComponent({
       store.getMemberInfo().then(() => {
         if (!store.realName || store.realName == "") {
           notify({ type: "error", message: "真实姓名不可为空" });
-          return;
-        } else if (!store.phone || store.phone == "") {
-          notify({ type: "error", message: "绑定银行卡前，请先验证手机号。" });
           return;
         } else {
           bankCardInfo.bankId = undefined;
@@ -1183,6 +1180,7 @@ body {
     border-radius: 10px;
     position: relative;
     flex-wrap: wrap;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1019607843);
 
     .card-details {
       display: flex;
@@ -1227,7 +1225,8 @@ body {
     }
 
     &.USDT {
-      background-image: url("../../assets/images/finance/download.png");
+      background: url('../../assets/images/finance/usdt-item-bg.jpg') center center no-repeat;
+      background-size: 100% 100%;
     }
 
     &.active {

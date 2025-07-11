@@ -77,7 +77,9 @@ import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, openURL } from "quasar";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
+import { useI18n } from "vue-i18n";
 const $q = useQuasar();
+const { t } = useI18n();
 
 const store = userStore();
 const { token } = storeToRefs(store);
@@ -227,7 +229,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         }
       }
 
-      $q.loading.show({ message: "加载中..." });
+      $q.loading.show({ message: t("common.loading") });
 
       if (way !== "H5") {
         //Change to open at same page.
