@@ -297,10 +297,9 @@ export default defineComponent({
       // console.log("onLoad");
       // console.log(comList.value);
       setTimeout(() => {
-        truncatedList.value = [];
         if (!props.isEnded || comList.value.length > 0) {
           if (comList.value.length) {
-            var slicedArray = comList.value;
+            const slicedArray = comList.value.splice(0, 6);
             slicedArray.forEach((element) => {
               truncatedList.value.push(element);
             });
