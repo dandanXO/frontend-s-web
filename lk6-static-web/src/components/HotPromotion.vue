@@ -49,7 +49,6 @@ export default defineComponent({
   },
   data() {
     return {
-      isDark: useDark(),
       emptyText: "今天没有获奖者。",
       privilegeClaimedModalVisible: false,
       dataSource: [],
