@@ -42,7 +42,10 @@
     "email": "E-mail",
     "emailRule01": "Invalid email address",
     "contactSupportForgetPassword": "Please contact support to retrieve password",
-    "contactSupport": "Contact Support"
+    "contactSupport": "Contact Support",
+    "withdrawCryptoAccount": "Withdraw Crypto Account",
+    "addWithdrawCryptoAccount": "Add Crypto Account",
+    "bindWithdrawCryptoAccount": "Bind Crypto Account"
   },
   "menu": {
     "promotion": "Promo",
