@@ -14,17 +14,17 @@
             </div>
             <div class="download">
               <div class="dl-wrapper">
-                <VueQRCodeComponent :size="90" :text="ui.downloadUrl" class="dl-frame" />
+                <VueQRCodeComponent :size="90" :text="ui.downloadUrl || 'http://6.vip'" class="dl-frame" />
                 <div class="link-desc">{{ $t('download.scan') }}</div>
                 <div class="link">
-                  <a :href="ui.downloadUrl" target="_blank">{{ ui.downloadUrl }}</a>
+                  <a :href="ui.downloadUrl || 'http://6.vip'" target="_blank">{{ ui.downloadUrl || 'http://6.vip' }}</a>
                 </div>
               </div>
               <div class="dl-wrapper">
                 <div class="five-logo" />
                 <div class="link-desc">{{ $t('download.download') }}</div>
                 <div class="link">
-                  <a :href="ui.downloadUrl" target="_blank">{{ ui.downloadUrl }}</a>
+                  <a :href="ui.downloadUrl || 'http://6.vip'" target="_blank">{{ ui.downloadUrl || 'http://6.vip' }}</a>
                 </div>
               </div>
             </div>
