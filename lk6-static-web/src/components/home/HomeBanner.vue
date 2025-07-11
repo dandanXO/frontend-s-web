@@ -12,9 +12,7 @@
     </div>
   </el-dialog>
   
-  <div v-if="isFetchingBanners" class="banner-loading">
-    <img class="loading-img" src="@/assets/lucky-6-logo.png" />
-  </div>
+  <LoadingComponent v-if="isFetchingBanners" />
 
   <transition name="stomp">
     <el-carousel
@@ -52,6 +50,7 @@ import { useRouter } from "vue-router";
 import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
 import SitePopout from "@/components/modal/SitePopout.vue";
+import LoadingComponent from "../menu/LoadingComponent.vue";
 
 const emit = defineEmits(["scrollToView"]);
 
@@ -248,39 +247,6 @@ watch(
 </script>
 
 <style scoped lang="scss">
-.banner-loading {
-  width: 100%;
-  height: 450px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(
-    to bottom,
-    rgba(240, 248, 255, 0.8196078431) 0%,
-    rgb(240 248 255 / 50%) 80%,
-    rgb(240 248 255 / 0%) 100%
-  );
-
-  .loading-img {
-    animation-name: fade-in-out;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    width: 100px;
-  }
-}
-
-@keyframes fade-in-out {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 .banner-slider {
   width: 100%;
 
