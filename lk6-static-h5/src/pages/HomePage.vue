@@ -230,7 +230,7 @@
 
                       <div class="game-title">
                         <span class="game-title-1">SPORTS</span>
-                        <h3 class="game-title-2">{{ sp.title }}</h3>
+                        <h3 class="game-title-2">{{ sp.title[languageVal] || sp.title.default }}</h3>
                         <RedirectButton class="redirect-button" @click="playGame(sp.name, sp.code, sp.gameCode)">
                           {{ $t("btn.betNow") }}
                         </RedirectButton>
@@ -1333,17 +1333,23 @@ export default defineComponent({
 
     const getAliasName = (plat, platformType) => {
       // console.log(plat);
-      if (plat.alias?.includes("、")) {
-        const aliass = plat.alias.split("、");
-        const gameTypes = plat.gameType.split(",");
-        const itemIndex = gameTypes.indexOf(platformType);
+      if (plat.alias?.includes("|")) {
+        const [zh, en] = plat.alias.split("|");
+        return {
+          zh,
+          en,
+          default: plat.alias
+        };
+
+        // const gameTypes = plat.gameType.split(",");
+        // const itemIndex = gameTypes.indexOf(platformType);
         // console.log(platformType);
         // console.log(aliass);
         // console.log(aliass[itemIndex]);
 
         return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
       }
-      return plat.alias;
+      return { default: plat.alias };
     };
     const liveTabs = ref("");
     const searchList = () => {
@@ -3096,26 +3102,25 @@ export default defineComponent({
     height: unset !important;
     background-color: transparent !important;
   }
-}
-
-.close-btn {
-  width: 14px;
-  min-width: 14px;
-  height: 14px;
-  min-height: 14px;
-  border-radius: 50%;
-  border: 1px solid #333333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 1;
-  font-size: 6px;
-  font-weight: bold;
-  margin-left: 24px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 400;
+  .close-btn {
+    width: 14px;
+    min-width: 14px;
+    height: 14px;
+    min-height: 14px;
+    border-radius: 50%;
+    border: 1px solid #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    font-size: 6px;
+    font-weight: bold;
+    margin-left: 24px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 400;
+  }
 }
 
 .rocket-wrapper {

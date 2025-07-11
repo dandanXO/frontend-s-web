@@ -73,7 +73,7 @@ export default defineComponent({
     var rstArray = Object.values(process.env.RST_API);
     var rstApiRand = rstArray[getRndInteger(0, rstArray.length)];
 
-    var rstApi = localStorage.getItem("DY_H5_RST_URL") ?? rstApiRand;
+    var rstApi = localStorage.getItem("LK_H5_RST_URL") ?? rstApiRand;
 
     const chat_type = ref("");
     // let partnerCode = route.query?.partnerCode ?? "";

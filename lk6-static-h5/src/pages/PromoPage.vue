@@ -2,7 +2,7 @@
   <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="promoTabActive" align="justify">
-        <q-tab v-for="(tab, i) in promoTypes" :key="i" :name="tab.name" :label="tab.label" />
+        <q-tab v-for="(tab, i) in promoTypes" :key="i" :name="tab.name" :label="tab.label[languageVal]" />
       </q-tabs>
 
       <q-tab-panels v-model="promoTabActive" animated>
@@ -300,6 +300,7 @@ import { useLocalStorage } from "@vueuse/core";
 import RedirectButton from "src/components/RedirectButton.vue";
 import { i18nStore } from "src/router/language";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "PromoView",
@@ -310,7 +311,7 @@ export default defineComponent({
   },
   setup() {
     const {t} = useI18n();
-    const {languageVal} = i18nStore()
+    const {languageVal} = storeToRefs(i18nStore())
     const store = userStore();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
@@ -442,7 +443,7 @@ export default defineComponent({
       cached.get(key, () => api.get("/promo/type")).then((res) => {
         promoTypes.value = res.map(({ value, name, iconUrl }) => ({
           name: value,
-          label: name ? JSON.parse(name)[languageVal] : ''
+          label: name ? JSON.parse(name) : {}
         }));
         if (promoTypes.value.length > 0) {
           promoTabActive.value = promoTypes.value[0].name
@@ -528,7 +529,8 @@ export default defineComponent({
       extensionToken,
       isFetchingPromo,
       isSpecialPromo,
-      parsedParam
+      parsedParam,
+      languageVal
     };
   }
 });

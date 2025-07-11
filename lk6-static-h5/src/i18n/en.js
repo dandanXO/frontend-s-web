@@ -263,9 +263,7 @@ export default {
   },
   record: {
     betId: "Bet ID",
-    serialNumber: {
-      deposit: "Deposit Code"
-    },
+    serialNumber: "Code",
     table: {
       withdraw: {
         header: {
@@ -277,12 +275,13 @@ export default {
       },
       transfer: {
         header: {
-          serialNumber: "Transaction Code",
-          type: "Change Type",
+          serialNumber: "Code",
+          type: "Transaction Type",
           platform: "Platform",
           amount: "Amount",
+          subType: "Sub Type",
           status: "Status",
-          transferDate: "Date"
+          recordTime: "Date"
         }
       },
       promo: {
