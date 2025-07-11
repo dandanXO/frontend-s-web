@@ -512,7 +512,9 @@
 
     .plat-options-wrapper {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
+      margin-right: 230px;
+      margin-left: 20px;
     }
 
     .plat-options-container {
