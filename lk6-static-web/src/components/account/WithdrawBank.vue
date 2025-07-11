@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="account-title-container">
-      <span class="account-title">提款银行卡</span>
+      <span class="account-title">{{ $t('form.withdrawCryptoAccount') }}</span>
     </div>
     <div class="account-content">
       <div class="account-tip-text wbot"></div>
@@ -45,9 +45,9 @@
         <div class="bank-card-item" @click="bankCardModal('bank')">
           <img width="24" height="24" class="fill-424f72" src="../../assets/home/links-line.svg" />
           <span class="lock-card-txt">
-            添加银行卡
-            <template v-if="alipayAvailable">/ 支付宝</template>
-            &nbsp;/ 电子钱包 / 虚拟币
+            {{ $t('form.addWithdrawCryptoAccount') }}
+            <!-- <template v-if="alipayAvailable">/ 支付宝</template>
+            &nbsp;/ 电子钱包 / 虚拟币 -->
           </span>
         </div>
       </div>
@@ -123,7 +123,7 @@
         />
       </div>
     </div>
-    <el-dialog class="bankModal" width="600" v-model="bankCardModalState.visible" :footer="null" title="绑定银行卡">
+    <el-dialog class="bankModal" width="600" v-model="bankCardModalState.visible" :footer="null" :title="$t('form.bindWithdrawCryptoAccount')">
       <el-form ref="bankCardFormRef" :model="bankCardInfo" :rules="bankCardRules">
         <el-form-item prop="bankId" :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]">
           <el-row :gutter="20">
@@ -423,10 +423,10 @@ export default defineComponent({
       }
     ]);
     const bankTypes = computed(() => [
-      { value: "Bank", text: "银行卡" },
-      ...(alipayAvailable.value ? [{ value: "alipay", text: "支付宝" }] : []),
+      // { value: "Bank", text: "银行卡" },
+      // ...(alipayAvailable.value ? [{ value: "alipay", text: "支付宝" }] : []),
       { value: "Crypto", text: "数字货币" },
-      { value: "e-Wallet", text: "电子钱包" }
+      // { value: "e-Wallet", text: "电子钱包" }
     ]);
     const personalState = reactive({
       memberInfo: {},
@@ -583,10 +583,10 @@ export default defineComponent({
     const banksList = ref([]);
     const bankCardModal = () => {
       store.getMemberInfo().then(() => {
-        if (!store.realName || store.realName == "") {
-          notify({ type: "error", message: "真实姓名不可为空" });
-          return;
-        } else {
+        // if (!store.realName || store.realName == "") {
+        //   notify({ type: "error", message: "真实姓名不可为空" });
+        //   return;
+        // } else {
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";
           bankCardInfo.cardAccount = store.realName;
@@ -613,7 +613,7 @@ export default defineComponent({
                 console.log("error", e);
               });
           }
-        }
+        // }
       });
     };
 
@@ -634,7 +634,7 @@ export default defineComponent({
       }
     };
 
-    const selectedBankType = ref("Bank");
+    const selectedBankType = ref("Crypto");
     const selectBankType = () => {
       banksList.value = [];
       bankCardInfo.bankId = null;
@@ -778,7 +778,7 @@ export default defineComponent({
       }
     };
     const submitBankCard = () => {
-      console.log(bankCardInfo);
+      bankCardInfo.cardAccount = store.nickName;
       bankCardFormRef.value
         .validate()
         .then(() => {

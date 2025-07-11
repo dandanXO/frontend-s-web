@@ -295,13 +295,14 @@ onMounted(() => {});
               position: relative;
 
               .circle {
-                width: 7.5rem;
+                width: 130px;
               }
 
               .icon {
                 height: 40px;
                 width: 40px;
                 position: absolute;
+                margin-left: 10px;
               }
             }
           }
