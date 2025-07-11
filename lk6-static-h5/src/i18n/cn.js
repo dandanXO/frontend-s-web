@@ -73,12 +73,12 @@ export default {
     betNow: "立即投注",
     close: "关闭",
     search: "搜寻",
-    deposit: "存款",
     withdraw: "提款",
     transfer: "转账",
     save: "保存",
     login: "登录",
     register: "注册",
+    registernow: "立即注册",
     toConfirm: "前往确认",
     bind: "绑定",
     unbind: "解绑",
@@ -645,6 +645,8 @@ export default {
     }
   },
   login: {
+    alreadyGotAcc: "我已有账号，",
+    loginnow: "立即登录",
     userNameLogin: "用户名登录",
     phoneLogin: "手机号码登录",
     forgotPassword: "忘记密码？",

@@ -193,11 +193,11 @@
                   </span>
                 </div> -->
 
-                <router-link class="txt-tip align-right" style="margin-left: auto" to="/forgot-account">
+                <router-link class="txt-tip align-right text-gray-a1" style="margin-left: auto" to="/forgot-account">
                   <span>{{ $t("login.forgotPassword") }}</span>
                 </router-link>
 
-                <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
+                <div class="mui-row text-gray-a1" :class="isCheckRmb ? 'checked' : ''">
                   <q-checkbox
                     v-model="isCheckRmb"
                     :label="$t('login.rememberPassword')"
@@ -228,7 +228,7 @@
               size="16px"
               flat
             />
-            
+
           </q-form>
           <div id="captcha-box" />
         </q-tab-panel>
@@ -976,6 +976,7 @@ export default defineComponent({
       background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
       border: 1px solid #ffffff;
       border-radius: 30px;
+      height: 48px;
       font-weight: 600;
       color: white;
     }
@@ -986,6 +987,7 @@ export default defineComponent({
       background: linear-gradient(180deg, #f4f7fb 0%, #c5dcf8 100%);
       border-radius: 30px;
       font-weight: 600;
+      height: 48px;
       color: #424f72;
     }
   }
@@ -1061,10 +1063,10 @@ export default defineComponent({
       justify-content: center;
       gap: 10px;
       font-size: 13px;
-      color: #666;
+      color: #7A80A1;
 
       &.checked {
-        color: #0089ed;
+        color: #7A80A1;
       }
 
       &:active {
@@ -1077,7 +1079,7 @@ export default defineComponent({
     a:active,
     a:hover {
       text-decoration: none;
-      color: #0089ed;
+      color: #7A80A1;
     }
   }
 
@@ -1138,6 +1140,23 @@ export default defineComponent({
 
 .q-toolbar {
   background: transparent;
+}
+
+:deep(.q-field--standout .q-field__control){
+  border: 1px solid #ECEDF0;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px 0px #86B8FF inset;
+  background: #fff;
+  box-shadow: 0px 2px 0px 0px #9AB0FF70;
+
+}
+
+:deep(.q-field--standout.q-field--highlighted .q-field__native){
+  color: #000;
+}
+
+.text-gray-a1{
+  color: #7A80A1;
 }
 
 #captchaContainer {
