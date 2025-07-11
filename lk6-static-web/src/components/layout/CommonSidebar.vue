@@ -23,7 +23,7 @@
       class="sticky-sidebar-items"
       :class="stickyHovered && 'sticky-hovered'"
       @mouseover="stickyHovered = true"
-      @mouseleave="stickyHovered = false"
+      @mouseleave="closeStickySidebar"
     >
       <!-- <div class="sticky-sidebar-item" @click="handleDarkModeClick">
         <img v-if="isDark" src="@/assets/images/home/sticky-sidebar/light-mode-icon.svg" />
@@ -160,6 +160,7 @@ import { ElMessageBox } from "element-plus";
 import moment from "moment";
 
 import { storeToRefs } from "pinia";
+import { setTimeout } from "core-js";
 export default defineComponent({
   components: {
     GameModal
@@ -186,6 +187,12 @@ export default defineComponent({
         gameMenu.value.open(gameName, platType, gameCode, scrollingState);
       }
     };
+
+    const closeStickySidebar = () => {
+      setTimeout(() => {
+        stickyHovered.value = false;
+      }, 2000);
+    }
 
     const downloadUrl = ref("");
     const getAppDownloadUrl = () => {
@@ -452,7 +459,8 @@ export default defineComponent({
       isDragging,
       goToLiveChatPromo,
       ElMessageBox,
-      memberType
+      memberType,
+      closeStickySidebar
     };
   }
 });
