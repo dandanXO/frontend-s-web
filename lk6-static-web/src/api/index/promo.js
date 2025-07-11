@@ -334,7 +334,7 @@ export function claimSummon(promoCode) {
 }
 
 export function loadAffiliateByDomain(host) {
-  return server.REST.get(`/app/getAffiliateCode?siteCode=lh1&domain=${host}`);
+  return server.REST.get(`/app/getAffiliateCode?siteCode=lk6&domain=${host}`);
 }
 
 export function getSummonRewardRecord(page) {
