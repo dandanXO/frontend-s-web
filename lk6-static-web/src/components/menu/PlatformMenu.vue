@@ -20,14 +20,19 @@
                 </p>
                 <p class="small-size">请先前往其他场馆娱乐</p>
               </div>
-
-              <div class="platform-menu-title" v-html="item.cnname" />
-              <div class="platform-menu-caption" v-if="item.caption" v-html="item.caption" />
+              
+              <div class="platform-menu-title">
+                {{ getAliasName(item, platformType) }}
+              </div>
+              <template v-if="item.caption">
+                <div v-if="languageVal === 'en'" class="platform-menu-caption" v-html="item?.enCaption" />
+                <div v-else class="platform-menu-caption" v-html="item.caption" />
+              </template>
               <div class="platform-menu-img">
                 <img :src="renderPlatformMenuImg(item)" />
               </div>
 
-              <div class="standard-button btn-color-blue platform-menu-btn"><a>进入场馆</a></div>
+              <div class="standard-button btn-color-blue platform-menu-btn"><a>{{ $t('btn.enterDojo') }}</a></div>
             </div>
             <!--      </router-link>-->
           </template>
@@ -43,6 +48,8 @@ import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import moment from "moment";
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps({
   platforms: Array,
@@ -56,7 +63,8 @@ const store = userStore();
 const platformsList = ref([]);
 const numberToShow = ref(5);
 const platformsListDisplay = ref([]);
-
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 const getChunk = (list, size) =>
   [...Array(Math.ceil(list.length / size))].map((_, i) => list.slice(i * size, i * size + size));
 
@@ -112,12 +120,15 @@ const getPlatformList = () => {
 
     if (props.isBacarrat) {
       const bacarratPlatforms = [{
+        enname: "Bacarrat",
         cnname: "百家乐",
         code: "bacarrat",
       }, {
+        enname: "Roulette",
         cnname: "轮盘",
         code: "roulette",
       }, {
+        enname: "Lucky Lace",
         cnname: "幸运蕾丝",
         code: "lucky-lace",
       }];
@@ -151,16 +162,15 @@ const gotoGame = (item, platformType) => {
 
 const getAliasName = (plat, platformType) => {
   if (plat.alias) {
-    // console.log(plat);
     if (plat.alias.includes("、")) {
       const aliass = plat.alias.split("、");
       const gameTypes = plat.gameType.split(",");
       const itemIndex = gameTypes.indexOf(platformType.toUpperCase());
       return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
     }
-    return plat.alias;
+    return plat.alias.includes('|') ? plat.alias.split('|')[languageVal.value === 'en' ? 1 : 0] : plat.alias;
   } else {
-    return plat.cnname;
+    return languageVal.value === 'en' ? (plat?.enname ?? plat?.name) : (plat?.cnname || '');
   }
 };
 

@@ -444,10 +444,9 @@ const getAliasName = (plat, platformType) => {
       const itemIndex = gameTypes.indexOf(platformType.toUpperCase());
       return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
     }
-    return plat.alias;
+    return plat.alias.includes('|') ? plat.alias.split('|')[languageVal.value === 'en' ? 1 : 0] : plat.alias;
   } else {
-    console.log('here', plat)
-    return languageVal, languageVal.value === 'en' ? (plat.enname ?? plat.name) : plat.cnname;
+    return languageVal.value === 'en' ? (plat?.enname ?? plat?.name) : (plat?.cnname || '');
   }
 };
 
