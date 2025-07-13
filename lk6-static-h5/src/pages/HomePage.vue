@@ -118,8 +118,8 @@
               />
             </div>
           </marquee-text>
-          <img v-if="languageVal === 'zh'" src="../assets/index/home-hot-match-icon-zh.png" width="62px" />
-          <img v-else-if="languageVal === 'en'" src="../assets/index/home-hot-match-icon-en.png" width="62px" />
+          <!-- <img v-if="languageVal === 'zh'" src="../assets/index/home-hot-match-icon-zh.png" width="62px" />
+          <img v-else-if="languageVal === 'en'" src="../assets/index/home-hot-match-icon-en.png" width="62px" /> -->
         </div>
       </div>
 
@@ -156,11 +156,11 @@
 
           <div class="row justify-end home-quick-link-section">
             <router-link class="text-center cash-button" :unelevated="true" to="/finance/deposit?redirect=home">
-              <img src="../assets/index/home-deposit-icon.svg" alt="" width="100%" />
+              <img src="../assets/index/home-deposit-icon.png" alt="" width="100%" />
               <p>{{ $t("btn.deposit") }}</p>
             </router-link>
             <router-link class="text-center cash-button" :unelevated="true" to="/finance/withdraw?redirect=home">
-              <img src="../assets/index/home-withdrawal-icon.svg" alt="" width="100%" />
+              <img src="../assets/index/home-withdrawal-icon.png" alt="" width="100%" />
               <p>{{ $t("btn.withdraw") }}</p>
             </router-link>
             <!-- <router-link class="text-center cash-button" :unelevated="true" to="/account/transfer?redirect=home">

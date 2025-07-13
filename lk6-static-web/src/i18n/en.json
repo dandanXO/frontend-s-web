@@ -3,7 +3,12 @@
     "login": "Login",
     "register": "Register",
     "en": "English",
-    "enterGame": "Enter Game"
+    "enterGame": "Enter Game",
+    "enterDojo": "Enter Dojo",
+    "search": "Search",
+    "edit": "Edit",
+    "submit": "Submit",
+    "bind": "Bind"
   },
   "form": {
     "realName": "Real Name",
@@ -39,7 +44,23 @@
     "onlyNumbersAllowed": "Only numbers are allowed",
     "smsOtp": "SMS OTP",
     "email": "E-mail",
-    "emailRule01": "Invalid email address"
+    "emailRule01": "Invalid email address",
+    "contactSupportForgetPassword": "Please contact support to retrieve password",
+    "contactSupport": "Contact Support",
+    "withdrawCryptoAccount": "Withdraw Crypto Account",
+    "addWithdrawCryptoAccount": "Add Crypto Account",
+    "bindWithdrawCryptoAccount": "Bind Crypto Account",
+    "enterSearchGameName": "Enter game name for search",
+    "accountBalance": "Account Balance",
+    "unlinkBankCardRecord": "Unlink Bank Card Record",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "bankName": "Crypto Acc",
+    "cardNumber": "Acc No.",
+    "cardAddress": "Address",
+    "bindTime": "Bind Time",
+    "unbindTime": "Unbind Time",
+    "gender": "Gender"
   },
   "menu": {
     "promotion": "Promo",
@@ -63,7 +84,12 @@
     "welcome": "Welcome",
     "personalInfo": "Personal Info",
     "depositCentre": "Deposit Centre",
-    "promoClaim": "Promo Claim"
+    "promoClaim": "Promo Claim",
+    "notification": "Notification",
+    "match": "Match",
+    "event": "Event",
+    "announcement": "Announcement",
+    "transaction": "Deposit/Withdrawal"
   },
   "download": {
     "title": "Comprehensive client download",
@@ -174,7 +200,7 @@
     },
   "tianaiCaptcha": {
     "tipsError": "Verification failed, please try again!",
-    "tipsSuccess": "Verification succeeded, took {s} seconds",
+    "tipsSuccess": "Verification succeeded, took %s seconds",
     "sliderTitle": "Drag the slider to complete the puzzle",
     "concatTitle": "Drag the slider to complete the puzzle",
     "imageClickTitle": "Please click the images in the correct order",

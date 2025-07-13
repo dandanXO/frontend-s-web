@@ -645,11 +645,12 @@ export default {
     }
   },
   login: {
-    alreadygotAcc: "I Already have account,",
+    alreadyGotAcc: "I Already have account,",
     loginnow: "Login Now",
     userNameLogin: "Username Login",
     phoneLogin: "Phone Login",
     forgotPassword: "Forgot password?",
+    forgotPasswordTip: "Please contact support to recover your password {0}",
     rememberPassword: "Remember me",
     cs: "Contact Support",
     loggingIn: "Logging in...",
@@ -899,7 +900,7 @@ export default {
   },
   tianaiCaptcha: {
     tipsError: "Verification failed, please try again!",
-    tipsSuccess: "Verification succeeded, took {s} seconds",
+    tipsSuccess: "Verification succeeded, took %s seconds",
     sliderTitle: "Drag the slider to complete the puzzle",
     concatTitle: "Drag the slider to complete the puzzle",
     imageClickTitle: "Please click the images in the correct order",
@@ -997,6 +998,7 @@ export default {
     15011: "Cannot select date before 2024-07-10",
     15201: "Incorrect old code",
     15202: "The new password cannot be the same as the old password",
+    17000: "Invalid image format",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",

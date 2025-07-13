@@ -512,13 +512,15 @@
 
     .plat-options-wrapper {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
+      margin-right: 230px;
+      margin-left: 20px;
     }
 
     .plat-options-container {
       display: flex;
       gap: 5px;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       padding: 0.5rem 0.5rem;
       border-radius: 3rem;

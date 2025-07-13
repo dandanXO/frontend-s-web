@@ -191,7 +191,7 @@
       class="acc-dialog"
       v-model="loginDialogVisible"
       align-center
-      style="max-width: 1088px"
+      style="width: 900px;height: 500px;"
       @close="store.loginPageVisible = false"
     >
       <div class="acc-dialog-container">
@@ -218,7 +218,7 @@
       class="acc-dialog"
       v-model="registerDialogVisible"
       align-center
-      style="max-width: 1200px"
+      style="width: 900px;height: 500px;"
       @close="store.regPageVisible = false"
     >
       <div class="acc-dialog-container">
@@ -242,7 +242,7 @@
       title="验证码"
       width="50%"
       align-center
-      style="max-width: 500px"
+      style="max-width: 900px;height: 500px;"
       :close-on-click-modal="false"
       @keydown.enter.prevent
     >
@@ -2285,18 +2285,18 @@ body {
         display: flex;
         border-radius: 16px;
         overflow: hidden;
+        height: 500px;
       }
 
       .acc-dialog-left {
-        width: calc(100% - 450px);
+        width: 400px;
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
         overflow: hidden;
 
         .acc-dialog-img {
-          max-width: 963px;
-          max-height: 896px;
+          width: 100%;
           height: 100%;
 
           img {
@@ -2308,7 +2308,7 @@ body {
       }
 
       .acc-dialog-right {
-        width: 550px;
+        width: 500px;
         padding: 24px 24px 24px 24px;
         background-color: #F7F9FC;
 

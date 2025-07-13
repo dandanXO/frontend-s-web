@@ -2,8 +2,7 @@ import { server } from "@/utils/request";
 import { getDevice, getMobileOS } from "@/utils/utils";
 import cached from "@/utils/cache";
 import { userStore } from "@/store";
-
-
+import { i18nStore } from '@/store/language'
 
 export function getPlatformList() {
   return cached.get("PLATFORMS", () => server.REST.get("/platform"));
@@ -28,6 +27,7 @@ export function getPlatformGames(code, gameType) {
   if (getDevice() === "MOBILE") {
     way = getMobileOS();
   }
+  
   const key = `PLATFORM_GAMES_${code}_${gameType}_${regDevice}`;
   const apiUrl = store.hasToken() ? '/session/loggedInPlatformGames': '/platformGames'
 
@@ -48,8 +48,11 @@ export function launchSessionGame(platform, { gameCode = null, isMobile = false 
   if (getDevice() === "MOBILE") {
     way = getMobileOS();
   }
+  const i18nStoreLanguage = i18nStore()
+  const languageVal = i18nStoreLanguage.languageVal
+
   return server.REST.get(`/session/launch?_time=${new Date().getTime()}`, {
-    params: { platform, gameCode, isMobile, way }
+    params: { platform, gameCode, isMobile, way, language: languageVal === 'en' ? 'en' : languageVal === 'zh' ? 'cn' : undefined }
   });
 }
 

@@ -59,7 +59,7 @@ const goToMailDetail = (mail) => {
   color: black;
   margin-bottom: 10px;
   height: 80px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .announcement-content {

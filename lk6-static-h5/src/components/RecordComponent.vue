@@ -297,10 +297,9 @@ export default defineComponent({
       // console.log("onLoad");
       // console.log(comList.value);
       setTimeout(() => {
-        truncatedList.value = [];
         if (!props.isEnded || comList.value.length > 0) {
           if (comList.value.length) {
-            var slicedArray = comList.value;
+            const slicedArray = comList.value.splice(0, 6);
             slicedArray.forEach((element) => {
               truncatedList.value.push(element);
             });
@@ -450,7 +449,7 @@ export default defineComponent({
     };
 
     const getImageLink = (linkId) => {
-      reminderForm.photos = `/${linkId}`;
+      reminderForm.photos = linkId;
     };
 
     const submitReminder = () => {
@@ -460,7 +459,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "bottom",
-          message: t("common.uploadFileRequired.message"),
+          message: t("common.notification.uploadFileRequired.message"),
           icon: "report_problem"
         });
         return;

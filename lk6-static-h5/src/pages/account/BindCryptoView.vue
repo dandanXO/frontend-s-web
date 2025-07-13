@@ -244,7 +244,7 @@ const phoneVerificationRef = ref();
 const bankCardInfo = reactive({
   bankId: undefined,
   cardNumber: "",
-  cardAccount: store.realName,
+  cardAccount: store.nickName,
   cardAddress: "",
   telephone: store.phone,
   smsCode: "",
@@ -347,38 +347,38 @@ const onCaptchaSubmit = () => {
 
 const bankList = ref([]);
 const loadBankCards = () => {
-  store.getMemberInfo().then(() => {
-    if (!store.realName) {
-      notify({
-        type: "error",
-        message: "请输入您的真实姓名"
-      });
-      router.push("/account/personal");
-      // } else if (!store.phone) {
-      //   notify({
-      //     type: "error",
-      //     message: "请输入您的电话号码"
-      //   });
-      //   router.push("/account/verifyTelephone");
-    } else {
-      api
-        .get("/session/withdraw/card")
-        .then((res) => {
-          if (res.code === 0) {
-            for (let i = 0, l = res.data.length; i < l; i++) {
-              const data = res.data[i];
-              const { bankType } = data;
-              if (bankType === "CRYPTO") bankList.value.push(data);
-            }
+  // store.getMemberInfo().then(() => {
+  //   if (!store.realName) {
+  //     notify({
+  //       type: "error",
+  //       message: "请输入您的真实姓名"
+  //     });
+  //     router.push("/account/personal");
+  //     // } else if (!store.phone) {
+  //     //   notify({
+  //     //     type: "error",
+  //     //     message: "请输入您的电话号码"
+  //     //   });
+  //     //   router.push("/account/verifyTelephone");
+  //   } else {
+  //   }
+  // });
+  api
+    .get("/session/withdraw/card")
+    .then((res) => {
+      if (res.code === 0) {
+        for (let i = 0, l = res.data.length; i < l; i++) {
+          const data = res.data[i];
+          const { bankType } = data;
+          if (bankType === "CRYPTO") bankList.value.push(data);
+        }
 
-            bankCardInfo.bankId = bankList.value[0].id;
-          }
-        })
-        .catch((e) => {
-          console.log("error", e);
-        });
-    }
-  });
+        bankCardInfo.bankId = bankList.value[0].id;
+      }
+    })
+    .catch((e) => {
+      console.log("error", e);
+    });
 };
 
 const submitBankCard = () => {

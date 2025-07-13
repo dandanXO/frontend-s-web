@@ -1771,13 +1771,13 @@ function importToTable(file) {
             for (let i = 0; i < data.length; i += 50) {
               const sublist = data.slice(i, i + 50)
               const chunk = sublist.map(d => d.loginName).join(',')
-              
+
                 const { data: result} = await findIdByLoginNames(
                   chunk,
                   importForm.siteId
                 )
                 for (let j = i; j < i + sublist.length; j++) {
-                  data[j].memberId = result[data[j].loginName]
+                  data[j].memberId = result[data[j].loginName.toString().toLowerCase()]
                   uiControl.progress = Math.round(
                     ((j + 1) / data.length) * 100
                   )

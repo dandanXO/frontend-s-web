@@ -100,7 +100,7 @@
           </div>
 
           <div class="search-container">
-            <el-input class="search-input" v-model="gamePage.searchKey" @input="searchList()" placeholder="输入查找游戏名"
+            <el-input class="search-input" v-model="gamePage.searchKey" @input="searchList()" :placeholder="$t('form.enterSearchGameName')"
               clearable @clear="searchList()">
               <template #suffix>
                 <el-icon :width="15" @click="searchList()">
@@ -127,7 +127,7 @@
 
         <div class="plat-games-container">
           <div class="game-list-wrapper">
-            <div class="game-slot animate__animated animate__fadeInRight" v-for="game in gamePage.gameList"
+            <div class="game-slot animate__animated animate__fadeInRight" :class="{en: languageVal === 'en'}" v-for="game in gamePage.gameList"
               :key="game.id">
               <a @click="openGame(getAliasName(game, platformType), selectedPlat, game.code)">
                 <div class="slot-img">
@@ -444,10 +444,9 @@ const getAliasName = (plat, platformType) => {
       const itemIndex = gameTypes.indexOf(platformType.toUpperCase());
       return itemIndex && aliass[itemIndex] ? aliass[itemIndex] : aliass[0];
     }
-    return plat.alias;
+    return plat.alias.includes('|') ? plat.alias.split('|')[languageVal.value === 'en' ? 1 : 0] : plat.alias;
   } else {
-    console.log('here', plat)
-    return languageVal, languageVal.value === 'en' ? (plat.enname ?? plat.name) : plat.cnname;
+    return languageVal.value === 'en' ? (plat?.enname ?? plat?.name) : (plat?.cnname || '');
   }
 };
 

@@ -609,7 +609,7 @@ function importToTable(file) {
             importForm.siteId
           )
           for (let j = i; j < i + sublist.length; j++) {
-            data[j].memberId = result[data[j].loginName]
+            data[j].memberId = result[data[j].loginName.toString().toLowerCase()]
             uiControl.progress = Math.round(
               ((j + 1) / data.length) * 100
             )
