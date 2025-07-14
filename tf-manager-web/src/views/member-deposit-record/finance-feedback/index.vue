@@ -374,7 +374,8 @@ import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n()
 const startDate = new Date()
-startDate.setDate(startDate.getDate() - 3)
+// startDate.setDate(startDate.getDate() - 3)
+startDate.setDate(startDate.getDate())
 const defaultStartDate = convertDateToStart(startDate)
 const defaultEndDate = convertDateToEnd(new Date())
 
