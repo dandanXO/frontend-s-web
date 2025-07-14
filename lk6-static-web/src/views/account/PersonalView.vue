@@ -78,7 +78,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="info-tbl-col">
+                <div class="info-tbl-col" style="display:none;">
                   <div class="tbl-row">
                     <div class="basic-info-cell title">{{ $t('personal.phone') }}：</div>
                     <div v-if="personalState.memberInfo.telephone" class="basic-info-cell content">
