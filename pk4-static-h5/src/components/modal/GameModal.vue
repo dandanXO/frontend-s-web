@@ -498,7 +498,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
             }
 
             const script = document.createElement("script");
-            script.src = "https://ui.invisiblesport.com/bt-renderer.min.js";
+            script.src = "https://pk1.sptpub.com/bt-renderer.min.js";
             script.id= "btrenderer-script"
             script.async = true;
 
@@ -511,7 +511,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
               await nextTick();
 
               betbyInstance.value = new BTRenderer().initialize({
-                brand_id: "2547441365755760643",
+                brand_id: "2556215528716906501",
                 token: srcDoc,
                 themeName: "default",
                 lang: langVal.value,
