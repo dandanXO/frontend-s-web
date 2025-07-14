@@ -129,10 +129,10 @@
     </div>
     <el-dialog class="bankModal" width="600" v-model="bankCardModalState.visible" :footer="null" :title="$t('form.bindWithdrawCryptoAccount')">
       <el-form ref="bankCardFormRef" :model="bankCardInfo" :rules="bankCardRules">
-        <el-form-item prop="bankId" :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]">
+        <el-form-item prop="bankId" :rules="[{ required: true, message: $t('form.selectField', {field: $t('form.crypto')}), trigger: 'blur' }]">
           <el-row :gutter="20">
             <el-col :span="6">
-              <el-select placeholder="类型" v-model="selectedBankType" style="width: 100%" @change="selectBankType">
+              <el-select :placeholder="$t('form.type')" v-model="selectedBankType" style="width: 100%" @change="selectBankType">
                 <template v-for="bank in bankTypes">
                   <el-option :key="bank.value" :value="bank.value" :label="bank.text" v-if="bank.value === 'Crypto'">
                     {{ bank.text }}
@@ -297,7 +297,7 @@ export default defineComponent({
         }
       } else if (selectedBankType.value === "Crypto") {
         if (v === "") {
-          return Promise.reject("请输入虚拟钱包账号");
+          return Promise.reject(t('form.pleaseEnterField', {field: t('form.cardAddress')}));
         } else if (/^[A-Za-z0-9]*$/.test(v) === false) {
           return Promise.reject("虚拟钱包账号只能包含数字及英文字母");
         } else {

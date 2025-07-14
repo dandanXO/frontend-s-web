@@ -7,6 +7,7 @@ import { GLOBAL_NOTIFICATION_ERROR_CODE, ResponseCode, SkipErrorCode } from "@/a
 import { uiStore } from "@/store/ui";
 import { useRouter } from "vue-router";
 import { globalLinks, globalAndCNLinks } from "@/configs/domain";
+import i18n from "../i18n";
 
 const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
@@ -232,6 +233,7 @@ const onResponse = (response) => {
       // ElMessage.error(res.message);
     }
     // throw new Error(res.message || "Error");
+    res.message = i18n.global.t('error.' + res.code) || res.message
     return res;
   } else {
     return response.data;

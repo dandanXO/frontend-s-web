@@ -18,7 +18,12 @@
     "verify": "验证",
     "goComplete": "去完成",
     "back": "返回",
-    "refresh": "刷新"
+    "refresh": "刷新",
+    "delete": "删除",
+    "read": "读取",
+    "deleteAll": "全部删除",
+    "readAll": "全部已读",
+    "selectMany": "选择多个"
   },
   "message": {
     "loginFirstAction": "请登录后再操作",
@@ -127,7 +132,11 @@
     "statusIsTransferIn": "转进",
     "statusIsVipRebate": "VIP 返水",
     "noData": "没有数据",
-    "anyType": "任意类型"
+    "anyType": "任意类型",
+    "type": "类型",
+    "emailMismatch": "邮箱地址不符合",
+    "fullContent": "正文",
+    "noRecordsYet": "暂无记录"
   },
   "table": {
     "gameBetRecord": {

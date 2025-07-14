@@ -188,7 +188,9 @@ import { useRouter, useRoute } from "vue-router";
 // import { InfoFilled } from "@element-plus/icons-vue";
 import { doIt } from "@/utils/action";
 import { useNotify } from "@/hooks/notify";
+import { useI18n } from "vue-i18n";
 
+const {t} = useI18n();
 const router = useRouter();
 const route = useRoute();
 const loadingBtn = ref(false);
@@ -269,7 +271,7 @@ const rules = {
   localAmount: [
     {
       required: true,
-      message: "请输入金额",
+      message: t('form.pleaseEnterField', {field: t('form.amount')}),
       trigger: "blur"
     },
     {

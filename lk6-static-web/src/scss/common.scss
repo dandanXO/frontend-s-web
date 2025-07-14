@@ -140,9 +140,10 @@ body {
     align-items: center;
     &__label {
       color: #000000;
-      line-height: 16px;
+      line-height: 16px !important;
       white-space: pre-wrap;
       overflow-wrap: break-word;
+      height: 100% !important;
     }
     &.is-error {
       margin-bottom: 30px !important;

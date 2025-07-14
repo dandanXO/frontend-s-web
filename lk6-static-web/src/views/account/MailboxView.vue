@@ -29,24 +29,24 @@
                 <div class="left">
                   <div v-if="isShowSelect" class="mail-action" @click="deleteMultipleMsg()">
                     <div><img src="../../assets/images/account/icon-maildelete.png" /></div>
-                    删除
+                    {{ $t('btn.delete') }}
                   </div>
                   <div v-if="isShowSelect" class="mail-action" @click="readMultipleMsg()">
                     <div><img src="../../assets/images/account/icon-mailopen.png" /></div>
-                    读取
+                    {{ $t('btn.read') }}
                   </div>
                 </div>
                 <div class="right">
                   <div class="mail-action" @click="deleteAllMsg(item.type)">
                     <div><img src="../../assets/images/account/icon-maildelete.png" /></div>
-                    全部删除
+                    {{ $t('btn.deleteAll') }}
                   </div>
                   <div class="mail-action" @click="readAllMsg(item.type)">
                     <div><img src="../../assets/images/account/icon-mailopen.png" /></div>
-                    全部已读
+                    {{ $t('btn.readAll') }}
                   </div>
 
-                  <el-switch v-model="isShowSelect" inline-prompt active-text="选择多个" inactive-text="选择多个" />
+                  <el-switch v-model="isShowSelect" inline-prompt :active-text="$t('btn.selectMany')" :inactive-text="$t('btn.selectMany')" />
                 </div>
               </div>
               <el-collapse v-model="activeNames" @change="handleChange">
@@ -83,7 +83,7 @@
                   </template>
                   <div>
                     <div>
-                      正文：
+                      {{$t('form.fullContent')}}：
                       <div v-html="item.content.replace(/\n/g, '<br/>')"></div>
                     </div>
                   </div>
@@ -104,7 +104,7 @@
                 class="no-record-text"
                 style="display: flex; justify-content: center; align-items: center; height: 300px"
               >
-                暂无记录
+                {{ $t('form.noRecordsYet') }}
               </div>
             </template>
           </el-tab-pane>
