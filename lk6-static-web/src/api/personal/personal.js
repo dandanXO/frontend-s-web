@@ -34,7 +34,7 @@ const recordUrl = {
   withdraw: "/session/member/withdraw",
   rebates: "/session/member/privilege",
   betRecord: "/session/member/betRecord",
-  gameBetRecord: "/session/member/gameBetRecordWithType"
+  gameBetRecord: "/session/member/cassandraBetRecord"
 };
 
 export function loadRecords(type, p) {

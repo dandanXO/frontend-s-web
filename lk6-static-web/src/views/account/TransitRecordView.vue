@@ -400,8 +400,8 @@
         <el-tab-pane name="gameBetRecord" label="投注记录">
           <div class="payout-total">
             <div>总投注：{{ totalBetRecord.totalBet }}</div>
-            <div>总派彩：{{ totalBetRecord.totalPayout }}</div>
-            <div>总有效投注：{{ totalBetRecord.totalValidBet }}</div>
+            <!-- <div>总派彩：{{ totalBetRecord.totalPayout }}</div> -->
+            <!-- <div>总有效投注：{{ totalBetRecord.totalValidBet }}</div> -->
           </div>
           <div>
             <el-form layout="inline" :model="searchForm.gameBetRecord">
@@ -1096,9 +1096,9 @@ export default defineComponent({
             }
 
             if (recordActive.value === "gameBetRecord") {
-              totalBetRecord.totalBet = response.data.sums.totalBet;
-              totalBetRecord.totalPayout = response.data.sums.totalPayout;
-              totalBetRecord.totalValidBet= response.data.sums.totalValidBet;
+              totalBetRecord.totalBet = response.data.total;
+              // totalBetRecord.totalPayout = response.data.sums.totalPayout;
+              // totalBetRecord.totalValidBet= response.data.sums.totalValidBet;
             }
 
             const dataSource = dataState[recordActive.value];
