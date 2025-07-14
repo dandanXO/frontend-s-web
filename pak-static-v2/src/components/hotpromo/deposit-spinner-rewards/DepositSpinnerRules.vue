@@ -3,18 +3,21 @@
         <img style="margin-top:1rem;margin-left:1rem; margin-bottom:0.3rem;" src="./img/back-button.png" alt="">
     </div>
     <div class="rules-container">
-        
+
 
         <div class="rule-title">
             {{ $t('hotPromo.depositSpinWheel.activityRules')}}
         </div>
-        <ul>
+        <!-- tnc start -->
+        <div v-html="pageContent" />
+        <!-- <ul>
             <li>{{ $t('hotPromo.depositSpinWheel.rule_01')}}</li>
             <li>{{ $t('hotPromo.depositSpinWheel.rule_02')}}</li>
             <li>{{ $t('hotPromo.depositSpinWheel.rule_03')}}</li>
             <li>{{ $t('hotPromo.depositSpinWheel.rule_04')}}</li>
             <li>{{ $t('hotPromo.depositSpinWheel.rule_05')}}</li>
-        </ul>
+        </ul> -->
+        <!-- tnc end -->
         <div class="badges">
             <div class="badge" :key="index" v-for="(badge,index) in badgesList">
                 <img :src="require(`./img/spin-${index+1}.png`)">
@@ -25,7 +28,8 @@
 </template>
 <script setup>
     import { useRouter } from "vue-router";
-    import { ref } from "vue";
+    import { ref, onMounted } from "vue";
+    import { api } from "src/boot/axios";
     import { useI18n } from "vue-i18n";
 
     const router = useRouter();
@@ -44,6 +48,26 @@
             title: t('hotPromo.depositSpinWheel.supreme')
         }
     ])
+
+    const pageContent = ref();
+    const getPromoTnc = () => {
+      api
+        .get(`/opt-session/promo/page`)
+        .then((res) => {
+          if (res.code === 0) {
+            const promoItem = res.data.find((item) => item.promoCode === "pk2-deposit-wheel");
+            pageContent.value = promoItem.pageContent;
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    };
+
+    onMounted(() => {
+      getPromoTnc();
+    });
+
 </script>
 <style lang="scss">
     .rules-container {
@@ -55,9 +79,9 @@
         .rule-title {
             display: flex;
             justify-content: center;
-            
+
             background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
-            
+
             -webkit-background-clip: text;   /* 限定背景僅出現在文字區域（適用於 Chrome/Safari） */
             background-clip: text;           /* 部分瀏覽器可支援 */
             -webkit-text-fill-color: transparent;  /* 使文字本身透明，讓背景顯示出來 */
@@ -87,7 +111,7 @@
             margin: 25px auto;
         }
         .badges {
-            display: flex; 
+            display: flex;
             gap: 5px;
             width: 95%;
             margin: 10px auto;
@@ -102,7 +126,7 @@
                 justify-content: center;
                 align-items: center;
                 flex: 1;
-                
+
                 img {
                     width: 70%;
                     margin: 0 auto;
