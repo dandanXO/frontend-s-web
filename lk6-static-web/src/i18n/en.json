@@ -9,13 +9,25 @@
     "edit": "Edit",
     "submit": "Submit",
     "bind": "Bind",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "copy": "Copy",
+    "followUp": "Follow-up",
+    "cancel": "Cancel",
+    "confirmPayment": "Confirm Payment",
+    "logout": "Logout"
   },
   "message": {
     "loginFirstAction": "Please log in before proceeding",
-    "systemPrompt": "System Prompt"
+    "systemPrompt": "System Prompt",
+    "copied": "Copied",
+    "noAnnouncementYet": "No announcement yet",
+    "success": "Success",
+    "submitSuccessfully": "Submit Successfully"
   },
   "form": {
+    "remark": "Remark",
+    "selectImage": "Select image",
+    "followUp": "Follow-up",
     "realName": "Real Name",
     "username": "Username",
     "password": "Password",
@@ -65,7 +77,91 @@
     "cardAddress": "Address",
     "bindTime": "Bind Time",
     "unbindTime": "Unbind Time",
-    "gender": "Gender"
+    "gender": "Gender",
+    "fail": "Fail",
+    "totalBet": "Total Bet",
+    "platforms": "Platforms",
+    "allPlatforms": "All Platforms",
+    "doNotRemindAgainToday": "Dismiss for today",
+    "depositCentreTagline": "Supports small deposits and withdrawals of cryptocurrency USDT, 24-hour security, convenience, instant deposit and withdrawal!",
+    "estimatedReceivables": "Est. Receive",
+    "bank": "Bank",
+    "selectField": "Select {field}",
+    "perDeposit": "Per Deposit",
+    "amount": "Amount",
+    "birthday": "Birthday",
+    "male": "Male",
+    "female": "Female",
+    "crypto": "Crypto"
+  },
+  "table": {
+    "gameBetRecord": {
+      "transactionId": "Transaction ID",
+      "betTime": "Bet Time",
+      "alias": "Alias",
+      "bet": "Bet",
+      "gameType": "Game Type",
+       "betStatus": "Bet Status",
+       "serialNumber": "Serial Number",
+       "payout": "Payout"
+    },
+    "deposit": {
+      "depositAmount": "Deposit Amount",
+      "status": "Status",
+      "paymentType": "Payment Type",
+      "depositDate": "Deposit Date",
+      "operation": "Action",
+      "serialNumber": "Serial Number"
+    },
+    "withdraw": {
+      "withdrawAmount": "Withdraw Amount",
+      "status": "Status",
+      "withdrawDate": "Withdrawal Date",
+      "operation": "Action",
+      "serialNumber": "Serial Number"
+    },
+    "transfer": {
+      "type": "Transfer Type",
+      "alias": "Platform",
+      "amount": "Amount",
+      "status": "Status",
+      "transferDate": "Time",
+      "serialNumber": "Serial Number"
+    },
+    "rebates": {
+      "privilegeName": "Promotion Name",
+      "amount": "Amount",
+      "recordTime": "Record Time",
+      "serialNumber": "Serial Number"
+    },
+    "turnover": {
+      "subType": "Transaction Type",
+      "amount": "Amount",
+      "platformCode": "Platform",
+      "recordTime": "Time",
+      "serialNumber": "Serial Number"
+    },
+    "betRecord": {
+      "betId": "Bet ID",
+      "transactionId": "Transaction ID",
+      "platform": "Platform",
+      "bet": "Bet",
+      "payout": "Payout",
+      "beforeBalance": "Balance Before",
+      "afterBalance": "Balance After",
+      "betStatus": "Bet Status",
+      "gameType": "Game Type",
+      "betTime": "Bet Time",
+      "settleTime": "Settle Time",
+      "result": "Result",
+      "sportBetResult": "Sports Bet Result"
+    },
+    "reminderRecord": {
+      "orderNo": "Order No",
+      "financeRemark": "Finance Feedback",
+      "feedbackTime": "Feedback Time",
+      "type": "Type"
+    }
   },
   "menu": {
     "promotion": "Promo",
@@ -94,7 +190,20 @@
     "match": "Match",
     "event": "Event",
     "announcement": "Announcement",
-    "transaction": "Deposit/Withdrawal"
+    "transaction": "Deposit/Withdrawal",
+    "depositRecords": "Deposit Records",
+    "accountActivityLog": "Account Activity Log",
+    "withdrawRecords": "Withdraw Records",
+    "promoRecords": "Promo Records",
+    "betRecords": "Bet Records",
+    "followUpRecords": "Follow-up Records",
+    "inbox": "Inbox",
+    "supportCentre": "Support",
+    "appDownload": "APP",
+    "backToTop": "Back Top",
+    "officialSupport": "Official Support",
+    "dedicatedSupport": "Dedicated Support",
+    "announcementList": "Announcement List"
   },
   "footer": {
     "paymentMethods": "Payment Methods",

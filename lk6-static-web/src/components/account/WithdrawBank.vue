@@ -273,6 +273,7 @@ import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "WithdrawBankView",
@@ -281,6 +282,7 @@ export default defineComponent({
     InfoFilled
   },
   setup() {
+    const { t } = useI18n();
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
     const notify = useNotify();
@@ -371,7 +373,7 @@ export default defineComponent({
         }
         return "银行卡";
       } else if (type === "CRYPTO") {
-        return "数字货币";
+        return t('form.crypto');
       } else if (type === "EWALLET") {
         return "电子钱包";
       }

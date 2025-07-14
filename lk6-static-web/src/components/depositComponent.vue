@@ -16,7 +16,7 @@
       <div v-if="submitMessage.length > 0 && isDisplay" class="inner-cont">
         <div class="submit-message">
           <div class="linebox">
-            <span>银行名称：</span>
+            <span>{{$t('form.bankName')}}：</span>
             <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
             <button @blur="blurCode" @click="copyMessage('0')" class="common-btn">{{ copybtntxt0 }}</button>
           </div>
@@ -41,7 +41,7 @@
             <button @blur="blurCode" @click="copyMessage('3')" class="common-btn">{{ copybtntxt3 }}</button>
           </div>
           <div class="linebox" v-if="submitMessage[5] && submitMessage[5] !== 'null'">
-            <span>备注：</span>
+            <span>{{$t('form.remark')}}：</span>
             <span class="info" ref="subMsg5">{{ submitMessage[5] }}</span>
             <button @blur="blurCode" @click="copyMessage('5')" class="common-btn">{{ copybtntxt5 }}</button>
           </div>
@@ -58,11 +58,11 @@
           label-suffix=":"
         >
           <el-space>
-            <el-form-item class="helptxt" label="金额" prop="localAmount">
+            <el-form-item class="helptxt" :label="$t('form.amount')" prop="localAmount">
               <el-input
                 v-if="amountList.length === 0"
                 v-model="form.localAmount"
-                :placeholder="isUSDT ? '请输入USDT金额' : '请输入存款金额'"
+                :placeholder="isUSDT ? $t('form.pleaseEnterField', {field: `USDT ${$t('form.amount')}`}) : '请输入存款金额'"
               />
 
               <el-select placeholder="选择存款金额" v-else v-model="form.localAmount">
@@ -72,14 +72,14 @@
               </el-select>
             </el-form-item>
             <div class="account-tip">
-              单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
+              {{$t('form.perDeposit')}}：{{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
               {{ isUSDT ? "USDT" : store.currency.label }} -
               {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
               {{ isUSDT ? "USDT" : store.currency.label }}
             </div>
 
             <div class="btn-confirm">
-              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="standard-button btn-color-blue">确定</el-button>
+              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="standard-button btn-color-blue">{{ $t('btn.confirm') }}</el-button>
             </div>
           </el-space>
 
@@ -87,7 +87,7 @@
             <span style="color: #00A478">1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.label }}</span>
           </el-form-item> -->
 
-          <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="预计到账">
+          <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" :label="$t('form.estimatedReceivables')">
             <span style="color: #00A478">
               {{
                 calculatedMinDeposit && form.localAmount < calculatedMinDeposit
@@ -100,7 +100,7 @@
 
           <el-form-item
             v-show="selectedPayType && bankCardList.length"
-            label="银行"
+            :label="$t('form.bank')"
             prop="bankId"
             name="bankId"
             value="bankName"
@@ -114,11 +114,11 @@
               @selected="selectedBank"
             ></BankComponent>
           </el-form-item>
-          <el-form-item prop="privilegeId" name="privilegeId" v-if="hasPrivilege" label="优惠">
+          <el-form-item prop="privilegeId" name="privilegeId" v-if="hasPrivilege" :label="$t('menu.promotion')">
             <el-select
               v-model="selectedPrivilege"
               class="privilege-select"
-              placeholder="选择优惠"
+              :placeholder="$t('selectField', {field: $t('menu.promotion')})"
               @change="checkMinDepositAmt"
               @focus="loadPrivilege(activeMethod)"
               fit-input-width

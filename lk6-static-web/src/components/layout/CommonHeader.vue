@@ -156,7 +156,7 @@
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
-                  <button class="standard-button profile-info-dropdown-content-item btn-color-white">退出登录</button>
+                  <button class="standard-button profile-info-dropdown-content-item btn-color-white">{{ $t('btn.logout') }}</button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -1567,11 +1567,15 @@ body {
 
 .profile-info-dropdown-content {
   .profile-info-dropdown-content-item {
-    display: flex;
     align-items: center;
     gap: 10px;
     color: #a8b5c3;
-    margin: auto;
+    display: grid;
+    grid-template-columns: 35px 65px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    margin: 0 auto;
+
 
     img {
       max-width: 33px;
@@ -1579,6 +1583,7 @@ body {
 
     &.standard-button {
       color: #468cff;
+      display: flex;
     }
   }
 }

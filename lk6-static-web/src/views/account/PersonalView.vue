@@ -36,15 +36,15 @@
                           name="realName"
                           prop="realName"
                           :rules="[
-                            { required: true, message: '请输入姓名' },
-                            {
-                              pattern: /^[\u4e00-\u9fa5·]+$/,
-                              message: '请输入中文字符',
-                              trigger: 'change'
-                            }
+                            { required: true, message: $t('form.pleaseEnterField', {field: $t('form.realName')}) },
+                            // {
+                            //   pattern: /^[\u4e00-\u9fa5·]+$/,
+                            //   message: '请输入中文字符',
+                            //   trigger: 'change'
+                            // }
                           ]"
                         >
-                          <el-input v-model="updateFormDetails.realName" placeholder="姓名" />
+                          <el-input v-model="updateFormDetails.realName" :placeholder="$t('form.realName')" />
                         </el-form-item>
                       </div>
                     </div>
@@ -65,13 +65,13 @@
                         <el-form-item
                           name="birthday"
                           prop="birthday"
-                          :rules="[{ required: true, message: '请输入生日' }]"
+                          :rules="[{ required: true, message: $t('form.pleaseEnterField', {field: $t('form.birthday')}) }]"
                         >
                           <el-date-picker
                             style="max-width: 190px"
                             v-model="updateFormDetails.birthday"
                             value-format="YYYY-MM-DD"
-                            placeholder="生日"
+                            :placeholder="$t('form.birthday')"
                           />
                         </el-form-item>
                       </div>
@@ -191,9 +191,9 @@
                       class="basic-info-cell content"
                       v-if="personalState.memberInfo.gender || (!personalState.memberInfo.gender && isEdit)"
                     >
-                      <el-select v-model="updateFormDetails.gender" placeholder="选择性别" style="min-width: 150px">
-                        <el-option label="男" value="Male" />
-                        <el-option label="女" value="Female" />
+                      <el-select v-model="updateFormDetails.gender" :placeholder="$t('form.selectField', {field: $t('form.gender')})" style="min-width: 150px">
+                        <el-option :label="$t('form.male')" value="Male" />
+                        <el-option :label="$t('form.female')" value="Female" />
                       </el-select>
                     </div>
                   </div>
@@ -976,7 +976,7 @@ export default defineComponent({
               if (response.code === 0) {
                 // message.success("success");
                 notify({
-                  message: "成功",
+                  message: t('message.success'),
                   type: "success"
                 });
                 clearPwd();
@@ -997,7 +997,7 @@ export default defineComponent({
 
     const validatePwd = async (r, v) => {
       if (updatePwdInfo.confirmPassword !== updatePwdInfo.password) {
-        return Promise.reject("确认密码与新密码不符合");
+        return Promise.reject(t('form.passwordMismatch'));
       } else {
         return Promise.resolve();
       }
@@ -1015,33 +1015,37 @@ export default defineComponent({
         {
           min: 6,
           max: 12,
-          message: "长度应为 6 到 12 数字",
+          message: t('form.lengthMustBeBetween', {min: 6, max:12}),
           trigger: "blur"
         }
       ],
       password: [
         {
           required: true,
-          message: "请输入新密码",
+          message: t('form.pleaseEnterField', {
+            field: t('personal.newPassword')
+          }),
           trigger: "blur"
         },
         {
           min: 6,
           max: 12,
-          message: "长度应为 6 到 12 数字",
+          message:  t('form.lengthMustBeBetween', {min: 6, max:12}),
           trigger: "blur"
         }
       ],
       confirmPassword: [
         {
           required: true,
-          message: "请输入确认密码",
+          message: t('form.pleaseEnterField', {
+            field: t('personal.confirmPassword')
+          }),
           trigger: "blur"
         },
         {
           min: 6,
           max: 12,
-          message: "长度应为 6 到 12 数字",
+          message:  t('form.lengthMustBeBetween', {min: 6, max:12}),
           trigger: "blur"
         },
         {
@@ -1062,7 +1066,7 @@ export default defineComponent({
           .then((ret) => {
             if (ret.code === 0) {
               notify({
-                message: "提交成功",
+                message: t('message.submitSuccessfully'),
                 type: "success"
               });
               loadInfo();
