@@ -139,6 +139,9 @@ body {
     align-items: center;
     &__label {
       color: #000000;
+      line-height: 16px;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
     }
     &.is-error {
       margin-bottom: 30px !important;
