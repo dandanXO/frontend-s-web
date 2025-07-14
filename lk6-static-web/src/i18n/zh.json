@@ -258,16 +258,15 @@
     "aboutLK6": "关于幸运6",
     "serviceAndProducts": "Service & Products",
     "browserDownload": "Browser Download",
+    "googleChrome": "谷歌浏览器",
+    "mozillaFirefox": "火狐浏览器",
     "freeAccountOpening": "免费开户"
   },
   "download": {
     "title": "综合客户端下载",
     "desc": "引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐投注！",
     "scan": "扫码进入下载页面",
-    "download": "手机免费下载地址",
-    "googleChrome": "谷歌浏览器",
-    "mozillaFirefox": "火狐浏览器"
-   
+    "download": "手机免费下载地址"
   },
   "service": {
     "seconds": "秒",
