@@ -1843,6 +1843,10 @@ const handleScroll = () => {
 onDeactivated(() => {
   popupPromo.value = "";
 });
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+  store.getMemberInfo();
+});
 
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
@@ -6061,7 +6065,7 @@ const checkGoogleLoginSetPwd = () => {
   }
   &.sport-platform {
     .platform-game-item {
-      >img {
+      > img {
         min-height: 120px;
       }
     }

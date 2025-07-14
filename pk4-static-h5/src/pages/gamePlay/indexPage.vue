@@ -45,7 +45,7 @@
         </div>
 
         <div v-if="isLoading" class="loader-container">
-          <img class="loader-logo" src="../../assets/images/auth/auth-logo-text-only.png" alt="B9.GAME" />
+          <img class="loader-logo" src="../../assets/images/auth/auth-logo-text-only.png" alt="PK1.GAME" />
           <div>{{ $t("btn.loading_plsWait") }}</div>
         </div>
 
@@ -61,7 +61,9 @@
             :style="`height: calc(100% - 65px - ${ui.bottomInsetHeight}px);`"
           ></iframe>
         </template>
+
         <div v-else-if="isBetBy" ref="betbyRef" class="game-iframe--betby" />
+
         <template v-else>
           <iframe
             @load="loadGame()"
@@ -77,7 +79,7 @@
 
         <q-dialog width="100%" v-model="drawerVisible" presistent>
           <div class="popout-dialog">
-            <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
+            <q-btn dense rounded icon="close" class="text-black bg-yellow popout-close" v-close-popup />
             <div class="popout-dialog-container-gold">
               <div class="popout-main-title">
                 <div class="txt-title">Deposit</div>
@@ -92,25 +94,14 @@
       <!-- <img src="../../assets/logo-coming.png" style="width: 80%" /> -->
     </q-dialog>
 
-    <q-dialog class="flex-end" width="100%" v-model="isExitDialogOpen" presistent>
+    <q-dialog width="100%" v-model="isExitDialogOpen" presistent>
       <div class="popout-dialog">
-        <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
-        <div v-if="!isDemoMode" class="popout-dialog-container">
-          <div class="txt-content q-mt-md text-center">{{ $t("notify.quitGameMessage_01") }}</div>
+        <!-- <q-btn dense rounded icon="close" class="popout-close" v-close-popup /> -->
+        <div class="popout-dialog-container">
+          <div class="text-center txt-content q-mt-md">{{ $t("notify.quitGameMessage") }}</div>
           <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
             <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
             <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
-          </div>
-        </div>
-        <div v-else class="popout-dialog-container">
-          <div class="txt-content q-mt-md text-center">
-            {{ $t("notify.quitGameMessage_02") }}
-            <br />
-            {{ $t("notify.quitGameMessage_03") }}
-          </div>
-          <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
-            <q-btn :label="$t('btn.exit')" no-caps class="btn-cancel" v-close-popup @click="closeDialog" />
-            <q-btn :label="$t('btn.deposit')" no-caps class="btn-confirm" @click="goToDepositPage" v-close-popup />
           </div>
         </div>
       </div>
@@ -138,7 +129,7 @@
     <q-dialog v-model="isChooseGameDialog" transition-show="fade" transition-hide="fade">
       <div class="dialog-wrapper">
         <q-card class="bottom-panel">
-          <q-card-section class="row justify-center">
+          <q-card-section class="justify-center row">
             <div class="choices">
               <div @click="handleChooseGame(false)">{{ $t("btn.playReal") }}</div>
               <div @click="handleChooseGame(true)">{{ $t("btn.freeTrial") }}</div>
@@ -152,32 +143,16 @@
 <script setup id="GameModal">
 import { i18nStore } from "src/router/language";
 import { userStore } from "stores/index";
-// import { launchSessionGame } from "api/platform/platform";
-// import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
-import {
-  ref,
-  defineExpose,
-  reactive,
-  shallowRef,
-  onActivated,
-  onUnmounted,
-  onDeactivated,
-  watch,
-  nextTick,
-  computed
-} from "vue";
+import { ref, defineExpose, reactive, shallowRef, computed, watch, nextTick, onMounted, onActivated } from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
 import { App } from "@capacitor/app";
 
-// import { transfer } from "api/personal/transfer";
-// import { message } from "ant-design-vue";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
 import { isAndroid, convertToCommaAmount } from "boot/utils";
-// import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import DepositView from "../../pages/account/DepositView.vue";
 import { useUI } from "stores/ui";
 import { t } from "src/boot/lang";
@@ -202,6 +177,7 @@ const privilegeList = ref([]);
 const selectedPayType = shallowRef("");
 const isPaymentLoading = ref(true);
 const isBetBy = ref(false);
+
 const isBetByLoad = ref(false);
 const i18nStoreLanguage = i18nStore();
 const langVal = computed(() => i18nStoreLanguage.languageVal);
@@ -309,8 +285,10 @@ const submitTransfer = (amount) => {
       // });
     });
 };
-const closeDialog = () => {
+const closeDialog =  async () => {
+
   visible.value = false;
+
   src.value = "";
   store.getBalance();
   // AppFullscreen.exit()
@@ -318,14 +296,17 @@ const closeDialog = () => {
     screen.orientation.lock("portrait");
     App.removeAllListeners();
   }
+
   if (betbyInstance.value) {
     betbyInstance.value.kill();
   }
-};
+  await nextTick();
 
-const goToDepositPage = () => {
-  closeDialog();
-  router.push("/deposit");
+  // 使用router 操作 後續 bottom bar會產生bug
+  // router.replace('/home')
+  router.push('/home')
+
+  // window.location.href = `${window.location.origin}/home#Lobby`
 };
 
 const goToDeposit = () => {
@@ -422,9 +403,11 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
   if (store.memberType !== "TEST" && gameType === "TEST") {
     visibleComingSoon.value = true;
   } else {
+
     const _isPlatformAllowNonLogin = isPlatformAllowNonLogin(demo);
     if (store.hasToken() || _isPlatformAllowNonLogin) {
-      if (platformCode !== "LuckySport" && platformCode !== "NineW") {
+      if (platformCode !== "LuckySport") {
+
         visible.value = true;
       }
       // if (platformCode === "BetBy" && isBetByLoad.value === false) {
@@ -478,7 +461,6 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
         }
         sessionStorage.removeItem("isFromNewPlayerGuide");
       }
-
       api
         .get(apiUrl, {
           params: apiParam
@@ -487,15 +469,40 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
           let srcDoc = res.data;
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
           isLoading.value = false;
-          if (platformCode === "BetBy") {
-            const existingScript = document.getElementById("btrenderer-script");
-            if (existingScript) {
-              existingScript.remove(); // 或 existingScript.parentNode.removeChild(existingScript);
-            }
+          // if (platformCode === "BetBy") {
+          //   isBetBy.value = true;
 
+          //   const topActionsEl = document.querySelector(".topActions");
+          //   const headerHeight = topActionsEl ? topActionsEl.offsetHeight : 0;
+
+          //   await nextTick();
+          //   // debugger;
+          //   // betbyItem.style.display = "flex";
+
+          //   betbyInstance.value = new BTRenderer().initialize({
+          //     brand_id: "2547441365755760643",
+          //     token: srcDoc,
+          //     themeName: "default",
+          //     lang:  langVal.value,
+          //     target: betbyRef.value,
+          //     stickyTop: headerHeight,
+          //     betSlipOffsetTop: headerHeight,
+          //     betslipZIndex: 999,
+          //     onLogin: function () {},
+          //     onRegister: function () {},
+          //     onSessionRefresh: function () {
+          //       console.log("onSessionRefresh");
+          //     },
+          //     onTokenExpired: function (e) {
+          //       console.log("onTokenExpired" + e);
+          //     }
+          //   });
+          //   console.log("betbyInstance.value: ", betbyInstance.value);
+          // }
+
+          if (platformCode === "BetBy") {
             const script = document.createElement("script");
             script.src = "https://ui.invisiblesport.com/bt-renderer.min.js";
-            script.id = "btrenderer-script";
             script.async = true;
 
             script.onload = async () => {
@@ -515,21 +522,17 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
                 stickyTop: headerHeight,
                 betSlipOffsetTop: headerHeight,
                 betslipZIndex: 999,
-                onRecharge: function () {
-                  router.push("/deposit?from=/home");
+                onRecharge: function() {
+                  router.push("/deposit?from=/home")
                 },
-                onSessionRefresh: function () {
+                onSessionRefresh: function() {
                   console.log("onSessionRefresh");
                   window.location.reload();
                 },
-                onTokenExpired: () => {
+                onTokenExpired: ()=>{
                   return new Promise((resolve, reject) => {
-                    const apiUrl2 = `/session/launch?_time=${new Date().getTime()}`;
-
-                    api
-                      .get(apiUrl2, { params: apiParam })
-                      .then((res) => resolve(res.data))
-                      .catch((err) => reject(err));
+                    visible.value = false;
+                    startGame(gameName, platformCode, gameCode, gameType, demo);
                   });
                 }
               });
@@ -540,14 +543,16 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
             script.onerror = () => {
               console.error("Failed to load bt-renderer.min.js");
             };
+
             document.head.appendChild(script);
+
           } else if (firstFourChars === "http") {
-            if ((platformCode === "LuckySport" || platformCode === "NineW") && gameCode !== "") {
+            if (platformCode === "LuckySport" && gameCode !== "") {
               src.value = srcDoc.replace(gameCode, "");
               setTimeout(function () {
                 src.value = srcDoc.substring(0, srcDoc.indexOf("?"));
               }, 1000);
-            } else if (platformCode === "LuckySport" || platformCode === "NineW") {
+            } else if (platformCode === "LuckySport") {
               window.open(srcDoc, "_blank", "location=no,zoom=no");
             } else {
               src.value = srcDoc;
@@ -573,16 +578,16 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
           // } else {
           //   src.value = res.data;
           // }
-        });
+        })
+        .catch((e)=>{
+          alert(e)
+        })
     } else {
       denyGameLaunch();
     }
   }
 };
-
-const isDemoMode = ref(false);
 const handleChooseGame = (runDemo) => {
-  isDemoMode.value = runDemo;
   if (!pendingGameParams.value) return;
 
   const { gameName, platformCode, gameCode, gameType, demo } = pendingGameParams.value;
@@ -628,12 +633,23 @@ const refreshBalance = () => {
   }
 };
 
-watch(
-  () => route.path,
-  (val) => {
-    if (val !== "/home") closeDialog();
-  }
-);
+// watch(
+//   () => route.path,
+//   (val) => {
+//     // if (val !== "/home") closeDialog();
+//   }
+// );
+
+onMounted(()=>{
+    // dan test
+    if(route.query.gameName){
+      visible.value = true;
+      open(route.query.gameName, route.query.gameName)
+    }else{
+      console.error('wrong game')
+    }
+
+})
 
 defineExpose({
   open
@@ -726,9 +742,9 @@ defineExpose({
     }
 
     .game-logo-img {
-      height: 50px;
+      height: 25px;
       position: absolute;
-      top: 10px;
+      top: 18px;
       left: 45px;
 
       .game-logo {
@@ -911,21 +927,21 @@ defineExpose({
 // }
 
 .popout-dialog {
-  // width: 90%;
+  width: 90%;
 
   // max-width: 500px;
   // position: relative;
   // padding-top: 90px;
   // padding-right: 10px;
-  width: 100%;
+  // width: 100%;
   max-width: 500px;
   position: relative;
 
-  .popout-close {
-    position: absolute;
-    right: 15px;
-    top: 15px;
-  }
+  // .popout-close {
+  //   position: absolute;
+  //   right: 15px;
+  //   top: 15px;
+  // }
 
   .popout-dialog-container-gold {
     // background-image: url(../../assets/images/index/popout/deposit-bg.png);
@@ -1094,35 +1110,35 @@ defineExpose({
   .popout-btns {
     width: 100%;
   }
-  .btn-cancel {
-    // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
-    // border: 1px solid #5d8956;
-    // font-weight: 700;
-    // color: #ffffff;
-    // border-radius: 12px;
-    font-weight: 700;
-    width: 100%;
-    padding: 10px 10px;
-    font-size: 16px;
-    background: #455152;
-    color: #ffffff;
+  // .btn-cancel {
+  //   // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+  //   // border: 1px solid #5d8956;
+  //   // font-weight: 700;
+  //   // color: #ffffff;
+  //   // border-radius: 12px;
+  //   font-weight: 700;
+  //   width: 100%;
+  //   padding: 10px 10px;
+  //   font-size: 16px;
+  //   background: #455152;
+  //   color: #ffffff;
 
-    box-shadow: 0px 2px 0px 0px #2a3637;
-    text-align: center !important;
-  }
+  //   box-shadow: 0px 2px 0px 0px #2a3637;
+  //   text-align: center !important;
+  // }
 
-  .btn-confirm {
-    font-weight: 700;
-    width: 100%;
-    padding: 10px 10px;
-    font-size: 16px;
-    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-    color: #000000;
-    box-shadow: 0px 2px 0px 0px #1cca6a;
-    border-radius: 4px;
-    height: unset;
-    text-align: center !important;
-  }
+  // .btn-confirm {
+  //   font-weight: 700;
+  //   width: 100%;
+  //   padding: 10px 10px;
+  //   font-size: 16px;
+  //   background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  //   color: #000000;
+  //   box-shadow: 0px 2px 0px 0px #1cca6a;
+  //   border-radius: 4px;
+  //   height: unset;
+  //   text-align: center !important;
+  // }
 }
 
 .loader-container {
@@ -1203,7 +1219,11 @@ defineExpose({
 
 .profile-balance {
   position: relative;
+  // background: rgba(255, 255, 255, 0.24);
+  // background: #192633;
+  // background: rgba(0, 10, 1, 0.6);
   // background: #ffffff0f;
+
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -1213,20 +1233,25 @@ defineExpose({
   width: 100%;
   min-height: 35px;
   // border: 1px solid #ffffff14;
+
   font-size: 14px;
   color: #fff;
   font-weight: bold;
+  // border: 1px solid #2c323b;
+  .q-btn {
+    max-width: 40px;
+  }
 
   &:active {
     filter: brightness(0.75);
   }
 
   .currency-amount {
-    color: #000000;
-    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+    color: #ffffff;
+    background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
     font-size: 12px;
     font-weight: 700;
-    margin-right: 3px;
+    margin-right: 8px;
     border-radius: 50%;
     padding: 3px 5px;
     font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1239,6 +1264,8 @@ defineExpose({
     align-items: center;
     line-height: 16px;
     vertical-align: middle;
+    min-width: 24px;
+    min-height: 24px;
   }
 
   .balance-amount {
