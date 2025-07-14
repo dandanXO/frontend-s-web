@@ -23,7 +23,7 @@
                 <!-- <img v-if="p.iconUrl" :src="p.iconUrl" /> -->
                 <img v-if="p.img" :src="require('../assets/promo/menu-' + p.img + '.svg')" />
                 <span v-else></span>
-                <span style="width: 100px" class="label">{{ p.label }}</span>
+                <span style="width: 100px" class="label">{{ `${$t(`menu.${p.img}`)} ${$t('menu.promotion')}` }}</span>
               </div>
             </div>
           </div>
@@ -228,7 +228,7 @@ export default defineComponent({
       { code: "SPORT", img: "sport", label: `${t('menu.sport')} ${t('menu.promotion')}` },
       { code: "LIVE CASINO", img: "live", label:`${t('menu.live')} ${t('menu.promotion')}` },
       // { code: "SLOT GAME", img: "slot", label: "电游活动" },
-      { code: "POKER", img: "poker", label: `${t('menu.bacarrat')} ${t('menu.promotion')}` },
+      // { code: "POKER", img: "poker", label: `${t('menu.bacarrat')} ${t('menu.promotion')}` },
       // { code: "FISH", img: 'fish', label: '捕鱼'},
       // { code: "FTD", img: "deposit", label: "存款优惠" },
       // { code: "VIP", img: "vip", label: "VIP 特权" }
