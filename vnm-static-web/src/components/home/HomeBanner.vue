@@ -52,7 +52,10 @@ const isFetchingBanners = ref(false);
 const allGames = ref(null);
 const goToUrl = (redirectUrl) => {
   const urlSplit = redirectUrl.split("|");
-  if (urlSplit.length >= 2) {
+  if (redirectUrl.startsWith('slot-')) {
+    const value = redirectUrl.substring(5); // Removes 'slot-' prefix
+    router.push(`/slot?plat=${value}`);
+  } else if (urlSplit.length >= 2) {
     const type = urlSplit[0];
     if (type === "page") {
       router.push(`/${urlSplit[1]}`);
