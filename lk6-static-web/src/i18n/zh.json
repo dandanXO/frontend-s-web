@@ -112,13 +112,19 @@
     "toBeCompleteContinuation": "流水，立即享受快速提款",
     "betRequirements": "投注要求",
     "turnoverProgress": "流水进度",
-    "completionProgress": "完成状态"
+    "completionProgress": "完成状态",
+    "statusIsBet": "投注",
+    "statusIsSettle": "结算",
+    "statusIsSettled": "已结算",
+    "statusIsBetNSettle": "投注并结算",
+    "statusIsCancelled": "取消",
+    "statusIsPatched": "修补"
   },
   "table": {
     "gameBetRecord": {
       "transactionId": "注单号",
       "betTime": "游戏时间",
-      "alias": "游戏平台",
+      "platform": "游戏平台",
       "bet": "投注",
       "gameType": "游戏类型",
       "betStatus": "投注状态",

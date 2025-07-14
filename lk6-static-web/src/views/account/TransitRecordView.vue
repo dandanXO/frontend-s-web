@@ -695,6 +695,7 @@ import EmptyData from "@/components/emptyData.vue";
 import { useRoute } from "vue-router";
 import { useNotify } from "@/hooks/notify";
 import i18n from '../../i18n'
+import { useI18n } from "vue-i18n";
 
 const notify = useNotify()
 
@@ -917,7 +918,7 @@ const tableColumns = {
     },
     {
       title: "游戏平台",
-      dataIndex: "alias"
+      dataIndex: "platform"
     },
     {
       title: "投注",
@@ -1032,6 +1033,7 @@ export default defineComponent({
   },
   name: "TransitRecordView",
   setup() {
+    const { t } = useI18n();
     const searchRecord = (tab) => {
       // console.log(tab)
       console.log(searchForm[recordActive.value]);
@@ -1605,11 +1607,11 @@ export default defineComponent({
       if (gameType === "SLOT") {
         return "电子"; // Slot
       } else if (gameType === "LIVE") {
-        return "真人"; // Live
+        return t('menu.live'); // Live
       } else if (gameType === "FISH") {
         return "捕鱼"; // Fish
       } else if (gameType === "SPORT") {
-        return "体育"; // Sport
+        return t('menu.sport'); // Sport
       } else if (gameType === "ESPORT") {
         return "电竞"; // E-Sport
       } else if (gameType === "POKER") {
@@ -1626,17 +1628,17 @@ export default defineComponent({
         return "";
       }
       if (betStatus === "BET") {
-        return "投注"; // Bet
+        return t('form.statusIsBet'); // Bet
       } else if (betStatus === "SETTLE") {
-        return "结算"; // Settle
+        return t('form.statusIsSettle'); // Settle
       } else if (betStatus === "SETTLED") {
-        return "已结算"; // Bet & Settled
+        return t('form.statusIsSettled'); // Bet & Settled
       } else if (betStatus === "BET_N_SETTLE") {
-        return "投注并结算"; // Bet & Settled
+        return t('form.statusIsBetNSettle'); // Bet & Settled
       } else if (betStatus === "CANCEL") {
-        return "取消"; // Cancel
+        return t('form.statusIsCancelled'); // Cancel
       } else if (betStatus === "PATCH") {
-        return "修补"; // Patch
+        return t('form.statusIsPatched'); // Patch
       } else {
         return betStatus;
       }

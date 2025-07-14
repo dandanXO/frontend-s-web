@@ -112,13 +112,19 @@
     "toBeCompleteContinuation": "turnover, instantly enjoy fast withdrawals",
     "betRequirements": "Bet Requirements",
     "turnoverProgress": "Turnover Progress",
-    "completionProgress": "Completion Progress"
+    "completionProgress": "Completion Progress",
+    "statusIsBet": "Bet",
+    "statusIsSettle": "Settle",
+    "statusIsSettled": "Settled",
+    "statusIsBetNSettle": "Bet & Settle",
+    "statusIsCancelled": "Cancelled",
+    "statusIsPatched": "Patched"
   },
   "table": {
     "gameBetRecord": {
       "transactionId": "Transaction ID",
       "betTime": "Bet Time",
-      "alias": "Alias",
+      "platform": "Platform",
       "bet": "Bet",
       "gameType": "Game Type",
        "betStatus": "Bet Status",
