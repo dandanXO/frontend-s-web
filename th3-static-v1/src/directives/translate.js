@@ -119,7 +119,7 @@ export const translateRecord = (rec, type = "") => {
     return "转账"; // TRANSFER
   } else if (rec === "ADJUST") {
     return "金额调整"; // ADJUST
-  } else if (rec === "MGP") {
+  }else if (rec === "MGP") {
     return "MG"; // AG
   } else if (rec === "AG") {
     return "AG真人"; // AG

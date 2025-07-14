@@ -1,6 +1,16 @@
 <template>
-  <q-page-sticky position="bottom-right" :offset="[18, 18]" style="transform: none">
-    <q-btn padding="sm" color="brightbtn" @click="scrollToTop" fab icon="keyboard_arrow_up" />
+  <q-page-sticky
+    position="bottom-right"
+    :offset="[18, 18]"
+    style="transform: none"
+  >
+    <q-btn
+      padding="sm"
+      color="brightbtn"
+      @click="scrollToTop"
+      fab
+      icon="keyboard_arrow_up"
+    />
   </q-page-sticky>
 </template>
 <script>

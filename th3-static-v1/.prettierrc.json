@@ -10,8 +10,5 @@
   "bracketSpacing": true,
   "jsxBracketSameLine": false,
   "semi": true,
-  "htmlWhitespaceSensitivity": "ignore",
-  "importOrder": ["^vue$", "^quasar/", "^[./]", "^@/", "^[a-z]", "^[^./]", "^[^a-z]"],
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "htmlWhitespaceSensitivity": "ignore"
 }

@@ -1,5 +1,7 @@
 import { Platform } from "quasar";
 import moment from "moment/moment";
+// import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 export const MAIN = "MAIN";
 
@@ -77,15 +79,15 @@ export const getTimeout = (key) => {
     : 0; // No timeout found
 };
 
-export const getImageUrl = (srcPath) => require(`/src/assets/${srcPath}`);
+// export const getImageUrl = (srcPath) => require(`/src/assets/${srcPath}`);
 
 export const updateDate = (val) => {
   const gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
   const oldDate = new Date(gapDate);
 
-  // Adjust the time to GMT+7.0
-  oldDate.setHours(oldDate.getHours() + 7);
-  oldDate.setMinutes(oldDate.getMinutes() + 0);
+  // Adjust the time to GMT+5.5
+  oldDate.setHours(oldDate.getHours() + 5);
+  oldDate.setMinutes(oldDate.getMinutes() + 30);
 
   const newDate = {
     Y: oldDate.getFullYear() + "-",
@@ -96,47 +98,75 @@ export const updateDate = (val) => {
 };
 
 export const convertToGMT55 = (dateTime) => {
-  return moment(dateTime).utcOffset("+05:30").format("YYYY-MM-DD HH:mm:ss");
+  return moment(dateTime).add(-3, "hours").format("YYYY-MM-DD HH:mm:ss");
 };
 export const convertToGMT8 = (dateTime) => {
-  return moment(dateTime).utcOffset("+08:00").format("YYYY-MM-DD");
+  return moment(dateTime).utcOffset("+05:00").format("YYYY-MM-DD");
 };
-export const convertToGMT7 = (dateTime) => {
-  return moment(dateTime).utcOffset("+07:00").format("YYYY-MM-DD");
+export const normalDateTime = (dateTime) => {
+  return moment(dateTime).format("YYYY-MM-DD HH:mm:ss");
 };
 
-export const convertToCommaAmount = (amount, isForceDecimal) => {
-  if (amount === null) {
+export const convertToCommaAmount = (amount, isForceDecimal, minimumFractionDigits = 2) => {
+  if (amount === null || amount === undefined) {
     return 0;
   }
   if (isNonNumericString(amount)) {
     return amount;
   }
-
-  const parsedAmount = parseFloat(amount);
-  if (isForceDecimal) {
-    const truncatedAmount = Math.floor(parsedAmount * 100) / 100;
-    return truncatedAmount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  } else {
-    return parsedAmount.toLocaleString("en-US");
-  }
-};
-
-export const displayPlatform = (platform) => {
-  if (platform === "BTI") {
-    return "55Ace";
-  }
-  return platform;
+  return parseFloat(amount).toLocaleString("en-US", { minimumFractionDigits, maximumFractionDigits: 2 });
 };
 
 function isNonNumericString(value) {
   return typeof value === "string" && isNaN(value);
 }
 
-export const isInPwa = () => {
-  if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
-    return true;
-  } else {
-    return false;
+export const getVisitorId = async () => {
+  // const { getData } = useVisitorData({ extendedResult: true }, { immediate: false });
+  //
+  // const fp = await getData({ ignoreCache: true });
+  //
+  // if (fp && fp.visitorId) {
+  //   console.log("use Visitor ID");
+  //   localStorage.setItem("VISITOR_ID", fp.visitorId);
+  //   return fp.visitorId;
+  // } else {
+  const fpPromise = FingerprintJS.load();
+  const fp = await fpPromise;
+  const result = await fp.get();
+  const { timezone, ...allComponents } = result.components;
+  // console.log(allComponents);
+  const sidParam = FingerprintJS.hashComponents(allComponents);
+  console.log("Use Normal Fingerprint");
+  console.log(sidParam);
+  localStorage.setItem("VISITOR_ID", sidParam);
+  return sidParam;
+  // }
+};
+
+export const trackNewUserFtd = (e) => {
+  const { detail: triggeredPixels } = e;
+  if (triggeredPixels.includes("fb")) {
+    fbq("trackCustom", "PurchaseComplete");
   }
+  if (triggeredPixels.includes("tk")) {
+    ttq.track("PurchaseComplete", { content_type: "product" }, { event_id: Date.now() });
+  }
+  // console.log("PurchaseComplete");
+
+  localStorage.removeItem("newUserFtd");
+
+  document.removeEventListener("ftdPurchaseSuccess", trackNewUserFtd);
+  localStorage.removeItem("REG_REFERRAL_CODE");
+};
+
+export const isInPwa = () => {
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  const hasRbKey = Object.keys(localStorage).some((key) => key.startsWith("__rb_"));
+  const hasPwa = sessionStorage.getItem("IS_PWA");
+  return isStandalone || hasRbKey || hasPwa;
+};
+
+export const generateEventID = () => {
+  return `evt_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
 };

@@ -1,32 +1,36 @@
 <template>
-  <div class="section-wrapper">
-    <div class="team-member-wrapper">
-      <div class="team-member-container" v-if="memberVIPData.totalMembers > 0">
-        <div class="member-imgs" :style="`width: ${40 + limitedMembers * 15}px`">
-          <q-avatar v-for="n in limitedMembers" :key="n" size="30px" class="overlapping" :style="`left: ${n * 15}px`">
-            <img :src="getRandomImageSource(n)" />
-          </q-avatar>
-        </div>
-        <div class="member-amt">{{ memberVIPData.totalMembers }}</div>
-      </div>
-    </div>
-
-    <div class="title-wrapper">
-      <div class="title-txt">{{ $t("earnMoney.daily.myTeamYesterday") }}</div>
-      <div class="subtitle-wrapper">
-        <div class="chart-cat">
-          <div class="square m"></div>
-          <div>{{ $t("earnMoney.daily.member") }}</div>
-        </div>
-        <div class="chart-cat">
-          <div class="square ba"></div>
-          <div>{{ $t("earnMoney.daily.betAmount") }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="content-wrapper">
+    <div class="section-wrapper">
+      <div class="title-wrapper">
+        <div class="title-txt">My Team (Yesterday)</div>
+
+        <div class="subtitle-wrapper">
+          <div class="chart-cat">
+            <div class="square m"></div>
+            <div>Member</div>
+          </div>
+          <div class="chart-cat">
+            <div class="square ba"></div>
+            <div>Bet Amount</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-member-wrapper">
+          <div class="team-member-container" v-if="memberVIPData.totalMembers > 0">
+            <div class="member-imgs" :style="`width: ${40 + limitedMembers * 15}px`">
+              <q-avatar v-for="n in limitedMembers" :key="n" size="30px" class="overlapping" :style="`left: ${n * 15}px`">
+                <img :src="getRandomImageSource(n)" />
+              </q-avatar>
+            </div>
+          </div>
+
+          <div class="member-amt-wrapper">
+            <div class="member-amt">{{ memberVIPData.totalMembers }}</div>
+            <div class="member-amt-label">Member</div>
+          </div>
+        </div>
+    </div>
     <div class="progress-bar-wrapper">
       <q-linear-progress size="15px" :value="progressValueM" color="#EC77FF" class="progress-bar-M">
         <div class="linear-indicator linear-start">{{ memberVIPData.currentLevelMemberCount }}</div>
@@ -67,8 +71,8 @@
         <div class="percentage">{{ memberVIPData.nextLevelRate }}%</div>
       </div>
       <div class="rate-wrapper">
-        <div class="rate">{{ $t("earnMoney.daily.rate") }}</div>
-        <div class="rate">{{ $t("earnMoney.daily.rate") }}</div>
+        <div class="rate">Rate</div>
+        <div class="rate">Rate</div>
       </div>
       <div class="achieve-wrapper">
         <div class="achieve"><q-icon name="check" /></div>
@@ -82,8 +86,57 @@
     </div>
   </div>
 
+  <!-- <div class="content-wrapper">
+    <div class="top-container">
+      <div class="left-container">
+        <div class="title">Betting Amount</div>
+        <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.validBet, false) }}</div>
+        <div class="data-wrapper">
+          <div class="img-wrapper">
+            <img src="../../assets/images/earn-money/member.png" />
+          </div>
+          <div class="data-txt">Register Members:</div>
+          <div class="data-amount">{{ totalBetRabteDailyDetailsData.memberCount }}</div>
+        </div>
+      </div>
+      <div class="right-container text-right">
+        <div class="title">Rebate Amount</div>
+        <div class="value">₹ {{ convertToCommaAmount(totalBetRabteDailyDetailsData.rebateAmount, false) }}</div>
+        <div class="data-wrapper right">
+          <div class="img-wrapper">
+            <img src="../../assets/images/earn-money/cash.png" />
+          </div>
+          <div class="data-txt">Cash In:</div>
+          <div class="data-amount">0</div>
+        </div>
+      </div>
+    </div>
+    <div class="chart">
+      <div class="arrow" @click="onSwiperArrowClick()"><img src="../../assets/images/earn-money/arrow_left.png" /></div>
+      <div class="swiper-container swiper-nav-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="slide-item">
+              <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" />
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="slide-item">
+              <Bar ref="chartRef2" :data="chartData2.data" :options="chartData2.options" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="arrow" @click="onSwiperArrowClick(true)">
+        <img src="../../assets/images/earn-money/arrow_right.png" />
+      </div>
+
+      <Bar ref="chartRef" :data="chartData.data" :options="chartData.options" />
+    </div>
+  </div> -->
+
   <div class="info-wrapper q-pt-lg">
-    <div class="title-txt">{{ $t("earnMoney.daily.yesterdayReportTotal") }}</div>
+    <div class="title-txt">Yesterday Report (Total)</div>
     <div class="info-container">
       <div class="info-row">
         <div class="info-content-item longer-item">
@@ -93,7 +146,7 @@
               :class="checkTeamAmountData(teamAmountData.agentLevel) === 'Calculating' ? 'f-wrap' : ''"
             >
               <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-06.png" /></div>
-              <div class="info-txt">{{ $t("earnMoney.daily.level") }}:</div>
+              <div class="info-txt">Level:</div>
               <div
                 class="info-amount"
                 :class="checkTeamAmountData(teamAmountData.agentLevel) === 'Calculating' ? 'font-smaller' : ''"
@@ -109,7 +162,7 @@
               :class="checkTeamAmountData(teamAmountData.agentRate) === 'Calculating' ? 'f-wrap' : ''"
             >
               <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-01.png" /></div>
-              <div class="info-txt">{{ $t("earnMoney.daily.rate") }}:</div>
+              <div class="info-txt">Rate:</div>
               <div
                 class="info-amount"
                 :class="checkTeamAmountData(teamAmountData.agentRate) === 'Calculating' ? 'font-smaller' : ''"
@@ -124,7 +177,7 @@
         <div class="info-content-item line-side">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-07.png" /></div>
-            <div class="info-txt">{{ $t("earnMoney.daily.myselfBettingAmount") }}:</div>
+            <div class="info-txt">Myself betting amount:</div>
           </div>
           <div class="info-amount">
             {{ store.currency.value }}
@@ -135,7 +188,7 @@
         <div class="info-content-item">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-02.png" /></div>
-            <div class="info-txt">{{ $t("earnMoney.daily.myselfRebate") }}:</div>
+            <div class="info-txt">Myself rebate:</div>
           </div>
           <div
             class="info-amount"
@@ -151,7 +204,7 @@
         <div class="info-content-item line-side">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-03.png" /></div>
-            <div class="info-txt">{{ $t("earnMoney.daily.teamBettingamount") }}:</div>
+            <div class="info-txt">Team betting amount:</div>
           </div>
           <div class="info-amount">
             {{ store.currency.value }}
@@ -162,7 +215,7 @@
         <div class="info-content-item">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-04.png" /></div>
-            <div class="info-txt">{{ $t("earnMoney.daily.teamRebate") }}:</div>
+            <div class="info-txt">Team rebate:</div>
           </div>
           <div
             class="info-amount"
@@ -178,7 +231,7 @@
         <div class="info-content-item last-item">
           <div class="info-title">
             <div class="info-icon"><img src="../../assets/images/earn-money/icon-my-team-05.png" /></div>
-            <div class="info-txt">{{ $t("earnMoney.daily.totalRebate") }}:</div>
+            <div class="info-txt">Total rebate:</div>
             <div
               class="info-amount"
               :class="checkTeamAmountData(teamAmountData.totalRebate) === 'Calculating' ? 'font-smaller' : ''"
@@ -193,11 +246,11 @@
   </div>
 
   <LoadingComponent v-if="isLoading.referredBetRebateRecord"></LoadingComponent>
-  <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noMember')" shortenContainer="true"></NoInfoComponent>
+  <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Member" shortenContainer="true"></NoInfoComponent>
   <div v-else class="member-info-container">
     <div class="section-wrapper q-pt-lg">
-      <div class="title-txt">{{ $t("earnMoney.daily.teamDetailsYesterday") }}</div>
-      <div class="subtitle">{{ moment().utcOffset("+05:30").format("YYYY-MM-DD") }}</div>
+      <div class="title-txt">Team details (Yesterday)</div>
+      <div class="subtitle">{{ moment().utcOffset("+05:00").format("YYYY-MM-DD") }}</div>
     </div>
 
     <div v-for="(e, i) in myMemberList" :key="`${e}-${i}`" class="member-info">
@@ -210,23 +263,22 @@
             <template v-else>{{ e.rebateLevel }}</template>
           </div>
         </div>
-        <div class="status online">
-          {{ $t("earnMoney.daily.betAmount") }}: {{ e.memberCount > 0 ? e.memberCount : "..." }}
-        </div>
+        <!-- <div :class="`status ${e.status === 'Online' ? 'online' : 'offline'}`">{{ e.status }}</div> -->
+        <div class="status online">Team Member: {{ e.memberCount > 0 ? e.memberCount : "..." }}</div>
       </div>
       <div class="bot-container">
         <div class="amount-container">
-          <div class="amount-text">{{ $t("earnMoney.daily.betAmount") }}</div>
+          <div class="amount-text">Bet Amount</div>
           <div class="amount">
-            {{ store.currency.label }}
+            RS
             <span>{{ convertToCommaAmount(e.validBet, false) }}</span>
           </div>
         </div>
 
         <div class="amount-container">
-          <div class="amount-text text-right">{{ $t("earnMoney.daily.income") }}</div>
+          <div class="amount-text text-right">Income</div>
           <div class="amount text-right">
-            {{ store.currency.label }}
+            RS
             <span>{{ convertToCommaAmount(e.rebateAmount, false) }}</span>
           </div>
         </div>
@@ -236,19 +288,20 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
-
-import { api } from "@/boot/axios";
-import { convertToCommaAmount } from "@/boot/utils";
-import LoadingComponent from "@/components/LoadingComponent.vue";
-import NoInfoComponent from "@/components/NoInfoComponent.vue";
-import { userStore } from "@/stores/index";
-import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from "chart.js";
+import { onMounted, ref, reactive, computed } from "vue";
+import { api } from "boot/axios";
+import NoInfoComponent from "../NoInfoComponent.vue";
+import LoadingComponent from "../LoadingComponent.vue";
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from "chart.js";
+import { Bar } from "vue-chartjs";
+import { userStore } from "stores/index";
 import moment from "moment";
 import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
+import { convertToCommaAmount } from "src/boot/utils";
 
 const store = userStore();
+
 const isLoading = reactive({ referredBetRebateRecord: true });
 const isNoInfo = ref(true);
 
@@ -267,6 +320,7 @@ const getReferredBetRebateRecord = () => {
 const maxProgress = store.levelUpDeposit.toFixed(2);
 const progressRef = ref(store.currentDeposit.toFixed(2));
 const progressValue = ref(0);
+
 const progressValueM = ref(0);
 const progressValueBA = ref(0);
 
@@ -279,9 +333,11 @@ const getProgressValue = () => {
 
 const getRandomImageSource = (index) => {
   const randomNumber = Math.floor(Math.random() * 5) + 1;
+
   return require(`../../assets/images/earn-money/profile-img-${randomNumber}.png`);
 };
 
+// const memberVIPData = ref([]);
 const memberVIPData = reactive({
   rate: 0,
   currentLevelMemberCount: 0,
@@ -335,6 +391,135 @@ const initializeSwiperNav = () => {
 };
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+const chartData = reactive({
+  data: {
+    labels: [],
+    datasets: [
+      {
+        label: "Member",
+        data: [],
+        backgroundColor: [],
+        borderRadius: []
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: "#C4C4C4"
+        }
+      },
+      y: {
+        ticks: {
+          color: "#fff",
+          callback: function (value, index) {
+            return index % 2 ? value : "";
+          }
+        }
+      }
+    }
+  }
+});
+const chartData2 = reactive({
+  data: {
+    labels: [],
+    datasets: [
+      {
+        label: "Bet Amount",
+        data: [],
+        backgroundColor: [],
+        borderRadius: []
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: "#C4C4C4"
+        }
+      },
+      y: {
+        ticks: {
+          color: "#fff",
+          callback: function (value, index) {
+            return index % 2 ? value : "";
+          }
+        }
+      }
+    }
+  }
+});
+const chartRef = ref();
+const chartRef2 = ref();
+
+const onSwiperArrowClick = (isRight) => {
+  if (isRight) swiperNav.slideNext();
+  else swiperNav.slidePrev();
+};
+
+// const totalBetRabteDailyDetailsData = reactive({
+//   recordTime: "",
+//   validBet: 0,
+//   rebateAmount: 0,
+//   memberCount: 0
+// });
+// const getChartAPI = () => {
+//   const startDate = moment().subtract(6, "d").format("YYYY-MM-DD");
+//   const endDate = moment().format("YYYY-MM-DD");
+
+//   api.get(`/session/member/betRebateDailyDetails?start=${startDate}&end=${endDate}`).then((res) => {
+//     const { code, data } = res;
+//     if (code === 0) {
+//       data.forEach((e, i) => {
+//         totalBetRabteDailyDetailsData.validBet += e.validBet;
+//         totalBetRabteDailyDetailsData.rebateAmount += e.rebateAmount;
+//         totalBetRabteDailyDetailsData.memberCount += e.memberCount;
+
+//         // chartRef.value.chart.data.datasets[0].data[i] = e.validBet;
+
+//         chartData.data.datasets[0].data[i] = e.memberCount;
+//         chartData.data.datasets[0].borderRadius[i] = 6;
+//         chartData.data.labels[i] = moment(e.recordTime).format("DD MMM");
+
+//         chartData2.data.datasets[0].data[i] = e.validBet;
+//         chartData2.data.datasets[0].borderRadius[i] = 6;
+//         chartData2.data.labels[i] = moment(e.recordTime).format("DD MMM");
+//       });
+
+//       const maxChart = Math.max(...chartData.data.datasets[0].data);
+//       chartData.data.datasets[0].data.forEach((e, i) => {
+//         if (e === maxChart) chartData.data.datasets[0].backgroundColor[i] = "#00D1FF";
+//         else chartData.data.datasets[0].backgroundColor[i] = "#574BA0";
+//       });
+
+//       const maxChart2 = Math.max(...chartData2.data.datasets[0].data);
+//       chartData2.data.datasets[0].data.forEach((e, i) => {
+//         if (e === maxChart2) chartData2.data.datasets[0].backgroundColor[i] = "#FFB100";
+//         else chartData2.data.datasets[0].backgroundColor[i] = "#574BA0";
+//       });
+
+//       chartRef.value.chart.update();
+//       chartRef.value.chart.render();
+
+//       chartRef2.value.chart.update();
+//       chartRef2.value.chart.render();
+//     }
+//   });
+// };
 
 const teamAmountData = reactive({
   myselfBetting: 0,
@@ -367,9 +552,12 @@ const checkTeamAmountData = (value) => {
 
 onMounted(() => {
   initializeSwiperNav();
+
   getReferredBetRebateRecord();
+
   getVIPApi();
   getTeamAmountData();
+  // getChartAPI();
 });
 </script>
 
@@ -382,7 +570,6 @@ onMounted(() => {
     justify-content: space-between;
     align-items: center;
     height: 40px;
-    flex-wrap: wrap;
   }
   .title {
     color: #fff;
@@ -404,6 +591,7 @@ onMounted(() => {
     font-size: 0.9375rem;
     font-weight: 500;
     margin-left: auto;
+    white-space: nowrap;
 
     .subtitle {
       font-size: 12px;
@@ -433,10 +621,30 @@ onMounted(() => {
 
 .team-member-wrapper {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+
+  .member-amt-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    .member-amt {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 28px;
+    }
+
+    .member-amt-label {
+      color: #FFFFFF66;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 21px;
+    }
+  }
+
   .team-member-container {
-    background: rgba(217, 217, 217, 0.2);
-    padding: 6px 8px;
     border-radius: 4px;
     position: relative;
     display: flex;
@@ -447,7 +655,6 @@ onMounted(() => {
       width: 60px;
       display: block;
       position: relative;
-      margin-left: -15px;
     }
 
     .member-amt {
@@ -470,7 +677,7 @@ onMounted(() => {
     .info-row {
       display: flex;
       gap: 15px;
-      background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
+      background: linear-gradient(180deg, rgb(16 133 35 / 51%) 0%, rgb(39 83 39 / 53%) 100%);
       border-radius: 12px;
     }
 
@@ -494,15 +701,12 @@ onMounted(() => {
       }
       &.longer-item {
         flex-direction: row;
-        // gap: 36px;
+        gap: 36px;
 
         .longer-group {
           flex: 1;
           position: relative;
 
-          &:first-child {
-            margin-right: 36px;
-          }
           &:first-child:before {
             content: "";
             position: absolute;
@@ -537,6 +741,7 @@ onMounted(() => {
         margin-left: auto;
         margin-top: auto;
         padding-top: 12px;
+        color: #FFFFFFCC;
 
         &.font-smaller {
           font-size: 12px;
@@ -551,6 +756,7 @@ onMounted(() => {
 
       .info-title {
         display: flex;
+        gap: 8px;
 
         &.f-wrap {
           flex-wrap: wrap;
@@ -561,13 +767,13 @@ onMounted(() => {
         img {
           display: block;
           width: 27px;
-          margin-right: 8px;
         }
       }
 
       .info-txt {
         margin-top: 4px;
-        font-weight: 700;
+        font-size: 12px;
+        line-height: 18px;
       }
     }
   }
@@ -575,9 +781,10 @@ onMounted(() => {
 
 .content-wrapper {
   border-radius: 0.75rem;
-  background: #6759c0;
+  background: #ffffff0d;
+  border: 1px solid #FFFFFF0D;
   padding: 15px;
-  margin: 0;
+  margin-top: 15px;
 
   // top section
   .progress-bar-wrapper {

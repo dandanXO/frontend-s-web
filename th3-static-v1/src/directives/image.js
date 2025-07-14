@@ -4,7 +4,7 @@ export const image = {
   },
   updated(el, binding) {
     checkImage(el, binding);
-  }
+  },
 };
 
 const checkImage = async (el, binding) => {

@@ -36,11 +36,10 @@ const ui = useUI();
   flex-direction: column;
 
   .maintenance-img {
-    padding-bottom: 12px;
     img {
       display: block;
       width: 100%;
-      max-width: 200px;
+      max-width: 250px;
     }
   }
 

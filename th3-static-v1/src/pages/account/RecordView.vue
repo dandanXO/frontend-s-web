@@ -4,30 +4,28 @@
       <q-form layout="inline" :model="searchForm">
         <div class="date-field">
           <q-input filled v-model="searchForm.startDate" readonly>
-            <template v-slot:prepend>
-              <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="white" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
+            <template v-slot:append>
+              <img src="../../assets/images/earn-money/calendar-icon.svg" />
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="white" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
             </template>
           </q-input>
-          <span>{{ $t("records.to") }}</span>
+          <span>to</span>
           <q-input filled v-model="searchForm.endDate" readonly>
-            <template v-slot:prepend>
-              <q-icon name="calendar_today" class="cursor-pointer text-purple-7">
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="white" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
+            <template v-slot:append>
+              <img src="../../assets/images/earn-money/calendar-icon.svg" />
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="white" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
             </template>
           </q-input>
         </div>
@@ -37,8 +35,14 @@
       </q-form>
     </q-card>
 
+    <!-- <q-tabs v-model="selectedRange" @update:model-value="updateDateRange" active-color="green" indicator-color="green">
+      <q-tab name="1" label="1 Day" />
+      <q-tab name="7" label="7 Days" />
+      <q-tab name="30" label="30 Days" />
+    </q-tabs> -->
+
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noRecord')"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('notify.noRecord')"></NoInfoComponent>
 
     <template v-else>
       <NoInfoComponent
@@ -47,28 +51,67 @@
         noInfoTitle="You have reached the end of the page."
       ></NoInfoComponent>
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
-        <q-card-section class="top-wrapper">
-          <div class="date">{{ e.betTime }}</div>
-          <div :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`">
-            {{ `${e.payout > 0 ? $t("records.profit") : $t("records.loss")}` }}
-          </div>
-        </q-card-section>
+        <!-- <q-card-section class="top-wrapper">
+
+
+        </q-card-section> -->
 
         <q-card-section class="mid-wrapper">
-          {{ store.currency.label }}
-          <span :class="`${e.payout > 0 ? 'win-amt' : 'loss-amt'}`">{{ convertToCommaAmount(e.payout, false) }}</span>
+          <div class="game-platform-val">
+            <img
+              :src="require(`../../assets/images/index/logo/logo-${e.platform.toLowerCase()}.png`)"
+              :class="{
+                'nine-w': e.platform === 'NineW'
+              }"
+            />
+            / {{ e.platform }}
+          </div>
+          <q-btn
+            flat
+            :class="{
+              'btn--green': ['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus),
+              'btn--red': ['CANCEL', 'ROLLBACK', 'PATCH'].includes(e.betStatus),
+              'btn--orange': e.betStatus === 'BET',
+              'btn--yellow': e.betStatus === 'UNSETTLED',
+              'btn--blue': ['JACKPOT', 'BONUS'].includes(e.betStatus)
+            }"
+            :label="getRecordStatus(e.betStatus)"
+          ></q-btn>
         </q-card-section>
 
         <q-card-section class="bot-wrapper">
           <div class="origin">
+            <div class="bet">{{ $t("records.date") }}</div>
             <div class="bet">{{ $t("records.bet") }}</div>
-            <div class="game-platform">{{ $t("records.gamePlatform") }}</div>
+            <!-- <div class="game-platform">{{ $t("records.gamePlatform") }}</div> -->
           </div>
           <div class="origin-val">
-            <div class="bet-val">{{ convertToCommaAmount(e.bet, false) }}</div>
-            <div class="game-platform-val">{{ displayPlatform(e.platform) }}</div>
+            <div class="bet-val">{{ normalDateTime(e.betTime) }}</div>
+            <div class="bet-val">{{ convertToCommaAmount(e.bet, true) }}</div>
           </div>
         </q-card-section>
+
+        <q-card-section class="bot-wrapper last">
+          <template v-if="e.platform !== 'NineW'">
+            <div class="origin">
+              <div class="bet">{{ $t("records.beforeBalance") }}</div>
+              <div class="game-platform">{{ $t("records.afterBalance") }}</div>
+            </div>
+            <div class="origin-val">
+              <div class="bet-val win-amt">{{ convertToCommaAmount(e.beforeBalance, true) }}</div>
+              <div class="game-platform-val win-amt">{{ convertToCommaAmount(e.afterBalance, true) }}</div>
+            </div>
+          </template>
+          <template v-else>
+            <div class="origin">
+              <div class="bet">{{ $t("records.payout") }}</div>
+            </div>
+            <div class="origin-val">
+              <div class="bet-val win-amt">{{ convertToCommaAmount(e.payout, true) }}</div>
+            </div>
+          </template>
+        </q-card-section>
+        <BetRefereceWithCopy :betId="e.betId" />
       </q-card>
 
       <q-card class="pagination-container">
@@ -81,15 +124,17 @@
 </template>
 
 <script setup>
-import { onActivated, onMounted, reactive, ref } from "vue";
+import { onActivated, onMounted, reactive, ref, computed } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { updateDate, convertToGMT8 } from "src/boot/utils";
+import { updateDate, normalDateTime, convertToGMT55 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
-import { convertToCommaAmount, displayPlatform } from "src/boot/utils";
+import { convertToCommaAmount } from "src/boot/utils";
 import { useQuasar } from "quasar";
+import { t } from "src/boot/lang";
+import BetRefereceWithCopy from "../../components/account/BetReferenceWithCopy.vue";
 
 const router = useRouter();
 const store = userStore();
@@ -113,13 +158,22 @@ const isActiveSlide = (e) => {
   return false;
 };
 
+const selectedRange = ref("1");
+
+const updateDateRange = (range) => {
+  searchRecord();
+  const days = parseInt(range);
+  searchForm.startDate = updateDate(days);
+  searchForm.endDate = updateDate(0);
+};
+
 const isLoading = ref(true);
 const isNoInfo = ref(true);
 const isNoInfoAtEnd = ref(false);
 
 const searchForm = reactive({ startDate: "", endDate: "", platform: "", memberId: store.id });
 const setTime = () => {
-  searchForm.startDate = updateDate(7);
+  searchForm.startDate = updateDate(1);
   searchForm.endDate = updateDate(0);
 };
 
@@ -226,20 +280,31 @@ const totalBetRecord = reactive({
   totalBet: 0,
   totalPayout: 0
 });
-const getGameBetRecordTotal = () => {
-  const obj = {
-    memberId: store.id,
-    platform: searchForm.platform,
-    startDate: convertToGMT8(searchForm.startDate),
-    endDate: convertToGMT8(searchForm.endDate)
-  };
-  api.get("/session/member/gameBetRecordTotal", { params: obj }).then((res) => {
-    if (res.code === 0) {
-      const { totalBet, totalPayout } = res.data;
-      totalBetRecord.totalBet = totalBet;
-      totalBetRecord.totalPayout = totalPayout;
-    }
-  });
+
+const getRecordStatus = (recordStatus) => {
+  if (recordStatus === "SETTLE") {
+    return t("records.settle"); // Settle
+  } else if (recordStatus === "SETTLED") {
+    return t("records.settled"); // Settled
+  } else if (recordStatus === "BET_N_SETTLE") {
+    return t("records.betAndSettle"); // Bet and Settle
+  } else if (recordStatus === "CANCEL") {
+    return t("records.cancel"); // Cancel
+  } else if (recordStatus === "ROLLBACK") {
+    return t("records.rollback"); // Rollback
+  } else if (recordStatus === "PATCH") {
+    return t("records.patch"); // Patch
+  } else if (recordStatus === "BET") {
+    return t("records.bet"); // Bet
+  } else if (recordStatus === "UNSETTLED") {
+    return t("records.unsettled"); // Unsettled
+  } else if (recordStatus === "JACKPOT") {
+    return t("records.jackpot"); // Jackpot
+  } else if (recordStatus === "BONUS") {
+    return t("records.bonus"); // Bonus
+  } else {
+    return recordStatus;
+  }
 };
 
 onActivated(() => {
@@ -253,7 +318,7 @@ onActivated(() => {
 <style lang="scss">
 .search-container {
   border-radius: 0.5rem;
-  background: rgba(21, 0, 37, 0.2);
+  background: transparent;
   padding: 1rem;
   margin-top: 0;
 
@@ -266,17 +331,10 @@ onActivated(() => {
       padding: 0px 12px;
     }
 
-    .q-field__control,
-    .q-field__marginal {
-      //border: 1px solid #b478ff4d;
-      height: unset;
-    }
-
     .q-field {
-      border: 1px solid #b478ff4d;
-      background: #28292b;
+      background: #2f3136;
       padding: 4px 3px;
-      border-radius: 8px;
+      border-radius: 0px;
     }
 
     .q-field__native {
@@ -310,66 +368,151 @@ onActivated(() => {
   }
 }
 .record-container {
-  border-radius: 0.5rem;
-  background: rgba(21, 0, 37, 0.2);
-  padding: 1rem;
-  margin-top: 0;
+  // border-radius: 0;
+  // // background: rgba(21, 0, 37, 0.2);
+  // box-shadow: none;
+  // border-bottom: 1px solid #ffffff33;
+  // background: transparent;
+  // padding: 1rem;
+  // margin-top: 0;
 
+  background: #292d2e;
+  border-radius: 6px;
+  box-shadow: none;
   .top-wrapper {
-    display: flex;
+    display: grid;
+    padding: 1rem;
+    // grid-template-columns: 50% 50%;
     align-items: center;
-    justify-content: space-between;
-    margin: 0 0 0.5rem 0;
+
+    .date-status-wrapper {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
     .date {
       color: rgba(255, 255, 255, 0.5);
       font-size: 0.825rem;
       font-weight: 700;
     }
+    .amt {
+      span {
+        color: #fff;
+      }
 
-    .bet-btn {
-      color: #fae576;
-      font-size: 0.825rem;
-      font-weight: 700;
-      text-transform: capitalize;
-      border-radius: 12.5rem;
-      background: rgba(250, 229, 118, 0.2);
-      padding: 0.25rem 1rem;
-      min-height: unset;
+      .win-amt {
+        color: $positive;
+      }
+
+      .loss-amt {
+        color: $negative;
+      }
     }
-
-    .loss-btn {
-      color: #bc66ff;
-      font-size: 0.825rem;
-      font-weight: 700;
-      text-transform: capitalize;
-      border-radius: 12.5rem;
-      background: rgba(188, 102, 255, 0.2);
-      padding: 0.25rem 1rem;
-      min-height: unset;
-    }
-  }
-
-  .win-amt {
-    color: $positive;
-  }
-
-  .loss-amt {
-    color: $negative;
   }
 
   .mid-wrapper {
     font-size: 1rem;
     font-weight: 700;
     line-height: 2.25rem;
-    background: rgba(21, 0, 37, 0.5);
+    // background: rgba(21, 0, 37, 0.5);
     margin: 0 -1rem;
-    padding: 0 1rem;
 
-    span {
-      background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    padding: 1rem 1rem 0.5rem;
+    display: flex;
+    margin: 0px;
+    width: 100%;
+    justify-content: space-between;
+
+    .bet-btn {
+      color: #5bf25c;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(250, 229, 118, 0.2);
+      min-height: unset;
+    }
+
+    .loss-btn {
+      color: #b81212;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(184, 18, 18, 0.2);
+      min-height: unset;
+    }
+
+    .btn--yellow {
+      color: #ffe500;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(255, 229, 0, 0.2);
+      min-height: unset;
+    }
+
+    .btn--blue {
+      color: #00f0ff;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(0, 240, 255, 0.2);
+      min-height: unset;
+    }
+
+    .btn--orange {
+      color: #fbab1b;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(251, 171, 27, 0.2);
+      min-height: unset;
+    }
+
+    .btn--red {
+      color: #ff3434;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(255, 52, 52, 0.2);
+      min-height: unset;
+    }
+
+    .btn--green {
+      color: #21ef89;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(33, 239, 137, 0.2);
+      min-height: unset;
+    }
+
+    .game-platform-val {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      font-size: 16px;
+      img {
+        height: 20px;
+        &.nine-w {
+          margin-right: 4px;
+        }
+      }
     }
   }
 
@@ -377,13 +520,21 @@ onActivated(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0.5rem 0 0 0;
+    margin: 0 10px;
+    &.last {
+      margin-bottom: 10px;
+    }
+
+    .win-amt {
+      color: $positive;
+    }
 
     .origin {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       color: rgba(255, 255, 255, 0.5);
+      gap: 6px;
 
       .bet {
         font-size: 0.825rem;
@@ -397,13 +548,14 @@ onActivated(() => {
     }
 
     .origin-val {
+      gap: 6px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
       justify-content: space-between;
       .bet-val {
         font-size: 0.825rem;
-        font-weight: 700;
+        color: #b2bdbf;
       }
 
       .game-platform-val {
@@ -411,6 +563,28 @@ onActivated(() => {
         font-weight: 700;
       }
     }
+  }
+  .order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 12px;
+    gap: 10px;
+    .bet-id {
+      font-size: smaller;
+      word-wrap: break-word;
+      color: #ffffff;
+      font-size: 13px;
+    }
+  }
+  .bet-id-wrapper {
+    display: flex;
+    background: #ffffff0f;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
   }
 }
 
@@ -422,7 +596,7 @@ onActivated(() => {
   border-bottom: 0;
 
   .pagination-btn {
-    background: #7c28bd;
+    background: #58b475;
     font-size: 20px;
     width: 40px;
     height: 40px;

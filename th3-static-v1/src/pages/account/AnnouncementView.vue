@@ -1,7 +1,17 @@
 <template>
   <div class="announcement-section">
-    <q-tabs active-color="dark" indicator-color="bright" align="justify" v-model="activeKey">
-      <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.id" :label="tab.name" />
+    <q-tabs
+        active-color="dark"
+        indicator-color="bright"
+        align="justify"
+        v-model="activeKey"
+    >
+      <q-tab
+          v-for="(tab, i) in tabItems"
+          :key="i"
+          :name="tab.id"
+          :label="tab.name"
+      />
     </q-tabs>
 
     <q-tab-panels v-model="activeKey" animated>
@@ -9,14 +19,23 @@
         <q-list class="rounded-borders">
           <span v-for="ann in announcementsList" :key="ann">
             <div v-if="ann.typeId === tab.id">
-              <q-expansion-item class="expansion-bg" expand-separator :label="ann.title">
+              <q-expansion-item
+                  class="expansion-bg"
+                  expand-separator
+                  :label="ann.title"
+              >
                 <q-card>
                   <q-card-section>
                     {{ ann.content }}
                   </q-card-section>
                 </q-card>
               </q-expansion-item>
-              <div class="text-center q-pa-md text-brand" v-if="ann.content.length === 0">暂时无通知</div>
+              <div
+                  class="text-center q-pa-md text-brand"
+                  v-if="ann.content.length === 0"
+              >
+                暂时无通知
+              </div>
             </div>
           </span>
         </q-list>

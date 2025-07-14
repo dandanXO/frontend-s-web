@@ -21,8 +21,8 @@
 import { ref } from "vue";
 // import { postDeposit } from "@/api/personal/deposit";
 // import { doIt } from "@/utils/action";
-import { doIt } from "@/boot/action";
-import { cashier } from "@/boot/axios";
+import { doIt } from "boot/action";
+import { cashier } from "boot/axios";
 import { useQuasar } from "quasar";
 
 const $q = useQuasar();
