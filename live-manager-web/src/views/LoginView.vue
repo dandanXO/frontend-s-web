@@ -106,10 +106,15 @@ const onFormSubmit = () => {
   loginFn(loginForm.loginName, loginForm.password)
     .then((result) => {
       if (result) {
-        router.push({ path: '/' })
+        // router.push({ path: '/' })
         store.isAuthLoading = false
         console.log('Login successful:', result.memberType)
         store.memberType = result.memberType
+        if(result.memberType === 'streamer'){
+          router.push({ path: '/stream/list' })
+        }else{
+          router.push({ path: '/live-sport/live-event' })
+        }
         toast.add({ severity: 'success', summary: t('LOGIN_SUCCESS'), life: 3000 })
       } else {
         store.isAuthLoading = false
