@@ -61,7 +61,12 @@
                 @click="handleDotClick(index)"
               ></div>
             </div>
-            <q-checkbox v-model="checked" :label="$t('announcement.dontRemindToday')" color="blue" />
+            <q-checkbox
+              v-model="checked"
+              class="dont-remind-today"
+              :label="$t('announcement.dontRemindToday')"
+              color="blue"
+            />
           </div>
         </div>
         <div class="dialog-action">
@@ -283,6 +288,16 @@ watch(checked, (val) => {
       background: #2792fd;
       width: 20px;
       border-radius: 56px;
+    }
+  }
+
+  .dont-remind-today {
+    max-width: 50vw;
+    :deep(.q-checkbox__label) {
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

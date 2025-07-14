@@ -14,11 +14,11 @@
         <div class="announcement-content" v-html="item.content"></div>
         <div class="announcement-footer">
           <div class="footer-button" @click="handleService">
-            {{ $t("announcement.btn.cs") }}
+            <span>{{ $t("announcement.btn.cs") }}</span>
             <img src="../../assets/images/home/announcement/arrow-right.svg" alt="" />
           </div>
           <div class="footer-button" @click="handleDetail(item)">
-            {{ $t("announcement.btn.detail") }}
+            <span>{{ $t("announcement.btn.detail") }}</span>
             <img src="../../assets/images/home/announcement/arrow-right.svg" alt="" />
           </div>
         </div>
@@ -116,6 +116,7 @@ const handleDetail = (mail) => {
   align-items: center;
 
   .footer-button {
+    max-width: 32vw;
     cursor: pointer;
     background: #2792fd;
     display: inline-flex;
@@ -123,12 +124,20 @@ const handleDetail = (mail) => {
     align-items: center;
     border-radius: 6px;
     height: 30px;
-    font-size: 16px;
+    font-size: 14px;
     gap: 2px;
     padding: 8px 12px;
     color: white;
     &:hover {
       filter: brightness(0.9);
+    }
+
+    span {
+      display: inline-block;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }
