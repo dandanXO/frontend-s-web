@@ -369,14 +369,15 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../utils/util'
-import { getShortcuts } from "@/utils/datetime";
+import { getShortcuts, convertDateToStart, convertDateToEnd } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const { t } = useI18n()
 const startDate = new Date()
-startDate.setDate(startDate.getDate())
-// const defaultStartDate = convertDate(startDate)
-// const defaultEndDate = convertDate(new Date())
+startDate.setDate(startDate.getDate() - 3)
+const defaultStartDate = convertDateToStart(startDate)
+const defaultEndDate = convertDateToEnd(new Date())
+
 const reviewForm = ref()
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -416,7 +417,7 @@ const request = reactive({
   size: 30,
   current: 1,
   name: null,
-  feedbackTime: [null, null],
+  feedbackTime: [defaultStartDate, defaultEndDate],
   commitTime: [null, null],
   siteId: null,
   orderNo: null,
@@ -460,7 +461,7 @@ async function submit() {
 
 function resetQuery() {
   request.name = null
-  request.feedbackTime = [null, null]
+  request.feedbackTime = [defaultStartDate, defaultEndDate]
   request.commitTime = [null, null]
   request.siteId = store.state.user.siteId
   request.orderNo = null
