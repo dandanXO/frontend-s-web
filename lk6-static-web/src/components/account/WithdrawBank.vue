@@ -144,7 +144,7 @@
               <el-select
                 class="select"
                 v-model="bankCardInfo.bankId"
-                :placeholder="'选择' + chooseCard()"
+                :placeholder="$t('form.choose') + ' ' + chooseCard()"
                 style="width: 100%"
               >
                 <el-option v-for="b in banksList" :key="b.id" :label="getOptionLabel(b.name)" :value="b.id">
@@ -205,7 +205,7 @@
         </el-form-item>
 
         <el-form-item class="txt-center" v-if="isSendOtp || store.isRequirePhoneValidation === false">
-          <el-button class="txt-center common-btn" @click="submitBankCard">提交</el-button>
+          <el-button class="txt-center common-btn" @click="submitBankCard">{{$t('btn.submit')}}</el-button>
         </el-form-item>
         <span v-if="isEWALLET" class="tip-text">
           *特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！
@@ -213,7 +213,7 @@
       </el-form>
     </el-dialog>
     <el-dialog v-model="phoneCaptchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px">
-      <el-button size="large" color="#3bafda" class="common-btn" style="width: 100%" @click="sendOtp">提交</el-button>
+      <el-button size="large" color="#3bafda" class="common-btn" style="width: 100%" @click="sendOtp">{{$t('btn.submit')}}</el-button>
     </el-dialog>
 
     <el-dialog
@@ -435,7 +435,7 @@ export default defineComponent({
     const bankTypes = computed(() => [
       // { value: "Bank", text: "银行卡" },
       // ...(alipayAvailable.value ? [{ value: "alipay", text: "支付宝" }] : []),
-      { value: "Crypto", text: "数字货币" },
+      { value: "Crypto", text: t('form.crypto') },
       // { value: "e-Wallet", text: "电子钱包" }
     ]);
     const personalState = reactive({
@@ -871,11 +871,11 @@ export default defineComponent({
     };
     const unbindBankCard = (card) => {
       ElMessageBox.prompt(
-        `请输入解绑${getOptionLabel(card.bankName)}的${card.bankType === "CRYPTO" || card.bankType === "EWALLET" ? "钱包地址" : "卡号"}`,
-        "确认解绑",
+        t('form.pleaseEnterField', {field: t('form.cardAddress')}),
+        t('form.confirmUnbind'),
         {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+          confirmButtonText: t('btn.confirm'),
+          cancelButtonText: t('btn.cancel'),
           cancelButtonClass: "cancel-btn",
           type: "warning" // Error message to display if input is invalid
         }
@@ -909,7 +909,7 @@ export default defineComponent({
         .catch(() => {
           notify({
             type: "info",
-            message: "删除取消"
+            message: t('message.deleteCancelled')
           });
         });
     };
@@ -936,7 +936,7 @@ export default defineComponent({
 
     const chooseCard = () => {
       if (isUSDT.value) {
-        return "虚拟币";
+        return t('form.crypto');
       } else if (isEWALLET.value) {
         return "电子钱包";
       } else if (isALIPAY.value) {
@@ -948,7 +948,7 @@ export default defineComponent({
 
     const numAddress = () => {
       if (isUSDT.value) {
-        return "钱包地址";
+        return t('form.cardAddress');
       } else if (isEWALLET.value && !isSZPAY.value) {
         return "电子钱包";
       } else if (isEWALLET.value && isSZPAY.value) {

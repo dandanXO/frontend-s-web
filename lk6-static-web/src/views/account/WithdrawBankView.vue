@@ -238,11 +238,13 @@ import {useRouter} from "vue-router";
 import {sendSessionSms} from "@/api/personal/personal";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
+import { useI18n } from "vue-i18n";
 // import moment from "moment";
 
 export default defineComponent({
   name: "WithdrawBankView",
   setup() {
+    const { t } = useI18n();
     const notify = useNotify()
     let validateEmptyCardNo = async (r, v) => {
       if (selectedBankType.value === 'Bank') {
@@ -384,7 +386,7 @@ export default defineComponent({
       pageSize: 5,
       pageCount: 1
     }])
-    const bankTypes = [{value: 'Bank', text: '银行卡'}, {value: 'Crypto', text: '数字货币'}, {
+    const bankTypes = [{value: 'Bank', text: '银行卡'}, {value: 'Crypto', text: t('form.crypto')}, {
       value: 'e-Wallet',
       text: '电子钱包'
     }]
@@ -754,11 +756,11 @@ export default defineComponent({
     const unbindBankCard = (card) => {
 
       ElMessageBox.prompt(
-          `请输入解绑${getOptionLabel(card.bankName)}的${card.bankType === 'CRYPTO' || card.bankType === 'EWALLET' ? '钱包地址' : '卡号'}`,
-          '确认解绑',
+          t('form.pleaseEnterField', {field: t('form.cardAddress')}),
+          t('form.confirmUnbind'),
           {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+            confirmButtonText: t('btn.confirm'),
+            cancelButtonText: t('btn.cancel'),
             cancelButtonClass: 'cancel-btn',
             type: 'warning',
             // inputErrorMessage: '请输入正确的卡号', // Error message to display if input is invalid
@@ -798,7 +800,7 @@ export default defineComponent({
           .catch(() => {
             notify({
               type: 'info',
-              message: '删除取消',
+              message: t('message.deleteCancelled'),
             });
           });
     };
