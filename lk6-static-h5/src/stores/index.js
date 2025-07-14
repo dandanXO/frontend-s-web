@@ -47,7 +47,8 @@ export const userStore = defineStore("userStore", {
       appDownloadUrl: "",
       visitorId: "",
       withdrawType: "",
-      chatGuid: ""
+      chatGuid: "",
+      profilePhoto: ""
     };
   },
   actions: {
@@ -209,6 +210,7 @@ export const userStore = defineStore("userStore", {
           this.memberType = response.data.memberType;
           this.vip = response.data.vip;
           this.profilePicture = response.data.pictureUrl;
+          this.profilePhoto = response.data.profilePhoto;
           this.displayName = response.data.displayName;
           // this.personalAddress = response.data.personalAddress
           this.phoneVerified = response.data.phoneVerified;
