@@ -427,14 +427,14 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
       if (platformCode !== "LuckySport" && platformCode !== "NineW") {
         visible.value = true;
       }
-      if (platformCode === "BetBy" && isBetByLoad.value === false) {
-        console.log("Load BEt By");
-        isBetByLoad.value = true;
-        const script = document.createElement("script");
-        script.src = "https://ui.invisiblesport.com/bt-renderer.min.js";
-        script.async = true;
-        document.head.appendChild(script);
-      }
+      // if (platformCode === "BetBy" && isBetByLoad.value === false) {
+      //   console.log("Load BEt By");
+      //   isBetByLoad.value = true;
+      //   const script = document.createElement("script");
+      //   script.src = "https://ui.invisiblesport.com/bt-renderer.min.js";
+      //   script.async = true;
+      //   document.head.appendChild(script);
+      // }
 
       var way = null;
       if ("standalone" in window.navigator && window.navigator.standalone) {
