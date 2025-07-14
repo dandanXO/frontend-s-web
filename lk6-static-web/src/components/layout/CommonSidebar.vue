@@ -4,14 +4,14 @@
       <div class="additional-info-item" @click.stop.prevent="store.openLiveChat()">
         <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
         <span style="margin-left: 5px">
-          官网客服
+          {{ $t('menu.officialSupport') }}
           <img width="20px" height="20px" src="../../assets/home/24-hours-line.svg" class="icon-24h" />
         </span>
       </div>
       <a class="additional-info-item" @click.stop.prevent="goToLiveChatPromo()">
         <!-- <img src="../../assets/images/home/sticky-sidebar/email-icon.svg" /> -->
         <img style="margin-right: 8px" src="@/components/hotpromo/officialGift/img/voxis.svg" />
-        <span style="margin-left: 5px">专属客服</span>
+        <span style="margin-left: 5px">{{ $t('menu.dedicatedSupport') }}</span>
       </a>
       <!--      <div class="additional-info-item">-->
       <!--        <img src="../../assets/images/home/sticky-sidebar/phone-icon.svg" />-->
@@ -36,17 +36,17 @@
       </router-link> -->
       <div class="sticky-sidebar-item" @mouseover="customerHovered = true">
         <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
-        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">客服中心</div>
+        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">{{ $t('menu.supportCentre') }}</div>
       </div>
       <div @mouseover="customerHovered = false">
         <router-link to="/app" class="sticky-sidebar-item">
           <img src="../../assets/images/home/sticky-sidebar/app-dl-icon.svg" />
-          <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">APP 下载</div>
+          <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">{{ $t('menu.appDownload') }}</div>
         </router-link>
       </div>
       <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
         <img src="../../assets/images/home/sticky-sidebar/back-top-icon.svg" />
-        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">返回顶部</div>
+        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">{{ $t('menu.backToTop') }}</div>
       </div>
     </div>
   </div>
@@ -760,6 +760,8 @@ export default defineComponent({
       white-space: nowrap;
       transition: 0.3s all;
       text-align: center;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
 
       &.sticky-hovered {
         opacity: 1;

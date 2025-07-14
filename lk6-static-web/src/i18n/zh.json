@@ -9,13 +9,25 @@
     "edit": "编辑",
     "submit": "提交",
     "bind": "绑定",
-    "confirm": "确认"
+    "confirm": "确认",
+    "copy": "复制",
+    "followUp": "催单",
+    "cancel": "取消",
+    "confirmPayment": "确认到账",
+    "logout": "退出登录"
   },
   "message": {
     "loginFirstAction": "请登录后再操作",
-    "systemPrompt": "系统提示"
+    "systemPrompt": "系统提示",
+    "copied": "已复制",
+    "noAnnouncementYet": "暂无公告",
+    "success": "成功",
+    "submitSuccessfully": "提交成功"
   },
   "form": {
+    "remark": "Remark",
+    "selectImage": "选择图片",
+    "followUp": "催单",
     "realName": "姓名",
     "username": "用户名",
     "password": "密码",
@@ -65,7 +77,92 @@
     "cardAddress": "地址",
     "bindTime": "绑定时间",
     "unbindTime": "解绑时间",
-    "gender": "性别"
+    "gender": "性别",
+    "fail": "失败",
+    "totalBet": "总投注",
+    "platforms": "平台",
+    "allPlatforms": "全部平台",
+    "doNotRemindAgainToday": "今天不再提醒",
+    "depositCentreTagline": "支持虚拟币 USDT 小额存提，24 小时安全，便捷，秒存秒提！",
+    "estimatedReceivables": "预计到账",
+    "bank": "银行",
+    "selectField": "选择{field}",
+    "perDeposit": "单笔存款",
+    "amount": "金额",
+    "birthday": "生日",
+    "male": "男",
+    "female": "女"
+  },
+  "table": {
+    "gameBetRecord": {
+      "transactionId": "注单号",
+      "betTime": "游戏时间",
+      "alias": "游戏平台",
+      "bet": "投注",
+      "gameType": "游戏类型",
+      "betStatus": "投注状态",
+      "serialNumber": "编码",
+      "payout": "派彩"
+    },
+    "deposit": {
+      "depositAmount": "金额",
+      "status": "状态",
+      "paymentType": "存款类型",
+      "depositDate": "存款日期",
+      "operation": "操作",
+      "serialNumber": "编码"
+    },
+    "withdraw": {
+      "withdrawAmount": "金额",
+      "status": "状态",
+      "withdrawDate": "提款日期",
+      "operation": "操作",
+      "serialNumber": "编码"
+    },
+    "transfer": {
+      "type": "转账类型",
+      "alias": "游戏平台",
+      "amount": "金额",
+      "status": "状态",
+      "transferDate": "时间",
+      "serialNumber": "编码"
+    },
+    "rebates": {
+      "privilegeName": "优惠名",
+      "amount": "金额",
+      "recordTime": "记录时间",
+      "serialNumber": "编码"
+    },
+    "turnover": {
+      "subType": "账变类型",
+      "amount": "金额",
+      "platformCode": "平台",
+      "recordTime": "时间",
+      "serialNumber": "编码"
+    },
+    "betRecord": {
+      "betId": "下注 ID",
+      "transactionId": "交易 ID",
+      "platform": "游戏平台",
+      "bet": "下注",
+      "payout": "支出",
+      "beforeBalance": "余额前金额",
+      "afterBalance": "余额后金额",
+      "betStatus": "投注状态",
+      "gameType": "游戏类型",
+      "betTime": "下注时间",
+      "settleTime": "结算时间",
+      "result": "结果",
+      "sportBetResult": "体育投注结果",
+      "serialNumber": "编码"
+    },
+    "reminderRecord": {
+      "orderNo": "订单号",
+      "financeRemark": "财务反馈",
+      "feedbackTime": "反馈时间",
+      "type": "类型",
+      "serialNumber": "编码"
+    }
   },
   "menu": {
     "promotion": "优惠",
@@ -94,7 +191,20 @@
     "match": "赛事",
     "event": "活动",
     "announcement": "公告",
-    "transaction": "充提"
+    "transaction": "充提",
+    "depositRecords": "存款记录",
+    "accountActivityLog": "账变记录",
+    "withdrawRecords": "提款记录",
+    "promoRecords": "优惠记录",
+    "betRecords": "投注记录",
+    "followUpRecords": "催单记录",
+    "inbox": "站內信",
+    "supportCentre": "客服中心",
+    "appDownload": "APP 下载",
+    "backToTop": "返回顶部",
+    "officialSupport": "官网客服",
+    "dedicatedSupport": "专属客服",
+    "announcementList": "公告列表"
   },
   "footer": {
     "paymentMethods": "支付方式",

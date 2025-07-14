@@ -9,11 +9,11 @@
 
         <div class="announcement-footer">
           <div class="footer-button" @click="store.openLiveChat()">
-            联系客服
+            {{ $t('form.contactSupport') }}
             <img src="@/assets/images/home/sticky-sidebar/cs-icon.svg" />
           </div>
           <div class="footer-button detail" @click="goToMailDetail(item)">
-            查看详情
+            {{ $t('promotion.checkDetails') }}
           </div>
         </div>
       </el-carousel-item>
