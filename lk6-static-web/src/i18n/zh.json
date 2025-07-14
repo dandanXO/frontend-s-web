@@ -126,7 +126,8 @@
     "statusIsTransferOut": "转出",
     "statusIsTransferIn": "转进",
     "statusIsVipRebate": "VIP 返水",
-    "noData": "没有数据"
+    "noData": "没有数据",
+    "anyType": "任意类型"
   },
   "table": {
     "gameBetRecord": {

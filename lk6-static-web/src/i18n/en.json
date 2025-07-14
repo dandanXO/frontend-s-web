@@ -126,7 +126,8 @@
     "statusIsTransferOut": "Transfer Out",
     "statusIsTransferIn": "Transfer In",
     "statusIsVipRebate": "VIP Rebate",
-    "noData": "No Data"
+    "noData": "No Data",
+    "anyType": "Any Type"
   },
   "table": {
     "gameBetRecord": {
