@@ -216,11 +216,11 @@ router.beforeEach((to, from, next) => {
 
     if (to.meta.requiresAuth) {
       // 账号已在其他设备登录，
-      ElMessageBox.alert(i18n.t('message.loginFirstAction'), i18n.t('message.systemPrompt'), {
+      ElMessageBox.alert(i18n.global.t('message.loginFirstAction'), i18n.global.t('message.systemPrompt'), {
         // if you want to disable its autofocus
         // autofocus: false,
         center: true,
-        confirmButtonText: i18n.t('btn.confirm'),
+        confirmButtonText: i18n.global.t('btn.confirm'),
         showClose: false,
         buttonSize: "large"
       }).then(() => {
