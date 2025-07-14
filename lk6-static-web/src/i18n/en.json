@@ -118,7 +118,15 @@
     "statusIsSettled": "Settled",
     "statusIsBetNSettle": "Bet & Settle",
     "statusIsCancelled": "Cancelled",
-    "statusIsPatched": "Patched"
+    "statusIsPatched": "Patched",
+    "statusIsPaymentOngoing": "Ongoing",
+    "statusIsPaymentSuccess": "Success",
+    "statusIsPaymentClosed": "Closed",
+    "statusIsTransferFailed": "Transfer Failed",
+    "statusIsTransferOut": "Transfer Out",
+    "statusIsTransferIn": "Transfer In",
+    "statusIsVipRebate": "VIP Rebate",
+    "noData": "No Data"
   },
   "table": {
     "gameBetRecord": {
