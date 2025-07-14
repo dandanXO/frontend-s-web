@@ -1,4 +1,4 @@
-import Image from "../directives/image.js";
+import Image from '../directives/image.js'
 
 export default ({ app }) => {
   // We globally register our directive with Vue;
@@ -6,5 +6,5 @@ export default ({ app }) => {
   // but that should not be part of your directive name
   // https://vuejs.org/v2/guide/custom-directive.html
   // 'my-directive' will be used as 'v-my-directive'
-  app.directive("image", Image);
-};
+  app.directive('image', Image)
+}

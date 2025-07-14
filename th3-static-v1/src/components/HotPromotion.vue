@@ -1,45 +1,82 @@
 <template>
-  <div class="hot-promo">
+  <div class="hot-promo" :style="list.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border-radius: 0;' : ''">
     <ClaimPromo
       v-if="isCommonPromo && store.hasToken()"
       :promo-id="list.id"
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
+    <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
 
-    <!-- external promos -->
-    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'th2-slot-ftd' && store.token" :params="list.param" />
-    <SpinLuckyWheelPromo v-if="!isCommonPromo && list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
+    <BonusSpinWheelPromo v-if="list.redirectUrl === 'pak-spin-wheel' && !isCommonPromo && store.token" />
+    <SignIn7DaysPromo v-if="list.redirectUrl === 'pak-signin-bonus' && !isCommonPromo && store.token" />
+    <NewPlayerSpinWheelPromo
+      v-if="list.redirectUrl === 'pak-newplayer-welcome-spin' && !isCommonPromo && store.token"
+    />
+    <NewPlayerWelcome
+      v-if="list.redirectUrl === 'pak-welcome-new-players' && !isCommonPromo && store.token"
+    />
+    <RedPacketRainPromo v-if="list.redirectUrl === 'pak-redpacketrain' && !isCommonPromo && store.token" />
+    <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
+    <NewPlayersPromo v-if="list.redirectUrl === 'pak-new-players' && !isCommonPromo && store.token" :list="list" />
+    <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'pak-aviator-golden-egg' && store.token" />
+    <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'pak-slot-ftd' && store.token" :params="list.param" />
+    <VideoAmbassador v-if="list.redirectUrl === 'pak-video-ambassador' && store.token" :params="list.param" />
+    <JackpotAviator
+      v-if="list.redirectUrl === 'pak-jackpot-aviator' && !isCommonPromo && store.token"
+      :promocode="list.promoCode"
+      :promoContent="list.pageContent"
+    />
+    <DepositSpinnerRewards
+      v-if="list.redirectUrl === 'pak-deposit-spinner-rewards' && store.token"
+      :params="list.param"
+    />
+    <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
+    <NewPlayerAccDepositPromo v-if="list.redirectUrl === 'new-player-acc-deposit'" :params="list.param" />
+    <Lucky9DayRewardsCarnival v-if="!isCommonPromo && list.redirectUrl === 'pak-lucky-10-day-bonus'" :params="list.param" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
     <q-card class="win-rebate-model">
       <q-card-section class="row items-center">
         <div class="bonus-svg-div">
-          <span class="bonus-text">You Get</span>
+          <span class="bonus-text">Congratulation!</span>
           <span class="claim-amt">{{ claimMsg }}</span>
         </div>
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn flat label="Ok" color="primary" v-close-popup />
+        <q-btn flat label="确定" color="primary" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
+import { defineComponent, onMounted, ref } from "vue";
+import { userStore } from "stores/index";
+import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
-import { defineComponent, ref } from "vue";
-
-import { eventapi } from "@/boot/axios";
-import ClaimPromo from "@/components/hotpromo/claimPromo.vue";
-import { userStore } from "@/stores/index";
 import * as _ from "lodash";
 import moment from "moment";
+import ClaimPromo from "../components/hotpromo/claimPromo.vue";
+import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
+import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheelPromo.vue";
+import SignIn7DaysPromo from "../components/hotpromo/signIn7Days/SignIn7DaysPromo";
+import NewPlayerSpinWheelPromo from "../components/hotpromo/newPlayerWheel/NewPlayerWheelPromo.vue";
+import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRainPromo.vue";
+import InterestProfitPromo from "../components/hotpromo/interestProfit/InterestProfitPromo.vue";
+import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.vue";
+import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
+import GoldenEggPromo from "./hotpromo/goldenEgg/GoldenEggPromo.vue";
 
-import SlotFtdPromo from "@/components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
+import VideoAmbassador from "./hotpromo/video-ambassador/VideoAmbassador.vue";
+import DepositSpinnerRewards from "./hotpromo/deposit-spinner-rewards/DepositSpinnerRewards.vue";
+import JackpotAviator from "./hotpromo/jackpotAviator/JackpotAviator.vue";
 import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
+import NewPlayerAccDepositPromo from "./hotpromo/new-player-acc-deposit/NewPlayerAccDepositPromo.vue"
+import Lucky9DayRewardsCarnival from "./hotpromo/lucky9day/Lucky9DayRewardsCarnival.vue"
+import NewPlayerWelcome from "../components/hotpromo/newPlayerSpinWheel/NewPlayerWheelPromo.vue"
 
 export default defineComponent({
   name: "HotPromo",
@@ -47,8 +84,22 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
+    HongBaoYuPromo,
+    BonusSpinWheelPromo,
+    SignIn7DaysPromo,
+    NewPlayerSpinWheelPromo,
+    RedPacketRainPromo,
+    InterestProfitPromo,
+    NewPlayersPromo,
     SlotFtdPromo,
-    SpinLuckyWheelPromo
+    VideoAmbassador,
+    GoldenEggPromo,
+    JackpotAviator,
+    DepositSpinnerRewards,
+    SpinLuckyWheelPromo,
+    NewPlayerAccDepositPromo,
+    Lucky9DayRewardsCarnival,
+    NewPlayerWelcome
   },
   props: {
     list: {
@@ -81,7 +132,7 @@ export default defineComponent({
           this.btnLoading = false;
           if (res.code === 0) {
             var rebatePoint = res.data;
-            this.claimMsg = store.currency.value + rebatePoint;
+            this.claimMsg = "₹" + rebatePoint;
             this.isClaimModal = true;
           } else {
             this.btnLoading = false;
@@ -98,7 +149,25 @@ export default defineComponent({
         this.selectedHotPromo = element;
       }
     });
-    if (this.list.redirectUrl === "th2-slot-ftd" || this.list.id === 40 || this.list.redirectUrl === "spin-lucky-wheel") {
+    if (
+      this.list.redirectUrl === "hongbaoyu" ||
+      this.list.redirectUrl === "pak-spin-wheel" ||
+      this.list.redirectUrl === "pak-signin-bonus" ||
+      this.list.redirectUrl === "pak-newplayer-welcome-spin" ||
+      this.list.redirectUrl === "pak-redpacketrain" ||
+      this.list.redirectUrl === "interest-profit" ||
+      this.list.redirectUrl === "pak-new-players" ||
+      this.list.redirectUrl === "pak-slot-ftd" ||
+      this.list.redirectUrl === "pak-aviator-golden-egg" ||
+      this.list.redirectUrl === "pak-video-ambassador" ||
+      this.list.redirectUrl === "pak-jackpot-aviator" ||
+      this.list.redirectUrl === "pak-deposit-spinner-rewards" ||
+      this.list.redirectUrl === "spin-lucky-wheel" ||
+      this.list.redirectUrl === "new-player-acc-deposit" ||
+      this.list.redirectUrl === "pak-lucky-10-day-bonus" ||
+      this.list.redirectUrl === "pak-welcome-new-players" ||
+      this.list.id === 40
+    ) {
       this.isCommonPromo = false;
     } else {
       this.isCommonPromo = true;
@@ -161,37 +230,6 @@ export default defineComponent({
     const dataSource = ref([]);
     const winnerDataSource = ref([]);
 
-    const winnerColumn = [
-      {
-        name: "number",
-        label: "号码",
-        field: "number",
-        align: "left",
-        sortable: true
-      },
-      {
-        name: "name",
-        label: "名字",
-        field: "loginName",
-        align: "left",
-        sortable: true
-      },
-      {
-        name: "status",
-        label: "状态",
-        field: "winStatus",
-        align: "left",
-        sortable: true
-      },
-      {
-        name: "date",
-        label: "日期",
-        field: "date",
-        align: "left",
-        sortable: true
-      }
-    ];
-
     const filterWinnerLists = () => {
       var resultTime = formState.value.resultTime;
       var winnerUrl = "/privi/winners";
@@ -216,6 +254,28 @@ export default defineComponent({
         }
       });
     };
+
+    // const loadLNWinnerList = () => {
+    //   const winnerUrl = "/privi/winners";
+    //   winnerDataSource.value = [];
+    //   loading.value = true;
+    //   eventapi
+    //     .get(winnerUrl)
+    //     .then((res) => {
+    //       loading.value = false;
+    //       var data = res.data.data;
+
+    //       for (let i in data) {
+    //         _.each(data[i].winners, function (winner, index) {
+
+    //           winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
+    //           console.log(winner);
+
+    //           winnerDataSource.value.push(winner);
+    //         })
+    //       }
+    //     });
+    // }
 
     const filterLuckyNumber = () => {
       loading.value = true;
@@ -254,6 +314,23 @@ export default defineComponent({
           // });
         });
     };
+    // const ClaimDailyRebate = (id) => {
+    //   if (!store.hasToken()) {
+    //   } else {
+    //     // var user_id = store.id;
+    //     var claim_id = '';
+    //     if (id == 27) {
+    //       claim_id = 'jolly88-daily-rebate';
+    //     } else if (id == 32) {
+    //       claim_id = 'jolly88-daily-slot';
+    //     } else if (id == 31) {
+    //       claim_id = 'jolly88-refund';
+    //     }
+
+    //     // console.log(eventapi);
+
+    // }
+    // }
 
     const submitLuckyNumber = () => {
       console.log(lucky_number.value);
@@ -319,7 +396,6 @@ export default defineComponent({
       formState,
       dataSource,
       winnerDataSource,
-      winnerColumn,
       filterColumn,
       loading,
       btnLoading,
@@ -329,7 +405,6 @@ export default defineComponent({
   }
 });
 </script>
-
 <style lang="scss">
 .hot-promo {
   border-radius: 10px;
@@ -424,9 +499,6 @@ export default defineComponent({
       &-active {
         background-image: linear-gradient(to right, #de4545, #db7e42);
       }
-    }
-
-    .ant-tabs-nav-container {
     }
 
     .ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane,

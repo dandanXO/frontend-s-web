@@ -104,7 +104,7 @@
               <div class="card-icon">
                 <q-icon key="md" size="md" name="add" />
               </div>
-              <div class="card-label">Add New Account</div>
+              <div class="card-label">{{ $t("btn.addNewAccount") }}</div>
             </div>
           </div>
         </q-card>
@@ -154,7 +154,7 @@
           <div class="top-wrapper">
             <div class="title">
               Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
-              {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} {{ store.currency.label }})
+              {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} RS)
             </div>
           </div>
 
@@ -171,7 +171,7 @@
                 (val) => !!val || 'Please Enter Withdraw Amount',
                 (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
                 (val) =>
-                  val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
+                  val <= withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
                 (val) =>
                   (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
                     val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
@@ -186,10 +186,10 @@
             <div class="info">
               <div class="desc-wrapper">
                 <div class="yel-dot"></div>
-                <div class="desc">Withdrew Amount</div>
+                <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
               </div>
               <div class="desc">
-                {{ store.currency.label }}:{{
+                RS:{{
                   withdrawalMethods[withdrawalDialogTab].withdrawMax -
                   withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount
                 }}
@@ -200,18 +200,14 @@
                 <div class="yel-dot"></div>
                 <div class="desc">{{ store.vip }} Daily Limit</div>
               </div>
-              <div class="desc">
-                {{ store.currency.label }}:{{ withdrawalMethods[withdrawalDialogTab].withdrawMax }}
-              </div>
+              <div class="desc">RS:{{ withdrawalMethods[withdrawalDialogTab].withdrawMax }}</div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
                 <div class="yel-dot"></div>
                 <div class="desc">Remain Wagers</div>
               </div>
-              <div class="desc">
-                {{ store.currency.label }}:{{ withdrawalMethods[withdrawalDialogTab].remainWagers }}
-              </div>
+              <div class="desc">RS:{{ withdrawalMethods[withdrawalDialogTab].remainWagers }}</div>
             </div>
           </div>
         </q-card>
@@ -234,7 +230,7 @@
         <div class="bottom-tnc">
           <div class="note-title">Note:</div>
           <div class="note">
-            <span>2% + 50{{ store.currency.label }}</span>
+            <span>3%+6Rs</span>
             of the withdrawal amount will be deducted as
             <span>bank commission</span>
           </div>
@@ -645,7 +641,7 @@ const isValidCardAddress = () => {
     .withdrawal-summary {
       font-family: "Manrope", sans-serif;
       border-radius: 10px;
-      background: #370a40;
+      background: #373c3d;
       padding: 1rem;
       margin-top: 0;
       display: flex;
@@ -715,8 +711,7 @@ const isValidCardAddress = () => {
 
         .bank-card-item {
           padding: 3px;
-          border-radius: 1.25rem;
-          background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
+          border-radius: 8px;
           position: relative;
           transition: 0.3s all;
           width: 100%;
@@ -724,7 +719,8 @@ const isValidCardAddress = () => {
           align-items: center;
           justify-content: center;
           color: #150025;
-
+          background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+          box-shadow: 0px 2px 0px 0px #1cca6a;
           .card-label {
             font-size: 1rem;
             font-weight: 700;
@@ -774,7 +770,8 @@ const isValidCardAddress = () => {
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        margin: 1rem 0 0.5rem 0;
+        // margin: 1rem 0 0.5rem 0;
+        background: #373c3d;
 
         .info {
           display: flex;
@@ -788,6 +785,14 @@ const isValidCardAddress = () => {
             align-items: center;
             justify-content: center;
             gap: 5px;
+            color: #b2bdbf;
+            font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 20px;
+            letter-spacing: 2%;
+            vertical-align: middle;
+            text-transform: capitalize;
 
             .yel-dot {
               width: 0.25rem;
@@ -800,6 +805,7 @@ const isValidCardAddress = () => {
           .desc {
             font-size: 0.825rem;
             font-weight: 400;
+            color: #21ef89;
           }
         }
       }

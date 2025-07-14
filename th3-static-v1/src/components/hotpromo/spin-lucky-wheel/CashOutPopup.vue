@@ -1,15 +1,12 @@
 <template>
   <q-dialog v-model="_modelValue" @hide="hideCashOutPopup" @show="handleDialogShow">
     <div v-if="isShowInviteWins" class="invite-wins">
-      <InviteWins />
+      <SharePopup ref="sharePopupRef" v-model="isShowInviteWins" />
     </div>
     <div class="cash-out" v-else>
-      <GradientTextAmount
-        v-if="isShowTextAmount"
-        :amountText="`การถอนเงินมีค่าใช้จ่าย ${store.currency.value} ${extractionDifference}`"
-      />
+      <GradientTextAmount v-if="isShowTextAmount" :amountText="`${$t('hotPromo.CASH_OUT_COSTS')}  ${extractionDifference}$`" />
       <div v-else class="text-amount-placeholder"></div>
-      <span class="next-spin-remaining-time">รอบถัดไป: {{ remainingTime }}</span>
+      <!-- <span class="next-spin-remaining-time">COUNTDOWN: {{ nextFreeSpinRemainingTime }}</span> -->
       <div class="cash-out-backdrop-wrapper">
         <div class="pulse1"></div>
         <div class="pulse2"></div>
@@ -18,11 +15,11 @@
         <div class="pulse5"></div>
         <img
           class="cash-out-backdrop"
-          src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/cash-out-backdrop.png"
+          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/cash-out-backdrop.png"
         />
       </div>
       <ProgressBar :isShowDetails="true" />
-      <CommonButton class="invite-wins-btn" @click="showInviteWins">ชนะการเชิญ</CommonButton>
+      <CommonButton class="invite-wins-btn" @click="showInviteWins">{{ $t("hotPromo.invitation_wins") }}</CommonButton>
     </div>
   </q-dialog>
 </template>
@@ -31,11 +28,9 @@ import { computed, inject, ref } from "vue";
 import CommonButton from "./CommonButton.vue";
 import GradientTextAmount from "./GradientTextAmount.vue";
 import ProgressBar from "./ProgressBar.vue";
-import InviteWins from "./InviteWins.vue";
-import { userStore } from "@/stores/index";
+import SharePopup from "./SharePopup.vue";
 
-const store = userStore();
-const props = defineProps(["modelValue"]);
+const props = defineProps(["modelValue", "prize"]);
 const emit = defineEmits(["update:modelValue", "hide"]);
 const showInviteWins = () => (isShowInviteWins.value = true);
 const isShowTextAmount = ref(false);
@@ -58,7 +53,7 @@ const hideCashOutPopup = () => {
 };
 
 const extractionDifference = inject("extractionDifference");
-const remainingTime = inject("remainingTime");
+const nextFreeSpinRemainingTime = inject("nextFreeSpinRemainingTime");
 
 const handleDialogShow = () => {
   isShowTextAmount.value = true;
@@ -67,7 +62,8 @@ const handleDialogShow = () => {
 <style lang="scss" scoped>
 .invite-wins {
   width: 90%;
-  background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/invite-win-popup-bg.png) no-repeat;
+  background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/invite-win-popup-bg.png)
+    no-repeat;
   background-size: 100% 100%;
   position: relative;
   padding: 40px 20px 20px;
@@ -104,7 +100,7 @@ const handleDialogShow = () => {
     width: 65%;
     aspect-ratio: 228 / 90;
     margin: 2px auto;
-    min-height: 90px;
+    min-height: 100px;
 
     &.common-btn {
       background-size: 100% 100%;
@@ -119,7 +115,7 @@ const handleDialogShow = () => {
 @media screen and (max-width: 500px) {
   .cash-out {
     .prize {
-      font-size: 30px;
+      font-size: 11vw;
     }
   }
 }
@@ -129,14 +125,14 @@ const handleDialogShow = () => {
   justify-content: center;
   font-family: Inter;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 20px;
   line-height: 24.2px;
   letter-spacing: 0px;
 }
 
 @media screen and (max-width: 400px) {
   .next-spin-remaining-time {
-    font-size: 15px;
+    font-size: 18px;
   }
 }
 
@@ -166,7 +162,7 @@ const handleDialogShow = () => {
 .pulse4,
 .pulse5 {
   width: 30px;
-  background: url(../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/sparkle.gif) no-repeat;
+  background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/sparkle.gif) no-repeat;
   aspect-ratio: 480 / 467;
   background-size: cover;
   animation: pulse 2s infinite;

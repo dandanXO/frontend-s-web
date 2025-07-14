@@ -2,7 +2,7 @@
   <div class="popout-dialog-container">
     <div class="txt-title">{{ $t("form.pleaseCompleteKYC") }}</div>
     <div class="pc-form">
-      <div class="pc-form-item">
+      <div v-if="showRealNameField" class="pc-form-item">
         <div class="pc-form-label">{{ $t("form.fullName") }}</div>
         <div class="pc-form-input">
           <q-input
@@ -15,6 +15,41 @@
           />
         </div>
       </div>
+      <div v-if="showPhoneField" class="pc-form-item">
+        <div class="pc-form-label">{{ $t("form.phone") }}</div>
+        <div class="pc-form-input">
+          <q-input
+            filled
+            dense
+            clearable
+            :placeholder="$t('form.phone_placeholder')"
+            v-model="formDetail.phone"
+            :rules="[(val) => val.startsWith('03') || $t('form.phone_rules_03'), (_) => isValidPhone()]"
+          >
+            <template v-slot:prepend>
+              <q-icon name="smartphone" />
+              <div class="prepend-number">+92</div>
+            </template>
+          </q-input>
+        </div>
+      </div>
+      <div v-if="ui.siteType === 'CURACAO'" class="pc-form-item">
+        <div class="pc-form-label">{{ $t("form.address") }}</div>
+        <div class="pc-form-input">
+          <q-input
+            filled
+            dense
+            clearable
+            :placeholder="$t('form.address_placeholder')"
+            v-model="formDetail.address"
+            :rules="[(_) => isValidAddress()]"
+          >
+            <template v-slot:prepend>
+              <q-icon name="home" />
+            </template>
+          </q-input>
+        </div>
+      </div>
     </div>
 
     <q-btn
@@ -22,8 +57,12 @@
       rounded
       flat
       no-caps
-      class="style-btn-confirm"
-      :disable="!(isValidName() === true)"
+      class="btn-primary btn-primary__full"
+      :disabled="
+        (showRealNameField && isValidName() !== true) ||
+        (showPhoneField && isValidPhone() !== true) ||
+        (showAddressField && isValidAddress() !== true)
+      "
       @click="submitKYCNewUser"
     >
       {{ $t("btn.submit") }}
@@ -32,13 +71,13 @@
 </template>
 
 <script setup>
-import { useQuasar } from "quasar";
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted, computed } from "vue";
+import { api } from "boot/axios";
+import { useQuasar, copyToClipboard } from "quasar";
+import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
-
-import { api } from "@/boot/axios";
-import { t } from "@/boot/lang";
-import { userStore } from "@/stores";
+import { t } from "src/boot/lang";
+import { useUI } from "src/stores/ui";
 
 const emits = defineEmits(["test"]);
 
@@ -46,6 +85,7 @@ const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
+const ui = useUI();
 
 const btnLoading = ref(false);
 
@@ -61,6 +101,10 @@ const isValidName = () => {
   return result;
 };
 
+const showPhoneField = computed(() => !store.phone && ui.siteType !== "CURACAO");
+const showRealNameField = computed(() => ui.siteType !== "CURACAO");
+const showAddressField = computed(() => ui.siteType === "CURACAO");
+
 const isValidPhone = () => {
   const { phone } = formDetail;
 
@@ -68,15 +112,20 @@ const isValidPhone = () => {
     return "Please Enter Phone Number";
   }
 
-  const phoneRegex = /^\d{10}$/;
+  const phoneRegex = /^\d{11}$/;
   const isValid = phoneRegex.test(phone);
 
-  return isValid ? true : "Phone Number must be 10 digits";
+  return isValid ? true : "Phone Number must be 11 digits";
 };
 
 const isAlphanumeric = (value, translation) => {
   const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
   return passwordPattern.test(value) || `${translation} must be alphanumeric`;
+};
+
+const isValidAddress = () => {
+  const { address } = formDetail;
+  return (address && address.length > 0) || t("form.address_rules_01");
 };
 
 const formDetail = reactive([]);
@@ -89,6 +138,19 @@ const submitKYCNewUser = () => {
 const updateNewUserState = () => {
   const updateInfo = {};
   updateInfo.realName = formDetail.realName;
+  updateInfo.phone = formDetail.phone;
+
+  if (ui.siteType === "CURACAO") {
+    localStorage.setItem("PAK_ADDRESS", formDetail.address);
+    $q.notify({
+      color: "positive",
+      position: "top",
+      message: "Updated successfully",
+      icon: "check_circle_outline"
+    });
+    emits("closeUserKYCDialog", updateInfo);
+    return;
+  }
 
   api
     .post("/session/account", qs.stringify(updateInfo))
@@ -97,10 +159,10 @@ const updateNewUserState = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: t("notify.updatedSuccessfully"),
+          message: "Updated successfully",
           icon: "check_circle_outline"
         });
-        emits("closeUserKYCDialog");
+        emits("closeUserKYCDialog", updateInfo);
       } else {
         $q.notify({
           color: "negative",
@@ -115,6 +177,20 @@ const updateNewUserState = () => {
       btnLoading.value = false;
     });
 };
+
+const loadCurrentInfo = () => {
+  if (store.realName) {
+    formDetail.realName = store.realName;
+  }
+
+  if (store.phone) {
+    formDetail.phone = store.phone;
+  }
+};
+
+defineExpose({
+  loadCurrentInfo
+});
 </script>
 
 <style lang="scss" scoped>
@@ -220,16 +296,33 @@ const updateNewUserState = () => {
 }
 
 .btn-cancel {
-  background: rgba(21, 0, 37, 0.5);
+  // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+  // border: 1px solid #5d8956;
+  // font-weight: 700;
+  // color: #fff;
+  // border: 1px solid #ffffff80;
+  // border-radius: 12px;
+  // width: 140px;
+  // height: 42px;
   font-weight: 700;
+  width: 100%;
+  padding: 10px 40px;
+  font-size: 16px;
+  background: #455152;
   color: #ffffff;
-  border-radius: 8px;
+
+  box-shadow: 0px 2px 0px 0px #2a3637;
 }
 .btn-confirm {
-  background: linear-gradient(180deg, #ffcd5c 0%, #fea800 100%);
   font-weight: 700;
-  color: #150025;
-  border-radius: 8px;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 16px;
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  color: #000000;
+  box-shadow: 0px 2px 0px 0px #1cca6a;
+  border-radius: 4px;
+  height: unset;
 }
 
 .style-btn-confirm {

@@ -1,12 +1,17 @@
+import { defineStore } from "pinia";
 import { api, cashier, eventapi } from "boot/axios";
+import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
 import { isAndroid, isInPwa } from "boot/utils";
+import { useUI } from "stores/ui";
 import OneSignal from "onesignal-cordova-plugin";
-import { defineStore } from "pinia";
-import { Notify, Platform, SessionStorage } from "quasar";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
+
+const createFtdEvent = (triggeredPixels) => {
+  return new CustomEvent("ftdPurchaseSuccess", { detail: triggeredPixels });
+};
 
 export const userStore = defineStore("userStore", {
   state: () => {
@@ -32,36 +37,49 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
-      currency: { value: "฿", label: "THB" },
+      currency: { value: "₨", label: "Rs" },
       personalAddress: "",
       unreadInboxMail: 0,
       phoneVerified: false,
       emailVerified: false,
       currentDeposit: "",
       levelUpDeposit: "",
+      hasDeposit: "",
       currentMailData: {},
       guest: false,
       readMsgLists: [],
       aaid: "",
       googleadid: "",
-      h5Url: "https://tha.55ace.com/",
+      visitorId: "",
+      h5Url: "https://m.b9mega1.com/",
+      isFbPixel: false,
+      isOldFBPixel: false,
       hasUpdatedOneSignal: false,
       paytypeWithPrivilege: "",
       extraPrivilegeId: "",
-      ftd: true,
-      spinWheelLuckyPromoInfo: {
-        startTime: "",
-        currAmount: 0,
-        targetWithdrawAmount: 0,
-        spinChance: 0,
-        status: ""
-      },
-      isShowOtp: false
+      ftd: "CLOSE",
+      isTkPixel: false,
+      isGoogleLogin: false,
+      isFirstLandOnHomePage: true,
+      isReferralReady: false,
+      isFromGooglePackage: false,
+      isCheckGaid: false,
+      claimedFtdPrivilege: false,
+      claimedSecondPrivilege: false,
+      depositCount: 0,
+      eligibleThirdPrivilege: false,
+      canClaimFtdPrivilege: false,
+      canClaimSecondPrivilege: false,
+      canClaimThirdPrivilege: false,
+      canSpinPrivilegeCoupon: false,
+      isEnableBankCardOTP: false,
+      hasUnusedCoupon: false
     };
   },
   actions: {
     hasToken() {
-      if (isAndroid() || isInPwa()) {
+      if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
+        // console.log("android");
         if (LocalStorage.getItem("TOKEN", "") !== "") {
           return true;
         } else {
@@ -108,19 +126,21 @@ export const userStore = defineStore("userStore", {
         regDevice = "IOS";
       } else {
         regDevice = Platform.is.mobile ? "H5" : "WEB";
-        if (Platform.is.capacitor && Platform.is.android) {
+        if ((Platform.is.capacitor && Platform.is.android) || this.isFromGooglePackage) {
           regDevice = "ANDROID";
         }
       }
       loginInfo.way = regDevice;
       var string = qs.stringify(loginInfo);
-      return api.post("/member/login", string).then((ret) => {
+      return api.post("/member/pakLogin", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid() || isInPwa()) {
-            LocalStorage.set("TOKEN", ret.data, 31536000);
+          if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
+            LocalStorage.set("TOKEN", ret.data, 86400);
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
+          this.token = ret.data;
+          this.getMemberInfo("fromlogin");
         } else {
           Notify.create({
             color: "negative",
@@ -137,7 +157,7 @@ export const userStore = defineStore("userStore", {
         regDevice = "IOS";
       } else {
         regDevice = Platform.is.mobile ? "H5" : "WEB";
-        if (Platform.is.capacitor && Platform.is.android) {
+        if ((Platform.is.capacitor && Platform.is.android) || this.isFromGooglePackage) {
           regDevice = "ANDROID";
         }
       }
@@ -145,11 +165,12 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/mobileLogin", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid() || isInPwa()) {
-            LocalStorage.set("TOKEN", ret.data, 31536000);
+          if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
+            LocalStorage.set("TOKEN", ret.data, 86400);
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
+          this.getMemberInfo("fromlogin");
         } else {
           Notify.create({
             color: "negative",
@@ -172,7 +193,7 @@ export const userStore = defineStore("userStore", {
     setReadMsg() {
       this.readMsgLists = SessionStorage.getItem("READ_MAIL_IDS") || [];
     },
-    getMemberInfo() {
+    getMemberInfo(from) {
       // api.interceptors.request.use(async (req) => {
       //   var token;
       //   if (isAndroid()) {
@@ -190,7 +211,7 @@ export const userStore = defineStore("userStore", {
       //   } else {
       //     token = SessionStorage.getItem("TOKEN");
       //   }
-      //   req.headers.TOKEN = token;
+      //   req.headers.token = token;
       //   return req;
       // });
       // eventapi.interceptors.request.use(async (req) => {
@@ -200,11 +221,15 @@ export const userStore = defineStore("userStore", {
       //   } else {
       //     token = SessionStorage.getItem("TOKEN");
       //   }
-      //   req.headers.TOKEN = token;
+      //   req.headers.token = token;
       //   return req;
       // });
-      this.token = isAndroid() || isInPwa() ? LocalStorage.getItem("TOKEN") : SessionStorage.getItem("TOKEN");
-      return api.get("/session/member").then((response) => {
+      const timestamp = Date.now();
+      this.token =
+        isAndroid() || isInPwa() || this.isFromGooglePackage
+          ? LocalStorage.getItem("TOKEN")
+          : SessionStorage.getItem("TOKEN");
+      return api.get(`/session/member?v=${timestamp}`).then((response) => {
         if (response.code === 0) {
           const {
             id,
@@ -220,9 +245,17 @@ export const userStore = defineStore("userStore", {
             phoneVerified,
             emailVerified,
             evip,
+            hasDeposit,
             currentDeposit,
             levelUpDeposit,
-            guest
+            guest,
+            claimedFtdPrivilege,
+            claimedSecondPrivilege,
+            depositCount,
+            canClaimFtdPrivilege,
+            canClaimSecondPrivilege,
+            canClaimThirdPrivilege,
+            canSpinPrivilegeCoupon
           } = response.data;
 
           this.id = id;
@@ -239,7 +272,15 @@ export const userStore = defineStore("userStore", {
           this.emailVerified = emailVerified;
           this.currentDeposit = parseFloat(currentDeposit);
           this.levelUpDeposit = parseFloat(levelUpDeposit);
+          this.hasDeposit = hasDeposit;
           this.guest = guest;
+          this.claimedFtdPrivilege = claimedFtdPrivilege;
+          this.claimedSecondPrivilege = claimedSecondPrivilege;
+          this.depositCount = depositCount;
+          this.canClaimFtdPrivilege = canClaimFtdPrivilege;
+          this.canClaimThirdPrivilege = canClaimThirdPrivilege;
+          this.canClaimSecondPrivilege = canClaimSecondPrivilege;
+          this.canSpinPrivilegeCoupon = canSpinPrivilegeCoupon;
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
             OneSignal.login(this.nickName);
@@ -252,8 +293,17 @@ export const userStore = defineStore("userStore", {
             var exclusive = JSON.parse(evip);
             this.evip = exclusive.wap;
           }
-
           this.unreadInboxMail = 0;
+          if (from === "fromlogin") {
+            if (!this.hasDeposit) {
+              localStorage.setItem("newPlayerGuide", "1");
+              localStorage.removeItem("completeddepositguide");
+              localStorage.removeItem("completedreferguide");
+              localStorage.removeItem("completedwithdrawguide");
+            } else {
+              localStorage.setItem("newPlayerGuide", "END");
+            }
+          }
           // this.unreadInboxMail = 16;
           this.getBalance();
         } else {
@@ -270,7 +320,21 @@ export const userStore = defineStore("userStore", {
             }
           })
           .then((res) => {
+            console.log(res);
             if (res.code === 0) {
+              if ((this.isOldFBPixel || this.isTkPixel) && res.data !== 0) {
+                // debugger;
+                const triggeredPixels = [];
+                if (this.isOldFBPixel) triggeredPixels.push("fb");
+                if (this.isTkPixel) triggeredPixels.push("tk");
+                const isNewFtd = localStorage.getItem("newUserFtd");
+                // const UserPurchaseComplete = localStorage.getItem("UserPurchaseComplete") || "";
+                if (isNewFtd) {
+                  if (isNewFtd && isNewFtd === this.nickName && this.isOldFBPixel === true) {
+                    document.dispatchEvent(createFtdEvent(triggeredPixels));
+                  }
+                }
+              }
               this.balance = res.data;
             } else {
               this.balance = 0;
@@ -280,7 +344,7 @@ export const userStore = defineStore("userStore", {
     },
     getUnreadTotal() {
       if (this.token) {
-        return api.get("/session/inbox/getUnreadTotal").then((total) => {
+        return api.get("/session/pm/inbox/getUnreadTotal").then((total) => {
           if (total.code === 0) {
             this.unreadInboxMail = total.data;
           }
@@ -288,17 +352,22 @@ export const userStore = defineStore("userStore", {
       }
     },
     autoLogin(token) {
-      this.token = token;
-      if (isAndroid() || isInPwa()) {
-        LocalStorage.set("TOKEN", token, 31536000);
+      const ui = useUI();
+      if (isAndroid() || isInPwa() || this.isFromGooglePackage) {
+        LocalStorage.set("TOKEN", token, 86400);
+        ui.showLoggedIn();
       } else {
         SessionStorage.set("TOKEN", token);
+        ui.showLoggedIn();
       }
     },
     memberLogout() {
       return api.post("/session/logout").then(() => {
         LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
+        LocalStorage.remove("onAppFirstDeposit");
+        LocalStorage.remove("secondDeposit");
+        LocalStorage.remove("thirdDeposit");
 
         this.hasUpdatedOneSignal = false;
 
@@ -306,7 +375,8 @@ export const userStore = defineStore("userStore", {
           OneSignal.logout();
         }
 
-        location.href = "/";
+        // location.href = "/";
+        window.location.reload();
       });
     },
     setMailData(mailData) {

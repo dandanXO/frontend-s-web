@@ -2,29 +2,41 @@
   <div class="btn-container">
     <div class="go-deposit-btn" :class="isFtdPromoEnded ? 'is-disabled' : ''" @click="gotoDepositPage(param)">
       <img src="./img/gift-icon.png" />
-      <span>{{ $t("btn.joinNow") }}</span>
+      <span>JOIN NOW</span>
     </div>
 
     <div class="text-warning" v-if="isFtdPromoEnded">
-      {{ $t("promo_ph1SlotFtd.sorryDesc") }}
+      {{ store.ftd === "CLOSE" ? params.desc_closed : params.desc_warning }}
     </div>
   </div>
 </template>
-
 <script setup>
 import { computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { userStore } from "@/stores";
+import { userStore } from "src/stores";
 import { api } from "boot/axios";
 
 const router = useRouter();
+
 const store = userStore();
 
 const props = defineProps(["params"]);
 const params = JSON.parse(props.params || "{}");
 
+const isFtdPromoEnded = computed(() => {
+  if (store.ftd !== "OPEN") {
+    return true;
+  }
+  return false;
+});
+
+const gotoDepositPage = () => {
+  const redirectPage = params && params.page ? params.page : "/deposit?from=/promo";
+  router.push(redirectPage);
+};
+
 const loadAppTabs = () => {
-  api.get("/opt-session/getAppTabs").then((res) => {
+  api.get("/opt-session/getPakAppTabs").then((res) => {
     if (res.code === 0) {
       const { data } = res;
       if (data && data.hasOwnProperty("ftd")) {
@@ -37,23 +49,12 @@ const loadAppTabs = () => {
 onMounted(() => {
   loadAppTabs();
 });
-
-const isFtdPromoEnded = computed(() => {
-  if (store.ftd === true) {
-    return true;
-  }
-
-  return false;
-});
-const gotoDepositPage = () => {
-  const redirectPage = params && params.page ? params.page : "/deposit?from=/promo";
-  router.push(redirectPage);
-};
 </script>
 <style lang="scss">
 .btn-container {
   width: 100%;
   margin: 8px auto 10px;
+  position: relative;
 }
 .text-warning {
   padding: 8px 0px;
@@ -61,14 +62,12 @@ const gotoDepositPage = () => {
 .go-deposit-btn {
   width: 100%;
   height: 48px;
-  background-color: #5c46e7;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   border-radius: 5px;
-  background: linear-gradient(180deg, #8575e9 0%, #5c46e7 100%);
-  border: 1px solid #8d83cd;
+  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
 
   &.is-disabled {
     pointer-events: none;
@@ -76,17 +75,16 @@ const gotoDepositPage = () => {
   }
 
   img {
-    width: 28px;
+    width: 28px !important;
     margin: 0px;
     display: inline-block;
     height: auto;
   }
 
   span {
-    color: #fff;
+    color: #000;
     font-size: 20px;
     font-weight: 700;
-    text-transform: uppercase;
   }
 
   &:active {

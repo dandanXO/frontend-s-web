@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <div class="lang-select-container">
-      <q-radio class="select-item" v-model="group" val="en" color="purple">
+      <q-radio class="select-item" v-model="group" val="en">
         <template v-slot>
           <div class="radio-label">
             <img :src="require(`../assets/images/auth/country-flag-en.png`)" class="flag" />
@@ -9,18 +9,29 @@
           </div>
         </template>
       </q-radio>
-      <q-radio class="select-item" v-model="group" val="ur" color="purple">
+      <q-radio class="select-item" v-model="group" val="ur">
         <template v-slot>
           <div class="radio-label">
             <img :src="require(`../assets/images/auth/country-flag-ur.png`)" class="flag" />
-            <span class="text">Brazil</span>
+            <span class="text">Pakistan</span>
           </div>
         </template>
       </q-radio>
+      <!-- <q-radio class="select-item" v-model="group" val="cn">
+        <template v-slot>
+          <div class="radio-label">
+            <img :src="require(`../assets/images/auth/country-flag-cn.png`)" class="flag" />
+            <span class="text">China</span>
+          </div>
+        </template>
+      </q-radio> -->
     </div>
 
+    <!-- <pre>group---{{ group }}</pre>
+    <pre>languageVal--{{ languageVal }}</pre> -->
+
     <div class="bottom-btn">
-      <q-btn no-caps unelevated @click="handleConfirmClick('/')">
+      <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="handleConfirmClick('/')">
         {{ $t("btn.confirm") }}
       </q-btn>
     </div>
@@ -42,7 +53,6 @@ const group = ref(languageVal.value);
 
 watch(group, (newVal) => {
   setLanguage(group.value);
-  // console.log("asdasd" + `t("btn.confirm")`);
 });
 
 // const updateLanguage = (lang) => {
@@ -77,25 +87,17 @@ const handleConfirmClick = (route) => {
 .radio-label {
   display: flex;
   align-items: center;
+  gap: 6px;
 
   img {
     display: block;
     width: 28px;
-    margin-right: 6px;
   }
 }
 
 .bottom-btn {
   display: flex;
-  // width: 100%;
-  // margin-top: 20px;
-  justify-content: center;
-
-  background-color: #8b00ff;
   width: 100%;
-  height: 56px;
-  font-size: 16px;
-  border-radius: 4px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 </style>

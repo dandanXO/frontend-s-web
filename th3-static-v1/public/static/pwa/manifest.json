@@ -1,7 +1,7 @@
 {
-  "name": "55ACE",
-  "short_name": "55ACE",
-  "description": "55ACE App",
+  "name": "B9Game",
+  "short_name": "B9GAME",
+  "description": "Pakistan real money games",
   "display": "standalone",
   "start_url": "/static/pwa/pwa-index.html",
   "icons": [
@@ -97,12 +97,17 @@
   "scope": "/",
   "screenshots": [
     {
-      "src": "images/screenshot1.png",
+      "src": "images/screenshot1.jpg",
       "type": "image/png",
       "sizes": "500x1024"
     },
     {
-      "src": "images/screenshot2.png",
+      "src": "images/screenshot2.jpg",
+      "type": "image/png",
+      "sizes": "500x1024"
+    },
+    {
+      "src": "images/screenshot3.jpg",
       "type": "image/png",
       "sizes": "500x1024"
     }

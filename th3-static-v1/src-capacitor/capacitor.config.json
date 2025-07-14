@@ -1,11 +1,19 @@
 {
-  "appId": "com.ind.appth2",
-  "appName": "55Ace",
+  "appId": "com.ind.appb9mega1",
+  "appName": "B9.GAME",
   "webDir": "www",
+  "server": {
+    "androidScheme": "https",
+    "hostname": "7rzyd3kui.b9mega1.com"
+  },
   "plugins": {
-    "SplashScreen": {
-      "launchAutoHide": false,
-      "showSpinner": true
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "83563276345-oa2oi16o8597le1mku7bftcbu1avuk68.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
     }
   }
 }

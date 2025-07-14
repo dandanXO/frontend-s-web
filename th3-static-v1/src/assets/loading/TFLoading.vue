@@ -107,7 +107,6 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
-
   .txt {
     display: block;
     font-size: 30px;
