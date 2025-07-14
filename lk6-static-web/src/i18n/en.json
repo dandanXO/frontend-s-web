@@ -18,7 +18,12 @@
     "verify": "Verify",
     "goComplete": "Go complete",
     "back": "Back",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "delete": "Delete",
+    "read": "Read",
+    "deleteAll": "Delete All",
+    "readAll": "Read All",
+    "selectMany": "Select Many"
   },
   "message": {
     "loginFirstAction": "Please log in before proceeding",
@@ -127,7 +132,11 @@
     "statusIsTransferIn": "Transfer In",
     "statusIsVipRebate": "VIP Rebate",
     "noData": "No Data",
-    "anyType": "Any Type"
+    "anyType": "Any Type",
+    "type": "Type",
+    "emailMismatch": "Email mismatch",
+    "fullContent": "Full Content",
+    "noRecordsYet": "No records yet"
   },
   "table": {
     "gameBetRecord": {

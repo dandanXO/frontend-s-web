@@ -348,7 +348,7 @@
         :rules="updateSecurityVerifiedRules"
       >
         <el-form-item ref="emailAddress" prop="emailAddress">
-          <el-input v-model="updateSecurityVerified.emailAddress" placeholder="邮箱" />
+          <el-input v-model="updateSecurityVerified.emailAddress" :placeholder="$t('form.email')" />
         </el-form-item>
         <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
@@ -642,7 +642,7 @@ export default defineComponent({
         })
         .catch((err) => {
           notify({
-            message: "请输入有效的邮件",
+            message: t('form.pleaseEnterField', {field: t('form.email')}),
             type: "error"
           });
         });
@@ -895,24 +895,24 @@ export default defineComponent({
       emailAddress: [
         {
           required: true,
-          message: "请输入邮箱地址",
+          message: t('form.pleaseEnterField', {field: t('form.email')}),
           trigger: "blur"
         },
         {
           type: "email",
-          message: "邮箱地址不符合",
+          message: t('form.emailMismatch'),
           trigger: "blur"
         }
       ],
       verificationCode: [
         {
           required: true,
-          message: "请输入验证码",
+          message: t('form.pleaseEnterField', {field: t('form.verificationCode')}),
           trigger: "blur"
         },
         {
           min: 4,
-          message: "长度应为 4",
+          message: t('form.lengthMustBe', {num: 4}),
           trigger: "blur"
         }
       ]
