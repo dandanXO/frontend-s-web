@@ -1494,18 +1494,18 @@ export default defineComponent({
         return "";
       }
       if (type === "WITHDRAW_FAIL") {
-        return "转账失败";
+        return t('form.statusIsTransferFailed');
       }
       if (subType === "DEPOSIT") {
-        return "转进"; // 转进
+        return t('form.statusIsTransferIn'); // 转进
       } else if (subType === "WITHDRAW") {
-        return "转出"; // 转出
+        return t('form.statusIsTransferOut'); // 转出
       } else if (type === "WITHDRAW") {
-        return "转出"; // 转出
+        return t('form.statusIsTransferOut'); // 转出
       } else if (type === "DEPOSIT") {
-        return "转进"; // 转出
+        return t('form.statusIsTransferIn'); // 转出
       }else if (type === "VIP_REBATE"|| subType === "VIP_REBATE"){
-        return "VIP 返水"; // VIP 返水
+        return t('form.statusIsVipRebate'); // VIP 返水
       } else {
         return subType;
       }
@@ -1541,13 +1541,13 @@ export default defineComponent({
         return "";
       }
       if (depositStatus === "PENDING") {
-        return "支付中"; // Pending
+        return t('form.statusIsPaymentOngoing'); // Pending
       } else if (depositStatus === "SUCCESS") {
-        return "成功"; // Success
+        return t('form.statusIsPaymentSuccess'); // Success
       } else if (depositStatus === "SUPPLEMENT_SUCCESS") {
-        return "成功"; // Supplement Success
+        return t('form.statusIsPaymentSuccess'); // Supplement Success
       } else if (depositStatus === "CLOSED") {
-        return "关闭"; // Closed
+        return t('form.statusIsPaymentClosed'); // Closed
       } else {
         return depositStatus;
       }

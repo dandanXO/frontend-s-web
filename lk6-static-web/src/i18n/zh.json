@@ -118,7 +118,15 @@
     "statusIsSettled": "已结算",
     "statusIsBetNSettle": "投注并结算",
     "statusIsCancelled": "取消",
-    "statusIsPatched": "修补"
+    "statusIsPatched": "修补",
+    "statusIsPaymentOngoing": "支付中",
+    "statusIsPaymentSuccess": "成功",
+    "statusIsPaymentClosed": "关闭",
+    "statusIsTransferFailed": "转账失败",
+    "statusIsTransferOut": "转出",
+    "statusIsTransferIn": "转进",
+    "statusIsVipRebate": "VIP 返水",
+    "noData": "没有数据"
   },
   "table": {
     "gameBetRecord": {
