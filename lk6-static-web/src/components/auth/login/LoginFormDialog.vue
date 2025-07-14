@@ -61,7 +61,7 @@
       <span class="no-acc">{{$t('form.dontHaveAcc')}}？</span>
       <a class="go-reg" @click="openRegDialog">{{ $t('form.goCreateAcc') }}</a>
     </div>
-    <div id="captcha-box" />
+    <div id="login-captcha-box" />
   </el-form>
 </template>
 
@@ -169,7 +169,7 @@ const submitLogin = () => {
       // 验证接口 (必选项,必须配置, 要符合tianai-captcha默认验证码校验接口规范)
       validCaptchaUrl: `${rstUrl}/member/login`,
       // 验证码绑定的div块 (必选项,必须配置)
-      bindEl: "#captcha-box",
+      bindEl: "#login-captcha-box",
       // 验证码类型, 登陆信息
       loginData: {
         loginName: loginForm.loginName,
@@ -476,7 +476,7 @@ const loginRules = {
   }
 }
 
-#captcha-box {
+#login-captcha-box {
   position: fixed;
   z-index: 1000;
   top: 50%;

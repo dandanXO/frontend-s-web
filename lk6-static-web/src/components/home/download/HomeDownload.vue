@@ -73,6 +73,7 @@ onMounted(() => { });
         display: flex;
         margin: auto;
         position: relative;
+        width: 600px;
         // right: 2.5rem;
       }
     }
