@@ -492,8 +492,14 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
           // }
 
           if (platformCode === "BetBy") {
+            const existingScript = document.getElementById("btrenderer-script");
+            if (existingScript) {
+              existingScript.remove(); // 或 existingScript.parentNode.removeChild(existingScript);
+            }
+
             const script = document.createElement("script");
             script.src = "https://ui.invisiblesport.com/bt-renderer.min.js";
+            script.id= "btrenderer-script"
             script.async = true;
 
             script.onload = async () => {
@@ -537,7 +543,6 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
             script.onerror = () => {
               console.error("Failed to load bt-renderer.min.js");
             };
-
             document.head.appendChild(script);
           } else if (firstFourChars === "http") {
             if (platformCode === "LuckySport" && gameCode !== "") {

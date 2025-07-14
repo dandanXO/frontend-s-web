@@ -488,43 +488,59 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
           isLoading.value = false;
           if (platformCode === "BetBy") {
-            isBetBy.value = true;
+            const existingScript = document.getElementById("btrenderer-script");
+            if (existingScript) {
+              existingScript.remove(); // 或 existingScript.parentNode.removeChild(existingScript);
+            }
 
-            const topActionsEl = document.querySelector(".topActions");
-            const headerHeight = topActionsEl ? topActionsEl.offsetHeight : 0;
+            const script = document.createElement("script");
+            script.src = "https://ui.invisiblesport.com/bt-renderer.min.js";
+            script.id = "btrenderer-script";
+            script.async = true;
 
-            await nextTick();
-            // debugger;
-            // betbyItem.style.display = "flex";
+            script.onload = async () => {
+              isBetBy.value = true;
 
-            betbyInstance.value = new BTRenderer().initialize({
-              brand_id: "2547441365755760643",
-              token: srcDoc,
-              themeName: "default",
-              lang: langVal.value,
-              target: betbyRef.value,
-              stickyTop: headerHeight,
-              betSlipOffsetTop: headerHeight,
-              betslipZIndex: 999,
-              onRecharge: function () {
-                router.push("/deposit?from=/home");
-              },
-              onSessionRefresh: function () {
-                console.log("onSessionRefresh");
-                window.location.reload();
-              },
-              onTokenExpired: () => {
-                return new Promise((resolve, reject) => {
-                  const apiUrl2 = `/session/launch?_time=${new Date().getTime()}`;
+              const topActionsEl = document.querySelector(".topActions");
+              const headerHeight = topActionsEl ? topActionsEl.offsetHeight : 0;
 
-                  api
-                    .get(apiUrl2, { params: apiParam })
-                    .then((res) => resolve(res.data))
-                    .catch((err) => reject(err));
-                });
-              }
-            });
-            console.log(betbyInstance.value);
+              await nextTick();
+
+              betbyInstance.value = new BTRenderer().initialize({
+                brand_id: "2547441365755760643",
+                token: srcDoc,
+                themeName: "default",
+                lang: langVal.value,
+                target: betbyRef.value,
+                stickyTop: headerHeight,
+                betSlipOffsetTop: headerHeight,
+                betslipZIndex: 999,
+                onRecharge: function () {
+                  router.push("/deposit?from=/home");
+                },
+                onSessionRefresh: function () {
+                  console.log("onSessionRefresh");
+                  window.location.reload();
+                },
+                onTokenExpired: () => {
+                  return new Promise((resolve, reject) => {
+                    const apiUrl2 = `/session/launch?_time=${new Date().getTime()}`;
+
+                    api
+                      .get(apiUrl2, { params: apiParam })
+                      .then((res) => resolve(res.data))
+                      .catch((err) => reject(err));
+                  });
+                }
+              });
+
+              console.log("betbyInstance.value: ", betbyInstance.value);
+            };
+
+            script.onerror = () => {
+              console.error("Failed to load bt-renderer.min.js");
+            };
+            document.head.appendChild(script);
           } else if (firstFourChars === "http") {
             if ((platformCode === "LuckySport" || platformCode === "NineW") && gameCode !== "") {
               src.value = srcDoc.replace(gameCode, "");
