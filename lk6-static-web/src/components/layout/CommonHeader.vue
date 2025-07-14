@@ -198,6 +198,7 @@
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
             <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else-if="languageVal === 'en'" src="../../assets/home/auth/login-banner-en.jpg" />
             <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
@@ -225,6 +226,7 @@
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
             <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else-if="languageVal === 'en'" src="../../assets/home/auth/login-banner-en.jpg" />
             <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
@@ -275,6 +277,7 @@
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
             <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else-if="languageVal === 'en'" src="../../assets/home/auth/login-banner-en.jpg" />
             <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
