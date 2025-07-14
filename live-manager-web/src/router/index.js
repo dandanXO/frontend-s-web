@@ -128,6 +128,9 @@ router.beforeEach((to, from, next) => {
   if (!token && !isLoginPage) {
     next('/login')
   } else {
+    if (to.path !== '/live-sport/live-event' && to.path !== '/live-sport/live-setting' && sessionStorage.getItem('liveEventQuery')) {
+      sessionStorage.removeItem('liveEventQuery');
+    }
     next()
   }
 })

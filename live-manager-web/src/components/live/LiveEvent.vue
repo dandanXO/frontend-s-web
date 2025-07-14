@@ -184,8 +184,11 @@
             <router-link
               :to="{
                 path: '/live-sport/live-setting',
-                query: { id: slotProps.data.id },
+                query: { 
+                  id: slotProps.data.id,
+                },
               }"
+              @click.native="saveQueryState"
             >
               <Button icon="pi pi-video" class="p-button-text p-button-sm p-button-success" style="width: 100px">
                 {{ t('fields.manageStream') }}
@@ -213,7 +216,7 @@
       class="p-dialog-md live-event-dialog"
       appendTo="body"
     >
-      <form @submit.prevent="submit" class="p-fluid">
+      <form @submit.prevent="submit" @keydown.enter.prevent class="p-fluid">
         <!-- Sport Type -->
         <div class="p-field">
           <label :for="t('fields.sportType')">{{ t('fields.sportType') }}</label>
@@ -246,17 +249,16 @@
         <!-- Home Team Selector -->
         <div class="p-field">
           <label for="homeTeam">{{ t('fields.homeTeam') }}</label>
-          <Dropdown
-            v-model="form.homeId"
-            :options="homeDisplayTeams"
-            optionLabel="nameZh"
-            optionValue="id"
-            filter
-            :placeholder="form.homeName || t('fields.pleaseChoose')"
-            style="width: 300px"
-            @change="(val) => handleTeamSelect(val, 'home')"
-            @filter="(event) => searchTeams(event, 'home')"
-            @blur="handleBlur('home')" 
+          <AutoComplete
+            v-model="form.homeName"
+            :suggestions="homeDisplayTeams"
+            field="nameZh"
+            :dropdown="false"
+            :disabled="!form.sportId"
+            @complete="searchTeams($event, 'home')"
+            @item-select="(e) => handleTeamSelect(e.value, 'home')"
+            @keyup.enter="handleEnter($event, 'home')"
+            placeholder="输入或选择主队"
           >
             <template #option="slotProps">
               <div style="display: flex; align-items: center">
@@ -267,23 +269,22 @@
                 {{ slotProps.option.nameZh }}
               </div>
             </template>
-          </Dropdown>
+          </AutoComplete>
         </div>
 
         <!-- Away Team Selector -->
         <div class="p-field">
           <label for="awayTeam">{{ t('fields.awayTeam') }}</label>
-          <Dropdown
-            v-model="form.awayId"
-            :options="awayDisplayTeams"
-            optionLabel="nameZh"
-            optionValue="id"
-            filter
-            :placeholder="form.awayName || t('fields.pleaseChoose')"
-            style="width: 300px"
-            @change="(val) => handleTeamSelect(val, 'away')"
-            @filter="(event) => searchTeams(event, 'away')"
-            @blur="handleBlur('away')" 
+          <AutoComplete
+            v-model="form.awayName"
+            :suggestions="awayDisplayTeams"
+            field="nameZh"
+            :dropdown="false"
+            :disabled="!form.sportId"
+            @complete="searchTeams($event, 'away')"
+            @item-select="(e) => handleTeamSelect(e.value, 'away')"
+            @keyup.enter="handleEnter($event, 'away')"
+            placeholder="输入或选择客队"
           >
             <template #option="slotProps">
               <div style="display: flex; align-items: center">
@@ -294,9 +295,9 @@
                 {{ slotProps.option.nameZh }}
               </div>
             </template>
-          </Dropdown>
+          </AutoComplete>
         </div>
-
+        
 <!-- Home Team 
         <div class="p-field">
           <label :for="t('fields.homeTeam')">{{ t('fields.homeTeam') }}</label>
@@ -396,12 +397,9 @@
             :min="0"
             mode="decimal"
             showButtons
-            buttonLayout="horizontal"
-            decrementButtonClassName="p-button-secondary"
-            incrementButtonClassName="p-button-secondary"
-            :class="{ 'p-invalid': validationErrors.sort }"
             @keypress="restrictInput($event)"
           />
+          
           <small class="p-error" v-if="validationErrors.sort">{{ validationErrors.sort }}</small>
         </div>
 
@@ -721,41 +719,48 @@ const loadInitialTeams = (type) => {
   displayTeams.value = teams.value.slice(0, TEAMS_PER_VIEW)
 };
 
-// 搜索过滤
+// 搜索过滤逻辑
 const searchTeams = (event, type) => {
+  const inputValue = event.query;
   const displayTeams = type === 'home' ? homeDisplayTeams : awayDisplayTeams;
-  if (!event.value) {
+  
+  console.log("LiveEvent ::: displayTeams : ", displayTeams)
+  if (!inputValue) {
     displayTeams.value = teams.value.slice(0, TEAMS_PER_VIEW);
   } else {
     displayTeams.value = teams.value.filter(team =>
-      team.nameZh.toLowerCase().includes(event.value.toLowerCase())
+      team.nameZh.toLowerCase().includes(inputValue.toLowerCase())
     );
   }
 };
 
 // 处理选中队伍
-const handleTeamSelect = (val, type) => {
+const handleTeamSelect = (team, type) => {
   if (type === 'home') {
-    const match = teams.value.find(t => t.id === val.value);
-    form.homeName = match ? match.nameZh : val.value;
-    form.homeId = match ? match.id : null;
+    form.homeName = team.nameZh;
+    form.homeId = team.id;
   } else {
-    const match = teams.value.find(t => t.id === val.value);
-    form.awayName = match ? match.nameZh : val.value;
-    form.awayId = match ? match.id : null;
+    form.awayName = team.nameZh;
+    form.awayId = team.id;
   }
 };
 
-const handleBlur = (type) => {
-  if (type === 'home') {
-    // 如果未选中队伍且输入框有值，保存到 homeName
-    if (!form.homeId && form.homeName) {
-      form.homeName = form.homeName.trim();
-    }
-  } else {
-    // 如果未选中队伍且输入框有值，保存到 awayName
-    if (!form.awayId && form.awayName) {
-      form.awayName = form.awayName.trim();
+// 处理回车事件（自由输入）
+const handleEnter = (event, type) => {
+  const inputValue = type === 'home' ? form.homeName : form.awayName;
+  if (!inputValue?.trim()) return;
+
+  const displayTeams = type === 'home' ? homeDisplayTeams.value : awayDisplayTeams.value;
+  const matchedTeam = displayTeams.find(team => team.nameZh === inputValue.trim());
+
+  if (!matchedTeam) {
+    // 没有匹配项时，使用输入值并清空ID
+    if (type === 'home') {
+      form.homeName = inputValue.trim();
+      form.homeId = null;
+    } else {
+      form.awayName = inputValue.trim();
+      form.awayId = null;
     }
   }
 };
@@ -791,6 +796,10 @@ function resetQuery() {
   request.nameEn = null
   request.title = null
   request.matchTime = [new Date(), new Date()]
+
+  if (sessionStorage.getItem('liveEventQuery')) {
+      sessionStorage.removeItem('liveEventQuery')
+  }
 }
 
 
@@ -949,6 +958,9 @@ function changePage(event) {
   loadList();
 }
 
+function saveQueryState() {
+  sessionStorage.setItem('liveEventQuery', JSON.stringify(request));
+}
 
 const afterTeamSelectorChanged = () => {
   nextTick(() => {
@@ -995,7 +1007,15 @@ watch(() => uiForm.eventEndTime, (newValue) => {
 onMounted(async () => {
   const { data: timeZone } = await SiteService.getSiteTimeZoneById(store.siteId) || "+08:00"
   timezone.value = timeZone
+  const savedQuery = sessionStorage.getItem('liveEventQuery');
 
+  if (savedQuery) {
+    const parsedQuery = JSON.parse(savedQuery);
+    // 逐個賦值給 request 的屬性，而非直接替換 request
+    Object.keys(parsedQuery).forEach(key => {
+      request[key] = parsedQuery[key];
+    });
+  }
   await loadList()
   registerTeamSelectorScrollObserver()
 })

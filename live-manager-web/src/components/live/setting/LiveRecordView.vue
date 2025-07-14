@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <form @submit.prevent="submit" :model="form" class="p-fluid">
+    <form @submit.prevent="submit" @keydown.enter.prevent :model="form" class="p-fluid">
       <!-- Sport Type Dropdown -->
       <div class="p-field">
         <label for="sportId">{{ t('fields.sportType') }}</label>
@@ -29,17 +29,15 @@
       <!-- Home Team Selector -->
       <div class="p-field">
         <label for="homeTeam">{{ t('fields.homeTeam') }}</label>
-        <Dropdown
-          v-model="form.homeId"
-          :options="homeDisplayTeams"
-          optionLabel="nameZh"
-          optionValue="id"
-          filter
-          :placeholder="form.homeName || t('fields.pleaseChoose')"
-          style="width: 300px"
-          @change="(val) => handleTeamSelect(val, 'home')"
-          @filter="(event) => searchTeams(event, 'home')"
-          @blur="handleBlur('home')" 
+        <AutoComplete
+          v-model="form.homeName"
+          :suggestions="homeDisplayTeams"
+          field="nameZh"
+          :dropdown="false"
+          @complete="searchTeams($event, 'home')"
+          @item-select="(e) => handleTeamSelect(e.value, 'home')"
+          @keyup.enter="handleEnter($event, 'home')"
+          placeholder="输入或选择主队"
         >
           <template #option="slotProps">
             <div style="display: flex; align-items: center">
@@ -50,23 +48,21 @@
               {{ slotProps.option.nameZh }}
             </div>
           </template>
-        </Dropdown>
+        </AutoComplete>
       </div>
 
       <!-- Away Team Selector -->
       <div class="p-field">
         <label for="awayTeam">{{ t('fields.awayTeam') }}</label>
-        <Dropdown
-          v-model="form.awayId"
-          :options="awayDisplayTeams"
-          optionLabel="nameZh"
-          optionValue="id"
-          filter
-          :placeholder="form.awayName || t('fields.pleaseChoose')"
-          style="width: 300px"
-          @change="(val) => handleTeamSelect(val, 'away')"
-          @filter="(event) => searchTeams(event, 'away')"
-          @blur="handleBlur('away')" 
+        <AutoComplete
+          v-model="form.awayName"
+          :suggestions="awayDisplayTeams"
+          field="nameZh"
+          :dropdown="false"
+          @complete="searchTeams($event, 'away')"
+          @item-select="(e) => handleTeamSelect(e.value, 'away')"
+          @keyup.enter="handleEnter($event, 'away')"
+          placeholder="输入或选择客队"
         >
           <template #option="slotProps">
             <div style="display: flex; align-items: center">
@@ -77,9 +73,9 @@
               {{ slotProps.option.nameZh }}
             </div>
           </template>
-        </Dropdown>
+        </AutoComplete>
       </div>
-      
+
       <!-- Sequence Input -->
       <div class="p-field">
         <label for="sort">{{ t('fields.sequence') }}</label>
@@ -368,41 +364,50 @@ const loadInitialTeams = (type) => {
   displayTeams.value = teams.value.slice(0, TEAMS_PER_VIEW)
 };
 
-// 搜索过滤
+// 搜索过滤逻辑
 const searchTeams = (event, type) => {
+  const inputValue = event.query;
   const displayTeams = type === 'home' ? homeDisplayTeams : awayDisplayTeams;
-  if (!event.value) {
+  
+  if (!inputValue) {
     displayTeams.value = teams.value.slice(0, TEAMS_PER_VIEW);
   } else {
     displayTeams.value = teams.value.filter(team =>
-      team.nameZh.toLowerCase().includes(event.value.toLowerCase())
+      team.nameZh.toLowerCase().includes(inputValue.toLowerCase())
     );
   }
 };
 
 // 处理选中队伍
-const handleTeamSelect = (val, type) => {
+const handleTeamSelect = (team, type) => {
   if (type === 'home') {
-    const match = teams.value.find(t => t.id === val.value);
-    form.homeName = match ? match.nameZh : val.value;
-    form.homeId = match ? match.id : null;
+    form.homeName = team.nameZh;
+    form.homeId = team.id;
   } else {
-    const match = teams.value.find(t => t.id === val.value);
-    form.awayName = match ? match.nameZh : val.value;
-    form.awayId = match ? match.id : null;
+    form.awayName = team.nameZh;
+    form.awayId = team.id;
   }
 };
 
-const handleBlur = (type) => {
-  if (type === 'home') {
-    // 如果未选中队伍且输入框有值，保存到 homeName
-    if (!form.homeId && form.homeName) {
-      form.homeName = form.homeName.trim();
-    }
-  } else {
-    // 如果未选中队伍且输入框有值，保存到 awayName
-    if (!form.awayId && form.awayName) {
-      form.awayName = form.awayName.trim();
+// 处理回车事件（自由输入）
+const handleEnter = (event, type) => {
+  if (event.key === 'Enter') {
+    event.preventDefault(); 
+    const inputValue = type === 'home' ? form.homeName : form.awayName;
+    if (!inputValue?.trim()) return;
+
+    const displayTeams = type === 'home' ? homeDisplayTeams.value : awayDisplayTeams.value;
+    const matchedTeam = displayTeams.find(team => team.nameZh === inputValue.trim());
+
+    if (!matchedTeam) {
+      // 没有匹配项时，使用输入值并清空ID
+      if (type === 'home') {
+        form.homeName = inputValue.trim();
+        form.homeId = null;
+      } else {
+        form.awayName = inputValue.trim();
+        form.awayId = null;
+      }
     }
   }
 };
