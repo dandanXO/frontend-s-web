@@ -110,9 +110,9 @@ const getDisplayRemainingType = (type) => {
     case "numberGame":
       return "数字游戏";
     case "all":
-      return "任意类型";
+      return t('form.anyType');
     default:
-      return "任意类型";
+      return t('form.anyType');
   }
 };
 
