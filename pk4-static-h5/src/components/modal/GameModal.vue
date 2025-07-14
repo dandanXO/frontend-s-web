@@ -141,21 +141,20 @@
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
-import { i18nStore } from "src/router/language";
-import { userStore } from "stores/index";
-import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef, computed, watch, nextTick } from "vue";
+import { App } from "@capacitor/app";
+import { api } from "boot/axios";
+import { convertToCommaAmount, isAndroid } from "boot/utils";
 import DepositComponent from "components/depositComponent.vue";
 
-import { App } from "@capacitor/app";
-
 import { storeToRefs } from "pinia";
-import { api } from "boot/axios";
-import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
-import { isAndroid, convertToCommaAmount } from "boot/utils";
-import DepositView from "../../pages/account/DepositView.vue";
-import { useUI } from "stores/ui";
+import { Platform, useQuasar } from "quasar";
 import { t } from "src/boot/lang";
+import { i18nStore } from "src/router/language";
+import { userStore } from "stores/index";
+import { useUI } from "stores/ui";
+import { computed, defineExpose, nextTick, reactive, ref, shallowRef, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import DepositView from "../../pages/account/DepositView.vue";
 
 const props = defineProps(["closeFullGameDialog"]);
 
@@ -335,6 +334,7 @@ const open = (gameName, platformCode, gameCode, gameType, demo, isChoice = false
   // Proceed with the game launch
   startGame(gameName, platformCode, gameCode, gameType, demo);
 };
+
 const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
   const store = userStore();
   console.log(store.getCurrentDeposit());
@@ -513,17 +513,20 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
                 stickyTop: headerHeight,
                 betSlipOffsetTop: headerHeight,
                 betslipZIndex: 999,
-                onRecharge: function() {
-                  router.push("/deposit?from=/home")
+                onRecharge: function () {
+                  router.push("/deposit?from=/home");
                 },
-                onSessionRefresh: function() {
+                onSessionRefresh: function () {
                   console.log("onSessionRefresh");
                   window.location.reload();
                 },
-                onTokenExpired: ()=>{
+                onTokenExpired: () => {
                   return new Promise((resolve, reject) => {
-                    visible.value = false;
-                    startGame(gameName, platformCode, gameCode, gameType, demo);
+                    const apiUrl2 = `/session/launch?_time=${new Date().getTime()}`;
+
+                    api.get(apiUrl2, { params: apiParam })
+                      .then((res) => resolve(res.data))
+                      .catch((err) => reject(err));
                   });
                 }
               });
@@ -536,7 +539,6 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
             };
 
             document.head.appendChild(script);
-
           } else if (firstFourChars === "http") {
             if (platformCode === "LuckySport" && gameCode !== "") {
               src.value = srcDoc.replace(gameCode, "");

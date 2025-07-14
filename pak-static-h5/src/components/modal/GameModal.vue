@@ -515,8 +515,12 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
               },
               onTokenExpired: () => {
                 return new Promise((resolve, reject) => {
-                  visible.value = false;
-                  startGame(gameName, platformCode, gameCode, gameType, demo);
+                  const apiUrl2 = `/session/launch?_time=${new Date().getTime()}`;
+
+                  api
+                    .get(apiUrl2, { params: apiParam })
+                    .then((res) => resolve(res.data))
+                    .catch((err) => reject(err));
                 });
               }
             });
