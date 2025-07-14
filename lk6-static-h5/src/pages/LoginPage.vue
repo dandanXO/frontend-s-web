@@ -75,7 +75,12 @@
                     v-model="loginForm.password"
                     :placeholder="$t('login.form.password.placeholder')"
                     :type="isPwd ? 'password' : 'text'"
-                    :rules="[(val) => (val && val.length > 0) || $t('login.form.password.error.required')]"
+                    :rules="[
+                      (val) => (val && val.length > 0) || $t('login.form.password.error.required'),
+                      (val) =>
+                        (val.length > 5 && val.length <= 12) ||
+                        $t('login.form.password.error.length', { min: 6, max: 12 })
+                    ]"
                     label-color=""
                     autocomplete="current-password"
                   >
@@ -195,7 +200,7 @@
 
                 <q-btn class="forgot-password-btn" style="margin-left: auto" flat dense no-caps>
                   <span>{{ $t("login.forgotPassword") }}</span>
-                  <q-popup-proxy class="forgot-password-tip">
+                  <q-popup-proxy class="forgot-password-tip" :breakpoint="300">
                     <i18n-t keypath="login.forgotPasswordTip" tag="span">
                       <a
                         class="txt-tip"
@@ -1160,7 +1165,8 @@ export default defineComponent({
   box-shadow: 0px 2px 0px 0px #9ab0ff70;
 }
 
-:deep(.q-field--standout.q-field--highlighted .q-field__native) {
+:deep(.q-field--standout.q-field--highlighted .q-field__native),
+:deep(.q-field--standout.q-field--highlighted .q-field__append) {
   color: #000;
 }
 

@@ -666,7 +666,8 @@ export default {
         label: "密码",
         placeholder: "请输入密码",
         error: {
-          required: "请输入密码"
+          required: "请输入密码",
+          length: "密码长度为 {min} 到 {max}"
         }
       },
       phone: {

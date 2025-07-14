@@ -16,7 +16,9 @@
               lazy-rules
               :rules="[
                 (val) => (val && val.length > 0) || $t('register.form.userName.error.required'),
-                (val) => (val && val.length >= 4 && val.length <= 11) || $t('register.form.userName.error.length'),
+                (val) =>
+                  (val && val.length >= 4 && val.length <= 11) ||
+                  $t('register.form.userName.error.length', { min: 4, max: 11 }),
                 (val) => (val && /^[a-zA-Z][a-zA-Z0-9]{3,10}$/.test(val)) || $t('register.form.userName.error.format'),
                 (val) =>
                   (val && (val.match(/[a-zA-Z]/g) || []).length >= 2) || $t('register.form.userName.error.format'),
@@ -340,7 +342,7 @@ export default defineComponent({
     };
 
     const clearPwConfirmName = () => {
-      regForm.password = "";
+      regForm.confirmPwd = "";
       regFormRef.value.reset();
     };
 
@@ -1009,7 +1011,8 @@ function charType(num) {
   box-shadow: 0px 2px 0px 0px #9ab0ff70;
 }
 
-:deep(.q-field--standout.q-field--highlighted .q-field__native) {
+:deep(.q-field--standout.q-field--highlighted .q-field__native),
+:deep(.q-field--standout.q-field--highlighted .q-field__append) {
   color: #000;
 }
 </style>
