@@ -155,7 +155,9 @@ import { storeToRefs } from "pinia";
 import DepositComponent from "@/components/depositComponent.vue";
 import { ElMessageBox } from "element-plus";
 import { uiStore } from "@/store/ui";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const store = userStore();
 const UI = uiStore();
 const { token } = storeToRefs(store);
@@ -323,11 +325,11 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         });
       }
     } else {
-      ElMessageBox.alert("请登录后再操作", "系统提示", {
+      ElMessageBox.alert(t('message.loginFirstAction'), t('message.systemPrompt'), {
         // if you want to disable its autofocus
         // autofocus: false,
         center: true,
-        confirmButtonText: "确认",
+        confirmButtonText: t('btn.confirm'),
         showClose: false,
         buttonSize: "large"
       }).then(() => {

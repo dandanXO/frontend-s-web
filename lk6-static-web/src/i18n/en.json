@@ -8,7 +8,12 @@
     "search": "Search",
     "edit": "Edit",
     "submit": "Submit",
-    "bind": "Bind"
+    "bind": "Bind",
+    "confirm": "Confirm"
+  },
+  "message": {
+    "loginFirstAction": "Please log in before proceeding",
+    "systemPrompt": "System Prompt"
   },
   "form": {
     "realName": "Real Name",
@@ -90,6 +95,17 @@
     "event": "Event",
     "announcement": "Announcement",
     "transaction": "Deposit/Withdrawal"
+  },
+  "footer": {
+    "paymentMethods": "Payment Methods",
+    "recommendedBrowsers": "Recommended Browsers",
+    "workingPartners": "Working Partners",
+    "aboutLK6": "About Lucky6",
+    "serviceAndProducts": "Service & Products",
+    "browserDownload": "Browser Download",
+    "googleChrome": "Google Chrome",
+    "mozillaFirefox": "Mozilla Firefox",
+    "freeAccountOpening": "Free Account Opening"
   },
   "download": {
     "title": "Comprehensive client download",

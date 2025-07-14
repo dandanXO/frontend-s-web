@@ -6,6 +6,7 @@ import PersonalRouter from "./personal";
 import { userStore } from "@/store/index";
 import { ElMessageBox } from "element-plus";
 import { useDark } from "@vueuse/core";
+import i18n from '../i18n'
 
 const routes = [
   {
@@ -215,11 +216,11 @@ router.beforeEach((to, from, next) => {
 
     if (to.meta.requiresAuth) {
       // 账号已在其他设备登录，
-      ElMessageBox.alert("请登录后再操作", "系统提示", {
+      ElMessageBox.alert(i18n.t('message.loginFirstAction'), i18n.t('message.systemPrompt'), {
         // if you want to disable its autofocus
         // autofocus: false,
         center: true,
-        confirmButtonText: "确认",
+        confirmButtonText: i18n.t('btn.confirm'),
         showClose: false,
         buttonSize: "large"
       }).then(() => {
