@@ -723,8 +723,7 @@ const loadInitialTeams = (type) => {
 const searchTeams = (event, type) => {
   const inputValue = event.query;
   const displayTeams = type === 'home' ? homeDisplayTeams : awayDisplayTeams;
-  
-  console.log("LiveEvent ::: displayTeams : ", displayTeams)
+
   if (!inputValue) {
     displayTeams.value = teams.value.slice(0, TEAMS_PER_VIEW);
   } else {
@@ -1013,7 +1012,12 @@ onMounted(async () => {
     const parsedQuery = JSON.parse(savedQuery);
     // 逐個賦值給 request 的屬性，而非直接替換 request
     Object.keys(parsedQuery).forEach(key => {
-      request[key] = parsedQuery[key];
+      if (key === 'matchTime' && Array.isArray(parsedQuery[key])) {
+        // 將 matchTime 的字符串轉為 Date 物件
+        request[key] = parsedQuery[key].map(time => new Date(time));
+      } else {
+        request[key] = parsedQuery[key];
+      }
     });
   }
   await loadList()
