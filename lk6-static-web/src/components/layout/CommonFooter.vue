@@ -3,7 +3,7 @@
     <div class="top-footer">
       <div class="top-footer-inner">
         <div class="top-ft-rgt">
-          <span class="s1">支付方式：</span>
+          <span class="s1">{{$t('footer.paymentMethods')}}：</span>
           <span class="footPayIcon usdt" title="USDT"></span>
           <!-- <span class="footPayIcon unionpay" title="中国银联"></span>
           <span class="footPayIcon numberpay" title="数字人民币"></span>
@@ -19,7 +19,7 @@
           <!-- <span class="s1">博彩责任：</span>
           <span class="footPayIcon gameCore" title="GameCore"></span>
           <span class="footPayIcon eighteenadd" title="18+"></span> -->
-          <span class="s1">推荐浏览器：</span>
+          <span class="s1">{{$t('footer.recommendedBrowsers')}}：</span>
           <span class="recBrowser bchrome" title="Chrome"></span>
           <span class="recBrowser bfirefox" title="Firefox"></span>
         </div>
@@ -32,7 +32,7 @@
       </div> -->
         
         <div class="top-ft-rgt">
-          <span class="s1">合作伙伴:</span>
+          <span class="s1">{{$t('footer.workingPartners') }}:</span>
           <span class="hzhb-icon eeai" title="eeai"></span>
           <span class="hzhb-icon cr" title="cr"></span>
           <span class="hzhb-icon pm" title="pm"></span>
@@ -43,27 +43,27 @@
     <div class="bottom-footer">
       <div class="sitemap">
         <ul class="index_bottom_des">
-          <li>关于幸运6</li>
-          <li><router-link to="/promotion">优惠活动</router-link></li>
-          <li @click="openRegPage">免费开户</li>
+          <li>{{ $t('footer.aboutLK6') }}</li>
+          <li><router-link to="/promotion">{{ $t('menu.promotion') }}</router-link></li>
+          <li @click="openRegPage">{{ $t('footer.freeAccountOpening') }}</li>
           <!--              <li><router-link to="/agent">代理加盟</router-link></li>-->
         </ul>
         <ul class="index_bottom_des">
-          <li>产品服务</li>
-          <li><router-link to="/live-casino">真人</router-link></li>
-          <li><router-link to="/crown?plat=CR">皇冠</router-link></li>
-          <li><router-link to="/panda?plat=PM">熊猫</router-link></li>
-          <li><router-link to="/bacarrat">百家乐</router-link></li>
+          <li>{{ $t('footer.serviceAndProducts') }}</li>
+          <li><router-link to="/live-casino">{{ $t('menu.live') }}</router-link></li>
+          <li><router-link to="/crown?plat=CR">{{ $t('menu.crown') }}</router-link></li>
+          <li><router-link to="/panda?plat=PM">{{ $t('menu.panda') }}</router-link></li>
+          <li><router-link to="/bacarrat">{{ $t('menu.bacarrat') }}</router-link></li>
         </ul>
         <ul class="index_bottom_des">
-          <li>浏览器下载</li>
+          <li>{{ $t('footer.browserDownload') }}</li>
           <li>
             <a href="https://www.google.com/intl/en_sg/chrome/">
-              谷歌浏览器
+              {{ $t('footer.googleChrome') }}
             </a>
           </li>
           <li>
-            <a href="https://www.mozilla.org/en-US/firefox/new/">火狐浏览器</a>
+            <a href="https://www.mozilla.org/en-US/firefox/new/">{{ $t('footer.mozillaFirefox') }}</a>
           </li>
         </ul>
       </div>

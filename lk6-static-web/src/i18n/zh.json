@@ -8,7 +8,12 @@
     "search": "搜索",
     "edit": "编辑",
     "submit": "提交",
-    "bind": "绑定"
+    "bind": "绑定",
+    "confirm": "确认"
+  },
+  "message": {
+    "loginFirstAction": "请登录后再操作",
+    "systemPrompt": "系统提示"
   },
   "form": {
     "realName": "姓名",
@@ -91,11 +96,23 @@
     "announcement": "公告",
     "transaction": "充提"
   },
+  "footer": {
+    "paymentMethods": "支付方式",
+    "recommendedBrowsers": "推荐浏览器",
+    "workingPartners": "合作伙伴",
+    "aboutLK6": "关于幸运6",
+    "serviceAndProducts": "Service & Products",
+    "browserDownload": "Browser Download",
+    "freeAccountOpening": "免费开户"
+  },
   "download": {
     "title": "综合客户端下载",
     "desc": "引领市场的卓越技术，自主研发了全套终端应用，让您畅享 Web,H5,更有iOS,Android原生APP，让您随时随地，娱乐投注！",
     "scan": "扫码进入下载页面",
-    "download": "手机免费下载地址"
+    "download": "手机免费下载地址",
+    "googleChrome": "谷歌浏览器",
+    "mozillaFirefox": "火狐浏览器"
+   
   },
   "service": {
     "seconds": "秒",

@@ -161,11 +161,13 @@ import moment from "moment";
 
 import { storeToRefs } from "pinia";
 import { setTimeout } from "core-js";
+import { useI18n } from "vue-i18n";
 export default defineComponent({
   components: {
     GameModal
   },
   setup() {
+    const { t } = useI18n();
     const notify = useNotify();
     const route = useRoute();
     const router = useRouter();
@@ -376,9 +378,9 @@ export default defineComponent({
           router.push(`/promotion?name=lh-official-gift`);
         }
       } else {
-        ElMessageBox.alert("请登录后再操作", "系统提示", {
+        ElMessageBox.alert(t('message.loginFirstAction'), t('message.systemPrompt'), {
           center: true,
-          confirmButtonText: "确认",
+          confirmButtonText: t('btn.confirm'),
           showClose: false,
           buttonSize: "large"
         }).then(() => {
