@@ -37,15 +37,15 @@
         <q-btn class="search-btn" @click="searchRecord">{{ $t("btn.search") }}</q-btn>
       </div>
     </div>
-    <div class="payout-total">
-      <div>
-        {{ $t("record.filter.totalBet", { amount: totalBetRecord.totalBet }) }}
-      </div>
-      <div>
-        {{ $t("record.filter.totalPayout", { amount: totalBetRecord.totalPayout }) }}
-      </div>
-      <!-- <div>总有效投注: {{ totalBetRecord.totalValidBet }}</div> -->
-    </div>
+    <!-- <div class="payout-total"> -->
+    <!-- <div> -->
+    <!-- {{ $t("record.filter.totalBet", { amount: totalBetRecord.totalBet }) }} -->
+    <!-- </div> -->
+    <!-- <div> -->
+    <!-- {{ $t("record.filter.totalPayout", { amount: totalBetRecord.totalPayout }) }} -->
+    <!-- </div> -->
+    <!-- <div>总有效投注: {{ totalBetRecord.totalValidBet }}</div> -->
+    <!-- </div> -->
     <!--    <div class="select-btn">-->
     <!--      <q-btn class="common-large-btn" label="点击选择平台" @click="showSelection" />-->
     <!--    </div>-->
@@ -63,7 +63,7 @@
     <BottomSheetPicker
       v-model="showPlatformSelectorDialog"
       :list="platformsList"
-      :current="pendingPlatform"
+      :current="platform"
       @confirm="handlePendingPlatformConfirmClick"
     />
   </div>
@@ -94,7 +94,7 @@ const searchRecord = () => {
 const isEnded = ref(false);
 const showPlatformSelectorDialog = ref(false);
 
-var apiUrl = "/session/member/gameBetRecordWithType";
+var apiUrl = "/session/member/cassandraBetRecord";
 
 var endDate = ref(moment().format("YYYY-MM-DD"));
 var startDate = ref(moment().add(-7, "days").format("YYYY-MM-DD"));
@@ -164,9 +164,9 @@ const loadDepositTable = (isNew) => {
     })
     .then((res) => {
       maxPage.value = res.data.pages;
-      totalBetRecord.totalBet = res.data.sums.totalBet;
-      totalBetRecord.totalPayout = res.data.sums.totalPayout;
-      totalBetRecord.totalValidBet = res.data.sums.totalValidBet;
+      // totalBetRecord.totalBet = res.data.sums.totalBet;
+      // totalBetRecord.totalPayout = res.data.sums.totalPayout;
+      // totalBetRecord.totalValidBet = res.data.sums.totalValidBet;
       tableData.value.push(...res.data.records);
     })
     .finally(() => {
@@ -226,7 +226,7 @@ const tableHeaders = computed(() => [
     label: t("record.table.bet.header.gameType")
   },
   {
-    key: "status",
+    key: "betStatus",
     label: t("record.table.bet.header.status")
   }
 ]);

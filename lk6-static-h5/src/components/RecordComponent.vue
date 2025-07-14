@@ -91,7 +91,7 @@
                   {{ checkRecord(det[obj]) }}
                 </div>
                 <div v-else-if="obj === 'platform'">
-                  {{ det["alias"] ?? det["obj"] }}
+                  {{ det["alias"] ?? det[obj] }}
                 </div>
                 <div
                   v-else-if="
@@ -110,6 +110,12 @@
                 <div v-else-if="obj === 'serialNumber'" class="deposit-serial-number">
                   <div class="ellipsis">{{ det[obj] }}</div>
                   <q-btn @click="copyText(det.serialNumber, $t('record.serialNumber'))" flat round>
+                    <img src="../assets/records/copy-icon.png" />
+                  </q-btn>
+                </div>
+                <div v-else-if="obj === 'transactionId'" class="deposit-serial-number">
+                  <div class="ellipsis">{{ det[obj] }}</div>
+                  <q-btn @click="copyText(det.transactionId, $t('record.betId'))" flat round>
                     <img src="../assets/records/copy-icon.png" />
                   </q-btn>
                 </div>
