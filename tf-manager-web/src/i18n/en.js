@@ -2700,6 +2700,7 @@ export default {
     retentionDay30: 'Day 31',
     depositRetention: 'Deposit Retention',
     regLoginRetention: 'Register Login Retenion',
+    combinePlatform: 'Combine Platform',
   },
   message: {
     adsStatusOpen: 'Open',

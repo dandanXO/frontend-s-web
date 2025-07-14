@@ -2001,6 +2001,7 @@ export default {
     pts: '포인트',
     ptsRebateAmount: '리베이트 포인트 금액',
     ftdRebateAmount: '첫 입금 리베이트 금액',
+    combinePlatform: '플랫폼 합치기',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3 개월 이상일 수 없습니다',
