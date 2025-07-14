@@ -14,7 +14,11 @@
     "followUp": "Follow-up",
     "cancel": "Cancel",
     "confirmPayment": "Confirm Payment",
-    "logout": "Logout"
+    "logout": "Logout",
+    "verify": "Verify",
+    "goComplete": "Go complete",
+    "back": "Back",
+    "refresh": "Refresh"
   },
   "message": {
     "loginFirstAction": "Please log in before proceeding",
@@ -22,7 +26,8 @@
     "copied": "Copied",
     "noAnnouncementYet": "No announcement yet",
     "success": "Success",
-    "submitSuccessfully": "Submit Successfully"
+    "submitSuccessfully": "Submit Successfully",
+    "deleteCancelled": "Delete cancelled"
   },
   "form": {
     "remark": "Remark",
@@ -92,7 +97,22 @@
     "birthday": "Birthday",
     "male": "Male",
     "female": "Female",
-    "crypto": "Crypto"
+    "crypto": "Crypto",
+    "confirmUnbind": "Confirm Unbind",
+    "safetyVerification": "Safety Verification",
+    "sendOTP": "Send OTP",
+    "sent": "Sent",
+    "seconds": "seconds",
+    "phoneVerification": "Phone Verification",
+    "choose": "Choose",
+    "pleaseCompleteFollowing": "Please complete the following",
+    "withdrawRemainDialogHelpText01": "If you have any questions, please contact online customer service for verification~",
+    "withdrawRemainDialogHelpText02": "*If there’s a delay in the platform’s settlement process, please try again after 10 minutes!",
+    "toBeComplete": "To be complete",
+    "toBeCompleteContinuation": "turnover, instantly enjoy fast withdrawals",
+    "betRequirements": "Bet Requirements",
+    "turnoverProgress": "Turnover Progress",
+    "completionProgress": "Completion Progress"
   },
   "table": {
     "gameBetRecord": {

@@ -14,7 +14,11 @@
     "followUp": "催单",
     "cancel": "取消",
     "confirmPayment": "确认到账",
-    "logout": "退出登录"
+    "logout": "退出登录",
+    "verify": "验证",
+    "goComplete": "去完成",
+    "back": "返回",
+    "refresh": "刷新"
   },
   "message": {
     "loginFirstAction": "请登录后再操作",
@@ -22,7 +26,8 @@
     "copied": "已复制",
     "noAnnouncementYet": "暂无公告",
     "success": "成功",
-    "submitSuccessfully": "提交成功"
+    "submitSuccessfully": "提交成功",
+    "deleteCancelled": "删除取消"
   },
   "form": {
     "remark": "Remark",
@@ -92,7 +97,22 @@
     "birthday": "生日",
     "male": "男",
     "female": "女",
-    "crypto": "数字货币"
+    "crypto": "数字货币",
+    "confirmUnbind": "确认解绑",
+    "safetyVerification": "安全验证",
+    "sendOTP": "发送验证码",
+    "sent": "已发送",
+    "seconds": "秒",
+    "phoneVerification": "手机验证",
+    "choose": "选择",
+    "pleaseCompleteFollowing": "请完成以下条件",
+    "withdrawRemainDialogHelpText01": "若有疑问，请联系在线客服核查~",
+    "withdrawRemainDialogHelpText02": "*若平台结算流水有延迟，请您10分钟后重试！",
+    "toBeComplete": "再完成",
+    "toBeCompleteContinuation": "流水，立即享受快速提款",
+    "betRequirements": "投注要求",
+    "turnoverProgress": "流水进度",
+    "completionProgress": "完成状态"
   },
   "table": {
     "gameBetRecord": {

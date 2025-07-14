@@ -336,7 +336,7 @@
       v-model="updateSecurityModalVisible"
       :footer="null"
       width="500px"
-      title="安全验证"
+      :title="$t('form.safetyVerification')"
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -354,7 +354,7 @@
           <el-space>
             <el-input
               v-model="updateSecurityVerified.verificationCode"
-              :placeholder="'验证码'"
+              :placeholder="$t('form.verificationCode')"
               @keyup.enter="submitUpdateSecurity"
             />
             <el-button
@@ -363,13 +363,13 @@
               class="common-btn verification-btn"
               @click="openVerificationModal"
             >
-              <span v-if="disableSendVerificationButton">已发送（倒数{{ countDown }}秒)</span>
-              <span v-else>发送验证码</span>
+              <span v-if="disableSendVerificationButton">{{$t('form.sent')}}（{{ countDown }}{{ $t('form.seconds') }})</span>
+              <span v-else>{{ $t('form.sendOTP') }}</span>
             </el-button>
           </el-space>
         </el-form-item>
         <el-button :loading="loadingSecurityBtn" class="common-btn verification-btn" @click="submitUpdateSecurity">
-          提交
+          {{ $t('btn.submit') }}
         </el-button>
       </el-form>
     </el-dialog>
@@ -377,7 +377,7 @@
     <el-dialog
       wrap-class-name="securityModal"
       v-model="verificationModalVisible"
-      title="验证码"
+      :title="$t('form.verificationCode')"
       width="500px"
       align-center
       :close-on-click-modal="false"
@@ -385,13 +385,13 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaUpdateRef" :model="updateSecurityVerified">
-        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码' }]">
+        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: $t('form.pleaseEnterField', {field: $t('form.verificationCode')}) }]">
           <el-space>
             <el-input
               @keyup.enter="verifyVerificationCode"
               v-model="updateSecurityVerified.captchaCode"
               :maxlength="4"
-              placeholder="验证码"
+              :placeholder="$t('form.verificationCode')"
             />
 
             <div class="verification" @click="getCode()">
@@ -400,7 +400,7 @@
           </el-space>
         </el-form-item>
       </el-form>
-      <el-button class="common-btn" @click="verifyVerificationCode" :loading="isEmailSending">验证</el-button>
+      <el-button class="common-btn" @click="verifyVerificationCode" :loading="isEmailSending">{{ $t('btn.verify') }}</el-button>
     </el-dialog>
 
     <el-dialog
@@ -408,7 +408,7 @@
       v-model="updatePhoneModalVisible"
       :footer="null"
       width="500px"
-      title="手机验证"
+      :title="$t('form.phoneVerification')"
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -420,26 +420,26 @@
         :rules="updatePhoneVerifiedRules"
       >
         <el-form-item ref="phone" prop="phone">
-          <el-input v-model="updatePhoneVerified.phone" placeholder="手机号码" />
+          <el-input v-model="updatePhoneVerified.phone" :placeholder="$t('form.ohone')" />
         </el-form-item>
         <template v-if="isRequirePhoneValidation">
           <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
-            <el-input v-model="updatePhoneVerified.verificationCode" :placeholder="'验证码'" />
+            <el-input v-model="updatePhoneVerified.verificationCode" :placeholder="$t('form.verificationCode')" />
             <el-button
               :disabled="disableSendPhoneButton"
               size="small"
               class="common-btn verification-btn"
               @click="openPhoneVerificationModal"
             >
-              <span v-if="disableSendPhoneButton">已发送（倒数{{ countDown }}秒)</span>
-              <span v-else>发送验证码</span>
+              <span v-if="disableSendPhoneButton">{{$t('form.sent')}}（{{ countDown }}{{ $t('form.seconds') }})</span>
+              <span v-else>{{ $t('form.sendOTP') }}</span>
             </el-button>
           </el-space>
         </el-form-item>
         </template>
         <el-button :loading="loadingPhoneBtn" class="common-btn verification-btn" @click="submitUpdatePhone">
-          提交
+          {{ $t('btn.submit') }}
         </el-button>
       </el-form>
     </el-dialog>
@@ -447,20 +447,20 @@
     <el-dialog
       wrap-class-name="phoneModal"
       v-model="verificationPhoneModalVisible"
-      title="验证码"
+      :title="$t('form.verificationCode')"
       width="500px"
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form ref="captchaUpdateRef" :model="updatePhoneVerified">
-        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码' }]">
+        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: $t('pleaseEnterField', {field: $t('form.verificationCode')})}]">
           <el-space>
             <el-input
               @keypress.enter.prevent="verifyPhoneVerificationCode"
               v-model="updatePhoneVerified.captchaCode"
               :maxlength="4"
-              placeholder="验证码"
+              :placeholder="$t('form.verificationCode')"
             />
 
             <div class="verification" @click="getCode()">
@@ -469,7 +469,7 @@
           </el-space>
         </el-form-item>
       </el-form>
-      <el-button class="common-btn" @click="verifyPhoneVerificationCode" :loading="isPhoneSending">验证</el-button>
+      <el-button class="common-btn" @click="verifyPhoneVerificationCode" :loading="isPhoneSending">{{ $t('btn.verify') }}</el-button>
     </el-dialog>
   </div>
 

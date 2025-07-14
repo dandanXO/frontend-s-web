@@ -11,30 +11,30 @@
     <div class="withdraw-remaining-dialog__header">
       <div class="withdraw-remaining-dialog__header-title">
         <img src="@/assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
-        <span>请完成以下条件</span>
+        <span>{{ $t('form.pleaseCompleteFollowing') }}</span>
       </div>
       <span class="withdraw-remaining-dialog__header-help-text">
-        若有疑问，请联系在线客服核查~
+        {{ $t('form.withdrawRemainDialogHelpText01') }}
         <br />
-        *若平台结算流水有延迟，请您10分钟后重试！
+        {{ $t('form.withdrawRemainDialogHelpText02') }}
       </span>
     </div>
     <img class="withdraw-remaining-dialog__pic" src="@/assets/images/finance/withdraw/withdraw-remaining-pic.png" />
     <div class="withdraw-remaining-dialog__body">
       <div class="withdraw-remaining-dialog__body-title">
-        再完成
+        {{ $t('form.toBeComplete') }}
         <span class="text-yellow">{{ convertToCommaAmount(totalRemaining, true) }}</span>
-        流水，立即享受快速提款
+        {{ $t('form.toBeCompleteContinuation') }}
       </div>
       <table class="withdraw-remaining-dialog__body-table">
         <thead>
           <tr>
-            <th align="center">投注要求</th>
+            <th align="center">{{ $t('form.betRequirements') }}</th>
             <th align="center">
-              流水进度
+              {{ $t('form.turnoverProgress') }}
               <!-- <img class="refresh-btn" @click="refreshTurnOverAmt" src="@/assets/images/common/refresh-btn.png" /> -->
             </th>
-            <th align="center">完成状态</th>
+            <th align="center">{{ $t('form.completionProgress') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -42,14 +42,14 @@
             <td align="center">{{ getDisplayRemainingTypes(record.type) }}</td>
             <td align="center">{{ convertToCommaAmount(record.progress, true) }}/{{ convertToCommaAmount(record.total, true) }}</td>
             <td align="center">
-              <router-link class="action-button" to="/home">去完成</router-link>
+              <router-link class="action-button" to="/home">{{ $t('btn.goComplete') }}</router-link>
             </td>
           </tr>
         </tbody>
       </table>
       <div class="withdraw-remaining-dialog__buttons">
-        <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
-        <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">刷新</button>
+        <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t('btn.back') }}</button>
+        <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">{{ $t('btn.refresh') }}</button>
       </div>
     </div>
   </el-dialog>
@@ -60,10 +60,13 @@ import { convertToCommaAmount } from "@/utils/utils";
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessageBox } from "element-plus";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps({
   modelValue: Boolean
 });
+
+const { t } = useI18n();
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -85,9 +88,9 @@ const getDisplayRemainingType = (type) => {
     case "esport":
       return "电竞";
     case "sport":
-      return "体育";
+      return t('menu.sport');
     case "live":
-      return "真人";
+      return t('menu.live');
     case "fish":
       return "捕鱼";
     case "casual":
