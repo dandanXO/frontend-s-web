@@ -2719,7 +2719,7 @@ export default {
     retentionDay30: '31日',
     depositRetention: '存款留存',
     regLoginRetention: '注册回头',
-    combinePlatform: '合并平台',
+    combinePlatform: '合并线路',
   },
   message: {
     adsStatusOpen: '开',
