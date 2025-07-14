@@ -42,12 +42,12 @@ export default defineComponent({
     var maxPage = ref(0);
 
     const loadNewData = () => {
-      // if (maxPage.value > current.value) {
-      //   current.value++;
-      // } else {
-      //   isEnded.value = true;
-      //   return;
-      // }
+      if (maxPage.value > current.value) {
+        current.value++;
+      } else {
+        isEnded.value = true;
+        return;
+      }
       loadDepositTable(false);
     };
 

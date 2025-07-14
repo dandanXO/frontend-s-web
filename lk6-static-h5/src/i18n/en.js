@@ -667,7 +667,8 @@ export default {
         label: "Password",
         placeholder: "Enter password",
         error: {
-          required: "Enter password"
+          required: "Enter password",
+          length: "Password must be {min} to {max} chars"
         }
       },
       phone: {

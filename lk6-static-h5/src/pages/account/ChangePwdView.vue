@@ -10,9 +10,17 @@
         :type="isPwd ? 'password' : 'text'"
         :placeholder="$t('changePassword.form.oldPassword.placeholder')"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || $t('changePassword.form.oldPassword.error.required')]"
+        :rules="[
+          (val) => (val && val.length > 0) || $t('changePassword.form.oldPassword.error.required'),
+          (val) =>
+            (val && val.length >= 4 && val.length <= 11) ||
+            $t('changePassword.form.oldPassword.error.length', { min: 6, max: 12 })
+        ]"
       >
         <template v-slot:append>
+          <q-btn v-if="updatePwdInfo.oldPassword" flat round @click="clearPwd">
+            <img src="../../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+          </q-btn>
           <!--          <q-icon-->
           <!--              -->
           <!--              :name="isPwd ? 'visibility_off' : 'visibility'"-->
@@ -44,10 +52,18 @@
         :type="isPwd2 ? 'password' : 'text'"
         :placeholder="$t('changePassword.form.newPassword.placeholder')"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || $t('changePassword.form.newPassword.error.required')]"
+        :rules="[
+          (val) => (val && val.length > 0) || $t('changePassword.form.newPassword.error.required'),
+          (val) =>
+            (val && val.length >= 4 && val.length <= 11) ||
+            $t('changePassword.form.newPassword.error.length', { min: 6, max: 12 })
+        ]"
         label-
       >
         <template v-slot:append>
+          <q-btn v-if="updatePwdInfo.password" flat round @click="clearNewPwd">
+            <img src="../../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+          </q-btn>
           <img
             v-if="!isPwd2"
             @click="isPwd2 = !isPwd2"
@@ -82,11 +98,17 @@
         lazy-rules
         :rules="[
           (val) => (val && val.length > 0) || $t('changePassword.form.newPasswordConfirm.error.required'),
+          (val) =>
+            (val && val.length >= 4 && val.length <= 11) ||
+            $t('changePassword.form.newPasswordConfirm.error.length', { min: 6, max: 12 }),
           (val) => val === updatePwdInfo.password || $t('changePassword.form.newPasswordConfirm.error.match')
         ]"
         label-
       >
         <template v-slot:append>
+          <q-btn v-if="updatePwdInfo.confirmNewPwd" flat round @click="clearPwdConfirm">
+            <img src="../../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+          </q-btn>
           <img
             v-if="!isPwd3"
             @click="isPwd3 = !isPwd3"
@@ -189,6 +211,21 @@ export default defineComponent({
       }
     };
 
+    const clearPwd = () => {
+      updatePwdInfo.oldPassword = "";
+      oldPasswordRef.value.resetValidation();
+    };
+
+    const clearNewPwd = () => {
+      updatePwdInfo.password = "";
+      passwordRef.value.resetValidation();
+    };
+
+    const clearPwdConfirm = () => {
+      updatePwdInfo.confirmNewPwd = "";
+      confirmPasswordRef.value.resetValidation();
+    };
+
     onDeactivated(() => {
       // Reset the form when the component is deactivated
       updatePwdInfo.oldPassword = "";
@@ -208,7 +245,10 @@ export default defineComponent({
       confirmPasswordRef,
       isPwd,
       isPwd2,
-      isPwd3
+      isPwd3,
+      clearPwd,
+      clearNewPwd,
+      clearPwdConfirm
     };
   }
 });
