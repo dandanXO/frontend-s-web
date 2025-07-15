@@ -2581,8 +2581,9 @@ const loadCustomerAddress = () => {
 const hbPromo = ref([]);
 
 const checkHbPromo = () => {
+  const apiUrl = store.hasToken() ? "/session/loggedInRedirect" : "/redirect";
   api
-    .get("/redirect")
+    .get(apiUrl)
     .then((res) => {
       return res;
     })
