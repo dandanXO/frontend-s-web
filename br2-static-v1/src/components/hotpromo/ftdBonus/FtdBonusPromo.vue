@@ -70,27 +70,11 @@
 </template>
 
 <script setup>
-import { userStore } from "src/stores";
-import { computed, ref, onMounted } from "vue";
-import { api, eventapi } from "boot/axios";
-import { useRouter } from "vue-router";
+import { ref } from "vue";
+import { eventapi } from "boot/axios";
 
-const promoInfo = ref({});
-
-const loadPromoInit = () => {
-  eventapi
-    .get("/session/deposit-bonus/init?promoCode=br2-ftd-bonus")
-    .then((res) => {
-      // debugger;
-      if (res.code === 0) {
-        const { data } = res;
-        promoInfo.value = data;
-      }
-    })
-    .catch((e) => {});
-};
-
-const router= useRouter();
+const showPrizePopup = ref(false);
+const prizeAmount = ref();
 
 const claimPromo = () => {
   // router.push("/deposit")
@@ -105,13 +89,6 @@ const claimPromo = () => {
     })
     .catch((e) => {});
 };
-
-const showPrizePopup = ref(false);
-const prizeAmount = ref();
-
-onMounted(() => {
-  loadPromoInit();
-});
 </script>
 
 <style lang="scss" scoped>

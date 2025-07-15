@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { api, cashier, eventapi } from "boot/axios";
 import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
-import { isAndroid } from "boot/utils";
+import { isAndroid, isInPwa } from "boot/utils";
 import OneSignal from "onesignal-cordova-plugin";
 
 var qs = require("qs");
@@ -11,7 +11,7 @@ const TOKEN_KEY = "TOKEN";
 export const userStore = defineStore("userStore", {
   state: () => {
     const getStoreToken = () => {
-      if (isAndroid()) {
+      if (isAndroid() || isInPwa()) {
         return LocalStorage.getItem("TOKEN", "");
       } else {
         return SessionStorage.getItem("TOKEN") || "";
@@ -44,6 +44,7 @@ export const userStore = defineStore("userStore", {
       visitorId: "",
       googleadid: "",
       aaid: "",
+      isFbPixel: false,
       hasUpdatedOneSignal: false,
       isAffiliateA: false,
       isOperaPixelB: false,
@@ -53,7 +54,7 @@ export const userStore = defineStore("userStore", {
   },
   actions: {
     hasToken() {
-      if (isAndroid()) {
+      if (isAndroid() || isInPwa()) {
         // console.log("android");
         if (LocalStorage.getItem("TOKEN", "") !== "") {
           return true;
@@ -109,7 +110,7 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/login", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid()) {
+          if (isAndroid() || isInPwa()) {
             LocalStorage.set("TOKEN", ret.data, 86400);
           } else {
             SessionStorage.set("TOKEN", ret.data);
@@ -144,7 +145,7 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/mobileLogin", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid()) {
+          if (isAndroid() || isInPwa()) {
             LocalStorage.set("TOKEN", ret.data, 86400);
           } else {
             SessionStorage.set("TOKEN", ret.data);
@@ -162,7 +163,7 @@ export const userStore = defineStore("userStore", {
     getMemberInfo() {
       api.interceptors.request.use(async (req) => {
         var token;
-        if (isAndroid()) {
+        if (isAndroid() || isInPwa()) {
           token = LocalStorage.getItem("TOKEN");
         } else {
           token = SessionStorage.getItem("TOKEN");
@@ -172,7 +173,7 @@ export const userStore = defineStore("userStore", {
       });
       cashier.interceptors.request.use(async (req) => {
         var token;
-        if (isAndroid()) {
+        if (isAndroid() || isInPwa()) {
           token = LocalStorage.getItem("TOKEN");
         } else {
           token = SessionStorage.getItem("TOKEN");
@@ -182,7 +183,7 @@ export const userStore = defineStore("userStore", {
       });
       eventapi.interceptors.request.use(async (req) => {
         var token;
-        if (isAndroid()) {
+        if (isAndroid() || isInPwa()) {
           token = LocalStorage.getItem("TOKEN");
         } else {
           token = SessionStorage.getItem("TOKEN");
@@ -259,7 +260,7 @@ export const userStore = defineStore("userStore", {
     },
     autoLogin(token) {
       this.token = token;
-      if (isAndroid()) {
+      if (isAndroid() || isInPwa()) {
         LocalStorage.set("TOKEN", token, 86400);
       } else {
         SessionStorage.set("TOKEN", token);

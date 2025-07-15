@@ -1,7 +1,7 @@
 <template>
   <q-page class="account-table-page">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('records.noRecord')"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('notify.noRecord')"></NoInfoComponent>
     <div v-else v-for="(e, i) in discountData" :key="`${e}-${i}`" class="discount-table">
       <div class="discount-row discount-row--title">
         <div class="discount-col">
@@ -9,10 +9,10 @@
         </div>
       </div>
       <div class="discount-row discount-row--content">
-        <div class="discount-col">{{ translateNaming(e.privilegeName) }}</div>
+        <div class="discount-col">{{ e.privilegeName }}</div>
         <div class="discount-col">
           {{ $t("records.amount") }}:
-          <span class="txt-yellow">{{ convertToCommaAmount(e.amount, false) }}</span>
+          <span class="txt-yellow">{{ convertToTwoDecimalAmount(e.amount) }}</span>
         </div>
       </div>
     </div>
@@ -21,20 +21,37 @@
 
 <script setup>
 import { onActivated, reactive, ref } from "vue";
+import { api } from "boot/axios";
+import { useRouter } from "vue-router";
+import { updateDate, convertToGMT8 } from "src/boot/utils";
+import LoadingComponent from "../../components/LoadingComponent.vue";
+import NoInfoComponent from "../../components/NoInfoComponent.vue";
 
-import { api } from "@/boot/axios";
-import { t } from "@/boot/lang";
-import { convertToCommaAmount, convertToGMT8, updateDate } from "@/boot/utils";
-import LoadingComponent from "@/components/LoadingComponent.vue";
-import NoInfoComponent from "@/components/NoInfoComponent.vue";
+const router = useRouter();
+
+let slideList = ref(["Discount", "Record", "Order", "Bank", "Message", "Personal Center"]);
+let slideListPath = ref([
+  "/account/discount",
+  "/account/record",
+  "/account/order",
+  "/account/bank",
+  "/account/message",
+  "/account"
+]);
+let currentSlide = ref(slideList.value[0]);
+
+const isActiveSlide = (e) => {
+  if (e === currentSlide.value) return true;
+  return false;
+};
 
 const isLoading = ref(true);
 const isNoInfo = ref(true);
 
 const searchForm = reactive({ startDate: "", endDate: "" });
 const setTime = () => {
-  searchForm.startDate = updateDate(7);
-  searchForm.endDate = updateDate(0);
+  searchForm.startDate = updateDate(6);
+  searchForm.endDate = updateDate(-1);
 };
 
 const discountData = ref([]);
@@ -65,12 +82,9 @@ const searchDiscountRecord = () => {
     });
 };
 
-const translateNaming = (text) => {
-  if (text === "VIP Upgrade Bonus") {
-    return t("records.vipUpgradeBonus");
-  }
-
-  return text;
+const convertToTwoDecimalAmount = (amount) => {
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 onActivated(() => {

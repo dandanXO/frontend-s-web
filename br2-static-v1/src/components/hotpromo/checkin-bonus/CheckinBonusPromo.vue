@@ -59,15 +59,15 @@
       </div>
     </div>
 
-    <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
+    <!-- <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div> -->
 
-    <div class="tnc-content">
+    <!-- <div class="tnc-content">
       <ol>
         <li v-for="index in 7" :key="index">
           {{ $t(`hotPromo.signIn7Days.tnc${`${index}`.padStart(2, "0")}`) }}
         </li>
       </ol>
-    </div>
+    </div> -->
   </div>
 
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
@@ -331,44 +331,6 @@ onMounted(() => {
     .bar-desc {
       padding: 8px;
     }
-  }
-}
-
-.promo-subtitle {
-  // padding: 0 24px;
-  margin-top: 24px;
-  text-transform: uppercase;
-  font-weight: 900;
-  color: #ffffff;
-  font-size: 18px;
-  line-height: 1;
-  font-style: italic;
-  text-align: center;
-  position: relative;
-  display: flex;
-  justify-content: center;
-
-  &:before {
-    content: "";
-    background: url(../../../assets/images/promotion/receive-earn/promo-subtitle-icon.png);
-    width: 25px;
-    height: 9px;
-    display: block;
-    background-size: 100% 100%;
-    margin-right: 8px;
-    margin-top: 4px;
-  }
-
-  &:after {
-    content: "";
-    background: url(../../../assets/images/promotion/receive-earn/promo-subtitle-icon.png);
-    width: 25px;
-    height: 9px;
-    display: block;
-    background-size: 100% 100%;
-    transform: scaleX(-1);
-    margin-left: 8px;
-    margin-top: 4px;
   }
 }
 

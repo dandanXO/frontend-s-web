@@ -1,11 +1,13 @@
 <template>
-  <PlatformView
-    :platforms="sportsPlatforms"
-    :platformGameType="platformGameType"
-    :platformType="platformType"
-    :platformName="platformName"
-    :platformPattern="platformPattern"
-  />
+    <PlatformView
+      :platforms="sportsPlatforms"
+      :platformGameType="platformGameType"
+      :platformType="platformType"
+      :platformName="platformName"
+      :platformPattern="platformPattern"
+      :showPlayBtn="props.showPlayBtn"
+      :fullpage="props.fullpage"
+    />
 </template>
 
 <script setup>
@@ -17,4 +19,6 @@ const platformType = ref("sports");
 const platformGameType = ref("SPORT");
 const platformName = ref("SPORTS");
 const platformPattern = ref(true);
+
+const props = defineProps(['showPlayBtn', 'fullpage']);
 </script>

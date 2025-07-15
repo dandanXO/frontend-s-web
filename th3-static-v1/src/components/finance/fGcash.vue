@@ -1,8 +1,16 @@
 <template>
   <div v-bind="$attrs">
     <div>
-      <a-select v-model:value="selectedBankId" @change="selectBank" placeholder="Please select a bank">
-        <a-select-option v-for="bc in props.bankList" :key="bc.id" :value="bc.id">
+      <a-select
+        v-model:value="selectedBankId"
+        @change="selectBank"
+        placeholder="Please select a bank"
+      >
+        <a-select-option
+          v-for="bc in props.bankList"
+          :key="bc.id"
+          :value="bc.id"
+        >
           {{ bc.name }}
         </a-select-option>
       </a-select>

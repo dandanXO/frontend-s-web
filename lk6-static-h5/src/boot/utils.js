@@ -2,6 +2,9 @@ import { Platform } from "quasar";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useNotify } from "src/hooks/notify";
+import i18n from "src/i18n";
+
+const { t } = i18n.global;
 
 export const MAIN = "MAIN";
 
@@ -152,7 +155,7 @@ export const writeClipboard = async (content, useExecCommand = false) => {
     }
     notify({
       type: "success",
-      message: "复制成功"
+      message: t("common.notification.copySuccess.message")
     });
   } catch (error) {
     if (!useExecCommand) {
@@ -160,7 +163,7 @@ export const writeClipboard = async (content, useExecCommand = false) => {
     } else {
       notify({
         type: "error",
-        message: "复制失败"
+        message: t("common.notification.copyError.message")
       });
     }
   }

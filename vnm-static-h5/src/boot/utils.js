@@ -138,3 +138,10 @@ export const isOperaPixelUrl = () => {
   }
   return false;
 };
+
+export const isInPwa = () => {
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  const hasRbKey = Object.keys(localStorage).some((key) => key.startsWith("__rb_"));
+  const hasPwa = sessionStorage.getItem("IS_PWA");
+  return isStandalone || hasRbKey || hasPwa;
+};

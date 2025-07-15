@@ -1,0 +1,48 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+blockquote,
+dd,
+dl,
+fieldset,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+pre {
+  margin: 0;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+
+body {
+  height: 100%;
+  min-height: 100vh;
+  font-family: Google Sans, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  line-height: inherit;
+  background-color: #131313;
+}
+
+.wrapper {
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  background: url(images/splash3.png) no-repeat center center;
+  background-size: cover;
+  height: 100vh;
+}

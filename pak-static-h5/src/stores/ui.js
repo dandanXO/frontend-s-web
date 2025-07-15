@@ -88,6 +88,7 @@ export const useUI = defineStore("ui-store", {
         case "wf7io956.com":
         case "zp6marm8.cc":
         case "zhdjoqzf.cc":
+        case "owj3mc22.cc":
           return "NONE";
         default:
           return "DEFAULT";

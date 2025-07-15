@@ -356,6 +356,21 @@
           />
         </template>
       </el-table-column>
+      <el-table-column
+        prop="totalBalance"
+        :label="t('fields.totalBalance')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.totalBalance,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
     </el-table>
 
     <el-pagination
@@ -516,7 +531,7 @@ function getSummaries(param) {
       columns.forEach((column, index) => {
         if (index === 0) {
           sums[index] = t('fields.total')
-        } else if (index === 3 || index === 4) {
+        } else if (index === 3 || index === 4 || index === 23) {
         } else {
           var prop = column.property
           if (

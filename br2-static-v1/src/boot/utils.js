@@ -142,9 +142,14 @@ function isNonNumericString(value) {
 }
 
 export const isInPwa = () => {
+  // return true;
   if (window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true) {
     return true;
   } else {
     return false;
   }
+};
+
+export const generateEventID = () => {
+  return `evt_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
 };

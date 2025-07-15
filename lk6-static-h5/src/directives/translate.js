@@ -1,132 +1,136 @@
+import i18n from "src/i18n";
+
 export const translateRecord = (rec, type = "") => {
-  if(rec === 'VIP_REBATE' || type=== 'VIP_REBATE') {
-    return 'VIP 返水';
+  const { t } = i18n.global;
+
+  if (rec === "VIP_REBATE" || type === "VIP_REBATE") {
+    return t("record.field.vipRebate");
   } else if (rec === "WITHDRAW_FAIL") {
-    return "提款失败"; // Fail Withdrawal
+    return t("record.field.withdrawFail"); // Fail Withdrawal
   } else if (rec === "WITHDRAW") {
     if (type === "transfer" || type === "moneyChange") {
-      return "转出";
+      return t("record.field.withdrawTransfer"); // Withdraw Transfer
     }
-    return "提款"; // Withdraw
+    return t("record.field.withdraw"); // Withdraw
   } else if (rec === "DEPOSIT") {
     if (type === "transfer") {
-      return "转进";
+      return t("record.field.depositTransfer"); // Deposit Transfer
     } else if (type === "moneyChange") {
-      return "转账";
+      return t("record.field.depositMoneyChange"); // Deposit Money Change
     }
-    return "存款"; // 存款
+    return t("record.field.deposit"); // 存款
   } else if (rec === "PROMO") {
-    return "优惠"; // 优惠
+    return t("record.field.promo"); // 优惠
   } else if (rec === "APPLY") {
-    return "处理中"; //Applying
+    return t("record.field.apply"); //Applying
   } else if (rec === "FAIL") {
-    return "失败"; // Failed
+    return t("record.field.fail"); // Failed
   } else if (rec === "SUCCESS") {
-    return "成功"; // Success
+    return t("record.field.success"); // Success
   } else if (rec === "STEP_1") {
-    return "处理中"; //Under review
+    return t("record.field.step1"); //Under review
   } else if (rec === "STEP_2") {
-    return "待支付"; // To be paid
+    return t("record.field.step2"); // To be paid
   } else if (rec === "STEP_3") {
-    return "支付中"; // Payment on going
+    return t("record.field.step3"); // Payment on going
   } else if (rec === "STEP_4") {
-    return "自动支付"; // Automatic Payment
+    return t("record.field.step4"); // Automatic Payment
   } else if (rec === "STEP_5") {
-    return "请联系客服查询原因"; // Suspend
+    return t("record.field.step5"); // Suspend
   } else if (rec === "AUTOPAY") {
-    return "自动支付"; // Automatic Payment
+    return t("record.field.autoPay"); // Automatic Payment
   } else if (rec === "BANK") {
-    return "VIP 转卡"; // VIP 转卡
+    return t("record.field.bank"); // VIP 转卡
   } else if (rec === "USDTERC") {
-    return "USDT ERC"; // USDT ERC
+    return t("record.field.usdtErc"); // USDT ERC
   } else if (rec === "USDTTRC") {
-    return "USDT TRC"; // USDT TRC
+    return t("record.field.usdtTrc"); // USDT TRC
   } else if (rec === "OFFLINE") {
-    return "线下转卡"; // 线下转卡
+    return t("record.field.offline"); // 线下转卡
   } else if (rec === "UNION") {
-    return "银联快捷"; // 银联快捷
+    return t("record.field.union"); // 银联快捷
   } else if (rec === "QUICKPAYMENT") {
-    return "小额转卡"; // 小额转卡
+    return t("record.field.quickPayment"); // 小额转卡
   } else if (rec === "SPECIALPAY") {
-    return "网银转账"; // 网银转账
+    return t("record.field.specialPayment"); // 网银转账
   } else if (rec === "ALIPAY") {
-    return "支付宝转卡"; // 支付宝转卡
+    return t("record.field.alipay"); // 支付宝转卡
   } else if (rec === "ALIPAYCODE") {
-    return "支付宝"; // 支付宝
+    return t("record.field.alipayCode"); // 支付宝
   } else if (rec === "WECHATCODE") {
-    return "微信支付"; // 微信支付
+    return t("record.field.wechatCode"); // 微信支付
   } else if (rec === "QQCODE") {
-    return "QQ 支付"; // QQ 支付
+    return t("record.field.qqCode"); // QQ 支付
   } else if (rec === "KDPAY") {
-    return "K 豆"; // K 豆
+    return t("record.field.kdPay"); // K 豆
   } else if (rec === "BLBPAY") {
-    return "808 钱包"; // 808 钱包
+    return t("record.field.blbPay"); // 808 钱包
   } else if (rec === "DDPAY") {
-    return "钉钉"; // 钉钉
+    return t("record.field.ddPay"); // 钉钉
   } else if (rec === "HBPAY") {
-    return "和包"; // 和包
+    return t("record.field.hbPay"); // 和包
   } else if (rec === "SZPAY") {
-    return "数字人民币"; // 数字人民币
+    return t("record.field.szPay"); // 数字人民币
   } else if (rec === "CARDPAY") {
-    return "点卡支付"; // 点卡支付
+    return t("record.field.cardPay"); // 点卡支付
   } else if (rec === "ONLINECODE") {
-    return "云闪付"; // 云闪付
+    return t("record.field.onlineCode"); // 云闪付
   } else if (rec === "DYPAY") {
-    return "抖音"; // 抖音
+    return t("record.field.dyPay"); // 抖音
   } else if (rec === "AUTOPAY") {
-    return "自动支付"; // 自动支付
+    return t("record.field.autoPay"); // 自动支付
   } else if (rec === "PENDING") {
-    return "支付中"; // Pending
+    return t("record.field.pending"); // Pending
   } else if (rec === "SUCCESS") {
-    return "成功"; // Success
+    return t("record.field.success"); // Success
   } else if (rec === "SUPPLEMENT_SUCCESS") {
-    return "成功"; // Supplement Success
+    return t("record.field.supplementSuccess"); // Supplement Success
   } else if (rec === "CLOSED") {
-    return "关闭"; // Closed
+    return t("record.field.closed"); // Closed
   } else if (rec === "WAITING_CALLBACK") {
-    return "自动支付中"; // Waiting Callback
+    return t("record.field.waitingCallback"); // Waiting Callback
   } else if (rec === "SETTLED") {
-    return "已结算"; // Settled
+    return t("record.field.settled"); // Settled
   } else if (rec === 1) {
     if (type == "reminder") {
-      return "进行中";
+      return t("record.field.rec1Reminder");
     }
-    return "存款"; // 存款
+    return t("record.field.rec1"); // 存款
   } else if (rec === 2) {
     if (type == "reminder") {
-      return "完成";
+      return t("record.field.rec2Reminder");
     }
-    return "提款"; // 提款
+    return t("record.field.rec2"); // 提款
   } else if (rec === "BET") {
-    return "投注"; // BET
+    return t("record.field.bet"); // BET
   } else if (rec === "SETTLE") {
-    return "结算"; // SETTLE
+    return t("record.field.settle"); // SETTLE
   } else if (rec === "BET_N_SETTLE") {
-    return "投注并结算"; // BET_N_SETTLE
+    return t("record.field.betNSettle"); // BET_N_SETTLE
   } else if (rec === "CANCEL") {
-    return "取消"; // CANCEL
+    return t("record.field.cancel"); // CANCEL
   } else if (rec === "PATCH") {
-    return "修补"; // PATCH
+    return t("record.field.patch"); // PATCH
   } else if (rec === "SLOT") {
-    return "老虎机"; // Slot
+    return t("common.gameType.slot"); // Slot
   } else if (rec === "LIVE") {
-    return "真人"; // Live
+    return t("common.gameType.live"); // Live
   } else if (rec === "FISH") {
-    return "捕鱼"; // Fish
+    return t("common.gameType.fish"); // Fish
   } else if (rec === "SPORT") {
-    return "体育"; // Sport
+    return t("common.gameType.sport"); // Sport
   } else if (rec === "ESPORT") {
-    return "电竞"; // E-Sport
+    return t("common.gameType.esport"); // E-Sport
   } else if (rec === "POKER") {
-    return "棋牌"; // Poker
+    return t("common.gameType.poker"); // Poker
   } else if (rec === "LOTTERY") {
-    return "彩票"; // Lottery
+    return t("common.gameType.lottery"); // Lottery
   } else if (rec === null) {
     return "-"; // null
   } else if (rec === "TRANSFER") {
-    return "转账"; // TRANSFER
+    return t("record.field.transfer"); // TRANSFER
   } else if (rec === "ADJUST") {
-    return "金额调整"; // ADJUST
+    return t("record.field.adjust"); // ADJUST
   } else if (rec === "MGP") {
     return "MG"; // AG
   } else if (rec === "PMLIVE") {

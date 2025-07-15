@@ -829,7 +829,7 @@ import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/date
 import { getSiteListSimple } from "@/api/site";
 import { TENANT } from "@/store/modules/user/action-types";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { isPak } from '@/utils/site'
 
 const { t } = useI18n();
@@ -1139,11 +1139,25 @@ async function toFail(memberWithdrawRecord) {
   if (isPak(request.siteId)) {
     showDialog('FAIL', memberWithdrawRecord)
   } else {
-    page.loading = true
-    await autoWithdrawToFail(memberWithdrawRecord.id, 'Auto Withdraw Fail', 'Auto Withdraw Fail', memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
-    await loadRecordByRequestType()
-    ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
-    page.loading = false
+    try {
+      await ElMessageBox.confirm(
+        t('message.confirmToAction') || 'Are you sure you want to mark this withdrawal as failed?',
+        t('fields.confirm') || 'Confirm',
+        {
+          confirmButtonText: t('fields.confirm') || 'Confirm',
+          cancelButtonText: t('fields.cancel') || 'Cancel',
+          type: 'warning',
+        }
+      )
+      page.loading = true
+      await autoWithdrawToFail(memberWithdrawRecord.id, 'Auto Withdraw Fail', 'Auto Withdraw Fail', memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
+      await loadRecordByRequestType()
+      ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
+      page.loading = false
+    } catch (error) {
+      // User cancelled the action
+      console.log('User cancelled the auto withdraw fail action')
+    }
   }
 }
 

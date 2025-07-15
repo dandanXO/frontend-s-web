@@ -5,7 +5,6 @@ import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
 import { getVIPDetails, getVIPDetailsNotLoggedIn } from "../api/index/promo";
 
-
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
 
@@ -33,7 +32,7 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
-      currency: { value: "￥", label: "RMB" },
+      currency: { value: "USDT", label: "USDT" },
       personalAddress: "",
       levelUpDeposit: 0,
       currentBetAmt: "",
@@ -48,7 +47,8 @@ export const userStore = defineStore("userStore", {
       appDownloadUrl: "",
       visitorId: "",
       withdrawType: "",
-      chatGuid: ""
+      chatGuid: "",
+      profilePhoto: ""
     };
   },
   actions: {
@@ -119,14 +119,9 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/login", string).then((ret) => {
         if (ret.code === 0) {
-          if (isAndroid()) {
-            LocalStorage.set("TOKEN", ret.data, 86400);
-          } else {
-            window.captchaObj.reset();
-            SessionStorage.set("TOKEN", ret.data);
-          }
+          this.setToken(ret.data);
         } else {
-          window.captchaObj.reset();
+          // window.captchaObj.reset();
           Notify.create({
             color: "negative",
             position: "top",
@@ -135,6 +130,14 @@ export const userStore = defineStore("userStore", {
           });
         }
       });
+    },
+    setToken(token) {
+      if (isAndroid()) {
+        LocalStorage.set("TOKEN", token, 86400);
+      } else {
+        // window.captchaObj.reset();
+        SessionStorage.set("TOKEN", token);
+      }
     },
     memberLoginviaPhone(loginInfo) {
       var regDevice = Platform.is.mobile ? "H5" : "WEB";
@@ -207,6 +210,7 @@ export const userStore = defineStore("userStore", {
           this.memberType = response.data.memberType;
           this.vip = response.data.vip;
           this.profilePicture = response.data.pictureUrl;
+          this.profilePhoto = response.data.profilePhoto;
           this.displayName = response.data.displayName;
           // this.personalAddress = response.data.personalAddress
           this.phoneVerified = response.data.phoneVerified;
@@ -283,7 +287,7 @@ export const userStore = defineStore("userStore", {
     },
     getUnreadTotal() {
       if (this.token) {
-        return api.get("/session/inbox/getUnreadTotal").then((total) => {
+        return api.get("/session/pm/inbox/getUnreadTotal").then((total) => {
           console.log(total);
           if (total.code === 0) {
             this.unreadInboxMail = total.data;

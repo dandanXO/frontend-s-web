@@ -26,12 +26,15 @@ export const useUI = defineStore("ui-store", {
       maintenanceEndTime: "",
       firstScreenLoading: !!sessionStorage.getItem("FIRST_SCREEN_CACHE") || true,
       loginView: "",
+      isShowRegAccSuccessModal: false,
+      isShowBonusCollectModal: false,
       promoBg: "",
       hideDownload: false,
       jackpotAmt: 0,
       notificationQueue: [],
       notificationZIndex: 9500,
       duringNotificationAnimation: false,
+      isShowSpinWheelPromoRules: false
     };
   },
   actions: {

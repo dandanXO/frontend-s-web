@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { csapi } from "boot/axios";
+import { csapi, csws } from "boot/axios";
 import qs from "qs";
 import isNull from "lodash/isNull";
 import isEmpty from "lodash/isEmpty";
@@ -76,6 +76,9 @@ const authAPI = {
   },
   ping() {
     return csapi.get("/");
+  },
+  pingCs() {
+    return csws.get("/ping");
   }
 };
 

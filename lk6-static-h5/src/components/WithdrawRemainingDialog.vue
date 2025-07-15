@@ -4,30 +4,28 @@
       <div class="withdraw-remaining-dialog__header">
         <div class="withdraw-remaining-dialog__header-title">
           <img src="../assets/images/finance/withdraw/withdraw-remaining-icon.svg" />
-          <span>请完成以下条件</span>
+          <span>{{ $t("withdraw.remaining.title") }}</span>
         </div>
         <span class="withdraw-remaining-dialog__header-help-text">
-          若有疑问，请联系在线客服核查~
-          <br />
-          *若平台结算流水有延迟，请您10分钟后重试！
+          {{ $t("withdraw.remaining.desc") }}
         </span>
       </div>
       <img class="withdraw-remaining-dialog__pic" src="../assets/images/finance/withdraw/withdraw-remaining-pic.png" />
       <div class="withdraw-remaining-dialog__body">
         <div class="withdraw-remaining-dialog__body-title">
-          再完成
-          <span class="text-yellows">{{ convertToCommaAmount(totalRemaining, true) }}</span>
-          流水，立即享受快速提款
+          <i18n-t keypath="withdraw.remaining.rolloverRequired">
+            <span class="text-yellows">{{ convertToCommaAmount(totalRemaining, true) }}</span>
+          </i18n-t>
         </div>
         <table class="withdraw-remaining-dialog__body-table">
           <thead>
             <tr>
-              <th align="center">投注要求</th>
+              <th align="center">{{ $t("withdraw.remaining.table.header.bet") }}</th>
               <th align="center" style="display: flex; align-items: center; justify-content: center; gap: 4px">
-                流水进度
+                {{ $t("withdraw.remaining.table.header.transaction") }}
                 <!-- <img class="refresh-btn" @click="refreshTurnOverAmt" src="../assets/images/common/refresh-btn.png" /> -->
               </th>
-              <th align="center">完成状态</th>
+              <th align="center">{{ $t("withdraw.remaining.table.header.status") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -37,14 +35,14 @@
                 {{ convertToCommaAmount(record.progress, true) }}/{{ convertToCommaAmount(record.total, true) }}
               </td>
               <td align="center">
-                <router-link class="action-button" to="/home">去完成</router-link>
+                <router-link class="action-button" to="/home">{{ $t("btn.complete") }}</router-link>
               </td>
             </tr>
           </tbody>
         </table>
         <div class="withdraw-remaining-dialog__buttons">
-          <button class="withdraw-remaining-dialog__action" @click="handleClose">返回</button>
-          <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">刷新</button>
+          <button class="withdraw-remaining-dialog__action" @click="handleClose">{{ $t("btn.back") }}</button>
+          <button class="withdraw-remaining-dialog__action" @click="refreshTurnOverAmt">{{ $t("btn.refresh") }}</button>
         </div>
       </div>
     </div>
@@ -56,12 +54,15 @@ import { convertToCommaAmount } from "src/boot/utils";
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
 
 const $q = useQuasar();
 
 const isShow = defineModel();
 
 const router = useRouter();
+
+const { t } = useI18n();
 
 const tableData = ref([]);
 
@@ -74,37 +75,36 @@ const getDisplayRemainingTypes = (items) => {
   return typeStr.join("，");
 };
 
-
 const getDisplayRemainingType = (type) => {
   switch (type) {
     case "esport":
-      return "电竞";
+      return t("common.gameType.esport");
     case "sport":
-      return "体育";
+      return t("common.gameType.sport");
     case "live":
-      return "真人";
+      return t("common.gameType.live");
     case "fish":
-      return "捕鱼";
+      return t("common.gameType.fish");
     case "casual":
-      return "小游戏";
+      return t("common.gameType.casual");
     case "lottery":
-      return "彩票";
+      return t("common.gameType.lottery");
     case "poker":
-      return "棋牌";
+      return t("common.gameType.poker");
     case "slot":
-      return "电子";
+      return t("common.gameType.slot");
     case "vSport":
-      return "虚拟运动";
+      return t("common.gameType.vsport");
     case "miniGame":
-      return "小游戏";
+      return t("common.gameType.miniGame");
     case "cockfight":
-      return "斗鸡";
+      return t("common.gameType.cockfight");
     case "numberGame":
-      return "数字游戏";
+      return t("common.gameType.numberGame");
     case "all":
-      return "任意类型";
+      return t("common.gameType.any");
     default:
-      return "任意类型";
+      return t("common.gameType.any");
   }
 };
 
@@ -154,18 +154,22 @@ const refreshWithdrawableBalance = () => {
       if (res.code === 0) {
         if (res.data.remainWagers === 0) {
           $q.notify({
-            type: 'success',
-            message: '恭喜您完成流水，可以提款了!',
+            type: "success",
+            message: t("withdraw.notification.withdrawable.message"),
             multiLine: true,
-            position: 'center',
+            position: "center",
             actions: [
-              { label: '确认', handler: () => {
-                isShow.value = false;
-              } }
+              {
+                label: t("btn.confirm"),
+                handler: () => {
+                  isShow.value = false;
+                }
+              }
             ],
-            timeout: 100000,
+            timeout: 100000
           });
-        } if (res.data.remainWagers !== 0) {
+        }
+        if (res.data.remainWagers !== 0) {
           getRemainingRolloverData();
         }
       }
@@ -178,7 +182,6 @@ const refreshWithdrawableBalance = () => {
       isRefreshing.value = false;
     });
 };
-
 
 onMounted(() => {
   getRemainingRolloverData();

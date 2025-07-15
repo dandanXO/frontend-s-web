@@ -1954,6 +1954,7 @@ export default {
     pts: 'Điểm',
     ptsRebateAmount: 'Số tiền hoàn điểm',
     ftdRebateAmount: 'Số tiền hoàn tiền gửi lần đầu',
+    combinePlatform: 'Kết hợp nền tảng',
   },
   message: {
     startenddatemore3months:

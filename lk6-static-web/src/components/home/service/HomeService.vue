@@ -1,12 +1,13 @@
 <template>
   <div class="service-section">
-    <img src="../../../assets/home/service/service-section-title.svg" width="1100px" style="display:flex;margin:0 auto;" />
+    <img v-if="languageVal === 'en'" src="../../../assets/home/service/service-section-title-en.svg" width="1100px" style="display:flex;margin:0 auto;" />
+    <img v-else src="../../../assets/home/service/service-section-title.svg" width="1100px" style="display:flex;margin:0 auto;" />
     <div class="service-container">
       <div class="top-container" data-aos="fade-down">
         <div class="counter">
           <div class="circle">
             <div class="inner-circle">
-              <div class="type">CURRENT SPEED</div>
+              <!-- <div class="type">CURRENT SPEED</div> -->
               <Vue3Autocounter
                 class="auto-counter"
                 :startAmount="0"
@@ -15,16 +16,19 @@
                 separator=","
                 :autoinit="true"
               />
-              <div class="unit">秒</div>
+              <div class="unit">{{ $t('service.seconds') }}</div>
             </div>
           </div>
-          <div class="title">平均存款时间</div>
-          <div class="title-en">Average Time To Deposit</div>
+          <div v-if="languageVal === 'en'" class="title">{{ $t('service.averageDepositTime') }}</div>
+          <template v-else>
+            <div class="title">平均存款时间</div>
+            <div class="title-en">Average Time To Deposit</div>
+          </template>
         </div>
         <div class="counter">
           <div class="circle">
             <div class="inner-circle">
-              <div class="type">TOTALLY AMOUNT</div>
+              <!-- <div class="type">TOTALLY AMOUNT</div> -->
               <Vue3Autocounter
                 class="auto-counter"
                 :startAmount="0"
@@ -33,16 +37,19 @@
                 separator=","
                 :autoinit="true"
               />
-              <div class="unit">家</div>
+              <div class="unit">{{ $t('service.partners') }}</div>
             </div>
           </div>
-          <div class="title">合作支付平台</div>
-          <div class="title-en">Cooperative Payment Platform</div>
+          <div v-if="languageVal === 'en'" class="title">{{ $t('service.coopPaymentPlatform') }}</div>
+          <template v-else>
+            <div class="title">合作支付平台</div>
+            <div class="title-en">Cooperative Payment Platform</div>
+          </template>
         </div>
         <div class="counter">
           <div class="circle">
             <div class="inner-circle">
-              <div class="type">CURRENT SPEED</div>
+              <!-- <div class="type">CURRENT SPEED</div> -->
               <Vue3Autocounter
                 class="auto-counter"
                 :startAmount="0"
@@ -51,16 +58,19 @@
                 separator=","
                 :autoinit="true"
               />
-              <div class="unit">秒</div>
+              <div class="unit">{{ $t('service.seconds') }}</div>
             </div>
           </div>
-          <div class="title">平均取款时间</div>
-          <div class="title-en">Average time To Withdraw</div>
+          <div class="title" v-if="languageVal === 'en'">{{ $t('service.averageWithdrawTime') }}</div>
+          <template v-else>
+            <div class="title">平均取款时间</div>
+            <div class="title-en">Average time To Withdraw</div>
+          </template>
         </div>
         <div class="counter">
           <div class="circle">
             <div class="inner-circle">
-              <div class="type">TOTALLY AMOUNT</div>
+              <!-- <div class="type">TOTALLY AMOUNT</div> -->
               <Vue3Autocounter
                 class="auto-counter"
                 :startAmount="0"
@@ -69,11 +79,15 @@
                 separator=","
                 :autoinit="true"
               />
-              <div class="unit">家</div>
+              <div class="unit">{{ $t('service.partners') }}</div>
             </div>
           </div>
-          <div class="title">合作游戏平台</div>
-          <div class="title-en">Cooperative Gaming Platform</div>
+
+          <div v-if="languageVal === 'en'" class="title">{{ $t('service.coopGamingPlatform') }}</div>
+          <template v-else>
+            <div class="title">合作游戏平台</div>
+            <div class="title-en">Cooperative Gaming Platform</div>
+          </template>
         </div>
       </div>
       <div class="bot-container" data-aos="fade-up">
@@ -86,10 +100,9 @@
               </div>
             </div>
             <div class="right-container">
-              <div class="title">极速存取转款</div>
+              <div class="title">{{ $t('service.tagline01_title') }}</div>
               <div class="desc">
-                最新技术自主研发的财务处理系统真正做到极速存、取、转 独家网络优化技术,为您提供一流的游戏体验,
-                最大优化网络延迟。
+                {{ $t('service.tagline01_desc') }}
               </div>
             </div>
           </div>
@@ -103,9 +116,9 @@
               </div>
             </div>
             <div class="right-container">
-              <div class="title">海量赛事种类</div>
+              <div class="title">{{ $t('service.tagline02_title') }}</div>
               <div class="desc">
-                每天为您提供近干场精彩体育赛事,更有真人、彩票、 电子游戏等多种娱乐方式选择,让您拥有完美游戏体验。
+                {{ $t('service.tagline02_desc') }}
               </div>
             </div>
           </div>
@@ -119,10 +132,9 @@
               </div>
             </div>
             <div class="right-container">
-              <div class="title">加密安全管理</div>
+              <div class="title">{{ $t('service.tagline03_title') }}</div>
               <div class="desc">
-                独家开发,采用128位加密技术和严格的安全管理体系, 客户资金得到最完善的保障,让您全情尽享娱乐、赛事投注、
-                无后顾之忧!
+                {{ $t('service.tagline03_desc') }}
               </div>
             </div>
           </div>
@@ -136,10 +148,9 @@
               </div>
             </div>
             <div class="right-container">
-              <div class="title">三端任您选择</div>
+              <div class="title">{{ $t('service.tagline04_title') }}</div>
               <div class="desc">
-                引领市场的卓越技术,自主研发了全套终端应用,让您 随时随地,娱乐投注随心所欲! 7x24小时在线客服提供
-                最贴心、最优质的服务。
+                {{ $t('service.tagline04_desc') }}
               </div>
             </div>
           </div>
@@ -151,18 +162,13 @@
 
 <script setup>
 import { onMounted } from "vue";
-import HomeTitle from "@/atoms/HomeTitle.vue";
-import HomeTitleV2 from "@/atoms/HomeTitleV2.vue";
 import Vue3Autocounter  from "vue3-autocounter";
-import { useDark } from "@vueuse/core";
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
 
-const isDark = useDark();
-
-const loadCircleBg = () => {
-  return isDark.value
-    ? require("../../../assets/home/service/circle-bg-dark.png")
-    : require("../../../assets/home/service/circle-bg.png");
-};
+const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
+const loadCircleBg = () => require("../../../assets/home/service/circle-bg.png");
 
 onMounted(() => {});
 </script>
@@ -218,7 +224,7 @@ onMounted(() => {});
               filter: drop-shadow(0px 2px #c4effa);
               font-family: FZHanZhenGuangBiaoS-GB;
               font-size: 2.82869rem;
-              font-weight: 600;
+              font-weight: 400;
               line-height: normal;
               letter-spacing: 0.14144rem;
               background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
@@ -276,10 +282,10 @@ onMounted(() => {});
 
         .item {
           display: flex;
-          align-items: flex-start;
+          align-items: center;
           justify-content: center;
           padding: 2rem;
-          gap: 16px;
+          gap: 20px;
 
           .left-container {
             .circle-wrapper {
@@ -289,13 +295,14 @@ onMounted(() => {});
               position: relative;
 
               .circle {
-                width: 7.5rem;
+                width: 130px;
               }
 
               .icon {
                 height: 40px;
                 width: 40px;
                 position: absolute;
+                margin-left: 10px;
               }
             }
           }

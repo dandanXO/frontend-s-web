@@ -1,80 +1,254 @@
 <template>
-  <div class="login-container">
-    <q-form ref="loginFormRef" @submit="onSubmit">
-      <div v-if="!loginType" class="login-form-grid">
-        <q-input
-          type="tel"
-          pattern="\d*"
-          maxlength="12"
-          hide-bottom-space
-          ref="loginNameRef"
-          v-model="loginForm.loginName"
-          :rules="[
-            (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-            (val) => (val && val.length == 10) || $t('form.phone_rules_02'),
-            (val) => (val && /^[0-9]*$/.test(val)) || $t('form.phone_rules_04')
-          ]"
-          label-color="brand"
-          autocomplete="username"
-          outlined
-          :placeholder="$t('form.phone')"
-          color="white"
-          class="landing-input login-form-field"
-        >
-          <template v-slot:prepend>
-            <img class="white-svg" src="../assets/images/auth/phone.svg" />
-            <span class="prepend-number">{{ $t("form.prependNumber") }}</span>
-          </template>
-        </q-input>
+  <!--  <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">-->
+  <!--    <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab(ui.CSAUrl)">-->
+  <!--      <div class="cs-icon-wrapper"></div>-->
+  <!--    </div>-->
+  <!--  </q-page-sticky>-->
+  <!--  <q-page-sticky position="bottom-right" :offset="whatDragPos" class="floating-btn">-->
+  <!--    <div v-touch-pan.prevent.mouse="moveWhatsIcon" @click="openWhatsApp()">-->
+  <!--      <div class="whatsapp-icon-wrapper"></div>-->
+  <!--    </div>-->
+  <!--  </q-page-sticky>-->
 
-        <q-input
-          ref="passwordRef"
-          hide-bottom-space
-          v-model="loginForm.password"
-          :type="isPwd ? 'password' : 'text'"
-          :rules="[(val) => (val && val.length > 0) || $t('form.password_rules_01')]"
-          label-color="brand"
-          autocomplete="current-password"
-          outlined
-          color="white"
-          :placeholder="$t('form.password')"
-          class="landing-input login-form-field"
-        >
-          <template v-slot:append>
-            <q-icon
-              color="gray-3"
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
-            />
-          </template>
+  <div class="login-container" :class="isRestrictedDomain ? 'w-domain' : ''">
+    <div class="back-left" v-if="!isRestrictedDomain">
+      <router-link :to="'/home'">
+        <img src="../assets/images/index/btn-house.png" />
+      </router-link>
+    </div>
+    <!--
+    <div class="is-domain top-img">
+      <img src="../assets/images/index/register-topimg.png" />
+    </div>
+    <div class="no-domain login-form-logo-img">
+      <img src="../assets/images/auth/b9-logo.png" />
+    </div> -->
+    <div class="back-btn-img" v-if="isRestrictedDomain" @click="router.replace('/')">
+      <img src="../assets/images/index/btn-back.png" />
+    </div>
+    <!-- <div class="no-domain auth-tab-wrapper">
+      <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
+        <q-tab name="login" :label="$t('header.login')" />
+        <q-tab name="register" :label="$t('header.register')" />
+      </q-tabs>
+    </div> -->
+    <div class="login-pg-title">{{ $t("header.login") }}</div>
 
-          <template v-slot:prepend>
-            <img class="white-svg" src="../assets/images/auth/pass.svg" />
+    <div class="login-form-wrapper">
+      <!-- <FloatingStickyKefu /> -->
+      <q-form ref="loginFormRef" @submit="onSubmit">
+        <InputRowGrid v-if="!loginType">
+          <template #fields>
+            <InputField>
+              <template #input>
+                <!-- <q-icon name="lock" class="input-icon" /> -->
+                <q-input
+                  type="tel"
+                  pattern="\d*"
+                  maxlength="11"
+                  hide-bottom-space
+                  ref="loginNameRef"
+                  v-model="loginForm.loginName"
+                  :rules="[
+                    // (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+                    // (val) => (val && val.length === 11) || $t('form.phone_rules_02')
+                    (val) => (val && val.length > 0 && val.length < 12) || $t('form.phone_rules_04')
+                  ]"
+                  label-color="brand"
+                  autocomplete="username"
+                  outlined
+                  color="green"
+                  :placeholder="$t('form.phone_placeholder')"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="smartphone" />
+                    <div class="prepend-number">+92</div>
+                  </template>
+                </q-input>
+              </template>
+            </InputField>
+
+            <InputField>
+              <template #input>
+                <q-input
+                  ref="passwordRef"
+                  hide-bottom-space
+                  v-model="loginForm.password"
+                  :type="isPwd ? 'password' : 'text'"
+                  :rules="[(val) => (val && val.length > 0) || $t('form.password_rules_01')]"
+                  label-color="brand"
+                  autocomplete="current-password"
+                  outlined
+                  color="green"
+                  :placeholder="$t('form.password_placeholder')"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="lock" />
+                  </template>
+                  <template v-slot:append>
+                    <!-- <q-icon
+                      color="gray-3"
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    /> -->
+                    <img
+                      style="width: 20px"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                      :src="require(`../assets/images/common/visibility${isPwd ? '_off' : ''}.png`)"
+                    />
+                  </template>
+                </q-input>
+              </template>
+            </InputField>
+
+            <!--        <q-input-->
+            <!--          ref="verificationRef"-->
+            <!--          hide-bottom-space-->
+            <!--          clearable-->
+            <!--          type="text"-->
+            <!--          v-model="loginForm.captchaCode"-->
+            <!--          label="Verification Code"-->
+            <!--          :rules="[-->
+            <!--            (val) => (val && val.length > 0) || 'Please insert verification code',-->
+            <!--            (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
+            <!--          ]"-->
+            <!--          label-color="brand"-->
+            <!--          rounded-->
+            <!--          outlined-->
+            <!--          color="white"-->
+            <!--          class="landing-input"-->
+            <!--        >-->
+            <!--          <template v-slot:append>-->
+            <!--            <img :src="verificationImg" @click="getCode" />-->
+            <!--          </template>-->
+            <!--        </q-input>-->
           </template>
-        </q-input>
+        </InputRowGrid>
+
+        <!-- <div class="forgot-password">
+          <router-link class="form-text" to="/forgot-password">{{ $t("form.forgotPassword") }}</router-link>
+        </div> -->
+
+        <!-- <div style="padding-top: 30px"> -->
+        <!-- <PrimaryButton :onClick="onSubmit" :label="'Login'" /> -->
+        <!-- <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">Confirm</q-btn> -->
+        <!-- </div> -->
+
+        <!-- <div class="q-mt-sm">
+          <q-btn @click="goRegister()" rounded flat no-caps class="btn-purple" label="Register" />
+        </div> -->
+      </q-form>
+
+      <!-- <hr class="end-of-form-separator" /> -->
+
+      <!-- <div class="create-account">
+        <span class="form-text">Not a member?</span>
+        &nbsp;
+        <router-link class="form-text" to="/register" style="color: #00ae00">Create account</router-link>
+      </div> -->
+    </div>
+    <router-link to="/forgot-password" class="forget-pwd">{{ $t("btn.forgetPwd") }}?</router-link>
+
+    <div class="no-domain bottom-btn-primary">
+      <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
+        {{ $t("btn.confirm") }}
+      </q-btn>
+      <div class="areyounew">
+        {{ $t("btn.areyounew") }}
+        <a @click="goRegister" class="green">{{ $t("btn.register") }}</a>
       </div>
 
-      <div class="forgot-password">
-        <router-link class="form-text" to="/forgot-password">{{ $t("form.forgotPassword") }}</router-link>
+      <div class="google-login-wrapper">
+        <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.svg" />
+        <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />
+        <template v-if="isAndroid()">
+          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
+            <div class="google-btn">
+              <img width="24px" src="../assets/images/index/google-icon.svg" />
+              <div>{{ $t("btn.signinWithGoogle") }}</div>
+            </div>
+          </q-btn>
+        </template>
+        <template v-else>
+          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
+            <div class="google-btn">
+              <img width="24px" src="../assets/images/index/google-icon.svg" />
+              <div>{{ $t("btn.signinWithGoogle") }}</div>
+            </div>
+          </q-btn>
+        </template>
       </div>
-
-      <div>
-        <q-btn @click.prevent="onSubmit" type="submit" class="login-btn" :label="$t('header.login')" rounded no-caps />
-      </div>
-    </q-form>
-
-    <hr class="end-of-form-separator" />
-
-    <div class="create-account">
-      <span class="form-text">{{ $t("btn.notAMember") }}</span>
-      &nbsp;
-      <router-link class="form-text" to="/register" style="color: #ae6def">{{ $t("btn.createAccount") }}</router-link>
     </div>
 
-    <div class="register-form-logo-img">
-      <img src="../assets/55-ace-logo.png" />
+    <div class="is-domain bottom-btn-primary">
+      <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
+        {{ $t("btn.login") }}
+      </q-btn>
     </div>
+
+    <div class="is-domain bottom-btn">
+      <!-- <router-link to="/register"> -->
+      <q-btn unelevated @click="router.replace('/register')">
+        {{ $t("btn.register") }}
+      </q-btn>
+      <!-- </router-link> -->
+    </div>
+
+    <!-- <div class="is-domain has-acct">
+      Don't have an account?
+      <router-link to="/register" class="login">Register</router-link>
+    </div> -->
+    <div class="no-domain btn-lists">
+      <ShareIcons />
+    </div>
+
+    <div class="is-domain social-container">
+      <div class="share">Share</div>
+      <!-- <div class="social-items">
+        <a @click="openWhatsApp()" id="Whatsapp" class="social-item">
+          <img src="../assets/images/auth/social_wa.png" />
+        </a>
+
+        <a v-if="!isAndroid() && !ui.hideDownload" @click="downloadApp()" id="Download" class="social-item">
+          <img src="../assets/images/auth/social_dl.png" />
+        </a>
+        <a @click="openYoutube()" id="Youtube" class="social-item">
+          <img src="../assets/images/auth/youtube-icc.png" />
+        </a>
+        <a @click="openTiktok()" id="TikTok" class="social-item" target="_blank">
+          <img src="../assets/images/auth/tiktok.png" />
+        </a>
+
+        <a @click="openCharity()" id="Instagram" class="social-item" target="_blank">
+          <img src="../assets/images/auth/social_charity.png" />
+        </a>
+      </div> -->
+      <div class="btn-lists">
+        <ShareIcons />
+      </div>
+    </div>
+    <template v-if="ui.siteType === 'CURACAO'">
+      <div class="col-grow" />
+
+      <a
+        class="license"
+        href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img class="license-img" src="../assets/images/license/curacao-license.png" />
+        <div class="license-text-wrapper">
+          <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
+          <span class="license-text__description">{{ $t("sideNav.license.curacao.description") }}</span>
+        </div>
+      </a>
+    </template>
+
+    <!-- <div class="no-domain bottom-img">
+      <img src="../assets/images/auth/login-img2.png" />
+    </div> -->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -105,24 +279,44 @@
 </template>
 
 <script>
-import { Platform, useQuasar } from "quasar";
-import { defineComponent, onMounted, reactive, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-
-import { api } from "@/boot/axios";
-import { t } from "@/boot/lang";
-import { userStore } from "@/stores/index";
-import { App } from "@capacitor/app";
+import { defineComponent, ref, reactive, onMounted, watch, computed } from "vue";
+import { userStore } from "stores/index";
+import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { useQuasar, Platform } from "quasar";
+import { useRoute, useRouter } from "vue-router";
 import qs from "qs";
+import InputField from "../components/auth/InputField.vue";
+import InputRowGrid from "../components/auth/InputRowGrid.vue";
+import ShareIcons from "../components/LoginAndRegisterShareIcons.vue";
+import { useUI } from "stores/ui";
+import { cached, TIME_EXPIRED } from "boot/cache";
+import { isAndroid, isInPwa, trackNewUserFtd } from "boot/utils";
+import { App } from "@capacitor/app";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../../firebase/firebaseConfig";
+import { useI18n } from "vue-i18n";
+import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
+// import FloatingStickyKefu from "../components/auth/FloatingStickyKefu.vue";
 
 export default defineComponent({
   name: "LoginPage",
+  methods: { isAndroid },
   components: {
+    // PrimaryButton,
+    InputField,
+    InputRowGrid,
+    ShareIcons
+    // FloatingStickyKefu
     // RiArrowDropLeftLine
   },
   setup() {
+    const { t } = useI18n();
+    const ui = useUI();
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
@@ -259,21 +453,153 @@ export default defineComponent({
       }
     };
 
+    const thirdPartyLoginInfo = reactive({
+      sid: "",
+      way: "ANDROID"
+    });
+
+    const getReferralCode = () => {
+      const refCode = sessionStorage.getItem("REFERRAL_CODE");
+      if (refCode) {
+        thirdPartyLoginInfo.referrer = refCode;
+      }
+    };
+
+    const onCapacitorGoogleSignin = async () => {
+      try {
+        const user = await GoogleAuth.signIn();
+
+        (() => {
+          thirdPartyLoginInfo.siteId = process.env.SITEID;
+          thirdPartyLoginInfo.thirdParty = "GOOGLE";
+          thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+          thirdPartyLoginInfo.accessToken = user.authentication.accessToken;
+          thirdPartyLoginInfo.idToken = user.authentication.idToken;
+
+          api
+            .post("/member/thirdPartyLogin", qs.stringify(thirdPartyLoginInfo))
+            .then((ret) => {
+              const res = ret;
+              console.log("res:", res);
+
+              if (res.code === 0) {
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: "Google login successfully",
+                  icon: "check_circle_outline"
+                });
+
+                if (res.data?.isFirstTime) {
+                  trackRegisterSuccessEventFromLogin();
+                }
+
+                store.autoLogin(res.data?.token || res.data);
+                sessionStorage.removeItem("REFERRAL_CODE");
+                if (store.hasToken()) {
+                  router.push("/home");
+                }
+              } else {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: res.message,
+                  icon: "report_problem"
+                });
+              }
+              $q.loading.hide();
+            })
+            .catch((error) => {
+              $q.loading.hide();
+            });
+          // getCode();
+        })();
+      } catch (error) {
+        console.error("Google Sign-In error:", error);
+        alert(error);
+      }
+    };
+
+    const onClickGoogleSignin = async () => {
+      const provider = await new GoogleAuthProvider();
+      return signInWithPopup(auth, provider)
+        .then((result) => {
+          // This gives you a Google Access Token. You can use it to access Google APIs.
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential.accessToken;
+
+          // The signed-in user info.
+          const user = result.user;
+          // IdP data available using getAdditionalUserInfo(result)
+          // ...
+
+          (async () => {
+            thirdPartyLoginInfo.siteId = process.env.SITEID;
+            thirdPartyLoginInfo.thirdParty = "GOOGLE";
+            thirdPartyLoginInfo.sid = store.googleadid ? store.googleadid : store.aaid;
+            thirdPartyLoginInfo.accessToken = credential.accessToken;
+            thirdPartyLoginInfo.idToken = credential.idToken;
+
+            api
+              .post("/member/thirdPartyLogin", qs.stringify(thirdPartyLoginInfo))
+              .then((ret) => {
+                const res = ret;
+
+                if (res.code === 0) {
+                  store.isGoogleLogin = true;
+                  store.isFirstLandOnHomePage = true;
+
+                  $q.notify({
+                    color: "positive",
+                    position: "top",
+                    message: "Google login successfully",
+                    icon: "check_circle_outline"
+                  });
+
+                  if (res.data?.isFirstTime) {
+                    trackRegisterSuccessEventFromLogin();
+                  }
+
+                  store.autoLogin(res.data?.token || res.data);
+                  sessionStorage.removeItem("REFERRAL_CODE");
+                  if (store.hasToken()) {
+                    router.push("/home");
+                  }
+                } else {
+                  $q.notify({
+                    color: "negative",
+                    position: "top",
+                    message: res.message,
+                    icon: "report_problem"
+                  });
+                }
+                $q.loading.hide();
+              })
+              .catch((error) => {
+                $q.loading.hide();
+              });
+            // getCode();
+          })();
+        })
+        .catch((error) => {
+          // Handle Errors here.
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // The email of the user's account used.
+          const email = error.customData.email;
+          // The AuthCredential type that was used.
+          const credential = GoogleAuthProvider.credentialFromError(error);
+          // ...
+        });
+    };
+
     const onSubmit = () => {
       $q.loading.show({
         message: t("notify.loggingIn")
       });
-      const fpPromise = FingerprintJS.load();
-      (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = "fp-" + FingerprintJS.hashComponents(allComponents);
+      const sidParam = store.visitorId;
 
+      (async () => {
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
@@ -289,7 +615,8 @@ export default defineComponent({
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
-                sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
+                // sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
+                sid: sidParam,
                 captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId,
                 ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVersionNo.value } : {})
@@ -298,6 +625,21 @@ export default defineComponent({
                 $q.loading.hide();
                 getCode();
                 sessionStorage.removeItem("REFERRAL_CODE");
+                localStorage.removeItem("PWA_REFERRAL_CODE");
+                sessionStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
+
+                //TODO:: ???
+                // if (!localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+                //   localStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", true);
+                // } else
+                if (localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
+                  const currTime = Date.now();
+                  const prevTime = Number(localStorage.getItem("SPIN_LUCKY_WHEEL_POPUP"));
+
+                  if (currTime - prevTime > 60 * 1000 * 60 * 24 * 30) {
+                    localStorage.setItem("SPIN_LUCKY_WHEEL_POPUP", true);
+                  }
+                }
 
                 if (isCheckRmb.value) {
                   localStorage.setItem(
@@ -315,7 +657,9 @@ export default defineComponent({
 
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
-                  router.go(jumpUrl);
+                  ui.showLoggedIn();
+                  // router.push(jumpUrl);
+                  router.push({ path: jumpUrl, query: { login: "true" } });
                 }
               })
               .catch((error) => {
@@ -343,6 +687,8 @@ export default defineComponent({
               .then(() => {
                 $q.loading.hide();
                 sessionStorage.removeItem("REFERRAL_CODE");
+                localStorage.removeItem("PWA_REFERRAL_CODE");
+
                 loginFormRef.value.reset();
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
@@ -402,17 +748,17 @@ export default defineComponent({
               });
 
               //ADJUST TRACKEVENT.
-              if (Platform.is.android && Platform.is.capacitor) {
-                affQuickRegEvent.value = sessionStorage.getItem("AFFILIATE_QUICK_REGISTER_EVENT");
-                var adjustEvent = new AdjustEvent(affQuickRegEvent.value);
-                // alert(affQuickRegEvent.value);
-                Adjust.trackEvent(adjustEvent);
-              } else {
-                // const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                // AdjustWeb.trackEvent({
-                //   eventToken: "vm6pjs"
-                // });
-              }
+              // if (Platform.is.android && Platform.is.capacitor) {
+              //   affQuickRegEvent.value = sessionStorage.getItem("AFFILIATE_QUICK_REGISTER_EVENT");
+              //   var adjustEvent = new AdjustEvent(affQuickRegEvent.value);
+              //   // alert(affQuickRegEvent.value);
+              //   Adjust.trackEvent(adjustEvent);
+              // } else {
+              // const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+              // AdjustWeb.trackEvent({
+              //   eventToken: "vm6pjs"
+              // });
+              // }
 
               store.autoLogin(res.data);
               sessionStorage.removeItem("REFERRAL_CODE");
@@ -452,6 +798,93 @@ export default defineComponent({
       // guestDeviceInfo.value = store.aaid;
     };
 
+    const regLoginTab = ref("login");
+
+    const isRegisterAdjustSentFromLogin = ref(false);
+    const trackRegisterSuccessEventFromLogin = () => {
+      if (isRegisterAdjustSentFromLogin.value || !ui.adjust_register_event || store.isFromGooglePackage) return;
+      isRegisterAdjustSentFromLogin.value = true;
+
+      if (process.env.MODE === "spa") {
+        if (isInPwa()) {
+          console.log(ui.adjust_register_event);
+          const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+          AdjustWeb.trackEvent({
+            eventToken: ui.adjust_register_event
+          });
+        } else {
+          const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+          AdjustWeb.trackEvent({
+            eventToken: ui.adjust_register_event
+          });
+        }
+      } else if (Platform.is.android && Platform.is.capacitor) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+        // alert(affRegEvent.value);
+        Adjust.trackEvent(adjustEvent);
+      }
+    };
+
+    watch(
+      () => regLoginTab.value,
+      () => {
+        if (regLoginTab.value === "register") {
+          router.push("/register");
+          regLoginTab.value = "login";
+        }
+      }
+    );
+
+    // watch(
+    //   () => route.path,
+    //   () => {
+    //     if (route.path === "/promo") {
+    //       vipPromoTab.value = "promo";
+    //     }
+    //   }
+    // );
+
+    // sticky cs
+    const csDragPos = ref([10, 30]);
+    const whatDragPos = ref([15, 110]);
+
+    const isDraggingCsIcon = ref(false);
+    const openCSInNewTab = (url) => {
+      const absoluteUrl = url;
+      window.open(absoluteUrl, "_blank");
+    };
+
+    const moveCsIcon = (ev) => {
+      isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
+
+      csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
+    };
+    const moveWhatsIcon = (ev) => {
+      isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
+      whatDragPos.value = [whatDragPos.value[0] - ev.delta.x, whatDragPos.value[1] - ev.delta.y];
+    };
+    const loadCustomerAddress = () => {
+      cached
+        .get("customerAddress", () =>
+          api.get("/config/customerAddress/v2").then((res) => {
+            return res;
+          })
+        )
+        .then((data) => {
+          // console.log(data);
+          var url = data.liveUrl1;
+          ui.CSAUrl = url;
+        });
+    };
+
+    //Put this when u need to test on localhost.
+    // "localhost",
+    const restrictedDomains = [];
+    const isRestrictedDomain = computed(() => {
+      const currentDomain = window.location.hostname;
+      return restrictedDomains.includes(currentDomain);
+    });
+
     onMounted(() => {
       getAppInfo();
       getVersionNo();
@@ -461,6 +894,12 @@ export default defineComponent({
         tab.value = "register";
       }
       checkRememberPwd();
+      loadCustomerAddress();
+
+      getReferralCode();
+      if (isAndroid()) {
+        GoogleAuth.initialize();
+      }
     });
     return {
       header: "Login",
@@ -496,61 +935,279 @@ export default defineComponent({
       getAppInfo,
       getVersionNo,
       Platform,
-      affQuickRegEvent
+      affQuickRegEvent,
+      regLoginTab,
+      csDragPos,
+      isDraggingCsIcon,
+      openCSInNewTab,
+      moveCsIcon,
+      moveWhatsIcon,
+      whatDragPos,
+      loadCustomerAddress,
+      ui,
+      isRestrictedDomain,
+      router,
+      onCapacitorGoogleSignin,
+      onClickGoogleSignin,
+      languageVal
     };
   }
 });
 </script>
 <style scoped lang="scss">
+.auth-tab-wrapper {
+  width: 90%;
+  margin: 0 auto;
+
+  .q-tab {
+    min-height: 45px;
+    border-radius: 8px;
+    color: #5f6061;
+    font-weight: 400;
+    width: 50%;
+  }
+
+  .auth-tab-toggle {
+    // background: url(../assets/images/auth/auth-tab-active.png) no-repeat center center;
+    // background-size: 100% 100%;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    margin-top: 0px;
+    padding: 1px;
+
+    :deep(.q-tab__label) {
+      font-weight: 400;
+    }
+
+    :deep(.q-tab--active) {
+      color: white;
+      background: url(../assets/images/auth/auth-tab-active.png) no-repeat center center;
+      background-size: 100% 100%;
+    }
+
+    :deep(.q-tab--active .q-tab__label) {
+      font-weight: 700 !important;
+    }
+  }
+}
+
 .login-container {
-  // min-height: 100vh;
-  padding: 16px;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  justify-content: flex-start;
-  background: url("../assets/images/index/auth-bg.png");
-  background-size: 100% 100%;
+  // justify-content: center;
+  padding-top: 20px;
+  // background: url("../assets/images/auth/bg-login.png");
+  background: url("../assets/images/auth/top-login-bg.jpg");
+  background-size: cover;
   background-repeat: no-repeat;
+  // padding-top: 250px;
+  padding-top: 265px;
+  padding-bottom: 20px;
+  @media screen and (max-width: 400px) {
+    padding-top: 235px;
+  }
+  .is-domain {
+    display: none;
+  }
+  .no-domain {
+    display: unset;
+    &.btn-lists {
+      display: flex;
+      width: 100%;
+      justify-self: space-around;
+      margin: 0 auto;
+    }
+  }
+  .forget-pwd {
+    color: #9f9f9f;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0 20px 20px;
+    text-decoration: none;
+
+    @media screen and (max-width: 400px) {
+      margin: 0 20px 10px;
+      font-size: 12px;
+    }
+  }
+  &.w-domain {
+    background: url("../assets/images/auth/trianglebg.png");
+    background-size: 100% 100%;
+    padding-top: 0;
+    .no-domain {
+      display: none;
+    }
+    .is-domain {
+      display: block;
+      &.top-img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        img {
+          width: calc(100% - 32px);
+          margin-left: -5px;
+        }
+      }
+    }
+    .has-acct {
+      width: 90%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 5px;
+      margin: 10px auto;
+      color: #9f9f9f;
+      a {
+        color: #83e977;
+      }
+    }
+
+    .social-container {
+      margin: 10px auto;
+      width: 95%;
+      position: sticky;
+      top: calc(100vh - 70px);
+      left: 0;
+      right: 0;
+      .share {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        gap: 10px;
+        color: #ffffff33;
+        &:before,
+        &:after {
+          content: "";
+          width: 100%;
+          flex: 1;
+          height: 1px;
+          background-color: #ffffff33;
+        }
+      }
+      .social-items {
+        display: flex;
+        justify-content: space-between;
+        width: 95%;
+        margin: 0 auto;
+        align-items: center;
+        .social-item {
+          border: 1px solid #ffffff33;
+          padding: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 8px;
+          animation: smallbeat 2s infinite;
+        }
+      }
+      .btn-lists {
+        margin: 0;
+      }
+    }
+  }
+
+  .license {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    .license-img {
+      max-width: 47px;
+      margin-right: 4px;
+      margin-bottom: 0;
+    }
+    .license-text-wrapper {
+      display: flex;
+      flex-direction: column;
+      span {
+        margin-bottom: 0;
+        font-weight: 600;
+        color: #ffffff99;
+      }
+      .license-text__title {
+        font-size: 12px;
+      }
+      .license-text__description {
+        font-size: 10px;
+      }
+    }
+  }
 }
 
 .back-left {
   position: fixed;
-  top: 16px;
-  left: 16px;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  img {
+    width: 100%;
+  }
 }
 
 .login-form-logo-img {
-  img {
-    display: block;
-    width: 95%;
-    margin: 20px auto;
-    max-width: 200px;
-  }
-}
-.login-form-grid {
-  display: grid;
-  grid-auto-flow: row;
-  gap: 7px;
+  margin-top: -10px;
+  padding: 0 16px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 
-  .login-form-field-label {
-    margin-top: 15px;
+  img {
+    display: inline-block;
+    width: 100%;
+    max-width: 140px;
+    margin-bottom: 10px;
   }
 }
-.login-btn {
-  background-color: #8b00ff;
-  width: 100%;
-  height: 56px;
-  border-radius: 4px;
-  margin-top: 10px;
+
+.back-btn-img {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  img {
+    width: 2.25rem;
+  }
 }
-.forgot-password {
-  margin: 8px 0px 0px;
-  text-align: right;
+.login-pg-title {
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  color: #ffffff;
+  padding: 0 20px;
 }
+
+.login-form-wrapper {
+  padding: 0 20px 15px 20px;
+
+  @media screen and (max-width: 400px) {
+    padding: 0 20px 10px 20px;
+  }
+
+  :deep(.q-field__control) {
+    height: 45px;
+
+    .q-field__marginal {
+      height: 45px;
+    }
+  }
+}
+
+// .forgot-password {
+//   margin: 8px 0px 0px;
+//   text-align: right;
+
+//   .form-text {
+//     color: #c1dffc;
+//   }
+// }
 
 .end-of-form-separator {
-  margin: 15px 0px 0px;
+  margin: 35px 0px 0px;
   border-color: #ffffff26;
 }
 
@@ -563,66 +1220,150 @@ export default defineComponent({
   text-decoration: none;
 }
 
-.tip-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 24px;
-  padding-bottom: 24px;
-}
-
-.landing-tip {
-  color: #fae576;
-  text-decoration: none;
-  font-weight: 700;
-}
-
-.landing-input {
-  :deep(.q-field__control) {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  :deep(.q-field__control):before {
-    border-color: #1e1f24;
-    background-color: #1e1f24;
-    border-width: 2px;
-  }
-
-  .white-svg {
-    filter: brightness(0) invert(1);
-  }
-}
-
-.rmb-checked-box {
-  font-size: 14px;
-  color: #91829d;
-  margin-bottom: 8px;
-
-  :deep(.q-checkbox__bg) {
-    border-radius: 50%;
-  }
-  :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
-    background: linear-gradient(180deg, #fed87d 0%, #e6a60c 100%);
-
-    svg {
-      color: #000;
-      padding: 2px;
-    }
-  }
-}
-
-.register-form-logo-img {
-  img {
-    display: block;
-    width: 95%;
-    margin: 20px auto;
-    max-width: 200px;
-  }
-}
-
 .prepend-number {
   font-size: 14px;
   color: #ffffff;
   margin-left: 8px;
-  z-index: 2;
+}
+
+.q-icon {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+:deep(.q-tab__label) {
+  color: #ffffff;
+}
+
+.bottom-btn {
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background-image: linear-gradient(#131313, #131313), linear-gradient(180deg, #33b085 0%, #68bd5c 100%);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  margin: 3px 20px 8px;
+  padding: 0;
+
+  .q-btn {
+    height: 44px;
+    width: 100%;
+    :deep(.q-btn__content) {
+      background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: bolder;
+      font-size: 16px;
+    }
+  }
+}
+.bottom-btn-primary {
+  border: none;
+  padding: 3px 20px 8px;
+  .btn-primary {
+    background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
+    color: #000a01;
+    @media screen and (max-width: 400px) {
+      min-height: 35px;
+      height: 35px;
+    }
+  }
+  :deep(.q-btn__content) {
+    font-weight: bolder;
+    font-size: 16px;
+
+    @media screen and (max-width: 400px) {
+      font-size: 13px;
+    }
+  }
+}
+
+.bottom-img {
+  text-align: center;
+  margin-top: 28px;
+}
+
+.cs-icon-wrapper {
+  display: flex;
+  width: 70px;
+  height: 76px;
+  background: url("../assets/images/index/icon-cs.gif") no-repeat center center;
+  background-size: contain;
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
+}
+
+.whatsapp-icon-wrapper {
+  display: flex;
+  width: 60px;
+  height: 60px;
+  background: url("../assets/images/auth/whatsapp-icon.png") no-repeat center center;
+  background-size: contain;
+  animation: smallbeat 2s infinite;
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
+}
+
+@keyframes smallbeat {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  14% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.3);
+  }
+
+  28% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  42% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.3);
+  }
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+.areyounew {
+  margin: 15px 0;
+
+  @media screen and (max-width: 400px) {
+    margin: 10px 0;
+    font-size: 12px;
+  }
+
+  .green {
+    color: #21ef89;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+
+.google-login-wrapper {
+  display: flex;
+  flex-direction: column;
+  // gap: 10px;
+  margin-top: 25px;
+  img {
+    margin-bottom: 10px;
+    margin-right: 6px;
+  }
+  .google-btn {
+    display: flex;
+  }
+  .google-login-wrapper {
+    height: 100%;
+  }
+  .btn-secondary {
+    height: 45px;
+    padding: 9px;
+  }
 }
 </style>

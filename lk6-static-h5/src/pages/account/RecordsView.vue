@@ -2,64 +2,53 @@
   <div>
     <div class="transit-buttons">
       <router-link class="btn" v-for="(trans, i) in transitList" :key="i" :to="`records/${trans.code}`">
-        <img :src="require(`../../assets/records/${trans.icon}-icon.png`)" />
+        <!-- <img :src="require(`../../assets/records/${trans.icon}-icon.png`)" /> -->
         {{ trans.name }}
         <div class="right">
-          <img class="svg" src="~assets/records/arrow-right-s-line.svg" />
+          <img src="~assets/records/arrow-right-s-line.svg" />
         </div>
       </router-link>
     </div>
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
-const transitList = ref([
+const { t } = useI18n();
+
+const transitList = computed(() => [
   {
     code: "deposit",
     icon: "deposit",
-    name: "存款记录"
+    name: t("record.list.deposit")
   },
   {
     code: "withdraw",
     icon: "withdraw",
-    name: "提款记录"
+    name: t("record.list.withdraw")
   },
-  {
-    code: "transfer",
-    icon: "transfer",
-    name: "转账记录"
-  },
+
   {
     code: "moneyChange",
     icon: "moneychange",
-    name: "账变记录"
+    name: t("record.list.moneyChange")
   },
   {
     code: "promo",
     icon: "recommend",
-    name: "优惠记录"
+    name: t("record.list.promo")
   },
   {
     code: "bet",
     icon: "cashhelp",
-    name: "投注记录"
+    name: t("record.list.bet")
   },
   {
     code: "financeFeedback",
     icon: "feedback",
-    name: "催单记录"
+    name: t("record.list.reminderRequest")
   }
-  // {
-  //   code: 'recommend',
-  //   icon: 'recommend',
-  //   name: '推荐好友记录'
-  // },
-  // {
-  //   code: 'betRecord',
-  //   icon: 'help',
-  //   name: '投注记录'
-  // },
 ]);
 </script>
 <style scoped lang="scss">
@@ -67,37 +56,28 @@ const transitList = ref([
   padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 0px;
-  color: #bacef1;
+  gap: 7px;
 
   .btn {
-    border-top: 0.5px solid #0089ed50;
-    color: #333;
+    color: #7a80a1;
     height: 46px;
     text-decoration: none;
     position: relative;
-    background: #ffffff;
+    background: #fcfdfe;
     padding: 10px 20px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 24px;
+    border-radius: 7px;
 
-    img:not(.svg) {
-      width: 22px;
+    img {
+      width: 8px;
     }
 
     .right {
       position: absolute;
       right: 18px;
-
-      svg {
-        fill: #757575;
-      }
-    }
-
-    &:last-child {
-      border-bottom: 0.5px solid #0089ed50;
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
+  <!-- <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" /> -->
   <div class="table-record">
     <RecordComponent
       ref="recordRef"
@@ -13,20 +13,22 @@
   </div>
 </template>
 <script lang="js">
-import {defineComponent, onActivated, onMounted, ref} from "vue";
+import {computed, defineComponent, onActivated, onMounted, ref} from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import { api } from "boot/axios";
 import moment from "moment/moment";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import RecordDateFilter from "../../components/RecordDateFilter.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "FeedbackRecordView",
   components: {
     RecordComponent,
-    RecordDateFilter
+    // RecordDateFilter
   },
   setup() {
+    const {t} = useI18n();
     const visible = ref(true);
     const tableData = ref([]);
 
@@ -40,12 +42,12 @@ export default defineComponent({
     var maxPage = ref(0);
 
     const loadNewData = () => {
-      // if (maxPage.value > current.value) {
-      //   current.value++;
-      // } else {
-      //   isEnded.value = true;
-      //   return;
-      // }
+      if (maxPage.value > current.value) {
+        current.value++;
+      } else {
+        isEnded.value = true;
+        return;
+      }
       loadDepositTable(false);
     };
 
@@ -92,28 +94,31 @@ export default defineComponent({
       });
     };
 
-    const tableHeaders = [
-      {
-        key: "orderNo",
-        label: "订单号"
-      },
-      {
-        key: "status",
-        label: "状态"
-      },
-      {
-        key: "financeRemark",
-        label: "财务反馈"
-      },
-      {
-        key: "feedbackTime",
-        label: "反馈时间"
-      },
-      {
-        key: "type",
-        label: "类型"
-      }
-    ];
+    const tableHeaders = computed(() => (
+
+      [
+        {
+          key: "orderNo",
+          label: t('record.table.reminderRequired.header.orderNo')
+        },
+        {
+          key: "status",
+          label: t('record.table.reminderRequired.header.status')
+        },
+        {
+          key: "financeRemark",
+          label: t('record.table.reminderRequired.header.financeRemark')
+        },
+        {
+          key: "feedbackTime",
+          label: t('record.table.reminderRequired.header.feedbackTime')
+        },
+        {
+          key: "type",
+          label: t('record.table.reminderRequired.header.type')
+        }
+      ]
+    ))
     const handleDateChange = (data) => {
       const {val, isStartDate} = data;
       isStartDate ? startDate.value = val : endDate.value = val;

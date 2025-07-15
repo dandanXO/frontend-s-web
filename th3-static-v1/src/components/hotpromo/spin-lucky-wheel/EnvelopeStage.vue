@@ -2,51 +2,56 @@
   <div class="envelope-stage-wrapper">
     <div class="envelope-stage-inner-wrapper">
       <img
-        style="width: 100%"
         class="title"
-        src="../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/title.png"
+        src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/title.png"
         alt="get cash every day"
       />
       <div v-if="envelopeStatus === 'idle'" class="envelope-wrapper">
-        <div class="aspect-box" v-for="(prize, index) in prizeList" :key="index">
-          <button class="envelope-item" :class="prize.status" @click="handleEnvelopeClick(index)">
-            <div v-if="prize.status !== 'idle'" class="prize-wrapper">
-              <span>
-                {{ prize.status === "selected" ? "ชนะ" : `โบนัส ${index + 1}` }}
-              </span>
-              <br />
-              <span class="prize">
-                {{ prize.prize }}
-              </span>
-            </div>
-          </button>
-        </div>
+        <button
+          v-for="(prize, index) in prizeList"
+          :key="index"
+          class="envelope-item"
+          :class="prize.status"
+          @click="handleEnvelopeClick(index)"
+        >
+          <div v-if="prize.status !== 'idle'" class="prize-wrapper">
+            <span>
+              {{ prize.status === "selected" ? "Winning" : `BONUS ${index + 1}` }}
+            </span>
+            <br />
+            <span class="prize">
+              {{ prize.prize }}
+            </span>
+          </div>
+        </button>
       </div>
       <div v-else class="selected-envelope">
-        <span class="prize">{{ store.currency.value }} {{ prizeList[selectedIndex]?.prize }}</span>
-        <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">ไปถอนเงินเดี๋ยวนี้!</CommonButton>
-        <span class="remaining-time">เวลาที่เหลือ: {{ remainingTime }}</span>
+        <span class="prize">{{$t("hotPromo.rs")}}{{ prizeList[selectedIndex]?.prize }}</span>
+        <span class="desc">{{$t("hotPromo.withdraw_money_over_rs") }} {{ targetWithdrawAmount }}</span>
+        <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">{{ $t("hotPromo.go_withdraw_now") }}</CommonButton>
+        <span class="remaining-time">{{ $t("hotPromo.time_left") }}: {{ remainingTime }}</span>
       </div>
-      <img class="footer tiger" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-tiger.png" />
-      <img class="footer rabbit" src="../../../assets/images/promotion/spin-lucky-wheel/decoration-rabbit.png" />
+      <img class="footer dragon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/footer.png" />
+      <!-- <img class="footer tiger" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-tiger.png" />
+      <img
+        class="footer rabbit"
+        src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-rabbit.png"
+      />
       <img
         class="footer coin"
-        style="width: 100%"
-        src="../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/footer-coin.png"
-      />
+        src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/footer-coin.png"
+      /> -->
     </div>
   </div>
 </template>
 <script setup>
 import moment from "moment";
-import { onUnmounted, ref } from "vue";
+import { inject, onUnmounted, ref } from "vue";
 import CommonButton from "./CommonButton.vue";
 import { eventapi } from "src/boot/axios";
-import { userStore } from "stores/index";
 
 defineEmits(["envelopeClick"]);
 
-const store = userStore();
 const envelopeStatus = ref("idle");
 const prizeList = ref(new Array(6).fill().map(() => ({ status: "idle", prize: 0 })));
 const selectedIndex = ref(0);
@@ -54,6 +59,9 @@ const remainingTime = ref("00:00:00");
 const endTime = ref("");
 const isClaiming = ref(false);
 const timer = ref();
+const wheelNo = ref(0);
+
+const targetWithdrawAmount = inject("targetWithdrawAmount");
 
 const delay = async (ms) => {
   return new Promise((resolve) => {
@@ -66,29 +74,56 @@ const handleEnvelopeClick = (index) => {
 
   isClaiming.value = true;
   selectedIndex.value = index;
-  eventapi.post("/refer-spin/start", { box: index }).then(async (res) => {
+  eventapi.post("/session/refer-wheel-spin/red-packet?promoCode=pak-refer-wheel-spin").then(async (res) => {
     let otherPrizeCounter = 0;
 
     prizeList.value[index].status = "selected";
     prizeList.value[index].prize = res.data.bonus;
 
+    const targetIndex = res.data.redPackets.findIndex((prize) => prize === res.data.bonus);
+    const temp = res.data.redPackets[index];
+    res.data.redPackets[index] = res.data.redPackets[targetIndex];
+    res.data.redPackets[targetIndex] = temp;
+
+    // let constantIndex = Math.floor(Math.random() * 6);
+    // while (constantIndex === index) {
+    //   constantIndex = Math.floor(Math.random() * 6);
+    // }
+
     await delay(1000);
-
     prizeList.value.forEach((prize, _index) => {
-      if (_index === index) return;
-
-      prize.status = "unselected";
-      prize.prize = res.data.otherBonus[otherPrizeCounter++];
+      // if (_index === constantIndex) {
+      //   prize.status = "unselected";
+      //   prize.prize = targetWithdrawAmount.value;
+      // } else
+      if (_index !== index) {
+        prize.status = "unselected";
+        prize.prize = res.data.redPackets[otherPrizeCounter];
+      }
+      otherPrizeCounter++;
     });
 
-    await delay(1000);
+    const [initRes] = await Promise.all([
+      eventapi.get("/session/refer-wheel-spin/init?promoCode=pak-refer-wheel-spin"),
+      delay(1000)
+    ]);
 
+    const wheelEndTime = moment.tz(initRes.data.wheelEndTime, "Asia/Karachi");
+    const wheelResetTime = moment.tz(initRes.data.wheelResetTime, "Asia/Karachi");
+    const now = moment();
+
+    endTime.value = now.isAfter(moment.min(wheelEndTime, wheelResetTime))
+      ? moment.max(wheelEndTime, wheelResetTime)
+      : moment.min(wheelEndTime, wheelResetTime);
+
+    wheelNo.value = initRes.data.wheelNo;
     envelopeStatus.value = "selected";
-    endTime.value = moment(res.data.startTime).add(3, "days");
     updateRemainingTime();
     timer.value = setInterval(updateRemainingTime, 1000);
     isClaiming.value = false;
-  });
+  }).catch((err) => {
+    isClaiming.value = false;
+  })
 };
 
 const updateRemainingTime = () => {
@@ -131,47 +166,39 @@ onUnmounted(() => {
       gap: 12px;
       grid-template-columns: repeat(3, 1fr);
 
-      .aspect-box {
-        position: relative;
-        width: 100%;
-        padding-bottom: 122%;
+      .envelope-item {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/envelope-close.png)
+          no-repeat;
+        background-size: 100% 100%;
+        aspect-ratio: 109 / 133;
+        border: none;
+        padding: 13% 0 0;
+        // transition: backg;
+        min-height: 126px;
 
-        .envelope-item {
-          width: 100%;
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: url(../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/envelope-close.png) no-repeat
-            center center;
-          background-size: 100% 100%;
-          border: none;
+        &.selected,
+        &.unselected {
+          background-image: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/envelope-opened.png);
+        }
 
-          &.selected,
-          &.unselected {
-            background-image: url(../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/envelope-opened.png);
-          }
+        &.unselected {
+          opacity: 0.6;
+        }
 
-          &.unselected {
-            opacity: 0.6;
-          }
+        .prize-wrapper {
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 24px;
+          color: #f33d31;
+          min-height: 110px;
 
-          .prize-wrapper {
-            font-size: 20px;
-            font-weight: 700;
-            line-height: 24px;
-            color: #8100ae;
-            min-height: 100px;
-
-            .prize {
-              font-size: 24px;
-              font-weight: 900;
-              line-height: 28px;
-            }
+          .prize {
+            font-size: 24px;
+            font-weight: 900;
+            line-height: 28px;
           }
         }
       }
@@ -179,12 +206,13 @@ onUnmounted(() => {
 
     .selected-envelope {
       max-width: 325px;
-      background: url(../../../assets/images/promotion/spin-lucky-wheel/envelope-stage/envelope-detail.png) no-repeat;
+      background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/envelope-detail.png)
+        no-repeat;
       background-size: 100% 100%;
       aspect-ratio: 485 / 574;
       margin: 0 auto;
       position: relative;
-      min-height: 350px;
+      min-height: 330px;
 
       .prize {
         position: absolute;
@@ -193,9 +221,20 @@ onUnmounted(() => {
         transform: translateY(-50%);
         font-size: 50px;
         font-weight: 900;
-        color: #8100ae;
+        color: #f33d31;
         text-align: center;
-        letter-spacing: -1px;
+      }
+
+      .desc {
+        position: absolute;
+        top: 34%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70%;
+        font-size: 20px;
+        font-weight: 900;
+        color: #f33d31;
+        text-align: center;
       }
 
       .withdraw-btn {
@@ -205,7 +244,9 @@ onUnmounted(() => {
         width: 80%;
         transform: translate(-50%, -50%);
         margin: 0 auto;
-        height: 100px;
+        background-image: url('../../../assets/images/promotion/hotpromo/spin-lucky-wheel/common-btn-gold.png');
+        color: #8A2C05;
+        min-height: 100px;
 
         &.common-btn {
           background-size: 100% 100%;
@@ -228,6 +269,14 @@ onUnmounted(() => {
       position: absolute;
       -webkit-user-drag: none;
 
+      &.dragon {
+        left: 50%;
+        bottom: 0%;
+        transform: translateX(-50%);
+        width: 100%;
+        margin-bottom: 0 !important;
+      }
+
       &.tiger {
         left: -5.4%;
         bottom: -5.4%;
@@ -246,7 +295,6 @@ onUnmounted(() => {
         left: 50%;
         bottom: -8%;
         transform: translateX(-50%);
-        width: 100%;
       }
     }
   }
@@ -259,10 +307,13 @@ onUnmounted(() => {
 
       .selected-envelope {
         .prize {
-          font-size: 30px;
+          font-size: 10vw;
+        }
+        .desc {
+          font-size: 4vw;
         }
         .remaining-time {
-          font-size: 15px;
+          font-size: 4vw;
         }
       }
     }
@@ -294,6 +345,8 @@ onUnmounted(() => {
     .envelope-stage-inner-wrapper {
       .envelope-wrapper {
         .envelope-item {
+          
+          min-height: 100px;
           .prize-wrapper {
             font-size: 14px;
             line-height: 18px;

@@ -1,178 +1,185 @@
 <template>
-  <div class="forget-pass-section bg-white">
-    <q-tabs
-      v-model="tab"
-      dense
-      size="lg"
-      class="text-grey"
-      active-color="light-blue-9"
-      indicator-color="light-blue-9"
-      align="justify"
-      @change="goToTab"
-    >
-      <q-tab name="phone" label="短信修改密码" />
-      <q-tab name="email" label="邮箱修改密码" />
-      <q-tab name="mail" label="邮箱找回账号" />
+  <div class="forget-pass-section">
+    <q-tabs v-model="tab" dense size="lg" class="forget-pass-tabs" align="justify" @change="goToTab">
+      <q-tab name="phone" :label="$t('forgotPassword.tab.changePasswordByPhone')" />
+      <q-tab name="email" :label="$t('forgotPassword.tab.changePasswordByEmail')" />
+      <!-- <q-tab name="mail" label="邮箱找回账号" /> -->
     </q-tabs>
-
-    <q-separator />
 
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="phone">
-        <div class="text-blue-grey" v-if="!isPhoneSent">方式：请输入您需找回登陆密码的用户名和验证手机号码</div>
-
-        <div class="forgetpass-board q-gutter-y-md">
+        <div class="forgetpass-board">
           <q-form v-if="!isPhoneSent" class="rounded-borders" ref="phoneFormRef">
-            <q-row class="row items-baseline justify-start">
-              <q-item-label>
-                <span class="text-red">*&nbsp;</span>
-                用户名:
-              </q-item-label>
-              <q-input
-                ref="userRef"
-                hide-bottom-space
-                type="text"
-                borderless
-                clearable
-                placeholder="请输入用户名"
-                v-model="passwordFormPhone.loginName"
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || '请输入用户名',
-                  (val) => (val && val.length >= 4 && val.length <= 12) || '长度要在 4-12 之间'
-                ]"
-                color="white"
-              ></q-input>
-            </q-row>
+            <div class="forgot-pwd-form-inner-wrapper q-gutter-y-md">
+              <div class="notification-red" v-if="!isPhoneSent">
+                {{ $t("forgotPassword.form.preparePhoneOtp") }}
+              </div>
 
-            <q-row class="row items-baseline justify-start">
-              <q-item-label>
-                <span class="text-red">*&nbsp;</span>
-                手机号码:
-              </q-item-label>
-              <q-input
-                ref="phoneRef"
-                hide-bottom-space
-                type="text"
-                borderless
-                clearable
-                v-model="passwordFormPhone.phone"
-                placeholder="请输入手机号码"
-                :rules="[(val) => (val && val.length > 0) || '请输入手机号码', (val) => isValidPhone(val)]"
-                color="white"
-                label-color="secondary"
-              ></q-input>
-            </q-row>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">{{ $t("forgotPassword.form.userName.label") }}</div>
+                <q-input
+                  ref="userRef"
+                  hide-bottom-space
+                  type="text"
+                  standout
+                  clearable
+                  :placeholder="$t('forgotPassword.form.userName.placeholder')"
+                  v-model="passwordFormPhone.loginName"
+                  lazy-rules
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('forgotPassword.form.userName.error.required'),
+                    (val) =>
+                      (val && val.length >= 4 && val.length <= 12) ||
+                      $t('forgotPassword.form.userName.error.length', { min: 4, max: 12 })
+                  ]"
+                  color="white"
+                ></q-input>
+              </div>
 
-            <q-row class="row items-baseline justify-start">
-              <q-item-label>
-                <span class="text-red">*&nbsp;</span>
-                验证码
-              </q-item-label>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">{{ $t("forgotPassword.form.phone.label") }}</div>
+                <q-input
+                  ref="phoneRef"
+                  hide-bottom-space
+                  type="text"
+                  standout
+                  clearable
+                  v-model="passwordFormPhone.phone"
+                  :placeholder="$t('forgotPassword.form.phone.placeholder')"
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('forgotPassword.form.phone.error.required'),
+                    (val) => isValidPhone(val)
+                  ]"
+                  color="white"
+                  label-color="secondary"
+                ></q-input>
+              </div>
 
-              <q-input
-                standout
-                class="captcha-textfield"
-                bg-color="white"
-                ref="verificationRef"
-                hide-bottom-space
-                type="text"
-                placeholder="请输入验证码"
-                v-model="passwordFormPhone.captchaCode"
-                :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
-                label-color=""
-              >
-                <template v-slot:append>
-                  <img :src="verificationImg" @click="getCode" />
-                </template>
-              </q-input>
-            </q-row>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">{{ $t("forgotPassword.form.verificationCode.label") }}</div>
+
+                <q-input
+                  standout
+                  class="captcha-textfield"
+                  ref="verificationRef"
+                  hide-bottom-space
+                  type="text"
+                  :placeholder="$t('forgotPassword.form.verificationCode.placeholder')"
+                  v-model="passwordFormPhone.captchaCode"
+                  :rules="[
+                    (val) =>
+                      (val && val.length > 3 && val.length < 5) ||
+                      $t('forgotPassword.form.verificationCode.error.format')
+                  ]"
+                  label-color=""
+                >
+                  <template v-slot:append>
+                    <img :src="verificationImg" @click="getCode" />
+                  </template>
+                </q-input>
+              </div>
+            </div>
 
             <div class="row justify-between items-center q-mt-md">
               <q-btn
                 @click.prevent="submitSendOtp('phone')"
-                label="提交"
+                :label="$t('btn.submit')"
                 width="100%"
-                color="dyblue"
+                class="submit-btn"
                 style="width: 100%"
               />
             </div>
           </q-form>
 
-          <div v-if="isPhoneSent" class="text-blue q-px-md">OTP短信已发送到您的注册手机, 请输入OTP和新密码。</div>
-          <q-form v-if="isPhoneSent" class="q-gutter-y-md rounded-borders form-after-submit">
-            <q-input
-              ref="codeRef"
-              filled
-              hide-bottom-space
-              v-model="verificationPhoneForm.code"
-              label="OTP码"
-              clearable
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入OTP码',
-                (val) => (val && val.length >= 4 && val.length <= 6) || 'OTP长度不符'
-              ]"
-            >
-              <template v-slot:prepend>
-                <q-icon name="qr_code" />
-              </template>
-            </q-input>
-            <q-input
-              ref="newPwdRef"
-              :type="isPwd ? 'password' : 'text'"
-              filled
-              hide-bottom-space
-              v-model="verificationPhoneForm.newPassword"
-              label="新密码"
-              clearable
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入密码',
-                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
-              ]"
-            >
-              <template v-slot:prepend>
-                <q-icon name="lock_open" />
-              </template>
-              <template v-slot:append>
-                <q-icon
-                  color="bright"
-                  :name="isPwd ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  @click="isPwd = !isPwd"
-                />
-              </template>
-            </q-input>
-            <q-input
-              ref="confirmPwdRef"
-              :type="isPwd ? 'password' : 'text'"
-              filled
-              hide-bottom-space
-              v-model="verificationPhoneForm.confirmPwd"
-              label="确认新密码"
-              clearable
-              lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入确认密码',
-                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
-                validatePassNew
-              ]"
-            >
-              <template v-slot:prepend>
-                <q-icon name="lock_open" />
-              </template>
-              <template v-slot:append>
-                <q-icon
-                  color="bright"
-                  :name="isPwd ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  @click="isPwd = !isPwd"
-                />
-              </template>
-            </q-input>
+          <q-form v-if="isPhoneSent" class="rounded-borders form-after-submit">
+            <div class="forgot-pwd-form-inner-wrapper q-gutter-y-md">
+              <div class="notification-blue">{{ $t("forgotPassword.form.notification") }}</div>
+
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">{{ $t("forgotPassword.form.otp.label") }}</div>
+                <q-input
+                  ref="codeRef"
+                  hide-bottom-space
+                  v-model="verificationPhoneForm.code"
+                  standout
+                  clearable
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('forgotPassword.form.otp.error.required'),
+                    (val) => (val && val.length >= 4 && val.length <= 6) || $t('forgotPassword.form.otp.error.length')
+                  ]"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="qr_code" />
+                  </template>
+                </q-input>
+              </div>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">{{ $t("forgotPassword.form.password.label") }}</div>
+                <q-input
+                  ref="newPwdRef"
+                  :type="isPwd ? 'password' : 'text'"
+                  hide-bottom-space
+                  v-model="verificationPhoneForm.newPassword"
+                  standout
+                  clearable
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('forgotPassword.form.password.error.required'),
+                    (val) =>
+                      (val.length > 5 && val.length <= 12) ||
+                      $t('forgotPassword.form.password.error.length', { min: 6, max: 12 })
+                  ]"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="lock_open" />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    />
+                  </template>
+                </q-input>
+              </div>
+
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">
+                  {{ $t("forgotPassword.form.passwordConfirm.label") }}
+                </div>
+                <q-input
+                  ref="confirmPwdRef"
+                  :type="isPwd ? 'password' : 'text'"
+                  hide-bottom-space
+                  v-model="verificationPhoneForm.confirmPwd"
+                  standout
+                  clearable
+                  lazy-rules
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('forgotPassword.form.passwordConfirm.error.required'),
+                    (val) =>
+                      (val.length > 5 && val.length <= 12) ||
+                      $t('forgotPassword.form.passwordConfirm.error.length', { min: 6, max: 12 }),
+                    validatePassNew
+                  ]"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="lock_open" />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    />
+                  </template>
+                </q-input>
+              </div>
+            </div>
+
             <div class="row justify-between items-center">
               <q-btn
                 @click.prevent="onVerifyForgotPassword('phone')"
-                label="提交"
+                :label="$t('btn.submit')"
                 width="100%"
                 class="common-large-btn"
                 color="brightbtn"
@@ -183,162 +190,178 @@
         </div>
       </q-tab-panel>
       <q-tab-panel name="email">
-        <div class="text-blue-grey" v-if="!isEmailSent">方式：请输入您需找回登陆密码的用户名和验证邮箱</div>
-
         <div class="forgetpass-board q-gutter-y-md">
           <q-form v-if="!isEmailSent" class="rounded-borders" ref="phoneFormRef">
-            <q-row class="row items-baseline justify-start">
-              <q-item-label>
-                <span class="text-red">*&nbsp;</span>
-                用户名:
-              </q-item-label>
-              <q-input
-                ref="userRef2"
-                hide-bottom-space
-                type="text"
-                borderless
-                clearable
-                placeholder="请输入用户名"
-                v-model="passwordFormEmail.loginName"
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || '请输入用户名',
-                  (val) => (val && val.length >= 4 && val.length <= 12) || '长度要在 4-12 之间'
-                ]"
-                color="white"
-              ></q-input>
-            </q-row>
+            <div class="forgot-pwd-form-inner-wrapper q-gutter-y-md">
+              <div class="notification-red" v-if="!isEmailSent">{{ $t("forgotPassword.form.prepareEmailOtp") }}</div>
 
-            <q-row class="row items-baseline justify-start">
-              <q-item-label>
-                <span class="text-red">*&nbsp;</span>
-                验证邮箱:
-              </q-item-label>
-              <q-input
-                ref="emailRef"
-                hide-bottom-space
-                type="email"
-                borderless
-                clearable
-                v-model="passwordFormEmail.email"
-                placeholder="请输入验证邮箱"
-                :rules="[(val) => (val && val.length > 0) || '请输入验证邮箱', (val) => isValidEmail(val)]"
-                color="white"
-                label-color="secondary"
-              ></q-input>
-            </q-row>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">{{ $t("forgotPassword.form.userName.label") }}</div>
+                <q-input
+                  ref="userRef2"
+                  hide-bottom-space
+                  type="text"
+                  standout
+                  clearable
+                  v-model="passwordFormEmail.loginName"
+                  :placeholder="$t('forgotPassword.form.userName.placeholder')"
+                  lazy-rules
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('forgotPassword.form.userName.error.required'),
+                    (val) =>
+                      (val && val.length >= 4 && val.length <= 12) ||
+                      $t('forgotPassword.form.userName.length', { min: 4, max: 12 })
+                  ]"
+                  color="white"
+                ></q-input>
+              </div>
 
-            <q-row class="row items-baseline justify-start">
-              <q-item-label>
-                <span class="text-red">*&nbsp;</span>
-                验证码
-              </q-item-label>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">{{ $t("forgotPassword.form.email.label") }}</div>
+                <q-input
+                  ref="emailRef"
+                  hide-bottom-space
+                  type="email"
+                  standout
+                  clearable
+                  v-model="passwordFormEmail.email"
+                  :placeholder="$t('forgotPassword.form.email.placeholder')"
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('forgotPassword.form.email.error.required'),
+                    (val) => isValidEmail(val)
+                  ]"
+                  color="white"
+                  label-color="secondary"
+                ></q-input>
+              </div>
 
-              <q-input
-                standout
-                class="captcha-textfield"
-                bg-color="white"
-                ref="verificationRef"
-                hide-bottom-space
-                type="text"
-                placeholder="请输入验证码"
-                v-model="passwordFormEmail.captchaCode"
-                :rules="[(val) => (val && val.length > 3 && val.length < 5) || '验证码应为四个字符串']"
-                label-color=""
-              >
-                <template v-slot:append>
-                  <img :src="verificationImg" @click="getCode" />
-                </template>
-              </q-input>
-            </q-row>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">{{ $t("forgotPassword.form.verificationCode.label") }}</div>
+
+                <q-input
+                  standout
+                  class="captcha-textfield"
+                  ref="verificationRef"
+                  hide-bottom-space
+                  type="text"
+                  :placeholder="$t('forgotPassword.form.verificationCode.placeholder')"
+                  v-model="passwordFormEmail.captchaCode"
+                  :rules="[
+                    (val) =>
+                      (val && val.length > 3 && val.length < 5) ||
+                      $t('forgotPassword.form.verificationCode.error.format')
+                  ]"
+                  label-color=""
+                >
+                  <template v-slot:append>
+                    <img :src="verificationImg" @click="getCode" />
+                  </template>
+                </q-input>
+              </div>
+            </div>
 
             <div class="row justify-between items-center q-mt-md">
               <q-btn
                 @click.prevent="submitSendOtp('email')"
-                label="提交"
+                :label="$t('btn.submit')"
                 width="100%"
-                color="dyblue"
+                class="submit-btn"
                 style="width: 100%"
               />
             </div>
           </q-form>
 
-          <div v-if="isEmailSent" class="text-blue q-px-md">验证码已发送到您的注册邮箱，请输入验证码和新密码完成密码修改。</div>
           <q-form v-if="isEmailSent" class="q-gutter-y-md rounded-borders form-after-submit">
-            <q-input
-              ref="codeRef2"
-              filled
-              hide-bottom-space
-              v-model="verificationForm.code"
-              label="验证码"
-              lazy-rules
-              clearable
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入验证码',
-                (val) => (val && val.length >= 4 && val.length <= 6) || 'OTP长度不符'
-              ]"
-            >
-              <template v-slot:prepend>
-                <q-icon name="qr_code" />
-              </template>
-            </q-input>
-            <q-input
-              ref="newPwdRef2"
-              :type="isPwd ? 'password' : 'text'"
-              filled
-              hide-bottom-space
-              v-model="verificationForm.newPassword"
-              label="新密码"
-              clearable
-              lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入密码',
-                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
-              ]"
-            >
-              <template v-slot:prepend>
-                <q-icon name="lock_open" />
-              </template>
-              <template v-slot:append>
-                <q-icon
-                  color="bright"
-                  :name="isPwd ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  @click="isPwd = !isPwd"
-                />
-              </template>
-            </q-input>
-            <q-input
-              ref="confirmPwdRef2"
-              :type="isPwd ? 'password' : 'text'"
-              filled
-              hide-bottom-space
-              v-model="verificationForm.confirmPwd"
-              label="确认新密码"
-              clearable
-              lazy-rules
-              :rules="[
-                (val) => (val && val.length > 0) || '请输入确认密码',
-                (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
-                validatePassNew2
-              ]"
-            >
-              <template v-slot:prepend>
-                <q-icon name="lock_open" />
-              </template>
-              <template v-slot:append>
-                <q-icon
-                  color="bright"
-                  :name="isPwd ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  @click="isPwd = !isPwd"
-                />
-              </template>
-            </q-input>
+            <div class="forgot-pwd-form-inner-wrapper q-gutter-y-md">
+              <div v-if="isEmailSent" class="notification-blue">
+                {{ $t("forgotPassword.form.notification") }}
+              </div>
+
+              <q-input
+                ref="codeRef2"
+                hide-bottom-space
+                v-model="verificationForm.code"
+                :placeholder="$t('forgotPassword.form.otp.placeholder')"
+                lazy-rules
+                standout
+                clearable
+                :rules="[
+                  (val) => (val && val.length > 0) || $t('forgotPassword.form.otp.error.required'),
+                  (val) => (val && val.length >= 4 && val.length <= 6) || $t('forgotPassword.form.otp.error.length')
+                ]"
+              >
+                <template v-slot:prepend>
+                  <q-icon name="qr_code" />
+                </template>
+              </q-input>
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">{{ $t("forgotPassword.form.password.label") }}</div>
+                <q-input
+                  ref="newPwdRef2"
+                  :type="isPwd ? 'password' : 'text'"
+                  hide-bottom-space
+                  v-model="verificationForm.newPassword"
+                  :placeholder="$t('forgotPassword.form.password.placeholder')"
+                  standout
+                  clearable
+                  lazy-rules
+                  :rules="[
+                    (val) => (val && val.length > 0) || $t('forgotPassword.form.password.error.required'),
+                    (val) =>
+                      (val.length > 5 && val.length <= 12) ||
+                      $t('forgotPassword.form.password.error.length', { min: 6, max: 12 })
+                  ]"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="lock_open" />
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    />
+                  </template>
+                </q-input>
+              </div>
+
+              <div class="input-field-wrapper">
+                <div class="input-field__label required">{{ $t("forgotPassword.form.passwordConfirm.label") }}</div>
+              </div>
+              <q-input
+                ref="confirmPwdRef2"
+                :type="isPwd ? 'password' : 'text'"
+                hide-bottom-space
+                v-model="verificationForm.confirmPwd"
+                :placeholder="$t('forgotPassword.form.passwordConfirm.placeholder')"
+                standout
+                clearable
+                lazy-rules
+                :rules="[
+                  (val) => (val && val.length > 0) || $t('forgotPassword.form.passwordConfirm.error.required'),
+                  (val) =>
+                    (val.length > 5 && val.length <= 12) ||
+                    $t('forgotPassword.form.passwordConfirm.error.length', { min: 6, max: 12 }),
+                  validatePassNew2
+                ]"
+              >
+                <template v-slot:prepend>
+                  <q-icon name="lock_open" />
+                </template>
+                <template v-slot:append>
+                  <q-icon
+                    color="bright"
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
+              </q-input>
+            </div>
             <div class="row justify-between items-center">
               <q-btn
                 @click.prevent="onVerifyForgotPassword('email')"
-                label="提交"
+                :label="$t('btn.submit')"
                 width="100%"
                 class="common-large-btn"
                 color="brightbtn"
@@ -348,14 +371,11 @@
           </q-form>
         </div>
       </q-tab-panel>
-      <q-tab-panel name="mail">
+      <!-- <q-tab-panel name="mail">
         <div class="text-blue-grey">方式：请输入您的注册邮箱</div>
         <q-form v-if="!isEmailSent" class="rounded-borders" ref="passRef">
-          <q-row class="row items-center justify-start">
-            <q-item-label>
-              <span class="text-red">*&nbsp;</span>
-              注册邮箱:
-            </q-item-label>
+          <div class="input-field-wrapper">
+            <div class="input-field__label required">注册邮箱:</div>
 
             <q-input
               ref="emailRef2"
@@ -369,19 +389,15 @@
               :rules="[(val) => (val && val.length > 0) || '请输入电子邮件', isValidEmail]"
               color="white"
             ></q-input>
-          </q-row>
+          </div>
 
-          <q-row class="row items-center justify-start">
-            <q-item-label>
-              <span class="text-red">*&nbsp;</span>
-              验证码
-            </q-item-label>
+          <div class="input-field-wrapper">
+            <div class="input-field__label required">验证码</div>
 
             <q-input
               standout
               hide-bottom-space
               class="captcha-textfield"
-              bg-color="white"
               ref="verificationRef"
               placeholder="请输入验证码"
               type="text"
@@ -392,13 +408,13 @@
                 <img :src="verificationImg" @click="getCode" />
               </template>
             </q-input>
-          </q-row>
+          </div>
 
           <div class="row justify-between items-center q-mt-md">
-            <q-btn @click.prevent="submitForgetPass" label="提交" width="100%" color="dyblue" style="width: 100%" />
+            <q-btn @click.prevent="submitForgetPass" label="提交" width="100%" class="submit-btn" style="width: 100%" />
           </div>
         </q-form>
-      </q-tab-panel>
+      </q-tab-panel> -->
     </q-tab-panels>
   </div>
 </template>
@@ -411,10 +427,12 @@ import { useRoute, useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
 import { findAccount } from "src/api/index/login";
 import qs from "qs";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "ForgotPwdPage",
   setup() {
+    const { t } = useI18n();
     const verificationRef = ref();
     const tab = ref("phone");
     const isPwd = ref(true);
@@ -511,7 +529,7 @@ export default defineComponent({
         if (phoneRef.value.hasError || userRef.value.hasError) {
         } else {
           $q.loading.show({
-            message: "发送验证码中..."
+            message: t("forgotPassword.notification.sendingOtp.message")
           });
           api
             .post("/otp/sendForgetPasswordPhone", qs.stringify(passwordFormPhone))
@@ -525,7 +543,7 @@ export default defineComponent({
               $q.notify({
                 color: "positive",
                 position: "top",
-                message: "请输入新密码",
+                message: t("forgotPassword.notification.otpVerified.message"),
                 icon: "check_circle_outline"
               });
               getCode();
@@ -542,7 +560,7 @@ export default defineComponent({
         if (emailRef.value.hasError || userRef2.value.hasError) {
         } else {
           $q.loading.show({
-            message: "发送验证码中..."
+            message: t("forgotPassword.notification.sendingOtp.message")
           });
           api
             .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordFormEmail))
@@ -556,7 +574,7 @@ export default defineComponent({
               $q.notify({
                 color: "positive",
                 position: "top",
-                message: "请输入新密码",
+                message: t("forgotPassword.notification.otpVerified.message"),
                 icon: "check_circle_outline"
               });
               getCode();
@@ -600,7 +618,7 @@ export default defineComponent({
         newPwdRef.value.validate();
         confirmPwdRef.value.validate();
         $q.loading.show({
-          message: "提交中.."
+          message: t("forgotPassword.notification.submitting.message")
         });
         if (codeRef.value.hasError || newPwdRef.value.hasError || confirmPwdRef.value.hasError) {
           $q.loading.hide();
@@ -615,7 +633,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "密码修改成功",
+                  message: t("forgotPassword.notification.passwordChanged.message"),
                   icon: "check_circle_outline"
                 });
                 router.push("/login");
@@ -639,7 +657,7 @@ export default defineComponent({
         newPwdRef2.value.validate();
         confirmPwdRef2.value.validate();
         $q.loading.show({
-          message: "提交中.."
+          message: t("forgotPassword.notification.submitting.message")
         });
         if (codeRef2.value.hasError || newPwdRef2.value.hasError || confirmPwdRef2.value.hasError) {
           $q.loading.hide();
@@ -653,7 +671,7 @@ export default defineComponent({
                 $q.notify({
                   color: "positive",
                   position: "top",
-                  message: "密码修改成功",
+                  message: t("forgotPassword.notification.passwordChanged.message"),
                   icon: "check_circle_outline"
                 });
                 router.push("/login");
@@ -691,24 +709,24 @@ export default defineComponent({
 
     const isValidPhone = (val) => {
       const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
-      return phonePattern.test(val) || "请输入有效的电话号码";
+      return phonePattern.test(val) || t("forgotPassword.form.phone.error.format");
     };
 
     const isValidEmail = (val) => {
       const emailPattern =
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
-      return emailPattern.test(val) || "请输入有效电子邮件";
+      return emailPattern.test(val) || t("forgotPassword.form.email.error.required");
     };
 
     const validatePassNew = () => {
       if (verificationPhoneForm.confirmPwd !== verificationPhoneForm.newPassword) {
-        return "密码不同";
+        return t("forgotPassword.form.passwordConfirm.error.match");
       }
     };
 
     const validatePassNew2 = () => {
       if (verificationForm.confirmPwd !== verificationForm.newPassword) {
-        return "密码不同";
+        return t("forgotPassword.form.passwordConfirm.error.match");
       }
     };
 

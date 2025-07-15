@@ -31,7 +31,11 @@ class CachedNode {
 }
 
 class Cached {
-  get(key, fn, { expired_type = TIME_EXPIRED, expired_value = DEFAULT_EXPIRED_TIME } = {}) {
+  get(
+    key,
+    fn,
+    { expired_type = TIME_EXPIRED, expired_value = DEFAULT_EXPIRED_TIME } = {}
+  ) {
     let value = this.getAndCheck(key);
     if (value) {
       return Promise.resolve(value);
@@ -67,9 +71,15 @@ class Cached {
 
   isExpired(node) {
     node.gotTimes++;
-    if (node.expired_type === TIME_EXPIRED && this.currentTime() <= node.expired_time) {
+    if (
+      node.expired_type === TIME_EXPIRED &&
+      this.currentTime() <= node.expired_time
+    ) {
       return true;
-    } else if (node.expired_type === GOT_EXPIRED && node.gotTimes <= node.expired_value) {
+    } else if (
+      node.expired_type === GOT_EXPIRED &&
+      node.gotTimes <= node.expired_value
+    ) {
       return true;
     } else {
       return false;

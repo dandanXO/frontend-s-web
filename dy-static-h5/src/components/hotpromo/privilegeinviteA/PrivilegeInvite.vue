@@ -448,7 +448,12 @@ export default defineComponent({
     };
 
     const shareInvite = () => {
-      router.push("/account/invite");
+    if (window.location.pathname === "/promotion") {
+      document.location.href = `app://invite#summon-share`;
+    }else{
+    router.push("/account/invite");
+  }
+      
     };
 
     onMounted(() => {

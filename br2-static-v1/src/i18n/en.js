@@ -1191,7 +1191,8 @@ export default {
     title1: "The registration time starts from the time the registration is completed.",
     message1:
       "When the accumulated amount reaches R$100, you can apply for withdrawal (withdrawal is to the game wallet)",
-    message2: "When there are no spins available, re-refer a new player to get a free spin.",
+    message2:
+      "Invite friends to register and make a deposit — this can significantly speed up your progress toward the maximum withdrawal limit!",
     message3:
       "The event lasts for 3 days. After the event, the accumulated bonus will be reset and the event will start again",
     message4:

@@ -75,7 +75,7 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 .transit-buttons {
-  padding: 10px 0px;
+  // padding: 10px 0px;
   display: flex;
   flex-direction: column;
   width: $box-width;
@@ -85,6 +85,14 @@ export default defineComponent({
   border-radius: 10px;
   box-shadow: $shadow-bg;
 
+  .btn:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  .btn:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
   .btn {
     color: $font-1;
     text-decoration: none;

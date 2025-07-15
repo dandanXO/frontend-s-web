@@ -1,6 +1,12 @@
 <template>
   <q-layout view="hHh Lpr fFf">
-    <q-header v-if="hasPage" class="page-wrapper">
+    <q-header
+      v-if="hasPage"
+      class="page-wrapper"
+      :class="{
+        'is-scrolled': isScrolled
+      }"
+    >
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
           <router-link to="/">
@@ -33,69 +39,13 @@
           icon="menu"
         />
       </q-card-section>
-      <!-- <q-card-actions v-if="store.hasToken()" class="bot-section" horizontal>
-        <q-card-section class="acct-section">
-          <div class="label">Main account:</div>
-          <div class="amt">{{ mainWallet }}</div>
-        </q-card-section>
-        <q-separator vertical />
-        <q-btn class="flex" to="/finance/deposit" no-caps flat
-          ><RiWalletLine />Top-up center</q-btn
-        >
-        <q-btn to="/finance/withdraw" no-caps flat
-          ><RiBankCardLine />Quick Withdraw</q-btn
-        >
-      </q-card-actions> -->
     </q-header>
-    <!--
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
+
+    <q-page-container
+      :class="{
+        'with-bg': withBgPage
+      }"
     >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer> -->
-
-    <q-drawer side="right" elevated overlay v-model="ui.drawerRight" :width="250" :breakpoint="500" v-if="hasDrawer">
-      <div class="q-pa-md bg-brightbtn">老虎机大厅</div>
-      <div class="platforms">
-        <div class="text-red q-px-sm q-pt-md">游戏平台</div>
-      </div>
-      <q-scroll-area class="fit">
-        <div class="q-pa-sm platform-list">
-          <q-btn
-            @click="changePlatform(plat)"
-            size="md"
-            color="dyblue"
-            v-for="(plat, n) in platformsList"
-            :key="n"
-            :label="plat.icon"
-          />
-        </div>
-      </q-scroll-area>
-    </q-drawer>
-    <!-- <q-scroll-area
-      ref="scrollPageRef"
-      class="scrollArea"
-    >
-      <q-page-container>
-        <router-view />
-      </q-page-container>
-    </q-scroll-area> -->
-
-    <q-page-container>
       <router-view v-slot="{ Component }">
         <KeepAlive :max="8" :exclude="excludeAliveComponents">
           <component :is="Component" />
@@ -105,49 +55,27 @@
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-primary text-white" :breakpoint="0" align="justify">
         <q-route-tab to="/" name="home" exact>
-          <img class="inactive" src="../assets/images/index/menu/ft-home.svg" />
-          <img class="hover" src="../assets/images/index/menu/ft-home-active.svg" />
-          首页
+          <img class="inactive" src="../assets/images/index/menu/ft-home.png" />
+          <img class="hover" src="../assets/images/index/menu/ft-home-active.png" />
+          {{ $t("layout.footer.home") }}
         </q-route-tab>
-        <!--        <q-route-tab to="/sport" name="sport">-->
-        <!--          <img-->
-        <!--              class="inactive"-->
-        <!--              src="../assets/images/index/menu/ft-sport.svg"-->
-        <!--          />-->
-        <!--          <img-->
-        <!--              class="hover"-->
-        <!--              src="../assets/images/index/menu/ft-sport-active.svg"-->
-        <!--          />-->
-        <!--          体育-->
-        <!--        </q-route-tab>-->
 
-        <!--        <q-route-tab to="/poker" name="poker">-->
-        <!--          <img-->
-        <!--              class="inactive"-->
-        <!--              src="../assets/images/index/menu/ft-poker.png"-->
-        <!--          />-->
-        <!--          <img-->
-        <!--              class="hover"-->
-        <!--              src="../assets/images/index/menu/ft-poker-active.png"-->
-        <!--          />-->
-        <!--          棋牌-->
-        <!--        </q-route-tab>-->
         <q-route-tab to="/promo" name="promo">
-          <img class="inactive" src="../assets/images/index/menu/ft-promo.svg" />
-          <img class="hover" src="../assets/images/index/menu/ft-promo-active.svg" />
-          优惠
+          <img class="inactive" src="../assets/images/index/menu/ft-promo.png" />
+          <img class="hover" src="../assets/images/index/menu/ft-promo-active.png" />
+          {{ $t("layout.footer.promo") }}
         </q-route-tab>
 
-        <q-route-tab :to="chatPage" name="chat">
-          <img class="inactive" src="../assets/images/index/menu/ft-livechat.svg" />
-          <img class="hover filtericon" src="../assets/images/index/menu/ft-livechat.svg" />
-          客服
+        <q-route-tab to="" name="chat" @click="handleLiveChatClick">
+          <img class="inactive" src="../assets/images/index/menu/ft-livechat.png" />
+          <img class="hover filtericon" src="../assets/images/index/menu/ft-livechat.png" />
+          {{ $t("layout.footer.liveChat") }}
         </q-route-tab>
 
         <q-route-tab to="/account" name="account">
-          <img class="inactive" src="../assets/images/index/menu/ft-me.svg" />
-          <img class="hover" src="../assets/images/index/menu/ft-me-active.svg" />
-          我的
+          <img class="inactive" src="../assets/images/index/menu/ft-me.png" />
+          <img class="hover" src="../assets/images/index/menu/ft-me-active.png" />
+          {{ $t("layout.footer.me") }}
         </q-route-tab>
       </q-tabs>
     </q-footer>
@@ -161,11 +89,13 @@ import { Platform } from "quasar";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import { translateRecord } from "src/directives/translate";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "MainLayout",
 
   setup() {
+    const { t } = useI18n();
     const route = useRoute();
     const router = useRouter();
     const store = userStore();
@@ -193,207 +123,6 @@ export default defineComponent({
 
       // Determine the tracking script URL based on the current domain
       let trackingScriptUrl = "";
-      switch (currentDomain) {
-        case "m.dy86353.com":
-        case "m.dy80252.com":
-        case "www.dy86353.com":
-        case "www.dy80252.com":
-        case "dy86353.com":
-        case "dy80252.com":
-          trackingScriptUrl = "https://s9.cnzz.com/z_stat.php?id=1281279658&web_id=1281279658";
-          break;
-        case "m.dy93113.com":
-        case "m.dy96108.com":
-        case "www.dy93113.com":
-        case "www.dy96108.com":
-        case "dy93113.com":
-        case "dy96108.com":
-          trackingScriptUrl = "https://s9.cnzz.com/z_stat.php?id=1280864521&web_id=1280864521";
-          break;
-        case "m.dy18178.com":
-        case "m.dy50122.com":
-        case "m.dy52506.com":
-        case "m.dy53976.com":
-        case "m.dy70679.com":
-        case "m.dy73953.com":
-        case "www.dy18178.com":
-        case "www.dy50122.com":
-        case "www.dy52506.com":
-        case "www.dy53976.com":
-        case "www.dy70679.com":
-        case "www.dy73953.com":
-        case "dy18178.com":
-        case "dy50122.com":
-        case "dy52506.com":
-        case "dy53976.com":
-        case "dy70679.com":
-        case "dy73953.com":
-          trackingScriptUrl = "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
-          break;
-        case "m.dy52373.com":
-        case "m.dy67892.com":
-        case "m.dy93828.com":
-        case "m.dy37378.com":
-        case "m.dy35567.com":
-        case "m.dy25952.com":
-        case "m.dy87265.com":
-        case "m.dy29892.com":
-        case "m.dy38885.com":
-        case "m.dy78299.com":
-        case "www.dy52373.com":
-        case "www.dy67892.com":
-        case "www.dy93828.com":
-        case "www.dy37378.com":
-        case "www.dy35567.com":
-        case "www.dy25952.com":
-        case "www.dy87265.com":
-        case "www.dy29892.com":
-        case "www.dy38885.com":
-        case "www.dy78299.com":
-        case "dy52373.com":
-        case "dy67892.com":
-        case "dy93828.com":
-        case "dy37378.com":
-        case "dy35567.com":
-        case "dy25952.com":
-        case "dy87265.com":
-        case "dy29892.com":
-        case "dy38885.com":
-        case "dy78299.com":
-        case "www.dy9639.com":
-        case "www.dy8930.com":
-        case "www.dy7698.com":
-        case "www.dy7835.com":
-        case "www.dy8365.com":
-        case "www.dy9286.com":
-        case "www.dy8539.com":
-        case "www.dy8286.com":
-        case "www.dy7197.com":
-        case "www.dy7586.com":
-        case "dy9639.com":
-        case "dy8930.com":
-        case "dy7698.com":
-        case "dy7835.com":
-        case "dy8365.com":
-        case "dy9286.com":
-        case "dy8539.com":
-        case "dy8286.com":
-        case "dy7197.com":
-        case "dy7586.com":
-        case "m.dy9639.com":
-        case "m.dy8930.com":
-        case "m.dy7698.com":
-        case "m.dy7835.com":
-        case "m.dy8365.com":
-        case "m.dy9286.com":
-        case "m.dy8539.com":
-        case "m.dy8286.com":
-        case "m.dy7197.com":
-        case "m.dy7586.com":
-        case "dy53718.cc":
-        case "dy31877.cc":
-        case "dy35798.cc":
-        case "dy13578.cc":
-        case "dy75281.cc":
-        case "dy18652.cc":
-        case "dy65982.cc":
-        case "dy12579.cc":
-        case "dy67982.cc":
-        case "dy89256.cc":
-        case "dy25912.cc":
-        case "dy72851.cc":
-        case "dy37215.cc":
-        case "dy29571.cc":
-        case "dy79851.cc":
-        case "dy12358.cc":
-        case "dy91658.cc":
-        case "dy25681.cc":
-        case "dy68151.cc":
-        case "dy32568.cc":
-        case "dy12769.cc":
-        case "dy27698.cc":
-        case "dy63897.cc":
-        case "dy96573.cc":
-        case "dy57831.cc":
-        case "dy73881.cc":
-        case "dy83699.cc":
-        case "dy15789.cc":
-        case "dy87951.cc":
-        case "dy59267.cc":
-        case "m.dy53718.cc":
-        case "m.dy31877.cc":
-        case "m.dy35798.cc":
-        case "m.dy13578.cc":
-        case "m.dy75281.cc":
-        case "m.dy18652.cc":
-        case "m.dy65982.cc":
-        case "m.dy12579.cc":
-        case "m.dy67982.cc":
-        case "m.dy89256.cc":
-        case "m.dy25912.cc":
-        case "m.dy72851.cc":
-        case "m.dy37215.cc":
-        case "m.dy29571.cc":
-        case "m.dy79851.cc":
-        case "m.dy12358.cc":
-        case "m.dy91658.cc":
-        case "m.dy25681.cc":
-        case "m.dy68151.cc":
-        case "m.dy32568.cc":
-        case "m.dy12769.cc":
-        case "m.dy27698.cc":
-        case "m.dy63897.cc":
-        case "m.dy96573.cc":
-        case "m.dy57831.cc":
-        case "m.dy73881.cc":
-        case "m.dy83699.cc":
-        case "m.dy15789.cc":
-        case "m.dy87951.cc":
-        case "m.dy59267.cc":
-        case "www.dy53718.cc":
-        case "www.dy31877.cc":
-        case "www.dy35798.cc":
-        case "www.dy13578.cc":
-        case "www.dy75281.cc":
-        case "www.dy18652.cc":
-        case "www.dy65982.cc":
-        case "www.dy12579.cc":
-        case "www.dy67982.cc":
-        case "www.dy89256.cc":
-        case "www.dy25912.cc":
-        case "www.dy72851.cc":
-        case "www.dy37215.cc":
-        case "www.dy29571.cc":
-        case "www.dy79851.cc":
-        case "www.dy12358.cc":
-        case "www.dy91658.cc":
-        case "www.dy25681.cc":
-        case "www.dy68151.cc":
-        case "www.dy32568.cc":
-        case "www.dy12769.cc":
-        case "www.dy27698.cc":
-        case "www.dy63897.cc":
-        case "www.dy96573.cc":
-        case "www.dy57831.cc":
-        case "www.dy73881.cc":
-        case "www.dy83699.cc":
-        case "www.dy15789.cc":
-        case "www.dy87951.cc":
-        case "www.dy59267.cc":
-        case "www.dy19637.com":
-        case "www.dy59386.com":
-        case "www.dy91628.com":
-        case "dy19637.com":
-        case "dy59386.com":
-        case "dy91628.com":
-        case "m.dy19637.com":
-        case "m.dy59386.com":
-        case "m.dy91628.com":
-          trackingScriptUrl = "https://s4.cnzz.com/z_stat.php?id=1281277587&web_id=1281277587";
-          break;
-        default:
-          return; // Don't load the tracking script for other domains
-      }
 
       if (isH5.value === true) {
         const script = document.createElement("script");
@@ -445,48 +174,56 @@ export default defineComponent({
           if (route.query.platform) {
             var platformName =
               route.query.platform == "BBINDY" ? "BBIN" : translateRecord(route.query.platform, "SLOT");
-            pageName.value = `${platformName}游戏大厅`;
+            pageName.value = t("layout.header.lobby", { name: platformName });
           }
+        } else if (route.path === "/baccarat") {
+          prevPage.value = "";
+          hasPage.value = true;
+          pageName.value = t("layout.header.baccarat");
+        } else if (route.path === "/register") {
+          prevPage.value = "";
+          hasPage.value = true;
+          pageName.value = t("btn.register");
         } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;
-          pageName.value = "找回账号";
+          pageName.value = t("layout.header.forgotPassword");
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
-          pageName.value = "Live Casino";
+          pageName.value = t("layout.header.live");
         } else if (route.path === "/e-sport") {
           hasPage.value = true;
-          pageName.value = "电子竞技";
+          pageName.value = t("layout.header.esport");
         } else if (route.path === "/sport") {
           hasPage.value = true;
-          pageName.value = "体育";
+          pageName.value = t("layout.header.sport");
           ui.hiddenFooter();
         } else if (route.path === "/poker") {
           hasPage.value = true;
-          pageName.value = "棋牌";
+          pageName.value = t("layout.header.poker");
           ui.hiddenFooter();
         } else if (route.path === "/fish") {
           hasPage.value = true;
-          pageName.value = "捕鱼达人";
+          pageName.value = t("layout.header.fish");
         } else if (route.path === "/finance/deposit") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "存款";
+          pageName.value = t("layout.header.deposit");
           if (route.query.redirect) {
             var redirectPage = route.query.redirect;
             prevPage.value = redirectPage;
           }
         } else if (route.path === "/deposit") {
           hasPage.value = false;
-          pageName.value = "存款";
+          pageName.value = t("layout.header.deposit");
           prevPage.value = "";
         } else if (route.path === "/promotion") {
           hasPage.value = false;
-          pageName.value = "优惠活动";
+          pageName.value = t("layout.header.promo");
           prevPage.value = "";
         } else if (route.path === "/promo") {
           hasPage.value = true;
-          pageName.value = "优惠活动";
+          pageName.value = t("layout.header.promo");
           prevPage.value = "";
           if (route.query.name) {
             if (route.query.fromAccount) {
@@ -501,7 +238,7 @@ export default defineComponent({
         } else if (route.path === "/finance/withdraw") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "提款";
+          pageName.value = t("layout.header.withdraw");
           if (route.query.redirect) {
             var redirectPage = route.query.redirect;
             prevPage.value = redirectPage;
@@ -509,7 +246,7 @@ export default defineComponent({
         } else if (route.path === "/account/transfer") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "转账";
+          pageName.value = t("layout.header.transfer");
           if (route.query.redirect) {
             var redirectPage = route.query.redirect;
             prevPage.value = redirectPage;
@@ -517,55 +254,55 @@ export default defineComponent({
         } else if (route.path === "/account/records") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "交易记录";
+          pageName.value = t("layout.header.records");
         } else if (route.path === "/account/transit") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "Transit";
+          pageName.value = t("layout.header.transit");
         } else if (route.path === "/account/personal") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "个人信息";
+          pageName.value = t("layout.header.personal");
         } else if (route.path === "/account/verifyTelephone") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "手机号码";
+          pageName.value = t("layout.header.verifyTelephone");
         } else if (route.path === "/account/verifyEmail") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "邮箱";
+          pageName.value = t("layout.header.verifyEmail");
         } else if (route.path === "/account/changePwd") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "修改密码";
+          pageName.value = t("layout.header.changePassword");
         } else if (route.path === "/account/download") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "东赢下载";
+          pageName.value = t("layout.header.download");
         } else if (route.path === "/account/invite") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "呼朋唤友";
+          pageName.value = t("layout.header.invite");
         } else if (route.path === "/privilege/invite") {
           prevPage.value = "promo";
           hasPage.value = true;
-          pageName.value = "邀请好友";
+          pageName.value = t("layout.header.invite2");
         } else if (route.path === "/privilege/hongbaoyu") {
           prevPage.value = "promo";
           hasPage.value = true;
-          pageName.value = "红包雨";
+          pageName.value = t("layout.header.hongbaoyu");
         } else if (route.path === "/account/announcement") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "系统公告";
+          pageName.value = t("layout.header.announcement");
         } else if (route.path === "/account/mail") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "会员建议";
+          pageName.value = t("layout.header.mail");
         } else if (route.path === "/account/inbox") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "消息中心 ";
+          pageName.value = t("layout.header.inbox");
           if (route.query.redirect) {
             var redirectPage = route.query.redirect;
             prevPage.value = redirectPage;
@@ -573,78 +310,82 @@ export default defineComponent({
         } else if (route.path === "/account/mail/outbox") {
           prevPage.value = "account/mail";
           hasPage.value = true;
-          pageName.value = "我的反馈";
+          pageName.value = t("layout.header.outbox");
         } else if (route.path === "/account/mail/write") {
           prevPage.value = "account/mail";
           hasPage.value = true;
-          pageName.value = "意见反馈";
+          pageName.value = t("layout.header.mailWrite");
         } else if (route.path === "/account/withdraw") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "银行信息";
+          pageName.value = t("layout.header.withdrawBank");
         } else if (route.path === "/account/promotion") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "优惠领取区";
+          pageName.value = t("layout.header.promotion");
         } else if (route.path === "/affiliate") {
           prevPage.value = "account";
           hasPage.value = true;
-          pageName.value = "加盟";
+          pageName.value = t("layout.header.affiliate");
         } else if (route.path === "/insert-bankinfo") {
           hasPage.value = true;
-          pageName.value = "Bank Information";
+          pageName.value = t("layout.header.bankInfo");
         } else if (route.path === "/account/records/deposit") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "存款记录";
+          pageName.value = t("layout.header.depositRecord");
         } else if (route.path === "/account/records/withdraw") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "提款记录";
+          pageName.value = t("layout.header.withdrawRecord");
         } else if (route.path === "/account/records/transfer") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "转账记录";
+          pageName.value = t("layout.header.transferRecord");
         } else if (route.path === "/account/records/moneyChange") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "账变记录";
+          pageName.value = t("layout.header.transferRecord");
         } else if (route.path === "/account/records/promo") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "优惠记录";
+          pageName.value = t("layout.header.promoRecord");
         } else if (route.path === "/account/records/bet") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "投注记录";
+          pageName.value = t("layout.header.betRecord");
         } else if (route.path === "/account/records/financeFeedback") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "催单记录";
+          pageName.value = t("layout.header.remindRecord");
         } else if (route.path === "/account/records/change") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "账变记录";
+          pageName.value = t("layout.header.transferRecord");
         } else if (route.path === "/account/records/betRecord") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "投注记录";
+          pageName.value = t("layout.header.betRecord");
         } else if (route.path === "/account/records/recommend") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "推荐好友记录";
+          pageName.value = t("layout.header.inviteRecord");
         } else if (route.path === "/account/records/help") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "救援金记录";
+          pageName.value = t("layout.header.help");
         } else if (route.path === "/account/records/bill") {
           prevPage.value = "account/records";
           hasPage.value = true;
-          pageName.value = "催单记录";
+          pageName.value = t("layout.header.remindRecord");
+        } else if (route.path === "/account/withdraw/crypto") {
+          prevPage.value = "account/withdraw";
+          hasPage.value = true;
+          pageName.value = t("layout.header.bindCrypto");
         } else if (route.path === "/account/vip") {
           prevPage.value = "";
           hasPage.value = true;
-          pageName.value = "VIP 优惠";
+          pageName.value = t("layout.header.vip");
           if (route.query.redirect) {
             var redirectPage = route.query.redirect;
             prevPage.value = redirectPage;
@@ -716,17 +457,29 @@ export default defineComponent({
       }
     ]);
 
+    const handleLiveChatClick = () => {
+      window.open(
+        "https://8xjp0t3ydi.ipbr7k9r.com/chatwindow.aspx?siteId=65001994&planId=099fb0e7-cad5-43d0-aa03-2ed2257e0e12",
+        "_blank"
+      );
+    };
+
     const platformsList = computed(() => {
       if (ui.slotLists.length === 0) {
         return platformsFixed.value;
       }
       return ui.slotLists;
     });
+    const withBgPage = computed(() => !["/login", "/register", "/forgot-account", "/"].includes(route.path));
+    const isScrolled = ref(false);
     // console.log(platformsList.value);
     onMounted(() => {
       checkPlatform();
       checkRoute();
-      loadTrackingScript();
+      window.addEventListener("scroll", () => {
+        isScrolled.value = window.scrollY > 0;
+      });
+      // loadTrackingScript();
     });
     return {
       tab: ref("home"),
@@ -757,7 +510,10 @@ export default defineComponent({
         "MoneyChangeRecordView",
         "WithdrawView",
         "ForgotPwdPage"
-      ]
+      ],
+      withBgPage,
+      handleLiveChatClick,
+      isScrolled
     };
   }
 });
@@ -807,16 +563,20 @@ svg path {
 }
 
 .page-wrapper {
-  background: linear-gradient(90deg, #57b7fc 0, #cf74ff 100%);
+  background: transparent;
   padding-top: 0px;
   background-size: cover;
+
+  &.is-scrolled {
+    background: #fcfdfe;
+    box-shadow: 0px 4px 4px 0px #00000040;
+  }
 }
 
 .page-title {
-  color: #fff;
+  color: #424f72;
   display: flex;
   padding: 8px;
-  font-weight: 500;
   letter-spacing: 1px;
 }
 </style>

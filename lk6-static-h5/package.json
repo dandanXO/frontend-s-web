@@ -1,8 +1,8 @@
 {
-  "name": "东赢",
-  "version": "1.0.22",
-  "description": "东赢官网 - 最专业的竞猜网站",
-  "productName": "东赢",
+  "name": "幸运6",
+  "version": "1.0.1",
+  "description": "幸运6官网 - 最专业的竞猜网站",
+  "productName": "幸运6",
   "author": "WeiSeng <weiseng@eagrp.net>",
   "private": true,
   "scripts": {
@@ -13,10 +13,10 @@
     "dev:test": "dotenv -e .test.env quasar dev",
     "dev:staging": "dotenv -e .staging.env quasar dev",
     "build:normal": "dotenv -e .prod.env quasar build",
-    "build:prod": "concurrently --names \"MAIN,LIVECHAT\" \"dotenv -e .prod.env quasar build\" \"dotenv -e .prod.env cross-env BUILD_TARGET=livechat quasar build\"",
-    "build:staging": "concurrently --names \"MAIN,LIVECHAT\" \"dotenv -e .staging.env quasar build\" \"dotenv -e .staging.env cross-env BUILD_TARGET=livechat quasar build\"",
-    "build:dev": "concurrently --names \"MAIN,LIVECHAT\" \"dotenv -e .dev.env quasar build\" \"dotenv -e .dev.env cross-env BUILD_TARGET=livechat quasar build\"",
-    "build:test": "concurrently --names \"MAIN,LIVECHAT\" \"dotenv -e .test.env quasar build\" \"dotenv -e .test.env cross-env BUILD_TARGET=livechat quasar build\"",
+    "build:prod": "dotenv -e .prod.env quasar build",
+    "build:staging": "dotenv -e .staging.env quasar build",
+    "build:dev": "dotenv -e .dev.env quasar build",
+    "build:test": "dotenv -e .test.env quasar build",
     "dev": "quasar dev"
   },
   "dependencies": {
@@ -48,6 +48,7 @@
     "swiper": "^9.3.2",
     "uuid": "^9.0.0",
     "vue": "^3.4.18",
+    "vue-advanced-cropper": "^2.8.9",
     "vue-i18n": "^9.0.0",
     "vue-marquee-text-component": "^2.0.1",
     "vue-native-websocket-vue3": "^3.1.6",

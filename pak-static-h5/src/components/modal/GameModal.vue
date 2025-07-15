@@ -2,7 +2,7 @@
   <q-scroll-area>
     <q-dialog v-model="visible" class="gameDialog" full-height full-width persistent no-esc-dismiss no-backdrop-dismiss>
       <q-toolbar>
-        <div class="topActions">
+        <div class="topActions" :class="{ betby: isBetBy }">
           <q-icon name="chevron_left" size="30px" @click="onExitClick" />
           <div class="game-logo-img">
             <img src="../../assets/images/auth/auth-logo-text-only.png" />
@@ -23,20 +23,33 @@
             </div> -->
           </div>
 
-          <div v-if="!drawerVisible" class="wallet-container" @click="goToDeposit()">
+          <div v-if="!drawerVisible && !isBetBy" class="wallet-container" @click="goToDeposit()">
             {{ $t("btn.addCash") }} &nbsp;
             <q-btn dense rounded class="wallet-btn">
               <img src="../../assets/images/account/personal-svg.svg" />
             </q-btn>
           </div>
+
+          <div v-if="!drawerVisible && isBetBy" class="wallet-container">
+            <div class="flex-c-start">
+              <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
+                <span class="currency-amount">
+                  {{ store.currency.value }}
+                </span>
+                <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
+                  {{ isLoadingBalance ? `${$t("btn.loading")}...` : convertToCommaAmount(store.balance, false) }}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="loader-container">
+        <div v-if="isLoading" class="loader-container">
           <img class="loader-logo" src="../../assets/images/auth/auth-logo-text-only.png" alt="B9.GAME" />
           <div>{{ $t("btn.loading_plsWait") }}</div>
         </div>
 
-        <template v-if="isInnerHtmlSrc === false">
+        <template v-if="isInnerHtmlSrc === false && !isBetBy">
           <iframe
             @load="loadGame()"
             v-show="!logoShow"
@@ -48,6 +61,7 @@
             :style="`height: calc(100% - 65px - ${ui.bottomInsetHeight}px);`"
           ></iframe>
         </template>
+        <div v-else-if="isBetBy" ref="betbyRef" class="game-iframe--betby" />
         <template v-else>
           <iframe
             @load="loadGame()"
@@ -136,11 +150,23 @@
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
+import { i18nStore } from "src/router/language";
 import { userStore } from "stores/index";
 // import { launchSessionGame } from "api/platform/platform";
 // import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated, watch } from "vue";
+import {
+  ref,
+  defineExpose,
+  reactive,
+  shallowRef,
+  onActivated,
+  onUnmounted,
+  onDeactivated,
+  watch,
+  nextTick,
+  computed
+} from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
 import { App } from "@capacitor/app";
@@ -150,7 +176,7 @@ import { App } from "@capacitor/app";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, Notify } from "quasar";
-import { isAndroid } from "boot/utils";
+import { isAndroid, convertToCommaAmount } from "boot/utils";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import DepositView from "../../pages/account/DepositView.vue";
 import { useUI } from "stores/ui";
@@ -175,6 +201,14 @@ const bankCardList = ref([]);
 const privilegeList = ref([]);
 const selectedPayType = shallowRef("");
 const isPaymentLoading = ref(true);
+const isBetBy = ref(false);
+const isBetByLoad = ref(false);
+const i18nStoreLanguage = i18nStore();
+const langVal = computed(() => i18nStoreLanguage.languageVal);
+
+const isLoading = ref(false);
+const betbyInstance = ref(null);
+const betbyRef = ref(null);
 
 const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
@@ -284,6 +318,9 @@ const closeDialog = () => {
     screen.orientation.lock("portrait");
     App.removeAllListeners();
   }
+  if (betbyInstance.value) {
+    betbyInstance.value.kill();
+  }
 };
 
 const goToDepositPage = () => {
@@ -309,6 +346,7 @@ const pendingGameParams = ref(null);
 const isDepositZero = ref(false);
 const open = (gameName, platformCode, gameCode, gameType, demo, isChoice = false) => {
   const store = userStore();
+  isLoading.value = true;
   isDepositZero.value = store.hasDeposit === false;
   const _isFromNewPlayerGuide = sessionStorage.getItem("isFromNewPlayerGuide");
   if (_isFromNewPlayerGuide) {
@@ -331,6 +369,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
   // debugger;
   // AppFullscreen.request()
   isInnerHtmlSrc.value = false;
+  isBetBy.value = false;
   platformCodeImg.value = platformCode;
 
   //TESt
@@ -388,6 +427,14 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
       if (platformCode !== "LuckySport" && platformCode !== "NineW") {
         visible.value = true;
       }
+      // if (platformCode === "BetBy" && isBetByLoad.value === false) {
+      //   console.log("Load BEt By");
+      //   isBetByLoad.value = true;
+      //   const script = document.createElement("script");
+      //   script.src = "https://ui.invisiblesport.com/bt-renderer.min.js";
+      //   script.async = true;
+      //   document.head.appendChild(script);
+      // }
 
       var way = null;
       if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -436,10 +483,65 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
         .get(apiUrl, {
           params: apiParam
         })
-        .then((res) => {
+        .then(async (res) => {
           let srcDoc = res.data;
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
-          if (firstFourChars === "http") {
+          isLoading.value = false;
+          if (platformCode === "BetBy") {
+            const existingScript = document.getElementById("btrenderer-script");
+            if (existingScript) {
+              existingScript.remove(); // 或 existingScript.parentNode.removeChild(existingScript);
+            }
+
+            const script = document.createElement("script");
+            script.src = "https://pk1.sptpub.com/bt-renderer.min.js";
+            script.id = "btrenderer-script";
+            script.async = true;
+
+            script.onload = async () => {
+              isBetBy.value = true;
+
+              const topActionsEl = document.querySelector(".topActions");
+              const headerHeight = topActionsEl ? topActionsEl.offsetHeight : 0;
+
+              await nextTick();
+
+              betbyInstance.value = new BTRenderer().initialize({
+                brand_id: "2556215528716906501",
+                token: srcDoc,
+                themeName: "default",
+                lang: langVal.value,
+                target: betbyRef.value,
+                stickyTop: headerHeight,
+                betSlipOffsetTop: headerHeight,
+                betslipZIndex: 999,
+                onRecharge: function () {
+                  router.push("/deposit?from=/home");
+                },
+                onSessionRefresh: function () {
+                  console.log("onSessionRefresh");
+                  window.location.reload();
+                },
+                onTokenExpired: () => {
+                  return new Promise((resolve, reject) => {
+                    const apiUrl2 = `/session/launch?_time=${new Date().getTime()}`;
+
+                    api
+                      .get(apiUrl2, { params: apiParam })
+                      .then((res) => resolve(res.data))
+                      .catch((err) => reject(err));
+                  });
+                }
+              });
+
+              console.log("betbyInstance.value: ", betbyInstance.value);
+            };
+
+            script.onerror = () => {
+              console.error("Failed to load bt-renderer.min.js");
+            };
+            document.head.appendChild(script);
+          } else if (firstFourChars === "http") {
             if ((platformCode === "LuckySport" || platformCode === "NineW") && gameCode !== "") {
               src.value = srcDoc.replace(gameCode, "");
               setTimeout(function () {
@@ -514,6 +616,16 @@ const close = () => {
   src.value = "";
   logoShow.value = true;
   payMethods = [];
+};
+
+const isLoadingBalance = ref(false);
+const refreshBalance = () => {
+  if (store.token) {
+    isLoadingBalance.value = true;
+    store.getBalance().then((res) => {
+      isLoadingBalance.value = false;
+    });
+  }
 };
 
 watch(
@@ -606,6 +718,12 @@ defineExpose({
     width: 100%;
     padding: 16px;
     align-items: center;
+
+    &.betby {
+      position: sticky;
+      top: 0;
+      background: inherit;
+    }
 
     .game-logo-img {
       height: 50px;
@@ -761,6 +879,10 @@ defineExpose({
   width: 100vw;
   z-index: 1;
   top: 65px;
+}
+
+.game-iframe--betby {
+  width: 100%;
 }
 
 .q-toolbar .topActions {
@@ -1076,6 +1198,53 @@ defineExpose({
         border-top: 1px solid #ffffff;
       }
     }
+  }
+}
+
+.profile-balance {
+  position: relative;
+  // background: #ffffff0f;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  min-width: 100px;
+  width: 100%;
+  min-height: 35px;
+  // border: 1px solid #ffffff14;
+  font-size: 14px;
+  color: #fff;
+  font-weight: bold;
+
+  &:active {
+    filter: brightness(0.75);
+  }
+
+  .currency-amount {
+    color: #000000;
+    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 3px;
+    border-radius: 50%;
+    padding: 3px 5px;
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 16px;
+    vertical-align: middle;
+  }
+
+  .balance-amount {
+    padding-right: 5px;
+    white-space: nowrap;
+    width: 100%;
   }
 }
 </style>

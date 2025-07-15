@@ -5,14 +5,18 @@
     </div>
     <img class="platform-item-logo" :src="require(`../../assets/index/live/platform-logo-${platform.logo}.png`)" />
     <div class="platform-item-bottom-wrapper">
-      <q-btn class="platform-item-play-btn" flat @click="$emit('click')" />
+      <RedirectButton class="platform-item-play-btn" @click="$emit('click')">{{ $t("btn.betNow") }}</RedirectButton>
       <div class="platform-item-desc">
-        {{ platform.message }}
+        {{ platform.message[languageVal] }}
       </div>
     </div>
   </div>
 </template>
 <script setup>
+import { i18nStore } from "src/router/language";
+import RedirectButton from "../RedirectButton.vue";
+import { storeToRefs } from "pinia";
+
 defineProps({
   platform: {
     type: Object,
@@ -21,6 +25,8 @@ defineProps({
 });
 
 defineEmits(["click"]);
+
+const { languageVal } = storeToRefs(i18nStore());
 </script>
 <style lang="scss" scoped>
 .platform-item-wrapper {
@@ -68,16 +74,6 @@ defineEmits(["click"]);
     margin-bottom: 10px;
 
     .platform-item-play-btn {
-      background: url(../../assets/index/play-btn-bg.png) no-repeat center;
-      background-size: 100% 100%;
-      aspect-ratio: 86 / 24;
-      width: 22vw;
-      max-width: 110px;
-      min-width: 86px;
-      min-height: unset;
-      border: none;
-      border-top-right-radius: 8px;
-      border-bottom-left-radius: 8px;
       margin-bottom: 10px;
     }
 

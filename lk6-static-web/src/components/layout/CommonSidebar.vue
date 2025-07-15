@@ -4,14 +4,14 @@
       <div class="additional-info-item" @click.stop.prevent="store.openLiveChat()">
         <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
         <span style="margin-left: 5px">
-          官网客服
+          {{ $t('menu.officialSupport') }}
           <img width="20px" height="20px" src="../../assets/home/24-hours-line.svg" class="icon-24h" />
         </span>
       </div>
       <a class="additional-info-item" @click.stop.prevent="goToLiveChatPromo()">
         <!-- <img src="../../assets/images/home/sticky-sidebar/email-icon.svg" /> -->
         <img style="margin-right: 8px" src="@/components/hotpromo/officialGift/img/voxis.svg" />
-        <span style="margin-left: 5px">专属客服</span>
+        <span style="margin-left: 5px">{{ $t('menu.dedicatedSupport') }}</span>
       </a>
       <!--      <div class="additional-info-item">-->
       <!--        <img src="../../assets/images/home/sticky-sidebar/phone-icon.svg" />-->
@@ -23,30 +23,30 @@
       class="sticky-sidebar-items"
       :class="stickyHovered && 'sticky-hovered'"
       @mouseover="stickyHovered = true"
-      @mouseleave="stickyHovered = false"
+      @mouseleave="closeStickySidebar"
     >
-      <div class="sticky-sidebar-item" @click="handleDarkModeClick">
+      <!-- <div class="sticky-sidebar-item" @click="handleDarkModeClick">
         <img v-if="isDark" src="@/assets/images/home/sticky-sidebar/light-mode-icon.svg" />
         <img v-else src="@/assets/images/home/sticky-sidebar/dark-mode-icon.svg" />
         <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">{{ isDark ? "白天" : "夜间" }}模式</div>
-      </div>
+      </div> -->
       <!-- <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
         <img src="../../assets/images/home/sticky-sidebar/hot-promo-icon.svg" />
         <div>热门活动</div>
       </router-link> -->
       <div class="sticky-sidebar-item" @mouseover="customerHovered = true">
         <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
-        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">客服中心</div>
+        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">{{ $t('menu.supportCentre') }}</div>
       </div>
       <div @mouseover="customerHovered = false">
         <router-link to="/app" class="sticky-sidebar-item">
           <img src="../../assets/images/home/sticky-sidebar/app-dl-icon.svg" />
-          <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">APP 下载</div>
+          <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">{{ $t('menu.appDownload') }}</div>
         </router-link>
       </div>
       <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
         <img src="../../assets/images/home/sticky-sidebar/back-top-icon.svg" />
-        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">返回顶部</div>
+        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">{{ $t('menu.backToTop') }}</div>
       </div>
     </div>
   </div>
@@ -160,11 +160,14 @@ import { ElMessageBox } from "element-plus";
 import moment from "moment";
 
 import { storeToRefs } from "pinia";
+import { setTimeout } from "core-js";
+import { useI18n } from "vue-i18n";
 export default defineComponent({
   components: {
     GameModal
   },
   setup() {
+    const { t } = useI18n();
     const notify = useNotify();
     const route = useRoute();
     const router = useRouter();
@@ -186,6 +189,12 @@ export default defineComponent({
         gameMenu.value.open(gameName, platType, gameCode, scrollingState);
       }
     };
+
+    const closeStickySidebar = () => {
+      setTimeout(() => {
+        stickyHovered.value = false;
+      }, 2000);
+    }
 
     const downloadUrl = ref("");
     const getAppDownloadUrl = () => {
@@ -369,9 +378,9 @@ export default defineComponent({
           router.push(`/promotion?name=lh-official-gift`);
         }
       } else {
-        ElMessageBox.alert("请登录后再操作", "系统提示", {
+        ElMessageBox.alert(t('message.loginFirstAction'), t('message.systemPrompt'), {
           center: true,
-          confirmButtonText: "确认",
+          confirmButtonText: t('btn.confirm'),
           showClose: false,
           buttonSize: "large"
         }).then(() => {
@@ -452,7 +461,8 @@ export default defineComponent({
       isDragging,
       goToLiveChatPromo,
       ElMessageBox,
-      memberType
+      memberType,
+      closeStickySidebar
     };
   }
 });
@@ -634,7 +644,8 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   padding: 20px 0px;
-  background: #fff;
+  background: url('../../assets/images/home/sticky-sidebar/sticky-sidebar-bg.png') center center no-repeat;
+  background-size: 100% 100%;
   height: min-content;
   border-radius: 25px;
   z-index: 1001;
@@ -649,7 +660,7 @@ export default defineComponent({
     width: 100%;
 
     &:hover {
-      background-color: #e5f5ff;
+      background-color: #ffffff68;
     }
 
     img {
@@ -664,18 +675,17 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 15px;
-  padding: 10px 5px;
-  background: #ffffff;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  box-shadow: 0px 0px 8px 0px #00000038;
+  padding: 5px;
+  background: url('../../assets/images/home/sticky-sidebar/sticky-sidebar-bg.png') center center no-repeat;
+  background-size: 100% 100%;
   position: relative;
   transition: 0.3s all;
+  font-family: 'PingFang SC';
 
   > div {
     width: 28px;
-    padding: 10px 5px;
-    border-bottom: 1px solid #7a80a14d;
+    padding: 5px;
+    border-bottom: 2px solid #FFFFFFE3;
     transition: 0.3s all;
   }
 
@@ -692,13 +702,13 @@ export default defineComponent({
     transform: translateY(-50%);
     height: 32px;
     width: 16px;
-    background: rgba(255, 255, 255, 1);
-    color: #7A80A1;
+    background: #d9e7ff94;
+    color: #333;
     font-size: 20px;
     font-weight: lighter;
     padding-left: 4px;
     padding-bottom: 2px;
-    light-height: 20px;
+    line-height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -715,6 +725,12 @@ export default defineComponent({
     > div {
       width: 74px;
     }
+
+    .sticky-sidebar-item {
+      > img {
+        width: 30px;
+      }
+    }
   }
 
   .sticky-sidebar-item {
@@ -722,9 +738,13 @@ export default defineComponent({
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #7A80A1;
+    color: #333333;
     gap: 5px;
     cursor: pointer;
+
+    > img {
+      width: 20px;
+    }
 
     &:hover {
       color: #4e93ff;
@@ -740,6 +760,8 @@ export default defineComponent({
       white-space: nowrap;
       transition: 0.3s all;
       text-align: center;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
 
       &.sticky-hovered {
         opacity: 1;
@@ -765,60 +787,6 @@ export default defineComponent({
   align-items: center;
   gap: 15px;
   transition: 0.3s all;
-}
-
-.dark {
-  .sticky-sidebar-items {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-
-    > :first-child {
-      border-color: #ffffff1a;
-    }
-
-    &::before {
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
-    }
-
-    .sticky-sidebar-item {
-      color: $color-white;
-
-      &:hover {
-        // color: rgb(83, 83, 83);
-      }
-
-      img {
-        filter: brightness(0) invert(1);
-      }
-    }
-  }
-
-  .additional-info-items {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-
-    .additional-info-item {
-      color: $color-white;
-
-      &:hover {
-        background: rgba($font-1-dark, 10%);
-      }
-
-      img {
-        filter: brightness(0) invert(1);
-      }
-    }
-  }
-
-  .rocket-wrapper {
-    .close-btn {
-      border-color: $font-3-dark;
-      color: $font-3-dark;
-    }
-  }
 }
 
 .icon-24h {

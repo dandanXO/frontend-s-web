@@ -1918,7 +1918,8 @@ export default {
     'Member Privilege Record Pak Export': 'บันทึกส่วนลดสมาชิกส่งออก - ปากีสถาน',
     'Refer Friend Rebate Point record': 'บันทึกคะแนนคืนเงินจากการหมุนเวียนเดิมพันของเพื่อนที่แนะนำ',
     'Member Refer Stat Analysis': '- การวิเคราะห์ค่าคอมมิชชั่นจากการแนะนำสมาชิก',
-    'Member Refer Relation': '- การตรวจสอบความสัมพันธ์ของการแนะนำสมาชิก'
+    'Member Refer Relation': '- การตรวจสอบความสัมพันธ์ของการแนะนำสมาชิก',
+    combinePlatform: 'รวมแพลตฟอร์ม',
   },
   google: {
     google_auth_menu: 'ตัวรับรองความถูกต้องของกูเกิ้ล',

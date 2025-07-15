@@ -71,16 +71,20 @@ import { userStore } from "stores/index";
 // import { launchSessionGame } from "api/platform/platform";
 // import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef } from "vue";
+import { ref, defineExpose, reactive, shallowRef, computed } from "vue";
 
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, openURL } from "quasar";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
+import { useI18n } from "vue-i18n";
+import { i18nStore } from "src/router/language";
 const $q = useQuasar();
+const { t } = useI18n();
 
 const store = userStore();
 const { token } = storeToRefs(store);
+const { languageVal } = storeToRefs(i18nStore());
 
 const formRef = ref();
 const payTypeClass = ref();
@@ -108,6 +112,14 @@ const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
 const hasPrivilege = ref(false);
 const quickTransferTab = ref(false);
+
+const apiLanguageParam = computed(() => {
+  if (languageVal.value === "zh") {
+    return "cn";
+  } else {
+    return "en";
+  }
+});
 
 const checkAmount = reactive({
   flag: true,
@@ -227,7 +239,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         }
       }
 
-      $q.loading.show({ message: "加载中..." });
+      $q.loading.show({ message: t("common.loading") });
 
       if (way !== "H5") {
         //Change to open at same page.
@@ -238,7 +250,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               params: {
                 platform: gameCode,
                 isMobile: Platform.is.mobile ? true : false,
-                way: way
+                way: way,
+                language: apiLanguageParam.value
               }
             })
             .then((response) => {
@@ -267,7 +280,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               platform: platformCode,
               gameCode: gameCode,
               isMobile: Platform.is.mobile ? true : false,
-              way: way
+              way: way,
+              language: apiLanguageParam.value
             }
           })
           .then((response) => {
@@ -304,7 +318,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               params: {
                 platform: gameCode,
                 isMobile: Platform.is.mobile ? true : false,
-                way: way
+                way: way,
+                language: apiLanguageParam.value
               }
             })
             .then((response) => {
@@ -320,7 +335,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               platform: platformCode,
               gameCode: gameCode,
               isMobile: Platform.is.mobile ? true : false,
-              way: way
+              way: way,
+              language: apiLanguageParam.value
             }
           })
           .then((response) => {

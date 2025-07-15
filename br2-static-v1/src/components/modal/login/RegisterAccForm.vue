@@ -47,7 +47,7 @@
         </template>
       </q-input>
 
-      <q-input
+      <!-- <q-input
         ref="emailRef"
         outlined
         v-model="email"
@@ -65,7 +65,7 @@
           <img v-if="!email" src="../../../assets/images/auth/email-icon.png" width="22px" />
           <img v-else src="../../../assets/images/auth/email-icon-active.png" width="22px" />
         </template>
-      </q-input>
+      </q-input> -->
 
       <q-input
         ref="phoneRef"
@@ -80,9 +80,9 @@
         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
         lazy-rules
         :rules="[
-           (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-            (val) => (val.length >= 8 && val.length <= 11) || $t('form.phone_rules_02'),
-            (val) => /^[0-9]*$/.test(val) || $t('form.phone_rules_04')
+          (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+          (val) => (val.length >= 8 && val.length <= 11) || $t('form.phone_rules_02'),
+          (val) => /^[0-9]*$/.test(val) || $t('form.phone_rules_04')
         ]"
       >
         <template v-slot:prepend>
@@ -139,7 +139,8 @@
         lazy-rules
         :rules="[
           (val) => (!!val && val.length > 0) || 'Por favor, insira o número do CPF',
-          (val) => val.length >= 6 || 'O número do CPF deve ter 11 dígitos'
+          (val) => val.length >= 6 || 'O número do CPF deve ter 11 dígitos',
+          (val) => validateCPF(val) || 'Formato do número do CPF está incorreto.'
         ]"
       >
         <template v-slot:prepend>
@@ -167,14 +168,14 @@
   </div>
 </template>
 <script setup>
-import { ref, onActivated, onMounted } from "vue";
-import { userStore } from "stores/index";
-import { useUI } from "stores/ui";
-import { useQuasar, Platform, SessionStorage } from "quasar";
-import { useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
-import { isAndroid } from "boot/utils";
+import { generateEventID, isAndroid } from "boot/utils";
+import { Platform, SessionStorage, useQuasar } from "quasar";
+import { userStore } from "stores/index";
+import { useUI } from "stores/ui";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
 const store = userStore();
 const $q = useQuasar();
@@ -206,20 +207,74 @@ const referrer = ref("");
 const captchaCode = ref("0000");
 const codeId = ref("");
 
+const fbc = ref("");
+const fbp = ref("");
+
 let sid = "";
 let isfinger = "";
 let regDevice = "";
 let regHost = location.hostname;
+
+const getFbValue = () => {
+  const fbclid2 = window.localStorage.getItem("fbclid");
+
+  const getCookie = (name) => {
+    const match = document.cookie.match(new RegExp(name + "=([^;]+)"));
+    return match ? decodeURIComponent(match[1]) : "";
+  };
+
+  const getFbclid = () => {
+    return sessionStorage.getItem("fbc3") || "";
+  };
+
+  const fbc3 = getFbclid();
+
+  const getFbClientId = () => {
+    let result = /_fbp=(fb\.1\.\d+\.\d+)/.exec(window.document.cookie);
+    if (!(result && result[1])) {
+      return null;
+    }
+    return result[1];
+  };
+
+  const fbc1 = (() => {
+    const rawFbp = getCookie("_fbc");
+    return rawFbp ? rawFbp.split(".").pop() : null;
+  })();
+
+  const fbp1 = (() => {
+    const rawFbp = getCookie("_fbp");
+    return rawFbp ? rawFbp.split(".").pop() : null;
+  })();
+
+  const fbp2 = (() => {
+    const rawFbp = getFbClientId();
+    return rawFbp ? rawFbp : null;
+  })();
+
+  const randUuid = generateEventID();
+
+  fbp.value = fbp1 || fbp2 || "";
+  fbc.value = fbclid2 || fbc1 || fbc3 || randUuid;
+};
 
 const register = () => {
   phoneRef.value.validate();
   passwordRef.value.validate();
   firstNameRef.value.validate();
   lastNameRef.value.validate();
-  emailRef.value.validate();
+  // emailRef.value.validate();
   taxIdRef.value.validate();
 
-  if (taxIdRef.value.hasError || firstNameRef.value.hasError || lastNameRef.value.hasError || emailRef.value.hasError || taxIdRef.value.hasError|| phoneRef.value.hasError || passwordRef.value.hasError || isAgreeReg.value === false) {
+  if (
+    taxIdRef.value.hasError ||
+    firstNameRef.value.hasError ||
+    lastNameRef.value.hasError ||
+    taxIdRef.value.hasError ||
+    phoneRef.value.hasError ||
+    passwordRef.value.hasError ||
+    isAgreeReg.value === false
+  ) {
     $q.loading.hide();
   } else {
     var qs = require("qs");
@@ -263,6 +318,9 @@ const register = () => {
         regHost = "app://";
       }
 
+      // debugger;
+      getFbValue();
+
       api
         .post(
           "/member/indRegister",
@@ -272,7 +330,7 @@ const register = () => {
             password: password.value,
             taxId: taxId.value,
             realName: `${firstName.value},${lastName.value}`,
-            email: email.value,
+            // email: email.value,
             captchaCode: captchaCode.value,
             codeId: codeId.value,
             codeAffiliate: codeAffiliate.value,
@@ -280,7 +338,9 @@ const register = () => {
             sid,
             isfinger,
             regDevice,
-            regHost
+            regHost,
+            fbc: fbc.value,
+            fbp: fbp.value
           })
         )
         .then((ret) => {
@@ -301,7 +361,6 @@ const register = () => {
             if (store.hasToken()) {
               router.push("/");
             }
-            // uiStore.loginView = "";
             isAgreeReg.value = false;
             // location.href = "/";
 
@@ -310,7 +369,8 @@ const register = () => {
               type: "register"
             });
 
-            uiStore.loginView = "regSuccess";
+            uiStore.loginView = "";
+            uiStore.isShowRegAccSuccessModal = true;
           } else {
             $q.notify({
               color: "negative",
@@ -340,6 +400,34 @@ const trackRegisterSuccessEvent = () => {
       eventToken: uiStore.adjust_register_event
     });
   }
+};
+
+const validateCPF = (input_cpf) => {
+  if (!input_cpf) return false;
+
+  const input = input_cpf.toString().replace(/\D/g, ""); // 去除非数字
+  if (input.length !== 11 || /^(\d)\1{10}$/.test(input)) return false; // 排除重复数字
+
+  const pesosA = [10, 9, 8, 7, 6, 5, 4, 3, 2];
+  const pesosB = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2];
+
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    sum += parseInt(input[i]) * pesosA[i];
+  }
+
+  let x1 = sum % 11;
+  x1 = x1 < 2 ? 0 : 11 - x1;
+
+  sum = 0;
+  for (let i = 0; i < 10; i++) {
+    sum += parseInt(input[i]) * pesosB[i];
+  }
+
+  let x2 = sum % 11;
+  x2 = x2 < 2 ? 0 : 11 - x2;
+
+  return x1 === parseInt(input[9]) && x2 === parseInt(input[10]);
 };
 
 const getCode = () => {

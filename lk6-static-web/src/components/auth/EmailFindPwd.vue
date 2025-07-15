@@ -1,14 +1,14 @@
 <template>
   <el-form ref="forgotPwdFormRef" :rules="loginRules" :model="forgotPwdForm" label-width="90" size="large">
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" width="35px" />
       <el-form-item label="注册邮箱" prop="email">
         <el-input v-model="forgotPwdForm.email" placeholder="输入注册邮箱" />
       </el-form-item>
     </div>
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" width="35px" />
       <el-form-item label="验证码" prop="captchaCode">
         <div style="display: flex; width: 100%">
           <el-input

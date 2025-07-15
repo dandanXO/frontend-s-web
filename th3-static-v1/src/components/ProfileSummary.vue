@@ -1,96 +1,166 @@
 <template>
-  <div style="height: 56px" v-if="topDownload"></div>
-  <div style="height: 80px"></div>
+  <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
+  <div style="height: 70px"></div>
 
-  <div class="top-download" v-if="topDownload">
+  <div class="top-download" v-if="topDownload && !ui.hideDownload">
     <div class="download-container">
-      <div class="download-btn">
-        <a :href="topDownloadUrl">
-          <img src="@/assets/images/index/download/top-download-btn.png" />
-        </a>
-      </div>
-      <div class="download-count">({{ topDownloadCount }}s)</div>
       <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
       </div>
+      <div class="download-logo"><img src="../assets/images/index/download/download-app-logo.png" /></div>
+      <!-- <div class="download-btn">
+        <a :href="topDownloadUrl">
+          <img src="../assets/images/index/download/top-download-btn.png" />
+        </a>
+      </div> -->
+
+      <div class="download-text">{{ $t("header.getFreeCash") }}</div>
+      <div class="download-btn-yel">
+        <a :href="ui.downloadAppUrl">{{ $t("header.download") }}</a>
+      </div>
+      <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
   </div>
-
-  <div class="infoboard-container" :class="{ 'q-pa-md': !homeProfile, 'with-top-download': topDownload }">
+  <div class="menu-open" :class="{ open: ui.isMenuOpen }">
+    <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div>
+    <SideMenu @closeMenu="toggleMenuOpen()" />
+  </div>
+  <div
+    class="infoboard-container"
+    :class="{
+      'q-pa-md': !homeProfile,
+      'with-top-download': topDownload && !ui.hideDownload,
+      'with-background': isScrolled
+    }"
+  >
+    <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
     <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
+      <!-- <div class="profile-menu">
+        <img src="../assets/images/auth/icon-more.png" @click="toggleMenuOpen()" />
+      </div> -->
       <div class="profile-wrapper-extra">
-        <div class="logo-img">
-          <img src="@/assets/logo.png" @click="onClickLogo" />
+        <div class="logo-img" style="cursor: pointer" @click="onClickLogo">
+          <img src="../assets/images/auth/bg-logo-only.png" />
+          <span v-if="!ui.loggedIn && !store.hasToken()">SUPERSIAM</span>
         </div>
       </div>
-      <div class="profile-wrapper" v-if="store.token">
+      <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
         <div class="profile-details-container">
-          <div class="flex-c-start">
-            <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
-              <span class="balance-amount" :style="`${store.balance > 999999 && 'font-size: 10px'}`">
-                <span style="font-family: Times New Roman, Times, serif; margin: 0; padding: 0">
+          <template v-if="!homeProfile">
+            <div class="profile-rating">
+              <img src="../assets/images/index/profile-rating-off.png" alt="" />
+              <img src="../assets/images/index/profile-rating-off.png" alt="" />
+              <img src="../assets/images/index/profile-rating-off.png" alt="" />
+            </div>
+            <div class="profile-agency">
+              <div class="profile-agency-lbl">Agency Level:</div>
+              <div class="profile-agency-val">1</div>
+            </div>
+          </template>
+
+          <template v-else>
+            <div class="flex-c-start">
+              <div :class="`profile-balance ${isLoadingBalance ? 'active' : ''}`" @click="refreshBalance()">
+                <span class="currency-amount">
                   {{ store.currency.value }}
                 </span>
-                {{ isLoadingBalance ? $t("btn.loading") : convertToCommaAmount(store.balance, 2) }}
-              </span>
-              <div class="btn-refresh">
-                <q-icon name="sync" size="16px" color="white-7"></q-icon>
+                <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
+                  {{ isLoadingBalance ? `${$t("btn.loading")}...` : convertToCommaAmount(store.balance, false) }}
+                </span>
+                <div v-if="promoPercentage" class="promo-percentage">
+                  {{ promoPercentage }} {{ $t("records.bonus") }}
+                </div>
+                <q-btn
+                  square
+                  class="style-blue-btn"
+                  :style="promoPercentage !== '' ? 'margin-right: 14px; margin-top: 10px;' : ''"
+                  icon="add"
+                  dense
+                  @click="handleBackBtn()"
+                />
+                <!-- <div class="btn-refresh">
+                  <q-icon name="sync" size="16px" color="white-7"></q-icon>
+                </div> -->
               </div>
             </div>
-          </div>
+          </template>
+        </div>
+        <div class="gift-notifications">
+          <q-btn class="notification-wrapper" flat @click="router.push('/account/message?from=' + route.path)">
+            <img src="../assets/images/auth/bell-icon.png" />
+            <q-badge v-if="store.unreadInboxMail > 0" class="bell-badge" floating rounded>
+              {{ store.unreadInboxMail }}
+            </q-badge>
+          </q-btn>
+          <div class="vertical-separator"></div>
+          <q-btn class="gift-wrapper" flat @click="showBonusModal">
+            <img src="../assets/images/auth/gift-icon.png" />
+            <q-badge v-if="fastAccessPromo.length > 0" class="gift-badge" floating rounded>
+              <q-spinner v-if="isFastAccessPromoCounting" size="16px" color="white" />
+              <template v-else>
+                {{ eligiblePromoCount }}
+              </template>
+            </q-badge>
+          </q-btn>
         </div>
 
-        <div style="z-index: 1">
-          <q-btn square class="style-blue-btn" icon="add" dense @click="handleBackBtn" />
-        </div>
-        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown">
+        <!-- <div>
+          <q-btn square class="style-blue-btn" icon="add" dense @click="router.push('/deposit?from=' + route.path)" />
+        </div> -->
+        <!-- <div class="profile-msg btn-effect" v-if="homeProfile">
+          <q-icon name="mail" size="40px" color="yellow-7" @click="router.push('/account/message')" />
+          <q-chip v-if="store.unreadInboxMail" class="notification" color="red" size="xs"></q-chip>
+        </div> -->
+        <q-btn-dropdown no-caps :ripple="false" dropdown-icon="expand_more" class="profile-dropdown" unelevated>
           <template v-slot:label>
             <div class="profile-pic">
-              <div class="unread-total" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</div>
-              <q-avatar size="50px">
+              <q-avatar size="40px">
                 <img :src="profileImagePath" />
               </q-avatar>
               <div class="profile-pic-frame" v-if="!homeProfile"></div>
 
               <div class="vip-details">
-                <img src="@/assets/images/index/vip-row.png" alt="" />
-                <div class="vip-level">
-                  {{ store.vip }}
-                </div>
+                <img
+                  class="bg"
+                  :src="
+                    require(`../assets/images/index/vip-badge/vip-${
+                      store.vip ? store.vip.replace('VIP', '') : '0'
+                    }.png`)
+                  "
+                  alt=""
+                />
               </div>
             </div>
           </template>
 
-          <q-list style="background: #303954" dense unelevated flat class="dropdown-list">
+          <q-list style="background: #323738; padding: 5px 0px" dense unelevated flat class="dropdown-list">
             <q-item clickable v-close-popup @click="onVipClick">
               <q-item-section avatar>
-                <q-avatar icon="diamond" />
+                <img src="../assets/images/account/vip-svg.svg" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>{{ $t("header.vip") }}</q-item-label>
+                <q-item-label>{{ $t("settings.vip") }}</q-item-label>
               </q-item-section>
             </q-item>
 
             <q-item clickable v-close-popup @click="router.push('/account/message?from=' + route.path)">
               <q-item-section avatar>
-                <q-avatar icon="mail" />
+                <img src="../assets/images/account/message-svg.svg" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>
                   <span class="message-amt" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</span>
-                  {{ $t("header.message") }}
+                  {{ $t("settings.message") }}
                 </q-item-label>
               </q-item-section>
             </q-item>
 
             <q-item clickable v-close-popup @click="router.push('/account/order?from=' + route.path)">
               <q-item-section avatar>
-                <q-avatar icon="receipt" />
+                <img src="../assets/images/account/order-svg.svg" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>
-                  {{ $t("header.order") }}
-                </q-item-label>
+                <q-item-label>{{ $t("settings.order") }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -98,69 +168,252 @@
 
             <q-item clickable v-close-popup @click="router.push('/account/bank?from=' + route.path)">
               <q-item-section avatar>
-                <q-avatar icon="account_balance" />
+                <img src="../assets/images/account/bank-svg.svg" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>{{ $t("header.bank") }}</q-item-label>
+                <q-item-label>{{ $t("settings.bank") }}</q-item-label>
               </q-item-section>
             </q-item>
 
             <q-item clickable v-close-popup @click="onLogout()">
               <q-item-section avatar>
-                <q-avatar icon="logout" />
+                <img src="../assets/images/account/logout-icon.svg" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>{{ $t("header.logout") }}</q-item-label>
+                <q-item-label>{{ $t("settings.logout") }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
         </q-btn-dropdown>
       </div>
       <div class="profile-wrapper" v-else>
-        <q-btn no-caps @click="goLogin()">{{ $t("header.login") }}</q-btn>
-        <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn>
+        <q-btn no-caps unelevated class="btn-primary" @click="goLogin">{{ $t("header.login") }}</q-btn>
+        <q-btn no-caps unelevated class="btn-register" @click="router.push('/register')">
+          {{ $t("header.register") }}
+        </q-btn>
+        <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.svg" /></div>
       </div>
     </div>
+
+    <q-dialog v-model="isBonusModal" position="top" style="z-index: 2002">
+      <BonusModal
+        :has-top-download="topDownload && !ui.hideDownload"
+        :promo-list="fastAccessPromo"
+        @openNewPlayer="showNewPlayer"
+      />
+    </q-dialog>
   </div>
 </template>
 
 <script setup>
-import { api } from "@/boot/axios";
-import { convertToCommaAmount, isAndroid, isInPwa } from "@/boot/utils";
-import { userStore } from "@/stores/index";
-import { Platform } from "quasar";
-import { computed, onMounted, ref } from "vue";
+import { ref, onMounted, computed, onUnmounted, watch, provide, shallowRef } from "vue";
+import { useQuasar, Platform } from "quasar";
+import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
+import { convertToCommaAmount, isAndroid, isInPwa } from "src/boot/utils";
+import { api, eventapi } from "boot/axios";
+import { useUI } from "stores/ui";
+import { cached, TIME_EXPIRED } from "boot/cache";
+import { useI18n } from "vue-i18n";
+import LangOptions from "components/LangOptions";
+import BonusModal from "./modal/BonusModal.vue";
+import SideMenu from "components/SideMenu.vue";
+
+import { defineEmits } from "vue";
+import { useCustomerTrigger } from "src/hooks/trigger";
+import { i18nStore } from "src/router/language";
+import { useThrottleFn } from "@vueuse/core";
 
 const props = defineProps(["homeProfile"]);
-const emits = defineEmits(["closeslot"]);
+const emits = defineEmits(["closeslot", "activateSlide", "showNewPlayer"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+const ui = useUI();
+const i18nStoreLanguage = i18nStore();
+const alreadyDeposited = JSON.parse(localStorage.getItem("onAppFirstDeposit"));
+const promoPercentage = computed(() => {
+  if (isAndroid() && store.canClaimFtdPrivilege) return "38";
+  if (store.canClaimSecondPrivilege) return "100";
+  if (store.canClaimThirdPrivilege) return "150";
+  return ""; // Optional: for other cases if needed
+});
+const isScrolled = ref(false);
+const eligiblePromoCount = ref(1);
+const isFastAccessPromoCounting = ref(false);
+const fastAccessPromoAbortController = ref(null);
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 0;
+};
+
+const isBonusModal = ref(false);
+const fastAccessPromo = shallowRef([]);
+
+const getFastAccessPromo = () => {
+  if (!store.token) return;
+  isFastAccessPromoCounting.value = true;
+  eligiblePromoCount.value = 0;
+  if (store.claimedFtdPrivilege === false) {
+    eligiblePromoCount.value++;
+  }
+  api.get(`/opt-session/promo/fast-access-promo?language=${i18nStoreLanguage.languageVal}`).then(async (res) => {
+    if (res.code === 0) {
+      let _fastAccessPromo;
+      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+        _fastAccessPromo = res.data;
+      } else {
+        _fastAccessPromo = res.data.filter((item) => item.privilegeStatus !== "TEST");
+      }
+
+      const apiQueue = [];
+      fastAccessPromoAbortController.value?.abort();
+      fastAccessPromoAbortController.value = new AbortController();
+      _fastAccessPromo.forEach((promo) => {
+        if (promo.initApiUrl) {
+          apiQueue.push(() =>
+            eventapi
+              .get(`${promo.initApiUrl}?promoCode=${promo.promoCode}`, {
+                signal: fastAccessPromoAbortController.value.signal
+              })
+              .then((res) => ({ apiRes: res, promoCode: promo.promoCode }))
+          );
+        } else if (promo.buttonMode === "CLAIM_REDIRECT") {
+          eligiblePromoCount.value++;
+        }
+      });
+
+      const initApiResList = await Promise.allSettled(apiQueue.map((apiCall) => apiCall()));
+      for (const initApiRes of initApiResList) {
+        if (initApiRes.status === "fulfilled") {
+          const { apiRes, promoCode } = initApiRes.value;
+          const _currentFastAccessPromo = _fastAccessPromo.find((promo) => promo.promoCode === promoCode);
+          if (_currentFastAccessPromo) {
+            _currentFastAccessPromo.response = apiRes.code === 0 ? apiRes.data : null;
+          }
+          if (apiRes.data.eligible || (promoCode === "pak-refer-wheel-spin" && apiRes.data.promoEndTime)) {
+            eligiblePromoCount.value++;
+          }
+          if (apiRes.data.hidePromo) {
+            _fastAccessPromo = _fastAccessPromo.filter((promo) => promo.promoCode !== "new-player-acc-deposit");
+          }
+        }
+      }
+      isFastAccessPromoCounting.value = false;
+
+      fastAccessPromo.value = _fastAccessPromo;
+    }
+  });
+};
+
+const showBonusModal = () => {
+  isBonusModal.value = !isBonusModal.value;
+};
+const showNewPlayer = () => {
+  isBonusModal.value = false;
+  emits("showNewPlayer");
+};
+
+const loadCustomerAddress = () => {
+  cached
+    .get("customerAddress", () =>
+      api.get("/config/customerAddress/v2").then((res) => {
+        return res;
+      })
+    )
+    .then((data) => {
+      console.log(data);
+      var url = data.liveUrl1;
+      ui.CSAUrl = url;
+    });
+};
+
+const activateSlide = (item) => {
+  router
+    .push(`/home#${item}`)
+    .then(() => {
+      if (props.homeProfile) {
+        emits("closeslot");
+      }
+      emits("activateSlide", item);
+      ui.isMenuOpen = false;
+    })
+    .catch((error) => {
+      console.error("Navigation error:", error);
+    });
+  ui.isMenuOpen = false;
+};
 
 const goLogin = () => {
+  if (props.homeProfile) {
+    emits("closeslot");
+  }
   router.push("/login");
 };
 
+const randomProfileImg = computed(() => {
+  const storedImg = sessionStorage.getItem("PROFILE_IMG");
+  if (storedImg) {
+    return storedImg;
+  } else {
+    const randomIndex = Math.floor(Math.random() * 24) + 1;
+    const imgPath = `image-${randomIndex}`;
+    sessionStorage.setItem("PROFILE_IMG", imgPath);
+    return imgPath;
+  }
+});
+
 const profileImagePath = computed(() => {
-  return require(`@/assets/images/account/profile-pic.png`);
+  return require(`../assets/images/account/profile/${randomProfileImg.value}.png`);
 });
 
 const isLoadingBalance = ref(false);
+
 const refreshBalance = () => {
   if (store.token) {
     isLoadingBalance.value = true;
-    store.getBalance().then((res) => {
-      isLoadingBalance.value = false;
-    });
+    // store.getBalance().then((res) => {
+    // isLoadingBalance.value = false;
+    transferOutAll();
+    // });
   }
 };
 
+const transferOutAll = () => {
+  isLoadingBalance.value = true;
+  api
+    .post("/session/balance/transfer/withdrawPlatform?platform=NineW")
+    .then((response) => {
+      if (response.code === 0) {
+        setTimeout(() => {
+          store.getBalance().then((res) => {
+            isLoadingBalance.value = false;
+          });
+        }, 1000);
+      } else {
+        isLoadingBalance.value = false;
+      }
+    })
+    .catch(() => {
+      isLoadingBalance.value = false;
+    });
+};
+
 const onClickLogo = () => {
-  if (isAndroid()) {
-    window.open(store.h5Url, "_blank");
+  if (props.homeProfile) {
+    activateSlide("Lobby");
     return;
   }
+  if (route.fullPath === "/home") {
+    // toggleMenuOpen();
+
+    return;
+  }
+  if (isAndroid()) {
+    window.open("http://m.b9mega1.com/", "_blank");
+    return;
+  }
+
   router.push("/");
 };
 
@@ -170,6 +423,7 @@ const onVipClick = () => {
 
 const onLogout = () => {
   store.memberLogout().then(() => {
+    // location.reload();
     router.push("/home");
   });
 };
@@ -177,7 +431,9 @@ const onLogout = () => {
 const topDownload = ref(false);
 const topDownloadcloseBtn = ref(true);
 
-const topDownloadCount = ref(11);
+const topDownloadCount = ref(6);
+
+provide("topDownload", topDownload);
 
 const closeTopdownload = () => {
   topDownload.value = false;
@@ -186,50 +442,96 @@ const closeTopdownload = () => {
 const countdown = () => {
   if (topDownloadCount.value > 0) {
     topDownloadCount.value--;
-    setTimeout(countdown, 1000);
+    setTimeout(countdown, 1000); // Update every 1000 milliseconds (1 second)
   }
 };
 
 const checkTopDownloadAppear = () => {
   const omitSites = ["bw3.genoortisy.com"];
 
-  if (!store.token && route.path === "/home") {
+  if (route.path === "/home") {
+    // console.log("Platform", Platform);
     if (
       ("standalone" in window.navigator && window.navigator.standalone) ||
       (Platform.is.capacitor && Platform.is.android) ||
-      omitSites.includes(location.host) ||
-      isInPwa()
+      omitSites.includes(location.host)
     ) {
       topDownload.value = false;
     } else {
       topDownload.value = true;
-      countdown();
-      setTimeout(() => {
-        topDownload.value = false;
-      }, 11000);
+      // countdown();
+      // setTimeout(() => {
+      //   topDownload.value = false;
+      // }, 6000);
     }
   }
 };
 
-const topDownloadUrl = ref("");
-const getTopDownloadUrl = () => {
-  api.get(`/app/download/affiliate/url?siteCode=${process.env.SITE}&affiliateCode=5E2D65`).then((res) => {
-    if (res.code === 0) {
-      topDownloadUrl.value = res.data.url;
-    }
-  });
+// const menuOpen = ref(false);
+
+const toggleMenuOpen = () => {
+  ui.isMenuOpen = !ui.isMenuOpen;
 };
 
+const handleMenuBackgroundClick = (event) => {
+  // if (event.target === event.currentTarget) {
+  ui.isMenuOpen = false;
+  // }
+};
+
+const handleMenuRouteClick = (route) => {
+  router.push(route);
+  ui.isMenuOpen = false;
+};
+
+const sideLang = ref(false);
 const handleBackBtn = () => {
   if (props.homeProfile) {
     emits("closeslot");
   }
-  router.push("/deposit?from=" + route.path);
+  const redirectQuery = {
+    from: route.path
+  };
+
+  router.push({ path: "/deposit", query: redirectQuery });
 };
 
+const isSideDownload = ref(false);
+
+const afterMounted = useCustomerTrigger(loadCustomerAddress);
+
+const throttledGetFastAccessPromo = useThrottleFn(() => {
+  getFastAccessPromo();
+}, 5000);
+
+watch(() => i18nStoreLanguage.languageVal, getFastAccessPromo);
+watch(() => store.token, getFastAccessPromo);
+watch(
+  () => isBonusModal.value,
+  (newVal) => {
+    if (newVal === true) {
+      throttledGetFastAccessPromo();
+    }
+  }
+);
+
 onMounted(() => {
-  getTopDownloadUrl();
   checkTopDownloadAppear();
+  ui.shouldFetchDownloadAppUrl = true;
+
+  sideLang.value = store.memberType === "TEST";
+  if (isAndroid() || isInPwa() || store.isFromGooglePackage) {
+    isSideDownload.value = false;
+  } else {
+    isSideDownload.value = true;
+  }
+  afterMounted();
+  window.addEventListener("scroll", handleScroll);
+  getFastAccessPromo();
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
 
@@ -242,14 +544,18 @@ onMounted(() => {
   max-width: 500px;
   margin: auto;
   width: 100%;
-  height: 86px; /* adjust the height as needed */
-  padding: 8px 16px 28px;
-  background: linear-gradient(180deg, #0c2962 0%, #01030d 100%);
-  z-index: 98;
+  height: 55px; /* adjust the height as needed */
+  padding: 12px 16px 28px;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  backdrop-filter: blur(6px);
+  z-index: 2003;
 
   .download-container {
     display: flex;
-    gap: 16px;
+    // gap: 16px;
+    :not(:last-child) {
+      margin-right: 16px;
+    }
     width: 100%;
     align-items: center;
     transition: 0.3s all;
@@ -280,17 +586,46 @@ onMounted(() => {
     }
 
     .download-count {
-      color: #fe9a9a;
+      color: #97a6b4;
       font-size: 20px;
+      width: 50px;
     }
 
     .download-btn {
       // margin-left: auto;
-      margin-right: auto;
+      margin-left: auto;
+      display: none;
 
       img {
         width: 100%;
         display: block;
+      }
+    }
+
+    .download-text {
+      font-size: 12px;
+      margin-right: auto;
+    }
+
+    .download-btn-yel {
+      margin-left: auto;
+      // display: none;
+
+      a {
+        text-decoration: none;
+        background: linear-gradient(163.93deg, #bdff00 11.18%, #ff9900 112.24%);
+        color: #131313;
+        font-weight: bold;
+        font-size: 12px;
+        min-width: 104px;
+        padding: 0 8px;
+        height: 36px;
+        border-radius: 40px;
+        // padding: 12px 16px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
 
@@ -300,6 +635,151 @@ onMounted(() => {
       opacity: 1;
       transition: 1s all;
     }
+    .download-logo {
+      width: 35px;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.menu-open {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: repeating-linear-gradient(45deg, #f1f1ee 0, #b9a78d 50%, #e9e8e4 100%);
+  backdrop-filter: blur(4px);
+  width: 100%;
+  height: calc(100% - 70px);
+  display: block;
+  z-index: 2002;
+  transition: 0.3s all;
+  margin-left: -100%;
+  &.open {
+    margin-left: 0;
+  }
+
+  .side-menu {
+    padding-top: 72px;
+    // background-color: #131313;
+    // width: 202px;
+    // height: 100%;
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 12px;
+    transition: 0.3s all;
+
+    overflow-y: auto;
+
+    .side-menu-divider {
+      background: rgba(255, 255, 255, 0.05);
+      height: 2px;
+      width: 100%;
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+
+    .side-menu-item {
+      height: 50px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      width: 170px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 5px;
+      color: #9f9f9f;
+      font-weight: bold;
+      line-height: 1.2;
+      text-decoration: none;
+      &__download {
+        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        color: #000a01;
+        font-weight: bold;
+
+        .item-icon {
+          img {
+            display: block;
+            width: 20px;
+          }
+        }
+      }
+
+      &__transparent {
+        background-color: transparent;
+        height: 40px;
+      }
+
+      &__checkin {
+        background: linear-gradient(270deg, #168346 0%, #171719 100%);
+        padding-left: 18px;
+        font-size: 80%;
+        color: #ffffff;
+        display: none !important;
+        span {
+          display: block;
+          color: #61ff00;
+        }
+
+        .item-icon {
+          margin-left: auto;
+          margin-top: -18px;
+        }
+      }
+
+      &__luckyspin {
+        background: linear-gradient(270deg, #b2267d 0%, #171719 100%);
+        padding-left: 18px;
+        font-size: 80%;
+        color: #ffffff;
+        display: none !important;
+        span {
+          display: block;
+          color: #ff00f5;
+        }
+
+        .item-icon {
+          margin-left: auto;
+          margin-top: -8px;
+        }
+      }
+
+      &__invite {
+        background: linear-gradient(270deg, #7a1683 0%, #171719 100%);
+        padding-left: 18px;
+        font-size: 80%;
+        color: #ffffff;
+        span {
+          font-size: 9px;
+          padding-top: 4px;
+          display: block;
+          color: #ffe500;
+        }
+
+        .item-icon {
+          margin-left: auto;
+          margin-top: -8px;
+        }
+      }
+
+      .item-icon {
+        width: 30px;
+        margin-right: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          display: block;
+
+          &.flag {
+            width: 26px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -308,28 +788,32 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  background: linear-gradient(180deg, #2d0f54 0%, #101114 100%);
+  // background-image: url("../assets/images/auth/auth-bg.png");
+  background-size: 100% 100%;
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
-  overflow-x: hidden;
+  overflow: hidden;
   position: fixed;
   top: 0;
   width: 100%;
-  // min-height: 82px;
   max-width: 500px;
-  z-index: 999;
+  z-index: 2003;
   transition: 0.3s all;
-  overflow: hidden;
+  height: 60px;
+
+  &.with-background {
+    background: #150a08;
+  }
 
   &.with-top-download {
-    border-top-right-radius: 25px;
-    border-top-left-radius: 25px;
+    // border-top-right-radius: 25px;
+    // border-top-left-radius: 25px;
     top: 56px;
   }
 
   .infoboard-wrapper {
     position: absolute;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
     // width: 22rem;
@@ -339,14 +823,19 @@ onMounted(() => {
     &.home-profile {
       position: relative;
       width: 100%;
-      gap: 0;
+      // gap: 5px;
+      gap: unset;
+      :not(:last-child) {
+        margin-right: 6px;
+      }
       justify-content: space-between;
+      align-items: center;
       padding: 0 12px;
       // overflow-y: hidden;
 
       .profile-pic {
         margin-top: -20px;
-        margin-right: 20px;
+        // margin-right: 20px;
       }
     }
   }
@@ -358,19 +847,35 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 12px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+
+    // > :not(:last-child) {
+    //   margin-right: 10px;
+    // }
+    padding-top: 8px;
+    padding-bottom: 5px;
     margin-bottom: 4px;
     width: 100%;
-    padding-right: 10px;
     position: relative;
+
+    .q-btn {
+      white-space: nowrap;
+    }
+
+    .btn-lang {
+      img {
+        display: block;
+        width: 24px;
+        filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);
+        // filter: brightness(1) sepia(0) hue-rotate(0deg) saturate(1);
+        animation: hueBlink 1s infinite;
+      }
+    }
 
     .unread-total {
       position: absolute;
       right: 0px;
       top: 0px;
-      background: #8952ff;
+      background: #00ae00;
       border-radius: 100px;
       padding: 0px 3px;
       z-index: 1;
@@ -388,6 +893,7 @@ onMounted(() => {
     }
 
     .profile-pic-frame {
+      // background-image: url(../assets/images/common/profile-frame.png);
       width: 70px;
       height: 70px;
       background-size: 100%;
@@ -400,7 +906,92 @@ onMounted(() => {
       display: flex;
       flex-direction: column;
       font-size: 16px;
+      width: 100%;
     }
+    .gift-notifications {
+      background: #0000000f;
+
+      display: flex;
+      border-radius: 10px;
+      padding: 5px;
+      margin: 0;
+
+      .vertical-separator {
+        width: 1px;
+        background-color: #907c5f;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      .notification-wrapper {
+        height: 20px;
+        width: 20px;
+        // padding-right: 20px;
+        // border-right: 1px solid #ffffff33;
+        img {
+          height: 20px;
+          width: 20px;
+        }
+        :deep(.q-badge--floating) {
+          top: 2px;
+          right: 2px;
+        }
+        .bell-badge {
+          background: #e30000;
+          color: #fff;
+        }
+      }
+      .gift-wrapper {
+        height: 20px;
+        width: 20px;
+        // padding-left: 20px;
+
+        img {
+          height: 20px;
+          width: 20px;
+        }
+        :deep(.q-badge--floating) {
+          top: 2px;
+          right: -4px;
+        }
+        .gift-badge {
+          background: #e30000;
+          color: #fff;
+        }
+      }
+
+      .bell-badge,
+      .gift-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        padding: 0;
+      }
+    }
+    // .gift-wrapper {
+    //   background: rgba(0, 10, 1, 0.6);
+    //   // box-shadow: 0px 0px 5px 0px #ffffff4a inset;
+    //   border-radius: 8px;
+    //   position: relative;
+    //   border: none;
+    //   padding: 10px;
+    //   height: 40px;
+    //   width: 40px;
+
+    //   &:hover {
+    //     filter: brightness(1.2);
+    //   }
+
+    //   img {
+    //     max-width: 100%;
+    //   }
+
+    //   .gift-badge {
+    //     background: linear-gradient(90deg, #24ee89 0%, #9fe871 100%);
+    //     color: #fff;
+    //   }
+    // }
 
     .profile-name {
       display: flex;
@@ -431,32 +1022,68 @@ onMounted(() => {
     .profile-balance {
       position: relative;
       // background: rgba(255, 255, 255, 0.24);
-      background: rgba(103, 38, 154, 0.9);
-      border-radius: 24px;
+      // background: #192633;
+      // background: rgba(0, 10, 1, 0.6);
+      background: linear-gradient(270deg, rgba(206, 198, 174, 0.5) 0%, rgba(118, 103, 76, 0.5) 99.76%);
+
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      // margin-bottom: 10px;
-      padding-top: 2px;
-      padding-bottom: 2px;
-      min-width: 130px;
+      padding: 6px;
+      min-width: 100px;
       width: 100%;
-      height: 28px;
-      padding-left: 6px;
-      padding-right: 8px;
+      min-height: 35px;
+      border: 1px solid #76674c;
 
       font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
+      color: #fff;
       font-weight: bold;
+      // border: 1px solid #2c323b;
+      .promo-percentage {
+        position: absolute;
+        // background: #ff0000;
+        padding: 2px 2px 7px;
+        border-radius: 5px;
+        font-size: 8px;
+        right: 0;
+        top: 0;
+        z-index: 2000;
+        background: url(../assets/images/index/redpromo-bg.png) no-repeat center center;
+        background-size: contain;
+        width: 70px;
+        text-align: center;
+      }
 
       &:active {
         filter: brightness(0.75);
       }
 
+      .currency-amount {
+        color: #000000;
+        background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+        font-size: 12px;
+        font-weight: 700;
+        margin-right: 3px;
+        border-radius: 50%;
+        padding: 3px 5px;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 100%;
+        letter-spacing: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 16px;
+        vertical-align: middle;
+      }
+
       .balance-amount {
-        padding-right: 18px;
-        padding-left: 8px;
+        padding-right: 5px;
         white-space: nowrap;
+        width: 100%;
+        color: #433e38;
       }
     }
 
@@ -471,22 +1098,50 @@ onMounted(() => {
       }
     }
   }
+  .profile-menu {
+    display: flex;
+    // padding: 5px;
+    img {
+      display: block;
+      // width: 35px;
+      width: 30px;
+      height: 30px;
+    }
+  }
+  .profile-menu:not(:last-child) {
+    margin-right: 3px;
+  }
 
   .profile-wrapper-extra {
     display: flex;
     align-items: center;
-    padding-top: 10px;
-    margin-bottom: auto;
     // width: 100%;
+    // max-width: 45px;
+    // margin-left: 12px;
   }
 
   .logo-img {
     width: 100%;
     margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: -4%;
+    text-align: center;
+    > span {
+      background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
 
     img {
-      max-width: 90px;
-      width: 100%;
+      width: 32px;
       text-align: center;
     }
   }
@@ -500,14 +1155,14 @@ onMounted(() => {
   position: relative;
   margin-left: 20px;
   margin-bottom: 5px;
-  margin-top: -10px;
+  margin-top: -15px;
 
-  img {
+  img.bg {
     display: block;
-    width: 100px;
+    width: 45px;
     position: absolute;
-    top: -17px;
-    left: -45px;
+    top: -2px;
+    left: -25px;
   }
 
   .vip-level {
@@ -520,9 +1175,14 @@ onMounted(() => {
     padding-top: 3px;
     padding-bottom: 4px;
     z-index: 3;
-    color: #334ad6;
+    color: #ffffff;
     font-weight: 700;
     font-style: italic;
+    display: none;
+    img {
+      width: 68%;
+      margin-left: -7px;
+    }
   }
 }
 
@@ -534,13 +1194,18 @@ onMounted(() => {
 
 .btn-refresh {
   position: absolute;
-  top: 2px;
-  right: 10px;
+  right: 0px;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .style-blue-btn {
-  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+  background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
   border-radius: 5px;
+  // animation: blink 1.5s infinite;
+  box-shadow: 0px 1.13px 0px 0px #76674c;
 }
 
 .menu-line {
@@ -548,12 +1213,11 @@ onMounted(() => {
 }
 
 @media (max-width: 375px) {
-  .infoboard-container .profile-wrapper .profile-balance {
-    width: 100px;
-  }
+  // .infoboard-container .profile-wrapper .profile-balance {
+  // width: 100px;
+  // }
 
   .infoboard-container .profile-wrapper {
-    gap: 4px;
   }
 
   .infoboard-container .infoboard-wrapper.home-profile {
@@ -562,7 +1226,8 @@ onMounted(() => {
 }
 
 .message-amt {
-  background-color: #8952ff;
+  color: #323738;
+  background-color: #24ee89;
   border-radius: 30px;
   width: 20px;
   height: 20px;
@@ -572,8 +1237,8 @@ onMounted(() => {
   line-height: 1;
   font-size: 10px;
   position: absolute;
-  bottom: 5px;
-  left: 15px;
+  bottom: 13px;
+  left: 5px;
   font-weight: bold;
 }
 </style>
@@ -581,20 +1246,21 @@ onMounted(() => {
 <style lang="scss">
 .q-btn-dropdown--simple * + .q-btn-dropdown__arrow {
   margin-left: -12px !important;
+  display: none;
 }
 
 .q-btn-dropdown--simple {
-  width: 80px !important;
+  width: 50px !important;
 }
 
 .q-item__label {
-  color: #c5c7ff;
+  // color: #c5c7ff;
   font-weight: 500;
 }
 
 .q-avatar {
   i.q-icon {
-    color: #7b80a9;
+    color: #b3bec1;
   }
 }
 
@@ -615,15 +1281,26 @@ onMounted(() => {
   // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
 }
 
-.btn-lang {
-  display: flex;
-  width: 24px;
-  img {
-    display: block !important;
-    width: 24px !important;
-    filter: brightness(1.2) invert(20%) sepia(40%) saturate(200%) hue-rotate(280deg) brightness(130%) contrast(80%);
-    // filter: brightness(1) sepia(0) hue-rotate(0deg) saturate(1);
-    animation: hueBlink 1s infinite;
+@keyframes hueBlink {
+  0% {
+    filter: brightness(0) invert(100%) sepia(0%) saturate(3258%) hue-rotate(355deg) brightness(100%) contrast(100%);
+  }
+  100% {
+    filter: brightness(0) invert(40%) sepia(9%) saturate(510%) hue-rotate(355deg) brightness(95%) contrast(90%);
+  }
+}
+
+@keyframes blink {
+  0% {
+    filter: brightness(0.8) saturate(0.8) contrast(0.8);
+  }
+
+  50% {
+    filter: brightness(1.3) saturate(1) contrast(1);
+  }
+
+  100% {
+    filter: brightness(0.8) saturate(0.8) contrast(0.8);
   }
 }
 </style>

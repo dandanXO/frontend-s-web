@@ -86,24 +86,16 @@
         </div>
     </div>
 
-    <div class="block-wrapper">
-      <div class="title-wrapper">
+    <div style="height: 0px;">
+      <!-- <div class="title-wrapper">
         <img src="./img/N-rule-title.png" >
-        <!-- {{ $t("hotPromo.activityRules") }} -->
-        <!-- <img
+        {{ $t("hotPromo.activityRules") }}
+        <img
           style="width: 100%; max-width: 250px; padding: 0 0 5px 0"
           src="../../../assets/images/promotion/spin-lucky-wheel/wheel-stage/activity-rules-title.png"
-        /> -->
+        />
       </div>
       <ol>
-        <!-- <li>{{ $t("content.message1") }}</li>
-        <li>{{ $t("content.message2") }}</li>
-        <li>{{ $t("content.message3") }}</li>
-        <li>{{ $t("content.message4") }}</li>
-        <li>{{ $t("content.message5") }}</li>
-        <li>{{ $t("content.message6") }}</li>
-        <li>{{ $t("content.message7") }}</li>
-        <li>{{ $t("content.message8") }}</li> -->
         <li>Para cada 10 apostas feitas em jogos Aviator Game, os membros recebem uma rodada de roleta. Quanto mais apostar, maior será o número de rodadas para as quais se qualifica para receber;</li>
         <li>O número de rodadas de roleta é válido exclusivamente para o dia atual e reiniciado às 00:00, Hora do Brasil, todos os dias. A contagem será retomada no dia seguinte;</li>
         <li>Não há limitações quanto ao número de vezes que cada Membro pode participar diariamente nesta promoção. Os membros são elegíveis para participar diariamente nesta promoção durante todo o período da promoção;</li>
@@ -111,7 +103,7 @@
         <li>Os ganhos da Roleta requerem apenas uma aposta 1x para levantamento;</li>
         <li>Esta promoção destina-se exclusivamente a operações manuais realizadas pelo titular da conta. Qualquer divergência em relação às regras pode resultar no cancelamento, dedução ou congelamento do Bônus, ou pode levar à inclusão da conta em uma "Lista Negra";</li>
         <li>Para evitar eventuais mal-entendidos em relação ao texto, a plataforma reserva-se o direito de fazer a interpretação final desta promoção.</li>
-      </ol>
+      </ol> -->
     </div>
 
     <q-dialog v-model="showWithdrawDialog">

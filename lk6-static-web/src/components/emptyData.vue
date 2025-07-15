@@ -1,6 +1,6 @@
 <template>
 <div>
-<el-empty description="没有数据" :image-size="200" />
+<el-empty :description="$t('form.noData')" :image-size="200" />
 </div>
 </template>
 

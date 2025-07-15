@@ -4,38 +4,32 @@
     ref="loginRef"
     :rules="loginRules"
     :model="loginForm"
-    label-width="70"
+    label-width="80"
     size="large"
   >
     <div class="login-form-field">
       <img
         class="login-form-field-icon"
-        :src="
-          isDark
-            ? require('@/assets/home/auth/username-icon-dark.png')
-            : require('@/assets/home/auth/username-icon.png')
-        "
+        :src="require('@/assets/home/auth/username-icon.png')"
+        width="35px"
       />
 
-      <el-form-item label="用户名" prop="loginName">
-        <el-input v-model="loginForm.loginName" placeholder="请输入4-12位非汉字字符" clearable :disabled="isLoading" />
+      <el-form-item :label="$t('form.username')" prop="loginName">
+        <el-input v-model="loginForm.loginName" :placeholder="$t('form.loginNameRule01', {min: 4, max: 12})" clearable :disabled="isLoading" />
       </el-form-item>
     </div>
 
     <div class="login-form-field">
       <img
         class="login-form-field-icon"
-        :src="
-          isDark
-            ? require('@/assets/home/auth/password-icon-dark.png')
-            : require('@/assets/home/auth/password-icon.png')
-        "
+        :src="require('@/assets/home/auth/password-icon.png')"
+        width="35px"
       />
 
-      <el-form-item label="密码" prop="password">
+      <el-form-item :label="$t('form.password')" prop="password">
         <el-input
           v-model="loginForm.password"
-          placeholder="请输入6-12位字母/数字组合"
+          :placeholder="$t('form.passwordRule01', {min: 6, max: 12})"
           type="password"
           show-password
           clearable
@@ -43,53 +37,45 @@
         />
       </el-form-item>
     </div>
-
-    <div class="login-form-field geetest-captcha-form-field">
-      <img
-        class="login-form-field-icon"
-        :src="
-          isDark
-            ? require('@/assets/home/auth/verification-icon-dark.png')
-            : require('@/assets/home/auth/verification-icon.png')
-        "
-      />
-
-      <div class="geetest-captcha-wrapper">
-        <div class="geetest-captcha-label">
-          <span class="asterisk">*</span>
-          <span class="label-text">验证码</span>
-        </div>
-        <div id="captchaContainer"></div>
-      </div>
-    </div>
+    <div id="captchaContainer"></div>
 
     <div class="agreement-and-forget-pwd">
       <div class="agreement-text">
-        登录即代表同意并遵守
-        <span class="underline">《用户协议》</span>
+        {{ $t('form.acceptTermsAndConditions') }}
+        <span class="underline">《{{$t('form.userAgreement')}}》</span>
       </div>
-      <div><a class="forget-pwd-text" @click="openForgotpwdDialog">忘记密码</a></div>
+      <div>
+        <el-tooltip placement="top" effect="dark">
+          <template #content>
+            {{ $t('form.contactSupportForgetPassword') }}
+            <a @click="store.openLiveChat">{{ $t('form.contactSupport') }}</a>
+          </template>
+          <a class="forget-pwd-text">{{ $t('form.forgotPwd') }}</a>
+        </el-tooltip>
+      </div>
     </div>
 
-    <el-button :loading="isLoading" size="large" class="login-form-submit-btn" @click="submitLogin">登录</el-button>
+    <el-button :loading="isLoading" size="large" class="login-form-submit-btn" @click="submitLogin">{{ $t('btn.login') }}</el-button>
 
     <div class="register-hint">
-      <span class="no-acc">没有账号？</span>
-      <a class="go-reg" @click="openRegDialog">去注册</a>
+      <span class="no-acc">{{$t('form.dontHaveAcc')}}？</span>
+      <a class="go-reg" @click="openRegDialog">{{ $t('form.goCreateAcc') }}</a>
     </div>
+    <div id="login-captcha-box" />
   </el-form>
 </template>
 
 <script setup>
 import { reactive, ref, onMounted, defineEmits } from "vue";
-import { useDark } from "@vueuse/core";
 import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { useNotify } from "@/hooks/notify";
+import { useI18n } from "vue-i18n";
+import { getDevice } from "@/utils/utils";
 
+const { t } = useI18n();
 const props = defineProps(["pageType"]);
 
-const isDark = useDark();
 const loginRef = ref();
 const store = userStore();
 const isLoading = ref(false);
@@ -157,7 +143,8 @@ const closeLoginDialog = () => {
 };
 
 const openForgotpwdDialog = () => {
-  emits("open-forgotpwd-dialog");
+  store.openLiveChat();
+  // emits("open-forgotpwd-dialog");
 };
 
 const openRegDialog = () => {
@@ -173,54 +160,108 @@ const submitLogin = () => {
   isLoading.value = true;
   (async () => {
     const sidParam = store.visitorId;
+    const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
+    let rstUrl = localStorage.getItem("LK6_WEB_RST_URL") || process.env.VUE_APP_RST_API.split(",")[0];
+    // tianai captcha config
+    const config = {
+      // 生成接口 (必选项,必须配置, 要符合tianai-captcha默认验证码生成接口规范)
+      requestCaptchaDataUrl: `${rstUrl}/member/getCaptcha`,
+      // 验证接口 (必选项,必须配置, 要符合tianai-captcha默认验证码校验接口规范)
+      validCaptchaUrl: `${rstUrl}/member/login`,
+      // 验证码绑定的div块 (必选项,必须配置)
+      bindEl: "#login-captcha-box",
+      // 验证码类型, 登陆信息
+      loginData: {
+        loginName: loginForm.loginName,
+        password: loginForm.password,
+        sid: store.visitorId,
+        summoner: loginForm.summoner || null,
+        type: "SLIDER",
+        way: regDevice
+      },
+      translate: (code) => {
+        return t(`error.${code}`);
+      },
+      requestHeaders: {
+        Authorization: process.env.VUE_APP_SITE
+      },
+      // 验证成功回调函数(必选项,必须配置)
+      validSuccess: (res, c, tac) => {
+        // 销毁验证码服务
+        tac.destroyWindow();
+        console.log("验证成功，后端返回的数据为", res);
+        store.token = res.data;
+        store.getBalance();
+        store.getMemberInfo();
+        store.getUnreadMail();
+
+        const jumpUrl = route.query.redirect
+          ? route.query.redirect.toString()
+          : props.pageType === "view"
+          ? "/"
+          : route.path;
+
+        if (store.token) {
+          router.push(jumpUrl);
+          sessionStorage.removeItem("REFERRAL_CODE");
+          sessionStorage.removeItem("SUMMON_CODE");
+          sessionStorage.setItem("POPUP", "true");
+          loginForm.loginName = null;
+          loginForm.password = null;
+          loginForm.captchaCode = null;
+
+          closeLoginDialog();
+        }
+      },
+      // 验证失败的回调函数(可忽略，如果不自定义 validFail 方法时，会使用默认的)
+      validFail: (res, c, tac) => {
+        console.log("验证码验证失败回调...");
+
+        if (res.code === 800) {
+          // 验证失败后重新拉取验证码
+          tac.reloadCaptcha();
+        } else {
+          // 其他错误则关闭验证
+          tac.destroyWindow();
+        }
+      },
+      // 刷新按钮回调事件
+      btnRefreshFun: (el, tac) => {
+        console.log("刷新按钮触发事件...");
+        tac.reloadCaptcha();
+      },
+      // 关闭按钮回调事件
+      btnCloseFun: (el, tac) => {
+        console.log("关闭按钮触发事件...");
+        tac.destroyWindow();
+      }
+    };
+
+    // tianai captcha style
+    const style = {
+      logoUrl: 'https://lk6-web.psnaback.com/static/img/login-logo-left.3f98a6ca.png',
+      i18n: {
+        tips_error: t("tianaiCaptcha.tipsError"),
+        tips_success: t("tianaiCaptcha.tipsSuccess"),
+        slider_title: t("tianaiCaptcha.sliderTitle"),
+        concat_title: t("tianaiCaptcha.concatTitle"),
+        image_click_title: t("tianaiCaptcha.imageClickTitle"),
+        rotate_title: t("tianaiCaptcha.rotateTitle")
+      }
+    };
+
+
     loginRef.value
       .validate()
       .then(() => {
-        if (window.captchaObj) {
-          const validate = window.captchaObj.getValidate();
-          if (!validate) {
-            notify({
-              type: "error",
-              message: "请完成验证码"
-            });
-            return;
-          }
-
-          store
-            .memberLogin({
-              loginName: loginForm.loginName,
-              password: loginForm.password,
-              sid: sidParam,
-              summoner: loginForm.summoner,
-              lotNumber: loginForm.lot_number,
-              captchaOutput: loginForm.captcha_output,
-              passToken: loginForm.pass_token,
-              genTime: loginForm.gen_time
-            })
-            .then(() => {
-              const jumpUrl = route.query.redirect
-                ? route.query.redirect.toString()
-                : props.pageType === "view"
-                ? "/"
-                : route.path;
-
-              if (store.token) {
-                router.push(jumpUrl);
-
-                sessionStorage.removeItem("REFERRAL_CODE");
-                sessionStorage.removeItem("SUMMON_CODE");
-                sessionStorage.setItem("POPUP", "true");
-                loginForm.loginName = null;
-                loginForm.password = null;
-                loginForm.captchaCode = null;
-
-                closeLoginDialog();
-              }
-            })
-            .catch((error) => {
-              console.log(error.message);
-            });
-        }
+        window
+          .initTAC("./tac", config, style)
+          .then((tac) => {
+            tac.init();
+          })
+          .catch((error) => {
+            console.log("initTAC fail:", error);
+          });
       })
       .catch(() => {});
     isLoading.value = false;
@@ -236,31 +277,31 @@ const getSummonCode = () => {
 };
 
 onMounted(async () => {
-  try {
-    // Step 1: Load Geetest script
-    await loadScript("https://static.geetest.com/v4/gt4.js");
+  // try {
+  //   // Step 1: Load Geetest script
+  //   await loadScript("https://static.geetest.com/v4/gt4.js");
 
-    // Step 2: Call your backend to get Geetest configuration (fake config for demo)
-    const geetestConfig = {
-      config: {
-        captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
-        language: "zh",
-        nativeButton: {
-          width: "100%",
-          height: "48px"
-        },
-        nextWidth: "200px",
-        product: "float"
-      },
-      handler: captchaHandler
-    };
+  //   // Step 2: Call your backend to get Geetest configuration (fake config for demo)
+  //   const geetestConfig = {
+  //     config: {
+  //       captchaId: "49cbcb1424a170f03f8c38648a1b2b31",
+  //       language: "zh",
+  //       nativeButton: {
+  //         width: "100%",
+  //         height: "48px"
+  //       },
+  //       nextWidth: "200px",
+  //       product: "float"
+  //     },
+  //     handler: captchaHandler
+  //   };
 
-    // Step 3: Initialize Geetest with the config
-    await initGeetest(geetestConfig);
-  } catch (error) {
-    message.value = "Error loading Geetest!";
-    console.error("Geetest loading error:", error);
-  }
+  //   // Step 3: Initialize Geetest with the config
+  //   await initGeetest(geetestConfig);
+  // } catch (error) {
+  //   message.value = "Error loading Geetest!";
+  //   console.error("Geetest loading error:", error);
+  // }
 
   getSummonCode();
 });
@@ -269,26 +310,26 @@ const loginRules = {
   loginName: [
     {
       required: true,
-      message: "请输入用户名",
+      message: t('form.pleaseEnterField', {field: t('form.username')}),
       trigger: "blur"
     },
     {
       min: 4,
       max: 12,
-      message: "长度要在 4-12 之间",
+      message: t('form.lengthMustBeBetween', {min:4, max:12}),
       trigger: "blur"
     }
   ],
   password: [
     {
       required: true,
-      message: "请输入密码",
+      message: t('form.pleaseEnterField', {field: t('form.password')}),
       trigger: "blur"
     },
     {
       min: 6,
       max: 12,
-      message: "长度要在 6-12 之间",
+      message: t('form.lengthMustBeBetween', {min:6, max:12}),
       trigger: "blur"
     }
   ]
@@ -305,17 +346,17 @@ const loginRules = {
   .login-form-field {
     display: grid;
     grid-template-columns: 40px 1fr;
-    padding: 8px 15px;
+    padding: 0px 15px;
     justify-content: center;
     align-items: center;
     gap: 10px;
     position: relative;
     width: 100%;
-    border: 1px solid rgba(217, 217, 217, 0.3);
-    border-radius: 15px;
+    border-radius: 30px;
     font-size: 14px;
-    background-color: #f7f8fb;
-    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+    background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
+    box-shadow: 0px 2px 2px 0px #FFFFFFCC inset, 0px 2px 0px 0px #C6D9FF;
+
 
     .login-form-field-icon {
       margin: auto;
@@ -385,7 +426,7 @@ const loginRules = {
           }
 
           .label-text {
-            font-size: 14px;
+            font-size: 12px;
           }
         }
       }
@@ -393,11 +434,13 @@ const loginRules = {
   }
 
   .login-form-submit-btn {
-    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
     color: #fff;
+    background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94C3FF 0%, #4B91F5 100%);
+    border: 1px solid #FFFFFF;
+    box-shadow: 0px 2px 0px 0px #9AB0FF70;
     font-size: 14px;
-    border-radius: 8px;
+    border-radius: 30px;
+    font-family: "Poppins", "PingFang SC", sans-serif;
 
     &:hover {
       filter: brightness(1.1);
@@ -407,6 +450,7 @@ const loginRules = {
   .agreement-and-forget-pwd {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
 
     .agreement-text {
       color: #555;
@@ -422,78 +466,48 @@ const loginRules = {
 
     .underline {
       text-decoration: underline;
+      color: #5F8AEE;
     }
   }
 
   .register-hint {
     display: flex;
-    justify-content: flex-end;
-  }
-}
-
-.dark {
-  .login-form-dialog-form {
-    .login-form-field {
-      background-color: #273354;
-      box-shadow: none;
-
-      .login-form-field-icon {
-        width: 25px;
-      }
-
-      :deep(.el-form-item__label) {
-        color: #fff;
-      }
-
-      &.geetest-captcha-form-field {
-        .geetest-captcha-wrapper {
-          .geetest-captcha-label {
-            width: 130px;
-
-            .asterisk {
-              color: #e2676a;
-              margin-right: 4px;
-            }
-
-            .label-text {
-              font-size: 14px;
-              color: #fff;
-            }
-          }
-        }
-      }
-    }
-
-    .agreement-and-forget-pwd {
-      .agreement-text {
-        color: #a98f7c;
-      }
-
-      .forget-pwd-text {
-        color: #a98f7c;
-      }
-    }
-  }
-
-  .login-form-submit-btn {
-    background: url("../../../assets/home/auth/login-btn-bg.svg") no-repeat center center;
-    background-size: cover;
-    box-shadow: none;
-    border-radius: 6px;
-    border: 1px solid #3a93ce;
-    margin-top: 20px;
-  }
-
-  .register-hint {
     justify-content: center;
-
-    .no-acc {
-      color: #a98f7c;
-    }
-
-    .go-reg {
-      color: #3a93ce;
-    }
   }
 }
+
+#login-captcha-box {
+  position: fixed;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>
+
+
+<style lang="scss">
+  .el-overlay:has(.acc-dialog) {
+    background: url("@/assets/home/auth/login-page-bg.jpg");
+    background-size: 100% auto;
+
+    .el-tabs__nav-wrap:after {
+      display: none;
+    }
+
+    .el-form-item__label {
+      font-size: 12px;
+    }
+  }
+
+  .acc-dialog {
+    .el-dialog__header.show-close {
+      padding: 0;
+    }
+
+    .el-input__wrapper {
+      box-shadow: none !important;
+      background: none !important;
+    }
+  }
 </style>

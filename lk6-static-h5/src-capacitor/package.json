@@ -1,8 +1,8 @@
 {
-  "name": "东赢",
-  "version": "1.0.22",
-  "description": "东赢官网 - 最专业的竞猜网站",
-  "productName": "东赢",
+  "name": "幸运6",
+  "version": "1.0.1",
+  "description": "幸运6官网 - 最专业的竞猜网站",
+  "productName": "幸运6",
   "author": "WeiSeng <weiseng@eagrp.net>",
   "private": true,
   "scripts": {

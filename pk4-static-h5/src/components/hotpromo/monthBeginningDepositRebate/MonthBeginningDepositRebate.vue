@@ -74,20 +74,6 @@
       </table>
     </div>
 
-    <div class="rule-title-container">
-      <img src="./../../../assets/images/promotion/hotpromo/month-beginning-deposit-rebate/title-left.png" />
-      <div>{{ $t("hotPromo.monthBeginningDepositRebate.rule_title") }}</div>
-      <img src="./../../../assets/images/promotion/hotpromo/month-beginning-deposit-rebate/title-right.png" />
-    </div>
-
-    <ul class="rule_list">
-      <li>
-        {{ $t("hotPromo.monthBeginningDepositRebate.rule_01") }}
-      </li>
-      <li>
-        {{ $t("hotPromo.monthBeginningDepositRebate.rule_02") }}
-      </li>
-    </ul>
   </div>
 </template>
 
@@ -97,7 +83,6 @@ import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import i18n from "src/i18n/index";
 
 const props= defineProps(["promocode"])
 
@@ -138,7 +123,7 @@ const claimApi = () => {
       });
     } else {
       $q.notify({
-        message: i18n.global.t("error." + res.code) || "Error",
+        message: res.message || "Error",
         color: "negative",
         position: "top",
         timeout: 2000
@@ -165,6 +150,7 @@ const initApi = () => {
     }
   });
 }
+
 
 onMounted(() => {
   initApi();
@@ -196,7 +182,7 @@ onMounted(() => {
   justify-content: center;
   // margin: 28px 0;
   
-    margin: 28px 20px;
+    margin: 28px 20px 0;
 
   .big-rebate-title-container {
     position: absolute;

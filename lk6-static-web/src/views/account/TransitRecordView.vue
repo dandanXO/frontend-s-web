@@ -2,15 +2,15 @@
 <template>
   <div class="transaction-container">
     <div class="menu-title-container">
-      <span class="menu-title">交易记录</span>
+      <span class="menu-title">{{ $t('menu.transactionRecords') }}</span>
     </div>
     <div class="account-content transit">
       <el-tabs v-model="recordActive" @tab-click="searchRecord" type="card">
-        <el-tab-pane name="deposit" label="存款记录">
+        <el-tab-pane name="deposit" :label="$t('menu.depositRecords')">
           <div>
             <el-form layout="inline" :model="searchForm.deposit">
               <div class="left">
-                <el-form-item label="开始">
+                <el-form-item :label="$t('form.startDate')">
                   <el-date-picker
                     :clearable="false"
                     v-model="searchForm.deposit.startDate"
@@ -18,7 +18,7 @@
                     placeholder=""
                   />
                 </el-form-item>
-                <el-form-item label="结束">
+                <el-form-item :label="$t('form.endDate')">
                   <el-date-picker
                     :clearable="false"
                     v-model="searchForm.deposit.endDate"
@@ -27,7 +27,7 @@
                   />
                 </el-form-item>
                 <el-form-item class="search">
-                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">{{ $t('btn.search') }}</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -42,7 +42,7 @@
                 v-for="tbl in tableColumns.deposit"
                 :key="tbl.key"
                 :prop="tbl.dataIndex"
-                :label="tbl.title"
+                :label="$t(`table.deposit.${tbl.dataIndex}`)"
               >
                 <template v-if="tbl.dataIndex === 'depositDate'" #default="scope">
                   <div style="display: flex; align-items: center">
@@ -64,7 +64,7 @@
                 <template v-if="tbl.dataIndex === 'operation'" #default="scope">
                   <template v-if="scope.row.status === 'PENDING'">
                     <div style="display: flex; align-items: center">
-                      <el-button size="small" class="common-btn" @click="openReminder(scope.row)">催单</el-button>
+                      <el-button size="small" class="common-btn" @click="openReminder(scope.row)">{{ $t('btn.followUp') }}</el-button>
                     </div>
                   </template>
                 </template>
@@ -79,11 +79,11 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="turnover" label="账变记录">
+        <el-tab-pane name="turnover" :label="$t('menu.accountActivityLog')">
           <div>
             <el-form layout="inline" :model="searchForm.turnover">
               <div class="left">
-                <el-form-item label="开始">
+                <el-form-item :label="$t('form.startDate')">
                   <el-date-picker
                     :clearable="false"
                     v-model="searchForm.turnover.startDate"
@@ -91,7 +91,7 @@
                     placeholder=""
                   />
                 </el-form-item>
-                <el-form-item label="结束">
+                <el-form-item :label="$t('form.endDate')">
                   <el-date-picker
                     :clearable="false"
                     v-model="searchForm.turnover.endDate"
@@ -100,7 +100,7 @@
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">{{ $t('btn.search') }}</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -116,7 +116,7 @@
                 v-for="tbl in tableColumns.turnover"
                 :key="tbl.key"
                 :prop="tbl.dataIndex"
-                :label="tbl.title"
+                :label="$t(`table.turnover.${tbl.dataIndex}`)"
               >
                 <template v-if="tbl.dataIndex === 'platform'" #default="scope">
                   <div style="display: flex; align-items: center">
@@ -152,11 +152,11 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="withdraw" label="提款记录">
+        <el-tab-pane name="withdraw" :label="$t('menu.withdrawRecords')">
           <div>
             <el-form layout="inline" :model="searchForm.withdraw">
               <div class="left">
-                <el-form-item label="开始">
+                <el-form-item :label="$t('form.startDate')">
                   <el-date-picker
                     :clearable="false"
                     v-model="searchForm.withdraw.startDate"
@@ -164,7 +164,7 @@
                     placeholder=""
                   />
                 </el-form-item>
-                <el-form-item label="结束">
+                <el-form-item :label="$t('form.endDate')">
                   <el-date-picker
                     :clearable="false"
                     v-model="searchForm.withdraw.endDate"
@@ -173,7 +173,7 @@
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">{{ $t('btn.search') }}</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -201,7 +201,7 @@
                 v-for="tbl in tableColumns.withdraw"
                 :key="tbl.key"
                 :prop="tbl.dataIndex"
-                :label="tbl.title"
+                :label="$t(`table.withdraw.${tbl.dataIndex}`)"
               >
                 <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
@@ -211,14 +211,14 @@
 
                 <template v-if="tbl.dataIndex === 'status'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.statusName }}</span>
+                    <span>{{ scope.row.statusName === 'FAIL' ? $t('form.fail') :  scope.row.statusName }}</span>
                   </div>
                 </template>
 
                 <template v-if="tbl.dataIndex === 'operation'" #default="scope">
                   <template v-if="scope.row.status === 'STEP_1'">
                     <div style="display: flex; align-items: center">
-                      <el-button size="small" class="common-btn" @click="openReminder(scope.row)">催单</el-button>
+                      <el-button size="small" class="common-btn" @click="openReminder(scope.row)">{{ $t('btn.followUp') }}</el-button>
                     </div>
                   </template>
 
@@ -230,7 +230,7 @@
                         class="common-btn cancel"
                         @click="openWithdrawCancel(scope.row)"
                       >
-                        取消
+                        {{ $t('btn.cancel') }}
                       </el-button>
                     </div>
                   </template>
@@ -244,7 +244,7 @@
                   >
                     <div style="display: flex; align-items: center">
                       <el-button size="small" class="common-btn" @click="openWithdrawConfirm(scope.row)">
-                        确认到账
+                        {{ $t('btn.confirmPayment') }}
                       </el-button>
                     </div>
                   </template>
@@ -261,7 +261,7 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="transfer" label="转账记录">
+        <!-- <el-tab-pane name="transfer" label="转账记录">
           <div>
             <el-form layout="inline" :model="searchForm.transfer">
               <div class="left">
@@ -330,12 +330,12 @@
               :page-size="searchForm[recordActive].size"
             />
           </div>
-        </el-tab-pane>
-        <el-tab-pane name="rebates" label="优惠记录">
+        </el-tab-pane> -->
+        <el-tab-pane name="rebates" :label="$t('menu.promoRecords')">
           <div>
             <el-form layout="inline" :model="searchForm.rebates">
               <div class="left">
-                <el-form-item label="开始">
+                <el-form-item :label="$t('form.startDate')">
                   <el-date-picker
                     :clearable="false"
                     v-model="searchForm.rebates.startDate"
@@ -343,7 +343,7 @@
                     placeholder=""
                   />
                 </el-form-item>
-                <el-form-item label="结束">
+                <el-form-item :label="$t('form.endDate')">
                   <el-date-picker
                     :clearable="false"
                     v-model="searchForm.rebates.endDate"
@@ -352,7 +352,7 @@
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">{{ $t('btn.search') }}</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -367,7 +367,7 @@
                 v-for="tbl in tableColumns.rebates"
                 :key="tbl.key"
                 :prop="tbl.dataIndex"
-                :label="tbl.title"
+                :label="$t(`table.rebates.${tbl.dataIndex}`)"
               >
                 <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
@@ -397,25 +397,25 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="gameBetRecord" label="投注记录">
+        <el-tab-pane name="gameBetRecord" :label="$t('menu.betRecords')">
           <div class="payout-total">
-            <div>总投注：{{ totalBetRecord.totalBet }}</div>
-            <div>总派彩：{{ totalBetRecord.totalPayout }}</div>
-            <div>总有效投注：{{ totalBetRecord.totalValidBet }}</div>
+            <div>{{$t('form.totalBet')}}：{{ totalBetRecord.totalBet }}</div>
+            <!-- <div>总派彩：{{ totalBetRecord.totalPayout }}</div> -->
+            <!-- <div>总有效投注：{{ totalBetRecord.totalValidBet }}</div> -->
           </div>
           <div>
             <el-form layout="inline" :model="searchForm.gameBetRecord">
               <div class="left">
-                <el-form-item label="平台">
+                <el-form-item :label="$t('form.platforms')">
                   <el-select
                     clearable
                     style="width: 200px"
                     v-model="searchForm.gameBetRecord.platformName"
-                    placeholder="平台"
+                    :placeholder="$t('form.platforms')"
                     @change="searchRecord"
                     value-key="code"
                   >
-                    <el-option key="" label="-全部平台-" value="">-</el-option>
+                    <el-option key="" :label="`-${$t('form.allPlatforms')}-`" value="">-</el-option>
                     <el-option
                       v-for="p in platformsList"
                       :label="p.alias"
@@ -424,7 +424,7 @@
                     />
                   </el-select>
                 </el-form-item>
-                <el-form-item label="开始">
+                <el-form-item :label="$t('form.startDate')">
                   <el-date-picker
                     :clearable="false"
                     v-model="searchForm.gameBetRecord.startDate"
@@ -432,7 +432,7 @@
                     placeholder=""
                   />
                 </el-form-item>
-                <el-form-item label="结束">
+                <el-form-item :label="$t('form.endDate')">
                   <el-date-picker
                     :clearable="false"
                     v-model="searchForm.gameBetRecord.endDate"
@@ -441,7 +441,7 @@
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">{{ $t('btn.search') }}</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -466,13 +466,13 @@
                 v-for="tbl in tableColumns.gameBetRecord"
                 :key="tbl.key"
                 :prop="tbl.dataIndex"
-                :label="tbl.title"
+                :label="$t(`table.gameBetRecord.${tbl.dataIndex}`)"
               >
                 <template v-if="tbl.dataIndex === 'betId'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <el-tooltip class="box-item" effect="dark" :content="scope.row.betId" placement="top-start">
                       <a @click="copy(scope.row.betId)">
-                        复制
+                        {{ $t('btn.copy') }}
                         <span style="color: black">{{ scope.row.betId.slice(0, 1) }}...</span>
                       </a>
                     </el-tooltip>
@@ -530,11 +530,11 @@
             />
           </div>
         </el-tab-pane>
-        <el-tab-pane name="reminderRecord" label="催单记录">
+        <el-tab-pane name="reminderRecord" :label="$t('menu.followUpRecords')">
           <div>
             <el-form layout="inline" :model="searchForm.reminderRecord">
               <div class="left">
-                <el-form-item label="开始">
+                <el-form-item :label="$t('form.startDate')">
                   <el-date-picker
                     :clearable="false"
                     v-model="searchForm.reminderRecord.startDate"
@@ -542,7 +542,7 @@
                     placeholder=""
                   />
                 </el-form-item>
-                <el-form-item label="结束">
+                <el-form-item :label="$t('form.endDate')">
                   <el-date-picker
                     :clearable="false"
                     v-model="searchForm.reminderRecord.endDate"
@@ -551,7 +551,7 @@
                   />
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="success" class="common-btn" @click="searchRecord">搜索</el-button>
+                  <el-button type="success" class="common-btn" @click="searchRecord">{{ $t('btn.search') }}</el-button>
                 </el-form-item>
               </div>
             </el-form>
@@ -566,7 +566,7 @@
                 v-for="tbl in tableColumns.reminderRecord"
                 :key="tbl.key"
                 :prop="tbl.dataIndex"
-                :label="tbl.title"
+                :label="$t(`table.reminderRecord.${tbl.dataIndex}`)"
               >
                 <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
@@ -576,7 +576,7 @@
 
                 <template v-if="tbl.dataIndex === 'type'" #default="scope">
                   <div style="display: flex; align-items: center">
-                    <span>{{ scope.row.type === 1 ? "存款" : "提款" }}</span>
+                    <span>{{ scope.row.type === 1 ? $t('menu.deposit') : $t('menu.withdraw') }}</span>
                   </div>
                 </template>
               </el-table-column>
@@ -624,7 +624,7 @@
 
       <el-dialog
         v-model="reminderDialog"
-        title="催单"
+        :title="$t('form.followUp')"
         width="50%"
         align-center
         style="max-width: 800px"
@@ -645,15 +645,15 @@
               <el-input v-model="reminderForm.orderNo" placeholder="单号" disabled />
             </el-form-item>
 
-            <el-form-item label="选择图片" prop="photos">
+            <el-form-item :label="$t('form.selectImage')" prop="photos">
               <FileUpload @photo-response="getImageLink" ref="uploadFileRef" />
             </el-form-item>
 
-            <el-form-item label="备注" prop="remarks">
+            <el-form-item :label="$t('form.remark')" prop="remarks">
               <el-input
                 type="textarea"
                 v-model="reminderForm.memberRemark"
-                placeholder="备注"
+                :placeholder="$t('form.remark')"
                 :rows="2"
                 :autosize="{ minRows: 2, maxRows: 5 }"
               />
@@ -667,7 +667,7 @@
               :loading="loadingBtn"
               @click="submitReminder()"
             >
-              提交
+              {{ $t('btn.submit') }}
             </el-button>
           </el-form>
         </span>
@@ -694,6 +694,8 @@ import FileUpload from "@/components/FileUpload.vue";
 import EmptyData from "@/components/emptyData.vue";
 import { useRoute } from "vue-router";
 import { useNotify } from "@/hooks/notify";
+import i18n from '../../i18n'
+import { useI18n } from "vue-i18n";
 
 const notify = useNotify()
 
@@ -704,7 +706,7 @@ const copy = (text) => {
   el.select();
   document.execCommand("copy");
   document.body.removeChild(el);
-  notify.success("已复制");
+  notify.success(i18n.global.t('message.copied'));
 };
 const loadingBtn = ref(false);
 const store = userStore();
@@ -916,7 +918,7 @@ const tableColumns = {
     },
     {
       title: "游戏平台",
-      dataIndex: "alias"
+      dataIndex: "platform"
     },
     {
       title: "投注",
@@ -1031,6 +1033,7 @@ export default defineComponent({
   },
   name: "TransitRecordView",
   setup() {
+    const { t } = useI18n();
     const searchRecord = (tab) => {
       // console.log(tab)
       console.log(searchForm[recordActive.value]);
@@ -1096,9 +1099,9 @@ export default defineComponent({
             }
 
             if (recordActive.value === "gameBetRecord") {
-              totalBetRecord.totalBet = response.data.sums.totalBet;
-              totalBetRecord.totalPayout = response.data.sums.totalPayout;
-              totalBetRecord.totalValidBet= response.data.sums.totalValidBet;
+              totalBetRecord.totalBet = response.data.total;
+              // totalBetRecord.totalPayout = response.data.sums.totalPayout;
+              // totalBetRecord.totalValidBet= response.data.sums.totalValidBet;
             }
 
             const dataSource = dataState[recordActive.value];
@@ -1491,18 +1494,18 @@ export default defineComponent({
         return "";
       }
       if (type === "WITHDRAW_FAIL") {
-        return "转账失败";
+        return t('form.statusIsTransferFailed');
       }
       if (subType === "DEPOSIT") {
-        return "转进"; // 转进
+        return t('form.statusIsTransferIn'); // 转进
       } else if (subType === "WITHDRAW") {
-        return "转出"; // 转出
+        return t('form.statusIsTransferOut'); // 转出
       } else if (type === "WITHDRAW") {
-        return "转出"; // 转出
+        return t('form.statusIsTransferOut'); // 转出
       } else if (type === "DEPOSIT") {
-        return "转进"; // 转出
+        return t('form.statusIsTransferIn'); // 转出
       }else if (type === "VIP_REBATE"|| subType === "VIP_REBATE"){
-        return "VIP 返水"; // VIP 返水
+        return t('form.statusIsVipRebate'); // VIP 返水
       } else {
         return subType;
       }
@@ -1538,13 +1541,13 @@ export default defineComponent({
         return "";
       }
       if (depositStatus === "PENDING") {
-        return "支付中"; // Pending
+        return t('form.statusIsPaymentOngoing'); // Pending
       } else if (depositStatus === "SUCCESS") {
-        return "成功"; // Success
+        return t('form.statusIsPaymentSuccess'); // Success
       } else if (depositStatus === "SUPPLEMENT_SUCCESS") {
-        return "成功"; // Supplement Success
+        return t('form.statusIsPaymentSuccess'); // Supplement Success
       } else if (depositStatus === "CLOSED") {
-        return "关闭"; // Closed
+        return t('form.statusIsPaymentClosed'); // Closed
       } else {
         return depositStatus;
       }
@@ -1604,11 +1607,11 @@ export default defineComponent({
       if (gameType === "SLOT") {
         return "电子"; // Slot
       } else if (gameType === "LIVE") {
-        return "真人"; // Live
+        return t('menu.live'); // Live
       } else if (gameType === "FISH") {
         return "捕鱼"; // Fish
       } else if (gameType === "SPORT") {
-        return "体育"; // Sport
+        return t('menu.sport'); // Sport
       } else if (gameType === "ESPORT") {
         return "电竞"; // E-Sport
       } else if (gameType === "POKER") {
@@ -1625,17 +1628,17 @@ export default defineComponent({
         return "";
       }
       if (betStatus === "BET") {
-        return "投注"; // Bet
+        return t('form.statusIsBet'); // Bet
       } else if (betStatus === "SETTLE") {
-        return "结算"; // Settle
+        return t('form.statusIsSettle'); // Settle
       } else if (betStatus === "SETTLED") {
-        return "已结算"; // Bet & Settled
+        return t('form.statusIsSettled'); // Bet & Settled
       } else if (betStatus === "BET_N_SETTLE") {
-        return "投注并结算"; // Bet & Settled
+        return t('form.statusIsBetNSettle'); // Bet & Settled
       } else if (betStatus === "CANCEL") {
-        return "取消"; // Cancel
+        return t('form.statusIsCancelled'); // Cancel
       } else if (betStatus === "PATCH") {
-        return "修补"; // Patch
+        return t('form.statusIsPatched'); // Patch
       } else {
         return betStatus;
       }

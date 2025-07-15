@@ -205,6 +205,8 @@
     "title": "Please enter title",
     "content": "Please enter content",
     "usernamereq": "Please enter username",
+    "no_special_characters": "Username must be a combination of alphabets and numbers",
+    "username_cannot_start_with_0": "Username cannot start with 0",
     "passwordreq": "Please enter password",
     "username": "Account name is 6-11 characters",
     "password": "Password is 6-11 characters",

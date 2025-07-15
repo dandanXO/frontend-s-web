@@ -18,7 +18,7 @@ const routes = [
   {
     path: "/register",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", name: "RegisterPage", component: () => {} }]
+    children: [{ path: "", component: () => import("pages/RegisterPage.vue") }]
   },
   {
     path: "/forgot-account",
@@ -79,6 +79,17 @@ const routes = [
         path: "",
         name: "slot",
         component: () => import("pages/games/SlotView.vue")
+      }
+    ]
+  },
+  {
+    path: "/baccarat",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "baccarat",
+        component: () => import("pages/games/BaccaratView.vue")
       }
     ]
   },
@@ -440,6 +451,17 @@ const routes = [
       {
         path: "",
         component: () => import("pages/finance/WithdrawView.vue")
+      }
+    ],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/withdraw/crypto",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        component: () => import("pages/account/BindCryptoView.vue")
       }
     ],
     meta: { requiresAuth: true }

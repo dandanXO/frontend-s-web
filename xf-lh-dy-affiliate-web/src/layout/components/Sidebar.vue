@@ -227,7 +227,7 @@ const checkMenu = nav => {
   })
 }
 const getNavigationData = () => {
-  if (parseInt(store.state.user.siteId) === 5 || parseInt(store.state.user.siteId) === 28) {
+  if (parseInt(store.state.user.siteId) === 5 || parseInt(store.state.user.siteId) === 28 || parseInt(store.state.user.siteId) === 18) {
     navigationData.value = [
       {
         title: t('menu.Daily Report'),

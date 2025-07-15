@@ -66,7 +66,7 @@
                 </div>
               </div>
             </div> -->
-            <template v-if="displayFields.includes('cardNumber')">
+            <template v-if="displayFields.includes('cardAddress')">
               <div v-if="currentCardType === 'Bank'" class="input-wrapper">
                 <div class="input-title">{{ accountTypeStr }}</div>
                 <!-- :type="['phone', 'cpf', 'cnpj'].includes(selectedOption) ? 'number' : 'text'" -->
@@ -77,9 +77,9 @@
                   class="q-pb-xs dialog-input"
                   hide-bottom-space
                   filled
-                  v-model="bankCardField.cardNumber"
+                  v-model="bankCardField.cardAddress"
                   :placeholder="t('form.phone_placeholder')"
-                  :rules="[(_) => isValidCardNumber()]"
+                  :rules="[(_) => isValidCardAddress()]"
                   label-color="secondary"
                 >
                   <template v-slot:prepend>
@@ -111,7 +111,7 @@
                   class="q-pb-xs dialog-input"
                   hide-bottom-space
                   filled
-                  v-model="bankCardField.cardNumber"
+                  v-model="bankCardField.cardAddress"
                   :placeholder="t('form.cryptoAccount_placeholder')"
                   :rules="[
                     (val) => (val && val.length > 0) || $t('form.cryptoAccount_rules_01'),
@@ -124,19 +124,19 @@
               </div>
             </template>
 
-            <div v-if="displayFields.includes('cardAddress')" class="input-wrapper">
+            <div v-if="displayFields.includes('cardNumber')" class="input-wrapper">
               <div class="input-title">{{ $t("form.cpf") }}</div>
               <!-- :type="['phone', 'cpf', 'cnpj'].includes(selectedOption) ? 'number' : 'text'" -->
               <q-input
                 type="number"
                 standout
-                ref="refBankCardAddress"
+                ref="refBankCardNumber"
                 class="q-pb-xs dialog-input"
                 hide-bottom-space
                 filled
-                v-model="bankCardField.cardAddress"
+                v-model="bankCardField.cardNumber"
                 :placeholder="t('form.cpf_placeholder')"
-                :rules="[(_) => isValidCardAddress()]"
+                :rules="[(_) => isValidCardNumber()]"
                 label-color="secondary"
               >
                 <template v-slot:prepend>
@@ -399,27 +399,27 @@ const isValidLastName = () => {
   return result;
 };
 
-const isValidCardNumber = () => {
-  const { cardNumber } = bankCardField;
+const isValidCardAddress = () => {
+  const { cardAddress } = bankCardField;
   let result = true;
 
-  result = !cardNumber ? t("form.phone_rules_01") : true;
+  result = !cardAddress ? t("form.phone_rules_01") : true;
 
-  const digitCount = cardNumber.match(/\d/g)?.length || 0;
+  const digitCount = cardAddress.match(/\d/g)?.length || 0;
   if (digitCount < 8 || digitCount > 11) {
     return t("form.phone_rules_02");
   }
 
-  if (!/^[0-9]*$/.test(cardNumber)) {
+  if (!/^[0-9]*$/.test(cardAddress)) {
     return t("form.phone_rules_04");
   }
 
   return result;
 };
 
-const isValidCardAddress = () => {
-  const { cardAddress } = bankCardField;
-  const result = !cardAddress ? t("form.cpf_rules_01") : cardAddress.length !== 11 ? t("form.cpf_rules_02") : true;
+const isValidCardNumber = () => {
+  const { cardNumber } = bankCardField;
+  const result = !cardNumber ? t("form.cpf_rules_01") : cardNumber.length !== 11 ? t("form.cpf_rules_02") : true;
   return result;
 };
 
@@ -457,8 +457,8 @@ const addCard = () => {
   const formData = { ...bankCardField };
 
   // if (selectedOption.value === "phone") {
-  if (!formData.cardNumber.startsWith("+55")) {
-    formData.cardNumber = `+55${formData.cardNumber}`;
+  if (!formData.cardAddress.startsWith("+55")) {
+    formData.cardAddress = `+55${formData.cardAddress}`;
   }
   // }
 

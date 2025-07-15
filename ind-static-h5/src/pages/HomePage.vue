@@ -1166,7 +1166,7 @@ import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
-import moment from 'moment';
+import {isAndroid } from "src/boot/utils"
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
 import "swiper/css";
@@ -1216,6 +1216,10 @@ const gotoFloatPromo = (val) => {
     } else {
       router.push("/promo");
     }
+  }
+
+  if(val.type ==='VIDEO'){
+    window.open(ui.downloadUrl);
   }
 
   if (val.type === "DOMAIN") {
@@ -2638,14 +2642,19 @@ const checkSpinLuckyWheelPromo = async () => {
 
 
 const checkHbPromo = () => {
+  const apiUrl = store.hasToken() ? "/session/loggedInRedirect" : "/redirect";
   api
-    .get("/redirect")
+    .get(apiUrl)
     .then((res) => {
       return res;
     })
     .then((data) => {
       // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
-      hbPromo.value = data.data;
+      if(isAndroid()){
+        hbPromo.value = data.data.filter((item) => item.type !== 'VIDEO');
+      }else{
+        hbPromo.value = data.data;
+      }
     });
 };
 
@@ -4204,6 +4213,11 @@ onBeforeUnmount(() => {
     height: 100px !important;
     width: 100px;
     padding: 0px;
+
+    &:active{
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
+    }
   }
 
   img {

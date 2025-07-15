@@ -8,13 +8,13 @@
         <div class="account-box account-balance">
           <div class="balance-details">
             <a @click="refreshBalance" class="balance-container">
-              <div>账户余额：</div>
+              <div>{{$t('form.accountBalance')}}：</div>
               <div class="balance-txt">
                 <span v-if="isLoadingBalance">加载中...</span>
-                <span v-if="!isLoadingBalance">￥{{ floor(store.balance, 2) }}</span>
+                <div v-if="!isLoadingBalance" style="display:flex;align-items:center;gap:5px;"><img src="../../../assets/images/finance/usdt-icon.svg" width="20px" height="20px" /> {{ floor(store.balance, 2) }}</div>
               </div>
               <el-icon><Refresh /></el-icon>
-              <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>
+              <!-- <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div> -->
             </a>
           </div>
           <!--
@@ -25,10 +25,10 @@
             </div>
           </div> -->
 
-          <div class="balance-details">
+          <!-- <div class="balance-details">
             <div>专属网址：</div>
             <a :href="`${evips.web}`">{{ evips.web }}</a>
-          </div>
+          </div> -->
         </div>
         <!-- <div class="account-box account-contents"> -->
         <router-view />
@@ -53,7 +53,6 @@ export default defineComponent({
     Refresh
   },
   setup() {
-
     const isLoadingBalance = ref(false)
     const refreshBalance = () => {
       isLoadingBalance.value = true;
@@ -76,10 +75,7 @@ export default defineComponent({
 
 <style lang="scss">
 .account-container {
-  background-image: url("../../../assets/images/home/main-bg.jpg");
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-position: top center;
+  background-color: #F3F7FD;
   font-size: 14px;
   padding: 20px;
   // background: #f4f8f9;
@@ -96,7 +92,7 @@ export default defineComponent({
     margin: 0 auto;
     justify-content: space-between;
     align-items: stretch;
-    gap: 20px;
+    gap: 30px;
     color: #000000;
     .account-box {
       // background-color: #fff;
@@ -113,6 +109,7 @@ export default defineComponent({
       display: flex;
       flex-direction: column;
       gap: 14px;
+      font-family: 'PingFang SC';
       .account-balance {
         font-size: 14px;
         display: flex;
@@ -152,9 +149,9 @@ export default defineComponent({
         // height: calc(100% - 50px);
         padding: 20px 40px;
         background-color: #fff;
-        box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
         border-radius: 15px;
         height: 100%;
+        box-shadow: 0px 0px 10px 0px #0000001A;
       }
     }
     .account-menu-container {
@@ -174,7 +171,7 @@ export default defineComponent({
         .account-info-bg {
           background-image: url(../../../assets/images/account/personal-bg.png);
           background-repeat: no-repeat;
-          background-size: cover;
+          background-size: 100% 100%;
           background-position: center center;
           padding: 1.6rem 0;
           display: flex;
@@ -183,6 +180,7 @@ export default defineComponent({
           align-items: center;
           width: 100%;
           height: 100%;
+          border-radius: 15px;
         }
         .account-avatar {
           width: 75px;
@@ -191,6 +189,9 @@ export default defineComponent({
           cursor: pointer;
           border-radius: 50%;
           overflow: hidden;
+          background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
+          box-shadow: 0px 2px 2px 0px #FFFFFFCC inset;
+          box-shadow: 0px 2px 0px 0px #C6D9FF;
 
           img{
             width: 100%;
@@ -243,8 +244,8 @@ export default defineComponent({
             transition: 0.3s all;
 
             img {
-              height: 28px;
-              width: 28px;
+              height: 40px;
+              width: 40px;
             }
             &:hover,
             &.router-link-exact-active {
@@ -264,57 +265,6 @@ export default defineComponent({
                 width: 7px;
                 height: 27px;
               }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-.dark {
-  .dark-account-container {
-    background-image: none;
-    background: $background-dark;
-
-    .account-container-wrap {
-      .account-menu-container {
-        @include content-block-dark;
-
-        .account-info-wrapper {
-          background: $active-color-dark-linear;
-          box-shadow: none;
-        }
-
-        .web-menu {
-          .account-menu-list {
-            .account-menu-item {
-              color: $font-3-dark;
-
-              &:hover,
-              &.router-link-exact-active {
-                color: $color-white;
-                background: #e7f3ff1a;
-              }
-            }
-          }
-        }
-      }
-
-      .account-content-wrapper {
-        .account-balance,
-        .account-contents {
-          @include content-block-dark;
-        }
-
-        .account-balance {
-          .balance-details {
-            color: $font-3-dark;
-          }
-
-          .balance-container {
-            .trans-tip {
-              color: $font-3-dark;
             }
           }
         }

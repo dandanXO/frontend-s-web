@@ -53,7 +53,11 @@
             </q-btn>
           </div>
         </div>
-        <div class="content-timing">
+
+        <!-- tnc start -->
+        <div v-html="pageContent" />
+
+        <!-- <div class="content-timing">
           <div class="timing-head">Every Friday, Saturday, and Sunday</div>
           <div class="timing-body">
             <span>00:00-00:59</span>
@@ -74,10 +78,6 @@
         </div>
 
         <div class="content-footer">
-          <!-- <div class="footer-title">
-            Limited to
-            <span>3000 Participants</span>
-          </div> -->
           <div class="footer-title q-mt-sm">Terms and Conditions:</div>
           <div class="footer-content">
             Each round of cash rain freely distributes 666,666 PKR.
@@ -92,7 +92,8 @@
             <br />
             The higher the VIP membership level, the greater the amount received.
           </div>
-        </div>
+        </div> -->
+        <!-- tnc end -->
       </div>
 
       <div class="rain-money-tab-content" v-show="moneyRainTab === 'records'">
@@ -221,7 +222,7 @@
 
 <script setup>
 import { onMounted, ref, reactive } from "vue";
-import { eventapi } from "src/boot/axios";
+import { eventapi, api } from "src/boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 
@@ -380,10 +381,26 @@ const onClaimBonus = () => {
     });
 };
 
+const pageContent = ref();
+const getPromoTnc = () => {
+  api
+    .get(`/opt-session/promo/page`)
+    .then((res) => {
+      if (res.code === 0) {
+        const promoItem = res.data.find((item) => item.promoCode === "pk2-red-envelope-rain");
+        pageContent.value = promoItem.pageContent;
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
 onMounted(() => {
   getListing();
   startAutoScroll();
   getNextRainTime();
+  getPromoTnc();
 
   const spans = document.querySelectorAll("#money-container span");
   spans.forEach((span) => {

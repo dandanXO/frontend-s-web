@@ -305,6 +305,15 @@ export const findIdByLoginName = (loginName, sid) => {
   )
 }
 
+export const findIdByLoginNames = (loginNames, sid) => {
+  return https().request(
+    '/member/loginNames',
+    Method.POST,
+    { loginNames: loginNames, siteId: sid },
+    ContentType.form
+  )
+}
+
 export const getPlatformBalance = (id, platformCode, siteId) => {
   return https().request(
     `/member/${id}/getBalance`,

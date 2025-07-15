@@ -2,109 +2,95 @@
   <div class="personal-account">
     <!--    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
-      <q-input
-        bg-color="white"
-        class="q-pb-xs"
-        hide-bottom-space
-        v-model="formDetail.nickName"
-        placeholder="账号"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入账号']"
-        label-color=""
-        :readonly="personalState.memberInfo.nickName ? true : false"
-      >
-        <template v-slot:prepend>
-          <q-icon name="person_outline" />
-          <label class="header-label">账号</label>
-        </template>
-      </q-input>
-      <q-input
-        ref="realNameRef"
-        bg-color="white"
-        class="q-pb-xs"
-        hide-bottom-space
-        v-model="formDetail.realName"
-        placeholder="姓名"
-        lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入姓名', isValidName]"
-        label-color=""
-        :readonly="personalState.memberInfo.realName ? true : false"
-      >
-        <template v-slot:prepend>
-          <q-icon name="badge" class="material-icons-outlined" />
-          <label class="header-label">姓名</label>
-        </template>
-      </q-input>
-      <q-input
-        ref="birthdayRef"
-        bg-color="white"
-        label-color=""
-        lazy-rules
-        class="border-input"
-        hide-bottom-space
-        placeholder="DD/MM/YYYY"
-        v-model="formDetail.birthday"
-        :rules="[(val) => (val && val.length > 0) || '请输入生日', isValidBirth]"
-      >
-        <template v-slot:prepend>
-          <q-icon name="cake" class="material-icons-outlined" />
-          <label class="header-label">生日</label>
-        </template>
-        <template v-slot:append>
-          <q-icon name="event" color="dark" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="formDetail.birthday" mask="DD/MM/YYYY">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="关闭" color="primary" flat />
+      <div class="mb-12">
+        <q-input
+          class="q-pb-xs"
+          hide-bottom-space
+          v-model="formDetail.nickName"
+          :placeholder="$t('personal.form.userName.placeholder')"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || $t('personal.form.userName.error.required')]"
+          :readonly="personalState.memberInfo.nickName ? true : false"
+        >
+          <template v-slot:prepend>
+            <!-- <q-icon name="person_outline" /> -->
+            <label class="header-label">{{ $t("personal.form.userName.label") }}&#12288;&#12288;</label>
+          </template>
+        </q-input>
+      </div>
+      <div class="mb-12">
+        <q-input
+          ref="realNameRef"
+          class="q-pb-xs"
+          hide-bottom-space
+          v-model="formDetail.realName"
+          :placeholder="$t('personal.form.realName.placeholder')"
+          lazy-rules
+          :rules="[(val) => (val && val.length > 0) || $t('personal.form.realName.error.required')]"
+          :readonly="personalState.memberInfo.realName ? true : false"
+        >
+          <template v-slot:prepend>
+            <!-- <q-icon name="badge" class="material-icons-outlined" /> -->
+            <label class="header-label">{{ $t("personal.form.realName.label") }}&#12288;&#12288;</label>
+          </template>
+        </q-input>
+      </div>
+      <div class="mb-12">
+        <q-input
+          ref="birthdayRef"
+          label-color=""
+          lazy-rules
+          hide-bottom-space
+          :placeholder="$t('personal.form.birth.placeholder')"
+          v-model="formDetail.birthday"
+          :rules="[(val) => (val && val.length > 0) || $t('personal.form.birth.error.required'), isValidBirth]"
+        >
+          <template v-slot:prepend>
+            <!-- <q-icon name="cake" class="material-icons-outlined" /> -->
+            <label class="header-label">{{ $t("personal.form.birth.label") }}&#12288;&#12288;</label>
+          </template>
+          <template v-slot:append>
+            <img
+              ref="datePickerBtnRef"
+              src="../../assets/images/account/date-picker.png"
+              width="32px"
+              class="date-picker-btn"
+            />
+            <q-popup-proxy
+              v-model="showDatePickerPopup"
+              cover
+              transition-show="scale"
+              transition-hide="scale"
+              :target="datePickerBtnRef"
+            >
+              <q-date v-model="formDetail.birthday" mask="DD/MM/YYYY" @show="handleDatePickerShow">
+                <div class="date-picker-btn-wrapper row items-center justify-between">
+                  <q-btn class="date-picker-btn__today" flat dense @click="handleTodayClick">{{ $t("btn.now") }}</q-btn>
+                  <div class="row items-center gap-8">
+                    <q-btn
+                      class="date-picker-btn__close"
+                      :label="$t('btn.close')"
+                      flat
+                      dense
+                      @click="handleClosePopupClick"
+                    />
+                    <q-btn class="date-picker-btn__confirm" v-close-popup :label="$t('btn.confirm')" flat dense />
+                  </div>
                 </div>
               </q-date>
             </q-popup-proxy>
-          </q-icon>
-        </template>
-      </q-input>
-
-      <div class="flex items-center no-wrap">
-        <q-input
-          bg-color="white"
-          class="q-pb-xs"
-          hide-bottom-space
-          v-model="formDetail.phone"
-          type="tel"
-          placeholder="电话"
-          lazy-rules
-          :rules="[(_) => isValidPhone()]"
-          label-color=""
-          color=""
-          readonly
-          style="width: 100%"
-          @click="isEditPhone ? goToVerifyTelephone() : ''"
-        >
-          <template v-slot:append v-if="isEditPhone">
-            <span style="font-size: 50%" @click="goToVerifyTelephone()">请点击验证按钮</span>
-          </template>
-          <template v-slot:prepend>
-            <q-icon name="phone_in_talk" class="material-icons-outlined" />
-            <label class="header-label">电话</label>
           </template>
         </q-input>
-        <template v-if="isEditPhone">
-          <div class="q-ml-md">
-            <router-link to="/account/verifyTelephone">
-              <q-btn size="md" color="dyblue" label="验证" style="white-space: nowrap" />
-            </router-link>
-          </div>
-        </template>
       </div>
 
-      <div class="flex items-center no-wrap">
+      <div class="flex items-center no-wrap mb-12">
         <q-input
-          bg-color="white"
           class="q-pb-xs"
           hide-bottom-space
           v-model="formDetail.email"
-          placeholder="邮箱"
+          :placeholder="$t('personal.form.email.placeholder')"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
+          :rules="[(val) => (val && val.length > 0) || $t('personal.form.email.error.required')]"
           label-color=""
           color=""
           readonly
@@ -112,26 +98,48 @@
           @click="isEditPhone ? goToVerifyEmail() : ''"
         >
           <template v-slot:append v-if="isEditEmail">
-            <span style="font-size: 50%" @click="goToVerifyEmail()">请点击验证按钮</span>
+            <router-link to="/account/verifyEmail">
+              <q-btn class="verification-btn">{{ $t("btn.verify") }}</q-btn>
+            </router-link>
           </template>
           <template v-slot:prepend>
-            <q-icon name="mail" class="material-icons-outlined" />
-            <label class="header-label">邮箱</label>
+            <!-- <q-icon name="mail" class="material-icons-outlined" /> -->
+            <label class="header-label">{{ $t("personal.form.email.label") }}</label>
           </template>
         </q-input>
-        <template v-if="isEditEmail">
-          <div class="q-ml-md">
-            <router-link to="/account/verifyEmail">
-              <q-btn size="md" color="dyblue" label="验证" style="white-space: nowrap" />
-            </router-link>
-          </div>
-        </template>
       </div>
+
+      <!-- <div class="flex items-center no-wrap mb-12"> -->
+      <!-- <q-input -->
+      <!-- class="q-pb-xs" -->
+      <!-- hide-bottom-space -->
+      <!-- v-model="formDetail.phone" -->
+      <!-- type="tel" -->
+      <!-- :placeholder="$t('personal.form.phone.placeholder')" -->
+      <!-- lazy-rules -->
+      <!-- :rules="[(_) => isValidPhone()]" -->
+      <!-- label-color="" -->
+      <!-- color="" -->
+      <!-- readonly -->
+      <!-- style="width: 100%" -->
+      <!-- @click="isEditPhone ? goToVerifyTelephone() : ''" -->
+      <!-- > -->
+      <!-- <template v-slot:append v-if="isEditPhone"> -->
+      <!-- <router-link to="/account/verifyTelephone"> -->
+      <!-- <q-btn class="verification-btn">{{ $t("btn.verify") }}</q-btn> -->
+      <!-- </router-link> -->
+      <!-- </template> -->
+      <!-- <template v-slot:prepend> -->
+      <!-- <q-icon name="phone_in_talk" class="material-icons-outlined" /> -->
+      <!-- <label class="header-label">{{ $t("personal.form.phone.label") }}&#12288;&#12288;</label> -->
+      <!-- </template> -->
+      <!-- </q-input> -->
+      <!-- </div> -->
 
       <!-- <q-input
         v-if="!formDetail.phoneVerified"
         standout
-        bg-color="white"
+
         class="q-pb-xs"
         hide-bottom-space
         v-model="formDetail.phone"
@@ -154,8 +162,14 @@
         </template>
       </q-input> -->
 
+      <div class="notification-text">
+        <i18n-t keypath="personal.alert">
+          <div class="notification-text__link" @click="chatPage">{{ $t("personal.cs") }}</div>
+        </i18n-t>
+      </div>
+
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="dyblue fit" @click="updateState" label="保存信息" />
+        <q-btn size="md" class="submit-btn" @click="updateState" :label="$t('btn.submit')" />
       </div>
     </q-form>
   </div>
@@ -163,13 +177,13 @@
   <q-dialog width="100%" v-model="showCaptchaDialog">
     <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
       <q-card-section class="q-mb-md" style="flex-direction: column; display: flex">
-        <strong>系统提示</strong>
+        <strong>{{ $t("common.notification.loginRequired.title") }}</strong>
         <br />
         <br />
-        请登录后再操作
+        {{ $t("common.notification.loginRequired.message") }}
       </q-card-section>
       <router-link to="/login?redirect=/promo">
-        <q-btn label="确认" color="dyblue" />
+        <q-btn :label="$t('btn.confirm')" color="dyblue" />
       </router-link>
     </q-card>
   </q-dialog>
@@ -203,10 +217,12 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
 import {useRouter} from "vue-router";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PersonalView",
   setup() {
+    const {t} = useI18n();
     // const isCardActive = ref();
     const qs = require("qs");
     const $q = useQuasar();
@@ -219,6 +235,17 @@ export default defineComponent({
     const profileFormRef = ref();
 
     const store = userStore();
+
+    const datePickerBtnRef = ref();
+    const initialBirthday = ref()
+    const showDatePickerPopup = ref(false);
+
+    const chatPage =() => {
+      window.open(
+        "https://8xjp0t3ydi.ipbr7k9r.com/chatwindow.aspx?siteId=65001994&planId=099fb0e7-cad5-43d0-aa03-2ed2257e0e12",
+        "_blank"
+      );
+    };
 
     const loadInfo = () => {
       personalState.memberInfo = userStore();
@@ -235,7 +262,7 @@ export default defineComponent({
 
       isEditEmail.value = (formDetail.emailVerified === false) ? true : false;
       isEditBirthday.value = (formDetail.birthday == "") ? true : false;
-      isEditPhone.value = (formDetail.phoneVerified === false) ? true : false;
+      // isEditPhone.value = (formDetail.phoneVerified === false) ? true : false;
     };
 
     const canEdit = computed(() => {
@@ -453,7 +480,7 @@ export default defineComponent({
       console.log("Bir");
       console.log(formDetail.birthday);
 
-      const result = !reg.test(formDetail.birthday) ? "请输入正确的日期" : true;
+      const result = !reg.test(formDetail.birthday) ? t('personal.form.birth.error.format') : true;
 
       return result;
     }
@@ -486,6 +513,19 @@ export default defineComponent({
           console.log("onCaptchaSubmit", res);
         });
     };
+
+    const handleTodayClick = () => {
+      formDetail.birthday = moment().format('DD/MM/YYYY')
+    }
+
+    const handleDatePickerShow = () => {
+      initialBirthday.value = formDetail.birthday;
+    }
+
+    const handleClosePopupClick = () => {
+      formDetail.birthday = initialBirthday.value;
+      showDatePickerPopup.value = false;
+    }
 
     return {
       searchForm,
@@ -527,7 +567,13 @@ export default defineComponent({
       openVerificationDialog,
       onCaptchaSubmit,
       goToVerifyTelephone,
-      goToVerifyEmail
+      goToVerifyEmail,
+      chatPage,
+      datePickerBtnRef,
+      handleTodayClick,
+      handleDatePickerShow,
+      handleClosePopupClick,
+      showDatePickerPopup
     };
   }
 });
@@ -537,9 +583,10 @@ export default defineComponent({
   padding: 10px;
 
   .header-label {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
-    margin-left: 4px;
+    margin-left: 12px;
+    color: #7a80a1;
   }
 
   .web {
@@ -550,12 +597,85 @@ export default defineComponent({
     font-size: 15px;
   }
 
-  .border-input {
-    border-bottom: 1px dashed #d7d7d7;
+  input.q-placeholder {
+    color: #424f72 !important;
   }
 
-  input.q-placeholder {
-    color: #333333 !important;
+  .q-input {
+    border-radius: 7px;
+    .q-field__inner {
+      .q-field__control,
+      .q-field__marginal {
+        height: 44px;
+      }
+      .q-field__control {
+        background: #fcfdfe;
+        &::before {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  .verification-btn {
+    background-image: url("../../assets/images/account/account-btn.png");
+    background-size: 100% 100%;
+    color: #fff;
+    // width: 60px;
+    padding: 2px 11px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 1rem;
+    // aspect-ratio: 122/68;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    box-shadow: 0px -0.5px 2px 0px #ffffff;
+    border-radius: 45.9px;
+    margin-right: 5px;
+  }
+
+  .mb-12 {
+    margin-bottom: 12px;
+  }
+
+  .notification-text {
+    font-size: 12.5px;
+    color: #7a80a1;
+    text-align: center;
+    .notification-text__link {
+      text-decoration: underline;
+      color: #458bff;
+      display: inline-block;
+    }
+  }
+  .date-picker-btn {
+    margin-right: 10px;
+  }
+  .submit-btn {
+    width: 100%;
+    background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
+    box-shadow: 0px 2px 0px 0px #9ab0ff70;
+    border: 1px solid #ffffff;
+    border-radius: 30px;
+    color: #fff;
+  }
+}
+.date-picker-btn-wrapper {
+  .date-picker-btn__today {
+    padding: 2px 12px;
+    background: #f2f3f5;
+    color: #4e5969;
+  }
+  .date-picker-btn__close {
+    padding: 2px 12px;
+    color: #3981ff;
+  }
+  .date-picker-btn__confirm {
+    padding: 2px 12px;
+    background: #3981ff;
+    color: #fff;
   }
 }
 </style>

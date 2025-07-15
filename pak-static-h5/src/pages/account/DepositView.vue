@@ -38,6 +38,9 @@
           <q-badge v-if="isNewPlayerPrivilege" color="green" floating rounded>
             {{ getNewPlayerAmount(item.amount) }}
           </q-badge>
+          <q-badge v-if="isJazzcashCryptoPrivilege || isUsdtPrivilege" color="green" floating rounded>
+            {{ getJazzcashUsdtAmt(item.amount) }}
+          </q-badge>
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -114,6 +117,12 @@
               v-else-if="newPlayerDepositBonusConfig.hasBonus && !isUSDT && isAndroid()"
             >
               {{ $t("deposit.appDepositBonus") }}
+            </q-checkbox>
+            <q-checkbox v-model="jazzcashBonusConfig.selected" v-else-if="jazzcashBonusConfig.hasBonus">
+              {{ getJazzcashUsdtCheckboxLabel }}
+            </q-checkbox>
+            <q-checkbox v-model="usdtBonusConfig.selected" v-else-if="usdtBonusConfig.hasBonus">
+              {{ getJazzcashUsdtCheckboxLabel }}
             </q-checkbox>
             <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
@@ -375,21 +384,21 @@
     </div>
   </q-dialog> -->
   <q-dialog width="100%" v-model="showPaymentCancellationDialog">
-  <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
-    <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
-    <div class="popout-dialog-container">
-      <div class="txt-title">{{ $t("notify.cancelPayment") }}</div>
-      <div class="txt-content q-mt-md text-center">
-        {{ $t("notify.cancelPaymentWillLose") }}
-        <br />
-        <div class="bonusAmt">PKR {{ paymentCancellationAmtLoss }}</div>
-      </div>
-      <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
-        <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup @click="confirmLeave" />
-        <q-btn :label="$t('btn.payAgain')" no-caps class="btn-confirm" @click="cancelLeave" v-close-popup />
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px">
+      <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ $t("notify.cancelPayment") }}</div>
+        <div class="txt-content q-mt-md text-center">
+          {{ $t("notify.cancelPaymentWillLose") }}
+          <br />
+          <div class="bonusAmt">PKR {{ paymentCancellationAmtLoss }}</div>
+        </div>
+        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
+          <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup @click="confirmLeave" />
+          <q-btn :label="$t('btn.payAgain')" no-caps class="btn-confirm" @click="cancelLeave" v-close-popup />
+        </div>
       </div>
     </div>
-  </div>
   </q-dialog>
 
   <AdditionalSteps
@@ -402,6 +411,7 @@
 </template>
 
 <script setup>
+import { useUI } from "stores/ui";
 import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, watch, computed, nextTick } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
@@ -537,7 +547,11 @@ const isFtdPrivilegeEnable = ref(false);
 const ftdBonusConfig = ref(DEFAULT_BONUS_CONFIG);
 const secondTimeDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
 const thirdTimeDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
-const newPlayerDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG)
+const newPlayerDepositBonusConfig = ref(DEFAULT_BONUS_CONFIG);
+const jazzcashBonusConfig = ref(DEFAULT_BONUS_CONFIG);
+const usdtBonusConfig = ref(DEFAULT_BONUS_CONFIG);
+
+const ui = useUI();
 
 const isFromFtdPromo = computed(() => route.query?.from === "/promo" && route.query.privilegeId);
 const isFtdPrivilege = computed(
@@ -564,12 +578,18 @@ const is3rdPrivilege = computed(
     thirdTimeDepositBonusConfig.value.hasBonus
 );
 const isNewPlayerPrivilege = computed(
-  () => 
+  () =>
     selectedPayType.value !== "USDTTRC" &&
     newPlayerDepositBonusConfig.value.selected &&
-    newPlayerDepositBonusConfig.value.hasBonus && 
+    newPlayerDepositBonusConfig.value.hasBonus &&
     isAndroid()
-)
+);
+const isJazzcashCryptoPrivilege = computed(
+  () => selectedPayType.value === "JAZZCASH" && jazzcashBonusConfig.value.selected && jazzcashBonusConfig.value.hasBonus
+);
+const isUsdtPrivilege = computed(
+  () => selectedPayType.value === "USDTTRC" && usdtBonusConfig.value.selected && usdtBonusConfig.value.hasBonus
+);
 
 const copyMessage = (position) => {
   let copyText = null;
@@ -683,7 +703,6 @@ const get2ndAmount = (amount) => {
   return rewardMap[amount] || 0;
 };
 
-
 const get3rdAmount = (amount) => {
   const rewardMap = {
     300: 150,
@@ -700,7 +719,6 @@ const get3rdAmount = (amount) => {
   return rewardMap[amount] || 0;
 };
 
-
 const getNewPlayerAmount = (amount) => {
   const rewardMap = {
     300: 38,
@@ -715,6 +733,58 @@ const getNewPlayerAmount = (amount) => {
     50000: 38
   };
   return rewardMap[amount] || 0;
+};
+
+const getJazzcashUsdtCheckboxLabel = computed(() => {
+  const priv = privilegeList.value.find((p) => p.payTypes.split(",").includes(selectedPayType.value));
+  return priv.name;
+});
+
+const getJazzcashUsdtAmt = (item) => {
+  const priv = privilegeList.value.find((p) => p.payTypes.split(",").includes(selectedPayType.value));
+  let amount = 0;
+  if (priv) {
+    if (!priv.param) {
+      if (priv.bonusType === "RATIO") {
+        amount = item * priv.bonusAmount;
+      } else {
+        // FIXED
+        amount = priv.bonusAmount;
+      }
+    } else {
+      if (priv.bonusType === "RATIO") {
+        const privMatch = priv.param.ratio.find((p) => {
+          const min = Number(p.min);
+          const max = Number(p.max);
+          return item >= min && item < max;
+        });
+        if (privMatch) {
+          amount = privMatch.ratio * item;
+        }
+      } else {
+        // FIXED
+        const privMatch = findBonusFromMinOnly(priv.param.fixed, item);
+        if (privMatch) {
+          amount = privMatch.fixed;
+        }
+      }
+    }
+  }
+
+  function findBonusFromMinOnly(bonusList, item) {
+    for (let i = 0; i < bonusList.length; i++) {
+      const current = bonusList[i];
+      const next = bonusList[i + 1];
+
+      if (!next || (item >= current.min && item < next.min)) {
+        return current;
+      }
+    }
+
+    return null;
+  }
+
+  return convertToCommaAmount(amount, false, 0);
 };
 
 const handleDepositNodeClick = (item) => {
@@ -852,9 +922,12 @@ async function loadPrivilege(val) {
   secondTimeDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
   thirdTimeDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
   newPlayerDepositBonusConfig.value = DEFAULT_BONUS_CONFIG;
+  jazzcashBonusConfig.value = DEFAULT_BONUS_CONFIG;
+  usdtBonusConfig.value = DEFAULT_BONUS_CONFIG;
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
     if (res.code === 0) {
       privilegeList.value = res.data.privileges;
+
       hasPrivilege.value = true;
       unselectedPrivileges.value = [];
       freePrivilege.value = [];
@@ -883,6 +956,18 @@ async function loadPrivilege(val) {
               };
             } else if (p.code === "pak-new-user-roulette") {
               newPlayerDepositBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else if (p.code === "pak-jazzcash-bonus") {
+              jazzcashBonusConfig.value = {
+                selected: true,
+                hasBonus: true,
+                privilegeId: p.id
+              };
+            } else if (p.code === "PAKUSDT") {
+              usdtBonusConfig.value = {
                 selected: true,
                 hasBonus: true,
                 privilegeId: p.id
@@ -991,6 +1076,12 @@ async function confirmDeposit() {
           if (newPlayerDepositBonusConfig.value.selected && newPlayerDepositBonusConfig.value.hasBonus) {
             form.privilegeId = newPlayerDepositBonusConfig.value.privilegeId;
           }
+          if (jazzcashBonusConfig.value.selected && jazzcashBonusConfig.value.hasBonus) {
+            form.privilegeId = jazzcashBonusConfig.value.privilegeId;
+          }
+          if (usdtBonusConfig.value.selected && usdtBonusConfig.value.hasBonus) {
+            form.privilegeId = usdtBonusConfig.value.privilegeId;
+          }
 
           const copy = { ...form };
           const data = {};
@@ -1086,6 +1177,8 @@ async function pDepo(deposit) {
                   newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
                 }
               }
+            } else if (ui.annoyingType === "NONE") {
+              window.open(response.requestUrl, "_blank");
             } else {
               const newWin = window.open(`/`);
               if (!newWin) {
@@ -1148,19 +1241,19 @@ async function pDepo(deposit) {
           }
           // if (isAndroid()) {
           // }
-          
-          const onAppFirstDeposit = newPlayerDepositBonusConfig.value?.hasBonus
+
+          const onAppFirstDeposit = newPlayerDepositBonusConfig.value?.hasBonus;
           if (onAppFirstDeposit) {
-            localStorage.setItem('onAppFirstDeposit', JSON.stringify(onAppFirstDeposit));
+            localStorage.setItem("onAppFirstDeposit", JSON.stringify(onAppFirstDeposit));
           }
-          const secondDeposit = secondTimeDepositBonusConfig.value?.hasBonus
+          const secondDeposit = secondTimeDepositBonusConfig.value?.hasBonus;
           if (secondDeposit) {
-            localStorage.setItem('secondDeposit', JSON.stringify(secondDeposit));
+            localStorage.setItem("secondDeposit", JSON.stringify(secondDeposit));
           }
-          
-          const thirdDeposit = thirdTimeDepositBonusConfig.value?.hasBonus
+
+          const thirdDeposit = thirdTimeDepositBonusConfig.value?.hasBonus;
           if (thirdDeposit) {
-            localStorage.setItem('thirdDeposit', JSON.stringify(thirdDeposit));
+            localStorage.setItem("thirdDeposit", JSON.stringify(thirdDeposit));
           }
         }
       } else {
@@ -1307,65 +1400,64 @@ onMounted(() => {
 });
 const showPaymentCancellationDialog = ref();
 const paymentCancellationAmtLoss = ref(0);
-const pendingNext = ref(null)
+const pendingNext = ref(null);
 
 const confirmLeave = () => {
-  showPaymentCancellationDialog.value = false
+  showPaymentCancellationDialog.value = false;
   if (pendingNext.value) {
-    pendingNext.value()
-    pendingNext.value = null
+    pendingNext.value();
+    pendingNext.value = null;
   }
-}
+};
 
 const cancelLeave = () => {
-  showPaymentCancellationDialog.value = false
+  showPaymentCancellationDialog.value = false;
   if (pendingNext.value) {
-    pendingNext.value(false)
-    pendingNext.value = null
+    pendingNext.value(false);
+    pendingNext.value = null;
   }
-}
-const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
-
+};
+const alreadyDeposited = JSON.parse(localStorage.getItem("onAppFirstDeposit"));
 
 onBeforeRouteLeave((to, from, next) => {
-  console.log(from)
-  if (from.path !== '/deposit') {
-    next()
-    return
+  console.log(from);
+  if (from.path !== "/deposit") {
+    next();
+    return;
   }
-  const hasSecond = secondTimeDepositBonusConfig.value?.hasBonus
-  const hasThird = thirdTimeDepositBonusConfig.value?.hasBonus
-  const hasNewPlayerReward = newPlayerDepositBonusConfig.value?.hasBonus
-  
-  const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
-  const secondDeposit = JSON.parse(localStorage.getItem('secondDeposit'));
-  const thirdDeposit = JSON.parse(localStorage.getItem('thirdDeposit'));
+  const hasSecond = secondTimeDepositBonusConfig.value?.hasBonus;
+  const hasThird = thirdTimeDepositBonusConfig.value?.hasBonus;
+  const hasNewPlayerReward = newPlayerDepositBonusConfig.value?.hasBonus;
 
-  if (alreadyDeposited && isAndroid() || secondDeposit || thirdDeposit) {
-    next()
-    return
+  const alreadyDeposited = JSON.parse(localStorage.getItem("onAppFirstDeposit"));
+  const secondDeposit = JSON.parse(localStorage.getItem("secondDeposit"));
+  const thirdDeposit = JSON.parse(localStorage.getItem("thirdDeposit"));
+
+  if ((alreadyDeposited && isAndroid()) || secondDeposit || thirdDeposit) {
+    next();
+    return;
   }
-  if (((hasNewPlayerReward) && isAndroid()) || hasThird || hasSecond) {
+  if ((hasNewPlayerReward && isAndroid()) || hasThird || hasSecond) {
     if (hasNewPlayerReward) {
-      paymentCancellationAmtLoss.value = 38
+      paymentCancellationAmtLoss.value = 38;
     } else if (hasThird) {
-      paymentCancellationAmtLoss.value = 150
+      paymentCancellationAmtLoss.value = 150;
     } else if (hasSecond) {
-      paymentCancellationAmtLoss.value = 100
+      paymentCancellationAmtLoss.value = 100;
     }
-    pendingNext.value = next
-    showPaymentCancellationDialog.value = true
+    pendingNext.value = next;
+    showPaymentCancellationDialog.value = true;
   } else {
-    next()
+    next();
   }
-})
+});
 </script>
 
 <style scoped lang="scss">
 .bonusAmt {
-    font-weight: bold;
-    color: gold;
-    font-size: 25px;
+  font-weight: bold;
+  color: gold;
+  font-size: 25px;
 }
 .deposit-tabs {
   width: 100%;

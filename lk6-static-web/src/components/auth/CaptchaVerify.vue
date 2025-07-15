@@ -1,6 +1,6 @@
 <template>
   <div class="light-bg form-field" v-if="props.type === 'phone'">
-    <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
+    <img class="form-field-icon" src="@/assets/home/auth/phone-icon.svg" />
     <el-form-item tabindex="2" label="手机号" prop="phone">
       <el-row :gutter="10" style="justify-content: center; align-items: center">
         <el-col :span="14">
@@ -54,7 +54,7 @@
     @keydown.enter.prevent
   >
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
+      <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" width="35px" />
       <el-form-item tabindex="3" label="验证码" prop="captchaCode">
         <div style="display: flex; width: 100%">
           <el-input

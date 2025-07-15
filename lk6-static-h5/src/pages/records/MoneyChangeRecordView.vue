@@ -1,5 +1,5 @@
 <template>
-  <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
+  <!-- <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" /> -->
   <div class="table-record">
     <RecordComponent
       ref="recordRef"
@@ -13,21 +13,23 @@
   </div>
 </template>
 <script lang="js">
-import {defineComponent, onActivated, onMounted, ref} from "vue";
+import {computed, defineComponent, onActivated, onMounted, ref} from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import moment from "moment";
 import {api} from "boot/axios";
 import {userStore} from "src/stores";
 import {cached, TIME_EXPIRED} from "boot/cache";
 import RecordDateFilter from "../../components/RecordDateFilter.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "MoneyChangeRecordView",
   components: {
     RecordComponent,
-    RecordDateFilter
+    // RecordDateFilter
   },
   setup() {
+    const {t} = useI18n();
     const visible = ref(true);
     const tableData = ref([]);
     const isEnded = ref(false);
@@ -152,32 +154,32 @@ export default defineComponent({
     //   });
     // };
 
-    const tableHeaders = ([
+    const tableHeaders = computed(() => ([
       {
         key: "serialNumber",
-        label: "编码"
+        label: t('record.table.transfer.header.serialNumber'),
       },
       {
         key: "type",
-        label: "账变类型"
+        label: t('record.table.transfer.header.type')
       },
       {
         key: "platformCode",
-        label: "平台"
+        label: t('record.table.transfer.header.platform')
       },
       {
         key: "amount",
-        label: "金额"
+        label: t('record.table.transfer.header.amount')
       },
       {
         key: "subType",
-        label: "账变子类型"
+        label: t('record.table.transfer.header.subType')
       },
       {
         key: "recordTime",
-        label: "时间"
+        label: t('record.table.transfer.header.recordTime')
       }
-    ]);
+    ]));
     const handleDateChange = (data) => {
       const {val, isStartDate} = data;
       isStartDate ? startDate.value = val : endDate.value = val;

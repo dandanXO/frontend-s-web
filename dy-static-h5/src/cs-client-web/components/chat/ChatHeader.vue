@@ -24,6 +24,7 @@
         <q-badge rounded :color="localStatusColor" />
         <q-badge @click="pingServer" rounded :color="restIndColor" />
         <q-badge rounded :color="wsIndColor" />
+        <q-badge rounded :color="isCsPingColor" />
       </div>
 
       <q-btn v-if="isChatStarted" @click="handleOnModal" flat>
@@ -134,7 +135,7 @@ export default defineComponent({
     const userStore = useUserStore();
     const socketStore = useSocketStore();
     const { isChatEnded, chatFreeze } = storeToRefs(chatStore);
-    const { isConnected, isInternet } = storeToRefs(socketStore);
+    const { isConnected, isInternet, isCsPingColor } = storeToRefs(socketStore);
 
     const is_show_modal = ref(false);
 
@@ -315,6 +316,7 @@ export default defineComponent({
       restIndColor,
       localStatusColor,
       wsIndColor,
+      isCsPingColor,
       pingServer
     };
   }

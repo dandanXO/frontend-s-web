@@ -70,6 +70,7 @@ export default {
     earnMoney: "Earn Money",
     wallet: "Wallet",
     me: "Me",
+    sport: "Sports",
     account: "Account",
     more: "More",
     announcement: "Announcement",
@@ -641,7 +642,9 @@ export default {
     dailyWithdrawalLimit: "Daily Withdrawal Limit",
     bet: "Bet",
     deposit: "Deposit",
-    currentValidBets: "Current Valid Bets"
+    currentValidBets: "Current Valid Bets",
+    upgradeBonus: "Upgrade Bonus",
+    monthlyBonus: "Monthly Bonus"
   },
   earnMoney: {
     title: "Bonus Pot Arrived",

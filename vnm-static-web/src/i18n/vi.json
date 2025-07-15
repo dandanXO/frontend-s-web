@@ -204,6 +204,8 @@
     "title": "Vui lòng nhập tiêu đề",
     "content": "Vui lòng nhập nội dung",
     "usernamereq": "Tên tài khoản không thể để trống",
+    "no_special_characters": "Tên tài khoản không được chứa ký tự đặc biệt",
+    "username_cannot_start_with_0": "Tên người dùng không được bắt đầu bằng số 0",
     "passwordreq": "Vui lòng nhập mật khẩu",
     "username": "Tên tài khoản dài từ 6-11 ký tự",
     "password": "Mậu khẩu dài từ 6-11 ký tự ",

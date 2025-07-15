@@ -54,7 +54,7 @@
               <div v-if="index + 1 === 1">
                 <div class="welcome">
                   {{ t("playerGuide.welcomeMessage") }}
-                  <span class="yellow">B9GAME!</span>
+                  <span class="yellow">PK1.GAME!</span>
                   {{ t("playerGuide.teachingHowToEarn") }}
                   <!-- Welcome to <span class="yellow">B9GAME!</span> Let us teach you how to make money easily! -->
                 </div>
@@ -271,7 +271,7 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
 
-      <div class="popout-dialog-container">
+      <div class="popout-dialog-container" style="background: #b5c3ff;">
         <div class="txt-title">{{ $t("playerGuide.shareandearn") }}</div>
         <!-- <div class="txt-content q-mt-md text-center">Share and Earn</div> -->
         <div class="modal-invite-share-social">
@@ -1187,7 +1187,7 @@ defineExpose({ showVideo });
         font-size: 1.5vh;
         line-height: 2vh;
         .yellow {
-          color: #ffe500;
+          color: #A600FF;
         }
       }
       .withdraw-steps {

@@ -1,21 +1,21 @@
 <template>
   <div>
     <div class="account-title-container">
-      <span class="account-title">提款银行卡</span>
+      <span class="account-title">{{ $t('form.withdrawCryptoAccount') }}</span>
     </div>
     <div class="account-content">
       <div class="account-tip-text wbot"></div>
 
       <div class="flex-wrap flex-box bank-card-list">
         <div
-          class="bank-card-item active"
-          :class="{
-            USDT: bc.bankName === 'GCASH'
-          }"
+        class="bank-card-item active"
+        :class="{
+          USDT: bc.bankName === 'USDTTRC'
+        }"
           @click="showCard(bc, index)"
           v-for="(bc, index) in personalState.bankCardList"
           :key="bc.id"
-        >
+          >
           <div class="card-details">
             <div class="card-bank-icon">
               <img :src="imgURL + bc.bankIcon" />
@@ -45,42 +45,42 @@
         <div class="bank-card-item" @click="bankCardModal('bank')">
           <img width="24" height="24" class="fill-424f72" src="../../assets/home/links-line.svg" />
           <span class="lock-card-txt">
-            添加银行卡
-            <template v-if="alipayAvailable">/ 支付宝</template>
-            &nbsp;/ 电子钱包 / 虚拟币
+            {{ $t('form.addWithdrawCryptoAccount') }}
+            <!-- <template v-if="alipayAvailable">/ 支付宝</template>
+            &nbsp;/ 电子钱包 / 虚拟币 -->
           </span>
         </div>
       </div>
     </div>
     <div class="account-title-container bindunbind">
-      <span class="account-title">解绑银行卡记录</span>
+      <span class="account-title">{{ $t('form.unlinkBankCardRecord') }}</span>
     </div>
     <div class="account-content last bindunbind">
       <div class="searchbar">
         <el-form layout="inline" :model="searchForm">
           <div class="left">
-            <el-form-item label="开始日期">
+            <el-form-item :label="$t('form.startDate')">
               <el-date-picker
                 v-model="searchForm.startDate"
                 show-time
                 type="date"
-                placeholder="开始日期"
+                :placeholder="$t('form.startDate')"
                 valueFormat="YYYY-MM-DD"
                 format="YYYY-MM-DD"
               />
             </el-form-item>
-            <el-form-item label="结束日期">
+            <el-form-item :label="$t('form.endDate')">
               <el-date-picker
                 v-model="searchForm.endDate"
                 show-time
                 type="date"
-                placeholder="结束日期"
+                :placeholder="$t('form.endDate')"
                 valueFormat="YYYY-MM-DD"
                 format="YYYY-MM-DD"
               />
             </el-form-item>
             <el-form-item>
-              <button class="standard-button btn-color-blue" type="button" @click="searchRecord()">搜索</button>
+              <button class="standard-button btn-color-blue" type="button" @click="searchRecord()">{{ $t('btn.search') }}</button>
             </el-form-item>
           </div>
         </el-form>
@@ -93,7 +93,11 @@
           ></el-table> -->
 
         <el-table :data="dataSource" style="width: 100%" empty-text="暂无数据" v-loading="tblLoading">
-          <el-table-column v-for="tbl in columns" :key="tbl.key" :prop="tbl.dataIndex" :label="tbl.title">
+          <template #empty>
+            <img v-if="languageVal === 'en'" src="../../assets/images/home/empty-placeholder-en.png" style="aspect-ratio: 214/242;height:100px;"/>
+            <img v-else src="../../assets/images/home/empty-placeholder.png" style="aspect-ratio: 214/242;height:100px;"/>
+          </template>
+          <el-table-column v-for="tbl in columns" :key="tbl.key" :prop="tbl.dataIndex" :label="$t(`form.${tbl.key}`)">
             <template #default="scope">
               <template v-if="tbl.dataIndex === 'bankName'">
                 {{ getOptionLabel(scope.row.bankName) }}
@@ -123,22 +127,24 @@
         />
       </div>
     </div>
-    <el-dialog class="bankModal" width="600" v-model="bankCardModalState.visible" :footer="null" title="绑定银行卡">
+    <el-dialog class="bankModal" width="600" v-model="bankCardModalState.visible" :footer="null" :title="$t('form.bindWithdrawCryptoAccount')">
       <el-form ref="bankCardFormRef" :model="bankCardInfo" :rules="bankCardRules">
-        <el-form-item prop="bankId" :rules="[{ required: true, message: '请选择银行', trigger: 'blur' }]">
+        <el-form-item prop="bankId" :rules="[{ required: true, message: $t('form.selectField', {field: $t('form.crypto')}), trigger: 'blur' }]">
           <el-row :gutter="20">
             <el-col :span="6">
-              <el-select placeholder="类型" v-model="selectedBankType" style="width: 100%" @change="selectBankType">
-                <el-option v-for="bank in bankTypes" :key="bank.value" :value="bank.value" :label="bank.text">
-                  {{ bank.text }}
-                </el-option>
+              <el-select :placeholder="$t('form.type')" v-model="selectedBankType" style="width: 100%" @change="selectBankType">
+                <template v-for="bank in bankTypes">
+                  <el-option :key="bank.value" :value="bank.value" :label="bank.text" v-if="bank.value === 'Crypto'">
+                    {{ bank.text }}
+                  </el-option>
+                </template>
               </el-select>
             </el-col>
             <el-col :span="18">
               <el-select
                 class="select"
                 v-model="bankCardInfo.bankId"
-                :placeholder="'选择' + chooseCard()"
+                :placeholder="$t('form.choose') + ' ' + chooseCard()"
                 style="width: 100%"
               >
                 <el-option v-for="b in banksList" :key="b.id" :label="getOptionLabel(b.name)" :value="b.id">
@@ -181,7 +187,7 @@
         <!--          </el-space>-->
         <!--        </el-form-item>-->
 
-        <el-form-item name="smsCode" prop="smsCode">
+        <el-form-item name="smsCode" prop="smsCode" v-if="store.isRequirePhoneValidation">
           <el-space>
             <el-input
               class="half"
@@ -198,8 +204,8 @@
           </el-space>
         </el-form-item>
 
-        <el-form-item class="txt-center" v-if="isSendOtp">
-          <el-button class="txt-center common-btn" @click="submitBankCard">提交</el-button>
+        <el-form-item class="txt-center" v-if="isSendOtp || store.isRequirePhoneValidation === false">
+          <el-button class="txt-center common-btn" @click="submitBankCard">{{$t('btn.submit')}}</el-button>
         </el-form-item>
         <span v-if="isEWALLET" class="tip-text">
           *特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！
@@ -207,7 +213,7 @@
       </el-form>
     </el-dialog>
     <el-dialog v-model="phoneCaptchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px">
-      <el-button size="large" color="#3bafda" class="common-btn" style="width: 100%" @click="sendOtp">提交</el-button>
+      <el-button size="large" color="#3bafda" class="common-btn" style="width: 100%" @click="sendOtp">{{$t('btn.submit')}}</el-button>
     </el-dialog>
 
     <el-dialog
@@ -265,6 +271,9 @@ import { InfoFilled } from "@element-plus/icons-vue";
 import moment from "moment";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "WithdrawBankView",
@@ -273,6 +282,9 @@ export default defineComponent({
     InfoFilled
   },
   setup() {
+    const { t } = useI18n();
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
     const notify = useNotify();
     let validateEmptyCardNo = async (r, v) => {
       if (selectedBankType.value === "Bank") {
@@ -285,7 +297,7 @@ export default defineComponent({
         }
       } else if (selectedBankType.value === "Crypto") {
         if (v === "") {
-          return Promise.reject("请输入虚拟钱包账号");
+          return Promise.reject(t('form.pleaseEnterField', {field: t('form.cardAddress')}));
         } else if (/^[A-Za-z0-9]*$/.test(v) === false) {
           return Promise.reject("虚拟钱包账号只能包含数字及英文字母");
         } else {
@@ -361,7 +373,7 @@ export default defineComponent({
         }
         return "银行卡";
       } else if (type === "CRYPTO") {
-        return "数字货币";
+        return t('form.crypto');
       } else if (type === "EWALLET") {
         return "电子钱包";
       }
@@ -421,10 +433,10 @@ export default defineComponent({
       }
     ]);
     const bankTypes = computed(() => [
-      { value: "Bank", text: "银行卡" },
-      ...(alipayAvailable.value ? [{ value: "alipay", text: "支付宝" }] : []),
-      { value: "Crypto", text: "数字货币" },
-      { value: "e-Wallet", text: "电子钱包" }
+      // { value: "Bank", text: "银行卡" },
+      // ...(alipayAvailable.value ? [{ value: "alipay", text: "支付宝" }] : []),
+      { value: "Crypto", text: t('form.crypto') },
+      // { value: "e-Wallet", text: "电子钱包" }
     ]);
     const personalState = reactive({
       memberInfo: {},
@@ -581,13 +593,10 @@ export default defineComponent({
     const banksList = ref([]);
     const bankCardModal = () => {
       store.getMemberInfo().then(() => {
-        if (!store.realName || store.realName == "") {
-          notify({ type: "error", message: "真实姓名不可为空" });
-          return;
-        } else if (!store.phone || store.phone == "") {
-          notify({ type: "error", message: "绑定银行卡前，请先验证手机号。" });
-          return;
-        } else {
+        // if (!store.realName || store.realName == "") {
+        //   notify({ type: "error", message: "真实姓名不可为空" });
+        //   return;
+        // } else {
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";
           bankCardInfo.cardAccount = store.realName;
@@ -614,7 +623,7 @@ export default defineComponent({
                 console.log("error", e);
               });
           }
-        }
+        // }
       });
     };
 
@@ -635,7 +644,7 @@ export default defineComponent({
       }
     };
 
-    const selectedBankType = ref("Bank");
+    const selectedBankType = ref("Crypto");
     const selectBankType = () => {
       banksList.value = [];
       bankCardInfo.bankId = null;
@@ -779,7 +788,7 @@ export default defineComponent({
       }
     };
     const submitBankCard = () => {
-      console.log(bankCardInfo);
+      bankCardInfo.cardAccount = store.nickName;
       bankCardFormRef.value
         .validate()
         .then(() => {
@@ -862,13 +871,20 @@ export default defineComponent({
     };
     const unbindBankCard = (card) => {
       ElMessageBox.prompt(
-        `请输入解绑${getOptionLabel(card.bankName)}的${card.bankType === "CRYPTO" || card.bankType === "EWALLET" ? "钱包地址" : "卡号"}`,
-        "确认解绑",
+        t('form.pleaseEnterField', {field: t('form.cardAddress')}),
+        t('form.confirmUnbind'),
         {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+          confirmButtonText: t('btn.confirm'),
+          cancelButtonText: t('btn.cancel'),
           cancelButtonClass: "cancel-btn",
-          type: "warning" // Error message to display if input is invalid
+          type: "warning", // Error message to display if input is invalid
+          inputValidator: (value) => {
+            if (!value || value.trim() === '') {
+              return t('form.pleaseEnterField', {field: t('form.cardAddress')});
+            }
+            return true;
+          },
+          inputErrorMessage: t('form.pleaseEnterField', {field: t('form.cardAddress')})
         }
       )
         .then((inputValue) => {
@@ -877,7 +893,7 @@ export default defineComponent({
               if (res.code === 0) {
                 notify({
                   type: "success",
-                  message: "解绑完成"
+                  message: t('message.unbindSuccessfully')
                 });
                 // loadCards();
                 searchRecord();
@@ -900,7 +916,7 @@ export default defineComponent({
         .catch(() => {
           notify({
             type: "info",
-            message: "删除取消"
+            message: t('message.deleteCancelled')
           });
         });
     };
@@ -927,7 +943,7 @@ export default defineComponent({
 
     const chooseCard = () => {
       if (isUSDT.value) {
-        return "虚拟币";
+        return t('form.crypto');
       } else if (isEWALLET.value) {
         return "电子钱包";
       } else if (isALIPAY.value) {
@@ -939,7 +955,7 @@ export default defineComponent({
 
     const numAddress = () => {
       if (isUSDT.value) {
-        return "钱包地址";
+        return t('form.cardAddress');
       } else if (isEWALLET.value && !isSZPAY.value) {
         return "电子钱包";
       } else if (isEWALLET.value && isSZPAY.value) {
@@ -1030,7 +1046,9 @@ export default defineComponent({
       initCountdownTimer,
       countdownTimer,
       alipayAvailable,
-      setNewBankTypes
+      setNewBankTypes,
+      store,
+      languageVal
     };
   }
 });
@@ -1180,6 +1198,7 @@ body {
     border-radius: 10px;
     position: relative;
     flex-wrap: wrap;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1019607843);
 
     .card-details {
       display: flex;
@@ -1224,7 +1243,8 @@ body {
     }
 
     &.USDT {
-      background-image: url("../../assets/images/finance/download.png");
+      background: url('../../assets/images/finance/usdt-item-bg.jpg') center center no-repeat;
+      background-size: 100% 100%;
     }
 
     &.active {

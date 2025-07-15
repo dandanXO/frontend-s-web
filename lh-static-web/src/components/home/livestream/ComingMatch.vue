@@ -140,6 +140,12 @@ onUnmounted(() => {
   .coming-match-cover {
     position: absolute;
     inset: 0;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    bottom: 0px;
     object-fit: cover;
   }
 

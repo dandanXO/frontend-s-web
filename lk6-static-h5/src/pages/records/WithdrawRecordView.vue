@@ -1,5 +1,5 @@
 <template>
-  <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" />
+  <!-- <RecordDateFilter class="q-my-sm" :startDate="startDate" :endDate="endDate" @handleDateChange="handleDateChange" /> -->
   <div class="table-record">
     <RecordComponent
       ref="recordRef"
@@ -13,21 +13,22 @@
   </div>
 </template>
 <script lang="js">
-import {onMounted, ref, defineComponent, onActivated} from "vue";
+import {onMounted, ref, defineComponent, onActivated, computed} from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import { api } from "boot/axios";
 import moment from "moment";
 import { cached } from "boot/cache";
 import RecordDateFilter from "../../components/RecordDateFilter.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "WithdrawRecordView",
   components: {
     RecordComponent,
-    RecordDateFilter
+    // RecordDateFilter
   },
   setup() {
-
+    const {t} = useI18n();
     const visible = ref(true);
     const tableData = ref([]);
     const isEnded = ref(false);
@@ -94,28 +95,25 @@ export default defineComponent({
       });
     };
 
-    const tableHeaders = ([
+    const tableHeaders = computed(() => ([
       {
         key: "serialNumber",
-        label: "单号"
+        label: t('record.table.withdraw.header.serialNumber')
       },
       {
         key: "withdrawAmount",
-        label: "提款数额"
+        label: t('record.table.withdraw.header.amount'),
       },
       {
         key: "status",
-        label: "状态"
+        label: t('record.table.withdraw.header.status'),
       },
-      // {
-      //   key: 'typeText',
-      //   label: '类型'
-      // },
+
       {
         key: "withdrawDate",
-        label: "提款日期"
+        label: t('record.table.withdraw.header.withdrawDate'),
       }
-    ]);
+    ]))
     const handleDateChange = (data) => {
       const {val, isStartDate} = data
       isStartDate ? startDate.value = val : endDate.value = val
@@ -131,7 +129,7 @@ export default defineComponent({
     });
 
     return {
-      
+
       tableData,
       visible,
       tableHeaders,

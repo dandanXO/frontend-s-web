@@ -150,24 +150,24 @@
       @swiper="onSwiper"
       :breakpoints="{
         0: {
-          slidesPerView: 3.5,
-          spaceBetween: 4
-        },
-        330: {
-          slidesPerView: 3.8,
-          spaceBetween: 4
-        },
-        365: {
-          slidesPerView: 4.2,
-          spaceBetween: 4
-        },
-        390: {
           slidesPerView: 4.5,
           spaceBetween: 4
         },
-        480: {
+        330: {
+          slidesPerView: 4.8,
+          spaceBetween: 4
+        },
+        365: {
+          slidesPerView: 5.2,
+          spaceBetween: 4
+        },
+        390: {
           slidesPerView: 5.5,
-          spaceBetween: 10
+          spaceBetween: 4
+        },
+        480: {
+          slidesPerView: 6.1,
+          spaceBetween: 8
         }
       }"
     >
@@ -1190,11 +1190,7 @@
     v-model="isShowLossRebateModal"
   /> -->
 
-
-  <BonusCollectModal
-    @closeDialog="isShowBonusCollectModal = false"
-    v-model="isShowBonusCollectModal"
-  />
+  <BonusCollectModal @closeDialog="ui.isShowBonusCollectModal = false" v-model="isShowBonusCollectModal" />
 </template>
 
 <script setup>
@@ -1243,16 +1239,9 @@ const cashBackDetails = reactive({
   lossRebateClaimed: false
 });
 
-
-
-const isShowBonusCollectModal = ref(false);
-
-const loadBonusCollectPopup = () => {
-  const collectBonusPopup = sessionStorage.getItem("IS_COLLECTBONUS_POPUP") ? true : false;
-  if (store.token) {
-    isShowBonusCollectModal.value = collectBonusPopup;
-  }
-};
+const isShowBonusCollectModal = computed(() => {
+  return !!store.token && ui.isShowBonusCollectModal;
+});
 
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
@@ -3283,8 +3272,6 @@ const loadBetCashBackPopup = () => {
   }
 };
 
-
-
 onActivated(() => {
   if (route.query.login === "true" || route.query.register === "true") {
     //TODO: change back.
@@ -3296,10 +3283,6 @@ onActivated(() => {
   if (store.hasToken()) {
     store.getUnreadTotal();
     // loadBetCashBackPopup();
-
-    loadBonusCollectPopup();
-
-
   }
 });
 
@@ -3315,7 +3298,7 @@ onMounted(() => {
   loadTADAFishGameList();
   loadCustomerAddress();
   checkHbPromo();
-  checkSpinLuckyWheelPromo();
+  // checkSpinLuckyWheelPromo();
   getJackpotAmt();
 
   jackpotApiTimer = setInterval(getJackpotAmt, 5000);
@@ -3578,6 +3561,12 @@ onBeforeUnmount(() => {
       line-height: 140%;
       letter-spacing: -0.08%;
       border-radius: 4px;
+
+      @media (max-width: 390px) {
+        width: 12px;
+        height: 18px;
+        font-size: 14px;
+      }
 
       > span {
         background: linear-gradient(180deg, #033309 0%, #008b06 51.04%, #033309 100%);
@@ -4766,8 +4755,8 @@ button.android {
 .cat-selection-item {
   background: url("../assets/images/index/cat-selection-bg.svg") center center no-repeat;
   background-size: 100% 100%;
-  width: 80px;
-  height: 70px;
+  width: 72px;
+  height: 63px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -4777,6 +4766,11 @@ button.android {
   padding-bottom: 3px;
   transition: 0.3s all;
   min-width: 100%;
+
+  @media(max-width: 390px){
+    width: 64px;
+    height: 56px;
+  }
 
   &.active {
     background: url("../assets/images/index/cat-selected-bg.png") center center no-repeat;

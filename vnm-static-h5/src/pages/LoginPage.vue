@@ -16,40 +16,78 @@
       </div>
     </div>
 
-    <div class="login-img">
-    </div>
+    <div class="login-img"></div>
 
     <q-form ref="loginFormRef" @submit="onSubmit">
       <div class="login-form-container">
         <div v-if="!loginType" class="">
-          <q-input rounded standout dense clearable ref="loginNameRef" v-model="loginForm.loginName"
-            :placeholder="$t('lang.username')" :rules="[
+          <q-input
+            rounded
+            standout
+            dense
+            clearable
+            ref="loginNameRef"
+            v-model="loginForm.loginName"
+            :placeholder="$t('lang.username')"
+            :rules="[
               (val) => (val && val.length > 0) || $t('lang.please_enter_username'),
+              (val) => /^[^0]/.test(val) || $t('lang.username_cannot_start_with_0'),
+              (val) => /^[a-zA-Z0-9]*$/.test(val) || $t('lang.no_special_characters'),
               (val) => (val && val.length >= 6 && val.length <= 12) || $t('lang.length_between_6_12')
-            ]" color="white" label-color="secondary" autocomplete="username">
+            ]"
+            color="white"
+            label-color="secondary"
+            autocomplete="username"
+          >
             <template v-slot:prepend>
               <div class="user-icon" />
             </template>
           </q-input>
 
-          <q-input ref="passwordRef" rounded standout dense clearable v-model="loginForm.password"
-            :placeholder="$t('lang.password')" :type="isPwd ? 'password' : 'text'"
-            :rules="[(val) => (val && val.length > 0) || $t('lang.please_type_the_password')]" color="white"
-            label-color="brand" autocomplete="current-password">
+          <q-input
+            ref="passwordRef"
+            rounded
+            standout
+            dense
+            clearable
+            v-model="loginForm.password"
+            :placeholder="$t('lang.password')"
+            :type="isPwd ? 'password' : 'text'"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.please_type_the_password')]"
+            color="white"
+            label-color="brand"
+            autocomplete="current-password"
+          >
             <template v-slot:prepend>
               <div class="password-icon" />
             </template>
             <template v-slot:append>
-              <q-icon color="dark" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-                @click="isPwd = !isPwd" />
+              <q-icon
+                color="dark"
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
             </template>
           </q-input>
 
-          <q-input ref="verificationRef" rounded standout dense clearable type="text" maxlength="4"
-            v-model="loginForm.captchaCode" :placeholder="$t('lang.verification_code')" :rules="[
+          <q-input
+            ref="verificationRef"
+            rounded
+            standout
+            dense
+            clearable
+            type="text"
+            maxlength="4"
+            v-model="loginForm.captchaCode"
+            :placeholder="$t('lang.verification_code')"
+            :rules="[
               (val) => (val && val.length > 0) || $t('lang.please_enter_verification_code'),
               (val) => (val && val.length > 3 && val.length < 5) || $t('lang.length_is_4')
-            ]" color="white" label-color="brand">
+            ]"
+            color="white"
+            label-color="brand"
+          >
             <template v-slot:append>
               <img class="veri-img" :src="verificationImg" @click="getCode" />
             </template>
@@ -61,8 +99,15 @@
 
         <div class="row items-center justify-between q-mt-xs">
           <div :class="isCheckRmb ? 'checked' : ''">
-            <q-checkbox rounded v-model="isCheckRmb" :label="$t('lang.remember_me')" size="xs" checked-icon="task_alt"
-              unchecked-icon="highlight_off" color="light-blue-4" />
+            <q-checkbox
+              rounded
+              v-model="isCheckRmb"
+              :label="$t('lang.remember_me')"
+              size="xs"
+              checked-icon="task_alt"
+              unchecked-icon="highlight_off"
+              color="light-blue-4"
+            />
           </div>
 
           <div class="text-center">
@@ -71,11 +116,23 @@
         </div>
       </div>
       <div class="bottom-btn-list">
-        <q-btn @click.prevent="onSubmit" type="submit" class="common-large-btn bottom-btn" :label="$t('lang.login_btn')"
-          color="brightbtn" no-caps rounded />
+        <q-btn
+          @click.prevent="onSubmit"
+          type="submit"
+          class="common-large-btn bottom-btn"
+          :label="$t('lang.login_btn')"
+          color="brightbtn"
+          no-caps
+          rounded
+        />
         <div>
-          <q-btn @click="goToRegister" class="common-large-white-btn bottom-btn" :label="$t('lang.register_btn')"
-            no-caps rounded />
+          <q-btn
+            @click="goToRegister"
+            class="common-large-white-btn bottom-btn"
+            :label="$t('lang.register_btn')"
+            no-caps
+            rounded
+          />
         </div>
       </div>
       <div class="text-center q-pb-lg">
@@ -411,7 +468,6 @@ onActivated(() => {
   padding: 4px;
 
   .header-left {
-
     img {
       width: 100%;
       max-width: 135px;

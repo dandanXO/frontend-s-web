@@ -16,7 +16,7 @@
       <div v-if="submitMessage.length > 0 && isDisplay" class="inner-cont">
         <div class="submit-message">
           <div class="linebox">
-            <span>银行名称：</span>
+            <span>{{$t('form.bankName')}}：</span>
             <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
             <button @blur="blurCode" @click="copyMessage('0')" class="common-btn">{{ copybtntxt0 }}</button>
           </div>
@@ -41,7 +41,7 @@
             <button @blur="blurCode" @click="copyMessage('3')" class="common-btn">{{ copybtntxt3 }}</button>
           </div>
           <div class="linebox" v-if="submitMessage[5] && submitMessage[5] !== 'null'">
-            <span>备注：</span>
+            <span>{{$t('form.remark')}}：</span>
             <span class="info" ref="subMsg5">{{ submitMessage[5] }}</span>
             <button @blur="blurCode" @click="copyMessage('5')" class="common-btn">{{ copybtntxt5 }}</button>
           </div>
@@ -58,11 +58,11 @@
           label-suffix=":"
         >
           <el-space>
-            <el-form-item class="helptxt" label="金额" prop="localAmount">
+            <el-form-item class="helptxt" :label="$t('form.amount')" prop="localAmount">
               <el-input
                 v-if="amountList.length === 0"
                 v-model="form.localAmount"
-                :placeholder="isUSDT ? '请输入USDT金额' : '请输入存款金额'"
+                :placeholder="isUSDT ? $t('form.pleaseEnterField', {field: `USDT ${$t('form.amount')}`}) : '请输入存款金额'"
               />
 
               <el-select placeholder="选择存款金额" v-else v-model="form.localAmount">
@@ -72,23 +72,23 @@
               </el-select>
             </el-form-item>
             <div class="account-tip">
-              单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
+              {{$t('form.perDeposit')}}：{{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
               {{ isUSDT ? "USDT" : store.currency.label }} -
               {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
               {{ isUSDT ? "USDT" : store.currency.label }}
             </div>
 
             <div class="btn-confirm">
-              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
+              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="standard-button btn-color-blue">{{ $t('btn.confirm') }}</el-button>
             </div>
           </el-space>
 
-          <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="实时汇率">
-            <span style="color: #17cd27">1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.label }}</span>
-          </el-form-item>
+          <!-- <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="实时汇率">
+            <span style="color: #00A478">1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.label }}</span>
+          </el-form-item> -->
 
-          <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="预计到账">
-            <span style="color: #17cd27">
+          <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" :label="$t('form.estimatedReceivables')">
+            <span style="color: #00A478">
               {{
                 calculatedMinDeposit && form.localAmount < calculatedMinDeposit
                   ? "0.00"
@@ -100,7 +100,7 @@
 
           <el-form-item
             v-show="selectedPayType && bankCardList.length"
-            label="银行"
+            :label="$t('form.bank')"
             prop="bankId"
             name="bankId"
             value="bankName"
@@ -114,11 +114,11 @@
               @selected="selectedBank"
             ></BankComponent>
           </el-form-item>
-          <el-form-item prop="privilegeId" name="privilegeId" v-if="hasPrivilege" label="优惠">
+          <el-form-item prop="privilegeId" name="privilegeId" v-if="hasPrivilege" :label="$t('menu.promotion')">
             <el-select
               v-model="selectedPrivilege"
               class="privilege-select"
-              placeholder="选择优惠"
+              :placeholder="$t('selectField', {field: $t('menu.promotion')})"
               @change="checkMinDepositAmt"
               @focus="loadPrivilege(activeMethod)"
               fit-input-width
@@ -188,7 +188,9 @@ import { useRouter, useRoute } from "vue-router";
 // import { InfoFilled } from "@element-plus/icons-vue";
 import { doIt } from "@/utils/action";
 import { useNotify } from "@/hooks/notify";
+import { useI18n } from "vue-i18n";
 
+const {t} = useI18n();
 const router = useRouter();
 const route = useRoute();
 const loadingBtn = ref(false);
@@ -269,7 +271,7 @@ const rules = {
   localAmount: [
     {
       required: true,
-      message: "请输入金额",
+      message: t('form.pleaseEnterField', {field: t('form.amount')}),
       trigger: "blur"
     },
     {
@@ -470,40 +472,6 @@ function clearInfo() {
 }
 
 function confirmDeposit() {
-  if (store.token) {
-    if (!store.phone) {
-      ElMessageBox.confirm("为保证资金安全，存款前请先验证手机号", "系统提示", {
-        showClose: "false",
-        cancelButtonClass: "cancel-btn",
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning",
-        draggable: true,
-        buttonSize: "small"
-      })
-        .then(() => {
-          router.push("/center/personal");
-        })
-        .catch(() => {});
-      return;
-    }
-    if (!store.realName) {
-      ElMessageBox.confirm("您还未绑定真实姓名，请前往绑定", "系统提示", {
-        showClose: "false",
-        cancelButtonClass: "cancel-btn",
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning",
-        draggable: true,
-        buttonSize: "small"
-      })
-        .then(() => {
-          router.push("/center/personal");
-        })
-        .catch(() => {});
-      return;
-    }
-  }
   loadingBtn.value = true;
 
   if (freePrivilege.value) {
@@ -846,8 +814,9 @@ onMounted(() => {
   position: relative;
   :deep(.el-input__wrapper),
   :deep(.el-select__wrapper) {
-    background-color: #f7f8fb;
-    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+    background: #F7F8FB;
+    box-shadow: 0px 0px 2.78px 0px #A9C9EA inset;
+
   }
 }
 
@@ -979,30 +948,5 @@ onMounted(() => {
 
 .btn-confirm {
   padding-left: 20px;
-  // margin-bottom: 10px;
-  .el-button {
-    background-image: url(../assets/images/finance/deposit/btn-bg.png) !important;
-    background-size: 100% 100%;
-    &:hover {
-      opacity: 0.9;
-      background-size: 100% 100%;
-    }
-    &:active {
-      filter: brightness(0.85);
-      transform: translate(0px, 1px);
-    }
-  }
-}
-
-.dark {
-  .btn-confirm {
-    .el-button {
-      background: url("../assets/images/home/standard-button-bg.svg") no-repeat center center !important;
-      background-size: cover !important;
-      box-shadow: none;
-      border-radius: 8px;
-      border: 1px solid #3a93ce;
-    }
-  }
 }
 </style>

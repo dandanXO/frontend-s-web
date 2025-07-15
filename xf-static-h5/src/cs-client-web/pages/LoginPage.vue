@@ -8,6 +8,7 @@
       <q-badge rounded :color="localStatusColor" />
       <q-badge @click="pingServer" rounded :color="restIndColor" />
       <q-badge rounded :color="wsIndColor" />
+      <q-badge rounded :color="isCsPingColor" />
     </div>
 
     <div class="fit flex items-center justify-center text-center">
@@ -24,6 +25,7 @@
             <q-badge rounded :color="localStatusColor" />
             <q-badge @click="pingServer" rounded :color="restIndColor" />
             <q-badge rounded :color="wsIndColor" />
+            <q-badge rounded :color="isCsPingColor" />
           </div>
         </div>
 
@@ -65,7 +67,7 @@ export default defineComponent({
     const chatStore = useChatStore();
     const userStore = useUserStore();
     const socketStore = useSocketStore();
-    const { isConnected, isInternet } = storeToRefs(socketStore);
+    const { isConnected, isInternet, isCsPingColor } = storeToRefs(socketStore);
 
     const text = ref("");
     const $q = useQuasar();
@@ -124,6 +126,14 @@ export default defineComponent({
       });
     };
 
+    const pingCs = () => {
+      authAPI.pingCs().then((res) => {
+        if (res.status === 200) {
+          isCsPingColor.value = "green";
+        }
+      });
+    };
+
     onActivated(async () => {
       let way;
       let type;
@@ -136,6 +146,7 @@ export default defineComponent({
       let chatGuid;
 
       await nextTick();
+      pingCs();
 
       let isNewCs = partnerCode != "" || partnerId != "" ? true : false;
       if (isNewCs === true) {
@@ -382,6 +393,7 @@ export default defineComponent({
       restIndColor,
       wsIndColor,
       localStatusColor,
+      isCsPingColor,
       pingServer,
       chat_type
     };
@@ -391,7 +403,7 @@ export default defineComponent({
 
 <style scoped>
 .server-indicator-div {
-  width: 70px;
+  width: 90px;
   padding: 10px;
   margin-left: auto;
 }

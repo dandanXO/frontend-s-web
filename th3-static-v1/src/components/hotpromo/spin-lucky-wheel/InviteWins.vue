@@ -11,18 +11,15 @@
     <div class="qr-wrapper invite-win-section">
       <q-spinner v-if="isLoading" :size="30" />
       <VueQRCodeComponent v-else id="the-qrcode" :size="120" :text="selfTgurl" class="qr-code" />
-      <span class="desc">
-        คุณต้องการปลดล็อกเงินรางวัล {{ `${store.currency.value}` }}500 ของคุณทันทีหรือไม่? เชิญเพื่อนของคุณเพื่อหมุนฟรี!
-      </span>
-      <q-btn label="บันทึก" :size="'150'" class="save-btn" @click="downloadQRImg()" />
+      <span class="desc">Do you want to unlock your reward right away? Invite you friends for a free spin!</span>
+      <q-btn label="Save" :size="'150'" class="save-btn" @click="downloadQRImg()" />
     </div>
   </div>
-  <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useQuasar, Platform } from "quasar";
+import { ref, onMounted, inject } from "vue";
+import { useQuasar, copyToClipboard, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import VueQRCodeComponent from "vue-qrcode-component";
@@ -34,24 +31,29 @@ const store = userStore();
 const isLoading = ref(false);
 
 const selfTgurl = ref("");
-const copyinput = ref(null);
-const text_copied = ref("");
-const copyShareLink = () => {
-  const copiedText = `คุณต้องการปลดล็อกรางวัลของคุณ ${store.currency.value}500 ทันทีหรือไม่? คลิกที่ลิงก์: ${selfTgurl.value}`;
-  text_copied.value = copiedText;
-  setTimeout(() => {
-    const copyText = copyinput.value;
 
-    copyText.select();
-    document.execCommand("copy");
+const targetWithdrawAmount = inject("targetWithdrawAmount");
 
-    $q.notify({
-      color: "positive",
-      position: "top",
-      message: `${selfTgurl.value} คัดลอกไปยังคลิปบอร์ด`,
-      icon: "check_circle_outline"
+const copyShareLink = (selfTgurl) => {
+  const copiedText = `Do you want to unlock your $${targetWithdrawAmount.value} reward right away? Click the link: ${selfTgurl}`;
+
+  copyToClipboard(copiedText)
+    .then(() => {
+      $q.notify({
+        color: "position",
+        position: "top",
+        message: `${selfTgurl} copied to clipboard`,
+        icon: "check_circle_outline"
+      });
+    })
+    .catch(() => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: "Failed",
+        icon: "report_problem"
+      });
     });
-  }, 100);
 };
 
 const downloadQRImg = async () => {
@@ -75,14 +77,14 @@ const downloadQRImg = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "รูปภาพ QR Code ถูกบันทึกลงในแกลเลอรีรูปภาพ.",
+          message: "QR Code image saved to photo gallery.",
           icon: "check_circle_outline"
         });
 
         canvas.style.display = "none";
       });
     } catch (error) {
-      console.error("เกิดข้อผิดพลาดในการบันทึกรูปภาพ QR Code:", error);
+      console.error("Error saving QR Code image:", error);
     }
   } else if (window.location.pathname === "/promotion") {
     try {
@@ -104,14 +106,14 @@ const downloadQRImg = async () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "รูปภาพ QR Code ถูกบันทึกลงในแกลเลอรีรูปภาพ.",
+          message: "QR Code image saved to photo gallery.",
           icon: "check_circle_outline"
         });
 
         canvas.style.display = "none";
       });
     } catch (error) {
-      console.error("เกิดข้อผิดพลาดในการบันทึกรูปภาพ QR Code:", error);
+      console.error("Error saving QR Code image:", error);
     }
   } else {
     try {
@@ -121,6 +123,7 @@ const downloadQRImg = async () => {
         // console.log(dataUrl);
 
         const link = window.document.createElement("a");
+        const imgElement = document.querySelector('img[alt="Scan me!"]');
         link.href = dataUrl;
         link.download = "myreferral";
 
@@ -150,7 +153,7 @@ onMounted(() => {
     .get("/session/member/referralCode")
     .then((res) => {
       if (res.code === 0) {
-        selfTgurl.value = tgDomain + "refer/" + res.data;
+        selfTgurl.value = tgDomain + "referSpin/" + res.data;
         isLoading.value = false;
       }
     })
@@ -192,7 +195,6 @@ onMounted(() => {
       width: 25px;
       height: 25px;
       font-size: 12px;
-      display: flex;
     }
   }
 
@@ -201,13 +203,13 @@ onMounted(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     padding: 25px;
 
     .qr-code {
       padding: 10px;
       border-radius: 0.625rem;
       background: #fff;
-      margin-bottom: 10px;
     }
 
     .save-btn {
@@ -217,14 +219,13 @@ onMounted(() => {
       border-radius: 0.5rem;
       background: linear-gradient(180deg, #ffa600 0%, #ff3b00 100%);
       border: 1px solid #e8c4ff33;
-      margin-top: 10px;
     }
   }
 }
 
 .invite-win-section {
   background: #1e1f24;
-  border: 1px solid #cd91ff;
+  border: 1px solid #c4ffd599;
   border-radius: 4px;
 }
 

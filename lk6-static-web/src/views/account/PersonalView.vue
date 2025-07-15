@@ -1,7 +1,7 @@
 <template>
   <div class="account-box account-contents">
     <div class="menu-title-container">
-      <div class="menu-title">个人中心</div>
+      <div class="menu-title">{{ $t('personal.personalCentre') }}</div>
     </div>
 
     <div class="personal-container">
@@ -10,13 +10,13 @@
           <div class="basic-info">
             <div class="basic-info-table">
               <div class="tbl-row">
-                <div class="basic-info-cell main-title">基本资料</div>
+                <div class="basic-info-cell main-title">{{ $t('personal.basicInfo') }}</div>
               </div>
 
               <div class="info-tbl-row">
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">昵称：</div>
+                    <div class="basic-info-cell title">{{ $t('personal.nickName') }}：</div>
                     <div v-if="personalState.memberInfo.loginName" class="basic-info-cell content">
                       {{ personalState.memberInfo.loginName }}
                     </div>
@@ -25,7 +25,7 @@
 
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">姓名：</div>
+                    <div class="basic-info-cell title">{{ $t('personal.name') }}：</div>
                     <div v-if="personalState.memberInfo.realName" class="basic-info-cell content">
                       {{ personalState.memberInfo.realName }}
                     </div>
@@ -36,15 +36,15 @@
                           name="realName"
                           prop="realName"
                           :rules="[
-                            { required: true, message: '请输入姓名' },
-                            {
-                              pattern: /^[\u4e00-\u9fa5·]+$/,
-                              message: '请输入中文字符',
-                              trigger: 'change'
-                            }
+                            { required: true, message: $t('form.pleaseEnterField', {field: $t('form.realName')}) },
+                            // {
+                            //   pattern: /^[\u4e00-\u9fa5·]+$/,
+                            //   message: '请输入中文字符',
+                            //   trigger: 'change'
+                            // }
                           ]"
                         >
-                          <el-input v-model="updateFormDetails.realName" placeholder="姓名" />
+                          <el-input v-model="updateFormDetails.realName" :placeholder="$t('form.realName')" />
                         </el-form-item>
                       </div>
                     </div>
@@ -55,7 +55,7 @@
               <div class="info-tbl-row">
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">生日：</div>
+                    <div class="basic-info-cell title">{{ $t('personal.birthday') }}：</div>
                     <div v-if="personalState.memberInfo.birthday" class="basic-info-cell content">
                       {{ personalState.memberInfo.birthday }}
                     </div>
@@ -65,22 +65,22 @@
                         <el-form-item
                           name="birthday"
                           prop="birthday"
-                          :rules="[{ required: true, message: '请输入生日' }]"
+                          :rules="[{ required: true, message: $t('form.pleaseEnterField', {field: $t('form.birthday')}) }]"
                         >
                           <el-date-picker
                             style="max-width: 190px"
                             v-model="updateFormDetails.birthday"
                             value-format="YYYY-MM-DD"
-                            placeholder="生日"
+                            :placeholder="$t('form.birthday')"
                           />
                         </el-form-item>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="info-tbl-col">
+                <div class="info-tbl-col" style="display:none;">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">电话：</div>
+                    <div class="basic-info-cell title">{{ $t('personal.phone') }}：</div>
                     <div v-if="personalState.memberInfo.telephone" class="basic-info-cell content">
                       {{ personalState.memberInfo.telephone }}
                     </div>
@@ -106,7 +106,7 @@
                         type="button"
                         @click="updatePhoneModal"
                       >
-                        绑定
+                        {{ $t('personal.bind') }}
                       </button>
                     </div>
                   </div>
@@ -148,7 +148,7 @@
               <div class="info-tbl-row">
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">邮箱：</div>
+                    <div class="basic-info-cell title">{{$t('form.email')}}：</div>
                     <div v-if="personalState.memberInfo.email" class="basic-info-cell content">
                       {{ personalState.memberInfo.email }}
                     </div>
@@ -174,7 +174,7 @@
                         type="button"
                         @click="updateSecurityModal"
                       >
-                        验证
+                        {{ $t('btn.bind') }}
                       </button>
                     </div>
                   </div>
@@ -182,7 +182,7 @@
 
                 <div class="info-tbl-col">
                   <div class="tbl-row">
-                    <div class="basic-info-cell title">性别：</div>
+                    <div class="basic-info-cell title">{{$t('form.gender')}}：</div>
                     <div v-if="personalState.memberInfo.gender" class="basic-info-cell content">
                       {{ personalState.memberInfo.gender === "Male" ? "男" : "女" }}
                     </div>
@@ -191,9 +191,9 @@
                       class="basic-info-cell content"
                       v-if="personalState.memberInfo.gender || (!personalState.memberInfo.gender && isEdit)"
                     >
-                      <el-select v-model="updateFormDetails.gender" placeholder="选择性别" style="min-width: 150px">
-                        <el-option label="男" value="Male" />
-                        <el-option label="女" value="Female" />
+                      <el-select v-model="updateFormDetails.gender" :placeholder="$t('form.selectField', {field: $t('form.gender')})" style="min-width: 150px">
+                        <el-option :label="$t('form.male')" value="Male" />
+                        <el-option :label="$t('form.female')" value="Female" />
                       </el-select>
                     </div>
                   </div>
@@ -207,7 +207,7 @@
                 v-if="isEdit"
                 @click="updateState"
               >
-                提交
+                {{ $t('btn.submit') }}
               </el-button>
 
               <button
@@ -220,7 +220,7 @@
                 "
                 @click="isEdit = !isEdit"
               >
-                编辑
+                {{ $t('btn.edit') }}
               </button>
             </div>
           </div>
@@ -230,37 +230,43 @@
 
           <div class="update-pwd-container">
             <div class="tbl-row">
-              <div class="mb-20 basic-info-cell main-title">修改密码</div>
+              <div class="mb-20 basic-info-cell main-title">{{ $t('personal.changePassword') }}</div>
             </div>
 
             <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
-              <el-form-item ref="refOldPassword" label="旧密码" name="oldPassword" prop="oldPassword">
+              <el-form-item ref="refOldPassword" :label="$t('personal.oldPassword')" name="oldPassword" prop="oldPassword">
                 <el-input
                   style="width: 200px"
                   type="password"
                   v-model="updatePwdInfo.oldPassword"
-                  :placeholder="'请输入旧密码'"
+                  :placeholder="$t('form.pleaseEnterField', {
+            field: $t('personal.oldPassword')
+          })"
                   clearable
                   show-password
                 />
               </el-form-item>
 
-              <el-form-item ref="refPassword" label="新密码" name="password" prop="password">
+              <el-form-item ref="refPassword" :label="$t('personal.newPassword')"name="password" prop="password">
                 <el-input
                   style="width: 200px"
                   type="password"
                   v-model="updatePwdInfo.password"
-                  :placeholder="'请输入新密码'"
+                  :placeholder="$t('form.pleaseEnterField', {
+            field: $t('personal.newPassword')
+          })"
                   clearable
                   show-password
                 />
               </el-form-item>
-              <el-form-item ref="refConfirmPassword" label="确认密码" name="confirmPassword" prop="confirmPassword">
+              <el-form-item ref="refConfirmPassword" :label="$t('personal.confirmPassword')" name="confirmPassword" prop="confirmPassword">
                 <el-input
                   style="width: 200px"
                   type="password"
                   v-model="updatePwdInfo.confirmPassword"
-                  :placeholder="'请再次输入新密码'"
+                  :placeholder="$t('form.pleaseEnterField', {
+            field: $t('personal.confirmPassword')
+          })"
                   clearable
                   show-password
                 />
@@ -272,7 +278,7 @@
                   type="button"
                   @click="clearPwd"
                 >
-                  重新填写
+                  {{ $t('personal.reset') }}
                 </button>
 
                 <button
@@ -281,7 +287,7 @@
                   type="button"
                   @click="submitUpdatePwd"
                 >
-                  确认修改
+                  {{ $t('personal.confirm') }}
                 </button>
               </div>
             </el-form>
@@ -289,8 +295,8 @@
         </div>
         <div class="account-tip-text">
           <div class="link">
-            如果您需要修改个人资料，请您联系我们的
-            <a @click="store.openLiveChat()">在线客服</a>
+            {{ $t('personal.supportTagline') }}
+            <a @click="store.openLiveChat()">{{ $t('personal.onlineSupport') }}</a>
           </div>
         </div>
       </el-form>
@@ -330,7 +336,7 @@
       v-model="updateSecurityModalVisible"
       :footer="null"
       width="500px"
-      title="安全验证"
+      :title="$t('form.safetyVerification')"
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -342,13 +348,13 @@
         :rules="updateSecurityVerifiedRules"
       >
         <el-form-item ref="emailAddress" prop="emailAddress">
-          <el-input v-model="updateSecurityVerified.emailAddress" placeholder="邮箱" />
+          <el-input v-model="updateSecurityVerified.emailAddress" :placeholder="$t('form.email')" />
         </el-form-item>
         <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
             <el-input
               v-model="updateSecurityVerified.verificationCode"
-              :placeholder="'验证码'"
+              :placeholder="$t('form.verificationCode')"
               @keyup.enter="submitUpdateSecurity"
             />
             <el-button
@@ -357,13 +363,13 @@
               class="common-btn verification-btn"
               @click="openVerificationModal"
             >
-              <span v-if="disableSendVerificationButton">已发送（倒数{{ countDown }}秒)</span>
-              <span v-else>发送验证码</span>
+              <span v-if="disableSendVerificationButton">{{$t('form.sent')}}（{{ countDown }}{{ $t('form.seconds') }})</span>
+              <span v-else>{{ $t('form.sendOTP') }}</span>
             </el-button>
           </el-space>
         </el-form-item>
         <el-button :loading="loadingSecurityBtn" class="common-btn verification-btn" @click="submitUpdateSecurity">
-          提交
+          {{ $t('btn.submit') }}
         </el-button>
       </el-form>
     </el-dialog>
@@ -371,7 +377,7 @@
     <el-dialog
       wrap-class-name="securityModal"
       v-model="verificationModalVisible"
-      title="验证码"
+      :title="$t('form.verificationCode')"
       width="500px"
       align-center
       :close-on-click-modal="false"
@@ -379,22 +385,22 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaUpdateRef" :model="updateSecurityVerified">
-        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码' }]">
-          <el-space>
+        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: $t('form.pleaseEnterField', {field: $t('form.verificationCode')}) }]">
+          <div style="width:100%;display:grid;grid-template-columns:1fr 135px;gap:10px;">
             <el-input
               @keyup.enter="verifyVerificationCode"
               v-model="updateSecurityVerified.captchaCode"
               :maxlength="4"
-              placeholder="验证码"
+              :placeholder="$t('form.verificationCode')"
             />
 
             <div class="verification" @click="getCode()">
-              <img style="width: 80%; margin-top: 6px" :src="verificationImg" />
+              <img style="width: 100%;" :src="verificationImg" />
             </div>
-          </el-space>
+          </div>
         </el-form-item>
       </el-form>
-      <el-button class="common-btn" @click="verifyVerificationCode" :loading="isEmailSending">验证</el-button>
+      <el-button class="common-btn" @click="verifyVerificationCode" :loading="isEmailSending">{{ $t('btn.verify') }}</el-button>
     </el-dialog>
 
     <el-dialog
@@ -402,7 +408,7 @@
       v-model="updatePhoneModalVisible"
       :footer="null"
       width="500px"
-      title="手机验证"
+      :title="$t('form.phoneVerification')"
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -414,24 +420,26 @@
         :rules="updatePhoneVerifiedRules"
       >
         <el-form-item ref="phone" prop="phone">
-          <el-input v-model="updatePhoneVerified.phone" placeholder="手机号码" />
+          <el-input v-model="updatePhoneVerified.phone" :placeholder="$t('form.ohone')" />
         </el-form-item>
-        <el-form-item class="half" ref="verificationCode" prop="verificationCode">
+        <template v-if="isRequirePhoneValidation">
+          <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
-            <el-input v-model="updatePhoneVerified.verificationCode" :placeholder="'验证码'" />
+            <el-input v-model="updatePhoneVerified.verificationCode" :placeholder="$t('form.verificationCode')" />
             <el-button
               :disabled="disableSendPhoneButton"
               size="small"
               class="common-btn verification-btn"
               @click="openPhoneVerificationModal"
             >
-              <span v-if="disableSendPhoneButton">已发送（倒数{{ countDown }}秒)</span>
-              <span v-else>发送验证码</span>
+              <span v-if="disableSendPhoneButton">{{$t('form.sent')}}（{{ countDown }}{{ $t('form.seconds') }})</span>
+              <span v-else>{{ $t('form.sendOTP') }}</span>
             </el-button>
           </el-space>
         </el-form-item>
+        </template>
         <el-button :loading="loadingPhoneBtn" class="common-btn verification-btn" @click="submitUpdatePhone">
-          提交
+          {{ $t('btn.submit') }}
         </el-button>
       </el-form>
     </el-dialog>
@@ -439,20 +447,20 @@
     <el-dialog
       wrap-class-name="phoneModal"
       v-model="verificationPhoneModalVisible"
-      title="验证码"
+      :title="$t('form.verificationCode')"
       width="500px"
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
       <el-form ref="captchaUpdateRef" :model="updatePhoneVerified">
-        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码' }]">
+        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: $t('pleaseEnterField', {field: $t('form.verificationCode')})}]">
           <el-space>
             <el-input
               @keypress.enter.prevent="verifyPhoneVerificationCode"
               v-model="updatePhoneVerified.captchaCode"
               :maxlength="4"
-              placeholder="验证码"
+              :placeholder="$t('form.verificationCode')"
             />
 
             <div class="verification" @click="getCode()">
@@ -461,7 +469,7 @@
           </el-space>
         </el-form-item>
       </el-form>
-      <el-button class="common-btn" @click="verifyPhoneVerificationCode" :loading="isPhoneSending">验证</el-button>
+      <el-button class="common-btn" @click="verifyPhoneVerificationCode" :loading="isPhoneSending">{{ $t('btn.verify') }}</el-button>
     </el-dialog>
   </div>
 
@@ -489,6 +497,7 @@ import WithdrawBank from "@/components/account/WithdrawBank.vue";
 import { useRouter } from "vue-router";
 import { ElMessageBox } from "element-plus";
 import { useLocalStorage } from "@vueuse/core";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PersonalView",
@@ -496,6 +505,7 @@ export default defineComponent({
     WithdrawBank
   },
   setup() {
+    const { t } = useI18n();
     const notify = useNotify();
     // Send Verification Code
     const emailKey = `emailKey`;
@@ -632,7 +642,7 @@ export default defineComponent({
         })
         .catch((err) => {
           notify({
-            message: "请输入有效的邮件",
+            message: t('form.pleaseEnterField', {field: t('form.email')}),
             type: "error"
           });
         });
@@ -794,7 +804,9 @@ export default defineComponent({
     };
     const submitUpdatePhone = () => {
       loadingPhoneBtn.value = true;
-      updatePhoneFormRef.value
+
+      if(store.isRequirePhoneValidation) {
+        updatePhoneFormRef.value
         .validate()
         .then(() => {
           verificationPhoneDetails.memberInfo.code = updatePhoneVerified.verificationCode;
@@ -816,13 +828,36 @@ export default defineComponent({
             .catch((e) => {
               console.log(e.message);
               // message.error(e.message);
+            }).finally(() => {
+              loadingPhoneBtn.value = false;
             });
         })
         .catch((error) => {
           console.log("error", error);
         });
-
-      loadingPhoneBtn.value = false;
+      } else {
+        updateAccount(toRaw({phone: updatePhoneVerified.phone}))
+            .then((res) => {
+              if (res.code === 0) {
+                notify({
+                  message: "成功",
+                  type: "success"
+                });
+                updatePhoneModalVisible.value = false;
+                store.getMemberInfo();
+                loadInfo();
+                gotoNewplayerPromo();
+              } else {
+                notify.error(res.message);
+              }
+            })
+            .catch((e) => {
+              console.log(e.message);
+              // message.error(e.message);
+            }).finally(() => {
+              loadingPhoneBtn.value = false;
+            });
+      }
     };
     const gotoNewplayerPromo = () => {
       if (useLocalStorage("need-go-back-newplayer").value === "true") {
@@ -860,24 +895,24 @@ export default defineComponent({
       emailAddress: [
         {
           required: true,
-          message: "请输入邮箱地址",
+          message: t('form.pleaseEnterField', {field: t('form.email')}),
           trigger: "blur"
         },
         {
           type: "email",
-          message: "邮箱地址不符合",
+          message: t('form.emailMismatch'),
           trigger: "blur"
         }
       ],
       verificationCode: [
         {
           required: true,
-          message: "请输入验证码",
+          message: t('form.pleaseEnterField', {field: t('form.verificationCode')}),
           trigger: "blur"
         },
         {
           min: 4,
-          message: "长度应为 4",
+          message: t('form.lengthMustBe', {num: 4}),
           trigger: "blur"
         }
       ]
@@ -941,7 +976,7 @@ export default defineComponent({
               if (response.code === 0) {
                 // message.success("success");
                 notify({
-                  message: "成功",
+                  message: t('message.success'),
                   type: "success"
                 });
                 clearPwd();
@@ -962,7 +997,7 @@ export default defineComponent({
 
     const validatePwd = async (r, v) => {
       if (updatePwdInfo.confirmPassword !== updatePwdInfo.password) {
-        return Promise.reject("确认密码与新密码不符合");
+        return Promise.reject(t('form.passwordMismatch'));
       } else {
         return Promise.resolve();
       }
@@ -972,39 +1007,45 @@ export default defineComponent({
       oldPassword: [
         {
           required: true,
-          message: "请输入旧密码",
+          message: t('form.pleaseEnterField', {
+            field: t('personal.oldPassword')
+          }),
           trigger: "blur"
         },
         {
           min: 6,
           max: 12,
-          message: "长度应为 6 到 12 数字",
+          message: t('form.lengthMustBeBetween', {min: 6, max:12}),
           trigger: "blur"
         }
       ],
       password: [
         {
           required: true,
-          message: "请输入新密码",
+          message: t('form.pleaseEnterField', {
+            field: t('personal.newPassword')
+          }),
           trigger: "blur"
         },
         {
           min: 6,
           max: 12,
-          message: "长度应为 6 到 12 数字",
+          message:  t('form.lengthMustBeBetween', {min: 6, max:12}),
           trigger: "blur"
         }
       ],
       confirmPassword: [
         {
           required: true,
-          message: "请输入确认密码",
+          message: t('form.pleaseEnterField', {
+            field: t('personal.confirmPassword')
+          }),
           trigger: "blur"
         },
         {
           min: 6,
           max: 12,
-          message: "长度应为 6 到 12 数字",
+          message:  t('form.lengthMustBeBetween', {min: 6, max:12}),
           trigger: "blur"
         },
         {
@@ -1025,7 +1066,7 @@ export default defineComponent({
           .then((ret) => {
             if (ret.code === 0) {
               notify({
-                message: "提交成功",
+                message: t('message.submitSuccessfully'),
                 type: "success"
               });
               loadInfo();
@@ -1120,10 +1161,12 @@ export default defineComponent({
       }
 
       :deep(.el-input__wrapper) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
         border-radius: 20px;
-        background: #f7f8fb;
         height: 38px;
+        background: linear-gradient(180deg, #FFFFFF 0%, #E3EFFF 100%);
+        box-shadow: 0px 2px 2px 0px #FFFFFFCC inset;
+        box-shadow: 0px 2px 0px 0px #C6D9FF;
+
       }
 
       .btn-container {
@@ -1198,39 +1241,14 @@ export default defineComponent({
     }
   }
 }
+</style>
 
-.dark {
-  .menu-title-container {
-    .menu-title {
-      color: $color-white;
-    }
-  }
-
-  .personal-container {
-    .personal-wrapper {
-      .tbl-row {
-        .basic-info-cell {
-          color: #fff;
-        }
-      }
-
-      .update-pwd-container {
-        &:deep(.el-input__wrapper) {
-          background-color: $background-content-block-lighter-dark;
-          box-shadow: 0px 0px 8px 0px #0d233a inset;
-        }
-      }
-    }
-  }
-
-  .account-tip-text {
-    color: $font-3-dark;
-  }
-
-  .standard-button.standout {
-    background: #394a65;
-    box-shadow: none;
-    color: $active-color-dark;
+<style lang="scss">
+.account-contents .searchbar {    
+  .el-input__wrapper {
+    background: #F7F8FB !important;
+    box-shadow: 0px 0px 2.78px 0px #A9C9EA inset !important;
+    border-radius: 8px !important;
   }
 }
 </style>

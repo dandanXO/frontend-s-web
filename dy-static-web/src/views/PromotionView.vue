@@ -432,6 +432,15 @@ export default defineComponent({
       }
       loadBanner();
       loadAll();
+      const wrapper = document.querySelector('.promo-type-wrapper');
+      const onScroll = () => {
+        if (window.scrollY > 0) {
+          wrapper && wrapper.classList.add('scrolled');
+        } else {
+          wrapper && wrapper.classList.remove('scrolled');
+        }
+      };
+      window.addEventListener('scroll', onScroll);
     });
 
     watch(() => route.query.name, () => {
@@ -607,10 +616,16 @@ export default defineComponent({
       max-width: $maxwidth;
       margin: 0 auto;
       padding: 10px 0;
+      position: relative;
 
       .promo-type-wrapper {
+        // width: 100vw;
+        position: sticky;
+        top: 100px; // 根據你的 header 高度調整
+        z-index: 10;
         display: flex;
         justify-content: center;
+        align-items: center;
         /* width */
         ::-webkit-scrollbar {
           width: 0px;
@@ -620,9 +635,9 @@ export default defineComponent({
 
         .type-list {
           display: flex;
-          justify-content: flex-start;
+          justify-content: center;
           align-items: center;
-          padding: 10px 0 20px;
+          padding: 20px 0 20px;
           overflow: auto;
           width: 90%;
           font-family: "PingFang SC";
@@ -683,6 +698,10 @@ export default defineComponent({
             }
           }
         }
+      }
+      .promo-type-wrapper.scrolled {
+        background: #fff; // 你想要的背景色
+        transition: background 0.3s;
       }
 
       .promo-list-wrapper {

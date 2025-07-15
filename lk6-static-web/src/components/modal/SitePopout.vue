@@ -406,39 +406,4 @@ watch(
     // }
   }
 }
-.dark {
-  .container {
-    background: url("../../assets/images/home/site-popout/dark-popout-bg2.png") no-repeat center center !important;
-    background-size: 100% 100% !important;
-    .header {
-      background: linear-gradient(180deg, rgba(179, 217, 255, 0.2) 0%, rgba(179, 217, 255, 0.2) 100%);
-      color: #fff;
-      font-family: YouSheBiaoTiHei;
-    }
-    .left-item {
-      background: url("../../assets/images/home/site-popout/dark-list-item-bg.png") no-repeat center center !important;
-      background-size: 100% 100% !important;
-      margin: 0px 5px;
-
-      .title {
-        color: #ffffff99 !important;
-      }
-      .period {
-        color: #ffffff99 !important;
-      }
-
-      &.active {
-        background: url("../../assets/images/home/site-popout/dark-list-item-bg-active.png") no-repeat center center !important;
-        background-size: 100% 100% !important;
-        margin: 0px;
-        .title {
-          color: #fff !important;
-        }
-        .period {
-          color: #fff !important;
-        }
-      }
-    }
-  }
-}
 </style>

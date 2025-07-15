@@ -2,106 +2,120 @@
   <div class="verify-section">
     <!--    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
-      <div class="flex items-center no-wrap">
+      <div class="flex items-center no-wrap q-mb-md">
         <q-input
-          standout
-          bg-color="white"
           class="q-pb-xs"
           hide-bottom-space
           v-model="formDetail.email"
-          label="邮箱"
           clearable
           lazy-rules
           ref="emailRef"
-          :rules="[(val) => (val && val.length > 0) || '请输入邮箱', isValidEmail]"
+          :rules="[(val) => (val && val.length > 0) || t('verifyEmail.form.email.error.required'), isValidEmail]"
           :readonly="showVerifyBtn ? false : true"
           style="width: 100%"
-        />
-
-        <div class="q-ml-md">
-          <q-btn
-            size="md"
-            color="dyblue"
-            :label="showVerifyBtn && otpCountdownCount <= 0 ? `发送验证码` : `已发送（倒数${otpCountdownCount}秒)`"
-            @click="openVerificationDialog()"
-            style="white-space: nowrap"
-            :disable="!showVerifyBtn && otpCountdownCount > 0"
-          />
-        </div>
+          :placeholder="$t('verifyEmail.form.email.placeholder')"
+        >
+          <template v-slot:prepend>
+            <!-- <q-icon name="person_outline" /> -->
+            <label class="header-label">{{ $t("verifyEmail.form.email.label") }}</label>
+          </template>
+          <template v-slot:append>
+            <q-btn
+              class="verification-btn"
+              :disable="!showVerifyBtn && otpCountdownCount > 0"
+              @click="openVerificationDialog"
+            >
+              {{
+                showVerifyBtn && otpCountdownCount <= 0
+                  ? $t("verifyEmail.form.email.append.sendable")
+                  : $t("verifyEmail.form.email.append.sent", { second: otpCountdownCount })
+              }}
+            </q-btn>
+          </template>
+        </q-input>
       </div>
 
       <q-input
-        standout
-        bg-color="white"
         class="q-pb-xs"
         hide-bottom-space
         ref="emailOtpRef"
         v-model="formDetail.emailOtpRef"
         type="tel"
-        label="邮箱验证码"
         lazy-rules
-        :rules="[(val) => (val && val.length > 5 && val.length < 7) || '请输入邮箱验证码']"
+        :rules="[(val) => (val && val.length > 5 && val.length < 7) || $t('verifyEmail.form.otp.error.required')]"
         label-color=""
         color=""
         style="width: 100%"
-      ></q-input>
+        :placeholder="$t('verifyEmail.form.otp.placeholder')"
+      >
+        <template v-slot:prepend>
+          <!-- <q-icon name="person_outline" /> -->
+          <label class="header-label">{{ $t("verifyEmail.form.otp.label") }}</label>
+        </template>
+      </q-input>
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="dyblue" @click="submitUpdateSecurity()" label="验证邮箱" />
+        <q-btn size="md" class="submit-btn" @click="submitUpdateSecurity" :label="$t('btn.submit')" />
       </div>
     </q-form>
   </div>
 
-  <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
-    <q-card width="100%">
-      <q-card-section style="padding: 10px 5px" class="q-pa-md bg-dyblue text-white">
-        <q-toolbar>
-          <q-toolbar-title>验证码</q-toolbar-title>
-          <q-btn flat v-close-popup round dense icon="close" />
-        </q-toolbar>
-      </q-card-section>
-      <div style="padding: 20px">
-        <q-card-section class="q-mb-md q-pa-md">
-          <q-input
-            :rules="[(val) => (val && val.length > 3 && val.length < 5) || '请输入验证码']"
-            v-model="innerCaptchaRef"
-            label="验证码"
-            ref="refInnerCaptchaCode"
-          >
-            <template v-slot:append>
-              <img
-                :src="verificationImg"
-                title="点击刷新验证码"
-                style="margin-top: 6px; cursor: pointer"
-                @click="getCode"
-              />
-            </template>
-          </q-input>
-        </q-card-section>
-        <q-btn @click="onCaptchaSubmit" label="发送验证码" color="dyblue" />
-      </div>
-    </q-card>
-  </q-dialog>
+  <CommonModal
+    v-model="showCaptchaDialog"
+    class="captcha-dialog"
+    no-backdrop-dismiss
+    :header="$t('verifyEmail.notification.captcha.title')"
+    :confirm-btn-text="$t('btn.confirm')"
+    @confirm="onCaptchaSubmit"
+  >
+    <template #content>
+      <q-input
+        class="verification-code-input"
+        standout
+        :rules="[(val) => (val && val.length > 3 && val.length < 5) || $t('verifyEmail.form.otp.error.required')]"
+        v-model="innerCaptchaRef"
+        :placeholder="$t('verifyEmail.form.otp.placeholder')"
+        ref="refInnerCaptchaCode"
+      >
+        <template v-slot:append>
+          <img
+            class="verification-img"
+            :src="verificationImg"
+            :title="$t('verifyEmail.form.otp.imgTitle')"
+            @click="getCode"
+          />
+        </template>
+      </q-input>
+    </template>
+  </CommonModal>
 
-  <!-- <br />
-  email: {{ formDetail.email }}
-  <br />
-  code: {{ formDetail.emailOtpRef }}
-  <br />
-  codeId: {{ emailCodeId }} -->
+  <CommonModal
+    v-model="showUpdateSecuritySuccessDialog"
+    no-backdrop-dismiss
+    :header="$t('verifyEmail.notification.captcha.title')"
+    :message="$t('verifyEmail.notification.captcha.message')"
+    @hide="handleUpdateSecuritySuccessDialogHide"
+    @confirm="showUpdateSecuritySuccessDialog = false"
+  />
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted, computed, onUnmounted} from "vue";
+import {defineComponent, reactive, ref, onMounted, computed, onUnmounted, onDeactivated, onActivated} from "vue";
 import moment from "moment";
 import {api} from "boot/axios";
 import {useRoute, useRouter} from "vue-router";
 import {useQuasar} from "quasar";
 import {userStore} from "src/stores";
+import CommonModal from "src/components/CommonModal.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PersonalView",
+  components: {
+    CommonModal
+  },
   setup() {
+    const {t} = useI18n();
     // const isCardActive = ref();
     const qs = require("qs");
     const router = useRouter();
@@ -135,7 +149,7 @@ export default defineComponent({
     });
     const verificationDetails = reactive({});
 
-    onMounted(() => {
+    onActivated(() => {
       loadInfo();
       getCode();
     });
@@ -167,7 +181,7 @@ export default defineComponent({
     const isValidEmail = () => {
       const emailPattern =
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
-      return emailPattern.test(formDetail.email) || "请输入正确的邮箱";
+      return emailPattern.test(formDetail.email) || t('verifyEmail.form.email.error.format');
     };
 
     const otpCountdownCount = ref(0);
@@ -215,7 +229,7 @@ export default defineComponent({
           $q.notify({
             color: "positive",
             position: "top",
-            message: "验证码已发送至您的邮箱。",
+            message: t('verifyEmail.notification.emailSent.message'),
             icon: "check_circle_outline"
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId;
@@ -249,15 +263,16 @@ export default defineComponent({
           codeId: emailCodeId.value
         })).then((res) => {
           if (res.code === 0) {
-            $q.notify({
-              color: "positive",
-              position: "top",
-              message: "验证成功",
-              icon: "check_circle_outline"
-            });
+            // $q.notify({
+            //   color: "positive",
+            //   position: "top",
+            //   message: "验证成功",
+            //   icon: "check_circle_outline"
+            // });
+            showUpdateSecuritySuccessDialog.value = true;
             store.emailVerified = true;
             store.email = formDetail.email;
-            router.push("/account");
+
           }
         }).catch((e) => {
           $q.notify({
@@ -320,7 +335,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "邮箱不能为空",
+          message: t('verifyEmail.form.email.error.required'),
           icon: "report_problem"
         });
         getCode();
@@ -330,7 +345,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "验证码必须为4个字符串",
+          message: t('verifyEmail.form.otp.error.required'),
           icon: "report_problem"
         });
         getCode();
@@ -343,7 +358,7 @@ export default defineComponent({
         codeId: updateSecurityVerified.codeId
       }))
           .then(res => {
-            let message = res.message || "发送邮箱验证码成功",
+            let message = res.message || t('verifyEmail.notification.captcha.message'),
                 color = "positive";
 
             if (res.code === 0) {
@@ -370,9 +385,25 @@ export default defineComponent({
       })
     };
 
+    const showUpdateSecuritySuccessDialog = ref(false);
+
+    const handleUpdateSecuritySuccessDialogHide = () => {
+      router.push("/account");
+    }
+
     onUnmounted(() => {
       clearInterval(otpCountdownSchedule);
     });
+
+    onDeactivated(() => {
+      clearInterval(otpCountdownSchedule);
+      if (updateSecurityModalVisible.value) {
+        updateSecurityModalVisible.value = false;
+      }
+      formDetail.email = "";
+      formDetail.emailOtpRef = "";
+      profileFormRef.value.resetValidation();
+    })
 
     return {
       router,
@@ -417,7 +448,9 @@ export default defineComponent({
       showCaptchaDialog,
       openVerificationDialog,
       onCaptchaSubmit,
-      showVerifyBtn
+      showVerifyBtn,
+      showUpdateSecuritySuccessDialog,
+      handleUpdateSecuritySuccessDialogHide
     };
   }
 });
@@ -438,24 +471,97 @@ export default defineComponent({
     color: #333333 !important;
   }
 
-  .q-field {
-    //border: 1px solid #d7d7d7;
+  // .q-field {
+  //   //border: 1px solid #d7d7d7;
 
-    margin-bottom: 10px;
+  //   margin-bottom: 10px;
 
-    .q-field__control {
-      border: 1px solid #d7d7d7;
-      border-radius: 10px;
-    }
+  //   .q-field__control {
+  //     border: 1px solid #d7d7d7;
+  //     border-radius: 10px;
+  //   }
 
+  //   .q-field__inner {
+  //     border: 0px;
+  //     border-radius: 10px;
+  //   }
+  // }
+
+  .q-input {
+    border-radius: 7px;
+    overflow: hidden;
     .q-field__inner {
-      border: 0px;
-      border-radius: 10px;
+      .q-field__control,
+      .q-field__marginal {
+        height: 44px;
+      }
+      .q-field__control {
+        background: #fcfdfe;
+        &::before {
+          border-bottom: none;
+        }
+      }
     }
+  }
+
+  .header-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 12px;
+    color: #7a80a1;
+  }
+
+  .verification-btn {
+    background-image: url("../../assets/images/index/primary-btn.png");
+    background-size: 100% 100%;
+    color: #fff;
+    width: 87px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 12px;
+    aspect-ratio: 87/32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 30px;
+    box-shadow: 0px -0.87px 3.47px 0px #ffffff;
+    border-radius: 45.9px;
+    margin-right: 5px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
+    box-shadow: 0px 2px 0px 0px #9ab0ff70;
+    border: 1px solid #ffffff;
+    border-radius: 30px;
+    color: #fff;
   }
 }
 
 .q-toolbar {
   background: #0089ed;
+}
+
+.captcha-dialog {
+  .verification-code-input {
+    border-radius: 7px;
+    .q-field__control {
+      box-shadow: 0px 0px 2.78px 0px #a9c9ea inset;
+      background-color: #f7f8fb;
+    }
+    .q-placeholder {
+      color: #424f72;
+      &::placeholder {
+        color: #a4aabb;
+        opacity: 1;
+      }
+    }
+  }
+
+  .verification-img {
+    border-radius: 7px;
+    cursor: pointer;
+  }
 }
 </style>

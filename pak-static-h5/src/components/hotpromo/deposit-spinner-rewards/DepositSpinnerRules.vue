@@ -3,13 +3,18 @@
         <div class="rule-title">
             {{ $t('hotPromo.depositSpinWheel.activityRules')}}
         </div>
-        <ul>
+
+        <!-- tnc start -->
+         <div v-html="pageContent" />
+        <!-- <ul>
             <li>{{ $t('hotPromo.depositSpinWheel.rule_01')}}</li>
             <li>{{ $t('hotPromo.depositSpinWheel.rule_02')}}</li>
             <li>{{ $t('hotPromo.depositSpinWheel.rule_03')}}</li>
             <li>{{ $t('hotPromo.depositSpinWheel.rule_04')}}</li>
             <li>{{ $t('hotPromo.depositSpinWheel.rule_05')}}</li>
-        </ul>
+        </ul> -->
+        <!-- tnc end -->
+
         <div class="badges">
             <div class="badge" :key="index" v-for="(badge,index) in badgesList">
                 <img :src="require(`./img/spin-${index+1}.png`)">
@@ -19,8 +24,26 @@
     </div>
 </template>
 <script setup>
-    import { ref } from "vue";
+    import { ref, onMounted } from "vue";
+    import { eventapi, api } from "src/boot/axios";
     import { useI18n } from "vue-i18n";
+    import { i18nStore } from "src/router/language";
+
+    const i18nStoreLanguage = i18nStore();
+    const pageContent = ref();
+    const getPromoTnc = () => {
+      api
+        .get(`/opt-session/promo/page?language=${i18nStoreLanguage.languageVal}`)
+        .then((res) => {
+          if (res.code === 0) {
+            const promoItem = res.data.find((item) => item.promoCode === "pak-deposit-wheel");
+            pageContent.value = promoItem.pageContent;
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    };
 
     const { t } = useI18n();
     const badgesList = ref([
@@ -37,6 +60,12 @@
             title: t('hotPromo.depositSpinWheel.supreme')
         }
     ])
+
+
+onMounted(() => {
+  getPromoTnc();
+});
+
 </script>
 <style lang="scss">
     .rules-container {
@@ -74,7 +103,7 @@
             margin: 25px auto;
         }
         .badges {
-            display: flex; 
+            display: flex;
             gap: 5px;
             width: 95%;
             margin: 10px auto;
@@ -87,7 +116,7 @@
                 justify-content: center;
                 align-items: center;
                 flex: 1;
-                
+
                 img {
                     width: 70%;
                     margin: 0 auto;
