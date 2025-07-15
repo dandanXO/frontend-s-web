@@ -4178,8 +4178,9 @@ const hbPromo = computed(() => {
 });
 
 const checkHbPromo = () => {
+  const apiUrl = store.hasToken() ? "/session/loggedInRedirect" : "/redirect";
   api
-    .get("/redirect")
+    .get(apiUrl)
     .then((res) => {
       return res;
     })
