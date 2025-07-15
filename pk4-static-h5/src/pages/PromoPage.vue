@@ -67,7 +67,7 @@
               <div
                 class="banner-container"
                 v-if="
-                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
+                  selectedPromo.redirectUrl !== 'pk4-jackpot-aviator' &&
                   selectedPromo.redirectUrl !== 'new-player-acc-deposit' && 
                   selectedPromo.redirectUrl !== 'pk4-month-beginning-deposit-rebate' && 
                   selectedPromo.redirectUrl !== 'pk4-app-login-phone-bonus' && 
@@ -98,7 +98,7 @@
               <div
                 class="promo-content-inner"
                 v-if="
-                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
+                  selectedPromo.redirectUrl !== 'pk4-jackpot-aviator' &&
                   selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
                   selectedPromo.redirectUrl !== 'pk4-welcome-new-players' && 
                   selectedPromo.redirectUrl !== 'pk4-month-beginning-deposit-rebate' && 
@@ -129,7 +129,7 @@
               <div
                 class="inner"
                 :class="{
-                  isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
+                  isJackpotAviator: selectedPromo.redirectUrl === 'pk4-jackpot-aviator',
                   isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
                   isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards',
                   isNewPlayerSpinWheel: selectedPromo.redirectUrl === 'pk4-welcome-new-players',
