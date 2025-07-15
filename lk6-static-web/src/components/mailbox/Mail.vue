@@ -1,7 +1,7 @@
 <template>
   <div ref="closeRef" class="close-mail" @click="props.closeMail">
     <el-icon size="18"><ArrowLeft /></el-icon>
-    返回
+    {{ $t('btn.back') }}
   </div>
   <div class="mail-container" :style="{ height: contentHeight }">
     <div class="mail-title">

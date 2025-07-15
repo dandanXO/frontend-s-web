@@ -23,7 +23,9 @@
     "read": "Read",
     "deleteAll": "Delete All",
     "readAll": "Read All",
-    "selectMany": "Select Many"
+    "selectMany": "Select Many",
+    "proceed": "Proceed",
+    "uploadImage": "Upload Image"
   },
   "message": {
     "loginFirstAction": "Please log in before proceeding",
@@ -137,7 +139,22 @@
     "type": "Type",
     "emailMismatch": "Email mismatch",
     "fullContent": "Full Content",
-    "noRecordsYet": "No records yet"
+    "noRecordsYet": "No records yet",
+    "withdrawProcedureTagline": "If the withdrawal fails, please check your in-site messages for the reason for the failure.",
+    "upgradeFastWithdrawal": "Upgrade to fast withdrawal",
+    "withdrawProcedure": "Withdraw Procedure",
+    "statusIsApplying": "Applying",
+    "statusIsUnderReview": "Under Review",
+    "statusIsWithdrawSuccess": "Withdrawal Successful",
+    "withdrawalMethod": "Withdrawal Method",
+    "withdrawAmount": "Withdraw Amount",
+    "singleTransactionLimit": "Single Transaction Limit",
+    "todayWithdrawal": "Today's Withdrawal",
+    "remaining": "Remaining",
+    "times": "times",
+    "withdrawalFees": "Withdrawal Fees",
+    "withdrawTipText": "Special Reminder: Please complete real-name verification in the app wallet, and make sure that the name linked to your wallet matches the name used when registering for the game",
+    "remainingDialogHint": "You need to click [Confirm Receipt] in the “Transaction History – Withdrawal Records” section to complete your previous withdrawal before submitting a new withdrawal request. Thank you for your cooperation!"
   },
   "table": {
     "gameBetRecord": {

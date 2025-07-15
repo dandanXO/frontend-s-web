@@ -25,7 +25,7 @@
     <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="submitForm">提交</el-button>
   </el-form>
 
-  <div style="text-align: center; margin-top: 20px"><a @click="openLoginDialog">返回登入页面</a></div>
+  <div style="text-align: center; margin-top: 20px"><a @click="openLoginDialog">{{ $t('btn.back') }}</a></div>
 </template>
 
 <script setup>
