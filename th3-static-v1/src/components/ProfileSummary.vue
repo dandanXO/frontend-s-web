@@ -1024,7 +1024,7 @@ onUnmounted(() => {
       // background: rgba(255, 255, 255, 0.24);
       // background: #192633;
       // background: rgba(0, 10, 1, 0.6);
-      background: #ffffff0f;
+      background: linear-gradient(270deg, rgba(206, 198, 174, 0.5) 0%, rgba(118, 103, 76, 0.5) 99.76%);
 
       border-radius: 10px;
       display: flex;
