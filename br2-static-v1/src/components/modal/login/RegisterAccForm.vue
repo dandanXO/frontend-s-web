@@ -405,29 +405,30 @@ const trackRegisterSuccessEvent = () => {
 const validateCPF = (input_cpf) => {
   if (!input_cpf) return false;
 
-  const input = input_cpf.toString().replace(/\D/g, ""); // 去除非数字
-  if (input.length !== 11 || /^(\d)\1{10}$/.test(input)) return false; // 排除重复数字
+  const cpf = input_cpf.toString().replace(/\D/g, "");
 
-  const pesosA = [10, 9, 8, 7, 6, 5, 4, 3, 2];
-  const pesosB = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2];
+  if (cpf.length !== 11) return false;
 
+  // 排除常见无效 CPF（所有数字都一样）
+  if (/^(\d)\1{10}$/.test(cpf)) return false;
+
+  const nums = cpf.split("").map(Number);
+
+  // 第一个校验位
   let sum = 0;
   for (let i = 0; i < 9; i++) {
-    sum += parseInt(input[i]) * pesosA[i];
+    sum += nums[i] * (10 - i);
   }
+  let d1 = sum % 11 < 2 ? 0 : 11 - (sum % 11);
 
-  let x1 = sum % 11;
-  x1 = x1 < 2 ? 0 : 11 - x1;
-
+  // 第二个校验位
   sum = 0;
   for (let i = 0; i < 10; i++) {
-    sum += parseInt(input[i]) * pesosB[i];
+    sum += nums[i] * (11 - i);
   }
+  let d2 = sum % 11 < 2 ? 0 : 11 - (sum % 11);
 
-  let x2 = sum % 11;
-  x2 = x2 < 2 ? 0 : 11 - x2;
-
-  return x1 === parseInt(input[9]) && x2 === parseInt(input[10]);
+  return d1 === nums[9] && d2 === nums[10];
 };
 
 const getCode = () => {
