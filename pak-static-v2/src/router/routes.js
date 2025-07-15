@@ -218,7 +218,7 @@ const routes = [
     // component: () => {},
   },
   {
-    path: "/refer/:referralSpinCode",
+    path: "/refer/:referCode",
     name: "referCode",
     component: () => {}
 
