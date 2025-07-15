@@ -21,7 +21,7 @@
           size="small"
           :placeholder="t('fields.sportType')"
           class="filter-item"
-          style="width: 120px;"
+          style="width: 120px; margin-left: 10px"
         >
           <el-option
             v-for="item in uiControl.sport"
@@ -35,7 +35,7 @@
           size="small"
           :placeholder="t('fields.status')"
           class="filter-item"
-          style="width: 120px;"
+          style="width: 120px; margin-left: 10px"
         >
           <el-option
             v-for="item in uiControl.liveStatus"
@@ -47,9 +47,24 @@
         <el-input
           v-model="request.title"
           size="small"
-          style="width: 200px; margin-left: 5px"
+          style="width: 200px; margin-left: 10px"
           :placeholder="t('fields.matchTitle')"
         />
+        <el-select
+          v-model="request.isStreamIdExist"
+          size="small"
+          :placeholder="t('fields.isLiveUrlExist')"
+          class="filter-item"
+          style="width: 120px; margin-left: 10px"
+        >
+          <el-option
+            v-for="item in uiControl.isStreamIdExist"
+            :key="item.key"
+            :label="item.displayName"
+            :value="item.value"
+          />
+        </el-select>
+
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadMatch">
           {{ t('fields.search') }}
         </el-button>
@@ -230,6 +245,10 @@ export default defineComponent({
         { name: '14', display: t('status.namiMatch.ABANDONED'), id: 14 },
         { name: '15', display: t('status.namiMatch.PENDING'), id: 15 },
       ],
+      isStreamIdExist: [
+        { key: true, displayName: t('fields.yes'), value: true },
+        { key: false, displayName: t('fields.no'), value: false }
+      ],
     });
     const page = reactive({
       pages: 0,
@@ -320,7 +339,6 @@ export default defineComponent({
 
     function handleSelectionChange(val) {
       selectedRows.value = val;
-      console.log(selectedRows.value);
     }
 
     async function handleDelete() {
