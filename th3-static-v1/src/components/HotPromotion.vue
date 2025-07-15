@@ -67,7 +67,7 @@ import NewPlayerSpinWheelPromo from "../components/hotpromo/newPlayerWheel/NewPl
 import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRainPromo.vue";
 import InterestProfitPromo from "../components/hotpromo/interestProfit/InterestProfitPromo.vue";
 import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.vue";
-import SlotFtdPromo from "../components/hotpromo/slotFtdPromo/SlotFtdPromo.vue";
+import SlotFtdPromo from "../components/hotpromo/slotftdpromo/SlotFtdPromo.vue";
 import GoldenEggPromo from "./hotpromo/goldenEgg/GoldenEggPromo.vue";
 
 import VideoAmbassador from "./hotpromo/video-ambassador/VideoAmbassador.vue";
