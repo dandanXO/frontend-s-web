@@ -150,24 +150,24 @@
       @swiper="onSwiper"
       :breakpoints="{
         0: {
-          slidesPerView: 3.5,
-          spaceBetween: 4
-        },
-        330: {
-          slidesPerView: 3.8,
-          spaceBetween: 4
-        },
-        365: {
-          slidesPerView: 4.2,
-          spaceBetween: 4
-        },
-        390: {
           slidesPerView: 4.5,
           spaceBetween: 4
         },
-        480: {
+        330: {
+          slidesPerView: 4.8,
+          spaceBetween: 4
+        },
+        365: {
+          slidesPerView: 5.2,
+          spaceBetween: 4
+        },
+        390: {
           slidesPerView: 5.5,
-          spaceBetween: 10
+          spaceBetween: 4
+        },
+        480: {
+          slidesPerView: 6.1,
+          spaceBetween: 8
         }
       }"
     >
@@ -4755,8 +4755,8 @@ button.android {
 .cat-selection-item {
   background: url("../assets/images/index/cat-selection-bg.svg") center center no-repeat;
   background-size: 100% 100%;
-  width: 80px;
-  height: 70px;
+  width: 72px;
+  height: 63px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -4766,6 +4766,11 @@ button.android {
   padding-bottom: 3px;
   transition: 0.3s all;
   min-width: 100%;
+
+  @media(max-width: 390px){
+    width: 64px;
+    height: 56px;
+  }
 
   &.active {
     background: url("../assets/images/index/cat-selected-bg.png") center center no-repeat;
