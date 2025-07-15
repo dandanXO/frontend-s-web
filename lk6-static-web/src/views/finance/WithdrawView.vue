@@ -326,12 +326,12 @@ export default defineComponent({
       amount: [
         {
           required: true,
-          message: "请输入金额",
+          message: t('form.pleaseEnterField', {field: t('form.amount')}),
           trigger: "blur"
         },
         {
           pattern: "^([1-9][0-9]*)$",
-          message: "金额应为正数",
+          message: t('form.amountShouldBePositiveInteger'),
           trigger: "change"
         },
         {
