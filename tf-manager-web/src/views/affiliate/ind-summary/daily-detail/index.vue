@@ -464,6 +464,7 @@ function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
   request.loginNameList = null
   request.affiliateCode = null
+  request.isGroup = false
 }
 
 const page = reactive({

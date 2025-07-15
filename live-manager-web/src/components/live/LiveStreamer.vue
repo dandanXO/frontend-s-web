@@ -3,8 +3,6 @@
   <div class="card">
     <DataTable
       :value="liveStreamerList"
-      :paginator="true"
-      :rows="10"
       :loading="loading"
       dataKey="eventId"
       :filters="filters"
@@ -108,6 +106,15 @@
         </template>
       </Column>
     </DataTable>
+    <Paginator
+      :rows="request.size"
+      :totalRecords="page.total"
+      :rowsPerPageOptions="[10, 20, 50]"
+      :first="(request.current - 1) * request.size"
+      template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+      @page="changePage"
+      class="p-mt-2"
+    />
 
     <!-- 編輯新增dialog -->
     <Dialog
@@ -424,6 +431,14 @@ const request = reactive({
   current: 1,
   liveStatus: null,
   name: null,
+})
+
+const page = reactive({
+  pages: 0,
+  records: [],
+  total: 0,
+  current: 1,
+  loading: false,
 })
 
 const form = reactive({
@@ -779,6 +794,7 @@ function getStatusName(statusId) {
 
 async function loadStreamer() {
   console.log(request, 'dan')
+  page.loading = true
   const _request = request
   if (request.liveStatus) {
     _request.liveStatus = request.liveStatus.value
@@ -787,6 +803,16 @@ async function loadStreamer() {
   const res = await getSportLiveStreamer(_request)
 
   liveStreamerList.value = res.records
+  page.total = res.total || 0
+  page.pages = res.pages || 0
+  page.current = res.current || 1
+  page.loading = false
+}
+
+function changePage(event) {
+  request.current = event.page + 1;
+  request.size = event.rows;
+  loadStreamer();
 }
 
 onMounted(() => {
