@@ -2,7 +2,7 @@
   <div class="card">
     <div class="menu-title-container">
       <span class="menu-title">
-        {{ isAutoWithdrawal ? $t('menu.quickWithdrawal') : $t('menu.withdraw') }}
+        {{ isAutoWithdrawal ? $t('form.quickWithdrawal') : $t('menu.withdraw') }}
       </span>
       <el-button
         v-if="!isAutoWithdrawal"
