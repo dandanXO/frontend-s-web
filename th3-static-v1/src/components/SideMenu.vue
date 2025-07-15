@@ -399,7 +399,7 @@ const openCSInNewTab = (url) => {
           span {
             margin-bottom: 0;
             font-weight: 600;
-            color: #ffffff99;
+            color: #3a3a3a;
           }
           .license-text__title {
             font-size: 12px;
