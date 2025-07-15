@@ -644,7 +644,6 @@ export default defineComponent({
 
     .step-item {
       color: #ffffff;
-      width: 130px;
       // height: 50px;
       line-height: 45px;
       background-image: linear-gradient(267deg, #78abfa 0, #4877ec 100%), linear-gradient(#5b80e7, #5b80e7);
@@ -658,6 +657,9 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
       border-radius: 2px;
+      min-width: 130px;
+      padding: 0 10px;
+      white-space: nowrap;
       // &::before,
       // &::after {
       //   content: "";
