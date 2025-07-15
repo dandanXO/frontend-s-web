@@ -273,7 +273,7 @@ const uiControl = reactive({
   ]),
 })
 const request = reactive({
-  size: 100,
+  size: 50,
   current: 1,
   sportType: null,
   nameZh: null,
