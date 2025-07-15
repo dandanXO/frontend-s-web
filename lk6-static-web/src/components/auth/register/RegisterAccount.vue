@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="registerRef" :rules="regRules" :model="regForm" :label-width="languageVal === 'en' ? 130 : 80" size="large" style="padding-top:16px;">
+  <el-form ref="registerRef" :rules="regRules" :model="regForm" :label-width="languageVal === 'en' ? 100 : 80" size="large" style="padding-top:16px;">
     <!-- <div class="light-bg form-field">
       <img class="form-field-icon" src="../../../assets/home/auth/username-icon.png" width="35px" />
       <el-form-item :label="$t('form.realName')" prop="realName">

@@ -32,7 +32,8 @@
     "noAnnouncementYet": "No announcement yet",
     "success": "Success",
     "submitSuccessfully": "Submit Successfully",
-    "deleteCancelled": "Delete cancelled"
+    "deleteCancelled": "Delete cancelled",
+    "unbindSuccessfully": "Unbind Successfully"
   },
   "form": {
     "remark": "Remark",
@@ -417,7 +418,7 @@
     "1015": "The current account has already bound a nickname",
     "1016": "The registration function is being upgraded. Please register after 9:00 a.m. local time. Thank you!",
     "1300": "Amount must be a number greater than 0",
-    "1301": "This card is not supported",
+    "1301": "This address is not valid",
     "1302": "This currency is not supported",
     "1304": "This number has already been used",
     "1305": "Bank not found",
