@@ -877,7 +877,14 @@ export default defineComponent({
           confirmButtonText: t('btn.confirm'),
           cancelButtonText: t('btn.cancel'),
           cancelButtonClass: "cancel-btn",
-          type: "warning" // Error message to display if input is invalid
+          type: "warning", // Error message to display if input is invalid
+          inputValidator: (value) => {
+            if (!value || value.trim() === '') {
+              return t('form.pleaseEnterField', {field: t('form.cardAddress')});
+            }
+            return true;
+          },
+          inputErrorMessage: t('form.pleaseEnterField', {field: t('form.cardAddress')})
         }
       )
         .then((inputValue) => {
@@ -886,7 +893,7 @@ export default defineComponent({
               if (res.code === 0) {
                 notify({
                   type: "success",
-                  message: "解绑完成"
+                  message: t('message.unbindSuccessfully')
                 });
                 // loadCards();
                 searchRecord();

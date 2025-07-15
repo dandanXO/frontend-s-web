@@ -144,6 +144,8 @@ body {
       white-space: pre-wrap;
       overflow-wrap: break-word;
       height: 100% !important;
+      justify-content: flex-start !important;
+      text-align: left !important;
     }
     &.is-error {
       margin-bottom: 30px !important;

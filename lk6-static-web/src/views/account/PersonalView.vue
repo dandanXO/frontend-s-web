@@ -386,7 +386,7 @@
     >
       <el-form ref="captchaUpdateRef" :model="updateSecurityVerified">
         <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: $t('form.pleaseEnterField', {field: $t('form.verificationCode')}) }]">
-          <el-space>
+          <div style="width:100%;display:grid;grid-template-columns:1fr 135px;gap:10px;">
             <el-input
               @keyup.enter="verifyVerificationCode"
               v-model="updateSecurityVerified.captchaCode"
@@ -395,9 +395,9 @@
             />
 
             <div class="verification" @click="getCode()">
-              <img style="width: 80%; margin-top: 6px" :src="verificationImg" />
+              <img style="width: 100%;" :src="verificationImg" />
             </div>
-          </el-space>
+          </div>
         </el-form-item>
       </el-form>
       <el-button class="common-btn" @click="verifyVerificationCode" :loading="isEmailSending">{{ $t('btn.verify') }}</el-button>

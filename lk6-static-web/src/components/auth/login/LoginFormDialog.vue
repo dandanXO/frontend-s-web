@@ -4,7 +4,7 @@
     ref="loginRef"
     :rules="loginRules"
     :model="loginForm"
-    label-width="70"
+    label-width="80"
     size="large"
   >
     <div class="login-form-field">
