@@ -501,8 +501,14 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
           // }
 
           if (platformCode === "BetBy") {
+            const existingScript = document.getElementById("btrenderer-script");
+            if (existingScript) {
+              existingScript.remove(); // 或 existingScript.parentNode.removeChild(existingScript);
+            }
+
             const script = document.createElement("script");
-            script.src = "https://ui.invisiblesport.com/bt-renderer.min.js";
+            script.src = "https://pk1.sptpub.com/bt-renderer.min.js";
+            script.id= "btrenderer-script"
             script.async = true;
 
             script.onload = async () => {
@@ -514,7 +520,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
               await nextTick();
 
               betbyInstance.value = new BTRenderer().initialize({
-                brand_id: "2547441365755760643",
+                brand_id: "2556215528716906501",
                 token: srcDoc,
                 themeName: "default",
                 lang: langVal.value,
@@ -522,17 +528,20 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
                 stickyTop: headerHeight,
                 betSlipOffsetTop: headerHeight,
                 betslipZIndex: 999,
-                onRecharge: function() {
-                  router.push("/deposit?from=/home")
+                onRecharge: function () {
+                  router.push("/deposit?from=/home");
                 },
-                onSessionRefresh: function() {
+                onSessionRefresh: function () {
                   console.log("onSessionRefresh");
                   window.location.reload();
                 },
-                onTokenExpired: ()=>{
+                onTokenExpired: () => {
                   return new Promise((resolve, reject) => {
-                    visible.value = false;
-                    startGame(gameName, platformCode, gameCode, gameType, demo);
+                    const apiUrl2 = `/session/launch?_time=${new Date().getTime()}`;
+
+                    api.get(apiUrl2, { params: apiParam })
+                      .then((res) => resolve(res.data))
+                      .catch((err) => reject(err));
                   });
                 }
               });
