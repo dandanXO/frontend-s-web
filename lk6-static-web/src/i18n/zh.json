@@ -23,7 +23,9 @@
     "read": "读取",
     "deleteAll": "全部删除",
     "readAll": "全部已读",
-    "selectMany": "选择多个"
+    "selectMany": "选择多个",
+    "proceed": "前往确认",
+    "uploadImage": "上传图片"
   },
   "message": {
     "loginFirstAction": "请登录后再操作",
@@ -137,7 +139,23 @@
     "type": "类型",
     "emailMismatch": "邮箱地址不符合",
     "fullContent": "正文",
-    "noRecordsYet": "暂无记录"
+    "noRecordsYet": "暂无记录",
+    "withdrawProcedureTagline": "若提款失败请查看站内信提示的失败原因！",
+    "upgradeFastWithdrawal": "升级快速提款",
+    "withdrawProcedure": "提款流程",
+    "statusIsApplying": "申请中",
+    "statusIsUnderReview": "审核中",
+    "statusIsWithdrawSuccess": "出款成功",
+    "quickWithdrawal": "快速提款",
+    "withdrawalMethod": "提款方式",
+    "withdrawAmount": "提款金额",
+    "singleTransactionLimit": "单笔限额",
+    "todayWithdrawal": "今日提款",
+    "remaining": "剩余",
+    "times": "次",
+    "withdrawalFees": "提币手续费",
+    "withdrawTipText": "特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！",
+    "remainingDialogHint": "您需要在交易记录-提款记录中点击 [确认到账] 完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!"
   },
   "table": {
     "gameBetRecord": {
