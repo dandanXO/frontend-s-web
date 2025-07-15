@@ -16,6 +16,9 @@
               :value="aff.name"
             />
           </el-select>
+
+          <el-checkbox v-model="request.isGroup" size="large" style="margin-left: 30px; margin-right: 20px; transform: scale(1.3); vertical-align: middle;"> <span style="font-size: 12px;">{{ t('fields.combinePlatform') }}</span></el-checkbox>
+
           <el-date-picker
             v-model="request.recordTime"
             format="DD/MM/YYYY"
@@ -42,7 +45,6 @@
           <el-button @click="resetQuery()">
             {{ t('fields.reset') }}
           </el-button>
-          <el-checkbox v-model="request.isGroup" style="margin-left: 20px"> {{ t('fields.combinePlatform') }}</el-checkbox>
         </div>
       </div>
     </div>
@@ -677,4 +679,5 @@ onMounted(async () => {
 .el-result {
   padding: 0;
 }
+
 </style>
