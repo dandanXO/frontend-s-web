@@ -18,14 +18,9 @@
       <Button icon="pi pi-refresh" :label="t('fields.refresh')" severity="warn" @click="loadBlockList" />
     </div>
 
-    <DataTable
-        :value="blockList"
-        :loading="loading"
-        dataKey="loginName"
-        responsiveLayout="scroll"
-    >
-      <Column field="loginName" :header="t('fields.loginName')" />
-      <Column field="blockDuration" :header="t('fields.blockDuration')">
+    <DataTable :value="blockList" :loading="loading" class="mt-4 p-datatable-sm">
+      <Column field="loginName" :header="t('fields.loginName')" style="width: 200px;" />
+      <Column :header="t('fields.blockDuration')" style="width: 250px;">
         <template #body="slotProps">
           {{ formatDate(slotProps.data.blockTime) }}
         </template>
@@ -33,10 +28,11 @@
       <Column :header="t('fields.operate')">
         <template #body="slotProps">
           <Button
-              icon="pi pi-unlock"
-              class="p-button-danger p-button-sm"
-              :label="t('fields.unblock')"
-              @click="unblockUser(slotProps.data.loginName)"
+            :label="t('fields.unblock')"
+            icon="pi pi-unlock"
+            severity="danger"
+            size="small"
+            @click="unblockUser(slotProps.data.loginName)"
           />
         </template>
       </Column>
@@ -75,17 +71,17 @@ import { DashboardService } from '@/service/DashboardService'
 const { t } = useI18n(); // 啟用多國語系翻譯
 const toast = useToast(); // 初始化 PrimeVue 的訊息提示功能
 
-const request = reactive({
-  size: 30,
-  current: 1,
-})
-
 // 用來輸入封鎖資訊的表單資料
 const form = reactive({
   loginName: '',   // 要封鎖的用戶名稱
   duration: 10,    // 封鎖時長，預設 10
   unit: 'minute'   // 封鎖單位，預設分鐘
 });
+
+const request = reactive({
+  size: 30,
+  current: 1,
+})
 
 // 不同封鎖單位對應的最大時長
 const unitMaxMap = {
@@ -141,7 +137,7 @@ async function loadBlockList() {
     page.total = res.data.total;       // 更新總筆數
   } catch (error) {
     console.error('載入封鎖列表失敗:', error);
-    toast.add({ severity: 'error', summary: 'error', detail: t('fields.unableLoadBlockList'), life: 3000 });
+    toast.add({ severity: 'error', summary: '錯誤', detail: '無法載入封鎖列表', life: 3000 });
   } finally {
     loading.value = false; // 載入結束，關閉轉圈圈
   }
@@ -151,7 +147,7 @@ async function loadBlockList() {
 async function blockUser() {
   // 檢查用戶名稱、時長、單位有沒有填
   if (!form.loginName || !form.duration || !form.unit) {
-    toast.add({ severity: 'warn', summary: 'warn', detail: t('message.validateBlockReasonRequired'), life: 3000 });
+    toast.add({ severity: 'warn', summary: '警告', detail: '請填寫完整的封鎖資訊', life: 3000 });
     return;
   }
 
@@ -161,12 +157,12 @@ async function blockUser() {
   try {
     // 呼叫 API 封鎖用戶
     await DashboardService.blockUserApiV1({ loginName: form.loginName, blockTime });
-    toast.add({ severity: 'success', summary: 'success', detail: t('fields.blockSuccess'), life: 3000 });
+    toast.add({ severity: 'success', summary: '成功', detail: t('封鎖成功'), life: 3000 });
     form.loginName = ''; // 封鎖成功後清空用戶名稱輸入框
     loadBlockList();     // 重新載入封鎖列表，顯示最新狀態
   } catch (error) {
     console.error('封鎖用戶失敗:', error);
-    toast.add({ severity: 'error', summary: 'error', detail: t('fields.blockFailed'), life: 3000 });
+    toast.add({ severity: 'error', summary: '錯誤', detail: '封鎖用戶失敗，請稍後再試', life: 3000 });
   }
 }
 
@@ -175,11 +171,11 @@ async function unblockUser(loginName) {
   try {
     // 呼叫 API 解除封鎖
     await DashboardService.unblockUserApi({ loginName });
-    toast.add({ severity: 'success', summary: 'success', detail: t('fields.unblockSuccess'), life: 3000 });
+    toast.add({ severity: 'success', summary: '成功', detail: t('封鎖成功'), life: 3000 });
     loadBlockList(); // 重新載入封鎖列表，顯示最新狀態
   } catch (error) {
     console.error('解除封鎖用戶失敗:', error);
-    toast.add({ severity: 'error', summary: 'error', detail: t('fields.unblockFailed'), life: 3000 });
+    toast.add({ severity: 'error', summary: '錯誤', detail: '解除封鎖用戶失敗，請稍後再試', life: 3000 });
   }
 }
 
@@ -196,5 +192,48 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* 頁面頂部的表單排版，使用 PrimeFlex 的 flex 屬性 */
+.flex {
+  display: flex;
+}
+.align-items-end {
+  align-items: flex-end; /* 讓表單項底部對齊 */
+}
+.gap-3 {
+  gap: 1rem; /* 項目間的間距 */
+}
+.mb-4 {
+  margin-bottom: 1.5rem; /* 表單下方留白 */
+}
 
+/* 確保輸入框和下拉選單能好好填滿空間 */
+.p-field {
+  display: flex;
+  flex-direction: column; /* 讓 label 和輸入框垂直排列 */
+  flex-grow: 1; /* 讓每個欄位能平均分配空間 */
+}
+.p-field .p-inputtext,
+.p-field .p-inputnumber,
+.p-field .p-dropdown {
+  width: 100%; /* 讓輸入框填滿其父容器 */
+}
+
+/* 調整特定元件的寬度 */
+.w-8rem {
+  width: 8rem; /* 下拉選單固定寬度 */
+}
+.flex-grow-1 {
+  flex-grow: 1; /* 讓元素在 flex 容器中盡可能佔用空間 */
+}
+
+/* 表格上方和分頁器上方的間距 */
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+/* 分頁器靠右對齊 */
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+}
 </style>
