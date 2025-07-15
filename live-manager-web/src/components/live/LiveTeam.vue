@@ -3,15 +3,13 @@
   <div class="card">
     <DataTable
       :value="page.records"
-      :paginator="true"
-      :rows="10"
-      :loading="loading"
-      dataKey="eventId"
-      :filters="filters"
-      filterDisplay="menu"
-      :globalFilterFields="['title']"
-      responsiveLayout="scroll"
-    >
+          :loading="loading"
+          dataKey="eventId"
+          :filters="filters"
+          filterDisplay="menu"
+          :globalFilterFields="['title']"
+          responsiveLayout="scroll"
+      >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
           <Select
@@ -119,6 +117,15 @@
         </template>
       </Column>
     </DataTable>
+    <Paginator
+      :rows="request.size"
+      :totalRecords="page.total"
+      :rowsPerPageOptions="[10, 20, 50]"
+      :first="(request.current - 1) * request.size"
+      template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
+      @page="changePage"
+      class="p-mt-2"
+      />
   </div>
   <Dialog
     v-model:visible="uiControl.dialogVisible"
@@ -266,7 +273,7 @@ const uiControl = reactive({
   ]),
 })
 const request = reactive({
-  size: 30,
+  size: 100,
   current: 1,
   sportType: null,
   nameZh: null,
@@ -277,6 +284,8 @@ const page = reactive({
   pages: 0,
   records: [],
   loading: false,
+  total: 0,
+  current: 1,
 })
 
 function resetQuery() {
@@ -286,9 +295,10 @@ function resetQuery() {
 }
 
 async function loadTeam() {
-  const { records, pages } = await getSportLiveTeam(request)
+  const { records, pages, total } = await getSportLiveTeam(request)
   page.pages = pages
   page.records = records
+  page.total = total || 0
   page.loading = false
 }
 
@@ -330,6 +340,13 @@ function showDialog(type, row = null) {
     })
   }
 }
+
+function changePage(event) {
+  request.current = event.page + 1;
+  request.size = event.rows;
+  loadTeam();
+}
+
 function submit() {
   if (uiControl.dialogType === 'CREATE') {
     create()
