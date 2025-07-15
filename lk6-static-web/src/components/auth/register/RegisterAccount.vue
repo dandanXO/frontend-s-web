@@ -100,7 +100,7 @@
         </div>
       </el-form-item>
     </div> -->
-    <div id="captcha-box" />
+    <div id="register-captcha-box" />
   </el-form>
   <div>
     <el-button class="blue-bg primary-btn" size="large" @click="submitRegisterForm(registerRef)">{{ $t('btn.register') }}</el-button>
@@ -402,7 +402,7 @@ const submitRegisterForm = async (elForm) => {
       // 验证接口 (必选项,必须配置, 要符合tianai-captcha默认验证码校验接口规范)
       validCaptchaUrl: `${rstUrl}/member/fbRegister`,
       // 验证码绑定的div块 (必选项,必须配置)
-      bindEl: "#captcha-box",
+      bindEl: "#register-captcha-box",
       // 验证码类型, 登陆信息
       loginData: {
         sid: store.visitorId,
@@ -574,7 +574,7 @@ onMounted(() => {
 </style>
 
 <style lang="scss" scoped>
-#captcha-box {
+#register-captcha-box {
   position: fixed;
   z-index: 1000;
   top: 50%;
