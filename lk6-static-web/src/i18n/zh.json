@@ -155,7 +155,8 @@
     "times": "次",
     "withdrawalFees": "提币手续费",
     "withdrawTipText": "特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！",
-    "remainingDialogHint": "您需要在交易记录-提款记录中点击 [确认到账] 完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!"
+    "remainingDialogHint": "您需要在交易记录-提款记录中点击 [确认到账] 完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!",
+    "amountShouldBePositiveInteger": "金额应为正数"
   },
   "table": {
     "gameBetRecord": {

@@ -154,7 +154,8 @@
     "times": "times",
     "withdrawalFees": "Withdrawal Fees",
     "withdrawTipText": "Special Reminder: Please complete real-name verification in the app wallet, and make sure that the name linked to your wallet matches the name used when registering for the game",
-    "remainingDialogHint": "You need to click [Confirm Receipt] in the “Transaction History – Withdrawal Records” section to complete your previous withdrawal before submitting a new withdrawal request. Thank you for your cooperation!"
+    "remainingDialogHint": "You need to click [Confirm Receipt] in the “Transaction History – Withdrawal Records” section to complete your previous withdrawal before submitting a new withdrawal request. Thank you for your cooperation!",
+    "amountShouldBePositiveInteger": "Amount should be positive integer"
   },
   "table": {
     "gameBetRecord": {
