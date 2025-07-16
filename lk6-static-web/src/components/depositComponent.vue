@@ -60,6 +60,7 @@
           <el-space>
             <el-form-item class="helptxt" :label="$t('form.amount')" prop="localAmount">
               <el-input
+                type="number"
                 v-if="amountList.length === 0"
                 v-model="form.localAmount"
                 :placeholder="isUSDT ? $t('form.pleaseEnterField', {field: `USDT ${$t('form.amount')}`}) : '请输入存款金额'"
