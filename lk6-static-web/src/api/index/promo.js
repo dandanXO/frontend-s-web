@@ -2,8 +2,8 @@ import { server } from "@/utils/request";
 import { userStore } from "@/store";
 import cached from "@/utils/cache";
 
-export function loadPromo() {
-  return server.REST.get("/opt-session/promo/page");
+export function loadPromo(languageVal) {
+  return server.REST.get(`/opt-session/promo/page?language=${languageVal}`);
 }
 
 export function loadPromoTypes(category) {
