@@ -19,7 +19,7 @@
       </div>
     </el-dialog>
   </div>
-  <DanTestPromo v-if="list.redirectUrl === 'dan-test-promo'"></DanTestPromo>
+  <DanTestPromo v-if="list.redirectUrl === 'lk6-live-gift'"></DanTestPromo>
   
  
 </template>
