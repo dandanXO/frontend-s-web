@@ -36,6 +36,9 @@ export default {
       },
       success: {
         message: "操作成功"
+      },
+      claimSuccessfully: {
+        message: "成功领取"
       }
     },
     gameType: {
@@ -623,7 +626,14 @@ export default {
       timeLimited: "限时",
       selected: "精选"
     },
-    viewDetail: "查看详情"
+    viewDetail: "查看详情",
+    weeklyReward: {
+      claimSection: {
+        title: "投注嘉奖",
+        yesterdayValidBets: "昨日累计有效投注：",
+        todayBonus: "今日领取彩金："
+      }
+    }
   },
   bindCrypto: {
     form: {
