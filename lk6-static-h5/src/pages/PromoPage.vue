@@ -1163,6 +1163,130 @@ export default defineComponent({
     }
   }
 }
+
+.section-bg {
+  border: 1px solid rgba(172, 212, 246, 1);
+  background: #f2f8fe;
+  border-radius: 12px;
+  padding: 30px;
+  font-family: "PingFang SC";
+
+  .claim-title-icon,
+  .claim-coin-icon,
+  .claim-gift-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .claim-title-icon {
+    background: url("../assets/images/promotion/hotpromo/common/section-title-img.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-coin-icon {
+    background: url("../assets/images/promotion/hotpromo/common/reward-icon1.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-gift-icon {
+    background: url("../assets/images/promotion/hotpromo/common/reward-icon2.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-btn-img {
+    aspect-ratio: 762/630;
+    width: auto;
+    height: 100%;
+    background: url("../assets/images/promotion/hotpromo/common/reward-btn.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .section-table {
+    th {
+      height: 56px;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 28px;
+      color: #fff !important;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
+      white-space: pre-wrap;
+
+      &:not(:last-child) {
+        border-right: 1px solid #dcdce8;
+      }
+    }
+
+    td {
+      border: 1px solid #dcdce8;
+      color: #333;
+    }
+  }
+
+  .element-bg {
+    color: #fff !important;
+    box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+      0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
+  }
+
+  .ribbon {
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    padding-right: 10px;
+    font-family: "PingFang SC";
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    width: fit-content;
+    padding: 0px 20px 0px 10px;
+    aspect-ratio: 94/30;
+    white-space: nowrap;
+  }
+
+  .title-img {
+    aspect-ratio: 2952 / 176;
+    background: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 905px 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    color: #4c4c6c;
+    font-weight: bold;
+    letter-spacing: 3px;
+  }
+
+  .item {
+    color: #333;
+    padding-left: 24px;
+    display: flex;
+    gap: 10px;
+    font-size: 1rem;
+    padding: 3px 0;
+
+    .item-num {
+      color: #ffffff;
+      font-size: 1rem;
+      line-height: 1;
+      border-radius: 50%;
+      height: 28px !important;
+      width: 28px !important;
+      min-width: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2px;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    }
+  }
+}
 </style>
 <style scoped lang="scss">
 .loader {
