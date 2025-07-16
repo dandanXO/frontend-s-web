@@ -551,5 +551,58 @@
     "58003": "活动已结束",
     "58004": "无法参与，前置任务未完成。",
     "58005": "恭喜您，已完成全部任务"
-  }
+  },
+  
+  "danTestPromo": {
+    "title": "活动详情",
+    "targetAudience": "活动对象",
+    "targetAudienceContent": "幸运6全体会员",
+    "activityTime": "活动时间",
+    "activityTimeContent": "活动时间即日起，结束时间以官方为准",
+    "activityContent": "活动内容",
+    "activityContentDetail": "在幸运6进行游戏中,凡事在北京时间每星期一至星期五累计有效投注达到1000U及以上即可获得幸运6赠送的周周奖,最高可获得18,888U！",
+    "table": {
+      "level": "关卡",
+      "winningStreaks": "连赢局数",
+      "bonus": "可获奖金",
+      "row1": {
+        "bet": "每注最少 50U",
+        "streak": "6局连赢",
+        "prize": "66U"
+      },
+      "row2": {
+        "bet": "每注最少 100U",
+        "streak": "8局连赢",
+        "prize": "266U"
+      },
+      "row3": {
+        "bet": "每注最少 200U",
+        "streak": "10局连赢",
+        "prize": "666U"
+      },
+      "row4": {
+        "bet": "每注最少 500U",
+        "streak": "15局连赢",
+        "prize": "6,666U"
+      },
+      "row5": {
+        "bet": "每注最少 1,000U",
+        "streak": "20局连赢",
+        "prize": "16,666U"
+      },
+      "row6": {
+        "bet": "每注最少 2,000U",
+        "streak": "25局连赢",
+        "prize": "26,666U"
+      },
+      "row7": {
+        "bet": "每注最少 5,000U",
+        "streak": "30局连赢",
+        "prize": "66,666U"
+      }
+    }
+  
+}
+
+
 }
