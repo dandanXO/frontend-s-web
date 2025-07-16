@@ -472,7 +472,7 @@ export default defineComponent({
     onMounted(() => {
       getBalance();
       store.getBalance();
-      store.getVIPInfo();
+      // store.getVIPInfo();
       // getVersionNo();
       getPromoImage();
       if (store.isApp()) {
