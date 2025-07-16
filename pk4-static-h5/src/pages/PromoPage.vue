@@ -1242,7 +1242,12 @@ export default defineComponent({
             display: none;
           }
           &.isPiggyBank {
-            padding: 0  10px 30px 20px;
+            img {
+              margin-left: -10px;
+            }
+            ul {
+             padding: 0 20px 30px 40px;
+            }
           }
           &.isGoldenEgg {
             table {
