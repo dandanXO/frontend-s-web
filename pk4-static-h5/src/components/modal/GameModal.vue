@@ -288,6 +288,7 @@ const closeDialog = () => {
   visible.value = false;
   src.value = "";
   store.getBalance();
+  ui.isBetBy = false;
   // AppFullscreen.exit()
   if (isAndroid()) {
     screen.orientation.lock("portrait");
@@ -504,6 +505,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
 
             script.onload = async () => {
               isBetBy.value = true;
+              ui.isBetBy = true;
 
               const topActionsEl = document.querySelector(".topActions");
               const headerHeight = topActionsEl ? topActionsEl.offsetHeight : 0;

@@ -501,6 +501,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
           // }
 
           if (platformCode === "BetBy") {
+            ui.isBetBy = true;
             const existingScript = document.getElementById("btrenderer-script");
             if (existingScript) {
               existingScript.remove(); // 或 existingScript.parentNode.removeChild(existingScript);

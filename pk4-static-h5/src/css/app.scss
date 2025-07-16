@@ -290,6 +290,10 @@ body.body--dark .q-footer {
 
   // height: 86px;
 
+  &.isBetBy{
+    z-index: 9999 !important;
+  }
+
   .q-tabs__content {
     // background-image: url(../assets/images/index/menu/menu-frame.png);
     // padding-top: 20px;
@@ -979,7 +983,7 @@ body.body--dark .q-footer {
   background: linear-gradient(270deg,#0d55c1,#1c8ee7);
   transform: rotateX(65deg) rotate(45deg);
   // remove bellows command for perspective change
-  //transform: perspective(200px) rotateX(65deg) rotate(45deg); 
+  //transform: perspective(200px) rotateX(65deg) rotate(45deg);
   color: #dadfff;
   animation: layers1 1s linear infinite alternate;
 }
