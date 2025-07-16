@@ -311,7 +311,7 @@ export default defineComponent({
   },
   setup() {
     const {t} = useI18n();
-    const {languageVal, apiLanguageParam} = storeToRefs(i18nStore())
+    const {languageVal} = storeToRefs(i18nStore())
     const store = userStore();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
@@ -369,7 +369,7 @@ export default defineComponent({
     const loadBanner = () => {
       api.get("/opt-session/promo/banner", {
         category: 'PROMO',
-        language: apiLanguageParam.value
+        language: languageVal.value
       }).then((response) => {
         if (response.code === 0) {
           banner.value = response.data[0];
@@ -466,7 +466,7 @@ export default defineComponent({
       api
         .get(platformApiUrl, {
           params: {
-            language: apiLanguageParam.value,
+            language: languageVal.value,
           }
         })
         .then((res) => {

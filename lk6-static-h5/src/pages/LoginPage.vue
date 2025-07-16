@@ -336,7 +336,7 @@ export default defineComponent({
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
-    const { apiLanguageParam } = storeToRefs(i18nStore());
+    const { languageVal } = storeToRefs(i18nStore());
     const verificationImg = ref("");
     const loginForm = reactive({
       loginName: "",
@@ -839,7 +839,7 @@ export default defineComponent({
         .get("/opt-session/promo/banner", {
           params: {
             category: "LOGIN",
-            language: apiLanguageParam.value
+            language: languageVal.value
           }
         })
         .then((res) => {
