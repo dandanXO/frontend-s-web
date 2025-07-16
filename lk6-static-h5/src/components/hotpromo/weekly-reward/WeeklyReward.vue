@@ -24,7 +24,13 @@
         </div>
         <div class="livepoker-rebate-section-right">
           <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0, loading: loadingClaim }">
-            <img src="../../../assets/images/promotion/hotpromo/common/claim-btn3.png" alt="" width="100%" />
+            <img
+              v-if="languageVal !== 'en'"
+              src="../../../assets/images/promotion/hotpromo/common/claim-btn3.png"
+              alt=""
+              width="100%"
+            />
+            <img v-else src="../../../assets/images/promotion/hotpromo/common/claim-btn3-en.png" alt="" width="100%" />
           </div>
         </div>
       </div>
@@ -38,6 +44,8 @@ import { initSportWeeklyBonus, claimSportWeeklyBonus } from "../../../api/index/
 import { useNotify } from "src/hooks/notify";
 import { userStore } from "src/stores";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
 
 const props = defineProps(["promoCode"]);
 const { promoCode } = toRefs(props);
@@ -45,6 +53,7 @@ const { promoCode } = toRefs(props);
 const notify = useNotify();
 const store = userStore();
 const { t } = useI18n();
+const { languageVal } = storeToRefs(i18nStore());
 
 const totalValidBet = ref(0);
 const bonus = ref(0);
