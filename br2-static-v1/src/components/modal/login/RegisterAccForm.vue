@@ -138,14 +138,25 @@
         :class="{ 'white-txt': !!taxId }"
         lazy-rules
         :rules="[
-          (val) => (!!val && val.length > 0) || 'Por favor, insira o número do CPF',
-          (val) => val.length >= 6 || 'O número do CPF deve ter 11 dígitos',
-          (val) => validateCPF(val) || 'Formato do número do CPF está incorreto.'
+          (val) => (!!val && val.length > 0) || 'Por favor, insira CPF/E-mail/Telefone',
+          validateTaxId
         ]"
       >
+
         <template v-slot:prepend>
           <img v-if="!taxId" src="../../../assets/images/auth/tax-icon.png" width="22px" />
           <img v-else src="../../../assets/images/auth/tax-icon-active.png" width="22px" />
+
+          <q-select
+            class="pix-selection"
+            filled
+            v-model="selectedPix"
+            :options="pixOptions"
+            option-value="id"
+            option-label="name"
+            emit-value
+            label=""
+          />
         </template>
       </q-input>
 
@@ -171,6 +182,7 @@
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import { generateEventID, isAndroid } from "boot/utils";
+import qs from "qs";
 import { Platform, SessionStorage, useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
@@ -203,6 +215,13 @@ const email = ref("");
 
 const codeAffiliate = ref("");
 const referrer = ref("");
+
+const selectedPix= ref("CPF")
+const pixOptions = [
+  { id: 'PHONE', name: 'Phone' },
+  { id: 'EMAIL', name: 'Email' },
+  { id: 'CPF', name: 'CPF' },
+];
 
 const captchaCode = ref("0000");
 const codeId = ref("");
@@ -318,6 +337,11 @@ const register = () => {
         regHost = "app://";
       }
 
+      let getTaxId = taxId.value;
+      if(selectedPix.value === "CPF"){
+        getTaxId =  getTaxId.replace(/[-.]/g, '');
+      }
+
       // debugger;
       getFbValue();
 
@@ -328,7 +352,8 @@ const register = () => {
             loginName: phone.value,
             telephone: phone.value,
             password: password.value,
-            taxId: taxId.value,
+            taxId: getTaxId,
+            taxType: selectedPix.value,
             realName: `${firstName.value},${lastName.value}`,
             // email: email.value,
             captchaCode: captchaCode.value,
@@ -401,6 +426,30 @@ const trackRegisterSuccessEvent = () => {
     });
   }
 };
+
+const validateTaxId = (val) => {
+  if (!val) return "Por favor, insira o conteúdo.";
+
+  if (selectedPix.value === 'EMAIL') {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(val) ? true : "Por favor, insira um E-mail válido.";
+  }
+
+  if (selectedPix.value === 'PHONE') {
+    const phoneRegex = /^\d{8,11}$/;
+    return phoneRegex.test(val) ? true : "Por favor, insira um número de telefone válido (8 a 11 dígitos).";
+  }
+
+  if (selectedPix.value === 'CPF') {
+    const cleaned = val.replace(/\D/g, '');
+    if (cleaned.length <= 6) return 'O número do CPF deve ter 11 dígitos';
+    const validate_cpf = validateCPF(val);
+    if(validate_cpf===false){
+      return 'Formato do número do CPF está incorreto.';
+    }
+  }
+  return true;
+}
 
 const validateCPF = (input_cpf) => {
   if (!input_cpf) return false;
@@ -480,6 +529,42 @@ onMounted(() => {
     right: 10px;
   }
 }
+
+.pix-selection{
+  width: 70px;
+  //:deep(.q-field__append){
+  //  display:none;
+  //}
+
+  :deep(.q-field__control){
+    padding: 0px 4px;
+  }
+
+  :deep(.q-field__native){
+    padding-bottom: 0px;
+  }
+
+  :deep(.q-field--outlined .q-field__control:after){
+    border: 0px;
+    border-width: 0px;
+  }
+
+  :deep(.q-field__control-container){
+    padding-top:0px;
+  }
+
+  :deep(.q-field--outlined.q-field--highlighted .q-field__control:after){
+    border: 0px;
+    border-width: 0px;
+  }
+
+  :deep(.ellipsis){
+    overflow:clip;
+  }
+}
+
+
+
 
 :deep(.reg-checked-box) {
   .q-checkbox__truthy {
