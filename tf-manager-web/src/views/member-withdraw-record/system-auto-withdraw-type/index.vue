@@ -730,6 +730,9 @@ const ruleType = reactive({
     { key: 17, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 2 + t('withdrawRuleType.week') + ')', value: '#betCountByPlatform_14' },
     { key: 18, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 1 + t('withdrawRuleType.month') + ')', value: '#betCountByPlatform_30' },
     { key: 19, name: t('withdrawRuleType.balanceThresholdMultiplier'), value: '#balance<#totalDeposit*' },
+    { key: 20, name: t('withdrawRuleType.balanceCompareTodayMultiplier'), value: '#balance<#todayDeposit*' },
+    { key: 21, name: t('withdrawRuleType.registerDay'), value: '#registerDay>' },
+
   ],
 })
 
@@ -904,6 +907,7 @@ function getValueList(str) {
   const matchesRegex = /\(([^)]+)\)\s+matches\s+'(.*)'/g;
   const platformRegex = /#betCountByPlatform_([a-zA-Z0-9_]+)_(\d+)/g;
   const balanceThresholdRegex = /#balance<#totalDeposit\*\s*(-?\d+(?:\.\d+)?)/g;
+  const balanceCompareTodayRegex = /#balance<#todayDeposit\*\s*(-?\d+(?:\.\d+)?)/g;
   const results = [];
   let match;
   if (!str) {
@@ -932,6 +936,11 @@ function getValueList(str) {
     }
     while ((match = balanceThresholdRegex.exec(conditionStr)) !== null) {
       const variable = '#balance<#totalDeposit*';
+      const value = parseFloat(match[1]);
+      results.push({ variable, operator: '', value });
+    }
+    while ((match = balanceCompareTodayRegex.exec(conditionStr)) !== null) {
+      const variable = '#balance<#todayDeposit*';
       const value = parseFloat(match[1]);
       results.push({ variable, operator: '', value });
     }
@@ -1204,6 +1213,10 @@ function createConditionString(data) {
       }
       // Handle balanceThresholdMultiplier rule - no space between variable and value
       if (variable === '#balance<#totalDeposit*') {
+        return `${variable}${value}`;
+      }
+      // Handle balanceCompareTodayMultiplier rule - no space between variable and value
+      if (variable === '#balance<#todayDeposit*') {
         return `${variable}${value}`;
       }
       return `${variable} ${value}`;

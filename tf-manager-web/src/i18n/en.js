@@ -135,6 +135,8 @@ export default {
     week: ' week',
     month: ' month',
     balanceThresholdMultiplier: 'Balance must be less than (Deposit × Multiplier)',
+    balanceCompareTodayMultiplier: 'Balance must be less than (Today Deposit × Multiplier)',
+    registerDay: 'Register Date - Withdraw Date (day)',
   },
   outboxStatus: {
     0: 'Not reply yet',
