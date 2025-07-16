@@ -458,13 +458,21 @@ export default defineComponent({
   background: #f2f8fe;
   border-radius: 12px;
   padding: 30px;
-  font-family: "PingFang SC";
+  font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial, sans-serif;
+
+  &.en {
+    .title-img {
+      background-image: url("../assets/images/promotion/hotpromo/common/section-title-img-lg.png");
+      background-size: 535px 26px;
+    }
+  }
 
   .claim-title-icon,
   .claim-coin-icon,
-  .claim-gift-icon {
-    width: 32px;
-    height: 32px;
+  .claim-gift-icon,
+  .claim-stacked-coins-icon {
+    width: 28px;
+    height: 28px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -485,6 +493,11 @@ export default defineComponent({
     background-size: 100% 100%;
   }
 
+  .claim-stacked-coins-icon {
+    background: url("../assets/images/promotion/hotpromo/common/reward-icon3.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
   .claim-btn-img {
     aspect-ratio: 762/630;
     width: auto;
@@ -494,6 +507,34 @@ export default defineComponent({
   }
 
   .section-table {
+    --section-table-border-radius: 7px;
+    tr {
+      overflow: hidden;
+      &:first-child {
+        th {
+          &:first-child {
+            border-top-left-radius: var(--section-table-border-radius);
+          }
+          &:last-child {
+            border-top-right-radius: var(--section-table-border-radius);
+          }
+        }
+        // border-top-left-radius: var(--section-table-border-radius);
+        // border-top-right-radius: var(--section-table-border-radius);
+      }
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: var(--section-table-border-radius);
+          }
+          &:last-child {
+            border-bottom-right-radius: var(--section-table-border-radius);
+          }
+        }
+        // border-bottom-left-radius: var(--section-table-border-radius);
+        // border-bottom-right-radius: var(--section-table-border-radius);
+      }
+    }
     th {
       height: 56px;
       font-size: 1rem;
@@ -504,13 +545,46 @@ export default defineComponent({
       white-space: pre-wrap;
 
       &:not(:last-child) {
-        border-right: 1px solid #dcdce8;
+        border-right: 1px solid #acd4f6;
       }
     }
 
     td {
-      border: 1px solid #dcdce8;
+      border: 1px solid #acd4f6;
       color: #333;
+      background: transparent !important;
+    }
+
+    &.cny {
+      th {
+        background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%) !important;
+        color: #894800 !important;
+      }
+    }
+  }
+
+  .section-table2 {
+    th {
+      height: 56px;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 28px;
+      color: #fff !important;
+      background: linear-gradient(180deg, #00cc8c 0%, #006646 100%) !important;
+      white-space: pre-wrap;
+    }
+
+    td {
+      border: 1px solid #acd4f6;
+      color: #014625 !important;
+      background: transparent !important;
+    }
+
+    &.cny {
+      th {
+        background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%) !important;
+        color: #894800 !important;
+      }
     }
   }
 
@@ -525,7 +599,32 @@ export default defineComponent({
     clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     padding-right: 10px;
-    font-family: "PingFang SC";
+    font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+      sans-serif;
+
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    width: fit-content;
+    padding: 0px 20px 0px 10px;
+    height: fit-content;
+    min-width: 100px;
+
+    &.cny {
+      background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%);
+      color: #894800;
+    }
+  }
+
+  .ribbon2 {
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+    background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
+    padding-right: 10px;
+    font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+      sans-serif;
+
     color: #fff;
     display: flex;
     justify-content: center;
@@ -533,23 +632,26 @@ export default defineComponent({
     font-size: 16px;
     width: fit-content;
     padding: 0px 20px 0px 10px;
-    aspect-ratio: 94/30;
-    white-space: nowrap;
+
+    &.cny {
+      background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%);
+      color: #894800;
+    }
   }
 
   .title-img {
-    aspect-ratio: 2952 / 176;
+    aspect-ratio: 960 / 80;
     background: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg.png");
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 905px 55px;
+    background-size: 290px 26px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 35px;
+    font-size: 20px;
     color: #4c4c6c;
     font-weight: bold;
-    letter-spacing: 3px;
+    letter-spacing: 1px;
   }
 
   .item {
@@ -558,7 +660,6 @@ export default defineComponent({
     display: flex;
     gap: 10px;
     font-size: 1rem;
-    padding: 3px 0;
 
     .item-num {
       color: #ffffff;

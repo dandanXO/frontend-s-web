@@ -782,7 +782,7 @@ export default defineComponent({
     LocaleSelector
   },
   setup() {
-    const { languageVal, apiLanguageParam } = storeToRefs(i18nStore());
+    const { languageVal } = storeToRefs(i18nStore());
     const { t } = useI18n();
     const notify = useNotify();
 
@@ -1083,7 +1083,7 @@ export default defineComponent({
         .get(`/opt-session/promo/banner`, {
           params: {
             category: "HOME",
-            language: apiLanguageParam.value,
+            language: languageVal.value,
             v: randNum
           }
         })

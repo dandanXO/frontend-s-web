@@ -45,7 +45,7 @@
                         />
                         <div>
                           <!-- <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" /> -->
-                          <RedirectButton class="promo-item-btn">查看详情</RedirectButton>
+                          <RedirectButton class="promo-item-btn">{{ $t("promo.viewDetail") }}</RedirectButton>
                         </div>
 
                         <div class="promo-item-side-img">
@@ -311,7 +311,7 @@ export default defineComponent({
   },
   setup() {
     const {t} = useI18n();
-    const {languageVal, apiLanguageParam} = storeToRefs(i18nStore())
+    const {languageVal} = storeToRefs(i18nStore())
     const store = userStore();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
@@ -369,7 +369,7 @@ export default defineComponent({
     const loadBanner = () => {
       api.get("/opt-session/promo/banner", {
         category: 'PROMO',
-        language: apiLanguageParam.value
+        language: languageVal.value
       }).then((response) => {
         if (response.code === 0) {
           banner.value = response.data[0];
@@ -466,7 +466,7 @@ export default defineComponent({
       api
         .get(platformApiUrl, {
           params: {
-            language: apiLanguageParam.value,
+            language: languageVal.value,
           }
         })
         .then((res) => {
@@ -725,7 +725,7 @@ export default defineComponent({
           .promo-item-title {
             color: #7a80a1;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.875rem;
             max-width: 160px;
 
             @media (min-width: 500px) {
@@ -735,8 +735,8 @@ export default defineComponent({
 
           .promo-item-deal {
             color: #7a80a1;
-            font-weight: bold;
-            font-size: 0.875rem;
+            font-weight: 400;
+            font-size: 0.75rem;
             max-width: 160px;
 
             @media (min-width: 500px) {
@@ -753,6 +753,7 @@ export default defineComponent({
             padding-right: 16px;
             font-size: 0.75rem;
             margin-top: 6px;
+            white-space: nowrap;
           }
 
           .promo-item-side-img {
@@ -1009,7 +1010,7 @@ export default defineComponent({
             padding: 5px;
             text-align: center;
             background-color: #ffffff;
-            border: 1px solid #d0d1d3;
+            border: 1px solid #acd4f6;
             white-space: normal;
           }
         }
