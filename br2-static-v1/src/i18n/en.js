@@ -234,7 +234,9 @@ export default {
     lastName_rules_01: "Please insert your last name",
     lastName_rules_02: "Please enter a valid last name",
     taxId: "Tax ID",
-    taxId_placeholder: "Please enter your Tax ID"
+    taxId_placeholder: "Please enter your Tax ID",
+    pixType: "Pix Type",
+    selectPixType: "Select Pix Type"
   },
   btn: {
     confirm: "Confirm",
@@ -374,7 +376,8 @@ export default {
     paymentChannels: "Payment Channels",
     channelUnderMaintenance: "This channel is under maintenance",
     accountNumber: "Account Number",
-    requireDeposit: "A deposit is required before a withdrawal can be made"
+    requireDeposit: "A deposit is required before a withdrawal can be made",
+    bindCardCs: "Please contact customer service to bind card"
   },
   bank: {
     virtualWallet: "eWallet",

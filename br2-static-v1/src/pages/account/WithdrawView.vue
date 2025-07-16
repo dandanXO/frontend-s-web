@@ -103,12 +103,13 @@
       </div>
 
       <div class="bot-wrapper">
-        <div class="bank-card-item" @click="goToBank()">
+        <div v-if="withdrawalMethods[withdrawalDialogTab].allowBindCard" class="bank-card-item" @click="goToBank()">
           <div class="card-icon">
             <q-icon key="md" size="md" name="add" />
           </div>
           <div class="card-label">{{ $t("btn.addNewAccount") }}</div>
         </div>
+        <div class="disable-bank-card-txt" v-else>{{ $t("withdraw.bindCardCs") }}</div>
       </div>
     </div>
 
@@ -742,6 +743,11 @@ const isValidCardAddress = () => {
           display: flex;
           justify-content: center;
         }
+      }
+
+      .disable-bank-card-txt {
+        margin-top: 6px;
+        color: #e03f3f;
       }
     }
   }
