@@ -6,6 +6,7 @@
       :loading-claim="loadingClaim"
       @daily-slot="handleSlot()"
     />
+    <WeeklyReward v-else-if="list.redirectUrl === 'lk6-weekly-reward'" />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -20,8 +21,6 @@
     </el-dialog>
   </div>
   <liveGift v-if="list.redirectUrl === 'lk6-live-gift'"></liveGift>
-  
- 
 </template>
 
 <script>
@@ -35,6 +34,7 @@ import { ElMessageBox } from "element-plus";
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import liveGift from "../components/hotpromo/liveGift.vue";
+import WeeklyReward from "./hotpromo/weekly-reward/WeeklyReward.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -42,7 +42,8 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
-    liveGift
+    liveGift,
+    WeeklyReward
   },
   props: {
     list: {
@@ -664,6 +665,13 @@ export default defineComponent({
   padding: 30px;
   font-family: "PingFang SC";
 
+  &.en {
+    .title-img {
+      background-image: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg-lg.png");
+      background-size: 1140px 55px;
+    }
+  }
+
   &.cny {
     background: url("../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg.png");
     background-size: 100% 100%;
@@ -756,7 +764,8 @@ export default defineComponent({
     font-size: 16px;
     width: fit-content;
     padding: 0px 20px 0px 10px;
-    aspect-ratio: 94/30;
+    // aspect-ratio: 94/30;
+    min-width: 94px;
     white-space: nowrap;
 
     &.cny {
@@ -908,54 +917,54 @@ export default defineComponent({
   }
 }
 .promo-table {
-      margin: 10px auto;
-      min-width: 80%;
-      text-align: center;
-      border-collapse: collapse;
+  margin: 10px auto;
+  min-width: 80%;
+  text-align: center;
+  border-collapse: collapse;
 
-      tr:first-child td {
-        background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
-        color: #ffffff;
-        border: 0;
-      }
-      tr:first-child td:first-child {
-        border-top-left-radius: 10px;
-      }
-      tr:first-child td:last-child {
-        border-top-right-radius: 10px;
-      }
+  tr:first-child td {
+    background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
+    color: #ffffff;
+    border: 0;
+  }
+  tr:first-child td:first-child {
+    border-top-left-radius: 10px;
+  }
+  tr:first-child td:last-child {
+    border-top-right-radius: 10px;
+  }
 
-      th,
-      td {
-        padding: 10px;
-      }
-      tbody {
-        display: table;
-        table-layout: fixed;
-        width: 100%;
-      }
-      th {
-        // background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%), linear-gradient(#d0d1d3, #d0d1d3);
-        background: #e7f3ff;
-        p {
-          margin: 0;
-        }
-        &:first-child {
-          border-top-left-radius: 20px;
-        }
-        &:last-child {
-          border-top-right-radius: 20px;
-        }
-      }
-      td {
-        // background-color: #202228;
-        border: 1px solid #dcdce8;
-        color: #333;
-      }
-      tr {
-        p {
-          margin: 0px;
-        }
-      }
+  th,
+  td {
+    padding: 10px;
+  }
+  tbody {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+  }
+  th {
+    // background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%), linear-gradient(#d0d1d3, #d0d1d3);
+    background: #e7f3ff;
+    p {
+      margin: 0;
     }
+    &:first-child {
+      border-top-left-radius: 20px;
+    }
+    &:last-child {
+      border-top-right-radius: 20px;
+    }
+  }
+  td {
+    // background-color: #202228;
+    border: 1px solid #dcdce8;
+    color: #333;
+  }
+  tr {
+    p {
+      margin: 0px;
+    }
+  }
+}
 </style>

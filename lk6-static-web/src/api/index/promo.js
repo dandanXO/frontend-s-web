@@ -950,3 +950,11 @@ export function getFissureJulyFinal2025Bonus(promoCode) {
 export function claimFissureJulyFinal2025Bonus(promoCode) {
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
 }
+
+export function initSportWeeklyBonus() {
+  return server.EVENT.get(`/session/game-type-bonus/init?promoCode=lk6-sport-weekly-bonus`);
+}
+
+export function claimSportWeeklyBonus() {
+  return server.EVENT.post(`/session/game-type-bonus/claim?promoCode=lk6-sport-weekly-bonus`);
+}
