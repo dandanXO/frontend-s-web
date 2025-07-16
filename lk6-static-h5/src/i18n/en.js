@@ -37,6 +37,9 @@ export default {
       },
       success: {
         message: "Operation successful"
+      },
+      claimSuccessfully: {
+        message: "Claim successful"
       }
     },
     gameType: {
@@ -624,7 +627,14 @@ export default {
       timeLimited: "Limited Time",
       selected: "Selected"
     },
-    viewDetail: "View Details"
+    viewDetail: "View Details",
+    weeklyReward: {
+      claimSection: {
+        title: "Weekly Betting Rewards",
+        yesterdayValidBets: "Yesterday's Valid Bets:",
+        todayBonus: "Today's Bonus:"
+      }
+    }
   },
   bindCrypto: {
     form: {

@@ -15163,10 +15163,6 @@
   "lk6-static-h5/src/assets/images/vip/level/vip10.png": "d5bc622a73d3166843605ccf2075841e",
   "lk6-static-h5/src/assets/images/vip/level/vip1.png": "c9d4519fddb327c35cdebc42017b50aa",
   "lk6-static-h5/src/assets/images/promotion/tab_bg.png": "c77c22c62bb940ac351d419dd009e49d",
-  "lk6-static-h5/src/assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png": "be8fcabd38ecd637dddf23102eb41aa9",
-  "lk6-static-h5/src/assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon3.png": "3b803defd7317974e76d0861dfe4eeb2",
-  "lk6-static-h5/src/assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png": "0b0702e79d3adf3157f169d5f92a6ec2",
-  "lk6-static-h5/src/assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png": "a52c1a347bc4c695fd8a7cb2fb1b622d",
   "lk6-static-h5/src/assets/images/promotion/hotpromo/dy2-first-usdt/icon.png": "3ef3e2c0c6e8a85c7efd07d324b59a6c",
   "lk6-static-h5/src/assets/images/promotion/hotpromo/common/promo-details-title-bg.png": "4c2bdd2c9eefaffa7d7a1e642323e194",
   "lk6-static-h5/src/assets/images/promotion/hotpromo/common/bg.png": "a7245dba5122fe3388a4fde465b94045",
@@ -31497,5 +31493,10 @@
   "lk6-static-h5/src/assets/images/promotion/hotpromo/common/reward-icon2.png": "0b0702e79d3adf3157f169d5f92a6ec2",
   "lk6-static-h5/src/assets/images/promotion/hotpromo/common/section-title-img.png": "be8fcabd38ecd637dddf23102eb41aa9",
   "lk6-static-h5/src/assets/images/promotion/hotpromo/common/reward-icon3.png": "3b803defd7317974e76d0861dfe4eeb2",
-  "lk6-static-h5/src/assets/images/promotion/hotpromo/common/section-title-img-lg.png": "ec804f28a00510e29cf0d9314d6e43f5"
+  "lk6-static-h5/src/assets/images/promotion/hotpromo/common/section-title-img-lg.png": "ec804f28a00510e29cf0d9314d6e43f5",
+  "lk6-static-h5/src/assets/images/promotion/hotpromo/common/claim-btn.png": "42ae8c0a70d8e047b310fc6a3ad5bea5",
+  "lk6-static-h5/src/assets/images/promotion/hotpromo/common/claim-btn2.png": "152b0bc51fd1d1680024d0f1c0c27a42",
+  "lk6-static-h5/src/assets/images/promotion/hotpromo/common/claim-btn3.png": "0c3f9f3d8a1585b49d66625ccb68b3ba",
+  "lk6-static-h5/src/assets/images/promotion/hotpromo/common/section-bg.png": "4b001bd17b467e75dc867de173f2a0ab",
+  "lk6-static-h5/src/assets/images/promotion/hotpromo/common/claim-btn3-en.png": "58425b1276e461d03648d80ce7b24c3c"
 }
