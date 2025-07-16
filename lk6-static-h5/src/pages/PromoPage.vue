@@ -283,7 +283,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onActivated, reactive, watch, defineAsyncComponent } from "vue";
+import { ref, defineComponent, onActivated, reactive, watch, defineAsyncComponent, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import {cached} from "boot/cache";
@@ -311,7 +311,7 @@ export default defineComponent({
   },
   setup() {
     const {t} = useI18n();
-    const {languageVal} = storeToRefs(i18nStore())
+    const {languageVal, apiLanguageParam} = storeToRefs(i18nStore())
     const store = userStore();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
@@ -355,6 +355,7 @@ export default defineComponent({
 
 
 
+
     watch(
       () => route.query,
       () => {
@@ -366,7 +367,10 @@ export default defineComponent({
       }
     );
     const loadBanner = () => {
-      api.get("/opt-session/promo/banner?category=PROMO").then((response) => {
+      api.get("/opt-session/promo/banner", {
+        category: 'PROMO',
+        language: apiLanguageParam.value
+      }).then((response) => {
         if (response.code === 0) {
           banner.value = response.data[0];
         }
@@ -460,7 +464,11 @@ export default defineComponent({
       isFetchingPromo.value = window.location.pathname === "/promotion";
 
       api
-        .get(platformApiUrl)
+        .get(platformApiUrl, {
+          params: {
+            language: apiLanguageParam.value,
+          }
+        })
         .then((res) => {
           if (res.code === 0) {
             promoState.promoList = [];

@@ -84,7 +84,7 @@ const { t } = useI18n();
 
 const store = userStore();
 const { token } = storeToRefs(store);
-const { languageVal } = storeToRefs(i18nStore());
+const { apiLanguageParam } = storeToRefs(i18nStore());
 
 const formRef = ref();
 const payTypeClass = ref();
@@ -112,14 +112,6 @@ const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
 const hasPrivilege = ref(false);
 const quickTransferTab = ref(false);
-
-const apiLanguageParam = computed(() => {
-  if (languageVal.value === "zh") {
-    return "cn";
-  } else {
-    return "en";
-  }
-});
 
 const checkAmount = reactive({
   flag: true,

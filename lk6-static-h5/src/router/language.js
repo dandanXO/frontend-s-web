@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import vueI18n from "../i18n";
 import { defineStore } from "pinia";
 import { DEFAULT_LANG } from "src/constant/lang";
@@ -31,5 +31,14 @@ export const i18nStore = defineStore("i18nStore", () => {
     setLanguage(lang);
     isLangInitialized.value = true;
   };
-  return { languageVal, setLanguage, isLangInitialized, initializeLang };
+
+  const apiLanguageParam = computed(() => {
+    if (languageVal.value === "zh") {
+      return "cn";
+    } else {
+      return languageVal.value;
+    }
+  });
+
+  return { languageVal, setLanguage, isLangInitialized, initializeLang, apiLanguageParam };
 });

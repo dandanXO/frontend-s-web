@@ -322,6 +322,8 @@ import { useLocalStorage } from "@vueuse/core";
 import { getDevice } from "src/boot/utils";
 import CommonModal from "src/components/CommonModal.vue";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
 
 export default defineComponent({
   name: "LoginPage",
@@ -334,6 +336,7 @@ export default defineComponent({
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
+    const { apiLanguageParam } = storeToRefs(i18nStore());
     const verificationImg = ref("");
     const loginForm = reactive({
       loginName: "",
@@ -832,9 +835,16 @@ export default defineComponent({
       checkRememberPwd();
       // initGeetestCaptcha();
 
-      api.get("/opt-session/promo/banner?category=LOGIN").then((res) => {
-        loginBannerUrl.value = imgURL + res.data[0].mobileImageUrl;
-      });
+      api
+        .get("/opt-session/promo/banner", {
+          params: {
+            category: "LOGIN",
+            language: apiLanguageParam.value
+          }
+        })
+        .then((res) => {
+          loginBannerUrl.value = imgURL + res.data[0].mobileImageUrl;
+        });
     });
 
     return {

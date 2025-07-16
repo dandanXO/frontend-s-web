@@ -782,7 +782,7 @@ export default defineComponent({
     LocaleSelector
   },
   setup() {
-    const { languageVal } = storeToRefs(i18nStore());
+    const { languageVal, apiLanguageParam } = storeToRefs(i18nStore());
     const { t } = useI18n();
     const notify = useNotify();
 
@@ -1080,7 +1080,13 @@ export default defineComponent({
     function loadData() {
       const randNum = Math.floor(Math.random() * 1000) + 1;
       api
-        .get(`/opt-session/promo/banner?category=HOME&v=${randNum}`)
+        .get(`/opt-session/promo/banner`, {
+          params: {
+            category: "HOME",
+            language: apiLanguageParam.value,
+            v: randNum
+          }
+        })
         .then((res) => {
           if (res.code === 0) {
             // banners.value = res.data;
