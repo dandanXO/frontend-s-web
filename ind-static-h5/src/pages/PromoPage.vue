@@ -77,14 +77,16 @@
             <div v-if="isFetchingPromo" class="spinner-container">
               <q-spinner color="yellow" size="70px" :thickness="5" />
             </div>
-            <div class="selected-promo-wrapper">
+            <div class="selected-promo-wrapper" :class="selectedParam.dailybonusbg && 'daily-bonus-bg'">
               <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
-                <img
-                  class="promo-content"
-                  :src="imgURL + selectedPromo.mobileBannerUrl"
-                  style="display: block; width: 100%"
-                />
+                <template v-if="!selectedParam.hidebanner">
+                  <img
+                    class="promo-content"
+                    :src="imgURL + selectedPromo.mobileBannerUrl"
+                    style="display: block; width: 100%"
+                  />
+                </template>
               </div>
               <div class="inner" :class="ui.promoBg">
                 <div v-if="!selectedParam.hidetitle" class="promo-content-inner">
@@ -1042,6 +1044,12 @@ export default defineComponent({
     width: 100%;
 
     .selected-promo-wrapper {
+
+      &.daily-bonus-bg {
+        background: teal;
+        background-image: url(../components/hotpromo/dailybonus/img/dailybonus-main-bg.jpg);
+      }
+
       .banner-container {
         &:after {
           content: "";
