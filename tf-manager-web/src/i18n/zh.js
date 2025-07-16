@@ -134,6 +134,8 @@ export default {
     week: '周内',
     month: '月内',
     balanceThresholdMultiplier: '余额需小于存款金额倍数',
+    balanceCompareTodayMultiplier: '余额需小于今日存款金额倍数',
+    registerDay: '注册时间 - 提款时间 （天数）'
   },
   outboxStatus: {
     0: '未回复',
