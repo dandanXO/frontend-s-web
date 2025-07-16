@@ -20,7 +20,9 @@
       </div>
     </el-dialog>
   </div>
-  <liveGift v-if="list.redirectUrl === 'lk6-live-gift'"></liveGift>
+  <!-- <liveGift v-if="list.redirectUrl === 'lk6-live-gift'"></liveGift> -->
+  
+ 
 </template>
 
 <script>
@@ -33,8 +35,7 @@ import { ElMessageBox } from "element-plus";
 
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
-import liveGift from "../components/hotpromo/liveGift.vue";
-import WeeklyReward from "./hotpromo/weekly-reward/WeeklyReward.vue";
+// import liveGift from "../components/hotpromo/liveGift.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -42,8 +43,7 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
-    liveGift,
-    WeeklyReward
+    // liveGift
   },
   props: {
     list: {
