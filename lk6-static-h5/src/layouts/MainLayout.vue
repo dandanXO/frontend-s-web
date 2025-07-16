@@ -470,7 +470,9 @@ export default defineComponent({
       }
       return ui.slotLists;
     });
-    const withBgPage = computed(() => !["/login", "/register", "/forgot-account", "/"].includes(route.path));
+    const withBgPage = computed(
+      () => !["/login", "/register", "/forgot-account", "/", "/affiliate"].includes(route.path)
+    );
     const isScrolled = ref(false);
     // console.log(platformsList.value);
     onMounted(() => {
