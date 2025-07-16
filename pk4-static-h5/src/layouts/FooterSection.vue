@@ -1,5 +1,5 @@
 <template>
-  <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" unelevated>
+  <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" unelevated :class="ui.isBetBy && 'isBetBy'">
     <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify" indicator-color="white" narrow-indicator>
       <q-route-tab to="/home" name="home" id="home" :ripple="false">
         <div class="footer-img">
