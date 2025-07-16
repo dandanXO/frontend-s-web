@@ -215,6 +215,7 @@
       modal
       class="p-dialog-md live-event-dialog"
       appendTo="body"
+      :style="{ width: '600px' }"
     >
       <form @submit.prevent="submit" @keydown.enter.prevent class="p-fluid">
         <!-- Sport Type -->
@@ -664,7 +665,7 @@ function restrictInput(event) {
 }
 const ui = reactive({
   dialogVisible: false,
-  dialogTitle: '',
+  dialogTitle: t('fields.add'),
   dialogType: 'CREATE',
 });
 
