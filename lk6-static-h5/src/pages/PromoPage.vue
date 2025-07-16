@@ -1010,7 +1010,7 @@ export default defineComponent({
             padding: 5px;
             text-align: center;
             background-color: #ffffff;
-            border: 1px solid #d0d1d3;
+            border: 1px solid #acd4f6;
             white-space: normal;
           }
         }
