@@ -19,7 +19,7 @@
       </div>
     </el-dialog>
   </div>
-  <DanTestPromo v-if="list.redirectUrl === 'lk6-live-gift'"></DanTestPromo>
+  <liveGift v-if="list.redirectUrl === 'lk6-live-gift'"></liveGift>
   
  
 </template>
@@ -34,7 +34,7 @@ import { ElMessageBox } from "element-plus";
 
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
-import DanTestPromo from "../components/hotpromo/danTestPromo.vue";
+import liveGift from "../components/hotpromo/liveGift.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -42,7 +42,7 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
-    DanTestPromo
+    liveGift
   },
   props: {
     list: {
