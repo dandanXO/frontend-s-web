@@ -151,10 +151,15 @@
       :promo-code="list.promoCode"
       :params="list.param"
     />
-    
 
     <PPDianZiTianTianSong
       v-if="list.redirectUrl === 'lh-PPdianzitiantiansong'"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
+
+    <RapidDrop2025
+      v-if="list.redirectUrl === 'lh1-rapid-drop-2025'"
       :promo-code="list.promoCode"
       :params="list.param"
     />
@@ -247,6 +252,7 @@ import EsportWorldCup2025 from "./hotpromo/esport-world-cup-2025/EsportWorldCup2
 import FifaCwcRedPacket from "./hotpromo/fifa-cwc-red-packet/FifaCwcRedPacket.vue";
 import FissureJulyFinal2025 from "./hotpromo/fissure-july-final-2025/FissureJulyFinal2025.vue";
 import PPDianZiTianTianSong from "./hotpromo/ppdianzitiantiansong/PPDianZiTianTianSong.vue";
+import RapidDrop2025 from "./hotpromo/rapid-drop-2025/RapidDrop2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -314,7 +320,7 @@ export default defineComponent({
     EsportWorldCup2025,
     FifaCwcRedPacket,
     FissureJulyFinal2025,
-    PPDianZiTianTianSong
+    RapidDrop2025
   },
   props: {
     list: {
