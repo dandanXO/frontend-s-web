@@ -622,7 +622,8 @@ export default {
       newUser: "新人",
       timeLimited: "限时",
       selected: "精选"
-    }
+    },
+    viewDetail: "查看详情"
   },
   bindCrypto: {
     form: {
