@@ -358,6 +358,8 @@ import moment from "moment";
 import { useNotify } from "src/hooks/notify";
 import CommonModal from "src/components/CommonModal.vue";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
 export default defineComponent({
   name: "AccountPage",
   components: {
@@ -385,6 +387,7 @@ export default defineComponent({
     const store = userStore();
     const router = useRouter();
     const $q = useQuasar();
+    const { apiLanguageParam } = storeToRefs(i18nStore());
 
     const isLogoutModal = ref(false);
     const isHideLevelUp = ref(false);
@@ -487,7 +490,10 @@ export default defineComponent({
     const btm_banners = ref([]);
     const getPromoImage = () => {
       api
-        .get("/opt-session/promo/banner?category=CENTERPROMO")
+        .get("/opt-session/promo/banner", {
+          category: "CENTERPROMO",
+          language: apiLanguageParam.value
+        })
         .then((res) => {
           if (res.code === 0) {
             btm_banners.value = res.data.filter((promo) => {
@@ -1083,9 +1089,9 @@ export default defineComponent({
     align-items: center;
     width: 100%;
     color: #424f72;
-    
+
     // background-color: $lightblue;
-    background: #E7F3FF;
+    background: #e7f3ff;
     border-radius: 20px 20px 0 0;
     position: relative;
     &:before {
