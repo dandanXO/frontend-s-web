@@ -575,6 +575,11 @@ const getRollOverText = (rolltext) => {
 
   var fulltext = "流水倍数要求（本金 + 彩金）：";
   var rolloverlists = [];
+  if (thetext.rolloverType && thetext.rollover) {
+    fulltext += `${thetext.rollover} 倍`;
+    return fulltext;
+  }
+
   if (thetext.sport) {
     rolloverlists.push("体育" + thetext.sport + "倍");
   }
