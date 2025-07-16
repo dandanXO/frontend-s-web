@@ -226,7 +226,7 @@ export default defineComponent({
       // { code: "HOT", img: "hot", label: "热门活动" },
       // { code: "ESPORT", img: "esport", label: "电竞活动" },
       { code: "SPORT", img: "sport", label: `${t('menu.sport')} ${t('menu.promotion')}` },
-      { code: "LIVE CASINO", img: "live", label:`${t('menu.live')} ${t('menu.promotion')}` },
+      { code: "LIVE", img: "live", label:`${t('menu.live')} ${t('menu.promotion')}` },
       // { code: "SLOT GAME", img: "slot", label: "电游活动" },
       // { code: "POKER", img: "poker", label: `${t('menu.bacarrat')} ${t('menu.promotion')}` },
       // { code: "FISH", img: 'fish', label: '捕鱼'},
