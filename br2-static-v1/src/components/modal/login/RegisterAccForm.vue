@@ -144,8 +144,10 @@
       >
 
         <template v-slot:prepend>
-          <img v-if="!taxId" src="../../../assets/images/auth/tax-icon.png" width="22px" />
-          <img v-else src="../../../assets/images/auth/tax-icon-active.png" width="22px" />
+
+          <img v-if="selectedPix === 'CPF'" :class="taxId ? 'bright-icon' : ''" src="../../../assets/images/auth/input-icon-cpf-white.png" width="22px" />
+          <img v-else-if="selectedPix === 'PHONE'" :class="taxId ? 'bright-icon' : ''"  src="../../../assets/images/auth/input-icon-phone-white.png" width="22px" />
+          <img v-else-if="selectedPix === 'EMAIL'" :class="taxId ? 'bright-icon' : ''"  src="../../../assets/images/auth/input-icon-email-white.png" width="22px" />
 
           <q-select
             class="pix-selection"
@@ -155,6 +157,7 @@
             option-value="id"
             option-label="name"
             emit-value
+            map-options
             label=""
           />
         </template>
@@ -528,6 +531,10 @@ onMounted(() => {
     width: 150px;
     right: 10px;
   }
+}
+
+.bright-icon{
+  filter: brightness(0) invert(1);
 }
 
 .pix-selection{
