@@ -97,7 +97,7 @@
               style="width: 20px; height: 20px; margin-right: 10px"
               preview
             />
-            <span>{{ slotProps.data.homeNameZh || slotProps.data.homeName }}</span>
+            <span>{{ slotProps.data.homeNameZh || slotProps.data.homeNameEn }}</span>
           </div>
         </template>
       </Column>
@@ -110,7 +110,7 @@
               preview
               style="width: 20px; height: 20px; margin-right: 10px"
             />
-            <span>{{ slotProps.data.awayNameZh || slotProps.data.awayName }}</span>
+            <span>{{ slotProps.data.awayNameZh || slotProps.data.awayNameEn }}</span>
           </div>
         </template>
       </Column>
