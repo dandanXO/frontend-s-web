@@ -284,10 +284,10 @@ const loadCards = () => {
 
         if (bankCardList.value.length > 0) {
           isCardShown.value[bankCardList.value.length - 1] = true;
+          isAllowBindBankCard.value = res.data[0].allowBindCard;
+        } else {
+          isAllowBindBankCard.value = true;
         }
-
-        // isAllowBindBankCard.value = res.data.allowBindCard
-        isAllowBindBankCard.value = true;
       }
     })
     .catch((error) => {

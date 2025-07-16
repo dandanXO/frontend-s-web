@@ -502,7 +502,7 @@ const addCard = () => {
 
   // if (selectedOption.value === "phone") {
   if (!formData.cardAddress.startsWith("+55")) {
-    formData.cardAddress = `+55${formData.cardAddress}`;
+    formData.cardAddress = formData.cardAddress;
   }
   // }
 

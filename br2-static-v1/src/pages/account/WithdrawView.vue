@@ -103,7 +103,7 @@
       </div>
 
       <div class="bot-wrapper">
-        <div v-if="isAllowBindBankCard" class="bank-card-item" @click="goToBank()">
+        <div v-if="withdrawalMethods[withdrawalDialogTab].allowBindCard" class="bank-card-item" @click="goToBank()">
           <div class="card-icon">
             <q-icon key="md" size="md" name="add" />
           </div>
@@ -281,7 +281,6 @@ const refreshBalance = () => {
   if (store.token) store.getBalance();
 };
 
-const isAllowBindBankCard = ref(false);
 const isLoadingWithdrawalMethod = ref(false);
 const withdrawalDialogTab = ref("BANK");
 const withdrawalMethods = reactive({
@@ -305,9 +304,6 @@ const getWithdrawalMethods = () => {
 
   api.get("/session/withdraw/entrance").then((response) => {
     if (response.code === 0) {
-      // isAllowBindBankCard.value = response.data.allowBindCard
-      isAllowBindBankCard.value = true;
-
       for (let i = 0, l = response.data.length; i < l; i++) {
         const currentData = response.data[i];
         withdrawalMethods[currentData.code] = currentData;
