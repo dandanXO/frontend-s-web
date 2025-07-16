@@ -551,5 +551,54 @@
     "58003": "Event have expired",
     "58004": "Cannot Participate. Previous Tasks Has Failed to Accomplish.",
     "58005": "Congrats, You have Completed All Tasks"
+  },
+  "danTestPromo": {
+    "title": "Details",
+    "targetAudience": "Target Audience",
+    "targetAudienceContent": "All Lucky6 Members",
+    "activityTime": "Promotion Time",
+    "activityTimeContent": "Effective immediately, the end time is subject to official announcement.",
+    "activityContent": "Promotion Details",
+    "activityContentDetail": "Play at Lucky6 from Monday to Friday (Beijing time) and achieve a cumulative valid bet of 1000U or more to receive a weekly bonus, up to 18,888U!",
+    "table": {
+      "level": "Level",
+      "winningStreaks": "Winning Streak",
+      "bonus": "Bonus Prize",
+      "row1": {
+        "bet": "Min. bet 50U",
+        "streak": "6-game winning streak",
+        "prize": "66U"
+      },
+      "row2": {
+        "bet": "Min. bet 100U",
+        "streak": "8-game winning streak",
+        "prize": "266U"
+      },
+      "row3": {
+        "bet": "Min. bet 200U",
+        "streak": "10-game winning streak",
+        "prize": "666U"
+      },
+      "row4": {
+        "bet": "Min. bet 500U",
+        "streak": "15-game winning streak",
+        "prize": "6,666U"
+      },
+      "row5": {
+        "bet": "Min. bet 1,000U",
+        "streak": "20-game winning streak",
+        "prize": "16,666U"
+      },
+      "row6": {
+        "bet": "Min. bet 2,000U",
+        "streak": "25-game winning streak",
+        "prize": "26,666U"
+      },
+      "row7": {
+        "bet": "Min. bet 5,000U",
+        "streak": "30-game winning streak",
+        "prize": "66,666U"
+      }
+    }
   }
 }
