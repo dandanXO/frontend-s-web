@@ -332,7 +332,7 @@ export default defineComponent({
         }
         isLoading.value = false;
       });
-      loadPromo()
+      loadPromo(languageVal.value)
         .then((res) => {
           if (res.code === 0) {
             if (promoState.promoList.length === 0) {

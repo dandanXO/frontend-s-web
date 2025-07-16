@@ -387,7 +387,7 @@ export default defineComponent({
     const store = userStore();
     const router = useRouter();
     const $q = useQuasar();
-    const { apiLanguageParam } = storeToRefs(i18nStore());
+    const { languageVal } = storeToRefs(i18nStore());
 
     const isLogoutModal = ref(false);
     const isHideLevelUp = ref(false);
@@ -492,7 +492,7 @@ export default defineComponent({
       api
         .get("/opt-session/promo/banner", {
           category: "CENTERPROMO",
-          language: apiLanguageParam.value
+          language: languageVal.value
         })
         .then((res) => {
           if (res.code === 0) {

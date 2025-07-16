@@ -623,7 +623,8 @@ export default {
       newUser: "New User",
       timeLimited: "Limited Time",
       selected: "Selected"
-    }
+    },
+    viewDetail: "View Details"
   },
   bindCrypto: {
     form: {
