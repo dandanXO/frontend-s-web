@@ -466,7 +466,7 @@ export default defineComponent({
   &.en {
     .title-img {
       background-image: url("../assets/images/promotion/hotpromo/common/section-title-img-lg.png");
-      background-size: 535px 26px;
+      background-size: 580px 26px;
     }
   }
 
