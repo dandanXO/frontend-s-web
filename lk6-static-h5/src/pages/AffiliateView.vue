@@ -1,7 +1,10 @@
 <template>
   <div class="affiliate-container">
     <div class="page-title">
-      <div class="page-title-img"><img src="../assets/images/affiliate/title.png" /></div>
+      <div class="page-title-img">
+        <img v-if="languageVal !== 'en'" src="../assets/images/affiliate/title.png" />
+        <img v-else src="../assets/images/affiliate/title-en.png" />
+      </div>
     </div>
     <div class="page-title-text">
       <span class="page-title-text__stroke">{{ $t("affiliate.agentSupport") }}</span>
@@ -126,10 +129,14 @@
     </div>
     <div class="affiliate-subgroup agent-content-item rule">
       <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%">
+        <div class="page-title-text">
+          <span class="page-title-text__stroke">{{ $t("affiliate.commissionTerm") }}</span>
+          <span class="page-title-text__fill">{{ $t("affiliate.commissionTerm") }}</span>
+        </div>
+
         <div class="affiliate-sub">
           <img class="bonus-rabbit" src="../assets/images/affiliate/bonus-rabbit.png" alt="" />
           <div class="affiliate-inner">
-            {{ $t("affiliate.commissionTerm") }}
             <ol>
               <li v-for="(term, key) in terms" :key="key">
                 <ul>
@@ -145,11 +152,13 @@
 </template>
 
 <script setup>
+import { storeToRefs } from "pinia";
 import { userStore } from "../stores/index";
 import { Platform, useQuasar } from "quasar";
 import { useNotify } from "src/hooks/notify.js";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { i18nStore } from "src/router/language";
 
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 const notify = useNotify();
@@ -169,6 +178,7 @@ const text_copied = ref("");
 const copyinput = ref(null);
 const $q = useQuasar();
 const { t, locale, getLocaleMessage } = useI18n();
+const { languageVal } = storeToRefs(i18nStore());
 
 const contactInfo = computed(() => [
   { icon: "qq-logo.png", label: t("affiliate.contact.qq"), value: "2115894008", download: "https://im.qq.com/index/" },
@@ -267,6 +277,7 @@ const copyText = (text, msgTitle) => {
     color: transparent;
 
     .page-title-text__stroke {
+      --stroke-width: 1px;
       position: absolute;
       top: 0;
       left: 0;
@@ -274,8 +285,9 @@ const copyText = (text, msgTitle) => {
       background: linear-gradient(180deg, #e2ebfa 0%, #ffffff 76.92%);
       -webkit-background-clip: text;
       color: transparent;
-      -webkit-text-stroke: 1px transparent;
-      text-shadow: 1px 0 0 #e2ebfa, -1px 0 0 #ffffff, 0 1px 0 #e2ebfa, 0 -1px 0 #ffffff;
+      -webkit-text-stroke: var(--stroke-width) transparent;
+      text-shadow: var(--stroke-width) 0 0 #e2ebfa, calc(var(--stroke-width) * -1) 0 0 #ffffff,
+        0 var(--stroke-width) 0 #e2ebfa, 0 calc(var(--stroke-width) * -1) 0 #ffffff;
       z-index: 1;
     }
 
