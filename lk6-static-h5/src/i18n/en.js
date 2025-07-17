@@ -40,6 +40,9 @@ export default {
       },
       claimSuccessfully: {
         message: "Claim successful"
+      },
+      promoEnded: {
+        message: "The promotion has ended"
       }
     },
     gameType: {
