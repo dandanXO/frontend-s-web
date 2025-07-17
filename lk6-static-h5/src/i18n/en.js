@@ -40,6 +40,9 @@ export default {
       },
       claimSuccessfully: {
         message: "Claim successful"
+      },
+      promoEnded: {
+        message: "The promotion has ended"
       }
     },
     gameType: {
@@ -91,7 +94,8 @@ export default {
     verify: "Verify",
     download: "Download",
     downloadNow: "Download Now",
-    all: "All"
+    all: "All",
+    joinUs: "Join us"
   },
   deposit: {
     paymentWay: "Payment Method",
@@ -496,11 +500,12 @@ export default {
       record: "Transaction Info",
       betRecord: "Betting History",
       inbox: "Notifications",
-      changePassword: "Change Password"
+      changePassword: "Change Password",
+      promo: "Promos",
+      affiliate: "Alliance Agency"
     },
     hot: {
-      title: "Hot Picks",
-      promo: "Promos"
+      title: "Hot Picks"
     },
     logout: "Log Out",
     notification: {
@@ -627,14 +632,7 @@ export default {
       timeLimited: "Limited Time",
       selected: "Selected"
     },
-    viewDetail: "View Details",
-    weeklyReward: {
-      claimSection: {
-        title: "Weekly Betting Rewards",
-        yesterdayValidBets: "Yesterday's Valid Bets:",
-        todayBonus: "Today's Bonus:"
-      }
-    }
+    viewDetail: "View Details"
   },
   bindCrypto: {
     form: {
@@ -917,6 +915,78 @@ export default {
     concatTitle: "Drag the slider to complete the puzzle",
     imageClickTitle: "Please click the images in the correct order",
     rotate_title: "Drag the slider to complete the puzzle"
+  },
+  hotpromo: {
+    weeklyReward: {
+      claimSection: {
+        title: "Weekly Betting Rewards",
+        yesterdayValidBets: "Valid Bets:",
+        todayBonus: "Saturday's Bonus:"
+      }
+    }
+  },
+  affiliate: {
+    agentSupport: "Agent Services",
+    commissionPercentage: "Commission Percentage",
+    commissionStructureExample: "Commission Structure Example",
+    commissionCalculation: "Commission Calculation",
+    commissionCalculationExample: "Below is an example of commission calculation:",
+    commissionTerm: "Commission Terms & Conditions",
+    contact: {
+      qq: "Lucky6 QQ",
+      telegram: "Telegram",
+      skype: "Skype",
+      sigua: "Sigua",
+      amico: "Amico",
+      email: "Email"
+    },
+    agentLevel: {
+      brown: "Brown",
+      silver: "Silver",
+      gold: "Gold",
+      diamond: "Diamond",
+      crown: "Crown"
+    },
+    table: {
+      commissionStructure: {
+        agent: "Agent",
+        profit: "Profit",
+        activeValidMembers: "Active Valid Members",
+        commissionRate: "Commission Rate"
+      },
+      commissionCalculation: {
+        winLose: "Total Game Win/Loss",
+        platformFee: "Platform Fee",
+        platformFeeFormula: "Platform Fee = Total Game Win/Loss × {rate}",
+        bonus: "Bonuses",
+        bonusFormula: "Rebates, bonuses, deposit/withdrawal fees can be viewed in the details",
+        netProfit: "= Net Profit",
+        commissionRate: "× Commission Rate",
+        totalCommission: "= Total Commission"
+      }
+    },
+    term: {
+      payoutSchedule: {
+        title: "Commission Payout Schedule:",
+        autoPayout:
+          "Commissions are automatically credited to your agent account between the 5th and 10th of each month.",
+        noWagerRequirement: "No wagering requirements apply—commissions can be withdrawn immediately."
+      },
+      activeMemberRequirement: {
+        title: "Active Member Requirement:",
+        minimumActiveMembers: "A minimum of five (5) active members per month is required for commission eligibility.",
+        activeMemberDefinition:
+          'An "active player" is defined as a member with a minimum deposit of ≥200 within the month.'
+      },
+      promotionRequirement: {
+        title: "Promotion Requirements:",
+        minimumActiveMembers: "Agents must recruit at least three (3) new active members per month.",
+        failureToMeet: "Failure to meet this quota may result in reduced or withheld commissions.",
+        suspensionCondition:
+          "If an agent fails to recruit 10+ new active members over three consecutive months, the account will be suspended.",
+        reactivationCondition: "Reactivation requires contacting customer support."
+      }
+    }
   },
   error: {
     101: "Platform not found",

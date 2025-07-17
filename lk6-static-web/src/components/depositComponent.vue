@@ -88,7 +88,7 @@
             <span style="color: #00A478">1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.label }}</span>
           </el-form-item> -->
 
-          <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" :label="$t('form.estimatedReceivables')">
+          <el-form-item style="display:none;"  v-if="isUSDT && activeMethod.currencyRate" class="helptxt" :label="$t('form.estimatedReceivables')">
             <span style="color: #00A478">
               {{
                 calculatedMinDeposit && form.localAmount < calculatedMinDeposit

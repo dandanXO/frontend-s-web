@@ -11,6 +11,7 @@
     "bind": "Bind",
     "confirm": "Confirm",
     "copy": "Copy",
+    "copied": "Copied",
     "followUp": "Follow-up",
     "cancel": "Cancel",
     "confirmPayment": "Confirm Payment",
@@ -25,7 +26,8 @@
     "readAll": "Read All",
     "selectMany": "Select Many",
     "proceed": "Proceed",
-    "uploadImage": "Upload Image"
+    "uploadImage": "Upload Image",
+    "joinUs": "Join Us"
   },
   "message": {
     "loginFirstAction": "Please log in before proceeding",
@@ -36,6 +38,38 @@
     "submitSuccessfully": "Submit Successfully",
     "deleteCancelled": "Delete cancelled",
     "unbindSuccessfully": "Unbind Successfully"
+  },
+  "agent": {
+    "jointQQ": "Joint QQ",
+    "jointTeams": "Joint Teams",
+    "sigua": "Sigua",
+    "commissionStructure": "Sample commission structure shown below",
+    "rechargedMember2ndAndAbove": "Recharged Members (2nd+)",
+    "profit": "Profit",
+    "activePlayer": "Active Player",
+    "commissionRate": "Commission Ratio",
+    "bonusCommissionRate": "Bonus Commission Rate",
+    "postBonusCommissionRate": "Post-Bonus Commission Rate",
+    "belowSampleCalculation": "Below is an example of commission calculation:",
+    "totalGameWinLoss": "Total Game Win/Loss",
+    "platformFee": "Platform Fee",
+    "platformFeeExplained": "Platform Fee = Total Game Win/Loss",
+    "bonuses": "Bonuses",
+    "feesCanViewInDetails": "Rebates, bonuses, deposit/withdrawal fees can be viewed in the detials",
+    "netProfit": "Net Profit",
+    "totalCommission": "Total Commission",
+    "commissionTermsAndConditions": "Commission Terms & Conditions",
+    "commissionTermsAndConditions01": "Commission Payout Schedule",
+    "commissionTermsAndConditions0101": "Commissions are automatically credited to your agent account between the 5th and 10th of each month",
+    "commissionTermsAndConditions0102": "No wagering requirements apply—commissions can be withdrawn immediately",
+    "commissionTermsAndConditions02": "Active Member Requirement",
+    "commissionTermsAndConditions0201": "A minimum of five (5) active members per month is required for commission eligibility",
+    "commissionTermsAndConditions0202": "An 'active player' is defined as a member with a minimum deposit of ≥200 within the month",
+    "commissionTermsAndConditions03": "Promotion Requirements",
+    "commissionTermsAndConditions0301": "Agents must recruit at least three (3) new active members per month",
+    "commissionTermsAndConditions0302": "Failure to meet this quota may result in reduced or withheld commissions",
+    "commissionTermsAndConditions0303": "If an agent fails to recruit 10+ new active members over three consecutive months, the account will be suspended",
+    "commissionTermsAndConditions0304": "Reactivation requires contacting customer support"
   },
   "form": {
     "remark": "Remark",
@@ -146,6 +180,7 @@
     "statusIsApplying": "Applying",
     "statusIsUnderReview": "Under Review",
     "statusIsWithdrawSuccess": "Withdrawal Successful",
+    "quickWithdrawal": "Quick Withdrawal",
     "withdrawalMethod": "Withdrawal Method",
     "withdrawAmount": "Withdraw Amount",
     "singleTransactionLimit": "Single Transaction Limit",
@@ -266,7 +301,8 @@
     "backToTop": "Back Top",
     "officialSupport": "Official Support",
     "dedicatedSupport": "Dedicated Support",
-    "announcementList": "Announcement List"
+    "announcementList": "Announcement List",
+    "affiliate": "Affiliate"
   },
   "footer": {
     "paymentMethods": "Payment Methods",
@@ -395,8 +431,8 @@
     "weeklyReward": {
       "rewardSection": {
         "title": "Weekly Betting Rewards",
-        "yesterdayValidBets": "Yesterday's Valid Bets:",
-        "todayBonus": "Today's Bonus:"
+        "yesterdayValidBets": "Valid Bets:",
+        "todayBonus": "Saturday's Bonus:"
       }
     }
   },

@@ -21,8 +21,6 @@
     </el-dialog>
   </div>
   <!-- <liveGift v-if="list.redirectUrl === 'lk6-live-gift'"></liveGift> -->
-  
- 
 </template>
 
 <script>
@@ -35,6 +33,7 @@ import { ElMessageBox } from "element-plus";
 
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
+import WeeklyReward from "./hotpromo/weekly-reward/WeeklyReward.vue";
 // import liveGift from "../components/hotpromo/liveGift.vue";
 
 export default defineComponent({
@@ -43,6 +42,7 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
+    WeeklyReward
     // liveGift
   },
   props: {
@@ -669,6 +669,11 @@ export default defineComponent({
     .title-img {
       background-image: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg-lg.png");
       background-size: 1140px 55px;
+    }
+
+    .ribbon {
+      min-width: 150px;
+      justify-content: flex-start;
     }
   }
 

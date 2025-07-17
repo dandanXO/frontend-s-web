@@ -468,6 +468,11 @@ export default defineComponent({
       background-image: url("../assets/images/promotion/hotpromo/common/section-title-img-lg.png");
       background-size: 580px 26px;
     }
+
+    .ribbon {
+      min-width: 135px;
+      justify-content: flex-start;
+    }
   }
 
   .claim-title-icon,

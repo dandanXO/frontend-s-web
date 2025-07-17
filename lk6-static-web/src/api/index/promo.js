@@ -10,10 +10,11 @@ export function loadPromoTypes(category) {
   return cached.get("PROMOTION_TYPES", () => server.REST.get("/promo/type"));
 }
 
-export function loadPromoBanner(category) {
+export function loadPromoBanner(category, languageVal) {
   return server.REST.get("/opt-session/promo/banner", {
     params: {
-      category: category
+      category: category,
+      language: languageVal
     }
   });
 }

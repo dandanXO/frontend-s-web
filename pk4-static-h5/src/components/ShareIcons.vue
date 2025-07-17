@@ -5,7 +5,7 @@
       <img class="absolute-hot" src="../assets/images/index/hot.gif" />
     <!-- <div>WhatsApp</div> -->
   </div>
-  <div v-if="isInvite" class="list-item" @click="openFacebook()">
+  <div class="list-item" @click="openFacebook()">
     <img class="btn-icon" id="facebook-icon"
       :src="require(`../assets/images/index/home-social-facebook.png`)" />
   </div>
@@ -97,7 +97,7 @@ const openCharity = () => {
 };
 const openFacebook = () => {
   if (!props.isInvite) {
-
+    window.open(ui.facebookUrl, "_blank");
   } else {
     const shareText = t("earnMoney.reward.shareText");
     const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
