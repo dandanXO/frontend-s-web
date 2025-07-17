@@ -137,8 +137,9 @@
         class="input"
         :class="{ 'white-txt': !!taxId }"
         lazy-rules
+        hint="CPF inválido impede o saque."
         :rules="[
-          (val) => (!!val && val.length > 0) || 'Por favor, insira o CPF',
+          (val) => (!!val && val.length > 0) || 'CPF inválido impede o saque.',
           validateTaxId
         ]"
       >
@@ -165,9 +166,9 @@
         </template>
       </q-input>
 
-      <div class="red-notice-txt">
-        CPF inválido impede o saque.
-      </div>
+<!--      <div class="red-notice-txt">-->
+<!--        CPF inválido impede o saque.-->
+<!--      </div>-->
 
       <div class="" style="margin-top: 5px" :class="isAgreeReg ? 'checked' : ''">
         <q-checkbox v-model="isAgreeReg" class="reg-checked-box" rounded size="md">
@@ -596,4 +597,12 @@ onMounted(() => {
   color: #d25858;
   margin-bottom: 20px;
 }
+
+.input{
+  :deep(.q-field__bottom){
+    color: #d25858;
+  }
+
+}
+
 </style>
