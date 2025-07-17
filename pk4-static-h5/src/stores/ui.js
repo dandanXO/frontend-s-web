@@ -21,6 +21,7 @@ export const useUI = defineStore("ui-store", {
       shouldFetchDownloadAppUrl: false,
       instagramUrl: "",
       tiktokUrl: "",
+      facebookUrl: "",
       whatsappUrl: "",
       youtubeUrl: "",
       charityUrl: "",

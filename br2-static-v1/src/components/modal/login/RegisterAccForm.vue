@@ -137,19 +137,22 @@
         class="input"
         :class="{ 'white-txt': !!taxId }"
         lazy-rules
+        hint="CPF inválido impede o saque."
         :rules="[
-          (val) => (!!val && val.length > 0) || 'Por favor, insira CPF/E-mail/Telefone',
+          (val) => (!!val && val.length > 0) || 'CPF inválido impede o saque.',
           validateTaxId
         ]"
       >
 
         <template v-slot:prepend>
 
-          <img v-if="selectedPix === 'CPF'" :class="taxId ? 'bright-icon' : ''" src="../../../assets/images/auth/input-icon-cpf-white.png" width="22px" />
-          <img v-else-if="selectedPix === 'PHONE'" :class="taxId ? 'bright-icon' : ''"  src="../../../assets/images/auth/input-icon-phone-white.png" width="22px" />
-          <img v-else-if="selectedPix === 'EMAIL'" :class="taxId ? 'bright-icon' : ''"  src="../../../assets/images/auth/input-icon-email-white.png" width="22px" />
+          <img :class="taxId ? 'bright-icon' : ''" src="../../../assets/images/auth/input-icon-cpf-white.png" width="22px" />
 
-          <q-select
+          <!-- <img v-if="selectedPix === 'CPF'" :class="taxId ? 'bright-icon' : ''" src="../../../assets/images/auth/input-icon-cpf-white.png" width="22px" /> -->
+          <!-- <img v-else-if="selectedPix === 'PHONE'" :class="taxId ? 'bright-icon' : ''"  src="../../../assets/images/auth/input-icon-phone-white.png" width="22px" /> -->
+          <!-- <img v-else-if="selectedPix === 'EMAIL'" :class="taxId ? 'bright-icon' : ''"  src="../../../assets/images/auth/input-icon-email-white.png" width="22px" /> -->
+
+          <!-- <q-select
             class="pix-selection"
             filled
             v-model="selectedPix"
@@ -159,9 +162,13 @@
             emit-value
             map-options
             label=""
-          />
+          /> -->
         </template>
       </q-input>
+
+<!--      <div class="red-notice-txt">-->
+<!--        CPF inválido impede o saque.-->
+<!--      </div>-->
 
       <div class="" style="margin-top: 5px" :class="isAgreeReg ? 'checked' : ''">
         <q-checkbox v-model="isAgreeReg" class="reg-checked-box" rounded size="md">
@@ -433,15 +440,15 @@ const trackRegisterSuccessEvent = () => {
 const validateTaxId = (val) => {
   if (!val) return "Por favor, insira o conteúdo.";
 
-  if (selectedPix.value === 'EMAIL') {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(val) ? true : "Por favor, insira um E-mail válido.";
-  }
+  // if (selectedPix.value === 'EMAIL') {
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   return emailRegex.test(val) ? true : "Por favor, insira um E-mail válido.";
+  // }
 
-  if (selectedPix.value === 'PHONE') {
-    const phoneRegex = /^\d{8,11}$/;
-    return phoneRegex.test(val) ? true : "Por favor, insira um número de telefone válido (8 a 11 dígitos).";
-  }
+  // if (selectedPix.value === 'PHONE') {
+  //   const phoneRegex = /^\d{8,11}$/;
+  //   return phoneRegex.test(val) ? true : "Por favor, insira um número de telefone válido (8 a 11 dígitos).";
+  // }
 
   if (selectedPix.value === 'CPF') {
     const cleaned = val.replace(/\D/g, '');
@@ -585,4 +592,17 @@ onMounted(() => {
     color: #00fd7c;
   }
 }
+
+.red-notice-txt {
+  color: #d25858;
+  margin-bottom: 20px;
+}
+
+.input{
+  :deep(.q-field__bottom){
+    color: #d25858;
+  }
+
+}
+
 </style>

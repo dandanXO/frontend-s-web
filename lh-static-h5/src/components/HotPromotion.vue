@@ -100,7 +100,7 @@
     <FifaCwcRedPacket v-else-if="list.redirectUrl === 'lh1-fifa-cwc-red-packet'" :promo-code="list.promoCode" />
     <FissureJulyFinal2025 v-else-if="list.redirectUrl === 'lh1-fissure-july-final-2025'" :promo-code="list.promoCode" />
     <PPDianZiTianTianSong v-else-if="list.redirectUrl === 'lh-PPdianzitiantiansong'" :promo-code="list.promoCode" />
-
+    <RapidDrop2025 v-else-if="list.redirectUrl === 'lh1-rapid-drop-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -261,6 +261,7 @@ const FissureJulyFinal2025 = defineAsyncComponent(() =>
 const PPDianZiTianTianSong = defineAsyncComponent(() =>
   import("./hotpromo/ppdianzitiantiansong/PPDianZiTianTianSong.vue")
 );
+const RapidDrop2025 = defineAsyncComponent(() => import("./hotpromo/rapid-drop-2025/RapidDrop2025.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -342,7 +343,8 @@ export default defineComponent({
     EsportWorldCup2025,
     FifaCwcRedPacket,
     FissureJulyFinal2025,
-    PPDianZiTianTianSong
+    PPDianZiTianTianSong,
+    RapidDrop2025
   },
   props: {
     list: {
@@ -956,7 +958,6 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
     }
-
 
     .title-img {
       color: #fff;

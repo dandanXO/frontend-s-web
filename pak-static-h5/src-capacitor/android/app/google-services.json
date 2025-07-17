@@ -1,24 +1,24 @@
 {
   "project_info": {
-    "project_number": "224522131575",
-    "project_id": "b9game-450207",
-    "storage_bucket": "b9game-450207.firebasestorage.app"
+    "project_number": "83563276345",
+    "project_id": "b9game-450208",
+    "storage_bucket": "b9game-450208.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:224522131575:android:5453bd8bdcf0a19e48ce72",
+        "mobilesdk_app_id": "1:83563276345:android:44f68f579674fded1d85e8",
         "android_client_info": {
           "package_name": "com.ind.appb9mega1"
         }
       },
       "oauth_client": [
         {
-          "client_id": "83563276345-l8qgm6ofspb4en0ifneqr5jalm9o2i8q.apps.googleusercontent.com",
+          "client_id": "83563276345-oh39khgp47ni2tfrq54on9usqru8ag21.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ind.appb9mega1",
-            "certificate_hash": "e23e5f0cfae541689a6e9bc653bfb4d4ce0219c3"
+            "certificate_hash": "a1fbfa38b913b67e3df24e88dbc1a8d09d905d64"
           }
         },
         {
@@ -28,7 +28,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBREvqzsgWwYuU2_6HU_1nyXQBab6-9Hcs"
+          "current_key": "AIzaSyBjbR4GdM8PzIRTfQllCP2kJ2bJSTeCuzo"
         }
       ],
       "services": {

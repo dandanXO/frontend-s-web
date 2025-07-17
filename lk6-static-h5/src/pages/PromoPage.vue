@@ -93,12 +93,6 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee
-                v-if="
-                  selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024' ||
-                  selectedPromo?.redirectUrl === 'bounty-blast-premier'
-                "
-              />
               <div
                 class="inner"
                 :class="{
@@ -138,24 +132,6 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-mesa-nomadic-masters-spring-2025'">
-                    <MesaPromo :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
-                    <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-valorant-masters-toronto-2025'">
-                    <TorontoMasters :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-fifa-2025'">
-                    <Fifa2025Promo :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-blast-tv-austin-major-2025'">
-                    <BlastAustin :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2laohuji'">
-                    <Dy2DailySlotBonus :promoCode="selectedPromo.promoCode" />
-                  </div>
                   <div
                     v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
                     v-html="selectedPromo.pageContent"
@@ -301,6 +277,7 @@ import RedirectButton from "src/components/RedirectButton.vue";
 import { i18nStore } from "src/router/language";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "PromoView",
@@ -351,8 +328,9 @@ export default defineComponent({
     const router = useRouter();
     const $q = useQuasar();
     const ui = useUI();
+    const notify = useNotify();
     const isDisplayLogin = ref(false);
-
+    const isPromoFound = ref(false)
 
 
 
@@ -378,6 +356,7 @@ export default defineComponent({
     };
     const isSpecialPromo = ref(false);
     const showPromoDetails = (promo) => {
+      isPromoFound.value = true;
       if (promo.redirectUrl === 'dy2-christmas-gachapon') {
         isSpecialPromo.value = true;
       } else {
@@ -462,6 +441,7 @@ export default defineComponent({
 
       const platformApiUrl = "/opt-session/promo/page";
       isFetchingPromo.value = window.location.pathname === "/promotion";
+      isPromoFound.value = false;
 
       api
         .get(platformApiUrl, {
@@ -480,6 +460,13 @@ export default defineComponent({
                 showPromoDetails(element);
               }
             });
+            if(route.query.name && !isPromoFound.value) {
+              notify({
+                type:'error',
+                message: t('common.notification.promoEnded.message')
+              })
+              clearNameQuery()
+            }
             if (promoTypes.value.length > 0) {
               switchPromoType(promoState.active);
             }
@@ -491,6 +478,13 @@ export default defineComponent({
           isFetchingPromo.value = false;
         });
     };
+
+    const clearNameQuery = () => {
+      const newQuery = { ...route.query };
+      delete newQuery.name;
+
+      router.replace({ path: route.path, query: newQuery });
+    }
 
     // extension
     const currentPath = ref(route.path);

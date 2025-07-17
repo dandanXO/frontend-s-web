@@ -1,7 +1,7 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
   <ProfileSummary v-if="!extensionState" :homeProfile="true" />
-  <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
+  <!-- <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
       dense
@@ -13,18 +13,18 @@
       <q-tab name="promo" :label="$t('settings.promo')" />
       <q-tab name="vip" :label="$t('settings.vip')" />
     </q-tabs>
-  </div>
+  </div> -->
 
   <div class="promo-container">
     <div class="promo">
-      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify" active-color="green">
+      <!-- <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify" active-color="green">
         <q-tab
           v-for="(tab, i) in tabItems"
           :key="i"
           :name="tab.name"
           :label="langVal === 'ur' ? tab.label_ur : tab.label"
         />
-      </q-tabs>
+      </q-tabs> -->
 
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.name">
@@ -63,7 +63,7 @@
             </div>
 
             <div class="selected-promo-wrapper">
-              <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
+              <!-- <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" /> -->
               <div
                 class="banner-container"
                 v-if="
@@ -95,7 +95,7 @@
               </div>
 
               <div class="banner-container" v-if="selectedPromo.redirectUrl === 'pak-lucky-10-day-bonus'">
-                <img style="width: 100%;" src="../components/hotpromo/lucky9day/img/top-banner.png">
+                <img style="width: 100%" src="../components/hotpromo/lucky9day/img/top-banner.png" />
               </div>
               <div
                 class="promo-content-inner"
@@ -133,12 +133,10 @@
                   isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
                   isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards',
                   isNewPlayerSpinWheel: selectedPromo.redirectUrl === 'pak-welcome-new-players',
-                  isSpinLuckyWheel:
-                    selectedPromo.redirectUrl === 'spin-lucky-wheel',
+                  isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel',
                   envelope:
                     selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope',
-                  wheel:
-                    selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel'
+                  wheel: selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo">
@@ -1138,15 +1136,17 @@ export default defineComponent({
       .banner-container {
         width: 100%;
         .promo-content {
+          width: 90%;
+          place-self: center;
+          border-radius: 10px;
           &.usual {
             display: block;
-            width: 100%;
           }
           &.dpsr {
             display: block;
             width: 90%;
-            border-radius: 15px;
-            margin: 20px auto;
+            // border-radius: 15px;
+            // margin: 20px auto;
           }
           &.npad {
             display: none;
@@ -1163,7 +1163,7 @@ export default defineComponent({
 
         &:after {
           content: "";
-          background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0));
+          // background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0));
           position: absolute;
           top: 0;
           left: 0;
@@ -1201,7 +1201,7 @@ export default defineComponent({
 
           &.envelope {
             background: url("../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/bg.png") no-repeat top
-            center;
+              center;
             background-size: cover;
           }
 
@@ -1457,8 +1457,10 @@ export default defineComponent({
 // promo content-inner
 .promo-content-inner {
   padding: 12px 0px;
-  margin: 0 12px;
+  // margin: 0 12px;
   border-bottom: 1px solid #ffffff1a;
+  width: 90%;
+  place-self: center;
   .content-title {
     color: #ffffff;
     font-size: 24px;

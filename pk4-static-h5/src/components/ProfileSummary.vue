@@ -757,15 +757,39 @@ onUnmounted(() => {
         background: linear-gradient(90deg, #2DB966 0%, #089E4E 100%);
         color: #ffffff;
         width: 55%;
+        overflow: hidden;
+        position: relative;
         &::after {
           content: "";
           position:absolute;
           width: 30%;
           top: 0;
           left: 0%;
+          opacity: 0;
           height: 100%;
           background: url(../assets/images/index/btn-shine.png)no-repeat center center;
           background-size: cover;
+          // animation: shineMove 2s ease-in-out infinite;
+          animation: shineMove 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          animation-delay: 2s; /* optional: delay before the animation starts */
+        }
+
+        /* Keyframes for movement */
+        @keyframes shineMove {
+          0% {
+            left: -10%;
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            left: 100%;
+            opacity: 0;
+          }
         }
       }
     }

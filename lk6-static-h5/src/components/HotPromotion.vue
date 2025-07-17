@@ -7,6 +7,7 @@
       :loading-claim="btnLoading"
       @daily-slot="handleSlot(list.promoCode)"
     />
+    <WeeklyReward v-if="list.redirectUrl === 'lk6-weekly-reward'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -33,6 +34,7 @@ import { useQuasar } from "quasar";
 import moment from "moment";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import WeeklyReward from "./hotpromo/weekly-reward/WeeklyReward.vue";
 
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 
@@ -41,7 +43,8 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
-    ClaimPromo
+    ClaimPromo,
+    WeeklyReward
   },
   props: {
     list: {
@@ -463,7 +466,12 @@ export default defineComponent({
   &.en {
     .title-img {
       background-image: url("../assets/images/promotion/hotpromo/common/section-title-img-lg.png");
-      background-size: 535px 26px;
+      background-size: 580px 26px;
+    }
+
+    .ribbon {
+      min-width: 135px;
+      justify-content: flex-start;
     }
   }
 

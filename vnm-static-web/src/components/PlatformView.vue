@@ -156,7 +156,7 @@
       {{ $t("common.comingSoon") }}
     </div>
 
-    <div class="margin-center game-container" v-if="platformExpandable">
+    <div class="margin-center game-container" :class="platformType" v-if="platformExpandable">
       <div class="all-game-container">
         <div class="plat-options-wrapper">
           <div class="plat-options-container">

@@ -128,7 +128,14 @@
         <router-link to="/promo">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-promo-icon.png" />
-            <div class="acct-nav-label">{{ $t("account.hot.promo") }}</div>
+            <div class="acct-nav-label">{{ $t("account.feature.promo") }}</div>
+          </div>
+        </router-link>
+
+        <router-link to="/affiliate">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-affiliate-icon.png" />
+            <div class="acct-nav-label">{{ $t("account.feature.affiliate") }}</div>
           </div>
         </router-link>
       </div>
@@ -160,12 +167,6 @@
           </div>
         </router-link> -->
 
-      <!-- <router-link to="/affiliate">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-affiliate-icon.png" />
-            <div class="acct-nav-label">合作加盟</div>
-          </div>
-        </router-link> -->
       <!-- </div> -->
     </q-item-section>
 
@@ -472,7 +473,7 @@ export default defineComponent({
     onMounted(() => {
       getBalance();
       store.getBalance();
-      store.getVIPInfo();
+      // store.getVIPInfo();
       // getVersionNo();
       getPromoImage();
       if (store.isApp()) {

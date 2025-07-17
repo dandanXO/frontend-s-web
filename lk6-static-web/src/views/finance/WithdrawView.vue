@@ -168,7 +168,8 @@
             <span>加载中...</span>
           </template>
         </el-form-item>
-        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" :label="$t('form.estimatedReceivables')">
+        <el-form-item style="display:none;" v-if="isUSDT && 
+        selectedWithdrawalMethod.exchangeRate" class="helptxt" :label="$t('form.estimatedReceivables')">
           <span style="color: #17cd27">
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
