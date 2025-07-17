@@ -936,9 +936,9 @@ export default {
       qq: "幸运6 QQ",
       telegram: "Telegram",
       skype: "Skype",
-      sigua: "Sigua",
+      sigua: "丝瓜",
       amico: "Amico",
-      email: "Email"
+      email: "幸运6 投诉邮箱"
     },
     agentLevel: {
       brown: "铜牌",
