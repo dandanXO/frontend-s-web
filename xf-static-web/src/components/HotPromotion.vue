@@ -43,6 +43,7 @@
       :params="list.param"
     />
     <AgYuanxiaohongbao v-if="list.redirectUrl === 'xf1-ag-yuanxiaohongbao'" :promo-code="list.promoCode" />
+    <RapidDrop2025 v-if="list.redirectUrl === 'xf-rapid-drop-2025'" :promo-code="list.promoCode" />
     <div v-if="list.redirectUrl === 'fucaiiphone'" class="promo-4">
       <div class="tabs">
         <el-tabs v-model="activeKey" type="card">
@@ -214,6 +215,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
 import OfficialGiftPromo from "./hotpromo/officialGift/OfficialGiftPromo.vue";
+import RapidDrop2025 from "./hotpromo/rapid-drop-2025/RapidDrop2025.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -239,7 +241,8 @@ export default defineComponent({
     SlotsBonusPromo,
     HongBaoYu2025,
     OfficialGiftPromo,
-    PPDianZiTianTianSong
+    PPDianZiTianTianSong,
+    RapidDrop2025
     // DailyBonus
   },
   props: {
@@ -825,127 +828,127 @@ export default defineComponent({
 }
 
 .section-bg {
-    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%) ;
-    border: 1px solid #be9457 !important;
-    color: #fff;
-    border-radius: 12px;
-    padding: 30px;
-    font-family: "PingFang";
+  background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0.4) 98.7%);
+  border: 1px solid #be9457 !important;
+  color: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  font-family: "PingFang";
 
-    &.cny {
-      background: url("../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg.png") !important;
-      background-size: 100% 100% !important;
-      border: none !important;
-      color: #4C4C6C;
+  &.cny {
+    background: url("../assets/images/promotion/hotpromo/hongbaoyu2025/section-bg.png") !important;
+    background-size: 100% 100% !important;
+    border: none !important;
+    color: #4c4c6c;
+  }
+
+  .section-table {
+    th {
+      color: #fff !important;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
+      border-radius: 0px;
+
+      &:not(:last-child) {
+        border-right: 1px solid #484c5770;
+      }
     }
 
-    .section-table {
-      th {
-        color: #fff !important;
-        background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) ;
-        border-radius: 0px ;
+    td {
+      border: 1px solid #484c5770 !important;
+      color: #fff;
+    }
 
-        &:not(:last-child) {
-          border-right: 1px solid #484c5770;
-        }
+    &.cny {
+      th {
+        background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%) !important;
+        color: #894800 !important;
       }
 
       td {
-        border: 1px solid #484c5770 !important;
-        color: #fff;
-      }
-
-      &.cny {
-        th {
-          background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%) !important;
-          color: #894800 !important;
-        }
-
-        td {
-          color: #4C4C6C;
-        }
-      }
-    }
-
-    .element-bg {
-      color: #fff !important;
-      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
-        0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
-      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
-    }
-
-    .ribbon {
-      clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
-      padding-right: 10px;
-      font-family: "PingFang";
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 16px;
-      width: fit-content;
-      padding: 0px 20px 0px 10px;
-      aspect-ratio: 94/30;
-      white-space: nowrap;
-      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
-
-      &.cny {
-        background: linear-gradient(180deg, #FFE190 0%, #FF9F40 100%);
-        color: #894800;
-      }
-    }
-
-    .title-img {
-      aspect-ratio: 2952 / 176;
-      background: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg.png");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 905px 55px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 35px;
-      font-weight: bold;
-      letter-spacing: 3px;
-    }
-
-    .item {
-      color: #fff;
-      padding-left: 24px;
-      display: flex;
-      gap: 10px;
-      font-size: 1rem;
-      padding: 3px 0;
-
-      .item-num {
-        font-size: 1rem;
-        line-height: 1;
-        border-radius: 50%;
-        height: 28px !important;
-        width: 28px !important;
-        min-width: 28px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 2px;
-        color: #fff ;
-        box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
-          0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset ;
-        background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) ;
-      }
-
-      .item-num__pseudo {
-        height: 28px !important;
-        width: 28px !important;
-        min-width: 28px;
-        display: flex;
-      }
-    }
-
-    &.cny {
-      .item {
-        color: #4C4C6C;
+        color: #4c4c6c;
       }
     }
   }
+
+  .element-bg {
+    color: #fff !important;
+    box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+      0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+    background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%) !important;
+  }
+
+  .ribbon {
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+    padding-right: 10px;
+    font-family: "PingFang";
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    width: fit-content;
+    padding: 0px 20px 0px 10px;
+    aspect-ratio: 94/30;
+    white-space: nowrap;
+    background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
+
+    &.cny {
+      background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%);
+      color: #894800;
+    }
+  }
+
+  .title-img {
+    aspect-ratio: 2952 / 176;
+    background: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 905px 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    font-weight: bold;
+    letter-spacing: 3px;
+  }
+
+  .item {
+    color: #fff;
+    padding-left: 24px;
+    display: flex;
+    gap: 10px;
+    font-size: 1rem;
+    padding: 3px 0;
+
+    .item-num {
+      font-size: 1rem;
+      line-height: 1;
+      border-radius: 50%;
+      height: 28px !important;
+      width: 28px !important;
+      min-width: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2px;
+      color: #fff;
+      box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+        0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset;
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
+    }
+
+    .item-num__pseudo {
+      height: 28px !important;
+      width: 28px !important;
+      min-width: 28px;
+      display: flex;
+    }
+  }
+
+  &.cny {
+    .item {
+      color: #4c4c6c;
+    }
+  }
+}
 </style>
