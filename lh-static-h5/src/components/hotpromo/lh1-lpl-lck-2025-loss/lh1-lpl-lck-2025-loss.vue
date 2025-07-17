@@ -43,7 +43,7 @@
             <div class="title-img">活动详情</div>
             <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
               <div class="ribbon">活动时间</div>
-              <div class="right">2025年6月28日-7月14日</div>
+              <div class="right">  2025年7月19日-9月30日</div>
             </div>
             <div
               class="little-title"
@@ -108,7 +108,7 @@
                   />
                   <span>示例</span>
                 </div>
-                用户 A 在 6月28日投注 LPL&LCK2025第三赛段累计有效投注 50,000 元，用户 A 在次日 24 小时内可获得彩金：288 元
+                用户 A 在 7月20日投注 LPL&LCK2025第三赛段累计有效投注 50,000 元，用户 A 在次日 24 小时内可获得彩金：288 元
               </div>
             </div>
           </div>
