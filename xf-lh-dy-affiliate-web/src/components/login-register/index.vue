@@ -34,7 +34,8 @@
               <div class="log">
                 {{ isReg ? $t('common.signup') : $t('common.login') }}
               </div>
-              <LangToggle v-if="props.siteId === '8'" />
+              <LangToggle v-if="props.siteId === '8'" :langList="['vi', 'en']" />
+              <LangToggle v-if="props.siteId === '30'" :langList="['zh', 'en']" />
               <!--              <div class="topright" v-if="props.siteId !== '5'">-->
               <!--                <span class="noaccabs">-->
               <!--                  {{ isReg ? '已经有账号? ' : '没有帐户？' }}-->
@@ -625,6 +626,7 @@ import kakaLogo from '@/assets/images/kaka/logo-kaka-game.png'
 import krLogo from '@/assets/images/kr/kr-logo.png'
 import pakLogo from '@/assets/images/pak/logowhitee.png'
 import br2Logo from '@/assets/images/br2/br2-logo.png'
+import lk6Logo from '@/assets/images/lk6/lk6-logo.png'
 import { getVerificationImage } from '@/api/verification'
 import {
   getVerificationCode,
@@ -1391,6 +1393,7 @@ export default defineComponent({
     const i18nStoreLanguage = i18nStore()
     const { setLanguage, languageVal } = i18nStoreLanguage
     const populateCurrentSiteData = () => {
+      console.log('hit 1', props.siteId)
       if (props.siteId === '6') {
         currentSite.value.firstLiner = '从东赢开始'
         currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
@@ -1491,6 +1494,15 @@ export default defineComponent({
         state.loginForm.site = 'BR2'
         currentSite.value.lang = 'PT'
         setLanguage('pt')
+      }
+      if (props.siteId === '30') {
+        currentSite.value.firstLiner = '从幸运6开始'
+        currentSite.value.secondLiner =
+          '成为传奇<br>还是成为传奇的歌颂者'
+        currentSite.value.logo = lk6Logo
+        state.loginForm.site = 'LK6'
+        // currentSite.value.lang = 'EN'
+        setLanguage('zh')
       }
     }
 
@@ -1904,7 +1916,7 @@ a {
       flex: 1;
       .first-liner,
       .second-liner {
-        max-width: 400px;
+        // max-width: 400px;
         width: 100%;
         img {
           width: 100%;

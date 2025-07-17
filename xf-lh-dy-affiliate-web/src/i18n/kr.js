@@ -239,6 +239,7 @@ export default {
     cardAddress: '은행 카드 주소',
     cardNumber: '은행 카드 번호',
     changeWithdrawPw: '출금 비밀번호 변경',
+    chinese: '中文',
     clearingSum: '정산 총합',
     commission: '커미션',
     gamecommission: "플랫폼 수수료",
