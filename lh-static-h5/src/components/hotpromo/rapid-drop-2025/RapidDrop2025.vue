@@ -32,7 +32,7 @@
               <td>x10 投注乘数</td>
             </tr>
             <tr>
-              <td>≥6,500</td>
+              <td>6,500</td>
               <td>x5 投注乘数</td>
             </tr>
             <tr>
@@ -52,7 +52,7 @@
         <div class="title-img">活动规则</div>
         <br />
         <div class="content">
-          <div class="item">
+          <div class="item no-num">
             合格游戏：奥林匹斯之胜，星光闪耀，福虎生财1000，777疾速，福虎生财，福气鼠，金牛来福，果冻糖，毛怪赢翻天，旺福狗，灵猴招福，胜利表情，招财蛙，凤凰迎福，财猪农场，阿兹特克之宝与大师宝石。
           </div>
           <div class="item">
@@ -415,7 +415,9 @@ onMounted(() => {
       display: flex;
       gap: 10px;
       align-items: baseline;
-
+      &.no-num {
+        margin-left: 26px;
+      }
       .item-num {
         color: #ffffff;
         font-size: 12px;
