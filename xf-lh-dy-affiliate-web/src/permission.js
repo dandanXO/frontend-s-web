@@ -60,7 +60,7 @@ router.beforeEach(async (to, _, next) => {
       // In the free login whitelist, go directly
       next()
     } else {
-      const currentHost = window.location.host
+      const currentHost = window.location.hostname
       const siteCode = currentHost.substring(0, 3)
       const thaiHost = 'affiliate-web.monemental.com'
       const ph1Host = 'ph1-os.dt2e7svs94.com'

@@ -66,7 +66,7 @@ onMounted(() => {
     link.href = '/ind2-favicon.ico'
   } else if (
     window.location.pathname.indexOf('br2') > -1 ||
-    window.location.hostname.indexOf('br2-')
+    window.location.hostname.indexOf('br2-') > -1
   ) {
     link.href = '/br2-favicon.ico'
   } else if (
