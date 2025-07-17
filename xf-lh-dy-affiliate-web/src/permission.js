@@ -66,6 +66,8 @@ router.beforeEach(async (to, _, next) => {
       const ph1Host = 'ph1-os.dt2e7svs94.com'
       const lk6Host = '6666vip.cc'
 
+      console.log("Hostname: " + window.location.hostname)
+
       if (currentHost === thaiHost) {
         next(`/th/login?redirect=${to.path}`)
       } else if (currentHost === ph1Host) {
