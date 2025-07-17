@@ -2329,6 +2329,7 @@ export default {
     scoringShots: 'Any Players Scored With 13 Shots',
     foulOut: 'Any Player Getting Foul Out',
     gender: 'Gender',
+    taxId: 'CPF',
     Male: 'Male',
     Female: 'Female',
     startHour: 'Start Hour',
