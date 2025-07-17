@@ -173,7 +173,7 @@ const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
   );
 };
 
-const affiliateUrl = ref("https://dy2-affiliate.mndofithly.com/dy/");
+const affiliateUrl = ref("https://6666vip.cc/lk6/");
 const text_copied = ref("");
 const copyinput = ref(null);
 const $q = useQuasar();
