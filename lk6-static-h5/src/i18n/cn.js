@@ -627,14 +627,7 @@ export default {
       timeLimited: "限时",
       selected: "精选"
     },
-    viewDetail: "查看详情",
-    weeklyReward: {
-      claimSection: {
-        title: "投注嘉奖",
-        yesterdayValidBets: "昨日累计有效投注：",
-        todayBonus: "今日领取彩金："
-      }
-    }
+    viewDetail: "查看详情"
   },
   bindCrypto: {
     form: {
@@ -918,6 +911,78 @@ export default {
     concatTitle: "拖动滑块完成拼图",
     imageClickTitle: "请依次点击下列图片",
     rotate_title: "拖动滑块完成拼图"
+  },
+  hotpromo: {
+    weeklyReward: {
+      claimSection: {
+        title: "投注嘉奖",
+        yesterdayValidBets: "累计有效投注：",
+        todayBonus: "周六领取彩金："
+      }
+    }
+  },
+  affiliate: {
+    agentSupport: "代理申请专属客服",
+    commissionPercentage: "佣金占比",
+    commissionStructureExample: "以下为佣金占比示例",
+    commissionCalculation: "佣金计算",
+    commissionCalculationExample: "以下为佣金计算示例",
+    commissionTerm: "Commission Terms & Conditions",
+    contact: {
+      qq: "Lucky6 QQ",
+      telegram: "Telegram",
+      skype: "Skype",
+      sigua: "Sigua",
+      amico: "Amico",
+      email: "Email"
+    },
+    agentLevel: {
+      brown: "Brown",
+      silver: "Silver",
+      gold: "Gold",
+      diamond: "Diamond",
+      crown: "Crown"
+    },
+    table: {
+      commissionStructure: {
+        agent: "Agent",
+        profit: "Profit",
+        activeValidMembers: "Active Valid Members",
+        commissionRate: "Commission Rate"
+      },
+      commissionCalculation: {
+        winLose: "Total Game Win/Loss",
+        platformFee: "Platform Fee",
+        platformFeeFormula: "Platform Fee = Total Game Win/Loss × {rate}",
+        bonus: "Bonuses",
+        bonusFormula: "Rebates, bonuses, deposit/withdrawal fees can be viewed in the details",
+        netProfit: "= Net Profit",
+        commissionRate: "× Commission Rate",
+        totalCommission: "= Total Commission"
+      }
+    },
+    term: {
+      payoutSchedule: {
+        title: "Commission Payout Schedule:",
+        autoPayout:
+          "Commissions are automatically credited to your agent account between the 5th and 10th of each month.",
+        noWagerRequirement: "No wagering requirements apply—commissions can be withdrawn immediately."
+      },
+      activeMemberRequirement: {
+        title: "Active Member Requirement:",
+        minimumActiveMembers: "A minimum of five (5) active members per month is required for commission eligibility.",
+        activeMemberDefinition:
+          'An "active player" is defined as a member with a minimum deposit of ≥200 within the month.'
+      },
+      promotionRequirement: {
+        title: "Promotion Requirements:",
+        minimumActiveMembers: "Agents must recruit at least three (3) new active members per month.",
+        failureToMeet: "Failure to meet this quota may result in reduced or withheld commissions.",
+        suspensionCondition:
+          "If an agent fails to recruit 10+ new active members over three consecutive months, the account will be suspended.",
+        reactivationCondition: "Reactivation requires contacting customer support."
+      }
+    }
   },
   error: {
     101: "未找到平台",

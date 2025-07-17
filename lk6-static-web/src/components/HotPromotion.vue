@@ -670,6 +670,11 @@ export default defineComponent({
       background-image: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg-lg.png");
       background-size: 1140px 55px;
     }
+
+    .ribbon {
+      min-width: 150px;
+      justify-content: flex-start;
+    }
   }
 
   &.cny {

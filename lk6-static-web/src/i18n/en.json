@@ -395,8 +395,8 @@
     "weeklyReward": {
       "rewardSection": {
         "title": "Weekly Betting Rewards",
-        "yesterdayValidBets": "Yesterday's Valid Bets:",
-        "todayBonus": "Today's Bonus:"
+        "yesterdayValidBets": "Valid Bets:",
+        "todayBonus": "Saturday's Bonus:"
       }
     }
   },

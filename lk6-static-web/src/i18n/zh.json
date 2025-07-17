@@ -398,8 +398,8 @@
     "weeklyReward": {
       "rewardSection": {
         "title": "投注嘉奖",
-        "yesterdayValidBets": "昨日累计有效投注：",
-        "todayBonus": "今日领取彩金："
+        "yesterdayValidBets": "累计有效投注：",
+        "todayBonus": "周六领取彩金："
       }
     }
   },
