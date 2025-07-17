@@ -512,9 +512,9 @@
 
     .plat-options-wrapper {
       display: flex;
-      justify-content: flex-start;
-      margin-right: 230px;
-      margin-left: 20px;
+      justify-content: center;
+      margin-right: 250px;
+      margin-left: 250px;
     }
 
     .plat-options-container {
@@ -799,6 +799,16 @@
       }
 
       img {
+        width: 100%;
+      }
+    }
+  }
+  &.slot {
+    .all-game-container {
+      .plat-options-wrapper {
+        margin-left: 20px;
+      }
+      .plat-options-container {
         width: 100%;
       }
     }
