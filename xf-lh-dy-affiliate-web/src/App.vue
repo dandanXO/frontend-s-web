@@ -74,6 +74,11 @@ onMounted(() => {
     window.location.hostname.indexOf('krw-') > -1
   ) {
     link.href = '/kr-favicon.ico'
+  } else if (
+    window.location.pathname.indexOf('lk6') > -1 ||
+    window.location.hostname.indexOf('lk6-') > -1
+  ) {
+    link.href = '/lk6-favicon.ico'
   } else {
     link.href = '/favicon.ico'
   }

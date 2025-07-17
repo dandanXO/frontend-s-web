@@ -64,11 +64,14 @@ router.beforeEach(async (to, _, next) => {
       const siteCode = currentHost.substring(0, 3)
       const thaiHost = 'affiliate-web.monemental.com'
       const ph1Host = 'ph1-os.dt2e7svs94.com'
+      const lk6Host = '6666vip.cc'
 
       if (currentHost === thaiHost) {
         next(`/th/login?redirect=${to.path}`)
       } else if (currentHost === ph1Host) {
         next(`/ph1/summary`)
+      } else if (currentHost === lk6Host) {
+        next(`/lk6/login?redirect=${to.path}`)
       } else {
         console.log('IS Check')
         console.log(siteCode)
