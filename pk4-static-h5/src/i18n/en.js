@@ -376,7 +376,7 @@ export default {
     cat_fishing: "Fishing",
     cat_poker: "Poker",
     cat_sport: "Sport",
-    liveSportEvent: "Live Sports Event",
+    liveSportEvent: "Live sports events",
     cashGift: "Cash Gifts",
     welcomeNewPlayer: "Welcome New Players",
     MegaSharingRoulette: "Mega Sharing Roulette",
