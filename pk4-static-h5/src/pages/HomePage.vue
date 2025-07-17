@@ -438,6 +438,7 @@
       <div v-if="category.title === 'Lobby' && category.active" class="games-selection-wrapper">
         <div class="title-game">
           <div class="left-label">
+            <img src="../assets/images/index/live-sport-event-icon.png" class="label-img" />
             <div class="txt-style">{{ $t("home.liveSportEvent") }}</div>
           </div>
         </div>
