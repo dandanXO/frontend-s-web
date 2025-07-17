@@ -157,7 +157,7 @@
       <div class="midd">
         <div class="station-notice-wrapper">
           <div class="volume">
-            <img src="../assets/images/index/icon-volume.svg" />
+            <img src="../assets/images/index/icon-volume.gif" />
           </div>
           <div class="marquee-container">
             <marquee-text :repeat="5" :duration="announcementList.length * 500">
@@ -310,7 +310,7 @@
                           "
                           class="burning-hot"
                         >
-                          <img src="../assets/images/index/hot.png" />
+                          <img src="../assets/images/index/hot.gif" />
                         </div>
                       </div>
                       <div class="platform-game-title">{{ truncateText(item.platform, 22) }}</div>
@@ -342,7 +342,7 @@
                         ></div>
 
                         <div v-if="index < 4 || item.code === 'Evo' || item.code === 'WCEvo'" class="burning-hot">
-                          <img src="../assets/images/index/hot.png" />
+                          <img src="../assets/images/index/hot.gif" />
                         </div>
                       </div>
 
@@ -396,7 +396,7 @@
                         "
                         class="burning-hot"
                       >
-                        <img src="../assets/images/index/hot.png" />
+                        <img src="../assets/images/index/hot.gif" />
                       </div>
                     </div>
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
@@ -427,7 +427,7 @@
                       ></div>
 
                       <div v-if="item.code === 'Evo' || item.code === 'WCEvo'" class="burning-hot">
-                        <img src="../assets/images/index/hot.png" />
+                        <img src="../assets/images/index/hot.gif" />
                       </div>
                     </div>
                     <div class="platform-game-title">
@@ -501,7 +501,7 @@
                         "
                         class="burning-hot"
                       >
-                        <img src="../assets/images/index/hot.png" />
+                        <img src="../assets/images/index/hot.gif" />
                       </div>
                     </div>
                   </div>
@@ -537,7 +537,7 @@
                         "
                         class="burning-hot"
                       >
-                        <img src="../assets/images/index/hot.png" />
+                        <img src="../assets/images/index/hot.gif" />
                       </div>
                     </div>
                   </div>
@@ -616,7 +616,7 @@
                     </div>
 
                     <div v-if="index < 2" class="burning-hot">
-                      <img src="../assets/images/index/hot.png" />
+                      <img src="../assets/images/index/hot.gif" />
                     </div>
 
                     <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
@@ -666,7 +666,7 @@
                   </div>
 
                   <div v-if="index < 2" class="burning-hot">
-                    <img src="../assets/images/index/hot.png" />
+                    <img src="../assets/images/index/hot.gif" />
                   </div>
 
                   <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
@@ -739,7 +739,7 @@
                       ></div>
 
                       <div v-if="index < 1" class="burning-hot">
-                        <img src="../assets/images/index/hot.png" />
+                        <img src="../assets/images/index/hot.gif" />
                       </div>
                     </div>
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
@@ -1128,7 +1128,7 @@
                   }"
                 >
                   <div v-if="item.name === 'LuckySport' || item.name === 'BTI'" class="burning-hot">
-                    <img src="../assets/images/index/hot.png" />
+                    <img src="../assets/images/index/hot.gif" />
                   </div>
                 </div>
               </div>
