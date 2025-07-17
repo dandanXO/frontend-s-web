@@ -2347,6 +2347,7 @@ export default {
     scoringShots: '任意球员拿到 13 个篮板',
     foulOut: '任意球员判罚离场',
     gender: '性别',
+    taxId: '税号',
     Male: '男性',
     Female: '女性',
     startHour: '开始小时',
