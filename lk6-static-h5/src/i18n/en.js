@@ -629,14 +629,7 @@ export default {
       timeLimited: "Limited Time",
       selected: "Selected"
     },
-    viewDetail: "View Details",
-    weeklyReward: {
-      claimSection: {
-        title: "Weekly Betting Rewards",
-        yesterdayValidBets: "Yesterday's Valid Bets:",
-        todayBonus: "Today's Bonus:"
-      }
-    }
+    viewDetail: "View Details"
   },
   bindCrypto: {
     form: {
@@ -920,7 +913,17 @@ export default {
     imageClickTitle: "Please click the images in the correct order",
     rotate_title: "Drag the slider to complete the puzzle"
   },
+  hotpromo: {
+    weeklyReward: {
+      claimSection: {
+        title: "Weekly Betting Rewards",
+        yesterdayValidBets: "Valid Bets:",
+        todayBonus: "Saturday's Bonus:"
+      }
+    }
+  },
   affiliate: {
+    agentSupport: "Agent Services",
     commissionPercentage: "Commission Percentage",
     commissionStructureExample: "Commission Structure Example",
     commissionCalculation: "Commission Calculation",

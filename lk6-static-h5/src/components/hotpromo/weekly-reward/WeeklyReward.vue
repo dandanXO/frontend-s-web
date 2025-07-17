@@ -5,19 +5,19 @@
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
             <div class="claim-title-icon"></div>
-            {{ $t("promo.weeklyReward.claimSection.title") }}
+            {{ $t("hotpromo.weeklyReward.claimSection.title") }}
           </div>
           <div class="reward-info">
             <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
-              {{ $t("promo.weeklyReward.claimSection.yesterdayValidBets") }}
+              {{ $t("hotpromo.weeklyReward.claimSection.yesterdayValidBets") }}
               <span class="amount">{{ totalValidBet }}元</span>
             </div>
           </div>
           <div class="reward-info">
             <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
-              {{ $t("promo.weeklyReward.claimSection.todayBonus") }}
+              {{ $t("hotpromo.weeklyReward.claimSection.todayBonus") }}
               <span class="amount">{{ bonus }}元</span>
             </div>
           </div>

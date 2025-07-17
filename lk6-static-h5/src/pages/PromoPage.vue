@@ -93,12 +93,6 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee
-                v-if="
-                  selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024' ||
-                  selectedPromo?.redirectUrl === 'bounty-blast-premier'
-                "
-              />
               <div
                 class="inner"
                 :class="{
@@ -138,24 +132,6 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-mesa-nomadic-masters-spring-2025'">
-                    <MesaPromo :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
-                    <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-valorant-masters-toronto-2025'">
-                    <TorontoMasters :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-fifa-2025'">
-                    <Fifa2025Promo :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-blast-tv-austin-major-2025'">
-                    <BlastAustin :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2laohuji'">
-                    <Dy2DailySlotBonus :promoCode="selectedPromo.promoCode" />
-                  </div>
                   <div
                     v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
                     v-html="selectedPromo.pageContent"

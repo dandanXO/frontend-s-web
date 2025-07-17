@@ -4,8 +4,8 @@
       <div class="page-title-img"><img src="../assets/images/affiliate/title.png" /></div>
     </div>
     <div class="page-title-text">
-      <span class="page-title-text__stroke">{{ $t("affiliate.commissionPercentage") }}</span>
-      <span class="page-title-text__fill">{{ $t("affiliate.commissionPercentage") }}</span>
+      <span class="page-title-text__stroke">{{ $t("affiliate.agentSupport") }}</span>
+      <span class="page-title-text__fill">{{ $t("affiliate.agentSupport") }}</span>
     </div>
     <q-input
       style="width: 100%; opacity: 0; height: 5px; pointer-events: none"
@@ -133,7 +133,7 @@
             <ol>
               <li v-for="(term, key) in terms" :key="key">
                 <ul>
-                  <li v-for="(subTerm, subKey) in term" :key="`${index}-${subKey}`">{{ subTerm }}</li>
+                  <li v-for="(subTerm, subKey) in term" :key="`${key}-${subKey}`">{{ subTerm }}</li>
                 </ul>
               </li>
             </ol>
