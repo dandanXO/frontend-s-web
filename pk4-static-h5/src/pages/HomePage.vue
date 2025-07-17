@@ -1195,7 +1195,7 @@
   </div>
   <div style="display: none;">
 
-    <ShareIcons ref="shareRef" :is-invite="true" />
+    <ShareIcons ref="shareRef" :is-invite="false" />
   </div>
   <GameModal
     v-if="route.path !== '/account/profile'"
@@ -2512,9 +2512,9 @@ const socialicons = ref([
   {
     name: "instagram",
   },
-  // {
-  //   name: "facebook",
-  // },
+  {
+    name: "facebook",
+  },
   {
     name: "tiktok",
   },

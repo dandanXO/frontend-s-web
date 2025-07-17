@@ -499,6 +499,7 @@ export default defineComponent({
           ui.instagramUrl = data.instagram;
           ui.tiktokUrl = data.tiktok;
           ui.whatsappUrl = data.whatsapp;
+          ui.facebookUrl = data.facebook;
           ui.youtubeUrl = data.youtube;
           ui.charityUrl = data.charity_url;
           ui.footerIcon = data.footer_icon;
