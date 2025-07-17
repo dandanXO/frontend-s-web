@@ -11,14 +11,14 @@
             <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
               {{ $t("hotpromo.weeklyReward.claimSection.yesterdayValidBets") }}
-              <span class="amount">{{ totalValidBet }}元</span>
+              <span class="amount">{{ totalValidBet }}{{ store.currency.value }}</span>
             </div>
           </div>
           <div class="reward-info">
             <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
               {{ $t("hotpromo.weeklyReward.claimSection.todayBonus") }}
-              <span class="amount">{{ bonus }}元</span>
+              <span class="amount">{{ bonus }}{{ store.currency.value }}</span>
             </div>
           </div>
         </div>
