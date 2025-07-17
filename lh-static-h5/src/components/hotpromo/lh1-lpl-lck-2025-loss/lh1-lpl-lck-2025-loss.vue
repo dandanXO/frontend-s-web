@@ -192,7 +192,7 @@
             <div class="title-img">活动详情</div>
             <div class="little-title" style="justify-content: flex-start; align-items: flex-start">
               <div class="ribbon">活动时间</div>
-              <div class="right">2025年6月28日-7月14日</div>
+              <div class="right"> 2025年7月19日-9月30日</div>
             </div>
             <div
               class="little-title"
@@ -207,7 +207,7 @@
             <table class="livepoker-rebate-game-info-table section-table">
               <tbody>
                 <tr>
-                  <th> LPL&LCK2025第三赛段 负盈利</th>
+                  <th>负盈利</th>
                   <th>救援金</th>
                   <th>流水倍数</th>
                 </tr>
