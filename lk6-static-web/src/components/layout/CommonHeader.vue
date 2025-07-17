@@ -987,7 +987,7 @@ export default defineComponent({
               if (regResult === 0) {
                 notify({
                   type: "success",
-                  message: "注册成功"
+                  message: t('message.registerSuccessfully')
                 });
                 store.autoLogin(response.data);
                 registerDialogVisible.value = false;
