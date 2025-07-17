@@ -68,9 +68,9 @@
                 class="banner-container"
                 v-if="
                   selectedPromo.redirectUrl !== 'pk4-jackpot-aviator' &&
-                  selectedPromo.redirectUrl !== 'new-player-acc-deposit' && 
-                  selectedPromo.redirectUrl !== 'pk4-month-beginning-deposit-rebate' && 
-                  selectedPromo.redirectUrl !== 'pk4-app-login-phone-bonus' && 
+                  selectedPromo.redirectUrl !== 'new-player-acc-deposit' &&
+                  selectedPromo.redirectUrl !== 'pk4-month-beginning-deposit-rebate' &&
+                  selectedPromo.redirectUrl !== 'pk4-app-login-phone-bonus' &&
                   selectedPromo.redirectUrl !== 'pk4-piggy-bank'
                 "
               >
@@ -100,9 +100,9 @@
                 v-if="
                   selectedPromo.redirectUrl !== 'pk4-jackpot-aviator' &&
                   selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
-                  selectedPromo.redirectUrl !== 'pk4-welcome-new-players' && 
-                  selectedPromo.redirectUrl !== 'pk4-month-beginning-deposit-rebate' && 
-                  selectedPromo.redirectUrl !== 'pk4-app-login-phone-bonus' && 
+                  selectedPromo.redirectUrl !== 'pk4-welcome-new-players' &&
+                  selectedPromo.redirectUrl !== 'pk4-month-beginning-deposit-rebate' &&
+                  selectedPromo.redirectUrl !== 'pk4-app-login-phone-bonus' &&
                   selectedPromo.redirectUrl !== 'pk4-piggy-bank'
                 "
                 :style="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border:0; padding: 0;' : ''"
@@ -170,7 +170,7 @@
                     <div class="top-title">{{ selectedPromo.title }}</div>
                   </div> -->
 
-                  <div v-html="selectedPromo.pageContent"></div>  
+                  <div v-html="selectedPromo.pageContent"></div>
                   <!-- <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
                       <div class="date-txt">Promotion Ends</div>
@@ -449,6 +449,8 @@ export default defineComponent({
       } else {
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({ path: "/vip" });
+        } if (promo.redirectUrl && promo.redirectUrl.includes("page-deposit")) {
+          router.push({ path: "/deposit" });
         } else if (promo.redirectUrl && promo.redirectUrl.includes("page-invite")) {
           router.push({ path: "/earn-money" });
         } else {
@@ -1135,7 +1137,7 @@ export default defineComponent({
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;
-        .promo-content {  
+        .promo-content {
           &.usual {
             display: block;
             width: 100%;
@@ -1206,7 +1208,7 @@ export default defineComponent({
         }
         &.isJackpotAviator {
           width: 100%;
-          
+
           // margin-top: -20px;
           // padding-top: 20px;
           padding: 0;
