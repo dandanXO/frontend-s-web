@@ -37,7 +37,8 @@
     "success": "成功",
     "submitSuccessfully": "提交成功",
     "deleteCancelled": "删除取消",
-    "unbindSuccessfully": "解绑成功"
+    "unbindSuccessfully": "解绑成功",
+    "registerSuccessfully": "注册成功"
   },
   "agent": {
     "jointQQ": "合营 QQ",

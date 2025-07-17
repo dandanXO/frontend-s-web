@@ -37,7 +37,8 @@
     "success": "Success",
     "submitSuccessfully": "Submit Successfully",
     "deleteCancelled": "Delete cancelled",
-    "unbindSuccessfully": "Unbind Successfully"
+    "unbindSuccessfully": "Unbind Successfully",
+    "registerSuccessfully": "Register Successfully"
   },
   "agent": {
     "jointQQ": "Joint QQ",
