@@ -496,11 +496,12 @@ export default {
       record: "交易信息",
       betRecord: "投注记录",
       inbox: "消息提醒",
-      changePassword: "修改密码"
+      changePassword: "修改密码",
+      promo: "优惠活动",
+      affiliate: "合作加盟"
     },
     hot: {
-      title: "热门推荐",
-      promo: "优惠活动"
+      title: "热门推荐"
     },
     logout: "退出登录",
     notification: {

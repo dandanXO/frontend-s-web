@@ -438,7 +438,7 @@ export default defineComponent({
             way: regDevice,
             type: "SLIDER"
           };
-
+          isLoading.value = true;
           window
             .initTAC("./tac", config, style)
             .then((tac) => {
@@ -779,7 +779,7 @@ export default defineComponent({
           } else {
             localStorage.removeItem("userpass");
           }
-
+          isLoading.value = false;
           loginFormRef.value.reset();
           router.push(jumpUrl);
         }
@@ -796,6 +796,7 @@ export default defineComponent({
           // 其他错误则关闭验证
           tac.destroyWindow();
         }
+        isLoading.value = false;
       },
       // 刷新按钮回调事件
       btnRefreshFun: (el, tac) => {
