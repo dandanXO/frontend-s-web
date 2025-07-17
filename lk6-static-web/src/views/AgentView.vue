@@ -3,56 +3,74 @@
     <div class="affiliate">
       <div class="affiliate-title">
         <div>
-          <img v-if="languageVal === 'en'" :src="require(`../assets/images/affiliate/agent-title-en.png`)" alt="" style="height:228px;width:700px;display:flex;margin:0auto;" />
-          <img v-else :src="require(`../assets/images/affiliate/agent-title.png`)" alt="" style="height:228px;width:700px;display:flex;margin:0auto;" />
+          <img
+            v-if="languageVal === 'en'"
+            :src="require(`../assets/images/affiliate/agent-title-en.png`)"
+            alt=""
+            style="height: 228px; width: 700px; display: flex; margin: 0auto"
+          />
+          <img
+            v-else
+            :src="require(`../assets/images/affiliate/agent-title.png`)"
+            alt=""
+            style="height: 228px; width: 700px; display: flex; margin: 0auto"
+          />
           <div>
             <div class="contact-left">
               <div class="contact-box mail-buttons">
                 <div class="contact-icon">
-
                   <img src="../assets/images/affiliate/icon-qq.png" />
                 </div>
-                <div class="contact-name">{{ $t('agent.jointQQ') }}</div>
+                <div class="contact-name">{{ $t("agent.jointQQ") }}</div>
                 <span ref="contact0" class="contact-text">6.vip</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('0')">{{ copybtntxt0 }}</button>
-                  <a target="_blank" href="https://im.qq.com/index/" class="download-btn"><img :src="require(`../assets/images/affiliate/download-icon.svg`)" /></a>
+                  <a target="_blank" href="https://im.qq.com/index/" class="download-btn">
+                    <img :src="require(`../assets/images/affiliate/download-icon.svg`)" />
+                  </a>
                 </div>
               </div>
               <div class="contact-box qq-buttons">
                 <div class="contact-icon">
-
                   <img src="../assets/images/affiliate/icon-telegram.png" />
                 </div>
                 <div class="contact-name">Telegram</div>
                 <span ref="contact1" class="contact-text">@6.vip</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('1')">{{ copybtntxt1 }}</button>
-                  <a target="_blank" href="https://telegram.org/download" class="download-btn"><img :src="require(`../assets/images/affiliate/download-icon.svg`)" /></a>
+                  <a target="_blank" href="https://telegram.org/download" class="download-btn">
+                    <img :src="require(`../assets/images/affiliate/download-icon.svg`)" />
+                  </a>
                 </div>
               </div>
               <div class="contact-box skype-buttons">
                 <div class="contact-icon">
-
                   <img src="../assets/images/affiliate/icon-teams.png" />
                 </div>
-                <div class="contact-name">{{ $t('agent.jointTeams') }}</div>
+                <div class="contact-name">{{ $t("agent.jointTeams") }}</div>
                 <span ref="contact2" class="contact-text" style="font-size: 7px">live:.cid.6.vip</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('2')">{{ copybtntxt2 }}</button>
-                  <a target="_blank" class="download-btn" href="https://www.microsoft.com/en-us/microsoft-teams/group-chat-software/"><img :src="require(`../assets/images/affiliate/download-icon.svg`)" /></a>
+                  <a
+                    target="_blank"
+                    class="download-btn"
+                    href="https://www.microsoft.com/en-us/microsoft-teams/group-chat-software/"
+                  >
+                    <img :src="require(`../assets/images/affiliate/download-icon.svg`)" />
+                  </a>
                 </div>
               </div>
               <div class="contact-box telegram-buttons">
                 <div class="contact-icon">
-
                   <img src="../assets/images/affiliate/icon-bubble.png" />
                 </div>
-                <div class="contact-name">{{ $t('agent.sigua') }}</div>
+                <div class="contact-name">{{ $t("agent.sigua") }}</div>
                 <span ref="contact3" class="contact-text">6.vip</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('3')">{{ copybtntxt3 }}</button>
-                  <a target="_blank" class="download-btn" href="https://ya.cn/index.html"><img :src="require(`../assets/images/affiliate/download-icon.svg`)" /></a>
+                  <a target="_blank" class="download-btn" href="https://ya.cn/index.html">
+                    <img :src="require(`../assets/images/affiliate/download-icon.svg`)" />
+                  </a>
                 </div>
               </div>
               <div class="contact-box bubble-buttons">
@@ -63,40 +81,62 @@
                 <span ref="contact4" class="contact-text">6.vip</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('4')">{{ copybtntxt4 }}</button>
-                  <a target="_blank" class="download-btn" href="https://am35.cc"><img :src="require(`../assets/images/affiliate/download-icon.svg`)" /></a>
+                  <a target="_blank" class="download-btn" href="https://am35.cc">
+                    <img :src="require(`../assets/images/affiliate/download-icon.svg`)" />
+                  </a>
                 </div>
               </div>
             </div>
 
             <div class="buttons">
-              <a class="login-btn" :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">{{ $t('btn.login') }}</a>
-              <a class="join-us-btn" :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">{{ $t('btn.joinUs') }}</a>
+              <a class="login-btn" :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">
+                {{ $t("btn.login") }}
+              </a>
+              <a class="join-us-btn" :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">
+                {{ $t("btn.joinUs") }}
+              </a>
             </div>
           </div>
         </div>
-        <img v-if="languageVal === 'en'" :src="require(`../assets/images/affiliate/agent-main-en.png`)" style="height:460px;width:600px;display:flex;margin:0auto;" />
-        <img v-else :src="require(`../assets/images/affiliate/agent-main.png`)" style="height:460px;width:600px;display:flex;margin:0auto;" />
+        <img
+          v-if="languageVal === 'en'"
+          :src="require(`../assets/images/affiliate/agent-main-en.png`)"
+          style="height: 460px; width: 600px; display: flex; margin: 0auto"
+        />
+        <img
+          v-else
+          :src="require(`../assets/images/affiliate/agent-main.png`)"
+          style="height: 460px; width: 600px; display: flex; margin: 0auto"
+        />
       </div>
 
       <div class="affiliate-program-first">
-        <img src="@/assets/images/affiliate/contact-phone.png" style="height:571px;width:500px;display:flex;margin:0auto;"  />
+        <img
+          src="@/assets/images/affiliate/contact-phone.png"
+          style="height: 571px; width: 500px; display: flex; margin: 0auto"
+        />
 
-        <div class="affiliate-subgroup agent-content-item" style="width: 60%;">
+        <div class="affiliate-subgroup agent-content-item" style="width: 60%">
           <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
-            <img v-if="languageVal === 'en'" :src="require(`../assets/images/affiliate/bonus-percentage-title-en.png`)" style="width:600px" alt="" />
+            <img
+              v-if="languageVal === 'en'"
+              :src="require(`../assets/images/affiliate/bonus-percentage-title-en.png`)"
+              style="width: 600px"
+              alt=""
+            />
             <img v-else :src="require(`../assets/images/affiliate/bonus-percentage-title.png`)" alt="" />
             <div class="affiliate-sub">
-              <div class="affiliate-subtitle">{{ $t('agent.commissionStructure') }}</div>
+              <div class="affiliate-subtitle">{{ $t("agent.commissionStructure") }}</div>
               <div class="affiliate-inner">
                 <table>
                   <tbody>
                     <tr>
-                      <th>{{ $t('agent.profit') }}</th>
-                      <th>{{ $t('agent.activePlayer') }}</th>
-                      <th>{{ $t('agent.commissionRate') }}</th>
-                      <th>{{ $t('agent.rechargedMember2ndAndAbove') }}</th>
-                      <th>{{ $t('agent.bonusCommissionRate') }}</th>
-                      <th>{{ $t('agent.postBonusCommissionRate') }}</th>
+                      <th>{{ $t("agent.profit") }}</th>
+                      <th>{{ $t("agent.activePlayer") }}</th>
+                      <th>{{ $t("agent.commissionRate") }}</th>
+                      <th>{{ $t("agent.rechargedMember2ndAndAbove") }}</th>
+                      <th>{{ $t("agent.bonusCommissionRate") }}</th>
+                      <th>{{ $t("agent.postBonusCommissionRate") }}</th>
                     </tr>
                     <tr>
                       <td>8000+</td>
@@ -138,81 +178,96 @@
         </div>
       </div>
 
-      
       <div class="affiliate-program affiliate-program-last">
-        <img v-if="languageVal === 'en'" style="width:800px;margin-bottom:30px;" :src="require(`../assets/images/affiliate/bonus-title-en.png`)" alt="" />
-        <img v-else :src="require(`../assets/images/affiliate/bonus-title.png`)" style="width:243px;margin-bottom:30px;" alt="" />
+        <img
+          v-if="languageVal === 'en'"
+          style="width: 800px; margin-bottom: 30px"
+          :src="require(`../assets/images/affiliate/bonus-title-en.png`)"
+          alt=""
+        />
+        <img
+          v-else
+          :src="require(`../assets/images/affiliate/bonus-title.png`)"
+          style="width: 243px; margin-bottom: 30px"
+          alt=""
+        />
 
         <div class="affiliate-subgroup agent-content-item">
           <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
             <div class="affiliate-sub" style="max-height: 650px; width: 450px">
-              <div class="affiliate-subtitle">{{ $t('agent.belowSampleCalculation') }}</div>
+              <div class="affiliate-subtitle">{{ $t("agent.belowSampleCalculation") }}</div>
               <div class="affiliate-inner">
                 <table>
                   <tr>
                     <td class="first-row">
-                      {{ $t('agent.totalGameWinLoss') }}
+                      {{ $t("agent.totalGameWinLoss") }}
                     </td>
-                    <td class="first-row">
-                      10,000
-                    </td>
+                    <td class="first-row">10,000</td>
                   </tr>
                   <tr>
-                    <td class="highlight">{{ $t('agent.platformFee') }}</td>
+                    <td class="highlight">{{ $t("agent.platformFee") }}</td>
                     <td class="highlight">-1500</td>
                   </tr>
                   <tr>
-                    <td :colspan="2">{{$t('agent.platformFeeExplained')}} x 15%</td>
+                    <td :colspan="2">{{ $t("agent.platformFeeExplained") }} x 15%</td>
                   </tr>
                   <tr>
-                    <td class="highlight">{{$t('agent.bonuses')}}</td>
+                    <td class="highlight">{{ $t("agent.bonuses") }}</td>
                     <td class="highlight">-20</td>
                   </tr>
                   <tr>
-                    <td :colspan="2">{{$t('agent.feesCanViewInDetails')}}</td>
+                    <td :colspan="2">{{ $t("agent.feesCanViewInDetails") }}</td>
                   </tr>
                   <tr>
-                    <td class="highlight">{{ $t('agent.netProfit') }}</td>
+                    <td class="highlight">{{ $t("agent.netProfit") }}</td>
                     <td class="highlight">8,480</td>
                   </tr>
                   <tr>
-                    <td class="highlight">{{$t('agent.commissionRate')}}</td>
+                    <td class="highlight">{{ $t("agent.commissionRate") }}</td>
                     <td class="highlight">*33%</td>
                   </tr>
                   <tr>
-                    <td class="result">{{ $t('agent.totalCommission') }}</td>
+                    <td class="result">{{ $t("agent.totalCommission") }}</td>
                     <td class="result">2,798.4</td>
                   </tr>
                 </table>
               </div>
             </div>
-            <img width="350px" style="display: flex;margin: auto;" :src="require(`../assets/images/affiliate/calc-decor.png`)" alt=""  />
+            <img
+              width="350px"
+              style="display: flex; margin: auto"
+              :src="require(`../assets/images/affiliate/calc-decor.png`)"
+              alt=""
+            />
           </div>
 
           <div style="display: flex; flex-direction: column; align-items: start; gap: 20px">
             <div class="affiliate-sub" style="max-height: 950px; justify-content: flex-start">
               <img :src="require(`../assets/images/affiliate/bonus-rabbit.png`)" alt="" class="bonus-rabbit" />
-              <div class="affiliate-inner" style="max-height: 850px;margin-top:69px;">
-                <div style="font-size: 20px;">{{ $t('agent.commissionTermsAndConditions') }}</div>
+              <div class="affiliate-inner" style="max-height: 850px; margin-top: 69px">
+                <div style="font-size: 20px">{{ $t("agent.commissionTermsAndConditions") }}</div>
                 <ol>
-                  <li>{{ $t('agent.commissionTermsAndConditions01') }}
+                  <li>
+                    {{ $t("agent.commissionTermsAndConditions01") }}
                     <ul>
-                      <li>{{ $t('agent.commissionTermsAndConditions0101') }}</li>
-                      <li>{{ $t('agent.commissionTermsAndConditions0102') }}</li>
+                      <li>{{ $t("agent.commissionTermsAndConditions0101") }}</li>
+                      <li>{{ $t("agent.commissionTermsAndConditions0102") }}</li>
                     </ul>
                   </li>
-                  <li>{{ $t('agent.commissionTermsAndConditions02') }}
+                  <li>
+                    {{ $t("agent.commissionTermsAndConditions02") }}
                     <ul>
-                      <li>{{ $t('agent.commissionTermsAndConditions0201') }}</li>
-                      <li>{{ $t('agent.commissionTermsAndConditions0202') }}</li>
+                      <li>{{ $t("agent.commissionTermsAndConditions0201") }}</li>
+                      <li>{{ $t("agent.commissionTermsAndConditions0202") }}</li>
                     </ul>
                   </li>
-                  <li>{{ $t('agent.commissionTermsAndConditions03') }}
+                  <li>
+                    {{ $t("agent.commissionTermsAndConditions03") }}
                     <ul>
-                      <li>{{ $t('agent.commissionTermsAndConditions0301') }}</li>
-                      <li>{{ $t('agent.commissionTermsAndConditions0302') }}</li>
-                      <li>{{ $t('agent.commissionTermsAndConditions0303') }}</li>
-                      <li>{{ $t('agent.commissionTermsAndConditions0304') }}</li>
+                      <li>{{ $t("agent.commissionTermsAndConditions0301") }}</li>
+                      <li>{{ $t("agent.commissionTermsAndConditions0302") }}</li>
+                      <li>{{ $t("agent.commissionTermsAndConditions0303") }}</li>
+                      <li>{{ $t("agent.commissionTermsAndConditions0304") }}</li>
                     </ul>
                   </li>
                 </ol>
@@ -229,16 +284,16 @@ import { defineComponent, ref } from "vue";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
 import { useDark } from "@vueuse/core";
-import { storeToRefs } from 'pinia'
-import { i18nStore } from '@/store/language'
+import { storeToRefs } from "pinia";
+import { i18nStore } from "@/store/language";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   setup() {
     const { t } = useI18n();
-    const i18nStoreLanguage = i18nStore()
-    const { languageVal } = storeToRefs(i18nStoreLanguage)
-    const affiliateUrl = ref("https://lh1-affiliate.phoicynxeey.com/lh/");
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
+    const affiliateUrl = ref("https://6666vip.cc/lk6/");
 
     const isDark = useDark();
 
@@ -258,12 +313,12 @@ export default defineComponent({
     const contact3 = ref();
     const contact4 = ref();
     const contact5 = ref();
-    const copybtntxt0 = ref(t('btn.copy'));
-    const copybtntxt1 = ref(t('btn.copy'));
-    const copybtntxt2 = ref(t('btn.copy'));
-    const copybtntxt3 = ref(t('btn.copy'));
-    const copybtntxt4 = ref(t('btn.copy'));
-    const copybtntxt5 = ref(t('btn.copy'));
+    const copybtntxt0 = ref(t("btn.copy"));
+    const copybtntxt1 = ref(t("btn.copy"));
+    const copybtntxt2 = ref(t("btn.copy"));
+    const copybtntxt3 = ref(t("btn.copy"));
+    const copybtntxt4 = ref(t("btn.copy"));
+    const copybtntxt5 = ref(t("btn.copy"));
     const copyMessage = (position) => {
       let copyText = null;
       copyText = eval(`contact${position}.value.innerText`);
@@ -279,7 +334,7 @@ export default defineComponent({
       // Remove the temporary textarea element
       document.body.removeChild(tempTextarea);
       const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
-      copybtntxt[position].value = t('btn.copied');
+      copybtntxt[position].value = t("btn.copied");
     };
     const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
     const store = userStore();
@@ -376,7 +431,7 @@ export default defineComponent({
       max-width: 1400px;
       width: 100%;
     }
-    .affiliate-program-last{
+    .affiliate-program-last {
       // margin-top: -150px;
       flex-direction: column;
       height: 950px;
@@ -391,17 +446,16 @@ export default defineComponent({
       align-items: center;
       margin-top: 50px;
 
-
       .login-btn {
-        background: url('../assets/images/affiliate/login-btn-bg.png') center center no-repeat;
+        background: url("../assets/images/affiliate/login-btn-bg.png") center center no-repeat;
         background-size: 100% 100%;
         width: 170px;
         height: 50px;
-        color: #3F4F75;
+        color: #3f4f75;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: 'PingFang SC';
+        font-family: "PingFang SC";
         font-weight: 600;
         font-size: 20px;
         line-height: 100%;
@@ -413,15 +467,15 @@ export default defineComponent({
       }
 
       .join-us-btn {
-        background: url('../assets/images/affiliate/join-us-btn-bg.png') center center no-repeat;
+        background: url("../assets/images/affiliate/join-us-btn-bg.png") center center no-repeat;
         background-size: 100% 100%;
         width: 170px;
         height: 50px;
-        color: #FFFFFF;
+        color: #ffffff;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: 'PingFang SC';
+        font-family: "PingFang SC";
         font-weight: 600;
         font-size: 20px;
         line-height: 100%;
@@ -490,7 +544,7 @@ export default defineComponent({
 }
 
 .contact-icon-email {
-  margin-top: 2px
+  margin-top: 2px;
 }
 
 .contact-text-email {
@@ -574,8 +628,8 @@ export default defineComponent({
       }
 
       .first-row {
-        background: linear-gradient(180deg, #4DA3FF -42.2%, #76B1FF 105.96%);
-        color: #FFFFFF;
+        background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%);
+        color: #ffffff;
       }
 
       .highlight {
@@ -682,7 +736,7 @@ export default defineComponent({
 
 .dark {
   .affiliate {
-    background:#15213E;
+    background: #15213e;
 
     .buttons {
       a {
@@ -704,7 +758,7 @@ export default defineComponent({
     }
 
     .affiliate-inner {
-      background: #17223E;
+      background: #17223e;
       color: #fff;
 
       .highlight {
@@ -718,9 +772,9 @@ export default defineComponent({
   }
 
   .affiliate-sub {
-    background-color: #1624404D;
-    background: linear-gradient(178.46deg, #2D4065 2.36%, rgba(45, 64, 101, 0) 98.7%);
-    border: 1px solid #BE945733;
+    background-color: #1624404d;
+    background: linear-gradient(178.46deg, #2d4065 2.36%, rgba(45, 64, 101, 0) 98.7%);
+    border: 1px solid #be945733;
 
     .affiliate-subtitle {
       color: #fff;
@@ -728,17 +782,17 @@ export default defineComponent({
   }
 
   .agent-content-item table th {
-    background: linear-gradient(180deg, #8DBBEC -42.2%, #3B4BA3 105.96%);
-    border-color: #17223E;
+    background: linear-gradient(180deg, #8dbbec -42.2%, #3b4ba3 105.96%);
+    border-color: #17223e;
   }
   .agent-content-item table td {
     background: #374569;
     color: #fff;
-    border-color: #17223E;
+    border-color: #17223e;
   }
 
   .contact-box {
-    background: linear-gradient(180deg, #3E5384 0%, #3558AB 100%);
+    background: linear-gradient(180deg, #3e5384 0%, #3558ab 100%);
     border: none;
 
     .contact-text {
@@ -746,7 +800,7 @@ export default defineComponent({
     }
 
     .download-btn {
-      background: #4798E4;
+      background: #4798e4;
       border-radius: 4px;
     }
 
