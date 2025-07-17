@@ -1,41 +1,76 @@
-import NProgress from "nprogress";
-import "nprogress/nprogress.css";
-import router from "@/router";
-import { useStore } from "./store";
-import { MenuActionType } from "@/store/modules/menu/action-types";
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+import router from '@/router'
+import { useStore } from './store'
+import { MenuActionType } from '@/store/modules/menu/action-types'
 
-const whiteList = ['/403', '/login', '/my/login', '/my/register', '/kaka/login', '/kaka/register', '/ph/login', '/ph/register', '/th/login', '/th/register', '/xf/login', '/xf/register', '/dy/login', '/dy/register', '/poster', '/ind/login', '/ind/register', '/lh/login', '/lh/register', '/vi/login', '/vi/register', '/ind2/login', '/ind2/register', '/kr/login', '/kr/register', '/pak/login', '/pak/register', '/ph1/summary', '/br1/login', '/br1/register', '/br2/login', '/br2/register']
-NProgress.configure({ showSpinner: false });
+const whiteList = [
+  '/403',
+  '/login',
+  '/my/login',
+  '/my/register',
+  '/kaka/login',
+  '/kaka/register',
+  '/ph/login',
+  '/ph/register',
+  '/th/login',
+  '/th/register',
+  '/xf/login',
+  '/xf/register',
+  '/dy/login',
+  '/dy/register',
+  '/poster',
+  '/ind/login',
+  '/ind/register',
+  '/lh/login',
+  '/lh/register',
+  '/vi/login',
+  '/vi/register',
+  '/ind2/login',
+  '/ind2/register',
+  '/kr/login',
+  '/kr/register',
+  '/pak/login',
+  '/pak/register',
+  '/ph1/summary',
+  '/br1/login',
+  '/br1/register',
+  '/br2/login',
+  '/br2/register',
+  '/lk6/login',
+  '/lk6/register',
+]
+NProgress.configure({ showSpinner: false })
 
 router.beforeEach(async (to, _, next) => {
-  NProgress.start();
-  const store = useStore();
+  NProgress.start()
+  const store = useStore()
   // Determine whether the user has logged in, if logged in can visit any page
   if (store.state.user.token) {
-    await store.dispatch(MenuActionType.ACTION_SET_ROUTES, undefined);
-    if (to.path === "/login") {
-      next({ path: "/" });
-      NProgress.done();
+    await store.dispatch(MenuActionType.ACTION_SET_ROUTES, undefined)
+    if (to.path === '/login') {
+      next({ path: '/' })
+      NProgress.done()
     } else {
-      next();
+      next()
     }
   } else {
     // Has no token
     if (whiteList.indexOf(to.path) !== -1) {
       // In the free login whitelist, go directly
-      next();
+      next()
     } else {
       const currentHost = window.location.host
       const siteCode = currentHost.substring(0, 3)
-      const thaiHost = "affiliate-web.monemental.com"
-      const ph1Host = "ph1-os.dt2e7svs94.com"
+      const thaiHost = 'affiliate-web.monemental.com'
+      const ph1Host = 'ph1-os.dt2e7svs94.com'
 
       if (currentHost === thaiHost) {
-        next(`/th/login?redirect=${to.path}`);
+        next(`/th/login?redirect=${to.path}`)
       } else if (currentHost === ph1Host) {
         next(`/ph1/summary`)
       } else {
-        console.log("IS Check")
+        console.log('IS Check')
         console.log(siteCode)
         if (siteCode === 'lh1') {
           next(`/lh/login?redirect=${to.path}`)
@@ -59,8 +94,10 @@ router.beforeEach(async (to, _, next) => {
           next(`/br1/login?redirect=${to.path}`)
         } else if (siteCode === 'br2') {
           next(`/br2/login?redirect=${to.path}`)
+        } else if (siteCode === 'lk6') {
+          next(`/lk6/login?redirect=${to.path}`)
         } else {
-          next(`/login?redirect=${to.path}`);
+          next(`/login?redirect=${to.path}`)
         }
       }
       // Other pages that do not have menu to access are redirected to the login page.
@@ -69,9 +106,9 @@ router.beforeEach(async (to, _, next) => {
 })
 
 router.afterEach((/* to: RouteLocationNormalized */) => {
-// Finish progress bar
-// hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
-  NProgress.done();
-// set page title
-// document.title = to.name
-});
+  // Finish progress bar
+  // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
+  NProgress.done()
+  // set page title
+  // document.title = to.name
+})

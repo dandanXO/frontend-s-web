@@ -259,6 +259,7 @@ export default {
     cardAddress: 'Endereço do Cartão',
     cardNumber: 'Número do Cartão',
     changeWithdrawPw: 'Alterar Senha de Retirada',
+    chinese: '中文',
     clearingSum: 'Total de Liquidação',
     commission: 'Comissão',
     gamecommission: 'Comissão da Plataforma',
