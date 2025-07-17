@@ -4,10 +4,7 @@
     style="transition: background 0.5s ease-in-out"
     class="dynamic-bg"
   > -->
-  <div
-    style="transition: background 0.5s ease-in-out"
-    class="dynamic-bg"
-  >
+  <div style="transition: background 0.5s ease-in-out" class="dynamic-bg">
     <ProfileSummary
       :showRedemption="isShowRedemptionInPopup"
       :homeProfile="true"
@@ -34,11 +31,11 @@
       class="hometop-banner"
     >
       <template v-for="(banner, index) in banners" :key="index">
-          <swiper-slide @click="gotoPromo(banner)">
-            <div class="category">
-              <img :src="returnBannerUrl(banner)"  />
-            </div>
-          </swiper-slide>
+        <swiper-slide @click="gotoPromo(banner)">
+          <div class="category">
+            <img :src="returnBannerUrl(banner)" />
+          </div>
+        </swiper-slide>
       </template>
     </swiper>
     <!-- <pre>
@@ -245,7 +242,7 @@
         <div class="games-selection-wrapper" id="hotgames">
           <div class="title-game">
             <!-- <img src="../assets/images/index/menu-label-hotgames.png" class="label-img" /> -->
-             <div class="left-label">
+            <div class="left-label">
               <img src="../assets/images/index/menu-label-icon-hotgames.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_hotgames") }}</div>
             </div>
@@ -254,9 +251,7 @@
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
-              <div class="games-length">
-                {{ hotGameList.length }} {{ $t("home.cat_games") }}
-              </div>
+              <div class="games-length">{{ hotGameList.length }} {{ $t("home.cat_games") }}</div>
               <div :class="`custom-hot-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
               <div :class="`custom-hot-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
@@ -269,7 +264,7 @@
               :spaceBetween="10"
               :modules="[Navigation, Grid]"
               :grid="{ rows: 2, fill: 'row' }"
-              style="padding:10px 0;"
+              style="padding: 10px 0"
             >
               <template v-for="(item, index) in hotGameList" :key="index">
                 <template v-if="item.type && item.type === 'game'">
@@ -355,7 +350,6 @@
               </template>
             </swiper>
           </div>
-
           <div class="platform-game-wrapper" v-else>
             <div class="platform-game-container grid-view">
               <template v-for="(item, index) in hotGameList" :key="index">
@@ -440,23 +434,31 @@
           </div>
         </div>
       </template>
+
+      <div v-if="category.title === 'Lobby' && category.active" class="games-selection-wrapper">
+        <div class="title-game">
+          <div class="left-label">
+            <div class="txt-style">{{ $t("home.liveSportEvent") }}</div>
+          </div>
+        </div>
+        <BetByWidget />
+      </div>
+
       <template
         v-if="(category.title === 'Live' && category.active) || (category.title === 'Lobby' && category.active)"
       >
         <div class="games-selection-wrapper" id="Live">
           <div class="title-game">
             <div class="left-label">
-            <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
-            <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
-          </div>
+              <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
+              <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
+            </div>
             <div v-if="category.title === 'Lobby' && category.active" class="side">
               <div class="all-btn" @click="handleActivateSlide('Live')">
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
-              <div class="games-length">
-                {{ livecasino.length }} {{ $t("home.cat_games") }}
-              </div>
+              <div class="games-length">{{ livecasino.length }} {{ $t("home.cat_games") }}</div>
               <div :class="`custom-live-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
               <div :class="`custom-live-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
@@ -553,7 +555,7 @@
       >
         <div class="games-selection-wrapper" id="Slot">
           <div class="title-game">
-             <div class="left-label">
+            <div class="left-label">
               <img src="../assets/images/index/menu-label-icon-slotsgame.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_slotsgame") }}</div>
             </div>
@@ -562,9 +564,7 @@
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
-              <div class="games-length">
-                {{ slot.length }} {{ $t("home.cat_games") }}
-              </div>
+              <div class="games-length">{{ slot.length }} {{ $t("home.cat_games") }}</div>
               <div :class="`custom-slot-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
               <div :class="`custom-slot-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
@@ -682,7 +682,7 @@
       >
         <div class="games-selection-wrapper" id="Fish" v-if="category.title === 'Lobby' && category.active">
           <div class="title-game">
-             <div class="left-label">
+            <div class="left-label">
               <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
             </div>
@@ -691,9 +691,7 @@
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
-              <div class="games-length">
-                {{ fishGameJILIList.length }} {{ $t("home.cat_games") }}
-              </div>
+              <div class="games-length">{{ fishGameJILIList.length }} {{ $t("home.cat_games") }}</div>
               <div :class="`custom-fish-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
               <div :class="`custom-fish-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
@@ -896,10 +894,10 @@
         <div class="games-selection-wrapper" id="fishing" v-else>
           <div class="title-game">
             <!-- <img src="../assets/images/index/menu-label-fishing.png" class="label-img" /> -->
-             <div class="left-label">
-            <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
-            <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
-          </div>
+            <div class="left-label">
+              <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
+              <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
+            </div>
           </div>
 
           <div class="platform-game-container grid-view">
@@ -969,7 +967,7 @@
       >
         <div class="games-selection-wrapper" id="Poker">
           <div class="title-game">
-             <div class="left-label">
+            <div class="left-label">
               <img src="../assets/images/index/menu-label-icon-poker.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_poker") }}</div>
             </div>
@@ -978,9 +976,7 @@
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
-              <div class="games-length">
-                {{ pokerGameJILIList.length }} {{ $t("home.cat_games") }}
-              </div>
+              <div class="games-length">{{ pokerGameJILIList.length }} {{ $t("home.cat_games") }}</div>
               <div :class="`custom-poker-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
               <div :class="`custom-poker-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
@@ -1092,7 +1088,7 @@
       >
         <div class="games-selection-wrapper" id="Sport">
           <div class="title-game">
-             <div class="left-label">
+            <div class="left-label">
               <img src="../assets/images/index/menu-label-icon-sport.png" class="label-img" />
               <div class="txt-style">{{ $t("home.cat_sport") }}</div>
             </div>
@@ -1101,9 +1097,7 @@
                 {{ $t("home.menu_all") }}
                 <img src="../assets/images/account/rgtarrow.svg" />
               </div>
-              <div class="games-length">
-                {{ sport.length }} {{ $t("home.cat_games") }}
-              </div>
+              <div class="games-length">{{ sport.length }} {{ $t("home.cat_games") }}</div>
               <div :class="`custom-sport-prev`"><img src="../assets/images/account/rgtarrow.svg" /></div>
               <div :class="`custom-sport-next`"><img src="../assets/images/account/rgtarrow.svg" /></div>
             </div>
@@ -1137,7 +1131,7 @@
         </div>
       </template>
     </template>
-          <!-- <div class="download-app-buttons">
+    <!-- <div class="download-app-buttons">
             <div class="app app_ios">
               <div class="icon">
                 <img src="../assets/images/index/app-ios.png">
@@ -1166,32 +1160,28 @@
               </div>
             </div>
           </div> -->
-          <div class="support-button">
-            <div class="supp-left">
-              <div class="supp-main">{{ $t('home.twentyFourSevenSupport') }}</div>
-              <div class="supp-sub">{{ $t('home.ifHaveQuestionsContactUs') }}</div>
-            </div>
+    <div class="support-button">
+      <div class="supp-left">
+        <div class="supp-main">{{ $t("home.twentyFourSevenSupport") }}</div>
+        <div class="supp-sub">{{ $t("home.ifHaveQuestionsContactUs") }}</div>
+      </div>
 
-            <q-btn class="btn-primary" :href="ui.CSAUrl" target="_blank">{{ $t('home.chat') }}</q-btn>
+      <q-btn class="btn-primary" :href="ui.CSAUrl" target="_blank">{{ $t("home.chat") }}</q-btn>
 
-            <!-- <a class="btn-primary" :href="ui.CSAUrl" target="_blank">
+      <!-- <a class="btn-primary" :href="ui.CSAUrl" target="_blank">
               <img src="../assets/images/index/cs-cs.png" />
             </a> -->
+    </div>
+    <swiper :slidesPerView="5.5" class="social-icons" :spaceBetween="10">
+      <template v-for="(icon, index) in socialicons" :key="index">
+        <swiper-slide @click="gotoSocial(icon)">
+          <div class="category">
+            <img class="absolute-hot" src="../assets/images/index/hot.gif" v-if="icon.name === 'whatsapp'" />
+            <img :src="require(`../assets/images/index/home-social-${icon.name}.png`)" />
           </div>
-        <swiper
-          :slidesPerView="5.5"
-          class="social-icons"
-          :spaceBetween="10"
-        >
-          <template v-for="(icon, index) in socialicons" :key="index">
-              <swiper-slide @click="gotoSocial(icon)">
-                <div class="category">
-                  <img class="absolute-hot" src="../assets/images/index/hot.gif" v-if="icon.name === 'whatsapp'" />
-                  <img :src="require(`../assets/images/index/home-social-${icon.name}.png`)"  />
-                </div>
-              </swiper-slide>
-          </template>
-        </swiper>
+        </swiper-slide>
+      </template>
+    </swiper>
   </div>
   <div style="display: none;">
 
@@ -1574,8 +1564,8 @@
     <div class="congrats-container" :class="{ ur: languageVal === 'ur' }">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
       <!- <div class="congrats-header"><img src="../assets/images/index/modal/congrats-header.png" /></div> -->
-      <!-- <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div> -->
-      <!-- <div class="congrats-title">You get a coupon，Recharge $300 Get</div> ->
+  <!-- <div class="congrats-coupons"><img src="../assets/images/index/modal/congrats-coupons.png" /></div> -->
+  <!-- <div class="congrats-title">You get a coupon，Recharge $300 Get</div> ->
       <div class="congrats-highlight">Rs28</div>
 
       <div class="congrats-button">
@@ -1631,17 +1621,17 @@
       <div class="congrats-coupons">
         <img :src="require('../assets/images/index/modal/congrats-coupons.png')" />
       </div>
-      <div class="congrats-title">{{ $t('hotPromo.unusedCoupons') }}</div>
+      <div class="congrats-title">{{ $t("hotPromo.unusedCoupons") }}</div>
 
       <div class="congrats-button-container">
         <q-btn no-caps unelevated class="congrats-btn" @click="handleNewPlayerDeposit">
-          {{ $t('btn.goNow') }}
+          {{ $t("btn.goNow") }}
         </q-btn>
       </div>
     </div>
   </q-dialog>
   <q-dialog
-    v-if="popupPromo === 'newplayer-spin-wheel'  && route.path === '/home'"
+    v-if="popupPromo === 'newplayer-spin-wheel' && route.path === '/home'"
     full-width
     :model-value="isShownNewPlayerWheel"
     class="isCentreDialog spin-lucky-wheel-dialog"
@@ -1667,7 +1657,6 @@
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
   <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" />
-
 </template>
 
 <script setup>
@@ -1735,6 +1724,7 @@ import { storeToRefs } from "pinia";
 import CongratsReuseableModal from "src/components/modal/CongratsReuseableModal.vue";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 import { i18nStore } from "src/router/language";
+import BetByWidget from "src/components/home/BetByWidget.vue";
 
 const i18nStoreLanguage = i18nStore();
 const { languageVal } = storeToRefs(i18nStoreLanguage);
@@ -1755,7 +1745,6 @@ const handleScroll = () => {
 
   lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 };
-
 
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
@@ -1947,7 +1936,6 @@ const liveTabRef = ref();
 const spinLuckyWheelPromoHomePopupRef = ref();
 const newPlayerPromoHomePopupRef = ref();
 
-
 const translatedCategoriesList = computed(() => {
   return categoriesList.value.map((category) => ({
     ...category,
@@ -1955,7 +1943,9 @@ const translatedCategoriesList = computed(() => {
   }));
 });
 const getImageUrl = (img) => {
-  return require(`../assets/images/index/category/hometop-${img.active?img.icon.toLowerCase()+'-active':img.icon.toLowerCase()}.png`);
+  return require(`../assets/images/index/category/hometop-${
+    img.active ? img.icon.toLowerCase() + "-active" : img.icon.toLowerCase()
+  }.png`);
 };
 
 const activeCategoryLabel = computed(() => {
@@ -2504,50 +2494,50 @@ const $q = useQuasar();
 const shareRef = ref();
 const socialicons = ref([
   {
-    name: "whatsapp",
+    name: "whatsapp"
   },
   {
-    name: "mail",
+    name: "mail"
   },
   {
-    name: "instagram",
+    name: "instagram"
   },
   {
     name: "facebook",
   },
   {
-    name: "tiktok",
+    name: "tiktok"
   },
   {
-    name: "youtube",
+    name: "youtube"
   },
   {
-    name: "sms",
-  },
-])
+    name: "sms"
+  }
+]);
 const gotoSocial = (icon) => {
-  if (icon.name === 'whatsapp') {
+  if (icon.name === "whatsapp") {
     shareRef.value.openWhatsApp();
   }
-  if (icon.name === 'sms') {
+  if (icon.name === "sms") {
     shareRef.value.openSMS();
   }
-  if (icon.name === 'mail') {
+  if (icon.name === "mail") {
     shareRef.value.openMail();
   }
-  if (icon.name === 'instagram') {
+  if (icon.name === "instagram") {
     shareRef.value.openInsta();
   }
-  if (icon.name === 'facebook') {
+  if (icon.name === "facebook") {
     shareRef.value.openFacebook();
   }
-  if (icon.name === 'tiktok') {
+  if (icon.name === "tiktok") {
     shareRef.value.openTiktok();
   }
-  if (icon.name === 'youtube') {
+  if (icon.name === "youtube") {
     shareRef.value.openYoutube();
   }
-}
+};
 const banners = ref([
   {
     mobileImageUrl: "empty-banner.png"
@@ -4332,7 +4322,7 @@ onActivated(async () => {
     await store.getMemberInfo();
     checkCodeBonusModal();
   }
-  
+
   if (store.hasToken()) {
     await showSpinWheel();
   }
@@ -4375,8 +4365,6 @@ onActivated(async () => {
 
 const afterMounted = useCustomerTrigger(loadCustomerAddress);
 
-
-
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
 
@@ -4388,7 +4376,6 @@ onMounted(() => {
   loadJDBFishGameList();
   loadJILIPokerhGameList();
   ui.shouldFetchDownloadAppUrl = true;
-
 
   AOS.init();
   SwiperCore.use([Grid, Navigation, Pagination, A11y]);
@@ -4415,13 +4402,13 @@ watch(
     if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
   }
 );
-watch (
+watch(
   () => promoStore.isShownNewPlayerWheel,
   async (val) => {
     await nextTick();
     if (val) checkNewPlayerWheelPromoHomePopupCanShow();
   }
-)
+);
 // watch(
 //   () => route.query.register,
 //   (newValue) => {
@@ -4440,8 +4427,8 @@ const handleReceiveCodeBonus = () => {
 };
 
 const handleNewPlayerDeposit = () => {
-  router.push({ path: '/deposit?from=home' })
-}
+  router.push({ path: "/deposit?from=home" });
+};
 
 const isShowRedemptionInPopup = ref(false);
 const checkCodeBonusModal = () => {
@@ -4465,7 +4452,6 @@ const checkSpinWheel = () => {
   }
 };
 
-
 const showSpinWheel = () => {
   eventapi
     .get("/new-user-roulette/init")
@@ -4477,9 +4463,9 @@ const showSpinWheel = () => {
         } else {
           store.hasUnusedCoupon = false;
         }
-        if ((store.canSpinPrivilegeCoupon) && isAndroid()) {
+        if (store.canSpinPrivilegeCoupon && isAndroid()) {
           promoStore.addShownFloatingOrDialogList("newplayer-spin-wheel");
-          popupPromo.value = "newplayer-spin-wheel"
+          popupPromo.value = "newplayer-spin-wheel";
         } else {
         }
       }
@@ -4774,60 +4760,64 @@ const checkGoogleLoginSetPwd = () => {
     //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
 }
-:deep(.hometop-banner.swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction) {
-    width: unset;
-    left: unset;
-    right: 13%;
-    background: #FFFFFF33;
-    border-radius: 10px;
-    padding: 0 8px;
+:deep(
+    .hometop-banner.swiper-horizontal > .swiper-pagination-bullets,
+    .swiper-pagination-bullets.swiper-pagination-horizontal,
+    .swiper-pagination-custom,
+    .swiper-pagination-fraction
+  ) {
+  width: unset;
+  left: unset;
+  right: 13%;
+  background: #ffffff33;
+  border-radius: 10px;
+  padding: 0 8px;
 }
 :deep(.hometop-banner.swiper-horizontal .swiper-pagination-bullet) {
   background: #ffffffc5;
-
 }
 :deep(.hometop-banner.swiper-horizontal .swiper-pagination-bullet-active) {
   background: #ffffff;
 }
 .hometop-banner {
   margin-top: 10px;
-  .swiper-slide-prev, .swiper-slide-next {
-    transform: scale(.9);
-
+  .swiper-slide-prev,
+  .swiper-slide-next {
+    transform: scale(0.9);
   }
-.category {
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-  border-radius: 25px;
-  img {
+  .category {
     width: 100%;
-    display: block;
-  }
-}
-}
-.social-icons {
-  margin: 20px auto 30px;
-.category {
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-  padding: 5px;
-  img {
-    width: 100%;
-
-    &.absolute-hot {
-      position: absolute;
-      right: -10px;
-      top: 0px;
-      width: 18px;
-      height: unset;
-      img {
-        width: 25px;
-      }
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: 25px;
+    img {
+      width: 100%;
+      display: block;
     }
   }
 }
+.social-icons {
+  margin: 20px auto 30px;
+  .category {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 5px;
+    img {
+      width: 100%;
+
+      &.absolute-hot {
+        position: absolute;
+        right: -10px;
+        top: 0px;
+        width: 18px;
+        height: unset;
+        img {
+          width: 25px;
+        }
+      }
+    }
+  }
 }
 .hometop-categories {
   // display: grid;
@@ -4862,7 +4852,7 @@ const checkGoogleLoginSetPwd = () => {
       margin: auto;
       width: 100%;
       text-align: center;
-      color: #FFFFFFB2;
+      color: #ffffffb2;
 
       &.active {
         color: #fff;
@@ -4943,18 +4933,18 @@ const checkGoogleLoginSetPwd = () => {
       width: 28px;
       z-index: 1;
       img {
-          height: 100%;
+        height: 100%;
       }
     }
 
     .marquee-container {
       // width: calc(100% - 28px);
-    width: 100%;
-    background: #FFFFFF0F;
-    padding: 5px;
-    margin-left: -30px;
-    z-index: 0;
-    border-radius: 10px;
+      width: 100%;
+      background: #ffffff0f;
+      padding: 5px;
+      margin-left: -30px;
+      z-index: 0;
+      border-radius: 10px;
       :deep(.marquee-text-content) {
         width: max-content;
       }
@@ -5511,7 +5501,8 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 @keyframes zoomInOut {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -5605,7 +5596,8 @@ const checkGoogleLoginSetPwd = () => {
   .custom-poker-prev,
   .custom-poker-next,
   .custom-fish-prev,
-  .custom-fish-next,.custom-sport-prev,
+  .custom-fish-next,
+  .custom-sport-prev,
   .custom-sport-next {
     background: #373c3d;
     padding: 10px;
@@ -5720,7 +5712,7 @@ const checkGoogleLoginSetPwd = () => {
       align-items: flex-end;
       .all-btn {
         // background: #373c3d;
-        color:#0085FF;
+        color: #0085ff;
         border-radius: 6px;
         font-weight: 700;
         cursor: pointer;
@@ -5729,7 +5721,7 @@ const checkGoogleLoginSetPwd = () => {
         }
       }
       .games-length {
-        color: #3F4C6B;
+        color: #3f4c6b;
         font-weight: 700;
         line-height: 8px;
         margin-bottom: 8px;
@@ -5849,7 +5841,7 @@ const checkGoogleLoginSetPwd = () => {
     .platform-game-img {
       height: 140px;
 
-      @media(max-width: 375px){
+      @media (max-width: 375px) {
         max-height: 105px;
         height: auto;
       }
@@ -5936,7 +5928,7 @@ const checkGoogleLoginSetPwd = () => {
   display: flex;
   margin: 20px auto;
   .app {
-    border: 1px solid #1A2239;
+    border: 1px solid #1a2239;
     border-radius: 12px;
     display: flex;
     justify-content: flex-start;
@@ -5945,8 +5937,8 @@ const checkGoogleLoginSetPwd = () => {
     width: 100%;
 
     font-family: Microsoft YaHei UI;
-      font-weight: 700;
-      font-size: 12px;
+    font-weight: 700;
+    font-size: 12px;
     .icon {
       width: 26px;
       margin-right: 10px;
@@ -5962,7 +5954,7 @@ const checkGoogleLoginSetPwd = () => {
       }
     }
     .type {
-      color:#FFFFFF66;
+      color: #ffffff66;
       text-transform: uppercase;
     }
     .version {
@@ -5974,7 +5966,7 @@ const checkGoogleLoginSetPwd = () => {
   }
 }
 .support-button {
-  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+  background: linear-gradient(90deg, #1c273d 0%, #12192b 100%);
   border-radius: 12px;
   padding: 10px;
   display: flex;
@@ -5984,7 +5976,7 @@ const checkGoogleLoginSetPwd = () => {
   .btn-primary {
     border-radius: 20px;
   }
-  .supp-left{
+  .supp-left {
     font-weight: 700;
     font-size: 11px;
 
@@ -5992,7 +5984,7 @@ const checkGoogleLoginSetPwd = () => {
       color: #ffffff;
     }
     .supp-sub {
-      color: #FFFFFF66;
+      color: #ffffff66;
     }
   }
 }
@@ -6059,7 +6051,7 @@ const checkGoogleLoginSetPwd = () => {
     z-index: 99;
     // min-height: 200px;
     .back-top-logo {
-      background: #3237384D;
+      background: #3237384d;
       padding: 12px;
       display: flex;
       justify-content: flex-start;
@@ -6358,7 +6350,7 @@ const checkGoogleLoginSetPwd = () => {
   color: #ffffff;
   // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
   // box-shadow: 0px 2px 0px 0px #1cca6a;
-  background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+  background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
   text-transform: uppercase;
   font-weight: 700;
 }
@@ -6444,8 +6436,8 @@ const checkGoogleLoginSetPwd = () => {
 
 .congrats-container {
   background-image: unset;
-  background-color: #090F1E;
-  border: 1px solid #0666D3;
+  background-color: #090f1e;
+  border: 1px solid #0666d3;
 
   border-radius: 10px !important;
   max-width: 350px;
@@ -6550,14 +6542,14 @@ const checkGoogleLoginSetPwd = () => {
   // left: 50%;
   // transform: translateX(-50%);
   // white-space: nowrap;
-    margin: 20px auto 0;
-    text-align: center;
+  margin: 20px auto 0;
+  text-align: center;
   .congrats-btn {
     border-radius: 10px;
     font-weight: 700;
     font-size: 16px;
     line-height: 24px;
-    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+    background: linear-gradient(90deg, #0287f2 0%, #0664d2 100%);
     color: #ffffff;
   }
 }
