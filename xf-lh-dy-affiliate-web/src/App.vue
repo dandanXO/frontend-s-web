@@ -75,7 +75,7 @@ onMounted(() => {
   ) {
     link.href = '/kr-favicon.ico'
   } else if (
-    window.location.host === '6666vip.cc' ||
+    window.location.hostname === '6666vip.cc' ||
     window.location.pathname.indexOf('lk6') > -1 ||
     window.location.hostname.indexOf('lk6-') > -1
   ) {
