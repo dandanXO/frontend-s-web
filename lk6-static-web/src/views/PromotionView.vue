@@ -782,7 +782,7 @@ export default defineComponent({
                 font-size: 30.02px;
                 line-height: 100%;
                 letter-spacing: 0px;
-                text-align: center;
+                text-align: left;
                 color: #7a80a1;
               }
               .front-btn {

@@ -11,6 +11,7 @@
     "bind": "绑定",
     "confirm": "确认",
     "copy": "复制",
+    "copied": "已复制",
     "followUp": "催单",
     "cancel": "取消",
     "confirmPayment": "确认到账",
@@ -25,7 +26,8 @@
     "readAll": "全部已读",
     "selectMany": "选择多个",
     "proceed": "前往确认",
-    "uploadImage": "上传图片"
+    "uploadImage": "上传图片",
+    "joinUs": "加入我们"
   },
   "message": {
     "loginFirstAction": "请登录后再操作",
@@ -36,6 +38,38 @@
     "submitSuccessfully": "提交成功",
     "deleteCancelled": "删除取消",
     "unbindSuccessfully": "解绑成功"
+  },
+  "agent": {
+    "jointQQ": "合营 QQ",
+    "jointTeams": "合营部 Teams",
+    "sigua": "丝瓜",
+    "commissionStructure": "佣金如何计划",
+    "rechargedMember2ndAndAbove": "代理",
+    "profit": "代盈利理",
+    "activePlayer": "有效活跃会员",
+    "commissionRate": "佣金比例",
+    "bonusCommissionRate": "额外佣金比例",
+    "postBonusCommissionRate": "奖金后佣金比例",
+    "belowSampleCalculation": "以下是佣金计算的示例:",
+    "totalGameWinLoss": "游戏总胜负记录",
+    "platformFee": "平台费",
+    "platformFeeExplained": "平台费=游戏总输赢",
+    "bonuses": "红利",
+    "feesCanViewInDetails": "返水，红利，存提手续费后台可见明细",
+    "netProfit": "净利润",
+    "totalCommission": "代理佣金",
+    "commissionTermsAndConditions": "佣金条款与条件",
+    "commissionTermsAndConditions01": "佣金支付时间表",
+    "commissionTermsAndConditions0101": "佣金将在每月的5日至10日期间自动记入您的代理账户",
+    "commissionTermsAndConditions0102": "佣金可立即提取，无需任何投注要求",
+    "commissionTermsAndConditions02": "活跃会员要求",
+    "commissionTermsAndConditions0201": "每月至少需要五 (5) 名活跃会员才能符合佣金资格",
+    "commissionTermsAndConditions0202": "“活跃玩家”指的是当月最低存款金额达到200的会员",
+    "commissionTermsAndConditions03": "推广要求",
+    "commissionTermsAndConditions0301": "代理每月至少需要招募三 (3) 名新的活跃会员",
+    "commissionTermsAndConditions0302": "未能达到此配额可能会导致佣金减少或被扣除",
+    "commissionTermsAndConditions0303": "如果代理连续三个月未能招募10名以上新的活跃会员，账号将被暂停",
+    "commissionTermsAndConditions0304": "重新激活需要联系客户支持"
   },
   "form": {
     "remark": "Remark",
@@ -269,7 +303,8 @@
     "backToTop": "返回顶部",
     "officialSupport": "官网客服",
     "dedicatedSupport": "专属客服",
-    "announcementList": "公告列表"
+    "announcementList": "公告列表",
+    "affiliate": "合营"
   },
   "footer": {
     "paymentMethods": "支付方式",
