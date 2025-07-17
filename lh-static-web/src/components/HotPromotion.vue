@@ -320,7 +320,8 @@ export default defineComponent({
     EsportWorldCup2025,
     FifaCwcRedPacket,
     FissureJulyFinal2025,
-    RapidDrop2025
+    RapidDrop2025,
+    PPDianZiTianTianSong
   },
   props: {
     list: {
