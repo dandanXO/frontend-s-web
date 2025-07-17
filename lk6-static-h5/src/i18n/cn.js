@@ -90,7 +90,8 @@ export default {
     verify: "验证",
     download: "下载",
     downloadNow: "立即下载",
-    all: "全部"
+    all: "全部",
+    joinUs: "加入我们"
   },
   deposit: {
     paymentWay: "支付方式",
@@ -927,9 +928,9 @@ export default {
     commissionStructureExample: "以下为佣金占比示例",
     commissionCalculation: "佣金计算",
     commissionCalculationExample: "以下为佣金计算示例",
-    commissionTerm: "Commission Terms & Conditions",
+    commissionTerm: "结算规则",
     contact: {
-      qq: "Lucky6 QQ",
+      qq: "幸运6 QQ",
       telegram: "Telegram",
       skype: "Skype",
       sigua: "Sigua",
@@ -937,50 +938,40 @@ export default {
       email: "Email"
     },
     agentLevel: {
-      brown: "Brown",
-      silver: "Silver",
-      gold: "Gold",
-      diamond: "Diamond",
-      crown: "Crown"
+      brown: "铜牌",
+      silver: "银牌",
+      gold: "金牌",
+      diamond: "钻石",
+      crown: "皇冠"
     },
     table: {
       commissionStructure: {
-        agent: "Agent",
-        profit: "Profit",
-        activeValidMembers: "Active Valid Members",
-        commissionRate: "Commission Rate"
+        agent: "代理",
+        profit: "盈利",
+        activeValidMembers: "有效活跃会员",
+        commissionRate: "佣金比例"
       },
       commissionCalculation: {
-        winLose: "Total Game Win/Loss",
-        platformFee: "Platform Fee",
-        platformFeeFormula: "Platform Fee = Total Game Win/Loss × {rate}",
-        bonus: "Bonuses",
-        bonusFormula: "Rebates, bonuses, deposit/withdrawal fees can be viewed in the details",
-        netProfit: "= Net Profit",
-        commissionRate: "× Commission Rate",
-        totalCommission: "= Total Commission"
+        winLose: "平台输赢",
+        platformFee: "- 平台费",
+        platformFeeFormula: "平台费=游戏总输赢 × {rate}",
+        bonus: "- 红利",
+        bonusFormula: "返水，红利，存提手续费后台可见明细",
+        netProfit: "= 净利润",
+        commissionRate: "× 佣金比例",
+        totalCommission: "= 总佣金"
       }
     },
     term: {
       payoutSchedule: {
-        title: "Commission Payout Schedule:",
-        autoPayout:
-          "Commissions are automatically credited to your agent account between the 5th and 10th of each month.",
-        noWagerRequirement: "No wagering requirements apply—commissions can be withdrawn immediately."
+        title: "佣金派发时间：每月5号至10号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款"
       },
       activeMemberRequirement: {
-        title: "Active Member Requirement:",
-        minimumActiveMembers: "A minimum of five (5) active members per month is required for commission eligibility.",
-        activeMemberDefinition:
-          'An "active player" is defined as a member with a minimum deposit of ≥200 within the month.'
+        title: "每月至少有五个有效活跃会员才能结算佣金，当月存款≥200为一个活跃玩家。"
       },
       promotionRequirement: {
-        title: "Promotion Requirements:",
-        minimumActiveMembers: "Agents must recruit at least three (3) new active members per month.",
-        failureToMeet: "Failure to meet this quota may result in reduced or withheld commissions.",
-        suspensionCondition:
-          "If an agent fails to recruit 10+ new active members over three consecutive months, the account will be suspended.",
-        reactivationCondition: "Reactivation requires contacting customer support."
+        title:
+          "代理推广每月至少需要新注册活跃会员达到3名或以上，如无法达到将视为零推广兴發平台，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。"
       }
     }
   },
