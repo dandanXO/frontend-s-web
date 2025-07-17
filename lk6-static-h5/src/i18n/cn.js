@@ -39,6 +39,9 @@ export default {
       },
       claimSuccessfully: {
         message: "成功领取"
+      },
+      promoEnded: {
+        message: "活动已结束"
       }
     },
     gameType: {

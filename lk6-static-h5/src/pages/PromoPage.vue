@@ -277,6 +277,7 @@ import RedirectButton from "src/components/RedirectButton.vue";
 import { i18nStore } from "src/router/language";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "PromoView",
@@ -327,8 +328,9 @@ export default defineComponent({
     const router = useRouter();
     const $q = useQuasar();
     const ui = useUI();
+    const notify = useNotify();
     const isDisplayLogin = ref(false);
-
+    const isPromoFound = ref(false)
 
 
 
@@ -354,6 +356,7 @@ export default defineComponent({
     };
     const isSpecialPromo = ref(false);
     const showPromoDetails = (promo) => {
+      isPromoFound.value = true;
       if (promo.redirectUrl === 'dy2-christmas-gachapon') {
         isSpecialPromo.value = true;
       } else {
@@ -438,6 +441,7 @@ export default defineComponent({
 
       const platformApiUrl = "/opt-session/promo/page";
       isFetchingPromo.value = window.location.pathname === "/promotion";
+      isPromoFound.value = false;
 
       api
         .get(platformApiUrl, {
@@ -456,6 +460,13 @@ export default defineComponent({
                 showPromoDetails(element);
               }
             });
+            if(route.query.name && !isPromoFound.value) {
+              notify({
+                type:'error',
+                message: t('common.notification.promoEnded.message')
+              })
+              clearNameQuery()
+            }
             if (promoTypes.value.length > 0) {
               switchPromoType(promoState.active);
             }
@@ -467,6 +478,13 @@ export default defineComponent({
           isFetchingPromo.value = false;
         });
     };
+
+    const clearNameQuery = () => {
+      const newQuery = { ...route.query };
+      delete newQuery.name;
+
+      router.replace({ path: route.path, query: newQuery });
+    }
 
     // extension
     const currentPath = ref(route.path);
