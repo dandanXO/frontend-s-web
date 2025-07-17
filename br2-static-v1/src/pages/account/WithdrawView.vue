@@ -396,7 +396,10 @@ const loadCards = () => {
             message: t("notify.addBankCardFirst"),
             icon: "report_problem"
           });
-          // router.push("/account/bank");
+
+          if (personalState.memberInfo.taxId !== null && personalState.memberInfo.realName !== null) {
+            router.push("/account/bank");
+          }
         }
       }
     })
