@@ -424,13 +424,14 @@ $transition_timer: 0.5s;
       justify-content: center;
       font-family: 'PingFang SC';
       font-weight: 600;
-      font-size: 24.84px;
+      font-size: 22px;
       line-height: 100%;
       letter-spacing: 4.35px;
       text-align: center;
       color: #35648F;
       cursor: pointer;
-
+      letter-spacing: 0px;
+      
       &:hover, &.active {
         background: url('../../../assets/home/hotgame/category-item-active-bg.png') center center no-repeat;
         background-size: 100% 100%;

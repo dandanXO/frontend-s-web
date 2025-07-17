@@ -771,7 +771,7 @@ export default defineComponent({
               .front-title {
                 font-family: "PingFang SC";
                 font-weight: 600;
-                font-size: 44.12px;
+                font-size: 35px;
                 line-height: 100%;
                 letter-spacing: 0px;
                 color: #7a80a1;
@@ -779,7 +779,7 @@ export default defineComponent({
               .front-sub {
                 font-family: "PingFang SC";
                 font-weight: 600;
-                font-size: 30.02px;
+                font-size: 22px;
                 line-height: 100%;
                 letter-spacing: 0px;
                 text-align: left;
