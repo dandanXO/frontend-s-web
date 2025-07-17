@@ -135,12 +135,10 @@ onMounted(() => {
       window.location.href.includes('br2-')
     ) {
       window.location.pathname = '/br2/login'
-    } else if (
-      window.location.host.indexOf('lk6') > -1 ||
-      window.location.hostname.indexOf('lk6-') > -1 ||
-      window.location.href.includes('lk6-')
-    ) {
-      window.location.pathname = '/lk6/login'
+    } else if (window.location.hostname === '6666vip.cc') {
+      if (window.location.pathname !== '/lk6/login') {
+        window.location.pathname = '/lk6/login'
+      }
     } else {
       window.location.pathname = '/dy/login'
     }
