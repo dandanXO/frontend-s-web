@@ -284,12 +284,10 @@
           v-if="
             uiControl.dialogType === 'CREATE' || uiControl.dialogType === 'EDIT'
           "
-          :label="t('fields.queryNumber')" prop="queryNumber"
+          :label="t('fields.queryNumber')"
+          prop="queryNumber"
         >
-          <el-input
-            v-model="form.queryNumber"
-            style="width: 350px;"
-          />
+          <el-input v-model="form.queryNumber" style="width: 350px;" />
         </el-form-item>
         <el-form-item
           v-if="
@@ -316,7 +314,9 @@
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="cancel">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+          <el-button type="primary" @click="submit">
+            {{ t('fields.confirm') }}
+          </el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -330,8 +330,16 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column type="selection" :selectable="selectable" width="55" />
-      <el-table-column :label="t('fields.site')" :formatter="toSiteName" width="100" />
-      <el-table-column prop="loginName" :label="t('fields.username')" width="200">
+      <el-table-column
+        :label="t('fields.site')"
+        :formatter="toSiteName"
+        width="100"
+      />
+      <el-table-column
+        prop="loginName"
+        :label="t('fields.username')"
+        width="200"
+      >
         <template #default="scope">
           {{ scope.row.loginName }}
           <el-tag
@@ -343,8 +351,16 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="queryRestriction" :label="t('fields.queryRestriction')" width="150" />
-      <el-table-column prop="queryNumber" :label="t('fields.queryNumber')" width="150" />
+      <el-table-column
+        prop="queryRestriction"
+        :label="t('fields.queryRestriction')"
+        width="150"
+      />
+      <el-table-column
+        prop="queryNumber"
+        :label="t('fields.queryNumber')"
+        width="150"
+      />
       <el-table-column prop="status" :label="t('fields.state')" width="100">
         <template #default="scope">
           <el-switch
@@ -355,13 +371,30 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="lockStatus" :label="t('fields.lockStatus')" width="120">
+      <el-table-column
+        prop="lockStatus"
+        :label="t('fields.lockStatus')"
+        width="120"
+      >
         <template #default="scope">
-          <el-tag v-if="scope.row.attempt === 3 && scope.row.lastAttemptDate === today" type="danger">{{ scope.row.lockStatus = 'LOCKED' }}</el-tag>
-          <el-tag v-else type="success">{{ scope.row.lockStatus = 'NORMAL' }}</el-tag>
+          <el-tag
+            v-if="
+              scope.row.attempt === 3 && scope.row.lastAttemptDate === today
+            "
+            type="danger"
+          >
+            {{ (scope.row.lockStatus = 'LOCKED') }}
+          </el-tag>
+          <el-tag v-else type="success">
+            {{ (scope.row.lockStatus = 'NORMAL') }}
+          </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="vcallName" :label="t('fields.vcallName')" width="200">
+      <el-table-column
+        prop="vcallName"
+        :label="t('fields.vcallName')"
+        width="200"
+      >
         <template #default="scope">
           {{ scope.row.vcallName }}
         </template>
@@ -371,31 +404,74 @@
           {{ getRolesTxt(scope.row.roles) }}
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" :label="t('fields.createTime')" width="200">
+      <el-table-column
+        prop="createTime"
+        :label="t('fields.createTime')"
+        width="200"
+      >
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>
           <span
             v-if="scope.row.createTime !== null"
-            v-formatter="{data: scope.row.createTime, timeZone: scope.row.timeZone, type: 'date'}"
+            v-formatter="{
+              data: scope.row.createTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
           />
         </template>
       </el-table-column>
-      <el-table-column prop="createBy" :label="t('fields.createBy')" width="100" />
-      <el-table-column prop="updateTime" :label="t('fields.updateTime')" width="200">
+      <el-table-column
+        prop="createBy"
+        :label="t('fields.createBy')"
+        width="100"
+      />
+      <el-table-column
+        prop="updateTime"
+        :label="t('fields.updateTime')"
+        width="200"
+      >
         <template #default="scope">
           <span v-if="scope.row.updateTime === null">-</span>
           <span
             v-if="scope.row.updateTime !== null"
-            v-formatter="{data: scope.row.updateTime, timeZone: scope.row.timeZone, type: 'date'}"
+            v-formatter="{
+              data: scope.row.updateTime,
+              timeZone: scope.row.timeZone,
+              type: 'date',
+            }"
           />
         </template>
       </el-table-column>
-      <el-table-column prop="updateBy" :label="t('fields.updateBy')" width="100" />
-      <el-table-column :label="t('fields.operate')" align="center" fixed="right" min-width="500"
-                       v-if="hasPermission(['sys:user:update:password'])||hasPermission(['sys:user:update'])||hasPermission(['sys:user:delete'])"
+      <el-table-column
+        prop="updateBy"
+        :label="t('fields.updateBy')"
+        width="100"
+      />
+      <el-table-column
+        :label="t('fields.operate')"
+        align="center"
+        fixed="right"
+        min-width="500"
+        v-if="
+          hasPermission(['sys:user:update:password']) ||
+            hasPermission(['sys:user:update']) ||
+            hasPermission(['sys:user:delete'])
+        "
       >
         <template #default="scope">
           <div v-if="scope.row.loginName !== LOGIN_USER_NAME">
+            <el-button
+              icon="el-icon-remove"
+              size="mini"
+              type="danger"
+              v-permission="['sys:user:update:google-key']"
+              @click="removeUserKey(scope.row)"
+              v-if="scope.row.googleKey !== null && scope.row.googleKey !== ''"
+            >
+              Google Key
+            </el-button>
+
             <el-button
               icon="el-icon-lock"
               size="mini"
@@ -422,11 +498,12 @@
               v-permission="['sys:user:update']"
               @click="showEdit(scope.row)"
             />
-            <el-button icon="el-icon-remove"
-                       size="mini"
-                       type="danger"
-                       v-permission="['sys:user:delete']"
-                       @click="removeUser(scope.row)"
+            <el-button
+              icon="el-icon-remove"
+              size="mini"
+              type="danger"
+              v-permission="['sys:user:delete']"
+              @click="removeUser(scope.row)"
             />
           </div>
         </template>
@@ -454,7 +531,8 @@ import {
   updateUser,
   updateUserPassword,
   updateUserState,
-  unlockUser
+  unlockUser,
+  removeKey,
 } from '../../../api/user'
 import { getSimpleRoles } from '../../../api/roles'
 import { getNetPhone } from '../../../api/vcall'
@@ -467,9 +545,9 @@ import {
 } from '../../../store/modules/user/action-types'
 import { hasPermission } from '../../../utils/util'
 import moment from 'moment'
-import { useI18n } from "vue-i18n";
+import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
+const { t } = useI18n()
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const LOGIN_USER_NAME = computed(() => store.state.user.name)
@@ -484,7 +562,7 @@ const userTypeList = computed(() => {
     return [TENANT]
   }
 })
-const today = moment(new Date()).format('YYYY-MM-DD');
+const today = moment(new Date()).format('YYYY-MM-DD')
 const siteList = reactive({ list: [] })
 const formSiteList = reactive({ list: [] })
 const netPhone = reactive({ list: [] })
@@ -504,8 +582,8 @@ const uiControl = reactive({
   ],
   queryRestriction: [
     { key: 1, displayName: 'No Limit', value: 'NO_LIMIT' },
-    { key: 2, displayName: 'At Least One', value: 'AT_LEAST_ONE' }
-  ]
+    { key: 2, displayName: 'At Least One', value: 'AT_LEAST_ONE' },
+  ],
 })
 const page = reactive({
   pages: 0,
@@ -518,7 +596,7 @@ const request = reactive({
   enable: null,
   siteId: null,
   role: null,
-  defaultSiteIds: null
+  defaultSiteIds: null,
 })
 const options = ref([])
 
@@ -565,19 +643,25 @@ const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   userType: [required(t('message.validateUserTypeRequired'))],
   queryRestriction: [required(t('message.validateQueryRestrictionRequired'))],
-  queryNumber: [required(t('message.validateQueryNumberRequired')), numericOnly(t('message.validateNumberOnly'))],
+  queryNumber: [
+    required(t('message.validateQueryNumberRequired')),
+    numericOnly(t('message.validateNumberOnly')),
+  ],
   siteIds: [
     {
       required: true,
       validator: (rule, value, callback) => {
-        if (form.userType === 'MANAGER' && (!form.siteIdArray || form.siteIdArray.length === 0)) {
-          callback(new Error(t('message.validateSiteRequired')));
+        if (
+          form.userType === 'MANAGER' &&
+          (!form.siteIdArray || form.siteIdArray.length === 0)
+        ) {
+          callback(new Error(t('message.validateSiteRequired')))
         } else {
-          callback();
+          callback()
         }
       },
       trigger: 'change',
-    }
+    },
   ],
 })
 
@@ -588,7 +672,10 @@ function resetQuery() {
   request.enable = null
   request.siteId = store.state.user.siteId
   request.role = null
-  request.defaultSiteIds = LOGIN_USER_TYPE.value !== TENANT.value ? `0,${store.state.user.sites.map(site => site.id).join(',')}` : store.state.user.sites.map(site => site.id).join(',')
+  request.defaultSiteIds =
+    LOGIN_USER_TYPE.value !== TENANT.value
+      ? `0,${store.state.user.sites.map(site => site.id).join(',')}`
+      : store.state.user.sites.map(site => site.id).join(',')
 }
 
 function handleSelectionChange(val) {
@@ -629,7 +716,7 @@ async function loadUser() {
 async function loadRoles(siteId) {
   if (siteId !== undefined && siteId !== null) {
     siteId = String(siteId)
-    if (form.userType !== "TENANT" && !siteId.includes('0')) {
+    if (form.userType !== 'TENANT' && !siteId.includes('0')) {
       siteId = `0,${siteId}`
     }
   }
@@ -638,7 +725,7 @@ async function loadRoles(siteId) {
   // 拼接 name
   const newRoles = roles.map(role => ({
     ...role,
-    name: `${role.name} ${getSiteName(role.siteId)}`
+    name: `${role.name} ${getSiteName(role.siteId)}`,
   }))
   options.value = newRoles
 }
@@ -663,7 +750,7 @@ function showDialog(type) {
       LOGIN_USER_TYPE.value === TENANT.value ? LOGIN_USER_TYPE.value : null
     form.queryRestriction = null
     form.queryNumber = 10
-    form.vcallId = null;
+    form.vcallId = null
     uiControl.dialogTitle = t('fields.addUser')
     uiControl.userTypeSelect = false
     uiControl.siteSelectVisible = true
@@ -690,7 +777,7 @@ function showEdit(user) {
   if (!user) {
     user = chooseUser[0]
   }
-  nextTick(async() => {
+  nextTick(async () => {
     for (const key in user) {
       if (Object.keys(form).find(k => k === key)) {
         if (key === 'vcallId' && user[key] === 0) {
@@ -700,7 +787,7 @@ function showEdit(user) {
         }
       }
     }
-    form.id = user.id;
+    form.id = user.id
 
     await loadRoles(
       form.siteIdArray && form.siteIdArray !== null
@@ -731,7 +818,7 @@ function resetFields() {
     LOGIN_USER_TYPE.value === TENANT.value ? LOGIN_USER_TYPE.value : null
   form.queryRestriction = null
   form.queryNumber = 10
-  form.vcallId = null;
+  form.vcallId = null
   uiControl.dialogTitle = t('fields.addUser')
   uiControl.userTypeSelect = false
   uiControl.siteSelectVisible = false
@@ -745,10 +832,10 @@ function create() {
   userForm.value.validate(async valid => {
     if (valid) {
       await createUser(form)
-      uiControl.dialogVisible = false;
+      uiControl.dialogVisible = false
       await loadUser()
-      ElMessage({ message: t('message.addSuccess'), type: 'success' });
-      resetFields();
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      resetFields()
       // setTimeout(() => {
       //   window.location.reload()
       // }, 250)
@@ -762,14 +849,17 @@ function create() {
 function edit() {
   userForm.value.validate(async valid => {
     if (valid) {
-      if (form.siteId === 0 && (form.siteIdArray !== null || form.siteIdArray !== 0)) {
+      if (
+        form.siteId === 0 &&
+        (form.siteIdArray !== null || form.siteIdArray !== 0)
+      ) {
         form.siteId = form.siteIdArray[0]
       }
       await updateUser(form)
       uiControl.dialogVisible = false
       await loadUser()
-      ElMessage({ message: t('message.editSuccess'), type: 'success' });
-      resetFields();
+      ElMessage({ message: t('message.editSuccess'), type: 'success' })
+      resetFields()
     }
   })
 }
@@ -779,15 +869,18 @@ function updatePassword() {
     if (valid) {
       await updateUserPassword(form)
       uiControl.dialogVisible = false
-      ElMessage({ message: t('message.updatePasswordSuccess'), type: 'success' })
+      ElMessage({
+        message: t('message.updatePasswordSuccess'),
+        type: 'success',
+      })
     }
   })
 }
 
 async function unlock(id) {
-  await unlockUser(id);
+  await unlockUser(id)
   ElMessage({ message: t('message.unlockUserSuccess'), type: 'success' })
-  await loadUser();
+  await loadUser()
 }
 
 async function changeUserState(id, state) {
@@ -795,14 +888,11 @@ async function changeUserState(id, state) {
 }
 
 async function removeUser(user) {
-  ElMessageBox.confirm(
-    t('message.confirmDelete'),
-    {
-      confirmButtonText: t('fields.confirm'),
-      cancelButtonText: t('fields.cancel'),
-      type: 'warning',
-    }
-  ).then(async () => {
+  ElMessageBox.confirm(t('message.confirmDelete'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
     if (user) {
       await deleteUser([user.id])
     } else {
@@ -813,9 +903,25 @@ async function removeUser(user) {
   })
 }
 
+async function removeUserKey(user) {
+  ElMessageBox.confirm(t('message.confirmDelete'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    if (user) {
+      await removeKey([user.id])
+    } else {
+      await removeKey(chooseUser.map(u => u.id))
+    }
+    await loadUser()
+    ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
+  })
+}
+
 function cancel() {
-  uiControl.dialogVisible = false;
-  resetFields();
+  uiControl.dialogVisible = false
+  resetFields()
 }
 
 function submit() {
@@ -848,15 +954,18 @@ async function loadNetPhone() {
 }
 
 function toSiteName(row, column, cellValue, index) {
-  if (row.siteIds !== null && row.siteIds !== "") {
+  if (row.siteIds !== null && row.siteIds !== '') {
     if (LOGIN_USER_TYPE.value === TENANT.value) {
       return store.state.user.siteName
     } else {
-      const siteIdsArray = row.siteIds.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
+      const siteIdsArray = row.siteIds
+        .split(',')
+        .map(id => parseInt(id.trim()))
+        .filter(id => !isNaN(id))
       const siteNames = siteIdsArray
         .map(siteId => siteList.list.find(site => site.id === siteId)?.siteName)
         .filter(Boolean)
-      return siteNames.join(', ');
+      return siteNames.join(', ')
     }
   } else {
     if (row.siteId) {
@@ -892,7 +1001,7 @@ function getRolesTxt(roleIds) {
 function roleTxt(roleId) {
   for (const r of options.value) {
     if (r.id === roleId) {
-      return r.name;
+      return r.name
     }
   }
 }
