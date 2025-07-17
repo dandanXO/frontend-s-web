@@ -469,7 +469,7 @@
               @click="removeUserKey(scope.row)"
               v-if="scope.row.googleKey !== null && scope.row.googleKey !== ''"
             >
-              Google Key
+              G.Key
             </el-button>
 
             <el-button
