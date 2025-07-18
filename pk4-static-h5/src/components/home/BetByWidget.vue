@@ -90,9 +90,7 @@ const generateBetByInstance = (token) => {
       placeholder: "operator_page",
       onBannerClick: ({ url, customAction }) => {
         exitByClick.value = true;
-        if (betByInstance.value) {
-          betByInstance.value.kill();
-        }
+        killBetByInstance();
         router.push("/gamePlay?gameName=BetBy");
       },
 
@@ -101,6 +99,13 @@ const generateBetByInstance = (token) => {
       }
     }
   });
+};
+
+const killBetByInstance = () => {
+  if (betByInstance.value) {
+    betByInstance.value.kill();
+    betByInstance.value = null;
+  }
 };
 
 onActivated(async () => {
@@ -112,9 +117,7 @@ onActivated(async () => {
 
 onDeactivated(() => {
   if (!exitByClick.value) {
-    if (betByInstance.value) {
-      betByInstance.value.kill();
-    }
+    killBetByInstance();
   } else {
     exitByClick.value = false;
   }
