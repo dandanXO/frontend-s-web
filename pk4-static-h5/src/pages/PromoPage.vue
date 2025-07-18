@@ -449,10 +449,13 @@ export default defineComponent({
       } else {
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({ path: "/vip" });
-        } if (promo.redirectUrl && promo.redirectUrl.includes("page-deposit")) {
+
+        } else if (promo.redirectUrl && promo.redirectUrl.includes("page-deposit")) {
           router.push({ path: "/deposit" });
+
         } else if (promo.redirectUrl && promo.redirectUrl.includes("page-invite")) {
           router.push({ path: "/earn-money" });
+
         } else {
           if (promo.redirectUrl === "pak-redpacketrain") {
             isMoneyRainModal.value = true;
