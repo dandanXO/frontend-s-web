@@ -131,44 +131,40 @@
                 <table>
                   <tbody>
                     <tr>
+                      <th>{{ $t("agent.agent") }}</th>
                       <th>{{ $t("agent.profit") }}</th>
                       <th>{{ $t("agent.activePlayer") }}</th>
                       <th>{{ $t("agent.commissionRate") }}</th>
-                      <th>{{ $t("agent.rechargedMember2ndAndAbove") }}</th>
-                      <th>{{ $t("agent.bonusCommissionRate") }}</th>
-                      <th>{{ $t("agent.postBonusCommissionRate") }}</th>
                     </tr>
                     <tr>
-                      <td>8000+</td>
+                      <td>铜牌</td>
                       <td>＜10W</td>
                       <td>5</td>
                       <td>35%</td>
-                      <td>35%</td>
-                      <td>35%</td>
                     </tr>
                     <tr>
-                      <td>500,001-800,000</td>
+                      <td>银牌</td>
                       <td>10W-30W</td>
                       <td>10</td>
                       <td>40%</td>
-                      <td>40%</td>
-                      <td>40%</td>
                     </tr>
                     <tr>
-                      <td>300,001-500,000</td>
+                      <td>金牌</td>
                       <td>30W-60W</td>
                       <td>25</td>
                       <td>45%</td>
-                      <td>45%</td>
-                      <td>45%</td>
                     </tr>
                     <tr>
-                      <td>80,001-300,000</td>
+                      <td>钻石</td>
                       <td>60W-100W</td>
                       <td>50</td>
                       <td>50%</td>
-                      <td>50%</td>
-                      <td>50%</td>
+                    </tr>
+                    <tr>
+                      <td>皇冠</td>
+                      <td>＞100W</td>
+                      <td>80</td>
+                      <td>55%</td>
                     </tr>
                   </tbody>
                 </table>
@@ -199,42 +195,42 @@
               <div class="affiliate-inner">
                 <table>
                   <tr>
-                    <td class="first-row">
-                      {{ $t("agent.totalGameWinLoss") }}
+                    <td>
+                      {{ $t("agent.platformWinLoss") }}
                     </td>
-                    <td class="first-row">10,000</td>
+                    <td>10,000</td>
                   </tr>
                   <tr>
                     <td class="highlight">{{ $t("agent.platformFee") }}</td>
-                    <td class="highlight">-1500</td>
+                    <td class="highlight">-800</td>
                   </tr>
                   <tr>
-                    <td :colspan="2">{{ $t("agent.platformFeeExplained") }} x 15%</td>
+                    <td :colspan="2">{{ $t("agent.platformFeeExplained") }} x 8%</td>
                   </tr>
                   <tr>
                     <td class="highlight">{{ $t("agent.bonuses") }}</td>
-                    <td class="highlight">-20</td>
+                    <td class="highlight">-200</td>
                   </tr>
                   <tr>
                     <td :colspan="2">{{ $t("agent.feesCanViewInDetails") }}</td>
                   </tr>
                   <tr>
                     <td class="highlight">{{ $t("agent.netProfit") }}</td>
-                    <td class="highlight">8,480</td>
+                    <td class="highlight">9,000</td>
                   </tr>
                   <tr>
                     <td class="highlight">{{ $t("agent.commissionRate") }}</td>
-                    <td class="highlight">*33%</td>
+                    <td class="highlight">x 35%</td>
                   </tr>
                   <tr>
                     <td class="result">{{ $t("agent.totalCommission") }}</td>
-                    <td class="result">2,798.4</td>
+                    <td class="result">3,150</td>
                   </tr>
                 </table>
               </div>
             </div>
             <img
-              width="350px"
+              width="300px"
               style="display: flex; margin: auto"
               :src="require(`../assets/images/affiliate/calc-decor.png`)"
               alt=""
@@ -245,30 +241,16 @@
             <div class="affiliate-sub" style="max-height: 950px; justify-content: flex-start">
               <img :src="require(`../assets/images/affiliate/bonus-rabbit.png`)" alt="" class="bonus-rabbit" />
               <div class="affiliate-inner" style="max-height: 850px; margin-top: 69px">
-                <div style="font-size: 20px">{{ $t("agent.commissionTermsAndConditions") }}</div>
+                <div class="affiliate-subtitle">{{ $t("agent.commissionTermsAndConditions") }}</div>
                 <ol>
                   <li>
                     {{ $t("agent.commissionTermsAndConditions01") }}
-                    <ul>
-                      <li>{{ $t("agent.commissionTermsAndConditions0101") }}</li>
-                      <li>{{ $t("agent.commissionTermsAndConditions0102") }}</li>
-                    </ul>
                   </li>
                   <li>
                     {{ $t("agent.commissionTermsAndConditions02") }}
-                    <ul>
-                      <li>{{ $t("agent.commissionTermsAndConditions0201") }}</li>
-                      <li>{{ $t("agent.commissionTermsAndConditions0202") }}</li>
-                    </ul>
                   </li>
                   <li>
                     {{ $t("agent.commissionTermsAndConditions03") }}
-                    <ul>
-                      <li>{{ $t("agent.commissionTermsAndConditions0301") }}</li>
-                      <li>{{ $t("agent.commissionTermsAndConditions0302") }}</li>
-                      <li>{{ $t("agent.commissionTermsAndConditions0303") }}</li>
-                      <li>{{ $t("agent.commissionTermsAndConditions0304") }}</li>
-                    </ul>
                   </li>
                 </ol>
               </div>
@@ -436,6 +418,7 @@ export default defineComponent({
       flex-direction: column;
       height: 950px;
       justify-content: flex-start;
+      margin-top: -100px;
     }
 
     .buttons {
@@ -619,7 +602,7 @@ export default defineComponent({
         padding-left: 20px;
 
         li {
-          padding: 5px 0;
+          padding: 25px 0;
         }
 
         ul {
