@@ -236,12 +236,7 @@ $node-color: #4873f1;
       }
     }
 
-    // &.node-group {
-    //   color: $group-color;
-    //   &.active{
-    //     border-color: $group-color;
-    //   }
-    // }
+
 
     img {
       // max-width: 50px;
@@ -307,6 +302,8 @@ $node-color: #4873f1;
         }
       }
       .promo {
+        bottom: -18px;
+
         img {
           background-color: transparent;
           box-shadow: none;
@@ -379,7 +376,7 @@ $node-color: #4873f1;
       }
     }
   }
- 
+
   .icons {
     text-align: right;
     display: flex;
@@ -404,8 +401,8 @@ $node-color: #4873f1;
       background-position: top center;
       left: 0;
       right: 0;
-      top: 48%;
-      z-inde: 4;
+      bottom: -28px;
+      z-index: 4;
       img {
         padding: 0;
         border: 0;
