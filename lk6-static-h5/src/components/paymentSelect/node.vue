@@ -366,7 +366,7 @@ $node-color: #4ab6fd;
       position: absolute;
       right: 50%;
       transform: translate(50%, 0);
-      top: -10px;
+      top: -8px;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
