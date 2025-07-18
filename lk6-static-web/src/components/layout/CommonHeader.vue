@@ -437,7 +437,7 @@ export default defineComponent({
         isTest: false
       },
       // { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true, isTest: false },
-      { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true, isTest: false },
+      { code: "App", name: "APP", enName: "App", path: "/app", submenu: false, hasicon: true, isTest: false },
       // { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false },
       { code: "CS", name: 'menu.customerService', enName: t('menu.customerService'), path: "/cs", hasicon: true, isTest: false }
     ]);

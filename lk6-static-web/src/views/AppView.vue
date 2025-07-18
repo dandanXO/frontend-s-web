@@ -1,6 +1,6 @@
 <template>
     <div class="app-download-section">
-        <HomeDownload></HomeDownload>
+        <HomeDownload :hideTitle="true"></HomeDownload>
     </div>
 </template>
 
