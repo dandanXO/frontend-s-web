@@ -1,10 +1,11 @@
 <template>
   <div v-if="!hideComponent" class="livestream-container">
-    <img v-if="isDark"
+    <img
+      v-if="isDark"
       src="@/assets/home/livestream/livestream-title-dark.png"
       style="display: flex; margin: 38px auto -38px; width: 70%"
     />
-    <img 
+    <img
       v-else
       src="@/assets/home/livestream/livestream-title-light.png"
       style="display: flex; margin: 38px auto 50px; width: 100%"
@@ -206,7 +207,10 @@ const getData = () => {
   getLivestreamList()
     .then(async (res) => {
       if (res.code === 0) {
-        const parsedData = res.data.streamList.map(parseLivestreamData);
+        const deduplicatedList = res.data.streamList.filter(
+          (item, index, self) => index === self.findIndex((t) => t.streamId === item.streamId)
+        );
+        const parsedData = deduplicatedList.map(parseLivestreamData);
         parsedData.sort((a, b) => a.sort - b.sort);
         if (parsedData.length) {
           hideComponent.value = false;
