@@ -1,9 +1,12 @@
 <template>
   <div class="download-section">
-    <img v-if="languageVal === 'en'" src="../../../assets/home/download/download-section-title-en.svg" width="1100px"
-      style="display:flex;margin:0 auto;" />
-    <img v-else src="../../../assets/home/download/download-section-title.svg" width="1100px"
-      style="display:flex;margin:0 auto;" />
+    <template v-if="props?.hideTitle"></template>
+    <template v-else>
+      <img v-if="languageVal === 'en'" src="../../../assets/home/download/download-section-title-en.svg" width="1100px"
+        style="display:flex;margin:0 auto;" />
+      <img v-else src="../../../assets/home/download/download-section-title.svg" width="1100px"
+        style="display:flex;margin:0 auto;" />
+    </template>
     <div class="download-container">
       <div class="left-container" data-aos="fade-left">
         <div class="tab-wrapper">
@@ -48,6 +51,7 @@ import { storeToRefs } from 'pinia'
 
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
+const props = defineProps(['hideTitle']);
 
 const activeKey = ref("1");
 const ui = uiStore();
