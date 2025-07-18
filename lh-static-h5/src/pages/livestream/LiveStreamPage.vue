@@ -72,7 +72,10 @@ const getLiveUrlList = () => {
     .post(`/opt-session/live/list`)
     .then((res) => {
       if (res.code === 0) {
-        liveStreamList.value.push(...res.data.streamList);
+        const deduplicatedStreams = res.data.streamList.filter(
+          (stream, index, self) => index === self.findIndex((s) => s.streamId === stream.streamId)
+        );
+        liveStreamList.value.push(...deduplicatedStreams);
         maxPage.value = res.data.pages;
         currentPage.value++;
       }
