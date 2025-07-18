@@ -1,11 +1,12 @@
 <template>
   <div class="navbar">
     <div class="logo-container">
-      <img class="logo" src="../../../assets/images/xf/logo.png" v-if="siteId === '1' || siteId === 1"> <!--XF-->
-      <img class="logo" src="../../../assets/images/dy/logo.png" v-if="siteId === '6' || siteId === 6"> <!--DY-->
-      <img class="logo" src="../../../assets/images/home/logo_w_text.png" v-if="siteId === '7' || siteId === 7"> <!--LH-->
-      <img class="logo" src="../../../assets/images/ind/logo.png" v-if="siteId === '5' || siteId === 5"> <!--LH-->
-      <img class="logo" src="../../../assets/images/br2/br2-logo-square.png" v-if="siteId === '28' || siteId === 28"> <!--BR2-->
+      <img class="logo" src="../../../assets/images/xf/logo.png" v-if="siteId === siteEnum.XF1 || siteId === Number(siteEnum.XF1)"> <!--XF-->
+      <img class="logo" src="../../../assets/images/dy/logo.png" v-if="siteId === siteEnum.DY2 || siteId === Number(siteEnum.DY2)"> <!--DY-->
+      <img class="logo" src="../../../assets/images/home/logo_w_text.png" v-if="siteId === siteEnum.LH1 || siteId === Number(siteEnum.LH1)"> <!--LH-->
+      <img class="logo" src="../../../assets/images/ind/logo.png" v-if="siteId === siteEnum.IND || siteId === Number(siteEnum.IND)"> <!--LH-->
+      <img class="logo" src="../../../assets/images/br2/br2-logo-square.png" v-if="siteId === siteEnum.BR2 || siteId === Number(siteEnum.BR2)"> <!--BR2-->
+      <img class="logo" src="../../../assets/images/br2/lk6-logo.png" v-if="siteId === siteEnum.LK6 || siteId === Number(siteEnum.LK6)"> <!--BR2-->
     </div>
     <div class="right-menu">
       <el-select class="lang-container right-menu-item" placeholder="" v-model="languageVal" @change="handleLanguage">
@@ -47,6 +48,7 @@
 <script>
 import ForgetPasswordModal from "@/components/forgetpassword-modal/Index.vue";
 
+import { siteEnum } from "@/consts/SiteEnum"
 import { computed, reactive, toRefs, onMounted } from "vue";
 import { useStore } from "@/store";
 import { AppActionTypes } from "@/store/modules/app/action-types";
@@ -143,7 +145,8 @@ export default {
       handleLanguage,
       ...toRefs(state),
       changePassword,
-      siteId
+      siteId,
+      siteEnum
     };
   }
 };
