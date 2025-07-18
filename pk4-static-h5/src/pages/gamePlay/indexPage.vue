@@ -662,19 +662,8 @@ const refreshBalance = () => {
 //   }
 // );
 
-onBeforeRouteLeave((to, from, next) => {
-  // debugger;
-  const btPath = route.query['bt-path'];
-  if (btPath) {
-    sessionStorage.setItem('betby-bt-path', btPath);
-  }
-  next(); // 一定要调用 next() 才能继续导航
-});
-
 
 onMounted(()=>{
-  const lastPath = sessionStorage.getItem("betby-bt-path");
-  // dan test
   if(route.query.gameName){
     visible.value = true;
     open(route.query.gameName, route.query.gameName)

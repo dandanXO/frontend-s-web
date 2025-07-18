@@ -192,7 +192,6 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (to.path === '/gamePlay' && !to.query['bt-path']) {
       const savedBtPath = sessionStorage.getItem('betby-bt-path');
-
       if (savedBtPath) {
         next({
           path: to.path,
@@ -200,11 +199,19 @@ export default route(function (/* { store, ssrContext } */) {
             ...to.query,
             'bt-path': savedBtPath
           },
-          replace: true // 可选：不留下多余 history
         });
         return;
       }
     }
+    if (from.path === '/gamePlay' && from.query['bt-path']) {
+      const currentQuery = new URLSearchParams(window.location.search);
+      const btPath = currentQuery.get('bt-path');
+      console.log(btPath)
+      if (btPath) {
+        sessionStorage.setItem('betby-bt-path', btPath);
+      }
+    }
+
 
     if (user.hasToken()) {
       if (to.path === "/" || to.path === "/register" || to.path === "/login" || to.path === "//") {
