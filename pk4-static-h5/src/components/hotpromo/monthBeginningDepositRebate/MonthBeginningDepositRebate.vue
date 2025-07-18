@@ -123,7 +123,7 @@ const claimApi = () => {
       });
     } else {
       $q.notify({
-        message: i18n.global.t("error." + res.code) || "Error",
+        message: res.message || "Error",
         color: "negative",
         position: "top",
         timeout: 2000
@@ -150,6 +150,7 @@ const initApi = () => {
     }
   });
 }
+
 
 onMounted(() => {
   initApi();

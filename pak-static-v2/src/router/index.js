@@ -135,7 +135,7 @@ export default route(function (/* { store, ssrContext } */) {
       next(`/register`);
     }
     if (to.name === "referCode") {
-      sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
+      sessionStorage.setItem("REFERRAL_CODE", to.params.referCode);
       localStorage.removeItem("REG_REFERRAL_CODE");
       user.isReferralReady = true;
       isRedirected = true;

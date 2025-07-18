@@ -24,8 +24,11 @@
             <p v-else>重要公告</p>
           </div>
           <div class="dialog-tab-item" :class="currentTab === 'inbox' ? 'active' : ''" @click="currentTab = 'inbox'">
-            <img v-if="currentTab === 'inbox'" src="../../assets/home/announcement/tab-inbox-active.png" alt="" />
-            <p v-else>站內信</p>
+            <template v-if="currentTab === 'inbox'">
+              <img v-if="languageVal === 'en'" src="../../assets/home/announcement/tab-inbox-active-en.png" alt="" />
+              <img v-else src="../../assets/home/announcement/tab-inbox-active.png" alt="" />
+            </template>
+            <p v-else>{{ $t('menu.inbox') }}</p>
           </div>
         </div>
         <div class="dialog-content">
@@ -39,15 +42,13 @@
       <div class="dialog-action">
         <div class="dialog-action-row today-not-remind">
           <div class="dialog-action-item">
-            <el-checkbox v-model="checked" style="color: white" text-color="white">今天不再提醒</el-checkbox>
+            <el-checkbox v-model="checked" style="color: white" text-color="white">{{ $t('form.doNotRemindAgainToday') }}</el-checkbox>
           </div>
         </div>
 
         <div class="dialog-action-row">
-          <div class="dialog-action-item close-icon" @click="visible = false">
-            <el-icon size="32px">
-              <img src="../../assets/home/close-circle-fill.svg" />
-            </el-icon>
+          <div class="dialog-action-item" @click="visible = false">
+            <img src="../../assets/home/close-circle-fill.svg" width="32px" height="32px" />
           </div>
         </div>
       </div>
@@ -63,7 +64,11 @@ import { popupMailBox } from "@/api/personal/mailbox";
 import { userStore } from "@/store";
 import { useLocalStorage } from "@vueuse/core";
 import moment from "moment";
+import { storeToRefs } from 'pinia'
+import { i18nStore } from '@/store/language'
 
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 const store = userStore();
 const lastAnnouncementDateStr = useLocalStorage("LH_LAST_ANNOUNCEMENT_DATE", null);
 
@@ -222,7 +227,6 @@ watch(checked, (val) => {
       border-radius: 50%;
       background: #ffffff99;
       border: 1px solid #ffffffb2;
-      fill: black;
     }
   }
 }

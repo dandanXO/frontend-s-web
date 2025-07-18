@@ -134,6 +134,8 @@ export default {
     week: '周内',
     month: '月内',
     balanceThresholdMultiplier: '余额需小于存款金额倍数',
+    balanceCompareTodayMultiplier: '余额需小于今日存款金额倍数',
+    registerDay: '注册时间 - 提款时间 （天数）'
   },
   outboxStatus: {
     0: '未回复',
@@ -2345,6 +2347,7 @@ export default {
     scoringShots: '任意球员拿到 13 个篮板',
     foulOut: '任意球员判罚离场',
     gender: '性别',
+    taxId: '税号',
     Male: '男性',
     Female: '女性',
     startHour: '开始小时',
@@ -2719,6 +2722,7 @@ export default {
     retentionDay30: '31日',
     depositRetention: '存款留存',
     regLoginRetention: '注册回头',
+    combinePlatform: '合并线路',
   },
   message: {
     adsStatusOpen: '开',
@@ -3437,7 +3441,8 @@ export default {
     'Bank Card': '银行卡',
     'Payment Type': '支付类型',
     'Payment Display List': '支付平台显示',
-    'Platform Game Report': '场馆游戏报表',
+    'Platform Game Report': '场馆报表',
+    'Game Report': '游戏报表',
     Payment: '支付',
     Deposit: '存款',
     Withdraw: '提款',

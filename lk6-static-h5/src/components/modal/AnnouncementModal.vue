@@ -12,9 +12,9 @@
             >
               <div v-if="currentTab === 'announcement'">
                 <img class="bg-img" src="../../assets/images/home/announcement/tab-active-background-2.png" alt="" />
-                <p class="text">重要公告</p>
+                <p class="text">{{ $t("announcement.title.announcement") }}</p>
               </div>
-              <p v-else>重要公告</p>
+              <p v-else>{{ $t("announcement.title.announcement") }}</p>
             </div>
             <div
               class="dialog-tab-item inbox"
@@ -29,10 +29,10 @@
                     alt=""
                     style="width: 24px; height: 24px"
                   />
-                  站内消息
+                  {{ $t("announcement.title.inbox") }}
                 </p>
               </div>
-              <p v-else>站內信</p>
+              <p v-else>{{ $t("announcement.title.inbox") }}</p>
             </div>
           </div>
           <div class="dialog-content">
@@ -61,7 +61,12 @@
                 @click="handleDotClick(index)"
               ></div>
             </div>
-            <q-checkbox v-model="checked" label="今天不再提醒" color="blue" />
+            <q-checkbox
+              v-model="checked"
+              class="dont-remind-today"
+              :label="$t('announcement.dontRemindToday')"
+              color="blue"
+            />
           </div>
         </div>
         <div class="dialog-action">
@@ -283,6 +288,16 @@ watch(checked, (val) => {
       background: #2792fd;
       width: 20px;
       border-radius: 56px;
+    }
+  }
+
+  .dont-remind-today {
+    max-width: 50vw;
+    :deep(.q-checkbox__label) {
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

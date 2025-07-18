@@ -46,8 +46,8 @@
     />
     <SlotsRebatePromo v-if="list.redirectUrl === 'xf1-slots-rebate'" :promo-code="list.promoCode" />
     <SlotsBonusPromo v-if="list.redirectUrl === 'xf1-slots-bet-bonus'" :promo-code="list.promoCode" />
-     <PPDianZiTianTianSong v-else-if="list.redirectUrl === 'xf-PPdianzitiantiansong'" :promo-code="list.promoCode" />
-
+    <PPDianZiTianTianSong v-else-if="list.redirectUrl === 'xf-PPdianzitiantiansong'" :promo-code="list.promoCode" />
+    <RapidDrop2025 v-if="list.redirectUrl === 'xf-rapid-drop-2025'" :promo-code="list.promoCode" />
     <div v-if="list.redirectUrl === 'fucaiiphone'" class="promo-4">
       <div class="tabs">
         <q-card-section>
@@ -158,6 +158,7 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import * as _ from "lodash";
 import moment from "moment";
+import RapidDrop2025 from "./hotpromo/rapid-drop-2025/RapidDrop2025.vue";
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 const TigerCardPromo = defineAsyncComponent(() => import("../components/hotpromo/tigercard/tigerCardPromo.vue"));
 const GoldenEggPromo = defineAsyncComponent(() => import("../components/hotpromo/goldenegg/goldenEggPromo.vue"));
@@ -220,7 +221,8 @@ export default defineComponent({
     DepositAwardPromo,
     SlotsRebatePromo,
     SlotsBonusPromo,
-    PPDianZiTianTianSong
+    PPDianZiTianTianSong,
+    RapidDrop2025
   },
   props: {
     list: {

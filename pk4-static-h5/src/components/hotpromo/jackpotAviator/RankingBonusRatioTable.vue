@@ -1,6 +1,6 @@
 <template>
     <div class="ranking">
-        <div class="item" style="background: #730319;">
+        <div class="item" style="background: #060373;">
             <div>{{ $t('hotPromo.jackpotAviator.rank') }}</div>
             <div>{{ $t('hotPromo.jackpotAviator.daily') }}</div>
         </div>

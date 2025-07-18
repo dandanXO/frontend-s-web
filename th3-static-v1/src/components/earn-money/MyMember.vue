@@ -3,9 +3,13 @@
     <div class="history-summary">
       <div class="frame">
         <div class="content-wrapper">
-          <div class="title">{{ $t("earnMoney.history.totalRebates") }}</div>
-          <div class="amount">
-            {{ store.currency.value }} {{ convertToCommaAmount(totalBetRebateData.totalRebate, false) }}
+          <div class="left">
+            <div>Total Rebates from {{ totalBetRebateData.rebateFrom }}</div>
+            <img src="../../assets/images/earn-money/total-rebate-cash.png" />
+          </div>
+          <div class="right">
+            <div class="amount">₹ {{ convertToCommaAmount(totalBetRebateData.totalRebate, false) }}</div>
+            <div class="title">Total Rebates</div>
           </div>
         </div>
       </div>
@@ -17,72 +21,62 @@
       color="black"
       no-caps
       narrow-indicator
-      indicator-color="white"
+      indicator-color="green"
     >
-      <q-tab name="month" :label="$t('earnMoney.history.month')"></q-tab>
-      <q-tab name="week" :label="$t('earnMoney.history.week')"></q-tab>
+      <q-tab name="month" label="Month"></q-tab>
+      <q-tab name="week" label="Week"></q-tab>
     </q-tabs>
 
     <q-tab-panels v-model="activeKey" class="history-panels">
       <q-tab-panel name="month">
         <div v-for="(e, i) in monthlyDailyBetRebateData" :key="`${e}-${i}`" class="member-info">
           <div class="amount-container">
-            <div class="amount-text">{{ $t("earnMoney.history.date") }}</div>
+            <div class="amount-text">Date</div>
             <div class="amount">
               <span>{{ e.recordTime }}</span>
             </div>
           </div>
 
           <div class="amount-container">
-            <div class="amount-text text-right">{{ $t("earnMoney.history.rebateAmount") }}</div>
+            <div class="amount-text text-right">Rebate Amount</div>
             <div class="amount text-right">
-              <span>{{ store.currency.value }} {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
+              <span>₹ {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
             </div>
           </div>
         </div>
 
-        <NoInfoComponent
-          v-if="isNoInfo"
-          :noInfoTitle="$t('records.noRecord')"
-          shortenContainer="true"
-        ></NoInfoComponent>
+        <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Record" shortenContainer="true"></NoInfoComponent>
       </q-tab-panel>
       <q-tab-panel name="week">
         <div v-for="(e, i) in weeklyDailyBetRebateData" :key="`${e}-${i}`" class="member-info">
           <div class="amount-container">
-            <div class="amount-text">{{ $t("earnMoney.history.date") }}</div>
+            <div class="amount-text">Date</div>
             <div class="amount">
               <span>{{ e.recordTime }}</span>
             </div>
           </div>
 
           <div class="amount-container">
-            <div class="amount-text text-right">{{ $t("earnMoney.history.rebateAmount") }}</div>
+            <div class="amount-text text-right">Rebate Amount</div>
             <div class="amount text-right">
-              <span>{{ store.currency.value }} {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
+              <span>₹ {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
             </div>
           </div>
         </div>
 
-        <NoInfoComponent
-          v-if="isNoInfo"
-          :noInfoTitle="$t('records.noRecord')"
-          shortenContainer="true"
-        ></NoInfoComponent>
+        <NoInfoComponent v-if="isNoInfo" noInfoTitle="No Record" shortenContainer="true"></NoInfoComponent>
       </q-tab-panel>
     </q-tab-panels>
   </div>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { ref, reactive, onMounted } from "vue";
+import { api } from "boot/axios";
+import { convertToCommaAmount } from "src/boot/utils";
+import NoInfoComponent from "../../components/NoInfoComponent.vue";
+import moment from 'moment';
 
-import { api } from "@/boot/axios";
-import { convertToCommaAmount } from "@/boot/utils";
-import NoInfoComponent from "@/components/NoInfoComponent.vue";
-import { userStore } from "@/stores/index";
-
-const store = userStore();
 const activeKey = ref("month");
 
 let totalBetRebateData = reactive({
@@ -126,33 +120,58 @@ onMounted(() => {
 <style scoped lang="scss">
 .history {
   .history-summary {
-    background: url("../../assets/images/earn-money/history-bg.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+    // background: url("../../assets/images/earn-money/history-bg.png");
+    // background-repeat: no-repeat;
+    // background-size: cover;
     border-radius: 0.625rem;
     padding: 15px;
 
     .frame {
       border-radius: 0.625rem;
-      border: 2px solid #fff;
+      // border: 2px solid #fff;
       padding: 2.5px;
 
       .content-wrapper {
         border-radius: 0.625rem;
-        background: rgba(255, 255, 255, 0.7);
+        background: #ffffff0d;
+        border: 1px solid #FFFFFF0D;
         margin: 0 auto;
         text-align: center;
-        padding: 30px 50px 25px 50px;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        .left {
+          text-align: left;
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 21px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 20px;
+        }
+
+        .right {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          align-items: flex-end;
+          gap: 5px;
+        }
+
         .title {
-          color: #000;
-          font-size: 1.75rem;
-          font-weight: 600;
+          color: #FFFFFF66;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 21px;
         }
 
         .amount {
-          color: #f3930a;
-          font-size: 3rem;
+          color: #fff;
+          font-size: 24px;
           font-weight: 700;
+          line-height: 28px;
         }
 
         .date {
@@ -174,33 +193,38 @@ onMounted(() => {
     :deep(.q-tab--active) {
       color: white;
     }
+
+    :deep(.q-tabs__content--align-justify .q-tab) {
+      flex: none;
+    }
   }
 
   .history-panels {
     background: transparent;
 
     .member-info {
-      border-radius: 1.25rem;
+      border-radius: 10px;
       padding: 1.25rem;
       margin: 0 0 1rem 0;
-      background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
+      background: #ffffff0d;
       display: flex;
       justify-content: space-between;
 
       .amount-container {
         .amount-text {
           color: rgba(255, 255, 255, 0.5);
-          font-family: Helvetica;
-          font-size: 0.95rem;
-          font-style: normal;
-          font-weight: 400;
           margin-bottom: 6px;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 16.8px;
         }
 
         .amount {
           color: white;
-          font-size: 1rem;
-          font-weight: 700;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 22.4px;
+
         }
       }
     }

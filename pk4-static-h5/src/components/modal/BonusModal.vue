@@ -39,9 +39,23 @@
             </q-tooltip>
           </q-icon> -->
         </div>
-        <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
+        <q-btn
+          :loading="mission.buttonMode === 'API_CLAIM' ? isClaimLoading : false"
+          class="details"
+          :class="{
+            claimable: mission.response?.eligible === true
+          }"
+          flat
+          @click="handleClick(mission)"
+        >
+          {{ promoCountdown[mission.promoCode] ? promoCountdown[mission.promoCode].btnText : "" }}
+          <span class="countdown-span" v-if="mission.countDown === true && mission.response?.eligible === true">
+            {{ promoCountdown[mission.promoCode] ? promoCountdown[mission.promoCode].countDown : "--:--" }}
+          </span>
+        </q-btn>
+        <!-- <RouterLink :to="{ path: '/promo', query: { name: mission.redirectUrl } }">
           <q-btn flat class="details">{{ $t("btn.details") }}</q-btn>
-        </RouterLink>
+        </RouterLink> -->
       </div>
     </div>
     <div class="bonus-header">
@@ -51,14 +65,97 @@
 </template>
 
 <script setup>
+import { api, eventapi } from "boot/axios";
 import { userStore } from "stores/index";
+import { computed, onMounted, onUnmounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+const $q = useQuasar();
 const emit = defineEmits(["open-new-player"]); 
 const store = userStore();
+const router = useRouter();
 const props = defineProps({
   hasRedemptionBonus: Boolean,
   hasTopDownload: Boolean,
   promoList: Array,
 });
+
+const handleClick = async (mission) => {
+  if (mission.fastAccessRedirectUrl) {
+    router.push(`/${mission.fastAccessRedirectUrl}`);
+  } else if (mission.buttonMode === "API_CLAIM") {
+    await claimApi(mission.claimApiUrl, mission.promoCode);
+  } else {
+    router.push({ path: "/promo", query: { name: mission.redirectUrl } });
+  }
+};
+
+async function claimApi(apiUrl, promoCode) {
+  if (!apiUrl) {
+    console.warn("Missing claimApiUrl");
+    return;
+  }
+
+  try {
+    isClaimLoading.value = true;
+    console.log("Calling claim API:", apiUrl);
+
+    const res = await eventapi.post(`${apiUrl}?promoCode=${promoCode}`);
+
+    if (res.code === 0) {
+      $q.notify({
+        type: "positive",
+        position: "top",
+        message: t("notify.claimedSuccessfully"),
+        icon: "check_circle_outline"
+      });
+    } else {
+    }
+  } catch (err) {
+    console.error("Claim API error:", err);
+  } finally {
+    isClaimLoading.value = false;
+  }
+}
+
+const isClaimLoading = ref(false);
+const countdownTimerList = ref();
+const now = ref(Date.now());
+
+const promoCountdown = ref({});
+function updateCountdown() {
+  const result = {};
+  for (const promo of props.promoList) {
+    result[promo.promoCode] = {};
+
+    if (promo.countDown && promo.response?.eligible === true) {
+      result[promo.promoCode].countDown = getCountdownWithDays(promo.response.promoEndTime);
+    }
+
+    // switch (promo.buttonMode) {
+    //   case "API_CLAIM":
+    //   case "CLAIM_REDIRECT":
+    //     result[promo.promoCode].btnText = t("btn.claim");
+    //     break;
+    //   default:
+    //     result[promo.promoCode].btnText = t("btn.details");
+    // }
+
+    if (promo.response && promo.response.eligible === true) {
+      result[promo.promoCode].btnText = t("btn.claim");
+    } else {
+      result[promo.promoCode].btnText = t("btn.details");
+    }
+
+    if (promo.promoCode === "pak-refer-wheel-spin" && promo.response?.promoEndTime) {
+      result[promo.promoCode].btnText = t("btn.claim");
+    }
+  }
+
+  promoCountdown.value = result;
+}
 
 const imgURL = process.env.IMAGE_CDN + "/promo/";
 const openNewPlayerGuide = () => {
@@ -68,6 +165,38 @@ const openNewPlayerGuide = () => {
   localStorage.removeItem("completedwithdrawguide");
   emit("open-new-player");
 }
+
+function getCountdownWithDays(endTime) {
+  const now = Date.now();
+  let diff = Math.max(0, endTime - now);
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  diff %= 1000 * 60 * 60 * 24;
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  diff %= 1000 * 60 * 60;
+
+  const minutes = Math.floor(diff / (1000 * 60));
+  diff %= 1000 * 60;
+
+  const seconds = Math.floor(diff / 1000);
+
+  const pad = (num) => String(num).padStart(2, "0");
+
+  return `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+}
+
+onUnmounted(() => {
+  clearInterval(countdownTimerList.value);
+});
+
+onMounted(() => {
+  updateCountdown();
+  setInterval(() => {
+    now.value = Date.now();
+    updateCountdown();
+  }, 1000);
+});
 </script>
 
 <style lang="scss" scoped>
@@ -189,6 +318,22 @@ const openNewPlayerGuide = () => {
           background: linear-gradient(90deg, rgba(36, 238, 137, 0.156) 0%, rgba(36, 238, 137, 0.078) 100%);
           box-shadow: 0px 0px 5px 0px #ffffff4a inset;
           color: #ffffff99;
+        }
+
+        &.claimable {
+          &::before {
+            content: "";
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background-color: #f00;
+            position: absolute;
+            top: 0;
+            right: -4px;
+            overflow: visible;
+            left: unset;
+            transform: translate(0%, -50%);
+          }
         }
       }
     }

@@ -16,6 +16,9 @@
               :value="aff.name"
             />
           </el-select>
+
+          <el-checkbox v-model="request.isGroup" size="large" style="margin-left: 30px; margin-right: 20px; transform: scale(1.3); vertical-align: middle;"> <span style="font-size: 12px;">{{ t('fields.combinePlatform') }}</span></el-checkbox>
+
           <el-date-picker
             v-model="request.recordTime"
             format="DD/MM/YYYY"
@@ -403,6 +406,7 @@ const request = reactive({
   loginNameList: null,
   affiliateCode: null,
   affiliateLevel: 'SUPER_AFFILIATE',
+  isGroup: false,
 })
 
 const total = reactive({
@@ -460,6 +464,7 @@ function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
   request.loginNameList = null
   request.affiliateCode = null
+  request.isGroup = false
 }
 
 const page = reactive({
@@ -532,8 +537,50 @@ async function loadRecord() {
   const { data: ret } = await queryDailySummaryList(query)
   const { data: ret1 } = await queryDailySummaryTotalList(query)
   total.data = ret1
+
+  if (request.isGroup) {
+    const groupedRecords = ret.records.reduce((acc, record) => {
+      const affiliateId = record.affiliateId;
+      if (!acc[affiliateId]) {
+        acc[affiliateId] = {
+          ...record,
+          children: [],
+        };
+      } else {
+        const numericFields = [
+          'depositAmount', 'depositCount', 'withdrawAmount', 'withdrawCount',
+          'withdrawMembersCount', 'bonus', 'adjustment', 'bet', 'payout',
+          'profit', 'netProfit', 'rebateAmount', 'ftdAmount', 'ftdCount',
+          'registerCount', 'betMembersCount', 'depositMembersCount',
+          'oldMemberDepositAmount', 'oldMemberDepositCount',
+          'oldMemberDepositMemberCount', 'oldMemberWithdrawAmount',
+          'oldMemberWithdrawCount', 'oldMemberWithdrawMemberCount',
+          'referCount', 'referFtdCount', 'redepositRate',
+        ];
+        numericFields.forEach(field => {
+          acc[affiliateId][field] = (acc[affiliateId][field] || 0) + (record[field] || 0);
+        });
+      }
+      acc[affiliateId].children.push(record);
+      return acc;
+    }, {});
+
+    // 计算日期范围的天数
+    const startDate = new Date(request.recordTime[0]);
+    const endDate = new Date(request.recordTime[1]);
+    const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1; // 包含起止日期
+
+    page.records = Object.values(groupedRecords).map(group => ({
+      ...group,
+      redepositRate: daysDiff > 0 ? (group.redepositRate / daysDiff).toFixed(2) : 0,
+      hasChildren: true,
+    }));
+  } else {
+    page.records = ret.records;
+  }
+
   page.pages = ret.pages
-  page.records = ret.records
+  // page.records = ret.records
   page.total = ret.total
   page.loading = false
 }
@@ -633,4 +680,5 @@ onMounted(async () => {
 .el-result {
   padding: 0;
 }
+
 </style>

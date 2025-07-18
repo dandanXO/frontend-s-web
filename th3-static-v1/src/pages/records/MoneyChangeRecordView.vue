@@ -1,12 +1,12 @@
 <template>
   <div class="table-record">
     <RecordComponent
-      recordType="moneyChange"
-      :loading="visible"
-      :list="tableData"
-      :headers="tableHeaders"
-      @loadnewdata="loadNewData"
-      :isEnded="isEnded"
+        recordType="moneyChange"
+        :loading="visible"
+        :list="tableData"
+        :headers="tableHeaders"
+        @loadnewdata="loadNewData"
+        :isEnded="isEnded"
     />
   </div>
 </template>

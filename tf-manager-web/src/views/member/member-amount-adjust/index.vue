@@ -1572,13 +1572,13 @@ async function showDialog(type) {
   await loadFormSelect()
   uiControl.dialogType = type
   uiControl.dialogVisible = true
-  uiControl.selectedGameTypeRolloverType = null
+  uiControl.selectedGameTypeRolloverType = 'ALL_TYPES'
   gameTypes.value = []
   addRollover()
 }
 async function showImportDialog() {
   uiControl.importDialogVisible = true
-  uiControl.selectedGameTypeRolloverType = null
+  uiControl.selectedGameTypeRolloverType = 'ALL_TYPES'
   gameTypes.value = []
   addRollover()
 }
@@ -1771,13 +1771,13 @@ function importToTable(file) {
             for (let i = 0; i < data.length; i += 50) {
               const sublist = data.slice(i, i + 50)
               const chunk = sublist.map(d => d.loginName).join(',')
-              
+
                 const { data: result} = await findIdByLoginNames(
                   chunk,
                   importForm.siteId
                 )
                 for (let j = i; j < i + sublist.length; j++) {
-                  data[j].memberId = result[data[j].loginName]
+                  data[j].memberId = result[data[j].loginName.toString().toLowerCase()]
                   uiControl.progress = Math.round(
                     ((j + 1) / data.length) * 100
                   )

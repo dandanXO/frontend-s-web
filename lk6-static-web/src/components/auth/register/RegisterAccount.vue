@@ -1,6 +1,6 @@
 <template>
-  <el-form ref="registerRef" :rules="regRules" :model="regForm" :label-width="languageVal === 'en' ? 130 : 80" size="large" style="padding-top:16px;">
-    <div class="light-bg form-field">
+  <el-form ref="registerRef" :rules="regRules" :model="regForm" :label-width="languageVal === 'en' ? 100 : 80" size="large" style="padding-top:16px;">
+    <!-- <div class="light-bg form-field">
       <img class="form-field-icon" src="../../../assets/home/auth/username-icon.png" width="35px" />
       <el-form-item :label="$t('form.realName')" prop="realName">
         <el-input
@@ -20,10 +20,10 @@
           <template #append></template>
         </el-input>
       </el-form-item>
-    </div>
+    </div> -->
 
     <div class="light-bg form-field">
-      <img class="form-field-icon" src="../../../assets/home/auth/username-icon.png" />
+      <img class="form-field-icon" src="../../../assets/home/auth/username-icon.png" width="35px" />
       <el-form-item :label="$t('form.username')" prop="loginName">
         <el-input class="wTip" v-model="regForm.loginName" :placeholder="$t('form.usernameRule01', {min: 4, max: 11})" clearable>
           <template #append></template>
@@ -85,7 +85,7 @@
       </el-form-item>
     </div>
 
-    <div class="light-bg form-field">
+    <!-- <div class="light-bg form-field">
       <img class="form-field-icon" src="../../../assets/home/auth/verification-icon.png" width="35px" />
       <el-form-item :label="$t('form.verificationCode')" prop="captchaCode">
         <div style="display: flex; width: 100%">
@@ -99,7 +99,8 @@
           <img style="width: 90px" :src="verificationImg" @click="getCode" />
         </div>
       </el-form-item>
-    </div>
+    </div> -->
+    <div id="register-captcha-box" />
   </el-form>
   <div>
     <el-button class="blue-bg primary-btn" size="large" @click="submitRegisterForm(registerRef)">{{ $t('btn.register') }}</el-button>
@@ -123,6 +124,7 @@ import { useNotify } from "@/hooks/notify";
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
 import { useI18n } from "vue-i18n";
+import { getDevice } from "@/utils/utils";
 
 const { t } = useI18n();
 const i18nStoreLanguage = i18nStore()
@@ -238,23 +240,23 @@ let validatePass = async (r, v) => {
 };
 
 const regRules = {
-  realName: [
-    {
-      required: true,
-      message: t('form.pleaseEnterField', {field: t('form.realName')}),
-      trigger: "blur"
-    },
-    {
-      min: 2,
-      max: 12,
-      message: t('form.lengthMustBeBetween', {min: 2, max: 12}),
-      trigger: "blur"
-    },
-    {
-      validator: validateRealName,
-      trigger: "change"
-    }
-  ],
+  // realName: [
+  //   {
+  //     required: true,
+  //     message: t('form.pleaseEnterField', {field: t('form.realName')}),
+  //     trigger: "blur"
+  //   },
+  //   {
+  //     min: 2,
+  //     max: 12,
+  //     message: t('form.lengthMustBeBetween', {min: 2, max: 12}),
+  //     trigger: "blur"
+  //   },
+  //   {
+  //     validator: validateRealName,
+  //     trigger: "change"
+  //   }
+  // ],
   loginName: [
     {
       required: true,
@@ -342,19 +344,19 @@ const regRules = {
       trigger: "blur"
     }
   ],
-  captchaCode: [
-    {
-      required: true,
-      message: t('form.pleaseEnterField', {field: t('form.verificationCode')}),
-      trigger: "blur"
-    },
-    {
-      min: 4,
-      max: 4,
-      message: t('form.lengthMustBe', {num: 4}),
-      trigger: "change"
-    }
-  ]
+  // captchaCode: [
+  //   {
+  //     required: true,
+  //     message: t('form.pleaseEnterField', {field: t('form.verificationCode')}),
+  //     trigger: "blur"
+  //   },
+  //   {
+  //     min: 4,
+  //     max: 4,
+  //     message: t('form.lengthMustBe', {num: 4}),
+  //     trigger: "change"
+  //   }
+  // ]
 };
 
 const getCode = () => {
@@ -392,47 +394,109 @@ const verificationImg = ref("");
 
 const submitRegisterForm = async (elForm) => {
   if (!elForm) return;
+  let rstUrl = localStorage.getItem("LK6_WEB_RST_URL") || process.env.VUE_APP_RST_API.split(",")[0];
+  const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
+  const config = {
+      // 生成接口 (必选项,必须配置, 要符合tianai-captcha默认验证码生成接口规范)
+      requestCaptchaDataUrl: `${rstUrl}/member/getCaptcha`,
+      // 验证接口 (必选项,必须配置, 要符合tianai-captcha默认验证码校验接口规范)
+      validCaptchaUrl: `${rstUrl}/member/fbRegister`,
+      // 验证码绑定的div块 (必选项,必须配置)
+      bindEl: "#register-captcha-box",
+      // 验证码类型, 登陆信息
+      loginData: {
+        sid: store.visitorId,
+        type: "SLIDER",
+        way: regDevice,
+        regDevice: regDevice,
+        ...regForm,
+      },
+      translate: (code) => {
+        return t(`error.${code}`);
+      },
+      requestHeaders: {
+        Authorization: process.env.VUE_APP_SITE
+      },
+      // 验证成功回调函数(必选项,必须配置)
+      validSuccess: (res, c, tac) => {
+        // 销毁验证码服务
+        tac.destroyWindow();
+        console.log("验证成功，后端返回的数据为", res);
+
+        const regResult = res.code;
+        if (regResult === 0) {
+          notify({
+            type: "success",
+            message: "注册成功"
+          });
+          store.autoLogin(res.data);
+          emits("close-dialog");
+          router.push("/");
+
+          sessionStorage.removeItem("REFERRAL_CODE");
+          sessionStorage.removeItem("AFFILIATE_CODE");
+
+          if (store.token) {
+            router.push("/");
+          }
+
+          store.regSuccessGuideVisible = true;
+        } else {
+          notify({
+            type: "error",
+            message: res.message
+          });
+        }
+      },
+      // 验证失败的回调函数(可忽略，如果不自定义 validFail 方法时，会使用默认的)
+      validFail: (res, c, tac) => {
+        console.log("验证码验证失败回调...");
+
+        if (res.code === 800) {
+          // 验证失败后重新拉取验证码
+          tac.reloadCaptcha();
+        } else {
+          // 其他错误则关闭验证
+          tac.destroyWindow();
+        }
+      },
+      // 刷新按钮回调事件
+      btnRefreshFun: (el, tac) => {
+        console.log("刷新按钮触发事件...");
+        tac.reloadCaptcha();
+      },
+      // 关闭按钮回调事件
+      btnCloseFun: (el, tac) => {
+        console.log("关闭按钮触发事件...");
+        tac.destroyWindow();
+      }
+    };
+
+    // tianai captcha style
+    const style = {
+      logoUrl: 'https://lk6-web.psnaback.com/static/img/login-logo-left.3f98a6ca.png',
+      i18n: {
+        tips_error: t("tianaiCaptcha.tipsError"),
+        tips_success: t("tianaiCaptcha.tipsSuccess"),
+        slider_title: t("tianaiCaptcha.sliderTitle"),
+        concat_title: t("tianaiCaptcha.concatTitle"),
+        image_click_title: t("tianaiCaptcha.imageClickTitle"),
+        rotate_title: t("tianaiCaptcha.rotateTitle")
+      }
+    };
+
   await elForm
     .validate((valid) => {
       if (valid) {
-        (async () => {
-          const sidParam = store.visitorId;
-          regForm.sid = sidParam;
-          register(regForm)
-            .then((response) => {
-              const regResult = response.code;
-              if (regResult === 0) {
-                notify({
-                  type: "success",
-                  message: "注册成功"
-                });
-                store.autoLogin(response.data);
-                emits("close-dialog");
-                router.push("/");
-
-                sessionStorage.removeItem("REFERRAL_CODE");
-                sessionStorage.removeItem("AFFILIATE_CODE");
-
-                if (store.token) {
-                  router.push("/");
-                }
-
-                store.regSuccessGuideVisible = true;
-              } else {
-                notify({
-                  type: "error",
-                  message: response.message
-                });
-                getCode();
-              }
-            })
-            .catch((err) => {
-              console.log(err.message);
-              getCode();
-            });
-        })();
+        window
+          .initTAC("./tac", config, style)
+          .then((tac) => {
+            tac.init();
+          })
+          .catch((error) => {
+            console.log("initTAC fail:", error);
+          });
       } else {
-        getCode();
       }
     })
     .catch((errr) => {
@@ -441,18 +505,18 @@ const submitRegisterForm = async (elForm) => {
 };
 
 const regForm = reactive({
-  realName: "",
+  // realName: "",
   loginName: "",
   password: "",
   confirmPwd: "",
   telephone: cachedTelephone ?? "",
   email: "",
-  captchaCode: "",
+  // captchaCode: "",
   regHost: location.hostname,
-  codeId: "",
+  // codeId: "",
   codeAffiliate: "",
-  smsCode: "",
-  smsCodeId: ""
+  // smsCode: "",
+  // smsCodeId: ""
 });
 
 const registerRef = ref([]);
@@ -472,7 +536,7 @@ const openLoginDialog = () => {
 };
 
 onMounted(() => {
-  getCode();
+  // getCode();
   getAffiliateCode();
   getReferalCode();
   checkReferSummonCode();
@@ -501,5 +565,20 @@ onMounted(() => {
   .el-form-item.is-error {
     margin-bottom: 15px;
   }
+
+  .el-input__wrapper {
+    background: none !important;
+    box-shadow: none !important;
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+#register-captcha-box {
+  position: fixed;
+  z-index: 1000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

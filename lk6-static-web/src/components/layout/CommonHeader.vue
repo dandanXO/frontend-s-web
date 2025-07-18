@@ -1,6 +1,4 @@
 <template>
-  <NewMemberGuide :openAppMenu="() => (selectedMenu = 'App')" :closeAppMenu="() => (selectedMenu = '')" />
-
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
@@ -15,36 +13,12 @@
                 class="header-menu-item"
                 :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }"
               >
-                <!-- <img
-                  v-if="nav.code === 'sports'"
-                  class="hot-label"
-                  :src="require(`../../assets/images/home/menu/hot-game-label.png`)"
-                /> -->
-                <a
-                  v-if="nav.code === 'minigame'"
-                  @click="openMiniGame"
-                  @mouseup="selectedMenu = ''"
-                  @mouseover="showSubMenu(nav)"
-                >
-                  <h2 class="nav-title cn">{{ nav.name }}</h2>
-                  <h2 class="nav-title">{{ nav.enName }}</h2>
-                </a>
-                <a v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
+                <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase() || route.fullPath === nav.path">
-                    <!-- <img
-                      class="menu-icon"
-                      :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
-                    /> -->
-                    <h2 class="nav-title cn active">{{ nav.name }}</h2>
-                    <h2 class="nav-title active">{{ nav.enName }}</h2>
+                    <h2 class="nav-title cn active">{{ $t(nav.name) }}</h2>
                   </template>
                   <template v-else>
-                    <!-- <img
-                      class="menu-icon"
-                      :src="require(`../../assets/images/home/menu/${nav.code}-icon${isDark ? '-dark' : ''}.png`)"
-                    /> -->
-                    <h2 class="nav-title cn">{{ nav.name }}</h2>
-                    <h2 class="nav-title">{{ nav.enName }}</h2>
+                    <h2 class="nav-title cn">{{ $t(nav.name) }}</h2>
                   </template>
                 </a>
               </div>
@@ -56,8 +30,13 @@
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="nav.hasicon">
               <div class="header-menu-item">
-                <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
+                <a v-if="nav.code === 'CS'" @click="store.openLiveChat">
+                  <span><div class="cs-icon" /></span>
+                  <span>{{ $t('menu.customerService') }}</span>
+                </a>
+                <router-link v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
                   <span>
+                    <div class="affiliate-icon" v-if="nav.code === 'Affiliate'" />
                     <div class="promotion-icon" v-if="nav.code === 'Promotion'" />
                     <!-- <img
                       class="hover-icon promotion"
@@ -82,10 +61,26 @@
                       v-if="nav.code === 'VIP'"
                     /> -->
                   </span>
-                  <span>{{ nav.name }}</span>
+                  <span>{{ $t(nav.name) }}</span>
                 </router-link>
               </div>
             </template>
+          </template>
+
+          <template  v-if="store.token">
+            <div class="header-menu-item">
+              <router-link to="/center/deposit" class="action-btn">
+                <span><img src="../../assets/images/home/deposit-icon.png" width="38px" height="38px"/></span>
+                <span>{{ $t('menu.deposit') }}</span>
+              </router-link>
+            </div>
+
+            <div class="header-menu-item">
+              <router-link to="/center/withdraw" class="action-btn">
+                <span><img src="../../assets/images/home/withdraw-icon.png" width="38px" height="38px" /></span>
+                <span>{{ $t('menu.withdraw') }}</span>
+              </router-link>
+            </div>
           </template>
 
           <div class="header-menu-item">
@@ -98,11 +93,8 @@
           <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
             <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
             <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />
-            <EsportsMenu ref="el" v-if="selectedMenu === 'esports'" @load-modal="openGame" />
             <SportsMenu ref="el" v-if="selectedMenu === 'panda' || selectedMenu === 'crown'" @load-modal="openGame" />
-            <LotteryMenu ref="el" v-if="selectedMenu === 'lottery'" @load-modal="openGame" />
-            <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />
-            <FishingMenu ref="el" v-if="selectedMenu === 'fish'" @load-modal="openGame" />
+            <PokerMenu ref="el" v-if="selectedMenu === 'bacarrat'" @load-modal="openGame" />
             <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
             <AppMenu ref="el" v-if="selectedMenu === 'App'" />
           </div>
@@ -117,27 +109,6 @@
           </router-link> -->
           <a class="standard-button btn-color-aqua" @click="loginDialogVisible = true">{{ $t('btn.login') }}</a>
           <a class="standard-button btn-color-white" @click="registerDialogVisible = true">{{ $t('btn.register') }}</a>
-        </div>
-
-        <div v-if="store.token" class="profile-actions">
-          <router-link to="/center/deposit" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-deposit.png" />
-            </div>
-            存款
-          </router-link>
-          <router-link to="/center/withdraw" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-withdraw.png" />
-            </div>
-            取款
-          </router-link>
-          <!-- <router-link to="/center/transfer" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-transfer.png" />
-            </div>
-            转账
-          </router-link> -->
         </div>
 
         <div class="profile-info" v-if="store.token">
@@ -164,13 +135,13 @@
                 <el-dropdown-item command="personal">
                   <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('personal')" />
-                    <span>个人信息</span>
+                    <span>{{ $t('menu.personalInfo') }}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
                   <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('deposit')" />
-                    <span>充值中心</span>
+                    <span>{{ $t('menu.depositCentre') }}</span>
                   </div>
                 </el-dropdown-item>
                 <!-- <el-dropdown-item command="transfer">
@@ -182,11 +153,11 @@
                 <el-dropdown-item command="promotion">
                   <div class="profile-info-dropdown-content-item">
                     <img :src="loadIcon('promo')" />
-                    <span>优惠领取</span>
+                    <span>{{ $t('menu.promoClaim') }}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
-                  <button class="standard-button profile-info-dropdown-content-item btn-color-white">退出登录</button>
+                  <button class="standard-button profile-info-dropdown-content-item btn-color-white">{{ $t('btn.logout') }}</button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -202,10 +173,10 @@
             </div>
             <a @click="refreshBalance" class="details-balance">
               <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
-                <span class="assets-text">总资产：</span>
+                <span class="assets-text">{{$t('menu.assets')}}：</span>
                 <span class="amount">
-                  <span v-if="isLoadingBalance">加载中...</span>
-                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ floor(store.balance, 2) }}</span>
+                  <span v-if="isLoadingBalance">{{ $t('menu.loading') }}...</span>
+                  <div v-if="!isLoadingBalance" style="display:flex;align-items:center;gap:5px;"><img src="../../assets/images/finance/usdt-icon.svg" width="20px" height="20px" /> {{ floor(store.balance, 2) }}</div>
                 </span>
               </div>
               <el-icon class="reload-btn">
@@ -221,13 +192,14 @@
       class="acc-dialog"
       v-model="loginDialogVisible"
       align-center
-      style="max-width: 1088px"
+      style="width: 900px;height: 500px;"
       @close="store.loginPageVisible = false"
     >
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
             <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else-if="languageVal === 'en'" src="../../assets/home/auth/login-banner-en.jpg" />
             <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
@@ -248,13 +220,14 @@
       class="acc-dialog"
       v-model="registerDialogVisible"
       align-center
-      style="max-width: 1200px"
+      style="width: 900px;height: 500px;"
       @close="store.regPageVisible = false"
     >
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
             <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else-if="languageVal === 'en'" src="../../assets/home/auth/login-banner-en.jpg" />
             <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
@@ -272,7 +245,7 @@
       title="验证码"
       width="50%"
       align-center
-      style="max-width: 500px"
+      style="max-width: 900px;height: 500px;"
       :close-on-click-modal="false"
       @keydown.enter.prevent
     >
@@ -305,6 +278,7 @@
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
             <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else-if="languageVal === 'en'" src="../../assets/home/auth/login-banner-en.jpg" />
             <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
@@ -348,7 +322,6 @@
 </template>
 
 <script lang="js">
-import NewMemberGuide from '@/components/home/NewMemberGuide.vue'
 import "vue3-carousel/dist/carousel.css";
 import { defineComponent, onMounted, ref, reactive, watch, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -358,12 +331,9 @@ import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
 import { useNotify } from "@/hooks/notify";
 import GameMenu from "@/components/menu/GameMenu.vue";
-import EsportsMenu from "@/components/menu/EsportsMenu.vue";
 import SportsMenu from "@/components/menu/SportsMenu.vue";
 import LiveCasinoMenu from "@/components/menu/LiveCasinoMenu.vue";
-import LotteryMenu from "@/components/menu/LotteryMenu.vue";
 import PokerMenu from "@/components/menu/PokerMenu.vue";
-import FishingMenu from "@/components/menu/FishingMenu.vue";
 import PromotionMenu from "@/components/menu/PromotionMenu.vue";
 import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
@@ -384,29 +354,27 @@ import { loadPromoBanner } from "@/api/index/promo";
 import LocaleChanger from '../LocaleChanger.vue';
 import LogoComponent from '../LogoComponent.vue';
 import { i18nStore } from '@/store/language'
+import { useI18n } from "vue-i18n";
 
 
 export default defineComponent({
   name: "CommonHeader",
   components: {
     GameMenu,
-    EsportsMenu,
     SportsMenu,
     LiveCasinoMenu,
-    LotteryMenu,
     PokerMenu,
-    FishingMenu,
     PromotionMenu,
     AppMenu,
     GameModal,
     LoginDialog,
     ForgotPwdDialog,
     RegisterAccount,
-    NewMemberGuide,
     LocaleChanger,
     LogoComponent
   },
   setup() {
+    const { t } = useI18n();
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
     const notify = useNotify();
@@ -438,22 +406,31 @@ export default defineComponent({
     const store = userStore();
 
     const navigations = reactive([
-      { code: "home", name: "首页", enName: "Home", path: "/home" },
+      { code: "home", name: 'menu.home', enName: t('menu.home'), path: "/home" },
       // { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
       // { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true, isTest: false },
-      { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true, isTest: false },
+      { code: "live", name: 'menu.live', enName:t('menu.live'), path: "/live-casino", submenu: true, isTest: false },
       // { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true, isTest: false },
-      { code: "crown", name: "皇冠", enName: "Crown", path: "/sports?plat=CR", submenu: true, isTest: false },
-      { code: "panda", name: "熊猫", enName: "Panda", path: "/sports?plat=PM", submenu: true, isTest: false },
-      { code: "bacarrat", name: "百家乐", enName: "Bacarrat", path: "/bacarrat", submenu: true, isTest: false },
+      { code: "crown", name: 'menu.crown', enName: t('menu.crown'), path: "/crown?plat=CR", submenu: true, isTest: false },
+      { code: "panda", name: 'menu.panda', enName: t('menu.panda'), path: "/panda?plat=PM", submenu: true, isTest: false },
+      { code: "bacarrat", name: 'menu.bacarrat', enName: t('menu.bacarrat'), path: "/bacarrat", submenu: true, isTest: false },
       // { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true, isTest: false },
       // { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: false },
       // { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
       // { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
       {
+        code: "Affiliate",
+        name: 'menu.affiliate',
+        enName: t('menu.affiliate'),
+        path: "/affiliate",
+        submenu: false,
+        hasicon: true,
+        isTest: false
+      },
+      {
         code: "Promotion",
-        name: "优惠",
-        enName: "Promotion",
+        name: 'menu.promotion',
+        enName: t('menu.promotion'),
         path: "/promotion",
         submenu: false,
         hasicon: true,
@@ -462,7 +439,7 @@ export default defineComponent({
       // { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true, isTest: false },
       { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true, isTest: false },
       // { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false },
-      { code: "CS", name: "客服", enName: "CS", path: "/cs", hasicon: true, isTest: false }
+      { code: "CS", name: 'menu.customerService', enName: t('menu.customerService'), path: "/cs", hasicon: true, isTest: false }
     ]);
     const { token } = storeToRefs(store);
     const router = useRouter();
@@ -1010,7 +987,7 @@ export default defineComponent({
               if (regResult === 0) {
                 notify({
                   type: "success",
-                  message: "注册成功"
+                  message: t('message.registerSuccessfully')
                 });
                 store.autoLogin(response.data);
                 registerDialogVisible.value = false;
@@ -1549,8 +1526,11 @@ body {
     }
 
     .details-name {
-      color: $font-1;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: #3483FC;
     }
 
     .account-vip-label {
@@ -1574,9 +1554,15 @@ body {
 
       .assets-text {
         white-space: nowrap;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 100%;
+        letter-spacing: 0%;
+
       }
 
       .amount {
+        font-family: 'PingFang SC';
         margin-right: 0.5rem;
         white-space: nowrap;
       }
@@ -1591,11 +1577,15 @@ body {
 
 .profile-info-dropdown-content {
   .profile-info-dropdown-content-item {
-    display: flex;
     align-items: center;
     gap: 10px;
     color: #a8b5c3;
-    margin: auto;
+    display: grid;
+    grid-template-columns: 35px 65px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    margin: 0 auto;
+
 
     img {
       max-width: 33px;
@@ -1603,6 +1593,7 @@ body {
 
     &.standard-button {
       color: #468cff;
+      display: flex;
     }
   }
 }
@@ -1631,19 +1622,8 @@ body {
       }
     }
 
-    .icon-rounded {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      box-shadow: 0px 2px 5px 0px #bbdcff inset;
-    }
-
     img {
       display: block;
-      width: 16px;
     }
   }
 
@@ -1804,7 +1784,7 @@ body {
           padding-left: 5px;
           padding-right: 5px;
 
-          a > span > div {
+          a > span > div, a > span > img {
             &:hover {
               animation: rumble 0.3s ease-in-out;
             }
@@ -1863,7 +1843,6 @@ body {
         .sub-menu {
           transition: $page-trans;
           background: linear-gradient(180deg, #F8FCFF 0%, #DFECFF 100%);
-          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 1px 0px 0px #a7c2dd;
           overflow: hidden;
           height: 0px;
           position: absolute;
@@ -2040,86 +2019,6 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
-
-    // &.slot-ag {
-    //   background-image: url("../../../assets/game/header_slot_ag.png");
-    // }
-
-    // &.slot-pt {
-    //   background-image: url("../../../assets/game/header_slot_pt.png");
-    // }
-
-    // &.slot-sw {
-    //   background-image: url("../../../assets/game/header_slot_sw.png");
-    // }
-
-    // &.slot-bbin {
-    //   background-image: url("../../../assets/game/header_slot_bbin.png");
-    // }
-
-    // &.slot-pg {
-    //   background-image: url("../../../assets/game/header_slot_pg.png");
-    // }
-
-    // &.slot-mg {
-    //   background-image: url("../../../assets/game/header_slot_mg.png");
-    // }
-
-    // &.slot-cq {
-    //   background-image: url("../../../assets/game/header_slot_cq.png");
-    // }
-
-    // &.fish-ag {
-    //   background-image: url("../../../assets/fishing/ag_fish_king.png");
-    // }
-
-    // &.fish-sg {
-    //   background-image: url("../../../assets/fishing/sg_fish_king.png");
-    // }
-
-    // &.fish-at {
-    //   background-image: url("../../../assets/fishing/at_fish_king.png");
-    // }
-
-    // &.fish-gps {
-    //   background-image: url("../../../assets/fishing/gps_fish_king.png");
-    // }
-
-    // &.live-ag {
-    //   background-image: url("../../../assets/live/live_ag.png");
-    // }
-
-    // &.live-allbet {
-    //   background-image: url("../../../assets/live/live_allbet.png");
-    // }
-
-    // &.live-bbin {
-    //   background-image: url("../../../assets/live/live_bbin.png");
-    // }
-
-    // &.live-pm {
-    //   background-image: url("../../../assets/live/live_pm.png");
-    // }
-
-    // &.live-bg {
-    //   background-image: url("../../../assets/live/live_bg.png");
-    // }
-
-    // &.live-sexy {
-    //   background-image: url("../../../assets/live/live_sexy.png");
-    // }
-
-    // &.lottery-tcg {
-    //   background-image: url("../../../assets/lottery/lottery_tcg.webp");
-    // }
-
-    // &.lottery-bbin {
-    //   background-image: url("../../../assets/lottery/lottery_bbin.webp");
-    // }
-
-    // &.lottery-sgwin {
-    //   background-image: url("../../../assets/lottery/lottery_sgwin.webp");
-    // }
   }
 
   &.games,
@@ -2404,18 +2303,18 @@ body {
         display: flex;
         border-radius: 16px;
         overflow: hidden;
+        height: 500px;
       }
 
       .acc-dialog-left {
-        width: calc(100% - 450px);
+        width: 400px;
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
         overflow: hidden;
 
         .acc-dialog-img {
-          max-width: 963px;
-          max-height: 896px;
+          width: 100%;
           height: 100%;
 
           img {
@@ -2427,7 +2326,7 @@ body {
       }
 
       .acc-dialog-right {
-        width: 550px;
+        width: 500px;
         padding: 24px 24px 24px 24px;
         background-color: #F7F9FC;
 
@@ -2462,22 +2361,6 @@ body {
     }
   }
 }
-
-// .register-dialog {
-//   .el-dialog__header .el-dialog__headerbtn {
-//     .el-dialog {
-//       &__close {
-//         color: #000000;
-//         opacity: 0.5;
-
-//         &:hover {
-//           opacity: 1;
-//           color: #000000;
-//         }
-//       }
-//     }
-//   }
-// }
 
 .mailbox-notify {
   position: relative;
@@ -2524,6 +2407,15 @@ body {
 .header-menu-item {
   min-width: 40px;
   position: relative;
+
+  .affiliate-icon {
+    background: url('../../assets/images/home/affiliate-icon.png');
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 38px;
+    height: 38px;
+  }
 
   .promotion-icon {
     background: url('../../assets/images/home/header-icon-set.png');

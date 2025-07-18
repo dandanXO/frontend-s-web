@@ -16,7 +16,9 @@
           ref="unbindBankCardNoRef"
           v-model="unbindBankCardNo"
           :label="unbindCardLabel()"
-          :rules="[(val) => (val && val.length > 0) || '请输入' + unbindCardLabel()]"
+          :rules="[
+            (val) => (val && val.length > 0) || $t('bank.form.bankCard.error.required', { label: unbindCardLabel() })
+          ]"
         />
       </q-form>
     </template>
@@ -25,7 +27,7 @@
   <q-page class="bank-detail-container">
     <div class="bank-detail-wrapper">
       <div class="bank-bind-item q-my-sm">
-        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">+添加虚拟币账户</div>
+        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">{{ $t("bank.addCrypto") }}</div>
       </div>
 
       <!-- <div v-if="bankCardList[CRYPTO].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(CRYPTO)">
@@ -52,9 +54,9 @@
                 @click="copy(bankCard.cardNumber)"
               /> -->
             </div>
-            <div v-if="$q.dark.isActive" class="bank-type">虚拟账户</div>
+            <!-- <div v-if="$q.dark.isActive" class="bank-type">虚拟账户</div> -->
           </div>
-          <q-btn class="unbind-btn" flat @click="onUnbindClick(bankCard)">解绑</q-btn>
+          <q-btn class="unbind-btn" flat @click="onUnbindClick(bankCard)">{{ $t("btn.unbind") }}</q-btn>
         </div>
       </template>
     </div>
@@ -69,6 +71,7 @@ import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "src/hooks/notify";
 import CommonModal from "src/components/CommonModal.vue";
+import { useI18n } from "vue-i18n";
 
 // constants (the string synced w/ BE API bankType)
 const BANK_CARD = "BANK";
@@ -76,6 +79,7 @@ const CRYPTO = "CRYPTO";
 const EWALLET = "EWALLET";
 const ALIPAY = "ALIPAY";
 
+const { t } = useI18n();
 const notify = useNotify();
 const $q = useQuasar();
 const router = useRouter();
@@ -120,12 +124,8 @@ const onUnbindClick = (card) => {
 };
 
 const getTitleText = () => {
-  const { bankType, bankCode } = selectedUnbindBankCard.value || {};
-
-  if (isAlipay(bankCode)) return "请输入解绑支付宝号";
-  else if (bankType === BANK_CARD) return "请输入解绑银行卡号";
-  else if (bankType === CRYPTO) return "请输入解绑虚拟币账户";
-  else if (bankType === EWALLET) return "请输入解绑电子钱包";
+  const label = unbindCardLabel();
+  return t("bank.notification.unbindBankCard.title", { label });
 };
 
 const unbindBankCard = () => {
@@ -136,7 +136,7 @@ const unbindBankCard = () => {
     if (response.code === 0) {
       notify({
         type: "success",
-        message: "操作成功"
+        message: t("common.notification.success.message")
       });
 
       isUnbindModalOpen.value = false;
@@ -151,10 +151,10 @@ const isAlipay = (bankID) => {
 
 const unbindCardLabel = () => {
   const { bankType, bankCode } = selectedUnbindBankCard.value || {};
-  if (isAlipay(bankCode)) return "支付宝号";
-  else if (bankType === BANK_CARD) return "银行卡号";
-  else if (bankType === CRYPTO) return "钱包地址";
-  else if (bankType === EWALLET) return "电子钱包";
+  if (isAlipay(bankCode)) return t("bank.bankType.alipay");
+  else if (bankType === BANK_CARD) return t("bank.bankType.bankCard");
+  else if (bankType === CRYPTO) return t("bank.bankType.crypto");
+  else if (bankType === EWALLET) return t("bank.bankType.eWallet");
 };
 
 let bankCardList = reactive({ BANK: [], CRYPTO: [], EWALLET: [], ALIPAY: [] });

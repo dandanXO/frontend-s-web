@@ -8,11 +8,19 @@
         class="q-pb-xs"
         hide-bottom-space
         :type="isPwd ? 'password' : 'text'"
-        placeholder="请输入旧密码"
+        :placeholder="$t('changePassword.form.oldPassword.placeholder')"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入旧密码']"
+        :rules="[
+          (val) => (val && val.length > 0) || $t('changePassword.form.oldPassword.error.required'),
+          (val) =>
+            (val && val.length >= 4 && val.length <= 11) ||
+            $t('changePassword.form.oldPassword.error.length', { min: 6, max: 12 })
+        ]"
       >
         <template v-slot:append>
+          <q-btn v-if="updatePwdInfo.oldPassword" flat round @click="clearPwd">
+            <img src="../../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+          </q-btn>
           <!--          <q-icon-->
           <!--              -->
           <!--              :name="isPwd ? 'visibility_off' : 'visibility'"-->
@@ -22,15 +30,15 @@
           <img
             v-if="!isPwd"
             @click="isPwd = !isPwd"
-            src="../../assets/login/eye-line.png"
-            style="margin-right: 3px"
+            src="../../assets/login/eye-line.svg"
+            style="margin-right: 12px"
             width="20"
           />
           <img
             v-if="isPwd"
             @click="isPwd = !isPwd"
-            src="../../assets/login/eye-close-line.png"
-            style="margin-right: 3px"
+            src="../../assets/login/eye-close-line.svg"
+            style="margin-right: 12px"
             width="20"
           />
         </template>
@@ -42,24 +50,32 @@
         class="q-pb-xs"
         hide-bottom-space
         :type="isPwd2 ? 'password' : 'text'"
-        placeholder="请输入新密码"
+        :placeholder="$t('changePassword.form.newPassword.placeholder')"
         lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '请输入新密码']"
+        :rules="[
+          (val) => (val && val.length > 0) || $t('changePassword.form.newPassword.error.required'),
+          (val) =>
+            (val && val.length >= 4 && val.length <= 11) ||
+            $t('changePassword.form.newPassword.error.length', { min: 6, max: 12 })
+        ]"
         label-
       >
         <template v-slot:append>
+          <q-btn v-if="updatePwdInfo.password" flat round @click="clearNewPwd">
+            <img src="../../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+          </q-btn>
           <img
             v-if="!isPwd2"
             @click="isPwd2 = !isPwd2"
-            src="../../assets/login/eye-line.png"
-            style="margin-right: 3px"
+            src="../../assets/login/eye-line.svg"
+            style="margin-right: 12px"
             width="20"
           />
           <img
             v-if="isPwd2"
             @click="isPwd2 = !isPwd2"
-            src="../../assets/login/eye-close-line.png"
-            style="margin-right: 3px"
+            src="../../assets/login/eye-close-line.svg"
+            style="margin-right: 12px"
             width="20"
           />
 
@@ -78,48 +94,56 @@
         class="q-pb-xs"
         hide-bottom-space
         :type="isPwd3 ? 'password' : 'text'"
-        placeholder="请再次输入新密码"
+        :placeholder="$t('changePassword.form.newPasswordConfirm.placeholder')"
         lazy-rules
         :rules="[
-          (val) => (val && val.length > 0) || '请再次输入新密码',
-          (val) => val === updatePwdInfo.password || '确认密码与新密码不符合'
+          (val) => (val && val.length > 0) || $t('changePassword.form.newPasswordConfirm.error.required'),
+          (val) =>
+            (val && val.length >= 4 && val.length <= 11) ||
+            $t('changePassword.form.newPasswordConfirm.error.length', { min: 6, max: 12 }),
+          (val) => val === updatePwdInfo.password || $t('changePassword.form.newPasswordConfirm.error.match')
         ]"
         label-
       >
         <template v-slot:append>
+          <q-btn v-if="updatePwdInfo.confirmNewPwd" flat round @click="clearPwdConfirm">
+            <img src="../../assets/login/input-close-icon.svg" style="margin-right: 3px" width="20" />
+          </q-btn>
           <img
             v-if="!isPwd3"
             @click="isPwd3 = !isPwd3"
-            src="../../assets/login/eye-line.png"
-            style="margin-right: 3px"
+            src="../../assets/login/eye-line.svg"
+            style="margin-right: 12px"
             width="20"
           />
           <img
             v-if="isPwd3"
             @click="isPwd3 = !isPwd3"
-            src="../../assets/login/eye-close-line.png"
-            style="margin-right: 3px"
+            src="../../assets/login/eye-close-line.svg"
+            style="margin-right: 12px"
             width="20"
           />
         </template>
       </q-input>
-      <q-btn type="submit" class="submit-btn" label="修改密码" width="100%" />
+      <q-btn type="submit" class="submit-btn" :label="$t('changePassword.btn')" width="100%" />
     </q-form>
   </div>
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted} from "vue";
+import {defineComponent, reactive, ref, onMounted, onDeactivated} from "vue";
 import moment from "moment";
 import {api} from "boot/axios"
 import {useQuasar} from "quasar"
 import {userStore} from "src/stores"
 import {useRouter} from "vue-router";
+import { useI18n } from "vue-i18n";
 
 
 export default defineComponent({
   name: "PersonalView",
   setup() {
+    const {t} = useI18n();
     // const isCardActive = ref();
     const isPwd = ref(true);
     const isPwd2= ref(true);
@@ -169,7 +193,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: "密码修改成功",
+              message: t('changePassword.notification.changePasswordSuccess.message'),
               icon: "check_circle_outline"
             });
             router.go(-1);
@@ -187,6 +211,31 @@ export default defineComponent({
       }
     };
 
+    const clearPwd = () => {
+      updatePwdInfo.oldPassword = "";
+      oldPasswordRef.value.resetValidation();
+    };
+
+    const clearNewPwd = () => {
+      updatePwdInfo.password = "";
+      passwordRef.value.resetValidation();
+    };
+
+    const clearPwdConfirm = () => {
+      updatePwdInfo.confirmNewPwd = "";
+      confirmPasswordRef.value.resetValidation();
+    };
+
+    onDeactivated(() => {
+      // Reset the form when the component is deactivated
+      updatePwdInfo.oldPassword = "";
+      updatePwdInfo.password = "";
+      updatePwdInfo.confirmNewPwd = "";
+      oldPasswordRef.value.resetValidation();
+      passwordRef.value.resetValidation();
+      confirmPasswordRef.value.resetValidation();
+    });
+
     return {
       personalState,
       updatePwdInfo,
@@ -196,7 +245,10 @@ export default defineComponent({
       confirmPasswordRef,
       isPwd,
       isPwd2,
-      isPwd3
+      isPwd3,
+      clearPwd,
+      clearNewPwd,
+      clearPwdConfirm
     };
   }
 });

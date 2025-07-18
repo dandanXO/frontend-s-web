@@ -67,10 +67,10 @@
               <div
                 class="banner-container"
                 v-if="
-                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
-                  selectedPromo.redirectUrl !== 'new-player-acc-deposit' && 
-                  selectedPromo.redirectUrl !== 'pk4-month-beginning-deposit-rebate' && 
-                  selectedPromo.redirectUrl !== 'pk4-app-login-phone-bonus' && 
+                  selectedPromo.redirectUrl !== 'pk4-jackpot-aviator' &&
+                  selectedPromo.redirectUrl !== 'new-player-acc-deposit' &&
+                  selectedPromo.redirectUrl !== 'pk4-month-beginning-deposit-rebate' &&
+                  selectedPromo.redirectUrl !== 'pk4-app-login-phone-bonus' &&
                   selectedPromo.redirectUrl !== 'pk4-piggy-bank'
                 "
               >
@@ -98,11 +98,11 @@
               <div
                 class="promo-content-inner"
                 v-if="
-                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
+                  selectedPromo.redirectUrl !== 'pk4-jackpot-aviator' &&
                   selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
-                  selectedPromo.redirectUrl !== 'pak-welcome-new-players' && 
-                  selectedPromo.redirectUrl !== 'pk4-month-beginning-deposit-rebate' && 
-                  selectedPromo.redirectUrl !== 'pk4-app-login-phone-bonus' && 
+                  selectedPromo.redirectUrl !== 'pk4-welcome-new-players' &&
+                  selectedPromo.redirectUrl !== 'pk4-month-beginning-deposit-rebate' &&
+                  selectedPromo.redirectUrl !== 'pk4-app-login-phone-bonus' &&
                   selectedPromo.redirectUrl !== 'pk4-piggy-bank'
                 "
                 :style="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border:0; padding: 0;' : ''"
@@ -129,10 +129,10 @@
               <div
                 class="inner"
                 :class="{
-                  isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
+                  isJackpotAviator: selectedPromo.redirectUrl === 'pk4-jackpot-aviator',
                   isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
                   isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards',
-                  isNewPlayerSpinWheel: selectedPromo.redirectUrl === 'pak-welcome-new-players',
+                  isNewPlayerSpinWheel: selectedPromo.redirectUrl === 'pk4-welcome-new-players',
                   isSpinLuckyWheel:
                     selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope',
                   isMonthlyBeginningDepositRebate: selectedPromo.redirectUrl === 'pk4-month-beginning-deposit-rebate',
@@ -170,7 +170,7 @@
                     <div class="top-title">{{ selectedPromo.title }}</div>
                   </div> -->
 
-                  <div v-html="selectedPromo.pageContent"></div>  
+                  <div v-html="selectedPromo.pageContent"></div>
                   <!-- <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
                       <div class="date-txt">Promotion Ends</div>
@@ -448,7 +448,11 @@ export default defineComponent({
         router.push(`/login`);
       } else {
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
-          router.push({ path: "/account/vip" });
+          router.push({ path: "/vip" });
+        } if (promo.redirectUrl && promo.redirectUrl.includes("page-deposit")) {
+          router.push({ path: "/deposit" });
+        } else if (promo.redirectUrl && promo.redirectUrl.includes("page-invite")) {
+          router.push({ path: "/earn-money" });
         } else {
           if (promo.redirectUrl === "pak-redpacketrain") {
             isMoneyRainModal.value = true;
@@ -1133,7 +1137,7 @@ export default defineComponent({
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;
-        .promo-content {  
+        .promo-content {
           &.usual {
             display: block;
             width: 100%;
@@ -1204,7 +1208,7 @@ export default defineComponent({
         }
         &.isJackpotAviator {
           width: 100%;
-          
+
           // margin-top: -20px;
           // padding-top: 20px;
           padding: 0;
@@ -1222,6 +1226,11 @@ export default defineComponent({
             display: none;
           }
         }
+        &.isNewPlayerSpinWheel {
+          margin: 0;
+          width: 100%;
+          padding: 25px;
+        }
         &.isNewPlayerAccDeposit {
           width: 100%;
 
@@ -1235,7 +1244,12 @@ export default defineComponent({
             display: none;
           }
           &.isPiggyBank {
-            padding: 0  10px 30px 20px;
+            img {
+              margin-left: -10px;
+            }
+            ul {
+             padding: 0 20px 30px 40px;
+            }
           }
           &.isGoldenEgg {
             table {
@@ -1307,7 +1321,8 @@ export default defineComponent({
             padding: 5px;
             text-align: center;
 
-            background: linear-gradient(180deg, #21ef89 0%, #33562d 100%);
+            // background: linear-gradient(180deg, #21ef89 0%, #33562d 100%);
+            background: linear-gradient(180deg, #214def, #3978fe);
 
             &:first-child {
               border-top-left-radius: 8px;
@@ -1321,7 +1336,7 @@ export default defineComponent({
           td {
             padding: 5px;
             text-align: center;
-            background-color: #1c241b;
+            background-color: #5278cd1a;
             border: 1px solid #2e3039;
           }
         }

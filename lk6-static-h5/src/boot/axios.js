@@ -59,13 +59,13 @@ if (isGlobalDY) {
   var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
   var crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
 
-  var rstApi = getInitApi(rstGlobalArray, "DY_H5_RST_URL");
-  var evtApi = getInitApi(evtGlobalArray, "DY_H5_EVT_URL");
-  var crtApi = getInitApi(crGlobalArray, "DY_H5_CRT_URL");
+  var rstApi = getInitApi(rstGlobalArray, "LK_H5_RST_URL");
+  var evtApi = getInitApi(evtGlobalArray, "LK_H5_EVT_URL");
+  var crtApi = getInitApi(crGlobalArray, "LK_H5_CRT_URL");
 } else {
-  var rstApi = getInitApi(rstArray, "DY_H5_RST_URL", "1");
-  var crtApi = getInitApi(crArray, "DY_H5_CRT_URL", "2");
-  var evtApi = getInitApi(evtArray, "DY_H5_EVT_URL", "3");
+  var rstApi = getInitApi(rstArray, "LK_H5_RST_URL", "1");
+  var crtApi = getInitApi(crArray, "LK_H5_CRT_URL", "2");
+  var evtApi = getInitApi(evtArray, "LK_H5_EVT_URL", "3");
 }
 
 const api = axios.create({ baseURL: rstApi });
@@ -286,14 +286,16 @@ export default boot(({ app, router }) => {
           LocalStorage.remove("TOKEN");
           window.location.href = "/";
         }
+        const translatedMessage = t(`error.${res.code}`);
         Notify.create({
           type: "negative",
           timeout: 1000,
           position: "top",
-          message: res.message + ` (${errorType} ${res.code})` || t("common.error")
+          message: translatedMessage + ` (${errorType} ${res.code})` || t("common.error")
         });
       }
-      throw new Error(res.message + ` (${errorType} ${res.code})` || t("common.error"));
+      const translatedMessage = t(`error.${res.code}`);
+      throw new Error(translatedMessage + ` (${errorType} ${res.code})` || t("common.error"));
     } else {
       Loading.hide();
       return res;

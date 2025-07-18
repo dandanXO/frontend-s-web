@@ -513,12 +513,14 @@
     .plat-options-wrapper {
       display: flex;
       justify-content: center;
+      margin-right: 250px;
+      margin-left: 250px;
     }
 
     .plat-options-container {
       display: flex;
       gap: 5px;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       padding: 0.5rem 0.5rem;
       border-radius: 3rem;
@@ -797,6 +799,16 @@
       }
 
       img {
+        width: 100%;
+      }
+    }
+  }
+  &.slot {
+    .all-game-container {
+      .plat-options-wrapper {
+        margin-left: 20px;
+      }
+      .plat-options-container {
         width: 100%;
       }
     }

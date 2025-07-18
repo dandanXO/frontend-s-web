@@ -13,7 +13,10 @@ function updateBinding(el, { value, modifiers }, ctx) {
   }
 
   if (value && Object(value) !== value) {
-    console.error("v-back-to-top requires an object {offset, duration} as parameter", el);
+    console.error(
+      "v-back-to-top requires an object {offset, duration} as parameter",
+      el
+    );
     return;
   }
 
@@ -41,14 +44,19 @@ export default {
       offset: 200,
       duration: 300,
       update: Utils.debounce(() => {
-        const trigger = Utils.dom.getScrollPosition(ctx.scrollTarget) > ctx.offset;
+        const trigger =
+          Utils.dom.getScrollPosition(ctx.scrollTarget) > ctx.offset;
         if (ctx.visible !== trigger) {
           ctx.visible = trigger;
           el.classList[trigger ? "remove" : "add"]("hidden");
         }
       }, 25),
       goToTop() {
-        Utils.dom.setScrollPosition(ctx.scrollTarget, 0, ctx.animate ? ctx.duration : 0);
+        Utils.dom.setScrollPosition(
+          ctx.scrollTarget,
+          0,
+          ctx.animate ? ctx.duration : 0
+        );
       }
     };
     el.classList.add("hidden");

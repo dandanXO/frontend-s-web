@@ -178,7 +178,15 @@ onMounted(() => {
 .my-bg {
   background: url("../../../assets/images/promotion/hotpromo/jackpot-aviator/main-bg.jpg") no-repeat bottom center;
   background-size: cover;
-  background-position: 0 -200px
+  background-position: 0 -320px;
+}
+@media (min-width: 500px) {
+  
+.my-bg {
+  background: url("../../../assets/images/promotion/hotpromo/jackpot-aviator/main-bg.jpg") no-repeat bottom center;
+  background-size: cover;
+  background-position: 0 -420px;
+}
 }
 .jackpot {
   

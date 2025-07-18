@@ -1,7 +1,7 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
   <ProfileSummary v-if="!extensionState" :homeProfile="true" />
-  <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
+  <!-- <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
       dense
@@ -10,21 +10,21 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="promo" :label="$t('header.promo')" />
-      <q-tab name="vip" :label="$t('header.vip')" />
+      <q-tab name="promo" :label="$t('settings.promo')" />
+      <q-tab name="vip" :label="$t('settings.vip')" />
     </q-tabs>
-  </div>
+  </div> -->
 
-  <div
-    class="promo-container"
-    style="background: #090b19"
-    v-touch-swipe.left="swipeLeft"
-    v-touch-swipe.right="swipeRight"
-  >
+  <div class="promo-container">
     <div class="promo">
-      <!-- <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify"> -->
-      <!-- <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" /> -->
-      <!-- </q-tabs> -->
+      <!-- <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify" active-color="green">
+        <q-tab
+          v-for="(tab, i) in tabItems"
+          :key="i"
+          :name="tab.name"
+          :label="langVal === 'ur' ? tab.label_ur : tab.label"
+        />
+      </q-tabs> -->
 
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.name">
@@ -32,113 +32,161 @@
             <div class="promo-main-container">
               <div class="promo-type-wrapper"></div>
               <div class="promo-list-wrapper">
-                <div
-                  v-for="(promo, i) in filteredArray"
-                  :key="i"
-                  data-aos="zoom-in"
-                  data-aos-easing="ease-out"
-                  data-aos-duration="1000"
-                >
-                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
+                <div v-for="(promo, i) in filteredArray" :key="i">
+                  <div
+                    class="promo-item"
+                    v-if="tab.name === 'all' || promo.promoType.toLowerCase().split(',').includes(tab.name)"
+                  >
                     <a @click="showPromoDetails(promo)">
-                      <div class="promo-info">
-                        <span class="viewdetail">{{ promo.title }}</span>
-                      </div>
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
-                    </a>
-                  </div>
-
-                  <div class="promo-item" v-if="tab.name === 'all'">
-                    <a @click="showPromoDetails(promo)">
                       <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
-                      </div>
-                      <div class="promo-img-wrapper">
-                        <div class="promo-bg">
-                          <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
-                        </div>
+                        <span class="date">
+                          {{ $t("hotPromo.promoEndsOn") }}: {{ moment(promo.displayEndTime).format("YYYY-MM-DD") }}
+                        </span>
                       </div>
                     </a>
                   </div>
                 </div>
               </div>
+              <!--              <MediaSettingsComponent />-->
             </div>
           </div>
           <div v-else class="selected-promo">
+            <!-- <div class="loader" v-if="isFetchingPromo" /> -->
             <div v-if="isFetchingPromo" class="spinner-container">
               <q-spinner color="yellow" size="70px" :thickness="5" />
             </div>
+
             <div class="selected-promo-wrapper">
-              <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
-              <div class="banner-container">
+              <!-- <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" /> -->
+              <div
+                class="banner-container"
+                v-if="
+                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
+                  selectedPromo.redirectUrl !== 'new-player-acc-deposit' &&
+                  selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
+                  selectedPromo.redirectUrl !== 'pak-lucky-10-day-bonus'
+                "
+              >
+                <!-- <div
+                    class="promo-bg"
+                    :style="
+                    'background-image: url(' +
+                    imgURL +
+                    (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
+                    ')'
+                  "
+                ></div> -->
+                <!-- <div class="promo-bg"> -->
                 <img
                   class="promo-content"
+                  :class="
+                    (selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'dpsr' : 'usual',
+                    selectedPromo.redirectUrl === 'new-player-acc-deposit' ? 'npad' : 'usual')
+                  "
                   :src="imgURL + selectedPromo.mobileBannerUrl"
-                  style="display: block; width: 100%"
                 />
+                <!-- </div> -->
               </div>
-              <div class="inner">
+
+              <div class="banner-container" v-if="selectedPromo.redirectUrl === 'pak-lucky-10-day-bonus'">
+                <img style="width: 100%" src="../components/hotpromo/lucky9day/img/top-banner.png" />
+              </div>
+              <div
+                class="promo-content-inner"
+                v-if="
+                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
+                  selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
+                  selectedPromo.redirectUrl !== 'pak-lucky-10-day-bonus' &&
+                  selectedPromo.redirectUrl !== 'pak-welcome-new-players'
+                "
+                :style="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border:0; padding: 0;' : ''"
+              >
+                <RouterLink
+                  v-if="parsedParam.showEarnMoney"
+                  class="content-go-earn-money-btn"
+                  :class="isFtdPromoEnded ? 'is-disabled' : ''"
+                  to="/earn-money"
+                >
+                  <img src="../assets/images/bonus/share-icon.png" />
+                  <span>{{ $t("hotPromo.earnMoney.earnMoney") }}</span>
+                </RouterLink>
+                <div class="content-title" v-if="selectedPromo.redirectUrl !== 'pak-deposit-spinner-rewards'">
+                  {{ selectedPromo.title }}
+                </div>
+                <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
+                <div class="content-date" v-if="parsedParamDate">
+                  <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
+                  {{ parsedParamDate }}
+                </div>
+              </div>
+
+              <div
+                class="inner"
+                :class="{
+                  isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
+                  isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
+                  isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards',
+                  isNewPlayerSpinWheel: selectedPromo.redirectUrl === 'pak-welcome-new-players',
+                  isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel',
+                  envelope:
+                    selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel-envelope',
+                  wheel: selectedPromo.redirectUrl === 'spin-lucky-wheel' && ui.promoBg === 'spin-lucky-wheel'
+                }"
+              >
+                <div v-if="selectedPromo.hasPromo">
+                  <!-- <pre>selectedPromo{{ selectedPromo }}</pre>
+                  <template v-if="selectedPromo.promoCode === 'pak-red-packet-rain'">
+                    <div>asdasd</div>
+                  </template>
+                  <template v-else><HotPromotion :list="selectedPromo" /></template> -->
+                  <!-- <HotPromotion :list="selectedPromo" /> -->
+                  <component v-if="HotPromotion" :is="HotPromotion" :list="selectedPromo" />
+                  <!-- promo.redirectUrl -->
+                </div>
                 <div
-                  v-if="selectedPromo.promoType"
+                  v-if="selectedPromo.promoType && selectedPromo.redirectUrl !== 'pak-jackpot-aviator'"
+                  class="select-promo-html"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
                     eSport: selectedPromo.promoType.toLowerCase() === 'esport',
                     fish: selectedPromo.promoType.toLowerCase() === 'fish',
                     liveCasino: selectedPromo.promoType.toLowerCase() === 'live casino',
-                    slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+                    slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+                    isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel',
+                    isGoldenEgg: selectedPromo.redirectUrl === 'pak-aviator-golden-egg'
                   }"
                 >
-                  <div class="top-float" v-if="!selectedParam || (selectedParam && !selectedParam.hidefloat)">
-                    <div class="top-subtitle" v-if="selectedPromo.subtitle">{{ selectedPromo.subtitle }}</div>
+                  <!-- <div class="top-float">
+                    <div class="top-subtitle">Get unlimited rewards!</div>
                     <div class="top-title">{{ selectedPromo.title }}</div>
-                  </div>
-                  <div class="promo-content-inner" v-if="!selectedParam || (selectedParam && !selectedParam.hidetitle)">
-                    <div class="content-title">{{ selectedPromo.title }}</div>
-                  </div>
+                  </div> -->
 
-                  <div class="hot-promo-div" v-if="selectedPromo.hasPromo">
-                    <HotPromotion :list="selectedPromo" />
-                  </div>
                   <div v-html="selectedPromo.pageContent"></div>
+                  <!-- <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
+                    <div class="promo-date">
+                      <div class="date-txt">Promotion Ends</div>
+                      <div class="date-timer">
+                        <img src="../assets/images/promotion/timer-icon.svg" alt="" />
+                        <q-icon name="all_inclusive" size="22px"></q-icon>
+                      </div>
+                    </div>
+                    <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
+                  </div> -->
 
-                  <div
-                    class="join-container"
-                    v-if="!selectedParam || (selectedParam && !selectedParam.hidebottom)"
-                    :style="{
-                      bottom: extensionState ? '0' : `calc(72px + ${ui.bottomInsetHeight}px)`
-                    }"
-                  >
-                    <template v-if="selectedPromoDate">
-                      <div class="promo-date">
-                        <div class="date-txt">{{ $t("promo.promotion") }}</div>
-                        <div class="date-timer">
-                          {{ selectedPromoDate }}
-                        </div>
-                      </div>
-                    </template>
-                    <template v-else>
-                      <div class="promo-date">
-                        <div class="date-txt">Promotion Ends</div>
-                        <div class="date-timer">
-                          <img src="../assets/images/promotion/timer-icon.svg" alt="" />
-                          <q-icon name="all_inclusive" size="22px"></q-icon>
-                        </div>
-                      </div>
-                      <q-btn
-                        class="btn-join-now"
-                        :class="isFtdPromoEnded ? 'btn-disabled' : ''"
-                        :disable="isFtdPromoEnded"
-                        no-caps
-                        label="Join Now"
-                        @click="goToJoinNow()"
-                      />
-                    </template>
-                  </div>
+                  <!-- <div class="join-container">
+                    <div class="promo-date">
+                      <div class="date-txt">Promotion Ends</div>
+                      <div class="date-timer">01/01/2024</div>
+                    </div>
+                    <q-btn class="btn-join-now" no-caps label="Join Now" />
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -154,38 +202,75 @@
     :closeFullGameDialog="closeFullGameDialog"
   ></GameModal>
 
+  <q-dialog width="100%" v-model="isDisplayLogin">
+    <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
+      <q-card-section class="q-mb-md">
+        <strong>System Prompt</strong>
+        <br />
+        <br />
+        Please log in before performing the operation
+      </q-card-section>
+      <router-link to="/login?redirect=/promo">
+        <q-btn label="Login" color="primary" />
+      </router-link>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog v-model="isMoneyRainModal" width="100%">
+    <MoneyRainModal @closeModal="isMoneyRainModal = false" />
+    <q-btn icon="close" round dense v-close-popup @click="backToPromoList()" class="money-rain-close" />
+  </q-dialog>
+
+  <q-dialog v-model="isMegaSharingWheelModal" full-width class="mega-sharing-wheel-dialog">
+    <q-btn class="mega-sharing-wheel-dialog-close" icon="close" round dense v-close-popup />
+    <MegaSharingWheelModal />
+  </q-dialog>
+
   <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
-    <div class="dialog-mid-text">Loading...</div>
+    <div class="dialog-mid-text">{{ $t("btn.loading") }}...</div>
   </q-dialog>
 </template>
 
 <script lang="js">
-import { Filesystem, Directory } from "@capacitor/filesystem";
-import { computed, defineComponent, onActivated, onBeforeUnmount, reactive, ref, watch, onMounted } from "vue";
+import { ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated, defineAsyncComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
-import { api } from "@/boot/axios";
-import HotPromotion from "@/components/HotPromotion";
-import GameModal from "@/components/modal/GameModal.vue";
-import ProfileSummary from "@/components/ProfileSummary.vue";
-import { userStore } from "@/stores/index";
-import { t } from "@/boot/lang";
-import { useUI } from "@/stores/ui";
+import { api } from "boot/axios";
+import { cached } from "src/boot/cache";
 import { useQuasar } from "quasar";
+import { useUI } from "stores/ui";
+import { userStore } from "stores/index";
+import { i18nStore } from "src/router/language";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
+import moment from "moment";
+// import { loadPromo } from "src/api/index/promo.js";
+// import { loadPromoBanner } from "src/api/index/promo";
+import ProfileSummary from "components/ProfileSummary.vue";
+import GameModal from "components/modal/GameModal.vue";
+import { t } from "src/boot/lang";
+import MoneyRainModal from "components/modal/MoneyRainModal.vue";
+import MegaSharingWheelModal from "src/components/hotpromo/megaSharingWheel/MegaSharingWheelModal.vue";
+import { Directory, Filesystem } from "@capacitor/filesystem";
+// import MediaSettingsComponent from "components/MediaSettingsComponent.vue";
+
 export default defineComponent({
   name: "PromoView",
   components: {
     GameModal,
-    HotPromotion,
-    ProfileSummary
+    ProfileSummary,
+    MoneyRainModal,
+    MegaSharingWheelModal,
+    // MediaSettingsComponent
   },
   setup() {
     const store = userStore();
+    const i18nStoreLanguage = i18nStore();
     const imgURL = process.env.IMAGE_CDN + "/promo/";
     const banner = ref([]);
     const vipPromoTab = ref("promo");
+
+    const popupPromo = ref("");
+
     const promoState = reactive({
       active: { value: "ALL", label: "ALL" },
       promoList: []
@@ -201,17 +286,23 @@ export default defineComponent({
     const promoTabActive = ref(promoTypes.value[0].value);
     const filteredArray = ref([]);
     const isPromoDetail = ref(false);
-    const selectedPromoDate = ref();
     const selectedPromo = ref({});
     const route = useRoute();
     const router = useRouter();
     const $q = useQuasar();
     const ui = useUI();
+    const isDisplayLogin = ref(false);
+
+    const isOpenExtension = ref(false);
 
     const isFetchingPromo = ref(false);
     const extensionState = ref(false);
     const extensionToken = ref("");
-    const isOpenExtension = ref(false);
+
+    const HotPromotion = computed(() => process.env.MODE === 'spa' ?
+      defineAsyncComponent(() => import('components/HotPromotion.vue')) :
+      null
+    );
 
     const checkExtension = () => {
       if (route.path === "/promotion") {
@@ -221,35 +312,36 @@ export default defineComponent({
       }
     };
 
-    const tab = ref("all");
-    const tabItems = [
-      { name: "all", label: "全部" }
-      // { name: "slot game", label: '电子'},
-      // { name: "fish", label: '捕鱼'},
-      // { name: "live casino", label: '真人'},
-      // { name: "poker", label: '棋牌'},
+    // const tab = ref("all");
+    // const tabItems = [
 
-      // {
-      //   name: "all",
-      //   label: "全部",
-      // },
-      // {
-      //   name: "sport",
-      //   label: "体育",
-      // },
-      // {
-      //   name: "esport",
-      //   label: "电竞",
-      // },
-      // {
-      //   name: "live casino",
-      //   label: "真人",
-      // },
-      // {
-      //   name: "slot game",
-      //   label: "电游",
-      // },
-    ];
+    //   {name: "all", label: '全部'},
+    //   // { name: "slot game", label: '电子'},
+    //   // { name: "fish", label: '捕鱼'},
+    //   // { name: "live casino", label: '真人'},
+    //   // { name: "poker", label: '棋牌'},
+
+    //   // {
+    //   //   name: "all",
+    //   //   label: "全部",
+    //   // },
+    //   // {
+    //   //   name: "sport",
+    //   //   label: "体育",
+    //   // },
+    //   // {
+    //   //   name: "esport",
+    //   //   label: "电竞",
+    //   // },
+    //   // {
+    //   //   name: "live casino",
+    //   //   label: "真人",
+    //   // },
+    //   // {
+    //   //   name: "slot game",
+    //   //   label: "电游",
+    //   // },
+    // ];
 
     onActivated(() => {
       // if promo name is present, do not show promo list on first load
@@ -261,6 +353,18 @@ export default defineComponent({
       loadAll();
       updateCountdown();
       store.getUnreadTotal();
+
+      if(sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+        sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+      }
+    });
+
+    onMounted(() => {
+      checkExtension();
+
+      if(sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+        sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+      }
     });
 
     watch(
@@ -272,6 +376,7 @@ export default defineComponent({
           isPromoDetail.value = route.query.name;
           ui.setScrollPosition("vertical", 0, 200);
         }
+        if (currentPromoDetail.value) showPromoDetails(currentPromoDetail.value);
       }
     );
 
@@ -304,21 +409,17 @@ export default defineComponent({
       isPromoDetailPage.value = false;
     };
 
-    const isFtdPromoEnded = computed(() => {
-      if (selectedPromo.value && selectedPromo.value.promoCode === "th2-slot-ftd" && store.ftd === true) {
-        return true;
-      }
-
-      return false;
-    });
-
     const loadBanner = () => {
+      const params = {
+        category: "PROMO",
+        language: langVal.value
+      }
       // loadPromoBanner("PROMO").then((res) => {
       //   if (res.code === 0) {
       //       banner.value = res.data[0]
       //   }
       // })
-      api.get("/opt-session/promo/banner?category=PROMO").then((response) => {
+      api.get("/opt-session/promo/banner", {params}).then((response) => {
         if (response.code === 0) {
           banner.value = response.data[0];
           // console.log(banner.value)
@@ -333,7 +434,12 @@ export default defineComponent({
         // banners.value = response.data;
       });
     };
+
+    const isMoneyRainModal = ref(false);
+    const isMegaSharingWheelModal = ref(false);
+
     const showPromoDetails = (promo) => {
+      // debugger;
       if (!store.token) {
         $q.notify({
           color: "negative",
@@ -345,93 +451,86 @@ export default defineComponent({
       } else {
         if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({ path: "/account/vip" });
-        } else if (promo.redirectUrl && promo.redirectUrl.includes("SigninBonus")) {
-          router.push({ path: "/activities-details" });
         } else {
-          // if (route.query.fromAccount) {
-          //   router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
-          // } else {
-          //   router.push({ path: "/promo", query: { name: promo.redirectUrl } });
-          // }
-
-          if (extensionState.value) {
-            isPromoDetail.value = true;
-
-            selectedPromo.value = promo;
-            if (isAndroid()) {
-              LocalStorage.set("TOKEN", extensionToken.value, 86400);
-            } else {
-              SessionStorage.set("TOKEN", extensionToken.value);
-            }
-            store.token = extensionToken.value;
-          } else if (isAndroid()) {
-            // store.h5Url = "http://192.168.68.105:9090/";
-            var preUrl = store.h5Url + `promotion?name=${promo.redirectUrl}&token=${store.token}`;
-            // alert(preUrl);
-            console.log(preUrl);
-            // promoSrc.value= preUrl;
-            var ref = cordova.InAppBrowser.open(
-              preUrl,
-              "_blank",
-              "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes"
-            );
-            isOpenExtension.value = true;
-
-            ref.addEventListener("message", async function(event) {
-              if (event.data.action === "qrcode") {
-                // alert(event.data.item);
-                const dataUrl = event.data.item;
-                // alert(dataUrl)
-                // Save the image to the photo gallery
-                await Filesystem.writeFile({
-                  path: `Pictures/myreferral-${Date.now()}.jpg`,
-                  data: dataUrl,
-                  directory: Directory.Documents,
-                  recursive: true
-                });
-
-              }
-            });
-
-            ref.addEventListener("loadstart", function (event) {
-              var url = event.url;
-              // alert("This" + url);
-              if (url.indexOf("xfapp:") > -1) {
-                var message = url.split("xfapp:")[1];
-                console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
-                // alert(message);
-                ref.close();
-                router.push(message);
-              }
-            });
-
-            ref.addEventListener("loadstop", function () {
-              setTimeout(() => {
-                ref.show();
-              }, 500);
-            });
-
-            ref.addEventListener("exit", function () {
-              isOpenExtension.value = false;
-            });
-          } else {
-            if (route.query.fromAccount) {
-              router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
-            } else {
-              router.push({ path: "/promo", query: { name: promo.redirectUrl } });
-            }
-            if (!isAndroid()) {
+          if (promo.redirectUrl === "pak-redpacketrain") {
+            isMoneyRainModal.value = true;
+          } else if (promo.redirectUrl === "pak-mega-sharing-wheel") {
+            isMegaSharingWheelModal.value = true;
+            popupPromo.value = "mega-sharing-wheel"
+          }else {
+            if (extensionState.value) {
               isPromoDetail.value = true;
+
               selectedPromo.value = promo;
-              selectedPromoDate.value = "";
-            }
-          }
+              if (isAndroid()) {
+                LocalStorage.set("TOKEN", extensionToken.value, 86400);
+              } else {
+                SessionStorage.set("TOKEN", extensionToken.value);
+              }
+              store.token = extensionToken.value;
+            } else if (isAndroid()) {
+              // store.evip = "192.168.68.93:9090";
+              const tgDomain = "https://" + store.evip;
+              var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}&lang=${langVal.value}`;
+              // alert(preUrl);
+              console.log(preUrl);
+              // promoSrc.value= preUrl;
+              var ref = cordova.InAppBrowser.open(
+                preUrl,
+                "_blank",
+                "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes"
+              );
+              isOpenExtension.value = true;
 
-          if (selectedPromo.value.param) {
-            let promoDate = JSON.parse(selectedPromo.value.param).promoDate;
+              ref.addEventListener("loadstop", function () {
+                setTimeout(() => {
+                  ref.show();
+                }, 500);
+              });
 
-            if (promoDate) {
-              selectedPromoDate.value = promoDate;
+              ref.addEventListener("message", async function (event) {
+                if(event.data.action === "qrcode") {
+                  const dataUrl = event.data.item;
+                  await Filesystem.writeFile({
+                    path: `Picture/${event.data.filename}`,
+                    data: dataUrl,
+                    directory: Directory.Documents,
+                    recursive: true
+                  })
+                }
+                var message = event.data;
+                console.log("Message received from InAppBrowser: ", message);
+                if (message === "close") {
+                  ref.close();
+                  isOpenExtension.value = false;
+                }
+              });
+
+              ref.addEventListener("loadstart", function (event) {
+                var url = event.url;
+                // alert("This" + url);
+                if (url.indexOf("xfapp:") > -1) {
+                  var message = url.split("xfapp:")[1];
+                  console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
+                  // alert(message);
+                  ref.close();
+                  router.push(message);
+                }
+              });
+
+              ref.addEventListener("exit", function () {
+                isOpenExtension.value = false;
+              });
+            } else {
+              if (route.query.fromAccount) {
+                router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+              } else {
+                router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+              }
+              if (!isAndroid()) {
+                isPromoDetail.value = true;
+                selectedPromo.value = promo;
+              }
             }
           }
         }
@@ -446,13 +545,34 @@ export default defineComponent({
       } else {
         filteredArray.value = promoState.promoList;
       }
+
+      // remove to show faq as promo item at promo list
+      filteredArray.value = [...filteredArray.value].filter(({ promoCode }) => promoCode !== "pak-faq");
     };
 
     const loadAll = () => {
-      const randNum = Math.floor(Math.random() * 1000) + 1;
-      const platformApiUrl = `/opt-session/promo/page?v=${randNum}`;
+      const key = "PROMOTION_TYPES"
+      cached.get(key, () => api.get("/promo/type")).then((res) => {
+        if (res.length > 0) {
+          tabItems.value = [];
+          res.forEach(element => {
+            const obj = {
+              name: element.value.toLowerCase(),
+              label: JSON.parse(element.name).en,
+              label_ur: JSON.parse(element.name).H5_ur
+            };
+            tabItems.value.push(obj);
+          });
+          switchPromoType(promoState.active)
+        } else {
+          console.warn('No promo types loaded, using default promo types.');
+        }
+      })
 
-      isFetchingPromo.value = window.location.pathname === "/promotion";
+      const platformApiUrl = `/opt-session/promo/page?language=${langVal.value}`;
+
+      // isFetchingPromo.value = window.location.pathname === "/promotion";
+      isFetchingPromo.value = true;
 
       api
         .get(platformApiUrl)
@@ -461,18 +581,19 @@ export default defineComponent({
             promoState.promoList = [];
             var promoItems = res.data;
             // promoState.promoList.push(...res.data);
+            promoState.promoList.push(...promoItems);
+            if (currentPromoDetail.value) showPromoDetails(currentPromoDetail.value);
+            // promoItems.forEach((element) => {
+            //   // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            //   // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            //   // } else {
+            //   promoState.promoList.push(element);
 
-            promoItems.forEach((element) => {
-              // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-              // } else {
-              promoState.promoList.push(element);
-
-              if (route.query.name && String(element.redirectUrl) === route.query.name) {
-                showPromoDetails(element);
-              }
-              // }
-            });
+            //   if (route.query.name && String(element.redirectUrl) === route.query.name) {
+            //     showPromoDetails(element);
+            //   }
+            //   // }
+            // });
 
             switchPromoType(promoState.active);
 
@@ -484,15 +605,6 @@ export default defineComponent({
           console.log("error", e);
         });
     };
-
-    const selectedParam = computed(() => {
-      if (selectedPromo.value && selectedPromo.value.param) {
-        const paramJson = JSON.parse(selectedPromo.value.param);
-        return paramJson;
-      } else {
-        return null;
-      }
-    });
 
     const goToJoinNow = () => {
       // console.log(selectedPromo.value);
@@ -599,8 +711,14 @@ export default defineComponent({
       clearInterval(countdownInterval);
     });
 
+    // onMounted(() => {
+    //   loadBanner();
+    //   loadAll();
+    //   updateCountdown();
+    // });
+
     const swipeLeft = () => {
-      router.push("/vip");
+      // router.push('/vip')
     };
 
     // Handle swipe right
@@ -611,11 +729,36 @@ export default defineComponent({
       fullGameDialog.value = false;
     };
 
-    onMounted(() => {
-      checkExtension();
+    const tab = ref("all");
+    const tabItems = ref([]);
+
+    const langVal = computed(() => i18nStoreLanguage.languageVal);
+
+    // promo param split.
+    const parsedParam = computed(() => {
+      try {
+        if (selectedPromo.value && selectedPromo.value.param) {
+          return JSON.parse(selectedPromo.value.param);
+        }
+        return {};
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+        return {};
+      }
+    });
+
+    const parsedParamSub = computed(() => parsedParam.value.sub || "");
+    const parsedParamDate = computed(() => parsedParam.value.date || "");
+
+    const currentPromoDetail = computed(() => {
+      if (!route.query.name || !promoState.promoList.length) return null;
+
+      const targetPromo = promoState.promoList.find((promo) => promo.redirectUrl === route.query.name);
+      return targetPromo || null;
     });
 
     return {
+      langVal,
       promoState,
       promoTypes,
       promoTabActive,
@@ -624,18 +767,17 @@ export default defineComponent({
       isPromoDetail,
       showPromoDetails,
       selectedPromo,
-      selectedPromoDate,
       banner,
       imgURL,
       store,
       tab,
       tabItems,
+      isDisplayLogin,
       vipPromoTab,
       backToPromoList,
       isPromotionEnded,
       countdown,
       getCountdown,
-      selectedParam,
       updateCountdown,
       countdownInterval,
       goToVip,
@@ -646,43 +788,87 @@ export default defineComponent({
       route,
       allGames,
       closeFullGameDialog,
-      isFtdPromoEnded,
+      parsedParamSub,
+      parsedParamDate,
+      MoneyRainModal,
+      isMoneyRainModal,
       isFetchingPromo,
       extensionState,
-      isOpenExtension
+      isOpenExtension,
+      parsedParam,
+      isMegaSharingWheelModal,
+      popupPromo,
+      HotPromotion,
+      moment
+      // MediaSettingsComponent
     };
   }
 });
 </script>
-
 <style lang="scss" scoped>
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 150px;
+}
+
 .vip-promo-tab-wrapper {
   width: 90%;
   margin: 0 auto;
 
   .q-tab {
-    min-height: 45px;
+    min-height: 44px;
     border-radius: 8px;
-    background: #101114;
-    color: #5c6c86;
+    color: #ffffff80;
     font-weight: 400;
+    width: 50%;
   }
 
   .vip-promo-tab-toggle {
-    background-color: #1b2232;
+    // background: url(../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
+    background: #323738;
+    background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
     margin-top: 5px;
     padding: 1px;
 
     :deep(.q-tab__label) {
-      font-weight: 400;
+      font-weight: 700;
+      // color: #FFFFFF80;
     }
 
     :deep(.q-tab--active) {
-      color: #fff;
-      background: linear-gradient(0deg, #5c46e7, #5c46e7), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-      box-shadow: 0px 1px 2px 0px #0000000d;
+      color: white;
+      // background: url(../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
+      // background-size: 100% 100%;
+      // background: linear-gradient(
+      //   180deg,
+      //   rgba(97, 255, 0, 0) 0%,
+      //   rgba(97, 255, 0, 0.25) 50.5%,
+      //   rgba(97, 255, 0, 0) 100%
+      // );
+      // box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+
+      // &:before {
+      //   content: "";
+      //   background-color: #21EF89;
+      //   height: 3px;
+      //   border-radius: 4px;
+      //   width: 30%;
+      //   position: absolute;
+      //   bottom: 0;
+      //   left: 50%;
+      //   transform: translateX(-50%);
+      // }
+      background: #394142;
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -690,7 +876,8 @@ export default defineComponent({
     }
   }
 }
-
+</style>
+<style scoped lang="scss">
 .promo-container {
   .promo-view-container {
     ol {
@@ -741,21 +928,20 @@ export default defineComponent({
 
 .back-btn {
   background: rgb(255, 255, 255, 0.4);
-  margin: 12px;
-  position: absolute;
-  right: 0;
-  top: 0;
+  margin: 12px !important;
+  position: absolute !important;
+  right: 0 !important;
+  top: 0 !important;
   z-index: 9;
 }
 </style>
-
 <style lang="scss">
 .promo-container {
   color: #ffffff;
   min-height: calc(100vh - 160px);
 
   .all-promotions {
-    padding-bottom: 20px;
+    // padding-bottom: 20px;
     @keyframes fadein {
       100% {
         opacity: 1;
@@ -765,9 +951,10 @@ export default defineComponent({
     .promo-bg {
       background-size: cover;
       background-repeat: no-repeat;
-      background-position: center bottom;
+      background-position: center top;
       overflow: hidden;
-      height: 170px;
+
+      // max-height: 130px;
       margin: 10px;
 
       img {
@@ -854,27 +1041,28 @@ export default defineComponent({
           transition: 0.4s ease-in;
           margin-bottom: 20px;
           overflow: hidden;
-          padding-top: 40px;
+          // padding-top: 40px;
           border-radius: 17px;
-          background: #4f366c;
           box-shadow: 0px 7.5px 20px 0px #1411321a;
-          cursor: pointer;
+          background: rgba(255, 255, 255, 0.1);
 
           .promo-img-wrapper {
             position: relative;
+            max-height: 145px;
             overflow: hidden;
             // border-radius: 10px 10px 0 0;
 
             .promo-bg {
               transition: all 0.5s ease;
-              background-size: cover;
+              // background-size: cover;
               background-position: center center;
+              background-size: 100% 100%;
               margin: 0;
-              // border-radius: 10px 10px 0 0;
-              border-radius: 17px;
+
               display: flex;
+              // height: 160px;
               justify-content: center;
-              align-items: center;
+              align-items: flex-start;
               gap: 30px;
 
               &:hover {
@@ -883,8 +1071,6 @@ export default defineComponent({
 
               .promo-content {
                 width: 100%;
-                // width: unset;
-                // height: 100%;
 
                 &.isDesktop {
                   display: block;
@@ -904,47 +1090,33 @@ export default defineComponent({
           .promo-info {
             display: flex;
             justify-content: flex-start;
-            align-items: center;
+            align-items: flex-start;
+            background: #292d2e;
 
+            padding: 10px 20px;
+            gap: 0px;
+            flex-direction: column;
             .viewdetail {
               // background: #002a35;
               color: #ffffff;
-              font-size: 14px;
-              position: absolute;
+
+              // position: absolute;
+              position: relative;
               width: 100%;
               z-index: 2;
-              top: 0;
-              height: 40px;
+              height: 30px;
               overflow: hidden;
-              line-height: 40px;
-              padding: 0 100px 0 10px;
-              font-weight: 500;
-
-              // &:before {
-              //   background: #043d4f;
-              //   content: "";
-              //   display: block;
-              //   height: 100%;
-              //   position: absolute;
-              //   right: 0;
-              //   top: 0;
-              //   width: 70px;
-              // }
-
-              // &:after {
-              //   border-left: 20px solid transparent;
-              //   border-right: 30px solid transparent;
-              //   border-top: 30px solid #043d4f;
-              //   clear: both;
-              //   content: "";
-              //   display: block;
-              //   height: 0;
-              //   position: absolute;
-              //   right: 50px;
-              //   top: 0;
-              //   transform: rotate(180deg);
-              //   width: 0;
-              // }
+              line-height: 30px;
+              font-family: Poppins;
+              font-size: 15.3px;
+              font-weight: 700;
+              text-transform: uppercase;
+            }
+            .date {
+              color: #b2bdbf;
+              font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+              font-weight: 400;
+              font-size: 12px;
             }
 
             .detail-arrow {
@@ -963,15 +1135,22 @@ export default defineComponent({
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;
-
-        &:after {
-          content: "";
-          background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0));
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 80px;
-          width: 100%;
+        .promo-content {
+          width: 90%;
+          place-self: center;
+          border-radius: 10px;
+          &.usual {
+            display: block;
+          }
+          &.dpsr {
+            display: block;
+            width: 90%;
+            // border-radius: 15px;
+            // margin: 20px auto;
+          }
+          &.npad {
+            display: none;
+          }
         }
 
         .promo-bg {
@@ -980,6 +1159,16 @@ export default defineComponent({
           background-position: center center;
           overflow: hidden;
           height: 220px;
+        }
+
+        &:after {
+          content: "";
+          // background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0));
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 80px;
+          width: 100%;
         }
       }
 
@@ -998,19 +1187,98 @@ export default defineComponent({
       .inner {
         max-width: 1400px;
         width: 90%;
-        margin: 20px auto 35px;
+        margin: 20px auto;
         display: flex;
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
         padding-bottom: 40px;
 
-        &.spin-lucky-wheel-envelope {
-          background: url("../assets/images/promotion/spin-lucky-wheel/envelope-stage/bg.png") no-repeat top center;
-          background-size: cover;
+        &.isSpinLuckyWheel {
           width: 100%;
           margin-top: 0;
           padding-bottom: 0;
+
+          &.envelope {
+            background: url("../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/bg.png") no-repeat top
+              center;
+            background-size: cover;
+          }
+
+          &.wheel {
+            background: url("../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/promo-bg.png") no-repeat;
+            background-size: 100% auto;
+          }
+        }
+        &.isJackpotAviator {
+          width: 100%;
+          background: url("../assets/images/promotion/hotpromo/jackpot-aviator/main-bg.jpg") no-repeat top center;
+          background-size: contain;
+          margin-top: -20px;
+          padding-top: 20px;
+        }
+        &.isDepositSpinnerRewards {
+          border-radius: 0;
+          width: 100%;
+          padding: 0;
+          margin: 0;
+          > div:nth-child(2) {
+            display: none;
+          }
+        }
+        &.isNewPlayerSpinWheel {
+          background: #131313;
+          margin: 0;
+          width: 100%;
+          padding: 25px;
+        }
+        &.isNewPlayerAccDeposit {
+          width: 100%;
+
+          .select-promo-html {
+            padding: 16px;
+          }
+        }
+
+        .select-promo-html {
+          &.isSpinLuckyWheel {
+            display: none;
+          }
+          &.isGoldenEgg {
+            table {
+              p {
+                margin: 0;
+              }
+              border: none;
+              td {
+                border: 0;
+                padding: 15px 0;
+              }
+              td:first-child {
+                border-right: 1px solid #ffffff1a;
+              }
+              tr:first-of-type td {
+                background: #323738;
+                color: #ffffff80;
+                border: 0;
+                &:first-child {
+                  border-radius: 10px 0 0 0;
+                }
+                &:last-child {
+                  border-radius: 0 10px 0 0;
+                }
+              }
+              tr:nth-child(even) td {
+                background: #394142;
+              }
+              tr:nth-child(odd) td {
+                background: #323738;
+              }
+              tr:not(:first-of-type) td:last-child {
+                color: #ffd400;
+              }
+            }
+          }
         }
 
         p {
@@ -1024,10 +1292,11 @@ export default defineComponent({
         ol,
         ul {
           margin: 0;
-          padding: 15px;
+          padding: 0 15px;
 
           li {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            color: #9f9f9f;
           }
         }
 
@@ -1035,17 +1304,31 @@ export default defineComponent({
           width: 100%;
           border-spacing: 0;
           border-collapse: collapse;
+          margin-bottom: 20px;
+
+          p {
+            font-size: 12px;
+          }
 
           th {
             padding: 5px;
             text-align: center;
-            background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
+
+            background: linear-gradient(180deg, #21ef89 0%, #33562d 100%);
+
+            &:first-child {
+              border-top-left-radius: 8px;
+            }
+
+            &:last-child {
+              border-top-right-radius: 8px;
+            }
           }
 
           td {
             padding: 5px;
             text-align: center;
-            background-color: #202228;
+            background-color: #1c241b;
             border: 1px solid #2e3039;
           }
         }
@@ -1055,16 +1338,9 @@ export default defineComponent({
           display: block;
         }
 
-        .hot-promo-div img {
-          width: initial;
-          display: initial;
-          margin-bottom: initial;
-        }
-
         .hot-promo {
-          //background: #272c3d;
-          //border-radius: 10px;
-          //display: none;
+          border-radius: 10px;
+          // display: none;
         }
 
         .promo-view-container {
@@ -1074,24 +1350,6 @@ export default defineComponent({
           padding: 20px;
           border-radius: 10px;
           overflow: auto;
-          // &.welcome {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/welcome.png");
-          // }
-          // &.sport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/sport.png");
-          // }
-          // &.esport {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/esport.png");
-          // }
-          // &.fish {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/fish.png");
-          // }
-          // &.livecasino {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/livecasino.png");
-          // }
-          // &.slot {
-          //   background-image: url("../assets/images/promotion/hotpromo/common/slot.png");
-          // }
         }
       }
     }
@@ -1127,13 +1385,14 @@ export default defineComponent({
 .promo {
   .q-tabs {
     // background: rgba(113, 125, 146, 0.2);
-    background: #063c50;
-    width: 100%;
-    margin: 0 auto;
+    // background: #2b501d;
+    width: calc(100% - 40px);
+    margin: 10px 20px 0;
   }
 
   .q-tab {
     min-height: 40px;
+    color: #8c968f;
   }
 
   .q-tab__content {
@@ -1148,13 +1407,14 @@ export default defineComponent({
     font-size: 13px;
   }
 
+  .q-tab--inactive {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
   .q-tab--active .q-tab__indicator {
-    // background: url("../assets/images/promotion/tab_bg.png") no-repeat center center;
-    background-size: 20px 10px;
     width: 100%;
-    height: 10px;
-    // background: salmon !important;
-    filter: hue-rotate(311deg);
+    height: 2px;
+    background: #21ef89;
   }
 
   .q-tab__label {
@@ -1196,16 +1456,66 @@ export default defineComponent({
 
 // promo content-inner
 .promo-content-inner {
+  padding: 12px 0px;
+  // margin: 0 12px;
+  border-bottom: 1px solid #ffffff1a;
+  width: 90%;
+  place-self: center;
   .content-title {
-    background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
+    color: #ffffff;
     font-size: 24px;
-    font-weight: 700;
-    line-height: 26px;
-    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  .content-para {
+    font-size: 14px;
+    padding-top: 4px;
+    color: #9f9f9f;
+  }
+  .content-date {
+    padding-top: 6px;
+    color: #9f9f9f;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    img {
+      display: block;
+      width: 30px;
+    }
+  }
+  .content-go-earn-money-btn {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4px 0;
+    border-radius: 5px;
+    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    text-decoration: none;
+
+    &.is-disabled {
+      pointer-events: none;
+      filter: brightness(0.4);
+    }
+
+    img {
+      width: 28px !important;
+      margin: 0px;
+      display: inline-block;
+      height: auto;
+      margin-right: 10px;
+    }
+
+    span {
+      color: #000;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    &:active {
+      transform: translate(0px, 1px);
+      filter: brightness(0.85);
+    }
   }
 }
 
@@ -1234,7 +1544,7 @@ export default defineComponent({
 
 // join now
 .join-container {
-  background: #3b2e95;
+  background: #252b37;
   padding: 12px 12px;
   position: fixed;
   //top: calc(100vh - 127px);
@@ -1270,22 +1580,24 @@ export default defineComponent({
     display: flex;
     align-items: center;
     line-height: 1 !important;
+    gap: 8px;
     font-size: 14px;
 
     img {
       width: 14px !important;
-      margin-right: 8px;
     }
   }
 }
 
-.btn-disabled {
-  filter: brightness(0.6);
+.money-rain-close {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .dark-grey-dialog {
-  background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
-  // background: #3e1474;
+  background: linear-gradient(#000000b3, #000000b3);
   background-size: contain;
 
   .dialog-mid-text {
@@ -1310,5 +1622,14 @@ export default defineComponent({
   left: 0;
   width: 100%;
   z-index: 9999;
+}
+
+.mega-sharing-wheel-dialog-close {
+  position: absolute;
+  top: 16px;
+  right: 0;
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: all;
 }
 </style>

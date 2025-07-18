@@ -1,6 +1,6 @@
 <template>
   <el-dialog v-model="isStationNotice" :maskClosable="false" :footer="null" style="border-radius: 8px; width: 600px"
-    class="notice-modal" :show-close="true" title="公告列表">
+    class="notice-modal" :show-close="true" :title="$t('menu.announcementList')">
     <div>
       <el-tabs type="card" class="announcement-tabs" v-model="announcementActive" @tab-click="announcementTabChange">
         <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :tab="ind" :label="tab.name"
@@ -26,7 +26,7 @@
           <img class="announcement-img" :class="{ loading: isLoading }"
             src="../../../assets/home/announcement/announcement-img.png" @click="openPopup(announcementList)" />
           <div v-if="isLoading === false" class="station-notice">
-            <div v-if="!announcementList.length">暂无公告</div>
+            <div v-if="!announcementList.length">{{ $t('message.noAnnouncementYet') }}</div>
             <div v-else class="marquee-wrapper">
               <Vue3Marquee :clone="false"
                 :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 1 + 10 : 70">
@@ -34,7 +34,7 @@
                   @click="openPopup(word)" class="station-notice-item"></div>
               </Vue3Marquee>
             </div>
-            <img src="../../../assets/home/announcement/hot-matches.png" height="30px" />
+            <!-- <img src="../../../assets/home/announcement/hot-matches.png" height="30px" /> -->
           </div>
         </div>
       </div>

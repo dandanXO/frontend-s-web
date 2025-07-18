@@ -21,6 +21,7 @@ export const useUI = defineStore("ui-store", {
       shouldFetchDownloadAppUrl: false,
       instagramUrl: "",
       tiktokUrl: "",
+      facebookUrl: "",
       whatsappUrl: "",
       youtubeUrl: "",
       charityUrl: "",
@@ -32,7 +33,8 @@ export const useUI = defineStore("ui-store", {
       isPageInitialized: false,
       firstScreenLoading: !!sessionStorage.getItem("FIRST_SCREEN_CACHE") || true,
       promoBg: "",
-      adjust_register_event: ""
+      adjust_register_event: "",
+      isBetBy: false
     };
   },
   actions: {

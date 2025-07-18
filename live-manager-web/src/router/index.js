@@ -27,7 +27,7 @@ const router = createRouter({
     },
     {
       path: '/sensitive-word',
-      name: '後台管理',
+      name: '后台管理',
       component: () => import('../views/Sensitive-word/SensitiveWordView.vue'),
       children: [
         {
@@ -49,6 +49,75 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/live-sport',
+      name: 'Live Sport',
+      beforeEnter: (to, from, next) => {
+        if (sessionStorage.getItem('memberType') === 'admin'){
+          next()
+        }else{
+          next({ path: '/', query: { redirect: to.fullPath } })
+        }
+      },
+      component: () => import('../views/Live/LiveView.vue'),
+      children: [
+        {
+          name: '体育直播赛事设定',
+          path: 'live-setting',
+          component: () => import('../components/live/LiveSetting.vue'),
+        },
+        {
+          name: '体育直播监控',
+          path: 'live-monitor',
+          component: () => import('../components/live/LiveMonitor.vue'),
+        },
+        {
+          name: '聊天室记录',
+          path: 'live-history-block',
+          component: () => import('../components/live/LiveHistoryBlock.vue'),
+        },
+        {
+          name: '聊天室会员禁言设定',
+          path: 'live-block',
+          component: () => import('../components/live/LiveBlock.vue'),
+        },
+        {
+          name: '聊天室VIP发言设定',
+          path: 'chat-status',
+          component: () => import('../components/live/ChatStatus.vue'),
+        },
+        {
+          name: '体育直播敏感词设定',
+          path: 'sensitive-wrod',
+          component: () => import('../components/live/SensitiveWord.vue'),
+        },
+        {
+          name: '赛事管理',
+          path: 'live-event',
+          component: () => import('../components/live/LiveEvent.vue'),
+        },
+        {
+          name: '主播管理',
+          path: 'live-streamer',
+          component: () => import('../components/live/LiveStreamer.vue'),
+        },
+        {
+          name: '队伍管理',
+          path: 'live-team',
+          component: () => import('../components/live/LiveTeam.vue'),
+        },
+        {
+          name: '电竞赛事',
+          path: 'live-match',
+          component: () => import('../components/live/liveMatch.vue'),
+        },
+        {
+          name: '体育赛事',
+          path: 'live-match-mars',
+          component: () => import('../components/live/LiveMatchMars.vue'),
+        },
+      ]
+    },
   ],
 })
 
@@ -59,6 +128,9 @@ router.beforeEach((to, from, next) => {
   if (!token && !isLoginPage) {
     next('/login')
   } else {
+    if (to.path !== '/live-sport/live-event' && to.path !== '/live-sport/live-setting' && sessionStorage.getItem('liveEventQuery')) {
+      sessionStorage.removeItem('liveEventQuery');
+    }
     next()
   }
 })

@@ -14,11 +14,11 @@
         <div class="announcement-content" v-html="item.content"></div>
         <div class="announcement-footer">
           <div class="footer-button" @click="handleService">
-            联系客服
+            <span>{{ $t("announcement.btn.cs") }}</span>
             <img src="../../assets/images/home/announcement/arrow-right.svg" alt="" />
           </div>
           <div class="footer-button" @click="handleDetail(item)">
-            查看详情
+            <span>{{ $t("announcement.btn.detail") }}</span>
             <img src="../../assets/images/home/announcement/arrow-right.svg" alt="" />
           </div>
         </div>
@@ -64,7 +64,10 @@ watch(
 );
 
 const handleService = () => {
-  router.push("/liveChat");
+  window.open(
+    "https://8xjp0t3ydi.ipbr7k9r.com/chatwindow.aspx?siteId=65001994&planId=099fb0e7-cad5-43d0-aa03-2ed2257e0e12",
+    "_blank"
+  );
 };
 
 const handleDetail = (mail) => {
@@ -94,6 +97,8 @@ const handleDetail = (mail) => {
   font-weight: 600;
   color: black;
   margin-bottom: 10px;
+  max-height: calc(24px * 3);
+  overflow: auto;
 }
 
 .announcement-content {
@@ -111,6 +116,7 @@ const handleDetail = (mail) => {
   align-items: center;
 
   .footer-button {
+    max-width: 32vw;
     cursor: pointer;
     background: #2792fd;
     display: inline-flex;
@@ -118,12 +124,20 @@ const handleDetail = (mail) => {
     align-items: center;
     border-radius: 6px;
     height: 30px;
-    font-size: 16px;
+    font-size: 14px;
     gap: 2px;
     padding: 8px 12px;
     color: white;
     &:hover {
       filter: brightness(0.9);
+    }
+
+    span {
+      display: inline-block;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

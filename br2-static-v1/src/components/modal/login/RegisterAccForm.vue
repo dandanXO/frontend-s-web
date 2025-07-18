@@ -80,9 +80,9 @@
         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
         lazy-rules
         :rules="[
-           (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-            (val) => (val.length >= 8 && val.length <= 11) || $t('form.phone_rules_02'),
-            (val) => /^[0-9]*$/.test(val) || $t('form.phone_rules_04')
+          (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+          (val) => (val.length >= 8 && val.length <= 11) || $t('form.phone_rules_02'),
+          (val) => /^[0-9]*$/.test(val) || $t('form.phone_rules_04')
         ]"
       >
         <template v-slot:prepend>
@@ -137,17 +137,38 @@
         class="input"
         :class="{ 'white-txt': !!taxId }"
         lazy-rules
+        hint="CPF inválido impede o saque."
         :rules="[
-          (val) => (!!val && val.length > 0) || 'Por favor, insira o número do CPF',
-          (val) => val.length >= 6 || 'O número do CPF deve ter 11 dígitos',
-          (val) => validateCPF(val) || 'Formato do número do CPF está incorreto.'
+          (val) => (!!val && val.length > 0) || 'CPF inválido impede o saque.',
+          validateTaxId
         ]"
       >
+
         <template v-slot:prepend>
-          <img v-if="!taxId" src="../../../assets/images/auth/tax-icon.png" width="22px" />
-          <img v-else src="../../../assets/images/auth/tax-icon-active.png" width="22px" />
+
+          <img :class="taxId ? 'bright-icon' : ''" src="../../../assets/images/auth/input-icon-cpf-white.png" width="22px" />
+
+          <!-- <img v-if="selectedPix === 'CPF'" :class="taxId ? 'bright-icon' : ''" src="../../../assets/images/auth/input-icon-cpf-white.png" width="22px" /> -->
+          <!-- <img v-else-if="selectedPix === 'PHONE'" :class="taxId ? 'bright-icon' : ''"  src="../../../assets/images/auth/input-icon-phone-white.png" width="22px" /> -->
+          <!-- <img v-else-if="selectedPix === 'EMAIL'" :class="taxId ? 'bright-icon' : ''"  src="../../../assets/images/auth/input-icon-email-white.png" width="22px" /> -->
+
+          <!-- <q-select
+            class="pix-selection"
+            filled
+            v-model="selectedPix"
+            :options="pixOptions"
+            option-value="id"
+            option-label="name"
+            emit-value
+            map-options
+            label=""
+          /> -->
         </template>
       </q-input>
+
+<!--      <div class="red-notice-txt">-->
+<!--        CPF inválido impede o saque.-->
+<!--      </div>-->
 
       <div class="" style="margin-top: 5px" :class="isAgreeReg ? 'checked' : ''">
         <q-checkbox v-model="isAgreeReg" class="reg-checked-box" rounded size="md">
@@ -168,14 +189,15 @@
   </div>
 </template>
 <script setup>
-import { ref, onActivated, onMounted } from "vue";
-import { userStore } from "stores/index";
-import { useUI } from "stores/ui";
-import { useQuasar, Platform, SessionStorage } from "quasar";
-import { useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
-import { isAndroid } from "boot/utils";
+import { generateEventID, isAndroid } from "boot/utils";
+import qs from "qs";
+import { Platform, SessionStorage, useQuasar } from "quasar";
+import { userStore } from "stores/index";
+import { useUI } from "stores/ui";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
 const store = userStore();
 const $q = useQuasar();
@@ -204,13 +226,66 @@ const email = ref("");
 const codeAffiliate = ref("");
 const referrer = ref("");
 
+const selectedPix= ref("CPF")
+const pixOptions = [
+  { id: 'PHONE', name: 'Phone' },
+  { id: 'EMAIL', name: 'Email' },
+  { id: 'CPF', name: 'CPF' },
+];
+
 const captchaCode = ref("0000");
 const codeId = ref("");
+
+const fbc = ref("");
+const fbp = ref("");
 
 let sid = "";
 let isfinger = "";
 let regDevice = "";
 let regHost = location.hostname;
+
+const getFbValue = () => {
+  const fbclid2 = window.localStorage.getItem("fbclid");
+
+  const getCookie = (name) => {
+    const match = document.cookie.match(new RegExp(name + "=([^;]+)"));
+    return match ? decodeURIComponent(match[1]) : "";
+  };
+
+  const getFbclid = () => {
+    return sessionStorage.getItem("fbc3") || "";
+  };
+
+  const fbc3 = getFbclid();
+
+  const getFbClientId = () => {
+    let result = /_fbp=(fb\.1\.\d+\.\d+)/.exec(window.document.cookie);
+    if (!(result && result[1])) {
+      return null;
+    }
+    return result[1];
+  };
+
+  const fbc1 = (() => {
+    const rawFbp = getCookie("_fbc");
+    return rawFbp ? rawFbp.split(".").pop() : null;
+  })();
+
+  const fbp1 = (() => {
+    const rawFbp = getCookie("_fbp");
+    return rawFbp ? rawFbp.split(".").pop() : null;
+  })();
+
+  const fbp2 = (() => {
+    const rawFbp = getFbClientId();
+    return rawFbp ? rawFbp : null;
+  })();
+
+  const randUuid = generateEventID();
+
+  fbp.value = fbp1 || fbp2 || "";
+  fbc.value = fbclid2 || fbc1 || fbc3 || randUuid;
+};
 
 const register = () => {
   phoneRef.value.validate();
@@ -220,7 +295,15 @@ const register = () => {
   // emailRef.value.validate();
   taxIdRef.value.validate();
 
-  if (taxIdRef.value.hasError || firstNameRef.value.hasError || lastNameRef.value.hasError || taxIdRef.value.hasError|| phoneRef.value.hasError || passwordRef.value.hasError || isAgreeReg.value === false) {
+  if (
+    taxIdRef.value.hasError ||
+    firstNameRef.value.hasError ||
+    lastNameRef.value.hasError ||
+    taxIdRef.value.hasError ||
+    phoneRef.value.hasError ||
+    passwordRef.value.hasError ||
+    isAgreeReg.value === false
+  ) {
     $q.loading.hide();
   } else {
     var qs = require("qs");
@@ -264,6 +347,14 @@ const register = () => {
         regHost = "app://";
       }
 
+      let getTaxId = taxId.value;
+      if(selectedPix.value === "CPF"){
+        getTaxId =  getTaxId.replace(/[-.]/g, '');
+      }
+
+      // debugger;
+      getFbValue();
+
       api
         .post(
           "/member/indRegister",
@@ -271,7 +362,8 @@ const register = () => {
             loginName: phone.value,
             telephone: phone.value,
             password: password.value,
-            taxId: taxId.value,
+            taxId: getTaxId,
+            taxType: selectedPix.value,
             realName: `${firstName.value},${lastName.value}`,
             // email: email.value,
             captchaCode: captchaCode.value,
@@ -281,7 +373,9 @@ const register = () => {
             sid,
             isfinger,
             regDevice,
-            regHost
+            regHost,
+            fbc: fbc.value,
+            fbp: fbp.value
           })
         )
         .then((ret) => {
@@ -302,7 +396,6 @@ const register = () => {
             if (store.hasToken()) {
               router.push("/");
             }
-            // uiStore.loginView = "";
             isAgreeReg.value = false;
             // location.href = "/";
 
@@ -311,7 +404,8 @@ const register = () => {
               type: "register"
             });
 
-            uiStore.loginView = "regSuccess";
+            uiStore.loginView = "";
+            uiStore.isShowRegAccSuccessModal = true;
           } else {
             $q.notify({
               color: "negative",
@@ -343,34 +437,58 @@ const trackRegisterSuccessEvent = () => {
   }
 };
 
+const validateTaxId = (val) => {
+  if (!val) return "Por favor, insira o conteúdo.";
+
+  // if (selectedPix.value === 'EMAIL') {
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   return emailRegex.test(val) ? true : "Por favor, insira um E-mail válido.";
+  // }
+
+  // if (selectedPix.value === 'PHONE') {
+  //   const phoneRegex = /^\d{8,11}$/;
+  //   return phoneRegex.test(val) ? true : "Por favor, insira um número de telefone válido (8 a 11 dígitos).";
+  // }
+
+  if (selectedPix.value === 'CPF') {
+    const cleaned = val.replace(/\D/g, '');
+    if (cleaned.length <= 6) return 'O número do CPF deve ter 11 dígitos';
+    const validate_cpf = validateCPF(val);
+    if(validate_cpf===false){
+      return 'Formato do número do CPF está incorreto.';
+    }
+  }
+  return true;
+}
+
 const validateCPF = (input_cpf) => {
   if (!input_cpf) return false;
 
-  const input = input_cpf.toString().replace(/\D/g, ''); // 去除非数字
-  if (input.length !== 11 || /^(\d)\1{10}$/.test(input)) return false; // 排除重复数字
+  const cpf = input_cpf.toString().replace(/\D/g, "");
 
-  const pesosA = [10, 9, 8, 7, 6, 5, 4, 3, 2];
-  const pesosB = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2];
+  if (cpf.length !== 11) return false;
 
+  // 排除常见无效 CPF（所有数字都一样）
+  if (/^(\d)\1{10}$/.test(cpf)) return false;
+
+  const nums = cpf.split("").map(Number);
+
+  // 第一个校验位
   let sum = 0;
   for (let i = 0; i < 9; i++) {
-    sum += parseInt(input[i]) * pesosA[i];
+    sum += nums[i] * (10 - i);
   }
+  let d1 = sum % 11 < 2 ? 0 : 11 - (sum % 11);
 
-  let x1 = sum % 11;
-  x1 = (x1 < 2) ? 0 : 11 - x1;
-
+  // 第二个校验位
   sum = 0;
   for (let i = 0; i < 10; i++) {
-    sum += parseInt(input[i]) * pesosB[i];
+    sum += nums[i] * (11 - i);
   }
+  let d2 = sum % 11 < 2 ? 0 : 11 - (sum % 11);
 
-  let x2 = sum % 11;
-  x2 = (x2 < 2) ? 0 : 11 - x2;
-
-  return x1 === parseInt(input[9]) && x2 === parseInt(input[10]);
-}
-
+  return d1 === nums[9] && d2 === nums[10];
+};
 
 const getCode = () => {
   // api
@@ -422,6 +540,46 @@ onMounted(() => {
   }
 }
 
+.bright-icon{
+  filter: brightness(0) invert(1);
+}
+
+.pix-selection{
+  width: 70px;
+  //:deep(.q-field__append){
+  //  display:none;
+  //}
+
+  :deep(.q-field__control){
+    padding: 0px 4px;
+  }
+
+  :deep(.q-field__native){
+    padding-bottom: 0px;
+  }
+
+  :deep(.q-field--outlined .q-field__control:after){
+    border: 0px;
+    border-width: 0px;
+  }
+
+  :deep(.q-field__control-container){
+    padding-top:0px;
+  }
+
+  :deep(.q-field--outlined.q-field--highlighted .q-field__control:after){
+    border: 0px;
+    border-width: 0px;
+  }
+
+  :deep(.ellipsis){
+    overflow:clip;
+  }
+}
+
+
+
+
 :deep(.reg-checked-box) {
   .q-checkbox__truthy {
     stroke: #1f241f;
@@ -434,4 +592,17 @@ onMounted(() => {
     color: #00fd7c;
   }
 }
+
+.red-notice-txt {
+  color: #d25858;
+  margin-bottom: 20px;
+}
+
+.input{
+  :deep(.q-field__bottom){
+    color: #d25858;
+  }
+
+}
+
 </style>

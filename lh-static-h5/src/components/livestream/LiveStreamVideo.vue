@@ -6,8 +6,8 @@
     @mouseenter="handleWrapperMouseEnter"
     @mouseleave="handleWrapperMouseLeave"
   >
-    <div class="back-section" style="z-index: 4900" v-if="showPlayerController">
-      <q-btn flat>
+    <div class="back-section" style="z-index: 4900" >
+      <q-btn no-wrap flat>
         <q-icon name="chevron_left" color="white" size="lg" @click="backToPrev()" />
         <div class="item-content">
           <div class="content-title">{{ livestreamData.title }}</div>
@@ -948,6 +948,7 @@ const handleShareClick = () => {
   justify-content: space-between;
   margin-right: auto;
 
+
   &:before {
     content: "";
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 100%);
@@ -969,6 +970,8 @@ const handleShareClick = () => {
     .content-desc {
       color: #fff;
       font-size: 11px;
+      white-space: normal;
+      line-height: 16px;
     }
   }
 
@@ -1007,4 +1010,5 @@ const handleShareClick = () => {
     margin-right: auto;
   }
 }
+
 </style>

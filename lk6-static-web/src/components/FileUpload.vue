@@ -120,7 +120,7 @@ export default defineComponent({
               />
     <el-button size="small" class="common-btn"
                 @click="$refs.input.click()">
-      上传图片
+      {{ $t('btn.uploadImage') }}
     </el-button></el-space>
           <!-- <el-input v-model.number="ruleForm.icon" autocomplete="off" /> -->
 </template>

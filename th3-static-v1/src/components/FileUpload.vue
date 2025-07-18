@@ -1,21 +1,37 @@
 <template>
-  <q-file name="upload_img" v-model="file" class="q-pt-md" filled label="上传图片" color="white">
-    <template v-slot:prepend>
-      <q-icon name="cloud_upload" />
-    </template>
+  <q-file
+    name="upload_img"
+    v-model="file"
+    label-color="brand"
+    outlined
+    clearable
+    :class="file? '' : 'hasFile'"
+  >
     <!-- Display error message -->
     <!-- <template v-slot:error="{ error }">
       <div class="text-negative">{{ error }}</div>
     </template> -->
+    <template v-slot:prepend>
+      <img style="
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 32px;
+    width: 32px;" v-if="!file" src="../assets/images/common/image-icon.png">
+    </template>
+
   </q-file>
+ 
 </template>
 
 <script>
+import { ref, defineComponent, watch, defineExpose } from "vue";
+import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
-import { defineComponent, ref, watch } from "vue";
-
-import { getRndInteger } from "@/boot/utils";
-import { userStore } from "@/stores";
+import { getRndInteger } from "boot/utils";
 
 export default defineComponent({
   emits: ["photoResponse"],
@@ -28,6 +44,9 @@ export default defineComponent({
 
     const action = rstApi + "/session/image/uploadOrder?token=" + store.token;
     const $q = useQuasar();
+    const resetFile = () => {
+      file.value = null;
+    };
     const file = ref();
     watch(file, (newValue, oldValue) => {
       uploadFile(newValue);
@@ -50,14 +69,14 @@ export default defineComponent({
             $q.notify({
               type: "positive",
               position: "top",
-              message: `${file.value.name} 上传成功。`,
+              message: `${file.value.name} uploaded successfully`,
               icon: "check_circle_outline"
             });
           } else {
             $q.notify({
               type: "negative",
               position: "top",
-              message: `${file.value.name} 上传失败。请稍后再试。`,
+              message: `${file.value.name} upload failed. Please try again`,
               icon: "report_problem"
             });
             file.value = null;
@@ -68,19 +87,43 @@ export default defineComponent({
       }
     };
 
+    defineExpose({
+      resetFile
+    });
+
     return {
       file,
       action,
       // handleChange,
-      uploadFile
+      uploadFile,
       // uploadedCallBack,
+      resetFile
     };
   }
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .q-uploader .q-uploader-upload-btn {
   color: #ffffff !important;
+}
+.q-field__control-container {
+  height: 100%;
+  flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.q-file .q-field__native {
+  display: block;
+}
+:deep(.q-field__control):after {
+ height: 100%;
+}
+.hasFile { 
+  :deep(.q-field__control-container) {
+    display: flex; padding: 30px 0; justify-content: center;
+
+  }
 }
 </style>

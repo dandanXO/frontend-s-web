@@ -13,12 +13,13 @@
   </div>
 </template>
 <script lang="js">
-import {defineComponent, onActivated, onMounted, ref} from "vue";
+import {computed, defineComponent, onActivated, onMounted, ref} from "vue";
 import RecordComponent from "../../components/RecordComponent.vue";
 import moment from "moment";
 import { api } from "boot/axios";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import RecordDateFilter from "src/components/RecordDateFilter.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "TransferRecordView",
@@ -27,6 +28,7 @@ export default defineComponent({
     // RecordDateFilter
   },
   setup() {
+    const {t} = useI18n();
     const visible = ref(true);
     const tableData = ref([]);
     const recordRef = ref();
@@ -93,33 +95,32 @@ export default defineComponent({
       });
     };
 
-    const tableHeaders = ([
+    const tableHeaders = computed(() => ([
       {
         key: "serialNumber",
-        label: "转账编码"
+        label: t('record.table.transfer.header.serialNumber')
       },
       {
         key: "type",
-        label: "账变类型"
+        label: t('record.table.transfer.header.type')
       },
       {
         key: "platform",
-        label: "游戏平台"
+        label: t('record.table.transfer.header.platform')
       },
       {
         key: "amount",
-        label: "金额"
+        label: t('record.table.transfer.header.amount')
       },
       {
         key: "status",
-        label: "状态"
+        label: t('record.table.transfer.header.status')
       },
       {
         key: "transferDate",
-        label: "时间"
+        label: t('record.table.transfer.header.transferDate'),
       }
-
-    ]);
+    ]));
     const handleDateChange = (data) => {
       const {val, isStartDate} = data
       isStartDate ? startDate.value = val : endDate.value = val

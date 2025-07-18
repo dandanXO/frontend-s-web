@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="card">
     <div class="menu-title-container">
       <span class="menu-title">
-        {{ isAutoWithdrawal ? "快速提款" : "提款" }}
+        {{ isAutoWithdrawal ? $t('form.quickWithdrawal') : $t('menu.withdraw') }}
       </span>
       <el-button
         v-if="!isAutoWithdrawal"
@@ -13,23 +13,23 @@
         @click="handleUpgradeClick"
       >
         <img src="@/assets/images/finance/withdraw/rocket-icon.svg" />
-        <span>升级快速提款</span>
+        <span>{{ $t('form.upgradeFastWithdrawal') }}</span>
       </el-button>
     </div>
 
     <div class="menu-title-container">
       <div class="account-content withdrawal">
         <div class="flex-box">
-          <span class="">提款流程：</span>
-          <div class="step-item active">申请中</div>
+          <span class="">{{$t('form.withdrawProcedure')}}：</span>
+          <div class="step-item active">{{ $t('form.statusIsApplying') }}</div>
           <img width="20" height="20" src="../../assets/home/arrow-right-s-line.svg" />
-          <div class="step-item">审核中</div>
+          <div class="step-item">{{ $t('form.statusIsUnderReview') }}</div>
           <img width="20" height="20" src="../../assets/home/arrow-right-s-line.svg" />
-          <div class="step-item">支付中</div>
+          <div class="step-item">{{ $t('form.statusIsPaymentOngoing') }}</div>
           <img width="20" height="20" src="../../assets/home/arrow-right-s-line.svg" />
-          <div class="step-item">出款成功</div>
+          <div class="step-item">{{ $t('form.statusIsWithdrawSuccess') }}</div>
         </div>
-        <div class="withdraw-tip">* 若提款失败请查看站内信提示的失败原因！</div>
+        <div class="withdraw-tip">* {{ $t('form.withdrawProcedureTagline') }}</div>
       </div>
     </div>
     <div class="withdraw-form">
@@ -41,7 +41,7 @@
         :model="withdrawInfo"
         :rules="withdrawRules"
       >
-        <el-form-item label="提款方式">
+        <el-form-item :label="$t('form.withdrawalMethod')">
           <div
             v-for="(method, i) in withdrawalMethods"
             :key="i"
@@ -65,24 +65,24 @@
           class="helptxt"
           :class="{ 'has-helper-text': isAutoWithdrawal }"
           prop="amount"
-          label="提款金额"
+          :label="$t('form.withdrawAmount')"
           name="amount"
         >
           <el-space>
             <el-row :gutter="10" style="align-items: center">
               <el-col :span="12">
-                <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
+                <el-input class="form-input" v-model="withdrawInfo.amount" :placeholder="$t('form.withdrawAmount')">
                   <template #append>{{ store.currency.label }}</template>
                 </el-input>
               </el-col>
               <el-col :span="12">
                 <span v-if="selectedWithdrawalMethod && selectedWithdrawalMethod.withdrawMin">
                   {{
-                    `单笔限额: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
+                    `${$t('form.singleTransactionLimit')}: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
                   }}
                   <br />
                   {{
-                    `今日提款: ${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余: ${selectedWithdrawalMethod.withdrawMaxTimes} 次`
+                    `${$t('form.todayWithdrawal')}: ${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, ${$t('form.remaining')}: ${selectedWithdrawalMethod.withdrawMaxTimes} ${$t('form.times')}`
                   }}
                 </span>
               </el-col>
@@ -94,7 +94,7 @@
               class="standard-button btn-color-blue"
               @click="submitWithraw"
             >
-              确定
+              {{ $t('btn.confirm') }}
             </el-button>
           </el-space>
           <!-- <div
@@ -130,19 +130,19 @@
             <!--            </div>-->
           </el-col>
         </el-row>
-        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
+        <!-- <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
           <span style="color: #17cd27">
             1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }} {{ store.currency.label }}
           </span>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item
           class="select"
           prop="cardId"
-          :label="`选择${cardLabel()}`"
+          :label="`${$t('form.choose')} ${cardLabel()}`"
           :rules="[
             {
               required: true,
-              message: `请选择${cardLabel()}`,
+              message: `${$t('form.choose')} ${cardLabel()}`,
               trigger: 'blur'
             }
           ]"
@@ -151,7 +151,7 @@
             <el-select
               @click="withdrawState.bankCardList.length === 0 ? checkBankCards() : ''"
               v-model="withdrawInfo.cardId"
-              :placeholder="`选择${cardLabel()}`"
+              :placeholder="`${$t('form.choose')} ${cardLabel()}`"
               style="width: 300px"
             >
               <el-option
@@ -168,7 +168,8 @@
             <span>加载中...</span>
           </template>
         </el-form-item>
-        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="预计到账">
+        <el-form-item style="display:none;" v-if="isUSDT && 
+        selectedWithdrawalMethod.exchangeRate" class="helptxt" :label="$t('form.estimatedReceivables')">
           <span style="color: #17cd27">
             {{
               selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
@@ -184,14 +185,14 @@
 
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET && selectedWithdrawalMethod.url">
-          <span class="tip-text">*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</span>
+          <span class="tip-text">*{{$t('form.withdrawTipText')}}</span>
           <el-button class="standard-button btn-color-blue" v-if="selectedWithdrawalMethod.code !== 'SZPAY'" @click="openEWalletTutorial">
             <span>{{ tutorialLabel }}</span>
           </el-button>
         </div>
 
         <div v-if="selectedWithdrawalMethod.withdrawFee" style="color: #17cd27">
-          *提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT
+          *{{$t('form.withdrawalFees')}}：{{ selectedWithdrawalMethod.withdrawFee }} USDT
         </div>
 
         <!-- <div
@@ -212,11 +213,11 @@
       :close-on-click-modal="false"
       v-model="isShowWithdrawErrorBlock"
     >
-      您需要在交易记录-提款记录中点击 "确认到账" 完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!
+      {{ $t('form.remainingDialogHint') }}
       <div class="withdraw-remaining-dialog__buttons">
-        <el-button class="common-btn" @click="isShowWithdrawErrorBlock = false">返回</el-button>
+        <el-button class="common-btn" @click="isShowWithdrawErrorBlock = false">{{ $t('btn.back') }}</el-button>
         <router-link to="/center/transit-record?type=withdraw">
-          <el-button class="common-btn">前往确认</el-button>
+          <el-button class="common-btn">{{ $t('btn.proceed') }}</el-button>
         </router-link>
       </div>
     </el-dialog>
@@ -232,6 +233,7 @@ import { useRouter } from "vue-router";
 import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "@/hooks/notify";
 import WithdrawRemainingDialog from "@/components/finance/WithdrawRemainingDialog.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -239,6 +241,7 @@ export default defineComponent({
     WithdrawRemainingDialog
   },
   setup() {
+    const { t } = useI18n(); 
     const notify = useNotify()
     const router = useRouter();
     const loadingBtn = ref(false);
@@ -324,12 +327,12 @@ export default defineComponent({
       amount: [
         {
           required: true,
-          message: "请输入金额",
+          message: t('form.pleaseEnterField', {field: t('form.amount')}),
           trigger: "blur"
         },
         {
           pattern: "^([1-9][0-9]*)$",
-          message: "金额应为正数",
+          message: t('form.amountShouldBePositiveInteger'),
           trigger: "change"
         },
         {
@@ -521,7 +524,7 @@ export default defineComponent({
     };
     const cardLabel = () => {
       if (isUSDT.value) {
-        return "钱包地址";
+        return t('form.crypto');
       } else if (isEWALLET.value) {
         return "电子钱包";
       } else if (isALIPAY.value) {
@@ -642,7 +645,6 @@ export default defineComponent({
 
     .step-item {
       color: #ffffff;
-      width: 130px;
       // height: 50px;
       line-height: 45px;
       background-image: linear-gradient(267deg, #78abfa 0, #4877ec 100%), linear-gradient(#5b80e7, #5b80e7);
@@ -656,6 +658,9 @@ export default defineComponent({
       justify-content: center;
       align-items: center;
       border-radius: 2px;
+      min-width: 130px;
+      padding: 0 10px;
+      white-space: nowrap;
       // &::before,
       // &::after {
       //   content: "";

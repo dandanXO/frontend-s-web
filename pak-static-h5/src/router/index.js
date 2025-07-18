@@ -142,6 +142,11 @@ export default route(function (/* { store, ssrContext } */) {
       ttq.load("D1N7MJRC77U41SK2M5OG");
       ttq.page();
       user.isTkPixel = true;
+      sessionStorage.setItem("TK_PIXEL_ID", "D1N7MJRC77U41SK2M5OG");
+      ttq.track("ViewContent", {
+        content_type: "product",
+        content_name: to.path
+      });
     } else if (
       window.location.href.indexOf("fbiyucw0.cc") > -1 &&
       window.location.href.indexOf("MDM1NjU2NzcwMDI=") > -1

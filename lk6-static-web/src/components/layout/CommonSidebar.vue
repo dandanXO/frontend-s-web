@@ -4,14 +4,14 @@
       <div class="additional-info-item" @click.stop.prevent="store.openLiveChat()">
         <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
         <span style="margin-left: 5px">
-          官网客服
+          {{ $t('menu.officialSupport') }}
           <img width="20px" height="20px" src="../../assets/home/24-hours-line.svg" class="icon-24h" />
         </span>
       </div>
       <a class="additional-info-item" @click.stop.prevent="goToLiveChatPromo()">
         <!-- <img src="../../assets/images/home/sticky-sidebar/email-icon.svg" /> -->
         <img style="margin-right: 8px" src="@/components/hotpromo/officialGift/img/voxis.svg" />
-        <span style="margin-left: 5px">专属客服</span>
+        <span style="margin-left: 5px">{{ $t('menu.dedicatedSupport') }}</span>
       </a>
       <!--      <div class="additional-info-item">-->
       <!--        <img src="../../assets/images/home/sticky-sidebar/phone-icon.svg" />-->
@@ -23,7 +23,7 @@
       class="sticky-sidebar-items"
       :class="stickyHovered && 'sticky-hovered'"
       @mouseover="stickyHovered = true"
-      @mouseleave="stickyHovered = false"
+      @mouseleave="closeStickySidebar"
     >
       <!-- <div class="sticky-sidebar-item" @click="handleDarkModeClick">
         <img v-if="isDark" src="@/assets/images/home/sticky-sidebar/light-mode-icon.svg" />
@@ -36,17 +36,17 @@
       </router-link> -->
       <div class="sticky-sidebar-item" @mouseover="customerHovered = true">
         <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
-        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">客服中心</div>
+        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">{{ $t('menu.supportCentre') }}</div>
       </div>
       <div @mouseover="customerHovered = false">
         <router-link to="/app" class="sticky-sidebar-item">
           <img src="../../assets/images/home/sticky-sidebar/app-dl-icon.svg" />
-          <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">APP 下载</div>
+          <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">{{ $t('menu.appDownload') }}</div>
         </router-link>
       </div>
       <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
         <img src="../../assets/images/home/sticky-sidebar/back-top-icon.svg" />
-        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">返回顶部</div>
+        <div :class="stickyHovered && 'sticky-hovered'" class="item-txt">{{ $t('menu.backToTop') }}</div>
       </div>
     </div>
   </div>
@@ -160,11 +160,14 @@ import { ElMessageBox } from "element-plus";
 import moment from "moment";
 
 import { storeToRefs } from "pinia";
+import { setTimeout } from "core-js";
+import { useI18n } from "vue-i18n";
 export default defineComponent({
   components: {
     GameModal
   },
   setup() {
+    const { t } = useI18n();
     const notify = useNotify();
     const route = useRoute();
     const router = useRouter();
@@ -186,6 +189,12 @@ export default defineComponent({
         gameMenu.value.open(gameName, platType, gameCode, scrollingState);
       }
     };
+
+    const closeStickySidebar = () => {
+      setTimeout(() => {
+        stickyHovered.value = false;
+      }, 2000);
+    }
 
     const downloadUrl = ref("");
     const getAppDownloadUrl = () => {
@@ -369,9 +378,9 @@ export default defineComponent({
           router.push(`/promotion?name=lh-official-gift`);
         }
       } else {
-        ElMessageBox.alert("请登录后再操作", "系统提示", {
+        ElMessageBox.alert(t('message.loginFirstAction'), t('message.systemPrompt'), {
           center: true,
-          confirmButtonText: "确认",
+          confirmButtonText: t('btn.confirm'),
           showClose: false,
           buttonSize: "large"
         }).then(() => {
@@ -452,7 +461,8 @@ export default defineComponent({
       isDragging,
       goToLiveChatPromo,
       ElMessageBox,
-      memberType
+      memberType,
+      closeStickySidebar
     };
   }
 });
@@ -670,6 +680,7 @@ export default defineComponent({
   background-size: 100% 100%;
   position: relative;
   transition: 0.3s all;
+  font-family: 'PingFang SC';
 
   > div {
     width: 28px;
@@ -691,9 +702,8 @@ export default defineComponent({
     transform: translateY(-50%);
     height: 32px;
     width: 16px;
-    background: #d9e7ff;
-    border-left: 2px solid #d4e6ff;
-    color: #7A80A1;
+    background: #d9e7ff94;
+    color: #333;
     font-size: 20px;
     font-weight: lighter;
     padding-left: 4px;
@@ -728,7 +738,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #7A80A1;
+    color: #333333;
     gap: 5px;
     cursor: pointer;
 
@@ -750,6 +760,8 @@ export default defineComponent({
       white-space: nowrap;
       transition: 0.3s all;
       text-align: center;
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
 
       &.sticky-hovered {
         opacity: 1;

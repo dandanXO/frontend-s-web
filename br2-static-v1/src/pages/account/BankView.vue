@@ -5,10 +5,11 @@
         <q-icon name="add" size="20px" />
         <div class="card-label">{{ $t("header.addCrypto") }}</div>
       </div> -->
-      <div class="bank-card-add" @click="onAddCardClick()">
+      <div v-if="isAllowBindBankCard" class="bank-card-add" @click="onAddCardClick()">
         <q-icon name="add" size="20px" />
         <div class="card-label">{{ $t("header.addCard") }}</div>
       </div>
+      <div v-else class="disable-bank-card-txt">{{ $t("withdraw.bindCardCs") }}</div>
     </div>
 
     <!-- unbind dialog -->
@@ -61,7 +62,13 @@
                 <img :src="imgURL + item.bankIcon" alt="Bank Icon" style="width: 30px" />
               </div>
               <div class="item-title">{{ item.bankName }}</div>
-              <q-btn class="item-bind" flat dense @click.stop.prevent="onUnbindClick(item.cardNumber, item.id)">
+              <q-btn
+                v-if="item.allowUnBindCard"
+                class="item-bind"
+                flat
+                dense
+                @click.stop.prevent="onUnbindClick(item.cardNumber, item.id)"
+              >
                 {{ $t("btn.unbinding") }}
               </q-btn>
               <!-- <div class="item-bind" @click.stop.prevent="onUnbindClick(item.cardNumber, item.id)">
@@ -206,7 +213,7 @@ const copy = (val) => {
       $q.notify({
         color: "position",
         position: "top",
-        message: `${val} ${t('notify.copiedToClipboard')}`,
+        message: `${val} ${t("notify.copiedToClipboard")}`,
         icon: "check_circle_outline"
       });
     })
@@ -231,6 +238,8 @@ const onUnbindClick = (cardNumber, cardId) => {
   selectedUnbindCardNum.value = cardNumber;
 };
 
+const isAllowBindBankCard = ref(false);
+
 const unbind = () => {
   isUnbindDialogOpen.value = false;
 
@@ -240,7 +249,7 @@ const unbind = () => {
       $q.notify({
         color: "positive",
         position: "top",
-        message: t('notify.unbindSucceed'),
+        message: t("notify.unbindSucceed"),
         icon: "check_circle_outline"
       });
       loadCards();
@@ -275,6 +284,9 @@ const loadCards = () => {
 
         if (bankCardList.value.length > 0) {
           isCardShown.value[bankCardList.value.length - 1] = true;
+          isAllowBindBankCard.value = res.data[0].allowBindCard;
+        } else {
+          isAllowBindBankCard.value = true;
         }
       }
     })
@@ -452,6 +464,7 @@ onActivated(() => {
   justify-content: center;
   width: calc(100% - 20px);
   margin: 30px auto 12px;
+  flex-direction: column;
 
   .bank-card-add {
     flex: 1;
@@ -466,6 +479,7 @@ onActivated(() => {
     padding: 1rem 8px;
     height: 50px;
     justify-content: center;
+    width: 100%;
 
     .card-update,
     .card-unlink {
@@ -487,6 +501,10 @@ onActivated(() => {
       opacity: 0.9;
       filter: brightness(0.9);
     }
+  }
+
+  .disable-bank-card-txt {
+    color: #e03f3f;
   }
 }
 

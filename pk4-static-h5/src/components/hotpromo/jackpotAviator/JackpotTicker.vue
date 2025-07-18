@@ -97,6 +97,7 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     font-family: "Poppins";
+    display:none;
 
     .jackpot-number {
         text {

@@ -37,9 +37,9 @@
         <div class="content-sec">
           <div class="treasure-img"><img src="../../assets/images/index/money-rain/treasure-img.png" /></div>
           <div class="rewind-title">
-            {{$t("hotPromo.rewind_time")}}
+            {{ $t("hotPromo.rewind_time") }}
             <span>
-              <template v-if="nextRainTime.nowIsRain">{{$t("hotPromo.starts_now")}}</template>
+              <template v-if="nextRainTime.nowIsRain">{{ $t("hotPromo.starts_now") }}</template>
 
               <template v-else>{{ $t("hotPromo.starts_at") }} {{ nextRainTime.rainStartNext }}</template>
             </span>
@@ -57,8 +57,11 @@
             </q-btn>
           </div>
         </div>
-        <div class="content-timing">
-          <div class="timing-head">{{ $t("hotPromo.every_friday_saturday_and_sunday") }}</div>
+
+        <!-- tnc starts -->
+        <div v-html="pageContent" />
+        <!-- <div class="content-timing">
+          <div class="timing-head">Each round of cash rain freely distributes 666,666 PKR.</div>
           <div class="timing-body">
             <span>00:00-00:59</span>
             <span>12:00-12:59</span>
@@ -78,31 +81,27 @@
         </div>
 
         <div class="content-footer">
-          <!-- <div class="footer-title">
-            Limited to
-            <span>3000 Participants</span>
-          </div> -->
           <div class="footer-title q-mt-sm">{{ $t("hotPromo.terms_and_Conditions") }}:</div>
           <div class="footer-content">
             {{ $t("content.cashRainIntro") }}
-            
+
             <br />
             {{ $t("content.cashRainMaxPerRound") }}
-            
+
             <br />
             {{ $t("content.cashRainFreeDistribution") }}
-            
+
             <br />
             {{ $t("content.cashRainClaimCondition") }}
-            
+
             <br />
             {{ $t("content.cashRainUsage") }}
-            
+
             <br />
             {{ $t("content.cashRainVIP") }}
-            
           </div>
-        </div>
+        </div> -->
+        <!-- tnc ends -->
       </div>
 
       <div class="rain-money-tab-content" v-show="moneyRainTab === 'records'">
@@ -191,9 +190,9 @@
               <table border="0" cellpadding="4" cellspacing="0" width="100%">
                 <thead style="opacity: 0">
                   <tr>
-                  <td>{{ $t("hotPromo.name") }}</td>
-                  <td>{{ $t("hotPromo.date") }}</td>
-                  <td>{{ $t("hotPromo.amount") }}</td>
+                    <td>{{ $t("hotPromo.name") }}</td>
+                    <td>{{ $t("hotPromo.date") }}</td>
+                    <td>{{ $t("hotPromo.amount") }}</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -210,36 +209,41 @@
           </div>
         </div>
       </div>
-
     </div>
-    <img @click="closeModalHandler" class="return-enveloper-btn" src="../../assets/images/index/money-rain/return-red-envelope-btn.png" />
+    <img
+      @click="closeModalHandler"
+      class="return-enveloper-btn"
+      src="../../assets/images/index/money-rain/return-red-envelope-btn.png"
+    />
   </div>
-  
+
   <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <q-btn icon="close" round dense v-close-popup class="money-rain-close" />
     <div class="congrats-wrapper">
-      <div class="congrats-head">{{ $t('hotPromo.earnMoney.congratsOnGetting') }}</div>
-    <div class="congrats-container">
-      <!-- <div class="congrats-header"><img src="../../assets/images/index/money-rain/congrats-header.png" /></div> -->
-      <!-- <div class="congrats-coupons"><img src="../../assets/images/index/money-rain/congrats-money.png" /></div> -->
-      <div class="congrats-highlight"> {{ $t("hotPromo.rs") }}{{ prizeAmount }}</div>
+      <div class="congrats-head">{{ $t("hotPromo.earnMoney.congratsOnGetting") }}</div>
+      <div class="congrats-container">
+        <!-- <div class="congrats-header"><img src="../../assets/images/index/money-rain/congrats-header.png" /></div> -->
+        <!-- <div class="congrats-coupons"><img src="../../assets/images/index/money-rain/congrats-money.png" /></div> -->
+        <div class="congrats-highlight">{{ $t("hotPromo.rs") }}{{ prizeAmount }}</div>
 
-      <div class="congrats-button">
-        <q-btn flat :loading="false" @click="showPrizePopup = false">
-          {{ $t("btn.recharge") }}
-        </q-btn>
+        <div class="congrats-button">
+          <q-btn flat :loading="false" @click="showPrizePopup = false">
+            {{ $t("btn.recharge") }}
+          </q-btn>
+        </div>
       </div>
-    </div>
     </div>
   </q-dialog>
 </template>
 
 <script setup>
 import { onMounted, ref, reactive, defineEmits } from "vue";
-import { eventapi } from "src/boot/axios";
+import { eventapi, api } from "src/boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { i18nStore } from "src/router/language";
 
+const i18nStoreLanguage = i18nStore();
 const router = useRouter();
 const store = userStore();
 const moneyRainTab = ref("events");
@@ -398,10 +402,27 @@ const onClaimBonus = () => {
     });
 };
 
+const pageContent = ref();
+const getPromoTnc = () => {
+  api
+    .get(`/opt-session/promo/page?language=${i18nStoreLanguage.languageVal}`)
+    .then((res) => {
+      if (res.code === 0) {
+        const promoItem = res.data.find((item) => item.promoCode === "pak-red-envelope-rain");
+
+        pageContent.value = promoItem.pageContent;
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
 onMounted(() => {
   getListing();
   startAutoScroll();
   getNextRainTime();
+  getPromoTnc();
 
   const spans = document.querySelectorAll("#money-container span");
   spans.forEach((span) => {
@@ -419,13 +440,13 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url(../../assets/images/earn-money/congrats-bg.png)no-repeat top center;
-  background-color: rgba(0, 0, 0, .8);
+  background: url(../../assets/images/earn-money/congrats-bg.png) no-repeat top center;
+  background-color: rgba(0, 0, 0, 0.8);
   width: 100%;
-    background-size: contain;
-    flex-direction: column;
-    gap: 20px;
-    padding-top: 100px;
+  background-size: contain;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 100px;
 }
 .congrats-head {
   margin-top: -100px;
@@ -436,12 +457,11 @@ onMounted(() => {
   max-width: 300px;
   letter-spacing: 0px;
   text-align: center;
-  color: #FFD288;
-  
+  color: #ffd288;
 }
 .congrats-container {
   position: relative;
-  background: url(../../assets/images/earn-money/congrats-card.png)no-repeat center center;
+  background: url(../../assets/images/earn-money/congrats-card.png) no-repeat center center;
   background-size: contain;
   width: 75%;
   height: 300px;
@@ -452,7 +472,7 @@ onMounted(() => {
     line-height: 100%;
     letter-spacing: 0px;
     text-align: center;
-    color: #F23030;
+    color: #f23030;
     margin-top: 50px;
   }
   .congrats-button {
@@ -468,7 +488,6 @@ onMounted(() => {
     letter-spacing: 0%;
     text-align: center;
     color: #ffffff;
-
   }
 }
 .table-container {
@@ -502,14 +521,14 @@ onMounted(() => {
     width: 143px;
     text-align: center;
     font-weight: bold;
-    color: #AA1414;
+    color: #aa1414;
     position: relative;
-    background: #FFFFFF;
+    background: #ffffff;
     border-radius: 4px;
     font-family: Poppins;
 
     &.active {
-      background: #EE4034;
+      background: #ee4034;
       color: #ffffff;
 
       &:before {
@@ -518,7 +537,7 @@ onMounted(() => {
         width: 0;
         border-left: 12px solid transparent;
         border-right: 12px solid transparent;
-        border-top: 12px solid #EE4034;
+        border-top: 12px solid #ee4034;
         position: absolute;
         bottom: -8px;
         left: 50%;
@@ -539,7 +558,7 @@ onMounted(() => {
   font-family: Poppins;
 
   .content-footer {
-    color: #B90704;
+    color: #b90704;
     margin-top: 12px;
     .footer-title {
       font-weight: bold;
@@ -554,7 +573,7 @@ onMounted(() => {
   }
 
   .content-table {
-    background: #EE4034;
+    background: #ee4034;
     padding: 8px;
     border-radius: 12px;
     margin-top: 12px;
@@ -583,7 +602,7 @@ onMounted(() => {
   }
 
   .content-timing {
-    color: #B90704;
+    color: #b90704;
     // background: #00b352;
     padding: 8px;
     border-radius: 12px;
@@ -631,7 +650,7 @@ onMounted(() => {
   }
 
   .content-sec {
-    background: #F97474;
+    background: #f97474;
     padding: 0 8px;
     border-radius: 12px;
     display: flex;
@@ -731,10 +750,9 @@ onMounted(() => {
     width: 60px;
   }
 
-
   .rain-money-tabs-container {
-    background: #FFE9D5;
-    border: 1.38px solid #FFC18A;
+    background: #ffe9d5;
+    border: 1.38px solid #ffc18a;
     padding: 16px 20px 50px;
     border-radius: 12px;
     position: relative;
@@ -839,12 +857,11 @@ onMounted(() => {
 }
 </style>
 <style lang="scss">
-
 ::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: transparent;
-  }
-  </style>
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+</style>

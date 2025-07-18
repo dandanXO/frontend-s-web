@@ -149,3 +149,7 @@ export const isInPwa = () => {
     return false;
   }
 };
+
+export const generateEventID = () => {
+  return `evt_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
+};

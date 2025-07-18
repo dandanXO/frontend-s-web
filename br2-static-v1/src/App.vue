@@ -10,7 +10,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { isAndroid, isInPwa } from "boot/utils";
+import { generateEventID, getRndInteger, isAndroid, isInPwa } from "boot/utils";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { useUI } from "src/stores/ui";
@@ -137,7 +137,92 @@ export default defineComponent({
       }
     };
 
+    const sendFacebookInfo = () => {
+      const fbclid2 = window.localStorage.getItem("fbclid");
 
+      const siteCode = "BR2";
+
+      const getCookie = (name) => {
+        const match = document.cookie.match(new RegExp(name + '=([^;]+)'));
+        return match ? decodeURIComponent(match[1]) : '';
+      };
+
+      const getFbclid = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get("fbclid");
+      };
+
+      const fbc3 = getFbclid();
+      if(fbc3){
+        sessionStorage.setItem("fbc3", fbc3);
+      }
+
+      const getFbClientId = () => {
+        let result = /_fbp=(fb\.1\.\d+\.\d+)/.exec(window.document.cookie);
+        if (!(result && result[1])) {
+          return null;
+        }
+        return result[1];
+      };
+
+      const fbc = (() => {
+        const rawFbp = getCookie("_fbc");
+        return rawFbp ? rawFbp.split(".").pop() : null;
+      })
+
+      // const fbp = getCookie("_fbp");
+      // Extract the last portion of _fbp
+      const fbp = (() => {
+        const rawFbp = getCookie("_fbp");
+        return rawFbp ? rawFbp.split(".").pop() : null;
+      })();
+
+      const fbp2 = (() => {
+        const rawFbp = getFbClientId();
+        return rawFbp ? rawFbp : null;
+      })();
+
+      const randUuid = generateEventID();
+      const payload = new URLSearchParams({
+        fbp: fbp || fbp2 || "",
+        fbc:  fbclid2 || fbc || fbc3 || randUuid,
+        siteCode: siteCode,
+        linkId: ""
+      });
+
+      // alert(`payload: ${payload}`);
+
+      var rstArray = Object.values(process.env.RST_API);
+      var rstApi = rstArray[getRndInteger(0, rstArray.length)];
+
+      // Make the POST request
+      // fetch(`${rstApi}/app/facebookInfo`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/x-www-form-urlencoded"
+      //   },
+      //   body: payload.toString()
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     console.log("Success:", data);
+      //     const randomValue = Math.floor(Math.random() * (999 - 300 + 1)) + 300;
+      //     // if (data.data.sendEvent === "ftd") {
+      //     //   fbq(
+      //     //     "track",
+      //     //     "Purchase",
+      //     //     {
+      //     //       currency: "PKR",
+      //     //       value: randomValue
+      //     //     },
+      //     //     { eventID: randUuid }
+      //     //   );
+      //     // }
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error:", error);
+      //   });
+    };
 
 
     const trackH5Affiliate = () => {
@@ -183,7 +268,7 @@ export default defineComponent({
               fbq("init", facebookId);
               fbq("track", "PageView");
               store.isFbPixel = true;
-              // sendFacebookInfo();
+              sendFacebookInfo();
             }
             if (pushId) {
               // initEngageLabPush(pushId);

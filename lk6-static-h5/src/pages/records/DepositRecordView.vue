@@ -19,6 +19,7 @@ import { api } from "boot/axios";
 import moment from "moment/moment";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import RecordDateFilter from "src/components/RecordDateFilter.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "DepositRecordView",
@@ -27,6 +28,7 @@ export default defineComponent({
     // RecordDateFilter
   },
   setup() {
+    const {t} = useI18n();
     const recordRef = ref();
     const visible = ref(true);
     const tableData = ref([]);
@@ -104,23 +106,23 @@ export default defineComponent({
     const tableHeaders = [
       {
         key: "depositAmount",
-        label: "金额"
+        label: t('record.table.deposit.header.depositAmount')
       },
       {
         key: "paymentType",
-        label: "存款类型"
+        label: t('record.table.deposit.header.paymentType')
       },
       {
         key: "status",
-        label: "存款状态"
+        label: t('record.table.deposit.header.status')
       },
       {
         key: "depositDate",
-        label: "到账时间"
+        label: t('record.table.deposit.header.depositDate')
       },
       {
         key: "serialNumber",
-        label: "存款编码"
+        label: t('record.table.deposit.header.serialNumber')
       }
     ];
     const handleDateChange = (data) => {

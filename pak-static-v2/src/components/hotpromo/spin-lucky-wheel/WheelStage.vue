@@ -97,13 +97,9 @@
       </div>
     </div>
 
-    <div class="block-wrapper">
+    <!-- <div class="block-wrapper">
       <div class="title-wrapper">
         {{ $t("hotPromo.activityRules") }}
-        <!-- <img
-          style="width: 100%; max-width: 250px; padding: 0 0 5px 0"
-          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/activity-rules-title.png"
-        /> -->
       </div>
       <ol>
         <li>{{ $t("hotPromo.spinReferWheel.message1") }}</li>
@@ -112,7 +108,7 @@
         <li>{{ $t("hotPromo.spinReferWheel.message4") }}</li>
         <li>{{ $t("hotPromo.spinReferWheel.message5") }}</li>
       </ol>
-    </div>
+    </div> -->
 
     <q-dialog v-model="showWithdrawDialog">
       <div class="withdraw-container">
@@ -724,7 +720,7 @@ onUnmounted(() => {
 .wheel-stage-wrapper {
   // height: 710px;
 
-  min-height: 1200px;
+  // min-height: 1200px;
   max-width: 370px;
   margin: 0 auto;
 

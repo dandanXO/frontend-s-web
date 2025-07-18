@@ -1,132 +1,71 @@
 <template>
   <div class="affiliate-container">
-    <div class="page-title" v-if="!$q.dark.isActive">
-      <div class="page-title-img"><img src="../assets/images/affiliate/title-1.png" /></div>
-      <div class="page-title-img"><img src="../assets/images/affiliate/title-2.png" /></div>
-      <div class="page-title-img" style="margin-top: 32px"><img src="../assets/images/affiliate/title-3.png" /></div>
+    <div class="page-title">
+      <div class="page-title-img">
+        <img v-if="languageVal !== 'en'" src="../assets/images/affiliate/title.png" />
+        <img v-else src="../assets/images/affiliate/title-en.png" />
+      </div>
     </div>
-    <div class="page-title-img" v-else><img src="../assets/images/affiliate/title-1.png" /></div>
-    <q-input style="width: 100%; opacity: 0; height: 5px" filled color="white" ref="copyinput" v-model="text_copied" />
+    <div class="page-title-text">
+      <span class="page-title-text__stroke">{{ $t("affiliate.agentSupport") }}</span>
+      <span class="page-title-text__fill">{{ $t("affiliate.agentSupport") }}</span>
+    </div>
+    <q-input
+      style="width: 100%; opacity: 0; height: 5px; pointer-events: none"
+      filled
+      color="white"
+      ref="copyinput"
+      v-model="text_copied"
+    />
     <div class="contact-list">
-      <div class="contact-item">
+      <div v-for="(info, index) in contactInfo" :key="index" class="contact-item">
         <div class="contact-info">
-          <img src="../assets/images/affiliate/qqlogo.png" alt="QQ Icon" class="contact-icon" />
+          <img :src="require(`../assets/images/affiliate/${info.icon}`)" alt="Icon" class="contact-icon" />
           <div class="contact-details">
-            <span class="contact-name">东赢 QQ</span>
-            <span class="contact-id">1827985941</span>
+            <span class="contact-name">{{ info.label }}</span>
+            <span class="contact-id ellipsis">{{ info.value }}</span>
           </div>
         </div>
         <div class="contact-actions">
-          <button @click="copyText('1827985941')" class="copy-button">复制</button>
-          <a target="_blank" href="https://im.qq.com/index/" class="download-button" rel="noopener">下载</a>
-        </div>
-      </div>
-
-      <div class="contact-item">
-        <div class="contact-info">
-          <img src="../assets/images/affiliate/tglogo.png" alt="Telegram Icon" class="contact-icon" />
-          <div class="contact-details">
-            <span class="contact-name">Telegram</span>
-            <span class="contact-id">@dyghs_01</span>
-          </div>
-        </div>
-        <div class="contact-actions">
-          <button class="copy-button" @click="copyText('@dyghs_01')">复制</button>
-          <a target="_blank" class="download-button" href="https://telegram.org/" rel="noopener">下载</a>
-        </div>
-      </div>
-
-      <div class="contact-item">
-        <div class="contact-info">
-          <img src="../assets/images/affiliate/skypelogo.png" alt="Skype Icon" class="contact-icon" />
-          <div class="contact-details">
-            <span class="contact-name">Skype</span>
-            <span class="contact-id">live:.cid.1b8d9a018a52a8f5</span>
-          </div>
-        </div>
-        <div class="contact-actions">
-          <button class="copy-button" @click="copyText('live:.cid.1b8d9a018a52a8f5')">复制</button>
-          <a target="_blank" class="download-button" href="https://www.skype.com/zh-Hans/get-skype/" rel="noopener">下载</a>
-        </div>
-      </div>
-
-      <div class="contact-item">
-        <div class="contact-info">
-          <img src="../assets/images/affiliate/mmlogo.png" alt="丝瓜 Icon" class="contact-icon" />
-          <div class="contact-details">
-            <span class="contact-name">丝瓜</span>
-            <span class="contact-id">LH1008666</span>
-          </div>
-        </div>
-        <div class="contact-actions">
-          <button class="copy-button" @click="copyText('LH1008666')">复制</button>
-          <a target="_blank" class="download-button" href="https://ya.cn/index.html" rel="noopener">下载</a>
-        </div>
-      </div>
-
-      <div class="contact-item">
-        <div class="contact-info">
-          <img src="../assets/images/affiliate/servicelogo.png" alt="Amico Icon" class="contact-icon" />
-          <div class="contact-details">
-            <span class="contact-name">Amico</span>
-            <span class="contact-id">vip777</span>
-          </div>
-        </div>
-        <div class="contact-actions">
-          <button class="copy-button" @click="copyText('vip777')">复制</button>
-          <a target="_blank" class="download-button" href="https://am35.cc" rel="noopener">下载</a>
+          <button @click="copyText(info.value, info.label)" class="copy-button">{{ $t("btn.copy") }}</button>
+          <a v-if="info.download" :href="info.download" target="_blank" class="download-button" rel="noopener">
+            <img src="../assets/images/affiliate/download.svg" alt="download" />
+          </a>
         </div>
       </div>
     </div>
     <div class="button-group">
-      <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"><button class="login-button">登录</button></a>
       <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">
-        <button class="join-us-button">加入我们</button>
+        <button class="login-button">{{ $t("btn.login") }}</button>
+      </a>
+      <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">
+        <button class="join-us-button">{{ $t("btn.joinUs") }}</button>
       </a>
     </div>
+
     <div class="affiliate-subgroup agent-content-item">
       <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%">
-        <img style="width: 120px; height: 30px" src="../assets/images/affiliate/bonus-percentage-title.png" alt="" />
+        <div class="page-title-text">
+          <span class="page-title-text__stroke">{{ $t("affiliate.commissionPercentage") }}</span>
+          <span class="page-title-text__fill">{{ $t("affiliate.commissionPercentage") }}</span>
+        </div>
+
         <div class="affiliate-sub">
-          <div class="affiliate-subtitle">以下为佣金占比示例</div>
+          <div class="affiliate-subtitle">{{ $t("affiliate.commissionStructureExample") }}</div>
           <div class="affiliate-inner">
             <table>
               <tbody>
                 <tr>
-                  <th>代理</th>
-                  <th>盈利</th>
-                  <th>有效活跃会员</th>
-                  <th>佣金比例</th>
+                  <th>{{ $t("affiliate.table.commissionStructure.agent") }}</th>
+                  <th>{{ $t("affiliate.table.commissionStructure.profit") }}</th>
+                  <th>{{ $t("affiliate.table.commissionStructure.activeValidMembers") }}</th>
+                  <th>{{ $t("affiliate.table.commissionStructure.commissionRate") }}</th>
                 </tr>
-                <tr>
-                  <td>铜牌</td>
-                  <td>＜10W</td>
-                  <td>5</td>
-                  <td>35%</td>
-                </tr>
-                <tr>
-                  <td>银牌</td>
-                  <td>10W-30W</td>
-                  <td>10</td>
-                  <td>40%</td>
-                </tr>
-                <tr>
-                  <td>金牌</td>
-                  <td>30W-60W</td>
-                  <td>25</td>
-                  <td>45%</td>
-                </tr>
-                <tr>
-                  <td>钻石</td>
-                  <td>60W-100W</td>
-                  <td>50</td>
-                  <td>50%</td>
-                </tr>
-                <tr>
-                  <td>皇冠</td>
-                  <td>>100W</td>
-                  <td>80</td>
-                  <td>55%</td>
+                <tr v-for="(item, index) in commissionStructure" :key="index">
+                  <td>{{ item.level }}</td>
+                  <td>{{ item.profit }}</td>
+                  <td>{{ item.activeMembers }}</td>
+                  <td>{{ item.commissionRate }}</td>
                 </tr>
               </tbody>
             </table>
@@ -136,65 +75,75 @@
     </div>
     <div class="affiliate-subgroup agent-content-item">
       <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%">
-        <img style="width: 120px; height: 30px" src="../assets/images/affiliate/bonus-title.png" alt="" />
+        <div class="page-title-text">
+          <span class="page-title-text__stroke">{{ $t("affiliate.commissionCalculation") }}</span>
+          <span class="page-title-text__fill">{{ $t("affiliate.commissionCalculation") }}</span>
+        </div>
+
         <div class="affiliate-sub">
-          <div class="affiliate-subtitle">佣金计算 (以下为示例)</div>
+          <div class="affiliate-subtitle">{{ $t("affiliate.commissionCalculationExample") }}</div>
           <div class="affiliate-inner">
             <table>
-              <tr>
-                <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
-                  平台输赢
-                </td>
-                <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
-                  10,000
-                </td>
-              </tr>
-              <tr>
-                <td class="highlight">平台费</td>
-                <td class="highlight">-800</td>
-              </tr>
-              <tr>
-                <td :colspan="2">平台费=游戏总输赢 x8%</td>
-              </tr>
-              <tr>
-                <td class="highlight">红利</td>
-                <td class="highlight">-200</td>
-              </tr>
-              <tr>
-                <td :colspan="2">返水，红利，存提手续费后台可见明细</td>
-              </tr>
-              <tr>
-                <td class="highlight">净利润</td>
-                <td class="highlight">9,000</td>
-              </tr>
-              <tr>
-                <td class="highlight">佣金比例</td>
-                <td class="highlight">x35%</td>
-              </tr>
-              <tr>
-                <td class="result">代理佣金</td>
-                <td class="result">3,150</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
+                    {{ $t("affiliate.table.commissionCalculation.winLose") }}
+                  </td>
+                  <td style="background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%); color: white">
+                    10,000
+                  </td>
+                </tr>
+                <tr>
+                  <td class="highlight">{{ $t("affiliate.table.commissionCalculation.platformFee") }}</td>
+                  <td class="highlight">-800</td>
+                </tr>
+                <tr>
+                  <td :colspan="2">
+                    {{ $t("affiliate.table.commissionCalculation.platformFeeFormula", { rate: "15%" }) }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="highlight">{{ $t("affiliate.table.commissionCalculation.bonus") }}</td>
+                  <td class="highlight">-200</td>
+                </tr>
+                <tr>
+                  <td :colspan="2">{{ $t("affiliate.table.commissionCalculation.bonusFormula") }}</td>
+                </tr>
+                <tr>
+                  <td class="highlight">{{ $t("affiliate.table.commissionCalculation.netProfit") }}</td>
+                  <td class="highlight">9,000</td>
+                </tr>
+                <tr>
+                  <td class="highlight">{{ $t("affiliate.table.commissionCalculation.commissionRate") }}</td>
+                  <td class="highlight">x35%</td>
+                </tr>
+                <tr>
+                  <td class="result">{{ $t("affiliate.table.commissionCalculation.totalCommission") }}</td>
+                  <td class="result">2798.4</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
-    <div class="affiliate-subgroup agent-content-item">
+    <div class="affiliate-subgroup agent-content-item rule">
       <div style="display: flex; flex-direction: column; align-items: center; justify-self: center; width: 100%">
-        <img style="width: 120px; height: 30px" src="../assets/images/affiliate/rule-title.png" alt="" />
+        <div class="page-title-text">
+          <span class="page-title-text__stroke">{{ $t("affiliate.commissionTerm") }}</span>
+          <span class="page-title-text__fill">{{ $t("affiliate.commissionTerm") }}</span>
+        </div>
 
         <div class="affiliate-sub">
           <img class="bonus-rabbit" src="../assets/images/affiliate/bonus-rabbit.png" alt="" />
           <div class="affiliate-inner">
-            <ul>
-              <li>1.佣金派发时间：每月 1 号至 10 号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款。</li>
-              <li>2.每月至少有五个有效活跃会员才能结算佣金，当月存款≥500，流水≥1000 为一个活跃玩家。</li>
-              <li>
-                3.代理推广每月至少需要新注册活跃会员达到 3
-                名或以上，如无法达到将视为零推广，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。
+            <ol>
+              <li v-for="(term, key) in terms" :key="key">
+                <ul>
+                  <li v-for="(subTerm, subKey) in term" :key="`${key}-${subKey}`">{{ subTerm }}</li>
+                </ul>
               </li>
-            </ul>
+            </ol>
           </div>
         </div>
       </div>
@@ -203,13 +152,17 @@
 </template>
 
 <script setup>
+import { storeToRefs } from "pinia";
 import { userStore } from "../stores/index";
 import { Platform, useQuasar } from "quasar";
 import { useNotify } from "src/hooks/notify.js";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { i18nStore } from "src/router/language";
 
-const affiliateUrl = ref("https://dy2-affiliate.mndofithly.com/dy/");
+const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 const notify = useNotify();
+
 const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
   const left = (screen.width - popupWinWidth) * 2;
   const top = (screen.height - popupWinHeight) / 4;
@@ -219,10 +172,48 @@ const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
     "resizable=yes, width=" + popupWinWidth + ", height=" + popupWinHeight + ", top=" + top + ", left=" + left
   );
 };
+
+const affiliateUrl = ref("https://dy2-affiliate.mndofithly.com/dy/");
 const text_copied = ref("");
 const copyinput = ref(null);
 const $q = useQuasar();
-const affCode = sessionStorage.getItem("AFFILIATE_CODE");
+const { t, locale, getLocaleMessage } = useI18n();
+const { languageVal } = storeToRefs(i18nStore());
+
+const contactInfo = computed(() => [
+  { icon: "qq-logo.png", label: t("affiliate.contact.qq"), value: "2115894008", download: "https://im.qq.com/index/" },
+  {
+    icon: "tg-logo.png",
+    label: t("affiliate.contact.telegram"),
+    value: "@leihuo686",
+    download: "https://telegram.org/"
+  },
+  {
+    icon: "skype-logo.png",
+    label: t("affiliate.contact.skype"),
+    value: "live:.cid.8099acb97a5ea41",
+    download: "https://www.skype.com/zh-Hans/get-skype/"
+  },
+  {
+    icon: "sigua-logo.png",
+    label: t("affiliate.contact.sigua"),
+    value: "Lh080688",
+    download: "https://ya.cn/index.html"
+  },
+  { icon: "amico-logo.png", label: t("affiliate.contact.amico"), value: "Vip333", download: "https://am35.cc" },
+  { icon: "email-logo.png", label: t("affiliate.contact.email"), value: "leihuo188@gmail.com" }
+]);
+
+const commissionStructure = computed(() => [
+  { level: t("affiliate.agentLevel.brown"), profit: "＜10W", activeMembers: 5, commissionRate: "35%" },
+  { level: t("affiliate.agentLevel.silver"), profit: "10W-30W", activeMembers: 10, commissionRate: "40%" },
+  { level: t("affiliate.agentLevel.gold"), profit: "30W-60W", activeMembers: 25, commissionRate: "45%" },
+  { level: t("affiliate.agentLevel.diamond"), profit: "60W-100W", activeMembers: 50, commissionRate: "50%" },
+  { level: t("affiliate.agentLevel.crown"), profit: ">100W", activeMembers: 80, commissionRate: "55%" }
+]);
+
+const terms = computed(() => getLocaleMessage(locale.value)["affiliate"]["term"] || []);
+
 const copyText = (text, msgTitle) => {
   text_copied.value = text;
   console.log(text_copied.value);
@@ -236,13 +227,13 @@ const copyText = (text, msgTitle) => {
 
     notify({
       type: "success",
-      message: `${msgTitle ? msgTitle : ""}复制成功！`
+      message: t("common.notification.copySuccess.message", { str: msgTitle })
     });
   }, 100);
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .affiliate-container {
   padding: 1.2rem 1rem;
   background: url("../assets/images/affiliate/bg-affiliate.png");
@@ -266,15 +257,60 @@ const copyText = (text, msgTitle) => {
     -moz-text-fill-color: transparent;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: #b1e4ff;
+    padding: 0;
   }
 
   .page-title-img {
-    width: 90%;
-    margin: 0 auto;
+    margin: 0 auto 32px;
 
     img {
       width: 100%;
     }
+  }
+
+  .page-title-text {
+    position: relative;
+    margin-bottom: 34px;
+    text-align: center;
+    font-size: clamp(20px, 6vw, 32px);
+    font-weight: 900;
+    color: transparent;
+
+    .page-title-text__stroke {
+      --stroke-width: 1px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(180deg, #e2ebfa 0%, #ffffff 76.92%);
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-stroke: var(--stroke-width) transparent;
+      text-shadow: var(--stroke-width) 0 0 #e2ebfa, calc(var(--stroke-width) * -1) 0 0 #ffffff,
+        0 var(--stroke-width) 0 #e2ebfa, 0 calc(var(--stroke-width) * -1) 0 #ffffff;
+      z-index: 1;
+    }
+
+    .page-title-text__fill {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(180deg, #7abdff -22.99%, #3a8aff 64.94%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    // &::before {
+    //   content: attr(data-text);
+    //   position: absolute;
+    //   z-index: -1;
+    //   // background: linear-gradient(180deg, #e2ebfa 0%, #ffffff 76.92%);
+    //   // background-clip: text;
+    //   // -webkit-background-clip: text;
+    //   // color: transparent;
+    //   -webkit-text-stroke: 1px #fff;
+    //   text-stroke: 1px #fff;
+    // }
   }
 
   .ambassador {
@@ -392,7 +428,6 @@ const copyText = (text, msgTitle) => {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
   width: 100%;
 }
 
@@ -400,6 +435,7 @@ const copyText = (text, msgTitle) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
   padding: 10px 0;
 }
 
@@ -410,9 +446,13 @@ const copyText = (text, msgTitle) => {
 .contact-info {
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
 .contact-icon {
+  background: linear-gradient(180deg, #ffffff 0%, #b8d5fb 87.95%, #ffffff 100%);
+  border-radius: 50%;
+  padding: 5px;
   width: 32px;
   height: 32px;
   margin-right: 10px;
@@ -421,6 +461,7 @@ const copyText = (text, msgTitle) => {
 .contact-details {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .contact-name {
@@ -429,35 +470,44 @@ const copyText = (text, msgTitle) => {
 }
 
 .contact-id {
-  color: rgba(48, 52, 66, 1);
+  color: #303442;
   font-size: 0.9em;
-  overflow: auto;
-  max-width: 120px;
+  font-weight: 600;
+  // flex-shrink: 1;
+  max-width: 160px;
 }
 
 .contact-actions {
   display: flex;
+  flex-shrink: 0;
   gap: 10px;
   width: 108px;
 }
 
 .copy-button {
+  flex-basis: 50%;
   background-color: rgba(219, 232, 255, 1);
   color: rgba(132, 143, 177, 1);
   border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
+  border-radius: 30px;
+  padding: 5px 0;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 .download-button {
+  flex-basis: 50%;
   background-color: rgba(8, 181, 255, 1);
   color: rgba(255, 255, 255, 1);
   border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
+  border-radius: 30px;
+  padding: 5px 0;
   cursor: pointer;
   transition: background-color 0.3s;
+  text-align: center;
+  img {
+    display: block;
+    margin: 0 auto;
+  }
 }
 
 .copy-button:hover,
@@ -472,9 +522,10 @@ const copyText = (text, msgTitle) => {
 
 .button-group {
   width: 100%;
-  margin-top: 32px;
+  max-width: 320px;
+  margin: 32px auto 40px;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
 }
 a {
   flex: 1;
@@ -486,30 +537,27 @@ a {
   justify-content: space-between;
   border-radius: 30px;
   padding: 10px 20px;
-  font-size: 1em;
+  font-weight: 600;
+  font-size: 18px;
   cursor: pointer;
   transition: all 0.3s;
 }
 
 .login-button {
-  box-shadow: 0px -1.52px 3.48px 0px rgba(177, 215, 255, 1) inset;
-  box-shadow: 0px -0.76px 2.79px 0px rgba(88, 148, 255, 1) inset;
-  background: linear-gradient(180deg, #f7f7f7 0%, #f5f9ff 100%);
-
-  color: #6a7ba2;
+  background: url("../assets/images/affiliate/login-btn.png") no-repeat center center;
+  background-size: 100% 100%;
+  box-shadow: 0px 4.76px 4.76px 0px #0000000d;
+  color: #3f4f75;
 }
 
 .login-button:hover {
 }
 
 .join-us-button {
-  // background-color: #008cdd;
-  color: #ffffff;
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-
-  box-shadow: 0px -1.52px 3.48px 0px rgba(177, 215, 255, 1) inset;
-
-  box-shadow: 0px -0.76px 2.79px 0px rgba(88, 148, 255, 1) inset;
+  background: url("../assets/images/affiliate/join-us-btn.png") no-repeat center center;
+  background-size: 100% 100%;
+  box-shadow: 0px 4.76px 4.76px 0px #0000000d;
+  color: #fff;
 }
 
 .join-us-button:hover {
@@ -517,7 +565,7 @@ a {
   // box-shadow: 0 6px 12px rgba(0, 123, 189, 0.7);
 }
 .affiliate-subgroup {
-  margin: 24px 0px;
+  margin: 40px 0px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -546,9 +594,23 @@ a {
       color: #43609c;
       height: 100%;
 
-      ul {
-        list-style: none;
-        padding: 0;
+      ol {
+        padding-left: 20px;
+        margin: 0;
+        &::marker {
+          vertical-align: top;
+        }
+
+        ul {
+          list-style-type: disc;
+          padding-left: 0;
+          li:first-child {
+            list-style: none;
+          }
+          li:not(:first-child) {
+            margin-left: 20px;
+          }
+        }
       }
 
       .highlight {
@@ -580,15 +642,27 @@ a {
     }
   }
 }
-.agent-content-item ul {
-  font-family: "PingFang";
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 28px;
-  text-align: left;
-  margin: 0;
-  padding-left: 20px;
+
+.agent-content-item {
+  &.rule {
+    .affiliate-sub {
+      padding-top: 24px;
+      .affiliate-inner {
+        position: relative;
+      }
+    }
+  }
 }
+
+// .agent-content-item ul {
+//   font-family: "PingFang";
+//   font-size: 12px;
+//   font-weight: 400;
+//   line-height: 28px;
+//   text-align: left;
+//   margin: 0;
+//   padding-left: 20px;
+// }
 .agent-content-item table {
   width: 100%;
   margin-top: 10px;
@@ -601,67 +675,22 @@ a {
 .agent-content-item table th {
   text-align: center;
   color: #dde8f7;
-  border: 1px solid #4d8de1;
   background: linear-gradient(180deg, #4da3ff -42.2%, #76b1ff 105.96%);
 }
 .agent-content-item table td {
-  height: 45px;
+  height: 36px;
   background: #e3eeff;
   color: #43609c;
   border: 0.76px solid #3578d01a;
 }
 .agent-content-item table th {
-  height: 56px;
+  height: 36px;
 }
 .bonus-rabbit {
   position: absolute;
-  top: -100px;
-  right: -20px;
-  width: 128px;
-  height: 114px;
-}
-.body--dark {
-  .affiliate-container {
-    .ambassador {
-      .btn-wrapper {
-        .join-btn,
-        .login-btn {
-          background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
-          background-size: cover;
-          box-shadow: none;
-          border-radius: 4px;
-          border: 1px solid #3a93ce;
-          color: #ffffff;
-        }
-        .contact-btn {
-          background: url("../assets/images/account/secondary-btn.svg") no-repeat center center;
-          background-size: cover;
-          box-shadow: none;
-          border-radius: 4px;
-          border: 1px solid #ffffff4d;
-          color: #ffffff;
-        }
-        .mask {
-          display: none;
-        }
-      }
-    }
-    .contact-us {
-      .register-btn-wrapper {
-        .register-btn {
-          background: url("../assets/images/account/primary-btn.svg") no-repeat center center;
-          background-size: cover;
-          box-shadow: none;
-          border-radius: 4px;
-          border: 1px solid #3a93ce;
-          color: #ffffff;
-        }
-      }
-    }
-    .page-title {
-      -webkit-text-stroke-color: #ffffff4d;
-      text-shadow: 0px 7.8040986061px 7.8040986061px rgba(0, 0, 0, 0.47), 3.9020493031px 3.9020493031px 0px #9da6d4;
-    }
-  }
+  top: -50px;
+  right: 0;
+  width: 100%;
+  max-width: 128px;
 }
 </style>

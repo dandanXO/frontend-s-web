@@ -20,6 +20,7 @@ import { api } from "boot/axios";
 import moment from "moment/moment";
 import { cached, TIME_EXPIRED } from "boot/cache";
 import RecordDateFilter from "../../components/RecordDateFilter.vue";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PromoRecordView",
@@ -28,7 +29,7 @@ export default defineComponent({
     // RecordDateFilter
   },
   setup() {
-
+    const {t} = useI18n()
     const visible = ref(true);
     const tableData = ref([]);
 
@@ -98,19 +99,19 @@ export default defineComponent({
     const tableHeaders = [
       {
         key: "serialNumber",
-        label: "编码"
+        label: t('record.table.promo.header.serialNumber')
       },
       {
         key: "privilegeName",
-        label: "优惠名"
+        label: t('record.table.promo.header.privilegeName')
       },
       {
         key: "amount",
-        label: "金额"
+        label: t('record.table.promo.header.amount')
       },
       {
         key: "recordTime",
-        label: "记录时间"
+        label: t('record.table.promo.header.recordTime')
       }
     ];
     const handleDateChange = (data) => {

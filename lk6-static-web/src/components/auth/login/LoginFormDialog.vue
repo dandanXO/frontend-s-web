@@ -4,7 +4,7 @@
     ref="loginRef"
     :rules="loginRules"
     :model="loginForm"
-    label-width="70"
+    label-width="80"
     size="large"
   >
     <div class="login-form-field">
@@ -44,7 +44,15 @@
         {{ $t('form.acceptTermsAndConditions') }}
         <span class="underline">《{{$t('form.userAgreement')}}》</span>
       </div>
-      <div><a class="forget-pwd-text" @click="openForgotpwdDialog">{{ $t('form.forgotPwd') }}</a></div>
+      <div>
+        <el-tooltip placement="top" effect="dark">
+          <template #content>
+            {{ $t('form.contactSupportForgetPassword') }}
+            <a @click="store.openLiveChat">{{ $t('form.contactSupport') }}</a>
+          </template>
+          <a class="forget-pwd-text">{{ $t('form.forgotPwd') }}</a>
+        </el-tooltip>
+      </div>
     </div>
 
     <el-button :loading="isLoading" size="large" class="login-form-submit-btn" @click="submitLogin">{{ $t('btn.login') }}</el-button>
@@ -53,7 +61,7 @@
       <span class="no-acc">{{$t('form.dontHaveAcc')}}？</span>
       <a class="go-reg" @click="openRegDialog">{{ $t('form.goCreateAcc') }}</a>
     </div>
-    <div id="captcha-box" />
+    <div id="login-captcha-box" />
   </el-form>
 </template>
 
@@ -135,7 +143,8 @@ const closeLoginDialog = () => {
 };
 
 const openForgotpwdDialog = () => {
-  emits("open-forgotpwd-dialog");
+  store.openLiveChat();
+  // emits("open-forgotpwd-dialog");
 };
 
 const openRegDialog = () => {
@@ -152,15 +161,15 @@ const submitLogin = () => {
   (async () => {
     const sidParam = store.visitorId;
     const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
-    
+    let rstUrl = localStorage.getItem("LK6_WEB_RST_URL") || process.env.VUE_APP_RST_API.split(",")[0];
     // tianai captcha config
     const config = {
       // 生成接口 (必选项,必须配置, 要符合tianai-captcha默认验证码生成接口规范)
-      requestCaptchaDataUrl: `${'https://ubysg6a4qi.eioxrlyh06.com'}/member/getCaptcha`,
+      requestCaptchaDataUrl: `${rstUrl}/member/getCaptcha`,
       // 验证接口 (必选项,必须配置, 要符合tianai-captcha默认验证码校验接口规范)
-      validCaptchaUrl: `${'https://ubysg6a4qi.eioxrlyh06.com'}/member/login`,
+      validCaptchaUrl: `${rstUrl}/member/login`,
       // 验证码绑定的div块 (必选项,必须配置)
-      bindEl: "#captcha-box",
+      bindEl: "#login-captcha-box",
       // 验证码类型, 登陆信息
       loginData: {
         loginName: loginForm.loginName,
@@ -169,6 +178,9 @@ const submitLogin = () => {
         summoner: loginForm.summoner || null,
         type: "SLIDER",
         way: regDevice
+      },
+      translate: (code) => {
+        return t(`error.${code}`);
       },
       requestHeaders: {
         Authorization: process.env.VUE_APP_SITE
@@ -227,8 +239,17 @@ const submitLogin = () => {
 
     // tianai captcha style
     const style = {
-      logoUrl: 'https://lk6-web.psnaback.com/static/img/login-logo-left.3f98a6ca.png'
+      logoUrl: 'https://lk6-web.psnaback.com/static/img/login-logo-left.3f98a6ca.png',
+      i18n: {
+        tips_error: t("tianaiCaptcha.tipsError"),
+        tips_success: t("tianaiCaptcha.tipsSuccess"),
+        slider_title: t("tianaiCaptcha.sliderTitle"),
+        concat_title: t("tianaiCaptcha.concatTitle"),
+        image_click_title: t("tianaiCaptcha.imageClickTitle"),
+        rotate_title: t("tianaiCaptcha.rotateTitle")
+      }
     };
+
 
     loginRef.value
       .validate()
@@ -325,7 +346,7 @@ const loginRules = {
   .login-form-field {
     display: grid;
     grid-template-columns: 40px 1fr;
-    padding: 8px 15px;
+    padding: 0px 15px;
     justify-content: center;
     align-items: center;
     gap: 10px;
@@ -429,6 +450,7 @@ const loginRules = {
   .agreement-and-forget-pwd {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
 
     .agreement-text {
       color: #555;
@@ -444,16 +466,17 @@ const loginRules = {
 
     .underline {
       text-decoration: underline;
+      color: #5F8AEE;
     }
   }
 
   .register-hint {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
   }
 }
 
-#captcha-box {
+#login-captcha-box {
   position: fixed;
   z-index: 1000;
   top: 50%;
@@ -474,6 +497,17 @@ const loginRules = {
 
     .el-form-item__label {
       font-size: 12px;
+    }
+  }
+
+  .acc-dialog {
+    .el-dialog__header.show-close {
+      padding: 0;
+    }
+
+    .el-input__wrapper {
+      box-shadow: none !important;
+      background: none !important;
     }
   }
 </style>

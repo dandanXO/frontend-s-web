@@ -7,6 +7,7 @@
       :loading-claim="btnLoading"
       @daily-slot="handleSlot(list.promoCode)"
     />
+    <WeeklyReward v-if="list.redirectUrl === 'lk6-weekly-reward'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -33,6 +34,7 @@ import { useQuasar } from "quasar";
 import moment from "moment";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import WeeklyReward from "./hotpromo/weekly-reward/WeeklyReward.vue";
 
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 
@@ -41,7 +43,8 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
-    ClaimPromo
+    ClaimPromo,
+    WeeklyReward
   },
   props: {
     list: {
@@ -453,66 +456,233 @@ export default defineComponent({
   }
 }
 
-.ribbon {
-  clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
-  background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
-  padding-right: 10px;
-  font-family: "PingFang";
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  width: fit-content;
-  padding: 0px 20px 0px 10px;
-  min-width: 100px;
-  height: fit-content;
-}
+.section-bg {
+  border: 1px solid rgba(172, 212, 246, 1);
+  background: #f2f8fe;
+  border-radius: 12px;
+  padding: 30px;
+  font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial, sans-serif;
 
-.title-img {
-  aspect-ratio: 960 / 80;
-  background: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 290px 26px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-  color: #4c4c6c;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
+  &.en {
+    .title-img {
+      background-image: url("../assets/images/promotion/hotpromo/common/section-title-img-lg.png");
+      background-size: 580px 26px;
+    }
 
-.claim-title-icon,
-.claim-coin-icon,
-.claim-gift-icon,
-.claim-stacked-coins-icon {
-  width: 28px;
-  height: 28px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    .ribbon {
+      min-width: 135px;
+      justify-content: flex-start;
+    }
+  }
 
-.claim-title-icon {
-  background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/section-title-img.png") no-repeat center
-    center;
-  background-size: 100% 100%;
-}
+  .claim-title-icon,
+  .claim-coin-icon,
+  .claim-gift-icon,
+  .claim-stacked-coins-icon {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.claim-coin-icon {
-  background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon1.png") no-repeat center center;
-  background-size: 100% 100%;
-}
+  .claim-title-icon {
+    background: url("../assets/images/promotion/hotpromo/common/section-title-img.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
 
-.claim-gift-icon {
-  background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon2.png") no-repeat center center;
-  background-size: 100% 100%;
-}
+  .claim-coin-icon {
+    background: url("../assets/images/promotion/hotpromo/common/reward-icon1.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
 
-.claim-stacked-coins-icon {
-  background: url("../assets/images/promotion/hotpromo/lh-livepoker-rebate/reward-icon3.png") no-repeat center center;
-  background-size: 100% 100%;
+  .claim-gift-icon {
+    background: url("../assets/images/promotion/hotpromo/common/reward-icon2.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-stacked-coins-icon {
+    background: url("../assets/images/promotion/hotpromo/common/reward-icon3.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-btn-img {
+    aspect-ratio: 762/630;
+    width: auto;
+    height: 100%;
+    background: url("../assets/images/promotion/hotpromo/common/reward-btn.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .section-table {
+    --section-table-border-radius: 7px;
+    tr {
+      overflow: hidden;
+      &:first-child {
+        th {
+          &:first-child {
+            border-top-left-radius: var(--section-table-border-radius);
+          }
+          &:last-child {
+            border-top-right-radius: var(--section-table-border-radius);
+          }
+        }
+        // border-top-left-radius: var(--section-table-border-radius);
+        // border-top-right-radius: var(--section-table-border-radius);
+      }
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: var(--section-table-border-radius);
+          }
+          &:last-child {
+            border-bottom-right-radius: var(--section-table-border-radius);
+          }
+        }
+        // border-bottom-left-radius: var(--section-table-border-radius);
+        // border-bottom-right-radius: var(--section-table-border-radius);
+      }
+    }
+    th {
+      height: 56px;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 28px;
+      color: #fff !important;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
+      white-space: pre-wrap;
+
+      &:not(:last-child) {
+        border-right: 1px solid #acd4f6;
+      }
+    }
+
+    td {
+      border: 1px solid #acd4f6;
+      color: #333;
+      background: transparent !important;
+    }
+
+    &.cny {
+      th {
+        background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%) !important;
+        color: #894800 !important;
+      }
+    }
+  }
+
+  .section-table2 {
+    th {
+      height: 56px;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 28px;
+      color: #fff !important;
+      background: linear-gradient(180deg, #00cc8c 0%, #006646 100%) !important;
+      white-space: pre-wrap;
+    }
+
+    td {
+      border: 1px solid #acd4f6;
+      color: #014625 !important;
+      background: transparent !important;
+    }
+
+    &.cny {
+      th {
+        background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%) !important;
+        color: #894800 !important;
+      }
+    }
+  }
+
+  .element-bg {
+    color: #fff !important;
+    box-shadow: 0px 8px 9px 0px rgba(255, 255, 255, 0.25) inset, 0px 4px 4px 0px rgba(255, 255, 255, 0.25) inset,
+      0px -4px 4px 0px rgba(255, 255, 255, 0.25) inset !important;
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
+  }
+
+  .ribbon {
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    padding-right: 10px;
+    font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+      sans-serif;
+
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    width: fit-content;
+    padding: 0px 20px 0px 10px;
+    height: fit-content;
+    min-width: 100px;
+
+    &.cny {
+      background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%);
+      color: #894800;
+    }
+  }
+
+  .ribbon2 {
+    clip-path: polygon(0% 0%, 100% 0%, calc(100% - 10px) 50%, 100% 100%, 0% 100%);
+    background: linear-gradient(180deg, #00cc8c 0%, #006646 100%);
+    padding-right: 10px;
+    font-family: "PingFang", "Roboto", "-apple-system", "Helvetica Neue", "Microsoft YaHei", Helvetica, Arial,
+      sans-serif;
+
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    width: fit-content;
+    padding: 0px 20px 0px 10px;
+
+    &.cny {
+      background: linear-gradient(180deg, #ffe190 0%, #ff9f40 100%);
+      color: #894800;
+    }
+  }
+
+  .title-img {
+    aspect-ratio: 960 / 80;
+    background: url("../assets/images/promotion/hotpromo/common/promo-details-title-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 290px 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #4c4c6c;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .item {
+    color: #333;
+    padding-left: 24px;
+    display: flex;
+    gap: 10px;
+    font-size: 1rem;
+
+    .item-num {
+      color: #ffffff;
+      font-size: 1rem;
+      line-height: 1;
+      border-radius: 50%;
+      height: 28px !important;
+      width: 28px !important;
+      min-width: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2px;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    }
+  }
 }
 </style>

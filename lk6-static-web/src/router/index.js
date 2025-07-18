@@ -6,6 +6,7 @@ import PersonalRouter from "./personal";
 import { userStore } from "@/store/index";
 import { ElMessageBox } from "element-plus";
 import { useDark } from "@vueuse/core";
+import i18n from '../i18n'
 
 const routes = [
   {
@@ -30,36 +31,22 @@ const routes = [
         component: HomeView
       },
       {
-        path: "/welcome",
-        name: "welcome",
-        component: () => import(/* webpackChunkName: "Welcome" */ "../views/WelcomeView.vue")
-      },
-      {
-        path: "/slot",
-        name: "slot",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/SlotView.vue")
-      },
-      {
-        path: "/esports",
-        name: "esports",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/eSportsView.vue")
-      },
-      {
-        path: "/sports",
-        name: "sports",
+        path: "/crown",
+        name: "crown",
         component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue"),
-        props: { showPlayBtn: true }
+        props: { showPlayBtn: true, fullpage: true }
+      },
+      {
+        path: "/panda",
+        name: "panda",
+        component: () => import(/* webpackChunkName: "Game" */ "../views/SportsView.vue"),
+        props: { showPlayBtn: true, fullpage: true }
       },
       {
         path: "/live-casino",
         name: "live",
         component: () => import(/* webpackChunkName: "Game" */ "../views/LiveCasinoView.vue"),
-        props: { showPlayBtn: true }
-      },
-      {
-        path: "/lottery",
-        name: "lottery",
-        component: () => import(/* webpackChunkName: "Game" */ "../views/LotteryView.vue")
+        props: { showPlayBtn: true, fullpage: true }
       },
       {
         path: "/lottery/SGWin",
@@ -74,6 +61,16 @@ const routes = [
       {
         path: "/bacarrat",
         name: "bacarrat",
+        component: () => import(/* webpackChunkName: "Game" */ "../views/BacarratView.vue")
+      },
+      {
+        path: "/roulette",
+        name: "roulette",
+        component: () => import(/* webpackChunkName: "Game" */ "../views/BacarratView.vue")
+      },
+      {
+        path: "/lucky-lace",
+        name: "lucky-lace",
         component: () => import(/* webpackChunkName: "Game" */ "../views/BacarratView.vue")
       },
       {
@@ -117,6 +114,11 @@ const routes = [
         path: "/agent/:affiliateCode",
         name: "agentCode",
         component: () => {}
+      },
+      {
+        path: "/affiliate",
+        name: "affiliate",
+        component: () => import(/* webpackChunkName: "affiliate" */ "../views/AgentView")
       },
       {
         path: "/app-tutorial",
@@ -219,11 +221,11 @@ router.beforeEach((to, from, next) => {
 
     if (to.meta.requiresAuth) {
       // 账号已在其他设备登录，
-      ElMessageBox.alert("请登录后再操作", "系统提示", {
+      ElMessageBox.alert(i18n.global.t('message.loginFirstAction'), i18n.global.t('message.systemPrompt'), {
         // if you want to disable its autofocus
         // autofocus: false,
         center: true,
-        confirmButtonText: "确认",
+        confirmButtonText: i18n.global.t('btn.confirm'),
         showClose: false,
         buttonSize: "large"
       }).then(() => {

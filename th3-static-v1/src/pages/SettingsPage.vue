@@ -1,45 +1,90 @@
 <template>
-  <ProfileSummary :homeProfile="true" />
+  <!-- <ProfileSummary :homeProfile="true" /> -->
+  <div class="menu-open" :class="{ open: ui.isMenuOpen }">
+    <!-- <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div> -->
+    <SideMenu @closeMenu="toggleMenuOpen()" />
+  </div>
 
   <q-page>
     <div class="top-setting-section">
-      <div class="top-section-inner">
-        <router-link to="/withdraw">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/withdraw-svg.svg" />
+      <div class="top-profile">
+        <div class="profile">
+          <div class="profile-pic">
+            <q-avatar size="50px">
+              <img :src="profileImagePath" />
+            </q-avatar>
+            <!-- <div class="profile-pic-frame" v-if="!homeProfile"></div> -->
+
+            <div class="vip-details">
+              <img
+                class="bg"
+                :src="require(`../assets/images/index/vip-badge/vip-${store.vip.replace('VIP', '')}.png`)"
+                alt=""
+              />
+            </div>
           </div>
-          <div class="acct-nav-label">{{ $t("settings.withdraw") }}</div>
-        </router-link>
-        <router-link to="/deposit">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/deposit-svg.svg" />
+          <div class="top-name">
+            <div class="top-name-details">
+              <!-- <img src="../assets/images/account/login-name-icon.png" /> -->
+              <div>{{ store.realName }}</div>
+            </div>
+            <div class="top-copy-id">
+              <!-- <img src="../assets/images/account/login-name-icon.png" /> -->
+              <div>ID: {{ store.nickName }}</div>
+              <img class="copy-icon" src="../assets/images/account/copy-icon.png" @click="handleCopyClick" />
+            </div>
           </div>
-          <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
-        </router-link>
-        <router-link to="/promo">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/promo-svg.svg" />
-          </div>
-          <div class="acct-nav-label">{{ $t("settings.promo") }}</div>
-        </router-link>
+        </div>
+        <RouterLink to="/account/profile" class="right">
+          <img src="../assets/images/account/rgtarrow.svg" />
+        </RouterLink>
       </div>
+      <RouterLink to="/vip" class="top-vip">
+        <VIPCarousel :onlyShowCurrentLevel="true" :vipCarouselIndex="vipCarouselIndex" style="pointer-events: none" />
+      </RouterLink>
+      <div class="top-total-score">
+        <div class="score-txt">
+          <img style="width: 22px" src="../assets/images/account/total-score.png" />
+          {{ $t("settings.totalScore") }}
+        </div>
+        <div class="score-amount">{{ store.balance.toFixed(2) }}</div>
+      </div>
+      <!-- <div class="top-section-inner">
+      </div> -->
     </div>
 
     <div class="mid-setting-section">
-      <q-item-section class="acct-nav">
-        <h2>{{ $t("settings.otherServices") }}</h2>
+      <div class="acct-nav">
+        <!-- <h2>{{ $t("settings.otherServices") }}</h2> -->
+        <div class="top-section">
+          <router-link to="/deposit">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/deposit-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.deposit") }}</div>
+            <div v-if="promoPercentage !== ''" class="promo-percentage">
+              {{ promoPercentage }} {{ $t("records.bonus") }}
+            </div>
+          </router-link>
+          <router-link to="/withdraw">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/withdraw-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.withdraw") }}</div>
+          </router-link>
+        </div>
         <div class="acct-menu" id="id-acct-menu">
+          <router-link to="/promo">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/promo-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.promo") }}</div>
+          </router-link>
           <router-link to="/account/profile">
             <div class="acct-nav-item">
               <img src="../assets/images/account/personal-svg.svg" />
             </div>
-            <div class="acct-nav-label">{{ $t("settings.personalCentre") }}</div>
-          </router-link>
-          <router-link to="/account/discount">
-            <div class="acct-nav-item">
-              <img src="../assets/images/account/discount-svg.svg" />
-            </div>
-            <div class="acct-nav-label">{{ $t("settings.discount") }}</div>
+            <div class="acct-nav-label">{{ $t("settings.personalCenter") }}</div>
           </router-link>
           <router-link to="/account/record">
             <div class="acct-nav-item">
@@ -47,11 +92,11 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.record") }}</div>
           </router-link>
-          <router-link to="/account/order">
+          <router-link to="/account/discount">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/order-svg.svg" />
+              <img src="../assets/images/account/discount-svg.svg" />
             </div>
-            <div class="acct-nav-label">{{ $t("settings.order") }}</div>
+            <div class="acct-nav-label">{{ $t("settings.discount") }}</div>
           </router-link>
           <router-link to="/account/bank">
             <div class="acct-nav-item">
@@ -59,15 +104,66 @@
             </div>
             <div class="acct-nav-label">{{ $t("settings.bank") }}</div>
           </router-link>
-          <router-link to="/account/message">
+          <router-link to="/account/order">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/message-svg.svg" />
+              <img src="../assets/images/account/order-svg.svg" />
             </div>
-            <div class="acct-nav-label">{{ $t("settings.message") }}</div>
+            <div class="acct-nav-label">{{ $t("settings.order") }}</div>
           </router-link>
-        </div>
-      </q-item-section>
 
+          <router-link to="/vip">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/vip-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.vip") }}</div>
+          </router-link>
+          <a :href="ui.charityUrl" target="_blank">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/charitable-svg.svg" />
+            </div>
+            <div class="acct-nav-label">{{ $t("settings.charity") }}</div>
+          </a>
+        </div>
+      </div>
+      <div class="bottom-setting-section">
+        <router-link to="/account/message">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/message-svg.svg" />
+          </div>
+          <div class="acct-nav-label">{{ $t("settings.message") }}</div>
+        </router-link>
+        <router-link to="/account/feedback">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/feedback-svg.svg" />
+          </div>
+          <div class="acct-nav-label">{{ $t("settings.feedback") }}</div>
+        </router-link>
+        <a v-if="ui.promo_exchange === '1'" target="_blank" @click="handleExchangeClick">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/exchange-svg.svg" />
+          </div>
+          <div class="acct-nav-label">{{ $t("settings.exchange") }}</div>
+        </a>
+
+        <!--        <a v-if="canTransfer" target="_blank" @click="handleTransferClick">-->
+        <!--          <div class="acct-nav-item">-->
+        <!--            <img src="../assets/images/account/transfer-svg.svg" />-->
+        <!--          </div>-->
+        <!--          <div class="acct-nav-label">{{ $t("settings.transfer") }}</div>-->
+        <!--        </a>-->
+      </div>
+      <div class="bottom-setting-section invite-friends-section">
+        <div class="left-icon">
+          <img src="../assets/images/earn-money/invite-gift.png" />
+        </div>
+        <div class="right-contents">
+          <div class="invite-title">{{ $t("earnMoney.reward.inviteFriendsViaLink") }}</div>
+          <div class="invite-share-link">
+            <div class="link-href">{{ selfTgurl }}</div>
+            <div class="link-copy" @click="copyHrefLink">{{ $t("earnMoney.reward.copyLink") }}</div>
+          </div>
+        </div>
+      </div>
       <q-card class="card-account-banner" v-if="btm_banners.length > 0">
         <q-card-section>
           <q-carousel
@@ -105,91 +201,201 @@
               :key="i"
               :name="i"
               class="column no-wrap flex-center"
-              :img-src="banner.mobileImageUrl"
-              style="min-height: 150px"
-              @click="goToPage(banner)"
+              :img-src="imgURL + banner.mobileImageUrl"
+              @click="router.push('/earn-money')"
             ></q-carousel-slide>
           </q-carousel>
         </q-card-section>
       </q-card>
+
       <a @click="openConfirmSignOutDialog">
         <div class="acct-logout">
+          <img src="../assets/images/index/menu/logout.png" />
           <div class="acct-nav-label">{{ $t("settings.logout") }}</div>
         </div>
       </a>
     </div>
   </q-page>
 
-  <q-dialog width="100%" v-model="confirmSignOutDialog" presistent>
+  <q-dialog class="flex-end" width="100%" v-model="confirmSignOutDialog" persistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">{{ $t("btn.signOut") }}</div>
 
         <div class="txt-content q-mt-md text-center">{{ $t("notify.signOutMessage") }}</div>
 
-        <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
+        <div style="width: 100%" class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
           <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
           <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="logout" />
         </div>
       </div>
     </div>
   </q-dialog>
+  <ExchangeModal v-model="showExchangeModal" />
+  <TransferModal v-model="showTransferModal" :uplineId="uplineId" :uplineName="uplineName" :upline="true" />
 </template>
 
 <script setup>
+import { onActivated, onMounted, ref, computed } from "vue";
+import { userStore } from "src/stores";
+import { useRoute, useRouter } from "vue-router";
 import { useQuasar } from "quasar";
-import { onActivated, onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
-import { t } from "@/boot/lang";
-import ProfileSummary from "@/components/ProfileSummary.vue";
-import { userStore } from "@/stores";
+import VIPCarousel from "components/VIPCarousel.vue";
+import ProfileSummary from "../components/ProfileSummary.vue";
+import ExchangeModal from "../components/account/ExchangeModal.vue";
+import TransferModal from "../components/account/TransferModal.vue";
 import { api } from "boot/axios";
+import { useUI } from "stores/ui";
+import { Platform } from "quasar";
+import { t } from "src/boot/lang";
+import { i18nStore } from "src/router/language";
+import { isAndroid } from "boot/utils";
+import SideMenu from "components/SideMenu.vue";
 
+const selfTgurl = ref("");
+const fallbackCopyTextToClipboard = (text) => {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+
+  $q.notify({
+    message: "Link copied to clipboard",
+    color: "positive",
+    position: "top",
+    timeout: 2000
+  });
+};
+
+const copyHrefLink = () => {
+  const textToCopy = selfTgurl.value;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        $q.notify({
+          message: "Link copied to clipboard",
+          color: "positive",
+          position: "top",
+          timeout: 2000
+        });
+      })
+      .catch(() => {
+        fallbackCopyTextToClipboard(textToCopy);
+      });
+  } else {
+    fallbackCopyTextToClipboard(textToCopy);
+  }
+};
+
+const randomProfileImg = computed(() => {
+  const storedImg = sessionStorage.getItem("PROFILE_IMG");
+  if (storedImg) {
+    return storedImg;
+  } else {
+    const randomIndex = Math.floor(Math.random() * 24) + 1;
+    const imgPath = `image-${randomIndex}`;
+    sessionStorage.setItem("PROFILE_IMG", imgPath);
+    return imgPath;
+  }
+});
+
+const profileImagePath = computed(() => {
+  return require(`../assets/images/account/profile/${randomProfileImg.value}.png`);
+});
 const store = userStore();
 const router = useRouter();
+const route = useRoute();
 const qs = require("qs");
 const $q = useQuasar();
+const ui = useUI();
+const i18nStoreLanguage = i18nStore();
 
 const slide = ref(0);
 const imgURL = process.env.IMAGE_CDN + "/promo/";
-
-const btm_banners = ref([
-  {
-    mobileImageUrl: require("../assets/images/account/account-banner-2.jpg")
-  }
-]);
+const btm_banners = ref([]);
+const getPromoImage = () => {
+  const params = {
+    category: "CENTERPROMO",
+    language: i18nStoreLanguage.languageVal
+  };
+  api
+    .get("/opt-session/promo/banner", { params })
+    .then((res) => {
+      if (res.code === 0) {
+        btm_banners.value = res.data;
+        // if (btm_banners.value.length === 1) {
+        //   btm_banners.value.push(res.data[0]);
+        // }
+      }
+    })
+    .catch(() => {});
+};
 
 const loadingLogout = ref(false);
+const showExchangeModal = ref(false);
+const showTransferModal = ref(false);
+
 const confirmSignOutDialog = ref(false);
+
+const alreadyDeposited = JSON.parse(localStorage.getItem("onAppFirstDeposit"));
+const promoPercentage = computed(() => {
+  if (isAndroid() && store.canClaimFtdPrivilege) return "38";
+  if (store.canClaimSecondPrivilege) return "100";
+  if (store.canClaimThirdPrivilege) return "150";
+  return ""; // Optional: for other cases if needed
+});
+
 const openConfirmSignOutDialog = () => {
   confirmSignOutDialog.value = !confirmSignOutDialog.value;
 };
 
-const goToPage = (promo) => {
-  if (promo.redirectUrl && promo.redirectUrl !== "0") {
-    router.push(promo.redirectUrl);
-  }
-};
+const handleExchangeClick = () => (showExchangeModal.value = true);
 
-const loadBanner = () => {
-  api.get("/opt-session/promo/banner?category=CENTERPROMO").then((response) => {
-    if (response.code === 0) {
-      response.data.forEach((item) => {
-        item.mobileImageUrl = imgURL + item.mobileImageUrl;
-      });
-      btm_banners.value = response.data;
+const handleTransferClick = () => {
+  getUplineDetails();
+  showTransferModal.value = true;
+};
+onActivated(() => {
+  store.getUnreadTotal();
+  getPromoImage();
+  getUplineDetails();
+
+  if (route.query.openCodeModal) {
+    showExchangeModal.value = true;
+  }
+});
+onMounted(() => {
+  let tgDomain = window.location.origin + "/";
+  if (store.isApp()) {
+    tgDomain = store.evip ? "https://" + store.evip + "/" : store.h5Url;
+  }
+
+  api.get("/session/member/referralCode").then((res) => {
+    if (res.code === 0) {
+      selfTgurl.value = tgDomain + "refer/" + res.data;
+    }
+  });
+});
+const vipCarouselIndex = ref();
+
+const canTransfer = ref(false);
+const uplineId = ref();
+const uplineName = ref();
+const getUplineDetails = () => {
+  api.get(`/session/upline/checkTransfer`).then((res) => {
+    if (res.code === 0) {
+      canTransfer.value = res.data.canTransfer;
+      uplineId.value = res.data.referrerId;
+      uplineName.value = res.data.referrerName;
+    } else {
     }
   });
 };
-
-onMounted(() => {
-  loadBanner();
-});
-
-onActivated(() => {
-  store.getUnreadTotal();
-});
 
 const logout = () => {
   loadingLogout.value = true;
@@ -203,21 +409,208 @@ const logout = () => {
     router.push("/home");
   });
 };
+
+function isHuaweiBrowser() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  return userAgent.includes("huawei") || userAgent.includes("honor");
+}
+
+const handleCopyClick = async () => {
+  const textToCopy = store.nickName;
+  // alert(textToCopy);
+
+  if (navigator.clipboard && window.isSecureContext && Platform.is.chrome) {
+    await navigator.clipboard.writeText(textToCopy);
+
+    setTimeout(() => {
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: t("notify.copiedSuccessfully"),
+        icon: "check_circle_outline"
+      });
+    }, 100);
+  } else {
+    // Use the 'out of viewport hidden text area' trick
+    const textArea = document.createElement("textarea");
+    textArea.value = textToCopy;
+
+    // Move textarea out of the viewport so it's not visible
+    textArea.style.position = "absolute";
+    textArea.style.left = "-999999px";
+
+    document.body.prepend(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand("copy");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      document.body.removeChild(textArea);
+    }
+
+    setTimeout(() => {
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: t("notify.copiedSuccessfully"),
+        icon: "check_circle_outline"
+      });
+    }, 100);
+  }
+};
 </script>
 
 <style scoped lang="scss">
 .top-setting-section {
-  width: 100%;
+  .top-profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    .profile {
+      display: flex;
+      width: 90%;
+      // gap: 10px;
+      :not(:last-child) {
+        margin-right: 10px;
+      }
+      margin: 10px auto;
+      justify-content: flex-start;
+      align-items: center;
+      .top-name {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        .top-name-details {
+          font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 120%;
+          letter-spacing: 0px;
+          color: #ffffff;
+        }
+      }
+      .top-copy-id {
+        display: flex;
+        align-items: center;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 700;
+        font-size: 12.17px;
+        line-height: 120%;
+        letter-spacing: 0px;
+        color: #b3bec0;
+        img {
+          width: 30px;
+          height: 30px;
+          margin-right: 8px;
+        }
+        .copy-icon {
+          width: 16px;
+          height: 16px;
+          margin-left: 8px;
+        }
+      }
+      .profile-pic-frame {
+        // background-image: url(../assets/images/common/profile-frame.png);
+        width: 70px;
+        height: 70px;
+        background-size: 100%;
+        position: absolute;
+        top: -8px;
+        left: -4px;
+      }
+      .profile-pic {
+        position: relative;
+        padding-bottom: 20px;
+        .vip-details {
+          position: relative;
+          margin-left: 20px;
+          margin-bottom: 5px;
+          margin-top: -15px;
+
+          img.bg {
+            display: block;
+            width: 55px;
+            position: absolute;
+            top: -2px;
+            left: -25px;
+          }
+
+          .vip-level {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            line-height: 1.1;
+            padding-top: 3px;
+            padding-bottom: 4px;
+            z-index: 3;
+            color: #ffffff;
+            font-weight: 700;
+            font-style: italic;
+            img {
+              width: 68%;
+              margin-left: -7px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .top-vip {
+    max-width: 400px;
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+  }
+  background: url(../assets/images/account/setting-bg.png) no-repeat center center;
+  // padding-top: 175px;
+  padding-top: 60px;
+  background-size: cover;
   position: relative;
-  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-  border-radius: 20px 20px 0px 0px;
-  padding: 25px 0px 40px;
-  margin-bottom: -30px;
+
+  .top-total-score {
+    margin: 0 20px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .score-txt {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      font-size: 14px;
+      // gap: 5px;
+      :not(:last-child) {
+        margin-right: 5px;
+      }
+    }
+    .score-amount {
+      font-weight: bold;
+      font-size: 14px;
+
+      &:before {
+        content: "RS";
+        font-size: 14px;
+        margin-right: 4px;
+      }
+    }
+  }
 
   .top-section-inner {
-    width: 95%;
-    margin: 0px auto;
-    padding: 0px 5px;
+    background: #2e30344f;
+    border-radius: 4px;
+    width: 100%;
+    margin: -20px auto 0px;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -228,6 +621,7 @@ const logout = () => {
     height: auto;
     margin-bottom: 10px;
 
+    backdrop-filter: blur(4px);
     a {
       text-decoration: none;
       font-size: 14px;
@@ -235,7 +629,6 @@ const logout = () => {
       flex-direction: column;
       gap: 5px;
       text-align: center;
-      width: 100px;
       align-items: center;
       justify-content: flex-start;
       margin: 0 auto;
@@ -249,17 +642,20 @@ const logout = () => {
 
       .acct-nav-label {
         color: #fff;
-
         font-size: 14px;
         white-space: normal;
+
+        @media (max-width: 400px) {
+          font-size: 12px;
+        }
       }
 
       .acct-nav-item {
         border-radius: 50%;
         aspect-ratio: 1/1;
-        padding: 12px;
+        padding: 8px;
         height: 50px;
-        width: 80px;
+        width: 70px;
         cursor: pointer;
         display: flex;
         text-align: center;
@@ -267,6 +663,11 @@ const logout = () => {
         justify-content: center;
         color: #000;
         text-decoration: none;
+
+        @media (max-width: 400px) {
+          width: auto;
+          padding: 0;
+        }
 
         img {
           width: 70%;
@@ -279,32 +680,121 @@ const logout = () => {
 }
 
 .mid-setting-section {
-  background-color: #303954;
-  width: 100%;
   position: relative;
-  border-radius: 20px 20px 0px 0px;
-  padding: 20px 0px;
 
   h2 {
     line-height: 26px;
     color: #fff;
     font-size: 20px;
-    margin: 0px 0px 10px 28px;
     // width: calc(330px + 100px);
     text-transform: uppercase;
+
+    font-family: "Poppins";
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.0008em;
+  }
+}
+.bottom-setting-section {
+  margin: 5px 20px 20px;
+
+  border-radius: 10px;
+  background: #373c3d;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  a {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #ffffff;
+    padding: 10px;
+    // gap: 10px;
+    :not(:last-child) {
+      margin-right: 10px;
+    }
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      right: 10px;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      background: url(../assets/images/common/goright.png) no-repeat center center;
+      background-size: cover;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.invite-friends-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: unset;
+  // gap: 10px;
+  :not(:last-child) {
+    margin-right: 10px;
+  }
+  .left-icon {
+    width: 60px;
+    img {
+      width: 100%;
+    }
+  }
+  .right-contents {
+    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 14.32px;
+    line-height: 120%;
+    letter-spacing: 0px;
+    max-width: 75%;
+
+    width: 100%;
+  }
+}
+
+.invite-share-link {
+  margin-top: 8px;
+  background-color: #292d2e;
+  padding: 4px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  min-height: 40px;
+  border: 1px solid #ffffff14;
+
+  .link-href {
+    padding: 10px 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 11px;
+  }
+  .link-copy {
+    color: #ffffff;
+    background: #ffffff0f;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 70px;
+    font-weight: bold;
+    border-radius: 5px;
+    letter-spacing: -1px;
   }
 }
 
 .acct-nav {
-  width: 95%;
-  margin: 10px auto;
-  padding: 5px;
-  gap: 10px;
-
-  a {
-    padding: 5px;
-    display: block;
-  }
+  margin: 5px 20px 20px;
+  background: #373c3d;
+  padding: 10px;
+  border-radius: 10px;
 
   .acct-title {
     display: flex;
@@ -324,16 +814,77 @@ const logout = () => {
     }
   }
 
+  .top-section {
+    width: 100%;
+    display: flex;
+    // gap: 10px;
+    :not(:last-child) {
+      margin-right: 10px;
+    }
+    a {
+      position: relative;
+      display: flex;
+      width: 100%;
+      text-decoration: none;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      gap: 5px;
+      img {
+        width: 16px;
+        display: block;
+      }
+      &:nth-child(1) {
+        border-radius: 4px;
+        color: #333333;
+        font-weight: bold;
+        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+        box-shadow: 0px 2.07px 0px 0px #1cca6a;
+
+        img {
+          filter: grayscale(1) brightness(0);
+        }
+      }
+      &:nth-child(2) {
+        border-radius: 4px;
+        color: #ffffff;
+        font-weight: bold;
+        background: #455152;
+        box-shadow: 0px 2.07px 0px 0px #2a3637;
+        img {
+          filter: grayscale(1) brightness(100);
+        }
+      }
+
+      .promo-percentage {
+        position: absolute;
+        // background: #ff0000;
+        padding: 2px 2px 7px;
+        border-radius: 5px;
+        font-size: 8px;
+        left: 50%;
+        top: 6px;
+        z-index: 2000;
+        background: url(../assets/images/index/redpromo-bg.png) no-repeat center center;
+        background-size: contain;
+        transform: translate(-50%, -100%);
+        width: 70px;
+        text-align: center;
+        color: #fff;
+      }
+    }
+  }
   .acct-menu {
+    padding: 20px 0 0;
+    border-radius: 4px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
     grid-gap: 30px;
     gap: 10px;
     row-gap: 10px;
     height: auto;
     width: 100%;
-    margin-bottom: 0px;
 
     &.shorter-menu {
       grid-template-rows: repeat(2, 1fr);
@@ -344,33 +895,38 @@ const logout = () => {
       font-size: 14px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      padding: 8px 3px;
-      width: 100px;
+      > div {
+        margin-bottom: 10px;
+      }
+      width: 100%;
       text-align: center;
       align-items: center;
       justify-content: flex-start;
       margin: 0 auto;
 
-      &:active {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-      }
+      // &:active {
+      //   background-color: rgba(255, 255, 255, 0.1);
+      //   border-radius: 8px;
+      // }
 
       .acct-nav-label {
-        padding-top: 6px;
-        color: #ffffff90;
-        font-size: 14px;
-        white-space: normal;
+        color: #fff;
+        font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 120%;
+        letter-spacing: 0px;
+        text-align: center;
+        vertical-align: middle;
       }
 
       .acct-nav-item {
-        background-color: #b9c8ff26;
+        // background-color: #b9c8ff26;
         border-radius: 50%;
-        aspect-ratio: 1/1;
-        padding: 12px;
-        height: 56px;
-        width: 56px;
+        // aspect-ratio: 1/1;
+        // padding: 5px;
+        height: 22px;
+        width: 22px;
         cursor: pointer;
         display: flex;
         text-align: center;
@@ -380,7 +936,7 @@ const logout = () => {
         text-decoration: none;
 
         img {
-          width: 90%;
+          // width: 90%;
           fill: white;
           padding: 0;
         }
@@ -403,20 +959,29 @@ const logout = () => {
 }
 
 .acct-logout {
-  background-image: url("../assets/images/account/logout-btn.png");
-  background-repeat: no-repeat;
+  // height: 60px;
+  // background: #2e30344f;
+  // background-image: url("../assets/images/account/logout-btn.png");
+  // background-repeat: no-repeat;
   width: calc(95% - 20px);
   margin: 20px auto;
-  aspect-ratio: 335/40;
-  background-size: 100% 100%;
+  // aspect-ratio: 335/40;
+  // background-size: 100% 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 50px;
-
+  // gap: 5px;
+  :not(:last-child) {
+    margin-right: 5px;
+  }
+  img {
+    width: 30px;
+  }
   .acct-nav-label {
-    color: rgba(206, 206, 206, 0.8);
-    font-size: 16px;
+    // color: rgba(206, 206, 206, 0.8);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
   }
 
   &:active {
@@ -426,25 +991,191 @@ const logout = () => {
 }
 
 .btn-cancel {
-  background: #ffffff20;
+  // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+  // border: 1px solid #5d8956;
+  // font-weight: 700;
+  // color: #fff;
+  // border: 1px solid #ffffff80;
+  // border-radius: 12px;
+  // width: 140px;
+  // height: 42px;
   font-weight: 700;
-  color: #dcdcdc;
-  border: 1px solid #ffffff80;
-  border-radius: 8px;
-  width: 140px;
-  height: 42px;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 16px;
+  background: #455152;
+  color: #ffffff;
+
+  box-shadow: 0px 2px 0px 0px #2a3637;
 }
 .btn-confirm {
-  background: linear-gradient(187.94deg, rgba(255, 255, 255, 0.8) 5.77%, #8eb5ff 93.57%);
+  // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+  // border: 1px solid #5d8956;
+  // font-weight: 700;
+  // width: 140px;
+  // height: 42px;
+  // color: #fff;
+  // border-radius: 12px;
+
   font-weight: 700;
-  width: 140px;
-  height: 42px;
-  color: #5c46e7;
-  border-radius: 8px;
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 16px;
+  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+  color: #000000;
+  box-shadow: 0px 2px 0px 0px #1cca6a;
+  border-radius: 4px;
+  height: unset;
+}
+
+.menu-open {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: repeating-linear-gradient(45deg, #f1f1ee 0, #b9a78d 50%, #e9e8e4 100%);
+  backdrop-filter: blur(4px);
+  width: 100%;
+  height: calc(100% - 70px);
+  display: block;
+  z-index: 2002;
+  transition: 0.3s all;
+  margin-left: -100%;
+  &.open {
+    margin-left: 0;
+  }
+
+  .left-side-menu {
+    padding-top: 30px !important;
+  }
+  .side-menu {
+    padding-top: 72px;
+    // background-color: #131313;
+    // width: 202px;
+    // height: 100%;
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 12px;
+    transition: 0.3s all;
+
+    overflow-y: auto;
+
+    .side-menu-divider {
+      background: rgba(255, 255, 255, 0.05);
+      height: 2px;
+      width: 100%;
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+
+    .side-menu-item {
+      height: 50px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      width: 170px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 5px;
+      color: #9f9f9f;
+      font-weight: bold;
+      line-height: 1.2;
+      text-decoration: none;
+      &__download {
+        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        color: #000a01;
+        font-weight: bold;
+
+        .item-icon {
+          img {
+            display: block;
+            width: 20px;
+          }
+        }
+      }
+
+      &__transparent {
+        background-color: transparent;
+        height: 40px;
+      }
+
+      &__checkin {
+        background: linear-gradient(270deg, #168346 0%, #171719 100%);
+        padding-left: 18px;
+        font-size: 80%;
+        color: #ffffff;
+        display: none !important;
+        span {
+          display: block;
+          color: #61ff00;
+        }
+
+        .item-icon {
+          margin-left: auto;
+          margin-top: -18px;
+        }
+      }
+
+      &__luckyspin {
+        background: linear-gradient(270deg, #b2267d 0%, #171719 100%);
+        padding-left: 18px;
+        font-size: 80%;
+        color: #ffffff;
+        display: none !important;
+        span {
+          display: block;
+          color: #ff00f5;
+        }
+
+        .item-icon {
+          margin-left: auto;
+          margin-top: -8px;
+        }
+      }
+
+      &__invite {
+        background: linear-gradient(270deg, #7a1683 0%, #171719 100%);
+        padding-left: 18px;
+        font-size: 80%;
+        color: #ffffff;
+        span {
+          font-size: 9px;
+          padding-top: 4px;
+          display: block;
+          color: #ffe500;
+        }
+
+        .item-icon {
+          margin-left: auto;
+          margin-top: -8px;
+        }
+      }
+
+      .item-icon {
+        width: 30px;
+        margin-right: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          display: block;
+
+          &.flag {
+            width: 26px;
+          }
+        }
+      }
+    }
+  }
 }
 </style>
 
 <style lang="scss">
+// .q-page-container {
+//   padding-bottom: 20px !important;
+// }
+
 .q-page {
   min-height: 0 !important;
 }

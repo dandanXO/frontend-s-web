@@ -11,21 +11,12 @@ module.exports = (api) => {
         "@babel/preset-env",
         {
           targets: {
-            chrome: "50",
-            android: "6",
-            ios: "10",
-            safari: "10",
-            ie: "11"
-          },
-          useBuiltIns: "entry",
-          corejs: 3
+            android: "8.0",
+            browsers: ["last 10 versions", "ie >= 9", "iOS >= 12", "safari >= 12"],
+            chrome: "66"
+          }
         }
       ]
-    ],
-    plugins: [
-      "@babel/plugin-proposal-class-properties",
-      "@babel/plugin-proposal-optional-chaining",
-      "@babel/plugin-proposal-nullish-coalescing-operator"
     ]
   };
 };

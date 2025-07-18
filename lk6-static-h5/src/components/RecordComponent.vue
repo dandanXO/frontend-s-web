@@ -91,7 +91,7 @@
                   {{ checkRecord(det[obj]) }}
                 </div>
                 <div v-else-if="obj === 'platform'">
-                  {{ det["alias"] ?? det["obj"] }}
+                  {{ det["alias"] ?? det[obj] }}
                 </div>
                 <div
                   v-else-if="
@@ -109,7 +109,13 @@
                 </div>
                 <div v-else-if="obj === 'serialNumber'" class="deposit-serial-number">
                   <div class="ellipsis">{{ det[obj] }}</div>
-                  <q-btn @click="copyText(det.serialNumber, $t('record.serialNumber.deposit'))" flat round>
+                  <q-btn @click="copyText(det.serialNumber, $t('record.serialNumber'))" flat round>
+                    <img src="../assets/records/copy-icon.png" />
+                  </q-btn>
+                </div>
+                <div v-else-if="obj === 'transactionId'" class="deposit-serial-number">
+                  <div class="ellipsis">{{ det[obj] }}</div>
+                  <q-btn @click="copyText(det.transactionId, $t('record.betId'))" flat round>
                     <img src="../assets/records/copy-icon.png" />
                   </q-btn>
                 </div>
@@ -157,7 +163,9 @@
             <div class="justify-center row q-my-md" v-if="!isEnded">
               <q-spinner-dots color="primary" size="40px" />
             </div>
-            <span style="padding: 4px 0px; line-height: 36px; color: #7a80a1">{{ $t("common.noMoreData") }}</span>
+            <span v-else style="padding: 4px 0px; line-height: 36px; color: #7a80a1">
+              {{ $t("common.noMoreData") }}
+            </span>
           </div>
         </template>
       </q-infinite-scroll>
@@ -170,8 +178,8 @@
     v-model="reminderDialog"
     no-backdrop-dismiss
     no-esc-dismiss
-    :header="$t('')"
-    :confirm-btn-text="$t('record.notification.reminderRequest.title')"
+    :header="$t('record.notification.reminderRequest.title')"
+    :confirm-btn-text="$t('btn.reminderRequest')"
     @confirm="submitReminder"
   >
     <template #content>
@@ -295,20 +303,19 @@ export default defineComponent({
       // console.log("onLoad");
       // console.log(comList.value);
       setTimeout(() => {
-        truncatedList.value = [];
-        if (!props.isEnded) {
+        if (!props.isEnded || comList.value.length > 0) {
           if (comList.value.length) {
-            var slicedArray = comList.value;
+            const slicedArray = comList.value.splice(0, 6);
             slicedArray.forEach((element) => {
               truncatedList.value.push(element);
             });
             done();
           } else if (comList.value.length === 0) {
-            // context.emit("loadnewdata");
-            // done();
+            context.emit("loadnewdata");
+            done();
           }
         }
-      }, 30);
+      }, 100);
     };
 
     const openWithdrawConfirmDialog = (det) => {
@@ -406,7 +413,7 @@ export default defineComponent({
         $q.notify({
           color: "positive",
           position: "top",
-          message: t("common.copySuccess.message", { str: msgTitle }),
+          message: t("common.notification.copySuccess.message", { str: msgTitle }),
           icon: "check_circle_outline"
         });
       }, 100);
@@ -448,7 +455,7 @@ export default defineComponent({
     };
 
     const getImageLink = (linkId) => {
-      reminderForm.photos = `/${linkId}`;
+      reminderForm.photos = linkId;
     };
 
     const submitReminder = () => {
@@ -458,7 +465,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "bottom",
-          message: t("common.uploadFileRequired.message"),
+          message: t("common.notification.uploadFileRequired.message"),
           icon: "report_problem"
         });
         return;
@@ -521,15 +528,15 @@ export default defineComponent({
 
   .label {
     color: #7a80a1;
-    flex: 1;
+    flex: 3;
     align-items: center;
     display: flex;
     justify-content: flex-start;
-    min-width: max-content;
+    // min-width: max-content;
   }
 
   .desc {
-    flex: 4;
+    flex: 8;
     word-break: break-all;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -579,11 +586,12 @@ export default defineComponent({
     background-image: url("../assets/images/index/primary-btn.png");
     background-size: 100% 100%;
     color: #fff;
-    width: 87px;
+    // width: 87px;
+    padding: 5px 11px;
     text-align: center;
     white-space: nowrap;
     font-size: 14px;
-    aspect-ratio: 87/32;
+    // aspect-ratio: 87/32;
     display: flex;
     align-items: center;
     justify-content: center;
