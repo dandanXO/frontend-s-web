@@ -84,14 +84,14 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
 <style lang="scss" scoped>
 .rules-container {
   position: fixed;
-  padding: 70px 20px 150px 20px !important;
+  padding: 70px 20px 250px 20px !important;
   // top: 75px;
   top: 135px;
 
   overflow: auto;
   left: 0;
   right: 0;
-  background: #090f1e;                                            
+  background: #090f1e;
   height: 90vh;
 
   .title-img {
