@@ -73,166 +73,235 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="t('fields.reviewRule')" prop="reviewRuleList" v-if="uiControl.isShowReviewRule">
-          <el-table
-            :data="form.reviewRuleList"
-            style="width: 100%"
-            size="small"
-            :show-header="false"
-            :border="false"
-          >
-            <el-table-column prop="variable" width="310">
-              <template #default="scope">
-                <template v-if="!scope.row.variable || scope.row.variable.trim() === ''">
-                  <el-select
-                    v-model="scope.row.variable"
-                    size="small"
-                    filterable
-                    :placeholder="t('fields.pleaseChoose')"
-                    style="width: 300px;"
-                  >
-                    <el-option
-                      v-for="item in reviewRuleTypeList.list.filter(x => {
-                        if ([16, 17, 18].includes(x.key)) {
-                          const hasPlatformRule = form.reviewRuleList.some(y => {
-                            const ruleKey = reviewRuleTypeList.list.find(r => r.value === y.variable)?.key;
-                            return [16, 17, 18].includes(ruleKey);
-                          });
-                          if (hasPlatformRule) {
-                            return false;
-                          }
-                        }
-                        return !form.reviewRuleList.some(y => y.variable === x.value);
-                      })"
-                      :key="item.value"
-                      :label="item.name"
-                      :value="item.value"
-                      :disabled="form.reviewRuleList.some(y => y.variable === item.value)"
+          <div style="margin-bottom: 15px; padding: 10px; background-color: #f5f7fa; border-radius: 4px; border: 1px solid #e4e7ed; display: flex; align-items: center;">
+            <span style="font-weight: bold; color: #409EFF; margin-right: 16px;">{{ t('fields.reviewRule') }} Mode:</span>
+            <el-button-group>
+              <el-button
+                :type="uiControl.reviewRuleEditMode === 'form' ? 'primary' : 'default'"
+                @click="switchReviewRuleMode('form')"
+                size="small"
+                icon="el-icon-edit"
+              >
+                {{ t('fields.formMode') }}
+              </el-button>
+              <el-button
+                :type="uiControl.reviewRuleEditMode === 'direct' ? 'primary' : 'default'"
+                @click="switchReviewRuleMode('direct')"
+                size="small"
+                icon="el-icon-document"
+              >
+                {{ t('fields.directEditMode') }}
+              </el-button>
+            </el-button-group>
+          </div>
+
+          <template v-if="uiControl.reviewRuleEditMode === 'form'">
+            <div style="min-height: 200px; border: 1px solid #dcdfe6; border-radius: 4px; padding: 8px; width: 750px;">
+              <el-table
+                :data="form.reviewRuleList"
+                style="width: 100%"
+                size="small"
+                :show-header="false"
+                :border="false"
+              >
+                <el-table-column prop="variable" width="310">
+                  <template #default="scope">
+                    <template v-if="!scope.row.variable || scope.row.variable.trim() === ''">
+                      <el-select
+                        v-model="scope.row.variable"
+                        size="small"
+                        filterable
+                        :placeholder="t('fields.pleaseChoose')"
+                        style="width: 300px;"
+                      >
+                        <el-option
+                          v-for="item in reviewRuleTypeList.list.filter(x => {
+                            // Special handling for platform rules (16, 17, 18) - only one allowed
+                            if ([16, 17, 18].includes(x.key)) {
+                              const hasPlatformRule = form.reviewRuleList.some(y => {
+                                const ruleKey = reviewRuleTypeList.list.find(r => r.value === y.variable)?.key;
+                                return [16, 17, 18].includes(ruleKey);
+                              });
+                              if (hasPlatformRule) {
+                                return false;
+                              }
+                            }
+                            // For other rules, allow multiple selections of the same rule type
+                            return true;
+                          })"
+                          :key="item.value"
+                          :label="item.name"
+                          :value="item.value"
+                          :disabled="false"
+                        />
+                      </el-select>
+                    </template>
+                    <template v-if="scope.row.variable && scope.row.variable.trim() !== ''">
+                      <el-select
+                        v-model="scope.row.variable"
+                        size="small"
+                        filterable
+                        :placeholder="t('fields.pleaseChoose')"
+                        style="width: 300px;"
+                        disabled
+                      >
+                        <el-option
+                          v-for="item in ruleType.list"
+                          :key="item.value"
+                          :label="item.name"
+                          :value="item.value"
+                        />
+                      </el-select>
+                    </template>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="operator" width="80">
+                  <template #default="scope">
+                    <template v-if="scope.row.variable">
+                      <el-select
+                        v-model="scope.row.operator"
+                        size="small"
+                        :placeholder="t('fields.pleaseChoose')"
+                        style="width: 70px;"
+                        v-if="ruleType.list.find(rt => rt.value === scope.row.variable)?.supportsOperators"
+                      >
+                        <el-option
+                          v-for="item in operatorOptions"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                          :disabled="isOperatorDisabled(scope.row.variable, item.value, scope.$index)"
+                        />
+                      </el-select>
+                    </template>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="value" width="210">
+                  <template #default="scope">
+                    <template v-if="scope.row.variable && scope.row.variable.includes('financial')">
+                      <el-select
+                        v-model="scope.row.value"
+                        size="small"
+                        filterable
+                        multiple
+                        :placeholder="t('fields.pleaseChoose')"
+                        style="width: 200px;"
+                      >
+                        <el-option
+                          v-for="item in list.financials"
+                          :key="item.level"
+                          :label="item.name"
+                          :value="item.level"
+                        />
+                      </el-select>
+                    </template>
+                    <template v-else-if="scope.row.variable && scope.row.variable.includes('vip')">
+                      <el-select
+                        v-model="scope.row.value"
+                        size="small"
+                        filterable
+                        multiple
+                        :placeholder="t('fields.pleaseChoose')"
+                        style="width: 200px;"
+                      >
+                        <el-option
+                          v-for="item in list.vips"
+                          :key="item.level"
+                          :label="item.name"
+                          :value="item.level"
+                        />
+                      </el-select>
+                    </template>
+                    <template v-else-if="scope.row.variable && scope.row.variable.includes('risk')">
+                      <el-select
+                        v-model="scope.row.value"
+                        size="small"
+                        filterable
+                        multiple
+                        :placeholder="t('fields.pleaseChoose')"
+                        style="width: 200px;"
+                      >
+                        <el-option
+                          v-for="item in list.risks"
+                          :key="item.id"
+                          :label="item.levelName"
+                          :value="item.id"
+                        />
+                      </el-select>
+                    </template>
+                    <template v-else-if="scope.row.variable && scope.row.variable.includes('betCountByPlatform')">
+                      <el-select
+                        v-model="scope.row.value"
+                        size="small"
+                        filterable
+                        multiple
+                        :placeholder="t('fields.pleaseChoose')"
+                        style="width: 200px;"
+                      >
+                        <el-option
+                          v-for="item in list.gamePlatforms"
+                          :key="item.id"
+                          :label="item.code"
+                          :value="item.code"
+                        />
+                      </el-select>
+                    </template>
+                    <template v-else>
+                      <el-input-number
+                        v-model="scope.row.value"
+                        :min="-Infinity"
+                        class="form-input"
+                        :controls="false"
+                        :step="1"
+                        :precision="2"
+                        style="width: 200px;"
+                      />
+                    </template>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="action" width="50">
+                  <template #default="scope">
+                    <el-button
+                      type="danger"
+                      icon="el-icon-delete"
+                      size="mini"
+                      @click="removeReviewRuleRow(scope.$index)"
                     />
-                  </el-select>
-                </template>
-                <template v-if="scope.row.variable && scope.row.variable.trim() !== ''">
-                  <el-select
-                    v-model="scope.row.variable"
-                    size="small"
-                    filterable
-                    :placeholder="t('fields.pleaseChoose')"
-                    style="width: 300px;"
-                    disabled
-                  >
-                    <el-option
-                      v-for="item in ruleType.list"
-                      :key="item.value"
-                      :label="item.name"
-                      :value="item.value"
+                  </template>
+                </el-table-column>
+                <el-table-column prop="action" width="50">
+                  <template #default="scope">
+                    <el-button
+                      type="primary"
+                      icon="el-icon-plus"
+                      size="mini"
+                      @click="addReviewRuleRow(scope.$index)"
                     />
-                  </el-select>
-                </template>
-              </template>
-            </el-table-column>
-            <el-table-column prop="value" width="210">
-              <template #default="scope">
-                <template v-if="scope.row.variable && scope.row.variable.includes('financial')">
-                  <el-select
-                    v-model="scope.row.value"
-                    size="small"
-                    filterable
-                    multiple
-                    :placeholder="t('fields.pleaseChoose')"
-                    style="width: 200px;"
-                  >
-                    <el-option
-                      v-for="item in list.financials"
-                      :key="item.level"
-                      :label="item.name"
-                      :value="item.level"
-                    />
-                  </el-select>
-                </template>
-                <template v-else-if="scope.row.variable && scope.row.variable.includes('vip')">
-                  <el-select
-                    v-model="scope.row.value"
-                    size="small"
-                    filterable
-                    multiple
-                    :placeholder="t('fields.pleaseChoose')"
-                    style="width: 200px;"
-                  >
-                    <el-option
-                      v-for="item in list.vips"
-                      :key="item.level"
-                      :label="item.name"
-                      :value="item.level"
-                    />
-                  </el-select>
-                </template>
-                <template v-else-if="scope.row.variable && scope.row.variable.includes('risk')">
-                  <el-select
-                    v-model="scope.row.value"
-                    size="small"
-                    filterable
-                    multiple
-                    :placeholder="t('fields.pleaseChoose')"
-                    style="width: 200px;"
-                  >
-                    <el-option
-                      v-for="item in list.risks"
-                      :key="item.id"
-                      :label="item.levelName"
-                      :value="item.id"
-                    />
-                  </el-select>
-                </template>
-                <template v-else-if="scope.row.variable && scope.row.variable.includes('betCountByPlatform')">
-                  <el-select
-                    v-model="scope.row.value"
-                    size="small"
-                    filterable
-                    multiple
-                    :placeholder="t('fields.pleaseChoose')"
-                    style="width: 200px;"
-                  >
-                    <el-option
-                      v-for="item in list.gamePlatforms"
-                      :key="item.id"
-                      :label="item.code"
-                      :value="item.code"
-                    />
-                  </el-select>
-                </template>
-                <template v-else>
-                  <el-input-number
-                    v-model="scope.row.value"
-                    :min="-Infinity"
-                    class="form-input"
-                    :controls="false"
-                    :step="1"
-                    :precision="2"
-                    style="width: 200px;"
-                  />
-                </template>
-              </template>
-            </el-table-column>
-            <el-table-column prop="action" width="50">
-              <template #default="scope">
-                <el-button
-                  type="danger"
-                  icon="el-icon-delete"
-                  size="mini"
-                  @click="removeReviewRuleRow(scope.$index)"
-                />
-              </template>
-            </el-table-column>
-            <el-table-column prop="action" width="50">
-              <template #default="scope">
-                <el-button
-                  type="primary"
-                  icon="el-icon-plus"
-                  size="mini"
-                  @click="addReviewRuleRow(scope.$index)"
-                />
-              </template>
-            </el-table-column>
-          </el-table>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+          </template>
+
+          <template v-else>
+            <div style="min-height: 200px; border: 1px solid #dcdfe6; border-radius: 4px; width: 750px;">
+              <el-input
+                v-model="form.reviewRuleDirectEdit"
+                type="textarea"
+                :rows="8"
+                :placeholder="t('fields.enterRuleString')"
+                style="width: 100%; height: 100%; border: none; border-radius: 4px;"
+                resize="none"
+                @input="validateDirectEditRule"
+              />
+            </div>
+            <div v-if="uiControl.directEditValidationErrors.length > 0" style="margin-top: 10px; padding: 10px; background-color: #fef0f0; border: 1px solid #fbc4c4; border-radius: 4px; color: #f56c6c;">
+              <div style="font-weight: bold; margin-bottom: 5px;">{{ t('message.validationErrors') }}:</div>
+              <ul style="margin: 0; padding-left: 20px;">
+                <li v-for="(error, index) in uiControl.directEditValidationErrors" :key="index">{{ error }}</li>
+              </ul>
+            </div>
+          </template>
         </el-form-item>
         <el-form-item :label="t('fields.autoWithdrawRule')" prop="ruleList" v-if="!uiControl.isShowReviewRule">
           <el-table
@@ -275,6 +344,27 @@
                       :key="item.value"
                       :label="item.name"
                       :value="item.value"
+                    />
+                  </el-select>
+                </template>
+              </template>
+            </el-table-column>
+            <el-table-column prop="operator" width="80">
+              <template #default="scope">
+                <template v-if="scope.row.variable">
+                  <el-select
+                    v-model="scope.row.operator"
+                    size="small"
+                    :placeholder="t('fields.pleaseChoose')"
+                    style="width: 70px;"
+                    v-if="ruleType.list.find(rt => rt.value === scope.row.variable)?.supportsOperators"
+                  >
+                    <el-option
+                      v-for="item in operatorOptions"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                      :disabled="isAutoWithdrawOperatorDisabled(scope.row.variable, item.value, scope.$index)"
                     />
                   </el-select>
                 </template>
@@ -663,7 +753,9 @@ const uiControl = reactive({
   dialogLoading: false,
   useRule: true,
   showReviewRule: true,
-  isShowReviewRule: true
+  isShowReviewRule: true,
+  reviewRuleEditMode: 'form',
+  directEditValidationErrors: []
 })
 const request = reactive({
   size: 30,
@@ -700,10 +792,10 @@ const form = reactive({
   paymentTypeCode: null,
   withdrawAmountMax: 0,
   withdrawAmountMin: 0,
-  rule: null,
   reviewRule: null,
   ruleList: [],
   reviewRuleList: [],
+  reviewRuleDirectEdit: '' // For direct edit mode
 })
 const formRules = reactive({
   name: [required(t('message.validateNameRequired'))],
@@ -711,33 +803,26 @@ const formRules = reactive({
 })
 const ruleType = reactive({
   list: [
-    { key: 1, name: t('withdrawRuleType.withdrawAmount') + t('withdrawRuleType.max'), value: '#withdraw<' },
-    { key: 2, name: t('withdrawRuleType.withdrawAmount') + t('withdrawRuleType.min'), value: '#withdraw>' },
-    { key: 3, name: t('withdrawRuleType.financialLevel'), value: "matches '.*,' + T(String).valueOf(#financialLevel) + ',.*'" },
-    { key: 4, name: t('withdrawRuleType.todayWithdrawCount') + t('withdrawRuleType.max'), value: '#withdrawCount<' },
-    { key: 5, name: t('withdrawRuleType.todayWithdrawCount') + t('withdrawRuleType.min'), value: '#withdrawCount>' },
-    { key: 6, name: t('withdrawRuleType.profit') + t('withdrawRuleType.max'), value: '#profit<' },
-    { key: 7, name: t('withdrawRuleType.profit') + t('withdrawRuleType.min'), value: '#profit>' },
-    { key: 8, name: t('withdrawRuleType.balanceBeforeWithdrawal') + t('withdrawRuleType.max'), value: '#balance<' },
-    { key: 9, name: t('withdrawRuleType.balanceBeforeWithdrawal') + t('withdrawRuleType.min'), value: '#balance>' },
-    { key: 10, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.max'), value: '#afterBalance<' },
-    { key: 11, name: t('withdrawRuleType.balanceAfterWithdrawal') + t('withdrawRuleType.min'), value: '#afterBalance>' },
-    { key: 12, name: t('withdrawRuleType.vip'), value: "matches '.*,' + T(String).valueOf(#vipLevel) + ',.*'" },
-    { key: 13, name: t('withdrawRuleType.risk'), value: "matches '.*,' + T(String).valueOf(#riskId) + ',.*'" },
-    { key: 14, name: t('withdrawRuleType.monthlyProfit') + t('withdrawRuleType.max'), value: '#monthlyProfit<' },
-    { key: 15, name: t('withdrawRuleType.monthlyProfit') + t('withdrawRuleType.min'), value: '#monthlyProfit>' },
-    { key: 16, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 1 + t('withdrawRuleType.week') + ')', value: '#betCountByPlatform_7' },
-    { key: 17, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 2 + t('withdrawRuleType.week') + ')', value: '#betCountByPlatform_14' },
-    { key: 18, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 1 + t('withdrawRuleType.month') + ')', value: '#betCountByPlatform_30' },
-    { key: 19, name: t('withdrawRuleType.balanceThresholdMultiplier'), value: '#balance<#totalDeposit*' },
-    { key: 20, name: t('withdrawRuleType.balanceCompareTodayMultiplier'), value: '#balance<#todayDeposit*' },
-    { key: 21, name: t('withdrawRuleType.registerDay'), value: '#registerDay>' },
-
+    { key: 1, name: t('withdrawRuleType.withdrawAmount'), value: '#withdraw', supportsOperators: true },
+    { key: 2, name: t('withdrawRuleType.financialLevel'), value: "matches '.*,' + T(String).valueOf(#financialLevel) + ',.*'", supportsOperators: false },
+    { key: 3, name: t('withdrawRuleType.todayWithdrawCount'), value: '#withdrawCount', supportsOperators: true },
+    { key: 4, name: t('withdrawRuleType.profit'), value: '#profit', supportsOperators: true },
+    { key: 5, name: t('withdrawRuleType.balanceBeforeWithdrawal'), value: '#balance', supportsOperators: true },
+    { key: 6, name: t('withdrawRuleType.balanceAfterWithdrawal'), value: '#afterBalance', supportsOperators: true },
+    { key: 7, name: t('withdrawRuleType.vip'), value: "matches '.*,' + T(String).valueOf(#vipLevel) + ',.*'", supportsOperators: false },
+    { key: 8, name: t('withdrawRuleType.risk'), value: "matches '.*,' + T(String).valueOf(#riskId) + ',.*'", supportsOperators: false },
+    { key: 9, name: t('withdrawRuleType.monthlyProfit'), value: '#monthlyProfit', supportsOperators: true },
+    { key: 10, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 1 + t('withdrawRuleType.week') + ')', value: '#betCountByPlatform_7', supportsOperators: false },
+    { key: 11, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 2 + t('withdrawRuleType.week') + ')', value: '#betCountByPlatform_14', supportsOperators: false },
+    { key: 12, name: t('withdrawRuleType.noAutoWithdrawalGamePlatform') + '(' + 1 + t('withdrawRuleType.month') + ')', value: '#betCountByPlatform_30', supportsOperators: false },
+    { key: 13, name: t('withdrawRuleType.balanceVsTotalDepositMultiplier'), value: '#balance#totalDeposit*', supportsOperators: true },
+    { key: 14, name: t('withdrawRuleType.balanceVsTodayDepositMultiplier'), value: '#balance#todayDeposit*', supportsOperators: true },
+    { key: 15, name: t('withdrawRuleType.registerDay'), value: '#registerDay', supportsOperators: true },
   ],
 })
 
 const ruleTypeList = reactive({
-  list: ruleType.list.filter(x => [1, 2].includes(x.key)),
+  list: ruleType.list.filter(x => [1].includes(x.key)),
 })
 const reviewRuleTypeList = reactive({ ...ruleType });
 
@@ -778,6 +863,7 @@ function removeRuleRow(index) {
 function addRuleRow(index) {
   form.ruleList.splice(index + 1, 0, {
     variable: '',
+    operator: '',
     value: 0
   })
 }
@@ -792,9 +878,19 @@ function removeReviewRuleRow(index) {
 function addReviewRuleRow(index) {
   form.reviewRuleList.splice(index + 1, 0, {
     variable: '',
+    operator: '',
     value: 0
   })
 }
+
+const operatorOptions = [
+  { label: '<', value: '<' },
+  { label: '>', value: '>' },
+  { label: '==', value: '==' },
+  { label: '!=', value: '!=' },
+  { label: '<=', value: '<=' },
+  { label: '>=', value: '>=' },
+];
 
 const numberRules = reactive({
   repeatNumberValidation: [repeatNumberValidation(t('message.validateNoRepeatAmount'))],
@@ -848,7 +944,9 @@ async function loadWithdrawReviewRule() {
     item.paymentTypeCode = 'ALL'
     item.status = item.value === '1'
     item.reviewRule = item.describes
+    console.log('Loading review rule:', item.reviewRule);
     item.reviewRuleList = getValueList(item.reviewRule)
+    console.log('Parsed review rule list:', item.reviewRuleList);
     item.reviewRuleDisplay = createVariableValueString(item.reviewRuleList)
     item.siteId = request.siteId
   })
@@ -883,7 +981,12 @@ function createVariableValueString(originalData) {
       }
       const variableName = ruleType.list.find(a => a.value === item.variable)?.name;
       item.variable = variableName ?? item.variable;
-      return `${item.variable} : ${item.value}`;
+      // Include operator in display if it exists
+      if (item.operator && item.operator.trim() !== '') {
+        return `${item.variable} ${item.operator} ${item.value}`;
+      } else {
+        return `${item.variable} : ${item.value}`;
+      }
     }
     return null;
   }).filter(Boolean);
@@ -903,53 +1006,85 @@ function getValue(str, keyword) {
 }
 
 function getValueList(str) {
-  const conditionRegex = /(#\w+)\s*(<=|>=|==|<|>)\s*(-?\d+(?:\.\d+)?)/g;
+  const conditionRegex = /(#\w+)\s*(<=|>=|==|!=|<|>)\s*(-?\d+(?:\.\d+)?)/g;
   const matchesRegex = /\(([^)]+)\)\s+matches\s+'(.*)'/g;
   const platformRegex = /#betCountByPlatform_([a-zA-Z0-9_]+)_(\d+)/g;
-  const balanceThresholdRegex = /#balance<#totalDeposit\*\s*(-?\d+(?:\.\d+)?)/g;
-  const balanceCompareTodayRegex = /#balance<#todayDeposit\*\s*(-?\d+(?:\.\d+)?)/g;
+  // Single comprehensive regex for balance rules (handles both formats)
+  const balanceRegex = /#balance\s*(<=|>=|==|!=|<|>)\s*(#totalDeposit|#todayDeposit)\*\s*(\d+(?:\.\d+)?)/g;
+  // Fallback regex for auto withdraw rules without operators (backward compatibility)
+  const fallbackRegex = /(#\w+)\s+(-?\d+(?:\.\d+)?)/g;
   const results = [];
   let match;
   if (!str) {
     results.push({ variable: '', operator: '', value: null });
     return results;
   }
+  // Track processed conditions to avoid duplicates
+  const processedConditions = new Set();
   function extractConditions(conditionStr) {
-    while ((match = conditionRegex.exec(conditionStr)) !== null) {
-      const variable = match[1] + match[2];
-      const operator = match[2];
+    // Parse balance rules with single comprehensive regex
+    while ((match = balanceRegex.exec(conditionStr)) !== null) {
+      const operator = match[1];
+      const depositType = match[2]; // #totalDeposit or #todayDeposit
       const value = parseFloat(match[3]);
-      results.push({ variable, operator, value });
+      const variable = depositType === '#totalDeposit' ? '#balance#totalDeposit*' : '#balance#todayDeposit*';
+      const key = `balance_${depositType}_${operator}_${value}`;
+      if (!processedConditions.has(key)) {
+        results.push({ variable, operator, value });
+        processedConditions.add(key);
+      }
+    }
+    // Handle other rule types
+    while ((match = conditionRegex.exec(conditionStr)) !== null) {
+      const key = `condition_${match[1]}_${match[2]}_${match[3]}`;
+      if (!processedConditions.has(key)) {
+        const variable = match[1];
+        const operator = match[2];
+        const value = parseFloat(match[3]);
+        results.push({ variable, operator, value });
+        processedConditions.add(key);
+      }
     }
     while ((match = matchesRegex.exec(conditionStr)) !== null) {
-      const expression = match[1];
-      const pattern = match[2];
-      const innerValue = expression.replace(/[^0-9,]+/g, '').split(',').filter(item => item !== '').map(Number);
-      results.push({ variable: "matches '" + pattern + "'", operator: 'matches', value: innerValue });
+      const key = `matches_${match[2]}`;
+      if (!processedConditions.has(key)) {
+        const expression = match[1];
+        const pattern = match[2];
+        const innerValue = expression.replace(/[^0-9,]+/g, '').split(',').filter(item => item !== '').map(Number);
+        results.push({ variable: "matches '" + pattern + "'", operator: 'matches', value: innerValue });
+        processedConditions.add(key);
+      }
     }
     while ((match = platformRegex.exec(conditionStr)) !== null) {
-      const platformList = match[1].split('_');
-      const numericPart = match[2];
-      const variable = '#betCountByPlatform_' + numericPart;
-      const value = platformList;
-      results.push({ variable, operator: '', value });
+      const key = `platform_${match[1]}_${match[2]}`;
+      if (!processedConditions.has(key)) {
+        const platformList = match[1].split('_');
+        const numericPart = match[2];
+        const variable = '#betCountByPlatform_' + numericPart;
+        const value = platformList;
+        results.push({ variable, operator: '', value });
+        processedConditions.add(key);
+      }
     }
-    while ((match = balanceThresholdRegex.exec(conditionStr)) !== null) {
-      const variable = '#balance<#totalDeposit*';
-      const value = parseFloat(match[1]);
-      results.push({ variable, operator: '', value });
-    }
-    while ((match = balanceCompareTodayRegex.exec(conditionStr)) !== null) {
-      const variable = '#balance<#todayDeposit*';
-      const value = parseFloat(match[1]);
-      results.push({ variable, operator: '', value });
+    // Handle fallback cases for auto withdraw rules without operators
+    while ((match = fallbackRegex.exec(conditionStr)) !== null) {
+      const key = `fallback_${match[1]}_${match[2]}`;
+      if (!processedConditions.has(key)) {
+        const variable = match[1];
+        const value = parseFloat(match[2]);
+        results.push({ variable, operator: '', value });
+        processedConditions.add(key);
+      }
     }
   }
   const andConditions = str.split(/\s+and\s+/).filter(condition => condition.trim());
   for (const condition of andConditions) {
     extractConditions(condition.trim());
   }
-  results.push({ variable: '', operator: '', value: null });
+  // Only add empty row if no results
+  if (results.length === 0) {
+    results.push({ variable: '', operator: '', value: null });
+  }
   return results.length > 0 ? results : null;
 }
 
@@ -1072,10 +1207,25 @@ async function batchSave(data) {
 function showEdit(data) {
   showDialog('EDIT')
   nextTick(() => {
+    // Reset form first
+    Object.keys(form).forEach(key => {
+      if (key !== 'siteId') {
+        form[key] = null
+      }
+    })
+    // Load fresh data
     for (const key in data) {
       if (Object.keys(form).find(k => k === key)) {
         form[key] = data[key]
       }
+    }
+    // Parse rule strings to form data
+    if (data.rule) {
+      form.ruleList = getValueList(data.rule)
+    }
+    if (data.reviewRule) {
+      form.reviewRuleList = getValueList(data.reviewRule)
+      form.reviewRuleDirectEdit = data.reviewRule
     }
   })
 }
@@ -1083,15 +1233,29 @@ function showEdit(data) {
 function showEditWithdrawReview(data) {
   showDialog('EDIT_REVIEW_RULE')
   nextTick(() => {
+    // Reset form first
+    Object.keys(form).forEach(key => {
+      if (key !== 'siteId') {
+        form[key] = null
+      }
+    })
+    // Load fresh data
     for (const key in data) {
       if (Object.keys(form).find(k => k === key)) {
         form[key] = data[key]
       }
     }
+    // Parse review rule string to form data
+    if (data.reviewRule) {
+      form.reviewRuleList = getValueList(data.reviewRule)
+      form.reviewRuleDirectEdit = data.reviewRule
+    }
   })
 }
 
 function showDialog(type) {
+  // Always reset to form mode when opening dialog
+  uiControl.reviewRuleEditMode = 'form'
   if (type === 'CREATE') {
     if (autoPaymentForm.value) {
       handleChangeSite()
@@ -1103,6 +1267,8 @@ function showDialog(type) {
     uiControl.dialogTitle = t('fields.addPayType')
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editPayType')
+  } else if (type === 'EDIT_REVIEW_RULE') {
+    uiControl.dialogTitle = t('fields.editReviewRule')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
@@ -1144,8 +1310,10 @@ function create() {
   autoPaymentForm.value.validate(async valid => {
     if (valid) {
       form.siteId = request.siteId
-      form.rule = createConditionString(form.ruleList)
-      form.reviewRule = createConditionString(form.reviewRuleList)
+      form.rule = createConditionString(form.ruleList, false)
+      form.reviewRule = uiControl.reviewRuleEditMode === 'direct'
+        ? form.reviewRuleDirectEdit
+        : createConditionString(form.reviewRuleList, true)
       await createSystemAutoPaymentType(form)
       uiControl.dialogVisible = false
       await loadAutoPaymentType()
@@ -1170,7 +1338,9 @@ function createPlatform() {
 
 async function editReviewRule() {
   form.siteId = request.siteId
-  form.reviewRule = createConditionString(form.reviewRuleList)
+  form.reviewRule = uiControl.reviewRuleEditMode === 'direct'
+    ? form.reviewRuleDirectEdit
+    : createConditionString(form.reviewRuleList, true)
   await updateWithdrawReviewRule(form)
   uiControl.dialogVisible = false
   await loadWithdrawReviewRule()
@@ -1181,21 +1351,62 @@ function edit() {
   autoPaymentForm.value.validate(async valid => {
     if (valid) {
       form.siteId = request.siteId
-      form.rule = createConditionString(form.ruleList)
-      form.reviewRule = createConditionString(form.reviewRuleList)
+      form.rule = createConditionString(form.ruleList, false)
+      form.reviewRule = uiControl.reviewRuleEditMode === 'direct'
+        ? form.reviewRuleDirectEdit
+        : createConditionString(form.reviewRuleList, true)
       await updateystemAutoPaymentType(form)
       uiControl.dialogVisible = false
+      // Refresh data to ensure we have the latest saved data
       await loadAutoPaymentType()
+      // Update the specific record in the table with fresh data
+      const updatedRecord = page.records.find(r => r.id === form.id)
+      if (updatedRecord) {
+        updatedRecord.rule = form.rule
+        updatedRecord.reviewRule = form.reviewRule
+        updatedRecord.ruleList = getValueList(form.rule)
+        updatedRecord.reviewRuleList = getValueList(form.reviewRule)
+        updatedRecord.ruleDisplay = createVariableValueString(updatedRecord.ruleList)
+        updatedRecord.reviewRuleDisplay = createVariableValueString(updatedRecord.reviewRuleList)
+      }
       ElMessage({ message: t('message.editSuccess'), type: 'success' })
     }
   })
 }
 
-function createConditionString(data) {
+function createConditionString(data, isReviewRule = false) {
+  console.log('createConditionString input:', { data, isReviewRule });
   const conditions = data.map(item => {
     const variable = item.variable.trim();
     const value = item.value;
+    const operator = item.operator;
+    console.log('Processing item:', { variable, value, operator });
     if (variable !== '' && value !== null && value !== undefined) {
+      const ruleTypeObj = ruleType.list.find(rt => rt.value === variable);
+      console.log('Found ruleTypeObj:', ruleTypeObj);
+      // Handle balance rules first (before general operator format)
+      if (variable === '#balance#totalDeposit*') {
+        if (isReviewRule && operator) {
+          const result = `#balance${operator}#totalDeposit*${value}`;
+          console.log('Balance totalDeposit result:', result);
+          return result;
+        }
+        return `#balance<#totalDeposit*${value}`;
+      }
+      if (variable === '#balance#todayDeposit*') {
+        if (isReviewRule && operator) {
+          const result = `#balance${operator}#todayDeposit*${value}`;
+          console.log('Balance todayDeposit result:', result);
+          return result;
+        }
+        return `#balance<#todayDeposit*${value}`;
+      }
+      // Handle general operator format for other rules
+      if (isReviewRule && ruleTypeObj && ruleTypeObj.supportsOperators) {
+        if (!operator) return null;
+        console.log('Using general operator format:', `${variable} ${operator} ${value}`);
+        return `${variable} ${operator} ${value}`;
+      }
       if (variable.includes('matches')) {
         if (Array.isArray(value) && value.length === 0) {
           return null;
@@ -1211,19 +1422,24 @@ function createConditionString(data) {
         const numberPart = parts[parts.length - 1];
         return `#betCountByPlatform_${platforms}_${numberPart}`;
       }
-      // Handle balanceThresholdMultiplier rule - no space between variable and value
-      if (variable === '#balance<#totalDeposit*') {
-        return `${variable}${value}`;
+
+      // For auto withdraw rule, use operator if available
+      if (operator && operator.trim() !== '') {
+        const result = `${variable} ${operator} ${value}`;
+        console.log('Auto withdraw with operator result:', result);
+        return result;
+      } else {
+        const result = `${variable} ${value}`;
+        console.log('Auto withdraw without operator result:', result);
+        return result;
       }
-      // Handle balanceCompareTodayMultiplier rule - no space between variable and value
-      if (variable === '#balance<#todayDeposit*') {
-        return `${variable}${value}`;
-      }
-      return `${variable} ${value}`;
     }
+    console.log('Skipping empty item');
     return null;
   }).filter(Boolean);
-  return conditions.join(' and ');
+  const finalResult = conditions.join(' and ');
+  console.log('Final result:', finalResult);
+  return finalResult;
 }
 
 function cancelDialog() {
@@ -1269,6 +1485,224 @@ function checkUseRule() {
   }
 }
 
+// Function to check if an operator should be disabled for duplicate prevention
+function isOperatorDisabled(variable, operator, currentIndex) {
+  if (!variable || !operator) return false;
+
+  // Check if this rule type + operator combination already exists in other rows
+  const hasDuplicate = form.reviewRuleList.some((row, index) =>
+    index !== currentIndex &&
+    row.variable === variable &&
+    row.operator === operator
+  );
+
+  if (hasDuplicate) return true;
+
+  // Check for logically inconsistent operator combinations
+  // If current operator is < or >, disable == and != (and vice versa)
+  const currentRow = form.reviewRuleList[currentIndex];
+  if (currentRow && currentRow.variable === variable) {
+    const existingOperator = currentRow.operator;
+
+    // If we're trying to add < or >, check if == or != already exists
+    if ((operator === '<' || operator === '>') && (existingOperator === '==' || existingOperator === '!=')) {
+      return true;
+    }
+
+    // If we're trying to add == or !=, check if < or > already exists
+    if ((operator === '==' || operator === '!=') && (existingOperator === '<' || existingOperator === '>')) {
+      return true;
+    }
+
+    // Check other rows for the same variable with conflicting operators
+    const hasConflictingOperator = form.reviewRuleList.some((row, index) =>
+      index !== currentIndex &&
+      row.variable === variable &&
+      (
+        // If current operator is < or >, check for == or != in other rows
+        ((operator === '<' || operator === '>') && (row.operator === '==' || row.operator === '!=')) ||
+        // If current operator is == or !=, check for < or > in other rows
+        ((operator === '==' || operator === '!=') && (row.operator === '<' || row.operator === '>'))
+      )
+    );
+
+    if (hasConflictingOperator) return true;
+  }
+
+  return false;
+}
+
+// Function to check if an operator should be disabled for auto withdraw rules (duplicate prevention and logical conflicts)
+function isAutoWithdrawOperatorDisabled(variable, operator, currentIndex) {
+  if (!variable || !operator) return false;
+  // Check if this rule type + operator combination already exists in other rows
+  const hasDuplicate = form.ruleList.some((row, index) =>
+    index !== currentIndex &&
+    row.variable === variable &&
+    row.operator === operator
+  );
+  if (hasDuplicate) return true;
+  // Check for logically inconsistent operator combinations
+  // If current operator is < or >, disable == and != (and vice versa)
+  const currentRow = form.ruleList[currentIndex];
+  if (currentRow && currentRow.variable === variable) {
+    const existingOperator = currentRow.operator;
+    // If we're trying to add < or >, check if == or != already exists
+    if ((operator === '<' || operator === '>') && (existingOperator === '==' || existingOperator === '!=')) {
+      return true;
+    }
+    // If we're trying to add == or !=, check if < or > already exists
+    if ((operator === '==' || operator === '!=') && (existingOperator === '<' || existingOperator === '>')) {
+      return true;
+    }
+    // Check other rows for the same variable with conflicting operators
+    const hasConflictingOperator = form.ruleList.some((row, index) =>
+      index !== currentIndex &&
+      row.variable === variable &&
+      (
+        // If current operator is < or >, check for == or != in other rows
+        ((operator === '<' || operator === '>') && (row.operator === '==' || row.operator === '!=')) ||
+        // If current operator is == or !=, check for < or > in other rows
+        ((operator === '==' || operator === '!=') && (row.operator === '<' || row.operator === '>'))
+      )
+    );
+
+    if (hasConflictingOperator) return true;
+  }
+  return false;
+}
+
+// Add functions to handle mode switching
+function switchReviewRuleMode(mode) {
+  uiControl.reviewRuleEditMode = mode;
+  if (mode === 'direct') {
+    // Convert form data to direct edit string
+    console.log('Switching to direct mode, form data:', form.reviewRuleList);
+    form.reviewRuleDirectEdit = createConditionString(form.reviewRuleList, true);
+    console.log('Generated direct edit string:', form.reviewRuleDirectEdit);
+  } else {
+    // Convert direct edit string to form data
+    console.log('Switching to form mode, direct string:', form.reviewRuleDirectEdit);
+    form.reviewRuleList = getValueList(form.reviewRuleDirectEdit);
+    console.log('Parsed form data:', form.reviewRuleList);
+    // Ensure we have at least one empty row if the list is empty
+    if (!form.reviewRuleList || form.reviewRuleList.length === 0) {
+      form.reviewRuleList = [{ variable: '', operator: '', value: null }];
+    }
+  }
+}
+
+// Function to validate direct edit rule syntax
+function validateDirectEditRule() {
+  console.log('validateDirectEditRule called with:', form.reviewRuleDirectEdit);
+  uiControl.directEditValidationErrors = [];
+  const ruleString = form.reviewRuleDirectEdit;
+  if (!ruleString || ruleString.trim() === '') {
+    console.log('Empty string, returning');
+    return; // Empty string is valid
+  }
+  // Get valid rule variables based on current tab (review rule vs auto withdraw rule)
+  const validRuleVariables = uiControl.isShowReviewRule
+    ? ruleType.list.map(rule => rule.value)
+    : ruleTypeList.list.map(rule => rule.value);
+  console.log('Valid rule variables:', validRuleVariables);
+  // Track operators used for each variable to check for logical conflicts
+  const variableOperators = new Map();
+  // Split by 'and' to check each condition
+  const conditions = ruleString.split(/\s+and\s+/).filter(condition => condition.trim());
+  console.log('Split conditions:', conditions);
+  conditions.forEach((condition, index) => {
+    const trimmedCondition = condition.trim();
+    console.log(`Processing condition ${index + 1}: "${trimmedCondition}"`);
+    // Check for balance rules first
+    const balanceMatch = trimmedCondition.match(/#balance\s*(<=|>=|==|!=|<|>)\s*(#totalDeposit|#todayDeposit)\*\s*(\d+(?:\.\d+)?)/);
+    if (balanceMatch) {
+      const operator = balanceMatch[1];
+      const value = balanceMatch[3];
+      const variable = 'balance';
+      // Track operators for this variable
+      if (!variableOperators.has(variable)) {
+        variableOperators.set(variable, new Set());
+      }
+      variableOperators.get(variable).add(operator);
+      // Validate operator
+      if (!['<', '>', '==', '!=', '<=', '>='].includes(operator)) {
+        uiControl.directEditValidationErrors.push(`Condition ${index + 1}: Invalid operator "${operator}" for balance rule. Use <, >, ==, !=, <=, or >=`);
+      }
+      // Validate value is a number
+      if (isNaN(parseFloat(value))) {
+        uiControl.directEditValidationErrors.push(`Condition ${index + 1}: Invalid value "${value}" for balance rule. Must be a number`);
+      }
+      return;
+    }
+    // Check for regular variable rules
+    const variableMatch = trimmedCondition.match(/(#\w+)\s*(<=|>=|==|!=|<|>)\s*(.+)/);
+    if (variableMatch) {
+      const variable = variableMatch[1];
+      const operator = variableMatch[2];
+      const value = variableMatch[3].trim();
+      // Track operators for this variable
+      if (!variableOperators.has(variable)) {
+        variableOperators.set(variable, new Set());
+      }
+      variableOperators.get(variable).add(operator);
+      // Validate that the variable exists in the rule type list
+      if (!validRuleVariables.includes(variable)) {
+        uiControl.directEditValidationErrors.push(`Condition ${index + 1}: Invalid rule variable "${variable}". This rule type is not available.`);
+        return;
+      }
+      // Validate operator
+      if (!['<', '>', '==', '!=', '<=', '>='].includes(operator)) {
+        uiControl.directEditValidationErrors.push(`Condition ${index + 1}: Invalid operator "${operator}" for variable ${variable}. Use <, >, ==, !=, <=, or >=`);
+      }
+      // Validate value is a number
+      if (isNaN(parseFloat(value))) {
+        uiControl.directEditValidationErrors.push(`Condition ${index + 1}: Invalid value "${value}" for variable ${variable}. Must be a number`);
+      }
+      return;
+    }
+    // Check for matches rules
+    const matchesMatch = trimmedCondition.match(/\(([^)]+)\)\s+matches\s+'([^']+)'/);
+    if (matchesMatch) {
+      // Validate that the matches pattern corresponds to a valid rule type
+      const matchesPattern = matchesMatch[2];
+      const isValidMatchesRule = validRuleVariables.some(ruleVar =>
+        ruleVar.includes('matches') && ruleVar.includes(matchesPattern)
+      );
+      if (!isValidMatchesRule) {
+        uiControl.directEditValidationErrors.push(`Condition ${index + 1}: Invalid matches rule pattern "${matchesPattern}". This rule type is not available.`);
+      }
+      return;
+    }
+    // Check for platform rules
+    const platformMatch = trimmedCondition.match(/#betCountByPlatform_([a-zA-Z0-9_]+)_(\d+)/);
+    if (platformMatch) {
+      // Validate that the platform rule format matches valid rule types
+      const platformNumber = platformMatch[2];
+      const isValidPlatformRule = validRuleVariables.some(ruleVar =>
+        ruleVar.startsWith('#betCountByPlatform_') && ruleVar.endsWith(`_${platformNumber}`)
+      );
+      if (!isValidPlatformRule) {
+        uiControl.directEditValidationErrors.push(`Condition ${index + 1}: Invalid platform rule period "${platformNumber}". Valid periods are 7, 14, or 30.`);
+      }
+      return;
+    }
+    // If none of the above patterns match, it's an invalid condition
+    console.log(`No pattern matched for condition: "${trimmedCondition}"`);
+    uiControl.directEditValidationErrors.push(`Condition ${index + 1}: Invalid syntax "${trimmedCondition}". Check your rule format.`);
+  });
+
+  // Check for logically inconsistent operator combinations
+  variableOperators.forEach((operators, variable) => {
+    const operatorArray = Array.from(operators);
+    const hasComparisonOperators = operatorArray.some(op => op === '<' || op === '>');
+    const hasEqualityOperators = operatorArray.some(op => op === '==' || op === '!=');
+    if (hasComparisonOperators && hasEqualityOperators) {
+      uiControl.directEditValidationErrors.push(t('message.logicalConflict', { variable }));
+    }
+  });
+  console.log('Final validation errors:', uiControl.directEditValidationErrors);
+}
 onMounted(async() => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
