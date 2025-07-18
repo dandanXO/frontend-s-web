@@ -418,6 +418,7 @@ const routes = [
     children: [
       {
         path: "",
+        name: "GamePlay",
         component: () => import("pages/gamePlay/indexPage.vue")
       }
     ],
