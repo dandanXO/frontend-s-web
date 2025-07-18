@@ -2700,6 +2700,7 @@ export default {
     retentionDay30: 'Day 31',
     depositRetention: 'Deposit Retention',
     regLoginRetention: 'Register Login Retenion',
+    memberOrigin: 'Member Origin',
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3860,6 +3861,12 @@ export default {
     ACTIVE_DAYS: 'Active Days',
     SAME_DEVICE_LOGIN: 'Same Device Login',
     DEVICE_SWITCHING: 'Device Switching'
+  },
+  memberOrigin: {
+    DIRECT: 'Direct',
+    AFFILIATE: 'Affiliate',
+    TRACECODE: 'Trace Code',
+    REFER: 'Refer',
   },
   error: {
     400: 'Bad Request',

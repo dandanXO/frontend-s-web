@@ -2719,6 +2719,7 @@ export default {
     retentionDay30: '31日',
     depositRetention: '存款留存',
     regLoginRetention: '注册回头',
+    memberOrigin: '用户来源',
   },
   message: {
     adsStatusOpen: '开',
@@ -3828,6 +3829,12 @@ export default {
     ACTIVE_DAYS: '活跃天数',
     SAME_DEVICE_LOGIN: '同设备登录',
     DEVICE_SWITCHING: '设备切换'
+  },
+  memberOrigin: {
+    DIRECT: '网站注册',
+    AFFILIATE: '代理',
+    TRACECODE: '社交媒体',
+    REFER: '邀请',
   },
   error: {
     400: '请求无效',
