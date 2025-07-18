@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <div style="height: 48px; text-align: center; margin: 25px 0px">
+    <div style="height: 48px; text-align: center; margin: 10px 0px" v-if="tab === 'login'">
       <img src="../assets/login/login-logo.png" height="100%" />
     </div>
 
@@ -8,7 +8,7 @@
       <img src="../assets/images/login/home-icon.svg" />
     </router-link>
 
-    <div class="top-image-div">
+    <div class="top-image-div" v-if="tab === 'login'">
       <img src="../assets/login/login-top-bg.png" />
     </div>
 
@@ -75,7 +75,12 @@
                     v-model="loginForm.password"
                     :placeholder="$t('login.form.password.placeholder')"
                     :type="isPwd ? 'password' : 'text'"
-                    :rules="[(val) => (val && val.length > 0) || $t('login.form.password.error.required')]"
+                    :rules="[
+                      (val) => (val && val.length > 0) || $t('login.form.password.error.required'),
+                      (val) =>
+                        (val.length > 5 && val.length <= 12) ||
+                        $t('login.form.password.error.length', { min: 6, max: 12 })
+                    ]"
                     label-color=""
                     autocomplete="current-password"
                   >
@@ -90,15 +95,15 @@
                       <img
                         v-if="!isPwd"
                         @click="isPwd = !isPwd"
-                        src="../assets/login/eye-line.png"
-                        style="margin-right: 3px"
+                        src="../assets/login/eye-line.svg"
+                        style="margin-right: 12px"
                         width="20"
                       />
                       <img
                         v-if="isPwd"
                         @click="isPwd = !isPwd"
-                        src="../assets/login/eye-close-line.png"
-                        style="margin-right: 3px"
+                        src="../assets/login/eye-close-line.svg"
+                        style="margin-right: 12px"
                         width="20"
                       />
                     </template>
@@ -187,17 +192,29 @@
               </div>
 
               <div class="forgetpass-div">
-                <div class="align-right">
+                <!-- <div class="align-right">
                   <span class="txt-tip" style="color: #0089ed" @click="loginType = !loginType">
                     {{ loginType ? $t("login.userNameLogin") : $t("login.phoneLogin") }}
                   </span>
-                </div>
+                </div> -->
 
-                <router-link class="txt-tip align-right" style="margin-left: auto" to="/forgot-account">
+                <q-btn class="forgot-password-btn" style="margin-left: auto" flat dense no-caps>
                   <span>{{ $t("login.forgotPassword") }}</span>
-                </router-link>
+                  <q-popup-proxy class="forgot-password-tip" :breakpoint="300">
+                    <i18n-t keypath="login.forgotPasswordTip" tag="span">
+                      <a
+                        class="txt-tip"
+                        href="https://8xjp0t3ydi.ipbr7k9r.com/chatwindow.aspx?siteId=65001994&planId=099fb0e7-cad5-43d0-aa03-2ed2257e0e12"
+                        target="_blank"
+                      >
+                        <span style="color: #94c3ff">{{ $t("login.cs") }}</span>
+                      </a>
+                    </i18n-t>
+                  </q-popup-proxy>
+                </q-btn>
+                <div ref="forgotPasswordRef" />
 
-                <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
+                <div class="mui-row text-gray-a1" :class="isCheckRmb ? 'checked' : ''">
                   <q-checkbox
                     v-model="isCheckRmb"
                     :label="$t('login.rememberPassword')"
@@ -220,7 +237,7 @@
             />
 
             <q-btn
-              @click.prevent="tab = 'register'"
+              @click.prevent="goToRegister"
               type="button"
               class="register-btn q-mt-md"
               :label="$t('btn.register')"
@@ -239,24 +256,23 @@
     </div>
 
     <div class="login-bottom-section">
-      <div class="row justify-center items-center full-width q-mb-md" v-show="tab === 'login'">
-        <!-- <router-link class="txt-tip" to="/">
+      <!-- <div class="row justify-center items-center full-width q-mb-md" v-show="tab === 'login'">
+        <router-link class="txt-tip" to="/">
           <div class="row items-center gap-8">
             <img src="../assets/login/home-icon.svg" width="16px" />
             <span style="color: #458bff">先去逛逛</span>
           </div>
-        </router-link> -->
-      </div>
+        </router-link>
+      </div> -->
       <!--  -->
       <div class="row justify-center items-center full-width q-mb-md">
-        <router-link class="txt-tip" to="/liveChat">
-          <!-- <div style="width: 60px; height: 1px; background-color: #7a80a199"></div> -->
-          <div class="row items-center gap-8">
-            <!-- <img src="../assets/login/service-icon.svg" width="16px" /> -->
-            <span style="color: #458bff">{{ $t("login.cs") }}</span>
-          </div>
-          <!-- <div style="width: 60px; height: 1px; background-color: #7a80a199"></div> -->
-        </router-link>
+        <a
+          class="txt-tip"
+          href="https://8xjp0t3ydi.ipbr7k9r.com/chatwindow.aspx?siteId=65001994&planId=099fb0e7-cad5-43d0-aa03-2ed2257e0e12"
+          target="_blank"
+        >
+          <span style="color: #458bff">{{ $t("login.cs") }}</span>
+        </a>
       </div>
     </div>
 
@@ -306,6 +322,8 @@ import { useLocalStorage } from "@vueuse/core";
 import { getDevice } from "src/boot/utils";
 import CommonModal from "src/components/CommonModal.vue";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
 
 export default defineComponent({
   name: "LoginPage",
@@ -318,6 +336,7 @@ export default defineComponent({
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
+    const { languageVal } = storeToRefs(i18nStore());
     const verificationImg = ref("");
     const loginForm = reactive({
       loginName: "",
@@ -419,7 +438,7 @@ export default defineComponent({
             way: regDevice,
             type: "SLIDER"
           };
-
+          isLoading.value = true;
           window
             .initTAC("./tac", config, style)
             .then((tac) => {
@@ -531,7 +550,12 @@ export default defineComponent({
     };
 
     const changeLoginTab = () => {
-      tab.value = "login";
+      // tab.value = "login";
+      router.push("/register");
+    };
+
+    const goToRegister = () => {
+      router.push("/register");
     };
 
     const otpCountdownCount = ref(0);
@@ -725,6 +749,9 @@ export default defineComponent({
       requestHeaders: {
         Authorization: process.env.SITE
       },
+      translate: (code) => {
+        return t(`error.${code}`);
+      },
       // 验证成功回调函数(必选项,必须配置)
       validSuccess: (res, c, tac) => {
         // 销毁验证码服务
@@ -752,13 +779,14 @@ export default defineComponent({
           } else {
             localStorage.removeItem("userpass");
           }
-
+          isLoading.value = false;
           loginFormRef.value.reset();
           router.push(jumpUrl);
         }
       },
       // 验证失败的回调函数(可忽略，如果不自定义 validFail 方法时，会使用默认的)
       validFail: (res, c, tac) => {
+        console.log(tac);
         console.log("验证码验证失败回调...");
 
         if (res.code === 800) {
@@ -768,6 +796,7 @@ export default defineComponent({
           // 其他错误则关闭验证
           tac.destroyWindow();
         }
+        isLoading.value = false;
       },
       // 刷新按钮回调事件
       btnRefreshFun: (el, tac) => {
@@ -782,7 +811,15 @@ export default defineComponent({
     };
 
     const style = {
-      logoUrl: null
+      logoUrl: null,
+      i18n: {
+        tips_error: t("tianaiCaptcha.tipsError"),
+        tips_success: t("tianaiCaptcha.tipsSuccess"),
+        slider_title: t("tianaiCaptcha.sliderTitle"),
+        concat_title: t("tianaiCaptcha.concatTitle"),
+        image_click_title: t("tianaiCaptcha.imageClickTitle"),
+        rotate_title: t("tianaiCaptcha.rotateTitle")
+      }
     };
 
     onActivated(() => {
@@ -799,9 +836,16 @@ export default defineComponent({
       checkRememberPwd();
       // initGeetestCaptcha();
 
-      api.get("/opt-session/promo/banner?category=LOGIN").then((res) => {
-        loginBannerUrl.value = imgURL + res.data[0].mobileImageUrl;
-      });
+      api
+        .get("/opt-session/promo/banner", {
+          params: {
+            category: "LOGIN",
+            language: languageVal.value
+          }
+        })
+        .then((res) => {
+          loginBannerUrl.value = imgURL + res.data[0].mobileImageUrl;
+        });
     });
 
     return {
@@ -820,6 +864,7 @@ export default defineComponent({
       getCode,
       isCheckRmb,
       changeLoginTab,
+      goToRegister,
       phoneLoginForm,
       sendOtpSms,
       toggleInnerCode,
@@ -840,7 +885,7 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .login-container {
   padding-top: 12px;
   height: 100dvh;
@@ -896,7 +941,7 @@ export default defineComponent({
   .form-container {
     width: 100%;
     margin: auto;
-    padding: 16px 0px;
+    padding: 16px 0px 0;
 
     > .q-tab-panel {
     }
@@ -957,6 +1002,7 @@ export default defineComponent({
       background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94c3ff 0%, #4b91f5 100%);
       border: 1px solid #ffffff;
       border-radius: 30px;
+      height: 48px;
       font-weight: 600;
       color: white;
     }
@@ -967,6 +1013,7 @@ export default defineComponent({
       background: linear-gradient(180deg, #f4f7fb 0%, #c5dcf8 100%);
       border-radius: 30px;
       font-weight: 600;
+      height: 48px;
       color: #424f72;
     }
   }
@@ -1042,10 +1089,10 @@ export default defineComponent({
       justify-content: center;
       gap: 10px;
       font-size: 13px;
-      color: #666;
+      color: #7a80a1;
 
       &.checked {
-        color: #0089ed;
+        color: #7a80a1;
       }
 
       &:active {
@@ -1058,7 +1105,7 @@ export default defineComponent({
     a:active,
     a:hover {
       text-decoration: none;
-      color: #0089ed;
+      color: #7a80a1;
     }
   }
 
@@ -1121,6 +1168,23 @@ export default defineComponent({
   background: transparent;
 }
 
+:deep(.q-field--standout .q-field__control) {
+  border: 1px solid #ecedf0;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px 0px #86b8ff inset;
+  background: #fff;
+  box-shadow: 0px 2px 0px 0px #9ab0ff70;
+}
+
+:deep(.q-field--standout.q-field--highlighted .q-field__native),
+:deep(.q-field--standout.q-field--highlighted .q-field__append) {
+  color: #000;
+}
+
+.text-gray-a1 {
+  color: #7a80a1;
+}
+
 #captchaContainer {
   width: 100%;
 
@@ -1168,13 +1232,6 @@ export default defineComponent({
   }
 }
 
-#captcha-box {
-  position: fixed;
-  z-index: 1000;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 .captcha-dialog {
   .verification-code-input {
     border-radius: 7px;
@@ -1195,5 +1252,9 @@ export default defineComponent({
     border-radius: 7px;
     cursor: pointer;
   }
+}
+.forgot-password-btn {
+  font-size: 14px;
+  color: #7a80a1;
 }
 </style>

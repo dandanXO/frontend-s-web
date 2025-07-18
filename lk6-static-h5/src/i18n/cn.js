@@ -36,6 +36,12 @@ export default {
       },
       success: {
         message: "操作成功"
+      },
+      claimSuccessfully: {
+        message: "成功领取"
+      },
+      promoEnded: {
+        message: "活动已结束"
       }
     },
     gameType: {
@@ -73,12 +79,12 @@ export default {
     betNow: "立即投注",
     close: "关闭",
     search: "搜寻",
-    deposit: "存款",
     withdraw: "提款",
     transfer: "转账",
     save: "保存",
     login: "登录",
     register: "注册",
+    registernow: "立即注册",
     toConfirm: "前往确认",
     bind: "绑定",
     unbind: "解绑",
@@ -87,7 +93,8 @@ export default {
     verify: "验证",
     download: "下载",
     downloadNow: "立即下载",
-    all: "全部"
+    all: "全部",
+    joinUs: "加入我们"
   },
   deposit: {
     paymentWay: "支付方式",
@@ -261,9 +268,7 @@ export default {
   },
   record: {
     betId: "注单号",
-    serialNumber: {
-      deposit: "存款编码"
-    },
+    serialNumber: "编码",
     table: {
       withdraw: {
         header: {
@@ -275,12 +280,13 @@ export default {
       },
       transfer: {
         header: {
-          serialNumber: "转账编码",
-          type: "帐变类型",
-          platform: "游戏平台",
+          serialNumber: "编码",
+          type: "账变类型",
+          platform: "平台",
           amount: "金额",
+          subType: "账变子类型",
           status: "状态",
-          transferDate: "时间"
+          recordTime: "时间"
         }
       },
       promo: {
@@ -494,11 +500,12 @@ export default {
       record: "交易信息",
       betRecord: "投注记录",
       inbox: "消息提醒",
-      changePassword: "修改密码"
+      changePassword: "修改密码",
+      promo: "优惠活动",
+      affiliate: "合作加盟"
     },
     hot: {
-      title: "热门推荐",
-      promo: "优惠活动"
+      title: "热门推荐"
     },
     logout: "退出登录",
     notification: {
@@ -623,7 +630,8 @@ export default {
       newUser: "新人",
       timeLimited: "限时",
       selected: "精选"
-    }
+    },
+    viewDetail: "查看详情"
   },
   bindCrypto: {
     form: {
@@ -645,9 +653,12 @@ export default {
     }
   },
   login: {
+    alreadyGotAcc: "我已有账号，",
+    loginnow: "立即登录",
     userNameLogin: "用户名登录",
     phoneLogin: "手机号码登录",
     forgotPassword: "忘记密码？",
+    forgotPasswordTip: "请联系客服找回密码 {0}",
     rememberPassword: "记住密码",
     cs: "联系客服",
     loggingIn: "登录中...",
@@ -664,7 +675,8 @@ export default {
         label: "密码",
         placeholder: "请输入密码",
         error: {
-          required: "请输入密码"
+          required: "请输入密码",
+          length: "密码长度为 {min} 到 {max}"
         }
       },
       phone: {
@@ -896,6 +908,76 @@ export default {
       }
     }
   },
+  tianaiCaptcha: {
+    tipsError: "验证失败，请重新尝试!",
+    tipsSuccess: "验证成功,耗时%s秒",
+    sliderTitle: "拖动滑块完成拼图",
+    concatTitle: "拖动滑块完成拼图",
+    imageClickTitle: "请依次点击下列图片",
+    rotate_title: "拖动滑块完成拼图"
+  },
+  hotpromo: {
+    weeklyReward: {
+      claimSection: {
+        title: "投注嘉奖",
+        yesterdayValidBets: "累计有效投注：",
+        todayBonus: "周六领取彩金："
+      }
+    }
+  },
+  affiliate: {
+    agentSupport: "代理申请专属客服",
+    commissionPercentage: "佣金占比",
+    commissionStructureExample: "以下为佣金占比示例",
+    commissionCalculation: "佣金计算",
+    commissionCalculationExample: "以下为佣金计算示例",
+    commissionTerm: "结算规则",
+    contact: {
+      qq: "幸运6 QQ",
+      telegram: "Telegram",
+      skype: "Skype",
+      sigua: "丝瓜",
+      amico: "Amico",
+      email: "幸运6 投诉邮箱"
+    },
+    agentLevel: {
+      brown: "铜牌",
+      silver: "银牌",
+      gold: "金牌",
+      diamond: "钻石",
+      crown: "皇冠"
+    },
+    table: {
+      commissionStructure: {
+        agent: "代理",
+        profit: "盈利",
+        activeValidMembers: "有效活跃会员",
+        commissionRate: "佣金比例"
+      },
+      commissionCalculation: {
+        winLose: "平台输赢",
+        platformFee: "- 平台费",
+        platformFeeFormula: "平台费=游戏总输赢 × {rate}",
+        bonus: "- 红利",
+        bonusFormula: "返水，红利，存提手续费后台可见明细",
+        netProfit: "= 净利润",
+        commissionRate: "× 佣金比例",
+        totalCommission: "= 总佣金"
+      }
+    },
+    term: {
+      payoutSchedule: {
+        title: "佣金派发时间：每月5号至10号期间，所有佣金由系统直接发放到代理账户，无需流水，即可提款"
+      },
+      activeMemberRequirement: {
+        title: "每月至少有五个有效活跃会员才能结算佣金，当月存款≥200为一个活跃玩家。"
+      },
+      promotionRequirement: {
+        title:
+          "代理推广每月至少需要新注册活跃会员达到3名或以上，如无法达到将视为零推广兴發平台，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。"
+      }
+    }
+  },
   error: {
     101: "未找到平台",
     102: "平台已关闭",
@@ -987,6 +1069,7 @@ export default {
     15011: "无法选择 2024-07-10 之前的日期",
     15201: "旧验证码不正确",
     15202: "新密码不能与旧密码相同",
+    17000: "无效的图片格式",
     21000: "该游戏已在收藏列表中",
     24001: "签到记录已存在",
     24002: "检测到相同 IP",

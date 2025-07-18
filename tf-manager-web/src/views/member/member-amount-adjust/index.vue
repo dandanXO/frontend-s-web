@@ -1572,13 +1572,13 @@ async function showDialog(type) {
   await loadFormSelect()
   uiControl.dialogType = type
   uiControl.dialogVisible = true
-  uiControl.selectedGameTypeRolloverType = null
+  uiControl.selectedGameTypeRolloverType = 'ALL_TYPES'
   gameTypes.value = []
   addRollover()
 }
 async function showImportDialog() {
   uiControl.importDialogVisible = true
-  uiControl.selectedGameTypeRolloverType = null
+  uiControl.selectedGameTypeRolloverType = 'ALL_TYPES'
   gameTypes.value = []
   addRollover()
 }

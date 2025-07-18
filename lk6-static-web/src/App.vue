@@ -1,6 +1,8 @@
 <template>
-  <router-view />
-  <notification-wrapper />
+  <el-config-provider :locale="languageVal === 'en' ? en : zhCn">
+    <router-view />
+    <notification-wrapper />
+  </el-config-provider>
 </template>
 
 <script>
@@ -15,11 +17,20 @@ import { submitMemberStats } from "@/api/index/site";
 import { useColorMode } from '@vueuse/core'
 import NotificationWrapper from "@/components/notification/NotificationWrapper.vue";
 import { useRouter } from "vue-router";
+import { ElConfigProvider } from 'element-plus'
+import en from "element-plus/dist/locale/en.mjs";
+import zhCn from "element-plus/dist/locale/zh-cn.mjs";
+import { storeToRefs } from 'pinia'
+import { i18nStore } from '@/store/language'
+
 export default defineComponent({
   components: {
     NotificationWrapper
   },
   setup() {
+
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
     const mode = useColorMode()
     mode.value = 'light'  // This sets and persists light mode
     const onlineStatTimeout = ref();
@@ -125,6 +136,12 @@ export default defineComponent({
       clearTimeout(onlineStatTimeout);
       clearInterval(onlineStatInterval);
     });
+
+    return {
+      en,
+      zhCn,
+      languageVal
+    }
   }
 });
 </script>

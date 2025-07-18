@@ -12,16 +12,7 @@
         <slot name="header">
           <div class="titles">{{ header }}</div>
         </slot>
-        <q-btn
-          v-if="closable"
-          v-close-popup
-          class="color-font-1"
-          flat
-          round
-          dense
-          icon="close"
-          @click="$emit('cancel')"
-        />
+        <q-btn v-if="closable" v-close-popup flat round dense icon="close" @click="$emit('cancel')" />
       </div>
       <div class="contents">
         <slot name="content">
@@ -134,14 +125,14 @@ const _cancelBtnText = computed(() => {
 
   .headers {
     width: calc(100% - 16px);
-    margin: auto;
+    margin: 32px auto 0;
     border-radius: 10px 10px 0px 0px;
     box-sizing: border-box;
     height: 55px;
-    line-height: 55px;
+
     color: #424f72;
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 18px;
     font-weight: bold;
     letter-spacing: 1px;
     display: flex;
@@ -150,10 +141,14 @@ const _cancelBtnText = computed(() => {
     position: relative;
 
     > .q-btn {
-      margin-left: auto;
+      position: absolute;
+      right: -8px;
+      top: -32px;
     }
 
     .titles {
+      width: max-content;
+      max-width: 90%;
       left: 50%;
       position: absolute;
       transform: translate(-50%, 0);

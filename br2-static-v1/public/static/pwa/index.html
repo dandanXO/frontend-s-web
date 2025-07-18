@@ -465,9 +465,14 @@ A plataforma utiliza tecnologia de segurança avançada para proteger as contas 
         .then((response) => response.json())
         .then((res) => {
           console.log("Success:", res);
-          const { affiliateCode } = res.data;
+          const { affiliateCode, facebookId } = res.data;
           localStorage.setItem("PWA_AFFILIATE_CODE", affiliateCode);
           // alert(affiliateCode);
+          console.log("Init FB");
+          if (facebookId) {
+            fbq("init", facebookId);
+            fbq("track", "PageView");
+          }
 
           fetch(`https://api.j9zwvu1ogrg.com/app/adjust/params?affiliateCode=${affiliateCode}`, {
             method: "GET"
@@ -560,5 +565,5 @@ A plataforma utiliza tecnologia de segurança avançada para proteger as contas 
   </noscript> -->
   <!-- End Facebook Pixel Code -->
   <script src="js/qrcode.min.js" type="text/javascript" defer></script>
-  <script src="js/index.js" type="module" defer></script>
+  <script src="js/index.js?v=123" type="module" defer></script>
 </html>

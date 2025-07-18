@@ -166,16 +166,16 @@
             </template>
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
-            <div class="q-my-md" style="display: flex; justify-content: center; align-items: center">
-              <span style="flex: 1">{{ $t("withdraw.exchangeRate") }}</span>
-              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
+            <div class="q-mt-md" style="display: flex; justify-content: center; align-items: center">
+              <span class="label">{{ $t("withdraw.exchangeRate") }}</span>
+              <span style="flex: 3" class="label-green">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
-            <div class="q-mt-md" style="display: flex; justify-content: center; align-items: center">
-              <span style="flex: 1">{{ $t("withdraw.expectedAmount") }}</span>
-              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
+            <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center">
+              <span class="label">{{ $t("withdraw.expectedAmount") }}</span>
+              <span style="flex: 3" class="label-green">
                 {{
                   selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
                     ? "0.00"
@@ -195,7 +195,7 @@
             </div>
           </div>
 
-          <div class="q-mt-md" style="color: #00b05c" v-if="selectedWithdrawalMethod.withdrawFee">
+          <div class="label-green q-mt-md" v-if="selectedWithdrawalMethod.withdrawFee">
             {{ $t("withdraw.withdrawFee", { fee: selectedWithdrawalMethod.withdrawFee, curry: "USDT" }) }}
           </div>
           <!-- <a-form-item
@@ -748,10 +748,14 @@ export default defineComponent({
   }
 
   .label {
-    font-weight: 600;
     font-size: 16px;
-    padding-bottom: 6px;
     display: block;
+    color: #7a80a1;
+  }
+
+  .label-green {
+    font-weight: 600;
+    color: #00b05c;
   }
 
   .submit-btn {
@@ -856,10 +860,19 @@ export default defineComponent({
     }
   }
 
+  &.q-field--float {
+    --test: 132;
+    :deep(.q-field__inner) {
+      .q-field__label {
+        transform: translateY(-70%) scale(0.75);
+      }
+    }
+  }
+
   :deep(.q-field__inner) {
     .q-field__control,
     .q-field__marginal {
-      height: 44px;
+      height: 56px;
       min-height: 44px;
     }
     .q-field__control {
@@ -871,7 +884,7 @@ export default defineComponent({
       }
 
       .q-field__control-container {
-        padding-top: 4px;
+        padding-top: 10px;
       }
 
       .q-field__native,
@@ -885,7 +898,6 @@ export default defineComponent({
       }
 
       .q-field__label {
-        top: 14px;
         font-size: 14px;
         color: #333333;
       }

@@ -50,13 +50,7 @@
             </div>
           </div>
           <div class="right-sect">
-            <q-btn
-              :label="$t('btn.deposit')"
-              class="btn-main btn-pointer deposit-btn"
-              flat
-              style=""
-              @click="openDeposit"
-            />
+            <q-btn :label="$t('btn.deposit')" class="btn-main btn-pointer" flat style="" @click="openDeposit" />
 
             <q-btn :label="$t('btn.withdraw')" class="btn-main btn-pointer" flat style="" @click="openWithdraw" />
 
@@ -64,79 +58,6 @@
           </div>
         </q-card-section>
         <hr v-if="$q.dark.isActive" style="width: 100%; border: 1px solid #3b5385; margin: 5px 0 15px 0" />
-        <q-card-section class="acct-btm-section">
-          <!-- <div class="vip-level-detail">
-            <div class="vip-link">{{ store.vip }}</div>
-
-            <div class="vip-progress">
-              <q-linear-progress size="10px" :value="store.vipProgress" />
-            </div>
-
-            <div class="vip-link">{{ updatedVip() }}</div>
-          </div> -->
-          <div class="vip-info-div">
-            <!-- <div class="vip-left">
-              VIP等级：
-              <div class="vip-level">
-                {{ store.vip }}
-              </div>
-            </div> -->
-
-            <!-- <div class="vip-txt-left" :class="isHideLevelUp && 'opacity-0'">
-              <div>晋级流水（元）</div>
-              <div v-if="store.currentBetAmt !== ''">
-                <div v-if="store.currentBetAmt <= store.currentUpgradeBetAmt">
-                  {{ formatNumber(store.currentBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}
-                </div>
-                <div v-else>
-                  {{ formatNumber(store.currentUpgradeBetAmt) }}/{{ formatNumber(store.currentUpgradeBetAmt) }}
-                </div>
-              </div>
-              <div v-else>计算中...</div>
-            </div>
-
-            <router-link to="/account/vip?from=account">
-              <div class="vip-right btn-pointer">
-                更多VIP特权
-                <img src="../assets/images/account/account-right-small.png" />
-              </div>
-            </router-link> -->
-          </div>
-
-          <!-- <div class="eshare-div">
-            <span v-if="store.evip">
-              专属网址:
-              <a class="share-link" :href="store.evip" target="_blank">
-                {{ store.evip }}
-              </a>
-              <img
-                class="copy-btn btn-pointer"
-                src="../assets/images/account/account-copy-icon.png"
-                @click="copyLink"
-              />
-            </span>
-          </div> -->
-          <!-- <div class="list-reward-wapper" style="display: none">
-            <div class="list-reward-received">
-              <div class="list-item collected">
-                <div><img src="../assets/images/account/list-tick.png" /></div>
-                <div>每周红包</div>
-              </div>
-              <div class="list-item collected">
-                <div><img src="../assets/images/account/list-tick.png" /></div>
-                <div>晋级礼金</div>
-              </div>
-              <div class="list-item">
-                <div><img src="../assets/images/account/list-cross.png" /></div>
-                <div>专属豪礼</div>
-              </div>
-              <div class="list-item">
-                <div><img src="../assets/images/account/list-cross.png" /></div>
-                <div>生日礼金</div>
-              </div>
-            </div>
-          </div> -->
-        </q-card-section>
       </q-card-section>
     </div>
 
@@ -203,42 +124,50 @@
             <div class="acct-nav-label">{{ $t("account.feature.changePassword") }}</div>
           </div>
         </router-link>
+
+        <router-link to="/promo">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-promo-icon.png" />
+            <div class="acct-nav-label">{{ $t("account.feature.promo") }}</div>
+          </div>
+        </router-link>
+
+        <router-link to="/affiliate">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-affiliate-icon.png" />
+            <div class="acct-nav-label">{{ $t("account.feature.affiliate") }}</div>
+          </div>
+        </router-link>
       </div>
     </q-item-section>
 
     <q-item-section class="acct-nav">
-      <div class="acct-title">
+      <!-- <div class="acct-title">
         <div class="acct-title-1">{{ $t("account.hot.title") }}</div>
-      </div>
-      <div class="acct-menu" id="id-acct-menu">
-        <router-link to="/promo">
+      </div> -->
+      <!-- <div class="acct-menu" id="id-acct-menu"> -->
+      <!-- <router-link to="/promo">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-promo-icon.png" />
             <div class="acct-nav-label">{{ $t("account.hot.promo") }}</div>
           </div>
-        </router-link>
+        </router-link> -->
 
-        <!-- <router-link to="/account/invite">
+      <!-- <router-link to="/account/invite">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-share-icon.png" />
             <div class="acct-nav-label">推广赚钱</div>
           </div>
         </router-link> -->
 
-        <!-- <router-link to="/account/invite#summon-share">
+      <!-- <router-link to="/account/invite#summon-share">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-summon-share-icon.png" />
             <div class="acct-nav-label">精英召回</div>
           </div>
         </router-link> -->
 
-        <!-- <router-link to="/affiliate">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-affiliate-icon.png" />
-            <div class="acct-nav-label">合作加盟</div>
-          </div>
-        </router-link> -->
-      </div>
+      <!-- </div> -->
     </q-item-section>
 
     <q-card v-if="btm_banners.length" class="card-account-banner">
@@ -300,7 +229,7 @@
 
   <CommonModal
     v-model="isLogoutModal"
-    :title="$t('account.notification.logoutConfirm.title')"
+    :header="$t('account.notification.logoutConfirm.title')"
     :message="$t('account.notification.logoutConfirm.message')"
     with-decorator
     :actions="['confirm', 'cancel']"
@@ -430,6 +359,8 @@ import moment from "moment";
 import { useNotify } from "src/hooks/notify";
 import CommonModal from "src/components/CommonModal.vue";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
 export default defineComponent({
   name: "AccountPage",
   components: {
@@ -457,6 +388,7 @@ export default defineComponent({
     const store = userStore();
     const router = useRouter();
     const $q = useQuasar();
+    const { languageVal } = storeToRefs(i18nStore());
 
     const isLogoutModal = ref(false);
     const isHideLevelUp = ref(false);
@@ -541,7 +473,7 @@ export default defineComponent({
     onMounted(() => {
       getBalance();
       store.getBalance();
-      store.getVIPInfo();
+      // store.getVIPInfo();
       // getVersionNo();
       getPromoImage();
       if (store.isApp()) {
@@ -559,7 +491,10 @@ export default defineComponent({
     const btm_banners = ref([]);
     const getPromoImage = () => {
       api
-        .get("/opt-session/promo/banner?category=CENTERPROMO")
+        .get("/opt-session/promo/banner", {
+          category: "CENTERPROMO",
+          language: languageVal.value
+        })
         .then((res) => {
           if (res.code === 0) {
             btm_banners.value = res.data.filter((promo) => {
@@ -938,7 +873,7 @@ export default defineComponent({
 }
 
 .vipcard {
-  margin: 5px auto;
+  margin: 5px auto 13px;
   border-radius: 15px;
   width: calc(100% - 2em);
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
@@ -954,15 +889,18 @@ export default defineComponent({
     background-size: 100% 100%;
     color: #fff;
     // width: 60px;
+    min-width: 55px;
     text-align: center;
     white-space: nowrap;
-    font-size: 1rem;
-    padding: 5px 11px;
+    font-size: 10px;
+    // padding: 2px 11px;
+    padding: 7px 11px;
     // aspect-ratio: 122/68;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 30px;
+    // height: 23px;
+    min-height: unset;
     // box-shadow: 0px -0.5px 2px 0px #ffffff;
     font-size: 12px;
     border-radius: 60px;
@@ -975,16 +913,17 @@ export default defineComponent({
     background: linear-gradient(90deg, #333333 1.5%, #6b6b6b 100%);
     align-items: center;
     padding: 10px 14px;
+    border-radius: 20px;
   }
 
   .acct-section {
     display: flex;
     text-align: left;
     justify-content: space-evenly;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
     color: #a4aabb;
-    margin-bottom: 8px;
+    // margin-bottom: 8px;
 
     > div {
       flex: 1;
@@ -1007,15 +946,15 @@ export default defineComponent({
 
         img {
           display: block;
-          width: 15px;
-          margin-bottom: 3px;
+          max-width: 20px;
+          // margin-bottom: 3px;
         }
       }
     }
 
     .right-sect {
       display: flex;
-      justify-content: space-between;
+      justify-content: end;
       max-width: 220px;
       gap: 20px;
 
@@ -1034,7 +973,7 @@ export default defineComponent({
     font-size: 1rem;
     font-weight: bold;
     width: calc(100% - 25px);
-    margin-left: 25px;
+    margin-left: 18px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -1151,8 +1090,9 @@ export default defineComponent({
     align-items: center;
     width: 100%;
     color: #424f72;
+
     // background-color: $lightblue;
-    background: rgba(203, 229, 255, 1);
+    background: #e7f3ff;
     border-radius: 20px 20px 0 0;
     position: relative;
     &:before {
@@ -1207,11 +1147,11 @@ export default defineComponent({
     height: auto;
     // max-height: 180px;
 
-    margin-bottom: 10px;
-    background-color: $white;
+    margin-bottom: 13px;
+    background-color: #fcfdfe;
     border-radius: 0px 0px 20px 20px;
     padding: 15px 0;
-    box-shadow: 0px -4px 4px 0px #c3d4e6 inset;
+    // box-shadow: 0px -4px 4px 0px #c3d4e6 inset;
 
     &.shorter-menu {
       grid-template-rows: repeat(2, 1fr);
@@ -1251,7 +1191,7 @@ export default defineComponent({
         }
 
         img {
-          height: 32px;
+          height: 35px;
           fill: white;
           padding: 0;
         }
@@ -1267,12 +1207,12 @@ export default defineComponent({
 
 .acct-logout {
   padding: 12px;
-  box-shadow: 0px -2px 8px 0px #c3d4e6 inset;
+  // box-shadow: 0px -2px 8px 0px #c3d4e6 inset;
   text-align: center;
   font-size: 1.2rem;
-  background: $white;
+  background: #fcfdfe;
   color: #7a80a1;
-  border-radius: 20px;
+  border-radius: 7px;
   line-height: 15px;
   width: calc(100% - 2em);
   letter-spacing: 1px;
@@ -1296,8 +1236,9 @@ export default defineComponent({
 
 .card-account-banner {
   width: calc(100% - 2rem);
+  border: 1px solid #cfddfd;
   margin: auto;
-  margin-bottom: 10px;
+  margin-bottom: 13px;
   border-radius: 10px;
   overflow: hidden;
 

@@ -111,15 +111,15 @@
             }}
           </div>
 
-          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md row align-center">
+          <!-- <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md row align-center">
             <label class="label">{{ $t("deposit.exchangeRate") }}</label>
             <span class="label-green" style="font-size: 16px; font-weight: 600">
               1.00 USDT ≈ {{ activeMethod.currencyRate }}
               {{ store.currency.value }}
             </span>
-          </div>
+          </div> -->
 
-          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md">
+          <!-- <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md">
             <label class="label">{{ $t("deposit.expectedAmount") }}</label>
             <span class="label-green" style="font-size: 16px; font-weight: 600">
               {{
@@ -129,7 +129,7 @@
               }}
               {{ store.currency.value }}
             </span>
-          </div>
+          </div> -->
           <BankComponent
             v-show="selectedPayType && bankCardList.length"
             ref="payTypeClass"
@@ -409,7 +409,6 @@ async function loadPrivilege(val) {
   await cashier.get(`/session/payment/${val.paymentId}/privileges`).then((res) => {
     if (res.code === 0 && res.data.privileges.length) {
       privilegeList.value = res.data.privileges;
-      hasPrivilege.value = true;
       unselectedPrivileges.value = [];
       freePrivilege.value = null;
       privilegeList.value.map((p) => {
@@ -418,6 +417,7 @@ async function loadPrivilege(val) {
             freePrivilege.value = p;
           } else {
             unselectedPrivileges.value.push(p);
+            hasPrivilege.value = true;
           }
         }
       });

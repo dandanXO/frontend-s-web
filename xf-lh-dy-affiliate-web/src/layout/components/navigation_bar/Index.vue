@@ -107,6 +107,8 @@ export default {
         return router.push("/kr/login")
       } else if (siteId === "11" || siteId === 11) {
         return router.push("/pak/login")
+      } else if (siteId === "30" || siteId === 30) {
+        return router.push("/lk6/login")
       } else {
         return location.reload();
       }

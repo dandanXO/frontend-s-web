@@ -7,13 +7,15 @@
     <div class="platform-item-bottom-wrapper">
       <RedirectButton class="platform-item-play-btn" @click="$emit('click')">{{ $t("btn.betNow") }}</RedirectButton>
       <div class="platform-item-desc">
-        {{ platform.message }}
+        {{ platform.message[languageVal] }}
       </div>
     </div>
   </div>
 </template>
 <script setup>
+import { i18nStore } from "src/router/language";
 import RedirectButton from "../RedirectButton.vue";
+import { storeToRefs } from "pinia";
 
 defineProps({
   platform: {
@@ -23,6 +25,8 @@ defineProps({
 });
 
 defineEmits(["click"]);
+
+const { languageVal } = storeToRefs(i18nStore());
 </script>
 <style lang="scss" scoped>
 .platform-item-wrapper {

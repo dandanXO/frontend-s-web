@@ -3,28 +3,50 @@
     <div v-if="hasPage">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
-          <router-link to="/"><img src="@/assets/logo.png" /></router-link>
+          <router-link to="/"><img src="../assets/logo.png" /></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
-          <q-btn glossy color="brand" to="/login">{{ $t("header.login") }}</q-btn>
-          <q-btn outline color="brand" to="/register">{{ $t("header.register") }}</q-btn>
+          <q-btn glossy color="brand" to="/login">Login</q-btn>
+          <q-btn outline color="brand" to="/register">Register</q-btn>
         </q-card-actions>
+        <!-- <q-card-actions v-if="store.hasToken()">
+          <q-btn glossy color="brand" @click="logout">Logout</q-btn>
+        </q-card-actions> -->
         <q-btn v-if="store.hasToken()" class="flex" to="/finance/deposit" no-caps flat>
-          <span style="font-size: 10px; margin-left: 5px; display: block">{{ $t("header.deposit") }}</span>
+          <span style="font-size: 10px; margin-left: 5px; display: block">Deposit</span>
         </q-btn>
       </q-card-section>
-      <q-card-section class="page-title" v-if="hasPage">
-        <a @click="goToPrevPage(prevPage)" class="q-mt-sm">
-          <q-icon class="header-icon" name="arrow_back_ios"></q-icon>
-          <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">
-            {{ $t("btn.back") }}
-          </span>
+      <q-card-section
+        class="page-title"
+        :class="[pageName === '' ? 'page-title__empty' : '', hasProfileSummary ? 'has-profile-summary' : '']"
+        v-if="hasPage"
+      >
+        <a
+          @click="
+            route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account'
+              ? goToPrevPage('/')
+              : goToPrevPage(prevPage)
+          "
+          class="q-mt-sm"
+        >
+          <img
+            class="house-icon"
+            v-if="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account'"
+            src="../assets/images/index/btn-house.png"
+            width="30"
+          />
+          <img v-else src="../assets/images/index/btn-back.png" width="30" />
+          <!-- <q-icon class="header-icon" name="arrow_back_ios"></q-icon> -->
+          <!-- <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span> -->
         </a>
         <div class="page-title-wrapper">
+          <!--          <img src="../assets/images/index/hot-elephant-left.png" alt="" />-->
           <div class="title-container">
             <span class="title">{{ pageName }}</span>
           </div>
+          <!--          <img src="../assets/images/index/hot-elephant-right.png" alt="" />-->
         </div>
+
         <div
           class="header-right"
           :class="route.path === '/deposit' || route.path === '/withdraw' ? 'header-right-long' : ''"
@@ -32,11 +54,28 @@
           <q-btn v-if="hasDrawer" flat @click="ui.drawerRight = !ui.drawerRight" round dense icon="menu" />
         </div>
       </q-card-section>
+      <!-- <q-card-actions v-if="store.hasToken()" class="bot-section" horizontal>
+        <q-card-section class="acct-section">
+          <div class="label">Main account:</div>
+          <div class="amt">{{ mainWallet }}</div>
+        </q-card-section>
+        <q-separator vertical />
+        <q-btn class="flex" to="/finance/deposit" no-caps flat
+          ><RiWalletLine />Top-up center</q-btn
+        >
+        <q-btn to="/finance/withdraw" no-caps flat
+          ><RiBankCardLine />Quick Withdraw</q-btn
+        >
+      </q-card-actions> -->
     </div>
 
     <q-drawer side="right" elevated v-model="ui.drawerRight" :width="250" :breakpoint="500" v-if="hasDrawer">
       <div class="q-pa-md bg-brightbtn">游戏平台</div>
-      <div class="platforms q-pt-md"></div>
+      <div class="platforms q-pt-md">
+        <!--        <div class="text-bright q-px-sm q-pt-md">-->
+        <!--          -->
+        <!--        </div>-->
+      </div>
       <q-scroll-area class="fit">
         <div class="q-pa-sm platform-list">
           <q-btn
@@ -53,61 +92,35 @@
 
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <KeepAlive :max="8">
+        <component v-if="isGuessRoute" :is="Component" />
+        <KeepAlive v-else :max="8">
           <component :is="Component" />
         </KeepAlive>
       </router-view>
     </q-page-container>
 
-    <q-footer v-if="ui.footer" :style="ui.bottomInsetHeight > 0 ? `bottom: ${ui.bottomInsetHeight}px;` : ''" elevated>
-      <q-tabs v-model="tab" no-caps :breakpoint="0" align="justify">
-        <q-route-tab to="/home" name="home" exact :ripple="false">
-          <img class="inactive" src="@/assets/images/index/menu/home-icon.png" />
-          <img class="hover" src="@/assets/images/index/menu/home-icon-hover.png" />
-          {{ $t("bottomNav.home") }}
-        </q-route-tab>
-        <q-route-tab class="cs-web-id" to="/promo" id="cs-web-id" name="live" :ripple="false">
-          <img class="inactive" src="@/assets/images/index/menu/bonus-icon.png" />
-          <img class="hover" src="@/assets/images/index/menu/bonus-icon-hover.png" />
-          {{ $t("bottomNav.promo") }}
-        </q-route-tab>
-        <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" class="center-menu" :ripple="false">
-          <img src="@/assets/images/index/menu/deposit-icon.png" />
-        </q-route-tab>
-        <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
-          <img class="inactive" src="@/assets/images/index/menu/earn-icon.png" />
-          <img class="hover" src="@/assets/images/index/menu/earn-icon-hover.png" />
-          {{ $t("bottomNav.earnMoney") }}
-        </q-route-tab>
-        <q-route-tab to="/account" name="account" :ripple="false">
-          <img class="inactive" src="@/assets/images/index/menu/account-icon.png" />
-          <img class="hover" src="@/assets/images/index/menu/account-icon-hover.png" />
-          {{ $t("bottomNav.me") }}
-        </q-route-tab>
-      </q-tabs>
-    </q-footer>
+    <FooterSection />
   </q-layout>
 
-  <div class="first-screen-loading" v-show="ui.firstScreenLoading">
-    <img src="../assets/55-ace-logo.png" alt="" />
-  </div>
+  <div class="first-screen-loading" :class="isPromoPage ? 'ispromo-screen' : ''" v-show="ui.firstScreenLoading" />
 </template>
 
 <script>
-import { SplashScreen } from "@capacitor/splash-screen";
-import { isAndroid } from "boot/utils";
 import { computed, defineComponent, onMounted, ref, watch } from "vue";
-import { useI18n } from "vue-i18n";
+import { userStore } from "stores/index";
+import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
+import FooterSection from "../layouts/FooterSection.vue";
 
-import { i18nStore } from "@/router/language";
-import { userStore } from "@/stores/index";
-import { useUI } from "@/stores/ui";
+import { useI18n } from "vue-i18n";
+import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "MainLayout",
-
+  components: {
+    FooterSection
+  },
   setup() {
     const { t } = useI18n();
     const i18nStoreLanguage = i18nStore();
@@ -118,24 +131,28 @@ export default defineComponent({
     const prevPage = ref(null);
     const ui = useUI();
     const scrollPageRef = ref(null);
+
+    const isGuessRoute = computed(() => {
+      if (route.path === "/login" || route.path === "register") return true;
+      return false;
+    });
+    // ui.$onAction(({ name, args }) => {
+    //   switch (name) {
+    //     case "setScrollPosition":
+    //       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
+    //   }
+    // });
     const logout = () => {
       store.memberLogout().then(() => {
+        // location.reload();
         router.push("/home");
       });
     };
-
-    const checkFirstScreen = () => {
-      if (ui.firstScreenLoading) {
-        setTimeout(() => {
-          ui.firstScreenLoading = false;
-        }, 500);
-      }
-    };
-
     watch(
       () => route.path,
       async () => {
         checkRoute();
+        ui.isMenuOpen = false;
       }
     );
 
@@ -154,9 +171,14 @@ export default defineComponent({
         hasDrawer.value = false;
         hasPage.value = false;
         pageName.value = "";
-        if (route.path === "/account") {
+        if (route.path === "/slot") {
           prevPage.value = "/";
-          hasPage.value = false;
+          hasPage.value = true;
+          hasDrawer.value = true;
+          pageName.value = "Slot";
+        } else if (route.path === "/account") {
+          prevPage.value = "/";
+          hasPage.value = true;
           pageName.value = "";
         } else if (route.path === "/account/bank") {
           hasPage.value = true;
@@ -164,7 +186,31 @@ export default defineComponent({
           if (route.query.from) {
             prevPage.value = route.query.from;
           } else {
-            prevPage.value = "account";
+            prevPage.value = "/account";
+          }
+        } else if (route.path === "/account/withdraw/ewallet") {
+          hasPage.value = true;
+          pageName.value = t("header.addVirtualWallet");
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account/bank";
+          }
+        } else if (route.path === "/account/withdraw/crypto") {
+          hasPage.value = true;
+          pageName.value = t("header.addCrypto");
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account/bank";
+          }
+        } else if (route.path === "/account/withdraw/bank-card") {
+          hasPage.value = true;
+          pageName.value = t("header.addBankCard");
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account/bank";
           }
         } else if (route.path === "/account/message") {
           hasPage.value = true;
@@ -172,14 +218,34 @@ export default defineComponent({
           if (route.query.from) {
             prevPage.value = route.query.from;
           } else {
-            prevPage.value = "account";
+            prevPage.value = "/account";
           }
         } else if (route.path === "/account/message-detail") {
-          prevPage.value = "account/message";
+          prevPage.value = "/account/message";
           hasPage.value = true;
           pageName.value = t("header.message");
+        } else if (route.path === "/account/feedback") {
+          hasPage.value = true;
+          pageName.value = t("header.feedback");
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
+          }
+        } else if (route.path === "/account/feedback-detail") {
+          prevPage.value = "/account/feedback";
+          hasPage.value = true;
+          pageName.value = t("header.feedbackDetail");
+        } else if (route.path === "/account/write") {
+          hasPage.value = true;
+          pageName.value = t("header.postComment");
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account/feedback";
+          }
         } else if (route.path === "/account/record") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.record");
         } else if (route.path === "/account/order") {
@@ -188,10 +254,10 @@ export default defineComponent({
           if (route.query.from) {
             prevPage.value = route.query.from;
           } else {
-            prevPage.value = "account";
+            prevPage.value = "/account";
           }
         } else if (route.path === "/account/discount") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.discount");
         } else if (route.path === "/earn-money" || route.path === "/agency-policy") {
@@ -204,55 +270,95 @@ export default defineComponent({
           pageName.value = t("header.language");
         } else if (route.path === "/bonus") {
           prevPage.value = "/";
+          // hasPage.value = true;
           pageName.value = t("header.dailyActivity");
         } else if (route.path === "/vip") {
+          // hasPage.value = true;
           pageName.value = t("header.vipPrivileges");
           if (route.query.redirect) prevPage.value = route.query.redirect;
           else prevPage.value = "/";
         } else if (route.path === "/login") {
-          prevPage.value = "home";
-          hasPage.value = true;
-          pageName.value = t("header.login");
+          prevPage.value = "/home";
+          // hasPage.value = true;
+          pageName.value = "";
         } else if (route.path === "/register") {
-          prevPage.value = "home";
+          prevPage.value = "/home";
+          // hasPage.value = true;
+          pageName.value = "";
+        } else if (route.path === "/verification") {
+          prevPage.value = "/register";
           hasPage.value = true;
           pageName.value = t("header.register");
         } else if (route.path === "/forgot-account") {
-          prevPage.value = "login";
+          prevPage.value = "/login";
           hasPage.value = true;
           pageName.value = t("header.forgotAccount");
         } else if (route.path === "/forgot-password") {
-          prevPage.value = "login";
+          prevPage.value = "/login";
           hasPage.value = true;
-          pageName.value = t("header.forgotPassword");
+          pageName.value = t("sideNav.recoverPwd");
+        } else if (route.path === "/live-casino") {
+          hasPage.value = true;
+          pageName.value = t("sideNav.livecasino");
+        } else if (route.path === "/poker") {
+          hasPage.value = true;
+          pageName.value = t("sideNav.poker");
+        } else if (route.path === "/e-sport") {
+          hasPage.value = true;
+          pageName.value = t("sideNav.esport");
+        } else if (route.path === "/sport") {
+          hasPage.value = true;
+          pageName.value = t("sideNav.sport");
+        } else if (route.path === "/fish") {
+          hasPage.value = true;
+          pageName.value = t("sideNav.fishing");
         } else if (route.path === "/promo") {
-          hasPage.value = false;
+          hasPage.value = true;
           pageName.value = t("header.promotion");
           prevPage.value = "/";
           if (route.query.name) {
             if (route.query.fromAccount) {
-              prevPage.value = "account/promotion";
+              prevPage.value = "/account/promotion";
             } else {
-              hasPage.value = false;
-              prevPage.value = "promo";
+              hasPage.value = true;
+              prevPage.value = "/promo";
             }
           }
         } else if (route.path === "/promotion") {
-          // debugger;
           hasPage.value = true;
           pageName.value = t("header.promotion");
           prevPage.value = "";
-        } else if (route.path === "/activities-details") {
-          prevPage.value = "promo";
+        } else if (route.path === "/faq-page") {
           hasPage.value = true;
-          pageName.value = t("header.activitiesDetails");
+          pageName.value = t("header.effectiveRevenueFAQ");
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
+          }
+        } else if (route.path === "/cs-verifier") {
+          hasPage.value = true;
+          pageName.value = t("header.customerServiceVerifer");
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
+          }
+        } else if (route.path === "/terms-and-conditions") {
+          hasPage.value = true;
+          pageName.value = t("header.termsAndConditions");
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
+          }
         } else if (route.path === "/finance/deposit") {
           hasPage.value = true;
           pageName.value = t("header.deposit");
           if (route.query.from) {
             prevPage.value = route.query.from;
           } else {
-            prevPage.value = "account";
+            prevPage.value = "/account";
           }
         } else if (route.path === "/finance/withdraw") {
           hasPage.value = true;
@@ -260,145 +366,157 @@ export default defineComponent({
           if (route.query.from) {
             prevPage.value = route.query.from;
           } else {
-            prevPage.value = "account";
+            prevPage.value = "/account";
           }
         } else if (route.path === "/account/transfer") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.transfer");
           if (route.query.redirect) {
             prevPage.value = route.query.redirect;
           }
         } else if (route.path === "/account/profile") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.personalCenter");
         } else if (route.path === "/account/records") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
-          pageName.value = t("header.record");
+          pageName.value = t("header.records");
         } else if (route.path === "/account/transit") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.transit");
         } else if (route.path === "/account/personal") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.personalInformation");
         } else if (route.path === "/account/verifyTelephone") {
-          prevPage.value = "account/personal";
+          prevPage.value = "/account/personal";
           hasPage.value = true;
           pageName.value = t("header.verifyMobileNumber");
         } else if (route.path === "/account/verifyEmail") {
-          prevPage.value = "account/personal";
+          prevPage.value = "/account/personal";
           hasPage.value = true;
           pageName.value = t("header.email");
         } else if (route.path === "/account/changePwd") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.changePassword");
         } else if (route.path === "/account/download") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.download");
         } else if (route.path === "/account/invite") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.referral");
         } else if (route.path === "/account/announcement") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.announcement");
         } else if (route.path === "/account/mail") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.mail");
         } else if (route.path === "/account/mail/inbox") {
-          prevPage.value = "account/mail";
+          prevPage.value = "/account/mail";
           hasPage.value = true;
           pageName.value = t("header.inbox");
         } else if (route.path === "/account/mail/outbox") {
-          prevPage.value = "account/mail";
+          prevPage.value = "/account/mail";
           hasPage.value = true;
           pageName.value = t("header.outbox");
         } else if (route.path === "/account/mail/write") {
-          prevPage.value = "account/mail";
+          prevPage.value = "/account/mail";
           hasPage.value = true;
-          pageName.value = t("header.write");
+          pageName.value = "写信";
         } else if (route.path === "/account/withdraw") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.bankDetail");
         } else if (route.path === "/account/promotion") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.promotionClaim");
         } else if (route.path === "/affiliate") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = t("header.affiliate");
         } else if (route.path === "/insert-bankinfo") {
           hasPage.value = true;
           pageName.value = t("header.bankInformation");
         } else if (route.path === "/account/records/deposit") {
-          prevPage.value = "account/records";
+          prevPage.value = "/account/records";
           hasPage.value = true;
           pageName.value = t("header.depositRecord");
         } else if (route.path === "/account/records/withdraw") {
-          prevPage.value = "account/records";
+          prevPage.value = "/account/records";
           hasPage.value = true;
           pageName.value = t("header.withdrawalRecord");
         } else if (route.path === "/account/records/transfer") {
-          prevPage.value = "account/records";
+          prevPage.value = "/account/records";
           hasPage.value = true;
           pageName.value = t("header.transferRecord");
         } else if (route.path === "/account/records/moneyChange") {
-          prevPage.value = "account/records";
+          prevPage.value = "/account/records";
           hasPage.value = true;
-          pageName.value = t("header.moneyChange");
+          pageName.value = "账变记录";
         } else if (route.path === "/account/records/promo") {
-          prevPage.value = "account/records";
+          prevPage.value = "/account/records";
           hasPage.value = true;
           pageName.value = t("header.promotionRecord");
         } else if (route.path === "/account/records/bet") {
-          prevPage.value = "account/records";
+          prevPage.value = "/account/records";
           hasPage.value = true;
           pageName.value = t("header.betRecord");
         } else if (route.path === "/account/records/financeFeedback") {
-          prevPage.value = "account/records";
+          prevPage.value = "/account/records";
           hasPage.value = true;
-          pageName.value = t("header.financeFeedback");
+          pageName.value = "催单记录";
         } else if (route.path === "/account/records/change") {
-          prevPage.value = "account/records";
+          prevPage.value = "/account/records";
           hasPage.value = true;
-          pageName.value = t("header.moneyChange");
+          pageName.value = "账变记录";
         } else if (route.path === "/account/records/betRecord") {
-          prevPage.value = "account/records";
+          prevPage.value = "/account/records";
           hasPage.value = true;
           pageName.value = t("header.betRecord");
         } else if (route.path === "/account/records/recommend") {
-          prevPage.value = "account/records";
+          prevPage.value = "/account/records";
           hasPage.value = true;
           pageName.value = t("header.referralRecord");
         } else if (route.path === "/account/records/help") {
-          prevPage.value = "account/records";
+          prevPage.value = "/account/records";
           hasPage.value = true;
-          pageName.value = t("header.helpRecord");
+          pageName.value = "救援金记录";
         } else if (route.path === "/account/records/bill") {
-          prevPage.value = "account/records";
+          prevPage.value = "/account/records";
           hasPage.value = true;
-          pageName.value = t("header.reminderRecords");
+          pageName.value = "催单记录";
         } else if (route.path === "/deposit") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
-          pageName.value = "";
+          pageName.value = t("header.deposit");
           if (route.query.from) {
             prevPage.value = route.query.from;
           }
         } else if (route.path === "/withdraw") {
-          prevPage.value = "account";
+          prevPage.value = "/account";
           hasPage.value = true;
-          pageName.value = "";
+          pageName.value = t("header.withdraw");
+        } else if (route.path === "/interest-profit") {
+          prevPage.value = "/account";
+          hasPage.value = true;
+          pageName.value = t("header.interestProfit");
+        } else if (route.path === "/spinnerRules") {
+          prevPage.value = "/promo?name=pak-deposit-spinner-rewards";
+          hasPage.value = true;
+          pageName.value = t("header.spinnerRules");
+        } else if (route.path === "/spinnerHistory") {
+          prevPage.value = "/promo?name=pak-deposit-spinner-rewards";
+          hasPage.value = true;
+          pageName.value = t("header.spinnerHistory");
         }
       }
     };
@@ -464,13 +582,37 @@ export default defineComponent({
       }
     ]);
 
+    const hasProfileSummary = computed(() => {
+      return route.path === "/promo";
+    });
     const platformsList = computed(() => {
       if (ui.slotLists.length === 0) {
         return platformsFixed.value;
       }
       return ui.slotLists;
     });
-    // console.log(platformsList.value);
+
+    const isPromoPage = computed(() => {
+      return window.location.pathname === "/promotion";
+    });
+
+    const checkFirstScreen = () => {
+      if (ui.annoyingType === "NONE") {
+        ui.firstScreenLoading = false;
+        return;
+      }
+      if (ui.firstScreenLoading) {
+        if (isPromoPage.value === true) {
+          setTimeout(() => {
+            ui.firstScreenLoading = false;
+          }, 600);
+        } else {
+          setTimeout(() => {
+            ui.firstScreenLoading = false;
+          }, 2000);
+        }
+      }
+    };
 
     const goToPrevPage = (prePage) => {
       if (prePage === "/") {
@@ -478,19 +620,13 @@ export default defineComponent({
       } else if (window.location.pathname === "/promotion") {
         window.location.href = "xfapp:/promo";
       } else {
-        router.push("/" + prePage);
+        router.push(prePage);
       }
     };
 
     onMounted(() => {
       checkRoute();
       checkFirstScreen();
-
-      if (isAndroid()) {
-        setTimeout(() => {
-          SplashScreen.hide();
-        }, 500);
-      }
     });
     return {
       tab: ref("home"),
@@ -504,6 +640,7 @@ export default defineComponent({
       route,
       scrollPageRef,
       pageName,
+      isPromoPage,
       hasPage,
       ui,
       prevPage,
@@ -511,7 +648,9 @@ export default defineComponent({
       platformsList,
       changePlatform,
       languageVal,
-      goToPrevPage
+      goToPrevPage,
+      isGuessRoute,
+      hasProfileSummary
     };
   }
 });
@@ -565,6 +704,11 @@ svg path {
   margin: 0.5rem 0 0 0;
 }
 
+.page-title {
+  &.has-profile-summary {
+    top: 60px;
+  }
+}
 .page-title-wrapper {
   display: flex;
   justify-content: space-between;
@@ -583,9 +727,10 @@ svg path {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 14rem;
+    width: 20rem;
     margin: 0 0.5rem;
     font-size: 16px;
+    font-weight: bold;
   }
 
   svg {
@@ -601,18 +746,42 @@ svg path {
   transform: translateX(-50%);
   width: 500px;
   max-width: 100%;
-  background: #11131e;
-  background-size: cover;
-  background-position: center center;
+  background-image: url("../assets/images/redirect/0.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: top center;
   z-index: 10000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  img {
-    display: block;
-    width: 100%;
-    max-width: 200px;
+  &:after {
+    background: url("../assets/images/redirect/logo-2s.gif") no-repeat center center;
+    content: "";
+    position: absolute;
+    bottom: 2vh;
+    width: 80%;
+    left: 10%;
+    right: 10%;
+    height: 6vh;
+    background-size: contain;
   }
+
+  &.ispromo-screen {
+    background-size: auto 100%;
+    background-image: url(../assets/images/index/first-screen-loading.png);
+
+    &:after {
+      display: none;
+    }
+  }
+}
+
+.house-icon {
+  animation: beat 1.5s infinite;
+}
+
+.q-page-container {
+  background: repeating-linear-gradient(45deg, #f1f1ee 0, #b9a78d 50%, #e9e8e4 100%);
+  // background-image: url("../assets/images/index/app-bg.png");
+  // background-repeat: repeat-y;
+  // background-size: contain;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
   <div class="table-record">
     <RecordComponent
-      recordType="reminder"
-      :loading="visible"
-      :list="tableData"
-      :headers="tableHeaders"
-      @loadnewdata="loadNewData"
-      :isEnded="isEnded"
+        recordType="reminder"
+        :loading="visible"
+        :list="tableData"
+        :headers="tableHeaders"
+        @loadnewdata="loadNewData"
+        :isEnded="isEnded"
     />
   </div>
 </template>

@@ -7,7 +7,7 @@
     />
     <template v-else>
       <div class="menu-title-container">
-        <div class="menu-title">消息中心</div>
+        <div class="menu-title">{{ $t('menu.messageCentre') }}</div>
       </div>
 
       <div class="account-content mail mail-content">
@@ -20,7 +20,7 @@
                   {{ unreadCount[item.type] }}
                 </div>
                 <span>
-                  {{ item.name }}
+                  {{ $t(`menu.${item.name}`) }}
                 </span>
               </div>
             </template>
@@ -29,24 +29,24 @@
                 <div class="left">
                   <div v-if="isShowSelect" class="mail-action" @click="deleteMultipleMsg()">
                     <div><img src="../../assets/images/account/icon-maildelete.png" /></div>
-                    删除
+                    {{ $t('btn.delete') }}
                   </div>
                   <div v-if="isShowSelect" class="mail-action" @click="readMultipleMsg()">
                     <div><img src="../../assets/images/account/icon-mailopen.png" /></div>
-                    读取
+                    {{ $t('btn.read') }}
                   </div>
                 </div>
                 <div class="right">
                   <div class="mail-action" @click="deleteAllMsg(item.type)">
                     <div><img src="../../assets/images/account/icon-maildelete.png" /></div>
-                    全部删除
+                    {{ $t('btn.deleteAll') }}
                   </div>
                   <div class="mail-action" @click="readAllMsg(item.type)">
                     <div><img src="../../assets/images/account/icon-mailopen.png" /></div>
-                    全部已读
+                    {{ $t('btn.readAll') }}
                   </div>
 
-                  <el-switch v-model="isShowSelect" inline-prompt active-text="选择多个" inactive-text="选择多个" />
+                  <el-switch v-model="isShowSelect" inline-prompt :active-text="$t('btn.selectMany')" :inactive-text="$t('btn.selectMany')" />
                 </div>
               </div>
               <el-collapse v-model="activeNames" @change="handleChange">
@@ -83,7 +83,7 @@
                   </template>
                   <div>
                     <div>
-                      正文：
+                      {{$t('form.fullContent')}}：
                       <div v-html="item.content.replace(/\n/g, '<br/>')"></div>
                     </div>
                   </div>
@@ -104,7 +104,7 @@
                 class="no-record-text"
                 style="display: flex; justify-content: center; align-items: center; height: 300px"
               >
-                暂无记录
+                {{ $t('form.noRecordsYet') }}
               </div>
             </template>
           </el-tab-pane>
@@ -148,11 +148,11 @@ const router = useRouter();
 const activeNames = ref();
 
 const mailboxMessageTypeData = ref([
-  { num: 1, type: "NOTIFICATION", name: "通知" },
-  { num: 5, type: "MATCH", name: "赛事" },
-  { num: 2, type: "ACTIVITY", name: "活动" },
-  { num: 3, type: "ANNOUNCEMENT", name: "公告" },
-  { num: 4, type: "PAYMENT", name: "充提" }
+  { num: 1, type: "NOTIFICATION", name: "notification" },
+  { num: 5, type: "MATCH", name: "match" },
+  { num: 2, type: "ACTIVITY", name: "event" },
+  { num: 3, type: "ANNOUNCEMENT", name: "announcement" },
+  { num: 4, type: "PAYMENT", name: "transaction" }
   // { num: 6, type: "ALL", name: "全部" }
   // { num: 5, type: "ALL", name: "全部" }
 ]);
@@ -628,10 +628,7 @@ onMounted(() => {
   .title-text {
     font-weight: normal;
     font-family: 'PingFang SC';
-
-    p {
-      margin: 0px;
-    }
+    max-height: 45px;
 
     &.unread {
       font-weight: bold;
@@ -840,6 +837,13 @@ onMounted(() => {
   .el-collapse-item__title {
     display: flex;
     align-items: center;
+  }
+}
+
+.title-text {
+  p {
+    margin: 0px;
+    line-height: 45px;
   }
 }
 </style>

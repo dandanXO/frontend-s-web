@@ -188,6 +188,7 @@ export default {
     cardAddress: 'ที่อยู่บัตรธนาคาร',
     cardNumber: 'หมายเลขบัตรธนาคาร',
     changeWithdrawPw: 'เปลี่ยนรหัสผ่านการถอน',
+    chinese: '中文',
     clearingSum: 'ยอดการเคลียร์',
     commission: 'คอมมิชชัน',
     gamecommission: "ค่าคอมมิชชั่นแพลตฟอร์ม",

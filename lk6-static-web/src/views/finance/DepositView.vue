@@ -1,8 +1,8 @@
 <template>
   <div class="deposit-container">
     <div class="menu-title-container">
-      <span class="menu-title">充值中心</span>
-      <span class="additional-title">支持虚拟币 USDT 小额存提，24 小时安全，便捷，秒存秒提！</span>
+      <span class="menu-title">{{ $t('menu.depositCentre') }}</span>
+      <span class="additional-title">{{ $t('form.depositCentreTagline') }}</span>
     </div>
     <div class="account-content deposit">
       <!-- <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span> -->
@@ -43,6 +43,7 @@ export default defineComponent({
 }
 
 .deposit-container {
+  background-color: #fff;
   box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
   border-radius: 15px;
   padding: 20px 40px;

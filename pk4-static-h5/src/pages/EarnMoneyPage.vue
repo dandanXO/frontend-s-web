@@ -157,7 +157,10 @@ onBeforeMount(() => {
     :deep(.q-tab__label) {
       font-weight: 700;
       // color: #FFFFFF80;
-      margin: 5px 15px;
+      
+      margin: 5px 5px;
+      font-size: 11px;
+      line-height: 14px;
     }
     :deep(.q-tab--active) {
           color: white;

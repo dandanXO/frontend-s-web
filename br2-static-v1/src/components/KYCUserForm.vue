@@ -2,7 +2,7 @@
   <div class="popout-dialog-container">
     <div class="txt-title">{{ $t("form.pleaseCompleteKYC") }}</div>
     <div class="pc-form">
-      <div class="pc-form-item">
+      <div class="pc-form-item" v-if="isRealName">
         <div class="pc-form-label">{{ $t("form.firstName") }}</div>
         <div class="pc-form-input">
           <q-input
@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div class="pc-form-item">
+      <div class="pc-form-item" v-if="isRealName">
         <div class="pc-form-label">{{ $t("form.lastName") }}</div>
         <div class="pc-form-input">
           <q-input
@@ -28,7 +28,7 @@
         </div>
       </div>
 
-      <div class="pc-form-item">
+      <div class="pc-form-item" v-if="isTaxId">
         <div class="pc-form-label">{{ $t("form.taxId") }}</div>
         <div class="pc-form-input">
           <q-input
@@ -95,19 +95,6 @@ const isValidLastName = () => {
   return result;
 };
 
-const isValidCPF = () => {
-  const { taxId } = formDetail;
-
-  if (!taxId) {
-    return "Por favor, insira o número do CPF";
-  }
-
-  const phoneRegex = /^\d{11}$/;
-  const isValid = phoneRegex.test(taxId);
-
-  return isValid ? true : "O número do CPF deve ter 11 dígitos";
-};
-
 const isValidPhone = () => {
   const { phone } = formDetail;
 
@@ -135,7 +122,11 @@ const submitKYCNewUser = () => {
 
 const updateNewUserState = () => {
   const updateInfo = {};
-  updateInfo.realName = `${formDetail.firstName},${formDetail.lastName}`;
+
+  if (isRealName.value) {
+    updateInfo.realName = `${formDetail.firstName},${formDetail.lastName}`;
+  }
+
   updateInfo.taxId = `${formDetail.taxId}`;
 
   api
@@ -156,6 +147,91 @@ const updateNewUserState = () => {
       btnLoading.value = false;
     });
 };
+
+// const isValidCPF = () => {
+//   const { taxId } = formDetail;
+
+//   if (!taxId) {
+//     return "Por favor, insira o número do CPF";
+//   }
+
+//   const phoneRegex = /^\d{11}$/;
+//   const isValid = phoneRegex.test(taxId);
+
+//   return isValid ? true : "O número do CPF deve ter 11 dígitos";
+// };
+
+const isValidCPF = () => {
+  const { taxId } = formDetail;
+
+  if (!taxId) {
+    return "Por favor, insira o número do CPF";
+  }
+
+  const cleaned = taxId.replace(/\D/g, "");
+
+  if (cleaned.length !== 11) {
+    return "O número do CPF deve ter 11 dígitos";
+  }
+
+  if (!validateCPF(cleaned)) {
+    return "Formato do número do CPF está incorreto.";
+  }
+
+  return true;
+};
+
+const validateCPF = (input_cpf) => {
+  if (!input_cpf) return false;
+
+  const cpf = input_cpf.toString().replace(/\D/g, "");
+
+  if (cpf.length !== 11) return false;
+
+  // 排除常见无效 CPF（所有数字都一样）
+  if (/^(\d)\1{10}$/.test(cpf)) return false;
+
+  const nums = cpf.split("").map(Number);
+
+  // 第一个校验位
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    sum += nums[i] * (10 - i);
+  }
+  let d1 = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+
+  // 第二个校验位
+  sum = 0;
+  for (let i = 0; i < 10; i++) {
+    sum += nums[i] * (11 - i);
+  }
+  let d2 = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+
+  return d1 === nums[9] && d2 === nums[10];
+};
+
+const personalState = reactive({
+  memberInfo: {}
+});
+
+const isRealName = ref(false);
+const isTaxId = ref(false);
+
+const loadInfo = () => {
+  personalState.memberInfo = userStore();
+
+  if (personalState.memberInfo.taxId === null) {
+    isTaxId.value = true;
+  }
+
+  if (personalState.memberInfo.realName === null) {
+    isRealName.value = true;
+  }
+};
+
+onMounted(() => {
+  loadInfo();
+});
 </script>
 
 <style lang="scss" scoped>

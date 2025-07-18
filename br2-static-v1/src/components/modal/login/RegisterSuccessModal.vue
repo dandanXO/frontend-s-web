@@ -22,7 +22,7 @@ import { useUI } from "stores/ui";
 import { userStore } from "stores/index";
 
 const isShowRegisterSuccessDialog = computed(() => {
-  return uiStore.isShowRegAccSuccess;
+  return uiStore.isShowRegAccSuccessModal;
 });
 
 const store = userStore();
@@ -31,7 +31,12 @@ const uiStore = useUI();
 const handleConfirmRegSuccess = () => {
   // location.href = "/";
   store.getMemberInfo();
-  uiStore.isShowRegAccSuccess = false;
+  uiStore.isShowRegAccSuccessModal = false;
+
+  if (store.hasToken()) {
+    store.getUnreadTotal();
+    // loadBetCashBackPopup();
+  }
 };
 </script>
 <style lang="scss" scoped>

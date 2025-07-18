@@ -163,9 +163,9 @@
               maxlength="20"
             />
           </el-form-item>
-          <el-form-item :label="t('fields.referrerCode')" prop="referrerCode">
+          <el-form-item :label="t('fields.upLineLoginName')" prop="upLineLoginName">
             <el-input
-              v-model="request.referrerCode"
+              v-model="request.upLineLoginName"
               style="width: 300px;"
               maxlength="20"
             />
@@ -869,6 +869,7 @@ const request = reactive({
   accurateLoginName: false,
   accurateRealName: false,
   memberOrigin: null,
+  upLineLoginName: null
 })
 
 const form = reactive({

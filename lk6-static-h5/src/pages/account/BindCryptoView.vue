@@ -205,7 +205,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, watch } from "vue";
+import { reactive, ref, onMounted, watch, onDeactivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -214,7 +214,7 @@ import { useLocalStorage } from "@vueuse/core";
 import { useNotify } from "src/hooks/notify";
 import { useI18n } from "vue-i18n";
 
-const { t } = useI18n;
+const { t } = useI18n();
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
@@ -244,7 +244,7 @@ const phoneVerificationRef = ref();
 const bankCardInfo = reactive({
   bankId: undefined,
   cardNumber: "",
-  cardAccount: store.realName,
+  cardAccount: store.nickName,
   cardAddress: "",
   telephone: store.phone,
   smsCode: "",
@@ -347,38 +347,38 @@ const onCaptchaSubmit = () => {
 
 const bankList = ref([]);
 const loadBankCards = () => {
-  store.getMemberInfo().then(() => {
-    if (!store.realName) {
-      notify({
-        type: "error",
-        message: "请输入您的真实姓名"
-      });
-      router.push("/account/personal");
-      // } else if (!store.phone) {
-      //   notify({
-      //     type: "error",
-      //     message: "请输入您的电话号码"
-      //   });
-      //   router.push("/account/verifyTelephone");
-    } else {
-      api
-        .get("/session/withdraw/card")
-        .then((res) => {
-          if (res.code === 0) {
-            for (let i = 0, l = res.data.length; i < l; i++) {
-              const data = res.data[i];
-              const { bankType } = data;
-              if (bankType === "CRYPTO") bankList.value.push(data);
-            }
+  // store.getMemberInfo().then(() => {
+  //   if (!store.realName) {
+  //     notify({
+  //       type: "error",
+  //       message: "请输入您的真实姓名"
+  //     });
+  //     router.push("/account/personal");
+  //     // } else if (!store.phone) {
+  //     //   notify({
+  //     //     type: "error",
+  //     //     message: "请输入您的电话号码"
+  //     //   });
+  //     //   router.push("/account/verifyTelephone");
+  //   } else {
+  //   }
+  // });
+  api
+    .get("/session/withdraw/card")
+    .then((res) => {
+      if (res.code === 0) {
+        for (let i = 0, l = res.data.length; i < l; i++) {
+          const data = res.data[i];
+          const { bankType } = data;
+          if (bankType === "CRYPTO") bankList.value.push(data);
+        }
 
-            bankCardInfo.bankId = bankList.value[0].id;
-          }
-        })
-        .catch((e) => {
-          console.log("error", e);
-        });
-    }
-  });
+        bankCardInfo.bankId = bankList.value[0].id;
+      }
+    })
+    .catch((e) => {
+      console.log("error", e);
+    });
 };
 
 const submitBankCard = () => {
@@ -449,6 +449,24 @@ watch(
     }
   }
 );
+
+onDeactivated(() => {
+  // Reset the form when the component is deactivated
+  bankCardInfo.cardNumber = "";
+  bankCardInfo.cardAccount = store.realName;
+  bankCardInfo.cardAddress = "";
+  bankCardInfo.telephone = store.phone;
+  bankCardInfo.smsCode = "";
+  bankCardInfo.smsCodeId = "";
+  bankCardInfo.bankId = undefined;
+  bankCardInfo.currencyId = "";
+  innerCaptchaCode.value = "";
+  innerCodeId.value = "";
+  otpCountdownCount.value = 0;
+  isOtpSent.value = false;
+  bankCardRef.value?.resetValidation();
+  cardNumberRef.value?.resetValidation();
+});
 
 onMounted(() => {
   loadBankCards();

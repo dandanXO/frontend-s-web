@@ -59,7 +59,8 @@ export const userStore = defineStore("userStore", {
         spinChance: 0,
         status: ""
       },
-      canWithdraw: false
+      canWithdraw: false,
+      taxId: "",
     };
   },
   actions: {
@@ -229,7 +230,8 @@ export const userStore = defineStore("userStore", {
             levelUpBet,
             currentValidBet,
             guest,
-            canWithdraw
+            canWithdraw,
+            taxId
           } = response.data;
 
           this.id = id;
@@ -250,6 +252,7 @@ export const userStore = defineStore("userStore", {
           this.levelUpBet = parseFloat(levelUpBet);
           this.guest = guest;
           this.canWithdraw = canWithdraw;
+          this.taxId = taxId;
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
             OneSignal.login(this.nickName);

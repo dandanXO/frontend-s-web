@@ -70,6 +70,7 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  z-index: 2500 !important;
 
   &.success,
   &.red-packet {

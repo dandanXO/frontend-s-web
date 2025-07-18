@@ -37,6 +37,12 @@ export default {
       },
       success: {
         message: "Operation successful"
+      },
+      claimSuccessfully: {
+        message: "Claim successful"
+      },
+      promoEnded: {
+        message: "The promotion has ended"
       }
     },
     gameType: {
@@ -79,6 +85,7 @@ export default {
     save: "Save",
     login: "Login",
     register: "Register",
+    registernow: "Register Now",
     toConfirm: "To Confirm",
     bind: "Bind",
     unbind: "Unbind",
@@ -87,7 +94,8 @@ export default {
     verify: "Verify",
     download: "Download",
     downloadNow: "Download Now",
-    all: "All"
+    all: "All",
+    joinUs: "Join us"
   },
   deposit: {
     paymentWay: "Payment Method",
@@ -124,7 +132,7 @@ export default {
     autoWithdraw: "Fast Withdraw",
     upgradeToAutoWithdraw: "Upgrade to Fast Withdraw",
     wallet: "Main Wallet",
-    refresh: "One‑Click Refresh",
+    refresh: "Refresh",
     upgrading: "Upgrading...",
     confirming: "Confirming...",
     withdrawFee: "*Withdrawal fee: {fee} {currency}",
@@ -223,7 +231,7 @@ export default {
     }
   },
   mail: {
-    readAll: "Mark All Read",
+    readAll: "Read ALL",
     deleteAll: "Delete All",
     delete: "Delete",
     read: "Read",
@@ -262,9 +270,7 @@ export default {
   },
   record: {
     betId: "Bet ID",
-    serialNumber: {
-      deposit: "Deposit Code"
-    },
+    serialNumber: "Code",
     table: {
       withdraw: {
         header: {
@@ -276,12 +282,13 @@ export default {
       },
       transfer: {
         header: {
-          serialNumber: "Transaction Code",
-          type: "Change Type",
+          serialNumber: "Code",
+          type: "Transaction Type",
           platform: "Platform",
           amount: "Amount",
+          subType: "Sub Type",
           status: "Status",
-          transferDate: "Date"
+          recordTime: "Date"
         }
       },
       promo: {
@@ -403,9 +410,7 @@ export default {
       cardPay: "Prepaid Card Payment",
       onlineCode: "Cloud QuickPass",
       dyPay: "Douyin",
-      autoPay: "Auto Payment",
       pending: "Paying",
-      success: "Successful",
       supplementSuccess: "Successful",
       closed: "Closed",
       waitingCallback: "Auto Paying",
@@ -495,11 +500,12 @@ export default {
       record: "Transaction Info",
       betRecord: "Betting History",
       inbox: "Notifications",
-      changePassword: "Change Password"
+      changePassword: "Change Password",
+      promo: "Promos",
+      affiliate: "Alliance Agency"
     },
     hot: {
-      title: "Hot Picks",
-      promo: "Promos"
+      title: "Hot Picks"
     },
     logout: "Log Out",
     notification: {
@@ -625,7 +631,8 @@ export default {
       newUser: "New User",
       timeLimited: "Limited Time",
       selected: "Selected"
-    }
+    },
+    viewDetail: "View Details"
   },
   bindCrypto: {
     form: {
@@ -647,9 +654,12 @@ export default {
     }
   },
   login: {
+    alreadyGotAcc: "I Already have account,",
+    loginnow: "Login Now",
     userNameLogin: "Username Login",
     phoneLogin: "Phone Login",
     forgotPassword: "Forgot password?",
+    forgotPasswordTip: "Please contact support to recover your password {0}",
     rememberPassword: "Remember me",
     cs: "Contact Support",
     loggingIn: "Logging in...",
@@ -666,7 +676,8 @@ export default {
         label: "Password",
         placeholder: "Enter password",
         error: {
-          required: "Enter password"
+          required: "Enter password",
+          length: "Password must be {min} to {max} chars"
         }
       },
       phone: {
@@ -897,6 +908,86 @@ export default {
       }
     }
   },
+  tianaiCaptcha: {
+    tipsError: "Verification failed, please try again!",
+    tipsSuccess: "Verification succeeded, took %s seconds",
+    sliderTitle: "Drag the slider to complete the puzzle",
+    concatTitle: "Drag the slider to complete the puzzle",
+    imageClickTitle: "Please click the images in the correct order",
+    rotate_title: "Drag the slider to complete the puzzle"
+  },
+  hotpromo: {
+    weeklyReward: {
+      claimSection: {
+        title: "Weekly Betting Rewards",
+        yesterdayValidBets: "Valid Bets:",
+        todayBonus: "Saturday's Bonus:"
+      }
+    }
+  },
+  affiliate: {
+    agentSupport: "Agent Services",
+    commissionPercentage: "Commission Percentage",
+    commissionStructureExample: "Commission Structure Example",
+    commissionCalculation: "Commission Calculation",
+    commissionCalculationExample: "Below is an example of commission calculation:",
+    commissionTerm: "Commission Terms & Conditions",
+    contact: {
+      qq: "Lucky6 QQ",
+      telegram: "Telegram",
+      skype: "Skype",
+      sigua: "Sigua",
+      amico: "Amico",
+      email: "Email"
+    },
+    agentLevel: {
+      brown: "Brown",
+      silver: "Silver",
+      gold: "Gold",
+      diamond: "Diamond",
+      crown: "Crown"
+    },
+    table: {
+      commissionStructure: {
+        agent: "Agent",
+        profit: "Profit",
+        activeValidMembers: "Active Valid Members",
+        commissionRate: "Commission Rate"
+      },
+      commissionCalculation: {
+        winLose: "Total Game Win/Loss",
+        platformFee: "Platform Fee",
+        platformFeeFormula: "Platform Fee = Total Game Win/Loss × {rate}",
+        bonus: "Bonuses",
+        bonusFormula: "Rebates, bonuses, deposit/withdrawal fees can be viewed in the details",
+        netProfit: "= Net Profit",
+        commissionRate: "× Commission Rate",
+        totalCommission: "= Total Commission"
+      }
+    },
+    term: {
+      payoutSchedule: {
+        title: "Commission Payout Schedule:",
+        autoPayout:
+          "Commissions are automatically credited to your agent account between the 5th and 10th of each month.",
+        noWagerRequirement: "No wagering requirements apply—commissions can be withdrawn immediately."
+      },
+      activeMemberRequirement: {
+        title: "Active Member Requirement:",
+        minimumActiveMembers: "A minimum of five (5) active members per month is required for commission eligibility.",
+        activeMemberDefinition:
+          'An "active player" is defined as a member with a minimum deposit of ≥200 within the month.'
+      },
+      promotionRequirement: {
+        title: "Promotion Requirements:",
+        minimumActiveMembers: "Agents must recruit at least three (3) new active members per month.",
+        failureToMeet: "Failure to meet this quota may result in reduced or withheld commissions.",
+        suspensionCondition:
+          "If an agent fails to recruit 10+ new active members over three consecutive months, the account will be suspended.",
+        reactivationCondition: "Reactivation requires contacting customer support."
+      }
+    }
+  },
   error: {
     101: "Platform not found",
     102: "Platform is closed",
@@ -989,6 +1080,7 @@ export default {
     15011: "Cannot select date before 2024-07-10",
     15201: "Incorrect old code",
     15202: "The new password cannot be the same as the old password",
+    17000: "Invalid image format",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",

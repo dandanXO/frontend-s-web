@@ -167,14 +167,14 @@ export default defineComponent({
 
       const fbc = (() => {
         const rawFbp = getCookie("_fbc");
-        return rawFbp ? rawFbp : null;
+        return rawFbp ? rawFbp.split(".").pop() : null;
       })
 
       // const fbp = getCookie("_fbp");
       // Extract the last portion of _fbp
       const fbp = (() => {
         const rawFbp = getCookie("_fbp");
-        return rawFbp ? rawFbp : null;
+        return rawFbp ? rawFbp.split(".").pop() : null;
       })();
 
       const fbp2 = (() => {

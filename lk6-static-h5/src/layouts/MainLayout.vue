@@ -1,6 +1,12 @@
 <template>
   <q-layout view="hHh Lpr fFf">
-    <q-header v-if="hasPage" class="page-wrapper">
+    <q-header
+      v-if="hasPage"
+      class="page-wrapper"
+      :class="{
+        'is-scrolled': isScrolled
+      }"
+    >
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
           <router-link to="/">
@@ -49,26 +55,26 @@
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="bg-primary text-white" :breakpoint="0" align="justify">
         <q-route-tab to="/" name="home" exact>
-          <img class="inactive" src="../assets/images/index/menu/ft-home.svg" />
-          <img class="hover" src="../assets/images/index/menu/ft-home-active.svg" />
+          <img class="inactive" src="../assets/images/index/menu/ft-home.png" />
+          <img class="hover" src="../assets/images/index/menu/ft-home-active.png" />
           {{ $t("layout.footer.home") }}
         </q-route-tab>
 
         <q-route-tab to="/promo" name="promo">
-          <img class="inactive" src="../assets/images/index/menu/ft-promo.svg" />
-          <img class="hover" src="../assets/images/index/menu/ft-promo-active.svg" />
+          <img class="inactive" src="../assets/images/index/menu/ft-promo.png" />
+          <img class="hover" src="../assets/images/index/menu/ft-promo-active.png" />
           {{ $t("layout.footer.promo") }}
         </q-route-tab>
 
-        <q-route-tab :to="chatPage" name="chat">
-          <img class="inactive" src="../assets/images/index/menu/ft-livechat.svg" />
-          <img class="hover filtericon" src="../assets/images/index/menu/ft-livechat.svg" />
+        <q-route-tab to="" name="chat" @click="handleLiveChatClick">
+          <img class="inactive" src="../assets/images/index/menu/ft-livechat.png" />
+          <img class="hover filtericon" src="../assets/images/index/menu/ft-livechat.png" />
           {{ $t("layout.footer.liveChat") }}
         </q-route-tab>
 
         <q-route-tab to="/account" name="account">
-          <img class="inactive" src="../assets/images/index/menu/ft-me.svg" />
-          <img class="hover" src="../assets/images/index/menu/ft-me-active.svg" />
+          <img class="inactive" src="../assets/images/index/menu/ft-me.png" />
+          <img class="hover" src="../assets/images/index/menu/ft-me-active.png" />
           {{ $t("layout.footer.me") }}
         </q-route-tab>
       </q-tabs>
@@ -174,6 +180,10 @@ export default defineComponent({
           prevPage.value = "";
           hasPage.value = true;
           pageName.value = t("layout.header.baccarat");
+        } else if (route.path === "/register") {
+          prevPage.value = "";
+          hasPage.value = true;
+          pageName.value = t("btn.register");
         } else if (route.path === "/forgot-account") {
           prevPage.value = "login";
           hasPage.value = true;
@@ -447,17 +457,30 @@ export default defineComponent({
       }
     ]);
 
+    const handleLiveChatClick = () => {
+      window.open(
+        "https://8xjp0t3ydi.ipbr7k9r.com/chatwindow.aspx?siteId=65001994&planId=099fb0e7-cad5-43d0-aa03-2ed2257e0e12",
+        "_blank"
+      );
+    };
+
     const platformsList = computed(() => {
       if (ui.slotLists.length === 0) {
         return platformsFixed.value;
       }
       return ui.slotLists;
     });
-    const withBgPage = computed(() => !["/login", "/register", "/forgot-account", "/"].includes(route.path));
+    const withBgPage = computed(
+      () => !["/login", "/register", "/forgot-account", "/", "/affiliate"].includes(route.path)
+    );
+    const isScrolled = ref(false);
     // console.log(platformsList.value);
     onMounted(() => {
       checkPlatform();
       checkRoute();
+      window.addEventListener("scroll", () => {
+        isScrolled.value = window.scrollY > 0;
+      });
       // loadTrackingScript();
     });
     return {
@@ -490,7 +513,9 @@ export default defineComponent({
         "WithdrawView",
         "ForgotPwdPage"
       ],
-      withBgPage
+      withBgPage,
+      handleLiveChatClick,
+      isScrolled
     };
   }
 });
@@ -543,6 +568,11 @@ svg path {
   background: transparent;
   padding-top: 0px;
   background-size: cover;
+
+  &.is-scrolled {
+    background: #fcfdfe;
+    box-shadow: 0px 4px 4px 0px #00000040;
+  }
 }
 
 .page-title {

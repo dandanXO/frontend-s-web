@@ -123,6 +123,13 @@
           </marquee-text>
         </div>
       </div>
+      <a :href="topDownloadUrl" style="height: 38px">
+        <img
+          style="height: 38px; width: 38px"
+          class="notice-app-download"
+          src="../assets/images/index/app-download.png"
+        />
+      </a>
     </div>
 
     <!-- <div class="top-action" v-if="store.hasToken()">
@@ -1145,7 +1152,6 @@
   <HomePopup ref="spinLuckyWheelPromoPopupRef" />
   <SpinLuckyWheelPromoSticky v-if="store.spinWheelLuckyPromoInfo?.status === 'IN_PROGRESS'" />
   <!-- Spin Lucky Wheel promo end -->
-
 </template>
 
 <script setup>
@@ -1166,7 +1172,7 @@ import WithdrawalModal from "../components/modal/WithdrawalModal.vue";
 import DepositComponent from "../components/depositComponent.vue";
 import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
-import moment from 'moment';
+import { isAndroid } from "src/boot/utils";
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
 import "swiper/css";
@@ -1216,6 +1222,10 @@ const gotoFloatPromo = (val) => {
     } else {
       router.push("/promo");
     }
+  }
+
+  if (val.type === "VIDEO") {
+    window.open(ui.downloadUrl);
   }
 
   if (val.type === "DOMAIN") {
@@ -2130,7 +2140,9 @@ const loadHotGameList = () => {
           gameLists = res;
 
           hotlists = hotlists.map((item1) => {
-            const matchingItem = gameLists.find((item2) => item1.type === "game" && item1.code === item2.code && item1.platform === item2.platformCode);
+            const matchingItem = gameLists.find(
+              (item2) => item1.type === "game" && item1.code === item2.code && item1.platform === item2.platformCode
+            );
             return { ...matchingItem, ...item1 };
           });
 
@@ -2621,31 +2633,35 @@ const gotoSignUp = () => {
 const hbPromo = ref([]);
 
 const checkSpinLuckyWheelPromo = async () => {
-  if(store.token) {
+  if (store.token) {
     const res = await eventapi.post("/refer-spin/check");
     store.spinWheelLuckyPromoInfo = { ...store.spinWheelLuckyPromoInfo, ...res.data };
   }
 
   if (sessionStorage.getItem("isReload")) {
     sessionStorage.removeItem("isReload");
-    sessionStorage.removeItem('SPIN_LUCKY_WHEEL_POPUP');
+    sessionStorage.removeItem("SPIN_LUCKY_WHEEL_POPUP");
   }
 
-  if (!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
     spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
   }
-}
-
+};
 
 const checkHbPromo = () => {
+  const apiUrl = store.hasToken() ? "/session/loggedInRedirect" : "/redirect";
   api
-    .get("/redirect")
+    .get(apiUrl)
     .then((res) => {
       return res;
     })
     .then((data) => {
       // isHbShow.value = data.data.some((item) => item.code === "pak-redpacketrain");
-      hbPromo.value = data.data;
+      if (isAndroid()) {
+        hbPromo.value = data.data.filter((item) => item.type !== "VIDEO");
+      } else {
+        hbPromo.value = data.data;
+      }
     });
 };
 
@@ -2847,14 +2863,23 @@ const loadAppTabs = () => {
     });
 };
 
+const topDownloadUrl = ref("");
+
+const getTopDownloadUrl = () => {
+  api.get("/app/download/affiliate/url?siteCode=IND&affiliateCode=8999B3").then((res) => {
+    if (res.code === 0) {
+      topDownloadUrl.value = res.data.url;
+      ui.downloadUrl = res.data.url;
+    }
+  });
+};
+
 onActivated(() => {
   store.getUnreadTotal();
-  if(!sessionStorage.getItem('SPIN_LUCKY_WHEEL_POPUP')) {
+  if (!sessionStorage.getItem("SPIN_LUCKY_WHEEL_POPUP")) {
     spinLuckyWheelPromoPopupRef.value.checkIsCanShowPopup();
   }
 });
-
-
 
 onMounted(() => {
   isPlatLoading.value = true;
@@ -2868,6 +2893,7 @@ onMounted(() => {
   loadCustomerAddress();
   checkHbPromo();
   checkSpinLuckyWheelPromo();
+  getTopDownloadUrl();
 
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
@@ -2880,8 +2906,6 @@ onMounted(() => {
   window.addEventListener("beforeunload", function () {
     sessionStorage.setItem("isReload", "true");
   });
-
-
 });
 
 window.addEventListener("beforeunload", () => {
@@ -3052,6 +3076,7 @@ onBeforeUnmount(() => {
   position: relative;
   border-radius: 40px;
   overflow: hidden;
+  display: flex;
 
   .station-notice-wrapper {
     display: flex;
@@ -3060,6 +3085,8 @@ onBeforeUnmount(() => {
     padding: 5px 10px;
     justify-content: center;
     align-items: center;
+    width: calc(100% - 40px);
+    border-radius: 50px;
 
     .volume {
       display: flex;
@@ -3083,6 +3110,20 @@ onBeforeUnmount(() => {
       cursor: pointer;
       color: #bacef1;
       font-weight: light;
+    }
+  }
+
+  .notice-app-download {
+    animation: growShrink 0.9s ease-in-out infinite;
+  }
+
+  @keyframes growShrink {
+    0%,
+    100% {
+      transform: scale(0.8);
+    }
+    50% {
+      transform: scale(1.1);
     }
   }
 
@@ -4204,6 +4245,11 @@ onBeforeUnmount(() => {
     height: 100px !important;
     width: 100px;
     padding: 0px;
+
+    &:active {
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
+    }
   }
 
   img {

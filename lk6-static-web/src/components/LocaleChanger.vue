@@ -33,7 +33,8 @@ export default {
     const { setLanguage } = i18nStoreLanguage
 
     const handleLanguage = (newLanguage) => {
-      setLanguage(newLanguage)
+      setLanguage(newLanguage);
+      window.location.reload();
     }
     const langs = [
       { code: "en", text: "English" },

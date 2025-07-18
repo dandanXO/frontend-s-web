@@ -21,6 +21,8 @@ const fs = require("fs-extra");
 const isImageCompress = true;
 
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
+const IgnorePlugin = require("webpack").IgnorePlugin;
+const NormalModuleReplacementPlugin = require("webpack").NormalModuleReplacementPlugin;
 
 const ContextReplacementPlugin = require("webpack").ContextReplacementPlugin;
 
@@ -35,7 +37,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["polyfill", "axios", "cache", "lang"],
+    boot: ["axios", "cache", "lang", "fingerprint", "google-analytics"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss"],
@@ -56,14 +58,22 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-build
     build: {
-      vueRouterMode: "history", // available values: 'hash', 'history'
+      env: {
+        IS_PWA: process.env.ROUTER_BASE ? "1" : "0",
+        ROUTER_BASE: process.env.ROUTER_BASE
+      },
+      vueRouterMode: process.env.VUE_ROUTER_MODE === "hash" || "history", // available values: 'hash', 'history'
       postcss: {
         configFile: true
       },
       transpile: true,
-      transpileDependencies: [/node_modules\/(vue|pinia|chart|vue-i18n|@intlify|@capacitor|vue-router|swiper)/],
+      transpileDependencies: [/node_modules\/chart\.js/],
+      nativeMobile: false, // or any other value you want
+      nativeMobileWrapper: "", // or any other value you want
       // transpile: false,
       // publicPath: '/',
+      // transpile: false,
+      publicPath: process.env.ROUTER_BASE ? `/${process.env.ROUTER_BASE}/` : "",
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
@@ -74,7 +84,7 @@ module.exports = configure(function (ctx) {
       // preloadChunks: true,
       // showProgress: false,
       // gzip: true,
-      // analyze: true,
+      analyze: false,
 
       minify: true,
       uglifyOptions: {
@@ -87,8 +97,6 @@ module.exports = configure(function (ctx) {
       extractCSS: true,
       sourceMap: false,
 
-      // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
-      // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       // https://v2.quasar.dev/quasar-cli-webpack/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       extendWebpack(cfg) {
@@ -107,34 +115,28 @@ module.exports = configure(function (ctx) {
         );
 
         cfg.module.rules.push({
-          test: /\.(m?js|cjs|js)$/,
-          exclude: /node_modules\/(?!(@vue|vue|vue-i18n|pinia|@intlify|@capacitor|vue-router|swiper))/,
+          test: /\.m?js$/,
+          include: [
+            path.resolve(__dirname, "node_modules/vue-chartjs"),
+            path.resolve(__dirname, "node_modules/@fingerprintjs/fingerprintjs"),
+            path.resolve(__dirname, "node_modules/@fingerprintjs/fingerprintjs-pro-vue-v3")
+          ],
           use: {
             loader: "babel-loader",
             options: {
-              cacheDirectory: true,
               presets: [
                 [
                   "@babel/preset-env",
                   {
                     targets: {
-                      chrome: "50",
-                      android: "6",
-                      ios: "10",
-                      safari: "10",
-                      ie: "11"
+                      chrome: "67"
                     },
                     useBuiltIns: "entry",
                     corejs: 3
                   }
                 ]
               ],
-              plugins: [
-                "@babel/plugin-proposal-class-properties",
-                "@babel/plugin-proposal-optional-chaining",
-                "@babel/plugin-proposal-nullish-coalescing-operator",
-                "@babel/plugin-transform-spread"
-              ]
+              plugins: ["@babel/plugin-proposal-class-properties", "@babel/plugin-proposal-optional-chaining"]
             }
           }
         });
@@ -142,12 +144,8 @@ module.exports = configure(function (ctx) {
         cfg.optimization.minimizer = [
           new TerserPlugin({
             terserOptions: {
-              ecma: 5,
               compress: {
-                drop_console: true
-              },
-              output: {
-                comments: false
+                drop_console: true // 移除 console.log
               }
             }
           })
@@ -173,15 +171,40 @@ module.exports = configure(function (ctx) {
             }
           }
         };
+
+        if (ctx.mode.capacitor) {
+          cfg.plugins.forEach((plugin) => {
+            if (plugin.constructor.name === "CopyPlugin") {
+              const publicPath = path.resolve(__dirname, "public");
+              plugin.patterns.forEach((pattern) => {
+                if (pattern.from === publicPath) {
+                  pattern.globOptions.ignore = [
+                    ...pattern.globOptions.ignore,
+                    "**/public/static/**",
+                    "**/public/*.ico"
+                  ];
+                }
+              });
+            }
+          });
+        }
       },
-      // chainWebpack(chain) {
-      //   chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
-      // }
       chainWebpack(chain) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
         chain.resolve.alias.set("@", path.resolve(__dirname, "src")); // shortcut for src
+        chain.plugin("ignore-plugin").use(IgnorePlugin, [
+          {
+            resourceRegExp: /^\.\/locale$/,
+            contextRegExp: /moment$/
+          }
+        ]);
+        chain
+          .plugin("normal-module-replacement-plugin")
+          .use(NormalModuleReplacementPlugin, [
+            /moment-timezone\/data\/packed\/latest.json/,
+            require.resolve(path.resolve(__dirname, "misc/timezone.json"))
+          ]);
 
-        // Add Image Compression
         if (process.env.NODE_ENV === "production" && isImageCompress) {
           chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [
             {
@@ -192,6 +215,7 @@ module.exports = configure(function (ctx) {
             }
           ]);
         }
+        // chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
       },
 
       // Add a hook to copy assets after the build
@@ -275,8 +299,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `55Ace`,
-        short_name: `55Ace`,
+        name: `B9.GAME`,
+        short_name: `B9.GAME`,
         description: `APP`,
         display: "standalone",
         orientation: "portrait",
@@ -319,9 +343,9 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/developing-capacitor-apps/configuring-capacitor
     capacitor: {
-      hideSplashscreen: false,
+      hideSplashscreen: true,
       // (Optional) If not present, will look for package.json > name
-      appName: "55Ace", // string
+      appName: "B9.GAME", // string
       backButtonExit: "*"
     },
 
@@ -343,7 +367,7 @@ module.exports = configure(function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: "th2-project"
+        appId: "ph-project"
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

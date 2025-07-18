@@ -7,9 +7,9 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
-const items = ref([
-  {
+const items = ref([])
+if(sessionStorage.getItem('memberType') === 'streamer'){
+  items.value.push({
     label: '流媒体',
     icon: 'pi pi-sync',
     items: [
@@ -30,7 +30,7 @@ const items = ref([
     ],
   },
   {
-    label: '後台管理',
+    label: '后台管理',
     icon: 'pi pi-home',
     items: [
       {
@@ -54,6 +54,86 @@ const items = ref([
         },
       },
     ],
-  },
-])
+  })
+}
+
+if (sessionStorage.getItem('memberType') === 'admin') {
+  items.value.push({
+    label: '体育直播',
+    icon: 'pi pi-home',
+    items: [
+      {
+        label: '体育直播监控',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-monitor')
+        },
+      },
+      {
+        label: '聊天室记录',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-history-block')
+        },
+      },
+      {
+        label: '聊天室会员禁言设定',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-block')
+        },
+      },
+      {
+        label: '聊天室VIP发言设定',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/chat-status')
+        },
+      },
+      {
+        label: '体育直播敏感词设定',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/sensitive-wrod')
+        },
+      },
+      {
+        label: '赛事管理',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-event')
+        },
+      },
+      {
+        label: '主播管理',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-streamer')
+        },
+      },
+      {
+        label: '队伍管理',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-team')
+        },
+      },
+      {
+        label: '电竞赛事',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-match')
+        },
+      },
+      {
+        label: '体育赛事',
+        icon: 'pi pi-info-circle',
+        command: () => {
+          router.push('/live-sport/live-match-mars')
+        },
+      },
+    ]
+  })
+
+}
 </script>

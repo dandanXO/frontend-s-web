@@ -30,8 +30,13 @@
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="nav.hasicon">
               <div class="header-menu-item">
-                <router-link @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
+                <a v-if="nav.code === 'CS'" @click="store.openLiveChat">
+                  <span><div class="cs-icon" /></span>
+                  <span>{{ $t('menu.customerService') }}</span>
+                </a>
+                <router-link v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
                   <span>
+                    <div class="affiliate-icon" v-if="nav.code === 'Affiliate'" />
                     <div class="promotion-icon" v-if="nav.code === 'Promotion'" />
                     <!-- <img
                       class="hover-icon promotion"
@@ -62,6 +67,22 @@
             </template>
           </template>
 
+          <template  v-if="store.token">
+            <div class="header-menu-item">
+              <router-link to="/center/deposit" class="action-btn">
+                <span><img src="../../assets/images/home/deposit-icon.png" width="38px" height="38px"/></span>
+                <span>{{ $t('menu.deposit') }}</span>
+              </router-link>
+            </div>
+
+            <div class="header-menu-item">
+              <router-link to="/center/withdraw" class="action-btn">
+                <span><img src="../../assets/images/home/withdraw-icon.png" width="38px" height="38px" /></span>
+                <span>{{ $t('menu.withdraw') }}</span>
+              </router-link>
+            </div>
+          </template>
+
           <div class="header-menu-item">
             <a>
               <span><LocaleChanger/></span>
@@ -73,7 +94,7 @@
             <GameMenu ref="el" v-if="selectedMenu === 'slot'" @load-modal="openGame" />
             <LiveCasinoMenu ref="el" v-if="selectedMenu === 'live'" @load-modal="openGame" />
             <SportsMenu ref="el" v-if="selectedMenu === 'panda' || selectedMenu === 'crown'" @load-modal="openGame" />
-            <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />
+            <PokerMenu ref="el" v-if="selectedMenu === 'bacarrat'" @load-modal="openGame" />
             <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
             <AppMenu ref="el" v-if="selectedMenu === 'App'" />
           </div>
@@ -88,27 +109,6 @@
           </router-link> -->
           <a class="standard-button btn-color-aqua" @click="loginDialogVisible = true">{{ $t('btn.login') }}</a>
           <a class="standard-button btn-color-white" @click="registerDialogVisible = true">{{ $t('btn.register') }}</a>
-        </div>
-
-        <div v-if="store.token" class="profile-actions">
-          <router-link to="/center/deposit" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-deposit.png" />
-            </div>
-            {{ $t('menu.deposit') }}
-          </router-link>
-          <router-link to="/center/withdraw" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-withdraw.png" />
-            </div>
-             {{ $t('menu.withdraw') }}
-          </router-link>
-          <!-- <router-link to="/center/transfer" class="action-btn">
-            <div class="icon-rounded">
-              <img src="../../assets/images/home/profile-action-transfer.png" />
-            </div>
-            转账
-          </router-link> -->
         </div>
 
         <div class="profile-info" v-if="store.token">
@@ -157,7 +157,7 @@
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
-                  <button class="standard-button profile-info-dropdown-content-item btn-color-white">退出登录</button>
+                  <button class="standard-button profile-info-dropdown-content-item btn-color-white">{{ $t('btn.logout') }}</button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -176,7 +176,7 @@
                 <span class="assets-text">{{$t('menu.assets')}}：</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">{{ $t('menu.loading') }}...</span>
-                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ floor(store.balance, 2) }}</span>
+                  <div v-if="!isLoadingBalance" style="display:flex;align-items:center;gap:5px;"><img src="../../assets/images/finance/usdt-icon.svg" width="20px" height="20px" /> {{ floor(store.balance, 2) }}</div>
                 </span>
               </div>
               <el-icon class="reload-btn">
@@ -192,13 +192,14 @@
       class="acc-dialog"
       v-model="loginDialogVisible"
       align-center
-      style="max-width: 1088px"
+      style="width: 900px;height: 500px;"
       @close="store.loginPageVisible = false"
     >
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
             <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else-if="languageVal === 'en'" src="../../assets/home/auth/login-banner-en.jpg" />
             <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
@@ -219,13 +220,14 @@
       class="acc-dialog"
       v-model="registerDialogVisible"
       align-center
-      style="max-width: 1200px"
+      style="width: 900px;height: 500px;"
       @close="store.regPageVisible = false"
     >
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
             <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else-if="languageVal === 'en'" src="../../assets/home/auth/login-banner-en.jpg" />
             <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
@@ -243,7 +245,7 @@
       title="验证码"
       width="50%"
       align-center
-      style="max-width: 500px"
+      style="max-width: 900px;height: 500px;"
       :close-on-click-modal="false"
       @keydown.enter.prevent
     >
@@ -276,6 +278,7 @@
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
             <img v-if="accDialogImg" :src="accDialogImg" />
+            <img v-else-if="languageVal === 'en'" src="../../assets/home/auth/login-banner-en.jpg" />
             <img v-else src="../../assets/home/auth/login-banner.jpg" />
           </div>
         </div>
@@ -415,6 +418,15 @@ export default defineComponent({
       // { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: false },
       // { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
       // { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
+      {
+        code: "Affiliate",
+        name: 'menu.affiliate',
+        enName: t('menu.affiliate'),
+        path: "/affiliate",
+        submenu: false,
+        hasicon: true,
+        isTest: false
+      },
       {
         code: "Promotion",
         name: 'menu.promotion',
@@ -975,7 +987,7 @@ export default defineComponent({
               if (regResult === 0) {
                 notify({
                   type: "success",
-                  message: "注册成功"
+                  message: t('message.registerSuccessfully')
                 });
                 store.autoLogin(response.data);
                 registerDialogVisible.value = false;
@@ -1565,11 +1577,15 @@ body {
 
 .profile-info-dropdown-content {
   .profile-info-dropdown-content-item {
-    display: flex;
     align-items: center;
     gap: 10px;
     color: #a8b5c3;
-    margin: auto;
+    display: grid;
+    grid-template-columns: 35px 65px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    margin: 0 auto;
+
 
     img {
       max-width: 33px;
@@ -1577,6 +1593,7 @@ body {
 
     &.standard-button {
       color: #468cff;
+      display: flex;
     }
   }
 }
@@ -1605,19 +1622,8 @@ body {
       }
     }
 
-    .icon-rounded {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      box-shadow: 0px 2px 5px 0px #bbdcff inset;
-    }
-
     img {
       display: block;
-      width: 16px;
     }
   }
 
@@ -1778,7 +1784,7 @@ body {
           padding-left: 5px;
           padding-right: 5px;
 
-          a > span > div {
+          a > span > div, a > span > img {
             &:hover {
               animation: rumble 0.3s ease-in-out;
             }
@@ -1837,7 +1843,6 @@ body {
         .sub-menu {
           transition: $page-trans;
           background: linear-gradient(180deg, #F8FCFF 0%, #DFECFF 100%);
-          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 1px 0px 0px #a7c2dd;
           overflow: hidden;
           height: 0px;
           position: absolute;
@@ -2298,18 +2303,18 @@ body {
         display: flex;
         border-radius: 16px;
         overflow: hidden;
+        height: 500px;
       }
 
       .acc-dialog-left {
-        width: calc(100% - 450px);
+        width: 400px;
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
         overflow: hidden;
 
         .acc-dialog-img {
-          max-width: 963px;
-          max-height: 896px;
+          width: 100%;
           height: 100%;
 
           img {
@@ -2321,7 +2326,7 @@ body {
       }
 
       .acc-dialog-right {
-        width: 550px;
+        width: 500px;
         padding: 24px 24px 24px 24px;
         background-color: #F7F9FC;
 
@@ -2402,6 +2407,15 @@ body {
 .header-menu-item {
   min-width: 40px;
   position: relative;
+
+  .affiliate-icon {
+    background: url('../../assets/images/home/affiliate-icon.png');
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 38px;
+    height: 38px;
+  }
 
   .promotion-icon {
     background: url('../../assets/images/home/header-icon-set.png');

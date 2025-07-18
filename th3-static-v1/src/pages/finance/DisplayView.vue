@@ -32,18 +32,27 @@
     </div>
   </div>
   <div v-else id="renderArea">
-    <form ref="formRef" method="post" :target="targetType" style="display: none">
-      <input type="text" v-for="input in data" :key="input" :value="input.value" :name="input.name" />
+    <form ref="formRef" method="post"
+          :target="targetType"
+          style="display: none;"
+    >
+      <input
+          type="text"
+          v-for="input in data"
+          :key="input"
+          :value="input.value"
+          :name="input.name"
+      />
       <button type="submit" id="submitBtn">提交</button>
     </form>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, nextTick } from "vue";
-import { isEmpty } from "boot/utils";
-import { useRoute } from "vue-router";
-import { userStore } from "src/stores";
+import {ref, onMounted, reactive, nextTick} from "vue";
+import {isEmpty} from "boot/utils";
+import {useRoute} from "vue-router";
+import {userStore} from "src/stores";
 
 const store = userStore();
 const route = useRoute();
@@ -92,9 +101,9 @@ const targetType = ref("");
 function getRequest(url) {
   if (isEmpty(url)) {
     // console.log(route.fullPath);
-    if (store.getDeviceType() == "IOS" || store.getDeviceType() == "ANDROID" || store.isMobileSafari() == true) {
+    if (store.getDeviceType() == 'IOS' || store.getDeviceType() == 'ANDROID' || store.isMobileSafari() == true) {
       url = route.fullPath;
-      if (store.getDeviceType() == "IOS" || store.isMobileSafari() == true) {
+      if (store.getDeviceType() == 'IOS' || store.isMobileSafari() == true) {
         targetType.value = "_self";
       } else {
         targetType.value = "_blank";
@@ -106,7 +115,7 @@ function getRequest(url) {
   }
   let theRequest = {};
   if (url.indexOf("?") != -1) {
-    var spliturl = url.split("?");
+    var spliturl= url.split("?");
     url = spliturl[1];
   }
   let strs = url.split("&");

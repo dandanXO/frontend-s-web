@@ -42,7 +42,7 @@
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">活动期间，当日FISSURE 2025 7月总决赛累计有效投注≥1000 元即可获得最高1388元的奖金。</div>
+          <div class="right">活动期间，当日 FISSURE 游乐场 累计有效投注≥1000 元即可获得最高1388元的奖金。</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
@@ -98,7 +98,7 @@
               <img src="@/assets/promo/lh-livepoker-rebate/game-bottom-left-btn.png" alt="" style="width: 10px" />
               <span>示例</span>
             </div>
-            会员在FISSURE 2025 7月总决赛累计有效投注为50,000 元，在次日 24 小时内可获得彩金：288元
+            会员在FISSURE 游乐场 累计有效投注为50,000 元，在次日 24 小时内可获得彩金：288元
           </div>
         </div>
       </div>
@@ -110,14 +110,14 @@
           <div class="item">
             <div class="item-num">1</div>
             <div style="display: flex; flex-direction: column">
-              活动期间，活动仅计算电竞场馆中FISSURE 2025 7月总决赛，会员在当日FISSURE 2025 7月总决赛累计有效投注≥1000
+              活动期间，活动仅计算电竞场馆中FISSURE 游乐场 ，会员在当日FISSURE 游乐场 累计有效投注≥1000
               元即可获得对应彩金，有效投注次日清零；
               <div class="hint">注：奖金不叠加派发，奖金按最高档位每日派发一次。</div>
             </div>
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算当日FISSURE 2025 7月总决赛已结算的赛事总有效投注，次日 24
+            活动期间，活动仅计算当日FISSURE 游乐场  已结算的赛事总有效投注，次日 24
             小时内在活动页面点击【立即领取】按钮领取。逾期未领取则视为放弃，彩金 6倍流水即可出款；
           </div>
           <div class="item">

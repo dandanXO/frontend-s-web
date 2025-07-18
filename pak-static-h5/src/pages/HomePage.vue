@@ -1189,19 +1189,36 @@
     <div class="claim-popup-container" :class="{ ur: languageVal === 'ur' }">
       <div v-if="showClaimPopup.prize !== 0" class="claimed-reward-wrapper">
         <img class="claimed-reward" src="../assets/images/index/modal/claim-popup/claimed-reward.png" />
-        <span class="claimed-reward-desc">{{ `${$t('hotPromo.claimPopup.youWon')} ${store.currency.value}${showClaimPopup.prize}!` }}</span>
+        <span class="claimed-reward-desc">
+          {{ `${$t("hotPromo.claimPopup.youWon")} ${store.currency.value}${showClaimPopup.prize}!` }}
+        </span>
         <div class="claimed-reward-highlight">{{ `+${store.currency.value}${showClaimPopup.prize}` }}</div>
       </div>
       <div v-else class="claim-reward-wrapper">
         <img class="unclaimed-reward" src="../assets/images/index/modal/claim-popup/please-claim-reward.png" />
-        <span class="claimed-reward-desc">{{ `${$t('hotPromo.claimPopup.oneOfTodayWinners')}!` }}</span>
+        <span class="claimed-reward-desc">{{ `${$t("hotPromo.claimPopup.oneOfTodayWinners")}!` }}</span>
       </div>
-      <img v-if="languageVal === 'ur'" @click="claimClaimPopupPrize" class="claim-reward-btn" :class="{ claimed: showClaimPopup.prize !== 0 }" src="../assets/images/index/modal/claim-popup/receieve-btn-ur.png" />
-      <img v-else @click="claimClaimPopupPrize" class="claim-reward-btn" :class="{ claimed: showClaimPopup.prize !== 0 }" src="../assets/images/index/modal/claim-popup/receieve-btn.png" />
-      <img @click="showClaimPopup.visible = false" class="close-btn" src="../assets/images/index/modal/claim-popup/close-btn.png" />
+      <img
+        v-if="languageVal === 'ur'"
+        @click="claimClaimPopupPrize"
+        class="claim-reward-btn"
+        :class="{ claimed: showClaimPopup.prize !== 0 }"
+        src="../assets/images/index/modal/claim-popup/receieve-btn-ur.png"
+      />
+      <img
+        v-else
+        @click="claimClaimPopupPrize"
+        class="claim-reward-btn"
+        :class="{ claimed: showClaimPopup.prize !== 0 }"
+        src="../assets/images/index/modal/claim-popup/receieve-btn.png"
+      />
+      <img
+        @click="showClaimPopup.visible = false"
+        class="close-btn"
+        src="../assets/images/index/modal/claim-popup/close-btn.png"
+      />
     </div>
   </q-dialog>
-
 
   <q-dialog
     width="100%"
@@ -4161,8 +4178,9 @@ const hbPromo = computed(() => {
 });
 
 const checkHbPromo = () => {
+  const apiUrl = store.hasToken() ? "/session/loggedInRedirect" : "/redirect";
   api
-    .get("/redirect")
+    .get(apiUrl)
     .then((res) => {
       return res;
     })
@@ -4195,7 +4213,7 @@ const homePopupLink = ref("");
 const homePopupLinkOut = ref(false);
 const showClaimPopup = ref({
   visible: false,
-  prize: 0,
+  prize: 0
 });
 
 const setExpiryBanner = () => {
@@ -4396,26 +4414,26 @@ const checkNewPlayerWheelPromoHomePopupCanShow = () => {
 };
 
 const claimClaimPopupPrize = () => {
-  if(showClaimPopup.value.prize > 0) {
+  if (showClaimPopup.value.prize > 0) {
     return;
   }
 
-  eventapi.post('/session/privilege-voucher/claim').then((res) => {
-    if(res.code === 0) {
+  eventapi.post("/session/privilege-voucher/claim").then((res) => {
+    if (res.code === 0) {
       showClaimPopup.value.prize = res.data;
     }
-  })
-}
+  });
+};
 
 const loadClaimPopup = () => {
   if (store.token) {
-    eventapi.get('/session/privilege-voucher/init').then((res) => {
-      if(res.code === 0 && res.data.bonus > 0) {
+    eventapi.get("/session/privilege-voucher/init").then((res) => {
+      if (res.code === 0 && res.data.bonus > 0) {
         showClaimPopup.value.visible = true;
       }
-    })
+    });
   }
-}
+};
 
 onActivated(async () => {
   nextTick(() => {
@@ -6061,7 +6079,7 @@ const checkGoogleLoginSetPwd = () => {
   }
   &.sport-platform {
     .platform-game-item {
-      >img {
+      > img {
         min-height: 120px;
       }
     }
@@ -6818,7 +6836,7 @@ const checkGoogleLoginSetPwd = () => {
 }
 
 .claim-popup-container {
-  background: url('../assets/images/index/modal/claim-popup/claim-popup-bg.png') center center no-repeat;
+  background: url("../assets/images/index/modal/claim-popup/claim-popup-bg.png") center center no-repeat;
   background-size: 100% 100%;
   aspect-ratio: 1120/1550;
   width: 350px;
@@ -6827,7 +6845,7 @@ const checkGoogleLoginSetPwd = () => {
   text-align: center;
 
   &.ur {
-    background: url('../assets/images/index/modal/claim-popup/claim-popup-bg-ur.png') center center no-repeat;
+    background: url("../assets/images/index/modal/claim-popup/claim-popup-bg-ur.png") center center no-repeat;
     background-size: 100% 100%;
   }
 
@@ -6857,7 +6875,7 @@ const checkGoogleLoginSetPwd = () => {
     }
 
     .claimed-reward-highlight {
-      background: url('../assets/images/index/modal/claim-popup/claimed-reward-highlight.png') center center no-repeat;
+      background: url("../assets/images/index/modal/claim-popup/claimed-reward-highlight.png") center center no-repeat;
       background-size: 100% 100%;
       aspect-ratio: 358/95;
       width: 150px;
@@ -6865,13 +6883,13 @@ const checkGoogleLoginSetPwd = () => {
       align-items: center;
       justify-content: center;
       text-align: center;
-      font-family: 'Poppins';
+      font-family: "Poppins";
       font-weight: 900;
       font-size: 30px;
       line-height: 100%;
       letter-spacing: 0px;
       text-align: center;
-      color: #FFF96F;
+      color: #fff96f;
     }
   }
 

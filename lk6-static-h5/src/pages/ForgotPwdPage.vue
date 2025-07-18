@@ -207,7 +207,7 @@
                   :placeholder="$t('forgotPassword.form.userName.placeholder')"
                   lazy-rules
                   :rules="[
-                    (val) => (val && val.length > 0) || $t('forgotPassword.form.userName.required'),
+                    (val) => (val && val.length > 0) || $t('forgotPassword.form.userName.error.required'),
                     (val) =>
                       (val && val.length >= 4 && val.length <= 12) ||
                       $t('forgotPassword.form.userName.length', { min: 4, max: 12 })

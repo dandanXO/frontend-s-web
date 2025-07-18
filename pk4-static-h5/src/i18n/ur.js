@@ -70,6 +70,7 @@ export default {
     wallet: "پرس",
     me: "میں",
     account: "اکاؤنٹ",
+    sport: "کھیل",
     more: "مزید",
     dividend: "حصہ",
     announcement: "اعلان"
@@ -304,7 +305,7 @@ export default {
     playReal: "حقیقی کھیلیں",
     freeTrial: "مفت آزمائش",
     payAgain: "دوبارہ ادائیگی کریں",
-    reminder: "یاد دہانی",
+    reminder: "یاد دہانی"
   },
   notify: {
     cancelPayment: "ادائیگی منسوخ کریں",
@@ -372,6 +373,7 @@ export default {
     cat_fishing: "ماہی گیری",
     cat_poker: "پوکر",
     cat_sport: "کھیل",
+    liveSportEvent: "لائیو کھیلوں کے ایونٹ",
     cashGift: "نقدی تحفے",
     welcomeNewPlayer: "نئے کھلاڑیوں کو خوش آمدید",
     MegaSharingRoulette: "میگا شیئرنگ رولیٹی",
@@ -450,7 +452,7 @@ export default {
       validBet: "درست شرط",
       winLoss: "جیت/ہار",
       teamPnL: "ٹیم منافع و نقصان",
-      teamRebate: "ٹیم ریبیٹ",
+      teamRebate: "ٹیم ریبیٹ"
     },
     accountRecord: {
       all: "سب",
@@ -889,7 +891,7 @@ export default {
     system: "نظام",
     noMessage: "کوئی پیغام نہیں",
     visitLink: "لنک دیکھیں",
-    copySuccess: "سیریل نمبر کلپ بورڈ پر کاپی ہو گیا۔",
+    copySuccess: "سیریل نمبر کلپ بورڈ پر کاپی ہو گیا۔"
   },
   customerServiceVerifier: {
     mainTitle: "PK1.GAME",
@@ -1172,8 +1174,8 @@ export default {
     }
   },
   csVerifier: {
-    validAccDesc: 'PK1.GAME کا سرکاری نمائندہ ہے اور اس پر بھروسہ کیا جا سکتا ہے',
-    invalidAccDesc: 'PK1.GAME کا سرکاری نمائندہ نہیں ہے، براہ کرم اس اکاؤنٹ پر بھروسہ نہ کریں'
+    validAccDesc: "PK1.GAME کا سرکاری نمائندہ ہے اور اس پر بھروسہ کیا جا سکتا ہے",
+    invalidAccDesc: "PK1.GAME کا سرکاری نمائندہ نہیں ہے، براہ کرم اس اکاؤنٹ پر بھروسہ نہ کریں"
   },
   shareAffiliate: {
     login: "لاگ ان کریں",

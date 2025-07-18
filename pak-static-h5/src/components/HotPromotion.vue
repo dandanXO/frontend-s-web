@@ -25,6 +25,7 @@
     <JackpotAviator
       v-if="list.redirectUrl === 'pak-jackpot-aviator' && !isCommonPromo && store.token"
       :promocode="list.promoCode"
+      :promoContent="list.pageContent"
     />
     <DepositSpinnerRewards
       v-if="list.redirectUrl === 'pak-deposit-spinner-rewards' && store.token"

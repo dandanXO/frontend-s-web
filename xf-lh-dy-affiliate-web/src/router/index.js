@@ -12,7 +12,7 @@ export const constantRoutes = [
     path: '/403',
     name: 'Forbidden',
     meta: { hidden: true },
-    component: Forbidden
+    component: Forbidden,
   },
   {
     path: '/xf/login',
@@ -210,6 +210,24 @@ export const constantRoutes = [
     component: () =>
       import(
         /* webpackChunkName: "registerAffiliate" */ '../views/br2/register/index.vue'
+      ),
+  },
+  {
+    path: '/lk6/login',
+    name: 'LK6 Login',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "loginAffiliate" */ '../views/lk6/login/index.vue'
+      ),
+  },
+  {
+    path: '/lk6/register',
+    name: 'LK6 Register',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "registerAffiliate" */ '../views/lk6/register/index.vue'
       ),
   },
   {

@@ -9,15 +9,11 @@
 
         <div class="announcement-footer">
           <div class="footer-button" @click="store.openLiveChat()">
-            联系客服
+            {{ $t('form.contactSupport') }}
             <img src="@/assets/images/home/sticky-sidebar/cs-icon.svg" />
           </div>
-          <!--          v-show="item.redirectType !== 'NONE'"-->
           <div class="footer-button detail" @click="goToMailDetail(item)">
-            查看详情
-            <el-icon :size="20">
-              <img src="../../assets/home/arrow-drop-right-line.svg" />
-            </el-icon>
+            {{ $t('promotion.checkDetails') }}
           </div>
         </div>
       </el-carousel-item>
@@ -62,6 +58,8 @@ const goToMailDetail = (mail) => {
   font-weight: 600;
   color: black;
   margin-bottom: 10px;
+  height: 80px;
+  overflow: auto;
 }
 
 .announcement-content {
@@ -85,22 +83,20 @@ const goToMailDetail = (mail) => {
 
   .footer-button {
     cursor: pointer;
-    color: #2f3244;
     display: inline-flex;
     justify-content: center;
     align-items: center;
     border-radius: 6px;
     height: 48px;
     font-size: 16px;
-    border: 1px solid #2f3244;
     flex: 1;
     gap: 2px;
-
-    &.detail {
-      background: #2792fd;
-      color: white;
-      border: none;
-    }
+    color: $color-white;
+    background: url('../../assets/images/common/blue-btn-bg.svg') center center no-repeat;
+    background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94C3FF 0%, #4B91F5 100%);
+    border: 1px solid #FFFFFF;
+    box-shadow: 0px 2px 0px 0px #9AB0FF70;
+    background-size: 100% 100%;
 
     &:hover {
       filter: brightness(0.9);

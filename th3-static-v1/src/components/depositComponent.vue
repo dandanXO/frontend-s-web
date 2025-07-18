@@ -8,7 +8,7 @@
             <!--              :src="require(`../assets/images/index/popout/deposit-coin-${item.amount}.png`)"-->
             <!--              :alt="item.amount + ' Coin'"-->
             <!--            />-->
-            <div class="deposit-hot-label" v-if="isUpi2Active">+{{ store.currency.value }}{{ item.hotLabel }}</div>
+            <div class="deposit-hot-label" v-if="isUpi2Active">+₹{{ item.hotLabel }}</div>
           </div>
           <div class="deposit-amt">{{ item.amount }}</div>
         </div>
@@ -154,7 +154,7 @@
       </span>
     </div> -->
 
-    <div class="node-wrapper" style="display: none">
+    <div class="node-wrapper">
       <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
   </div>
@@ -274,9 +274,9 @@ const $q = useQuasar();
 const calculatedMinDeposit = ref("");
 
 const depositItems = reactive([
-  { amount: 100, hotLabel: 5, isActive: false },
   { amount: 300, hotLabel: 15, isActive: false },
   { amount: 500, hotLabel: 25, isActive: false },
+  { amount: 800, hotLabel: 40, isActive: false },
   { amount: 1000, hotLabel: 50, isActive: false },
   { amount: 2000, hotLabel: 100, isActive: false },
   { amount: 3000, hotLabel: 150, isActive: false },
@@ -761,7 +761,7 @@ onMounted(() => {
       margin-top: 20px;
 
       .deposit-input {
-        background-color: rgba(21, 0, 37, 0.5);
+        // background-color: rgba(21, 0, 37, 0.5);
         border-radius: 5px;
         width: 100%;
       }

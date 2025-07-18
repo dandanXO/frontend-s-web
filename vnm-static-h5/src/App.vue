@@ -12,7 +12,7 @@ import { isAndroid, isInPwa } from "boot/utils";
 import axios from "axios";
 import { getVisitorId } from "boot/utils";
 import { useUI } from "src/stores/ui";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
   name: "App",
@@ -21,6 +21,7 @@ export default defineComponent({
     const store = userStore();
     const ui = useUI();
     const router = useRouter();
+    const route = useRoute();
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(false);
 
@@ -294,6 +295,54 @@ export default defineComponent({
       );
     };
 
+    const checkFBPixelInit = () => {
+      //FOr Testing.
+      // const windowLocation = "b9game0.com";
+      const windowLocation = window.location.hostname;
+      const pixelDataStr = sessionStorage.getItem("FB_PIXEL_CODE");
+      const isNoPixel = sessionStorage.getItem("NO_FB_PIXEL_CODE");
+      if (isNoPixel) {
+        return;
+      } else if (pixelDataStr) {
+        registerFbPixel(JSON.parse(pixelDataStr));
+      } else {
+        api.get(`/member/fb-request?url=${windowLocation}`).then((res) => {
+          if (res.code === 0) {
+            registerFbPixel(res.data);
+            sessionStorage.setItem("FB_PIXEL_CODE", JSON.stringify(res.data));
+          } else {
+            sessionStorage.setItem("NO_FB_PIXEL_CODE", "1");
+          }
+        });
+      }
+    };
+
+    const registerFbPixel = (res) => {
+      const { fbId, token } = res;
+      if (fbId !== "1") {
+        const fbIdList = fbId.split("|");
+        fbIdList.forEach((_fbId) => fbq("init", _fbId));
+      } else {
+        const tokenObj = JSON.parse(token);
+        const referralCode =
+          route.name === "referCode" && route.params.referralCode
+            ? route.params.referralCode
+            : sessionStorage.getItem("REFERRAL_CODE")
+            ? sessionStorage.getItem("REFERRAL_CODE")
+            : localStorage.getItem("REG_REFERRAL_CODE");
+        const _fbId = tokenObj[referralCode] || tokenObj.DEFAULT;
+        if (!_fbId) return;
+        fbq("init", _fbId);
+      }
+      fbq("track", "PageView");
+      store.isFbPixel = true;
+
+      const isNewUser = localStorage.getItem("newUserFtd");
+      if (isNewUser) {
+        document.addEventListener("ftdPurchaseSuccess", trackNewUserFtd, { once: true });
+      }
+    };
+
     onMounted(() => {
       console.log("VNM0106");
       checkServerStatus();
@@ -314,6 +363,7 @@ export default defineComponent({
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
+      checkFBPixelInit();
     });
   }
 });

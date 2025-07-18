@@ -57,12 +57,6 @@ export default [
     component: () => import(/* webpackChunkName: "display" */ "../views/finance/DisplayView.vue")
   },
   {
-    path: "transfer",
-    name: "transfer",
-    meta: { requiresAuth: true },
-    component: () => import(/* webpackChunkName: "transfer" */ "../views/finance/TransferView.vue")
-  },
-  {
     path: "withdraw",
     name: "withdraw",
     meta: { requiresAuth: true },

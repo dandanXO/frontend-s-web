@@ -23,12 +23,13 @@
                 <!-- <img v-if="p.iconUrl" :src="p.iconUrl" /> -->
                 <img v-if="p.img" :src="require('../assets/promo/menu-' + p.img + '.svg')" />
                 <span v-else></span>
-                <span style="width: 100px" class="label">{{ p.label }}</span>
+                <span style="width: 100px" class="label">{{ `${$t(`menu.${p.img}`)} ${$t("menu.promotion")}` }}</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="promo-list-wrapper">
+        <LoadingComponent v-if="isLoading" />
+        <div class="promo-list-wrapper" v-else>
           <div
             class="promo-item glow-effect wobble-effect"
             v-for="(promo, i) in filteredArray"
@@ -45,13 +46,13 @@
                     {{ getPromoLabel(promo.labelType) }}
                   </div>
                 </div>
-                
+
                 <div class="promo-details">
                   <div class="label-date">{{ JSON.parse(promo.param).date }}</div>
                   <!-- <div class="front-date">{{ JSON.parse(promo.param).date }}</div> -->
                   <div class="front-title">{{ promo.title }}</div>
                   <div class="front-sub">{{ JSON.parse(promo.param).sub }}</div>
-                  <div class="front-btn">{{ $t('promotion.checkDetails') }}</div>
+                  <div class="front-btn">{{ $t("promotion.checkDetails") }}</div>
                 </div>
                 <div class="promo-bg">
                   <img class="promo-content isDesktop" :src="imgURL + promo.desktopImgUrl" />
@@ -199,11 +200,13 @@ import { useLocalStorage } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
+import LoadingComponent from "@/components/menu/LoadingComponent.vue";
 
 export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
+    LoadingComponent
   },
   setup() {
     const i18nStoreLanguage = i18nStore()
@@ -223,9 +226,9 @@ export default defineComponent({
       // { code: "HOT", img: "hot", label: "热门活动" },
       // { code: "ESPORT", img: "esport", label: "电竞活动" },
       { code: "SPORT", img: "sport", label: `${t('menu.sport')} ${t('menu.promotion')}` },
-      { code: "LIVE CASINO", img: "live", label:`${t('menu.live')} ${t('menu.promotion')}` },
+      { code: "LIVE", img: "live", label:`${t('menu.live')} ${t('menu.promotion')}` },
       // { code: "SLOT GAME", img: "slot", label: "电游活动" },
-      { code: "POKER", img: "poker", label: `${t('menu.bacarrat')} ${t('menu.promotion')}` },
+      // { code: "POKER", img: "poker", label: `${t('menu.bacarrat')} ${t('menu.promotion')}` },
       // { code: "FISH", img: 'fish', label: '捕鱼'},
       // { code: "FTD", img: "deposit", label: "存款优惠" },
       // { code: "VIP", img: "vip", label: "VIP 特权" }
@@ -243,7 +246,7 @@ export default defineComponent({
     const router = useRouter();
 
     const notify = useNotify();
-
+    const isLoading = ref(false);
     const countDay = ref(5);
     const euroCupStartDate = moment("2024-06-15");
     countDay.value = euroCupStartDate.diff(moment(), "days");
@@ -309,6 +312,8 @@ export default defineComponent({
       }
     };
     const loadAll = async () => {
+      isLoading.value = true;
+
       await loadPromoTypes().then((res) => {
         if (res.length > 0) {
           // promoTypes.value = [];
@@ -325,8 +330,9 @@ export default defineComponent({
         } else {
           console.warn('No promo types loaded, using default promo types.');
         }
+        isLoading.value = false;
       });
-      loadPromo()
+      loadPromo(languageVal.value)
         .then((res) => {
           if (res.code === 0) {
             if (promoState.promoList.length === 0) {
@@ -361,6 +367,9 @@ export default defineComponent({
         })
         .catch((e) => {
           console.log("error", e);
+          isLoading.value = false;
+        }).finally(() => {
+          isLoading.value = false;
         });
       switchPromoType(promoState.active);
     };
@@ -422,7 +431,8 @@ export default defineComponent({
       imgURL,
       getPromoLabel,
       countDay,
-      languageVal
+      languageVal,
+      isLoading
     };
   }
 });
@@ -435,7 +445,7 @@ export default defineComponent({
   // background-position: top center;
   // background-size: 100% auto;
   // background-repeat: no-repeat;
-  background-color: #F3F7FD;
+  background-color: #f3f7fd;
 
   .promo-banner {
     //background: #e7f1fd;
@@ -613,7 +623,7 @@ export default defineComponent({
             align-items: center;
             gap: 20px;
             position: relative;
-            background: url('../assets/promo/promo-type-bg.svg') center center no-repeat;
+            background: url("../assets/promo/promo-type-bg.svg") center center no-repeat;
             background-size: 100% 100%;
             aspect-ratio: 232/67;
             width: 232px;
@@ -621,7 +631,7 @@ export default defineComponent({
 
             .label {
               z-index: 0;
-              color: #7A80A1;
+              color: #7a80a1;
               font-size: 18px;
               font-weight: 700;
               white-space: nowrap;
@@ -643,7 +653,7 @@ export default defineComponent({
             }
             &.active,
             &:hover {
-              background: url('../assets/promo/promo-type-active-bg.svg') center center no-repeat;
+              background: url("../assets/promo/promo-type-active-bg.svg") center center no-repeat;
               background-size: 100% 100%;
 
               // background: #4b4e66;
@@ -676,7 +686,7 @@ export default defineComponent({
           background: url(../assets/promo/front-bg.jpg) no-repeat center center;
           background-size: 100% 100%;
           box-shadow: 0px 4px 26px 0px #00000026;
-          border: 2.88px solid #FFFFFF;
+          border: 2.88px solid #ffffff;
           border-radius: 28px;
 
           a {
@@ -710,7 +720,7 @@ export default defineComponent({
               align-items: center;
               height: 42px;
               .label-type {
-                background: url('../assets/promo/type-bg.png') center center no-repeat;
+                background: url("../assets/promo/type-bg.png") center center no-repeat;
                 background-size: 100% 100%;
                 padding: 10px 40px 10px 30px;
                 color: #ffffff;
@@ -745,13 +755,13 @@ export default defineComponent({
               justify-content: flex-start;
               align-items: flex-start;
               .label-date {
-                font-family: 'PingFang SC';
+                font-family: "PingFang SC";
                 font-weight: 400;
                 font-size: 25.02px;
                 line-height: 100%;
                 letter-spacing: 0px;
                 text-align: center;
-                color: #7A80A1;
+                color: #7a80a1;
               }
               .front-date {
                 color: #606479;
@@ -759,26 +769,25 @@ export default defineComponent({
                 font-weight: 700;
               }
               .front-title {
-                font-family: 'PingFang SC';
+                font-family: "PingFang SC";
                 font-weight: 600;
-                font-size: 44.12px;
+                font-size: 35px;
                 line-height: 100%;
                 letter-spacing: 0px;
-                color: #7A80A1;
-
+                color: #7a80a1;
               }
               .front-sub {
-                font-family: 'PingFang SC';
+                font-family: "PingFang SC";
                 font-weight: 600;
-                font-size: 30.02px;
+                font-size: 22px;
                 line-height: 100%;
                 letter-spacing: 0px;
-                text-align: center;
-                color: #7A80A1;
+                text-align: left;
+                color: #7a80a1;
               }
               .front-btn {
                 color: #ffffff;
-                background: url('../assets/promo/promo-details-btn-bg.svg') center center no-repeat;
+                background: url("../assets/promo/promo-details-btn-bg.svg") center center no-repeat;
                 background-size: 100% 100%;
                 display: inline-flex;
                 justify-content: center;
@@ -786,7 +795,7 @@ export default defineComponent({
                 aspect-ratio: 172 / 48;
                 width: 172px;
                 height: 48px;
-                font-family: 'PingFang SC';
+                font-family: "PingFang SC";
                 font-weight: 500;
                 font-size: 24.08px;
                 line-height: 100%;
@@ -936,10 +945,10 @@ export default defineComponent({
         }
         .promo-view-container {
           margin: 0 auto;
-          max-width: $maxwidth;
-          width: 95%;
+          max-width: 1200px;
+          // width: 95%;
           text-align: left;
-          padding: 20px;
+          padding: 20px 0;
           color: #333;
           font-size: 20px;
           overflow: auto;

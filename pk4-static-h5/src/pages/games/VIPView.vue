@@ -15,18 +15,21 @@
     </q-tabs>
   </div>
 
-  <!--  <div class="receive-monthly">-->
-  <!--    <div class="monthly-img"><img src="../../assets/images/vip/receive-monthly-img.png" width="120" /></div>-->
-  <!--    <div class="monthly-txt">{{ $t("vip.receiveMonthlyRewards") }}</div>-->
-  <!--    <div class="monthly-btn" @click="getMonthlyVip" :class="!monthlyVipReceive && 'disable'">-->
-  <!--      <span v-if="!monthlyVipReceive">{{ $t("vip.received") }}</span>-->
-  <!--      <span v-else>{{ $t("vip.receive") }}</span>-->
-  <!--    </div>-->
-  <!--  </div>-->
+  <!-- <div class="receive-monthly">
+    <div class="monthly-img">
+      <img src="../../assets/images/vip/receive-monthly-img.png" width="120" />
+    </div>
+    <div class="monthly-txt">{{ $t("vip.receiveMonthlyRewards") }}</div>
+    <div class="monthly-btn" @click="getMonthlyVip" :class="!monthlyVipReceive && 'disable'">
+      <span v-if="!monthlyVipReceive">{{ $t("vip.received") }}</span>
+      <span v-else>{{ $t("vip.receive") }}</span>
+    </div>
+  </div> -->
+  
 
   <div class="vip-container">
     <VIPCarousel :vipCarouselIndex="vipCarouselIndex" :onlyShowCurrentLevel="false" />
-
+    
     <div class="vip-details" v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
       <div class="vip-table-wrapper">
         <q-table
@@ -577,9 +580,9 @@ const dailyWithdrawalLimitData = [
 //   });
 // });
 
-onMounted(() => {
-  checkMonthlyVipReceive();
-});
+// onMounted(() => {
+//   checkVipReceive();
+// });
 
 // watch(
 //   () => vipCarouselIndex.value,
@@ -739,51 +742,6 @@ const swipeRight = () => {
   router.push("/promo");
 };
 
-const monthlyVipReceive = ref(false);
-
-// api.get('/session/balance', {params: {platform: platform.code}}).then((res) => {
-
-const checkMonthlyVipReceive = () => {
-  eventapi
-    .get("/privi/vip/canRedeem", { params: { promoCode: "pak-vip-monthly" } })
-    .then((res) => {
-      console.log(res);
-      monthlyVipReceive.value = res.data;
-    })
-    .catch((err) => {
-      console.log(err.message);
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: err.message,
-        icon: "report_problem"
-      });
-    });
-};
-
-const getMonthlyVip = () => {
-  eventapi
-    .put("/bonus/claim/pak-vip-monthly")
-    .then((res) => {
-      if (res.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: "Vip monthly claimed successfully",
-          icon: "check_circle_outline"
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
-      // $q.notify({
-      //   color: "negative",
-      //   position: "top",
-      //   message: err.message,
-      //   icon: "report_problem"
-      // });
-    });
-};
 </script>
 
 <style lang="scss" scoped>
@@ -1091,29 +1049,140 @@ const getMonthlyVip = () => {
 //   }
 // }
 
-.receive-monthly {
+// .receive-monthly {
+//   display: flex;
+//   background: rgba(255, 255, 255, 0.05);
+//   // padding: 0 12px;
+//   height: 48px;
+//   align-items: center;
+//   justify-content: space-between;
+//   margin-top: 36px;
+//   margin-left: 20px;
+//   margin-right: 20px;
+//   padding-left: 90px;
+//   position: relative;
+//   border-radius: 6px;
+//   .monthly-img {
+//     position: absolute;
+//     top: -30px;
+//     left: -20px;
+//   }
+//   .monthly-txt {
+//     margin: auto;
+//   }
+//   .monthly-btn {
+//     background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+//     height: 100%;
+//     display: flex;
+//     align-items: center;
+//     padding: 0 12px;
+//     border-radius: 6px;
+//     font-weight: bold;
+//     color: #000a01;
+
+//     &.disable {
+//       background: #313131;
+//       color: #999999;
+//       pointer-events: none;
+//     }
+//   }
+// }
+
+.bet-deposit-box {
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+  border-radius: 10px;
+  margin: 0px auto;
+  width: 90%;
   display: flex;
-  background: rgba(255, 255, 255, 0.05);
+  justify-content: center;
+  align-items: center;
+  .bet-deposit-item {
+    display: flex;
+    padding: 8px;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    &:first-of-type {
+      &:after {
+        content: "";
+        width: 2px;
+        height: 30px;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        background: #FFFFFF55;
+        position: absolute;
+        right: 0;
+      }
+    }
+    .item-title {
+      color: #FFFFFF80;
+      font-family: Microsoft YaHei UI;
+      font-weight: 400;
+    }
+    .item-amt {
+      color: #21A7EF;
+      font-family: Microsoft YaHei UI;
+      font-weight: 700;
+      font-size: 20px;
+      text-transform: uppercase;
+    }
+  }
+  
+}
+.upgrade-monthly-bonus {
+  display: flex;
+  background: linear-gradient(90deg, #1C273D 0%, #12192B 100%);
+
   // padding: 0 12px;
-  height: 48px;
+  // height: 48px;
   align-items: center;
   justify-content: space-between;
-  margin-top: 36px;
-  margin-left: 20px;
-  margin-right: 20px;
-  padding-left: 90px;
   position: relative;
   border-radius: 6px;
+  width: 90%;
+  margin: 20px auto 20px;
+  height: 60px;
+  padding: 10px;
   .monthly-img {
-    position: absolute;
-    top: -30px;
-    left: -20px;
+    width: 50px;
+    img { 
+      width: 100%;
+    }
   }
   .monthly-txt {
     margin: auto;
+    display: flex; 
+    justify-content: flex-start;
+    font-family: Microsoft YaHei UI;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 12.74px;
+    text-transform: uppercase;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &-title {
+
+    }
+    &-amt {
+        background: -webkit-linear-gradient(top, #fff4bc, #ff9000); /* Older Safari */
+        background: linear-gradient(to top, #fff4bc, #ff9000);     /* Modern browsers */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        /* Optional for modern support */
+        background-clip: text;
+        color: transparent;
+        text-transform: uppercase;
+        font-family: Microsoft YaHei UI;
+        font-weight: 700;
+        font-style: Bold;
+        font-size: 20px;
+    }
   }
   .monthly-btn {
-    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
     height: 100%;
     display: flex;
     align-items: center;
@@ -1121,10 +1190,16 @@ const getMonthlyVip = () => {
     border-radius: 6px;
     font-weight: bold;
     color: #000a01;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #0287F2 0%, #0664D2 100%);
+    cursor: pointer;
 
     &.disable {
-      background: #313131;
-      color: #999999;
+      // background: #313131;
+      // color: #999999;
+      color:#FFFFFF99;
+      background: #FFFFFF1A;
+      pointer-events: none;
     }
   }
 }

@@ -72,3 +72,7 @@ export const unlockUser = async (id) => {
 export const updateDefaultSite = siteId => {
   return https().request(`/authority/session/change/site/${siteId}`, Method.POST);
 };
+
+export const removeKey = async (id) => {
+  await https().request(`/authority/user/${id}/removeKey?_method=PUT`, Method.POST, { }, ContentType.form);
+};

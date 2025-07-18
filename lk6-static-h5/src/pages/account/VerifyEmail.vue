@@ -2,7 +2,7 @@
   <div class="verify-section">
     <!--    <div class="web">专属网址: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
-      <div class="flex items-center no-wrap">
+      <div class="flex items-center no-wrap q-mb-md">
         <q-input
           class="q-pb-xs"
           hide-bottom-space
@@ -100,7 +100,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted, computed, onUnmounted} from "vue";
+import {defineComponent, reactive, ref, onMounted, computed, onUnmounted, onDeactivated, onActivated} from "vue";
 import moment from "moment";
 import {api} from "boot/axios";
 import {useRoute, useRouter} from "vue-router";
@@ -149,7 +149,7 @@ export default defineComponent({
     });
     const verificationDetails = reactive({});
 
-    onMounted(() => {
+    onActivated(() => {
       loadInfo();
       getCode();
     });
@@ -394,6 +394,16 @@ export default defineComponent({
     onUnmounted(() => {
       clearInterval(otpCountdownSchedule);
     });
+
+    onDeactivated(() => {
+      clearInterval(otpCountdownSchedule);
+      if (updateSecurityModalVisible.value) {
+        updateSecurityModalVisible.value = false;
+      }
+      formDetail.email = "";
+      formDetail.emailOtpRef = "";
+      profileFormRef.value.resetValidation();
+    })
 
     return {
       router,

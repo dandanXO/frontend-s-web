@@ -196,6 +196,7 @@
 </template>
 
 <script setup>
+import { useUI } from "stores/ui";
 import { ref, onMounted, computed } from "vue";
 import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
@@ -210,6 +211,7 @@ const router = useRouter();
 const store = userStore();
 const qs = require("qs");
 const $q = useQuasar();
+const ui = useUI()
 
 const multiWallet = ref();
 const getMultiWallet = () => {
@@ -392,6 +394,7 @@ const getTopDownloadUrl = () => {
   api.get("/app/download/affiliate/url?siteCode=IND&affiliateCode=8999B3").then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
+      ui.downloadUrl = res.data.url;
     }
   });
 };

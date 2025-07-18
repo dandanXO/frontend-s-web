@@ -2,7 +2,7 @@
   <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="promoTabActive" align="justify">
-        <q-tab v-for="(tab, i) in promoTypes" :key="i" :name="tab.name" :label="tab.label" />
+        <q-tab v-for="(tab, i) in promoTypes" :key="i" :name="tab.name" :label="tab.label[languageVal]" />
       </q-tabs>
 
       <q-tab-panels v-model="promoTabActive" animated>
@@ -45,7 +45,7 @@
                         />
                         <div>
                           <!-- <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" /> -->
-                          <RedirectButton class="promo-item-btn">查看详情</RedirectButton>
+                          <RedirectButton class="promo-item-btn">{{ $t("promo.viewDetail") }}</RedirectButton>
                         </div>
 
                         <div class="promo-item-side-img">
@@ -93,12 +93,6 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee
-                v-if="
-                  selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024' ||
-                  selectedPromo?.redirectUrl === 'bounty-blast-premier'
-                "
-              />
               <div
                 class="inner"
                 :class="{
@@ -138,24 +132,6 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-mesa-nomadic-masters-spring-2025'">
-                    <MesaPromo :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-nba-water-battle'">
-                    <NBAWaterBattle :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-valorant-masters-toronto-2025'">
-                    <TorontoMasters :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-fifa-2025'">
-                    <Fifa2025Promo :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2-blast-tv-austin-major-2025'">
-                    <BlastAustin :promoCode="selectedPromo.promoCode" />
-                  </div>
-                  <div v-if="selectedPromo.redirectUrl === 'dy2laohuji'">
-                    <Dy2DailySlotBonus :promoCode="selectedPromo.promoCode" />
-                  </div>
                   <div
                     v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
                     v-html="selectedPromo.pageContent"
@@ -283,7 +259,7 @@
 </template>
 
 <script lang="js">
-import { ref, defineComponent, onActivated, reactive, watch, defineAsyncComponent } from "vue";
+import { ref, defineComponent, onActivated, reactive, watch, defineAsyncComponent, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import {cached} from "boot/cache";
@@ -300,6 +276,8 @@ import { useLocalStorage } from "@vueuse/core";
 import RedirectButton from "src/components/RedirectButton.vue";
 import { i18nStore } from "src/router/language";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { useNotify } from "src/hooks/notify";
 
 export default defineComponent({
   name: "PromoView",
@@ -310,7 +288,7 @@ export default defineComponent({
   },
   setup() {
     const {t} = useI18n();
-    const {languageVal} = i18nStore()
+    const {languageVal} = storeToRefs(i18nStore())
     const store = userStore();
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
@@ -350,7 +328,9 @@ export default defineComponent({
     const router = useRouter();
     const $q = useQuasar();
     const ui = useUI();
+    const notify = useNotify();
     const isDisplayLogin = ref(false);
+    const isPromoFound = ref(false)
 
 
 
@@ -365,7 +345,10 @@ export default defineComponent({
       }
     );
     const loadBanner = () => {
-      api.get("/opt-session/promo/banner?category=PROMO").then((response) => {
+      api.get("/opt-session/promo/banner", {
+        category: 'PROMO',
+        language: languageVal.value
+      }).then((response) => {
         if (response.code === 0) {
           banner.value = response.data[0];
         }
@@ -373,6 +356,7 @@ export default defineComponent({
     };
     const isSpecialPromo = ref(false);
     const showPromoDetails = (promo) => {
+      isPromoFound.value = true;
       if (promo.redirectUrl === 'dy2-christmas-gachapon') {
         isSpecialPromo.value = true;
       } else {
@@ -442,7 +426,7 @@ export default defineComponent({
       cached.get(key, () => api.get("/promo/type")).then((res) => {
         promoTypes.value = res.map(({ value, name, iconUrl }) => ({
           name: value,
-          label: name ? JSON.parse(name)[languageVal] : ''
+          label: name ? JSON.parse(name) : {}
         }));
         if (promoTypes.value.length > 0) {
           promoTabActive.value = promoTypes.value[0].name
@@ -457,9 +441,14 @@ export default defineComponent({
 
       const platformApiUrl = "/opt-session/promo/page";
       isFetchingPromo.value = window.location.pathname === "/promotion";
+      isPromoFound.value = false;
 
       api
-        .get(platformApiUrl)
+        .get(platformApiUrl, {
+          params: {
+            language: languageVal.value,
+          }
+        })
         .then((res) => {
           if (res.code === 0) {
             promoState.promoList = [];
@@ -471,6 +460,13 @@ export default defineComponent({
                 showPromoDetails(element);
               }
             });
+            if(route.query.name && !isPromoFound.value) {
+              notify({
+                type:'error',
+                message: t('common.notification.promoEnded.message')
+              })
+              clearNameQuery()
+            }
             if (promoTypes.value.length > 0) {
               switchPromoType(promoState.active);
             }
@@ -482,6 +478,13 @@ export default defineComponent({
           isFetchingPromo.value = false;
         });
     };
+
+    const clearNameQuery = () => {
+      const newQuery = { ...route.query };
+      delete newQuery.name;
+
+      router.replace({ path: route.path, query: newQuery });
+    }
 
     // extension
     const currentPath = ref(route.path);
@@ -528,7 +531,8 @@ export default defineComponent({
       extensionToken,
       isFetchingPromo,
       isSpecialPromo,
-      parsedParam
+      parsedParam,
+      languageVal
     };
   }
 });
@@ -715,7 +719,7 @@ export default defineComponent({
           .promo-item-title {
             color: #7a80a1;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.875rem;
             max-width: 160px;
 
             @media (min-width: 500px) {
@@ -725,8 +729,8 @@ export default defineComponent({
 
           .promo-item-deal {
             color: #7a80a1;
-            font-weight: bold;
-            font-size: 0.875rem;
+            font-weight: 400;
+            font-size: 0.75rem;
             max-width: 160px;
 
             @media (min-width: 500px) {
@@ -743,6 +747,7 @@ export default defineComponent({
             padding-right: 16px;
             font-size: 0.75rem;
             margin-top: 6px;
+            white-space: nowrap;
           }
 
           .promo-item-side-img {
@@ -999,7 +1004,7 @@ export default defineComponent({
             padding: 5px;
             text-align: center;
             background-color: #ffffff;
-            border: 1px solid #d0d1d3;
+            border: 1px solid #acd4f6;
             white-space: normal;
           }
         }

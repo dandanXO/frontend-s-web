@@ -155,7 +155,9 @@ import { storeToRefs } from "pinia";
 import DepositComponent from "@/components/depositComponent.vue";
 import { ElMessageBox } from "element-plus";
 import { uiStore } from "@/store/ui";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const store = userStore();
 const UI = uiStore();
 const { token } = storeToRefs(store);
@@ -323,11 +325,11 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         });
       }
     } else {
-      ElMessageBox.alert("请登录后再操作", "系统提示", {
+      ElMessageBox.alert(t('message.loginFirstAction'), t('message.systemPrompt'), {
         // if you want to disable its autofocus
         // autofocus: false,
         center: true,
-        confirmButtonText: "确认",
+        confirmButtonText: t('btn.confirm'),
         showClose: false,
         buttonSize: "large"
       }).then(() => {
@@ -553,6 +555,13 @@ defineExpose({
     word-break: break-all;
     white-space: normal;
     // width: 55px;
+
+    color: $color-white;
+    background: url('../../assets/images/common/blue-btn-bg.svg') center center no-repeat;
+    background: radial-gradient(103.75% 103.75% at 50% -3.75%, #94C3FF 0%, #4B91F5 100%);
+    border: 1px solid #FFFFFF;
+    box-shadow: 0px 2px 0px 0px #9AB0FF70;
+    background-size: 100% 100%; 
   }
 }
 

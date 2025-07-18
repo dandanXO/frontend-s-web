@@ -76,7 +76,7 @@
   </el-form>
 
   <div style="text-align: center; margin-top: 20px">
-    <a @click="openLoginDialog">返回登入页面</a>
+    <a @click="openLoginDialog">{{ $t('btn.back') }}</a>
   </div>
 </template>
 

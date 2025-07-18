@@ -237,7 +237,9 @@ export default {
     evp: "EVP",
     evp_placeholder: "Por favor, insira o EVP",
     evp_rules_01: "Por favor, insira o EVP",
-    evp_rules_02: "Por favor, insira um EVP válido"
+    evp_rules_02: "Por favor, insira um EVP válido",
+    pixType: "Tipo de Pix",
+    selectPixType: "Selecione o Tipo de Pix"
   },
   btn: {
     confirm: "Confirmar",
@@ -385,7 +387,8 @@ export default {
     channelUnderMaintenance: "Este canal está em manutenção",
     accountNumber: "Número da Conta",
     available: "Disponível",
-    requireDeposit: "É necessário ter pelo menos um depósito antes de fazer um saque"
+    requireDeposit: "É necessário ter pelo menos um depósito antes de fazer um saque",
+    bindCardCs: "Por favor, entre em contato com o atendimento ao cliente para vincular o cartão"
   },
   bank: {
     virtualWallet: "eWallet",

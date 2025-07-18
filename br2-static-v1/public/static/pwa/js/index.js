@@ -408,6 +408,8 @@ function detectDeviceAndBrowser() {
   const isHuawei = /huawei/.test(userAgent);
   const isPC = !isIphone && !isAndroid;
 
+  const isFacebookInApp = /fban|fbav/.test(userAgent);
+
   const isSafari = /safari/.test(userAgent) && !/crios/.test(userAgent) && !/chrome/.test(userAgent);
   const isChrome =
     (/chrome/.test(userAgent) && !/edge|heytapbrowser|mibrowser/.test(userAgent)) || /crios/.test(userAgent);
@@ -433,7 +435,12 @@ function detectDeviceAndBrowser() {
 
   document.querySelectorAll(".modal-open .content-logo .logo-ios").forEach((el) => (el.style.display = "none"));
   document.querySelectorAll(".modal-open .content-logo .logo-android").forEach((el) => (el.style.display = "block"));
-  if (isIphone && !isSafari) {
+  if (isFacebookInApp) {
+    console.log("User is using Facebook in-app browser.");
+    document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
+    document.querySelector(".modal-open .content-text").textContent =
+      "Please open this link in your device's default browser (e.g. Safari or Chrome) for best experience.";
+  }else if (isIphone && !isSafari) {
     console.log("User is on iPhone but not using Safari.");
     document.getElementById("id-open-btn").style.display = "none";
     document.querySelectorAll(".modal-open").forEach((el) => (el.style.display = "block"));
