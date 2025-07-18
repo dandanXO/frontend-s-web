@@ -495,7 +495,7 @@
                                 }
                               })()
                             }"
-                            @click="playGame(game.name, game.platformCode, game.code)"
+                            @click="playGame(game.name.default, 'EEAI', game.code)"
                           >
                             <div class="game-title">
                               <div class="game-title__category">
@@ -1882,7 +1882,8 @@ export default defineComponent({
               ...item,
               name: {
                 en: enName,
-                zh: zhName
+                zh: zhName,
+                default: item.name
               }
             };
             if (item.code.startsWith("101")) {
