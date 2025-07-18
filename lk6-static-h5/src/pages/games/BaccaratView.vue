@@ -39,7 +39,7 @@
             v-for="(game, index) in currentGameList"
             :key="index"
             :data-id="index"
-            @click="openGame(game.name, game.code, selectedCat.status)"
+            @click="openGame(game.name.default, game.code, selectedCat.status)"
           >
             <div class="game-wrapper q-col-gutter-none">
               <q-img
@@ -235,7 +235,8 @@ const loadGameList = () => {
           icon,
           name: {
             en: enName,
-            zh: zhName
+            zh: zhName,
+            default: item.name
           }
         };
         if (item.code.startsWith("101")) {
