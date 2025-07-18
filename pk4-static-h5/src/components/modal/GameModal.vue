@@ -318,6 +318,10 @@ const pendingGameParams = ref(null);
 const isDepositZero = ref(false);
 const open = (gameName, platformCode, gameCode, gameType, demo, isChoice = false) => {
   const store = userStore();
+  if (platformCode === "BetBy") {
+    router.push('/gamePlay?gameName=BetBy')
+    return;
+  }
   isLoading.value = true;
   isDepositZero.value = store.hasDeposit === false;
   const _isFromNewPlayerGuide = sessionStorage.getItem("isFromNewPlayerGuide");

@@ -190,6 +190,22 @@ export default route(function (/* { store, ssrContext } */) {
       next(`/register`);
     }
 
+    if (to.path === '/gamePlay' && !to.query['bt-path']) {
+      const savedBtPath = sessionStorage.getItem('betby-bt-path');
+
+      if (savedBtPath) {
+        next({
+          path: to.path,
+          query: {
+            ...to.query,
+            'bt-path': savedBtPath
+          },
+          replace: true // 可选：不留下多余 history
+        });
+        return;
+      }
+    }
+
     if (user.hasToken()) {
       if (to.path === "/" || to.path === "/register" || to.path === "/login" || to.path === "//") {
         next({ path: "/home" });

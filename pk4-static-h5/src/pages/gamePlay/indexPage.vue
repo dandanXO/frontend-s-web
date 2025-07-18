@@ -141,10 +141,22 @@
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
+defineOptions({
+  name: 'GamePlay'
+})
+
 import { i18nStore } from "src/router/language";
 import { userStore } from "stores/index";
-import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef, computed, watch, nextTick, onMounted, onActivated } from "vue";
+import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
+import {
+  ref,
+  defineExpose,
+  reactive,
+  shallowRef,
+  computed,
+  nextTick,
+  onMounted,
+} from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
 import { App } from "@capacitor/app";
@@ -650,14 +662,25 @@ const refreshBalance = () => {
 //   }
 // );
 
+onBeforeRouteLeave((to, from, next) => {
+  // debugger;
+  const btPath = route.query['bt-path'];
+  if (btPath) {
+    sessionStorage.setItem('betby-bt-path', btPath);
+  }
+  next(); // 一定要调用 next() 才能继续导航
+});
+
+
 onMounted(()=>{
-    // dan test
-    if(route.query.gameName){
-      visible.value = true;
-      open(route.query.gameName, route.query.gameName)
-    }else{
-      console.error('wrong game')
-    }
+  const lastPath = sessionStorage.getItem("betby-bt-path");
+  // dan test
+  if(route.query.gameName){
+    visible.value = true;
+    open(route.query.gameName, route.query.gameName)
+  }else{
+    console.error('wrong game')
+  }
 
 })
 
