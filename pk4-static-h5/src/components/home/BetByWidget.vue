@@ -7,7 +7,7 @@ import { Platform } from "quasar";
 import { api } from "src/boot/axios";
 import { i18nStore } from "src/router/language";
 import { userStore } from "src/stores";
-import { onMounted, ref } from "vue";
+import { onActivated, onDeactivated, ref } from "vue";
 import { useRouter } from "vue-router";
 
 const store = userStore();
@@ -16,6 +16,7 @@ const router = useRouter();
 
 const betByWidgetRef = ref(null);
 const betByInstance = ref(null);
+const exitByClick = ref(false);
 
 const getBetByToken = async () => {
   let way = null;
@@ -32,7 +33,7 @@ const getBetByToken = async () => {
       way = "ANDROID";
     }
   }
-  console.log(store.hasToken());
+
   const apiPath = store.hasToken()
     ? `/session/launch?_time=${new Date().getTime()}`
     : `/game/launch?_time=${new Date().getTime()}`;
@@ -88,6 +89,10 @@ const generateBetByInstance = (token) => {
     widgetParams: {
       placeholder: "operator_page",
       onBannerClick: ({ url, customAction }) => {
+        exitByClick.value = true;
+        if (betByInstance.value) {
+          betByInstance.value.kill();
+        }
         router.push("/gamePlay?gameName=BetBy");
       },
 
@@ -98,10 +103,20 @@ const generateBetByInstance = (token) => {
   });
 };
 
-onMounted(async () => {
+onActivated(async () => {
   // const token = await getBetByToken();
   const betByScriptStatus = await loadBetByScript();
   if (!betByScriptStatus) return;
   generateBetByInstance();
+});
+
+onDeactivated(() => {
+  if (!exitByClick.value) {
+    if (betByInstance.value) {
+      betByInstance.value.kill();
+    }
+  } else {
+    exitByClick.value = false;
+  }
 });
 </script>
