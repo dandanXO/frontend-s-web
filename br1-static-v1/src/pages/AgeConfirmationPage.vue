@@ -55,11 +55,13 @@
 </template>
 
 <script setup>
-import { defineComponent, ref, reactive, onMounted, watch, onActivated, onUnmounted, computed } from "vue";
+import { ref, reactive, computed } from "vue";
 import { useQuasar } from "quasar";
 import { t } from "src/boot/lang";
+import { useRouter } from "vue-router";
 
 const $q = useQuasar();
+const router = useRouter();
 
 const regForm = reactive({
   dayOfBirth: "",
@@ -157,6 +159,7 @@ const onEnterBirthdate = () => {
   }
 
   localStorage.setItem("age_confirmation", true);
+  router.replace("/home");
 };
 </script>
 <style scoped lang="scss">

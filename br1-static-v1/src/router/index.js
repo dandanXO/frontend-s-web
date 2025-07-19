@@ -54,7 +54,8 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/forgot-password" ||
       to.path === "/withdraw" ||
       to.path === "/deposit" ||
-      to.path === "/promotion"
+      to.path === "/promotion" ||
+      to.path === "/ageConfirmation"
     ) {
       ui.hiddenFooter();
     } else {
