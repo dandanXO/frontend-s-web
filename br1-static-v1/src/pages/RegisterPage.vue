@@ -25,7 +25,9 @@
             <span class="prepend-number">{{ $t("form.prependNumber") }}</span>
           </template>
           <template v-if="regForm.referrer" v-slot:append>
-            <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">{{ otpCountdown > 0 ? `Obter Código (${otpCountdown})` : 'Obter Código' }}</q-btn>
+            <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">
+              {{ otpCountdown > 0 ? `Obter Código (${otpCountdown})` : "Obter Código" }}
+            </q-btn>
           </template>
         </q-input>
         <q-input
@@ -78,12 +80,67 @@
             <img class="white-svg" src="../assets/images/auth/otp.svg" />
           </template>
         </q-input>
+
+        <div>
+          <div class="text-subtitle1 q-mb-sm">*{{ $t("form.date_of_birth") }}</div>
+          <div class="row q-col-gutter-md">
+            <q-input
+              type="text"
+              inputmode="numeric"
+              pattern="\d*"
+              maxlength="2"
+              hide-bottom-space
+              v-model="regForm.dayOfBirth"
+              color="white"
+              class="landing-input col-4"
+              outlined
+              placeholder="DD"
+              label-color="white"
+              @keypress="onlyDigits"
+              @blur="padOnBlur('dayOfBirth')"
+            />
+            <q-input
+              type="text"
+              inputmode="numeric"
+              pattern="\d*"
+              maxlength="2"
+              hide-bottom-space
+              v-model="regForm.monthOfBirth"
+              color="white"
+              class="landing-input col-4"
+              outlined
+              placeholder="MM"
+              label-color="white"
+              @keypress="onlyDigits"
+              @blur="padOnBlur('monthOfBirth')"
+            />
+            <q-input
+              type="text"
+              inputmode="numeric"
+              pattern="\d*"
+              maxlength="4"
+              hide-bottom-space
+              v-model="regForm.yearOfBirth"
+              color="white"
+              class="landing-input col-4"
+              outlined
+              placeholder="YYYY"
+              label-color="white"
+              @keypress="onlyDigits"
+              @blur="validateBirthYear()"
+            />
+            <div class="text-negative" v-if="isBirthdateInvalid || isInvalidBirthYear">Date inválida</div>
+          </div>
+        </div>
       </div>
 
-      <div class="" style="margin-top: 5px" :class="isAgreeReg ? 'checked' : ''">
+      <div :class="isAgreeReg ? 'checked' : ''">
         <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
-          {{ $t("form.register_agree_01") }}
-          <a href="#" style="text-decoration: none; color: #c1dffc">{{ $t("form.register_agree_02") }}</a>
+          <span>{{ $t("form.register_agree_01") }}</span>
+          <br />
+          <a href="#" style="text-decoration: none; color: #c1dffc; margin-left: -6px">
+            {{ $t("form.register_agree_02") }}
+          </a>
         </q-checkbox>
       </div>
 
@@ -138,7 +195,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch, onActivated, onUnmounted } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch, onActivated, onUnmounted, computed } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -179,8 +236,66 @@ export default defineComponent({
       codeAffiliate: "",
       referrer: "",
       smsCodeId: "",
-      smsCode: ""
+      smsCode: "",
+      dayOfBirth: "",
+      monthOfBirth: "",
+      yearOfBirth: ""
     });
+
+    const onlyDigits = (e) => {
+      // Allow only digits (0–9)
+      if (!/[0-9]/.test(e.key)) {
+        e.preventDefault();
+      }
+    };
+
+    const padOnBlur = (field) => {
+      if (regForm[field].length === 1) {
+        regForm[field] = "0" + regForm[field];
+      }
+    };
+
+    const isInvalidBirthYear = ref(false);
+    const validateBirthYear = () => {
+      isInvalidBirthYear.value = regForm.yearOfBirth.length !== 4;
+    };
+
+    const isBirthdateInvalid = computed(() => {
+      const { dayOfBirth, monthOfBirth, yearOfBirth } = regForm;
+
+      const day = parseInt(dayOfBirth, 10);
+      const month = parseInt(monthOfBirth, 10);
+      const year = parseInt(yearOfBirth, 10);
+
+      const hasDay = dayOfBirth.length > 0;
+      const hasMonth = monthOfBirth.length > 0;
+      const hasYear = yearOfBirth.length === 4;
+
+      // Immediate invalid range checks
+      if (hasDay && (day < 1 || day > 31)) return true;
+      if (hasMonth && (month < 1 || month > 12)) return true;
+
+      if (hasDay && hasMonth && hasYear) {
+        const inputDate = new Date(year, month - 1, day);
+        const now = new Date();
+        const minDate = new Date(now.getFullYear() - 200, now.getMonth(), now.getDate());
+
+        // Check if it's a valid calendar date
+        const isRealDate =
+          inputDate.getFullYear() === year && inputDate.getMonth() === month - 1 && inputDate.getDate() === day;
+
+        if (!isRealDate) return true;
+
+        // Check if date is in the future
+        if (inputDate > now) return true;
+
+        // Check if date is more than 200 years ago
+        if (inputDate < minDate) return true;
+      }
+
+      return false;
+    });
+
     const getCode = () => {
       // api
       //   .get("/member/verificationCode")
@@ -297,7 +412,6 @@ export default defineComponent({
         message: "Registering in progress"
       });
 
-
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
@@ -306,10 +420,11 @@ export default defineComponent({
         // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
         verificationRef.value?.hasError ||
-        isAgreeReg.value === false
+        isAgreeReg.value === false ||
+        isBirthdateInvalid.value
       ) {
         $q.loading.hide();
-      } else if (regForm.referrer && isOtpEnable.value){
+      } else if (regForm.referrer && isOtpEnable.value) {
         $q.notify({
           color: "negative",
           position: "top",
@@ -358,6 +473,8 @@ export default defineComponent({
           if (regForm.regHost.indexOf("http://localhost") > -1) {
             regForm.regHost = "app://";
           }
+
+          regForm.birthday = `${regForm.yearOfBirth}-${regForm.monthOfBirth}-${regForm.dayOfBirth}`;
 
           api
             .post("/member/indRegister", qs.stringify(regForm))
@@ -479,28 +596,28 @@ export default defineComponent({
             // start otp countdown
             otpCountdown.value = res.data.second || 60;
             otpCountdownInterval.value = setInterval(() => {
-              if(otpCountdown.value > 0) {
+              if (otpCountdown.value > 0) {
                 otpCountdown.value = otpCountdown.value - 1;
               }
-            },1000);
+            }, 1000);
           } else {
             color = "negative";
-            if(res.code === 1402) {
+            if (res.code === 1402) {
               message = `Por favor, tente novamente após ${res.data.second} segundos`;
 
-               // start otp countdown
+              // start otp countdown
               otpCountdown.value = res.data.second || 60;
               otpCountdownInterval.value = setInterval(() => {
-                if(otpCountdown.value > 0) {
+                if (otpCountdown.value > 0) {
                   otpCountdown.value = otpCountdown.value - 1;
                 }
-              },1000);
+              }, 1000);
             }
             getInnerCode();
           }
 
           if (message) {
-            $q.notify({ message, color, position: 'top' });
+            $q.notify({ message, color, position: "top" });
           }
 
           console.log("onCaptchaSubmit", res);
@@ -526,15 +643,18 @@ export default defineComponent({
     const imgOnLoad = () => (showImageCode.value = true);
     const imgOnError = () => (showImageCode.value = false);
 
-    watch(() => otpCountdown.value, () => {
-      if(otpCountdown.value === 0) {
-        clearInterval(otpCountdownInterval.value);
+    watch(
+      () => otpCountdown.value,
+      () => {
+        if (otpCountdown.value === 0) {
+          clearInterval(otpCountdownInterval.value);
+        }
       }
-    })
+    );
 
     onUnmounted(() => {
       clearInterval(otpCountdownInterval.value);
-    })
+    });
 
     return {
       header: "Register Account",
@@ -571,7 +691,12 @@ export default defineComponent({
       imgOnError,
       otpCountdown,
       otpCountdownInterval,
-      isOtpEnable
+      isOtpEnable,
+      onlyDigits,
+      isBirthdateInvalid,
+      validateBirthYear,
+      isInvalidBirthYear,
+      padOnBlur
     };
   }
 });
@@ -630,7 +755,7 @@ function charType(num) {
   width: 100%;
   height: 56px;
   border-radius: 4px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 .page-header {
   background-image: linear-gradient(to right, #de4545, #db7e42);

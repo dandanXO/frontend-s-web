@@ -92,9 +92,11 @@ export default {
     password_rules_01: "Please insert password",
     password_rules_02: "The characters of password must be above 6",
     forgotPassword: "Forgot Password",
-    forgotPassword_desc: "Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.",
-    register_agree_01: "I have Agree To The ",
-    register_agree_02: "Use Privacy Agreement",
+    forgotPassword_desc:
+      "Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.",
+    register_agree_01: "I am over 18years old and have read and agree ",
+    register_agree_02: "《User agree》",
+    date_of_birth: "Date of Birth",
     email: "Email",
     email_placeholder: "Please enter email",
     email_rules_01: "Please insert email",
@@ -265,7 +267,8 @@ export default {
     serialNumberCopied: "Serial Number Copied to clipboard.",
     fillInPersonalDetails: "Please fill in your personal details",
     addSucceed: "Add Succeed",
-    areYouSureUnbind: "Are You Sure To Unbind?"
+    areYouSureUnbind: "Are You Sure To Unbind?",
+    siteAgeRestrict: "Access to this site is restricted to users who are 18 years old or older"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
