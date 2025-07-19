@@ -38,6 +38,12 @@ export default route(function (/* { store, ssrContext } */) {
     const user = userStore();
     const ui = useUI();
 
+    // debugger;
+    if (to.path !== "/ageConfirmation" && !localStorage.getItem("age_confirmation")) {
+      // alert("YES");
+      next("/ageConfirmation");
+    }
+
     if (user.token && from && from.href) {
       user.getBalance();
     }
