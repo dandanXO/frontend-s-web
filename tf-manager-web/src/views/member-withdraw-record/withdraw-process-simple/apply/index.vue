@@ -163,6 +163,12 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="memberOrigin"
+          :label="t('fields.memberOrigin')"
+          align="center"
+          min-width="120"
+        />
+        <el-table-column
           prop="afterBalance"
           :label="t('fields.balance')"
           align="center"
