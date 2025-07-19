@@ -267,7 +267,8 @@ export default {
     serialNumberCopied: "Serial Number Copied to clipboard.",
     fillInPersonalDetails: "Please fill in your personal details",
     addSucceed: "Add Succeed",
-    areYouSureUnbind: "Are You Sure To Unbind?"
+    areYouSureUnbind: "Are You Sure To Unbind?",
+    siteAgeRestrict: "Access to this site is restricted to users who are 18 years old or older"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",

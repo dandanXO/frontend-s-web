@@ -134,11 +134,13 @@
         </div>
       </div>
 
-      <div class="qa-my-lg" :class="isAgreeReg ? 'checked' : ''">
+      <div :class="isAgreeReg ? 'checked' : ''">
         <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
-          <span style="margin-left: 6px">{{ $t("form.register_agree_01") }}</span>
+          <span>{{ $t("form.register_agree_01") }}</span>
           <br />
-          <a href="#" style="text-decoration: none; color: #c1dffc">{{ $t("form.register_agree_02") }}</a>
+          <a href="#" style="text-decoration: none; color: #c1dffc; margin-left: -6px">
+            {{ $t("form.register_agree_02") }}
+          </a>
         </q-checkbox>
       </div>
 

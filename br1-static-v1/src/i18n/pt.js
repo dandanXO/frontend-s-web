@@ -281,7 +281,8 @@ export default {
     fillInPersonalDetails: "Por favor, preencha seus dados pessoais",
     addSucceed: "Adição bem-sucedida",
     areYouSureUnbind: "Tem certeza de que deseja desvincular?",
-    withdrawSuceed: "Retirada Enviar com sucesso"
+    withdrawSuceed: "Retirada Enviar com sucesso",
+    siteAgeRestrict: "Acesso a este site é restrito a usuários com 18 anos ou mais"
   },
   sideNav: {
     inviteToEarn: "Convidar para Ganhar",
