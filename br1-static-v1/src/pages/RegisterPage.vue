@@ -204,6 +204,7 @@ import { userStore } from "stores/index";
 import qs from "qs";
 import { useUI } from "stores/ui";
 import { isAndroid, isInPwa } from "boot/utils";
+import { t } from "src/boot/lang";
 // import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
@@ -258,6 +259,26 @@ export default defineComponent({
     const isInvalidBirthYear = ref(false);
     const validateBirthYear = () => {
       isInvalidBirthYear.value = regForm.yearOfBirth.length !== 4;
+    };
+
+    const isUnder18 = () => {
+      const { dayOfBirth, monthOfBirth, yearOfBirth } = regForm;
+
+      if (dayOfBirth.length !== 2 || monthOfBirth.length !== 2 || yearOfBirth.length !== 4) {
+        return true; // Incomplete date, treat as underage
+      }
+
+      const birthDate = new Date(parseInt(yearOfBirth), parseInt(monthOfBirth) - 1, parseInt(dayOfBirth));
+      const today = new Date();
+
+      const age = today.getFullYear() - birthDate.getFullYear();
+      const hasHadBirthdayThisYear =
+        today.getMonth() > birthDate.getMonth() ||
+        (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+
+      const actualAge = hasHadBirthdayThisYear ? age : age - 1;
+
+      return actualAge < 18;
     };
 
     const isBirthdateInvalid = computed(() => {
@@ -423,6 +444,14 @@ export default defineComponent({
         isAgreeReg.value === false ||
         isBirthdateInvalid.value
       ) {
+        $q.loading.hide();
+      } else if (isUnder18()) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: t("notify.siteAgeRestrict"),
+          icon: "report_problem"
+        });
         $q.loading.hide();
       } else if (regForm.referrer && isOtpEnable.value) {
         $q.notify({

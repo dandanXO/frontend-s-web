@@ -1,7 +1,7 @@
 <template>
   <div class="age-confirmation-container">
     <img class="ace-logo" src="../assets/55-ace-logo.png" />
-    <div class="content">Please tell us: when were you born?</div>
+    <div class="content">{{ $t("ageConfirmation.bornWhere") }}</div>
     <img class="no-under-18-img" src="../assets/images/index/no-under-18.png" />
     <div>
       <div class="row q-col-gutter-x-md">
@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, onBeforeMount } from "vue";
 import { useQuasar } from "quasar";
 import { t } from "src/boot/lang";
 import { useRouter } from "vue-router";
@@ -161,6 +161,12 @@ const onEnterBirthdate = () => {
   localStorage.setItem("age_confirmation", true);
   router.replace("/home");
 };
+
+onBeforeMount(() => {
+  if (localStorage.getItem("age_confirmation")) {
+    router.replace("/home");
+  }
+});
 </script>
 <style scoped lang="scss">
 .age-confirmation-container {

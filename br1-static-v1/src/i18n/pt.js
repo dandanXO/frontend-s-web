@@ -333,6 +333,9 @@ export default {
     interestProfit: "Lucro de Juros",
     version: "Versão"
   },
+  ageConfirmation: {
+    bornWhere: "Por favor, diga-nos: quando você nasceu?"
+  },
   deposit: {
     selectAmount: "Selecionar Valor",
     depositTutorial: "Tutorial de Depósito",

@@ -319,6 +319,9 @@ export default {
     interestProfit: "Interest Profit",
     version: "Version"
   },
+  ageConfirmation: {
+    bornWhere: "Please tell us: when were you born?"
+  },
   deposit: {
     selectAmount: "Select Amount",
     depositTutorial: "Deposit Tutorial",
