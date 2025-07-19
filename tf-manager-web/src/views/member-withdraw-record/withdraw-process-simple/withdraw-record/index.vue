@@ -171,6 +171,12 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="memberOrigin"
+          :label="t('fields.memberOrigin')"
+          align="center"
+          min-width="120"
+        />
+        <el-table-column
           prop="serialNumber"
           :label="t('fields.serialNo')"
           align="center"
