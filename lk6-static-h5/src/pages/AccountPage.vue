@@ -128,7 +128,14 @@
         <router-link to="/promo">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-promo-icon.png" />
-            <div class="acct-nav-label">{{ $t("account.hot.promo") }}</div>
+            <div class="acct-nav-label">{{ $t("account.feature.promo") }}</div>
+          </div>
+        </router-link>
+
+        <router-link to="/affiliate">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-affiliate-icon.png" />
+            <div class="acct-nav-label">{{ $t("account.feature.affiliate") }}</div>
           </div>
         </router-link>
       </div>
@@ -160,12 +167,6 @@
           </div>
         </router-link> -->
 
-      <!-- <router-link to="/affiliate">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-affiliate-icon.png" />
-            <div class="acct-nav-label">合作加盟</div>
-          </div>
-        </router-link> -->
       <!-- </div> -->
     </q-item-section>
 
@@ -358,6 +359,8 @@ import moment from "moment";
 import { useNotify } from "src/hooks/notify";
 import CommonModal from "src/components/CommonModal.vue";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
 export default defineComponent({
   name: "AccountPage",
   components: {
@@ -385,6 +388,7 @@ export default defineComponent({
     const store = userStore();
     const router = useRouter();
     const $q = useQuasar();
+    const { languageVal } = storeToRefs(i18nStore());
 
     const isLogoutModal = ref(false);
     const isHideLevelUp = ref(false);
@@ -469,7 +473,7 @@ export default defineComponent({
     onMounted(() => {
       getBalance();
       store.getBalance();
-      store.getVIPInfo();
+      // store.getVIPInfo();
       // getVersionNo();
       getPromoImage();
       if (store.isApp()) {
@@ -487,7 +491,10 @@ export default defineComponent({
     const btm_banners = ref([]);
     const getPromoImage = () => {
       api
-        .get("/opt-session/promo/banner?category=CENTERPROMO")
+        .get("/opt-session/promo/banner", {
+          category: "CENTERPROMO",
+          language: languageVal.value
+        })
         .then((res) => {
           if (res.code === 0) {
             btm_banners.value = res.data.filter((promo) => {
@@ -1083,9 +1090,9 @@ export default defineComponent({
     align-items: center;
     width: 100%;
     color: #424f72;
-    
+
     // background-color: $lightblue;
-    background: #E7F3FF;
+    background: #e7f3ff;
     border-radius: 20px 20px 0 0;
     position: relative;
     &:before {

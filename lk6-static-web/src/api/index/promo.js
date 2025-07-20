@@ -2,18 +2,19 @@ import { server } from "@/utils/request";
 import { userStore } from "@/store";
 import cached from "@/utils/cache";
 
-export function loadPromo() {
-  return server.REST.get("/opt-session/promo/page");
+export function loadPromo(languageVal) {
+  return server.REST.get(`/opt-session/promo/page?language=${languageVal}`);
 }
 
 export function loadPromoTypes(category) {
   return cached.get("PROMOTION_TYPES", () => server.REST.get("/promo/type"));
 }
 
-export function loadPromoBanner(category) {
+export function loadPromoBanner(category, languageVal) {
   return server.REST.get("/opt-session/promo/banner", {
     params: {
-      category: category
+      category: category,
+      language: languageVal
     }
   });
 }
@@ -949,4 +950,12 @@ export function getFissureJulyFinal2025Bonus(promoCode) {
 }
 export function claimFissureJulyFinal2025Bonus(promoCode) {
   return server.EVENT.post(`/session/competition/claimBonus?promoCode=${promoCode}`);
+}
+
+export function initSportWeeklyBonus() {
+  return server.EVENT.get(`/session/game-type-bonus/init?promoCode=lk6-sport-weekly-bonus`);
+}
+
+export function claimSportWeeklyBonus() {
+  return server.EVENT.post(`/session/game-type-bonus/claim?promoCode=lk6-sport-weekly-bonus`);
 }

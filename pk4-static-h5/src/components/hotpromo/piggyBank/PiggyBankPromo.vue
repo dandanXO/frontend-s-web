@@ -82,6 +82,7 @@ const claimApi = () => {
       console.log(res)
       showClaimDialog.value = true;
       cashbackGet.value= res.data;
+      initApi();
     }else{
       $q.notify({
         color: "negative",

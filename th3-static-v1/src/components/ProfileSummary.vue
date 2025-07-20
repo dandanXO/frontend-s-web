@@ -821,6 +821,7 @@ onUnmounted(() => {
     margin: 0;
 
     &.home-profile {
+      background: #e0d6c7;
       position: relative;
       width: 100%;
       // gap: 5px;

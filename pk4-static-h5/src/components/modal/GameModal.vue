@@ -288,6 +288,7 @@ const closeDialog = () => {
   visible.value = false;
   src.value = "";
   store.getBalance();
+  ui.isBetBy = false;
   // AppFullscreen.exit()
   if (isAndroid()) {
     screen.orientation.lock("portrait");
@@ -317,6 +318,10 @@ const pendingGameParams = ref(null);
 const isDepositZero = ref(false);
 const open = (gameName, platformCode, gameCode, gameType, demo, isChoice = false) => {
   const store = userStore();
+  if (platformCode === "BetBy") {
+    router.push('/gamePlay?gameName=BetBy')
+    return;
+  }
   isLoading.value = true;
   isDepositZero.value = store.hasDeposit === false;
   const _isFromNewPlayerGuide = sessionStorage.getItem("isFromNewPlayerGuide");
@@ -504,6 +509,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
 
             script.onload = async () => {
               isBetBy.value = true;
+              ui.isBetBy = true;
 
               const topActionsEl = document.querySelector(".topActions");
               const headerHeight = topActionsEl ? topActionsEl.offsetHeight : 0;

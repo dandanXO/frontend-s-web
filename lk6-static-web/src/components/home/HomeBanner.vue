@@ -51,6 +51,11 @@ import GameModal from "@/components/modal/GameModal.vue";
 import { useNotify } from "@/hooks/notify";
 import SitePopout from "@/components/modal/SitePopout.vue";
 import LoadingComponent from "../menu/LoadingComponent.vue";
+import { storeToRefs } from 'pinia'
+import { i18nStore } from '@/store/language'
+
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 
 const emit = defineEmits(["scrollToView"]);
 
@@ -90,7 +95,7 @@ const handleClose = () => {
 const loadBanners = () => {
   isFetchingBanners.value = true;
 
-  loadPromoBanner("HOME")
+  loadPromoBanner("HOME", languageVal.value)
     .then((res) => {
       isFetchingBanners.value = false;
       if (res.code === 0) {

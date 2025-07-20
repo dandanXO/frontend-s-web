@@ -38,6 +38,12 @@ export default route(function (/* { store, ssrContext } */) {
     const user = userStore();
     const ui = useUI();
 
+    // debugger;
+    if (to.path !== "/ageConfirmation" && !localStorage.getItem("age_confirmation")) {
+      // alert("YES");
+      next("/ageConfirmation");
+    }
+
     if (user.token && from && from.href) {
       user.getBalance();
     }
@@ -48,7 +54,8 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/forgot-password" ||
       to.path === "/withdraw" ||
       to.path === "/deposit" ||
-      to.path === "/promotion"
+      to.path === "/promotion" ||
+      to.path === "/ageConfirmation"
     ) {
       ui.hiddenFooter();
     } else {

@@ -141,10 +141,22 @@
   </q-scroll-area>
 </template>
 <script setup id="GameModal">
+defineOptions({
+  name: 'GamePlay'
+})
+
 import { i18nStore } from "src/router/language";
 import { userStore } from "stores/index";
-import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef, computed, watch, nextTick, onMounted, onActivated } from "vue";
+import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
+import {
+  ref,
+  defineExpose,
+  reactive,
+  shallowRef,
+  computed,
+  nextTick,
+  onMounted,
+} from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
 import { App } from "@capacitor/app";
@@ -501,6 +513,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
           // }
 
           if (platformCode === "BetBy") {
+            ui.isBetBy = true;
             const existingScript = document.getElementById("btrenderer-script");
             if (existingScript) {
               existingScript.remove(); // 或 existingScript.parentNode.removeChild(existingScript);
@@ -649,14 +662,14 @@ const refreshBalance = () => {
 //   }
 // );
 
+
 onMounted(()=>{
-    // dan test
-    if(route.query.gameName){
-      visible.value = true;
-      open(route.query.gameName, route.query.gameName)
-    }else{
-      console.error('wrong game')
-    }
+  if(route.query.gameName){
+    visible.value = true;
+    open(route.query.gameName, route.query.gameName)
+  }else{
+    console.error('wrong game')
+  }
 
 })
 

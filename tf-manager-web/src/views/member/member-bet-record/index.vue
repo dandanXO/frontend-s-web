@@ -164,6 +164,14 @@
           @click="requestExportExcel"
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
+        <el-button
+          icon="el-icon-position"
+          size="mini"
+          type="primary"
+          @click="showSabaDialog()"
+        >
+          {{ t('fields.resend_saba_payout') }}
+        </el-button>
       </div>
     </div>
 
@@ -282,6 +290,35 @@
       </router-link>
       <span>{{ t('message.requestExportToExcelDone2') }}</span>
     </el-dialog>
+
+    <el-dialog
+      :title="t('message.enterSabaTransactionId')"
+      v-model="uiControl.sabaResendDialogVisible"
+      append-to-body
+      width="580px"
+    >
+      <el-form
+        ref="sabaResendPayoutForm"
+        :model="sabaResendForm"
+        :rules="sabaResendFormRules"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.transactionId')" prop="transactionId">
+          <el-input style="width: 350px" v-model="sabaResendForm.transactionId" />
+        </el-form-item>
+
+        <div class="dialog-footer">
+          <el-button @click="uiControl.sabaResendDialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="submitSabaResend">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -295,6 +332,9 @@ import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { required } from "@/utils/validate";
+import { sabaResendPayout } from "@/api/member-platform";
+import { ElMessage } from "element-plus";
 
 const { t } = useI18n();
 const store = useStore()
@@ -401,6 +441,20 @@ const page = reactive({
   loading: false
 });
 
+const sabaResendPayoutForm = ref(null)
+
+const sabaResendForm = reactive({
+  siteId: null,
+  platform: "SABA",
+  gameType: "SPORT",
+  transactionId: null,
+  betId: null,
+})
+
+const sabaResendFormRules = reactive({
+  transactionId: [required(t('message.validateTransactionIdRequired'))],
+})
+
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD') + ' 23:59:59';
 }
@@ -496,6 +550,33 @@ async function requestExportExcel() {
   }
 }
 
+function showSabaDialog() {
+  sabaResendForm.siteId = store.state.user.siteId
+  if (sabaResendPayoutForm.value) {
+    sabaResendPayoutForm.value.resetFields()
+  }
+  uiControl.sabaResendDialogVisible = true
+}
+
+function submitSabaResend() {
+  sabaResendPayoutForm.value.validate(async valid => {
+    if (valid) {
+      sabaResendForm.transactionId = sabaResendForm.transactionId.replace(/^SABA_/, "");
+      const { data: ret } = await sabaResendPayout(sabaResendForm)
+
+      if (ret === "Success") {
+        ElMessage({ message: ret, type: 'success' })
+      } else {
+        ElMessage.error(ret)
+      }
+
+      sabaResendForm.transactionId = null;
+      sabaResendForm.betId = null;
+      uiControl.sabaResendDialogVisible = false;
+    }
+  })
+}
+
 onMounted(async() => {
   await loadSites();
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -527,5 +608,10 @@ onMounted(async() => {
 
 .btn-group {
   margin-top: 15px;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

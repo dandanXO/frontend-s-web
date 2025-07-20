@@ -410,12 +410,12 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
+  <!-- <q-dialog width="100%" v-model="guestKYCDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense flat icon="close" class="popout-close" @click="closeGuestKYCDialog" />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
     </div>
-  </q-dialog>
+  </q-dialog> -->
 
   <q-dialog width="100%" v-model="userKYCDialog" presistent>
     <div class="popout-dialog">

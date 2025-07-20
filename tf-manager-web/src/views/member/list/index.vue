@@ -324,6 +324,22 @@
             />
             {{ t('fields.realName') }}
           </el-form-item>
+          <el-form-item :label="t('fields.memberOrigin')" prop="memberOrigin">
+            <el-select
+              v-model="request.memberOrigin"
+              size="small"
+              class="filter-item"
+              style="width: 300px;"
+              default-first-option
+            >
+              <el-option
+                v-for="item in memberOriginList.list"
+                :key="item"
+                :label="t('memberOrigin.' + item)"
+                :value="item"
+              />
+            </el-select>
+          </el-form-item>
           <div class="dialog-footer">
             <el-button @click="resetQuery()">
               {{ t('fields.cancel') }}
@@ -710,6 +726,12 @@
             />
           </template>
         </el-table-column>
+        <el-table-column prop="memberOrigin" :label="t('fields.memberOrigin')" width="100">
+          <template #default="scope">
+            <span v-if="scope.row.memberOrigin === null">-</span>
+            <span v-if="scope.row.memberOrigin !== null">{{ t(`memberOrigin.${scope.row.memberOrigin}`) }}</span>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"
@@ -772,6 +794,9 @@ const privilegeInfoList = reactive({
 })
 const siteList = reactive({
   list: [],
+})
+const memberOriginList = reactive({
+  list: ['DIRECT', 'AFFILIATE', 'TRACECODE', 'REFER'],
 })
 
 let timeZone = null
@@ -843,6 +868,7 @@ const request = reactive({
   regTime: [],
   accurateLoginName: false,
   accurateRealName: false,
+  memberOrigin: null,
   upLineLoginName: null
 })
 

@@ -89,6 +89,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "Maintenance" */ "../views/MaintenanceView.vue")
       },
       {
+        path: "/app",
+        name: "app",
+        component: () => import(/* webpackChunkName: "Maintenance" */ "../views/AppView.vue")
+      },
+      {
         path: "/refer/:referralCode",
         name: "referCode",
         component: () => {}
@@ -114,6 +119,11 @@ const routes = [
         path: "/agent/:affiliateCode",
         name: "agentCode",
         component: () => {}
+      },
+      {
+        path: "/affiliate",
+        name: "affiliate",
+        component: () => import(/* webpackChunkName: "affiliate" */ "../views/AgentView")
       },
       {
         path: "/app-tutorial",

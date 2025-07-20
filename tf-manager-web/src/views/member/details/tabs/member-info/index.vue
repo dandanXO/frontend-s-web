@@ -602,6 +602,20 @@
           <span v-else>-</span>
         </el-descriptions-item>
         <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="user" style="height: 16px;width: 16px;" />
+              {{ t('fields.taxId') }}
+            </div>
+          </template>
+          <span v-if="memberDetail.taxId !== null && memberDetail.taxId !== ''">{{ memberDetail.taxId }}</span>
+          <span v-else>-</span>
+        </el-descriptions-item>
+        <el-descriptions-item
           v-if="isPak(memberDetail.siteId)"
           label-align="left"
           label-class-name="member-label"
@@ -620,6 +634,20 @@
           />
         </el-descriptions-item>
         <el-descriptions-item v-else />
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="user" style="height: 16px;width: 16px;" />
+              {{ t('fields.memberOrigin') }}
+            </div>
+          </template>>
+          <span v-if="memberDetail.memberOrigin !== null && memberDetail.memberOrigin !== ''"> {{ t(`memberOrigin.${memberDetail.memberOrigin}`) }} </span>
+          <span v-else>-</span>
+        </el-descriptions-item>
       </el-descriptions>
     </el-card>
 
@@ -1974,6 +2002,7 @@ export default defineComponent({
       gender: null,
       isOpenTransfer: null,
       maskedLoginName: null,
+      taxId: null,
     })
 
     const affiliateDetail = reactive({

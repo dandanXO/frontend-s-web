@@ -103,12 +103,13 @@
       </div>
 
       <div class="bot-wrapper">
-        <div class="bank-card-item" @click="goToBank()">
+        <div v-if="withdrawalMethods[withdrawalDialogTab].allowBindCard" class="bank-card-item" @click="goToBank()">
           <div class="card-icon">
             <q-icon key="md" size="md" name="add" />
           </div>
           <div class="card-label">{{ $t("btn.addNewAccount") }}</div>
         </div>
+        <div class="disable-bank-card-txt" v-else>{{ $t("withdraw.bindCardCs") }}</div>
       </div>
     </div>
 
@@ -254,6 +255,13 @@
       <router-link to="/account/bank"><q-btn label="OK" color="brightbtn" /></router-link>
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="userKYCDialog" persistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="popout-close" @click="router.go(-1)" v-close-popup />
+      <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -264,6 +272,7 @@ import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
 import { t } from "src/boot/lang";
+import KYCUserForm from "../../components/KYCUserForm.vue";
 
 // withdraw component
 const qs = require("qs");
@@ -387,7 +396,10 @@ const loadCards = () => {
             message: t("notify.addBankCardFirst"),
             icon: "report_problem"
           });
-          router.push("/account/bank");
+
+          if (personalState.memberInfo.taxId !== null && personalState.memberInfo.realName !== null) {
+            router.push("/account/bank");
+          }
         }
       }
     })
@@ -600,16 +612,41 @@ const checkNewUser = () => {
   }
 };
 
+// KYC Dialog
+const personalState = reactive({
+  memberInfo: {}
+});
+const userKYCDialog = ref(false);
+const openUserKYCDialog = () => {
+  userKYCDialog.value = true;
+};
+const closeUserKYCDialog = () => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+    userKYCDialog.value = false;
+  });
+};
+
+const loadInfo = () => {
+  personalState.memberInfo = userStore();
+
+  if (personalState.memberInfo.taxId === null || personalState.memberInfo.realName === null) {
+    openUserKYCDialog();
+  }
+};
+
 onMounted(() => {
   getWithdrawalMethods();
-  checkNewUser();
+  // checkNewUser();
   // loadCards();
+  loadInfo();
 });
 
 onActivated(() => {
   getWithdrawalMethods();
-  checkNewUser();
+  // checkNewUser();
   // loadCards();
+  loadInfo();
 });
 
 const isValidCardNumber = () => {
@@ -742,6 +779,11 @@ const isValidCardAddress = () => {
           display: flex;
           justify-content: center;
         }
+      }
+
+      .disable-bank-card-txt {
+        margin-top: 6px;
+        color: #e03f3f;
       }
     }
   }

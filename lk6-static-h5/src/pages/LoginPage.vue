@@ -322,6 +322,8 @@ import { useLocalStorage } from "@vueuse/core";
 import { getDevice } from "src/boot/utils";
 import CommonModal from "src/components/CommonModal.vue";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
 
 export default defineComponent({
   name: "LoginPage",
@@ -334,6 +336,7 @@ export default defineComponent({
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
+    const { languageVal } = storeToRefs(i18nStore());
     const verificationImg = ref("");
     const loginForm = reactive({
       loginName: "",
@@ -435,7 +438,7 @@ export default defineComponent({
             way: regDevice,
             type: "SLIDER"
           };
-
+          isLoading.value = true;
           window
             .initTAC("./tac", config, style)
             .then((tac) => {
@@ -776,7 +779,7 @@ export default defineComponent({
           } else {
             localStorage.removeItem("userpass");
           }
-
+          isLoading.value = false;
           loginFormRef.value.reset();
           router.push(jumpUrl);
         }
@@ -793,6 +796,7 @@ export default defineComponent({
           // 其他错误则关闭验证
           tac.destroyWindow();
         }
+        isLoading.value = false;
       },
       // 刷新按钮回调事件
       btnRefreshFun: (el, tac) => {
@@ -832,9 +836,16 @@ export default defineComponent({
       checkRememberPwd();
       // initGeetestCaptcha();
 
-      api.get("/opt-session/promo/banner?category=LOGIN").then((res) => {
-        loginBannerUrl.value = imgURL + res.data[0].mobileImageUrl;
-      });
+      api
+        .get("/opt-session/promo/banner", {
+          params: {
+            category: "LOGIN",
+            language: languageVal.value
+          }
+        })
+        .then((res) => {
+          loginBannerUrl.value = imgURL + res.data[0].mobileImageUrl;
+        });
     });
 
     return {

@@ -3,7 +3,7 @@
     class="customer-service"
     id="div-customer-service"
     :class="{
-      kaka: props.siteId === '15'
+      kaka: props.siteId === siteEnum.KAKA
     }"
   >
     <div class="inner">
@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="girl">
-          <img v-if="props.siteId === '7'" src="../../assets/images/login/cus-guy.png">
+          <img v-if="props.siteId === siteEnum.LH1" src="../../assets/images/login/cus-guy.png">
           <img v-else-if="props.siteId === '8' || props.siteId === '15'" src="../../assets/images/login/cus-girl-vn.png">
           <img v-else src="../../assets/images/login/cus-girl.png">
           <!--          <div v-if="props.siteId === '15'" class="kaka-cs-24">-->
@@ -55,6 +55,7 @@
 <script setup>
 import { onMounted, defineProps, ref } from 'vue';
 import { useI18n } from "vue-i18n";
+import { siteEnum } from "@/consts/SiteEnum"
 
 const { t } = useI18n();
 
@@ -65,37 +66,44 @@ const props = defineProps({
   },
 });
 const skypeLink = () => {
-  if (props.siteId === '6') {
+  if (props.siteId === siteEnum.DY2) {
     return 'live:.cid.1b8d9a018a52a8f5'
-  } else if (props.siteId === '1') {
+  } else if (props.siteId === siteEnum.XF1) {
     return 'live:.cid.178f76828f54342e'
-  } else if (props.siteId === '7') {
+  } else if (props.siteId === siteEnum.LH1) {
     return 'live:.cid.8099acb97a5ea41'
+  } else if (props.siteId === siteEnum.LK6) {
+    return null
   } else {
     return 'live:.cid.1a1ab9b6b5b0721f'
   }
 }
 const loofahLink = () => {
-  if (props.siteId === '7') {
+  if (props.siteId === siteEnum.LH1) {
     return 'Lh16816808'
-  } else if (props.siteId === '1') {
+  } else if (props.siteId === siteEnum.XF1) {
     return 'xfdlk001'
+  } else if (props.siteId === siteEnum.LK6) {
+    return null
   }
 }
 const bubbleLink = () => {
-  if (props.siteId === '6') {
+  if (props.siteId === siteEnum.DY2) {
     return 'LH1008666'
-  } else if (props.siteId === '1') {
+  } else if (props.siteId === siteEnum.XF1) {
     return 'xfdlkf001'
+  } else if (props.siteId === siteEnum.LK6) {
+    return null
   } else {
+    // console.log(props.siteId , siteEnum.LK6,'dan2')
     return 'Lh16816808'
   }
 }
 
 const amicoLink = () => {
-  if (props.siteId === '6') {
+  if (props.siteId === siteEnum.DY2) {
     return 'vip777'
-  } else if (props.siteId === '1') {
+  } else if (props.siteId === siteEnum.XF1) {
     return 'vip444'
   } else {
     return 'vip333'
@@ -103,38 +111,40 @@ const amicoLink = () => {
 }
 
 const mailLink = () => {
-  if (props.siteId === '7') {
+  if (props.siteId === siteEnum.LH1) {
     return 'mailto:affiliate@e8007.com'
   } else if (props.siteId === '8') {
     return 'vnaffiliates@tf88.com'
-  } else if (props.siteId === '1') {
+  } else if (props.siteId === siteEnum.XF1) {
     return ''
   } else {
     return 'mailto:affiliate@dyvip99.com'
   }
 }
 const qqLink = () => {
-  if (props.siteId === '7') {
+  if (props.siteId === siteEnum.LH1) {
     return '2115894008'
-  } else if (props.siteId === '1') {
+  } else if (props.siteId === siteEnum.XF1) {
     return '1600337511'
-  } else if (props.siteId === '6') {
+  } else if (props.siteId === siteEnum.DY2) {
     return '1827985941'
   } else {
     return '100983290'
   }
 }
 const telegramLink = () => {
-  if (props.siteId === '7') {
+  if (props.siteId === siteEnum.LH1) {
     return '@leihuo686'
   } else if (props.siteId === '15') {
     return '@dailykakagame'
   } else if (props.siteId === '8') {
     return '@dailitf88'
-  } else if (props.siteId === '1') {
+  } else if (props.siteId === siteEnum.XF1) {
     return '@xf100200'
-  } else if (props.siteId === '6') {
+  } else if (props.siteId === siteEnum.DY2) {
     return '@dyghs_01'
+  } else if (props.siteId === siteEnum.LK6) {
+    return 'Lucky666'
   } else {
     return '@leihuo123'
   }
@@ -193,7 +203,7 @@ const initContactList = () => {
     },
     {
       icon: 'bubble-logo',
-      type: t('common.paopao'),
+      type: t('common.paopao') + '?',
       link: bubbleLink(),
       btns: [{
         text: t('common.copy'),
@@ -274,7 +284,7 @@ const initContactList = () => {
       }
     ]
   }
-  if (props.siteId === '7') {
+  if (props.siteId === siteEnum.LH1) {
     contactlist.value = [
       {
         icon: 'cmail',
@@ -339,7 +349,7 @@ const initContactList = () => {
       }
     ]
   }
-  if (props.siteId === '1') {
+  if (props.siteId === siteEnum.XF1) {
     contactlist.value = [
       {
         icon: 'cmail',
@@ -406,10 +416,10 @@ const initContactList = () => {
   }
   // 上面 if 各自有的客服管道
   // 下面兩個 if 是大家固定要刪除或新增的 就不動
-  if (props.siteId === '6' || props.siteId === '1' || props.siteId === '7') {
+  if (props.siteId === siteEnum.DY2 || props.siteId === siteEnum.XF1 || props.siteId === siteEnum.LH1) {
     contactlist.value.shift()
   }
-  if (props.siteId === '6' || props.siteId === '1' || props.siteId === '7') {
+  if (props.siteId === siteEnum.DY2 || props.siteId === siteEnum.XF1 || props.siteId === siteEnum.LH1) {
     contactlist.value.push({
       icon: 'amico-logo',
       type: "AMICO",
@@ -423,6 +433,23 @@ const initContactList = () => {
         action: 'https://am35.cc/'
       }]
     })
+  }
+  if (props.siteId === siteEnum.LK6) {
+    contactlist.value = [
+      {
+        icon: 'ctelegram',
+        type: 'Telegram',
+        link: telegramLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://telegram.org/'
+        }]
+      }
+    ]
   }
 }
 const copyMessage = (position, text, btnPosition) => {

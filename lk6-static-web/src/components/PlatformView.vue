@@ -483,7 +483,9 @@ const loadGameList = () => {
 const changePage = (page, pageSize) => {
   // console.log(page);
   // console.log(pageSize);
-  gamePage.gameList = gameListData.value.filter(gameItem => gameItem.code.startsWith(selectedFixedBacarratPlatforms.value.prefix)).slice((page - 1) * pageSize, page * pageSize);
+  const gameListFullLength = gameListData.value.filter(gameItem => gameItem.code.startsWith(selectedFixedBacarratPlatforms.value.prefix));
+  gamePage.gameList = gameListFullLength.slice((page - 1) * pageSize, page * pageSize);
+  gamePage.total = gameListFullLength.length;
 };
 
 const gameCat = ref("allGame");

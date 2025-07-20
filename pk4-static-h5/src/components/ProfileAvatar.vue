@@ -7,6 +7,7 @@
 
         <div class="vip-details" :class="{ isHeader: props.isHeader }" @click="onVipClick">
           <img
+            v-if="store.vip"
             class="bg"
             :src="require(`../assets/images/index/vip-badge/vip-${store.vip.replace('VIP', '')}.png`)"
             alt=""

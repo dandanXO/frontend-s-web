@@ -505,6 +505,7 @@ export default {
     authenticator: 'Ứng dụng Xác thực',
     vietnamese: 'Tiếng Việt',
     english: 'English',
+    chinese: '中文',
     affiliateName: 'Tên đối tác liên kết',
     ftdAmountAndMemberCount: 'Số tiền FTD / Số lượng thành viên',
     depositAmountAndMemberCount: 'Số tiền Gửi tiền / Số lượng thành viên',

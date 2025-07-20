@@ -16,7 +16,11 @@
           <span style="font-size: 10px; margin-left: 5px; display: block">Deposit</span>
         </q-btn>
       </q-card-section>
-      <q-card-section class="page-title" :class="pageName === '' && 'page-title__empty'" v-if="hasPage">
+      <q-card-section
+        class="page-title"
+        :class="[pageName === '' ? 'page-title__empty' : '', hasProfileSummary ? 'has-profile-summary' : '']"
+        v-if="hasPage"
+      >
         <a
           @click="
             route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account'
@@ -309,14 +313,14 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = t("sideNav.fishing");
         } else if (route.path === "/promo") {
-          hasPage.value = false;
+          hasPage.value = true;
           pageName.value = t("header.promotion");
           prevPage.value = "/";
           if (route.query.name) {
             if (route.query.fromAccount) {
               prevPage.value = "/account/promotion";
             } else {
-              hasPage.value = false;
+              hasPage.value = true;
               prevPage.value = "/promo";
             }
           }
@@ -578,6 +582,9 @@ export default defineComponent({
       }
     ]);
 
+    const hasProfileSummary = computed(() => {
+      return route.path === "/promo";
+    });
     const platformsList = computed(() => {
       if (ui.slotLists.length === 0) {
         return platformsFixed.value;
@@ -642,7 +649,8 @@ export default defineComponent({
       changePlatform,
       languageVal,
       goToPrevPage,
-      isGuessRoute
+      isGuessRoute,
+      hasProfileSummary
     };
   }
 });
@@ -696,6 +704,11 @@ svg path {
   margin: 0.5rem 0 0 0;
 }
 
+.page-title {
+  &.has-profile-summary {
+    top: 60px;
+  }
+}
 .page-title-wrapper {
   display: flex;
   justify-content: space-between;

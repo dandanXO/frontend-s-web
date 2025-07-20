@@ -36,6 +36,7 @@
                 </a>
                 <router-link v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" :to="nav.path">
                   <span>
+                    <div class="affiliate-icon" v-if="nav.code === 'Affiliate'" />
                     <div class="promotion-icon" v-if="nav.code === 'Promotion'" />
                     <!-- <img
                       class="hover-icon promotion"
@@ -418,6 +419,15 @@ export default defineComponent({
       // { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
       // { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
       {
+        code: "Affiliate",
+        name: 'menu.affiliate',
+        enName: t('menu.affiliate'),
+        path: "/affiliate",
+        submenu: false,
+        hasicon: true,
+        isTest: false
+      },
+      {
         code: "Promotion",
         name: 'menu.promotion',
         enName: t('menu.promotion'),
@@ -427,7 +437,7 @@ export default defineComponent({
         isTest: false
       },
       // { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true, isTest: false },
-      { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true, isTest: false },
+      { code: "App", name: "APP", enName: "App", path: "/app", submenu: false, hasicon: true, isTest: false },
       // { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false },
       { code: "CS", name: 'menu.customerService', enName: t('menu.customerService'), path: "/cs", hasicon: true, isTest: false }
     ]);
@@ -977,7 +987,7 @@ export default defineComponent({
               if (regResult === 0) {
                 notify({
                   type: "success",
-                  message: "注册成功"
+                  message: t('message.registerSuccessfully')
                 });
                 store.autoLogin(response.data);
                 registerDialogVisible.value = false;
@@ -2397,6 +2407,15 @@ body {
 .header-menu-item {
   min-width: 40px;
   position: relative;
+
+  .affiliate-icon {
+    background: url('../../assets/images/home/affiliate-icon.png');
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    width: 38px;
+    height: 38px;
+  }
 
   .promotion-icon {
     background: url('../../assets/images/home/header-icon-set.png');

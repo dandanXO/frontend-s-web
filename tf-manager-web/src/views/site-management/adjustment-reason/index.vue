@@ -136,19 +136,36 @@
             style="width: 490px; margin-bottom: 10px"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.rollover')" prop="rollover">
-          <el-input-number
-            clearable
-            v-model="form.rollover"
-            size="small"
-            :placeholder="t('fields.rollover')"
-            class="filter-item"
-            :min="0"
-            :max="100"
-            :controls="false"
-            @keypress="restrictInput($event)"
-          />
-        </el-form-item>
+        <el-row>
+          <el-form-item :label="t('fields.rollover')" prop="rollover">
+            <el-input-number
+              clearable
+              v-model="form.rollover"
+              size="small"
+              :placeholder="t('fields.rollover')"
+              class="filter-item"
+              :min="0"
+              :max="100"
+              :controls="false"
+              @keypress="restrictInput($event)"
+            />
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.sequence')" prop="sequence">
+            <el-input-number
+              clearable
+              v-model="form.sequence"
+              size="small"
+              :placeholder="t('fields.sequence')"
+              class="filter-item"
+              :min="0"
+              :max="999"
+              :controls="false"
+              @keypress="restrictInput($event)"
+            />
+          </el-form-item>
+        </el-row>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
             {{ t('fields.cancel') }}
@@ -234,6 +251,7 @@ const form = reactive({
   reasonItemId: null,
   reason: null,
   rollover: 1,
+  sequence: 0
 })
 
 const formRules = reactive({
@@ -275,6 +293,7 @@ function showDialog(type) {
       list.detailItems = []
     }
     form.siteId = request.siteId
+    form.sequence = 0
     uiControl.dialogTitle = t('fields.addAdjustmentReason')
   } else {
     uiControl.dialogTitle = t('fields.editAdjustmentReason')

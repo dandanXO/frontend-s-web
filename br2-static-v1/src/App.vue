@@ -143,8 +143,8 @@ export default defineComponent({
       const siteCode = "BR2";
 
       const getCookie = (name) => {
-        const match = document.cookie.match(new RegExp(name + '=([^;]+)'));
-        return match ? decodeURIComponent(match[1]) : '';
+        const match = document.cookie.match(new RegExp(name + "=([^;]+)"));
+        return match ? decodeURIComponent(match[1]) : "";
       };
 
       const getFbclid = () => {
@@ -153,7 +153,7 @@ export default defineComponent({
       };
 
       const fbc3 = getFbclid();
-      if(fbc3){
+      if (fbc3) {
         sessionStorage.setItem("fbc3", fbc3);
       }
 
@@ -166,15 +166,15 @@ export default defineComponent({
       };
 
       const fbc = (() => {
-        const rawFbp = getCookie("_fbc");
-        return rawFbp ? rawFbp.split(".").pop() : null;
+        const rawFbc = getCookie("_fbc");
+        return rawFbc ? rawFbc : null;
       })
 
       // const fbp = getCookie("_fbp");
       // Extract the last portion of _fbp
       const fbp = (() => {
         const rawFbp = getCookie("_fbp");
-        return rawFbp ? rawFbp.split(".").pop() : null;
+        return rawFbp ? rawFbp : null;
       })();
 
       const fbp2 = (() => {
@@ -185,7 +185,7 @@ export default defineComponent({
       const randUuid = generateEventID();
       const payload = new URLSearchParams({
         fbp: fbp || fbp2 || "",
-        fbc:  fbclid2 || fbc || fbc3 || randUuid,
+        fbc: fbclid2 || fbc || fbc3 || randUuid,
         siteCode: siteCode,
         linkId: ""
       });
@@ -224,12 +224,11 @@ export default defineComponent({
       //   });
     };
 
-
     const trackH5Affiliate = () => {
       // const hostname= "ifn31.cc";
-      const hostname = window.location.hostname
+      const hostname = window.location.hostname;
       const affiliateCodeFromDomain = domainLists[hostname]?.affiliateCode;
-      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || affiliateCodeFromDomain || "076DB8";
+      var affiliateCode = sessionStorage.getItem("AFFILIATE_CODE") || affiliateCodeFromDomain || "A658C3";
 
       const track = () => {
         sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
@@ -285,10 +284,10 @@ export default defineComponent({
             initAdjustEventTrack();
           }
         });
-      }
+      };
 
       const isRefreshed = sessionStorage.getItem("PWA_REFRESH_PAGE");
-      if (isInPwa() ) {
+      if (isInPwa()) {
         trackPwa();
       } else {
         track();
@@ -377,7 +376,7 @@ export default defineComponent({
       let maxRetry = 10; // 最多等1秒
       const interval = setInterval(() => {
         const code = sessionStorage.getItem("AFFILIATE_CODE");
-        if (code && code !== "076DB8") {
+        if (code && code !== "A658C3") {
           clearInterval(interval);
           console.log("[✅ Tracking] Got real affiliateCode:", code);
           trackH5Affiliate();
@@ -514,7 +513,7 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      console.log("BR2 0707-1")
+      console.log("BR2 0707-1");
       // const info = await App.getInfo();
       // console.log("APP Info");
       // console.log(info);

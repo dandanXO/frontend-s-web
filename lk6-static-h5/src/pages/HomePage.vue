@@ -495,7 +495,7 @@
                                 }
                               })()
                             }"
-                            @click="playGame(game.name, game.platformCode, game.code)"
+                            @click="playGame(game.name.default, 'EEAI', game.code)"
                           >
                             <div class="game-title">
                               <div class="game-title__category">
@@ -1080,7 +1080,13 @@ export default defineComponent({
     function loadData() {
       const randNum = Math.floor(Math.random() * 1000) + 1;
       api
-        .get(`/opt-session/promo/banner?category=HOME&v=${randNum}`)
+        .get(`/opt-session/promo/banner`, {
+          params: {
+            category: "HOME",
+            language: languageVal.value,
+            v: randNum
+          }
+        })
         .then((res) => {
           if (res.code === 0) {
             // banners.value = res.data;
@@ -1876,7 +1882,8 @@ export default defineComponent({
               ...item,
               name: {
                 en: enName,
-                zh: zhName
+                zh: zhName,
+                default: item.name
               }
             };
             if (item.code.startsWith("101")) {

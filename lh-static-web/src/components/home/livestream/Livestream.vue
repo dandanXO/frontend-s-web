@@ -1,6 +1,12 @@
 <template>
   <div v-if="!hideComponent" class="livestream-container">
     <img
+      v-if="isDark"
+      src="@/assets/home/livestream/livestream-title-dark.png"
+      style="display: flex; margin: 38px auto -38px; width: 70%"
+    />
+    <img
+      v-else
       src="@/assets/home/livestream/livestream-title-light.png"
       style="display: flex; margin: 38px auto 50px; width: 100%"
     />
@@ -38,6 +44,7 @@
   </div>
 </template>
 <script setup>
+import { useDark } from "@vueuse/core";
 import LivestreamCategories from "@/components/home/livestream/LivestreamCategories.vue";
 import LivestreamList from "@/components/home/livestream/LivestreamList.vue";
 import CurrentLivestream from "@/components/home/livestream/CurrentLivestream.vue";
@@ -77,7 +84,7 @@ const DEFAULT_MESSAGES_HISTORY_META = {
   current: 1,
   max: 1
 };
-
+const isDark = useDark();
 const store = userStore();
 const notify = useNotify();
 const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
@@ -200,7 +207,10 @@ const getData = () => {
   getLivestreamList()
     .then(async (res) => {
       if (res.code === 0) {
-        const parsedData = res.data.streamList.map(parseLivestreamData);
+        const deduplicatedList = res.data.streamList.filter(
+          (item, index, self) => index === self.findIndex((t) => t.streamId === item.streamId)
+        );
+        const parsedData = deduplicatedList.map(parseLivestreamData);
         parsedData.sort((a, b) => a.sort - b.sort);
         if (parsedData.length) {
           hideComponent.value = false;

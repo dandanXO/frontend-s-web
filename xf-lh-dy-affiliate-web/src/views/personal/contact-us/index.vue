@@ -27,6 +27,7 @@ import { storeToRefs } from "pinia";
 import { useI18n } from 'vue-i18n'
 import { useStore } from "@/store"
 import { useRoute } from 'vue-router'
+import { siteEnum } from "@/consts/SiteEnum"
 
 import { i18nStore } from "@/store/language";
 import LhFeedback from '../../../components/customer-service/lh-feedback.vue';
@@ -61,6 +62,8 @@ const telegramLink = () => {
     return '@dailitf88'
   } else if (siteId === '10' || siteId === 10) {
     return '@city88888'
+  } else if (siteId === siteEnum.LK6 || siteId === Number(siteEnum.LK6)) {
+    return 'Lucky666'
   } else {
     return 'leihuo123'
   }
@@ -169,7 +172,7 @@ const initContactList = () => {
       }]
     }
   ]
-  if (siteId === '8' || siteId === 8) {
+  if (siteId === siteEnum.VNM || siteId === siteEnum.VNM) {
     contactlist.value = [
       {
         icon: 'cmail',
@@ -221,7 +224,7 @@ const initContactList = () => {
       },
     ]
   }
-  if (siteId === '10' || siteId === 10) {
+  if (siteId === siteEnum.KRW || siteId === siteEnum.KRW) {
     contactlist.value = [
       {
         icon: 'ctelegram',
@@ -236,6 +239,23 @@ const initContactList = () => {
           action: 'https://telegram.org/'
         }]
       },
+    ]
+  }
+  if (siteId === siteEnum.LK6) {
+    contactlist.value = [
+      {
+        icon: 'ctelegram',
+        type: 'Telegram',
+        link: telegramLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://telegram.org/'
+        }]
+      }
     ]
   }
 }

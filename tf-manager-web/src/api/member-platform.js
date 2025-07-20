@@ -20,3 +20,7 @@ export const deleteMemberPlatform = (ids) => {
 export const updatePassword = (row) => {
   return https().request("/member-platform/updatePassword", Method.GET, row, ContentType.form);
 };
+
+export const sabaResendPayout = (row) => {
+  return https().request("/member-platform/sabaResendPayout", Method.GET, row, ContentType.form);
+};

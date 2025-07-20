@@ -262,7 +262,7 @@ export default {
     unauthorizedMethods:
       "Using bots, cheating, or any unauthorized methods will result in a ban and forfeiture of the bonus.",
     recoverPwd: "Recover your password",
-    copiedToClipboard: "Copied to Clipboard",
+    copiedToClipboard: "Copied to Clipboard"
   },
   btn: {
     login: "Login",
@@ -308,7 +308,7 @@ export default {
     playReal: "Play real",
     freeTrial: "Free trial",
     payAgain: "Pay again",
-    reminder: "Reminder",
+    reminder: "Reminder"
   },
   notify: {
     cancelPayment: "Cancel Payment",
@@ -338,7 +338,7 @@ export default {
     sendingVerificationCode: "Sending verification code...",
     passwordResetCompleted: "Password reset completed",
     success: "Success",
-    pleaseCompleteYourKYC: 'Please Complete your KYC.',
+    pleaseCompleteYourKYC: "Please Complete your KYC."
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -376,13 +376,14 @@ export default {
     cat_fishing: "Fishing",
     cat_poker: "Poker",
     cat_sport: "Sport",
+    liveSportEvent: "Live sports events",
     cashGift: "Cash Gifts",
     welcomeNewPlayer: "Welcome New Players",
     MegaSharingRoulette: "Mega Sharing Roulette",
     spinLuckyWheel: "Spin Lucky Wheel",
-    twentyFourSevenSupport: '24/7 support',
-    ifHaveQuestionsContactUs: 'If you still have questions, please contact us',
-    chat: 'Chat'
+    twentyFourSevenSupport: "24/7 support",
+    ifHaveQuestionsContactUs: "If you still have questions, please contact us",
+    chat: "Chat"
   },
   settings: {
     totalScore: "Total Score",
@@ -436,71 +437,71 @@ export default {
       pressQRCode: "press and hold to save QR code to album"
     },
     overview: {
-      today: 'Today',
-      yesterday: 'Yesterday',
-      sevenDays: '7 days',
-      thisMonth: 'This Month',
-      logins: 'Logins',
-      registers: 'Registers',
-      betCount: 'Bet count',
-      promotions: 'Promotions',
-      registersFirstDeposits: 'Registers first deposits',
-      firstDeposits: 'First deposits',
-      deposits: 'Deposits',
-      withdrawals: 'Withdrawals',
-      deposit: 'Deposit',
-      withdrawalAmount: 'Withdrawal amount',
-      bonus: 'Bonus',
-      validBet: 'Valid bet',
-      winLoss: 'Win/loss',
-      teamPnL: 'Team P&L',
-      teamRebate: 'Team Rebate',
+      today: "Today",
+      yesterday: "Yesterday",
+      sevenDays: "7 days",
+      thisMonth: "This Month",
+      logins: "Logins",
+      registers: "Registers",
+      betCount: "Bet count",
+      promotions: "Promotions",
+      registersFirstDeposits: "Registers first deposits",
+      firstDeposits: "First deposits",
+      deposits: "Deposits",
+      withdrawals: "Withdrawals",
+      deposit: "Deposit",
+      withdrawalAmount: "Withdrawal amount",
+      bonus: "Bonus",
+      validBet: "Valid bet",
+      winLoss: "Win/loss",
+      teamPnL: "Team P&L",
+      teamRebate: "Team Rebate"
     },
     accountRecord: {
-      all: 'All',
-      deposit: 'Deposit',
-      withdrawal: 'Withdrawal',
-      betting: 'Betting',
-      bonus: 'Bonus',
-      rebate: 'Rebate',
-      dividend: 'Dividend',
-      loginName: 'Login Name',
-      recordDate: 'Record Date',
-      beforeBalance: 'Before Balance',
-      afterBalance: 'After Balance',
-      amount: 'Amount',
-      currency: 'Currency'
+      all: "All",
+      deposit: "Deposit",
+      withdrawal: "Withdrawal",
+      betting: "Betting",
+      bonus: "Bonus",
+      rebate: "Rebate",
+      dividend: "Dividend",
+      loginName: "Login Name",
+      recordDate: "Record Date",
+      beforeBalance: "Before Balance",
+      afterBalance: "After Balance",
+      amount: "Amount",
+      currency: "Currency"
     },
     teamManagement: {
-      lastLoginTime: 'Last login time',
-      registrationDate: 'Registration date',
-      balance: 'Balance'
+      lastLoginTime: "Last login time",
+      registrationDate: "Registration date",
+      balance: "Balance"
     },
     teamPnL: {
-      deposit: 'Deposit',
-      withdrawal: 'Withdrawal',
-      bonus: 'Bonus',
-      validBet: 'Valid Bet',
-      winLoss: 'Win/Loss',
-      profitLoss: 'Profit & Loss',
-      today: 'Today',
-      yesterday: 'Yesterday',
-      sevenDays: '7 days',
-      thisMonth: 'This Month',
-      total: 'Total'
+      deposit: "Deposit",
+      withdrawal: "Withdrawal",
+      bonus: "Bonus",
+      validBet: "Valid Bet",
+      winLoss: "Win/Loss",
+      profitLoss: "Profit & Loss",
+      today: "Today",
+      yesterday: "Yesterday",
+      sevenDays: "7 days",
+      thisMonth: "This Month",
+      total: "Total"
     },
     teamBetting: {
-      all: 'All',
-      slot: 'Slot',
-      live: 'Live',
-      sport: 'Sport',
-      fish: 'Fish',
-      poker: 'Poker',
-      today: 'Today',
-      yesterday: 'Yesterday',
-      sevenDays: '7 days',
-      thisMonth: 'This Month',
-      vendors: 'Vendors'
+      all: "All",
+      slot: "Slot",
+      live: "Live",
+      sport: "Sport",
+      fish: "Fish",
+      poker: "Poker",
+      today: "Today",
+      yesterday: "Yesterday",
+      sevenDays: "7 days",
+      thisMonth: "This Month",
+      vendors: "Vendors"
     }
   },
   accountRecord: {
@@ -904,7 +905,7 @@ export default {
     system: "System",
     noMessage: "No messages",
     visitLink: "Visit link",
-    copySuccess: "Serial Number Copied to clipboard",
+    copySuccess: "Serial Number Copied to clipboard"
   },
   customerServiceVerifier: {
     mainTitle: "PK1.GAME",
@@ -1188,8 +1189,8 @@ export default {
     }
   },
   csVerifier: {
-    validAccDesc: 'is an official representative of PK1.GAME and can be trusted',
-    invalidAccDesc: 'is not an official representative of PK1.GAME, please do not trust this account'
+    validAccDesc: "is an official representative of PK1.GAME and can be trusted",
+    invalidAccDesc: "is not an official representative of PK1.GAME, please do not trust this account"
   },
   shareAffiliate: {
     login: "Login",
