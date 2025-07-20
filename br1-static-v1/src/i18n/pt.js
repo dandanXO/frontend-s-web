@@ -92,9 +92,11 @@ export default {
     password_rules_01: "Por favor, insira a senha",
     password_rules_02: "Os caracteres da senha devem ser maiores que 6",
     forgotPassword: "Esqueceu sua senha",
-    forgotPassword_desc: "Por favor, forneça seu nome de usuário e número de telefone, enviaremos um OTP para seu número registrado.",
-    register_agree_01: "Eu concordo com o ",
-    register_agree_02: "Acordo de Privacidade de Uso",
+    forgotPassword_desc:
+      "Por favor, forneça seu nome de usuário e número de telefone, enviaremos um OTP para seu número registrado.",
+    register_agree_01: "Tenho mais de 18 anos e li e concordo com os ",
+    register_agree_02: "《Termos do Usuário》",
+    date_of_birth: "Date de nascimento",
     email: "Email",
     email_placeholder: "Por favor, insira o email",
     email_rules_01: "Por favor, insira o email",
@@ -279,7 +281,8 @@ export default {
     fillInPersonalDetails: "Por favor, preencha seus dados pessoais",
     addSucceed: "Adição bem-sucedida",
     areYouSureUnbind: "Tem certeza de que deseja desvincular?",
-    withdrawSuceed: "Retirada Enviar com sucesso"
+    withdrawSuceed: "Retirada Enviar com sucesso",
+    siteAgeRestrict: "Acesso a este site é restrito a usuários com 18 anos ou mais"
   },
   sideNav: {
     inviteToEarn: "Convidar para Ganhar",
@@ -330,6 +333,9 @@ export default {
     interestProfit: "Lucro de Juros",
     version: "Versão"
   },
+  ageConfirmation: {
+    bornWhere: "Por favor, diga-nos: quando você nasceu?"
+  },
   deposit: {
     selectAmount: "Selecionar Valor",
     depositTutorial: "Tutorial de Depósito",
@@ -359,7 +365,7 @@ export default {
     paymentChannels: "Canais de Pagamento",
     channelUnderMaintenance: "Este canal está em manutenção",
     accountNumber: "Número da Conta",
-    available: "Disponível",
+    available: "Disponível"
   },
   bank: {
     virtualWallet: "eWallet",
@@ -704,7 +710,7 @@ export default {
     all: "Todos",
     turnover_requi: "TurnOver Requirement",
     reachTheEnd: "You have reached the end of the page.",
-    noMember: "Nenhum membro",
+    noMember: "Nenhum membro"
   },
   appUpdate: {
     updateHeader: "Update Announcement",

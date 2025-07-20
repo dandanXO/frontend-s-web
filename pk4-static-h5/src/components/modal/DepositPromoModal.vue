@@ -431,6 +431,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .deposit-promo-modal {
+  max-width: 450px;
   .modal-img-2 {
     position: relative;
     display: flex;
@@ -544,7 +545,7 @@ onMounted(() => {
       img {
         // max-width: 240px;
 
-        max-width: 80%;
+        max-width: 70%;
         margin-bottom: -90px;
       }
     }
