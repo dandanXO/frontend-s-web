@@ -319,7 +319,7 @@ const gameClick = (gameCode) => {
 const topDownloadUrl = ref("");
 
 const getTopDownloadUrl = () => {
-  api.get(`/app/download/affiliate/url?siteCode=${process.env.SITE}&affiliateCode=076DB8`).then((res) => {
+  api.get(`/app/download/affiliate/url?siteCode=${process.env.SITE}&affiliateCode=A658C3`).then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
     }
