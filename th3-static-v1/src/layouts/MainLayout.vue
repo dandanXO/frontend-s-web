@@ -29,13 +29,13 @@
           "
           class="q-mt-sm"
         >
-          <img
+          <!-- <img
             class="house-icon"
             v-if="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account'"
             src="../assets/images/index/btn-house.png"
             width="30"
-          />
-          <img v-else src="../assets/images/index/btn-back.png" width="30" />
+          /> -->
+          <img src="../assets/images/index/btn-back.png" width="30" />
           <!-- <q-icon class="header-icon" name="arrow_back_ios"></q-icon> -->
           <!-- <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span> -->
         </a>
@@ -782,6 +782,7 @@ svg path {
   background: repeating-linear-gradient(45deg, #f1f1ee 0, #b9a78d 50%, #e9e8e4 100%);
   // background-image: url("../assets/images/index/app-bg.png");
   // background-repeat: repeat-y;
-  // background-size: contain;
+  // background-size: 100vw 100vh;
+  // background-position: top left;
 }
 </style>

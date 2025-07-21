@@ -493,7 +493,7 @@ const handleCopyClick = async () => {
           font-size: 16px;
           line-height: 120%;
           letter-spacing: 0px;
-          color: #ffffff;
+          color: #433e38;
         }
       }
       .top-copy-id {
@@ -504,7 +504,7 @@ const handleCopyClick = async () => {
         font-size: 12.17px;
         line-height: 120%;
         letter-spacing: 0px;
-        color: #b3bec0;
+        color: #433e38c7;
         img {
           width: 30px;
           height: 30px;
