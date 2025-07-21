@@ -548,6 +548,10 @@ body.body--dark .q-footer {
   justify-content: center;
 }
 .fullscreen {
+  &.betby {
+    z-index: 6000;
+    max-height: calc(100vh - 75px);
+  }
     z-index: 9999;
 }
 // .fullscreen {

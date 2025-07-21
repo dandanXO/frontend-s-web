@@ -1,6 +1,6 @@
 <template>
   <q-scroll-area>
-    <q-dialog v-model="visible" class="gameDialog" full-height full-width persistent no-esc-dismiss no-backdrop-dismiss>
+    <q-dialog v-model="visible" class="gameDialog" :class="{ betby: isBetBy }" full-height full-width persistent no-esc-dismiss no-backdrop-dismiss>
       <q-toolbar>
         <div class="topActions" :class="{ betby: isBetBy }">
           <q-icon name="chevron_left" size="30px" @click="onExitClick" />
@@ -921,6 +921,7 @@ defineExpose({
 
 .game-iframe--betby {
   width: 100%;
+  height: calc(100vh - 140px);
 }
 
 .q-toolbar .topActions {
