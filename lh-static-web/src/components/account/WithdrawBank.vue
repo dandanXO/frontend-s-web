@@ -318,6 +318,11 @@ export default defineComponent({
             selectedCode = bank.code;
           }
         });
+        
+        if (!/^[a-zA-Z0-9]+$/.test(v)) {
+          return Promise.reject('请输入有效的电子钱包号码');
+        }
+
         if (selectedCode === "KDPAY") {
           min = 34;
           max = 34;
