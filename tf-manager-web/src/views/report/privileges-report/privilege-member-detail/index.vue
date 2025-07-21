@@ -2,14 +2,28 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-date-picker
+          v-model="request.recordTime"
+          format="DD/MM/YYYY"
+          value-format="YYYY-MM-DD"
+          size="small"
+          type="daterange"
+          range-separator=":"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
+          style="width: 250px"
+          :shortcuts="shortcuts"
+          :disabled-date="disabledDate"
+          :editable="false"
+          :clearable="false"
+        />
         <el-button
           style="margin-left: 20px"
-          icon="el-icon-refresh"
+          icon="el-icon-search"
           size="mini"
           type="success"
           @click="refresh()"
         />
-
         <el-button
           size="mini"
           type="primary"
@@ -165,6 +179,7 @@ import { TENANT } from '../../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import moment from 'moment'
 import { ElMessage } from "element-plus";
+import { getShortcuts } from "@/utils/datetime";
 
 // eslint-disable-next-line
 const { t } = useI18n()
@@ -176,8 +191,10 @@ const siteList = reactive({
 })
 var id = new URL(location.href).searchParams.get('id')
 var date = new URL(location.href).searchParams.get('date')
+const parsedRange = date ? date.split(',') : null
 var siteIdFromParam = new URL(location.href).searchParams.get('site')
 
+const shortcuts = getShortcuts(t)
 const uiControl = reactive({
   messageVisible: false,
 })
@@ -191,7 +208,8 @@ const page = reactive({
 const request = reactive({
   size: 30,
   current: 1,
-  recordTime: date,
+  recordTime: parsedRange,
+  originalRecordTime: date,
   siteId: null,
   id: id,
 })
@@ -256,13 +274,13 @@ function back() {
   window.location.href = '/report/privilege'
 }
 
-onMounted(async () => {
+onMounted(() => {
   // 返回前一页如果用户换站点
   if (store.state.user.siteId !== Number(siteIdFromParam)) {
     back()
   }
 
-  await loadSites()
+  loadSites()
   // tenant 只可以看到本身site的资料
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(
@@ -273,8 +291,18 @@ onMounted(async () => {
     request.siteId = siteIdFromParam
   }
 
-  await loadPrivilegeMemberDetail()
+  loadPrivilegeMemberDetail()
 })
+
+function disabledDate(time) {
+  return (
+    time.getTime() <
+    moment(new Date())
+      .subtract(5, 'months')
+      .startOf('month')
+      .format('x') || time.getTime() > new Date().getTime()
+  )
+}
 
 function checkQuery() {
   const requestCopy = { ...request }
