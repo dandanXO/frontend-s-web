@@ -504,6 +504,7 @@ const selectMethod = (method, index) => {
     withdrawInfo.withdrawCode.includes("EBPAY") ||
     withdrawInfo.withdrawCode.includes("OKPAY") ||
     withdrawInfo.withdrawCode.includes("SZPAY") ||
+    withdrawInfo.withdrawCode.includes("NINEPAY") ||
     withdrawInfo.withdrawCode.includes("JDPAY") ||
     withdrawInfo.withdrawCode.includes("BLBPAY");
   isALIPAY.value = withdrawInfo.withdrawCode.includes("ALIPAY");

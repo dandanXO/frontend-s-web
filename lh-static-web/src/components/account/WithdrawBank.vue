@@ -336,6 +336,9 @@ export default defineComponent({
         } else if (selectedCode === "SZPAY") {
           min = 11;
           max = 11;
+        } else if (selectedCode === "NINEPAY") {
+          min = 32;
+          max = 32;
         }
       }
       if (v === "") {
