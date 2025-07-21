@@ -8,7 +8,7 @@
         }"
         @click="handleLivestreamClick(live.streamId)"
       >
-        <div class="livestream-list-item__title">{{ live.title }}</div>
+        <div class="livestream-list-item__title" :title="live.title">{{ live.title }}</div>
         <div class="livestream-list-item__match-info">
           <div class="livestream-list-item__match-info__team">
             <div class="livestream-list-item__match-info__team-emblem">
@@ -156,7 +156,7 @@ watch(list, async (newVal, oldVal) => {
     --livestream-img-size: 60px;
     @include livestream-content-block;
     position: relative;
-    padding: 11px 0;
+    padding: 40px 0 11px;
     margin: calc(var(--livestream-img-size) / 2 + var(--livestream-badge-gap)) 0 0;
     cursor: pointer;
 
@@ -178,11 +178,15 @@ watch(list, async (newVal, oldVal) => {
 
     .livestream-list-item__title {
       margin-bottom: 10px;
+      padding: 0 10px;
+      overflow: hidden;
       font-size: 15px;
       line-height: 21px;
       font-weight: 500;
       text-align: center;
       color: #333333;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .livestream-list-item__match-info {
       display: flex;
