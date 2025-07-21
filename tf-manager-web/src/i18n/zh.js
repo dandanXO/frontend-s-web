@@ -1526,6 +1526,7 @@ export default {
     payout: '派彩',
     payoutTotal: '总派彩',
     resend_saba_payout: '重发SABA派彩',
+    check_saba_ticket: '检查SABA订单',
     return_ratio: '返奖率',
     return_ratio_total: '总返奖率',
     pcWay: 'PC 端',
@@ -3236,7 +3237,9 @@ export default {
     inputSensitiveWords: '请输入敏感词',
     streamUrlNotM3U8: "该链接不是 .m3u8 结尾，是否要自动替换为 .m3u8？",
     replacedWithM3U8: "已自动替换为 .m3u8 结尾",
-    streamUrlMustBeM3U8: "链接必须以 .m3u8 结尾，请修正后再提交"
+    streamUrlMustBeM3U8: "链接必须以 .m3u8 结尾，请修正后再提交",
+    validateTransactionIdOrBetIdRequired: '注单号或投注单号必填',
+    validateTransactionIdMustBeDigitsOnly: '注单号只能是数字',
   },
   menu: {
     'Add Promo': '新增优惠',

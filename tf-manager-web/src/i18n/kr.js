@@ -1262,6 +1262,7 @@ export default {
     payout: '지급',
     payoutTotal: '총 지급 금액',
     resend_saba_payout: 'SABA 지급금 재전송',
+    check_saba_ticket: 'SABA 티켓 확인',
     return_ratio: '환급률',
     return_ratio_total: '총 수익률',
     pcWay: 'PC',
@@ -2502,7 +2503,9 @@ export default {
     validateVipSettingRequired: 'VIP 설정 필요',
     validatePayementTypesSettingRequired: '결제 설정이 필요합니다',
     qrCodeGenerateFailed: 'QR 코드 생성 실패',
-    downloadUrlEmpty: '다운로드 URL이 비어 있습니다.'
+    downloadUrlEmpty: '다운로드 URL이 비어 있습니다.',
+    validateTransactionIdOrBetIdRequired: 'TransactionId 또는 BetId가 필요합니다.',
+    validateTransactionIdMustBeDigitsOnly: 'TransactionId는 숫자만 허용됩니다.',
   },
   menu: {
     undefined: '',
