@@ -328,6 +328,11 @@ export default defineComponent({
             selectedCode = bank.code;
           }
         });
+
+        if (!/^[a-zA-Z0-9]+$/.test(v)) {
+          return Promise.reject('请输入有效的电子钱包号码');
+        }
+        
         if (selectedCode === 'KDPAY') {
           min = 34;
           max = 34;
@@ -343,6 +348,9 @@ export default defineComponent({
         } else if(selectedCode === 'JDPAY') {
           min = 34;
           max = 34;
+        } else if(selectedCode === 'NINEPAY') {
+          min = 32;
+          max = 32;
         } else if (selectedCode === 'SZPAY') {
           // if (!/^\d+$/.test(v)) {
           //   return Promise.reject('请输入数字人民币使用的手机号');
