@@ -45,9 +45,9 @@ const props = defineProps(["label"]);
     }
   }
   :deep(.q-field__native) {
-    color: #d9cfb8;
+    color: #3a3a3a;
   }
-  :deep(.q-field__input) {
+  :deep(.q-field__native::placeholder) {
     color: #d9cfb8;
   }
   :deep(.q-field__control):before {
