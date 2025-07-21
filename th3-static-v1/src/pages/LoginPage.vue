@@ -229,27 +229,12 @@
         <ShareIcons />
       </div>
     </div>
-    <template v-if="ui.siteType === 'CURACAO'">
-      <div class="col-grow" />
-
-      <a
-        class="license"
-        href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img class="license-img" src="../assets/images/license/curacao-license.png" />
-        <div class="license-text-wrapper">
-          <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
-          <span class="license-text__description">{{ $t("sideNav.license.curacao.description") }}</span>
-        </div>
-      </a>
-    </template>
 
     <!-- <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div> -->
     <a
+      v-if="ui.siteType === 'CURACAO'"
       class="license"
       href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
       target="_blank"

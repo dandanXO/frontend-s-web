@@ -117,7 +117,7 @@ export default {
     forgotPassword_desc: "Please provide email, we will send OTP to your registered email.",
     forgotPasswordPhone_desc: "Please provide phone number, we will send OTP to your registered phone.",
     register_agree_01: "I have Agree To The ",
-    register_agree_02: "Use Privacy Agreement",
+    register_agree_02: "「Use Privacy Agreement」",
     email: "Email",
     email_placeholder: "Please enter email",
     email_rules_01: "Please insert email",

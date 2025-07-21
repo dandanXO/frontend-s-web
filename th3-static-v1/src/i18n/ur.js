@@ -114,7 +114,7 @@ export default {
     forgotPassword_desc: "براہ کرم ای میل فراہم کریں، ہم آپ کے رجسٹرڈ ای میل پر OTP بھیجیں گے۔",
     forgotPasswordPhone_desc: "براہ کرم اپنا فون نمبر فراہم کریں، ہم آپ کے رجسٹرڈ فون پر OTP بھیجیں گے۔",
     register_agree_01: "میں نے اس سے اتفاق کیا ہے ",
-    register_agree_02: "رازداری کے معاہدے کا استعمال کریں",
+    register_agree_02: "「رازداری کے معاہدے کا استعمال کریں」",
     email: "ای میل",
     email_placeholder: "براہ کرم ای میل درج کریں",
     email_rules_01: "براہ کرم ای میل درج کریں",
