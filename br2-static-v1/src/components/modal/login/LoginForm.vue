@@ -137,6 +137,10 @@ const login = () => {
               account: phone.value,
               type: "login"
             });
+
+            sessionStorage.setItem("SHOW_BONUS_AFTER_RELOAD", "1");
+            location.reload();
+
             // const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
             // router.replace(jumpUrl);
           }
