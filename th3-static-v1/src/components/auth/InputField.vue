@@ -39,9 +39,11 @@ const props = defineProps(["label"]);
     background: linear-gradient(#fff, #fff) padding-box,
       /* inner background */ linear-gradient(90deg, #76674c, #cec6ae) border-box; /* border gradient */
     .q-field__suffix,
-    .q-field__append,
-    .q-field__prepend {
+    .q-field__append {
       color: #d9cfb8;
+    }
+    .q-field__prepend {
+      color: #3a3a3a;
     }
   }
   :deep(.q-field__native) {

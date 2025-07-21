@@ -1252,7 +1252,7 @@ export default defineComponent({
       background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
       -webkit-background-clip: text;
       color: transparent;
-      font-weight: bolder;
+      // font-weight: bolder;
       font-size: 16px;
     }
   }
@@ -1269,7 +1269,7 @@ export default defineComponent({
     }
   }
   :deep(.q-btn__content) {
-    font-weight: bolder;
+    // font-weight: bolder;
     font-size: 16px;
 
     @media screen and (max-width: 400px) {
