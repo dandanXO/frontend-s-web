@@ -69,7 +69,7 @@ const onTabClick = () => {
 };
 
 const openUrl = () => {
-  window.open("https://aqfiqiy7.cc/refer/MDM5ODc5ODcwMDI=", "_blank");
+  window.open("https://www.b9game5.com/refer/MDM0NDQ0NTU1MDE=", "_blank");
 };
 </script>
 
