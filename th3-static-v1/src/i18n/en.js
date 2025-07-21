@@ -554,6 +554,7 @@ export default {
       inviteList_02: "Register via link",
       inviteList_03: "Complete deposit after registration",
       copyLink: "Copy Link",
+      copy: "copy",
       level: "Level",
       totalNoOfValidPlayersInvited: "Total number of valid invited players",
       invitationRewards: "Invitation rewards",
@@ -924,7 +925,7 @@ export default {
     bonus_claim_time: "Bonus claim time",
     promoEndsOn: "Promo Ends On",
     claimPopup: {
-      youWon: 'You won',
+      youWon: "You won",
       oneOfTodayWinners: "One of today's 77 lucky winners"
     },
     earnMoney: {

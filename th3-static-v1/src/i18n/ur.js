@@ -546,6 +546,7 @@ export default {
       inviteList_02: "لنک کے ذریعے رجسٹر کریں",
       inviteList_03: "رجسٹریشن کے بعد جمع کرائیں مکمل کریں",
       copyLink: "لنک کاپی کریں",
+      copy: "نقل کریں",
       level: "سطح",
       totalNoOfValidPlayersInvited: "درست مدعو کیے گئے کھلاڑیوں کی کل تعداد",
       invitationRewards: "دعوتی انعامات",
@@ -914,8 +915,8 @@ export default {
     bonus_claim_time: "بونس دعوت کا وقت",
     promoEndsOn: "پرومو ختم ہونے کی تاریخ",
     claimPopup: {
-      youWon: 'آپ جیت گئے',
-      oneOfTodayWinners: 'آج کے 77 خوش نصیب جیتنے والوں میں سے ایک'
+      youWon: "آپ جیت گئے",
+      oneOfTodayWinners: "آج کے 77 خوش نصیب جیتنے والوں میں سے ایک"
     },
     earnMoney: {
       earnMoney: "پیسہ کمائیں",
