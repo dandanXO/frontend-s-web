@@ -114,7 +114,7 @@ export default {
     forgotPassword_desc: "براہ کرم ای میل فراہم کریں، ہم آپ کے رجسٹرڈ ای میل پر OTP بھیجیں گے۔",
     forgotPasswordPhone_desc: "براہ کرم اپنا فون نمبر فراہم کریں، ہم آپ کے رجسٹرڈ فون پر OTP بھیجیں گے۔",
     register_agree_01: "میں نے اس سے اتفاق کیا ہے ",
-    register_agree_02: "رازداری کے معاہدے کا استعمال کریں",
+    register_agree_02: "「رازداری کے معاہدے کا استعمال کریں」",
     email: "ای میل",
     email_placeholder: "براہ کرم ای میل درج کریں",
     email_rules_01: "براہ کرم ای میل درج کریں",
@@ -546,6 +546,7 @@ export default {
       inviteList_02: "لنک کے ذریعے رجسٹر کریں",
       inviteList_03: "رجسٹریشن کے بعد جمع کرائیں مکمل کریں",
       copyLink: "لنک کاپی کریں",
+      copy: "نقل کریں",
       level: "سطح",
       totalNoOfValidPlayersInvited: "درست مدعو کیے گئے کھلاڑیوں کی کل تعداد",
       invitationRewards: "دعوتی انعامات",
@@ -914,8 +915,8 @@ export default {
     bonus_claim_time: "بونس دعوت کا وقت",
     promoEndsOn: "پرومو ختم ہونے کی تاریخ",
     claimPopup: {
-      youWon: 'آپ جیت گئے',
-      oneOfTodayWinners: 'آج کے 77 خوش نصیب جیتنے والوں میں سے ایک'
+      youWon: "آپ جیت گئے",
+      oneOfTodayWinners: "آج کے 77 خوش نصیب جیتنے والوں میں سے ایک"
     },
     earnMoney: {
       earnMoney: "پیسہ کمائیں",

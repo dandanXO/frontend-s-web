@@ -4,10 +4,11 @@
     :modelValue="modelValue"
     persistent
     @update:modelValue="(value) => emit('update:modelValue', value)"
+    position="bottom"
   >
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" @click="emit('update:modelValue', false)" />
-      <div class="popout-dialog-container" style="border-radius: 20px;">
+      <div class="popout-dialog-container" style="border-radius: 20px">
         <div class="txt-title">{{ $t("form.exchangeTitle") }}</div>
         <div class="pc-form">
           <div class="pc-form-item">
@@ -51,7 +52,7 @@
             </InputField>
           </div>
         </div>
-        <div class="error-text bonus-amt-txt">{{ $t('form.redemptionBonusAmount') }}: 9-9999</div>
+        <div class="error-text bonus-amt-txt">{{ $t("form.redemptionBonusAmount") }}: 9-9999</div>
 
         <q-btn
           :loading="btnLoading"
@@ -64,7 +65,7 @@
           {{ $t("btn.confirm") }}
         </q-btn>
 
-        <div class="error-invalid-text q-mt-lg" v-if="!isInvalidCode">
+        <!-- <div class="error-invalid-text q-mt-lg" v-if="!isInvalidCode">
           <p class="error-text">
             {{ $t("form.redemptionBtmText") }}
           </p>
@@ -74,24 +75,24 @@
             id="whatapp-icon"
             src="../../assets/images/auth/whatsapp-icon.png"
           />
-        </div>
-        <div class="error-text" :style="isInvalidCode ? 'margin-top: 20px;' : 'margin-top: 0;'">
-          {{ $t("form.followSteps") }}  
+        </div> -->
+        <!-- <div class="error-text" :style="isInvalidCode ? 'margin-top: 20px;' : 'margin-top: 0;'">
+          {{ $t("form.followSteps") }}
           <br />
-          {{ $t("form.subscribeWhatsapp") }}  
+          {{ $t("form.subscribeWhatsapp") }}
           <br />
-          {{ $t("form.enterBonusCode") }}  
+          {{ $t("form.enterBonusCode") }}
           <br />
-          {{ $t("form.redeemWithinValidity") }}  
+          {{ $t("form.redeemWithinValidity") }}
           <br />
-          {{ $t("form.wagerRequirement") }}  
+          {{ $t("form.wagerRequirement") }}
           <br />
-          {{ $t("form.redemptionFailure") }}  
+          {{ $t("form.redemptionFailure") }}
           <br />
-          {{ $t("form.accountOwnerOnly") }}  
+          {{ $t("form.accountOwnerOnly") }}
           <br />
           {{ $t("form.unauthorizedMethods") }}
-        </div>
+        </div> -->
       </div>
     </div>
   </q-dialog>
@@ -199,8 +200,14 @@ const closeRedeemSuccessDialog = () => {
     border-radius: 5px;
     position: relative;
 
+    :deep(.q-field__control) {
+      background: #ffffff14;
+    }
     :deep(.q-field__native) {
-      color: #ffffff;
+      color: #fff;
+    }
+    :deep(.q-field__native::placeholder) {
+      color: #ffffff33;
     }
   }
 
@@ -220,9 +227,14 @@ const closeRedeemSuccessDialog = () => {
   }
 }
 
+.txt-title {
+  color: #fff;
+}
+
 .redeem-success-container {
   display: flex;
   flex-direction: column;
+
   .close-div {
     display: flex;
     justify-content: flex-end;
@@ -278,5 +290,9 @@ const closeRedeemSuccessDialog = () => {
     -webkit-transform: scale(1);
     transform: scale(1);
   }
+}
+
+:deep(.form-field-label) {
+  color: #d9cfb8 !important;
 }
 </style>

@@ -22,23 +22,21 @@
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
-          <q-badge v-if="activeMethod.privilegeId" color="green" floating rounded>+{{ item.hotLabel }}</q-badge>
-          <q-badge v-if="isFtdPrivilegePayType" color="green" floating rounded>
-            +{{ getFtdCommaAmount(item.amount) }}
-          </q-badge>
-          <q-badge v-if="isNewUserFtdPrivilege" color="green" floating rounded>
+          <q-badge v-if="activeMethod.privilegeId" floating rounded>+{{ item.hotLabel }}</q-badge>
+          <q-badge v-if="isFtdPrivilegePayType" floating rounded>+{{ getFtdCommaAmount(item.amount) }}</q-badge>
+          <q-badge v-if="isNewUserFtdPrivilege" floating rounded>
             {{ getNewUserFtdAmount(item.amount) }}
           </q-badge>
-          <q-badge v-if="is2ndPrivilege" color="green" floating rounded>
+          <q-badge v-if="is2ndPrivilege" floating rounded>
             {{ get2ndAmount(item.amount) }}
           </q-badge>
-          <q-badge v-if="is3rdPrivilege" color="green" floating rounded>
+          <q-badge v-if="is3rdPrivilege" floating rounded>
             {{ get3rdAmount(item.amount) }}
           </q-badge>
-          <q-badge v-if="isNewPlayerPrivilege" color="green" floating rounded>
+          <q-badge v-if="isNewPlayerPrivilege" floating rounded>
             {{ getNewPlayerAmount(item.amount) }}
           </q-badge>
-          <q-badge v-if="isJazzcashCryptoPrivilege || isUsdtPrivilege" color="green" floating rounded>
+          <q-badge v-if="isJazzcashCryptoPrivilege || isUsdtPrivilege" floating rounded>
             {{ getJazzcashUsdtAmt(item.amount) }}
           </q-badge>
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
@@ -1561,7 +1559,6 @@ onBeforeRouteLeave((to, from, next) => {
       box-shadow: 0px 2px 0px 0px #2a3637;
       background: #394142;
       color: #ffffff80;
-
       font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-weight: 700;
       font-size: 16px;
@@ -1574,9 +1571,9 @@ onBeforeRouteLeave((to, from, next) => {
         // background: #00b900;
         color: #000a01;
         // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-        box-shadow: 0px 2px 0px 0px #1cca6a;
-        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-        color: #333333;
+        box-shadow: 0px 2px 0px 0px #907c5f;
+        background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+        color: #fff;
       }
     }
 
@@ -1734,7 +1731,7 @@ onBeforeRouteLeave((to, from, next) => {
 }
 
 .lil-title {
-  color: #d0d0d0;
+  color: #3a3a3a;
   font-weight: 600;
   white-space: nowrap;
 
@@ -1781,12 +1778,12 @@ onBeforeRouteLeave((to, from, next) => {
 }
 
 .tutorial-link {
-  color: #21ef89;
+  color: #3a3a3a;
   text-decoration: underline;
 }
 
 .step-desc-div {
-  color: #b2bdbf;
+  color: #907c5f;
 
   p {
     margin: 5px 0px;
@@ -1844,7 +1841,7 @@ onBeforeRouteLeave((to, from, next) => {
 </style>
 <style scoped>
 .description-text {
-  color: #b2bdbf;
+  color: #907c5f;
 }
 :deep(.description-text p) {
   margin: 5px 0px !important;

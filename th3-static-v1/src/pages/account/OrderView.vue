@@ -379,12 +379,15 @@ onActivated(() => {
 </script>
 
 <style lang="scss" scoped>
+.account-table-page {
+  padding-top: 20px;
+}
 .order-option-tab {
   background: #323738;
   background-size: 100% 100%;
   border-radius: 8px;
-  margin: 20px 16px 4px;
-  padding: 1px;
+  margin: 0 16px 4px;
+  // padding: 1px;
   font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
   font-size: 14px;
@@ -414,7 +417,7 @@ onActivated(() => {
   }
 
   :deep(.q-tab--active) {
-    background: #394142;
+    background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
     color: white;
     border-radius: 6px;
   }
@@ -455,7 +458,7 @@ onActivated(() => {
           font-size: 12px;
           line-height: 14px;
           letter-spacing: 0px;
-          color: #b2bdbf;
+          color: #d9cfb8;
           &.flex-c-end {
             color: #ffffff;
           }
@@ -501,7 +504,7 @@ onActivated(() => {
       }
 
       span.txt-gray {
-        color: #b2bdbf;
+        color: #d9cfb8;
         font-size: 12px;
         // background: rgba(136, 136, 136, 0.2);
       }

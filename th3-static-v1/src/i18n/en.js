@@ -117,7 +117,7 @@ export default {
     forgotPassword_desc: "Please provide email, we will send OTP to your registered email.",
     forgotPasswordPhone_desc: "Please provide phone number, we will send OTP to your registered phone.",
     register_agree_01: "I have Agree To The ",
-    register_agree_02: "Use Privacy Agreement",
+    register_agree_02: "「Use Privacy Agreement」",
     email: "Email",
     email_placeholder: "Please enter email",
     email_rules_01: "Please insert email",
@@ -326,7 +326,7 @@ export default {
     newpasswordupdated: "New password updated successfully",
     withdrewSuccessfully: "Withdraw successfully",
     noRecord: "No Record",
-    haventFoundAnyRecord: "Haven't found any record",
+    haventFoundAnyRecord: "Oops, no data yet",
     updatedSuccessfully: "Updated successfully",
     emailVerificationSent: "Email verification sent",
     messageSent: "Message Sent",
@@ -554,6 +554,7 @@ export default {
       inviteList_02: "Register via link",
       inviteList_03: "Complete deposit after registration",
       copyLink: "Copy Link",
+      copy: "copy",
       level: "Level",
       totalNoOfValidPlayersInvited: "Total number of valid invited players",
       invitationRewards: "Invitation rewards",
@@ -924,7 +925,7 @@ export default {
     bonus_claim_time: "Bonus claim time",
     promoEndsOn: "Promo Ends On",
     claimPopup: {
-      youWon: 'You won',
+      youWon: "You won",
       oneOfTodayWinners: "One of today's 77 lucky winners"
     },
     earnMoney: {
