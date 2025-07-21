@@ -786,9 +786,8 @@ $node-color: #309799;
     float: right;
   }
   .node-content {
-    display: flex;
-    align-items: stretch;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     padding: 5px 0;
     justify-content: flex-start;
     // border-bottom: 1px solid #EEEEEE;
