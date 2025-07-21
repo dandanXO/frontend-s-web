@@ -32,7 +32,7 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
-      h5Url: "",
+      h5Url: "https://www.tf88vip.com/",
       currency: { value: "VNDP", label: "VNDP" },
       personalAddress: "",
       unreadInboxMail: 0,

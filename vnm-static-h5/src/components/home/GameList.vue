@@ -24,6 +24,7 @@
   </div>
 </template>
 <script setup>
+import { userStore } from "src/stores";
 import MaintenanceBox from "../MaintenanceBox.vue";
 
 const props = defineProps({
@@ -33,9 +34,15 @@ const props = defineProps({
 
 defineEmits(["click"]);
 
+const store = userStore();
+
 const getImgPlatformBg = (platform, code, alias) => {
   try {
-    return `url(${require(`../../assets/images/home/${platform}/platform-item-${code.toLowerCase()}.png`)})`;
+    try {
+      return `url(${require(`../../assets/images/home/${platform}/platform-item-${code.toLowerCase()}.png`)})`;
+    } catch (e) {
+      return `url(${store.h5Url}static/images/index/${platform}/platform-item-${code.toLowerCase()}.png)`;
+    }
   } catch (e) {
     return `url(${require(`../../assets/images/home/${platform}/platform-item-empty.png`)})`;
   }
