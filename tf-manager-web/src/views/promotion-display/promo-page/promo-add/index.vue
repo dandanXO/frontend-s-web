@@ -302,13 +302,6 @@
         <el-row>
           <el-col>
             <el-form-item :label="t('fields.content')" prop="pageContent">
-              <el-input v-model="form.pageContent" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col>
-            <el-form-item :label="t('fields.content')" prop="pageContent">
               <!-- editor here -->
               <Editor v-model:value="form.pageContent" @input="getInput" />
             </el-form-item>
