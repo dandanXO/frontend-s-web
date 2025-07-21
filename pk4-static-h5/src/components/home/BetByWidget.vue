@@ -1,18 +1,33 @@
 <template>
-  <div ref="betByWidgetRef" />
+ <div ref="betByWidgetRef" @click="onWidgetClick" />
 </template>
+
 <script setup>
 import { storeToRefs } from "pinia";
 import { Platform } from "quasar";
 import { api } from "src/boot/axios";
 import { i18nStore } from "src/router/language";
 import { userStore } from "src/stores";
-import { onActivated, onDeactivated, ref } from "vue";
+import { onActivated, onDeactivated, ref, defineEmits, watch } from "vue";
 import { useRouter } from "vue-router";
 
 const store = userStore();
 const { languageVal } = storeToRefs(i18nStore());
 const router = useRouter();
+const emit = defineEmits(['click'])
+const generatedUrl = ref('')
+const onWidgetClick = () => {
+  if (generatedUrl.value) {
+    console.log("Widget clicked with generatedUrl:", generatedUrl.value);
+    emit('click', generatedUrl.value);
+  }
+};
+
+watch(generatedUrl, (newVal, oldVal) => {
+  if (newVal && newVal !== oldVal) {
+    onWidgetClick();
+  }
+});
 
 const betByWidgetRef = ref(null);
 const betByInstance = ref(null);
@@ -96,6 +111,7 @@ const generateBetByInstance = (token) => {
 
       onOutcomeClick: ({ url }) => {
         console.log("Outcome clicked:", url);
+        generatedUrl.value = url;
       }
     }
   });
