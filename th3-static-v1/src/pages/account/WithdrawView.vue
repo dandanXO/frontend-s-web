@@ -1302,12 +1302,12 @@ watch(
 }
 
 .tutorial-link {
-  color: #13f129;
+  color: #3a3a3a;
   text-decoration: underline;
 }
 .step-desc-div {
   margin-bottom: 105px;
-  color: #b2bdbf;
+  color: #907c5f;
 
   p {
     margin: 5px 0px;
@@ -1361,7 +1361,8 @@ watch(
       // box-shadow: none;
       // filter: drop-shadow(0px 0px 3px #ffffff);
       img {
-        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+        // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+        background: #76674c;
       }
 
       .type-name {
@@ -1472,7 +1473,7 @@ watch(
       justify-content: center;
       align-items: center;
       span {
-        color: #21ef89;
+        color: #fff;
         &.orange {
           color: #fbab1b;
         }
@@ -1576,12 +1577,11 @@ watch(
     align-items: center;
     justify-content: center;
     height: 40px;
-    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-    color: #000000;
-    box-shadow: 0px 2px 0px 0px #1cca6a;
+    background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+    color: #fff;
+    box-shadow: 0px 2px 0px 0px #907c5f;
     font-weight: 700;
     border-radius: 4px;
-    border: 1px solid #21ef89;
     padding: 5px;
     min-width: 68px;
     text-transform: uppercase;

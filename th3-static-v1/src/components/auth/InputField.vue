@@ -14,7 +14,7 @@ const props = defineProps(["label"]);
   // margin-top: 6px;
   // color: #98a6b4;
   margin: 3px 0;
-  color: #b2bdbf;
+  color: #3a3a3a;
   font-weight: 700;
 }
 

@@ -1767,13 +1767,13 @@ onBeforeRouteLeave((to, from, next) => {
 .bottom-btn {
   margin-top: auto;
   padding: 20px 15px 40px;
-  // position: fixed;
-  // bottom: 0;
+  position: fixed;
+  bottom: 0;
   width: 100%;
   max-width: 468px;
-  // left: 50%;
-  // transform: translateX(-50%);
-  // background-color: #24262b;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #24262b;
   // margin: 16px;
 }
 

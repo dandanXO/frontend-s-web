@@ -241,8 +241,8 @@ $node-color: #b81212;
           // border-width: 2px;
           box-shadow: unset;
           // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-          background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
-          // background: #bd9242;
+          // background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+          background: #76674c;
           // box-shadow: 0px 2px 0px 0px #907c5f;
 
           // &:before {
