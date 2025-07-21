@@ -227,6 +227,10 @@ export default defineComponent({
       );
     };
 
+    const errorHandler = (error) => {
+      console.error("File error: " + error.code);
+    };
+
     const setStatusBarColor = async () => {
       AddressbarColor.set("#ffffff");
       if (Platform.is.capacitor && Platform.is.android) {
