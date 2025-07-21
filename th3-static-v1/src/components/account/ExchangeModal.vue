@@ -200,8 +200,14 @@ const closeRedeemSuccessDialog = () => {
     border-radius: 5px;
     position: relative;
 
+    :deep(.q-field__control) {
+      background: #ffffff14;
+    }
     :deep(.q-field__native) {
-      color: #ffffff;
+      color: #fff;
+    }
+    :deep(.q-field__native::placeholder) {
+      color: #ffffff33;
     }
   }
 
