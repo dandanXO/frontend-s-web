@@ -188,7 +188,7 @@
                 </div>
                 <div
                   class="q-mt-sm q-mb-sm text-center"
-                  v-if="selectedWithdrawalMethod.code !== 'SZPAY' && tutorialLabel()"
+                  v-if="selectedWithdrawalMethod.code !== 'SZPAY' && selectedWithdrawalMethod.code !== 'NINEPAY' && tutorialLabel()"
                 >
                   <span style="text-decoration: underline; color: #fff" @click="openEWalletTutorial">
                     {{ `*${tutorialLabel()}` }}
