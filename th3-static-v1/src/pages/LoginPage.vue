@@ -13,7 +13,7 @@
   <div class="login-container" :class="isRestrictedDomain ? 'w-domain' : ''">
     <div class="back-left" v-if="!isRestrictedDomain">
       <router-link :to="'/home'">
-        <img src="../assets/images/index/btn-house.png" />
+        <img src="../assets/images/index/close-btn-brown.png" />
       </router-link>
     </div>
     <!--
@@ -60,10 +60,10 @@
                   color="green"
                   :placeholder="$t('form.phone_placeholder')"
                 >
-                  <template v-slot:prepend>
+                  <!-- <template v-slot:prepend>
                     <q-icon name="smartphone" />
                     <div class="prepend-number">+92</div>
-                  </template>
+                  </template> -->
                 </q-input>
               </template>
             </InputField>
@@ -82,9 +82,9 @@
                   color="green"
                   :placeholder="$t('form.password_placeholder')"
                 >
-                  <template v-slot:prepend>
+                  <!-- <template v-slot:prepend>
                     <q-icon name="lock" />
-                  </template>
+                  </template> -->
                   <template v-slot:append>
                     <!-- <q-icon
                       color="gray-3"
@@ -249,6 +249,18 @@
     <!-- <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div> -->
+    <a
+      class="license"
+      href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img class="license-img" src="../assets/images/license/curacao-license.png" />
+      <div class="license-text-wrapper">
+        <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
+        <span class="license-text__description">{{ $t("sideNav.license.curacao.description") }}</span>
+      </div>
+    </a>
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -1020,7 +1032,7 @@ export default defineComponent({
     }
   }
   .forget-pwd {
-    color: #9f9f9f;
+    color: #b99c73;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -1111,12 +1123,17 @@ export default defineComponent({
 
   .license {
     display: flex;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    width: 100%;
     .license-img {
       max-width: 47px;
-      margin-right: 4px;
+      margin-right: 6px;
       margin-bottom: 0;
     }
     .license-text-wrapper {
@@ -1125,7 +1142,7 @@ export default defineComponent({
       span {
         margin-bottom: 0;
         font-weight: 600;
-        color: #ffffff99;
+        color: #3a3a3a;
       }
       .license-text__title {
         font-size: 12px;
@@ -1177,7 +1194,7 @@ export default defineComponent({
   line-height: 100%;
   letter-spacing: 0px;
   vertical-align: middle;
-  color: #ffffff;
+  color: #3a3a3a;
   padding: 0 20px;
 }
 
@@ -1222,7 +1239,7 @@ export default defineComponent({
 
 .prepend-number {
   font-size: 14px;
-  color: #ffffff;
+  color: #d9cfb8;
   margin-left: 8px;
 }
 
@@ -1259,8 +1276,8 @@ export default defineComponent({
   border: none;
   padding: 3px 20px 8px;
   .btn-primary {
-    background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
-    color: #000a01;
+    // background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
+    // color: #000a01;
     @media screen and (max-width: 400px) {
       min-height: 35px;
       height: 35px;
@@ -1333,6 +1350,7 @@ export default defineComponent({
 }
 .areyounew {
   margin: 15px 0;
+  color: #3a3a3a;
 
   @media screen and (max-width: 400px) {
     margin: 10px 0;
@@ -1340,7 +1358,7 @@ export default defineComponent({
   }
 
   .green {
-    color: #21ef89;
+    color: #b99c73;
     font-weight: 700;
     cursor: pointer;
   }

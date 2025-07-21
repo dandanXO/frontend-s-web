@@ -850,7 +850,7 @@ body.body--dark .q-footer {
 }
 .btn-register {
   height: 34px;
-  font-weight: 600;
+  // font-weight: 600;
   border-radius: 6px;
   position: relative;
   background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
@@ -861,12 +861,12 @@ body.body--dark .q-footer {
 // secondary btn
 .btn-secondary {
   height: 34px;
-  font-weight: 600;
+  // font-weight: 600;
   border-radius: 6px;
   position: relative;
-  background: #1f2121;
+  background: #fff;
   box-shadow: unset;
-  color: #ffffff;
+  color: #3a3a3a;
   border: 1px solid #ffffff14;
   padding: 5px;
   &:before {

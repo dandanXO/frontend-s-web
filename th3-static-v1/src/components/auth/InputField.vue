@@ -24,17 +24,31 @@ const props = defineProps(["label"]);
     padding-right: 10px;
     border-radius: 10px;
     // background-color: #0b0e0d;
-    background-color: #0b0e0d;
-    border: 1px solid #ffffff14;
-    background: #292d2e;
+    background-color: #ffffff;
+    background: #fff;
     font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 14px;
     line-height: 100%;
     letter-spacing: 0px;
     vertical-align: middle;
-    color: #b2bdbf;
+    color: #d9cfb8;
     height: unset;
+    // border: 1px solid #907c5f;
+    border: 1px solid transparent;
+    background: linear-gradient(#fff, #fff) padding-box,
+      /* inner background */ linear-gradient(90deg, #76674c, #cec6ae) border-box; /* border gradient */
+    .q-field__suffix,
+    .q-field__append,
+    .q-field__prepend {
+      color: #d9cfb8;
+    }
+  }
+  :deep(.q-field__native) {
+    color: #d9cfb8;
+  }
+  :deep(.q-field__input) {
+    color: #d9cfb8;
   }
   :deep(.q-field__control):before {
     // border-color: #072a19;
