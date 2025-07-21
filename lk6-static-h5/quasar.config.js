@@ -91,14 +91,19 @@ module.exports = configure(function (ctx) {
 
         cfg.plugins.push(
           new ContextReplacementPlugin(/moment[\/\\]locale$/, /zh-cn/),
-          new ESLintPlugin({ extensions: ["js", "vue"] }),
-          new CompressionWebpackPlugin({
-            algorithm: "gzip",
-            test: /\.(js|css|html|svg)$/,
-            threshold: 10240,
-            minRatio: 0.8
-          })
+          new ESLintPlugin({ extensions: ["js", "vue"] })
         );
+
+        if (!ctx.mode.capacitor) {
+          cfg.plugins.push(
+            new CompressionWebpackPlugin({
+              algorithm: "gzip",
+              test: /\.(js|css|html|svg)$/,
+              threshold: 10240,
+              minRatio: 0.8
+            })
+          );
+        }
 
         cfg.module.rules.push({
           test: /\.(jpe?g|png|gif|svg)$/i,
