@@ -188,7 +188,7 @@
                 </div>
                 <div
                   class="q-mt-sm q-mb-sm text-center"
-                  v-if="selectedWithdrawalMethod.code !== 'SZPAY' && selectedWithdrawalMethod.code !== 'NINEPAY' && tutorialLabel()"
+                  v-if="selectedWithdrawalMethod.code !== 'SZPAY' && tutorialLabel()"
                 >
                   <span style="text-decoration: underline; color: #fff" @click="openEWalletTutorial">
                     {{ `*${tutorialLabel()}` }}
@@ -251,7 +251,7 @@
             <div class="q-mt-sm text-neontb">*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</div>
             <div
               class="q-mt-sm q-mb-sm text-center"
-              v-if="selectedWithdrawalMethod.code !== 'SZPAY' && !$q.dark.isActive"
+              v-if="selectedWithdrawalMethod.code !== 'SZPAY' && selectedWithdrawalMethod.code !== 'NINEPAY' && !$q.dark.isActive"
             >
               <q-btn
                 style="border: 1px solid #33bcd4; color: #33bcd4"
