@@ -155,7 +155,7 @@ import {
   shallowRef,
   computed,
   nextTick,
-  onMounted,
+  onMounted, onUnmounted, onDeactivated
 } from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
@@ -670,7 +670,14 @@ onMounted(()=>{
   }else{
     console.error('wrong game')
   }
+})
 
+onUnmounted(()=>{
+  if (betbyInstance.value) {
+    // console.log("KILL BetBy")
+    betbyInstance.value.kill();
+    betbyInstance.value= null;
+  }
 })
 
 defineExpose({
