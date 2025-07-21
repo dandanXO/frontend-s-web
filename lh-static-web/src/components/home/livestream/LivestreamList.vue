@@ -8,7 +8,7 @@
         }"
         @click="handleLivestreamClick(live.streamId)"
       >
-        <div class="livestream-list-item__title">{{ live.title }}</div>
+        <div class="livestream-list-item__title" :title="live.title">{{ live.title }}</div>
         <div class="livestream-list-item__match-info">
           <div class="livestream-list-item__match-info__team">
             <div class="livestream-list-item__match-info__team-emblem">
@@ -156,7 +156,7 @@ watch(list, async (newVal, oldVal) => {
     --livestream-img-size: 60px;
     @include livestream-content-block;
     position: relative;
-    padding: 11px 0;
+    padding: 40px 0 12px;
     margin: calc(var(--livestream-img-size) / 2 + var(--livestream-badge-gap)) 0 0;
     cursor: pointer;
 
@@ -177,12 +177,16 @@ watch(list, async (newVal, oldVal) => {
     }
 
     .livestream-list-item__title {
-      margin-bottom: 10px;
-      font-size: 15px;
-      line-height: 21px;
+      margin-bottom: 13px;
+      padding: 0 10px;
+      overflow: hidden;
+      font-size: 16px;
+      line-height: 22px;
       font-weight: 500;
       text-align: center;
       color: #333333;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .livestream-list-item__match-info {
       display: flex;
@@ -192,7 +196,7 @@ watch(list, async (newVal, oldVal) => {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 7px;
+        gap: 8px;
         flex-basis: 33%;
         max-width: 33%;
         .livestream-list-item__match-info__team-emblem {
@@ -200,7 +204,7 @@ watch(list, async (newVal, oldVal) => {
         }
         .livestream-list-item__match-info__team-name {
           font-size: 12px;
-          line-height: 15px;
+          line-height: 17px;
           color: #7a80a1;
           text-overflow: ellipsis;
           overflow: hidden;
