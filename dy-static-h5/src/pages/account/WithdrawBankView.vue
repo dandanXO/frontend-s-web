@@ -829,6 +829,11 @@ export default defineComponent({
             selectedCode = bank.code
           }
         });
+
+        if (!/^[a-zA-Z0-9]+$/.test(val)) {
+          return '请输入有效的电子钱包号码';
+        }
+
         if (selectedCode === 'KDPAY') {
           return (val.length > 33 && val.length < 35) || '长度应为34个字符'
         } else if(selectedCode === 'EBPAY') {
