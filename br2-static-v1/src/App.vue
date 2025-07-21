@@ -110,6 +110,9 @@ export default defineComponent({
         //Normal WEb / H5 / PWa.
         console.log("Init Web Adjust");
         console.log(affAppToken.value);
+        if(affAppToken.value === undefined){
+          return;
+        }
         const AdjustWeb = require("@adjustcom/adjust-web-sdk");
         const savedAdjustReferrer = sessionStorage.getItem("ADJUST_REFERRER");
         if (savedAdjustReferrer) {
@@ -361,7 +364,7 @@ export default defineComponent({
     const router = useRouter();
     const checkServerStatus = () => {
       axios.get(`https://sumbtf.tebarncale.com/server/status/${process.env.SITE}`).then((response) => {
-        if (response.data.code === 0) {
+        if (response.data.code === 0 && response.data.data) {
           console.log("responseStatus:", response.data.data.status);
           if (response.data.data.status === "CLOSED") {
             router.replace(`/maintenance`);

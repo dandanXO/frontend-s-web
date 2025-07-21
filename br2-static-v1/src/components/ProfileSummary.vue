@@ -165,7 +165,7 @@
   <div class="menu-open" :class="{ open: menuOpen }" @click="toggleMenuOpen()">
     <div style="height: 56px" v-if="topDownload && !uiStore.hideDownload"></div>
     <div class="menu-open-inner">
-      <SideMenu @closeMenu="toggleMenuOpen()" @gameClick="gameClick" />
+      <SideMenu @closeMenu="toggleMenuOpen()" @gameClick="gameClick"  />
     </div>
   </div>
 </template>
@@ -186,6 +186,9 @@ const route = useRoute();
 const router = useRouter();
 const store = userStore();
 const uiStore = useUI();
+
+import { provide } from 'vue'
+provide('topDownload', false)
 
 const menuOpen = ref(false);
 
