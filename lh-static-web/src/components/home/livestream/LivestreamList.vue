@@ -153,7 +153,7 @@ watch(list, async (newVal, oldVal) => {
 
   .livestream-list-item {
     --livestream-badge-gap: 6px;
-    --livestream-img-size: 60px;
+    --livestream-img-size: 62px;
     @include livestream-content-block;
     position: relative;
     padding: 40px 0 12px;
@@ -236,7 +236,7 @@ watch(list, async (newVal, oldVal) => {
 
     .livestream-list-item__badge-wrapper {
       position: absolute;
-      top: calc(-1 * var(--livestream-badge-gap));
+      top: 0;
       left: 0;
       margin-left: calc(var(--livestream-img-size) / 2 + var(--livestream-badge-gap));
       transform: translateY(-50%);
