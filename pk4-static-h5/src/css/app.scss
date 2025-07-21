@@ -547,6 +547,9 @@ body.body--dark .q-footer {
   align-content: center;
   justify-content: center;
 }
+.fullscreen {
+    z-index: 9999;
+}
 // .fullscreen {
 //   max-width: 500px;
 //   margin: 0 auto;
