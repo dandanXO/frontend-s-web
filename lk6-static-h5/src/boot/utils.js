@@ -98,7 +98,7 @@ export const getTimeout = (key) => {
     : 0; // No timeout found
 };
 
-export const getImageUrl = (srcPath) => require(`/src/assets/${srcPath}`);
+// export const getImageUrl = (srcPath) => require(`/src/assets/${srcPath}`);
 
 export const getVisitorId = async () => {
   const { getData } = useVisitorData({ extendedResult: true }, { immediate: false });
@@ -167,4 +167,15 @@ export const writeClipboard = async (content, useExecCommand = false) => {
       });
     }
   }
+};
+
+export const generateEventID = () => {
+  return `evt_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
+};
+
+export const isInPwa = () => {
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  const hasRbKey = Object.keys(localStorage).some((key) => key.startsWith("__rb_"));
+  const hasPwa = sessionStorage.getItem("IS_PWA");
+  return isStandalone || hasRbKey || hasPwa;
 };

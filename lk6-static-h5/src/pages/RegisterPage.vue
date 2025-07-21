@@ -293,7 +293,8 @@ export default defineComponent({
       captchaCode: "",
       regHost: location.hostname,
       codeId: "",
-      codeAffiliate: ""
+      codeAffiliate: "",
+      traceId: ""
     });
 
     const getAffiliateCode = () => {
@@ -372,7 +373,7 @@ export default defineComponent({
       return namePattern.test(regForm.loginName) || "用户名不允许使用特殊字符";
     };
 
-    const sidParam = store.visitorId;
+    const sidParam = store.googleadid || store.aaid || store.visitorId;
 
     const onSubmit = () => {
       loginNameRef.value.validate();
@@ -385,6 +386,9 @@ export default defineComponent({
       if (loginNameRef.value.hasError || pwdRef.value.hasError || confirmPwdRef.value.hasError) {
         return;
       }
+      if (store.aaid) {
+        regForm.traceId = store.aaid;
+      }
       const regDevice = Platform.is.mobile ? "H5" : "WEB";
       config.loginData = {
         loginName: regForm.loginName,
@@ -395,7 +399,8 @@ export default defineComponent({
         regDevice: regDevice,
         password: regForm.password,
         confirmPwd: regForm.confirmPwd,
-        type: "SLIDER"
+        type: "SLIDER",
+        traceId: regForm.traceId
       };
       window
         .initTAC("./tac", config, style)

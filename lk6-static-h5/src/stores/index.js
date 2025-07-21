@@ -48,7 +48,10 @@ export const userStore = defineStore("userStore", {
       visitorId: "",
       withdrawType: "",
       chatGuid: "",
-      profilePhoto: ""
+      profilePhoto: "",
+      aaid: "",
+      googleadid: "",
+      visitorId: ""
     };
   },
   actions: {

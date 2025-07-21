@@ -20,6 +20,18 @@
     "dev": "quasar dev"
   },
   "dependencies": {
+    "@aashu-dubey/capacitor-statusbar-safe-area": "^3.0.0",
+    "@adjustcom/adjust-web-sdk": "^5.7.2",
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/app": "^6.0.0",
+    "@capacitor/browser": "^6.0.0",
+    "@capacitor/clipboard": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/device": "^6.0.0",
+    "@capacitor/filesystem": "^6.0.3",
+    "@capacitor/preferences": "^6.0.0",
+    "@capacitor/splash-screen": "^6.0.3",
+    "@capacitor/status-bar": "^6.0.2",
     "@fingerprintjs/fingerprintjs": "^3.4.0",
     "@fingerprintjs/fingerprintjs-pro-vue-v3": "^1.5.0",
     "@quasar/extras": "^1.0.0",
