@@ -326,7 +326,7 @@ export default {
     newpasswordupdated: "New password updated successfully",
     withdrewSuccessfully: "Withdraw successfully",
     noRecord: "No Record",
-    haventFoundAnyRecord: "Haven't found any record",
+    haventFoundAnyRecord: "Oops, no data yet",
     updatedSuccessfully: "Updated successfully",
     emailVerificationSent: "Email verification sent",
     messageSent: "Message Sent",

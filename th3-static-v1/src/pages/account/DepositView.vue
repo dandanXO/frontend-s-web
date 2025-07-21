@@ -1573,7 +1573,7 @@ onBeforeRouteLeave((to, from, next) => {
         // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
         box-shadow: 0px 2px 0px 0px #907c5f;
         background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
-        color: #333333;
+        color: #fff;
       }
     }
 
@@ -1841,7 +1841,7 @@ onBeforeRouteLeave((to, from, next) => {
 </style>
 <style scoped>
 .description-text {
-  color: #b2bdbf;
+  color: #907c5f;
 }
 :deep(.description-text p) {
   margin: 5px 0px !important;

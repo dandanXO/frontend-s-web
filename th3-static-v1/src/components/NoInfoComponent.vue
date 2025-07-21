@@ -29,7 +29,7 @@ const props = defineProps(["noInfoTitle", "shortenContainer"]);
   }
 
   p {
-    color: #b3b0b8;
+    color: #3a3a3a;
     font-size: 14px;
   }
 
