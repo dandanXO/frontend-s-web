@@ -24,6 +24,9 @@
           <q-badge v-if="selectedPrivilege.code === 'br2-ftd-bonus'" color="green" floating rounded>
             +{{ getFtdCommaAmount(item.amount) }}
           </q-badge>
+          <q-badge v-if="selectedPrivilege.code === 'br2-first-deposit-once'" color="green" floating rounded>
+            +{{ getFtd100CommaAmount(item.amount) }}
+          </q-badge>
 
           <div :class="['deposit-amt', item.isActive && 'active']">{{ convertToCommaAmount(item.amount) }}</div>
           <div :class="['deposit-svg', item.isActive && 'active']">
@@ -104,6 +107,13 @@
             style="width: calc(100% - 18px); margin: 10px auto 8px"
           >
             Você receberá um bônus extra Rs{{ getFtdCommaAmount(form.localAmount) }}
+          </div>
+          <div
+            v-else-if="selectedPrivilege.code === 'br2-first-deposit-once' && form.localAmount"
+            class="font-small text-tealgreen"
+            style="width: calc(100% - 18px); margin: 10px auto 8px"
+          >
+            Você receberá um bônus extra Rs{{ getFtd100CommaAmount(form.localAmount) }}
           </div>
 
           <q-input
@@ -420,10 +430,21 @@ const getFtdCommaAmount = (amount) => {
   if (amount > 50) {
     return 50
   } else {
+    return parseFloat(amount / 2).toFixed(2);
+  }
+
+};
+
+const getFtd100CommaAmount = (amount) => {
+  if (amount > 50) {
+    return 50
+  } else {
     return amount;
   }
 
 };
+
+
 
 const get2ndDepoCommaAmount = (amount) => {
   if (amount < 1440) {
