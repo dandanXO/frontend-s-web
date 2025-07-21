@@ -97,7 +97,7 @@
               style="width: 20px; height: 20px; margin-right: 10px"
               preview
             />
-            <span>{{ slotProps.data.homeNameZh || slotProps.data.homeName }}</span>
+            <span>{{ slotProps.data.homeNameZh || slotProps.data.homeNameEn || slotProps.data.homeName }}</span>
           </div>
         </template>
       </Column>
@@ -110,7 +110,7 @@
               preview
               style="width: 20px; height: 20px; margin-right: 10px"
             />
-            <span>{{ slotProps.data.awayNameZh || slotProps.data.awayName }}</span>
+            <span>{{ slotProps.data.awayNameZh || slotProps.data.awayNameEn || slotProps.data.awayName }}</span>
           </div>
         </template>
       </Column>
@@ -412,6 +412,7 @@
             showTime
             hourFormat="24"
             dateFormat="yy-mm-dd"
+            timeFormat="HH:mm:ss"
             :showSeconds="true"
             :class="{ 'p-invalid': validationErrors.eventStartTime }"
           />
@@ -426,6 +427,7 @@
             showTime
             hourFormat="24"
             dateFormat="yy-mm-dd"
+            timeFormat="HH:mm:ss"
             :showSeconds="true"
             :class="{ 'p-invalid': validationErrors.eventEndTime }"
           />
