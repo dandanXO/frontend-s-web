@@ -322,11 +322,11 @@
                     style="width: 300px;"
                   >
                     <el-option
-                      v-for="item in ruleTypeList.list.filter(x => !form.ruleList.some(y => y.variable === x.value))"
+                      v-for="item in ruleTypeList.list"
                       :key="item.value"
                       :label="item.name"
                       :value="item.value"
-                      :disabled="form.ruleList.some(y => y.variable === item.value)"
+                      :disabled="false"
                     />
                   </el-select>
                 </template>
@@ -944,9 +944,7 @@ async function loadWithdrawReviewRule() {
     item.paymentTypeCode = 'ALL'
     item.status = item.value === '1'
     item.reviewRule = item.describes
-    console.log('Loading review rule:', item.reviewRule);
     item.reviewRuleList = getValueList(item.reviewRule)
-    console.log('Parsed review rule list:', item.reviewRuleList);
     item.reviewRuleDisplay = createVariableValueString(item.reviewRuleList)
     item.siteId = request.siteId
   })
@@ -964,6 +962,8 @@ function createVariableValueString(originalData) {
           return riskItem ? riskItem.levelName : '';
         });
         item.value = riskNames.join(',');
+        item.variable = t('withdrawRuleType.risk');
+        item.operator = ''; // Remove the 'matches' operator to use ' : ' format
       }
       if (item.variable === 'matches \'.*,\' + T(String).valueOf(#financialLevel) + \',.*\'') {
         const financialNames = item.value.map(val => {
@@ -971,6 +971,8 @@ function createVariableValueString(originalData) {
           return financialItem ? financialItem.name : '';
         });
         item.value = financialNames.join(',');
+        item.variable = t('withdrawRuleType.financialLevel');
+        item.operator = ''; // Remove the 'matches' operator to use ' : ' format
       }
       if (item.variable === 'matches \'.*,\' + T(String).valueOf(#vipLevel) + \',.*\'') {
         const vipNames = item.value.map(val => {
@@ -978,9 +980,20 @@ function createVariableValueString(originalData) {
           return vipItem ? vipItem.name : '';
         });
         item.value = vipNames.join(',');
+        item.variable = t('withdrawRuleType.vip');
+        item.operator = ''; // Remove the 'matches' operator to use ' : ' format
       }
-      const variableName = ruleType.list.find(a => a.value === item.variable)?.name;
-      item.variable = variableName ?? item.variable;
+      // Handle platform rules - keep original display format
+      if (item.variable.startsWith('#betCountByPlatform_')) {
+        const variableName = ruleType.list.find(a => a.value === item.variable)?.name;
+        item.variable = variableName ?? item.variable;
+        if (Array.isArray(item.value)) {
+          item.value = item.value.join(', ');
+        }
+      } else {
+        const variableName = ruleType.list.find(a => a.value === item.variable)?.name;
+        item.variable = variableName ?? item.variable;
+      }
       // Include operator in display if it exists
       if (item.operator && item.operator.trim() !== '') {
         return `${item.variable} ${item.operator} ${item.value}`;
@@ -1375,20 +1388,16 @@ function edit() {
 }
 
 function createConditionString(data, isReviewRule = false) {
-  console.log('createConditionString input:', { data, isReviewRule });
   const conditions = data.map(item => {
     const variable = item.variable.trim();
     const value = item.value;
     const operator = item.operator;
-    console.log('Processing item:', { variable, value, operator });
     if (variable !== '' && value !== null && value !== undefined) {
       const ruleTypeObj = ruleType.list.find(rt => rt.value === variable);
-      console.log('Found ruleTypeObj:', ruleTypeObj);
       // Handle balance rules first (before general operator format)
       if (variable === '#balance#totalDeposit*') {
         if (isReviewRule && operator) {
           const result = `#balance${operator}#totalDeposit*${value}`;
-          console.log('Balance totalDeposit result:', result);
           return result;
         }
         return `#balance<#totalDeposit*${value}`;
@@ -1396,7 +1405,6 @@ function createConditionString(data, isReviewRule = false) {
       if (variable === '#balance#todayDeposit*') {
         if (isReviewRule && operator) {
           const result = `#balance${operator}#todayDeposit*${value}`;
-          console.log('Balance todayDeposit result:', result);
           return result;
         }
         return `#balance<#todayDeposit*${value}`;
@@ -1404,7 +1412,6 @@ function createConditionString(data, isReviewRule = false) {
       // Handle general operator format for other rules
       if (isReviewRule && ruleTypeObj && ruleTypeObj.supportsOperators) {
         if (!operator) return null;
-        console.log('Using general operator format:', `${variable} ${operator} ${value}`);
         return `${variable} ${operator} ${value}`;
       }
       if (variable.includes('matches')) {
@@ -1426,19 +1433,15 @@ function createConditionString(data, isReviewRule = false) {
       // For auto withdraw rule, use operator if available
       if (operator && operator.trim() !== '') {
         const result = `${variable} ${operator} ${value}`;
-        console.log('Auto withdraw with operator result:', result);
         return result;
       } else {
         const result = `${variable} ${value}`;
-        console.log('Auto withdraw without operator result:', result);
         return result;
       }
     }
-    console.log('Skipping empty item');
     return null;
   }).filter(Boolean);
   const finalResult = conditions.join(' and ');
-  console.log('Final result:', finalResult);
   return finalResult;
 }
 
@@ -1577,14 +1580,10 @@ function switchReviewRuleMode(mode) {
   uiControl.reviewRuleEditMode = mode;
   if (mode === 'direct') {
     // Convert form data to direct edit string
-    console.log('Switching to direct mode, form data:', form.reviewRuleList);
     form.reviewRuleDirectEdit = createConditionString(form.reviewRuleList, true);
-    console.log('Generated direct edit string:', form.reviewRuleDirectEdit);
   } else {
     // Convert direct edit string to form data
-    console.log('Switching to form mode, direct string:', form.reviewRuleDirectEdit);
     form.reviewRuleList = getValueList(form.reviewRuleDirectEdit);
-    console.log('Parsed form data:', form.reviewRuleList);
     // Ensure we have at least one empty row if the list is empty
     if (!form.reviewRuleList || form.reviewRuleList.length === 0) {
       form.reviewRuleList = [{ variable: '', operator: '', value: null }];
@@ -1594,26 +1593,21 @@ function switchReviewRuleMode(mode) {
 
 // Function to validate direct edit rule syntax
 function validateDirectEditRule() {
-  console.log('validateDirectEditRule called with:', form.reviewRuleDirectEdit);
   uiControl.directEditValidationErrors = [];
   const ruleString = form.reviewRuleDirectEdit;
   if (!ruleString || ruleString.trim() === '') {
-    console.log('Empty string, returning');
     return; // Empty string is valid
   }
   // Get valid rule variables based on current tab (review rule vs auto withdraw rule)
   const validRuleVariables = uiControl.isShowReviewRule
     ? ruleType.list.map(rule => rule.value)
     : ruleTypeList.list.map(rule => rule.value);
-  console.log('Valid rule variables:', validRuleVariables);
   // Track operators used for each variable to check for logical conflicts
   const variableOperators = new Map();
   // Split by 'and' to check each condition
   const conditions = ruleString.split(/\s+and\s+/).filter(condition => condition.trim());
-  console.log('Split conditions:', conditions);
   conditions.forEach((condition, index) => {
     const trimmedCondition = condition.trim();
-    console.log(`Processing condition ${index + 1}: "${trimmedCondition}"`);
     // Check for balance rules first
     const balanceMatch = trimmedCondition.match(/#balance\s*(<=|>=|==|!=|<|>)\s*(#totalDeposit|#todayDeposit)\*\s*(\d+(?:\.\d+)?)/);
     if (balanceMatch) {
@@ -1688,7 +1682,6 @@ function validateDirectEditRule() {
       return;
     }
     // If none of the above patterns match, it's an invalid condition
-    console.log(`No pattern matched for condition: "${trimmedCondition}"`);
     uiControl.directEditValidationErrors.push(`Condition ${index + 1}: Invalid syntax "${trimmedCondition}". Check your rule format.`);
   });
 
@@ -1701,7 +1694,6 @@ function validateDirectEditRule() {
       uiControl.directEditValidationErrors.push(t('message.logicalConflict', { variable }));
     }
   });
-  console.log('Final validation errors:', uiControl.directEditValidationErrors);
 }
 onMounted(async() => {
   await loadSites()
