@@ -220,6 +220,7 @@ export default route(function (/* { store, ssrContext } */) {
     // }
 
     // Fallback: parse manually from fullPath if not present in query
+    let btPath = from.query['bt-path'];
     if (!btPath && from.fullPath.includes('bt-path=')) {
       const queryString = from.fullPath.split('?')[1] || '';
       const params = new URLSearchParams(queryString);
