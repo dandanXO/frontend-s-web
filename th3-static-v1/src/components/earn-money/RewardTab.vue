@@ -580,7 +580,7 @@ const copyHrefLink = async () => {
   if (navigator.share) {
     try {
       await navigator.share({
-        title: "b9.game",
+        title: "SuperSiam",
         text: "Pakistan real money games",
         url: textToCopy
       });

@@ -799,10 +799,10 @@ export default {
     visitLink: "لنک دیکھیں"
   },
   customerServiceVerifier: {
-    mainTitle: "B9.GAME",
+    mainTitle: "SuperSiam",
     subTitle: "کسٹمر سروس ویریفائر",
     contentPara01:
-      "B9.GAME کی فہرست کا استعمال کرتے ہوئے دھوکہ دہی سے بچنے کے لیے، آپ جس ٹیلیگرام یا ڈسکارڈ اکاؤنٹ سے بات کر رہے ہیں، اسے تصدیق&nbsp;کر&nbsp;سکتے&nbsp;ہیں",
+      "SuperSiam کی فہرست کا استعمال کرتے ہوئے دھوکہ دہی سے بچنے کے لیے، آپ جس ٹیلیگرام یا ڈسکارڈ اکاؤنٹ سے بات کر رہے ہیں، اسے تصدیق&nbsp;کر&nbsp;سکتے&nbsp;ہیں",
     contentPara02: "براہ کرم ایجنٹ اکاؤنٹ آئی ڈی درج کریں اور چیک بٹن پر کلک کریں"
   },
   playerGuide: {

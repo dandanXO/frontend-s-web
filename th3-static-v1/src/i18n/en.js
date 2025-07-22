@@ -810,7 +810,7 @@ export default {
     visitLink: "Visit link"
   },
   customerServiceVerifier: {
-    mainTitle: "B9.GAME",
+    mainTitle: "SuperSiam",
     subTitle: "Customer Service Verifier",
     contentPara01:
       "To prevent scams using B9.GAME's list, you can verify the Telegram or Discord account you are chatting&nbsp;with ",
