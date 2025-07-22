@@ -1261,7 +1261,7 @@ export default {
     paymentType: '결제 유형',
     payout: '지급',
     payoutTotal: '총 지급 금액',
-    resend_saba_payout: 'SABA 지급금 재전송',
+    resend_saba_payout: '지급금 재전송',
     check_saba_ticket: 'SABA 티켓 확인',
     return_ratio: '환급률',
     return_ratio_total: '총 수익률',

@@ -1507,7 +1507,7 @@ export default {
     paymentType: 'Payment Type',
     payout: 'Payout',
     payoutTotal: 'Total Payout',
-    resend_saba_payout: 'Resend SABA Payout',
+    resend_saba_payout: 'Resend Payout',
     check_saba_ticket: 'Check SABA Ticket',
     return_ratio: 'Ratio Return',
     return_ratio_total: 'Total Ratio Return',

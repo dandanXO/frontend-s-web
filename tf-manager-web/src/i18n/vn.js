@@ -1240,7 +1240,7 @@ export default {
     paymentType: 'Loại thanh toán',
     payout: 'Thanh toán',
     payoutTotal: 'Tổng tiền trả thưởng',
-    resend_saba_payout: 'Gửi lại khoản thanh toán SABA',
+    resend_saba_payout: 'Gửi lại khoản thanh toán',
     check_saba_ticket: 'Kiểm tra vé SABA',
     return_ratio: 'Tỷ lệ hoàn trả',
     return_ratio_total: 'Tổng tỷ lệ hoàn trả',

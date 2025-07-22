@@ -880,7 +880,7 @@ export default {
     paymentType: 'ประเภทการชำระเงิน',
     payout: 'การจ่ายเงิน',
     payoutTotal: 'ยอดจ่ายทั้งหมด',
-    resend_saba_payout: 'ส่งเงิน SABA อีกครั้ง',
+    resend_saba_payout: 'ส่งเงิน อีกครั้ง',
     check_saba_ticket: 'ตรวจสอบตั๋ว SABA',
     return_ratio: 'Ratio Return',
     return_ratio_total: 'อัตราผลตอบแทนทั้งหมด',
