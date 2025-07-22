@@ -19,7 +19,10 @@
       }
     }
   }
-
+  .q-radio[aria-checked="true"] {
+    color: #6e5841;
+    font-weight: bold;
+  }
   .search-field__radio-row {
     display: flex;
     gap: 2rem;
