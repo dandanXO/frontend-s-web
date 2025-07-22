@@ -8,7 +8,7 @@
   >
     <div class="inner">
       <div class="bg-design">
-        <img v-if="props.siteId === '15'" src="../../assets/images/kaka/cus-service-kaka.png">
+        <img v-if="props.siteId === siteEnum.KAKA" src="../../assets/images/kaka/cus-service-kaka.png">
         <img v-else src="../../assets/images/login/cus-service.png">
       </div>
       <div class="title">
@@ -19,7 +19,7 @@
       </div>
       <div class="bar" />
       <div class="services">
-        <div class="contact-boxes" :style="props.siteId === '8' ? 'gap: 50px;': ''">
+        <div class="contact-boxes" :style="props.siteId === siteEnum.VNM ? 'gap: 50px;': ''">
           <div class="contact-box" v-for="(c, i) in contactlist" :key="i">
             <div class="contacticon">
               <img v-if="c.icon === 'czalo'" style="max-width: 67px;" :src="require(`../../assets/images/${c.icon}.png`)">
@@ -36,7 +36,7 @@
         </div>
         <div class="girl">
           <img v-if="props.siteId === siteEnum.LH1" src="../../assets/images/login/cus-guy.png">
-          <img v-else-if="props.siteId === '8' || props.siteId === '15'" src="../../assets/images/login/cus-girl-vn.png">
+          <img v-else-if="props.siteId === siteEnum.VNM || props.siteId === siteEnum.KAKA" src="../../assets/images/login/cus-girl-vn.png">
           <img v-else src="../../assets/images/login/cus-girl.png">
           <!--          <div v-if="props.siteId === '15'" class="kaka-cs-24">-->
           <!--            <img src="../../assets/images/kaka/cs-24-kaka.svg">-->
@@ -113,7 +113,7 @@ const amicoLink = () => {
 const mailLink = () => {
   if (props.siteId === siteEnum.LH1) {
     return 'mailto:affiliate@e8007.com'
-  } else if (props.siteId === '8') {
+  } else if (props.siteId === siteEnum.VNM) {
     return 'vnaffiliates@tf88.com'
   } else if (props.siteId === siteEnum.XF1) {
     return ''
@@ -135,9 +135,9 @@ const qqLink = () => {
 const telegramLink = () => {
   if (props.siteId === siteEnum.LH1) {
     return '@leihuo686'
-  } else if (props.siteId === '15') {
+  } else if (props.siteId === siteEnum.KAKA) {
     return '@dailykakagame'
-  } else if (props.siteId === '8') {
+  } else if (props.siteId === siteEnum.VNM) {
     return '@dailitf88'
   } else if (props.siteId === siteEnum.XF1) {
     return '@xf100200'

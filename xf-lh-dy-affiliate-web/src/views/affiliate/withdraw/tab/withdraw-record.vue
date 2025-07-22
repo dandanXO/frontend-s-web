@@ -128,6 +128,7 @@ import { getWithdrawRecords } from '@/api/affiliate-withdraw-record'
 import { useI18n } from 'vue-i18n'
 import emptyComp from '@/components/empty'
 import { formatMoney } from "@/utils/format-money";
+import { siteEnum } from "@/consts/SiteEnum"
 
 const store = useStore()
 const { t } = useI18n()
@@ -285,9 +286,9 @@ const page = reactive({
 const returnCurrency = () => {
   if (siteId === 3 || siteId === '3') {
     return "THB"
-  } else if (siteId === 8 || siteId === '8') {
+  } else if (siteId === 8 || siteId === siteEnum.VNM) {
     return "VNDP"
-  } else if (siteId === 10 || siteId === '10') {
+  } else if (siteId === 10 || siteId === siteEnum.KRW) {
     return "₩"
   } else {
     return "RMB"
