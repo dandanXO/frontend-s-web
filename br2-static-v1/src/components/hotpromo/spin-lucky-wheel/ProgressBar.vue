@@ -17,6 +17,7 @@
     <span class="extraction-require-percentage">{{ `${remainingRequired}%` }}</span>
   </div>
 </template>
+
 <script setup>
 import { computed, inject } from "vue";
 
@@ -24,7 +25,10 @@ const props = defineProps(["isShowDetails"]);
 const info = inject("info");
 const extractionDifference = inject("extractionDifference");
 const targetWithdrawAmount = inject("targetWithdrawAmount");
-const remainingRequired = computed(() => ((info.value.accumulatedBonus / targetWithdrawAmount.value) * 100).toFixed(2));
+const remainingRequired = computed(() => {
+  const percentage = (info.value.accumulatedBonus / info.value.claimBonus) * 100;
+  return Math.min(percentage, 100).toFixed(2);
+});
 
 const progressBarIndicatePosition = computed(() => {
   return `calc(${remainingRequired.value}%)`;

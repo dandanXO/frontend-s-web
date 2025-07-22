@@ -41,7 +41,8 @@ const targetWithdrawAmount = computed(() => {
   //   default:
   //     return 0;
   // }
-  return 100;
+  // return 100;
+  return info.value.claimBonus;
 });
 
 const extractionDifference = computed(() =>
@@ -75,6 +76,7 @@ const loadData = async () => {
     };
 
     isDuringInit.value = false;
+
   }
 };
 
