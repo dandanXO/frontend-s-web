@@ -204,8 +204,10 @@ export default route(function (/* { store, ssrContext } */) {
       }
     }
 
+    console.log('from.path::: ', from.path)
+    console.log('from.query::: ', from.query)
+
     if (from.path === '/gamePlay' && from.query['bt-path']) {
-      // debugger;
       const currentQuery = new URLSearchParams(window.location.search);
       const btPath = currentQuery.get('bt-path');
       console.log(btPath)
