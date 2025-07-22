@@ -120,7 +120,7 @@ watch(
   overflow-x: hidden;
   .earn-money-container {
     .earn-money-title {
-      color: #ffffff;
+      color: #3A3A3A;
       font-size: 16px;
       font-weight: bold;
     }
@@ -153,9 +153,9 @@ watch(
     }
     :deep(.q-tab--active) {
           color: white;
-          background: #394142;
+          background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
         }
-    
+
         :deep(.q-tab--active .q-tab__label) {
           font-weight: 700 !important;
         }
@@ -169,5 +169,9 @@ watch(
       padding: 0;
     }
   }
+}
+:deep(.bg-neontb) {
+  background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+  border: 1px solid #76674c;
 }
 </style>
