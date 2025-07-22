@@ -35,7 +35,7 @@
           <div class="right">2025年7月23日至2025年8月03日</div>
         </div>
          <div class="little-title" style="flex-direction: row;align-items: center;">
-          <div class="ribbon">活动對象</div>
+          <div class="ribbon">活动对象</div>
           <div class="right">投注IEM 科隆 2025 的会员</div>
         </div>
          <div class="little-title" style="flex-direction: row;align-items: center;">
@@ -44,7 +44,7 @@
         </div>
         <div class="little-title">
           <div class="ribbon">活动内容</div>
-          <div class="right">活动期间，IEM 科隆 2025累计有效投注≥2,000元即可获得 最高1588元的奖励金 </div>
+          <div class="right">活动期间，当日IEM 科隆 2025累计有效投注≥2,000元即可获得最高1588元的奖励金！</div>
         </div>
         <table class="livepoker-rebate-game-info-table section-table">
           <thead>
@@ -123,7 +123,7 @@
           </div>
           <div class="item">
             <div class="item-num">2</div>
-            活动期间，活动仅计算活动期间内IEM 科隆 2025已结算的赛事总有效投注，次日24 小时内在优惠页面点击【立即领取】按钮领取。逾期未领取则视为放弃，彩金 6 倍流水即可出款； 
+            活动期间，活动仅计算当日投注IEM 科隆 2025赛事当日已结算的注单，次日 24 小时内在活动页面点击【立即领取】按钮领取。逾期未领取则视为放弃，彩金 6倍流水即可出款；
           </div>
           <div class="item">
             <div class="item-num">3</div>
