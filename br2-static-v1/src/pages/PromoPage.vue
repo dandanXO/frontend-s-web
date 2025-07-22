@@ -998,7 +998,7 @@ export default defineComponent({
               height: 40px;
               overflow: hidden;
               line-height: 40px;
-              padding: 0 100px 0 10px;
+              padding: 0 10px 0 10px;
               font-weight: 500;
 
               // &:before {
