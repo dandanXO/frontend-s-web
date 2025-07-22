@@ -1056,9 +1056,9 @@ export default {
     },
     lossRebate: {
       duration: "Em curso",
-      eligible: "Todos os membros com registro de depósito",
+      eligible: "Todos os membros com histórico de depósito",
       description:
-        "Todos os dias, os membros têm direito a receber um reembolso de 15% sobre as perdas líquidas incorridas no dia anterior",
+        "Os membros podem receber 15% de cashback sobre o valor líquido das perdas do dia anterior, diariamente.",
       tnc01: "Você pode receber diariamente 15% de suas perdas líquidas incorridas no dia anterior;",
       tnc02:
         "O período de reclamação desta Promoção começa diariamente após as 12h, horário do Brasil. Quaisquer Bônus que não sejam reclamados serão considerados perdidos;",
