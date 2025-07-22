@@ -23,7 +23,7 @@
     <VipPlanBettingUpgrade v-if="list.redirectUrl === 'br2-vip-plan'" :params="list.param" />
     <CashbackWeeklyPromo v-if="list.redirectUrl === 'cashback-weekly'" :params="list.param" />
     <RedPacketRainPromo v-if="list.redirectUrl === 'br2-red-packet-rain'" :params="list.param" />
-    <RedepositBonus100Promo v-if="list.redirectUrl === 'deposit-bonus-100-once'" :params="list.param" />
+    <DepositBonus100Promo v-if="list.redirectUrl === 'deposit-bonus-100-once'" :params="list.param" />
     <DailySecondDepositPromo v-if="list.redirectUrl === 'br2-daily-second-deposit'" :params="list.param" />
     <BetCashbackPromo v-if="list.redirectUrl === 'br2-bet-rebate'" :params="list.param" />
     <LossRebatePromo v-if="list.redirectUrl === 'br2-loss-rebate'" :params="list.param" />
@@ -66,7 +66,7 @@ const RedepositBonusPromo = defineAsyncComponent(() => import("./hotpromo/redepo
 const VipPlanBettingUpgrade = defineAsyncComponent(() => import("./hotpromo/vip-plan-betting-upgrade/VipPlanBettingUpgrade.vue"));
 const CashbackWeeklyPromo = defineAsyncComponent(() => import("./hotpromo/cashback-weekly/CashbackWeeklyPromo.vue"));
 const RedPacketRainPromo = defineAsyncComponent(() => import("../components/hotpromo/redPacketRain/RedPacketRainPromo.vue"));
-const RedepositBonus100Promo = defineAsyncComponent(() => import("../components/hotpromo/redeposit-bonus/RedepositBonusPromo.vue"));
+const DepositBonus100Promo = defineAsyncComponent(() => import("../components/hotpromo/deposit-bonus/DepositBonus100OncePromo.vue"));
 const BetCashbackPromo = defineAsyncComponent(() => import("../components/hotpromo/bet-cashback/BetCashbackPromo.vue"));
 const DailySecondDepositPromo = defineAsyncComponent(() => import("../components/hotpromo/daily-second-deposit/DailySecondDepositPromo.vue"));
 const LossRebatePromo = defineAsyncComponent(() => import("../components/hotpromo/loss-rebate/LossRebatePromo.vue"));
@@ -92,7 +92,7 @@ export default defineComponent({
     VipPlanBettingUpgrade,
     CashbackWeeklyPromo,
     RedPacketRainPromo,
-    RedepositBonus100Promo,
+    DepositBonus100Promo,
     BetCashbackPromo,
     DailySecondDepositPromo,
     LossRebatePromo,

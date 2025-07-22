@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="promo-subtitle">Detalhes da Promoção</div>
     <div class="receive-bar-container">
       <div class="receive-bar">
         <div class="bar-ribbon">
@@ -7,7 +8,7 @@
           {{ $t("hotPromo.duration") }}
         </div>
         <div class="bar-desc">
-          <div class="bar-desc">{{ $t("hotPromo.redepositBonus.duration") }}</div>
+          <div class="bar-desc">Válida por tempo indeterminado</div>
         </div>
       </div>
 
@@ -16,7 +17,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-eligibility.svg" />
           {{ $t("hotPromo.eligibility") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.redepositBonus.eligible") }}</div>
+        <div class="bar-desc"> Todos os membros</div>
       </div>
 
       <div class="receive-bar">
@@ -24,10 +25,9 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-description.svg" />
           {{ $t("hotPromo.desc") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.redepositBonus.description") }}</div>
+        <div class="bar-desc">Receba um bônus extra de 100% no primeiro depósito do dia</div>
       </div>
     </div>
-
     <!-- <div class="promo-subtitle">{{ $t("hotPromo.tnc") }}</div>
 
     <div class="tnc-content">
