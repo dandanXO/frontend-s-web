@@ -57,9 +57,14 @@ export default defineComponent({
       // console.log(info);
       // console.log(info.identifier);
       const isPwa = process.env.IS_PWA;
-      const click_id = localStorage.getItem("click_id");
-      if (click_id) {
-        store.googleadid = click_id;
+      const urlParams = new URLSearchParams(window.location.search);
+      const click_id1 = urlParams.get("click_id");
+      const click_id2 = localStorage.getItem("click_id");
+
+      if (click_id1 && click_id1 !== "undefined") {
+        store.googleadid = click_id1;
+      } else if (click_id2 && click_id2 !== "undefined") {
+        store.googleadid = click_id2;
       }
       // alert(isPwa);
       if (isPwa === "1") {
