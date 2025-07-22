@@ -190,7 +190,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="personalCenterDialog" persistent>
+  <q-dialog width="100%" class="flex-end" v-model="personalCenterDialog" persistent>
     <div class="popout-dialog">
       <q-btn
         dense
@@ -296,7 +296,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="bindEmailDialog" persistent>
+  <q-dialog width="100%" class="flex-end" v-model="bindEmailDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" @click="openBindEmailDialog()" v-close-popup />
       <div class="popout-dialog-container">
@@ -367,7 +367,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="verifyPhoneDialog" persistent>
+  <q-dialog width="100%" class="flex-end" v-model="verifyPhoneDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -442,7 +442,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="changePasswordDialog" presistent>
+  <q-dialog width="100%" class="flex-end" v-model="changePasswordDialog" presistent>
     <div class="popout-dialog">
       <q-btn
         dense
