@@ -164,6 +164,12 @@
       :params="list.param"
     />
 
+    <LhStepGamePromo
+      v-if="list.redirectUrl === 'lh1-game-steps'"
+      :pageContent="list.pageContent"
+    ></LhStepGamePromo>
+
+
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -253,6 +259,7 @@ import FifaCwcRedPacket from "./hotpromo/fifa-cwc-red-packet/FifaCwcRedPacket.vu
 import FissureJulyFinal2025 from "./hotpromo/fissure-july-final-2025/FissureJulyFinal2025.vue";
 import PPDianZiTianTianSong from "./hotpromo/ppdianzitiantiansong/PPDianZiTianTianSong.vue";
 import RapidDrop2025 from "./hotpromo/rapid-drop-2025/RapidDrop2025.vue";
+import LhStepGamePromo from "../components/hotpromo/lhstepgame/LhStepGamePromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -321,7 +328,8 @@ export default defineComponent({
     FifaCwcRedPacket,
     FissureJulyFinal2025,
     RapidDrop2025,
-    PPDianZiTianTianSong
+    PPDianZiTianTianSong,
+    LhStepGamePromo
   },
   props: {
     list: {
