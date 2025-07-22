@@ -311,6 +311,7 @@ const closeDialog =  async () => {
 
   if (betbyInstance.value) {
     betbyInstance.value.kill();
+    betbyInstance.value= null
   }
   await nextTick();
 
