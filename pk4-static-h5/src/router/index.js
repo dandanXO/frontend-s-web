@@ -206,15 +206,29 @@ export default route(function (/* { store, ssrContext } */) {
 
     console.log('from.path::: ', from.path)
     console.log('from.query::: ', from.query)
+    console.log('from:::', from)
+    console.log('to:::', to)
 
-    if (from.path === '/gamePlay' && from.query['bt-path']) {
-      const currentQuery = new URLSearchParams(window.location.search);
-      const btPath = currentQuery.get('bt-path');
-      console.log(btPath)
-      if (btPath) {
-        console.log('btPath', btPath)
-        sessionStorage.setItem('betby-bt-path', btPath);
-      }
+    // if (from.path === '/gamePlay' && from.query['bt-path']) {
+    //   const currentQuery = new URLSearchParams(window.location.search);
+    //   const btPath = currentQuery.get('bt-path');
+    //   console.log(btPath)
+    //   if (btPath) {
+    //     console.log('btPath', btPath)
+    //     sessionStorage.setItem('betby-bt-path', btPath);
+    //   }
+    // }
+
+    // Fallback: parse manually from fullPath if not present in query
+    if (!btPath && from.fullPath.includes('bt-path=')) {
+      const queryString = from.fullPath.split('?')[1] || '';
+      const params = new URLSearchParams(queryString);
+      btPath = params.get('bt-path');
+    }
+
+    if (from.path === '/gamePlay' && btPath) {
+      console.log('btPath resolved:', btPath);
+      sessionStorage.setItem('betby-bt-path', btPath);
     }
 
     if (user.hasToken()) {
