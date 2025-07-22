@@ -580,7 +580,7 @@ const copyHrefLink = async () => {
   if (navigator.share) {
     try {
       await navigator.share({
-        title: "b9.game",
+        title: "SuperSiam",
         text: "Pakistan real money games",
         url: textToCopy
       });
@@ -1485,10 +1485,11 @@ watch(activeSetting, checkIsShowDetail);
     display: flex;
     justify-content: center;
     align-items: center;
+    background: #3A3A3A;
 
     &.active {
       font-weight: bold;
-      background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+      background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
     }
 
     &:active {
