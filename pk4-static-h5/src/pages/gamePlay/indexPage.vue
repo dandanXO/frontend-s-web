@@ -1307,3 +1307,11 @@ defineExpose({
   }
 }
 </style>
+
+<style lang="scss">
+.game-iframe--betby {
+  #bt-inner-page {
+    padding-bottom: 32px;
+  }
+}
+</style>
