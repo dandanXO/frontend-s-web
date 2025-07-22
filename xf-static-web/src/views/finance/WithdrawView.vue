@@ -30,13 +30,7 @@
       </div>
     </div>
     <div class="withdraw-form">
-      <el-form
-        ref="formRef"
-        label-position="left"
-        label-suffix=":"
-        :model="withdrawInfo"
-        :rules="withdrawRules"
-      >
+      <el-form ref="formRef" label-position="left" label-suffix=":" :model="withdrawInfo" :rules="withdrawRules">
         <span class="menu-title">提款方式</span>
         <el-form-item class="withdraw-types">
           <div
@@ -57,36 +51,37 @@
             </div>
           </div>
         </el-form-item>
-        <div style="width: 343px;">
-        <div class="common-title">提款金额</div>
-        <el-form-item
-          class="helptxt"
-          :class="{ 'has-helper-text': isAutoWithdrawal }"
-          prop="amount"
-          name="amount"
-        >
-        <div style="width: 100%;">
-                <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
-                  <template #append>{{ store.currency.label }}</template>
-                </el-input>
-                
-                <span style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;" v-if="selectedWithdrawalMethod">
-                  <div class="spaced">
-                    <span>单笔限额：</span>
-                    <span>{{
-                    `${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
-                    }}</span>
-                  </div>
-                  <div class="spaced">
-                    <span>今日提款：</span>
-                    <span>{{
-                    `${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余：${selectedWithdrawalMethod.withdrawMaxTimes} 次`
+        <div style="width: 343px">
+          <div class="common-title">提款金额</div>
+          <el-form-item class="helptxt" :class="{ 'has-helper-text': isAutoWithdrawal }" prop="amount" name="amount">
+            <div style="width: 100%">
+              <el-input class="form-input" v-model="withdrawInfo.amount" placeholder="提款金额">
+                <template #append>{{ store.currency.label }}</template>
+              </el-input>
+
+              <span
+                style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px"
+                v-if="selectedWithdrawalMethod"
+              >
+                <div class="spaced">
+                  <span>单笔限额：</span>
+                  <span>
+                    {{
+                      `${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${selectedWithdrawalMethod.withdrawMax} ${store.currency.label}`
                     }}
-                    </span>
-                  </div>
-                </span>
-              </div>
-          <!-- <div
+                  </span>
+                </div>
+                <div class="spaced">
+                  <span>今日提款：</span>
+                  <span>
+                    {{
+                      `${selectedWithdrawalMethod.withdrawMaxAmount} ${store.currency.label}, 剩余：${selectedWithdrawalMethod.withdrawMaxTimes} 次`
+                    }}
+                  </span>
+                </div>
+              </span>
+            </div>
+            <!-- <div
             v-if="selectedWithdrawalMethod"
             class="account-tip remain-box"
             v-html="
@@ -98,108 +93,115 @@
               })
             "
           ></div> -->
-        </el-form-item>
-        <!-- <el-form-item v-if="isAutoWithdrawal" class="helptxt">
+          </el-form-item>
+          <!-- <el-form-item v-if="isAutoWithdrawal" class="helptxt">
           <div class="auto-withdraw-amount-wrapper">
             <span>可提余额：{{ selectedWithdrawalMethod.withdrawableBalance }}{{ store.currency.label }}</span>
             <span>剩余流水：{{ selectedWithdrawalMethod.remainWagers }}{{ store.currency.label }}</span>
           </div>
         </el-form-item> -->
-        <el-row>
-          <el-col>
+          <el-row>
+            <el-col>
+              <div
+                v-if="!isEWALLET && !isUSDT && !isALIPAY && selectedWithdrawalMethod.tips"
+                class="selected-tip"
+                v-html="selectedWithdrawalMethod.tips"
+              ></div>
+              <!--            <div v-if="isALIPAY" class="selected-tip">-->
+              <!--              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！-->
+              <!--            </div>-->
+            </el-col>
+          </el-row>
+          <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
+            <span style="color: #9bffd1">
+              1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
+              {{ store.currency.label }}
+            </span>
+          </el-form-item>
+
+          <div class="common-title">{{ `选择${cardLabel()}` }}</div>
+          <el-form-item
+            class="select"
+            style="margin-top: 10px"
+            prop="cardId"
+            :rules="[
+              {
+                required: true,
+                message: `请选择${cardLabel()}`,
+                trigger: 'blur'
+              }
+            ]"
+          >
+            <el-select
+              @click="withdrawState.bankCardList.length === 0 ? checkBankCards() : ''"
+              v-model="withdrawInfo.cardId"
+              :placeholder="`请选择${cardLabel()}`"
+              style="width: 100%"
+            >
+              <el-option
+                v-for="b in withdrawState.bankCardList"
+                :key="b.id"
+                :value="b.id"
+                :label="b.bankName + ' - ' + b.cardNumber"
+              >
+                {{ b.bankName }} - {{ b.cardNumber }}
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="预计到账">
+            <div style="color: #9bffd1">
+              {{
+                selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
+                  ? "0.00"
+                  : (
+                      withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
+                      selectedWithdrawalMethod.withdrawFee
+                    ).toFixed(2)
+              }}
+              USDT
+            </div>
+          </el-form-item>
+          <!-- K 豆教程视频 -->
+          <div v-else-if="isEWALLET && selectedWithdrawalMethod.url">
             <div
-              v-if="!isEWALLET && !isUSDT && !isALIPAY && selectedWithdrawalMethod.tips"
-              class="selected-tip"
-              v-html="selectedWithdrawalMethod.tips"
-            ></div>
-            <!--            <div v-if="isALIPAY" class="selected-tip">-->
-            <!--              “支付宝提款”可用时间：早 10 点 - 晚 12 点，其他时间提交系统会自动取消！-->
-            <!--            </div>-->
-          </el-col>
-        </el-row>
-        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="实时汇率">
-          <span style="color: #9bffd1">
-            1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
-            {{ store.currency.label }}
-          </span>
-        </el-form-item>
-        
-        <div class="common-title">{{ `选择${cardLabel()}` }}</div>
-        <el-form-item
-          class="select"
-          style="margin-top: 10px"
-          prop="cardId"
-          :rules="[
-            {
-              required: true,
-              message: `请选择${cardLabel()}`,
-              trigger: 'blur'
-            }
-          ]"
-        >
-          <el-select
-            @click="withdrawState.bankCardList.length === 0 ? checkBankCards() : ''"
-            v-model="withdrawInfo.cardId"
-            :placeholder="`请选择${cardLabel()}`"
-            style="width: 100%"
-          >
-            <el-option
-              v-for="b in withdrawState.bankCardList"
-              :key="b.id"
-              :value="b.id"
-              :label="b.bankName + ' - ' + b.cardNumber"
+              style="margin: 15px 0px; color: #fd574c"
+              v-if="
+                ['KDPAY', 'OKPAY', 'EBPAY', 'BLBPAY', 'JDPAY', 'SZPAY', 'NINEPAY'].includes(
+                  selectedWithdrawalMethod.code
+                )
+              "
             >
-              {{ b.bankName }} - {{ b.cardNumber }}
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="预计到账">
-          <div style="color: #9bffd1">
-            {{
-              selectedWithdrawalMethod && withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin
-                ? "0.00"
-                : (
-                    withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate -
-                    selectedWithdrawalMethod.withdrawFee
-                  ).toFixed(2)
-            }}
-            USDT
-          </div>
-        </el-form-item>
-        <!-- K 豆教程视频 -->
-        <div v-else-if="isEWALLET && selectedWithdrawalMethod.url">
-          <div
-            style="margin: 15px 0px; color: #FD574C;"
-            v-if="['KDPAY', 'OKPAY', 'EBPAY', 'BLBPAY', 'JDPAY', 'SZPAY', 'NINEPAY'].includes(selectedWithdrawalMethod.code)"
-          >
-            *特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！
-          </div>
-          <el-button class="common-btn grey" v-if="selectedWithdrawalMethod.code !== 'SZPAY'" @click="openEWalletTutorial">
-            <span>{{ tutorialLabel }}</span>
-          </el-button>
-        </div>
-
-        <div v-if="selectedWithdrawalMethod.withdrawFee" class="" style="color: #9bffd1">
-          *提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT
-        </div>
-
-
-        <el-button
-              :loading="loadingBtn"
-              :disable="loadingBtn"
-              size="large"
-              class="common-btn withdraw-btn"
-              @click="submitWithraw"
+              *特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！
+            </div>
+            <el-button
+              class="common-btn grey"
+              v-if="selectedWithdrawalMethod.code !== 'SZPAY'"
+              @click="openEWalletTutorial"
             >
-              确定
+              <span>{{ tutorialLabel }}</span>
             </el-button>
-        <!-- <div
+          </div>
+
+          <div v-if="selectedWithdrawalMethod.withdrawFee" class="" style="color: #9bffd1">
+            *提币手续费：{{ selectedWithdrawalMethod.withdrawFee }} USDT
+          </div>
+
+          <el-button
+            :loading="loadingBtn"
+            :disable="loadingBtn"
+            size="large"
+            class="common-btn withdraw-btn"
+            @click="submitWithraw"
+          >
+            确定
+          </el-button>
+          <!-- <div
           v-if="isUSDT && selectedWithdrawalMethod.tips"
           class="selected-tip"
           v-html="selectedWithdrawalMethod.tips"
         ></div> -->
 
-        <div class="flex-box flex-justify-center"></div>
+          <div class="flex-box flex-justify-center"></div>
         </div>
       </el-form>
     </div>
@@ -388,6 +390,8 @@ export default defineComponent({
       switch(selectedWithdrawalMethod.value.code) {
         case "KDPAY":
           return "K 豆教程视频";
+        case "NINEPAY":
+          return "98PAY教程视频";
         case "EBPAY":
           return "EB 使用教程";
         case "OKPAY":
@@ -623,7 +627,7 @@ export default defineComponent({
         justify-content: center;
       }
       .withdraw-tip {
-        color: #FD574C;
+        color: #fd574c;
         margin-top: 10px;
       }
       ul {
@@ -684,15 +688,14 @@ export default defineComponent({
           border-bottom: 25px solid transparent;
         }
       }
-      &:first-child::before
-      {
+      &:first-child::before {
         display: none;
       }
     }
     .withdraw-types {
       gap: 10px;
       display: flex;
-      border-bottom: 1px solid #FFFFFF1A;
+      border-bottom: 1px solid #ffffff1a;
       padding: 20px 0;
     }
     .withdraw-type-item {
@@ -705,7 +708,7 @@ export default defineComponent({
       // border-radius: 6px;
       // border: solid 1px #484460;
       border-radius: 15px;
-        border: 1px solid #323233;
+      border: 1px solid #323233;
       position: relative;
       display: flex;
       justify-content: center;
@@ -735,8 +738,8 @@ export default defineComponent({
       }
       &.active {
         &:after {
-          content:"";
-          background: url(@/assets/images/account/depotick.png)no-repeat bottom right;
+          content: "";
+          background: url(@/assets/images/account/depotick.png) no-repeat bottom right;
           position: absolute;
           background-size: contain;
           right: 0px;
@@ -747,12 +750,11 @@ export default defineComponent({
         // border-bottom: 4px solid #1bcef1;
         // border: 1px solid #ffd800;
         // color: #ffd800;
-        border-color: #32CEED;
+        border-color: #32ceed;
         pointer-events: none;
         .type-name {
-          
-        font-weight: bold;
-        color:#32CEED;
+          font-weight: bold;
+          color: #32ceed;
         }
         // .promo-img {
         //   border: 1px solid #45fdfb;
@@ -796,7 +798,7 @@ export default defineComponent({
     // min-width: 300px;
     // margin: 30px auto;
     width: 100%;
-    background: linear-gradient(180deg, #32CEED 0%, #1C7587 100%);
+    background: linear-gradient(180deg, #32ceed 0%, #1c7587 100%);
     border-radius: 8px;
     margin-top: 30px;
     &.cancel {
@@ -991,25 +993,24 @@ export default defineComponent({
   margin-top: 10px;
 }
 .spaced {
-      display: flex;
-      justify-content: space-between;
-      color: #B8B8B8;
-      margin: 0;
+  display: flex;
+  justify-content: space-between;
+  color: #b8b8b8;
+  margin: 0;
 
-      .el-form-item__label {
-        font-family: PingFang SC;
-        font-size: 15px;
-        font-weight: 400;
-        color:#B8B8B8;
-      }
-      .el-form-item__content {
-        font-family: PingFang SC;
-        font-size: 15px;
-        font-weight: 400;
-        color:#B8B8B8;
-        display: flex;
-        justify-content: flex-end;
-
-      }
-      }
+  .el-form-item__label {
+    font-family: PingFang SC;
+    font-size: 15px;
+    font-weight: 400;
+    color: #b8b8b8;
+  }
+  .el-form-item__content {
+    font-family: PingFang SC;
+    font-size: 15px;
+    font-weight: 400;
+    color: #b8b8b8;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
 </style>
