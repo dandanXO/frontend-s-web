@@ -2730,6 +2730,7 @@ export default {
     regLoginRetention: '注册回头',
     memberOrigin: '用户来源',
     combinePlatform: '合并线路',
+    shortName: '联赛简称'
   },
   message: {
     adsStatusOpen: '开',
@@ -3553,6 +3554,7 @@ export default {
     Team: '队伍',
     'Bet type setting': '投注项设定',
     'Sport App Setting': '体育 App 设置',
+    'Top Competition Setting': '联赛置顶设置',
     'Game Jackpot Bonus Record': '奖金池奖励记录',
     'Refer Spin': '邀请转盘',
     'Member Privilege Record Pak Export': '会员优惠记录导出 - 巴基斯坦',

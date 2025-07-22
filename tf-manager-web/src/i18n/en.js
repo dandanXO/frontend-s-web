@@ -2711,6 +2711,7 @@ export default {
     regLoginRetention: 'Register Login Retenion',
     memberOrigin: 'Member Origin',
     combinePlatform: 'Combine Platform',
+    shortName: 'Short Name'
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3584,6 +3585,7 @@ export default {
     Team: 'team',
     'Bet type setting': 'bet type setting',
     'Sport App Setting': 'Sport App Setting',
+    'Top Competition Setting': 'Top Competition Setting',
     'Game Jackpot Bonus Record': 'Game Jackpot Bonus Record',
     'Refer Spin': 'Refer Spin',
     'Member Privilege Record Pak Export': 'Member Privilege Record Pak Export',
