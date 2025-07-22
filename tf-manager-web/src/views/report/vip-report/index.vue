@@ -61,6 +61,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
+          :loading="page.loading"
           @click="loadVipReport()"
         >
           {{ t('fields.search') }}
