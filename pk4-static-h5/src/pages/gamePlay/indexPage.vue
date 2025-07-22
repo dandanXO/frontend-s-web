@@ -311,6 +311,7 @@ const closeDialog =  async () => {
 
   if (betbyInstance.value) {
     betbyInstance.value.kill();
+    betbyInstance.value= null
   }
   await nextTick();
 
@@ -540,6 +541,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
                 target: betbyRef.value,
                 stickyTop: headerHeight,
                 betSlipOffsetTop: headerHeight,
+                betSlipOffsetBottom: 74,
                 betslipZIndex: 999,
                 onRecharge: function () {
                   router.push("/deposit?from=/home");
