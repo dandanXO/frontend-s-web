@@ -206,11 +206,14 @@
       :show-close="false"
       :close-on-press-escape="false"
       :close-on-click-modal="false"
-      v-model="isShowWithdrawErrorBlock">
+      v-model="isShowWithdrawErrorBlock"
+    >
       您需要在交易记录-提款记录中点击 "确认到账" 完成上笔提款后, 才能提交新的提款订单。 感谢您的配合!
       <div class="withdraw-remaining-dialog__buttons">
         <el-button class="common-btn" @click="isShowWithdrawErrorBlock = false">返回</el-button>
-        <router-link to="/center/transit-record?type=withdraw"><el-button class="common-btn">前往确认</el-button></router-link>
+        <router-link to="/center/transit-record?type=withdraw">
+          <el-button class="common-btn">前往确认</el-button>
+        </router-link>
       </div>
     </el-dialog>
     <!-- <el-dialog
@@ -376,6 +379,8 @@ export default defineComponent({
       switch(selectedWithdrawalMethod.value.code) {
         case "KDPAY":
           return "K豆教程视频";
+        case "NINEPAY":
+          return "98PAY教程视频";
         case "EBPAY":
           return "EB使用教程";
         case "OKPAY":
@@ -553,7 +558,7 @@ export default defineComponent({
       } else if (isEWALLET.value) {
         return '电子钱包'
       } else if (isALIPAY.value) {
-        return '支付宝'  
+        return '支付宝'
       } else {
         return '银行卡'
       }

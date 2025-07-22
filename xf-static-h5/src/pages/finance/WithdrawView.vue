@@ -184,7 +184,11 @@
             </div>
             <div
               class="q-mt-md text-orange"
-              v-if="['KDPAY', 'EBPAY', 'OKPAY', 'JDPAY', 'BLBPAY', 'SZPAY', 'NINEPAY'].includes(selectedWithdrawalMethod.code)"
+              v-if="
+                ['KDPAY', 'EBPAY', 'OKPAY', 'JDPAY', 'BLBPAY', 'SZPAY', 'NINEPAY'].includes(
+                  selectedWithdrawalMethod.code
+                )
+              "
             >
               <span>*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</span>
             </div>
@@ -571,6 +575,8 @@ export default defineComponent({
         return '808 钱包教程视频'
       } else if (selectedWithdrawalMethod.value.code === 'JDPAY') {
         return 'JDPAY 教程视频'
+      }else if (selectedWithdrawalMethod.value.code === "NINEPAY") {
+        return "98PAY教程视频";
       }
     }
     const openEWalletTutorial = () => {

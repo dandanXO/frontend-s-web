@@ -553,6 +553,8 @@ export default defineComponent({
         return '808钱包教程视频'
       } else if (selectedWithdrawalMethod.value.code === 'JDPAY') {
         return 'JDPAY教程视频'
+      }else if (selectedWithdrawalMethod.value.code === "NINEPAY") {
+        return "98PAY教程视频";
       }
     }
     const openEWalletTutorial = () => {
