@@ -30,7 +30,7 @@
           size="8px"
           :value="progressBarRef"
           class="custom-progress-bar"
-          color="grey-9"
+          color="grey-3"
         />
         <div
           class="progress-circle"
@@ -96,21 +96,20 @@ const profileImagePath = computed(() => {
   top: -4px;
   width: 16px;
   height: 16px;
-  background-color: #21EF89;
-  border: 4px solid rgb(59 143 102);
+  background-color: #3A3A3A;
   border-radius: 50%;
+  border: 4px solid #cec6ae;
   z-index: 2;
   transition: left 0.3s ease;
 }
 .progress-container {
-  
   display: flex;
     flex-direction: column;
     width: 100%;
     gap: 10px;
     justify-content: center;
     align-items: center;
-    margin: 1.5rem 0 1rem 0;
+    padding-top: 1.5rem;
     border-radius: 8px;
     min-height: 130px;
 
@@ -160,6 +159,9 @@ const profileImagePath = computed(() => {
       text-overflow: ellipsis;
       max-width: 100%;
       overflow: auto;
+      color: #3A3A3A;
+      font-weight: bold;
+      margin-top: 10px;
     }
   }
 
@@ -173,11 +175,10 @@ const profileImagePath = computed(() => {
     font-weight: bold;
 
     width: 100%;
-    background: linear-gradient(90deg, #323738 0%, #404F4E 100%);
+    background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
     // padding: 15px;
     padding: 5px 15px;
     border-radius: 10px;
-    
     :not(:last-child) {
       margin-bottom: 8px;
     }
@@ -206,7 +207,7 @@ const profileImagePath = computed(() => {
     .win-gift-text {
       // margin-top: 5px;
       text-align: right;
-      color: #B2BDBF;
+      color: #E9E8E4;
       font-weight: 400;
     }
   }

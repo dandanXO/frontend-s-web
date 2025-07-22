@@ -1171,6 +1171,15 @@ const handleCopyClick = async () => {
     }
   }
 }
+
+.txt-title {
+  color: #fff;
+}
+
+.txt-content {
+  color: #D9CFB8;
+}
+
 </style>
 
 <style lang="scss">
