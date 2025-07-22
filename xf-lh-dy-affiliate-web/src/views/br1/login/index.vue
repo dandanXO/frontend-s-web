@@ -85,6 +85,7 @@ export default defineComponent({
       onSlideChange,
       swiperKey,
       isMobileView,
+      siteEnum
     }
   },
 })
