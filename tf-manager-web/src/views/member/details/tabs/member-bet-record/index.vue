@@ -616,11 +616,22 @@ function searchSabaTrx() {
   })
 }
 
-function searchSabaTrxOnClick(transactionId, betId) {
+async function searchSabaTrxOnClick(transactionId, betId) {
   showSabaDialog();
-  if (transactionId !== null) sabaResendForm.transactionId = transactionId.replace(/^SABA_/, "");
-  if (betId !== null) sabaResendForm.betId = betId;
-  searchSabaTrx();
+
+  const submitForm = { ...sabaResendForm }
+  submitForm.check = true;
+  if (transactionId !== null) submitForm.transactionId = transactionId.replace(/^SABA_/, "");
+  submitForm.betId = betId;
+
+  const { data: ret } = await sabaResendPayout(submitForm)
+  const resJson = JSON.parse(ret);
+  sabaTrxHist.message = resJson.message;
+  if (resJson.error_code === 0) {
+    sabaResendForm.transactionId = resJson.Data.txId;
+    sabaResendForm.betId = resJson.Data.refId;
+    sabaTrxHist.transHistory = resJson.Data.transHistory;
+  }
 }
 
 function submitSabaResend(operationId) {

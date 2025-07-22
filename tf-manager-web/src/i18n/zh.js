@@ -1525,7 +1525,7 @@ export default {
     paymentType: '支付类型',
     payout: '派彩',
     payoutTotal: '总派彩',
-    resend_saba_payout: '重发SABA派彩',
+    resend_saba_payout: '重发派彩',
     check_saba_ticket: '检查SABA订单',
     return_ratio: '返奖率',
     return_ratio_total: '总返奖率',
