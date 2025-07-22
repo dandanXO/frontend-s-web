@@ -19,7 +19,7 @@
             </div>
             <div class="col-desc">
               Check-in e divida
-              <span>Complete the sign-in get R$588</span>
+              <span>Conclua o login e ganhe R$588</span>
             </div>
             <div class="col-status">
               <template v-if="checkedInDays.indexOf(currentDay) > -1">
@@ -37,7 +37,7 @@
             </div>
             <div class="col-desc">
               no 1º depósito
-              <span>Deposit get 100% CASHBACK</span>
+              <span>Deposite e receba 50% de CASHBACK</span>
             </div>
             <div class="col-status">
               <template v-if="hasClaimed">
@@ -55,7 +55,7 @@
             </div>
             <div class="col-desc">
               Recarregue
-              <span>Deposit get R$288</span>
+              <span>Deposite e ganhe R$288</span>
             </div>
             <div class="col-status">
               <q-btn class="collect-btn" no-caps @click="gotoDepositPage()">Depósito</q-btn>

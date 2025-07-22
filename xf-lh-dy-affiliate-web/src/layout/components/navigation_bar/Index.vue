@@ -93,23 +93,23 @@ export default {
       }
     });
     const checkSite = (siteId) => {
-      if (siteId === "1" || siteId === 1) {
+      if (siteId === siteEnum.XF1 || siteId === 1) {
         return router.push("/xf/login")
       } else if (siteId === "3" || siteId === 3) {
         return router.push("/th/login")
-      } else if (siteId === "5" || siteId === 5) {
+      } else if (siteId === siteEnum.IND || siteId === 5) {
         return router.push("/ind/login")
-      } else if (siteId === "6" || siteId === 6) {
+      } else if (siteId === siteEnum.DY2 || siteId === 6) {
         return router.push("/dy/login")
-      } else if (siteId === "7" || siteId === 7) {
+      } else if (siteId === siteEnum.LH1 || siteId === 7) {
         return router.push("/lh/login")
-      } else if (siteId === "8" || siteId === 8) {
+      } else if (siteId === siteEnum.VNM || siteId === 8) {
         return router.push("/vi/login")
-      } else if (siteId === "10" || siteId === 10) {
+      } else if (siteId === siteEnum.KRW || siteId === 10) {
         return router.push("/kr/login")
-      } else if (siteId === "11" || siteId === 11) {
+      } else if (siteId === siteEnum.PAK || siteId === 11) {
         return router.push("/pak/login")
-      } else if (siteId === "30" || siteId === 30) {
+      } else if (siteId === siteEnum.LK6 || siteId === 30) {
         return router.push("/lk6/login")
       } else {
         return location.reload();

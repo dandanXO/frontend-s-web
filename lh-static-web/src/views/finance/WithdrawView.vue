@@ -343,6 +343,8 @@ export default defineComponent({
       switch(selectedWithdrawalMethod.value.code) {
         case "KDPAY":
           return "K豆教程视频";
+        case "NINEPAY":
+          return "98PAY教程视频";
         case "EBPAY":
           return "EB教程视频";
         case "OKPAY":

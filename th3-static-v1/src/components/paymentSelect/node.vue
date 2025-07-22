@@ -240,8 +240,10 @@ $node-color: #b81212;
           // border-color: $node-color;
           // border-width: 2px;
           box-shadow: unset;
-          background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
-
+          // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+          // background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+          background: #76674c;
+          // box-shadow: 0px 2px 0px 0px #907c5f;
 
           // &:before {
           //   display: block;
@@ -303,6 +305,8 @@ $node-color: #b81212;
       flex-direction: column;
       .account-title-container {
         margin: 0 0 8px;
+        color: #3a3a3a;
+        font-weight: 700;
       }
       .payment-method-wrapper {
         gap: 5px;
@@ -322,7 +326,7 @@ $node-color: #b81212;
 
         & > div {
           font-size: 12px;
-          color: #ffffff;
+          color: #907c5f;
         }
         img {
           border: 0;
@@ -367,7 +371,8 @@ $node-color: #b81212;
 
       & > div {
         font-size: 12px;
-        color: #ffffff;
+        color: #907c5f;
+        font-weight: 700;
       }
 
       .txt-title {
@@ -384,9 +389,9 @@ $node-color: #b81212;
         width: 60px;
         height: 60px;
         margin-bottom: 5px;
-        border: 2px solid transparent;
+        // border: 2px solid transparent;
         border-radius: 10px;
-        padding: 4px 4px;
+        padding: 6px 6px;
         background: #394142;
 
         img {

@@ -232,6 +232,7 @@ import { useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { required } from '../../../../utils/validate'
 import { formatMoney } from "@/utils/format-money";
+import { siteEnum } from "@/consts/SiteEnum"
 
 const withdrawalMethods = ref([])
 const store = useStore()
@@ -403,9 +404,9 @@ async function retrieveSecurityQuestion() {
 const returnCurrency = () => {
   if (siteId === 3 || siteId === '3') {
     return "THB"
-  } else if (siteId === 8 || siteId === '8') {
+  } else if (siteId === 8 || siteId === siteEnum.VNM) {
     return "VNDP"
-  } else if (siteId === 10 || siteId === '10') {
+  } else if (siteId === 10 || siteId === siteEnum.KRW) {
     return "₩"
   } else {
     return "RMB"

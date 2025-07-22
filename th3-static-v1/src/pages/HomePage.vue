@@ -1255,7 +1255,9 @@
   <q-dialog width="100%" class="flex-end announcement-modal" v-model="isStationNotice">
     <!-- <div class="announcement-top-img"><img src="../assets/images/index/notice-icon.png" /></div> -->
     <div class="popout-dialog announcement-popout">
-      <q-btn flat dense icon="close" class="text-black announcement-close" v-close-popup />
+      <q-btn flat dense class="text-black announcement-close" v-close-popup>
+        <img width="25px" height="25px" src="../assets/images/index/close-btn-brown.png" />
+      </q-btn>
       <div class="notice-title">Notice!</div>
       <q-card style="width: calc(100% - 0px); margin: auto" class="announcement-card">
         <q-card-section class="q-mb-md" style="max-height: 98%; overflow: auto">
@@ -5253,7 +5255,7 @@ const checkGoogleLoginSetPwd = () => {
   right: 30px;
   top: 30px;
   z-index: 3;
-  background: #464f50;
+  // background: #464f50;
 
   padding: 5px;
   font-size: 10px;

@@ -354,6 +354,7 @@ function initPay() {
 async function loadPrivilege(val) {
   privilegeList.value = [];
   freePrivilege.value = null;
+  loadingBtn.value = true;
   await loadPrivileges(val.paymentId).then((d) => {
     if (d.code === 0) {
       privilegeList.value = d.data.privileges;
@@ -377,6 +378,8 @@ async function loadPrivilege(val) {
       hasPrivilege.value = false;
       privilegeList.value = [];
     }
+    
+    loadingBtn.value = false;
   });
 }
 

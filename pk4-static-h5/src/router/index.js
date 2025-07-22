@@ -203,15 +203,17 @@ export default route(function (/* { store, ssrContext } */) {
         return;
       }
     }
+
     if (from.path === '/gamePlay' && from.query['bt-path']) {
+      // debugger;
       const currentQuery = new URLSearchParams(window.location.search);
       const btPath = currentQuery.get('bt-path');
       console.log(btPath)
       if (btPath) {
+        console.log('btPath', btPath)
         sessionStorage.setItem('betby-bt-path', btPath);
       }
     }
-
 
     if (user.hasToken()) {
       if (to.path === "/" || to.path === "/register" || to.path === "/login" || to.path === "//") {

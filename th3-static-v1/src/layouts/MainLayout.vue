@@ -31,11 +31,11 @@
         >
           <img
             class="house-icon"
-            v-if="route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account'"
-            src="../assets/images/index/btn-house.png"
+            v-if="route.path === '/account'"
+            src="../assets/images/index/btn-back.png"
             width="30"
           />
-          <img v-else src="../assets/images/index/btn-back.png" width="30" />
+          <img v-else src="../assets/images/index/btn-back-brown.png" width="30" />
           <!-- <q-icon class="header-icon" name="arrow_back_ios"></q-icon> -->
           <!-- <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span> -->
         </a>
@@ -775,13 +775,15 @@ svg path {
 }
 
 .house-icon {
-  animation: beat 1.5s infinite;
+  // animation: beat 1.5s infinite;
 }
 
 .q-page-container {
   background: repeating-linear-gradient(45deg, #f1f1ee 0, #b9a78d 50%, #e9e8e4 100%);
+  min-height: calc(100vh - 60px);
   // background-image: url("../assets/images/index/app-bg.png");
   // background-repeat: repeat-y;
-  // background-size: contain;
+  // background-size: 100vw 100vh;
+  // background-position: top left;
 }
 </style>

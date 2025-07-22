@@ -31648,5 +31648,8 @@
   "vnm-static-h5/public/static/images/index/sport/platform-item-sbo.png": "b0f56123f7ddc0898e8a060ccfb396d3",
   "vnm-static-h5/src/assets/images/home/fish/platform-item-megawin.png": "686fdc4ab82ce5a6de7e5e56f1422a73",
   "vnm-static-web/src/assets/fishing/fishing-item-megawin.png": "518d6e568c0cb9afd2d9d62d6131da5a",
+  "vnm-static-h5/src/assets/images/home/slotEdition/megawin-platform-icon-active.png": "d4a0da600f22c615b0d0d26ac95e9256",
+  "vnm-static-h5/src/assets/images/home/slotEdition/megawin-platform-icon.png": "bb4f8b82b71ac98062563ae671a680cc",
+  "vnm-static-web/src/assets/images/home/slotEdition/megawin-platform-icon.png": "177c5a7436807a0df8b5f8160cec29d0",
   "lh-static-h5/src/assets/images/livestream/room-message-bg-dark.png": "285cc16e624dd385410ecd8d596513b0"
 }

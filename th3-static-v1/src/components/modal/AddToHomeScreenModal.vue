@@ -18,19 +18,11 @@
           <img src="../../assets/images/index/download/benefits-emoji.png" alt="" />
         </div>
         <div class="more-benefits-txt">{{ $t("modal.addToHomeScreen.enjoyMoreBenefits") }}</div>
-        <q-btn v-if="Platform.is.ios" no-caps unelevated class="btn-custom" color="#EFFFD1" @click="handleIosBtnClick">
+        <q-btn v-if="Platform.is.ios" no-caps unelevated class="btn-custom" color="#fff" @click="handleIosBtnClick">
           <img class="os-logo" src="../../assets/images/index/download/ios-logo.png" />
           {{ $t("modal.addToHomeScreen.appAndWeb") }}
         </q-btn>
-        <q-btn
-          v-else
-          no-caps
-          unelevated
-          class="btn-custom"
-          color="#EFFFD1"
-          :href="ui.downloadAppUrl"
-          @click="closeDialog"
-        >
+        <q-btn v-else no-caps unelevated class="btn-custom" color="#fff" :href="ui.downloadAppUrl" @click="closeDialog">
           <img class="os-logo" src="../../assets/images/index/download/android-logo-green.png" />
           {{ $t("modal.addToHomeScreen.app") }}
         </q-btn>
@@ -86,7 +78,7 @@ watch(
 
 <style scoped lang="scss">
 .add-to-homescreen-container {
-  background-color: #e0d6c7;
+  background-color: #232626;
   // background-image: url("../../assets/images/index/download/download-bg.png");
 
   background-position: bottom center;
@@ -140,6 +132,7 @@ watch(
       // margin-right: 15px;
       // font-weight: 600;
       font-size: 14px;
+      color: #e9e8e4;
     }
   }
 
@@ -212,7 +205,7 @@ watch(
     display: flex;
     border-radius: 58px;
     box-shadow: 0px 2.16px 0px 0px #907c5f;
-    color: #333 !important;
+    color: #fff !important;
     font-family: Microsoft YaHei UI;
     font-weight: 700;
     font-size: 17px;
@@ -243,7 +236,7 @@ watch(
     // width: 30px;
     height: 30px;
     margin-right: 8px;
-    filter: grayscale(1) invert(1);
+    // filter: grayscale(1) invert(1);
   }
 }
 
@@ -268,7 +261,7 @@ watch(
 
 .close-btn {
   background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
-  color: #333;
+  color: #fff;
   position: absolute;
   right: 25px;
   top: 25px;

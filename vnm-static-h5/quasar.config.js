@@ -400,14 +400,16 @@ module.exports = configure(function (ctx) {
           }
         };
 
-        cfg.plugins.push(
-          new CompressionWebpackPlugin({
-            algorithm: "gzip",
-            test: /\.(js|css|html|svg)$/,
-            threshold: 10240,
-            minRatio: 0.8
-          })
-        );
+        if (!ctx.mode.capacitor) {
+          cfg.plugins.push(
+            new CompressionWebpackPlugin({
+              algorithm: "gzip",
+              test: /\.(js|css|html|svg)$/,
+              threshold: 10240,
+              minRatio: 0.8
+            })
+          );
+        }
       }
     },
 
