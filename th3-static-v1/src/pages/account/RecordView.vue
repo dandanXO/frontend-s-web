@@ -327,7 +327,7 @@ onActivated(() => {
     align-items: center;
 
     span {
-      color: #ffffff99;
+      color: #3A3A3A;
       padding: 0px 12px;
     }
 
