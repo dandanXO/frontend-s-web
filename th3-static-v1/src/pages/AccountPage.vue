@@ -322,7 +322,7 @@
                           no-caps
                           dense
                           flat
-                          class="text-green q-pr-md"
+                          class="text-main-color q-pr-md"
                           :label="!startCountdownResendOTP && $t('form.send')"
                           :disable="!formDetail.phone || startCountdownResendOTP"
                           @click="openVerificationCodeDialog"
@@ -397,7 +397,7 @@
                         <q-btn
                           no-caps
                           dense
-                          class="text-green"
+                          class="text-main-color"
                           :label="!startCountdownPhoneResendOTP && $t('form.send')"
                           :disable="startCountdownPhoneResendOTP"
                           @click="openPhoneVerificationCodeDialog"
@@ -1818,7 +1818,7 @@ const openConfirmSignOutDialog = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #1cca6a;
+  color: #3A3A3A;
 }
 
 .pc-tip {
@@ -1838,19 +1838,16 @@ const openConfirmSignOutDialog = () => {
 }
 
 .btn-refresh {
-  background: #00ae001a;
   border-radius: 8px;
-  font-weight: 400;
   margin-top: auto;
-  // color: #00ae00;
   padding: 10px 20px;
-  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-  color: #333333;
+  background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+  color: #fff;
   font-weight: 700;
-  box-shadow: 0px 2px 0px 0px #1cca6a;
+  box-shadow: 0px 2px 0px 0px #907c5f;
 
   :deep(.q-icon) {
-    color: #333333;
+    color: #FFF;
   }
 }
 
@@ -1897,4 +1894,40 @@ const openConfirmSignOutDialog = () => {
   width: 100%;
   margin-top: 20px;
 }
+.txt-title {
+  color: #fff;
+}
+
+.text-main-color {
+  color: #d9cfb8;
+}
+.form-field-label {
+  color: #d9cfb8;
+}
+
+:deep(.landing-input .q-field__control) {
+  color: #907C5F;
+}
+:deep(.landing-input .q-field__native) {
+  color: #907C5F;
+  font-weight: bold;
+}
+.popout-dialog-container {
+  :deep(.form-field-label) {
+    color: #d9cfb8;
+  }
+  :deep(.landing-input .q-field__control) {
+    background: #3A3A3A;
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+    }
+  }
+  :deep(.landing-input .q-field__control) {
+    color: #d9cfb8;
+  }
+  :deep(.landing-input .q-field__native) {
+    color: #d9cfb8;
+  }
+}
+
 </style>
