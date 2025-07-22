@@ -9,7 +9,7 @@
     :autoHeight="true"
   >
     <SwiperSlide>
-      <LoginRegisterPage siteId="18" />
+      <LoginRegisterPage :siteId="siteEnum.BR1" />
     </SwiperSlide>
     <!--    <SwiperSlide>-->
     <!--      <CustomerServicePage />-->
@@ -41,6 +41,7 @@ import SwiperCore, {
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/swiper-bundle.css'
 import LoginRegisterPage from '@/components/login-register'
+import { siteEnum } from "@/consts/SiteEnum"
 // extra components
 SwiperCore.use([Mousewheel, Pagination, Navigation, Scrollbar])
 export default defineComponent({
