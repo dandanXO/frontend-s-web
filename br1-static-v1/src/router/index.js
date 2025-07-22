@@ -38,6 +38,11 @@ export default route(function (/* { store, ssrContext } */) {
     const user = userStore();
     const ui = useUI();
 
+    if (to.query.click_id) {
+      localStorage.setItem("click_id", to.query.click_id);
+      user.googleadid = to.query.click_id;
+    }
+
     // debugger;
     if (to.path !== "/ageConfirmation" && !localStorage.getItem("age_confirmation")) {
       // alert("YES");
