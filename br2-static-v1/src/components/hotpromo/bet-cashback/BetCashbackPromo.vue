@@ -6,7 +6,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
           {{ $t("hotPromo.duration") }}
         </div>
-        <div class="bar-desc">{{$t("hotPromo.betCashback.duration") }}</div>
+        <div class="bar-desc">{{ $t("hotPromo.betCashback.duration") }}</div>
       </div>
 
       <div class="receive-bar">
@@ -29,61 +29,62 @@
     <div class="table-container">
       <table>
         <thead>
-        <tr>
-          <th>{{ $t("hotPromo.betCashback.thead1") }}</th>
-          <th>{{ $t("hotPromo.betCashback.thead2") }}</th>
-          <th>{{ $t("hotPromo.betCashback.thead3") }}</th>
-        </tr>
+          <tr>
+            <th>{{ $t("hotPromo.betCashback.thead1") }}</th>
+            <th>{{ $t("hotPromo.betCashback.thead2") }}</th>
+            <th>{{ $t("hotPromo.betCashback.thead3") }}</th>
+          </tr>
         </thead>
         <tbody>
           <tr>
             <td>1</td>
             <td>1</td>
-            <td>0.7%</td>
+            <td>0.5%</td>
           </tr>
           <tr>
             <td>2</td>
             <td>1,000</td>
-            <td>0.8%</td>
+            <td>0.6%</td>
           </tr>
           <tr>
             <td>3</td>
             <td>5,000</td>
-            <td>0.9%</td>
+            <td>0.7%</td>
           </tr>
           <tr>
             <td>4</td>
             <td>10,000</td>
-            <td>1.0%</td>
+            <td>0.8%</td>
           </tr>
           <tr>
             <td>5</td>
             <td>50,000</td>
-            <td>1.1%</td>
+            <td>0.9%</td>
           </tr>
           <tr>
             <td>6</td>
             <td>100,000</td>
-            <td>1.2%</td>
+            <td>1%</td>
           </tr>
           <tr>
             <td>7</td>
             <td>500,000</td>
-            <td>1.4%</td>
+            <td>1.2%</td>
           </tr>
           <tr>
             <td>8</td>
             <td>1,000,000</td>
-            <td>1.7%</td>
+            <td>1.5%</td>
           </tr>
           <tr>
             <td>9</td>
             <td>3,000,000</td>
-            <td>2.2%</td></tr>
+            <td>2%</td>
+          </tr>
           <tr class="highlight">
             <td>10</td>
             <td>5,000,000</td>
-            <td>3.0%</td>
+            <td>3%</td>
           </tr>
         </tbody>
       </table>
@@ -101,17 +102,14 @@
   </div>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 <style lang="scss" scoped>
-
 .table-container {
   max-width: 500px;
   margin: 15px auto 10px;
-  border-radius : 10px;
+  border-radius: 10px;
   overflow: hidden;
   background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-
 
   table {
     width: 100%;
@@ -123,11 +121,12 @@
     color: #2d2d2d;
   }
 
-  th{
-    background:transparent !important;
+  th {
+    background: transparent !important;
   }
 
-  th, td {
+  th,
+  td {
     padding: 12px;
     text-align: center;
     border-bottom: 1px solid #333;
@@ -148,14 +147,11 @@
   }
 }
 
-
 .receive-bar-container {
   margin-top: 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-
-
 
   .receive-bar {
     background: #1f241f;

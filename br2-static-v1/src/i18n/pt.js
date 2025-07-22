@@ -871,9 +871,9 @@ export default {
     },
     redepositBonus: {
       duration: "Em curso",
-      eligible: "Todos os membros ",
+      eligible: "Todos os membros com histórico de depósito",
       description:
-        "Aproveite um Bônus adicional de 100% no seu primeiro depósito todos os dias, recompensa máxima possível 50.",
+        "Os membros podem receber 15% de cashback sobre o valor líquido das perdas do dia anterior, diariamente.",
       tnc01:
         "O primeiro depósito do dia efetuado por cada membro é elegível para um Bônus de 100%, recompensa máxima possível 50.;",
       tnc02:
@@ -1017,9 +1017,9 @@ export default {
     },
     dailySecondDeposit: {
       duration: "Em curso",
-      eligible: "Todos os membros ",
+      eligible: "Todos os membros",
       description:
-        "Depois de completar o seu primeiro depósito do dia, você pode fazer depósitos adicionais para receber um Bônus de 20% de cada vez, sem limite para o número de depósitos.",
+        "Após realizar o primeiro depósito do dia, o membro poderá receber um bônus extra de 10% em cada novo depósito — sem limite de vezes.",
       tnc01:
         "Cada Membro tem o direito de reclamar o Bônus de recarga várias vezes por dia, sem restrições quanto ao número de depósitos;",
       tnc02:
@@ -1038,8 +1038,7 @@ export default {
     betCashback: {
       duration: "Em curso",
       eligible: "Todos os membros com registro de depósito",
-      description:
-        "Aproveite um desconto ilimitado diário de 3% - Quanto mais apostar, maiores serão os seus retornos!",
+      description: "3% de cashback diário sem limite — quanto mais você apostar, mais cashback recebe!",
       tnc01:
         "Os Bônus de desconto para apostas feitas no dia anterior são distribuídos automaticamente todos os dias às 6h, horário do Brasil;",
       tnc02:
