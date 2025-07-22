@@ -384,6 +384,7 @@ export default defineComponent({
       } else {
         if (promo.redirectUrl === "money-rain") {
           isMoneyRainModal.value = true;
+          sessionStorage.setItem('moneyRainContent', promo.pageContent);
         }
         else if (promo.redirectUrl && promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});
