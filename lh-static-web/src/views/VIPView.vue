@@ -1975,13 +1975,13 @@ $border-settings: 1px solid #e5e7eb;
         font-size: 15px;
         font-weight: 400;
         line-height: 18px;
-        margin-top: 20px;
+        margin-top: 14px;
         text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
         span {
           color: #f1dda0;
           font-size: 30px;
@@ -1995,8 +1995,9 @@ $border-settings: 1px solid #e5e7eb;
         font-family: "Purple Purse", sans-serif;
         font-size: 36px;
         font-weight: 400;
-        line-height: 40px;
+        // line-height: 40px; 
         text-align: center;
+        line-height: 1;
       }
 
       .inner-vip {
