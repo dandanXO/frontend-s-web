@@ -181,7 +181,7 @@ const { t, locale, getLocaleMessage } = useI18n();
 const { languageVal } = storeToRefs(i18nStore());
 
 const contactInfo = computed(() => [
-  { icon: "qq-logo.png", label: t("affiliate.contact.qq"), value: "2115894008", download: "https://im.qq.com/index/" },
+  { icon: "qq-logo.png", label: t("affiliate.contact.qq"), value: "6.vip", download: "https://im.qq.com/index/" },
   {
     icon: "tg-logo.png",
     label: t("affiliate.contact.telegram"),
