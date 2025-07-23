@@ -1169,6 +1169,45 @@
           </div>
         </div>
       </template>
+      <template
+        v-if="(category.title === 'Lottery' && category.active) || (category.title === 'Lobby' && category.active)"
+      >
+        <div class="games-selection-wrapper" id="Lottery">
+          <div class="title-game">
+            <!-- <img src="../assets/images/index/menu-label-sport.png" class="label-img" /> -->
+            <!-- <img src="../assets/images/index/sport-icon-label.png" /> -->
+            <!-- <span class="txt-style">Sports</span> -->
+            <img src="../assets/images/index/menu-label-icon-sport.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_lottery") }}</div>
+          </div>
+          <div class="platform-game-container sport-platform">
+            <template v-for="(item, index) in lottery" :key="index">
+              <div
+                class="platform-game-item btn-effect"
+                @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id, item.demo)"
+              >
+                <img src="../assets/images/index/lottery/item-game-maintenance.png" />
+                <div
+                  class="platform-game-item--img"
+                  :style="{
+                    backgroundImage: (() => {
+                      try {
+                        return `url(${require(`../assets/images/index/lottery/item-game-${item.name.toLowerCase()}.png`)})`;
+                      } catch (e) {
+                        return `url(https://m.b9mega1.com/static/images/index/lottery/item-game-${item.code.toLowerCase()}.png)`;
+                      }
+                    })()
+                  }"
+                >
+                  <!-- <div v-if="item.name === 'LuckySport' || item.name === 'BTI'" class="burning-hot">
+                    <img src="../assets/images/index/hot.png" />
+                  </div> -->
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </template>
     </template>
   </div>
 
@@ -2005,7 +2044,8 @@ const categoriesList = ref([
   { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
   { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false },
   { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false },
-  { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false }
+  { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false },
+  { title: "Lottery", label: t("home.menu_lottery"), icon: "lottery", active: false }
 ]);
 
 const isCsTabVisible = ref(false);
@@ -2055,6 +2095,7 @@ const closeDialog = () => {
 const activateSlide = (item) => {
   categoriesList.value.forEach((category) => (category.active = false));
   const category = categoriesList.value.find((cat) => cat.title === item.title);
+  console.log('dan',category, categoriesList.value)
   if (category) {
     category.active = true;
     router.replace({ hash: `#${category.label}` });
