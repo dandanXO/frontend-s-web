@@ -55,6 +55,7 @@
     "qrcode.vue": "^3.4.1",
     "qs": "^6.11.0",
     "quasar": "^2.18.1",
+    "stylus": "github:stylus/stylus#0.54.5",
     "swiper": "^9.3.2",
     "terser-webpack-plugin": "^5.3.10",
     "uuid": "^9.0.0",
