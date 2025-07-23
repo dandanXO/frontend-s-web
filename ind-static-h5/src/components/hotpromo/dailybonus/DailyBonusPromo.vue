@@ -414,9 +414,8 @@ onMounted(() => {
     font-weight: 700;
     font-size: 16px;
     
-    text-align: left;
+    text-align: center;
     margin-top: 12px;
-    margin-left: 25px;
   }
 
   .bonus-info-wrap {
