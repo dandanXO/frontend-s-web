@@ -50,6 +50,7 @@ export default {
       esports: "Esports",
       slot: "Slots",
       live: "Live Casino",
+      eeaiLive: "EEAI Live",
       poker: "Poker",
       fish: "Fishing",
       lottery: "Lottery",
@@ -932,6 +933,7 @@ export default {
     commissionCalculation: "Commission Calculation",
     commissionCalculationExample: "Below is an example of commission calculation:",
     commissionTerm: "Commission Terms & Conditions",
+    affiliation: "Affiliation",
     contact: {
       qq: "Lucky6 QQ",
       telegram: "Telegram",

@@ -43,12 +43,17 @@ import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/scrollbar";
 import { onMounted, ref, toRefs, watch } from "vue";
+import { useRouter } from "vue-router";
+
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation, Navigation, Pagination]);
 
 const props = defineProps({
   list: Array,
   scrollToCenter: Boolean
 });
+
+const router = useRouter();
+
 const { scrollToCenter, list } = toRefs(props);
 
 const emit = defineEmits(["select-swiper", "swiper"]);
@@ -58,8 +63,12 @@ const selectedTab = defineModel();
 const swiperRef = ref(null);
 
 const handleClick = (tab) => {
-  selectedTab.value = tab.name;
-  emit("select-swiper", tab);
+  if(tab?.route) {
+    router.push(tab.route);
+  } else {
+    selectedTab.value = tab.name;
+    emit("select-swiper", tab);
+  }
 };
 
 const scrollSlide = () => {

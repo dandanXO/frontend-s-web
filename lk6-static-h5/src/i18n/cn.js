@@ -49,6 +49,7 @@ export default {
       esports: "电竞",
       slot: "电子",
       live: "真人",
+      eeaiLive: "EEAI真人",
       poker: "棋牌",
       fish: "捕鱼",
       lottery: "彩票",
@@ -932,6 +933,7 @@ export default {
     commissionCalculation: "佣金计算",
     commissionCalculationExample: "以下为佣金计算示例",
     commissionTerm: "结算规则",
+    affiliation: "合作共赢",
     contact: {
       qq: "幸运6 QQ",
       telegram: "Telegram",
