@@ -21,7 +21,7 @@
         <img src="./img/collect-btn.png" alt="" />
       </div>
 
-      <div v-if="!loading" class="round-ends">Round ends in: {{getDuration(tasksStartTime, tasksEndTime)}}</div>
+      <div v-if="!loading" class="round-ends">Round ends in: {{countdownText}}</div>
 
       <div class="bonus-info-wrap">
         <div v-for="(task, i) in sortedTasks" :key="i" class="bonus-info-box">
@@ -155,7 +155,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onActivated } from "vue";
+import { ref, computed, onMounted, onUnmounted, onActivated } from "vue";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
@@ -172,6 +172,7 @@ const tasksEndTime = ref();
 const taskList = ref([]);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
+const countdownText = ref('');
 const initData = () => {
 //   loading.value = true;
 //   loading.value = false;
@@ -253,18 +254,25 @@ const initData = () => {
       tasksEndTime.value = res.data.tasksEndTime;
       taskList.value = res.data.tasks;
       hasWithdrawn.value = res.data.hasWithdrawn;
+      
+      let timer = null;
+
+        
+      countdownText.value = getDuration(tasksEndTime.value, Date.now());
+
+      timer = setInterval(() => {
+        countdownText.value = getDuration(tasksEndTime.value, Date.now());
+      }, 1000);
     }
 
   })
 }
-function getDuration(startStr, endStr) {
-  if (!startStr || !endStr) {
-    return
-  }
-  const start = new Date(startStr.replace(/-/g, '/'));
-  const end = new Date(endStr.replace(/-/g, '/'));
+function getDuration(endTime, nowTime) {
+  const end = new Date(endTime.replace(/-/g, '/'));
+  const now = new Date(nowTime);
 
-  let diffMs = end - start;
+  let diffMs = end - now;
+  if (diffMs <= 0) return 'Round has ended';
 
   const totalSeconds = Math.floor(diffMs / 1000);
   const days = Math.floor(totalSeconds / (3600 * 24));
@@ -276,6 +284,8 @@ function getDuration(startStr, endStr) {
 
   return `${days} days ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
+
+
 function getBarPercentage(part, total) {
   if (!total || total === 0) return 0;
   if (part >= total) return 100;
@@ -403,8 +413,10 @@ onMounted(() => {
     color: #ffc637;
     font-weight: 700;
     font-size: 16px;
-    text-align: center;
+    
+    text-align: left;
     margin-top: 12px;
+    margin-left: 25px;
   }
 
   .bonus-info-wrap {
