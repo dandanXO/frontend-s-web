@@ -26,7 +26,7 @@
         <div class="header-left">
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
 
-          <div class="telegram-contact">
+          <div class="telegram-contact" @click="openTelegram">
             <img class="telegram-logo" id="telegram-logo" src="../assets/index/telegram-logo.png" />
             <div class="right">
               <div class="top">{{ $t('affiliate.telegramGroup') }}</div>
@@ -1536,6 +1536,8 @@ export default defineComponent({
     const homePopupFrequency = ref(0);
     const homePopupFrequencyNum = ref(0);
 
+    const openTelegram = () => window.open('https://t.me/6vip', '_blank');
+
     const checkShowImgTop = () => {
       const lastTime = sessionStorage.getItem("indexImgTop");
       if (lastTime) {
@@ -2038,7 +2040,8 @@ export default defineComponent({
       handleSlidePrevClick,
       baccaratCategoryList,
       imgURLGame,
-      languageVal
+      languageVal,
+      openTelegram
     };
   }
 });
@@ -2132,6 +2135,7 @@ export default defineComponent({
       font-family: 'PingFang';
       gap: 3px;
       align-items: center;
+      cursor: pointer;
 
       .telegram-logo {
         width: auto;
