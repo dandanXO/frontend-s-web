@@ -52,6 +52,7 @@
     "pinia": "^2.0.17",
     "qs": "^6.11.0",
     "quasar": "^2.7.7",
+    "stylus": "github:stylus/stylus#0.54.5",
     "swiper": "^9.4.1",
     "vue": "^3.0.0",
     "vue-marquee-text-component": "^2.0.1",
