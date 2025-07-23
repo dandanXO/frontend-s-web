@@ -225,12 +225,17 @@ watch(checked, (val) => {
     &.close-icon {
       justify-content: center;
       cursor: pointer;
-      width: 32px;
-      height: 32px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       background: #ffffff99;
-      border: 1px solid #ffffffb2;
+      // border: 1px solid #ffffffb2;
       fill: black;
+
+      .el-icon {
+        margin-left: -4px;
+        margin-top: -4px;
+      }
     }
   }
 }
