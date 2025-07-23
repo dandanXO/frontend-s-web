@@ -79,7 +79,7 @@ installBtn.addEventListener("click", async () => {
         })();
 
         const fbc = fbclid;
-        const siteCode = "PAK";
+        const siteCode = "TH3";
 
         // Create payload in form format
         const payload = new URLSearchParams({

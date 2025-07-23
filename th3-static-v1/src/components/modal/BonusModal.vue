@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="bonus-header">
-      <img :src="require(`../../assets/images/index/modal/bonus-header-${$t('lang.langVal')}.png`)" />
+      <img :src="require(`../../assets/images/index/modal/-${$t('lang.langVal')}.png`)" />
     </div>
   </div>
 </template>
