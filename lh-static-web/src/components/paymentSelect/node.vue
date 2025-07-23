@@ -1,6 +1,6 @@
 <template>
   <div class="node" v-if="list && list.length !== 0">
-    <div class="" v-if="level === 1" style="padding:5px 0;"><strong>支付方式</strong></div>
+    <div class="" v-if="level === 1" style="padding: 5px 0"><strong>支付方式</strong></div>
     <!-- <div class="title" v-else>{{ name }}</div> -->
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
@@ -96,7 +96,7 @@ export default defineComponent({
       selectItem: null,
       dialogVisible: false,
       payMethods: reactive([]),
-      imgURL: useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/payment/",
+      imgURL: useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/payment/",
       nodeKey: 0
     };
   },
@@ -244,8 +244,8 @@ $node-color: #4873f1;
     // }
 
     img {
-      // max-width: 50px;
-      max-width: 73px;
+      max-width: 50px;
+      // max-width: 73px;
       margin-bottom: 10px;
     }
   }
@@ -340,11 +340,12 @@ $node-color: #4873f1;
     .node-item {
       display: flex;
       justify-content: center;
-      min-width: 4rem;
+      min-width: 140px;
       border-radius: 15px;
       // box-shadow: 0px 0px 8px 0px #a9c9ea inset;
       margin-bottom: 22px;
       // border: 2px solid;
+      border: 2px solid transparent;
       .payment-method-wrapper {
         display: none;
       }
@@ -451,14 +452,15 @@ $node-color: #4873f1;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
-      left: 0;
-      right: 0;
-      top: 48%;
-      z-inde: 4;
+      left: 50%;
+      bottom: -2px;
+      transform: translate(-50%, 50%);
       img {
+        display: block;
         padding: 0;
         border: 0;
         background-color: transparent;
+        margin-bottom: 0;
         // max-width: 42px;
         // width: 42px;
       }
