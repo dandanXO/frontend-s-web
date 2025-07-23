@@ -178,7 +178,7 @@
 
       <div class="note">温馨提示：若持卡人姓名不符可联系在线客服更正信息，感谢您的支持与 理解！</div>
 
-      <q-btn class="common-large-btn" label="提交" width="100%" style="width: 100%" @click="submitBankCard()" />
+      <q-btn :disabled="!bankList || bankList.length === 0" class="common-large-btn" label="提交" width="100%" style="width: 100%" @click="submitBankCard()" />
     </div>
   </q-page>
 </template>
