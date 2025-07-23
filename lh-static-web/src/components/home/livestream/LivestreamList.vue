@@ -21,7 +21,10 @@
             </div>
 
             <div class="livestream-list-item__match-info__date">
-              <div v-if="live.liveStatus" class="livestream-list-item__match-info__date__on-air">正在直播</div>
+              <div v-if="live.liveStatus" class="livestream-list-item__match-info__date__on-air">
+                正在直播
+                <img src="@/assets/home/livestream/on-air.gif" alt="正在直播" />
+              </div>
               <div v-else class="livestream-list-item__match-info__date__date">
                 {{ getDisplayDateTime(live.eventStartTime) }}
               </div>
@@ -259,6 +262,12 @@ watch(list, async (newVal, oldVal) => {
         gap: 2px;
         .livestream-list-item__match-info__date__on-air {
           @include livestream-on-air;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          img {
+            max-width: 20px;
+          }
         }
         .livestream-list-item__match-info__date__date {
           font-size: 11px;
