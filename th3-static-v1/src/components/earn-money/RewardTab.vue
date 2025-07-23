@@ -229,16 +229,16 @@
         <tbody>
           <tr v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
             <td>
-              <template v-if="index < 3">
+              <!-- <template v-if="index < 3">
                 <img style="max-width: 25px;" :src="require(`../../assets/images/earn-money/no${index + 1}.png`)" alt="Level Image" />
-              </template>
+              </template> -->
               LEVEL {{ index + 1 }}
             </td>
             <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
             <td>
               <div class="reward-coin-container">
-                <img class="reward-coin" src="../../assets/images/earn-money/invite-reward-coin.png" />
-                {{ item.bonusAmount }}
+                <!-- <img class="reward-coin" src="../../assets/images/earn-money/invite-reward-coin.png" /> -->
+                {{ store.currency.value }} {{ item.bonusAmount }}
               </div>
             </td>
           </tr>
@@ -275,20 +275,20 @@
     </div>
 
     <div class="earn-money-deposit-commission earn-money-card">
-      <div class="earn-money-card-title">
+      <div class="earn-money-card-title"> 
         {{ $t("earnMoney.reward.depositCommission") }}
       </div>
       <table class="card-table" border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
         <thead>
           <tr>
-            <th>{{ $t("earnMoney.reward.deposit_table.header.description") }}</th>
+            <th >{{ $t("earnMoney.reward.deposit_table.header.description") }}</th>
             <th>{{ $t("earnMoney.reward.deposit_table.header.commission") }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="index in 1" :key="index">
-            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.description`) }}</td>
-            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.commission`) }}</td>
+            <td style="color: #fff;">{{ $t(`earnMoney.reward.deposit_table.row${index}.description`) }}</td>
+            <td style="color: #fff;">{{ $t(`earnMoney.reward.deposit_table.row${index}.commission`) }}</td>
           </tr>
         </tbody>
       </table>
@@ -1407,7 +1407,7 @@ watch(activeSetting, checkIsShowDetail);
         font-weight: 900;
         font-size: 16.94px;
         line-height: 16.94px;
-        color: #21ef89;
+        color: #D9CFB8;
         letter-spacing: 0%;
         vertical-align: middle;
         text-transform: capitalize;
@@ -1566,7 +1566,7 @@ watch(activeSetting, checkIsShowDetail);
         font-size: 12px;
         // border: 1px solid #ffffff1a;
         &:last-child {
-          color: #21ef89;
+          color: #D9CFB8;
         }
       }
 
@@ -1591,6 +1591,7 @@ watch(activeSetting, checkIsShowDetail);
     display: flex;
     justify-content: center;
     align-items: center;
+    color:#D9CFB8;
     .reward-coin {
       // height: 16px;
       width: 24px;
