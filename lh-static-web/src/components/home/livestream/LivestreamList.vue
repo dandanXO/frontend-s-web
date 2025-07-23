@@ -373,7 +373,7 @@ watch(list, async (newVal, oldVal) => {
 
     &.disabled {
       pointer-events: none;
-      opacity: 0.5;
+      // opacity: 0.5;
     }
   }
 }
