@@ -1,5 +1,5 @@
 import https from "@/utils/https";
-import {ContentType, Method} from "axios-mapper";
+import { ContentType, Method } from "axios-mapper";
 
 export const getAllSportPlatform = () => {
   return https().request("/sport-config/all-sport-platform", Method.GET, ContentType.form);
