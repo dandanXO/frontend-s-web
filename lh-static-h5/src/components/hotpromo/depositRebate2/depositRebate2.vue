@@ -111,7 +111,7 @@
           <td>98PAY</td>
           <td>1.0%</td>
           <td>任意金额</td>
-          <td>188</td>
+          <td>288</td>
         </tr>
       </tbody>
     </table>
@@ -197,7 +197,7 @@ const depositCards = ref([
   {
     code: "98pay",
     title: "98PAY充值",
-    content: `充值即送<em class="light-bg">1.0%</em>彩金，98PAY完全可以满足您不同需求和使用场景。活动期间，每位玩家每笔使用98PAY单笔充值成功享受存款金额的<em class="light-bg">1.0%</em>%加码彩金，单日优惠最高上限188元！`
+    content: `充值即送<em class="light-bg">1.0%</em>彩金，98PAY完全可以满足您不同需求和使用场景。活动期间，每位玩家每笔使用98PAY单笔充值成功享受存款金额的<em class="light-bg">1.0%</em>%加码彩金，单日优惠最高上限288元！`
   },
 ]);
 
