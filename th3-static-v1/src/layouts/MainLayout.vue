@@ -102,7 +102,7 @@
     <FooterSection />
   </q-layout>
 
-  <div class="first-screen-loading" :class="isPromoPage ? 'ispromo-screen' : ''" v-show="ui.firstScreenLoading" />
+  <!-- <div class="first-screen-loading" :class="isPromoPage ? 'ispromo-screen' : ''" v-show="ui.firstScreenLoading" /> -->
 </template>
 
 <script>
