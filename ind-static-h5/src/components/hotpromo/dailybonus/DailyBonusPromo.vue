@@ -258,14 +258,18 @@ const initData = () => {
       let timer = null;
 
         
-      countdownText.value = getDuration(tasksEndTime.value, Date.now());
+      countdownText.value = getDuration(tasksEndTime.value, getIndiaNow());
 
       timer = setInterval(() => {
-        countdownText.value = getDuration(tasksEndTime.value, Date.now());
+        countdownText.value = getDuration(tasksEndTime.value, getIndiaNow());
       }, 1000);
     }
 
   })
+}
+function getIndiaNow() {
+  const indiaTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+  return new Date(indiaTime).getTime();
 }
 function getDuration(endTime, nowTime) {
   const end = new Date(endTime.replace(/-/g, '/'));
