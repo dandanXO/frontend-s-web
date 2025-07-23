@@ -1981,7 +1981,7 @@ $border-settings: 1px solid #e5e7eb;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-bottom: 12px;
+        margin-bottom: 15px;
         span {
           color: #f1dda0;
           font-size: 30px;
@@ -1993,7 +1993,7 @@ $border-settings: 1px solid #e5e7eb;
       .viplevel {
         color: #ffffff;
         font-family: "Purple Purse", sans-serif;
-        font-size: 36px;
+        font-size: 30px;
         font-weight: 400;
         // line-height: 40px; 
         text-align: center;
