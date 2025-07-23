@@ -3552,6 +3552,7 @@ export default {
     Competition: '联赛',
     Event: '赛事',
     Team: '队伍',
+    'Sport Sync Time': '赛事同步时间',
     'Bet type setting': '投注项设定',
     'Sport App Setting': '体育 App 设置',
     'Top Competition Setting': '联赛置顶设置',
