@@ -934,6 +934,7 @@ export default {
     commissionCalculationExample: "Below is an example of commission calculation:",
     commissionTerm: "Commission Terms & Conditions",
     affiliation: "Affiliation",
+    telegramGroup: "TG Group",
     contact: {
       qq: "Lucky6 QQ",
       telegram: "Telegram",

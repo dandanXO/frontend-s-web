@@ -22,9 +22,17 @@
         </div>
       </div> -->
 
-      <div class="home-header-section" style="height: 50px">
+      <div class="home-header-section" style="height: 50px" :class="{isNotLoggedIn: !store.token}">
         <div class="header-left">
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
+
+          <div class="telegram-contact">
+            <img class="telegram-logo" id="telegram-logo" src="../assets/index/telegram-logo.png" />
+            <div class="right">
+              <div class="top">{{ $t('affiliate.telegramGroup') }}</div>
+              <div class="bottom"><span style="font-family:system-ui;">@</span>6.vip</div>
+            </div>
+          </div>
         </div>
         <div class="header-right">
           <template v-if="store.token">
@@ -2113,7 +2121,51 @@ export default defineComponent({
   align-items: center;
 
   .header-left {
+    display: flex;
     height: 48px;
+    align-items: center;
+    gap: 10px;
+
+    .telegram-contact {
+      height: 48px;
+      display: flex;
+      font-family: 'PingFang';
+      gap: 3px;
+      align-items: center;
+
+      .telegram-logo {
+        width: auto;
+        height: 100%;
+        max-height: 30px;
+      }
+
+      .right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 1px;
+
+        .top {
+          font-family: 'PingFang';
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 102%;
+          letter-spacing: 0px;
+          color: #7A80A1;
+        }
+
+        .bottom {
+          font-family: 'PingFang';
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 102%;
+          letter-spacing: 0px;
+          text-align: left;
+          color: #3C96FF;
+        }
+      }
+    }
   }
 
   .top-logo {
@@ -2172,6 +2224,10 @@ export default defineComponent({
       box-shadow: 0px -0.87px 3.47px 0px #ffffff;
       border-radius: 45.9px;
       margin-right: 5px;
+
+      &.isNotLoggedIn {
+        width: 67px;
+      }
     }
 
     .login-btn {
@@ -2223,6 +2279,18 @@ export default defineComponent({
     background: #fff;
     justify-content: flex-start;
     align-items: stretch;
+  }
+
+  &.isNotLoggedIn {
+    .top-logo {
+      max-height: 40px;
+    }
+
+    .header-right {
+      .login-btn, .register-btn {
+        width: 60px;
+      }
+    }
   }
 }
 
