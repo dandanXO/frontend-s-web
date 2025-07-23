@@ -934,6 +934,7 @@ export default {
     commissionCalculationExample: "以下为佣金计算示例",
     commissionTerm: "结算规则",
     affiliation: "合作共赢",
+    telegramGroup: "代理TG群",
     contact: {
       qq: "幸运6 QQ",
       telegram: "Telegram",
