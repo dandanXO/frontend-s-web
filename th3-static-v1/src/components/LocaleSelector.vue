@@ -8,7 +8,7 @@ import { storeToRefs } from "pinia";
 import { computed, onMounted, ref } from "vue";
 import ThFlagImg from "../assets/images/auth/country-flag-th.png";
 import EnFlagImg from "../assets/images/auth/country-flag-en.png";
-import CnFlagImg from "../assets/images/auth/country-flag-cn.png";
+import CnFlagImg from "../assets/images/auth/country-flag-zh.png";
 
 const LOCALES = [
   { label: "ภาษาไทย", value: "th", icon: ThFlagImg },
