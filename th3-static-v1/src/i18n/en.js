@@ -342,7 +342,8 @@ export default {
     tryagain: "Please try again after {seconds} seconds",
     submitting: "Submitting...",
     sendingVerificationCode: "Sending verification code...",
-    passwordResetCompleted: "Password reset completed"
+    passwordResetCompleted: "Password reset completed",
+    linkCopied: "Link copied to clipboard"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",

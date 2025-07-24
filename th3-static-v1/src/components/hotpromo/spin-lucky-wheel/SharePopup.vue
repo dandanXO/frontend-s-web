@@ -310,7 +310,7 @@ const fallbackCopyTextToClipboard = (text) => {
   document.body.removeChild(textarea);
 
   $q.notify({
-    message: "Link copied to clipboard",
+    message: t("notify.linkCopied"),
     color: "dark",
     textColor: "white",
     position: "top",
@@ -336,7 +336,7 @@ const copyHrefLink = async () => {
       .writeText(textToCopy)
       .then(() => {
         $q.notify({
-          message: "Link copied to clipboard",
+          message: t("notify.linkCopied"),
           color: "dark",
           textColor: "white",
           position: "top",
