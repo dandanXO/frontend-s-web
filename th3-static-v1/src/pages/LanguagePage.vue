@@ -25,10 +25,10 @@
           </div>
         </template>
       </q-radio> -->
-      <q-radio class="select-item" v-model="group" val="cn">
+      <q-radio class="select-item" v-model="group" val="zh">
         <template v-slot>
           <div class="radio-label">
-            <img :src="require(`../assets/images/auth/country-flag-cn.png`)" class="flag" />
+            <img :src="require(`../assets/images/auth/country-flag-zh.png`)" class="flag" />
             <span class="text">中文</span>
           </div>
         </template>

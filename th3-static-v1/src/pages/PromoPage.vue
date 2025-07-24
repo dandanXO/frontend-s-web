@@ -556,10 +556,15 @@ export default defineComponent({
         if (res.length > 0) {
           tabItems.value = [];
           res.forEach(element => {
+            // const obj = {
+            //   name: element.value.toLowerCase(),
+            //   label: JSON.parse(element.name).en,
+            //   label_ur: JSON.parse(element.name).H5_ur
+            // };
             const obj = {
-              name: element.value.toLowerCase(),
-              label: JSON.parse(element.name).en,
-              label_ur: JSON.parse(element.name).H5_ur
+              name:'all',
+              label: 'all',
+              label_ur: 'all'
             };
             tabItems.value.push(obj);
           });

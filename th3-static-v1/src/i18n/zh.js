@@ -1,6 +1,6 @@
 export default {
   lang: {
-    langVal: "cn",
+    langVal: "zh",
     language: "语言"
   },
   header: {
