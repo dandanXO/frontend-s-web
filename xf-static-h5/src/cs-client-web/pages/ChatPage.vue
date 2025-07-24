@@ -42,9 +42,9 @@ export default defineComponent({
 
     const getChatBaseUrl = () => {
       const url = route?.path?.split?.("/")?.[1] || "live-chat";
-      if (url === "live-chat") {
-        return `${url}/live-chat`;
-      }
+      // if (url === "live-chat") {
+      //   return `${url}/live-chat`;
+      // }
       return url;
     };
 
