@@ -15,7 +15,14 @@
             require(`../../assets/images/livestream/chat/vip-badge-${message.vip}${isDark ? '-dark' : '-light'}.png`)
           "
           loading="lazy"
-          :style="{ width: message.vip === 12 ? '70px' : '44px' }"
+          :style="{
+            width:
+              message.vip === 12
+                ? '70px'
+                : message.vip === 10 || message.vip === 11
+                ? '50px'
+                : '44px'
+          }"
         />
         <div v-if="message.memberType !== 'NORMAL'" class="livestream-chat-item__manager-badge">管</div>
         <img
