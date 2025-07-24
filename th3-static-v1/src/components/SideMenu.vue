@@ -114,12 +114,12 @@
         <img :src="require(`../assets/images/auth/panda-app.png`)" />
       </div>
     </a>
-    <RouterLink to="/language" class="side-menu-item">
+    <a class="side-menu-item" @click="showLocaleSelectorDialog = true">
       <div class="item-icon">
         <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
       </div>
       {{ $t("sideNav.language") }}
-    </RouterLink>
+    </a>
     <a
       class="side-menu-item license"
       href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
@@ -143,15 +143,20 @@
     <!-- <div class="side-menu-item side-menu-item__transparent"> -->
     <!-- <LangOptions /> -->
     <!-- </div> -->
+    <LocaleSelector v-model="showLocaleSelectorDialog" />
   </div>
 </template>
 <script setup>
-import { defineEmits, inject } from "vue";
+import { defineEmits, inject, ref } from "vue";
 import { isAndroid } from "boot/utils";
 import { useRouter } from "vue-router";
 import ProfileSummary from "../components/ProfileSummary.vue";
 import { useUI } from "stores/ui";
+import LocaleSelector from "./LocaleSelector.vue";
 const emits = defineEmits(["closeMenu"]);
+
+const showLocaleSelectorDialog = ref(false);
+
 const router = useRouter();
 const ui = useUI();
 const topDownload = inject("topDownload");
