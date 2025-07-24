@@ -1,5 +1,5 @@
 {
-  "appId": "com.ind.appb9mega1",
+  "appId": "com.tha.appsupersiam",
   "appName": "B9.GAME",
   "webDir": "www",
   "server": {
@@ -8,10 +8,7 @@
   },
   "plugins": {
     "GoogleAuth": {
-      "scopes": [
-        "profile",
-        "email"
-      ],
+      "scopes": ["profile", "email"],
       "serverClientId": "83563276345-oa2oi16o8597le1mku7bftcbu1avuk68.apps.googleusercontent.com",
       "forceCodeForRefreshToken": true
     }

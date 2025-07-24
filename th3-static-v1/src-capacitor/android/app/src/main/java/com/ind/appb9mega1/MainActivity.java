@@ -1,4 +1,4 @@
-package com.ind.appb9mega1;
+package com.tha.appsupersiam;
 
 import android.os.Bundle;
 import com.getcapacitor.BridgeActivity;
