@@ -892,13 +892,21 @@ export default defineComponent({
         gap: 8
       },
       {
-        name: "live",
-        icon: "slide-eeai-live-icon.png",
-        iconActive: "slide-eeai-live-icon-active.png",
-        label: t("common.gameType.eeaiLive"),
+        name: "baccarat",
+        icon: "slide-baccarat-icon.png",
+        iconActive: "slide-baccarat-icon-active.png",
+        label: t("common.gameType.baccarat"),
         mb: 0,
         gap: 8
       },
+      // {
+      //   name: "live",
+      //   icon: "slide-eeai-live-icon.png",
+      //   iconActive: "slide-eeai-live-icon-active.png",
+      //   label: t("common.gameType.eeaiLive"),
+      //   mb: 0,
+      //   gap: 8
+      // },
       // TODO: check name
       {
         name: "affiliation",
@@ -908,15 +916,7 @@ export default defineComponent({
         mb: 0,
         gap: 8,
         route: '/affiliate'
-      },
-      // {
-      //   name: "baccarat",
-      //   icon: "slide-baccarat-icon.png",
-      //   iconActive: "slide-baccarat-icon-active.png",
-      //   label: t("common.gameType.baccarat"),
-      //   mb: 0,
-      //   gap: 8
-      // }
+      }
     ]);
     const esport = ref([]);
     const sport = ref([]);
