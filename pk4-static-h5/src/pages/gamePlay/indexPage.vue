@@ -2,25 +2,11 @@
   <q-scroll-area>
     <q-dialog v-model="visible" class="gameDialog" :class="{ betby: isBetBy }" full-height full-width persistent no-esc-dismiss no-backdrop-dismiss>
       <q-toolbar>
+
         <div class="topActions" :class="{ betby: isBetBy }">
           <q-icon name="chevron_left" size="30px" @click="onExitClick" />
           <div class="game-logo-img">
             <img src="../../assets/images/auth/auth-logo-text-only.png" />
-            <!-- <img src="../../assets/logo.png" /> -->
-            <!-- <div
-              class="game-logo"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../../assets/images/index/logo/logo-${platformCodeImg.toLowerCase()}.png`)})`;
-                  } catch (e) {
-                    return '';
-                  }
-                })()
-              }"
-            >
-              &nbsp;
-            </div> -->
           </div>
 
           <div v-if="!drawerVisible && !isBetBy" class="wallet-container" @click="goToDeposit()">
@@ -1315,7 +1301,15 @@ defineExpose({
 <style lang="scss">
 .game-iframe--betby {
   #bt-inner-page {
+    padding-bottom: 320px;
+  }
+
+  #bt-root {
     padding-bottom: 32px;
+  }
+
+  > div {
+    padding-bottom: 120px;
   }
 }
 </style>
