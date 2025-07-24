@@ -1,26 +1,23 @@
 <template>
   <q-page class="account-message-page">
-    <q-tabs dense
-      no-caps
-      indicator-color="transparent"
-      align="justify" v-model="activeTab" class="message-tab-toggle">
-        <q-tab name="activity" :label="$t('message.activity')">
-          <q-badge rounded color="#219efb" text-color="black" floating>{{unreadCount('activity')}}</q-badge>
-        </q-tab>
-        
-        <q-tab name="payment" :label="$t('message.payment')">
-          <q-badge rounded color="#219efb" text-color="black" floating>{{unreadCount('payment')}}</q-badge>
-        </q-tab>
-        
-        <q-tab name="system" :label="$t('message.system')">
-          <q-badge rounded color="#219efb" text-color="black" floating>{{unreadCount('system')}}</q-badge>
-        </q-tab>
+    <q-tabs dense no-caps indicator-color="transparent" align="justify" v-model="activeTab" class="message-tab-toggle">
+      <q-tab name="activity" :label="$t('message.activity')">
+        <q-badge rounded color="#219efb" text-color="black" floating>{{ unreadCount("activity") }}</q-badge>
+      </q-tab>
+
+      <q-tab name="payment" :label="$t('message.payment')">
+        <q-badge rounded color="#219efb" text-color="black" floating>{{ unreadCount("payment") }}</q-badge>
+      </q-tab>
+
+      <q-tab name="system" :label="$t('message.system')">
+        <q-badge rounded color="#219efb" text-color="black" floating>{{ unreadCount("system") }}</q-badge>
+      </q-tab>
     </q-tabs>
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <q-tab-panels v-model="activeTab" animated>
       <q-tab-panel v-for="(items, tab) in filteredMessages" :key="tab" :name="tab">
         <NoInfoComponent v-if="items.length === 0" :noInfoTitle="$t('message.noMessage')" />
-        <MessageCard v-else v-for="(e) in items" :key="e.id" :message="e" @details="onDetailsClick" />
+        <MessageCard v-else v-for="e in items" :key="e.id" :message="e" @details="onDetailsClick" />
       </q-tab-panel>
     </q-tab-panels>
   </q-page>
@@ -98,12 +95,12 @@ const onDetailsClick = (mailData) => {
 const filteredMessages = computed(() => ({
   activity: mailData.value.filter((e) => ["ACTIVITY", "MATCH"].includes(e.type)),
   payment: mailData.value.filter((e) => e.type === "PAYMENT"),
-  system: mailData.value.filter((e) => ["NOTIFICATION", "ANNOUNCEMENT"].includes(e.type)),
+  system: mailData.value.filter((e) => ["NOTIFICATION", "ANNOUNCEMENT"].includes(e.type))
 }));
 
 const unreadCount = (tab) => {
   const messages = filteredMessages.value[tab] || [];
-  return messages.filter(message => !message.readTime).length;
+  return messages.filter((message) => !message.readTime).length;
 };
 
 onActivated(() => {
@@ -114,6 +111,7 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .account-message-page {
+  padding-top: 20px;
   :deep(.q-tab-panels) {
     background: transparent;
   }
@@ -122,11 +120,9 @@ onActivated(() => {
     background: #323738;
     background-size: 100% 100%;
     border-radius: 8px;
-    margin-bottom: 4px;
-    margin-top: 5px;
-    padding: 1px;
+    // padding: 1px;
     width: calc(100% - 32px);
-    margin: 16px auto 0;
+    margin: 0 auto;
     .q-tab {
       min-height: 44px;
       border-radius: 8px;
@@ -178,8 +174,7 @@ onActivated(() => {
       //   left: 50%;
       //   transform: translateX(-50%);
       // }
-      background: #394142;
-
+      background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
     }
 
     :deep(.q-tab--active .q-tab__label) {

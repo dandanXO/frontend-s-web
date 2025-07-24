@@ -95,7 +95,7 @@ const goToOuterLink = (link) => {
       // top: 0;
       // width: 30px;
       // height: 30px;
-      background: #21ef89;
+      background: #d9cfb8;
       width: 6px;
       height: 6px;
       border-radius: 50%;
@@ -104,7 +104,7 @@ const goToOuterLink = (link) => {
     .time {
       font-size: 1rem;
       // font-weight: 700;
-      color: #ffffffb2;
+      color: #d9cfb8;
     }
   }
 
@@ -137,7 +137,7 @@ const goToOuterLink = (link) => {
 
   .content {
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.5);
+    color: #e9e8e4;
     display: -webkit-box;
     -webkit-line-clamp: 2; /* Limit to 2 lines */
     -webkit-box-orient: vertical;
@@ -154,7 +154,7 @@ const goToOuterLink = (link) => {
     justify-content: flex-end;
     margin: 1rem 0 0 0;
     // gap: 0.5rem;
-    
+
     :not(:last-child) {
       margin-right: 0.5rem;
     }
@@ -164,7 +164,7 @@ const goToOuterLink = (link) => {
       padding: 0.2rem 1rem;
       min-height: unset;
       text-transform: capitalize;
-      background: #464f50;
+      background: #907c5f;
       border-radius: 6px;
       display: flex;
       justify-content: center;
