@@ -103,7 +103,7 @@
 
       <div class="redeem-success-content">
         <img class="redeem-success-img" src="../../assets/images/exchange/redeem_success.png" />
-        <div class="redeem-amt">{{ convertToCommaAmount(redeemedAmt, true) }}Rs</div>
+        <div class="redeem-amt">{{ convertToCommaAmount(redeemedAmt, true) }}THB</div>
       </div>
     </div>
   </q-dialog>

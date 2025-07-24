@@ -10,7 +10,7 @@
       <div class="claim-btn" @click="closeDialog" :data-text="$t('btn.receive')">
         {{ $t("btn.receive") }}
       </div>
-      <div class="claim-amt">Rs {{ claimPrizeAmt }}</div>
+      <div class="claim-amt">THB {{ claimPrizeAmt }}</div>
     </div>
   </q-dialog>
 </template>

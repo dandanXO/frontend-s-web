@@ -124,7 +124,7 @@
             </q-checkbox>
             <div v-else>&nbsp;</div>
             <!--            {{ $t("form.depositAmount") }}-->
-            <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} RS)-->
+            <!--            ({{ convertToCommaAmount(amountDepositMin) }} - {{ convertToCommaAmount(amountDepositMax) }} THB)-->
             <div class="tutorial-link" @click="openDepositPage" style="margin-right: 10px">
               {{ $t("deposit.depositTutorial") }}
             </div>
@@ -372,7 +372,7 @@
       <div style="padding: 20px">
          Will Lose
         <q-card-section class="q-mb-md q-pa-md">
-          <div class="bonusAmt">PKR {{ paymentCancellationAmtLoss }}</div>
+          <div class="bonusAmt">THB {{ paymentCancellationAmtLoss }}</div>
           <br />
           <br />
         </q-card-section>
@@ -389,7 +389,7 @@
         <div class="txt-content q-mt-md text-center">
           {{ $t("notify.cancelPaymentWillLose") }}
           <br />
-          <div class="bonusAmt">PKR {{ paymentCancellationAmtLoss }}</div>
+          <div class="bonusAmt">THB {{ paymentCancellationAmtLoss }}</div>
         </div>
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container popout-btns">
           <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup @click="confirmLeave" />
@@ -664,7 +664,7 @@ const getFtdCommaAmount = (amount) => {
   const currencyRate = isUSDT.value ? activeMethod.value : 1;
   const bonusAmount = amount * 0.5 * currencyRate;
   if (bonusAmount < 999) {
-    return bonusAmount.toFixed(0) + "Pkr";
+    return bonusAmount.toFixed(0) + "THB";
   } else {
     return "999Pkr";
   }
@@ -1124,7 +1124,7 @@ async function pDepo(deposit) {
             "track",
             "Purchase",
             {
-              currency: "PKR",
+              currency: "THB",
               value: obj.localAmount
             },
             { eventID: randUuid }
@@ -1135,7 +1135,7 @@ async function pDepo(deposit) {
           ttq.track(
             "Purchase",
             {
-              currency: "PKR",
+              currency: "THB",
               value: obj.localAmount,
               content_type: "product"
             },

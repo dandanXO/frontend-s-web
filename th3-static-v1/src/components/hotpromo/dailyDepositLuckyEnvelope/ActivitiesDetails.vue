@@ -1,7 +1,11 @@
 <template>
   <div class="activities-container">
     <div class="activities-title">
-      <img width="160px" height="40px" src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/title-activities.png" />
+      <img
+        width="160px"
+        height="40px"
+        src="../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/title-activities.png"
+      />
     </div>
     <div class="activities-content">
       {{ $t("hotPromo.consecutiveDepositBonus") }}
@@ -31,7 +35,7 @@
           <div class="info-linear-amt">
             {{ rules[bonusSeq] ? rules[bonusSeq].minDeposit : 0 }}
             <br />
-            {{ $t("hotPromo.rs") }}
+            {{ $t("hotPromo.thb") }}
           </div>
         </div>
       </div>
@@ -46,7 +50,7 @@
           <div class="info-linear-amt">
             {{ rules[bonusSeq] ? rules[bonusSeq].minDeposit * betTimes : 0 }}
             <br />
-            {{ $t("hotPromo.rs") }}
+            {{ $t("hotPromo.thb") }}
           </div>
         </div>
       </div>
@@ -83,12 +87,14 @@
           />
         </div>
         <div>
-          <div class="box-title">Max {{ rule.bonusAmount }}rs</div>
+          <div class="box-title">Max {{ rule.bonusAmount }}thb</div>
           <div class="box-subtitle" v-if="(i === bonusSeq && hasClaimed) || i < bonusSeq">
             <img :src="require(`../../../assets/images/promotion/hotpromo/dailyDepositLuckyEnvelope/tick.png`)" />
             {{ $t("hotPromo.received") }}
           </div>
-          <div class="box-subtitle" v-else>{{ $t("hotPromo.deposit") }} {{ rule.minDeposit }}{{ $t("hotPromo.rs") }}</div>
+          <div class="box-subtitle" v-else>
+            {{ $t("hotPromo.deposit") }} {{ rule.minDeposit }}{{ $t("hotPromo.thb") }}
+          </div>
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@
         </div>
         <div class="item-desc">{{ $t("earnMoney.reward.myTotalIncome") }}</div>
         <div class="item-amount">
-          RS
+          THB
           {{
             convertToCommaAmount(
               getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET"),
@@ -50,7 +50,7 @@
       <!-- <div class="details-item" v-if="isShowOnetime"> -->
       <div class="details-item">
         <div class="item-amount">
-          Rs
+          THB
           <span>{{ convertToCommaAmount(getRewardAmount("ONE_TIME"), null, 0) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.invite") }}</div>
@@ -60,7 +60,7 @@
       <!-- <div class="details-item" v-if="isShowDeposit"> -->
       <div class="details-item">
         <div class="item-amount">
-          Rs
+          THB
           <span>{{ convertToCommaAmount(getRewardAmount("DEPOSIT"), null, 0) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.topUp") }}</div>
@@ -71,7 +71,7 @@
       <!-- <div class="details-item details-item" v-if="isShowBet"> -->
       <div class="details-item details-item">
         <div class="item-amount">
-          Rs
+          THB
           <span>{{ convertToCommaAmount(getRewardAmount("BET"), null, 0) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.bet") }}</div>
@@ -90,7 +90,7 @@
 
       <!-- <div class="details-item">
           <div class="item-amount">
-            Rs
+            THB
             <span>0</span>
           </div>
           <div class="item-title">Achievement</div>

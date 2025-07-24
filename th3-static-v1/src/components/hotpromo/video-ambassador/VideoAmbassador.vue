@@ -6,7 +6,7 @@
       <ul class="content">
         <li>
           Win
-          <span class="sp1">PKR 3,000,000</span>
+          <span class="sp1">THB 3,000,000</span>
           and worldwide recognition with just one video!
         </li>
         <li>Do you have creative ideas?</li>
@@ -32,7 +32,7 @@
       </li>
       <li>
         Prize Money:
-        <span class="l2">PKR 3,000,000</span>
+        <span class="l2">THB 3,000,000</span>
       </li>
     </ul>
 
@@ -45,7 +45,7 @@
       </li>
       <li>
         Prize Money:
-        <span class="l2">PKR 300,000</span>
+        <span class="l2">THB 300,000</span>
       </li>
     </ul>
     <div>3rd Prize - Innovation Champ</div>
@@ -57,12 +57,12 @@
       </li>
       <li>
         Prize Money:
-        <span class="l2">PKR 30,000</span>
+        <span class="l2">THB 30,000</span>
       </li>
     </ul>
     <div style="color: red">
       Participation Bonus Get
-      <span style="color: rgba(255, 157, 0, 1)">PKR 3,000</span>
+      <span style="color: rgba(255, 157, 0, 1)">THB 3,000</span>
       if your video gets over 1,000 views!
     </div>
     <div class="thrid-title">
@@ -71,7 +71,7 @@
     </div>
     <div>
       <span style="color: rgba(255, 255, 255, 0.8)">
-        if your video got 1000 views you will get 3000 pkr three simple steps to participate in game
+        if your video got 1000 views you will get 3000 THB three simple steps to participate in game
       </span>
       <ul>
         <li style="color: rgba(255, 255, 255, 0.8)">1- download SuperSiam game</li>

@@ -87,7 +87,7 @@
         <img src="./img/prize-gold.png" width="150" />
       </div>
 
-      <div class="prize-amount">Rs {{ bonusAmount }}</div>
+      <div class="prize-amount">THB {{ bonusAmount }}</div>
 
       <q-btn no-caps unelevated class="btn-primary" @click="handlePrizeDetailShow">
         {{ $t("btn.confirm") }}

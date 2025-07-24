@@ -155,7 +155,7 @@
 
       <div class="sum-item">
         <div class="item-amount">
-          Rs
+          THB
           <span>{{ convertToCommaAmount(sumsData.downlineBetAmount, true) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.betamount") }}</div>
@@ -163,7 +163,7 @@
 
       <div class="sum-item">
         <div class="item-amount">
-          Rs
+          THB
           <span>{{ convertToCommaAmount(sumsData.downlineDepositAmount, true) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.deposit") }}</div>
@@ -178,7 +178,7 @@
 
       <div class="sum-item">
         <div class="item-amount">
-          Rs
+          THB
           <span>{{ convertToCommaAmount(sumsData.downlinePayoutAmount, true) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.payout") }}</div>
@@ -186,7 +186,7 @@
 
       <!--      <div class="sum-item">-->
       <!--        <div class="item-amount">-->
-      <!--          Rs-->
+      <!--          THB-->
       <!--          <span>{{ convertToCommaAmount(sumsData.downlineDepositAmount, true) }}</span>-->
       <!--        </div>-->
       <!--        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.deposit") }}</div>-->
@@ -194,7 +194,7 @@
 
       <div class="sum-item">
         <div class="item-amount">
-          Rs
+          THB
           <span>{{ convertToCommaAmount(sumsData.downlineWithdrawAmount, true) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.withdraw") }}</div>

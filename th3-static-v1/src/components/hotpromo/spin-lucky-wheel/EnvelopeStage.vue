@@ -26,12 +26,17 @@
         </button>
       </div>
       <div v-else class="selected-envelope">
-        <span class="prize">{{$t("hotPromo.rs")}}{{ prizeList[selectedIndex]?.prize }}</span>
-        <span class="desc">{{$t("hotPromo.withdraw_money_over_rs") }} {{ targetWithdrawAmount }}</span>
-        <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">{{ $t("hotPromo.go_withdraw_now") }}</CommonButton>
+        <span class="prize">{{ $t("hotPromo.thb") }}{{ prizeList[selectedIndex]?.prize }}</span>
+        <span class="desc">{{ $t("hotPromo.withdraw_money_over_rs") }} {{ targetWithdrawAmount }}</span>
+        <CommonButton class="withdraw-btn" @click="$emit('envelopeClick')">
+          {{ $t("hotPromo.go_withdraw_now") }}
+        </CommonButton>
         <span class="remaining-time">{{ $t("hotPromo.time_left") }}: {{ remainingTime }}</span>
       </div>
-      <img class="footer dragon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/footer.png" />
+      <img
+        class="footer dragon"
+        src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/envelope-stage/footer.png"
+      />
       <!-- <img class="footer tiger" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-tiger.png" />
       <img
         class="footer rabbit"
@@ -74,56 +79,59 @@ const handleEnvelopeClick = (index) => {
 
   isClaiming.value = true;
   selectedIndex.value = index;
-  eventapi.post("/session/refer-wheel-spin/red-packet?promoCode=pak-refer-wheel-spin").then(async (res) => {
-    let otherPrizeCounter = 0;
+  eventapi
+    .post("/session/refer-wheel-spin/red-packet?promoCode=pak-refer-wheel-spin")
+    .then(async (res) => {
+      let otherPrizeCounter = 0;
 
-    prizeList.value[index].status = "selected";
-    prizeList.value[index].prize = res.data.bonus;
+      prizeList.value[index].status = "selected";
+      prizeList.value[index].prize = res.data.bonus;
 
-    const targetIndex = res.data.redPackets.findIndex((prize) => prize === res.data.bonus);
-    const temp = res.data.redPackets[index];
-    res.data.redPackets[index] = res.data.redPackets[targetIndex];
-    res.data.redPackets[targetIndex] = temp;
+      const targetIndex = res.data.redPackets.findIndex((prize) => prize === res.data.bonus);
+      const temp = res.data.redPackets[index];
+      res.data.redPackets[index] = res.data.redPackets[targetIndex];
+      res.data.redPackets[targetIndex] = temp;
 
-    // let constantIndex = Math.floor(Math.random() * 6);
-    // while (constantIndex === index) {
-    //   constantIndex = Math.floor(Math.random() * 6);
-    // }
+      // let constantIndex = Math.floor(Math.random() * 6);
+      // while (constantIndex === index) {
+      //   constantIndex = Math.floor(Math.random() * 6);
+      // }
 
-    await delay(1000);
-    prizeList.value.forEach((prize, _index) => {
-      // if (_index === constantIndex) {
-      //   prize.status = "unselected";
-      //   prize.prize = targetWithdrawAmount.value;
-      // } else
-      if (_index !== index) {
-        prize.status = "unselected";
-        prize.prize = res.data.redPackets[otherPrizeCounter];
-      }
-      otherPrizeCounter++;
+      await delay(1000);
+      prizeList.value.forEach((prize, _index) => {
+        // if (_index === constantIndex) {
+        //   prize.status = "unselected";
+        //   prize.prize = targetWithdrawAmount.value;
+        // } else
+        if (_index !== index) {
+          prize.status = "unselected";
+          prize.prize = res.data.redPackets[otherPrizeCounter];
+        }
+        otherPrizeCounter++;
+      });
+
+      const [initRes] = await Promise.all([
+        eventapi.get("/session/refer-wheel-spin/init?promoCode=pak-refer-wheel-spin"),
+        delay(1000)
+      ]);
+
+      const wheelEndTime = moment.tz(initRes.data.wheelEndTime, "Asia/Karachi");
+      const wheelResetTime = moment.tz(initRes.data.wheelResetTime, "Asia/Karachi");
+      const now = moment();
+
+      endTime.value = now.isAfter(moment.min(wheelEndTime, wheelResetTime))
+        ? moment.max(wheelEndTime, wheelResetTime)
+        : moment.min(wheelEndTime, wheelResetTime);
+
+      wheelNo.value = initRes.data.wheelNo;
+      envelopeStatus.value = "selected";
+      updateRemainingTime();
+      timer.value = setInterval(updateRemainingTime, 1000);
+      isClaiming.value = false;
+    })
+    .catch((err) => {
+      isClaiming.value = false;
     });
-
-    const [initRes] = await Promise.all([
-      eventapi.get("/session/refer-wheel-spin/init?promoCode=pak-refer-wheel-spin"),
-      delay(1000)
-    ]);
-
-    const wheelEndTime = moment.tz(initRes.data.wheelEndTime, "Asia/Karachi");
-    const wheelResetTime = moment.tz(initRes.data.wheelResetTime, "Asia/Karachi");
-    const now = moment();
-
-    endTime.value = now.isAfter(moment.min(wheelEndTime, wheelResetTime))
-      ? moment.max(wheelEndTime, wheelResetTime)
-      : moment.min(wheelEndTime, wheelResetTime);
-
-    wheelNo.value = initRes.data.wheelNo;
-    envelopeStatus.value = "selected";
-    updateRemainingTime();
-    timer.value = setInterval(updateRemainingTime, 1000);
-    isClaiming.value = false;
-  }).catch((err) => {
-    isClaiming.value = false;
-  })
 };
 
 const updateRemainingTime = () => {
@@ -244,8 +252,8 @@ onUnmounted(() => {
         width: 80%;
         transform: translate(-50%, -50%);
         margin: 0 auto;
-        background-image: url('../../../assets/images/promotion/hotpromo/spin-lucky-wheel/common-btn-gold.png');
-        color: #8A2C05;
+        background-image: url("../../../assets/images/promotion/hotpromo/spin-lucky-wheel/common-btn-gold.png");
+        color: #8a2c05;
         min-height: 100px;
 
         &.common-btn {
@@ -345,7 +353,6 @@ onUnmounted(() => {
     .envelope-stage-inner-wrapper {
       .envelope-wrapper {
         .envelope-item {
-          
           min-height: 100px;
           .prize-wrapper {
             font-size: 14px;
