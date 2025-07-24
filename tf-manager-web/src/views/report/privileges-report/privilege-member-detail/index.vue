@@ -114,6 +114,51 @@
           />
         </template>
       </el-table-column>
+      <el-table-column
+        prop="validBet"
+        :label="t('fields.totalBet')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.validBet,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="payout"
+        :label="t('fields.totalPayout')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.payout,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="winOrLoss"
+        :label="t('fields.winloss')"
+        width="120"
+      >
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.winOrLoss,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
       <el-table-column :label="t('fields.action')" width="180">
         <template #default="scope1">
           <el-button
