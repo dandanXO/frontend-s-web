@@ -159,6 +159,7 @@ import { useNotify } from "src/hooks/notify.js";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { i18nStore } from "src/router/language";
+import { useUI } from "stores/ui";
 
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 const notify = useNotify();
@@ -173,6 +174,7 @@ const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
   );
 };
 
+const ui = useUI();
 const affiliateUrl = ref("https://6666vip.cc/lk6/");
 const text_copied = ref("");
 const copyinput = ref(null);
@@ -185,7 +187,7 @@ const contactInfo = computed(() => [
   {
     icon: "tg-logo.png",
     label: t("affiliate.contact.telegram"),
-    value: "@6.vip",
+    value: ui.telegramUrl,
     download: "https://telegram.org/"
   },
   // {
