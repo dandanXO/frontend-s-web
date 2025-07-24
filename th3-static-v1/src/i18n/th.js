@@ -340,7 +340,8 @@ export default {
     tryagain: "กรุณาลองอีกครั้งใน {seconds} วินาที",
     submitting: "กำลังส่ง...",
     sendingVerificationCode: "กำลังส่งรหัสยืนยัน...",
-    passwordResetCompleted: "รีเซ็ตรหัสผ่านเสร็จสมบูรณ์"
+    passwordResetCompleted: "รีเซ็ตรหัสผ่านเสร็จสมบูรณ์",
+    linkCopied: "ลิงก์ถูกคัดลอกไปยังคลิปบอร์ดแล้ว"
   },
   sideNav: {
     inviteToEarn: "เชิญเพื่อนเพื่อรับรายได้",

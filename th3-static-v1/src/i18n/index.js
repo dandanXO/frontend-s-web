@@ -2,7 +2,7 @@ import { createI18n } from "vue-i18n";
 import ur from "./ur";
 import en from "./en";
 import th from "./th";
-import cn from "./cn"
+import zh from "./zh";
 import { DEFAULT_LANG } from "src/constant/lang";
 
 const i18n = createI18n({
@@ -13,7 +13,7 @@ const i18n = createI18n({
     ur,
     en,
     th,
-    cn
+    zh
   },
   globalInjection: true
 });

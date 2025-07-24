@@ -1,6 +1,6 @@
 export default {
   lang: {
-    langVal: "cn",
+    langVal: "zh",
     language: "语言"
   },
   header: {
@@ -333,7 +333,8 @@ export default {
     tryagain: "请在 {seconds} 秒后重试",
     submitting: "提交中...",
     sendingVerificationCode: "发送验证码中...",
-    passwordResetCompleted: "密码重置完成"
+    passwordResetCompleted: "密码重置完成",
+    linkCopied: "链接已复制到剪贴板"
   },
   sideNav: {
     inviteToEarn: "邀请赚钱",

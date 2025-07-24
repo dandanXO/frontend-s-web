@@ -22,7 +22,7 @@
               :rules="[(val) => (val && val.length > 0) || $t('form.telegramDiscordId_rules_01')]"
             >
               <template v-slot:append>
-                <div @click="checkAgentId()"><img src="../assets/images/cs-verifier/search-btn.png" alt="" /></div>
+                <div class="search-icon" @click="checkAgentId()"><img src="../assets/images/cs-verifier/search-btn.png" alt="" /></div>
               </template>
             </q-input>
           </template>
@@ -105,7 +105,7 @@ onMounted(() => {});
   .main-title {
     display: flex;
     justify-content: center;
-    color: #21ef89;
+    color: #907C5F;
     font-weight: 700;
     font-size: 18.46px;
     margin-top: 16px;
@@ -114,14 +114,14 @@ onMounted(() => {});
   .sub-title {
     display: flex;
     justify-content: center;
-    color: #ffffff;
+    color: #907C5F;
     font-size: 18px;
     font-weight: 700;
     margin-top: 8px;
   }
 
   .content-para {
-    color: #b2bdbf;
+    color: #3A3A3A;
     font-size: 14px;
     text-align: center;
   }
@@ -132,5 +132,11 @@ onMounted(() => {});
 }
 .txt-green {
   color: #21ef89;
+}
+.search-icon{
+  img{
+    width: 24px;
+    height: 24px;
+  }
 }
 </style>
