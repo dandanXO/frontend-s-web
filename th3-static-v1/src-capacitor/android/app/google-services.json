@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:224522131575:android:5453bd8bdcf0a19e48ce72",
         "android_client_info": {
-          "package_name": "com.ind.appb9mega1"
+          "package_name": "com.tha.appsupersiam"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "83563276345-l8qgm6ofspb4en0ifneqr5jalm9o2i8q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ind.appb9mega1",
+            "package_name": "com.tha.appsupersiam",
             "certificate_hash": "e23e5f0cfae541689a6e9bc653bfb4d4ce0219c3"
           }
         },

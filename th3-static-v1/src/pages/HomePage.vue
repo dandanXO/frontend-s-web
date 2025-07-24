@@ -1771,7 +1771,7 @@
   <SpinLuckyWheelPromoSticky v-show="false" />
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
 
-  <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" />
+  <!-- <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" /> -->
 </template>
 
 <script setup>
@@ -2095,7 +2095,7 @@ const closeDialog = () => {
 const activateSlide = (item) => {
   categoriesList.value.forEach((category) => (category.active = false));
   const category = categoriesList.value.find((cat) => cat.title === item.title);
-  console.log('dan',category, categoriesList.value)
+  console.log("dan", category, categoriesList.value);
   if (category) {
     category.active = true;
     router.replace({ hash: `#${category.label}` });
@@ -4431,15 +4431,15 @@ const claimClaimPopupPrize = () => {
   });
 };
 
-const loadClaimPopup = () => {
-  if (store.token) {
-    eventapi.get("/session/privilege-voucher/init").then((res) => {
-      if (res.code === 0 && res.data.bonus > 0) {
-        showClaimPopup.value.visible = true;
-      }
-    });
-  }
-};
+// const loadClaimPopup = () => {
+//   if (store.token) {
+//     eventapi.get("/session/privilege-voucher/init").then((res) => {
+//       if (res.code === 0 && res.data.bonus > 0) {
+//         showClaimPopup.value.visible = true;
+//       }
+//     });
+//   }
+// };
 
 onActivated(async () => {
   nextTick(() => {
@@ -4533,7 +4533,7 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
-  loadClaimPopup();
+  // loadClaimPopup();
   ui.shouldFetchDownloadAppUrl = true;
 
   if (store.hasToken() && ui.annoyingType !== "NONE") {
