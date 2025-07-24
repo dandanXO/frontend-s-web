@@ -22,13 +22,14 @@ import en from "element-plus/dist/locale/en.mjs";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import { storeToRefs } from 'pinia'
 import { i18nStore } from '@/store/language'
+import { getSocialMediaLinks } from "@/api/index/site";
+import cached from "@/utils/cache";
 
 export default defineComponent({
   components: {
     NotificationWrapper
   },
   setup() {
-
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
     const mode = useColorMode()
@@ -76,6 +77,12 @@ export default defineComponent({
       }
     };
 
+    const loadSocialMediaLinks = async () => {
+      getSocialMediaLinks().then((data) => {
+        ui.telegramUrl = data.telegram;
+      });
+    };
+
     const getAffiliateByDomain = async () => {
       var host = window.location.host;
       // host = "";
@@ -118,8 +125,9 @@ export default defineComponent({
       console.log("0522");
       checkServerStatus();
       checkSID();
-
       getAffiliateByDomain();
+
+      loadSocialMediaLinks();
 
       checkSessStorageItem();
 

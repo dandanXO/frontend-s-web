@@ -254,6 +254,18 @@ export default defineComponent({
       }
     };
 
+    const loadSocialMediaLinks = async () => {
+      cached
+        .get("socialMediaLinks", () =>
+          api.get("/config/uiconfigs").then((res) => {
+            return res;
+          })
+        )
+        .then((data) => {
+          ui.telegramUrl = data.telegram;
+        });
+    };
+
     const sendFacebookInfo = () => {
       const { fbclid, linkId } = getRbParams() || {};
 
@@ -511,6 +523,8 @@ export default defineComponent({
       checkSID();
       // initCsWeb();
       getCSA();
+      loadSocialMediaLinks();
+
       if (isAndroid() && !isHuaweiPhone()) {
         window.screen.orientation.lock("portrait");
       }

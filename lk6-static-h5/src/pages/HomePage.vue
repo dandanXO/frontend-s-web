@@ -1536,7 +1536,7 @@ export default defineComponent({
     const homePopupFrequency = ref(0);
     const homePopupFrequencyNum = ref(0);
 
-    const openTelegram = () => window.open('https://t.me/6vip', '_blank');
+    const openTelegram = () => window.open(ui.telegramUrl, '_blank');
 
     const checkShowImgTop = () => {
       const lastTime = sessionStorage.getItem("indexImgTop");
