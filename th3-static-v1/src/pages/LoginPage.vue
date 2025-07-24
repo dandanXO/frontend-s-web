@@ -57,7 +57,6 @@
                   label-color="brand"
                   autocomplete="username"
                   outlined
-                  color="green"
                   :placeholder="$t('form.phone_placeholder')"
                 >
                   <!-- <template v-slot:prepend>
@@ -79,7 +78,6 @@
                   label-color="brand"
                   autocomplete="current-password"
                   outlined
-                  color="green"
                   :placeholder="$t('form.password_placeholder')"
                 >
                   <!-- <template v-slot:prepend>
@@ -157,7 +155,7 @@
       </q-btn>
       <div class="areyounew">
         {{ $t("btn.areyounew") }}
-        <a @click="goRegister" class="green">{{ $t("btn.register") }}</a>
+        <a @click="goRegister" class="brown">{{ $t("btn.register") }}</a>
       </div>
 
       <div class="google-login-wrapper">
@@ -226,7 +224,7 @@
         </a>
       </div> -->
       <div class="btn-lists">
-        <ShareIcons />
+        <ShareIcons :isLogin="true" />
       </div>
     </div>
 
@@ -1345,7 +1343,7 @@ export default defineComponent({
     font-size: 12px;
   }
 
-  .green {
+  .brown {
     color: #b99c73;
     font-weight: 700;
     cursor: pointer;

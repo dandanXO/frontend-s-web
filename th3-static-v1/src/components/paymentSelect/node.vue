@@ -392,7 +392,7 @@ $node-color: #b81212;
         // border: 2px solid transparent;
         border-radius: 10px;
         padding: 6px 6px;
-        background: #394142;
+        background: #3a3a3a;
 
         img {
           background-color: transparent;

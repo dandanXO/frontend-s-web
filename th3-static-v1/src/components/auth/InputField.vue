@@ -46,6 +46,9 @@ const props = defineProps(["label"]);
       color: #3a3a3a;
     }
   }
+  :deep(.q-field--highlighted) {
+    color: #fff;
+  }
   :deep(.q-field__native) {
     color: #3a3a3a;
   }

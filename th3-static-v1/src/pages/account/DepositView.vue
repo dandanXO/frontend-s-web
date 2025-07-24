@@ -1557,7 +1557,7 @@ onBeforeRouteLeave((to, from, next) => {
       font-weight: 600;
       aspect-ratio: 106/64;
       box-shadow: 0px 2px 0px 0px #2a3637;
-      background: #394142;
+      background: #2a3637;
       color: #ffffff80;
       font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-weight: 700;
@@ -1573,7 +1573,6 @@ onBeforeRouteLeave((to, from, next) => {
         // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
         box-shadow: 0px 2px 0px 0px #907c5f;
         background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
-        color: #fff;
       }
     }
 
@@ -1611,12 +1610,21 @@ onBeforeRouteLeave((to, from, next) => {
 
       .deposit-input {
         // background-color: #0b0e0d;
+        // background: #fff;
         border-radius: 5px;
         width: 100%;
         height: 46px;
 
         :deep(.q-field__control) {
           height: 46px;
+          background: linear-gradient(#fff, #fff) padding-box, linear-gradient(90deg, #76674c, #cec6ae) border-box !important;
+          color: #907c5f;
+          ::placeholder {
+            color: #907c5f;
+          }
+        }
+        :deep(.q-field__native) {
+          color: #907c5f;
         }
       }
 
@@ -1632,7 +1640,7 @@ onBeforeRouteLeave((to, from, next) => {
       }
 
       .currency {
-        color: #b2bdbf;
+        color: #907c5f;
         font-weight: 700;
       }
     }

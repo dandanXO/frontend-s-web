@@ -1616,9 +1616,21 @@ watch(
 .txt-green {
   color: #21ef89;
 }
+
+:deep(.q-field__control) {
+  height: 46px;
+  background: linear-gradient(#fff, #fff) padding-box, linear-gradient(90deg, #76674c, #cec6ae) border-box !important;
+  color: #907c5f !important;
+  ::placeholder {
+    color: #907c5f !important;
+  }
+}
+:deep(.q-field__native) {
+  color: #907c5f !important;
+}
 </style>
 
-<style lang="scss">
+<!-- <style lang="scss">
 .popout-dialog-container {
   .form-fields {
     width: 90%;
@@ -1636,4 +1648,4 @@ watch(
 .q-field__marginal {
   height: auto !important;
 }
-</style>
+</style> -->

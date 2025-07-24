@@ -55,7 +55,6 @@
                       (val) => (val && val.length === 10) || $t('form.phone_rules_02'),
                       (val) => val.startsWith('0') || $t('form.phone_rules_03')
                     ]"
-                    color="green"
                     outlined
                     label-color="brand"
                     :placeholder="$t('form.phone_placeholder')"
@@ -114,7 +113,6 @@
                       (val) => (val && val.length > 0) || 'Please insert password',
                       (val) => val === regForm.password || 'Password does not match'
                     ]"
-                    color="green"
                     outlined
                     label-color="brand"
                   >
@@ -143,7 +141,6 @@
                       v-model="regForm.referrer"
                       label-color="brand"
                       outlined
-                      color="green"
                       placeholder="Enter Invitation Code (Optional)"
                     />
                   </template>
@@ -199,7 +196,7 @@
 
       <div class="areyounew">
         {{ $t("btn.alreadyhaveacct") }}
-        <a @click="regLoginTab = 'login'" class="green">{{ $t("btn.login") }}</a>
+        <a @click="regLoginTab = 'login'" class="brown">{{ $t("btn.login") }}</a>
       </div>
 
       <div v-if="!isSpinReferrer && ui.siteType === 'DEFAULT'" class="google-login-wrapper">
@@ -1801,7 +1798,7 @@ function charType(num) {
     font-size: 12px;
   }
 
-  .green {
+  .brown {
     color: #b99c73;
     font-weight: 700;
     cursor: pointer;
