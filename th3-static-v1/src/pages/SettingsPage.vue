@@ -604,7 +604,7 @@ const handleCopyClick = async () => {
       font-size: 14px;
 
       &:before {
-        content: "RS";
+        content: "THB";
         font-size: 14px;
         margin-right: 4px;
       }

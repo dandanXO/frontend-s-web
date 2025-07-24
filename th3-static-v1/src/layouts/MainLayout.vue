@@ -731,6 +731,10 @@ svg path {
     margin: 0 0.5rem;
     font-size: 16px;
     font-weight: bold;
+
+    .title {
+      color: #fff;
+    }
   }
 
   svg {

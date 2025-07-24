@@ -1653,7 +1653,7 @@
     </q-dialog>
   </template>
   <div class="tac-footer" v-if="ui.siteType === 'CURACAO'">
-    <img class="b9game-logo" alt="b9game-logo" src="../assets/images/common/b9game-logo.png" />
+    <img class="supersiamgame-logo" alt="supersiamgame-logo" src="../assets/images/common/supersiamgame-logo.png" />
     <div class="footer-content">
       b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies,
       always putting our customers first. Trust, integrity and fairness are just three of our key values.
@@ -5639,7 +5639,7 @@ const checkGoogleLoginSetPwd = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  .b9game-logo {
+  .supersiamgame-logo {
     width: 50%;
     min-width: 150px;
   }

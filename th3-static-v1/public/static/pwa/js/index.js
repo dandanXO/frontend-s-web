@@ -560,7 +560,7 @@ function insertRandomImages() {
 <div class="ULeU3b Utde2e" role="listitem">
                                         <div class="Atcj9b"><img src="${imageUrl}" class="T75of B5GQxf"
                                         ${extraStyle}
-                                                                 alt="B9GAME" loading="lazy"></div>
+                                                                 alt="SuperSiam" loading="lazy"></div>
 </div>
 `;
     // Append the image to the container

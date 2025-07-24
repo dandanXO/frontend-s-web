@@ -1,16 +1,18 @@
-# B9.GAME App (pak-h5-project)
+# SuperSiam App (pak-h5-project)
 
-B9.GAME (**pak**) H5 APP
+SuperSiam (**pak**) H5 APP
 
 - Node Version >= 16.17.0
 - H5 + Android APP
 
 ### You might need to install Quasar cli first:
+
 ```bash
 npm install -g @quasar/cli
 ```
 
 ## Install the dependencies
+
 ```bash
 yarn
 # or
@@ -18,21 +20,23 @@ npm install
 ```
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
+
 ```bash
 quasar dev
 ```
 
-
 ### Build the app for production (SPA Page)
+
 ```bash
 quasar build
 ```
 
 ### Customize the configuration
+
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js).
 
-
 ### Build The App in Android.
+
 ```bash
 1. build
 quasar build -m capacitor -T android
@@ -55,6 +59,7 @@ npx cap open android
 ```
 
 ### Run LiveReload on Device
+
 ```bash
 1. Run CMD
 quasar dev
@@ -70,29 +75,29 @@ npx cap run android -l --host=192.168.10.22 --port=9090
 
 ```
 
-
 ### Change Android Version Name
 
 1. open src-capacitor/android/app/build.gradle
 2. Edit Version No:
-  -     versionCode 36
-        versionName "1.0.36"
+
+-     versionCode 36
+      versionName "1.0.36"
+
 3. Rebuild Apk.
 
-
 ### Build Release Version .apk
+
 1. Open Android Studio.
 2. Select Build -> Generate Signed Bundle/Apk -> Select APK.
 3. Select keystore file .jks
 4. Input Alias & Both Passwords
 5. Build release .apk.
 
-
 ### Build iOS WebClip.
+
 1. goto https://ivi.cx/
 2. Insert all inputs. (Logo/Name/URL/Description/Install File Name)
 3. Submit & Download file .mobileconfig
-
 
 ### File Directory.
 
@@ -105,8 +110,6 @@ npx cap run android -l --host=192.168.10.22 --port=9090
 - Order Page:: src/pages/account/OrderView.vue
 - Add Bank Card Page:: src/pages/account/BankView.vue
 
-
-
 ### Setup CloudWise Plugin.
 
 1. Get the PDF file & .jar Zip File from Colleague.
@@ -114,7 +117,7 @@ npx cap run android -l --host=192.168.10.22 --port=9090
    1. Add CWPlugin
    2. Add cloudwise-mobile-distribute-2.5.1.1.jar in /libs
    3. Add use 'CWPlugin' in build.gradle
-   4. Add apply 'cloudwise' in app/build.gradle (Need add  cloudwise { injectDebug = true } )
+   4. Add apply 'cloudwise' in app/build.gradle (Need add cloudwise { injectDebug = true } )
    5. Add implementation files('libs/cloudwise-mobile-distribute-2.5.1.1.jar') in app/build.gradle.
    6. Add 'READ_PHONE_STATE' & 'ACCESS_NETWORK_STATE' permission in AndroidManifest.xml.
    7. Add [MyApplication.java] from /resources/app-cloudwise/app/src/main/java/app55ace/
@@ -125,7 +128,4 @@ npx cap run android -l --host=192.168.10.22 --port=9090
    1. Copy 整个 /resource/app-cloudwise 进去 android Folder 并 Sync & Build App ，OR 或者
    2. 找别人帮忙。 =3=
 
-
-
-~ 愿树懒保佑着你 ~
-![](http://npr101.com/sloth/sloth7.jpg)
+~ 愿树懒保佑着你 ~ ![](http://npr101.com/sloth/sloth7.jpg)

@@ -70,7 +70,7 @@
                     v-model="formDetail.transferAmount"
                   >
                     <template v-slot:append>
-                      <a style="color: #D9CFB8" @click="updateTransferAmount">{{ $t("form.all") }}</a>
+                      <a style="color: #d9cfb8" @click="updateTransferAmount">{{ $t("form.all") }}</a>
                     </template>
                   </q-input>
                 </div>
@@ -231,9 +231,8 @@ watch([downlineId, uplineId], ([newDownlineId, newUplineId]) => {
   text-align: right;
   margin-top: -20px;
   margin-bottom: 10px;
-  color: #FFF;
+  color: #fff;
 }
-
 
 .txt-title {
   color: #fff;
@@ -247,7 +246,7 @@ watch([downlineId, uplineId], ([newDownlineId, newUplineId]) => {
     color: #d9cfb8;
   }
   :deep(.landing-input .q-field__control) {
-    background: #3A3A3A;
+    background: #3a3a3a;
     ::placeholder {
       color: rgba(255, 255, 255, 0.2);
     }

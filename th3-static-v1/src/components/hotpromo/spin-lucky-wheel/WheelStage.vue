@@ -9,7 +9,7 @@
       <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
       <div class="summary-wrapper">
         <!-- <span class="prize">
-         Rs
+         THB
           <span class="amount">{{ info.accumulatedBonus }}</span>
         </span> -->
 
@@ -90,7 +90,7 @@
             <span class="name">{{ record.loginName }}</span>
             <span>
               {{ $t("hotPromo.receive") }}
-              <span class="amount">{{ $t("hotPromo.rs") }}{{ record.bonus }}</span>
+              <span class="amount">{{ $t("hotPromo.thb") }}{{ record.bonus }}</span>
             </span>
           </div>
         </template>
@@ -135,7 +135,7 @@
           <RedGradientTextAmount :amountText="`${info.accumulatedBonus}`" />
           <img
             class="currency"
-            src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/rs-text.svg"
+            src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/thb-text.svg"
           />
         </div>
         <img
@@ -192,7 +192,7 @@
               class="icon"
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/unchecked.svg"
             />
-            <div>{{ info.claimBonus }} RS {{ $t("hotPromo.spinReferWheel.willBePaidToYourRsAccount") }}</div>
+            <div>{{ info.claimBonus }} THB {{ $t("hotPromo.spinReferWheel.willBePaidToYourRsAccount") }}</div>
           </div>
         </div>
 

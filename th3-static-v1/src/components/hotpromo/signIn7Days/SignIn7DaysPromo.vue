@@ -56,7 +56,7 @@
         <img src="./../../../assets/images/promotion/hotpromo/signin-7days/prize-gold.png" width="150" />
       </div>
 
-      <div class="prize-amount">Rs {{ bonusAmount }}</div>
+      <div class="prize-amount">THB {{ bonusAmount }}</div>
 
       <q-btn no-caps unelevated class="btn-primary" @click="showPrizePopup = false">
         {{ $t("btn.confirm") }}
@@ -225,7 +225,7 @@ onMounted(() => {
     border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
-    color: #21EF89;
+    color: #21ef89;
     text-transform: uppercase;
     line-height: 1;
     gap: 12px;

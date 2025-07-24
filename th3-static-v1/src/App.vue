@@ -265,7 +265,7 @@ export default defineComponent({
               "track",
               "Purchase",
               {
-                currency: "PKR",
+                currency: "THB",
                 value: randomValue
               },
               { eventID: randUuid }

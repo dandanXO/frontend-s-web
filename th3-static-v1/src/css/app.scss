@@ -282,6 +282,10 @@ body.body--dark .q-footer {
   position: relative;
 }
 
+.q-tabs__content {
+  background: #3a3a3a;
+}
+
 .q-footer {
   // margin-top: 30px;
   background: transparent !important;
@@ -756,7 +760,7 @@ body.body--dark .q-footer {
     padding: 20px;
     min-height: 200px;
     border-radius: 20px !important;
-    display: flex;
+    ay: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -801,8 +805,7 @@ body.body--dark .q-footer {
   //   min-height: 120px;
   // }
   //
-  //.q-panel > div {
-  //  height: 150px;
+  //.q-    border-radius: 20px 20px 0 0 !important;
   //}
 
   .profile-pic {
