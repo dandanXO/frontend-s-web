@@ -41,7 +41,7 @@
                       v-model="passwordForm.phone"
                       :rules="[
                         (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                        (val) => (val && val.length === 11) || $t('form.phone_rules_02')
+                        (val) => (val && val.length === 10) || $t('form.phone_rules_02')
                       ]"
                       outlined
                       label-color="brand"
@@ -50,7 +50,7 @@
                     >
                       <template v-slot:prepend>
                         <!-- <q-icon name="smartphone" /> -->
-                        <div class="prepend-number">+92</div>
+                        <div class="prepend-number">+66</div>
                       </template>
                     </q-input>
                   </template>
@@ -327,7 +327,7 @@
                       v-model="passwordForm.loginName"
                       :rules="[
                         (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                        (val) => (val && val.length === 11) || $t('form.phone_rules_02')
+                        (val) => (val && val.length === 10) || $t('form.phone_rules_02')
                       ]"
                       outlined
                       label-color="brand"
@@ -335,8 +335,8 @@
                       :placeholder="$t('form.phone_placeholder')"
                     >
                       <template v-slot:prepend>
-                        <q-icon name="smartphone" />
-                        <div class="prepend-number">+92</div>
+                        <!-- <q-icon name="smartphone" /> -->
+                        <div class="prepend-number">+66</div>
                       </template>
                     </q-input>
                   </template>

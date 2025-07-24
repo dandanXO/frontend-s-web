@@ -780,7 +780,7 @@ svg path {
 
 .q-page-container {
   background: repeating-linear-gradient(45deg, #f1f1ee 0, #b9a78d 50%, #e9e8e4 100%);
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 50px);
   // background-image: url("../assets/images/index/app-bg.png");
   // background-repeat: repeat-y;
   // background-size: 100vw 100vh;

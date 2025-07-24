@@ -388,8 +388,8 @@
                     type="text"
                     :rules="[
                       (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                      (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
-                      (val) => val.startsWith('03') || $t('form.phone_rules_03')
+                      (val) => (val && val.length === 10) || $t('form.phone_rules_02'),
+                      (val) => val.startsWith('0') || $t('form.phone_rules_03')
                     ]"
                   >
                     <template v-slot:append>
@@ -1316,7 +1316,7 @@ const isValidPhone = () => {
     return "Please Enter Phone Number";
   }
 
-  if (!phone.startsWith("03")) {
+  if (!phone.startsWith("0")) {
     return t("form.phone_rules_03");
   }
 
