@@ -773,6 +773,7 @@ export default {
   },
   bankCard: {
     bankAccountNum: "Bank Account Number",
+    selectBank: "Please Select Bank",
     pleaseEnterCardAccount: "Please enter bank account number",
     bankCardMust16NumberandAbove: "Bank account number must be between 13 and 20 numbers",
     bankCardDisallowDecimal: "Bank account number cannot have decimal points",

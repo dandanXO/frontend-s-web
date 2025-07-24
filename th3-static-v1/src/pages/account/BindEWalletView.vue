@@ -678,8 +678,11 @@ onActivated(() => {
         margin: 8px 0 4px 0;
         display: inline-block;
         font-size: 0.95rem;
-        color: #98a6b4;
+        // color: #98a6b4;
 
+        
+        color: #3a3a3a;
+        font-weight: bold;
         em {
           color: $negative;
         }
@@ -748,7 +751,8 @@ onActivated(() => {
     }
 
     .note {
-      color: #ffa031;
+      // color: #ffa031;
+      color: #723d00;
       font-size: 0.8rem;
       font-weight: 400;
       margin: 1rem 0;

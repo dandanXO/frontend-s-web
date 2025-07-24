@@ -399,11 +399,11 @@ onActivated(() => {
         flex-direction: column;
         // gap: 15px;
         :not(:last-child) {
-          margin-right: 15px;
+          margin-bottom: 15px;
         }
         .bank-name {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           // gap: 10px;
           :not(:last-child) {
             margin-right: 10px;

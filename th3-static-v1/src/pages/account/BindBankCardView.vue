@@ -144,17 +144,15 @@
           {{ $t("settings.bank") }}
           <em>*</em>
         </q-label>
-        <div class="type-toggle">
-          <q-btn
-            v-for="(bank, bankIndex) in bankList"
-            :key="`${bank}-${bankIndex}`"
-            :class="`${selectedTypeToggleIndex === bankIndex ? 'common-sm-btn' : 'common-sm-white-btn'} content`"
-            @click="onTypeToggleBtnClick(bankIndex, bank.name)"
-            no-caps
-          >
-            <img :src="imgURL + bank.bankIcon" alt="" />
-            <div>{{ bank.name }}</div>
-          </q-btn>
+        <div class="selected-bank" @click="onOpenBankModal">
+          <div class="bank-icon-text" v-if="confirmedBankSelection">
+           <img :src="imgURL + confirmedBankSelection.bankIcon" alt="" />
+            <div>{{ confirmedBankSelection.name }}</div>
+          </div>
+          <div v-else>
+            {{ $t('bankCard.selectBank') }}
+          </div>
+          <div class="custom-drop"><img src="../../assets/images/account/downarrow.svg" /></div>
         </div>
 
         <InputRowGrid>
@@ -342,18 +340,47 @@
 
       <div class="bottom-btn">
         <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitBankCard()">
-          {{ $t("btn.confirm") }}
+          {{ $t("btn.submit") }}
         </q-btn>
         <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn> -->
       </div>
-
       <!-- <q-btn class="common-large-btn" label="提交" width="100%" style="width: 100%" @click="submitBankCard()" /> -->
     </div>
   </q-page>
+  
+  <q-dialog class="flex-end" v-model="isBankSelectionModal" persistent>
+    <q-card class="bank-selection-card">
+      <div class="top-bar">
+        <div class="pagination">
+          <q-btn class="page-btn" dense flat round icon="chevron_left" @click="goToPrevPage" :disable="currentPage === 1" />
+          <span class="q-mx-sm">{{ currentPage }}/{{ totalPages }}</span>
+          <q-btn class="page-btn" dense flat round icon="chevron_right" @click="goToNextPage" :disable="currentPage === totalPages" />
+        </div>
+        
+        <q-icon class="close-btn" name="close" v-close-popup></q-icon>
+      </div>
+      <div class="type-toggle">
+        <q-btn
+          v-for="(bank, bankIndex) in paginatedBankList"
+          :key="`${bank}-${bankIndex}`"
+          :class="`${selectedBank === bank ? 'common-sm-btn' : 'common-sm-white-btn'} content`"
+          @click="onTypeToggleBtnClick(bank)"
+          no-caps
+        >
+          <img :src="imgURL + bank.bankIcon" alt="" />
+          <div>{{ bank.name }}</div>
+        </q-btn>
+      </div>
+      <div class="confirm-btn">
+        <q-btn class="btn-primary__full" :label="$t('btn.confirm')" @click="onConfirmBankSelection()"></q-btn>
+      </div>
+    </q-card>
+
+  </q-dialog>
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, onBeforeUnmount, onActivated } from "vue";
+import { reactive, ref, onMounted, computed, onBeforeUnmount, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -364,17 +391,53 @@ import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 
 const { t } = useI18n();
+
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
 const selectedTypeToggleName = ref("EASYPAISA");
-const onTypeToggleBtnClick = (index, name) => {
-  selectedTypeToggleIndex.value = index;
-  selectedTypeToggleName.value = name;
-  bankCardInfo.bankId = bankList.value[index].id;
-  bankCardInfo.currencyId = bankList.value[index].currencyIds;
+const selectedBank = ref();
+const confirmedBankSelection = ref();
+const onTypeToggleBtnClick = (bank) => {
+  selectedBank.value = bank
+  // selectedTypeToggleIndex.value = index;
+  // selectedTypeToggleName.value = name;
+  // bankCardInfo.bankId = bankList.value[index].id;
+  // bankCardInfo.currencyId = bankList.value[index].currencyIds;
   // isPhoneVerified.value = false;
   // isOtpSent.value = false;
 };
+const onOpenBankModal = () => {
+  isBankSelectionModal.value = true;
+  if (confirmedBankSelection.value) {
+    selectedBank.value = confirmedBankSelection.value
+  }
+  const index = bankList.value.findIndex(
+    bank => bank.code === confirmedBankSelection.value.code
+  );
+
+  if (index !== -1) {
+    currentPage.value = Math.floor(index / itemsPerPage) + 1;
+  }
+}
+const onConfirmBankSelection = () => {
+  if (!selectedBank.value) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: t('bankCard.selectBank'),
+      icon: "report_problem"
+    });
+    return;
+  }
+  confirmedBankSelection.value = selectedBank.value
+  bankList.value.forEach((e) => {
+    if (e.code === confirmedBankSelection.value.code) {
+      bankCardInfo.bankId = confirmedBankSelection.value.id
+      bankCardInfo.currencyId = confirmedBankSelection.value.currencyIds
+    }
+  })
+  isBankSelectionModal.value = false
+}
 
 const categoryToggleList = ref(["EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20"]);
 const selectedCategoryToggleIndex = ref(0);
@@ -622,6 +685,7 @@ const submitBankCard = () => {
               icon: "check_circle_outline"
             });
             bankCardInfo.cardNumber = "";
+            selectedBank.value = null;
             bankFormRef.value.reset();
             router.push("/account/bank");
           }
@@ -638,7 +702,24 @@ const handleEnterKey = () => {
     openPhoneVeriDialog();
   }
 };
+const isBankSelectionModal = ref(true);
+const currentPage = ref(1);
+const itemsPerPage = 12;
 
+const totalPages = computed(() => Math.ceil(bankList.value.length / itemsPerPage));
+
+const paginatedBankList = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  return bankList.value.slice(start, start + itemsPerPage);
+});
+
+function goToPrevPage() {
+  if (currentPage.value > 1) currentPage.value--;
+}
+
+function goToNextPage() {
+  if (currentPage.value < totalPages.value) currentPage.value++;
+}
 onActivated(() => {
   loadBankCards();
   bankCardInfo.cardNumber = "";
@@ -681,13 +762,37 @@ onActivated(() => {
       border-radius: 10px;
       margin: 0 auto 14px;
       // padding: 1.25rem;
+      .selected-bank {
+        background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
+        display: flex;
+        justify-content: space-between;
+        border-radius: 6px;
+        align-items: center;
+        padding: 15px;
+        .bank-icon-text{
+          display: flex;
+          gap: 10px;
+          justify-content: center;
+          align-items: center;
+          img {
+            width: 40px;
+          }
+        }
+        .custom-drop {
+          background: #907C5F;
+          padding: 0 5px;
+          border-radius: 6px;
+        }
+      }
 
       q-label {
         // color: $font-2;
         margin: 8px 0 4px 0;
         display: inline-block;
         font-size: 0.95rem;
-        color: #98a6b4;
+        // color: #98a6b4;
+        color: #3a3a3a;
+        font-weight: bold;
 
         em {
           color: $negative;
@@ -757,7 +862,9 @@ onActivated(() => {
     }
 
     .note {
-      color: #ffa031;
+      // color: #ffa031;
+      
+      color: #723d00;
       font-size: 0.8rem;
       font-weight: 400;
       margin: 1rem 0;
@@ -769,5 +876,63 @@ onActivated(() => {
   display: flex;
   width: 100%;
   margin-top: 20px;
+}
+.bank-selection-card {
+  margin:0; 
+  background: #232626;
+  border-radius: 10px 10px 0 0 !important;
+  .top-bar {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+    .page-btn {
+      border-radius: 6px;
+      background:#A18D71;
+    }
+    .close-btn {
+      border-radius: 6px;
+      background:#A18D71;
+      padding: 10px;
+    }
+  }
+}
+.type-toggle {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 95%;
+  margin: 0 auto;
+  img {
+    width: 50px;
+    border-radius: 50%;
+  }
+  .q-btn {
+    font-size: 10px;
+    padding: 10px;
+    border: unset;
+    background: unset;
+    &:before {
+      box-shadow: unset;
+    }
+    .q-btn__content {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-height: 120px;
+      justify-content: space-evenly;
+    }
+    &.common-sm-btn {
+      background: #424242;
+    }
+  }
+}
+.confirm-btn {
+  padding: 10px;
 }
 </style>
