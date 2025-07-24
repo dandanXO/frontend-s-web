@@ -17952,8 +17952,8 @@
   "lh-static-h5/src/assets/images/livestream/chat/vip-badge-3-dark.png": "63343b56049d11b04f256fe94e070b47",
   "lh-static-h5/src/assets/images/livestream/chat/vip-badge-2-light.png": "5291281037469ec7bd2d255287aec20f",
   "lh-static-h5/src/assets/images/livestream/chat/vip-badge-2-dark.png": "d732a4ac54935bc4d56ff1af743bcac1",
-  "lh-static-h5/src/assets/images/livestream/chat/vip-badge-12-light.png": "762f7bd19ea10bfbf245eaac6e55d659",
-  "lh-static-h5/src/assets/images/livestream/chat/vip-badge-12-dark.png": "985179f36206b2c837e9ae5340608138",
+  "lh-static-h5/src/assets/images/livestream/chat/vip-badge-12-light.png": "f6ff9f3f5c2ff35c4e0330df28f42637",
+  "lh-static-h5/src/assets/images/livestream/chat/vip-badge-12-dark.png": "f6ff9f3f5c2ff35c4e0330df28f42637",
   "lh-static-h5/src/assets/images/livestream/chat/vip-badge-11-light.png": "470eb5b5744a9605509139360ef0ca69",
   "lh-static-h5/src/assets/images/livestream/chat/vip-badge-11-dark.png": "0374ef938699dd3b460d550b4b18de19",
   "lh-static-h5/src/assets/images/livestream/chat/vip-badge-10-light.png": "38d115f93147c6bf65a77feaa337182a",
@@ -31652,5 +31652,6 @@
   "vnm-static-h5/src/assets/images/home/slotEdition/megawin-platform-icon.png": "bb4f8b82b71ac98062563ae671a680cc",
   "vnm-static-web/src/assets/images/home/slotEdition/megawin-platform-icon.png": "177c5a7436807a0df8b5f8160cec29d0",
   "lh-static-h5/src/assets/images/livestream/room-message-bg-dark.png": "285cc16e624dd385410ecd8d596513b0",
-  "lh-static-web/src/assets/home/livestream/navigation-btn-bg-dark.png": "cfa40a4d30350aaff29623885216f079"
+  "lh-static-web/src/assets/home/livestream/navigation-btn-bg-dark.png": "cfa40a4d30350aaff29623885216f079",
+  "lh-static-web/src/assets/home/livestream/badge/vip12-bg.png": "ec012f7eee4878794d5cfcde37ccf6cf"
 }
