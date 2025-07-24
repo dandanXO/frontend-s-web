@@ -393,10 +393,11 @@
                     ]"
                   >
                     <template v-slot:append>
-                      <div class="pc-form-side-btn">
+                      <div class="pc-form-side-btn q-pr-md">
                         <q-btn
                           no-caps
                           dense
+                          flat
                           class="text-main-color"
                           :label="!startCountdownPhoneResendOTP && $t('form.send')"
                           :disable="startCountdownPhoneResendOTP"

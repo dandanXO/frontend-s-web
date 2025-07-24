@@ -18,7 +18,6 @@
                   <q-input
                     outlined
                     clearable
-                    color="green"
                     ref="redemptionCodeRef"
                     :error="isInvalidCode"
                     :placeholder="$t('form.redemptionCode_placeholder')"
@@ -294,5 +293,29 @@ const closeRedeemSuccessDialog = () => {
 
 :deep(.form-field-label) {
   color: #d9cfb8 !important;
+}
+:deep(.landing-input .q-field__control) {
+  color: #907c5f;
+}
+:deep(.landing-input .q-field__native) {
+  color: #907c5f;
+  font-weight: bold;
+}
+.popout-dialog-container {
+  :deep(.form-field-label) {
+    color: #d9cfb8;
+  }
+  :deep(.landing-input .q-field__control) {
+    background: #3a3a3a;
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+    }
+  }
+  :deep(.landing-input .q-field__control) {
+    color: #d9cfb8;
+  }
+  :deep(.landing-input .q-field__native) {
+    color: #d9cfb8;
+  }
 }
 </style>

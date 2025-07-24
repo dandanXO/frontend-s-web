@@ -1124,7 +1124,7 @@ watch(activeSetting, checkIsShowDetail);
     }
     .invite-desc {
       font-size: 14px;
-      color: #8c968f;
+      color: #d9cfb8;
     }
 
     .invite-listing {
@@ -1149,7 +1149,7 @@ watch(activeSetting, checkIsShowDetail);
         // :not(:last-child) {
         //   margin-right: 12px;
         // }
-        color: #8c968f;
+        color: #d9cfb8;
 
         span.list-num {
           width: 14px;
@@ -1326,7 +1326,7 @@ watch(activeSetting, checkIsShowDetail);
         }
 
         td:nth-child(2n) {
-          color: #21ef89;
+          color: #d9cfb8;
           font-weight: 700;
         }
       }
@@ -1508,7 +1508,8 @@ watch(activeSetting, checkIsShowDetail);
     width: 30vw;
     text-align: center;
     border-radius: 4px;
-    border: 1px solid #466a45;
+    // border: 1px solid #466a45;
+    box-shadow: 0px 2px 0px 0px #907c5f;
     padding: 5px 4px;
     height: 36px;
     display: flex;
@@ -1593,6 +1594,7 @@ watch(activeSetting, checkIsShowDetail);
         color: #fff;
         padding: 10px 4px;
         font-size: 12px;
+        font-weight: 700;
         // border: 1px solid #ffffff1a;
         &:last-child {
           color: #d9cfb8;
@@ -1621,6 +1623,7 @@ watch(activeSetting, checkIsShowDetail);
     justify-content: center;
     align-items: center;
     color: #d9cfb8;
+    font-weight: 700;
     .reward-coin {
       // height: 16px;
       width: 24px;
