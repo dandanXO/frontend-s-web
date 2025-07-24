@@ -10,9 +10,9 @@
 
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'pak-spin-wheel' && !isCommonPromo && store.token" />
     <SignIn7DaysPromo v-if="list.redirectUrl === 'pak-signin-bonus' && !isCommonPromo && store.token" />
-    <NewPlayerSpinWheelPromo
+    <!-- <NewPlayerSpinWheelPromo
       v-if="list.redirectUrl === 'pak-newplayer-welcome-spin' && !isCommonPromo && store.token"
-    />
+    /> -->
     <NewPlayerWelcome v-if="list.redirectUrl === 'pak-welcome-new-players' && !isCommonPromo && store.token" />
     <RedPacketRainPromo v-if="list.redirectUrl === 'pak-redpacketrain' && !isCommonPromo && store.token" />
     <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
@@ -64,7 +64,7 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheelPromo.vue";
 import SignIn7DaysPromo from "../components/hotpromo/signIn7Days/SignIn7DaysPromo";
-import NewPlayerSpinWheelPromo from "../components/hotpromo/newPlayerWheel/NewPlayerWheelPromo.vue";
+// import NewPlayerSpinWheelPromo from "../components/hotpromo/newPlayerWheel/NewPlayerWheelPromo.vue";
 import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRainPromo.vue";
 import InterestProfitPromo from "../components/hotpromo/interestProfit/InterestProfitPromo.vue";
 import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.vue";
@@ -88,7 +88,7 @@ export default defineComponent({
     HongBaoYuPromo,
     BonusSpinWheelPromo,
     SignIn7DaysPromo,
-    NewPlayerSpinWheelPromo,
+    // NewPlayerSpinWheelPromo,
     RedPacketRainPromo,
     InterestProfitPromo,
     NewPlayersPromo,
