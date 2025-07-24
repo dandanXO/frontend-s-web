@@ -286,7 +286,8 @@ const addCard = () => {
       if (response.code === 0) {
         isAddCardDialogOpen.value = false;
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "Add Succeed",
           icon: "check_circle_outline"

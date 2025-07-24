@@ -264,7 +264,8 @@ const fallbackCopyTextToClipboard = (text) => {
 
   $q.notify({
     message: "Link copied to clipboard",
-    color: "positive",
+    color: "dark",
+    textColor: "white",
     position: "top",
     timeout: 2000
   });
@@ -279,7 +280,8 @@ const copyHrefLink = () => {
       .then(() => {
         $q.notify({
           message: "Link copied to clipboard",
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           timeout: 2000
         });
@@ -424,7 +426,8 @@ const handleCopyClick = async () => {
 
     setTimeout(() => {
       $q.notify({
-        color: "positive",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: t("notify.copiedSuccessfully"),
         icon: "check_circle_outline"
@@ -453,7 +456,8 @@ const handleCopyClick = async () => {
 
     setTimeout(() => {
       $q.notify({
-        color: "positive",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: t("notify.copiedSuccessfully"),
         icon: "check_circle_outline"
@@ -1003,7 +1007,7 @@ const handleCopyClick = async () => {
   width: 100%;
   padding: 10px 10px;
   font-size: 16px;
-  background:  #707070;
+  background: #707070;
 
   color: #ffffff;
 
@@ -1022,10 +1026,10 @@ const handleCopyClick = async () => {
   width: 100%;
   padding: 10px 10px;
   font-size: 16px;
-  background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
+  background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
 
   color: #fff;
-  box-shadow: 0px 2px 0px 0px #907C5F;
+  box-shadow: 0px 2px 0px 0px #907c5f;
   border-radius: 4px;
   height: unset;
 }
@@ -1177,9 +1181,8 @@ const handleCopyClick = async () => {
 }
 
 .txt-content {
-  color: #D9CFB8;
+  color: #d9cfb8;
 }
-
 </style>
 
 <style lang="scss">

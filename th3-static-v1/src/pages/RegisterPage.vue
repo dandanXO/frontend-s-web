@@ -607,7 +607,8 @@ export default defineComponent({
 
               if (res.code === 0) {
                 $q.notify({
-                  color: "positive",
+                  color: "dark",
+                  textColor: "white",
                   position: "top",
                   message: t("form.google_login_success"),
                   icon: "check_circle_outline"
@@ -672,7 +673,8 @@ export default defineComponent({
 
                 if (res.code === 0) {
                   $q.notify({
-                    color: "positive",
+                    color: "dark",
+                    textColor: "white",
                     position: "top",
                     message: t("form.google_login_success"),
                     icon: "check_circle_outline"
@@ -808,7 +810,8 @@ export default defineComponent({
               const res = ret;
               if (res.code === 0) {
                 $q.notify({
-                  color: "positive",
+                  color: "dark",
+                  textColor: "white",
                   position: "top",
                   message: t("form.register_success"),
                   icon: "check_circle_outline"
@@ -861,62 +864,63 @@ export default defineComponent({
 
           //     if (res.code === 0 && !res.data) {
           //       $q.notify({
-          //         color: "positive",
-          //         position: "top",
-          //         message: "Please proceed to OTP",
-          //         icon: "check_circle_outline"
-          //       });
-          //       console.log(res, "-ressss");
-          //       sessionStorage.setItem("REG_FORM", qs.stringify(regForm));
-          //       sessionStorage.removeItem("REFERRAL_CODE");
+          //         color: "dark",
+          textColor: "white",
+            //         position: "top",
+            //         message: "Please proceed to OTP",
+            //         icon: "check_circle_outline"
+            //       });
+            //       console.log(res, "-ressss");
+            //       sessionStorage.setItem("REG_FORM", qs.stringify(regForm));
+            //       sessionStorage.removeItem("REFERRAL_CODE");
 
-          //       api
-          //         .post(
-          //           `/otp/sendSms`,
-          //           qs.stringify({
-          //             telephone: regForm.loginName,
-          //             captchaCode: '0000',
-          //             codeId: '0000'
-          //           })
-          //         )
-          //         .then((res) => {
-          //           getCode();
-          //           let message = res.message || "Phone verification code sent successfully",
-          //             color = "positive";
+            //       api
+            //         .post(
+            //           `/otp/sendSms`,
+            //           qs.stringify({
+            //             telephone: regForm.loginName,
+            //             captchaCode: '0000',
+            //             codeId: '0000'
+            //           })
+            //         )
+            //         .then((res) => {
+            //           getCode();
+            //           let message = res.message || "Phone verification code sent successfully",
+            //             color = "positive";
 
-          //           if (res.code === 0) {
-          //             console.log(res.data.codeId);
-          //           }
-          //           if (message) {
-          //             $q.notify({ message, color });
-          //           }
+            //           if (res.code === 0) {
+            //             console.log(res.data.codeId);
+            //           }
+            //           if (message) {
+            //             $q.notify({ message, color });
+            //           }
 
-          //           console.log("onCaptchaSubmit", res);
-          //         })
-          //         .catch(() => {
-          //           console.log("Err");
-          //           getInnerCode();
-          //         });
+            //           console.log("onCaptchaSubmit", res);
+            //         })
+            //         .catch(() => {
+            //           console.log("Err");
+            //           getInnerCode();
+            //         });
 
-          //       router.push("/verification");
-          //     } else {
-          //       $q.notify({
-          //         color: "negative",
-          //         position: "top",
-          //         message: res.message,
-          //         icon: "report_problem"
-          //       });
-          //     }
-          //     $q.loading.hide();
-          //     isLoading.value = false;
-          //   })
-          //   .catch((error) => {
-          //     $q.loading.hide();
-          //     isLoading.value = false;
-          //   });
-          // register to check phone exist and sms OTP -- end
+            //       router.push("/verification");
+            //     } else {
+            //       $q.notify({
+            //         color: "negative",
+            //         position: "top",
+            //         message: res.message,
+            //         icon: "report_problem"
+            //       });
+            //     }
+            //     $q.loading.hide();
+            //     isLoading.value = false;
+            //   })
+            //   .catch((error) => {
+            //     $q.loading.hide();
+            //     isLoading.value = false;
+            //   });
+            // register to check phone exist and sms OTP -- end
 
-          getCode();
+            getCode();
         })();
       }
     };

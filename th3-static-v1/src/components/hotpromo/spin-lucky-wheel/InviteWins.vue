@@ -75,7 +75,8 @@ const downloadQRImg = async () => {
         console.log("QR Code image saved to gallery.");
 
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "QR Code image saved to photo gallery.",
           icon: "check_circle_outline"
@@ -104,7 +105,8 @@ const downloadQRImg = async () => {
         console.log("QR Code image saved to gallery.");
 
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "QR Code image saved to photo gallery.",
           icon: "check_circle_outline"

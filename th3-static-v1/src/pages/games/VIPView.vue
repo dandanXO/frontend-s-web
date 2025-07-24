@@ -787,7 +787,8 @@ const getMonthlyVip = () => {
     .then((res) => {
       if (res.code === 0) {
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "Vip monthly claimed successfully",
           icon: "check_circle_outline"

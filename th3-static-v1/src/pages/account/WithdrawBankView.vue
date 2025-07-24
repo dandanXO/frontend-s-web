@@ -199,7 +199,8 @@ const unbindBankCard = () => {
   api.post(`/session/bankCard/${selectedUnbindBankCard.value.id}?_method=delete`).then((response) => {
     if (response.code === 0) {
       $q.notify({
-        color: "positive",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: "Untie successfully",
         icon: "check_circle_outline"

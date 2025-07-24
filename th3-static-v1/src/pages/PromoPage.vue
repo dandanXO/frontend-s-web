@@ -628,7 +628,8 @@ export default defineComponent({
               .then((res) => {
                 if (res.code === 0) {
                   $q.notify({
-                    color: "positive",
+                    color: "dark",
+textColor: "white",
                     position: "top",
                     message: "Success.",
                     icon: "check_circle_outline"

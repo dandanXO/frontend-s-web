@@ -250,7 +250,8 @@ const copyText = (text) => {
     console.log("Copied");
 
     $q.notify({
-      color: "positive",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: "Serial Number Copied to clipboard.",
       icon: "check_circle_outline"

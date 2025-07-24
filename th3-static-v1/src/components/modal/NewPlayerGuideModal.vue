@@ -484,9 +484,10 @@ const fallbackCopyTextToClipboard = (text) => {
 
   $q.notify({
     message: "Link copied to clipboard",
-    color: "positive",
+    color: "dark",
+    textColor: "white",
     position: "top",
-    timeout: 2000,
+    timeout: 2000
   });
 };
 
@@ -499,9 +500,10 @@ const copyHrefLink = () => {
       .then(() => {
         $q.notify({
           message: "Link copied to clipboard",
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
-          timeout: 2000,
+          timeout: 2000
         });
       })
       .catch(() => {
@@ -978,8 +980,8 @@ defineExpose({ showVideo });
           margin: 5px auto;
           // gap: 10px;
           > div:not(:last-child) {
-          margin-right: 10px;
-        }
+            margin-right: 10px;
+          }
           .deposititem {
             img {
               width: 100%;
@@ -1158,7 +1160,6 @@ defineExpose({ showVideo });
         :not(:last-child) {
           margin-right: 15px;
         }
-
       }
       .next-button {
         text-transform: uppercase;

@@ -2,85 +2,76 @@
   <div class="change-pwd">
     <q-form @submit="submitUpdatePwd">
       <q-input
-          ref="oldPasswordRef"
-          standout
-          v-model="updatePwdInfo.oldPassword"
-          class="q-pb-xs"
-          hide-bottom-space
-          :type="isPwd ? 'password' : 'text'"
-          label="旧密码"
-          lazy-rules
-          clearable
-          :rules="[(val) => (val && val.length > 0) || '请输入旧密码']"
+        ref="oldPasswordRef"
+        standout
+        v-model="updatePwdInfo.oldPassword"
+        class="q-pb-xs"
+        hide-bottom-space
+        :type="isPwd ? 'password' : 'text'"
+        label="旧密码"
+        lazy-rules
+        clearable
+        :rules="[(val) => (val && val.length > 0) || '请输入旧密码']"
       >
         <template v-slot:append>
           <q-icon
-              color="brand"
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
+            color="brand"
+            :name="isPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="isPwd = !isPwd"
           />
         </template>
       </q-input>
       <q-input
-          ref="passwordRef"
-          standout
-          v-model="updatePwdInfo.password"
-          class="q-pb-xs"
-          hide-bottom-space
-          :type="isPwd ? 'password' : 'text'"
-          label="新密码"
-          lazy-rules
-          clearable
-          :rules="[(val) => (val && val.length > 0) || '请输入新密码']"
-          label-color="brand"
-          color="brand"
+        ref="passwordRef"
+        standout
+        v-model="updatePwdInfo.password"
+        class="q-pb-xs"
+        hide-bottom-space
+        :type="isPwd ? 'password' : 'text'"
+        label="新密码"
+        lazy-rules
+        clearable
+        :rules="[(val) => (val && val.length > 0) || '请输入新密码']"
+        label-color="brand"
+        color="brand"
       >
         <template v-slot:append>
           <q-icon
-              color="brand"
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
+            color="brand"
+            :name="isPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="isPwd = !isPwd"
           />
         </template>
       </q-input>
       <q-input
-          ref="confirmPasswordRef"
-          standout
-          v-model="updatePwdInfo.confirmNewPwd"
-          class="q-pb-xs"
-          hide-bottom-space
-          :type="isPwd ? 'password' : 'text'"
-          label="确认新密码"
-          lazy-rules
-          clearable
-          :rules="[
+        ref="confirmPasswordRef"
+        standout
+        v-model="updatePwdInfo.confirmNewPwd"
+        class="q-pb-xs"
+        hide-bottom-space
+        :type="isPwd ? 'password' : 'text'"
+        label="确认新密码"
+        lazy-rules
+        clearable
+        :rules="[
           (val) => (val && val.length > 0) || '请再次输入新密码',
-          (val) =>
-                  val === updatePwdInfo.password ||
-                 '确认密码与新密码不符合' ,
-          ]"
-          label-color="brand"
-          color="brand"
+          (val) => val === updatePwdInfo.password || '确认密码与新密码不符合'
+        ]"
+        label-color="brand"
+        color="brand"
       >
         <template v-slot:append>
           <q-icon
-              color="brand"
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
+            color="brand"
+            :name="isPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="isPwd = !isPwd"
           />
         </template>
       </q-input>
-      <q-btn
-          type="submit"
-          class="q-mt-md"
-          label="修改密码"
-          width="100%"
-          color="brightbtn"
-          style="width: 100%"
-      />
+      <q-btn type="submit" class="q-mt-md" label="修改密码" width="100%" color="brightbtn" style="width: 100%" />
     </q-form>
   </div>
 </template>
@@ -142,7 +133,8 @@ export default defineComponent({
         })).then((response) => {
           if (response.code === 0) {
             $q.notify({
-              color: "positive",
+              color: "dark",
+textColor: "white",
               position: "top",
               message: "密码修改成功",
               icon: "check_circle_outline"
