@@ -140,12 +140,42 @@ $badge-theme-dark: (
   align-items: center;
   border-radius: 4px;
 
+  &.level-#{length($badge-theme-light) - 1} {
+    background-image: url(../../../assets/home/livestream/badge/vip12-bg.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center right;
+    color: #703906;
+    line-height: 1;
+    position: relative;
+    width: 60px;
+    height: 24px;
+    padding-left: 24px;
+    top: -6px;
+
+    img.badge-chip__badge {
+      max-width: 40px;
+      position: absolute;
+      top: -2px;
+      left: -14px;
+    }
+  }
+
   @each $theme in $badge-theme-light {
     $bg: map-get($theme, backgroundColor);
     $text: map-get($theme, textColor);
-    &.level-#{index($badge-theme-light, $theme) - 1} {
-      background-color: $bg;
-      color: $text;
+    $i: index($badge-theme-light, $theme) - 1;
+    $count: length($badge-theme-light) - 1;
+
+    @for $i from 1 through $count {
+      $theme: nth($badge-theme-light, $i);
+      $bg: map-get($theme, backgroundColor);
+      $text: map-get($theme, textColor);
+
+      &.level-#{$i - 1} {
+        background-color: $bg;
+        color: $text;
+      }
     }
   }
 
@@ -163,12 +193,43 @@ $badge-theme-dark: (
 
 .dark {
   .badge-chip-wrapper {
+    &.level-#{length($badge-theme-light) - 1} {
+      background-image: url(../../../assets/home/livestream/badge/vip12-bg.png);
+      // background-size: 50px 28px;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center right;
+      color: #703906;
+      line-height: 1;
+      position: relative;
+      width: 60px;
+      height: 24px;
+      padding-left: 24px;
+      top: -6px;
+
+      img.badge-chip__badge {
+        max-width: 40px;
+        position: absolute;
+        top: -2px;
+        left: -14px;
+      }
+    }
+
     @each $theme in $badge-theme-dark {
       $bg: map-get($theme, backgroundColor);
       $text: map-get($theme, textColor);
-      &.level-#{index($badge-theme-dark, $theme) - 1} {
-        background-color: $bg;
-        color: $text;
+      $i: index($badge-theme-dark, $theme) - 1;
+      $count: length($badge-theme-dark) - 1;
+
+      @for $i from 1 through $count {
+        $theme: nth($badge-theme-dark, $i);
+        $bg: map-get($theme, backgroundColor);
+        $text: map-get($theme, textColor);
+
+        &.level-#{$i - 1} {
+          background-color: $bg;
+          color: $text;
+        }
       }
     }
   }
