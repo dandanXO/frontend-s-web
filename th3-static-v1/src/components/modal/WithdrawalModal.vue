@@ -476,7 +476,8 @@ const submitWithdrawBank = async () => {
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: "Withdrawal Submit Succeed",
             icon: "check_circle_outline"
@@ -521,7 +522,8 @@ const withdrawGo = (callback) => {
     .then((response) => {
       if (response.code === 0) {
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "Withdrawal Submit Succeed",
           icon: "check_circle_outline"

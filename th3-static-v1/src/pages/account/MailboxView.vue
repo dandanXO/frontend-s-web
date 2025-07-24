@@ -290,7 +290,8 @@ export default defineComponent({
           .then((response) => {
             if (response.code === 0) {
               $q.notify({
-                color: "positive",
+                color: "dark",
+textColor: "white",
                 position: "top",
                 message: "发送成功",
                 icon: "check_circle_outline"

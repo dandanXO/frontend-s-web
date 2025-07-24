@@ -308,7 +308,8 @@ export default defineComponent({
       api.post("/otp/sendEmail", qs.stringify(emailDetails)).then((ret) => {
         if (ret.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: "OTP验证码已发送至您的邮箱",
             icon: "check_circle_outline"
@@ -343,7 +344,8 @@ export default defineComponent({
         api.post("/otp/verifyEmail", qs.stringify(verificationDetails.memberInfo)).then((res) => {
           if (res.code === 0) {
             $q.notify({
-              color: "positive",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: "验证成功",
               icon: "check_circle_outline"
@@ -398,7 +400,8 @@ export default defineComponent({
           profileFormRef.value.reset();
 
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: "更新成功",
             icon: "check_circle_outline"

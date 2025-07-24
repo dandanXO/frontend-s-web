@@ -36,7 +36,8 @@ const collectclaim = (promoCode) => {
     .then((res) => {
       if (res.code === 0) {
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "Collect successfully",
           icon: "check_circle_outline"

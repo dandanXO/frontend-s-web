@@ -892,7 +892,8 @@ const onVerifyForgotPassword = (type) => {
         .then((response) => {
           if (response.code === 0) {
             $q.notify({
-              color: "positive",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: t("notify.passwordResetCompleted"),
               icon: "check_circle_outline"
@@ -916,7 +917,8 @@ const onVerifyForgotPassword = (type) => {
         .then((response) => {
           if (response.code === 0) {
             $q.notify({
-              color: "positive",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: t("notify.passwordResetCompleted"),
               icon: "check_circle_outline"
@@ -968,7 +970,8 @@ const verificationForm = reactive({
 //       .then((response) => {
 //         if (response.code === 0) {
 //           $q.notify({
-//             color: "positive",
+//             color: "dark",
+//             textColor: "white",
 //             position: "top",
 //             message: "Password Reset Completed",
 //             icon: "report_problem"

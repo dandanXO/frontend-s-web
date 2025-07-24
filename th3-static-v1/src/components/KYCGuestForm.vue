@@ -147,7 +147,8 @@ const updateNewGuestState = () => {
     .then((r) => {
       if (r.code === 0) {
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "Updated successfully",
           icon: "check_circle_outline"

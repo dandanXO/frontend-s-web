@@ -143,7 +143,8 @@ const updateNewUserState = () => {
   if (ui.siteType === "CURACAO") {
     localStorage.setItem("PAK_ADDRESS", formDetail.address);
     $q.notify({
-      color: "positive",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: "Updated successfully",
       icon: "check_circle_outline"
@@ -157,7 +158,8 @@ const updateNewUserState = () => {
     .then((r) => {
       if (r.code === 0) {
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "Updated successfully",
           icon: "check_circle_outline"

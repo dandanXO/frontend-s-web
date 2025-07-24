@@ -210,7 +210,8 @@ const takeScreenshot = async () => {
         }
 
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "QR Code image saved to photo gallery.",
           icon: "check_circle_outline"
@@ -310,7 +311,8 @@ const fallbackCopyTextToClipboard = (text) => {
 
   $q.notify({
     message: "Link copied to clipboard",
-    color: "positive",
+    color: "dark",
+    textColor: "white",
     position: "top",
     timeout: 2000
   });
@@ -335,7 +337,8 @@ const copyHrefLink = async () => {
       .then(() => {
         $q.notify({
           message: "Link copied to clipboard",
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           timeout: 2000
         });

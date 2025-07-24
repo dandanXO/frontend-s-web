@@ -852,7 +852,8 @@ const submitWithdraw = async () => {
         console.log(response.code);
         if (response.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: t("notify.withdrewSuccessfully"),
             icon: "check_circle_outline"
@@ -911,7 +912,8 @@ const submitWithdraw = async () => {
 //       .then((response) => {
 //         if (response.code === 0) {
 //           $q.notify({
-//             color: "positive",
+//             color: "dark",
+//             textColor: "white",
 //             position: "top",
 //             message: t("lang.msg_submit_successful"),
 //             icon: "check_circle_outline"

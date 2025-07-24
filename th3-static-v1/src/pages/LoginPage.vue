@@ -481,7 +481,8 @@ export default defineComponent({
 
               if (res.code === 0) {
                 $q.notify({
-                  color: "positive",
+                  color: "dark",
+                  textColor: "white",
                   position: "top",
                   message: "Google login successfully",
                   icon: "check_circle_outline"
@@ -547,7 +548,8 @@ export default defineComponent({
                   store.isFirstLandOnHomePage = true;
 
                   $q.notify({
-                    color: "positive",
+                    color: "dark",
+                    textColor: "white",
                     position: "top",
                     message: "Google login successfully",
                     icon: "check_circle_outline"
@@ -738,7 +740,8 @@ export default defineComponent({
 
             if (res.code === 0) {
               $q.notify({
-                color: "positive",
+                color: "dark",
+                textColor: "white",
                 position: "top",
                 message: "Quick registered successfully",
                 icon: "check_circle_outline"

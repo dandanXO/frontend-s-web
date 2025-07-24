@@ -36,7 +36,7 @@
   </q-dialog> -->
 
   <q-dialog v-model="showCaptchaDialog" persistent>
-    <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">{{ $t("bankCard.otp") }}</div>
@@ -75,7 +75,7 @@
     </div>
   </q-dialog>
   <q-dialog v-model="showCaptchaMessageDialog" persistent>
-    <div class="popout-dialog" style="width: 90%; border-radius: 20px;">
+    <div class="popout-dialog" style="width: 90%; border-radius: 20px">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="flex justify-center">
@@ -190,7 +190,8 @@
                   type="number"
                   :rules="[
                     (val) => (val && val.length > 0) || $t('bankCard.pleaseEnterCardAccount'),
-                    (val) => (val && val.length >=13 && val.length <= 20) || $t('bankCard.bankCardMust16NumberandAbove'),
+                    (val) =>
+                      (val && val.length >= 13 && val.length <= 20) || $t('bankCard.bankCardMust16NumberandAbove'),
                     (val) => (val && !val.includes('.')) || $t('bankCard.bankCardDisallowDecimal')
                   ]"
                 ></q-input>
@@ -244,7 +245,10 @@
                 <q-input
                   ref="telephoneNumberRef"
                   standout
-                  :rules="[(val) => !!val || $t('bankCard.pleaseEnterTelephone'),  (val) => /^03\d{9}$/.test(val) || $t('bankCard.pleaseEnterTelephone')]"
+                  :rules="[
+                    (val) => !!val || $t('bankCard.pleaseEnterTelephone'),
+                    (val) => /^03\d{9}$/.test(val) || $t('bankCard.pleaseEnterTelephone')
+                  ]"
                   v-model="bankCardInfo.telephone"
                   class="q-pb-xs"
                   hide-bottom-space
@@ -252,7 +256,7 @@
                   clearable
                   :disable="isOtpSent"
                 >
-                <template v-slot:append>
+                  <template v-slot:append>
                     <q-btn
                       @click="openPhoneVeriDialog()"
                       type="submit"
@@ -454,7 +458,7 @@ const getInnerCode = () => {
 
 const showCaptchaDialog = ref(false);
 const openPhoneVeriDialog = () => {
-  telephoneNumberRef.value.validate()
+  telephoneNumberRef.value.validate();
   if (telephoneNumberRef.value && telephoneNumberRef.value.hasError) return;
   getInnerCode();
   showCaptchaDialog.value = true;
@@ -502,35 +506,34 @@ const onCaptchaSubmit = () => {
     });
 };
 
-
 const timer = ref(300); // Timer starts at 60 seconds
-  let intervalId = null;
-  // Method to start the countdown timer
-  function startTimer() {
-    intervalId = setInterval(() => {
-      if (timer.value > 0) {
-        timer.value--;
-      } else {
-        clearInterval(intervalId); // Stop the timer when it reaches 0
-        // isPhoneVerified.value = false;
-        isOtpSent.value = false;
-      }
-    }, 1000); // Update the timer every second
-  }
-
-  // Method to show the timer in the button label
-  function showTimer() {
-    const minutes = Math.floor(timer.value / 60);
-    const seconds = timer.value % 60;
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  }
-
-  // Cleanup the interval when the component is unmounted
-  onBeforeUnmount(() => {
-    if (intervalId) {
-      clearInterval(intervalId);
+let intervalId = null;
+// Method to start the countdown timer
+function startTimer() {
+  intervalId = setInterval(() => {
+    if (timer.value > 0) {
+      timer.value--;
+    } else {
+      clearInterval(intervalId); // Stop the timer when it reaches 0
+      // isPhoneVerified.value = false;
+      isOtpSent.value = false;
     }
-  });
+  }, 1000); // Update the timer every second
+}
+
+// Method to show the timer in the button label
+function showTimer() {
+  const minutes = Math.floor(timer.value / 60);
+  const seconds = timer.value % 60;
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
+// Cleanup the interval when the component is unmounted
+onBeforeUnmount(() => {
+  if (intervalId) {
+    clearInterval(intervalId);
+  }
+});
 
 const bankList = ref([]);
 const loadBankCards = () => {
@@ -578,12 +581,11 @@ const submitBankCard = () => {
     cardNumberRef.value.validate();
   }
   if (store.isEnableBankCardOTP && phoneVerificationRef.value) {
-    phoneVerificationRef.value.validate()
+    phoneVerificationRef.value.validate();
   }
   if (store.isEnableBankCardOTP && telephoneNumberRef.value) {
-    telephoneNumberRef.value.validate()
+    telephoneNumberRef.value.validate();
   }
-
 
   if (
     !(
@@ -592,7 +594,6 @@ const submitBankCard = () => {
       (store.isEnableBankCardOTP && phoneVerificationRef.value && phoneVerificationRef.value.hasError)
     )
   ) {
-
     if (store.isEnableBankCardOTP && (!isOtpSent.value || !bankCardInfo.telephone)) {
       $q.notify({
         color: "negative",
@@ -602,19 +603,20 @@ const submitBankCard = () => {
       });
       return;
     } else {
-      if(store.isEnableBankCardOTP === false) {
+      if (store.isEnableBankCardOTP === false) {
         bankCardInfo.telephone = undefined;
         bankCardInfo.smsCode = undefined;
         bankCardInfo.smsCodeId = undefined;
       }
-      
+
       // API call
       api
         .post("/session/bankCard", qs.stringify(bankCardInfo))
         .then((response) => {
           if (response.code === 0) {
             $q.notify({
-              color: "positive",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: t("notify.bankAddedSuccessfully"),
               icon: "check_circle_outline"
@@ -627,7 +629,7 @@ const submitBankCard = () => {
         .catch((error) => {
           console.log("error", error);
         });
-      }
+    }
   }
 };
 

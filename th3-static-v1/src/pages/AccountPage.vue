@@ -1091,7 +1091,8 @@ const verifyVerificationCode = () => {
     .then((ret) => {
       if (ret.code === 0) {
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "OTP验证码已发送至您的邮箱",
           icon: "check_circle_outline"
@@ -1128,7 +1129,8 @@ const submitUpdateSecurity = () => {
       .then((res) => {
         if (res.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: "验证成功",
             icon: "check_circle_outline"
@@ -1178,7 +1180,8 @@ const updateState = () => {
         profileFormRef.value.reset();
 
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: t("notify.updatedSuccessfully"),
           icon: "check_circle_outline"
@@ -1214,7 +1217,8 @@ const updateNewUserState = () => {
         profileFormRef.value.reset();
 
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "Updated successfully",
           icon: "check_circle_outline"
@@ -1252,7 +1256,8 @@ const updateNewUserState = () => {
 //         profileFormRef.value.reset();
 
 //         $q.notify({
-//           color: "positive",
+//           color: "dark",
+//           textColor: "white",
 //           position: "top",
 //           message: "Updated successfully",
 //           icon: "check_circle_outline"
@@ -1390,7 +1395,8 @@ const onCaptchaSubmit = () => {
         }, 1000);
 
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: t("notify.emailVerificationSent"),
           icon: "check_circle_outline"
@@ -1436,7 +1442,8 @@ const onPhoneCaptchaSubmit = () => {
         }, 1000);
 
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: t("notify.smsSent"),
           icon: "check_circle_outline"
@@ -1498,7 +1505,8 @@ const submitUpdatePwd = () => {
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: t("notify.newpasswordupdated"),
             icon: "check_circle_outline"
@@ -1539,7 +1547,8 @@ const submitUpdateEmail = () => {
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: "Email binded successfully",
             icon: "check_circle_outline"
@@ -1586,14 +1595,16 @@ const sendPhoneDetails = () => {
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: t("notify.phoneVerifySuccessful"),
             icon: "check_circle_outline"
           });
           if (response.data) {
             $q.notify({
-              color: "positive",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: t("modal.appLoginBonus.claimBonus", { amount: response.data }),
               icon: "check_circle_outline"
@@ -1636,7 +1647,8 @@ const submitUpdateNewPwd = () => {
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: t("notify.newpasswordupdated"),
             icon: "check_circle_outline"
@@ -1818,7 +1830,7 @@ const openConfirmSignOutDialog = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #3A3A3A;
+  color: #3a3a3a;
 }
 
 .pc-tip {
@@ -1847,7 +1859,7 @@ const openConfirmSignOutDialog = () => {
   box-shadow: 0px 2px 0px 0px #907c5f;
 
   :deep(.q-icon) {
-    color: #FFF;
+    color: #fff;
   }
 }
 
@@ -1906,10 +1918,10 @@ const openConfirmSignOutDialog = () => {
 }
 
 :deep(.landing-input .q-field__control) {
-  color: #907C5F;
+  color: #907c5f;
 }
 :deep(.landing-input .q-field__native) {
-  color: #907C5F;
+  color: #907c5f;
   font-weight: bold;
 }
 .popout-dialog-container {
@@ -1917,7 +1929,7 @@ const openConfirmSignOutDialog = () => {
     color: #d9cfb8;
   }
   :deep(.landing-input .q-field__control) {
-    background: #3A3A3A;
+    background: #3a3a3a;
     ::placeholder {
       color: rgba(255, 255, 255, 0.2);
     }
@@ -1929,5 +1941,4 @@ const openConfirmSignOutDialog = () => {
     color: #d9cfb8;
   }
 }
-
 </style>

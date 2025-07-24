@@ -604,7 +604,8 @@ const submitBankCard = () => {
         .then((response) => {
           if (response.code === 0) {
             $q.notify({
-              color: "positive",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: t("notify.virtualWalletAddedSuccessfully"),
               icon: "check_circle_outline"

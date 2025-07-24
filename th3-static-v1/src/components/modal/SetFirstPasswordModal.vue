@@ -110,9 +110,10 @@ const submit = () => {
       .then((res) => {
         if (res.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
-            message: t('notify.newpasswordupdated'),
+            message: t("notify.newpasswordupdated"),
             icon: "check_circle_outline"
           });
           // store.getMemberInfo();

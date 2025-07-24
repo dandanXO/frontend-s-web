@@ -252,7 +252,8 @@ const submitTransfer = (amount) => {
     .then((response) => {
       if (response.code === 0) {
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "สำเร็จ",
           icon: "check_circle_outline"
