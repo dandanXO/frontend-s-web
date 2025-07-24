@@ -42,19 +42,21 @@ export default defineComponent({
 
     const getChatBaseUrl = () => {
       const url = route?.path?.split?.("/")?.[1] || "live-chat";
-      // if (url === "live-chat") {
-      //   return `${url}/live-chat`;
-      // }
+      if (url === "live-chat") {
+        return `${url}/live-chat`;
+      }
       return url;
     };
 
     if (isEmpty(cSuserStore.token)) {
       // console.log("TOken Empty");
       const chatBaseUrl = getChatBaseUrl();
+      console.log('sam---',chatBaseUrl)
       if (store.chatGuid) {
         router.push({ path: `/${chatBaseUrl}/chat?uid=${store.chatGuid}` });
       } else {
-        router.push({ path: `/${chatBaseUrl}` });
+        // router.push({ path: `/${chatBaseUrl}` });
+        window.location.href = `/${chatBaseUrl}`;
       }
     }
 
