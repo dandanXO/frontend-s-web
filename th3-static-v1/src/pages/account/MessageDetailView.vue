@@ -5,16 +5,17 @@
   <!--    <img class="close-btn" src="../../assets/images/index/close-btn.png" alt="" @click="onCloseBtnClick()" />-->
   <!--  </div>-->
 
-  <div class="msg-detail-container">
-    <div class="send-time">{{ mailDataRef.sendTime && convertToGMT55(mailDataRef.sendTime) }}</div>
-    <div class="header">
-      <div class="title">
-        <span v-html="mailDataRef.title"></span>
+  <div class="q-pt-xs">
+    <div class="msg-detail-container">
+      <div class="send-time">{{ mailDataRef.sendTime && convertToGMT55(mailDataRef.sendTime) }}</div>
+      <div class="header">
+        <div class="title">
+          <span v-html="mailDataRef.title"></span>
+        </div>
       </div>
-    </div>
-    <div class="content">
-      
-      <span v-html="mailDataRef.content"></span>
+      <div class="content">
+        <span v-html="mailDataRef.content"></span>
+      </div>
     </div>
   </div>
 </template>
@@ -85,11 +86,12 @@ onActivated(() => {
   background: #323738;
   border-radius: 10px;
   margin: 20px;
-    .send-time {
-      font-size: 14px;
-      font-weight: 700;
-      color: #B2BDBF;
-    }
+  margin-top: 0;
+  .send-time {
+    font-size: 14px;
+    font-weight: 700;
+    color: #b2bdbf;
+  }
   .header {
     // display: grid;
     // grid-template-columns: 1fr 120px;
@@ -101,14 +103,12 @@ onActivated(() => {
       font-weight: 700;
       margin: 1rem 0;
     }
-
   }
 
   .content {
     font-size: 14px;
     // font-weight: 700;
-    color: #FFFFFF80;
-
+    color: #ffffff80;
   }
 }
 </style>
