@@ -39,6 +39,8 @@
 
               <!-- <img :src="imgURL + currentLiveData.avatar" /> -->
             </div>
+            <span class="profile-name">{{currentLiveData.name}}</span>
+
             <template v-if="currentLiveData.name === 'SYSTEM'">
               <div class="tag tag--live">官方直播间</div>
             </template>
@@ -717,11 +719,17 @@ onDeactivated(() => {
           justify-content: center;
           overflow: hidden;
 
+
           img {
             display: block;
             width: 24px;
             height: 24px;
           }
+        }
+
+        .profile-name{
+          font-weight: 600;
+          font-size: 12px;
         }
 
         .tag {
