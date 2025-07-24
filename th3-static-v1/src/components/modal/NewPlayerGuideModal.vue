@@ -45,9 +45,9 @@
               <div v-if="index + 1 === 1">
                 <div class="welcome">
                   {{ t("playerGuide.welcomeMessage") }}
-                  <span class="yellow">B9GAME!</span>
+                  <span class="yellow">SuperSiam!</span>
                   {{ t("playerGuide.teachingHowToEarn") }}
-                  <!-- Welcome to <span class="yellow">B9GAME!</span> Let us teach you how to make money easily! -->
+                  <!-- Welcome to <span class="yellow">SuperSiam!</span> Let us teach you how to make money easily! -->
                 </div>
               </div>
 

@@ -262,7 +262,7 @@ export default {
     confirm: "确认",
     submit: "提交",
     forgetPwd: "忘记密码",
-    areyounew: "您是B9的新用户吗？",
+    areyounew: "您是SuperSiam的新用户吗？",
     alreadyhaveacct: "已经有账户了？",
     addNewAccount: "添加新账户",
     updated: "已更新",
@@ -554,9 +554,9 @@ export default {
       deposit_tips: "存款佣金：<br />您推荐的每位新会员首次存款，您可获得5%的返利。",
       multiple_acc_hint:
         "2. 禁止同一個人使用多個帳戶惡意套取佣金。違者將被凍結帳戶。\n獎勵發放時間：第二天巴基斯坦時間下午3:00至下午6:00之間。獎勵將在此時間段內存入帳戶。",
-      shareTitle: "B9GAME 分享赚钱",
+      shareTitle: "SuperSiam 分享赚钱",
       shareText:
-        "B9GAME 分享赚钱：\n\t每位朋友最高可赚1000卢比。\n\t首次存款可获5%返利。\n\t享受长期0.6%的全投注返利。\n立即下载App，领取神秘现金奖励！\n{url}",
+        "SuperSiam 分享赚钱：\n\t每位朋友最高可赚1000卢比。\n\t首次存款可获5%返利。\n\t享受长期0.6%的全投注返利。\n立即下载App，领取神秘现金奖励！\n{url}",
       betting_table: {
         header: {
           description: "描述",
@@ -793,7 +793,7 @@ export default {
   customerServiceVerifier: {
     mainTitle: "SuperSiam",
     subTitle: "客服验证器",
-    contentPara01: "为防止使用B9.GAME名单的诈骗，您可以验证您正在聊天的Telegram或Discord账户",
+    contentPara01: "为防止使用SuperSiam名单的诈骗，您可以验证您正在聊天的Telegram或Discord账户",
     contentPara02: "请输入代理账户ID并点击检查按钮"
   },
   playerGuide: {
@@ -932,7 +932,7 @@ export default {
       rule_02: "每次抽奖都有100%的中奖机会。",
       rule_03: "所有奖励将直接存入您的钱包。",
       rule_04: "奖金需要一倍的流水才能提款。",
-      rule_05: "本次活动的解释权归B9.game所有。如有任何疑问，请联系客服。",
+      rule_05: "本次活动的解释权归SuperSiam所有。如有任何疑问，请联系客服。",
       silver: "白银",
       gold: "黄金",
       diamond: "钻石",

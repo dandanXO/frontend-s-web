@@ -271,7 +271,7 @@ export default {
     confirm: "Confirm",
     submit: "Submit",
     forgetPwd: "Forget Password",
-    areyounew: "Are you new to B9?",
+    areyounew: "Are you new to SuperSiam?",
     alreadyhaveacct: "Already have an account?",
     addNewAccount: "Add New Account",
     updated: "Updated",
@@ -573,9 +573,9 @@ export default {
       multiple_acc_hint: `2. It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
     Reward distribution time: Between 3:00 PM and 6:00 PM Pakistan time on the next day. The rewards will be credited to the account during this time frame.
     `,
-      shareTitle: "B9GAME Share and Earn",
+      shareTitle: "SuperSiam Share and Earn",
       shareText:
-        "B9GAME Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
+        "SuperSiam Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
       betting_table: {
         header: {
           description: "Description",
@@ -815,7 +815,7 @@ export default {
     mainTitle: "SuperSiam",
     subTitle: "Customer Service Verifier",
     contentPara01:
-      "To prevent scams using B9.GAME's list, you can verify the Telegram or Discord account you are chatting&nbsp;with ",
+      "To prevent scams using SuperSiam's list, you can verify the Telegram or Discord account you are chatting&nbsp;with ",
     contentPara02: "Please enter the agent account ID and click the Check button"
   },
   playerGuide: {
@@ -956,7 +956,7 @@ export default {
       rule_03: "All rewards will be deposited directly into your wallet.",
       rule_04: "The bonus requires one turnover to withdraw.",
       rule_05:
-        "The right to interpret this event belongs to B9.game. If you have any questions, please contact customer service.",
+        "The right to interpret this event belongs to SuperSiam. If you have any questions, please contact customer service.",
       silver: "Silver",
       gold: "Gold",
       diamond: "Diamond",

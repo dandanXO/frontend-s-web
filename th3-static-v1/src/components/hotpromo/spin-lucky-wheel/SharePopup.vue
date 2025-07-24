@@ -199,13 +199,13 @@ const takeScreenshot = async () => {
             JSON.stringify({
               action: "qrcode",
               item: image,
-              filename: `b9share-1-${timeStamp}.png`
+              filename: `share-1-${timeStamp}.png`
             })
           );
         } else {
           const link = document.createElement("a");
           link.href = image;
-          link.download = `b9share-1-${timeStamp}.png`;
+          link.download = `share-1-${timeStamp}.png`;
           link.click();
         }
 
@@ -324,7 +324,7 @@ const copyHrefLink = async () => {
   if (navigator.share) {
     try {
       await navigator.share({
-        title: "b9.game",
+        title: "SuperSiam",
         text: shareCaption.value + " " + textToCopy,
         url: textToCopy
       });
@@ -356,12 +356,12 @@ const qrCode = computed(() => {
 });
 
 const shareCaptions = [
-  "Mauqa yahan hai! Abhi B9GAME par register karo, aur main guarantee deta hoon ke tumhe bhi free bonus milega! ",
+  "Mauqa yahan hai! Abhi SuperSiam par register karo, aur main guarantee deta hoon ke tumhe bhi free bonus milega! ",
   "100% asli free bonus, sirf limited time ke liye! Maine le liya hai! ",
-  "Main bohot kismat wala hoon! Mujhe abhi B9GAME se free bonus mila hai, 100% asli! Aao aur try karo! ",
+  "Main bohot kismat wala hoon! Mujhe abhi SuperSiam se free bonus mila hai, 100% asli! Aao aur try karo! ",
   "Bas itna chahiye ke tum is par click karo, aur mil kar free bonus lo! ",
-  "Bhai, ek ehsaan karo! Mujhe withdraw karne mein madad do, aur mil kar B9GAME ka free bonus lo! ",
-  "Abhi abhi withdraw kiya! B9GAME ne waqai paise diye, jaldi aao aur apna free bonus lo! "
+  "Bhai, ek ehsaan karo! Mujhe withdraw karne mein madad do, aur mil kar SuperSiam ka free bonus lo! ",
+  "Abhi abhi withdraw kiya! SuperSiam ne waqai paise diye, jaldi aao aur apna free bonus lo! "
 ];
 
 const activeSlide = ref(0);

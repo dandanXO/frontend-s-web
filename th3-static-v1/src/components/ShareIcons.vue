@@ -1,6 +1,6 @@
 <template>
   <div class="list-item" id="whatapp-icon ddd" @click="openWhatsApp()">
-    <img class="btn-icon" :src="require(`../assets/images/auth/whatsapp-new.png`)" />
+    <img class="btn-icon" :src="require(`../assets/images/auth/whatsapp-new-color.png`)" />
     <img class="absolute-hot" src="../assets/images/index/hot.gif" />
     <!-- <div>WhatsApp</div> -->
   </div>
@@ -9,16 +9,16 @@
   </div>
   <a ref="tiktokRef" href="https://www.tiktok.com" target="_blank" :style="{ display: 'none' }" />
   <div class="list-item" @click="openTiktok()">
-    <img class="btn-icon" id="tiktok-icon" :src="require(`../assets/images/auth/tiktok-new.png`)" />
+    <img class="btn-icon" id="tiktok-icon" :src="require(`../assets/images/auth/tiktok-new-color.png`)" />
     <!-- <div>Tiktok</div> -->
   </div>
   <a ref="instagramRef" href="https://www.instagram.com" target="_blank" :style="{ display: 'none' }" />
   <div class="list-item" @click="openInsta()">
-    <img class="btn-icon" id="insta-icon" :src="require(`../assets/images/auth/insta-new.png`)" />
+    <img class="btn-icon" id="insta-icon" :src="require(`../assets/images/auth/insta-new-color.png`)" />
     <!-- <div>WhatsApp</div> -->
   </div>
   <div class="list-item" @click="openYoutube()">
-    <img class="btn-icon" id="youtube-icon" :src="require(`../assets/images/auth/youtube-new.png`)" />
+    <img class="btn-icon" id="youtube-icon" :src="require(`../assets/images/auth/youtube-new-color.png`)" />
     <!-- <div>Youtube</div> -->
   </div>
   <div v-if="isInvite" class="list-item" @click="openSMS()">

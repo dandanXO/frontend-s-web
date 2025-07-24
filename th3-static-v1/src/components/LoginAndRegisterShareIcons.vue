@@ -1,7 +1,7 @@
 <template>
   <div class="list-item" id="whatapp-icon" @click="openWhatsApp()">
     <img v-if="isLogin" class="btn-icon" :src="require(`../assets/images/auth/whatsapp-new.png`)" />
-    <img v-else class="btn-icon" :src="require(`../assets/images/auth/whatsapp-new-reg.png`)" />
+    <img v-else class="btn-icon" :src="require(`../assets/images/auth/whatsapp-new-color.png`)" />
     <img class="absolute-hot" src="../assets/images/index/hot.gif" />
     <!-- <div>WhatsApp</div> -->
   </div>
@@ -11,18 +11,18 @@
   <a ref="tiktokRef" href="https://www.tiktok.com" target="_blank" :style="{ display: 'none' }" />
   <div class="list-item" @click="openTiktok()">
     <img v-if="isLogin" class="btn-icon" id="tiktok-icon" :src="require(`../assets/images/auth/tiktok-new.png`)" />
-    <img v-else class="btn-icon" id="tiktok-icon" :src="require(`../assets/images/auth/tiktok-new-reg.png`)" />
+    <img v-else class="btn-icon" id="tiktok-icon" :src="require(`../assets/images/auth/tiktok-new-color.png`)" />
     <!-- <div>Tiktok</div> -->
   </div>
   <a ref="instagramRef" href="https://www.instagram.com" target="_blank" :style="{ display: 'none' }" />
   <div class="list-item" @click="openInsta()">
     <img v-if="isLogin" class="btn-icon" id="insta-icon" :src="require(`../assets/images/auth/insta-new.png`)" />
-    <img v-else class="btn-icon" id="insta-icon" :src="require(`../assets/images/auth/insta-new-reg.png`)" />
+    <img v-else class="btn-icon" id="insta-icon" :src="require(`../assets/images/auth/insta-new-color.png`)" />
     <!-- <div>WhatsApp</div> -->
   </div>
   <div class="list-item" @click="openYoutube()">
     <img v-if="isLogin" class="btn-icon" id="youtube-icon" :src="require(`../assets/images/auth/youtube-new.png`)" />
-    <img v-else class="btn-icon" id="youtube-icon" :src="require(`../assets/images/auth/youtube-new-reg.png`)" />
+    <img v-else class="btn-icon" id="youtube-icon" :src="require(`../assets/images/auth/youtube-new-color.png`)" />
     <!-- <div>Youtube</div> -->
   </div>
   <div v-if="isInvite" class="list-item" @click="openSMS()">
@@ -33,7 +33,7 @@
   </div>
   <div v-if="!isInvite" class="list-item" @click="openCharity()">
     <img v-if="isLogin" class="btn-icon" id="charity-icon" :src="require(`../assets/images/auth/charity-new.png`)" />
-    <img v-else class="btn-icon" id="charity-icon" :src="require(`../assets/images/auth/charity-new-reg.png`)" />
+    <img v-else class="btn-icon" id="charity-icon" :src="require(`../assets/images/auth/charity-new-color.png`)" />
     <!-- <div>Charity</div> -->
   </div>
   <!-- <div class="list-item" v-if="!isAndroid() && !ui.hideDownload && !isInvite" @click="downloadApp()">
