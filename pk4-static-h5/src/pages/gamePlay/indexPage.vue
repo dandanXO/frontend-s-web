@@ -558,6 +558,10 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
                       .then((res) => resolve(res.data))
                       .catch((err) => reject(err));
                   });
+                },
+                onStateChange: () => {
+                  console.log("onStateChange");
+                  store.getBalance();
                 }
               });
 
