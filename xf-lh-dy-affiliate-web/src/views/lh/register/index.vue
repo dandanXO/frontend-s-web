@@ -200,7 +200,7 @@ import { UserActionTypes } from "@/store/modules/user/action-types";
 import { getVerificationCode } from '../../../api/user';
 import xfLogo from "@/assets/images/xf/logo.png";
 import { ElNotification } from 'element-plus';
-
+import siteEnum from '@/enums/siteEnum';
 export default defineComponent({
   setup() {
     const validatePass2 = async (r, v) => {
@@ -396,7 +396,7 @@ export default defineComponent({
         });
       },
       handleRegister: () => {
-        state.loginForm.siteId = 7;
+        state.loginForm.siteId = Number(siteEnum.LH1);
         (loginFormRef.value).validate(async (valid) => {
           if (valid) {
             if (step.value === 1) {
@@ -483,7 +483,8 @@ export default defineComponent({
       ...toRefs(methods),
       getCode,
       hasAffiliate,
-      step
+      step,
+      siteEnum
     };
   }
 });

@@ -10,10 +10,10 @@
     id="login-swiper"
   >
     <SwiperSlide>
-      <LoginRegisterPage siteId="1" />
+      <LoginRegisterPage :siteId="siteEnum.XF1" />
     </SwiperSlide>
     <SwiperSlide>
-      <CustomerServicePage siteId="1" />
+      <CustomerServicePage :siteId="siteEnum.XF1" />
     </SwiperSlide>
     <SwiperSlide>
       <SupportPage />
@@ -24,7 +24,7 @@
     <Scrollbar />
   </Swiper>
   <div v-if="isMobileView">
-    <LoginRegisterPage siteId="1" />
+    <LoginRegisterPage :siteId="siteEnum.XF1" />
     <CustomerServicePage />
     <SupportPage />
   </div>
@@ -32,6 +32,7 @@
 <script>
 import { defineComponent, onMounted, onBeforeUnmount, ref } from 'vue'
 // import Swiper core and required modules
+import siteEnum from "@/consts/SiteEnum"
 import SwiperCore, {
   Navigation,
   Pagination,
@@ -93,6 +94,7 @@ export default defineComponent({
       onSlideChange,
       swiperKey,
       isMobileView,
+      siteEnum
     }
   },
 })
