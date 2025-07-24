@@ -145,7 +145,7 @@
 
             <q-item clickable v-close-popup @click="router.push('/account/message?from=' + route.path)">
               <q-item-section avatar>
-                <img src="../assets/images/account/message-svg.svg" />
+                <img src="../assets/images/account/message-menu-svg.svg" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>
