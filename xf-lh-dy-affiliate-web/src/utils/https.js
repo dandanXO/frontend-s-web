@@ -6,6 +6,7 @@ import { UserActionTypes } from '@/store/modules/user/action-types'
 import _cloneDeep from 'lodash/cloneDeep'
 import i18n from '../i18n/index'
 import router from '../router'
+import { siteEnum } from "@/consts/SiteEnum"
 
 /* eslint-disable */
 const toRawType = value => {
@@ -76,30 +77,30 @@ const onResponse = response => {
         type: 'error',
       })
       store.dispatch(UserActionTypes.ACTION_LOGOUT)
-      if (siteId === '1' || siteId === 1) {
-        router.go('/xf/login')
-      } else if (siteId === '3' || siteId === 3) {
-        router.go('/th/login')
-      } else if (siteId === '5' || siteId === 5) {
-        router.go('/ind/login')
-      } else if (siteId === '6' || siteId === 6) {
-        router.go('/dy/login')
-      } else if (siteId === '7' || siteId === 7) {
-        router.go('/lh/login')
-      } else if (siteId === '8' || siteId === 8) {
-        router.go('/vi/login')
-      } else if (siteId === '10' || siteId === 10) {
-        router.go('/kr/login')
-      } else if (siteId === '11' || siteId === 11) {
-        router.go('/pak/login')
-      } else if (siteId === '15' || siteId === 15) {
-        router.go('/kaka/login')
-      } else if (siteId === '18' || siteId === 18) {
-        router.go('/br1/login')
-      } else if (siteId === '28' || siteId === 28) {
-        router.go('/br2/login')
-      } else if (siteId === '30' || siteId === 30) {
-        router.go('/lk6/login')
+      if (siteId === siteEnum.XF1 || siteId === Number(siteEnum.XF1)) {
+        router.go('/xf/login');
+      } else if (siteId === '3' || siteId === 3) { // 注意：siteId '3' 
+        router.go('/th/login');
+      } else if (siteId === siteEnum.IND || siteId === Number(siteEnum.IND)) {
+        router.go('/ind/login');
+      } else if (siteId === siteEnum.DY2 || siteId === Number(siteEnum.DY2)) {
+        router.go('/dy/login');
+      } else if (siteId === siteEnum.LH1 || siteId === Number(siteEnum.LH1)) {
+        router.go('/lh/login');
+      } else if (siteId === siteEnum.VNM || siteId === Number(siteEnum.VNM)) {
+        router.go('/vi/login');
+      } else if (siteId === siteEnum.KRW || siteId === Number(siteEnum.KRW)) {
+        router.go('/kr/login');
+      } else if (siteId === siteEnum.PAK || siteId === Number(siteEnum.PAK)) {
+        router.go('/pak/login');
+      } else if (siteId === siteEnum.KAKA || siteId === Number(siteEnum.KAKA)) {
+        router.go('/kaka/login');
+      } else if (siteId === siteEnum.BR1 || siteId === Number(siteEnum.BR1)) {
+        router.go('/br1/login');
+      } else if (siteId === siteEnum.BR2 || siteId === Number(siteEnum.BR2)) {
+        router.go('/br2/login');
+      } else if (siteId === siteEnum.LK6 || siteId === Number(siteEnum.LK6)) {
+        router.go('/lk6/login');
       }
       location.reload()
     } else if (
@@ -114,22 +115,22 @@ const onResponse = response => {
         type: 'error',
       })
       store.dispatch(UserActionTypes.ACTION_LOGOUT)
-      if (siteId === '1' || siteId === 1) {
-        router.go('/xf/login')
-      } else if (siteId === '3' || siteId === 3) {
-        router.go('/th/login')
-      } else if (siteId === '5' || siteId === 5) {
-        router.go('/ind/login')
-      } else if (siteId === '6' || siteId === 6) {
-        router.go('/dy/login')
-      } else if (siteId === '7' || siteId === 7) {
-        router.go('/lh/login')
-      } else if (siteId === '8' || siteId === 8) {
-        router.go('/vi/login')
-      } else if (siteId === '10' || siteId === 10) {
-        router.go('/kr/login')
-      } else if (siteId === '11' || siteId === 11) {
-        router.go('/pak/login')
+      if (siteId === siteEnum.XF1 || siteId === Number(siteEnum.XF1)) {
+        router.go('/xf/login');
+      } else if (siteId === '3' || siteId === 3) { 
+        router.go('/th/login');
+      } else if (siteId === siteEnum.IND || siteId === Number(siteEnum.IND)) {
+        router.go('/ind/login');
+      } else if (siteId === siteEnum.DY2 || siteId === Number(siteEnum.DY2)) {
+        router.go('/dy/login');
+      } else if (siteId === siteEnum.LH1 || siteId === Number(siteEnum.LH1)) {
+        router.go('/lh/login');
+      } else if (siteId === siteEnum.VNM || siteId === Number(siteEnum.VNM)) {
+        router.go('/vi/login');
+      } else if (siteId === siteEnum.KRW || siteId === Number(siteEnum.KRW)) {
+        router.go('/kr/login');
+      } else if (siteId === siteEnum.PAK || siteId === Number(siteEnum.PAK)) {
+        router.go('/pak/login');
       }
       location.reload()
     } else {
@@ -139,22 +140,22 @@ const onResponse = response => {
         res.code === ResponseCode.ERROR_TOKEN_INVALID
       ) {
         store.dispatch(UserActionTypes.ACTION_LOGOUT)
-        if (siteId === '1' || siteId === 1) {
-          router.go('/xf/login')
+        if (siteId === siteEnum.XF1 || siteId === Number(siteEnum.XF1)) {
+          router.go('/xf/login');
         } else if (siteId === '3' || siteId === 3) {
-          router.go('/th/login')
-        } else if (siteId === '5' || siteId === 5) {
-          router.go('/ind/login')
-        } else if (siteId === '6' || siteId === 6) {
-          router.go('/dy/login')
-        } else if (siteId === '7' || siteId === 7) {
-          router.go('/lh/login')
-        } else if (siteId === '8' || siteId === 8) {
-          router.go('/vi/login')
-        } else if (siteId === '10' || siteId === 10) {
-          router.go('/kr/login')
-        } else if (siteId === '11' || siteId === 11) {
-          router.go('/pak/login')
+          router.go('/th/login');
+        } else if (siteId === siteEnum.IND || siteId === Number(siteEnum.IND)) {
+          router.go('/ind/login');
+        } else if (siteId === siteEnum.DY2 || siteId === Number(siteEnum.DY2)) {
+          router.go('/dy/login');
+        } else if (siteId === siteEnum.LH1 || siteId === Number(siteEnum.LH1)) {
+          router.go('/lh/login');
+        } else if (siteId === siteEnum.VNM || siteId === Number(siteEnum.VNM)) {
+          router.go('/vi/login');
+        } else if (siteId === siteEnum.KRW || siteId === Number(siteEnum.KRW)) {
+          router.go('/kr/login');
+        } else if (siteId === siteEnum.PAK || siteId === Number(siteEnum.PAK)) {
+          router.go('/pak/login');
         }
         location.reload()
       }
