@@ -17,7 +17,7 @@
           />
           <div>
             <div class="contact-left">
-              <div class="contact-box mail-buttons">
+              <!-- <div class="contact-box mail-buttons">
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-qq.png" />
                 </div>
@@ -29,7 +29,7 @@
                     <img :src="require(`../assets/images/affiliate/download-icon.svg`)" />
                   </a>
                 </div>
-              </div>
+              </div> -->
               <div class="contact-box qq-buttons">
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-telegram.png" />
@@ -43,7 +43,7 @@
                   </a>
                 </div>
               </div>
-              <div class="contact-box skype-buttons">
+              <!-- <div class="contact-box skype-buttons">
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-teams.png" />
                 </div>
@@ -59,8 +59,8 @@
                     <img :src="require(`../assets/images/affiliate/download-icon.svg`)" />
                   </a>
                 </div>
-              </div>
-              <div class="contact-box telegram-buttons">
+              </div> -->
+              <!-- <div class="contact-box telegram-buttons">
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-bubble.png" />
                 </div>
@@ -72,8 +72,8 @@
                     <img :src="require(`../assets/images/affiliate/download-icon.svg`)" />
                   </a>
                 </div>
-              </div>
-              <div class="contact-box bubble-buttons">
+              </div> -->
+              <!-- <div class="contact-box bubble-buttons">
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/amico-icon.png" />
                 </div>
@@ -85,7 +85,7 @@
                     <img :src="require(`../assets/images/affiliate/download-icon.svg`)" />
                   </a>
                 </div>
-              </div>
+              </div> -->
             </div>
 
             <div class="buttons">

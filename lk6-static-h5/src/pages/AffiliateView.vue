@@ -181,26 +181,26 @@ const { t, locale, getLocaleMessage } = useI18n();
 const { languageVal } = storeToRefs(i18nStore());
 
 const contactInfo = computed(() => [
-  { icon: "qq-logo.png", label: t("affiliate.contact.qq"), value: "6.vip", download: "https://im.qq.com/index/" },
+  // { icon: "qq-logo.png", label: t("affiliate.contact.qq"), value: "6.vip", download: "https://im.qq.com/index/" },
   {
     icon: "tg-logo.png",
     label: t("affiliate.contact.telegram"),
     value: "@6.vip",
     download: "https://telegram.org/"
   },
-  {
-    icon: "skype-logo.png",
-    label: t("affiliate.contact.skype"),
-    value: "live:.cid.6.vip",
-    download: "https://www.skype.com/zh-Hans/get-skype/"
-  },
-  {
-    icon: "sigua-logo.png",
-    label: t("affiliate.contact.sigua"),
-    value: "6.vip",
-    download: "https://ya.cn/index.html"
-  },
-  { icon: "amico-logo.png", label: t("affiliate.contact.amico"), value: "6.vip", download: "https://am35.cc" },
+  // {
+  //   icon: "skype-logo.png",
+  //   label: t("affiliate.contact.skype"),
+  //   value: "live:.cid.6.vip",
+  //   download: "https://www.skype.com/zh-Hans/get-skype/"
+  // },
+  // {
+  //   icon: "sigua-logo.png",
+  //   label: t("affiliate.contact.sigua"),
+  //   value: "6.vip",
+  //   download: "https://ya.cn/index.html"
+  // },
+  // { icon: "amico-logo.png", label: t("affiliate.contact.amico"), value: "6.vip", download: "https://am35.cc" },
   //{ icon: "email-logo.png", label: t("affiliate.contact.email"), value: "leihuo188@gmail.com" }
 ]);
 
