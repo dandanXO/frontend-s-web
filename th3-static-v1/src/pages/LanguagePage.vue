@@ -5,7 +5,7 @@
         <template v-slot>
           <div class="radio-label">
             <img :src="require(`../assets/images/auth/country-flag-th.png`)" class="flag" />
-            <span class="text">Thailand</span>
+            <span class="text">ภาษาไทย</span>
           </div>
         </template>
       </q-radio>
@@ -13,7 +13,7 @@
         <template v-slot>
           <div class="radio-label">
             <img :src="require(`../assets/images/auth/country-flag-en.png`)" class="flag" />
-            <span class="text">US</span>
+            <span class="text">English</span>
           </div>
         </template>
       </q-radio>
@@ -29,7 +29,7 @@
         <template v-slot>
           <div class="radio-label">
             <img :src="require(`../assets/images/auth/country-flag-cn.png`)" class="flag" />
-            <span class="text">China</span>
+            <span class="text">中文</span>
           </div>
         </template>
       </q-radio>

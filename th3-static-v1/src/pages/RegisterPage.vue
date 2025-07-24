@@ -52,8 +52,8 @@
                     v-model="regForm.loginName"
                     :rules="[
                       (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                      (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
-                      (val) => val.startsWith('03') || $t('form.phone_rules_03')
+                      (val) => (val && val.length === 10) || $t('form.phone_rules_02'),
+                      (val) => val.startsWith('0') || $t('form.phone_rules_03')
                     ]"
                     color="green"
                     outlined
@@ -62,7 +62,7 @@
                   >
                     <!-- <template v-slot:prepend>
                       <q-icon name="smartphone" />
-                      <div class="prepend-number">+92</div>
+                      <div class="prepend-number">+66</div>
                     </template> -->
                     <template v-if="regForm.referrer && spinRefCode" v-slot:append>
                       <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">
@@ -564,8 +564,8 @@ export default defineComponent({
 
     // const phoneNumberRules = [
     //   (val) => (val && val.length > 0) || "Please insert Phone number",
-    //   (val) => (val && val.length === 11) || "The phone number must have 11 digits",
-    //   (val) => (val && val.startsWith("03")) || 'The phone number must start with "03"'
+    //   (val) => (val && val.length === 10) || "The phone number must have 10 digits",
+    //   (val) => (val && val.startsWith("0")) || 'The phone number must start with "0"'
     // ];
 
     const router = useRouter();
