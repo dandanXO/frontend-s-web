@@ -32,7 +32,7 @@
 </template>
 <script>
 import { defineComponent, onMounted, onBeforeUnmount, ref } from 'vue'
-import siteEnum from "@/consts/SiteEnum"
+import { siteEnum } from "@/consts/SiteEnum"
 // import Swiper core and required modules
 import SwiperCore, {
   Navigation,

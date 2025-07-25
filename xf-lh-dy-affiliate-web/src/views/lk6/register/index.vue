@@ -200,7 +200,7 @@ import { UserActionTypes } from "@/store/modules/user/action-types";
 import { getVerificationCode } from '../../../api/user';
 import xfLogo from "@/assets/images/xf/logo.png";
 import { ElNotification } from 'element-plus';
-import siteEnum from '@/enums/siteEnum';
+import { siteEnum } from "@/consts/SiteEnum"
 
 export default defineComponent({
   setup() {
