@@ -65,6 +65,7 @@
     "moment-timezone": "^0.5.47",
     "onesignal-cordova-plugin": "^5.2.6",
     "pinia": "^2.0.17",
+    "process": "^0.11.10",
     "qs": "^6.11.0",
     "quasar": "^2.18.1",
     "stylus": "github:stylus/stylus#0.54.5",
