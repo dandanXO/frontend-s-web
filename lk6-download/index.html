@@ -118,7 +118,34 @@
         {imgurl: '/styles/images/ios/ios5.png'},
         {imgurl: '/styles/images/ios/ios6.png'}
     ];
+
+    function getApkUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryParamAgentCode = urlParams.get('agentCode');
+        if(!!queryParamAgentCode) {
+            sessionStorage.setItem('agentCode', queryParamAgentCode);
+        }
+        const sessionStorageAgentCode = sessionStorage.getItem('agentCode');
+        const agentCode = queryParamAgentCode || sessionStorageAgentCode || 'E1D148';
+
+        $.ajax({
+            url: `https://ap1d5gcci.4kcjx19nzj8.com/app/download/affiliate/url?siteCode=LK6&affiliateCode=${agentCode}`,
+            type: 'GET',
+            data: {},
+            success: function(response) {
+                if(typeof response.data === 'string') {
+                    $('#download').attr('href', response.data);
+                }
+            },
+            error: function(xhr, status, error) {
+                
+            }
+        });
+        }
+
     $(function () {
+        getApkUrl();
+
         function is_weixin() {
             var ua = navigator.userAgent.toLowerCase();
             if (ua.match(/MicroMessenger/i) == "micromessenger") {
