@@ -1265,6 +1265,7 @@ export default {
     ineligible: 'Ineligible',
     innerSetting: 'Inner Wheel Setting',
     ip: 'Access IP',
+    isBet: 'Show Bet',
     isDeposit: 'Show Deposit',
     isMultiple: 'Is Multiple Choice',
     itsYou: "it's you",
