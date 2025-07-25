@@ -1285,6 +1285,7 @@ export default {
     ineligible: '不符合',
     innerSetting: '内圈几率设置',
     ip: '访问 IP',
+    isBet: '显示投注会员',
     isDeposit: '显示存款会员',
     isMultiple: '支持多选项',
     itsYou: '是你',

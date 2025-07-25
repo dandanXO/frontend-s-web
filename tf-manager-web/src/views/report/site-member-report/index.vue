@@ -61,20 +61,18 @@
           style="width: 150px; margin-left: 5px"
           :placeholder="t('fields.affiliateName')"
         />
-        <el-select
-          v-model="request.isDeposit"
-          size="small"
-          :placeholder="t('fields.isDeposit')"
-          class="filter-item"
-          style="width: 140px; margin-left: 5px"
+        <el-checkbox
+          v-model="request.hasDeposit"
+          style="width: 100px; margin-left: 10px"
         >
-          <el-option
-            v-for="item in deposit.isDeposit"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
-          />
-        </el-select>
+          {{ t('fields.isDeposit') }}
+        </el-checkbox>
+        <el-checkbox
+          v-model="request.hasBet"
+          style="width: 100px; margin-left: 5px"
+        >
+          {{ t('fields.isBet') }}
+        </el-checkbox>
         <!-- <el-select
           v-model="request.siteId"
           size="small"
@@ -111,7 +109,6 @@
           type="primary"
           v-permission="['sys:report:site:member:report:export']"
           @click="requestExportExcel"
-          style="float: right;"
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
@@ -363,10 +360,6 @@ const siteList = reactive({
   list: [],
 })
 
-const deposit = reactive({
-  isDeposit: [{ id: 1, name: t('fields.showAll') }, { id: 2, name: t('fields.onlyDeposit') }],
-})
-
 const page = reactive({
   pages: 0,
   records: [],
@@ -382,13 +375,13 @@ const request = reactive({
   size: 20,
   current: 1,
   siteId: null,
-  isDeposit: 1,
   loginName: null,
   affiliateName: null,
   selectedDateType: uiControl.selectedDateType[0].value,
   recordTime: [defaultStartDate, defaultEndDate],
-  regTime: []
-
+  regTime: [],
+  hasDeposit: false,
+  hasBet: false
 })
 
 function resetQuery() {
@@ -398,7 +391,8 @@ function resetQuery() {
   request.siteId = store.state.user.siteId
   request.loginName = null
   request.affiliateName = null
-  request.isDeposit = 1
+  request.hasDeposit = false
+  request.hasBet = false
 }
 
 function changePage(page) {
