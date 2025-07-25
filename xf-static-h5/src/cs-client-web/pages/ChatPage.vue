@@ -51,7 +51,6 @@ export default defineComponent({
     if (isEmpty(cSuserStore.token)) {
       // console.log("TOken Empty");
       const chatBaseUrl = getChatBaseUrl();
-      console.log('sam---',chatBaseUrl)
       if (store.chatGuid) {
         router.push({ path: `/${chatBaseUrl}/chat?uid=${store.chatGuid}` });
       } else {

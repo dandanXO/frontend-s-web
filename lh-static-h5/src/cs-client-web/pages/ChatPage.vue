@@ -54,7 +54,8 @@ export default defineComponent({
       if (store.chatGuid) {
         router.push({ path: `/${chatBaseUrl}/chat?uid=${store.chatGuid}` });
       } else {
-        router.push({ path: `/${chatBaseUrl}` });
+        // router.push({ path: `/${chatBaseUrl}` });
+        window.location.href = `/${chatBaseUrl}`;
       }
     }
 
