@@ -964,6 +964,12 @@ const getMonthlyVip = () => {
       }
     }
   }
+  td {
+    background: #3a3a3a;
+  }
+  tr:nth-child(odd) td {
+    background: #ffffff0f;
+  }
   thead > :first-child {
     // background: linear-gradient(270deg, #5d01b9 -0.1%, #b11bff 50.22%, #6a069c 97.6%);
     // background: #FFFFFF0F
@@ -971,7 +977,7 @@ const getMonthlyVip = () => {
   tbody > :nth-child(odd) {
     // background: rgba(21, 0, 37, 0.2);
     // background: rgba(112, 188, 98, 0.1);
-    background: #ffffff0f;
+    // background: #ffffff0f;
 
     // background: #652c93;
     // background: #652c9315;
@@ -1020,7 +1026,7 @@ const getMonthlyVip = () => {
     // text-align: center;
     // font-weight: 400;
     // line-height: 19px;
-    color: #b2bdbf;
+    color: #d9cfb8;
   }
 
   .header-wrapper {
