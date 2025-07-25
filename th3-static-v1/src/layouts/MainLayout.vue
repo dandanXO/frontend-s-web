@@ -314,9 +314,9 @@ export default defineComponent({
           pageName.value = t("sideNav.fishing");
         } else if (route.path === "/promo") {
           hasPage.value = true;
-          pageName.value = t("header.promotion");
           prevPage.value = "/";
           if (route.query.name) {
+            pageName.value = t("header.promotion");
             if (route.query.fromAccount) {
               prevPage.value = "/account/promotion";
             } else {
@@ -583,7 +583,7 @@ export default defineComponent({
     ]);
 
     const hasProfileSummary = computed(() => {
-      return route.path === "/promo";
+      return route.path === "/promo" && route.query.name;
     });
     const platformsList = computed(() => {
       if (ui.slotLists.length === 0) {
