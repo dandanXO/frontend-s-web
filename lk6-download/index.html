@@ -122,6 +122,9 @@
     function getApkUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         const queryParamAgentCode = urlParams.get('agentCode');
+        if(!!queryParamAgentCode) {
+            sessionStorage.setItem('agentCode', queryParamAgentCode);
+        }
         const sessionStorageAgentCode = sessionStorage.getItem('agentCode');
         const agentCode = queryParamAgentCode || sessionStorageAgentCode || 'E1D148';
 
