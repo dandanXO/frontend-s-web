@@ -831,7 +831,7 @@ const getMonthlyVip = () => {
     border-radius: 8px;
     margin-bottom: 4px;
     margin-top: 5px;
-    padding: 1px;
+    // padding: 1px;
 
     .right {
       color: white;
@@ -872,7 +872,7 @@ const getMonthlyVip = () => {
       //   left: 50%;
       //   transform: translateX(-50%);
       // }
-      background: #394142;
+      background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
     }
 
     :deep(.q-tab--active .q-tab__label) {

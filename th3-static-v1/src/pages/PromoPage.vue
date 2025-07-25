@@ -1,7 +1,7 @@
 <template>
   <!-- <q-card-section class="page-title">优惠活动</q-card-section> -->
   <ProfileSummary v-if="!extensionState" :homeProfile="true" />
-  <!-- <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
+  <div class="vip-promo-tab-wrapper" v-if="!isPromoDetail">
     <q-tabs
       v-model="vipPromoTab"
       dense
@@ -13,18 +13,18 @@
       <q-tab name="promo" :label="$t('settings.promo')" />
       <q-tab name="vip" :label="$t('settings.vip')" />
     </q-tabs>
-  </div> -->
+  </div>
 
   <div class="promo-container">
     <div class="promo">
-      <!-- <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify" active-color="green">
+      <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
         <q-tab
           v-for="(tab, i) in tabItems"
           :key="i"
           :name="tab.name"
           :label="langVal === 'ur' ? tab.label_ur : tab.label"
         />
-      </q-tabs> -->
+      </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel v-for="(tab, i) in tabItems" :key="i" :name="tab.name">
@@ -556,15 +556,10 @@ export default defineComponent({
         if (res.length > 0) {
           tabItems.value = [];
           res.forEach(element => {
-            // const obj = {
-            //   name: element.value.toLowerCase(),
-            //   label: JSON.parse(element.name).en,
-            //   label_ur: JSON.parse(element.name).H5_ur
-            // };
             const obj = {
-              name:'all',
-              label: 'all',
-              label_ur: 'all'
+              name: element.value.toLowerCase(),
+              label: JSON.parse(element.name).en,
+              label_ur: JSON.parse(element.name).H5_ur
             };
             tabItems.value.push(obj);
           });
@@ -844,7 +839,7 @@ textColor: "white",
     border-radius: 8px;
     margin-bottom: 4px;
     margin-top: 5px;
-    padding: 1px;
+    // padding: 1px;
 
     :deep(.q-tab__label) {
       font-weight: 700;
@@ -874,7 +869,7 @@ textColor: "white",
       //   left: 50%;
       //   transform: translateX(-50%);
       // }
-      background: #394142;
+      background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -1420,11 +1415,12 @@ textColor: "white",
   .q-tab--active .q-tab__indicator {
     width: 100%;
     height: 2px;
-    background: #21ef89;
+    background: #907c5f;
   }
 
   .q-tab__label {
     z-index: 1;
+    color: #907c5f;
   }
 
   .q-tab-panels {
