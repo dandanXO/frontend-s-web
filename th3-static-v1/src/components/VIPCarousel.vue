@@ -22,7 +22,7 @@
 
               <div class="progress-bar-container">
                 <div class="progress-bar-outer-bar" v-if="vipIndex !== vipItems.length - 1">
-                  <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span>
+                  <!-- <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span> -->
 
                   <div class="progress-bar-inner-bar" :style="{ width: currentVipLevelStats.levelUpPercentage + '%' }">
                     <div class="progress-bar-inner-bar-endpoint-circle">
@@ -379,9 +379,6 @@ watch(
     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
 
     const levelUpPercentage = (() => {
-      // if (vipLevel === 0) {
-      //   return 0;
-      // }
       if (vipLevel + 1 > +vipInfo.vipLevel) {
         return 100;
       }
@@ -455,7 +452,7 @@ $colors: (
       // background: nth($colors, $i + 1); // Match color with vipitem
 
       .progress-bar-inner-bar-endpoint-circle {
-        -webkit-mask-image: radial-gradient(circle, transparent 7px, black 7px);
+        -webkit-mask-image: radial-gradient(circle, transparent 5px, black 6px);
         background: linear-gradient(208.54deg, #e2dcd9 -0.31%, rgba(207, 194, 173, 0) 68.75%);
         // background: rgba(nth($colors, $i + 1), 0.25); /* 16% opacity */
       }
@@ -574,7 +571,7 @@ $colors: (
     .progress-bar-outer-bar {
       // border: 1px solid #fff;
       border-radius: 16px;
-      background: #282d2e;
+      background: #e9e8e4;
       width: 100%;
       // overflow: hidden;
       position: relative;
@@ -601,23 +598,23 @@ $colors: (
       // background: #6D96C6;
       min-width: 12px;
       .progress-bar-inner-bar-endpoint-circle {
-        width: 36px;
-        height: 36px;
+        width: 28px;
+        height: 28px;
         display: flex;
         justify-content: center;
         align-items: center;
         // background: #6D96C629;
         padding: 12px;
         position: absolute;
-        right: -12px;
-        top: -12px;
+        right: -6px;
+        top: -6px;
         z-index: 1;
         border-radius: 50%;
         .progress-bar-inner-bar-endpoint-circle__outer {
           // background: #6D96C640;
           width: 100%;
           height: 100%;
-          padding: 12px;
+          padding: 10px;
           border-radius: 50%;
         }
         .progress-bar-inner-bar-endpoint-circle__inner {
