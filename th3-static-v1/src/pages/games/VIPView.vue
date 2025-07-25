@@ -968,7 +968,7 @@ const getMonthlyVip = () => {
     background: #3a3a3a;
   }
   tr:nth-child(odd) td {
-    background: #ffffff0f;
+    background: #464646;
   }
   thead > :first-child {
     // background: linear-gradient(270deg, #5d01b9 -0.1%, #b11bff 50.22%, #6a069c 97.6%);
