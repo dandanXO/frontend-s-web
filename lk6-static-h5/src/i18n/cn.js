@@ -888,8 +888,8 @@ export default {
   },
   home: {
     downloadApp: {
-      appName: "幸运6 APP",
-      desc: "覆盖全部游戏，体验更流畅，更安全，更快捷"
+      appName: "幸运6 app 下载",
+      desc: "APP专享礼包等你拿"
     },
     authSection: {
       notLogin1: "您还未登录",
