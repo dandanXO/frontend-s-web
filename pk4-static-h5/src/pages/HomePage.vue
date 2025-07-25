@@ -2498,19 +2498,19 @@ const socialicons = ref([
     name: "whatsapp"
   },
   {
-    name: "mail"
-  },
-  {
-    name: "instagram"
-  },
-  {
     name: "facebook",
   },
   {
     name: "tiktok"
   },
   {
+    name: "instagram"
+  },
+  {
     name: "youtube"
+  },
+  {
+    name: "mail"
   },
   {
     name: "sms"
