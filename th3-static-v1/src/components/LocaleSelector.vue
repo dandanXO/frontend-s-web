@@ -13,7 +13,7 @@ import CnFlagImg from "../assets/images/auth/country-flag-zh.png";
 const LOCALES = [
   { label: "ภาษาไทย", value: "th", icon: ThFlagImg },
   { label: "English", value: "en", icon: EnFlagImg },
-  { label: "中文", value: "cn", icon: CnFlagImg }
+  { label: "中文", value: "zh", icon: CnFlagImg }
 ];
 
 const model = defineModel();
