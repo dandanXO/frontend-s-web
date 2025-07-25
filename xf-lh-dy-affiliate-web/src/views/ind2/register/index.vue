@@ -413,7 +413,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import "swiper/swiper-bundle.css";
 import CustomerServicePage from '@/components/customer-service'
 import SupportPage from '@/components/support-page'
-
+import siteEnum from "@/enums/site";
 // extra components
 SwiperCore.use([Mousewheel, Pagination, Navigation])
 
@@ -621,7 +621,7 @@ export default defineComponent({
         });
       },
       handleRegister: () => {
-        state.loginForm.siteId = 6;
+        state.loginForm.siteId = Number(siteEnum.IW2);
         (loginFormRef.value).validate(async (valid) => {
           if (valid) {
             if (step.value === 1) {
@@ -713,6 +713,7 @@ export default defineComponent({
       onSwiper,
       onSlideChange,
       swiperKey,
+      siteEnum,
     };
   }
 });

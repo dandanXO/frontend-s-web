@@ -23,7 +23,7 @@
     <!--    <Scrollbar />-->
   </Swiper>
   <div v-if="isMobileView">
-    <LoginRegisterPage siteId="18" />
+    <LoginRegisterPage :siteId="siteEnum.BR1" />
     <!--    <CustomerServicePage />-->
     <!--    <SupportPage />-->
   </div>

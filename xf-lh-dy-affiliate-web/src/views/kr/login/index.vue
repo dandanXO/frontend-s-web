@@ -9,7 +9,7 @@
     :autoHeight="true"
   >
     <SwiperSlide>
-      <LoginRegisterPage siteId="10" />
+      <LoginRegisterPage :siteId="siteEnum.KRW" />
     </SwiperSlide>
     <!--    <SwiperSlide>-->
     <!--      <CustomerServicePage />-->
@@ -23,13 +23,14 @@
     <!--    <Scrollbar />-->
   </Swiper>
   <div v-if="isMobileView">
-    <LoginRegisterPage siteId="10" />
+    <LoginRegisterPage :siteId="siteEnum.KRW" />
     <!--    <CustomerServicePage />-->
     <!--    <SupportPage />-->
   </div>
 </template>
 <script>
 import { defineComponent, onMounted, onBeforeUnmount, ref } from 'vue'
+import siteEnum from "@/consts/SiteEnum"
 // import Swiper core and required modules
 import SwiperCore, {
   Navigation,
@@ -84,6 +85,7 @@ export default defineComponent({
       onSlideChange,
       swiperKey,
       isMobileView,
+      siteEnum
     }
   },
 })

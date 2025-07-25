@@ -11,10 +11,10 @@
     id="login-swiper"
   >
     <SwiperSlide>
-      <LoginRegisterPage siteId="8" />
+      <LoginRegisterPage :siteId="siteEnum.VNM" />
     </SwiperSlide>
     <SwiperSlide>
-      <CustomerServicePage siteId="8" />
+      <CustomerServicePage :siteId="siteEnum.VNM" />
     </SwiperSlide>
     <!--    <SwiperSlide>-->
     <!--      <SupportPage />-->
@@ -25,14 +25,15 @@
     <Scrollbar />
   </Swiper>
   <div v-if="isMobileView">
-    <LoginRegisterPage siteId="8" />
-    <CustomerServicePage siteId="8" />
+    <LoginRegisterPage :siteId="siteEnum.VNM" />
+    <CustomerServicePage :siteId="siteEnum.VNM" />
     <!--    <SupportPage />-->
   </div>
 </template>
 <script>
 import { defineComponent, onMounted, onBeforeUnmount, ref } from 'vue'
 // import Swiper core and required modules
+import siteEnum from "@/consts/SiteEnum"
 import SwiperCore, {
   Navigation,
   Pagination,
@@ -46,6 +47,7 @@ import CustomerServicePage from '@/components/customer-service'
 import LoginRegisterPage from '@/components/login-register'
 // import SupportPage from '@/components/support-page'
 import { useRoute } from 'vue-router'
+import { from } from 'core-js/core/array'
 // extra components
 SwiperCore.use([Mousewheel, Pagination, Navigation, Scrollbar])
 export default defineComponent({
@@ -104,7 +106,8 @@ export default defineComponent({
       onSlideChange,
       swiperKey,
       isMobileView,
-      refSwiper
+      refSwiper,
+      siteEnum
     }
   },
 })
