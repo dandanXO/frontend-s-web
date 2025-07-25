@@ -413,7 +413,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import "swiper/swiper-bundle.css";
 import CustomerServicePage from '@/components/customer-service'
 import SupportPage from '@/components/support-page'
-import siteEnum from "@/enums/site";
+import { siteEnum } from "@/consts/SiteEnum"
 // extra components
 SwiperCore.use([Mousewheel, Pagination, Navigation])
 

@@ -33,7 +33,7 @@
 <script>
 import { defineComponent, onMounted, onBeforeUnmount, ref } from 'vue'
 // import Swiper core and required modules
-import siteEnum from "@/consts/SiteEnum"
+import { siteEnum } from "@/consts/SiteEnum"
 import SwiperCore, {
   Navigation,
   Pagination,
@@ -47,7 +47,6 @@ import CustomerServicePage from '@/components/customer-service'
 import LoginRegisterPage from '@/components/login-register'
 // import SupportPage from '@/components/support-page'
 import { useRoute } from 'vue-router'
-import { from } from 'core-js/core/array'
 // extra components
 SwiperCore.use([Mousewheel, Pagination, Navigation, Scrollbar])
 export default defineComponent({
