@@ -105,6 +105,7 @@
       v-if="list.redirectUrl === 'lh1-game-steps'"
       :pageContent="list.pageContent"
     ></LhStepGamePromo>
+    <SnowMaster v-else-if="list.redirectUrl === 'lh1-d2-snow-ruyi-masters-2025'" :promo-code="list.promoCode" />
 
   </div>
 
@@ -142,6 +143,8 @@ const Monthly20HongBaoYu = defineAsyncComponent(() =>
   import("../components/hotpromo/hongbaoyu2025/Monthly20HongBaoYu.vue")
 );
 const VctBangkok = defineAsyncComponent(() => import("../components/hotpromo/vct-bangkok/VctBangkok.vue"));
+const SnowMaster = defineAsyncComponent(() => import("../components/hotpromo/snowMaster/snowMaster.vue"));
+
 const PGLOnFireBuenosAires2025 = defineAsyncComponent(() =>
   import("../components/hotpromo/pgl-on-fire-buenos-aires-2025/PGLOnFireBuenosAires2025.vue")
 );
@@ -284,6 +287,7 @@ export default defineComponent({
     PglS32025,
     KatowiceS25,
     VctBangkok,
+    SnowMaster,
     NewFootball,
     DailyCheckin,
     SlotLacky8,
