@@ -334,7 +334,8 @@ const collectBonus = () => {
     });
 };
 const sortedTasks = computed(() => {
-  return [...taskList.value].sort((a, b) => a.sequence - b.sequence);
+  // return [...taskList.value].sort((a, b) => a.sequence - b.sequence);
+  return taskList.value
 });
 onMounted(() => {
   initData();
