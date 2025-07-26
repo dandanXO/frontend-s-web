@@ -818,6 +818,7 @@ const ruleType = reactive({
     { key: 13, name: t('withdrawRuleType.balanceVsTotalDepositMultiplier'), value: '#balance#totalDeposit*', supportsOperators: true },
     { key: 14, name: t('withdrawRuleType.balanceVsTodayDepositMultiplier'), value: '#balance#todayDeposit*', supportsOperators: true },
     { key: 15, name: t('withdrawRuleType.registerDay'), value: '#registerDay', supportsOperators: true },
+    { key: 16, name: t('withdrawRuleType.sidCount'), value: '#sidCount', supportsOperators: true },
   ],
 })
 
