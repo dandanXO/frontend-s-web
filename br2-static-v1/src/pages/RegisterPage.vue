@@ -326,6 +326,10 @@ export default defineComponent({
         const sidParam = store.visitorId;
 
         (async () => {
+          if (store.aaid) {
+            regForm.traceId = store.aaid;
+          }
+          
           // regForm.sid = store.googleadid ? store.googleadid : store.aaid;
           if (store.googleadid) {
             regForm.sid = store.googleadid;

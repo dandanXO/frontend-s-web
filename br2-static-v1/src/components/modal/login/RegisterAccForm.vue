@@ -309,6 +309,10 @@ const register = () => {
     var qs = require("qs");
     
     (async () => {
+      if (store.aaid) {
+        regForm.traceId = store.aaid;
+      }
+
       const sidParam = store.visitorId;
       // sid = store.googleadid ? store.googleadid : store.aaid;
       if (store.googleadid) {
