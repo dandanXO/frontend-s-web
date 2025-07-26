@@ -173,6 +173,13 @@
               maxlength="20"
             />
           </el-form-item>
+          <el-form-item :label="t('fields.sid')" prop="sid">
+            <el-input
+              v-model="request.sid"
+              style="width: 300px;"
+              maxlength="500"
+            />
+          </el-form-item>
           <el-form-item :label="t('fields.vipLevel')" prop="vipId">
             <el-select
               v-model="request.vipId"
@@ -460,7 +467,11 @@
             <router-link
               :to="`details/${scope.row.id}?site=${scope.row.siteId}`"
             >
-              <el-link type="primary" v-if="scope.row.maskedLoginName !== null">{{ scope.row.loginName + " [" + scope.row.maskedLoginName + "]" }}</el-link>
+              <el-link type="primary" v-if="scope.row.maskedLoginName !== null">
+                {{
+                  scope.row.loginName + ' [' + scope.row.maskedLoginName + ']'
+                }}
+              </el-link>
               <el-link type="primary" v-else>{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
@@ -512,7 +523,11 @@
             <span v-formatter="{data: scope.row.balance, type: 'money'}" />
           </template>
         </el-table-column>
-        <el-table-column prop="regTime" :label="t('fields.registerTime')" width="90">
+        <el-table-column
+          prop="regTime"
+          :label="t('fields.registerTime')"
+          width="90"
+        >
           <template #default="scope">
             <span v-if="scope.row.regTime === null">-</span>
             <span
@@ -599,7 +614,11 @@
             <span v-if="scope.row.site !== null">{{ scope.row.site }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="lastLoginTime" :label="t('fields.lastLogin')" width="90">
+        <el-table-column
+          prop="lastLoginTime"
+          :label="t('fields.lastLogin')"
+          width="90"
+        >
           <template #default="scope">
             <span v-if="scope.row.lastLoginTime === null">-</span>
             <span
@@ -612,10 +631,16 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="memberOrigin" :label="t('fields.memberOrigin')" width="100">
+        <el-table-column
+          prop="memberOrigin"
+          :label="t('fields.memberOrigin')"
+          width="100"
+        >
           <template #default="scope">
             <span v-if="scope.row.memberOrigin === null">-</span>
-            <span v-if="scope.row.memberOrigin !== null">{{ t(`memberOrigin.${scope.row.memberOrigin}`) }}</span>
+            <span v-if="scope.row.memberOrigin !== null">
+              {{ t(`memberOrigin.${scope.row.memberOrigin}`) }}
+            </span>
           </template>
         </el-table-column>
       </el-table>
@@ -713,7 +738,7 @@ const uiControl = reactive({
     { key: 1, displayName: 'NORMAL', value: 'NORMAL' },
     { key: 2, displayName: 'TEST', value: 'TEST' },
     { key: 3, displayName: 'OUTSIDE', value: 'OUTSIDE' },
-  ]
+  ],
 })
 
 let selectedRegTimeStartDate = ''
@@ -726,7 +751,7 @@ const page = reactive({
   pages: 0,
   records: [],
   loading: false,
-  total: 0
+  total: 0,
 })
 
 const request = reactive({
@@ -745,6 +770,7 @@ const request = reactive({
   regTime: [],
   upLineLoginName: null,
   memberOrigin: null,
+  sid: null,
 })
 
 const form = reactive({
@@ -989,7 +1015,7 @@ async function loadMembers() {
   const query = checkQuery()
   const { data: ret } = await getMembers(query)
   page.pages = ret.pages
-  page.total = ret.total;
+  page.total = ret.total
   page.records = ret.records
   if (page.records.length / request.size < 1 || page.records.length === 0) {
     page.pages = request.current
