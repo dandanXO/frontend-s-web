@@ -307,23 +307,16 @@ const register = () => {
     $q.loading.hide();
   } else {
     var qs = require("qs");
-    const fpPromise = FingerprintJS.load();
+    
     (async () => {
-      const fp = await fpPromise;
-      const result = await fp.get();
-      const excludes = { value: ["timezone", "timeZoneOffset"] };
-      const allComponents = { ...result.components };
-      excludes.value.forEach((element) => {
-        delete allComponents[element];
-      });
-      const sidParam = FingerprintJS.hashComponents(allComponents);
+      const sidParam = store.visitorId;
       // sid = store.googleadid ? store.googleadid : store.aaid;
       if (store.googleadid) {
         sid = store.googleadid;
       } else if (store.aaid) {
         sid = store.aaid;
       } else {
-        sid = "fp-" + sidParam;
+        sid = sidParam;
         isfinger = "1";
       }
 
