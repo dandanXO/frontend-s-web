@@ -235,8 +235,10 @@ const loadPromoInit = () => {
 };
 
 const claimPromo = () => {
+  const sid = localStorage.getItem("VISITOR_ID") || '';
+  
   eventapi
-    .post("/session/loss-bonus/claim?promoCode=br2-weekly-loss-cashback")
+    .post(`/session/loss-bonus/claim?promoCode=br2-weekly-loss-cashback&sid=${sid}`)
     .then((res) => {
       // debugger;
       if (res.code === 0) {

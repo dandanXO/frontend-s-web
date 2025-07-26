@@ -172,8 +172,10 @@ const loadPromoInit = () => {
 };
 
 const claimPromo = () => {
+  const sid = localStorage.getItem("VISITOR_ID") || '';
+
   eventapi
-    .post("/session/cycle-check-in?promoCode=br2-daily-check-in")
+    .post(`/session/cycle-check-in?promoCode=br2-daily-check-in&sid=${sid}`)
     .then((res) => {
       // debugger;
       if (res.code === 0) {

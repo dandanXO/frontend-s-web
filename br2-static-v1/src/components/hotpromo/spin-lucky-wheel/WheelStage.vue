@@ -314,7 +314,10 @@ const reset = () => {
 
 const handleWheelClick = () => {
   if (spinButtonDisable.value || !info.value.availableSpin) return;
-  eventapi.post("/session/refer-wheel-spin/spin?promoCode=br2-refer-wheel").then((res) => {
+
+  const sid = localStorage.getItem("VISITOR_ID") || '';
+
+  eventapi.post(`/session/refer-wheel-spin/spin?promoCode=br2-refer-wheel&sid=${sid}`).then((res) => {
     // eventapi.post("/session/refer-wheel/spin?promoCode=br2-refer-wheel").then((res) => {
     if (res.code === 0) {
       prize.value = res.data;
@@ -355,7 +358,9 @@ const getRemainingTime = (endTime) => {
 };
 
 const handleReceiveClick = () => {
-  eventapi.post("/session/refer-wheel-spin/claimBonus?promoCode=br2-refer-wheel").then((res) => {
+  const sid = localStorage.getItem("VISITOR_ID") || '';
+
+  eventapi.post(`/session/refer-wheel-spin/claimBonus?promoCode=br2-refer-wheel&sid=${sid}`).then((res) => {
     // eventapi.post("/session/refer-wheel/claimBonus?promoCode=br2-refer-wheel").then((res) => {
     if (res.code === 0) {
       $q.notify({

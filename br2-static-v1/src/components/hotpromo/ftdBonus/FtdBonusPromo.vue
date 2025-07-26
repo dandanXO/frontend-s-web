@@ -77,9 +77,10 @@ const showPrizePopup = ref(false);
 const prizeAmount = ref();
 
 const claimPromo = () => {
+  const sid = localStorage.getItem("VISITOR_ID") || '';
   // router.push("/deposit")
   eventapi
-    .post("/session/deposit-bonus/claim?promoCode=br2-ftd-bonus")
+    .post(`/session/deposit-bonus/claim?promoCode=br2-ftd-bonus&sid=${sid}`)
     .then((res) => {
       // debugger;
       if (res.code === 0) {
