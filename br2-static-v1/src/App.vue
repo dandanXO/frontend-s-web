@@ -21,6 +21,7 @@ import "aos/dist/aos.css";
 import { domainLists } from "./constant";
 import NotificationWrapper from "./components/notification/NotificationWrapper.vue";
 import { useGtag } from "vue-gtag-next";
+import { getVisitorId } from "boot/utils";
 
 export default defineComponent({
   name: "App",
@@ -35,27 +36,26 @@ export default defineComponent({
 
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
+
     const checkSID = () => {
-      // const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      // const fpPromise = FingerprintJS.load();
-      // (async () => {
-      //   const fp = await fpPromise;
-      //   const result = await fp.get();
-      //   const excludes = { value: ["timezone", "timeZoneOffset"] };
-      //   const allComponents = { ...result.components };
-      //   excludes.value.forEach((element) => {
-      //     delete allComponents[element];
-      //   });
-      //   const sidParam = FingerprintJS.hashComponents(allComponents);
-      //   const obj = {
-      //     identifier: sidParam,
-      //     affiliateCode: affiliateItem
-      //   };
-      //   api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
-      //     if (res.code === 0) {
-      //     }
-      //   });
-      // })();
+      const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
+      (async () => {
+        const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+        store.visitorId = visitorId;
+
+        console.log("SID");
+        console.log(visitorId);
+
+        const obj = {
+          identifier: store.visitorId,
+          affiliateCode: affiliateItem
+        };
+
+        api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
+          if (res.code === 0) {
+          }
+        });
+      })();
     };
 
     const getAppInfo = async () => {
@@ -401,17 +401,8 @@ export default defineComponent({
     };
 
     const getOnlineStatApi = async () => {
-      // console.log("Ok Online.");
-      const fpPromise = FingerprintJS.load();
-
-      const fp = await fpPromise;
-      const result = await fp.get();
-      const excludes = { value: ["timezone", "timeZoneOffset"] };
-      const allComponents = { ...result.components };
-      excludes.value.forEach((element) => {
-        delete allComponents[element];
-      });
-      const sidParam = FingerprintJS.hashComponents(allComponents);
+      const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+      store.visitorId = sidParam;
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
       const theSid = store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam;
       console.log(theSid);
@@ -520,7 +511,7 @@ export default defineComponent({
       // const info = await App.getInfo();
       // console.log("APP Info");
       // console.log(info);
-      // checkSID();
+      checkSID();
       // getCSA();
       checkServerStatus();
       getAppInfo();
