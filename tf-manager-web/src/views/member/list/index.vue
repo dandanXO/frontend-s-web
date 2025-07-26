@@ -163,7 +163,10 @@
               maxlength="20"
             />
           </el-form-item>
-          <el-form-item :label="t('fields.upLineLoginName')" prop="upLineLoginName">
+          <el-form-item
+            :label="t('fields.upLineLoginName')"
+            prop="upLineLoginName"
+          >
             <el-input
               v-model="request.upLineLoginName"
               style="width: 300px;"
@@ -175,6 +178,13 @@
               v-model="request.affiliateCode"
               style="width: 300px;"
               maxlength="20"
+            />
+          </el-form-item>
+          <el-form-item :label="t('fields.sid')" prop="sid">
+            <el-input
+              v-model="request.sid"
+              style="width: 300px;"
+              maxlength="500"
             />
           </el-form-item>
           <el-form-item :label="t('fields.lastLoginIp')" prop="lastLoginIp">
@@ -618,9 +628,7 @@
         >
           <template #default="scope">
             $
-            <span
-              v-formatter="{data: scope.row.totalBet, type: 'money'}"
-            />
+            <span v-formatter="{data: scope.row.totalBet, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -726,10 +734,16 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="memberOrigin" :label="t('fields.memberOrigin')" width="100">
+        <el-table-column
+          prop="memberOrigin"
+          :label="t('fields.memberOrigin')"
+          width="100"
+        >
           <template #default="scope">
             <span v-if="scope.row.memberOrigin === null">-</span>
-            <span v-if="scope.row.memberOrigin !== null">{{ t(`memberOrigin.${scope.row.memberOrigin}`) }}</span>
+            <span v-if="scope.row.memberOrigin !== null">
+              {{ t(`memberOrigin.${scope.row.memberOrigin}`) }}
+            </span>
           </template>
         </el-table-column>
       </el-table>
@@ -869,7 +883,7 @@ const request = reactive({
   accurateLoginName: false,
   accurateRealName: false,
   memberOrigin: null,
-  upLineLoginName: null
+  upLineLoginName: null,
 })
 
 const form = reactive({
