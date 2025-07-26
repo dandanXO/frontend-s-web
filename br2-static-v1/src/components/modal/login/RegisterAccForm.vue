@@ -333,7 +333,7 @@ const register = () => {
         }
       }
 
-      let tradeId= store.googleadid ? store.googleadid : store.aaid ? store.aaid : "";
+      let traceId= store.googleadid ? store.googleadid : store.aaid ? store.aaid : "";
 
       if (!sid && (regDevice !== "ANDROID" || !affCode.value)) {
         sid = sidParam;
@@ -367,7 +367,7 @@ const register = () => {
             codeAffiliate: codeAffiliate.value,
             referrer: referrer.value,
             sid,
-            tradeId:  tradeId,
+            traceId:  traceId,
             isfinger,
             regDevice,
             regHost,
