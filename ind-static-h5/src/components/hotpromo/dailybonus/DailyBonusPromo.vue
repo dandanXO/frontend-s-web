@@ -305,7 +305,7 @@ const gotoTask = (taskType) => {
   if (taskType === 'REFER') {
     router.push('/earn-money');
   }
-  if (taskType === 'DEPOSIT') {
+  if (taskType === 'DEPOSIT' || taskType === 'DEPOSIT_WITHDRAW') {
     router.push('/deposit');
   }
   if (taskType === 'WITHDRAW') {
@@ -313,6 +313,9 @@ const gotoTask = (taskType) => {
   }
   if (taskType === 'BET') {
     router.push('/home');
+  }
+   if (taskType === 'VIP') {
+    router.push('/vip');
   }
 }
 
