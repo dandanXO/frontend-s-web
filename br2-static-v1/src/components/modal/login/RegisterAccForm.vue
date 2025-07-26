@@ -307,11 +307,8 @@ const register = () => {
     $q.loading.hide();
   } else {
     var qs = require("qs");
-    
+
     (async () => {
-      if (store.aaid) {
-        regForm.traceId = store.aaid;
-      }
 
       const sidParam = store.visitorId;
       // sid = store.googleadid ? store.googleadid : store.aaid;
@@ -335,6 +332,8 @@ const register = () => {
           }
         }
       }
+
+      let tradeId= store.googleadid ? store.googleadid : store.aaid ? store.aaid : "";
 
       if (!sid && (regDevice !== "ANDROID" || !affCode.value)) {
         sid = sidParam;
@@ -368,6 +367,7 @@ const register = () => {
             codeAffiliate: codeAffiliate.value,
             referrer: referrer.value,
             sid,
+            tradeId:  tradeId,
             isfinger,
             regDevice,
             regHost,
