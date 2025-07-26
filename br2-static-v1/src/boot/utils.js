@@ -1,6 +1,7 @@
 import { Platform } from "quasar";
 import moment from "moment/moment";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 export const MAIN = "MAIN";
 
