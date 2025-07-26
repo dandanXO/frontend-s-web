@@ -135,7 +135,8 @@ export default {
     month: '月内',
     balanceVsTotalDepositMultiplier: '余额对比存款金额倍数',
     balanceVsTodayDepositMultiplier: '余额对比今日存款金额倍数',
-    registerDay: '注册时间 - 提款时间 （天数）'
+    registerDay: '注册时间 - 提款时间 （天数）',
+    sidCount: 'SID 计数'
   },
   outboxStatus: {
     0: '未回复',

@@ -137,6 +137,7 @@ export default {
     balanceVsTotalDepositMultiplier: 'Balance vs Total Deposit Multiplier',
     balanceVsTodayDepositMultiplier: 'Balance vs Today Deposit Multiplier',
     registerDay: 'Register Date - Withdraw Date (day)',
+    sidCount: 'sid count',
   },
   outboxStatus: {
     0: 'Not reply yet',
