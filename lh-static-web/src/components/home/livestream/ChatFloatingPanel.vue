@@ -1,16 +1,21 @@
 <template>
   <div class="chat-floating-panel-wrapper" @click="handleClick">
-    <div class="chat-floating-panel__avatar-wrapper">
-      <img class="chat-floating-panel__avatar" :src="avatarUrl" loading="lazy" />
-    </div>
-    <div v-if="livestreamData.id" class="chat-floating-panel__tag-wrapper">
-      <div class="chat-floating-panel__tag streamer">
-        {{ isSystemLivestream ? "官方直播间" : "主播" }}
+    <div class="chat-floating-header">
+      <div class="chat-floating-panel__avatar-wrapper">
+        <img class="chat-floating-panel__avatar" :src="avatarUrl" loading="lazy" />
+        <span class="profile-name">{{ profileName }}</span>
       </div>
-      <div v-if="currentSportType" class="chat-floating-panel__tag sport-type">
-        {{ currentSportType }}
+
+      <div v-if="livestreamData.id" class="chat-floating-panel__tag-wrapper">
+        <div class="chat-floating-panel__tag streamer">
+          {{ isSystemLivestream ? "官方直播间" : "主播" }}
+        </div>
+        <div v-if="currentSportType" class="chat-floating-panel__tag sport-type">
+          {{ currentSportType }}
+        </div>
       </div>
     </div>
+
     <div v-if="roomMessage" class="chat-floating-panel__room-message" :class="{ expanded: isExpanded }">
       {{ roomMessage }}
     </div>
@@ -41,6 +46,10 @@ const roomMessage = computed(() => {
   }
 });
 
+const profileName = computed(() => {
+  return props.livestreamData?.name;
+});
+
 const avatarUrl = computed(() => {
   if (props.isSystemLivestream) {
     return require("@/assets/home/livestream/system-avatar.png");
@@ -59,7 +68,7 @@ const handleClick = () => {
 
 .chat-floating-panel-wrapper {
   display: grid;
-  grid-template-columns: 32px 1fr;
+  grid-template-columns: 1fr;
   gap: 12px;
   box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.66px 0px #a2bff4 inset, 0px 4px 4.5px 0px #00000029;
   background: linear-gradient(180deg, #d8eaff 0%, #fdfeff 100%);
@@ -68,11 +77,23 @@ const handleClick = () => {
   position: sticky;
   top: 0;
 
+  .chat-floating-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+
   .chat-floating-panel__avatar-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+
     .chat-floating-panel__avatar {
       @include img-pseudo;
       display: block;
-      max-width: 100%;
+      max-width: 40px;
       width: 100%;
       aspect-ratio: 1;
       border-radius: 50%;
@@ -99,6 +120,12 @@ const handleClick = () => {
         color: #c84e16;
       }
     }
+  }
+
+  .profile-name {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 12px;
   }
 
   .chat-floating-panel__room-message {

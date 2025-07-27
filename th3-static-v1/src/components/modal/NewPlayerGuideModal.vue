@@ -31,7 +31,7 @@
 
               <div v-if="index + 1 === 6" class="congrats-step">
                 <div class="txt">{{ step.instruction }}</div>
-                <div class="amt">RS {{ step.earnableAmt }}</div>
+                <div class="amt">THB {{ step.earnableAmt }}</div>
               </div>
               <div v-else class="other-steps">
                 <div class="midimg" v-if="index + 1 === 1 || index + 1 === 2">
@@ -39,15 +39,15 @@
                 </div>
                 <div class="mid-content" :class="{ show: index + 1 === 4 }">
                   <div class="ins">{{ step.instruction }}</div>
-                  <div class="amt">{{ step.earnableAmt }}RS</div>
+                  <div class="amt">{{ step.earnableAmt }}THB</div>
                 </div>
               </div>
               <div v-if="index + 1 === 1">
                 <div class="welcome">
                   {{ t("playerGuide.welcomeMessage") }}
-                  <span class="yellow">B9GAME!</span>
+                  <span class="yellow">SuperSiam!</span>
                   {{ t("playerGuide.teachingHowToEarn") }}
-                  <!-- Welcome to <span class="yellow">B9GAME!</span> Let us teach you how to make money easily! -->
+                  <!-- Welcome to <span class="yellow">SuperSiam!</span> Let us teach you how to make money easily! -->
                 </div>
               </div>
 
@@ -104,7 +104,7 @@
                     <div>
                       {{ t("playerGuide.maxReward") }}
                       <span class="yellow">1000</span>
-                      {{ t("playerGuide.rs") }}
+                      {{ t("playerGuide.thb") }}
                     </div>
                   </div>
 
@@ -324,7 +324,7 @@ const isBottomShareDialog = ref(false);
 //   { title: "Welcome!", instruction: "Complete registration and log in successfully", earnableAmt: "10", buttonTxt: "START NOW", video: "" },
 //   { title: "Hot Games", instruction: "Experience the game and try it out without recharging", earnableAmt: "10", buttonTxt: "TRY IT OUT", video: "Watch the game tutorial video" },
 //   { title: "Recharging", instruction: "After recharging, download the app and log in to get 28 extra bonuses", earnableAmt: "28", buttonTxt: "DEPOSIT NOW", video: "Deposit Tutorial" },
-//   { title: "Invite Friends", instruction: "Invite 1 person and get a reward of 250 RS (maximum 1000 RS/person)", earnableAmt: "250", buttonTxt: "SHARE NOW" },
+//   { title: "Invite Friends", instruction: "Invite 1 person and get a reward of 250 THB (maximum 1000 THB/person)", earnableAmt: "250", buttonTxt: "SHARE NOW" },
 //   { title: "Withdrawal", instruction: "Unlock subsequent invitation reward tasks", earnableAmt: "250", buttonTxt: "WITHDRAW NOW", video: "Withdraw Tutorial" },
 //   { title: "Congratulations!", instruction: "Congratulations on completing the novice mission!", earnableAmt: "1000", buttonTxt: "START GAME", video: "Watch the expert gameplay guide" },
 // ];
@@ -483,7 +483,7 @@ const fallbackCopyTextToClipboard = (text) => {
   document.body.removeChild(textarea);
 
   $q.notify({
-    message: "Link copied to clipboard",
+    message: t("notify.linkCopied"),
     color: "dark",
     textColor: "white",
     position: "top",
@@ -499,7 +499,7 @@ const copyHrefLink = () => {
       .writeText(textToCopy)
       .then(() => {
         $q.notify({
-          message: "Link copied to clipboard",
+          message: t("notify.linkCopied"),
           color: "dark",
           textColor: "white",
           position: "top",

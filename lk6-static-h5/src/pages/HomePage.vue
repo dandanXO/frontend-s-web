@@ -1,10 +1,10 @@
 <template>
   <q-page>
     <div id="id-sticky-header" :class="!isH5 || isShowDownload == false ? 'sticky-header' : ''">
-      <!-- <div v-if="isH5 && isShowDownload" class="download-top-container">
+      <div v-if="isH5 && isShowDownload" class="download-top-container">
         <div class="download-top-box">
           <q-icon name="close" @click="closeTopBox" />
-          <img class="headicon" src="../assets/index/logo-char.png" />
+          <img class="headicon" src="../assets/index/logo.png" />
           <div class="download-txt-container">
             <span class="download-title text-bold">{{ $t("home.downloadApp.appName") }}</span>
             <span class="download-content">{{ $t("home.downloadApp.desc") }}</span>
@@ -12,25 +12,29 @@
           <div class="buttons">
             <q-btn
               rounded
+              flat
               size="12px"
               @click="openDownloadAppLink"
               :label="$t('btn.downloadNow')"
-              color="primary"
-              class="top-btn no-shadow"
+              class="common-md-btn top-btn"
+              :class="{ en: languageVal === 'en' }"
             />
           </div>
         </div>
-      </div> -->
+      </div>
 
-      <div class="home-header-section" style="height: 50px" :class="{isNotLoggedIn: !store.token}">
+      <div class="home-header-section" style="height: 50px" :class="{ isNotLoggedIn: !store.token }">
         <div class="header-left">
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
 
           <div class="telegram-contact" @click="openTelegram">
             <img class="telegram-logo" id="telegram-logo" src="../assets/index/telegram-logo.png" />
             <div class="right">
-              <div class="top">{{ $t('affiliate.telegramGroup') }}</div>
-              <div class="bottom"><span style="font-family:system-ui;">@</span>6.vip</div>
+              <div class="top">{{ $t("affiliate.telegramGroup") }}</div>
+              <div class="bottom">
+                <span style="font-family: system-ui">@</span>
+                6.vip
+              </div>
             </div>
           </div>
         </div>
@@ -915,7 +919,7 @@ export default defineComponent({
         label: t("affiliate.affiliation"),
         mb: 0,
         gap: 8,
-        route: '/affiliate'
+        route: "/affiliate"
       }
     ]);
     const esport = ref([]);
@@ -1536,7 +1540,7 @@ export default defineComponent({
     const homePopupFrequency = ref(0);
     const homePopupFrequencyNum = ref(0);
 
-    const openTelegram = () => window.open('https://t.me/6vip', '_blank');
+    const openTelegram = () => window.open(ui.telegramUrl, "_blank");
 
     const checkShowImgTop = () => {
       const lastTime = sessionStorage.getItem("indexImgTop");
@@ -2055,7 +2059,7 @@ export default defineComponent({
     align-items: center;
     gap: 4px;
     height: 55px;
-    background: #50aef330;
+    background: #fff;
 
     .q-icon {
       font-size: 24px;
@@ -2063,7 +2067,7 @@ export default defineComponent({
     }
 
     .headicon {
-      width: 36px;
+      width: 72px;
     }
 
     .download-txt-container {
@@ -2081,7 +2085,7 @@ export default defineComponent({
       }
 
       .download-content {
-        max-width: 11rem;
+        max-width: 12rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -2094,13 +2098,11 @@ export default defineComponent({
     }
 
     .top-btn {
-      background-image: linear-gradient(180deg, #52acff 0, #3559da 100%), linear-gradient(#52acff, #3559da);
-      text-align: center;
-      height: 32px;
-      color: #fff;
       white-space: nowrap;
-      letter-spacing: 0px;
-      border-radius: 16px;
+      &.en {
+        aspect-ratio: 120/30;
+        width: 120px;
+      }
     }
   }
 }
@@ -2132,7 +2134,7 @@ export default defineComponent({
     .telegram-contact {
       height: 48px;
       display: flex;
-      font-family: 'PingFang';
+      font-family: "PingFang";
       gap: 3px;
       align-items: center;
       cursor: pointer;
@@ -2151,22 +2153,22 @@ export default defineComponent({
         gap: 1px;
 
         .top {
-          font-family: 'PingFang';
+          font-family: "PingFang";
           font-weight: 700;
           font-size: 12px;
           line-height: 102%;
           letter-spacing: 0px;
-          color: #7A80A1;
+          color: #7a80a1;
         }
 
         .bottom {
-          font-family: 'PingFang';
+          font-family: "PingFang";
           font-weight: 700;
           font-size: 12px;
           line-height: 102%;
           letter-spacing: 0px;
           text-align: left;
-          color: #3C96FF;
+          color: #3c96ff;
         }
       }
     }
@@ -2291,7 +2293,8 @@ export default defineComponent({
     }
 
     .header-right {
-      .login-btn, .register-btn {
+      .login-btn,
+      .register-btn {
         width: 60px;
       }
     }

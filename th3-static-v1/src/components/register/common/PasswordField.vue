@@ -10,7 +10,6 @@
           (val) => (val && val.length > 0) || $t('form.password_rules_01'),
           (val) => val.length > 6 || $t('form.password_rules_02')
         ]"
-        color="green"
         outlined
         clearable
         label-color="brand"

@@ -245,9 +245,9 @@
                 $t("lang.withdraw_singlewithdrawal") +
                 ": " +
                 selectedWithdrawalMethod.withdrawMin.toLocaleString() +
-                "RS - " +
+                "THB - " +
                 selectedWithdrawalMethod.withdrawMax.toLocaleString() +
-                "RS"
+                "THB"
               }}
               <br />
             </template>
@@ -256,7 +256,7 @@
                 $t("lang.withdraw_withdrawtoday") +
                 ": " +
                 selectedWithdrawalMethod.withdrawMaxAmount.toLocaleString() +
-                "RS"
+                "THB"
               }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
@@ -276,7 +276,7 @@
             <template #fields>
               <InputField
                 :label="`${$t('form.withdrawalAmount')} (${convertToCommaAmount(selectedWithdrawalMethod.withdrawMin)} -
-          ${convertToCommaAmount(selectedWithdrawalMethod.withdrawMax)} RS)`"
+          ${convertToCommaAmount(selectedWithdrawalMethod.withdrawMax)} THB)`"
               >
                 <template #input>
                   <q-input
@@ -314,7 +314,7 @@
               </div>
               <div class="desc">
                 <img src="../../assets/images/account/right-green.svg" />
-                <span>RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</span>
+                <span>THB:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</span>
               </div>
             </div>
 
@@ -328,7 +328,7 @@
               <div class="desc remain-wager-wrapper" @click="refreshRemainWager">
                 <img src="../../assets/images/account/right-green.svg" />
                 <q-spinner v-if="isRefreshRemainWager" />
-                <span v-else>RS:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</span>
+                <span v-else>THB:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</span>
                 <img
                   class="refresh-btn-img"
                   :class="{ rotate: isRefreshRemainWager }"
@@ -1616,9 +1616,21 @@ watch(
 .txt-green {
   color: #21ef89;
 }
+
+:deep(.q-field__control) {
+  height: 46px;
+  background: linear-gradient(#fff, #fff) padding-box, linear-gradient(90deg, #76674c, #cec6ae) border-box !important;
+  color: #907c5f !important;
+  ::placeholder {
+    color: #907c5f !important;
+  }
+}
+:deep(.q-field__native) {
+  color: #907c5f !important;
+}
 </style>
 
-<style lang="scss">
+<!-- <style lang="scss">
 .popout-dialog-container {
   .form-fields {
     width: 90%;
@@ -1636,4 +1648,4 @@ watch(
 .q-field__marginal {
   height: auto !important;
 }
-</style>
+</style> -->

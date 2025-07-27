@@ -1,8 +1,8 @@
 <template>
   <q-dialog v-model="_modelValue" @hide="$emit('hide')">
     <div class="wheel-result-wrapper">
-      <span class="prize">+{{ $t("hotPromo.rs") }}{{ props.prize }}</span>
-      <span class="desc">{{$t("hotPromo.withdraw_money_over_rs") }}{{ targetWithdrawAmount }}</span>
+      <span class="prize">+{{ $t("hotPromo.thb") }}{{ props.prize }}</span>
+      <span class="desc">{{ $t("hotPromo.withdraw_money_over_rs") }}{{ targetWithdrawAmount }}</span>
       <CommonButton class="close-btn" v-close-popup>Okay</CommonButton>
     </div>
   </q-dialog>
@@ -59,8 +59,8 @@ const _modelValue = computed({
     left: 50%;
     width: 80%;
     transform: translateX(-50%);
-    background-image: url('../../../assets/images/promotion/hotpromo/spin-lucky-wheel/common-btn-gold.png');
-    color: #8A2C05;
+    background-image: url("../../../assets/images/promotion/hotpromo/spin-lucky-wheel/common-btn-gold.png");
+    color: #8a2c05;
     min-height: 100px;
 
     &.common-btn {

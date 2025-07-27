@@ -290,7 +290,7 @@ module.exports = configure(function (ctx) {
     capacitor: {
       hideSplashscreen: true,
       // (Optional) If not present, will look for package.json > name
-      appName: "幸运6", // string
+      appName: "Lucky6", // string
       backButtonExit: "*"
     },
 

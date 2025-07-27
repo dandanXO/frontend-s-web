@@ -1,8 +1,8 @@
 {
-  "name": "幸运6",
+  "name": "Lucky6",
   "version": "1.0.1",
   "description": "幸运6官网 - 最专业的竞猜网站",
-  "productName": "幸运6",
+  "productName": "Lucky6",
   "author": "WeiSeng <weiseng@eagrp.net>",
   "private": true,
   "scripts": {

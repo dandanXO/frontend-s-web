@@ -1653,7 +1653,7 @@
     </q-dialog>
   </template>
   <div class="tac-footer" v-if="ui.siteType === 'CURACAO'">
-    <img class="b9game-logo" alt="b9game-logo" src="../assets/images/common/b9game-logo.png" />
+    <img class="supersiamgame-logo" alt="supersiamgame-logo" src="../assets/images/common/supersiamgame-logo.png" />
     <div class="footer-content">
       b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies,
       always putting our customers first. Trust, integrity and fairness are just three of our key values.
@@ -1749,11 +1749,11 @@
     persistent
   >
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
-    <NewPlayerPromoHomePopup @close-dialog="closeDialog" ref="newPlayerPromoHomePopupRef">
+    <!-- <NewPlayerPromoHomePopup @close-dialog="closeDialog" ref="newPlayerPromoHomePopupRef">
       <template #controller>
         <PopupController v-model="popupPromo" :hasSpin="true" :hasNewPlayer="true" />
       </template>
-    </NewPlayerPromoHomePopup>
+    </NewPlayerPromoHomePopup> -->
   </q-dialog>
   <q-dialog v-model="isMediaSettingsModal">
     <MediaSettingsComponent :media="mediaCode" />
@@ -4413,11 +4413,11 @@ const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
   }
 };
 
-const checkNewPlayerWheelPromoHomePopupCanShow = () => {
-  if (!sessionStorage.getItem("NEW_PLAYER_WHEEL_POPUP") && newPlayerPromoHomePopupRef.value) {
-    newPlayerPromoHomePopupRef.value.checkIsCanShowPopup();
-  }
-};
+// const checkNewPlayerWheelPromoHomePopupCanShow = () => {
+//   if (!sessionStorage.getItem("NEW_PLAYER_WHEEL_POPUP") && newPlayerPromoHomePopupRef.value) {
+//     newPlayerPromoHomePopupRef.value.checkIsCanShowPopup();
+//   }
+// };
 
 const claimClaimPopupPrize = () => {
   if (showClaimPopup.value.prize > 0) {
@@ -4484,9 +4484,9 @@ onActivated(async () => {
   if (store.hasToken()) {
     await store.getMemberInfo();
   }
-  if (store.hasToken()) {
-    await showSpinWheel();
-  }
+  // if (store.hasToken()) {
+  //   await showSpinWheel();
+  // }
   checkGoogleLoginSetPwd();
 
   if ((route.query.login === "true" || route.query.register === "true") && ui.annoyingType !== "NONE") {
@@ -4567,13 +4567,13 @@ watch(
     if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
   }
 );
-watch(
-  () => promoStore.isShownNewPlayerWheel,
-  async (val) => {
-    await nextTick();
-    if (val) checkNewPlayerWheelPromoHomePopupCanShow();
-  }
-);
+// watch(
+//   () => promoStore.isShownNewPlayerWheel,
+//   async (val) => {
+//     await nextTick();
+//     if (val) checkNewPlayerWheelPromoHomePopupCanShow();
+//   }
+// );
 
 watch(languageVal, loadData);
 // watch(
@@ -5639,7 +5639,7 @@ const checkGoogleLoginSetPwd = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  .b9game-logo {
+  .supersiamgame-logo {
     width: 50%;
     min-width: 150px;
   }

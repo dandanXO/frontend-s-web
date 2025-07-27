@@ -1,10 +1,7 @@
 <template>
   <div class="container">
     <div class="spin-wheel-container">
-      <div
-        :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`"
-        @click="spinWheel"
-      >
+      <div :class="`draw-btn click-pointer ${spinButtonDisable ? 'disabled' : ''}`" @click="spinWheel">
         <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/click-spin-btn.png" />
       </div>
       <div class="wheel-top-btn">
@@ -43,7 +40,7 @@
         <div>{{ $t("hotPromo.aviatorWheel.congratulations") }}</div>
       </div>
 
-      <div class="prize-amount">Rs {{ prizePopupBonusAmt }}</div>
+      <div class="prize-amount">THB {{ prizePopupBonusAmt }}</div>
 
       <q-btn no-caps unelevated class="btn-primary" @click="showPrizePopup = false">{{ $t("btn.confirm") }}</q-btn>
     </div>
@@ -64,7 +61,7 @@ const TOTAL_ITEMS = 10;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [8888, 28, 999999, 188, 888, 999998, 8, 88888, 388, 999997 ];
+const SPIN_WHEEL_PRIZES = [8888, 28, 999999, 188, 888, 999998, 8, 88888, 388, 999997];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -271,7 +268,7 @@ onMounted(() => {
   height: 330px;
   margin: 0 auto;
   background: url(../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-frame.png) no-repeat center
-  center;
+    center;
   background-size: 115%;
 }
 
@@ -487,7 +484,7 @@ onMounted(() => {
       font-size: 25px;
       letter-spacing: 2px;
       background: linear-gradient(94.81deg, #f6ff8c 7.45%, #ffba88 95.9%),
-      linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
+        linear-gradient(360deg, #ff932f 9.54%, #fffca9 86.08%);
       background-clip: text;
       -webkit-text-fill-color: transparent;
     }

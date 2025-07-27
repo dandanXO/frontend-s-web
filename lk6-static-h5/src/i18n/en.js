@@ -888,8 +888,8 @@ export default {
   },
   home: {
     downloadApp: {
-      appName: "Lucky6 APP",
-      desc: "All games covered. Smoother, safer, faster experience."
+      appName: "Lucky6 APP Download",
+      desc: "Exclusive in-app gift waiting for you!"
     },
     authSection: {
       notLogin1: "You are not logged in",

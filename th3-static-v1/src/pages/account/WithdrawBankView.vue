@@ -301,11 +301,8 @@ onActivated(() => {
         align-items: center;
         justify-content: center;
         width: 100%;
-        // background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-
-        background: #394142;
-        box-shadow: 0px 2px 0px 0px #2a3637;
-
+        background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+        box-shadow: 0px 2px 0px 0px #907c5f;
         padding: 12px 5px;
         border-radius: 8px;
         color: #ffffff;
@@ -399,11 +396,11 @@ onActivated(() => {
         flex-direction: column;
         // gap: 15px;
         :not(:last-child) {
-          margin-right: 15px;
+          margin-bottom: 15px;
         }
         .bank-name {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           // gap: 10px;
           :not(:last-child) {
             margin-right: 10px;

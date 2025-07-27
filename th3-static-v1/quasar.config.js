@@ -299,8 +299,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `B9.GAME`,
-        short_name: `B9.GAME`,
+        name: `SuperSiam`,
+        short_name: `SuperSiam`,
         description: `APP`,
         display: "standalone",
         orientation: "portrait",
@@ -345,7 +345,7 @@ module.exports = configure(function (ctx) {
     capacitor: {
       hideSplashscreen: true,
       // (Optional) If not present, will look for package.json > name
-      appName: "B9.GAME", // string
+      appName: "SuperSiam", // string
       backButtonExit: "*"
     },
 

@@ -26,7 +26,7 @@
         </div>
         <div class="item-desc">{{ $t("earnMoney.reward.myTotalIncome") }}</div>
         <div class="item-amount">
-          RS
+          THB
           {{
             convertToCommaAmount(
               getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET"),
@@ -50,7 +50,7 @@
       <!-- <div class="details-item" v-if="isShowOnetime"> -->
       <div class="details-item">
         <div class="item-amount">
-          Rs
+          THB
           <span>{{ convertToCommaAmount(getRewardAmount("ONE_TIME"), null, 0) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.invite") }}</div>
@@ -60,7 +60,7 @@
       <!-- <div class="details-item" v-if="isShowDeposit"> -->
       <div class="details-item">
         <div class="item-amount">
-          Rs
+          THB
           <span>{{ convertToCommaAmount(getRewardAmount("DEPOSIT"), null, 0) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.topUp") }}</div>
@@ -71,7 +71,7 @@
       <!-- <div class="details-item details-item" v-if="isShowBet"> -->
       <div class="details-item details-item">
         <div class="item-amount">
-          Rs
+          THB
           <span>{{ convertToCommaAmount(getRewardAmount("BET"), null, 0) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.bet") }}</div>
@@ -90,7 +90,7 @@
 
       <!-- <div class="details-item">
           <div class="item-amount">
-            Rs
+            THB
             <span>0</span>
           </div>
           <div class="item-title">Achievement</div>
@@ -595,7 +595,7 @@ const fallbackCopyTextToClipboard = (text) => {
   document.body.removeChild(textarea);
 
   $q.notify({
-    message: "Link copied to clipboard",
+    message: t("notify.linkCopied"),
     color: "dark",
     textColor: "white",
     position: "top",
@@ -621,7 +621,7 @@ const copyHrefLink = async () => {
       .writeText(textToCopy)
       .then(() => {
         $q.notify({
-          message: "Link copied to clipboard",
+          message: t("notify.linkCopied"),
           color: "dark",
           textColor: "white",
           position: "top",
@@ -1124,7 +1124,7 @@ watch(activeSetting, checkIsShowDetail);
     }
     .invite-desc {
       font-size: 14px;
-      color: #8c968f;
+      color: #d9cfb8;
     }
 
     .invite-listing {
@@ -1149,7 +1149,7 @@ watch(activeSetting, checkIsShowDetail);
         // :not(:last-child) {
         //   margin-right: 12px;
         // }
-        color: #8c968f;
+        color: #d9cfb8;
 
         span.list-num {
           width: 14px;
@@ -1326,7 +1326,7 @@ watch(activeSetting, checkIsShowDetail);
         }
 
         td:nth-child(2n) {
-          color: #21ef89;
+          color: #d9cfb8;
           font-weight: 700;
         }
       }
@@ -1508,7 +1508,8 @@ watch(activeSetting, checkIsShowDetail);
     width: 30vw;
     text-align: center;
     border-radius: 4px;
-    border: 1px solid #466a45;
+    // border: 1px solid #466a45;
+    box-shadow: 0px 2px 0px 0px #907c5f;
     padding: 5px 4px;
     height: 36px;
     display: flex;
@@ -1593,6 +1594,7 @@ watch(activeSetting, checkIsShowDetail);
         color: #fff;
         padding: 10px 4px;
         font-size: 12px;
+        font-weight: 700;
         // border: 1px solid #ffffff1a;
         &:last-child {
           color: #d9cfb8;
@@ -1621,6 +1623,7 @@ watch(activeSetting, checkIsShowDetail);
     justify-content: center;
     align-items: center;
     color: #d9cfb8;
+    font-weight: 700;
     .reward-coin {
       // height: 16px;
       width: 24px;

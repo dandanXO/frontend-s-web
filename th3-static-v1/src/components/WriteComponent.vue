@@ -15,10 +15,8 @@
                     v-model="mailDetailList.feedbackType"
                     :rules="[(val) => !!val || $t('form.feedbackType_pleaseSelect')]"
                     ref="feedbackTypeRef"
-                    hide-bottom-space
                     type="text"
-                  >
-                  </q-select>
+                  ></q-select>
                 </template>
               </InputField>
             </template>
@@ -41,14 +39,13 @@
                     maxlength="200"
                     v-model="mailDetailList.title"
                     class="textarea-input"
-                    label-color="brand"
                     :placeholder="$t('form.subjectTitle_placeholder')"
                   />
                 </template>
               </InputField>
             </template>
           </InputRowGrid>
-          <InputRowGrid>
+          <InputRowGrid class="q-mb-md">
             <template #fields>
               <InputField :label="$t('form.uploadImage')">
                 <template #input>
@@ -61,23 +58,22 @@
             <template #fields>
               <InputField :label="$t('form.feedbackType')">
                 <template #input>
-                    <q-input
-                      ref="contentRef"
-                      :rules="[
-                        (val) => (val && val.length > 0) || $t('form.content_rules_01'),
-                        (val) => (val && val.length < 501) || $t('form.content_rules_02')
-                      ]"
-                      name="content"
-                      standout
-                      type="textarea"
-                      :auto-size="{ minRows: 4, maxRows: 16 }"
-                      class="textarea-input mail-txtarea q-mb-md"
-                      counter
-                      maxlength="500"
-                      v-model="mailDetailList.content"
-                      :placeholder="$t('form.content_placeholder')"
-                      label-color="brand"
-                    ></q-input>
+                  <q-input
+                    ref="contentRef"
+                    :rules="[
+                      (val) => (val && val.length > 0) || $t('form.content_rules_01'),
+                      (val) => (val && val.length < 501) || $t('form.content_rules_02')
+                    ]"
+                    name="content"
+                    standout
+                    type="textarea"
+                    :auto-size="{ minRows: 4, maxRows: 16 }"
+                    class="textarea-input mail-txtarea q-mb-md"
+                    counter
+                    maxlength="500"
+                    v-model="mailDetailList.content"
+                    :placeholder="$t('form.content_placeholder')"
+                  ></q-input>
                 </template>
               </InputField>
             </template>
@@ -201,7 +197,9 @@ onMounted(() => {
 .write-letter {
   width: 100%;
   margin: 10px auto 30px;
-
+  :deep(.form-field-label) {
+    color: #d9cfb8;
+  }
   .top {
     display: flex;
     justify-content: space-between;
@@ -226,6 +224,29 @@ onMounted(() => {
       // #0b0e0d
     }
   }
+}
+:deep(.form-field-label) {
+  color: #d9cfb8;
+}
+:deep(.landing-input .q-field__control) {
+  background: #3a3a3a;
+  ::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+  }
+}
+:deep(.landing-input .q-field__control) {
+  color: #d9cfb8;
+  // min-height: unset;
+}
+:deep(.landing-input .q-field__native) {
+  color: #d9cfb8;
+}
+:deep(.landing-input .q-field--highlighted .q-field__native) {
+  color: #d9cfb8 !important;
+}
+:deep(.q-field--auto-height .q-field__native),
+:deep(.q-field--auto-height .q-field__control) {
+  min-height: 0 !important;
 }
 </style>
 <style lang="scss">
@@ -262,8 +283,13 @@ onMounted(() => {
   color: #8c968f;
 }
 
+.popout-dialog {
+  .txt-title {
+    color: #fff;
+  }
+}
+
 .btn-confirm {
-  
   font-weight: 700;
   width: 100%;
   padding: 10px 10px;

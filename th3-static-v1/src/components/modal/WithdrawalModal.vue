@@ -154,7 +154,7 @@
           <div class="top-wrapper">
             <div class="title">
               Withdrawal Amount ({{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin) }} -
-              {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} RS)
+              {{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }} THB)
             </div>
           </div>
 
@@ -189,7 +189,7 @@
                 <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
               </div>
               <div class="desc">
-                RS:{{
+                THB:{{
                   withdrawalMethods[withdrawalDialogTab].withdrawMax -
                   withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount
                 }}
@@ -200,14 +200,14 @@
                 <div class="yel-dot"></div>
                 <div class="desc">{{ store.vip }} Daily Limit</div>
               </div>
-              <div class="desc">RS:{{ withdrawalMethods[withdrawalDialogTab].withdrawMax }}</div>
+              <div class="desc">THB:{{ withdrawalMethods[withdrawalDialogTab].withdrawMax }}</div>
             </div>
             <div class="info">
               <div class="desc-wrapper">
                 <div class="yel-dot"></div>
                 <div class="desc">Remain Wagers</div>
               </div>
-              <div class="desc">RS:{{ withdrawalMethods[withdrawalDialogTab].remainWagers }}</div>
+              <div class="desc">THB:{{ withdrawalMethods[withdrawalDialogTab].remainWagers }}</div>
             </div>
           </div>
         </q-card>

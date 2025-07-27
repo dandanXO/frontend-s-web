@@ -137,6 +137,7 @@ export default {
     balanceVsTotalDepositMultiplier: 'Balance vs Total Deposit Multiplier',
     balanceVsTodayDepositMultiplier: 'Balance vs Today Deposit Multiplier',
     registerDay: 'Register Date - Withdraw Date (day)',
+    sidCount: 'sid count',
   },
   outboxStatus: {
     0: 'Not reply yet',
@@ -1265,6 +1266,7 @@ export default {
     ineligible: 'Ineligible',
     innerSetting: 'Inner Wheel Setting',
     ip: 'Access IP',
+    isBet: 'Show Bet',
     isDeposit: 'Show Deposit',
     isMultiple: 'Is Multiple Choice',
     itsYou: "it's you",

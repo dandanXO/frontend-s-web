@@ -13,7 +13,7 @@
         <div>{{ $t("hotPromo.aviatorWheel.congratulations") }}</div>
       </div>
 
-      <div class="prize-amount">Rs {{ prizePopupBonusAmt }}</div>
+      <div class="prize-amount">THB {{ prizePopupBonusAmt }}</div>
 
       <q-btn no-caps unelevated class="btn-primary" @click="showPrizePopup = false">{{ $t("btn.confirm") }}</q-btn>
     </div>

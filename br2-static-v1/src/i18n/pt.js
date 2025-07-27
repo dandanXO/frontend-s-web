@@ -1201,6 +1201,7 @@ export default {
     14001: "Este número de telefone já foi registrado",
     14002: "Este email já foi registrado",
     14003: "Código de afiliado não encontrado",
+    14010: "O dispositivo de registro não pode ser duplicado",
     15011: "Não é possível selecionar data anterior a 10/07/2024",
     15201: "Código antigo incorreto",
     15202: "A nova senha não pode ser igual à anterior",

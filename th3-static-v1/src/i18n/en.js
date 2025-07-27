@@ -8,7 +8,7 @@ export default {
     register: "Register",
     download: "Download",
     getFreeSpins: "Get free spins on the APP",
-    getFreeCash: "Free Rs 100 Better Experience!",
+    getFreeCash: "Free THB 100 Better Experience!",
     withdraw: "Withdraw",
     personalCenter: "Personal Center",
     deposit: "Deposit",
@@ -84,7 +84,7 @@ export default {
     appLoginBonus: {
       validatePhoneAndEmail: "Please bind your phone first",
       loginTomorrow: "Please log in tomorrow to claim your mystery reward.",
-      claimBonus: "You’ve received {amount}rs bonus!"
+      claimBonus: "You’ve received {amount}thb bonus!"
     }
   },
   form: {
@@ -271,7 +271,7 @@ export default {
     confirm: "Confirm",
     submit: "Submit",
     forgetPwd: "Forget Password",
-    areyounew: "Are you new to B9?",
+    areyounew: "Are you new to SuperSiam?",
     alreadyhaveacct: "Already have an account?",
     addNewAccount: "Add New Account",
     updated: "Updated",
@@ -342,7 +342,8 @@ export default {
     tryagain: "Please try again after {seconds} seconds",
     submitting: "Submitting...",
     sendingVerificationCode: "Sending verification code...",
-    passwordResetCompleted: "Password reset completed"
+    passwordResetCompleted: "Password reset completed",
+    linkCopied: "Link copied to clipboard"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -429,7 +430,7 @@ export default {
     appDepositBonus: "App Deposit Bonus",
     unlimited: "Unlimited",
     wagerRequirement: "Wager requirement (to withdrawal): 10 times of your deposit amount",
-    wagerRequirementEg: "Eg. Deposit 100 Rs, require 1,000 Rs wager",
+    wagerRequirementEg: "Eg. Deposit 100 THB, require 1,000 THB wager",
     rechargeTutorial: "Recharge tutorial",
     picture: "Picture",
     video: "Video",
@@ -464,9 +465,9 @@ export default {
       "Please ensure that your wallet has sufficient receiving limit before making a withdrawal to avoid transaction failure.",
     bindCardCorrectFormat: "Bind your wallet/bank card using the correct format.",
     dailyWalletLimit:
-      "Daily wallet limit: PKR 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.",
+      "Daily wallet limit: THB 50,000. Do not exceed this limit. You can add multiple wallets for withdrawals.",
     donotexceeddaily:
-      "Daily bank card limit: PKR 500,000. Do not exceed this limit. You can add multiple bank cards for withdrawals.",
+      "Daily bank card limit: THB 500,000. Do not exceed this limit. You can add multiple bank cards for withdrawals.",
     blockchainwithdrawfast: "For blockchain wallet (USDT) withdrawals, there is no limit, and transfers are very fast."
   },
   bank: {
@@ -573,9 +574,9 @@ export default {
       multiple_acc_hint: `2. It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
     Reward distribution time: Between 3:00 PM and 6:00 PM Pakistan time on the next day. The rewards will be credited to the account during this time frame.
     `,
-      shareTitle: "B9GAME Share and Earn",
+      shareTitle: "SuperSiam Share and Earn",
       shareText:
-        "B9GAME Share and Earn:\n\tEarn up to 1000 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
+        "SuperSiam Share and Earn:\n\tEarn up to 1000 THB per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
       betting_table: {
         header: {
           description: "Description",
@@ -772,6 +773,7 @@ export default {
   },
   bankCard: {
     bankAccountNum: "Bank Account Number",
+    selectBank: "Please Select Bank",
     pleaseEnterCardAccount: "Please enter bank account number",
     bankCardMust16NumberandAbove: "Bank account number must be between 13 and 20 numbers",
     bankCardDisallowDecimal: "Bank account number cannot have decimal points",
@@ -815,7 +817,7 @@ export default {
     mainTitle: "SuperSiam",
     subTitle: "Customer Service Verifier",
     contentPara01:
-      "To prevent scams using B9.GAME's list, you can verify the Telegram or Discord account you are chatting&nbsp;with ",
+      "To prevent scams using SuperSiam's list, you can verify the Telegram or Discord account you are chatting&nbsp;with ",
     contentPara02: "Please enter the agent account ID and click the Check button"
   },
   playerGuide: {
@@ -845,7 +847,7 @@ export default {
     startGame: "START GAME",
     expertGameplayGuide: "Watch the expert gameplay guide",
     maxReward: "For every person invited, the maximum reward is",
-    rs: "RS",
+    thb: "THB",
     extraBonus: "extra bonus for invited users' first deposit",
     lifetimeCommission: "Lifetime commission for invited users",
     commissionDetails: "(regardless of winning or losing)",
@@ -920,8 +922,8 @@ export default {
     received: "Received",
     time_left: "time left",
     go_withdraw_now: "Go withdraw now",
-    rs: "RS",
-    withdraw_money_over_rs: "Withdraw money over Rs",
+    thb: "THB",
+    withdraw_money_over_rs: "Withdraw money over THB",
     claim_now: "Claim now",
     claimed: "Claimed",
     bonus_claim_time: "Bonus claim time",
@@ -946,7 +948,7 @@ export default {
       depositNow: "Deposit Now",
       upto: "UP to",
       remainingTimes: "Remaining times",
-      depositSpin: "Deposit Rs {min} to get 1 spin.",
+      depositSpin: "Deposit THB {min} to get 1 spin.",
       spin: "Spin",
       rules: "Rules",
       activityRules: "Activity rules",
@@ -956,7 +958,7 @@ export default {
       rule_03: "All rewards will be deposited directly into your wallet.",
       rule_04: "The bonus requires one turnover to withdraw.",
       rule_05:
-        "The right to interpret this event belongs to B9.game. If you have any questions, please contact customer service.",
+        "The right to interpret this event belongs to SuperSiam. If you have any questions, please contact customer service.",
       silver: "Silver",
       gold: "Gold",
       diamond: "Diamond",
@@ -1027,7 +1029,7 @@ export default {
     spinReferWheel: {
       paymentRequestSubmitted: "Payment request submitted",
       stillNeedToMakeWithdrawal: "Still need to make withdrawal",
-      willBePaidToYourRsAccount: "will be paid to your RS account",
+      willBePaidToYourRsAccount: "will be paid to your THB account",
       inviteFriendsToHelp: "Invite Friends To Help",
       referFriendToRegister: "Refer a friend to register, deposit and verify your phone to win free spins",
       only: "Only",
@@ -1204,7 +1206,7 @@ export default {
   content: {
     nospinleft: "No spins left",
     title1: "The registration time starts from the time the registration is completed.",
-    message1: "Once your accumulated amount reaches 1000 PKR, you can withdraw.",
+    message1: "Once your accumulated amount reaches 1000 THB, you can withdraw.",
     message2: "When you have no spins left, invite new players to register and deposit to earn additional free spins.",
     message3:
       "The event lasts for 3 days. After the event ends, accumulated rewards will be reset and the event will restart.",
@@ -1212,16 +1214,16 @@ export default {
     message5:
       "The invitee must verify their phone number and must not have a duplicate IP address to qualify for the referral reward.",
     aviatorPromoIntro:
-      "Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! The prize pool for the top 50 is 1,250,000 PKR!",
+      "Enjoy the thrill of betting with Aviator! Your Aviator can win a staggering 3,216x with just one click! The prize pool for the top 50 is 1,250,000 THB!",
     aviatorGoldenEgg:
-      "When betting in Aviator every day, when the effective betting amount reaches 888 PKR, you can get the chance to smash the golden egg (SUNEHRI ANDY). Maximum reward: 88,888 PKR, the probability of winning is 3.6%",
+      "When betting in Aviator every day, when the effective betting amount reaches 888 THB, you can get the chance to smash the golden egg (SUNEHRI ANDY). Maximum reward: 88,888 THB, the probability of winning is 3.6%",
     aviatorTopTurnover:
       "When betting on Aviator, the player with the highest cumulative turnover will qualify for first place.",
-    cashRainIntro: "Each round of cash rain freely distributes 666,666 PKR.",
-    cashRainMaxPerRound: "Maximum cashback amount per round: 66,666 PKR.",
+    cashRainIntro: "Each round of cash rain freely distributes 666,666 THB.",
+    cashRainMaxPerRound: "Maximum cashback amount per round: 66,666 THB.",
     cashRainFreeDistribution: "Each round freely distributes cashback.",
     cashRainClaimCondition:
-      "Deposit ≥ PKR 300 on the same day and complete daily bets totaling ≥ PKR 350 to claim your free bonus.",
+      "Deposit ≥ THB 300 on the same day and complete daily bets totaling ≥ THB 350 to claim your free bonus.",
     cashRainUsage: "The received money can be directly used for playing games or withdrawing.",
     cashRainVIP: "The higher the VIP membership level, the greater the amount received."
   }
