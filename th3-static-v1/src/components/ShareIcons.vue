@@ -1,47 +1,46 @@
 <template>
   <div class="list-item" id="whatapp-icon ddd" @click="openWhatsApp()">
-    <img class="btn-icon" 
-      :src="require(`../assets/images/auth/whatsapp-new.png`)" />
-      <img class="absolute-hot" src="../assets/images/index/hot.gif" />
+    <img class="btn-icon" :src="require(`../assets/images/auth/whatsapp-new-color.png`)" />
+    <img class="absolute-hot" src="../assets/images/index/hot.gif" />
     <!-- <div>WhatsApp</div> -->
   </div>
   <div v-if="isInvite" class="list-item" @click="openFacebook()">
-    <img class="btn-icon" id="facebook-icon"
-      :src="require(`../assets/images/auth/facebook-new.png`)" />
+    <img class="btn-icon" id="facebook-icon" :src="require(`../assets/images/auth/facebook-new.png`)" />
   </div>
   <a ref="tiktokRef" href="https://www.tiktok.com" target="_blank" :style="{ display: 'none' }" />
   <div class="list-item" @click="openTiktok()">
-    <img class="btn-icon" id="tiktok-icon"
-      :src="require(`../assets/images/auth/tiktok-new.png`)" />
+    <img class="btn-icon" id="tiktok-icon" :src="require(`../assets/images/auth/tiktok-new-color.png`)" />
     <!-- <div>Tiktok</div> -->
   </div>
   <a ref="instagramRef" href="https://www.instagram.com" target="_blank" :style="{ display: 'none' }" />
   <div class="list-item" @click="openInsta()">
-    <img class="btn-icon" id="insta-icon"
-      :src="require(`../assets/images/auth/insta-new.png`)" />
+    <img class="btn-icon" id="insta-icon" :src="require(`../assets/images/auth/insta-new-color.png`)" />
     <!-- <div>WhatsApp</div> -->
   </div>
   <div class="list-item" @click="openYoutube()">
-    <img class="btn-icon" id="youtube-icon"
-      :src="require(`../assets/images/auth/youtube-new.png`)" />
+    <img class="btn-icon" id="youtube-icon" :src="require(`../assets/images/auth/youtube-new-color.png`)" />
     <!-- <div>Youtube</div> -->
   </div>
   <div v-if="isInvite" class="list-item" @click="openSMS()">
-    <img class="btn-icon" id="mail-icon"
-      :src="require(`../assets/images/auth/sms-new.png`)" />
+    <img class="btn-icon" id="mail-icon" :src="require(`../assets/images/auth/sms-new.png`)" />
   </div>
   <div v-if="isInvite" class="list-item" @click="openMail()">
-    <img class="btn-icon" id="mail-icon"
-      :src="require(`../assets/images/auth/mail-new.png`)" />
+    <img class="btn-icon" id="mail-icon" :src="require(`../assets/images/auth/mail-new.png`)" />
   </div>
   <div v-if="!isInvite" class="list-item" @click="openCharity()">
-    <img class="btn-icon" id="charity-icon"
-      :src="require(`../assets/images/auth/charity-${isInvite ? 'neon' : 'colored'}.png`)" />
+    <img
+      class="btn-icon"
+      id="charity-icon"
+      :src="require(`../assets/images/auth/charity-${isInvite ? 'neon' : 'colored'}.png`)"
+    />
     <!-- <div>Charity</div> -->
   </div>
   <div class="list-item" v-if="!isAndroid() && !ui.hideDownload && !isInvite" @click="downloadApp()">
-    <img class="btn-icon" id="download-icon"
-      :src="require(`../assets/images/auth/app-${isInvite ? 'neon' : 'grey'}.png`)" />
+    <img
+      class="btn-icon"
+      id="download-icon"
+      :src="require(`../assets/images/auth/app-${isInvite ? 'neon' : 'grey'}.png`)"
+    />
     <!-- <div>{{ $t("btn.downloadApp") }}</div> -->
   </div>
 </template>
@@ -57,15 +56,14 @@ const tiktokRef = ref();
 const instagramRef = ref();
 const youtubeRef = ref();
 const { t } = useI18n();
-const props = defineProps(["isInvite", "url"])
+const props = defineProps(["isInvite", "url"]);
 const ui = useUI();
 const openWhatsApp = () => {
   if (!props.isInvite) {
     window.open(ui.whatsappUrl, "_blank");
   } else {
-    window.open(`https://wa.me/?text=${encodeURIComponent(t('earnMoney.reward.shareText', { url: props.url }))}`);
+    window.open(`https://wa.me/?text=${encodeURIComponent(t("earnMoney.reward.shareText", { url: props.url }))}`);
   }
-
 };
 
 const openInsta = () => {
@@ -97,7 +95,6 @@ const openCharity = () => {
 };
 const openFacebook = () => {
   if (!props.isInvite) {
-
   } else {
     const shareText = t("earnMoney.reward.shareText");
     const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
@@ -106,20 +103,18 @@ const openFacebook = () => {
     copyToClipboard(shareText);
     window.open(facebookShareUrl, "_blank");
   }
-}
+};
 const openSMS = () => {
   if (!props.isInvite) {
-
   } else {
     const shareText = t("earnMoney.reward.shareText", { url: props.url });
     const smsBody = `${shareText}`;
     const smsShareUrl = `sms:?body=${encodeURIComponent(smsBody)}`;
     window.location.href = smsShareUrl;
   }
-}
+};
 const openMail = () => {
   if (!props.isInvite) {
-
   } else {
     const shareText = t("earnMoney.reward.shareText", { url: props.url });
     const shareTitle = t("earnMoney.reward.shareTitle");
@@ -128,7 +123,7 @@ const openMail = () => {
     const emailShareUrl = `mailto:?subject=${emailSubject}&body=${emailBody}`;
     window.open(emailShareUrl, "_self");
   }
-}
+};
 const downloadApp = () => {
   if (ui.downloadAppUrl) {
     window.open(ui.downloadAppUrl, "_blank");
@@ -150,24 +145,24 @@ const downloadApp = () => {
       width: 100%;
       max-width: 50px;
       margin: auto;
-      
-  &.absolute-hot {
-    position: absolute;
-    right: -4px;
-    top: -6px;
-    width: 18px;
-    height: unset;
-    img { 
-      width: 18px;
-    }
-  }
+
+      &.absolute-hot {
+        position: absolute;
+        right: -4px;
+        top: -6px;
+        width: 18px;
+        height: unset;
+        img {
+          width: 18px;
+        }
+      }
     }
   }
 }
 .btn-icon {
-    width: 38px !important;
-    height: 38px !important;
-  }
+  width: 38px !important;
+  height: 38px !important;
+}
 .btn-lists {
   display: flex;
   justify-content: space-evenly;
@@ -189,14 +184,13 @@ const downloadApp = () => {
     flex: 1;
   }
 
-
   .absolute-hot {
     position: absolute;
     right: 3px;
     top: -6px;
     width: 18px;
     height: unset;
-    img { 
+    img {
       width: 18px;
     }
   }

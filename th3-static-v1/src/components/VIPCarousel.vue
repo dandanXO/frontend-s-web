@@ -22,7 +22,7 @@
 
               <div class="progress-bar-container">
                 <div class="progress-bar-outer-bar" v-if="vipIndex !== vipItems.length - 1">
-                  <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span>
+                  <!-- <span class="progress-bar-label">{{ currentVipLevelStats.progressBarText }}</span> -->
 
                   <div class="progress-bar-inner-bar" :style="{ width: currentVipLevelStats.levelUpPercentage + '%' }">
                     <div class="progress-bar-inner-bar-endpoint-circle">
@@ -182,7 +182,7 @@ const rows = [
   {
     name: "VIP 11",
     ugprade: "3,000,000",
-    reward: t('vip.unlimited'),
+    reward: t("vip.unlimited"),
     flow: "58,888",
     invitee: 90,
     extrareward: "1,188"
@@ -190,7 +190,7 @@ const rows = [
   {
     name: "VIP 12",
     ugprade: "5,000,000",
-    reward: t('vip.unlimited'),
+    reward: t("vip.unlimited"),
     flow: "88,888",
     invitee: 100,
     extrareward: "2,888"
@@ -379,9 +379,6 @@ watch(
     const levelUpDeposit = +upgradeStatus.replace(/,/g, "");
 
     const levelUpPercentage = (() => {
-      // if (vipLevel === 0) {
-      //   return 0;
-      // }
       if (vipLevel + 1 > +vipInfo.vipLevel) {
         return 100;
       }
@@ -434,14 +431,14 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 $colors: (
-  #6d96c6,
+  #907c5f,
   #8c9b6a,
   #4ca1fc,
   #4c5efc,
   #d34cfc,
   #fc4cc4,
   #efa1f6,
-  #FF9D86,
+  #ff9d86,
   #5bfc49,
   #efe639,
   #67c2ac,
@@ -451,18 +448,23 @@ $colors: (
 @for $i from 0 through length($colors) - 1 {
   .vipitem#{$i} {
     .progress-bar-inner-bar {
-      background: nth($colors, $i + 1); // Match color with vipitem
+      background: #3a3a3a;
+      // background: nth($colors, $i + 1); // Match color with vipitem
 
       .progress-bar-inner-bar-endpoint-circle {
-        background: rgba(nth($colors, $i + 1), 0.16); /* 16% opacity */
+        -webkit-mask-image: radial-gradient(circle, transparent 5px, black 6px);
+        background: linear-gradient(208.54deg, #e2dcd9 -0.31%, rgba(207, 194, 173, 0) 68.75%);
+        // background: rgba(nth($colors, $i + 1), 0.25); /* 16% opacity */
       }
 
       .progress-bar-inner-bar-endpoint-circle__outer {
-        background: rgba(nth($colors, $i + 1), 0.25); /* 25% opacity */
+        background: linear-gradient(270deg, rgba(206, 198, 174, 0.5) 0%, rgba(118, 103, 76, 0.5) 99.76%);
+        // background: rgba(nth($colors, $i + 1), 0.5); /* 25% opacity */
       }
 
       .progress-bar-inner-bar-endpoint-circle__inner {
-        background: nth($colors, $i + 1); // Full color
+        // background: nth($colors, $i + 1); // Full color
+        background: #3a3a3a;
       }
     }
   }
@@ -569,7 +571,7 @@ $colors: (
     .progress-bar-outer-bar {
       // border: 1px solid #fff;
       border-radius: 16px;
-      background: #282d2e;
+      background: #e9e8e4;
       width: 100%;
       // overflow: hidden;
       position: relative;
@@ -596,23 +598,23 @@ $colors: (
       // background: #6D96C6;
       min-width: 12px;
       .progress-bar-inner-bar-endpoint-circle {
-        width: 36px;
-        height: 36px;
+        width: 28px;
+        height: 28px;
         display: flex;
         justify-content: center;
         align-items: center;
         // background: #6D96C629;
         padding: 12px;
         position: absolute;
-        right: -12px;
-        top: -12px;
+        right: -6px;
+        top: -6px;
         z-index: 1;
         border-radius: 50%;
         .progress-bar-inner-bar-endpoint-circle__outer {
           // background: #6D96C640;
           width: 100%;
           height: 100%;
-          padding: 12px;
+          padding: 10px;
           border-radius: 50%;
         }
         .progress-bar-inner-bar-endpoint-circle__inner {

@@ -869,7 +869,7 @@ async function loadRecord() {
     }
   }
   query.memberType = "NORMAL,TEST,OUTSIDE,PROMO_TEST";
-  query.withdrawCode = "KDPAY,EBPAY,OKPAY,SZPAY,BLBPAY,JDPAY,JAZZCASH,EASYPAISA";
+  query.withdrawCode = "KDPAY,EBPAY,OKPAY,SZPAY,BLBPAY,JDPAY,JAZZCASH,EASYPAISA,NINEPAY";
   const { data: ret } = await getMemberWithdrawRecordEwalltPay(query)
   page.pages = ret.pages
   ret.records.forEach(data => {

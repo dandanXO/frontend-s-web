@@ -26,30 +26,34 @@
     </div>
 
     <div ref="roomMessageRef" class="room-message-container">
-      <div class="container-box">
-        <div class="type-tags">
-          <div class="profile-tag">
-            <img
-              v-if="currentLiveData.name === 'SYSTEM'"
-              :src="require('../../assets/images/livestream/system-avatar.png')"
-            />
-            <img v-else-if="currentLiveData.avatar" :src="imgStreamerURL + currentLiveData.avatar" />
-            <img v-else :src="require('../../assets/images/profile/default-1.png')" />
+      <div class="border-box">
+        <div class="container-box">
+          <div class="type-tags">
+            <div class="profile-tag">
+              <img
+                v-if="currentLiveData.name === 'SYSTEM'"
+                :src="require('../../assets/images/livestream/system-avatar.png')"
+              />
+              <img v-else-if="currentLiveData.avatar" :src="imgStreamerURL + currentLiveData.avatar" />
+              <img v-else :src="require('../../assets/images/profile/default-1.png')" />
 
-            <!-- <img :src="imgURL + currentLiveData.avatar" /> -->
+              <!-- <img :src="imgURL + currentLiveData.avatar" /> -->
+            </div>
+            <span class="profile-name">{{currentLiveData.name}}</span>
+
+            <template v-if="currentLiveData.name === 'SYSTEM'">
+              <div class="tag tag--live">官方直播间</div>
+            </template>
+            <template v-else>
+              <div class="tag tag--live">主播</div>
+            </template>
+
+            <div class="tag tag--sport">{{ sportType.label }}</div>
           </div>
-          <template v-if="currentLiveData.name === 'SYSTEM'">
-            <div class="tag tag--live">官方直播间</div>
-          </template>
-          <template v-else>
-            <div class="tag tag--live">主播</div>
-          </template>
 
-          <div class="tag tag--sport">{{ sportType.label }}</div>
-        </div>
-
-        <div class="room-message-txt" :class="{ expanded: isExpanded }" v-if="currentLiveData.roomMessage">
-          {{ roomMessage }}
+          <div class="room-message-txt" :class="{ expanded: isExpanded }" v-if="currentLiveData.roomMessage">
+            {{ roomMessage }}
+          </div>
         </div>
       </div>
     </div>
@@ -685,72 +689,83 @@ onDeactivated(() => {
   align-items: center;
   background: #e8f2fe;
 
-  .container-box {
-    padding: 8px 12px;
-    background: #fcfdfe;
-    color: #000000;
-    width: 100%;
+  .border-box {
     margin: 12px 12px 0;
-    box-shadow: 0px -2.78px 2.78px 0px #c3d4e6 inset;
+    box-shadow: 0px 4px 4px 0px #00000026;
     border-radius: 12px;
-    font-size: 10px;
-    overflow: hidden;
+    width: 100%;
 
-    .type-tags {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .container-box {
+      padding: 8px 12px;
+      background: #fcfdfe;
+      color: #000000;
+      box-shadow: 0px -2.78px 2.78px 0px #c3d4e6 inset;
+      border-radius: 12px;
+      font-size: 10px;
+      overflow: hidden;
 
-      .profile-tag {
-        // background: salmon;
-        border-radius: 50%;
-        width: 24px;
-        height: 24px;
+      .type-tags {
         display: flex;
         align-items: center;
-        justify-content: center;
-        overflow: hidden;
+        gap: 8px;
 
-        img {
-          display: block;
+        .profile-tag {
+          // background: salmon;
+          border-radius: 50%;
           width: 24px;
           height: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+
+
+          img {
+            display: block;
+            width: 24px;
+            height: 24px;
+          }
+        }
+
+        .profile-name{
+          font-weight: 600;
+          font-size: 12px;
+        }
+
+        .tag {
+          padding: 0px 12px;
+          font-weight: 500;
+          font-size: 10px;
+          line-height: 1;
+          border-radius: 24px;
+          display: flex;
+          align-items: center;
+          height: 22px;
+          color: #000000;
+
+          &--live {
+            background-color: #bbaef9;
+            color: #8658fb;
+          }
+
+          &--sport {
+            background-color: #fbcd74;
+            color: #c84e16;
+          }
         }
       }
 
-      .tag {
-        padding: 0px 12px;
-        font-size: 10px;
-        line-height: 1;
-        border-radius: 24px;
-        display: flex;
-        align-items: center;
-        height: 22px;
-        color: #000000;
-        box-shadow: 0px -2px 2px 0px #bbc1d6 inset;
+      .room-message-txt {
+        margin-top: 8px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: all 0.3s ease;
 
-        &--live {
-          background-color: #bbaef9;
-          color: #8658fb;
+        &.expanded {
+          white-space: break-spaces;
         }
-
-        &--sport {
-          background-color: #fbcd74;
-          color: #c84e16;
-        }
-      }
-    }
-
-    .room-message-txt {
-      margin-top: 8px;
-
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      transition: all 0.3s ease;
-
-      &.expanded {
-        white-space: break-spaces;
       }
     }
   }
@@ -837,24 +852,32 @@ onDeactivated(() => {
       top: calc(56.25vw + 32px);
       background: unset;
 
-      .container-box {
+      .border-box {
         background: #1c42a3;
-        color: #ffffff;
-        box-shadow: 0px -2.78px 2.78px 0px #6691ff inset;
+        padding: 4px;
+        border: 2px solid #6691ff;
+        box-shadow: none;
 
-        .type-tags {
-          .tag {
-            color: #ffffff;
-            box-shadow: 0px 2px 2px 0px #16337e;
+        .container-box {
+          background: url("../../assets/images/livestream/room-message-bg-dark.png") no-repeat center center;
+          background-size: 100% 100%;
+          color: #ffffff;
+          box-shadow: none;
 
-            &--live {
-              background-color: #2d7b72;
-              color: #54ff00;
-            }
+          .type-tags {
+            .tag {
+              color: #ffffff;
+              box-shadow: 0px 2px 2px 0px #16337e;
 
-            &--sport {
-              background: #ff99004d;
-              color: #ff9900;
+              &--live {
+                background-color: #2d7b72;
+                color: #54ff00;
+              }
+
+              &--sport {
+                background: #ff99004d;
+                color: #ff9900;
+              }
             }
           }
         }

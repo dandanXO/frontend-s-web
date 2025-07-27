@@ -1240,7 +1240,8 @@ export default {
     paymentType: 'Loại thanh toán',
     payout: 'Thanh toán',
     payoutTotal: 'Tổng tiền trả thưởng',
-    resend_saba_payout: 'Gửi lại khoản thanh toán SABA',
+    resend_saba_payout: 'Gửi lại khoản thanh toán',
+    check_saba_ticket: 'Kiểm tra vé SABA',
     return_ratio: 'Tỷ lệ hoàn trả',
     return_ratio_total: 'Tổng tỷ lệ hoàn trả',
     pcWay: 'Máy tính',
@@ -2472,7 +2473,9 @@ export default {
     validateFbUrlRequired: 'URL Facebook là bắt buộc',
     validateFbTokenRequired: 'Token Facebook là bắt buộc',
     qrCodeGenerateFailed: 'Tạo mã QR không thành công',
-    downloadUrlEmpty: 'URL tải xuống trống'
+    downloadUrlEmpty: 'URL tải xuống trống',
+    validateTransactionIdOrBetIdRequired: 'TransactionId hoặc BetId là bắt buộc',
+    validateTransactionIdMustBeDigitsOnly: 'TransactionId Chỉ cho phép chữ số',
   },
   menu: {
     'Add Promo': 'Thêm khuyến mãi',

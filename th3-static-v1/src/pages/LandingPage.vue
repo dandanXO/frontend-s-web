@@ -52,7 +52,8 @@ const guestLogin = () => {
 
         if (res.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: "Quick registered successfully",
             icon: "check_circle_outline"

@@ -5,7 +5,13 @@
     </div>
     <div class="no-domain pwd-tab-wrapper">
       <q-tabs v-model="currentTab" no-caps class="pwd-tab-toggle" indicator-color="transparent" align="justify">
-        <q-tab :disable="isRequestSent" v-for="(tab, index) in childrenTabs" :key="index" :label="tab.label" :name="tab.name" />
+        <q-tab
+          :disable="isRequestSent"
+          v-for="(tab, index) in childrenTabs"
+          :key="index"
+          :label="tab.label"
+          :name="tab.name"
+        />
       </q-tabs>
     </div>
     <q-tab-panels
@@ -16,7 +22,6 @@
       animated
     >
       <q-tab-panel key="0" name="phone">
-        
         <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
           <div class="forgot-password-form-grid">
             <!-- <span class="forgot-password-form-title">{{ $t("form.forgotPassword") }}</span> -->
@@ -36,7 +41,7 @@
                       v-model="passwordForm.phone"
                       :rules="[
                         (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                        (val) => (val && val.length === 11) || $t('form.phone_rules_02')
+                        (val) => (val && val.length === 10) || $t('form.phone_rules_02')
                       ]"
                       outlined
                       label-color="brand"
@@ -44,8 +49,8 @@
                       :placeholder="$t('form.phone_placeholder')"
                     >
                       <template v-slot:prepend>
-                        <q-icon name="smartphone" />
-                        <div class="prepend-number">+92</div>
+                        <!-- <q-icon name="smartphone" /> -->
+                        <div class="prepend-number">+66</div>
                       </template>
                     </q-input>
                   </template>
@@ -105,7 +110,13 @@
           </div>
 
           <div class="bottom-btn">
-            <q-btn no-caps unelevated class="btn-primary btn-primary__full" :loading="isLoading" @click="onSubmitForgotPwd('phone')">
+            <q-btn
+              no-caps
+              unelevated
+              class="btn-primary btn-primary__full"
+              :loading="isLoading"
+              @click="onSubmitForgotPwd('phone')"
+            >
               {{ $t("btn.confirm") }}
             </q-btn>
           </div>
@@ -316,7 +327,7 @@
                       v-model="passwordForm.loginName"
                       :rules="[
                         (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                        (val) => (val && val.length === 11) || $t('form.phone_rules_02')
+                        (val) => (val && val.length === 10) || $t('form.phone_rules_02')
                       ]"
                       outlined
                       label-color="brand"
@@ -324,8 +335,8 @@
                       :placeholder="$t('form.phone_placeholder')"
                     >
                       <template v-slot:prepend>
-                        <q-icon name="smartphone" />
-                        <div class="prepend-number">+92</div>
+                        <!-- <q-icon name="smartphone" /> -->
+                        <div class="prepend-number">+66</div>
                       </template>
                     </q-input>
                   </template>
@@ -385,7 +396,13 @@
           </div>
 
           <div class="bottom-btn">
-            <q-btn no-caps unelevated class="btn-primary btn-primary__full" :loading="isLoading" @click="onSubmitForgotPwd">
+            <q-btn
+              no-caps
+              unelevated
+              class="btn-primary btn-primary__full"
+              :loading="isLoading"
+              @click="onSubmitForgotPwd"
+            >
               {{ $t("btn.confirm") }}
             </q-btn>
           </div>
@@ -554,36 +571,36 @@
     <!-- <div class="bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div> -->
-    
+
     <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
       <div class="popout-dialog">
         <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
-      <q-card class="captcha-form-wrapper" width="100%">
-        <q-card-section class="q-pa-md text-white">
-          <q-toolbar>
-            <q-toolbar-title>{{ $t("form.verificationCode") }}</q-toolbar-title>
-            <q-btn flat v-close-popup round dense icon="close" />
-          </q-toolbar>
-        </q-card-section>
-        <div class="q-px-lg q-pt-sm q-pb-lg">
-          <q-card-section class="q-mb-md q-pa-md">
-            <q-input v-model="innerCaptchaRef" :placeholder="$t(`form.captchaCode`)">
-              <template v-slot:append>
-                <img
-                  v-show="showImageCode"
-                  :src="phoneVerificationImg"
-                  @load="imgOnLoad"
-                  @error="imgOnError"
-                  :title="$t(`form.refresh_veri_code`)"
-                  style="margin-top: 6px; cursor: pointer"
-                  @click="getInnerCode"
-                />
-              </template>
-            </q-input>
+        <q-card class="captcha-form-wrapper" width="100%">
+          <q-card-section class="q-pa-md text-white">
+            <q-toolbar>
+              <q-toolbar-title>{{ $t("form.verificationCode") }}</q-toolbar-title>
+              <q-btn flat v-close-popup round dense icon="close" />
+            </q-toolbar>
           </q-card-section>
-          <q-btn class="get-code-btn" @click="onCaptchaSubmit" :label="$t(`form.send_otp`)" />
-        </div>
-      </q-card>
+          <div class="q-px-lg q-pt-sm q-pb-lg">
+            <q-card-section class="q-mb-md q-pa-md">
+              <q-input v-model="innerCaptchaRef" :placeholder="$t(`form.captchaCode`)">
+                <template v-slot:append>
+                  <img
+                    v-show="showImageCode"
+                    :src="phoneVerificationImg"
+                    @load="imgOnLoad"
+                    @error="imgOnError"
+                    :title="$t(`form.refresh_veri_code`)"
+                    style="margin-top: 6px; cursor: pointer"
+                    @click="getInnerCode"
+                  />
+                </template>
+              </q-input>
+            </q-card-section>
+            <q-btn class="get-code-btn" @click="onCaptchaSubmit" :label="$t(`form.send_otp`)" />
+          </div>
+        </q-card>
       </div>
     </q-dialog>
   </div>
@@ -644,69 +661,69 @@ const getInnerCode = () => {
     });
 };
 const onCaptchaSubmit = () => {
-      if (!passwordForm.loginName) {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: t("form.phone_cannot_empty"),
-          icon: "report_problem"
-        });
-        getInnerCode();
-        return;
-      }
-      api
-        .post(
-          `/otp/sendForgetPasswordPhone`,
-          qs.stringify({
-            loginName: passwordForm.loginName,
-            phone: passwordForm.loginName,
-            captchaCode: innerCaptchaRef.value,
-            codeId: innerCodeId.value
-          })
-        )
-        .then((res) => {
-          let message = res.message || t("form.otp_sent_phone_success"),
-            color = "positive";
+  if (!passwordForm.loginName) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: t("form.phone_cannot_empty"),
+      icon: "report_problem"
+    });
+    getInnerCode();
+    return;
+  }
+  api
+    .post(
+      `/otp/sendForgetPasswordPhone`,
+      qs.stringify({
+        loginName: passwordForm.loginName,
+        phone: passwordForm.loginName,
+        captchaCode: innerCaptchaRef.value,
+        codeId: innerCodeId.value
+      })
+    )
+    .then((res) => {
+      let message = res.message || t("form.otp_sent_phone_success"),
+        color = "positive";
 
-          if (res.code === 0) {
-            showCaptchaDialog.value = false;
-            passwordForm.smsCode = "";
-            passwordForm.smsCodeId = res.data.codeId;
-            console.log(res.data.codeId);
+      if (res.code === 0) {
+        showCaptchaDialog.value = false;
+        passwordForm.smsCode = "";
+        passwordForm.smsCodeId = res.data.codeId;
+        console.log(res.data.codeId);
 
-            // start otp countdown
-            otpCountdown.value = res.data.second || 60;
-            otpCountdownInterval.value = setInterval(() => {
-              if (otpCountdown.value > 0) {
-                otpCountdown.value = otpCountdown.value - 1;
-              }
-            }, 1000);
-          } else {
-            color = "negative";
-            if (res.code === 1402) {
-              message = t('notify.tryagain', { seconds: res.data.second });
+        // start otp countdown
+        otpCountdown.value = res.data.second || 60;
+        otpCountdownInterval.value = setInterval(() => {
+          if (otpCountdown.value > 0) {
+            otpCountdown.value = otpCountdown.value - 1;
+          }
+        }, 1000);
+      } else {
+        color = "negative";
+        if (res.code === 1402) {
+          message = t("notify.tryagain", { seconds: res.data.second });
 
-              // start otp countdown
-              otpCountdown.value = res.data.second || 60;
-              otpCountdownInterval.value = setInterval(() => {
-                if (otpCountdown.value > 0) {
-                  otpCountdown.value = otpCountdown.value - 1;
-                }
-              }, 1000);
+          // start otp countdown
+          otpCountdown.value = res.data.second || 60;
+          otpCountdownInterval.value = setInterval(() => {
+            if (otpCountdown.value > 0) {
+              otpCountdown.value = otpCountdown.value - 1;
             }
-            getInnerCode();
-          }
+          }, 1000);
+        }
+        getInnerCode();
+      }
 
-          if (message) {
-            $q.notify({ message, color, position: "top" });
-          }
+      if (message) {
+        $q.notify({ message, color, position: "top" });
+      }
 
-          console.log("onCaptchaSubmit", res);
-        })
-        .catch(() => {
-          getInnerCode();
-        });
-    };
+      console.log("onCaptchaSubmit", res);
+    })
+    .catch(() => {
+      getInnerCode();
+    });
+};
 const verificationImg = ref("");
 const passwordForm = reactive({
   loginName: "",
@@ -753,63 +770,62 @@ const newConfirmPwdVModel = ref();
 const isRequestSent = ref(false);
 
 const onSubmitForgotPwd = (type) => {
-    if (type === 'phone') {
-      loginNameRef.value.validate();
-      ftCaptchaRef.value.validate();
+  if (type === "phone") {
+    loginNameRef.value.validate();
+    ftCaptchaRef.value.validate();
 
-      $q.loading.show({
-        message: t('notify.sendingVerificationCode')
-      });
+    $q.loading.show({
+      message: t("notify.sendingVerificationCode")
+    });
 
-      if (loginNameRef.value.hasError || ftCaptchaRef.value.hasError) {
-        $q.loading.hide();
-      } else {
-        passwordForm.loginName = passwordForm.phone;
-        api
-          .post("/otp/sendForgetPasswordPhone", qs.stringify(passwordForm))
-          .then((response) => {
-            if (response.code === 0) {
-              isRequestSent.value = true;
-              SessionStorage.set("phoneCodeId", response.data.codeId);
-            }
-          })
-          .catch((error) => {})
-          .then(() => {
-            $q.loading.hide();
-          });
-
-        getCode();
-      }
-      return;
+    if (loginNameRef.value.hasError || ftCaptchaRef.value.hasError) {
+      $q.loading.hide();
     } else {
-      loginNameRef.value.validate();
-      emailRef.value.validate();
-      ftCaptchaRef.value.validate();
+      passwordForm.loginName = passwordForm.phone;
+      api
+        .post("/otp/sendForgetPasswordPhone", qs.stringify(passwordForm))
+        .then((response) => {
+          if (response.code === 0) {
+            isRequestSent.value = true;
+            SessionStorage.set("phoneCodeId", response.data.codeId);
+          }
+        })
+        .catch((error) => {})
+        .then(() => {
+          $q.loading.hide();
+        });
 
-      $q.loading.show({
-        message: t('notify.sendingVerificationCode')
-      });
-
-      if (loginNameRef.value.hasError || emailRef.value.hasError || ftCaptchaRef.value.hasError) {
-        $q.loading.hide();
-      } else {
-        api
-          .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordForm))
-          .then((response) => {
-            if (response.code === 0) {
-              isRequestSent.value = true;
-              SessionStorage.set("emailCodeId", response.data.codeId);
-            }
-          })
-          .catch((error) => {})
-          .then(() => {
-            $q.loading.hide();
-          });
-
-        getCode();
-      }
+      getCode();
     }
-  
+    return;
+  } else {
+    loginNameRef.value.validate();
+    emailRef.value.validate();
+    ftCaptchaRef.value.validate();
+
+    $q.loading.show({
+      message: t("notify.sendingVerificationCode")
+    });
+
+    if (loginNameRef.value.hasError || emailRef.value.hasError || ftCaptchaRef.value.hasError) {
+      $q.loading.hide();
+    } else {
+      api
+        .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordForm))
+        .then((response) => {
+          if (response.code === 0) {
+            isRequestSent.value = true;
+            SessionStorage.set("emailCodeId", response.data.codeId);
+          }
+        })
+        .catch((error) => {})
+        .then(() => {
+          $q.loading.hide();
+        });
+
+      getCode();
+    }
+  }
 };
 
 // const onSubmitForgotPwd = () => {
@@ -859,13 +875,13 @@ const onVerifyForgotPassword = (type) => {
   newPwdRef.value.validate();
 
   $q.loading.show({
-    message: t('notify.submitting')
+    message: t("notify.submitting")
   });
 
   if (codeRef.value.hasError || newPwdRef.value.hasError) {
     $q.loading.hide();
   } else {
-    if (type === 'phone') {
+    if (type === "phone") {
       verificationForm.codeId = SessionStorage.getItem("phoneCodeId");
       // verificationForm.email = passwordForm.email;
       verificationForm.phone = passwordForm.phone;
@@ -876,9 +892,10 @@ const onVerifyForgotPassword = (type) => {
         .then((response) => {
           if (response.code === 0) {
             $q.notify({
-              color: "positive",
+              color: "dark",
+              textColor: "white",
               position: "top",
-              message: t('notify.passwordResetCompleted'),
+              message: t("notify.passwordResetCompleted"),
               icon: "check_circle_outline"
             });
             isRequestSent.value = false;
@@ -891,8 +908,7 @@ const onVerifyForgotPassword = (type) => {
         });
 
       getCode();
-    }
-    else {
+    } else {
       verificationForm.codeId = SessionStorage.getItem("emailCodeId");
       verificationForm.email = passwordForm.email;
 
@@ -901,9 +917,10 @@ const onVerifyForgotPassword = (type) => {
         .then((response) => {
           if (response.code === 0) {
             $q.notify({
-              color: "positive",
+              color: "dark",
+              textColor: "white",
               position: "top",
-              message: t('notify.passwordResetCompleted'),
+              message: t("notify.passwordResetCompleted"),
               icon: "check_circle_outline"
             });
             isRequestSent.value = false;
@@ -917,15 +934,14 @@ const onVerifyForgotPassword = (type) => {
 
       getCode();
     }
-    }
-    
+  }
 };
 
 const verificationForm = reactive({
   // phone: "",
   code: "",
   // captchaCode: "",
-  codeId: currentTab.value === 'email' ? SessionStorage.getItem("emailCodeId") : SessionStorage.getItem("phoneCodeId"),
+  codeId: currentTab.value === "email" ? SessionStorage.getItem("emailCodeId") : SessionStorage.getItem("phoneCodeId"),
   newPassword: ""
 });
 // const onVerifyForgotPassword = () => {
@@ -954,7 +970,8 @@ const verificationForm = reactive({
 //       .then((response) => {
 //         if (response.code === 0) {
 //           $q.notify({
-//             color: "positive",
+//             color: "dark",
+//             textColor: "white",
 //             position: "top",
 //             message: "Password Reset Completed",
 //             icon: "report_problem"
@@ -1024,7 +1041,6 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-
 .get-code-btn {
   background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
   color: #000000;
@@ -1040,9 +1056,9 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   // justify-content: center;
-  // background: url("../assets/images/auth/bg-login.png");
-  // background-size: 100% 100%;
-  // background-repeat: no-repeat;
+  background: url("../assets/images/auth/bg-login.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .forgot-password-form-logo-img {
@@ -1091,7 +1107,7 @@ onMounted(() => {
     line-height: 18px;
     letter-spacing: 0;
     text-align: center;
-    color: #b2bdbf;
+    color: #907c5f;
     margin: 0 auto;
   }
 }
@@ -1140,15 +1156,16 @@ onMounted(() => {
 
 :deep(.q-tab-panels) {
   border-radius: 8px;
+  background: transparent;
 }
 
 .pwd-tab-wrapper {
-    width: 100%;
-    margin: 0 auto 18px;
+  width: 100%;
+  margin: 0 auto 18px;
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    color: #FFFFFF80;
+    color: #ffffff80;
 
     width: 50%;
   }
@@ -1159,7 +1176,7 @@ onMounted(() => {
     border-radius: 8px;
     margin-bottom: 4px;
     margin-top: 5px;
-    padding: 1px;
+    // padding: 1px;
 
     .right {
       color: white;
@@ -1200,8 +1217,7 @@ onMounted(() => {
       //   left: 50%;
       //   transform: translateX(-50%);
       // }
-      background: #394142;
-
+      background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
     }
 
     :deep(.q-tab--active .q-tab__label) {

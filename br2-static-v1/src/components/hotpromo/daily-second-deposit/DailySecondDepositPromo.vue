@@ -6,7 +6,7 @@
           <img src="../../../assets/images/promotion/receive-earn/icon-duration.svg" />
           {{ $t("hotPromo.duration") }}
         </div>
-        <div class="bar-desc">{{ $t("hotPromo.dailySecondDeposit.duration") }}</div>
+        <div class="bar-desc">{{ $t("hotPromo.longTerm") }}</div>
       </div>
 
       <div class="receive-bar">

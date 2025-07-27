@@ -17,7 +17,7 @@
           />
           <div>
             <div class="contact-left">
-              <div class="contact-box mail-buttons">
+              <!-- <div class="contact-box mail-buttons">
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-qq.png" />
                 </div>
@@ -29,13 +29,13 @@
                     <img :src="require(`../assets/images/affiliate/download-icon.svg`)" />
                   </a>
                 </div>
-              </div>
+              </div> -->
               <div class="contact-box qq-buttons">
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-telegram.png" />
                 </div>
                 <div class="contact-name">Telegram</div>
-                <span ref="contact1" class="contact-text">@6.vip</span>
+                <span ref="contact1" class="contact-text">{{ ui.telegramUrl }}</span>
                 <div class="contact-buttons">
                   <button class="copy-btn" @click="copyMessage('1')">{{ copybtntxt1 }}</button>
                   <a target="_blank" href="https://telegram.org/download" class="download-btn">
@@ -43,7 +43,7 @@
                   </a>
                 </div>
               </div>
-              <div class="contact-box skype-buttons">
+              <!-- <div class="contact-box skype-buttons">
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-teams.png" />
                 </div>
@@ -59,8 +59,8 @@
                     <img :src="require(`../assets/images/affiliate/download-icon.svg`)" />
                   </a>
                 </div>
-              </div>
-              <div class="contact-box telegram-buttons">
+              </div> -->
+              <!-- <div class="contact-box telegram-buttons">
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/icon-bubble.png" />
                 </div>
@@ -72,8 +72,8 @@
                     <img :src="require(`../assets/images/affiliate/download-icon.svg`)" />
                   </a>
                 </div>
-              </div>
-              <div class="contact-box bubble-buttons">
+              </div> -->
+              <!-- <div class="contact-box bubble-buttons">
                 <div class="contact-icon">
                   <img src="../assets/images/affiliate/amico-icon.png" />
                 </div>
@@ -85,7 +85,7 @@
                     <img :src="require(`../assets/images/affiliate/download-icon.svg`)" />
                   </a>
                 </div>
-              </div>
+              </div> -->
             </div>
 
             <div class="buttons">
@@ -269,10 +269,12 @@ import { useDark } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import { i18nStore } from "@/store/language";
 import { useI18n } from "vue-i18n";
+import { uiStore } from "@/store/ui";
 
 export default defineComponent({
   setup() {
     const { t } = useI18n();
+    const ui = uiStore();
     const i18nStoreLanguage = i18nStore();
     const { languageVal } = storeToRefs(i18nStoreLanguage);
     const affiliateUrl = ref("https://6666vip.cc/lk6/");
@@ -380,7 +382,8 @@ export default defineComponent({
       copybtntxt3,
       copybtntxt4,
       copybtntxt5,
-      languageVal
+      languageVal,
+      ui
     };
   }
 });

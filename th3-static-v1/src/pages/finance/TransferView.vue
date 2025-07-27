@@ -35,12 +35,7 @@
           />
         </div>
         <div class="transferamounts q-my-md">
-          <div
-            class="val"
-            v-for="(amt, i) in amounts"
-            :key="i"
-            @click="transferInfo.amount = amt"
-          >
+          <div class="val" v-for="(amt, i) in amounts" :key="i" @click="transferInfo.amount = amt">
             {{ amt }}
           </div>
         </div>
@@ -62,11 +57,7 @@
           </template>
           <template v-slot:append>
             <span style="font-size: 26px" class="text-bright">
-              <q-btn
-                label="最大金额"
-                @click="updateTransferAmt"
-                color="brightbtn"
-              />
+              <q-btn label="最大金额" @click="updateTransferAmt" color="brightbtn" />
             </span>
           </template>
         </q-input>
@@ -179,7 +170,8 @@ const submitTransfer = () => {
                 if (response.code === 0) {
                   setTimeout(() => {
                     $q.notify({
-                      color: "positive",
+                      color: "dark",
+                      textColor: "white",
                       position: "top",
                       message: "成功",
                       icon: "check_circle_outline"
@@ -212,7 +204,8 @@ const submitTransfer = () => {
                 if (response.code === 0) {
                   setTimeout(() => {
                     $q.notify({
-                      color: "positive",
+                      color: "dark",
+                      textColor: "white",
                       position: "top",
                       message: "转账成功",
                       icon: "check_circle_outline"
@@ -350,7 +343,7 @@ onMounted(() => {
   display: flex;
   font-size: 20px;
   line-height: 20px;
-  color: #B2BDBF;
+  color: #b2bdbf;
   width: 100%;
   justify-content: space-evenly;
   align-items: center;

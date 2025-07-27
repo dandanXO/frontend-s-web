@@ -32,7 +32,7 @@
         </div>
 
         <div class="loader-container">
-          <img class="loader-logo" src="../../assets/images/auth/auth-logo-text-only.png" alt="B9.GAME" />
+          <img class="loader-logo" src="../../assets/images/auth/auth-logo-text-only.png" alt="SuperSiam" />
           <div>{{ $t("btn.loading_plsWait") }}</div>
         </div>
 
@@ -252,7 +252,8 @@ const submitTransfer = (amount) => {
     .then((response) => {
       if (response.code === 0) {
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "สำเร็จ",
           icon: "check_circle_outline"

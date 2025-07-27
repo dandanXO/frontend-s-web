@@ -323,23 +323,20 @@ export default defineComponent({
         $q.loading.hide();
       } else {
         var qs = require("qs");
-        const fpPromise = FingerprintJS.load();
+        const sidParam = store.visitorId;
+
         (async () => {
-          const fp = await fpPromise;
-          const result = await fp.get();
-          const excludes = { value: ["timezone", "timeZoneOffset"] };
-          const allComponents = { ...result.components };
-          excludes.value.forEach((element) => {
-            delete allComponents[element];
-          });
-          const sidParam = FingerprintJS.hashComponents(allComponents);
+          if (store.aaid) {
+            regForm.traceId = store.aaid;
+          }
+          
           // regForm.sid = store.googleadid ? store.googleadid : store.aaid;
           if (store.googleadid) {
             regForm.sid = store.googleadid;
           } else if (store.aaid) {
             regForm.sid = store.aaid;
           } else {
-            regForm.sid = "fp-" + sidParam;
+            regForm.sid = sidParam;
             regForm.isfinger = "1";
           }
 

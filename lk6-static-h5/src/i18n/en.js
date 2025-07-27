@@ -50,6 +50,7 @@ export default {
       esports: "Esports",
       slot: "Slots",
       live: "Live Casino",
+      eeaiLive: "EEAI Live",
       poker: "Poker",
       fish: "Fishing",
       lottery: "Lottery",
@@ -887,8 +888,8 @@ export default {
   },
   home: {
     downloadApp: {
-      appName: "Lucky6 APP",
-      desc: "All games covered. Smoother, safer, faster experience."
+      appName: "Lucky6 APP Download",
+      desc: "Exclusive in-app gift waiting for you!"
     },
     authSection: {
       notLogin1: "You are not logged in",
@@ -932,6 +933,8 @@ export default {
     commissionCalculation: "Commission Calculation",
     commissionCalculationExample: "Below is an example of commission calculation:",
     commissionTerm: "Commission Terms & Conditions",
+    affiliation: "Affiliation",
+    telegramGroup: "TG Group",
     contact: {
       qq: "Lucky6 QQ",
       telegram: "Telegram",

@@ -160,7 +160,7 @@
           <div class="invite-title">{{ $t("earnMoney.reward.inviteFriendsViaLink") }}</div>
           <div class="invite-share-link">
             <div class="link-href">{{ selfTgurl }}</div>
-            <div class="link-copy" @click="copyHrefLink">{{ $t("earnMoney.reward.copyLink") }}</div>
+            <div class="link-copy" @click="copyHrefLink">{{ $t("earnMoney.reward.copy") }}</div>
           </div>
         </div>
       </div>
@@ -263,8 +263,9 @@ const fallbackCopyTextToClipboard = (text) => {
   document.body.removeChild(textarea);
 
   $q.notify({
-    message: "Link copied to clipboard",
-    color: "positive",
+    message: t("notify.linkCopied"),
+    color: "dark",
+    textColor: "white",
     position: "top",
     timeout: 2000
   });
@@ -278,8 +279,9 @@ const copyHrefLink = () => {
       .writeText(textToCopy)
       .then(() => {
         $q.notify({
-          message: "Link copied to clipboard",
-          color: "positive",
+          message: t("notify.linkCopied"),
+          color: "dark",
+          textColor: "white",
           position: "top",
           timeout: 2000
         });
@@ -424,7 +426,8 @@ const handleCopyClick = async () => {
 
     setTimeout(() => {
       $q.notify({
-        color: "positive",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: t("notify.copiedSuccessfully"),
         icon: "check_circle_outline"
@@ -453,7 +456,8 @@ const handleCopyClick = async () => {
 
     setTimeout(() => {
       $q.notify({
-        color: "positive",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: t("notify.copiedSuccessfully"),
         icon: "check_circle_outline"
@@ -493,7 +497,7 @@ const handleCopyClick = async () => {
           font-size: 16px;
           line-height: 120%;
           letter-spacing: 0px;
-          color: #ffffff;
+          color: #433e38;
         }
       }
       .top-copy-id {
@@ -504,7 +508,7 @@ const handleCopyClick = async () => {
         font-size: 12.17px;
         line-height: 120%;
         letter-spacing: 0px;
-        color: #b3bec0;
+        color: #433e38c7;
         img {
           width: 30px;
           height: 30px;
@@ -582,6 +586,7 @@ const handleCopyClick = async () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: #3a3a3a;
 
     .score-txt {
       display: flex;
@@ -599,7 +604,7 @@ const handleCopyClick = async () => {
       font-size: 14px;
 
       &:before {
-        content: "RS";
+        content: "THB";
         font-size: 14px;
         margin-right: 4px;
       }
@@ -698,9 +703,8 @@ const handleCopyClick = async () => {
 }
 .bottom-setting-section {
   margin: 5px 20px 20px;
-
   border-radius: 10px;
-  background: #373c3d;
+  background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -761,13 +765,14 @@ const handleCopyClick = async () => {
 
 .invite-share-link {
   margin-top: 8px;
-  background-color: #292d2e;
+  background-color: #e0d6c7;
   padding: 4px;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
   min-height: 40px;
   border: 1px solid #ffffff14;
+  color: #3a3a3a;
 
   .link-href {
     padding: 10px 16px;
@@ -778,8 +783,7 @@ const handleCopyClick = async () => {
   }
   .link-copy {
     color: #ffffff;
-    background: #ffffff0f;
-
+    background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -792,7 +796,7 @@ const handleCopyClick = async () => {
 
 .acct-nav {
   margin: 5px 20px 20px;
-  background: #373c3d;
+  background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
   padding: 10px;
   border-radius: 10px;
 
@@ -838,8 +842,8 @@ const handleCopyClick = async () => {
         border-radius: 4px;
         color: #333333;
         font-weight: bold;
-        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-        box-shadow: 0px 2.07px 0px 0px #1cca6a;
+        background: #e0d6c7;
+        box-shadow: 0px 2.07px 0px 0px #907c5f;
 
         img {
           filter: grayscale(1) brightness(0);
@@ -849,8 +853,8 @@ const handleCopyClick = async () => {
         border-radius: 4px;
         color: #ffffff;
         font-weight: bold;
-        background: #455152;
-        box-shadow: 0px 2.07px 0px 0px #2a3637;
+        background: #433e38;
+        box-shadow: 0px 2px 0px 0px #2a3637;
         img {
           filter: grayscale(1) brightness(100);
         }
@@ -979,7 +983,7 @@ const handleCopyClick = async () => {
   }
   .acct-nav-label {
     // color: rgba(206, 206, 206, 0.8);
-    color: #ffffff;
+    color: #3a3a3a;
     font-size: 12px;
     font-weight: 700;
   }
@@ -1003,7 +1007,8 @@ const handleCopyClick = async () => {
   width: 100%;
   padding: 10px 10px;
   font-size: 16px;
-  background: #455152;
+  background: #707070;
+
   color: #ffffff;
 
   box-shadow: 0px 2px 0px 0px #2a3637;
@@ -1021,9 +1026,10 @@ const handleCopyClick = async () => {
   width: 100%;
   padding: 10px 10px;
   font-size: 16px;
-  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-  color: #000000;
-  box-shadow: 0px 2px 0px 0px #1cca6a;
+  background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+
+  color: #fff;
+  box-shadow: 0px 2px 0px 0px #907c5f;
   border-radius: 4px;
   height: unset;
 }
@@ -1168,6 +1174,14 @@ const handleCopyClick = async () => {
       }
     }
   }
+}
+
+.txt-title {
+  color: #fff;
+}
+
+.txt-content {
+  color: #d9cfb8;
 }
 </style>
 

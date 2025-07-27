@@ -224,6 +224,8 @@ import { doIt } from '@/utils/action'
 import { useStore } from '@/store'
 import { useI18n } from 'vue-i18n'
 import { formatMoney } from '@/utils/format-money'
+import { siteEnum } from "@/consts/SiteEnum"
+
 const { t } = useI18n()
 const router = useRouter()
 const loadingBtn = ref(false)
@@ -614,9 +616,9 @@ async function verifyBank(r, v) {
 const returnCurrency = () => {
   if (siteId === 3 || siteId === '3') {
     return 'THB'
-  } else if (siteId === 8 || siteId === '8') {
+  } else if (siteId === siteEnum.VNM || siteId === Number(siteEnum.VNM)) {
     return 'VNDP'
-  } else if (siteId === 10 || siteId === '10') {
+  } else if (siteId === siteEnum.KRW || siteId === Number(siteEnum.KRW)) {
     return '₩'
   } else {
     return 'RMB'

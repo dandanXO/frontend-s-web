@@ -54,7 +54,7 @@
           personal information, including your name, date of birth, address, telephone number and email address. All
           information supplied by you must be accurate and complete. You must keep your registration and Account details
           up-to-date. If any of your Account details change you should notify us immediately by contacting our Customer
-          Services team (our contact details can be found here. b9customerservice@gmail.com).
+          Services team (our contact details can be found here. supersiamcustomerservice@gmail.com).
         </p>
         <p>
           3.2 You may only open one Account on the Website. Duplicate accounts are prohibited and will be closed and
@@ -67,7 +67,7 @@
           other person to use your Account. You accept that any actions taken using your Account will be considered to
           have been taken by you and any bets or wagers placed using your Account will be considered valid. If you have
           reason to believe that someone else is aware of your password, please contact our Customer Services team
-          immediately (our contact details can be found here. b9customerservice@gmail.com).
+          immediately (our contact details can be found here. supersiamcustomerservice@gmail.com).
         </p>
         <p>
           3.4 You must not open an Account or use the Website (including any of the products or services offered via the
@@ -187,7 +187,8 @@
         <p>
           *If you wish to withdraw an amount which is less than the Minimum Single Withdrawal set out in the table
           above, please contact our Customer Services team (our contact details can be found here.
-          b9customerservice@gmail.com). A fee may, reflecting our costs incurred in processing the withdrawal, apply.
+          supersiamcustomerservice@gmail.com). A fee may, reflecting our costs incurred in processing the withdrawal,
+          apply.
         </p>
         <p>
           ** The number of withdrawals you can make is not limited. If you wish to withdraw more than the Maximum Single
@@ -262,7 +263,7 @@
       <div class="content-subpoints">
         <p>
           3.25 If you wish to close your Account, please contact Customer Services (our contact details can be found
-          here. b9customerservice@gmail.com).
+          here. supersiamcustomerservice@gmail.com).
         </p>
         <p>
           3.26 We shall be entitled to restrict (pending our investigation) or permanently close your Account in the
@@ -413,7 +414,8 @@
           5.1 As part of our commitment to responsible gambling, we offer a deposit limit, bet limit, time out and
           self-exclusion facility to each player whereby you can set a limit on the amount that you deposit and spend
           and/or block access to your account for a specified or indefinite time. You can set these limits by going to
-          by contacting our Customer Services team (our contact details can be found here b9customerservice@gmail.com).
+          by contacting our Customer Services team (our contact details can be found here
+          supersiamcustomerservice@gmail.com).
         </p>
         <p>
           5.2 Requests to increase deposit or bet limits or to re-open your account will take effect only after a
@@ -538,7 +540,7 @@
         <p>
           9.1 If you have any compliant about our Website or any of the products or services offered through our
           Website, please contact our Customer Services team (using the contact details found here
-          b9customerservice@gmail.com) setting out the details of your complaint. We will review the complaint or
+          supersiamcustomerservice@gmail.com) setting out the details of your complaint. We will review the complaint or
           dispute and respond to you within fourteen (14) days.
         </p>
         <p>
@@ -590,10 +592,11 @@
     </div>
 
     <div class="tac-footer">
-      <img class="b9game-logo" alt="b9game-logo" src="../assets/images/common/b9game-logo.png" />
+      <img class="supersiamgame-logo" alt="Supersiamgame-logo" src="../assets/images/common/supersiamgame-logo.png" />
       <div class="footer-content">
-        b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies,
-        always putting our customers first. Trust, integrity and fairness are just three of our key values.
+        Supersiam aims to become the global leader in online gaming and betting using the latest blockchain
+        technologies, always putting our customers first. Trust, integrity and fairness are just three of our key
+        values.
       </div>
       <div class="logo-wrapper">
         <a
@@ -606,12 +609,12 @@
         <img class="eighteen-only-logo" alt="18+ only" src="../assets/images/common/18-only.png" />
       </div>
       <div class="footer-content">
-        b9.game is operated by Bridge Technologies B.V., company registration number 160264(0), with registered address
-        at Dr. M.J. Hugenholtzweg 25, Willemstad, Curaçao. Bridge Technologies B.V. is licensed and authorized by the
-        Government of Curaçao, operating under licence number OGL/2024/431/0231 issued by the Curaçao Gaming Control
-        Board (GCB).
+        Supersiam is operated by Bridge Technologies B.V., company registration number 160264(0), with registered
+        address at Dr. M.J. Hugenholtzweg 25, Willemstad, Curaçao. Bridge Technologies B.V. is licensed and authorized
+        by the Government of Curaçao, operating under licence number OGL/2024/431/0231 issued by the Curaçao Gaming
+        Control Board (GCB).
       </div>
-      <div class="copyright-txt">© 2024 b9.game ALL RIGHTS RESERVED</div>
+      <div class="copyright-txt">© 2024 Supersiam ALL RIGHTS RESERVED</div>
     </div>
   </div>
 </template>
@@ -774,7 +777,7 @@ function printDiv(divId) {
   flex-direction: column;
   align-items: center;
   margin: 30px 0 60px;
-  .b9game-logo {
+  .supersiamgame-logo {
     width: 50%;
     min-width: 150px;
   }

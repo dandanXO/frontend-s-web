@@ -79,7 +79,7 @@ installBtn.addEventListener("click", async () => {
         })();
 
         const fbc = fbclid;
-        const siteCode = "PAK";
+        const siteCode = "TH3";
 
         // Create payload in form format
         const payload = new URLSearchParams({
@@ -560,7 +560,7 @@ function insertRandomImages() {
 <div class="ULeU3b Utde2e" role="listitem">
                                         <div class="Atcj9b"><img src="${imageUrl}" class="T75of B5GQxf"
                                         ${extraStyle}
-                                                                 alt="B9GAME" loading="lazy"></div>
+                                                                 alt="SuperSiam" loading="lazy"></div>
 </div>
 `;
     // Append the image to the container

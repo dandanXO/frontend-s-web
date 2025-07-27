@@ -36,7 +36,7 @@
   <q-dialog v-model="showPrizePopup" backdrop-filter="none" persistent>
     <div class="congrats-container">
       <div class="congrats-header">
-        <span class="congrats-amt">{{ convertToCommaAmount(prizePopupBonusAmt) }}PKR</span>
+        <span class="congrats-amt">{{ convertToCommaAmount(prizePopupBonusAmt) }}THB</span>
         <img src="../../../assets/images/promotion/hotpromo/mega-sharing-spin-wheel/claim-success.png" />
       </div>
 

@@ -9,7 +9,7 @@
       <!-- <span class="title">Countdown: {{ remainingTime }}</span> -->
       <div class="summary-wrapper">
         <!-- <span class="prize">
-         Rs
+         THB
           <span class="amount">{{ info.accumulatedBonus }}</span>
         </span> -->
 
@@ -30,10 +30,7 @@
           <span>{{ $t("hotPromo.received") }}</span>
         </button>
 
-
-        <div class="foreground-wrapper">
-
-        </div>
+        <div class="foreground-wrapper"></div>
       </div>
 
       <button class="record-btn" @click="handleRecordClick">{{ $t("hotPromo.record") }}</button>
@@ -53,12 +50,16 @@
               src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/decoration-ox.png"
             /> -->
 
-
       <div class="wheel-inner-wrapper">
-        <img ref="spinWheelRef" class="wheel"
-          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-bg.png" />
-        <img class="indicate"
-          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-indicate.png" />
+        <img
+          ref="spinWheelRef"
+          class="wheel"
+          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-bg.png"
+        />
+        <img
+          class="indicate"
+          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/wheel-indicate.png"
+        />
         <button class="btn" :class="{ disabled: !info.availableSpin }" @click="handleWheelClick">
           {{ $t("hotPromo.rotate") }}
           <br />
@@ -76,9 +77,9 @@
             /> -->
 
       <span v-if="isWheelEnded" class="next-spin-remaining-time">{{ $t("hotPromo.this_round_has_ended") }}</span>
-      <span v-if="!isWheelEnded" class="next-spin-remaining-time">{{ $t("hotPromo.countdown_to_next_free_spins")
-      }}: {{
-          nextFreeSpinRemainingTime }}</span>
+      <span v-if="!isWheelEnded" class="next-spin-remaining-time">
+        {{ $t("hotPromo.countdown_to_next_free_spins") }}: {{ nextFreeSpinRemainingTime }}
+      </span>
     </div>
 
     <div class="winning-record-outer-wrapper">
@@ -89,7 +90,7 @@
             <span class="name">{{ record.loginName }}</span>
             <span>
               {{ $t("hotPromo.receive") }}
-              <span class="amount">{{ $t("hotPromo.rs") }}{{ record.bonus }}</span>
+              <span class="amount">{{ $t("hotPromo.thb") }}{{ record.bonus }}</span>
             </span>
           </div>
         </template>
@@ -115,50 +116,93 @@
     </div>
 
     <q-dialog v-model="showWithdrawDialog">
-          <div class="withdraw-container">
-            <img v-if="languageVal === 'ur'" class="withdraw-header" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/withdraw-header-ur.png" />
-            <img v-else class="withdraw-header" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/withdraw-header.png" />
-            <div class="withdraw-amount">
-              <img class="cash" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/cash-icon.png" />
-              <RedGradientTextAmount :amountText="`${info.accumulatedBonus}`"  />
-              <img class="currency" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/rs-text.svg" />
-            </div>
-            <img v-if="languageVal === 'ur'" class="payment-method-header" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/payment-method-header-ur.svg" />
-            <img v-else class="payment-method-header" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/payment-method-header.svg" />
-            <div class="progress">
-              <div class="progress-item">
-                <img class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/checked.svg" />
-                <div>{{ $t("hotPromo.spinReferWheel.paymentRequestSubmitted") }}</div>
-              </div>
-    
-              <div class="progress-item">
-                <img class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/line.svg" /><div></div>
-              </div>
-    
-              <div class="progress-item">
-                <img class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/checked.svg" />
-                <div>
-                  {{ $t("hotPromo.spinReferWheel.stillNeedToMakeWithdrawal") }} {{ extractionDifference }}
-                </div>
-              </div>
-    
-              <div class="progress-item">
-                <img class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/line.svg" /><div></div>
-              </div>
-    
-              <div class="progress-item">
-                <img v-if="extractionDifference <= 0" class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/checked.svg" />
-                <img v-else class="icon" src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/unchecked.svg" /><div>{{ info.claimBonus }} RS {{ $t("hotPromo.spinReferWheel.willBePaidToYourRsAccount") }}</div>
-              </div>
-            </div>
-    
-            <div class="desc">* {{ $t("hotPromo.spinReferWheel.referFriendToRegister") }}</div>
-    
-            <div class="invite-friends-btn" @click="handleInviteClick">
-              {{ $t("hotPromo.spinReferWheel.inviteFriendsToHelp") }}
-            </div>
+      <div class="withdraw-container">
+        <img
+          v-if="languageVal === 'ur'"
+          class="withdraw-header"
+          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/withdraw-header-ur.png"
+        />
+        <img
+          v-else
+          class="withdraw-header"
+          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/withdraw-header.png"
+        />
+        <div class="withdraw-amount">
+          <img
+            class="cash"
+            src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/cash-icon.png"
+          />
+          <RedGradientTextAmount :amountText="`${info.accumulatedBonus}`" />
+          <img
+            class="currency"
+            src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/thb-text.svg"
+          />
+        </div>
+        <img
+          v-if="languageVal === 'ur'"
+          class="payment-method-header"
+          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/payment-method-header-ur.svg"
+        />
+        <img
+          v-else
+          class="payment-method-header"
+          src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/payment-method-header.svg"
+        />
+        <div class="progress">
+          <div class="progress-item">
+            <img
+              class="icon"
+              src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/checked.svg"
+            />
+            <div>{{ $t("hotPromo.spinReferWheel.paymentRequestSubmitted") }}</div>
           </div>
-        </q-dialog>
+
+          <div class="progress-item">
+            <img
+              class="icon"
+              src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/line.svg"
+            />
+            <div></div>
+          </div>
+
+          <div class="progress-item">
+            <img
+              class="icon"
+              src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/checked.svg"
+            />
+            <div>{{ $t("hotPromo.spinReferWheel.stillNeedToMakeWithdrawal") }} {{ extractionDifference }}</div>
+          </div>
+
+          <div class="progress-item">
+            <img
+              class="icon"
+              src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/line.svg"
+            />
+            <div></div>
+          </div>
+
+          <div class="progress-item">
+            <img
+              v-if="extractionDifference <= 0"
+              class="icon"
+              src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/checked.svg"
+            />
+            <img
+              v-else
+              class="icon"
+              src="../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/withdraw/unchecked.svg"
+            />
+            <div>{{ info.claimBonus }} THB {{ $t("hotPromo.spinReferWheel.willBePaidToYourRsAccount") }}</div>
+          </div>
+        </div>
+
+        <div class="desc">* {{ $t("hotPromo.spinReferWheel.referFriendToRegister") }}</div>
+
+        <div class="invite-friends-btn" @click="handleInviteClick">
+          {{ $t("hotPromo.spinReferWheel.inviteFriendsToHelp") }}
+        </div>
+      </div>
+    </q-dialog>
 
     <WheelResultDialog v-model="showResultDialog" :prize="prize" @hide="$emit('reload')" />
     <RecordDialog v-model="showRecordDialog" />
@@ -312,7 +356,7 @@ const handleWheelClick = () => {
 const handleInviteClick = () => {
   // isCashOutPopupVisible.value = true;
   // cashOutPopupRef.value?.showInviteWins();
-  isSharePopupVisible.value = true
+  isSharePopupVisible.value = true;
   // sharePopupRef.value?.showInviteWins();
 };
 
@@ -339,7 +383,8 @@ const handleReceiveClick = () => {
     if (res.code === 0) {
       $q.notify({
         message: "Receive successfully",
-        color: "positive",
+        color: "dark",
+        textColor: "white",
         position: "top"
       });
       emit("reload");
@@ -458,7 +503,7 @@ onUnmounted(() => {
         gap: 4px;
         min-height: 20px;
 
-        >span {
+        > span {
           line-height: 20px;
           flex: 1;
           text-overflow: ellipsis;
@@ -473,7 +518,7 @@ onUnmounted(() => {
 
         .amount {
           font-weight: 600;
-          color: #FEBA02;
+          color: #feba02;
         }
 
         .name {
@@ -586,14 +631,13 @@ onUnmounted(() => {
       }
     }
 
-
-
     .next-spin-remaining-time {
       font-weight: 700;
       color: #fff;
       display: block;
       text-align: center;
-      background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/next-spin-countdown-bg.png) no-repeat;
+      background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/next-spin-countdown-bg.png)
+        no-repeat;
       background-size: 100% 100%;
       padding: 8px;
       margin-top: 10px;
@@ -612,7 +656,7 @@ onUnmounted(() => {
       align-items: center;
       padding: 38px 34px 0;
 
-      >* {
+      > * {
         margin-bottom: 10px;
       }
 
@@ -657,7 +701,8 @@ onUnmounted(() => {
           left: 0;
           height: 100%;
           background: linear-gradient(356.25deg, #3b156e -0.21%, #8100ae 93.65%);
-          background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/progress-bar-bg.png) no-repeat;
+          background: url(../../../assets/images/promotion/hotpromo/spin-lucky-wheel/wheel-stage/progress-bar-bg.png)
+            no-repeat;
           background-size: 100% 100%;
           border-radius: 4px;
         }
@@ -700,10 +745,10 @@ onUnmounted(() => {
       top: 8%;
       right: 7%;
       border: none;
-      background-color: #C93F1E;
+      background-color: #c93f1e;
       border-radius: 87px;
       padding: 3px 6px;
-      color: #EC9823;
+      color: #ec9823;
     }
 
     .rules-btn {
@@ -711,22 +756,20 @@ onUnmounted(() => {
       top: 8%;
       left: 9%;
       border: none;
-      background-color: #C93F1E;
+      background-color: #c93f1e;
       border-radius: 87px;
       padding: 3px 6px;
-      color: #EC9823;
+      color: #ec9823;
     }
   }
 
-
-
-  >div:not(:last-child) {
+  > div:not(:last-child) {
     margin-bottom: 12px;
   }
 }
 
 .block-wrapper {
-  background-color: #2A2F3B;
+  background-color: #2a2f3b;
   border-radius: 12px;
   padding: 16px 10px;
   width: 100%;
@@ -746,12 +789,11 @@ onUnmounted(() => {
     text-transform: uppercase;
     padding: 10px 5px 0px 10px;
 
-
     .title-decoration {
       display: flex;
       gap: 12px;
 
-      >div {
+      > div {
         width: 8px;
         height: 8px;
         transform: rotate(45deg);
@@ -770,17 +812,17 @@ onUnmounted(() => {
 @media screen and (max-width: 500px) {
   .wheel-stage-wrapper {
     .wheel-outer-wrapper {
-      .summary-wrapper {}
+      .summary-wrapper {
+      }
     }
   }
 }
 
 @media screen and (max-width: 450px) {
   .wheel-stage-wrapper {
-
     .winning-record-outer-wrapper {
       .winning-record-wrapper {
-        .winning-record-item>span {
+        .winning-record-item > span {
           font-size: 9px;
         }
       }
@@ -799,7 +841,6 @@ onUnmounted(() => {
 
 @media screen and (max-width: 375px) {
   .wheel-stage-wrapper {
-
     .wheel-wrapper {
       .countdown {
         font-size: 12px;
@@ -808,7 +849,6 @@ onUnmounted(() => {
 
     .wheel-outer-wrapper {
       .summary-wrapper {
-
         .prize {
           font-size: 24px;
 
@@ -873,7 +913,7 @@ onUnmounted(() => {
     display: flex;
     flex-direction: column;
     color: #fff;
-    background-color: #EC0105;
+    background-color: #ec0105;
     padding: 10px;
     border-radius: 16px;
     margin: 10px 0;
@@ -895,7 +935,7 @@ onUnmounted(() => {
   }
 
   .desc {
-    color: #A42628;
+    color: #a42628;
     font-weight: 600;
     font-size: 12px;
     line-height: 16px;
@@ -903,7 +943,7 @@ onUnmounted(() => {
   }
 
   .invite-friends-btn {
-    background: linear-gradient(270deg, #F43030 0%, #FF7070 100%);
+    background: linear-gradient(270deg, #f43030 0%, #ff7070 100%);
     font-weight: 700;
     font-size: 12.76px;
     line-height: 16.67px;

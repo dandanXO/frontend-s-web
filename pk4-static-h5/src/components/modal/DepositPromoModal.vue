@@ -547,6 +547,7 @@ onMounted(() => {
 
         max-width: 70%;
         margin-bottom: -90px;
+        margin-top: -50px;
       }
     }
     .modal-countdown {

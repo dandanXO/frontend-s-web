@@ -32,13 +32,7 @@
       <template #fields>
         <InputField :label="'Recommended Link'">
           <template #input>
-            <q-input
-              hide-bottom-space
-              v-model="selfTgurl"
-              label-color="brand"
-              outlined
-              color="white"
-            >
+            <q-input hide-bottom-space v-model="selfTgurl" label-color="brand" outlined color="white">
               <template v-slot:append>
                 <q-icon class="copy-btn" name="content_copy" @click="copyShareLink(selfTgurl)" />
               </template>
@@ -118,7 +112,8 @@ const downloadQRImg = async () => {
         console.log("QR Code image saved to gallery.");
 
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "QR Code image saved to photo gallery.",
           icon: "check_circle_outline"
@@ -195,11 +190,11 @@ onMounted(() => {
       line-height: 30px;
       text-align: center;
       border-radius: 6.25rem;
-      background: #00AE0033;
+      background: #00ae0033;
     }
 
     .desc-title {
-      color: #00AE00;
+      color: #00ae00;
       font-weight: 700;
     }
   }

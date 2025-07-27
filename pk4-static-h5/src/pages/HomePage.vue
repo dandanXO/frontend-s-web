@@ -442,7 +442,7 @@
             <div class="txt-style">{{ $t("home.liveSportEvent") }}</div>
           </div>
         </div>
-        <BetByWidget />
+        <BetByWidget :widgetUrl="widgetUrl" @click="onWidgetClick" />
       </div>
 
       <template
@@ -2498,19 +2498,19 @@ const socialicons = ref([
     name: "whatsapp"
   },
   {
-    name: "mail"
-  },
-  {
-    name: "instagram"
-  },
-  {
     name: "facebook",
   },
   {
     name: "tiktok"
   },
   {
+    name: "instagram"
+  },
+  {
     name: "youtube"
+  },
+  {
+    name: "mail"
   },
   {
     name: "sms"
@@ -4502,6 +4502,14 @@ const checkGoogleLoginSetPwd = () => {
     });
   }
 };
+
+// BetByWidget click
+const onWidgetClick = (url) => {
+  router.push({
+    path: "/gamePlay",
+    query: { gameName: "BetBy", 'bt-path': url  }
+  });
+}
 </script>
 
 <style scoped lang="scss">

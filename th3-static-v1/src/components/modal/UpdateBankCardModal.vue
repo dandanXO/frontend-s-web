@@ -168,7 +168,8 @@ const updateCard = () => {
       if (response.code === 0) {
         isUpdateCardDialogOpen.value = false;
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "Update Succeed",
           icon: "check_circle_outline"

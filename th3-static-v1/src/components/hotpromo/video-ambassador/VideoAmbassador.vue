@@ -2,17 +2,17 @@
   <div class="btn-container">
     <img class="icon" src="./img/flower.png" />
     <div class="styled-box">
-      <div class="title">Show your creativity and become the face of B9.GAME!</div>
+      <div class="title">Show your creativity and become the face of SuperSiam!</div>
       <ul class="content">
         <li>
           Win
-          <span class="sp1">PKR 3,000,000</span>
+          <span class="sp1">THB 3,000,000</span>
           and worldwide recognition with just one video!
         </li>
         <li>Do you have creative ideas?</li>
         <li>Do you want to be in the spotlight?</li>
         <li>
-          <span class="sp2">B9.GAME</span>
+          <span class="sp2">SuperSiam</span>
           is searching for its next Brand Ambassador, and it could be YOU!
         </li>
       </ul>
@@ -27,12 +27,12 @@
     <ul>
       <li>
         Represent
-        <span class="l1">B9.GAME</span>
+        <span class="l1">SuperSiam</span>
         for 12 months
       </li>
       <li>
         Prize Money:
-        <span class="l2">PKR 3,000,000</span>
+        <span class="l2">THB 3,000,000</span>
       </li>
     </ul>
 
@@ -40,29 +40,29 @@
     <ul>
       <li>
         Represent
-        <span class="l1">B9.GAME</span>
+        <span class="l1">SuperSiam</span>
         for 6 months
       </li>
       <li>
         Prize Money:
-        <span class="l2">PKR 300,000</span>
+        <span class="l2">THB 300,000</span>
       </li>
     </ul>
     <div>3rd Prize - Innovation Champ</div>
     <ul>
       <li>
         Represent
-        <span class="l1">B9.GAME</span>
+        <span class="l1">SuperSiam</span>
         for 1 month
       </li>
       <li>
         Prize Money:
-        <span class="l2">PKR 30,000</span>
+        <span class="l2">THB 30,000</span>
       </li>
     </ul>
     <div style="color: red">
       Participation Bonus Get
-      <span style="color: rgba(255, 157, 0, 1)">PKR 3,000</span>
+      <span style="color: rgba(255, 157, 0, 1)">THB 3,000</span>
       if your video gets over 1,000 views!
     </div>
     <div class="thrid-title">
@@ -71,10 +71,10 @@
     </div>
     <div>
       <span style="color: rgba(255, 255, 255, 0.8)">
-        if your video got 1000 views you will get 3000 pkr three simple steps to participate in game
+        if your video got 1000 views you will get 3000 THB three simple steps to participate in game
       </span>
       <ul>
-        <li style="color: rgba(255, 255, 255, 0.8)">1- download b9 game</li>
+        <li style="color: rgba(255, 255, 255, 0.8)">1- download SuperSiam game</li>
         <li style="color: rgba(255, 255, 255, 0.8)">2- sign up</li>
         <li style="color: rgba(255, 255, 255, 0.8)">3- get the invitation link</li>
       </ul>
@@ -110,18 +110,18 @@
         <li>How to Claim Rewards?</li>
         <li>
           Once your video reaches 1,000 views, contact
-          <span class="sp2">B9.GAME</span>
+          <span class="sp2">SuperSiam</span>
           Customer Support to submit your video link and ID. Your reward will be processed within 7 working days!
         </li>
         <li>
           Don't Miss Out! Download
-          <span class="sp2">B9.GAME</span>
+          <span class="sp2">SuperSiam</span>
           now, use your creativity, and shine like a star!
         </li>
         <li>“This is your chance to make Pakistan proud!”</li>
         <li>
           “The next
-          <span class="sp2">B9.GAME</span>
+          <span class="sp2">SuperSiam</span>
           Brand Ambassador could be YOU!"
         </li>
       </ul>

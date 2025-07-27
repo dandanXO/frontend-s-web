@@ -49,6 +49,7 @@ export default {
       esports: "电竞",
       slot: "电子",
       live: "真人",
+      eeaiLive: "EEAI真人",
       poker: "棋牌",
       fish: "捕鱼",
       lottery: "彩票",
@@ -887,8 +888,8 @@ export default {
   },
   home: {
     downloadApp: {
-      appName: "幸运6 APP",
-      desc: "覆盖全部游戏，体验更流畅，更安全，更快捷"
+      appName: "幸运6 app 下载",
+      desc: "APP专享礼包等你拿"
     },
     authSection: {
       notLogin1: "您还未登录",
@@ -932,6 +933,8 @@ export default {
     commissionCalculation: "佣金计算",
     commissionCalculationExample: "以下为佣金计算示例",
     commissionTerm: "结算规则",
+    affiliation: "合作共赢",
+    telegramGroup: "代理TG群",
     contact: {
       qq: "幸运6 QQ",
       telegram: "Telegram",

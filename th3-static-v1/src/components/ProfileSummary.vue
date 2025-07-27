@@ -145,7 +145,7 @@
 
             <q-item clickable v-close-popup @click="router.push('/account/message?from=' + route.path)">
               <q-item-section avatar>
-                <img src="../assets/images/account/message-svg.svg" />
+                <img src="../assets/images/account/message-menu-svg.svg" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>
@@ -191,10 +191,13 @@
         <q-btn no-caps unelevated class="btn-register" @click="router.push('/register')">
           {{ $t("header.register") }}
         </q-btn>
-        <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.svg" /></div>
+        <div class="btn-lang" @click="showLocaleSelectorDialog = true">
+          <img src="../assets/images/auth/icon-globe.svg" />
+        </div>
       </div>
     </div>
 
+    <LocaleSelector v-model="showLocaleSelectorDialog" />
     <q-dialog v-model="isBonusModal" position="top" style="z-index: 2002">
       <BonusModal
         :has-top-download="topDownload && !ui.hideDownload"
@@ -223,6 +226,7 @@ import { defineEmits } from "vue";
 import { useCustomerTrigger } from "src/hooks/trigger";
 import { i18nStore } from "src/router/language";
 import { useThrottleFn } from "@vueuse/core";
+import LocaleSelector from "./LocaleSelector.vue";
 
 const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot", "activateSlide", "showNewPlayer"]);
@@ -249,6 +253,7 @@ const handleScroll = () => {
 
 const isBonusModal = ref(false);
 const fastAccessPromo = shallowRef([]);
+const showLocaleSelectorDialog = ref(false);
 
 const getFastAccessPromo = () => {
   if (!store.token) return;

@@ -43,6 +43,7 @@ watch(
 <style scoped lang="scss">
 .transaction-landing {
   // background: #101114;
+  padding-top: 20px;
   .deposit-tabs {
     font-family: "Manrope", sans-serif;
 
@@ -55,8 +56,8 @@ watch(
     background: #323738;
     background-size: 100% 100%;
     border-radius: 8px;
-    margin: 20px 16px 4px;
-    padding: 1px;
+    margin: 0 16px 4px;
+    // padding: 1px;
     font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
     font-size: 14px;
@@ -93,7 +94,7 @@ watch(
 
     :deep(.q-tab--active) {
       color: white;
-      background: #394142;
+      background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
       border-radius: 6px;
       // color: white;
       // background: linear-gradient(

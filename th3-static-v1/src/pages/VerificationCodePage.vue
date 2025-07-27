@@ -71,7 +71,8 @@ const onSubmit = () => {
     // router.go("/");
     router.push("/home").then(() => {
       $q.notify({
-        color: "positive",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: "Registered successfully",
         icon: "check_circle_outline"
@@ -99,7 +100,7 @@ const onSubmit = () => {
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    color: #5F6061;
+    color: #5f6061;
     font-weight: 400;
     width: 50%;
   }

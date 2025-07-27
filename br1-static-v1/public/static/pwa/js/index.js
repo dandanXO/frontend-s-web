@@ -114,7 +114,8 @@ installBtn.addEventListener("click", async () => {
         if (isIos) {
           document.querySelectorAll(".ios-modal").forEach((el) => (el.style.display = "flex"));
         } else {
-          window.open("https://bra.55ace.com/register", "_blank");
+          const currentDomain = window.location.origin;
+          window.open(`${currentDomain}/home?click_id=${click_id}`, "_blank");
         }
       } else {
         const { outcome } = await deferredPrompt.prompt();
@@ -237,21 +238,21 @@ window.addEventListener("load", () => {
   const urlParams = new URLSearchParams(window.location.search);
   const click_id = urlParams.get("click_id");
 
-  if(click_id) {
+  if (click_id) {
     fetch(`https://api.j9zwvu1ogrg.com/event/kwai/content-view?clickId=${click_id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": 'BR1'
+        Authorization: "BR1"
       }
     })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
 
   const fbqId = fbqLists[hostname]?.id;

@@ -103,17 +103,10 @@ const login = () => {
   $q.loading.show({
     message: t("btn.logging_in")
   });
-  const fpPromise = FingerprintJS.load();
+  
   (async () => {
-    const fp = await fpPromise;
-    const result = await fp.get();
-    const excludes = { value: ["timezone", "timeZoneOffset"] };
-    const allComponents = { ...result.components };
-    excludes.value.forEach((element) => {
-      delete allComponents[element];
-    });
-    const sidParam = "fp-" + FingerprintJS.hashComponents(allComponents);
-
+    const sidParam = store.visitorId;
+    
     if (phoneRef.value.hasError || passwordRef.value.hasError) {
       $q.loading.hide();
     } else {
@@ -137,6 +130,10 @@ const login = () => {
               account: phone.value,
               type: "login"
             });
+
+            sessionStorage.setItem("SHOW_BONUS_AFTER_RELOAD", "1");
+            location.reload();
+
             // const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
             // router.replace(jumpUrl);
           }

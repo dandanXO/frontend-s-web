@@ -13,7 +13,7 @@
 
   <q-inner-loading class="loading-spinner-div" :showing="isLoading">
     <q-spinner-gears size="50px" color="brightbtn" />
-    <div class="label" style="color: #fff">{{$t('btn.loading')}}...</div>
+    <div class="label" style="color: #fff">{{ $t("btn.loading") }}...</div>
   </q-inner-loading>
 
   <div class="reward-wrapper">
@@ -26,10 +26,13 @@
         </div>
         <div class="item-desc">{{ $t("earnMoney.reward.myTotalIncome") }}</div>
         <div class="item-amount">
-          RS
+          THB
           {{
-            convertToCommaAmount(getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET"), null, 0) ||
-            0.0
+            convertToCommaAmount(
+              getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET"),
+              null,
+              0
+            ) || 0.0
           }}
         </div>
       </div>
@@ -47,7 +50,7 @@
       <!-- <div class="details-item" v-if="isShowOnetime"> -->
       <div class="details-item">
         <div class="item-amount">
-          Rs
+          THB
           <span>{{ convertToCommaAmount(getRewardAmount("ONE_TIME"), null, 0) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.invite") }}</div>
@@ -57,7 +60,7 @@
       <!-- <div class="details-item" v-if="isShowDeposit"> -->
       <div class="details-item">
         <div class="item-amount">
-          Rs
+          THB
           <span>{{ convertToCommaAmount(getRewardAmount("DEPOSIT"), null, 0) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.topUp") }}</div>
@@ -68,7 +71,7 @@
       <!-- <div class="details-item details-item" v-if="isShowBet"> -->
       <div class="details-item details-item">
         <div class="item-amount">
-          Rs
+          THB
           <span>{{ convertToCommaAmount(getRewardAmount("BET"), null, 0) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.reward.bet") }}</div>
@@ -87,7 +90,7 @@
 
       <!-- <div class="details-item">
           <div class="item-amount">
-            Rs
+            THB
             <span>0</span>
           </div>
           <div class="item-title">Achievement</div>
@@ -126,7 +129,7 @@
       </div>
       <!-- <div class="person-level-away">
         <div class="person-level-title">
-          <img class="mini-icon" src="../../assets/images/earn-money/oneperson.png"> 
+          <img class="mini-icon" src="../../assets/images/earn-money/oneperson.png">
           <div class="text" v-if="currentLevel < 10">
             Only <span class="text-person">{{playersToNextLevel}} person</span> away from <span class="text-level">Level {{ currentLevel + 1}}</span>
           </div>
@@ -145,21 +148,21 @@
               <div class="level">Level {{ currentLevel < 10 ? currentLevel : 8 }}</div>
               <img v-if="currentPersonPercentage >= 33" src="../../assets/images/earn-money/level-active.png">
               <img v-else src="../../assets/images/earn-money/level-inactive.png">
-              
+
               <div class="noOfPerson">{{ currentLevel < 10 ? levels[currentLevel].minPlayers : 50001 }} person</div>
             </div>
             <div class="checkpoint" style="left: 66%">
               <div class="level">Level {{ currentLevel < 10 ? currentLevel + 1 : 9 }}</div>
               <img v-if="currentPersonPercentage >= 66" src="../../assets/images/earn-money/level-active.png">
               <img v-else src="../../assets/images/earn-money/level-inactive.png">
-              
+
               <div class="noOfPerson">{{ currentLevel < 10 ? levels[currentLevel].minPlayers : 100001 }} person</div>
             </div>
             <div class="checkpoint" style="left: 99%">
               <div class="level">Level {{currentLevel < 10 ? currentLevel : 10 }}</div>
               <img v-if="currentPersonPercentage >= 100" src="../../assets/images/earn-money/level-active.png">
               <img v-else src="../../assets/images/earn-money/level-inactive.png">
-              
+
               <div class="noOfPerson">{{ currentLevel < 10 ? levels[currentLevel].minPlayers : 150001 }} person</div>
             </div>
           </div>
@@ -167,16 +170,20 @@
         </div>
       </div>
        -->
-       <div class="person-level-away">
+      <div class="person-level-away">
         <div class="person-level-title">
-          <img class="mini-icon" src="../../assets/images/earn-money/oneperson.png">
+          <img class="mini-icon" src="../../assets/images/earn-money/oneperson.png" />
           <div class="text" v-if="currentLevel > 0 && currentLevel < 10">
-            {{ $t('earnMoney.only') }} <span class="text-person">{{ playersToNextLevel }} {{$t('earnMoney.person')}}</span> {{$t('earnMoney.awayFrom')}}
-            <span class="text-level">{{ $t('earnMoney.level') }} {{ currentLevel + 1 }}</span>
+            {{ $t("earnMoney.only") }}
+            <span class="text-person">{{ playersToNextLevel }} {{ $t("earnMoney.person") }}</span>
+            {{ $t("earnMoney.awayFrom") }}
+            <span class="text-level">{{ $t("earnMoney.level") }} {{ currentLevel + 1 }}</span>
           </div>
-          <div class="text" v-else-if="currentLevel > 0">{{ $t('earnMoney.youSuccessfullyInvited') }} <span class="text-person">{{ invitedPlayers }} {{$t('earnMoney.person')}}</span>
+          <div class="text" v-else-if="currentLevel > 0">
+            {{ $t("earnMoney.youSuccessfullyInvited") }}
+            <span class="text-person">{{ invitedPlayers }} {{ $t("earnMoney.person") }}</span>
           </div>
-          <div class="text" v-else>{{ $t('earnMoney.reward.deposit_table.row1.description') }} </div>
+          <div class="text" v-else>{{ $t("earnMoney.reward.deposit_table.row1.description") }}</div>
         </div>
 
         <div class="person-level-away-bar-container">
@@ -191,22 +198,19 @@
               </div>
 
               <!-- Dynamic checkpoints -->
-              <div 
+              <div
                 class="checkpoint"
-                v-for="(checkpoint, index) in checkpoints" 
-                :key="index" 
+                v-for="(checkpoint, index) in checkpoints"
+                :key="index"
                 :style="{ left: checkpoint.left - 5 + '%' }"
               >
                 <div class="level">{{ checkpoint.label }}</div>
-                <img 
-                  v-if="currentPersonPercentage >= checkpoint.left" 
-                  src="../../assets/images/earn-money/level-active.png" 
+                <img
+                  v-if="currentPersonPercentage >= checkpoint.left"
+                  src="../../assets/images/earn-money/level-active.png"
                 />
-                <img 
-                  v-else 
-                  src="../../assets/images/earn-money/level-inactive.png" 
-                />
-                <div class="noOfPerson">{{ checkpoint.minPlayers }} {{$t('earnMoney.person')}}</div>
+                <img v-else src="../../assets/images/earn-money/level-inactive.png" />
+                <div class="noOfPerson">{{ checkpoint.minPlayers }} {{ $t("earnMoney.person") }}</div>
               </div>
             </div>
           </div>
@@ -229,16 +233,16 @@
         <tbody>
           <tr v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
             <td>
-              <template v-if="index < 3">
+              <!-- <template v-if="index < 3">
                 <img style="max-width: 25px;" :src="require(`../../assets/images/earn-money/no${index + 1}.png`)" alt="Level Image" />
-              </template>
+              </template> -->
               LEVEL {{ index + 1 }}
             </td>
             <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
             <td>
               <div class="reward-coin-container">
-                <img class="reward-coin" src="../../assets/images/earn-money/invite-reward-coin.png" />
-                {{ item.bonusAmount }}
+                <!-- <img class="reward-coin" src="../../assets/images/earn-money/invite-reward-coin.png" /> -->
+                {{ store.currency.value }} {{ item.bonusAmount }}
               </div>
             </td>
           </tr>
@@ -287,8 +291,8 @@
         </thead>
         <tbody>
           <tr v-for="index in 1" :key="index">
-            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.description`) }}</td>
-            <td>{{ $t(`earnMoney.reward.deposit_table.row${index}.commission`) }}</td>
+            <td style="color: #fff">{{ $t(`earnMoney.reward.deposit_table.row${index}.description`) }}</td>
+            <td style="color: #fff">{{ $t(`earnMoney.reward.deposit_table.row${index}.commission`) }}</td>
           </tr>
         </tbody>
       </table>
@@ -478,30 +482,33 @@ const currentPersonPercentage = computed(() => {
   if (currentLevel.value >= maxLevel) {
     return 100;
   }
-  
+
   const remainingPlayers = playersToNextLevel.value - invitedPlayers.value;
   // Define base for the progress calculation based on level
   const base = (() => {
-  if (currentLevel.value >= 1 && currentLevel.value <= 8) {
-    // For levels 1 to 8, the base is always 33%
-    return 33;
-  } else if (currentLevel.value === 9) {
-    return 66;  // For level 9, base is 66%
-  } else if (currentLevel.value === 10) {
-    return 100; // For level 10, base is 100%
-  } else {
-    return 0; // Default if somehow currentLevel is invalid
-  }
-})();
+    if (currentLevel.value >= 1 && currentLevel.value <= 8) {
+      // For levels 1 to 8, the base is always 33%
+      return 33;
+    } else if (currentLevel.value === 9) {
+      return 66; // For level 9, base is 66%
+    } else if (currentLevel.value === 10) {
+      return 100; // For level 10, base is 100%
+    } else {
+      return 0; // Default if somehow currentLevel is invalid
+    }
+  })();
 
-  const progressInsideLevel = ((invitedPlayers.value - levelThresholds[currentLevel.value - 1]) / (levelThresholds[currentLevel.value] - levelThresholds[currentLevel.value - 1]) * 33) || 0;
+  const progressInsideLevel =
+    ((invitedPlayers.value - levelThresholds[currentLevel.value - 1]) /
+      (levelThresholds[currentLevel.value] - levelThresholds[currentLevel.value - 1])) *
+      33 || 0;
 
-  console.log('base' + base)
-  console.log('ProgressInside' + progressInsideLevel)
+  console.log("base" + base);
+  console.log("ProgressInside" + progressInsideLevel);
   if (currentLevel.value === 10 || currentLevel.value === 0) {
-    return base
+    return base;
   } else {
-    return base + progressInsideLevel
+    return base + progressInsideLevel;
   }
 });
 const playersToNextLevel = ref(0);
@@ -510,7 +517,7 @@ const invitedPlayers = ref(0);
 
 // Get progress data
 const getPersonPercentage = () => {
-  api.get("/session/refer-rebate/refer-progress").then(res => {
+  api.get("/session/refer-rebate/refer-progress").then((res) => {
     invitedPlayers.value = res.data.currentRefer;
     playersToNextLevel.value = Number(res.data.nextLevelRefer) - Number(invitedPlayers.value);
     currentLevel.value = res.data.currentRefer === 0 ? 0 : getCurrentLevel(invitedPlayers.value);
@@ -540,21 +547,42 @@ const checkpoints = computed(() => {
     // First checkpoint at 33%
     {
       left: 33,
-      label: `${t('earnMoney.level')} ${invitedPlayers.value === 0 ? 1 : currentLevel.value < 8 ? currentLevel.value : 8}`,  // If currentLevel is below 8, show it, else show Level 8
-      minPlayers: invitedPlayers.value === 0 ? levels[0]?.minPlayers : currentLevel.value < 8 ? levels[currentLevel.value - 1]?.minPlayers : levels[7]?.minPlayers  // Level 8 minPlayers
+      label: `${t("earnMoney.level")} ${
+        invitedPlayers.value === 0 ? 1 : currentLevel.value < 8 ? currentLevel.value : 8
+      }`, // If currentLevel is below 8, show it, else show Level 8
+      minPlayers:
+        invitedPlayers.value === 0
+          ? levels[0]?.minPlayers
+          : currentLevel.value < 8
+          ? levels[currentLevel.value - 1]?.minPlayers
+          : levels[7]?.minPlayers // Level 8 minPlayers
     },
     // Second checkpoint at 66%
     {
       left: 66,
-      label: `${t('earnMoney.level')} ${invitedPlayers.value === 0 ? 2 : currentLevel.value < 8 ? currentLevel.value + 1 : 9}`,  // If currentLevel is below 9, show the next level, else show Level 9
-      minPlayers: invitedPlayers.value === 0 ? levels[1]?.minPlayers : currentLevel.value < 8 ? levels[currentLevel.value]?.minPlayers : levels[8]?.minPlayers  // Level 8 minPlayers
+      label: `${t("earnMoney.level")} ${
+        invitedPlayers.value === 0 ? 2 : currentLevel.value < 8 ? currentLevel.value + 1 : 9
+      }`, // If currentLevel is below 9, show the next level, else show Level 9
+      minPlayers:
+        invitedPlayers.value === 0
+          ? levels[1]?.minPlayers
+          : currentLevel.value < 8
+          ? levels[currentLevel.value]?.minPlayers
+          : levels[8]?.minPlayers // Level 8 minPlayers
       // minPlayers: nextThreshold || levels[9]?.minPlayers // Level 9 minPlayers
     },
     // Final checkpoint at 99%
     {
       left: 99,
-      label: `${t('earnMoney.level')} ${invitedPlayers.value === 0 ? 3 : currentLevel.value < 8 ? currentLevel.value + 2 : 10}`,// Always show Level 10 at 99%
-      minPlayers: invitedPlayers.value === 0 ? levels[2]?.minPlayers : currentLevel.value < 8 ? levels[currentLevel.value + 1]?.minPlayers : levels[9]?.minPlayers  // Level 8 minPlayers
+      label: `${t("earnMoney.level")} ${
+        invitedPlayers.value === 0 ? 3 : currentLevel.value < 8 ? currentLevel.value + 2 : 10
+      }`, // Always show Level 10 at 99%
+      minPlayers:
+        invitedPlayers.value === 0
+          ? levels[2]?.minPlayers
+          : currentLevel.value < 8
+          ? levels[currentLevel.value + 1]?.minPlayers
+          : levels[9]?.minPlayers // Level 8 minPlayers
     }
   ];
 });
@@ -567,10 +595,11 @@ const fallbackCopyTextToClipboard = (text) => {
   document.body.removeChild(textarea);
 
   $q.notify({
-    message: "Link copied to clipboard",
-    color: "positive",
+    message: t("notify.linkCopied"),
+    color: "dark",
+    textColor: "white",
     position: "top",
-    timeout: 2000,
+    timeout: 2000
   });
 };
 
@@ -580,7 +609,7 @@ const copyHrefLink = async () => {
   if (navigator.share) {
     try {
       await navigator.share({
-        title: "b9.game",
+        title: "SuperSiam",
         text: "Pakistan real money games",
         url: textToCopy
       });
@@ -592,10 +621,11 @@ const copyHrefLink = async () => {
       .writeText(textToCopy)
       .then(() => {
         $q.notify({
-          message: "Link copied to clipboard",
-          color: "positive",
+          message: t("notify.linkCopied"),
+          color: "dark",
+          textColor: "white",
           position: "top",
-          timeout: 2000,
+          timeout: 2000
         });
       })
       .catch(() => {
@@ -864,7 +894,7 @@ watch(activeSetting, checkIsShowDetail);
       &__2 {
         img {
           max-width: 45px;
-          display:block;
+          display: block;
           margin: 0px auto;
           padding-top: 10px;
           padding-bottom: 8px;
@@ -1094,7 +1124,7 @@ watch(activeSetting, checkIsShowDetail);
     }
     .invite-desc {
       font-size: 14px;
-      color: #8c968f;
+      color: #d9cfb8;
     }
 
     .invite-listing {
@@ -1119,7 +1149,7 @@ watch(activeSetting, checkIsShowDetail);
         // :not(:last-child) {
         //   margin-right: 12px;
         // }
-        color: #8c968f;
+        color: #d9cfb8;
 
         span.list-num {
           width: 14px;
@@ -1168,9 +1198,9 @@ watch(activeSetting, checkIsShowDetail);
       // display: none !important;
       display: flex;
       justify-content: space-around;
-    //     :not(:last-child) {
-    //   margin-right: 12px;
-    // }
+      //     :not(:last-child) {
+      //   margin-right: 12px;
+      // }
     }
     .person-level-away {
       margin-top: 30px;
@@ -1185,20 +1215,20 @@ watch(activeSetting, checkIsShowDetail);
         .text {
           font-weight: bold;
           .text-person {
-            background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
+            background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
           }
           .text-level {
-              background: linear-gradient(90deg, #2CED88 0%, #9EE871 100%);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
+            background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
           }
         }
       }
       .person-level-away-bar-container {
         margin: 10px 0 0;
-        border: 1px solid #FFFFFF14;
+        border: 1px solid #ffffff14;
         border-radius: 4px;
         padding: 10px 15px 10px 5px;
         position: relative;
@@ -1208,52 +1238,51 @@ watch(activeSetting, checkIsShowDetail);
           width: 90%;
           margin: 50px auto;
           .outer-bar {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          background: #E6E6E680; /* light gray background */
-          border-radius: 10px;
-        }
-
-        .inner-bar {
-          height: 100%;
-          background-color: #82ea77; /* green progress */
-          border-radius: 10px 0 0 10px;
-          transition: width 0.3s ease;
-        }
-
-        .checkpoint {
-          position: absolute;
-          top: -35px;
-          bottom: 0;
-          width: 50px;
-          height: 50px;
-          transform: translateX(-50%);
-          &.check0 {
-            left: 25px;
-            top: 22px;
-            height: unset;
-          }
-          img {
+            position: relative;
             width: 100%;
+            height: 100%;
+            background: #e6e6e680; /* light gray background */
+            border-radius: 10px;
           }
-          .level {
+
+          .inner-bar {
+            height: 100%;
+            background-color: #82ea77; /* green progress */
+            border-radius: 10px 0 0 10px;
+            transition: width 0.3s ease;
+          }
+
+          .checkpoint {
             position: absolute;
-            font-size: 11px;
-            text-align: center;
-            width: 100%;
-          }
-          .noOfPerson {
-            font-size: 10px;
-            font-weight: bold;
-            width: 80px;
+            top: -35px;
+            bottom: 0;
+            width: 50px;
+            height: 50px;
+            transform: translateX(-50%);
+            &.check0 {
+              left: 25px;
+              top: 22px;
+              height: unset;
+            }
+            img {
+              width: 100%;
+            }
+            .level {
+              position: absolute;
+              font-size: 11px;
+              text-align: center;
+              width: 100%;
+            }
+            .noOfPerson {
+              font-size: 10px;
+              font-weight: bold;
+              width: 80px;
+            }
           }
         }
-        }
-        
       }
     }
-   }
+  }
 
   .earn-money-friendcount {
     margin-top: 16px;
@@ -1297,7 +1326,7 @@ watch(activeSetting, checkIsShowDetail);
         }
 
         td:nth-child(2n) {
-          color: #21ef89;
+          color: #d9cfb8;
           font-weight: 700;
         }
       }
@@ -1407,7 +1436,7 @@ watch(activeSetting, checkIsShowDetail);
         font-weight: 900;
         font-size: 16.94px;
         line-height: 16.94px;
-        color: #21ef89;
+        color: #d9cfb8;
         letter-spacing: 0%;
         vertical-align: middle;
         text-transform: capitalize;
@@ -1479,16 +1508,18 @@ watch(activeSetting, checkIsShowDetail);
     width: 30vw;
     text-align: center;
     border-radius: 4px;
-    border: 1px solid #466a45;
+    // border: 1px solid #466a45;
+    box-shadow: 0px 2px 0px 0px #907c5f;
     padding: 5px 4px;
     height: 36px;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: #3a3a3a;
 
     &.active {
       font-weight: bold;
-      background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+      background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
     }
 
     &:active {
@@ -1563,9 +1594,10 @@ watch(activeSetting, checkIsShowDetail);
         color: #fff;
         padding: 10px 4px;
         font-size: 12px;
+        font-weight: 700;
         // border: 1px solid #ffffff1a;
         &:last-child {
-          color: #21ef89;
+          color: #d9cfb8;
         }
       }
 
@@ -1590,6 +1622,8 @@ watch(activeSetting, checkIsShowDetail);
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #d9cfb8;
+    font-weight: 700;
     .reward-coin {
       // height: 16px;
       width: 24px;

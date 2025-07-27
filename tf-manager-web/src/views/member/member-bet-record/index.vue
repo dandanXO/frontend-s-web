@@ -165,12 +165,12 @@
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
         <el-button
-          icon="el-icon-position"
+          icon="el-icon-view"
           size="mini"
           type="primary"
           @click="showSabaDialog()"
         >
-          {{ t('fields.resend_saba_payout') }}
+          {{ t('fields.check_saba_ticket') }}
         </el-button>
       </div>
     </div>
@@ -189,7 +189,12 @@
                 :empty-text="t('fields.noData')"
       >
         <el-table-column prop="betId" :label="t('fields.betId')" align="center" min-width="280" />
-        <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="280" />
+        <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="280">
+          <template #default="scope">
+            <el-link type="primary" class="link-font" v-if="scope.row.platform === 'SABA'" @click="searchSabaTrxOnClick(scope.row.transactionId,null)">{{ scope.row.transactionId }}</el-link>
+            <span v-else>{{ scope.row.transactionId }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120" />
         <el-table-column prop="loginName" :label="t('fields.loginName')" align="center" min-width="120" />
         <el-table-column prop="vipName" :label="t('fields.vipLevel')" align="center" min-width="120" />
@@ -295,7 +300,7 @@
       :title="t('message.enterSabaTransactionId')"
       v-model="uiControl.sabaResendDialogVisible"
       append-to-body
-      width="580px"
+      width="1000px"
     >
       <el-form
         ref="sabaResendPayoutForm"
@@ -308,15 +313,67 @@
         <el-form-item :label="t('fields.transactionId')" prop="transactionId">
           <el-input style="width: 350px" v-model="sabaResendForm.transactionId" />
         </el-form-item>
-
+        <el-form-item :label="t('fields.betId')" prop="betId">
+          <el-input style="width: 350px" v-model="sabaResendForm.betId" />
+        </el-form-item>
         <div class="dialog-footer">
+          <el-button type="primary" @click="searchSabaTrx">
+            {{ t('fields.search') }}
+          </el-button>
           <el-button @click="uiControl.sabaResendDialogVisible = false">
             {{ t('fields.cancel') }}
           </el-button>
-          <el-button type="primary" @click="submitSabaResend">
-            {{ t('fields.confirm') }}
-          </el-button>
         </div>
+
+        <el-card class="box-card" shadow="never" style="margin-top: 20px">
+          <template #header>
+            <div class="clearfix">
+              <span class="role-span">{{ t('fields.historyRecord') }}</span>
+            </div>
+          </template>
+          <el-table :data="sabaTrxHist.transHistory" ref="table"
+                    row-key="id"
+                    size="small"
+                    highlight-current-row
+                    :empty-text="sabaTrxHist.message"
+          >
+            <el-table-column prop="actionDate" :label="t('fields.operateTime')" align="center" min-width="100">
+              <template #default="scope">
+                <span v-if="scope.row.actionDate === null">-</span>
+                <span
+                  v-if="scope.row.actionDate !== null"
+                  v-formatter="{data: convertUtcMinus4ToPlus8(scope.row.actionDate), timeZone: timeZone, type: 'date'}"
+                />
+              </template>
+            </el-table-column>
+            <el-table-column prop="operationId" :label="t('fields.betId')" align="center" min-width="100" />
+            <el-table-column prop="action" :label="t('fields.betStatus')" align="center" min-width="60" />
+            <el-table-column prop="odds" :label="t('fields.odds')" align="center" min-width="50" />
+            <el-table-column prop="stake" :label="t('fields.bet')" align="center" min-width="80">
+              <template #default="scope">
+                $ <span v-formatter="{data: scope.row.stake,type: 'money'}" />
+              </template>
+            </el-table-column>
+            <el-table-column prop="winlostAmount" :label="t('fields.payout')" align="center" min-width="80">
+              <template #default="scope">
+                $ <span v-formatter="{data: scope.row.winlostAmount,type: 'money'}" />
+              </template>
+            </el-table-column>
+            <el-table-column>
+              <template #default="scope">
+                <el-button
+                  type="info"
+                  size="mini"
+                  style="float: right;"
+                  @click="submitSabaResend(scope.row.operationId)"
+                  v-if="scope.row.action === 'Settle'"
+                >
+                  {{ t('fields.resend_saba_payout') }}
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-card>
       </el-form>
     </el-dialog>
   </div>
@@ -335,6 +392,12 @@ import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { required } from "@/utils/validate";
 import { sabaResendPayout } from "@/api/member-platform";
 import { ElMessage } from "element-plus";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const { t } = useI18n();
 const store = useStore()
@@ -449,11 +512,51 @@ const sabaResendForm = reactive({
   gameType: "SPORT",
   transactionId: null,
   betId: null,
+  check: null,
 })
 
+const validateTransactionId = (rule, value, callback) => {
+  const transactionId = sabaResendForm.transactionId;
+  const betId = sabaResendForm.betId;
+
+  if (!transactionId && !betId) {
+    callback(required(t('message.validateTransactionIdOrBetIdRequired')))
+  }
+
+  if (transactionId && !/^\d+$/.test(transactionId)) {
+    callback(required(t('message.validateTransactionIdMustBeDigitsOnly')));
+  }
+
+  return callback()
+}
+
+const validateBetId = (rule, value, callback) => {
+  const transactionId = sabaResendForm.transactionId;
+  const betId = sabaResendForm.betId;
+
+  if (!transactionId && !betId) {
+    callback(required(t('message.validateTransactionIdOrBetIdRequired')))
+  }
+
+  return callback()
+}
+
 const sabaResendFormRules = reactive({
-  transactionId: [required(t('message.validateTransactionIdRequired'))],
+  transactionId: [{ validator: validateTransactionId, trigger: 'blur' }],
+  betId: [{ validator: validateBetId, trigger: 'blur' }]
 })
+
+const sabaTrxHist = reactive({
+  txId: null,
+  refId: null,
+  transHistory: [],
+  message: null
+});
+
+function convertUtcMinus4ToPlus8(input) {
+  // UTC-4 时区 → 转为 Asia/Shanghai（UTC+8）
+  return dayjs.tz(input, "America/New_York").tz("Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss");
+}
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD') + ' 23:59:59';
@@ -555,24 +658,62 @@ function showSabaDialog() {
   if (sabaResendPayoutForm.value) {
     sabaResendPayoutForm.value.resetFields()
   }
+  sabaResendForm.transactionId = null;
+  sabaResendForm.betId = null;
+  sabaTrxHist.transHistory = [];
+  sabaTrxHist.message = null;
+  sabaResendForm.check = null;
   uiControl.sabaResendDialogVisible = true
 }
 
-function submitSabaResend() {
+function searchSabaTrx() {
   sabaResendPayoutForm.value.validate(async valid => {
     if (valid) {
-      sabaResendForm.transactionId = sabaResendForm.transactionId.replace(/^SABA_/, "");
+      sabaResendForm.check = true;
       const { data: ret } = await sabaResendPayout(sabaResendForm)
+      const resJson = JSON.parse(ret);
+      sabaTrxHist.message = resJson.message;
+      if (resJson.error_code === 0) {
+        sabaResendForm.transactionId = resJson.Data.txId;
+        sabaResendForm.betId = resJson.Data.refId;
+        sabaTrxHist.transHistory = resJson.Data.transHistory;
+      }
+    }
+  })
+}
+
+async function searchSabaTrxOnClick(transactionId, betId) {
+  showSabaDialog();
+
+  const submitForm = { ...sabaResendForm }
+  submitForm.check = true;
+  if (transactionId !== null) submitForm.transactionId = transactionId.replace(/^SABA_/, "");
+  submitForm.betId = betId;
+
+  const { data: ret } = await sabaResendPayout(submitForm)
+  const resJson = JSON.parse(ret);
+  sabaTrxHist.message = resJson.message;
+  if (resJson.error_code === 0) {
+    sabaResendForm.transactionId = resJson.Data.txId;
+    sabaResendForm.betId = resJson.Data.refId;
+    sabaTrxHist.transHistory = resJson.Data.transHistory;
+  }
+}
+
+function submitSabaResend(operationId) {
+  sabaResendPayoutForm.value.validate(async valid => {
+    if (valid) {
+      const submitForm = { ...sabaResendForm }
+      submitForm.check = false;
+      submitForm.transactionId = operationId
+      submitForm.betId = null
+      const { data: ret } = await sabaResendPayout(submitForm)
 
       if (ret === "Success") {
         ElMessage({ message: ret, type: 'success' })
       } else {
         ElMessage.error(ret)
       }
-
-      sabaResendForm.transactionId = null;
-      sabaResendForm.betId = null;
-      uiControl.sabaResendDialogVisible = false;
     }
   })
 }
@@ -613,5 +754,9 @@ onMounted(async() => {
 .dialog-footer {
   display: flex;
   justify-content: flex-end;
+}
+
+.link-font {
+  font-size: small;
 }
 </style>

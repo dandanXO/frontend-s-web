@@ -13,7 +13,7 @@
   <div class="register-container" :class="isRestrictedDomain ? 'w-domain' : ''">
     <div class="back-left" v-if="!isRestrictedDomain">
       <router-link :to="'/home'">
-        <img src="../assets/images/index/btn-house.png" />
+        <img src="../assets/images/index/close-btn-brown.png" />
       </router-link>
     </div>
     <!-- <div class="is-domain top-img">
@@ -52,18 +52,17 @@
                     v-model="regForm.loginName"
                     :rules="[
                       (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                      (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
-                      (val) => val.startsWith('03') || $t('form.phone_rules_03')
+                      (val) => (val && val.length === 10) || $t('form.phone_rules_02'),
+                      (val) => val.startsWith('0') || $t('form.phone_rules_03')
                     ]"
-                    color="green"
                     outlined
                     label-color="brand"
                     :placeholder="$t('form.phone_placeholder')"
                   >
-                    <template v-slot:prepend>
+                    <!-- <template v-slot:prepend>
                       <q-icon name="smartphone" />
-                      <div class="prepend-number">+92</div>
-                    </template>
+                      <div class="prepend-number">+66</div>
+                    </template> -->
                     <template v-if="regForm.referrer && spinRefCode" v-slot:append>
                       <q-btn :disable="otpCountdown > 0" class="get-code-btn" @click="openPhoneVeriDialog">
                         {{ otpCountdown > 0 ? `RESEND (${otpCountdown})` : $t("form.get_code") }}
@@ -95,9 +94,9 @@
                     label-color="brand"
                     :disable="isOtpEnable"
                   >
-                    <template v-slot:prepend>
+                    <!-- <template v-slot:prepend>
                       <q-icon name="key" />
-                    </template>
+                    </template> -->
                   </q-input>
                 </template>
               </InputField>
@@ -114,7 +113,6 @@
                       (val) => (val && val.length > 0) || 'Please insert password',
                       (val) => val === regForm.password || 'Password does not match'
                     ]"
-                    color="green"
                     outlined
                     label-color="brand"
                   >
@@ -143,7 +141,6 @@
                       v-model="regForm.referrer"
                       label-color="brand"
                       outlined
-                      color="green"
                       placeholder="Enter Invitation Code (Optional)"
                     />
                   </template>
@@ -177,7 +174,9 @@
     <div class="no-domain mui-row q-mx-md q-mb-lg" :class="isAgreeReg ? 'checked' : ''">
       <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
         {{ $t("form.register_agree_01") }}
-        <a href="#" style="text-decoration: none; color: #61ff00">{{ $t("form.register_agree_02") }}</a>
+        <a href="#" style="text-decoration: none; color: #3a3a3a; font-weight: 700">
+          {{ $t("form.register_agree_02") }}
+        </a>
       </q-checkbox>
     </div>
 
@@ -197,7 +196,7 @@
 
       <div class="areyounew">
         {{ $t("btn.alreadyhaveacct") }}
-        <a @click="regLoginTab = 'login'" class="green">{{ $t("btn.login") }}</a>
+        <a @click="regLoginTab = 'login'" class="brown">{{ $t("btn.login") }}</a>
       </div>
 
       <div v-if="!isSpinReferrer && ui.siteType === 'DEFAULT'" class="google-login-wrapper">
@@ -298,22 +297,19 @@
         </div>
       </div>
     </div>
-    <template v-if="ui.siteType === 'CURACAO'">
-      <div class="col-grow" />
-
-      <a
-        class="license"
-        href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img class="license-img" src="../assets/images/license/curacao-license.png" />
-        <div class="license-text-wrapper">
-          <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
-          <span class="license-text__description">{{ $t("sideNav.license.curacao.description") }}</span>
-        </div>
-      </a>
-    </template>
+    <a
+      v-if="ui.siteType === 'CURACAO'"
+      class="license"
+      href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img class="license-img" src="../assets/images/license/curacao-license.png" />
+      <div class="license-text-wrapper">
+        <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
+        <span class="license-text__description">{{ $t("sideNav.license.curacao.description") }}</span>
+      </div>
+    </a>
 
     <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
       <q-card class="captcha-form-wrapper" width="100%">
@@ -565,8 +561,8 @@ export default defineComponent({
 
     // const phoneNumberRules = [
     //   (val) => (val && val.length > 0) || "Please insert Phone number",
-    //   (val) => (val && val.length === 11) || "The phone number must have 11 digits",
-    //   (val) => (val && val.startsWith("03")) || 'The phone number must start with "03"'
+    //   (val) => (val && val.length === 10) || "The phone number must have 10 digits",
+    //   (val) => (val && val.startsWith("0")) || 'The phone number must start with "0"'
     // ];
 
     const router = useRouter();
@@ -608,7 +604,8 @@ export default defineComponent({
 
               if (res.code === 0) {
                 $q.notify({
-                  color: "positive",
+                  color: "dark",
+                  textColor: "white",
                   position: "top",
                   message: t("form.google_login_success"),
                   icon: "check_circle_outline"
@@ -673,7 +670,8 @@ export default defineComponent({
 
                 if (res.code === 0) {
                   $q.notify({
-                    color: "positive",
+                    color: "dark",
+                    textColor: "white",
                     position: "top",
                     message: t("form.google_login_success"),
                     icon: "check_circle_outline"
@@ -809,7 +807,8 @@ export default defineComponent({
               const res = ret;
               if (res.code === 0) {
                 $q.notify({
-                  color: "positive",
+                  color: "dark",
+                  textColor: "white",
                   position: "top",
                   message: t("form.register_success"),
                   icon: "check_circle_outline"
@@ -862,62 +861,63 @@ export default defineComponent({
 
           //     if (res.code === 0 && !res.data) {
           //       $q.notify({
-          //         color: "positive",
-          //         position: "top",
-          //         message: "Please proceed to OTP",
-          //         icon: "check_circle_outline"
-          //       });
-          //       console.log(res, "-ressss");
-          //       sessionStorage.setItem("REG_FORM", qs.stringify(regForm));
-          //       sessionStorage.removeItem("REFERRAL_CODE");
+          //         color: "dark",
+          textColor: "white",
+            //         position: "top",
+            //         message: "Please proceed to OTP",
+            //         icon: "check_circle_outline"
+            //       });
+            //       console.log(res, "-ressss");
+            //       sessionStorage.setItem("REG_FORM", qs.stringify(regForm));
+            //       sessionStorage.removeItem("REFERRAL_CODE");
 
-          //       api
-          //         .post(
-          //           `/otp/sendSms`,
-          //           qs.stringify({
-          //             telephone: regForm.loginName,
-          //             captchaCode: '0000',
-          //             codeId: '0000'
-          //           })
-          //         )
-          //         .then((res) => {
-          //           getCode();
-          //           let message = res.message || "Phone verification code sent successfully",
-          //             color = "positive";
+            //       api
+            //         .post(
+            //           `/otp/sendSms`,
+            //           qs.stringify({
+            //             telephone: regForm.loginName,
+            //             captchaCode: '0000',
+            //             codeId: '0000'
+            //           })
+            //         )
+            //         .then((res) => {
+            //           getCode();
+            //           let message = res.message || "Phone verification code sent successfully",
+            //             color = "positive";
 
-          //           if (res.code === 0) {
-          //             console.log(res.data.codeId);
-          //           }
-          //           if (message) {
-          //             $q.notify({ message, color });
-          //           }
+            //           if (res.code === 0) {
+            //             console.log(res.data.codeId);
+            //           }
+            //           if (message) {
+            //             $q.notify({ message, color });
+            //           }
 
-          //           console.log("onCaptchaSubmit", res);
-          //         })
-          //         .catch(() => {
-          //           console.log("Err");
-          //           getInnerCode();
-          //         });
+            //           console.log("onCaptchaSubmit", res);
+            //         })
+            //         .catch(() => {
+            //           console.log("Err");
+            //           getInnerCode();
+            //         });
 
-          //       router.push("/verification");
-          //     } else {
-          //       $q.notify({
-          //         color: "negative",
-          //         position: "top",
-          //         message: res.message,
-          //         icon: "report_problem"
-          //       });
-          //     }
-          //     $q.loading.hide();
-          //     isLoading.value = false;
-          //   })
-          //   .catch((error) => {
-          //     $q.loading.hide();
-          //     isLoading.value = false;
-          //   });
-          // register to check phone exist and sms OTP -- end
+            //       router.push("/verification");
+            //     } else {
+            //       $q.notify({
+            //         color: "negative",
+            //         position: "top",
+            //         message: res.message,
+            //         icon: "report_problem"
+            //       });
+            //     }
+            //     $q.loading.hide();
+            //     isLoading.value = false;
+            //   })
+            //   .catch((error) => {
+            //     $q.loading.hide();
+            //     isLoading.value = false;
+            //   });
+            // register to check phone exist and sms OTP -- end
 
-          getCode();
+            getCode();
         })();
       }
     };
@@ -1429,6 +1429,11 @@ function charType(num) {
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
     .license-img {
       max-width: 47px;
       margin-right: 4px;
@@ -1440,7 +1445,7 @@ function charType(num) {
       span {
         margin-bottom: 0;
         font-weight: 600;
-        color: #ffffff99;
+        color: #3a3a3a;
       }
       .license-text__title {
         font-size: 12px;
@@ -1492,7 +1497,7 @@ function charType(num) {
   line-height: 100%;
   letter-spacing: 0px;
   vertical-align: middle;
-  color: #ffffff;
+  color: #3a3a3a;
   padding: 0 20px;
 }
 
@@ -1572,7 +1577,7 @@ function charType(num) {
 }
 
 .rmb-checked-box {
-  font-size: 14px;
+  font-size: 1rem;
   color: #eeeeee;
 
   @media screen and (max-width: 400px) {
@@ -1583,10 +1588,10 @@ function charType(num) {
     border-radius: 4px;
   }
   :deep(.q-checkbox__inner--truthy .q-checkbox__bg) {
-    background: #21ef89;
+    background: #907c5f;
 
     svg {
-      color: #000000;
+      color: #fff;
       padding: 2px;
     }
   }
@@ -1786,14 +1791,15 @@ function charType(num) {
 
 .areyounew {
   margin: 15px 0;
+  color: #3a3a3a;
 
   @media screen and (max-width: 400px) {
     margin: 10px 0;
     font-size: 12px;
   }
 
-  .green {
-    color: #21ef89;
+  .brown {
+    color: #b99c73;
     font-weight: 700;
     cursor: pointer;
   }
@@ -1817,5 +1823,9 @@ function charType(num) {
     height: 45px;
     padding: 9px;
   }
+}
+
+:deep(.q-checkbox__label) {
+  color: #3a3a3a;
 }
 </style>

@@ -1,30 +1,17 @@
 <template>
-  <q-file
-    name="upload_img"
-    v-model="file"
-    label-color="brand"
-    outlined
-    clearable
-    :class="file? '' : 'hasFile'"
-  >
+  <q-file name="upload_img" v-model="file" label-color="brand" outlined clearable :class="file ? '' : 'hasFile'">
     <!-- Display error message -->
     <!-- <template v-slot:error="{ error }">
       <div class="text-negative">{{ error }}</div>
     </template> -->
     <template v-slot:prepend>
-      <img style="
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    height: 32px;
-    width: 32px;" v-if="!file" src="../assets/images/common/image-icon.png">
+      <img
+        style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto; height: 32px; width: 32px"
+        v-if="!file"
+        src="../assets/images/common/image-icon.png"
+      />
     </template>
-
   </q-file>
- 
 </template>
 
 <script>
@@ -70,14 +57,19 @@ export default defineComponent({
               type: "positive",
               position: "top",
               message: `${file.value.name} uploaded successfully`,
-              icon: "check_circle_outline"
+              icon: "check_circle_outline",
+              color: "dark",
+              textColor: "white",
+              timeout: 2000
             });
           } else {
             $q.notify({
               type: "negative",
               position: "top",
               message: `${file.value.name} upload failed. Please try again`,
-              icon: "report_problem"
+              icon: "report_problem",
+              color: "dark",
+              textColor: "white"
             });
             file.value = null;
           }
@@ -110,20 +102,21 @@ export default defineComponent({
 .q-field__control-container {
   height: 100%;
   flex-direction: column-reverse;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 .q-file .q-field__native {
   display: block;
 }
 :deep(.q-field__control):after {
- height: 100%;
+  height: 100%;
 }
-.hasFile { 
+.hasFile {
   :deep(.q-field__control-container) {
-    display: flex; padding: 30px 0; justify-content: center;
-
+    display: flex;
+    padding: 30px 0;
+    justify-content: center;
   }
 }
 </style>

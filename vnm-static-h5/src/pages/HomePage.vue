@@ -1553,7 +1553,7 @@ export default defineComponent({
 
     const gotoPromo = (redirectUrl) => {
       const urlSplit = redirectUrl.split("|");
-      if (redirectUrl.startsWith('slot-')) {
+      if (redirectUrl.startsWith("slot-")) {
         const value = redirectUrl.substring(5); // Removes 'slot-' prefix
         router.push(`/slot?platform=${value}`);
       } else if (urlSplit.length >= 2) {

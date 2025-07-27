@@ -245,9 +245,9 @@
                 $t("lang.withdraw_singlewithdrawal") +
                 ": " +
                 selectedWithdrawalMethod.withdrawMin.toLocaleString() +
-                "RS - " +
+                "THB - " +
                 selectedWithdrawalMethod.withdrawMax.toLocaleString() +
-                "RS"
+                "THB"
               }}
               <br />
             </template>
@@ -256,7 +256,7 @@
                 $t("lang.withdraw_withdrawtoday") +
                 ": " +
                 selectedWithdrawalMethod.withdrawMaxAmount.toLocaleString() +
-                "RS"
+                "THB"
               }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
@@ -276,7 +276,7 @@
             <template #fields>
               <InputField
                 :label="`${$t('form.withdrawalAmount')} (${convertToCommaAmount(selectedWithdrawalMethod.withdrawMin)} -
-          ${convertToCommaAmount(selectedWithdrawalMethod.withdrawMax)} RS)`"
+          ${convertToCommaAmount(selectedWithdrawalMethod.withdrawMax)} THB)`"
               >
                 <template #input>
                   <q-input
@@ -314,7 +314,7 @@
               </div>
               <div class="desc">
                 <img src="../../assets/images/account/right-green.svg" />
-                <span>RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</span>
+                <span>THB:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</span>
               </div>
             </div>
 
@@ -328,7 +328,7 @@
               <div class="desc remain-wager-wrapper" @click="refreshRemainWager">
                 <img src="../../assets/images/account/right-green.svg" />
                 <q-spinner v-if="isRefreshRemainWager" />
-                <span v-else>RS:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</span>
+                <span v-else>THB:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</span>
                 <img
                   class="refresh-btn-img"
                   :class="{ rotate: isRefreshRemainWager }"
@@ -852,7 +852,8 @@ const submitWithdraw = async () => {
         console.log(response.code);
         if (response.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: t("notify.withdrewSuccessfully"),
             icon: "check_circle_outline"
@@ -911,7 +912,8 @@ const submitWithdraw = async () => {
 //       .then((response) => {
 //         if (response.code === 0) {
 //           $q.notify({
-//             color: "positive",
+//             color: "dark",
+//             textColor: "white",
 //             position: "top",
 //             message: t("lang.msg_submit_successful"),
 //             icon: "check_circle_outline"
@@ -1302,12 +1304,12 @@ watch(
 }
 
 .tutorial-link {
-  color: #13f129;
+  color: #3a3a3a;
   text-decoration: underline;
 }
 .step-desc-div {
   margin-bottom: 105px;
-  color: #b2bdbf;
+  color: #907c5f;
 
   p {
     margin: 5px 0px;
@@ -1361,7 +1363,8 @@ watch(
       // box-shadow: none;
       // filter: drop-shadow(0px 0px 3px #ffffff);
       img {
-        background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+        // background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
+        background: #76674c;
       }
 
       .type-name {
@@ -1472,7 +1475,7 @@ watch(
       justify-content: center;
       align-items: center;
       span {
-        color: #21ef89;
+        color: #fff;
         &.orange {
           color: #fbab1b;
         }
@@ -1576,12 +1579,11 @@ watch(
     align-items: center;
     justify-content: center;
     height: 40px;
-    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-    color: #000000;
-    box-shadow: 0px 2px 0px 0px #1cca6a;
+    background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+    color: #fff;
+    box-shadow: 0px 2px 0px 0px #907c5f;
     font-weight: 700;
     border-radius: 4px;
-    border: 1px solid #21ef89;
     padding: 5px;
     min-width: 68px;
     text-transform: uppercase;
@@ -1614,9 +1616,21 @@ watch(
 .txt-green {
   color: #21ef89;
 }
+
+:deep(.q-field__control) {
+  height: 46px;
+  background: linear-gradient(#fff, #fff) padding-box, linear-gradient(90deg, #76674c, #cec6ae) border-box !important;
+  color: #907c5f !important;
+  ::placeholder {
+    color: #907c5f !important;
+  }
+}
+:deep(.q-field__native) {
+  color: #907c5f !important;
+}
 </style>
 
-<style lang="scss">
+<!-- <style lang="scss">
 .popout-dialog-container {
   .form-fields {
     width: 90%;
@@ -1634,4 +1648,4 @@ watch(
 .q-field__marginal {
   height: auto !important;
 }
-</style>
+</style> -->

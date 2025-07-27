@@ -35,6 +35,11 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
+
+    if (to.query.adjust_referrer) {
+      sessionStorage.setItem("ADJUST_REFERRER", to.query.adjust_referrer);
+    }
+
     if (
       to.path === "/login" ||
       to.path === "/register" ||

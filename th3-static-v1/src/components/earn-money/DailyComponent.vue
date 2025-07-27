@@ -17,19 +17,19 @@
       </div>
 
       <div class="team-member-wrapper">
-          <div class="team-member-container" v-if="memberVIPData.totalMembers > 0">
-            <div class="member-imgs" :style="`width: ${40 + limitedMembers * 15}px`">
-              <q-avatar v-for="n in limitedMembers" :key="n" size="30px" class="overlapping" :style="`left: ${n * 15}px`">
-                <img :src="getRandomImageSource(n)" />
-              </q-avatar>
-            </div>
-          </div>
-
-          <div class="member-amt-wrapper">
-            <div class="member-amt">{{ memberVIPData.totalMembers }}</div>
-            <div class="member-amt-label">Member</div>
+        <div class="team-member-container" v-if="memberVIPData.totalMembers > 0">
+          <div class="member-imgs" :style="`width: ${40 + limitedMembers * 15}px`">
+            <q-avatar v-for="n in limitedMembers" :key="n" size="30px" class="overlapping" :style="`left: ${n * 15}px`">
+              <img :src="getRandomImageSource(n)" />
+            </q-avatar>
           </div>
         </div>
+
+        <div class="member-amt-wrapper">
+          <div class="member-amt">{{ memberVIPData.totalMembers }}</div>
+          <div class="member-amt-label">Member</div>
+        </div>
+      </div>
     </div>
     <div class="progress-bar-wrapper">
       <q-linear-progress size="15px" :value="progressValueM" color="#EC77FF" class="progress-bar-M">
@@ -270,7 +270,7 @@
         <div class="amount-container">
           <div class="amount-text">Bet Amount</div>
           <div class="amount">
-            RS
+            THB
             <span>{{ convertToCommaAmount(e.validBet, false) }}</span>
           </div>
         </div>
@@ -278,7 +278,7 @@
         <div class="amount-container">
           <div class="amount-text text-right">Income</div>
           <div class="amount text-right">
-            RS
+            THB
             <span>{{ convertToCommaAmount(e.rebateAmount, false) }}</span>
           </div>
         </div>
@@ -637,7 +637,7 @@ onMounted(() => {
     }
 
     .member-amt-label {
-      color: #FFFFFF66;
+      color: #ffffff66;
       font-size: 14px;
       font-weight: 400;
       line-height: 21px;
@@ -741,7 +741,7 @@ onMounted(() => {
         margin-left: auto;
         margin-top: auto;
         padding-top: 12px;
-        color: #FFFFFFCC;
+        color: #ffffffcc;
 
         &.font-smaller {
           font-size: 12px;
@@ -782,7 +782,7 @@ onMounted(() => {
 .content-wrapper {
   border-radius: 0.75rem;
   background: #ffffff0d;
-  border: 1px solid #FFFFFF0D;
+  border: 1px solid #ffffff0d;
   padding: 15px;
   margin-top: 15px;
 

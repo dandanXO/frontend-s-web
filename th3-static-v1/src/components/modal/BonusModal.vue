@@ -10,7 +10,7 @@
           </div>
         </div>
         <RouterLink to="/account?openCodeModal=true">
-          <q-btn flat class="details redemption">{{ $t("btn.details") }}</q-btn>
+          <q-btn flat class="details redemption ">{{ $t("btn.details") }}</q-btn>
         </RouterLink>
       </div>
 
@@ -64,9 +64,9 @@
         </a>
       </div>
     </div>
-    <div class="bonus-header">
+    <!-- <div class="bonus-header">
       <img :src="require(`../../assets/images/index/modal/bonus-header-${$t('lang.langVal')}.png`)" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -240,9 +240,11 @@ onMounted(() => {
 <style lang="scss" scoped>
 .bonus-container {
   // background-color: #1e371f;
-  background: linear-gradient(325.86deg, #0e1e08 5.38%, #1b6026 98.11%);
+  // background: linear-gradient(325.86deg, #0e1e08 5.38%, #1b6026 98.11%);
+  background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
+  box-shadow: 0px 2px 0px 0px #907C5F;
 
-  border: 1px solid #9fe871;
+  //  border: 1px solid #9fe871;
   border-radius: 16px !important;
   max-width: 400px;
   width: 100%;
@@ -250,7 +252,7 @@ onMounted(() => {
   position: relative;
   overflow: visible;
   margin-bottom: -100px;
-  margin-top: 60px;
+  margin-top: 80px;
 
   &:before {
     content: "";
@@ -292,7 +294,7 @@ onMounted(() => {
 
   .bonus-content-wrapper {
     // margin: 0 auto 29px;
-    margin: 30px auto 0;
+    margin: 38px auto 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -303,8 +305,8 @@ onMounted(() => {
       align-items: center;
       padding: 0 6px 0 6px;
       border-radius: 8px;
-      min-height: 50px;
-      background: #ffffff0d;
+      min-height: 74px;
+      background: #E9E8E4;
       border: 1px solid #55c2530d;
       box-shadow: 0px 4px 4px 0px #0000000d;
       a {
@@ -319,6 +321,7 @@ onMounted(() => {
         display: flex;
         align-items: center;
         flex-grow: 1;
+        
         > :first-child {
           margin-right: 7px;
         }
@@ -327,11 +330,11 @@ onMounted(() => {
           display: flex;
           flex-direction: column;
           font-weight: 700;
-          color: #fff;
+          color: #3A3A3A;
         }
 
         .mission-title-extra {
-          color: #00ff44;
+          color: #3A3A3A;
         }
       }
 
@@ -347,8 +350,9 @@ onMounted(() => {
         min-height: 48px;
 
         &.details {
-          background: url(../../assets/images/index/modal/common-btn.png) no-repeat;
+          // background: url(../../assets/images/index/modal/common-btn.png) no-repeat;
           background-size: 100% 100%;
+          background: #707070;
           color: #fff;
         }
 
@@ -367,11 +371,13 @@ onMounted(() => {
         }
 
         &.redemption {
-          background: url(../../assets/images/index/modal/promo-code-btn.png) no-repeat;
+          // background: url(../../assets/images/index/modal/promo-code-btn.png) no-repeat;
           background-size: 100% 100%;
         }
 
         &.claimable {
+          background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
+
           &::before {
             content: "";
             width: 11px;
@@ -392,8 +398,10 @@ onMounted(() => {
 }
 
 .bonus-close {
+  background-color: #907C5F;
+  border-radius: 8px;
   position: absolute;
-  top: 5px;
+  top: 10px;
   right: 10px;
   z-index: 99;
 }

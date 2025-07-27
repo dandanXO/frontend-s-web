@@ -582,11 +582,13 @@ function showEdit(limit) {
       const arr = form.dayRegLimit.split(",")
       form.minDayRegLimit = +arr[0]
       form.maxDayRegLimit = +arr[1]
+      form.dayRegProbability = +arr[2]
     }
     if (form.dayFirstDepositLimit !== null) {
       const arr = form.dayFirstDepositLimit.split(",")
       form.minDayFirstDepositLimit = +arr[0]
       form.maxDayFirstDepositLimit = +arr[1]
+      form.dayFirstDepositProbability = +arr[2]
     }
   })
 }

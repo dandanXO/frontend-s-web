@@ -137,6 +137,7 @@ export default {
     balanceVsTotalDepositMultiplier: 'Balance vs Total Deposit Multiplier',
     balanceVsTodayDepositMultiplier: 'Balance vs Today Deposit Multiplier',
     registerDay: 'Register Date - Withdraw Date (day)',
+    sidCount: 'sid count',
   },
   outboxStatus: {
     0: 'Not reply yet',
@@ -1265,6 +1266,7 @@ export default {
     ineligible: 'Ineligible',
     innerSetting: 'Inner Wheel Setting',
     ip: 'Access IP',
+    isBet: 'Show Bet',
     isDeposit: 'Show Deposit',
     isMultiple: 'Is Multiple Choice',
     itsYou: "it's you",
@@ -1507,7 +1509,8 @@ export default {
     paymentType: 'Payment Type',
     payout: 'Payout',
     payoutTotal: 'Total Payout',
-    resend_saba_payout: 'Resend SABA Payout',
+    resend_saba_payout: 'Resend Payout',
+    check_saba_ticket: 'Check SABA Ticket',
     return_ratio: 'Ratio Return',
     return_ratio_total: 'Total Ratio Return',
     pcWay: 'PC',
@@ -2710,6 +2713,7 @@ export default {
     regLoginRetention: 'Register Login Retenion',
     memberOrigin: 'Member Origin',
     combinePlatform: 'Combine Platform',
+    shortName: 'Short Name'
   },
   message: {
     adsStatusOpen: 'Open',
@@ -3266,7 +3270,9 @@ export default {
     streamUrlMustBeM3U8OrFlv: 'The stream URL must end with .m3u8 or .flv.',
     replacedWithM3U8: 'Automatically replaced with .m3u8 extension.',
     validateSupplierStreamRequired: 'Supplier stream URL is required.',
-    validateStreamerRequired: 'Streamer is required.'
+    validateStreamerRequired: 'Streamer is required.',
+    validateTransactionIdOrBetIdRequired: 'TransactionId or BetId is required',
+    validateTransactionIdMustBeDigitsOnly: 'TransactionId Only Digit is allowed',
   },
   menu: {
     'Add Promo': 'Add Promo',
@@ -3581,6 +3587,7 @@ export default {
     Team: 'team',
     'Bet type setting': 'bet type setting',
     'Sport App Setting': 'Sport App Setting',
+    'Top Competition Setting': 'Top Competition Setting',
     'Game Jackpot Bonus Record': 'Game Jackpot Bonus Record',
     'Refer Spin': 'Refer Spin',
     'Member Privilege Record Pak Export': 'Member Privilege Record Pak Export',

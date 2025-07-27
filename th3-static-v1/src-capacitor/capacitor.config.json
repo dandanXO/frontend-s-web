@@ -1,6 +1,6 @@
 {
-  "appId": "com.ind.appb9mega1",
-  "appName": "B9.GAME",
+  "appId": "com.tha.appsupersiam",
+  "appName": "Supersiam",
   "webDir": "www",
   "server": {
     "androidScheme": "https",
@@ -8,10 +8,7 @@
   },
   "plugins": {
     "GoogleAuth": {
-      "scopes": [
-        "profile",
-        "email"
-      ],
+      "scopes": ["profile", "email"],
       "serverClientId": "83563276345-oa2oi16o8597le1mku7bftcbu1avuk68.apps.googleusercontent.com",
       "forceCodeForRefreshToken": true
     }

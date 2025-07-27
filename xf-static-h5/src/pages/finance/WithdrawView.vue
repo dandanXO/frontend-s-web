@@ -184,7 +184,11 @@
             </div>
             <div
               class="q-mt-md text-orange"
-              v-if="['KDPAY', 'EBPAY', 'OKPAY', 'JDPAY', 'BLBPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)"
+              v-if="
+                ['KDPAY', 'EBPAY', 'OKPAY', 'JDPAY', 'BLBPAY', 'SZPAY', 'NINEPAY'].includes(
+                  selectedWithdrawalMethod.code
+                )
+              "
             >
               <span>*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</span>
             </div>
@@ -457,7 +461,7 @@ export default defineComponent({
       selectedWithdrawalMethod.value = method;
       withdrawInfo.withdrawCode = method.code;
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')|| withdrawInfo.withdrawCode.includes('SZPAY') || withdrawInfo.withdrawCode.includes('JDPAY') || withdrawInfo.withdrawCode.includes('BLBPAY')
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')|| withdrawInfo.withdrawCode.includes('SZPAY') || withdrawInfo.withdrawCode.includes('JDPAY') || withdrawInfo.withdrawCode.includes('BLBPAY') || withdrawInfo.withdrawCode.includes('NINEPAY')
       isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       activeItem.value = index;
       loadCards();
@@ -571,6 +575,8 @@ export default defineComponent({
         return '808 钱包教程视频'
       } else if (selectedWithdrawalMethod.value.code === 'JDPAY') {
         return 'JDPAY 教程视频'
+      }else if (selectedWithdrawalMethod.value.code === "NINEPAY") {
+        return "98PAY教程视频";
       }
     }
     const openEWalletTutorial = () => {

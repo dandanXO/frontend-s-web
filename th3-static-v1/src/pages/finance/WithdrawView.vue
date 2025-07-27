@@ -38,11 +38,7 @@
                 <q-item-section class="text-grey">
                   {{ "没有可用的" + chooseCard() }}
                   <router-link class="text-bright" to="/account/withdraw">
-                    {{
-                      isUSDT || isEWALLET
-                        ? "加" + chooseCard()
-                        : "绑定" + chooseCard()
-                    }}
+                    {{ isUSDT || isEWALLET ? "加" + chooseCard() : "绑定" + chooseCard() }}
                   </router-link>
                 </q-item-section>
               </q-item>
@@ -50,18 +46,12 @@
             <template v-slot:option="scope">
               <q-item v-bind="scope.itemProps">
                 <q-item-section avatar v-if="scope.opt.bankIcon">
-                  <img
-                    style="width: 30px"
-                    :src="imgURL + '/payment/' + scope.opt.bankIcon"
-                  />
+                  <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>
                     {{ scope.opt.bankName }} - ****{{
-                      scope.opt.cardNumber.slice(
-                        scope.opt.cardNumber.length - 4,
-                        scope.opt.cardNumber.length
-                      )
+                      scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
                     }}
                   </q-item-label>
                 </q-item-section>
@@ -75,13 +65,7 @@
                 />
               </q-item-section>
               <q-item-section>
-                <q-item-label
-                  style="
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                    white-space: nowrap;
-                  "
-                >
+                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
                   {{ scope.opt.bankName }} - {{ scope.opt.cardNumber }}
                 </q-item-label>
               </q-item-section>
@@ -102,16 +86,9 @@
             color="white"
             :rules="[
               (val) => (val && val.length > 0) || '请输入提款金额',
-              (val) =>
-                val >= selectedWithdrawalMethod.withdrawMin ||
-                '请输入正确的提款金额',
-              (val) =>
-                val <= selectedWithdrawalMethod.withdrawMax ||
-                '请输入正确的提款金额',
-              !isUSDT
-                ? (val) =>
-                    (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数'
-                : true
+              (val) => val >= selectedWithdrawalMethod.withdrawMin || '请输入正确的提款金额',
+              (val) => val <= selectedWithdrawalMethod.withdrawMax || '请输入正确的提款金额',
+              !isUSDT ? (val) => (!isUSDT && /^([1-9][0-9]*)$/.test(val)) || '金额应为正数' : true
             ]"
             clearable
           >
@@ -122,11 +99,7 @@
             </template>
             <template v-slot:append>
               <span style="font-size: 26px" class="text-bright">
-                <q-btn
-                  @click="updateWithdrawAmt"
-                  label="全额提款"
-                  color="brightbtn"
-                />
+                <q-btn @click="updateWithdrawAmt" label="全额提款" color="brightbtn" />
               </span>
             </template>
           </q-input>
@@ -135,12 +108,7 @@
             style="border-bottom: 1px solid #434343"
             v-show="selectedWithdrawalMethod"
           >
-            <template
-              v-if="
-                selectedWithdrawalMethod.withdrawMin &&
-                selectedWithdrawalMethod.withdrawMin
-              "
-            >
+            <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
                 "单笔提款: " +
                 selectedWithdrawalMethod.withdrawMin +
@@ -151,48 +119,24 @@
               <br />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-              {{
-                "今日提款: " +
-                selectedWithdrawalMethod.withdrawMaxAmount +
-                "RMB"
-              }}
+              {{ "今日提款: " + selectedWithdrawalMethod.withdrawMaxAmount + "RMB" }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
-              {{
-                " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次"
-              }}
+              {{ " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次" }}
             </template>
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
-            <div
-              class="q-my-md"
-              style="
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
+            <div class="q-my-md" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 1">实施汇率：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
             </div>
-            <div
-              class="q-mt-md"
-              style="
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              "
-            >
+            <div class="q-mt-md" style="display: flex; justify-content: center; align-items: center">
               <span style="flex: 1">预计到帐：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
-                {{
-                  (
-                    withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate
-                  ).toFixed(2)
-                }}
+                {{ (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate).toFixed(2) }}
                 USDT
               </span>
             </div>
@@ -207,7 +151,9 @@
             </div>
           </div>
 
-          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">{{ $t("form.usdtSpecialNote", {fee:selectedWithdrawalMethod.withdrawFee}) }}</div>
+          <div class="q-mt-sm text-neontb" v-if="selectedWithdrawalMethod.withdrawFee">
+            {{ $t("form.usdtSpecialNote", { fee: selectedWithdrawalMethod.withdrawFee }) }}
+          </div>
           <!-- <a-form-item
             class="select"
             name="cardId"
@@ -228,13 +174,7 @@
             </a-select>
           </a-form-item> -->
           <div class="flex-box flex-justify-center">
-            <q-btn
-              style="width: 100%"
-              class="q-mt-md fit"
-              color="brightbtn"
-              @click="submitWithdraw"
-              label="立即提款"
-            />
+            <q-btn style="width: 100%" class="q-mt-md fit" color="brightbtn" @click="submitWithdraw" label="立即提款" />
           </div>
           <div class="q-py-md text-orange">
             <div
@@ -353,7 +293,8 @@ export default defineComponent({
         api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
           if (response.code === 0) {
             $q.notify({
-              color: "positive",
+              color: "dark",
+textColor: "white",
               position: "top",
               message: "提交成功",
               icon: "check_circle_outline"

@@ -13,7 +13,7 @@
   <div class="login-container" :class="isRestrictedDomain ? 'w-domain' : ''">
     <div class="back-left" v-if="!isRestrictedDomain">
       <router-link :to="'/home'">
-        <img src="../assets/images/index/btn-house.png" />
+        <img src="../assets/images/index/close-btn-brown.png" />
       </router-link>
     </div>
     <!--
@@ -51,19 +51,18 @@
                   v-model="loginForm.loginName"
                   :rules="[
                     // (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                    // (val) => (val && val.length === 11) || $t('form.phone_rules_02')
-                    (val) => (val && val.length > 0 && val.length < 12) || $t('form.phone_rules_04')
+                    // (val) => (val && val.length === 10) || $t('form.phone_rules_02')
+                    // (val) => (val && val.length > 0 && val.length < 11) || $t('form.phone_rules_04')
                   ]"
                   label-color="brand"
                   autocomplete="username"
                   outlined
-                  color="green"
                   :placeholder="$t('form.phone_placeholder')"
                 >
-                  <template v-slot:prepend>
+                  <!-- <template v-slot:prepend>
                     <q-icon name="smartphone" />
-                    <div class="prepend-number">+92</div>
-                  </template>
+                    <div class="prepend-number">+66</div>
+                  </template> -->
                 </q-input>
               </template>
             </InputField>
@@ -79,12 +78,11 @@
                   label-color="brand"
                   autocomplete="current-password"
                   outlined
-                  color="green"
                   :placeholder="$t('form.password_placeholder')"
                 >
-                  <template v-slot:prepend>
+                  <!-- <template v-slot:prepend>
                     <q-icon name="lock" />
-                  </template>
+                  </template> -->
                   <template v-slot:append>
                     <!-- <q-icon
                       color="gray-3"
@@ -157,7 +155,7 @@
       </q-btn>
       <div class="areyounew">
         {{ $t("btn.areyounew") }}
-        <a @click="goRegister" class="green">{{ $t("btn.register") }}</a>
+        <a @click="goRegister" class="brown">{{ $t("btn.register") }}</a>
       </div>
 
       <div class="google-login-wrapper">
@@ -226,29 +224,26 @@
         </a>
       </div> -->
       <div class="btn-lists">
-        <ShareIcons />
+        <ShareIcons :isLogin="true" />
       </div>
     </div>
-    <template v-if="ui.siteType === 'CURACAO'">
-      <div class="col-grow" />
-
-      <a
-        class="license"
-        href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img class="license-img" src="../assets/images/license/curacao-license.png" />
-        <div class="license-text-wrapper">
-          <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
-          <span class="license-text__description">{{ $t("sideNav.license.curacao.description") }}</span>
-        </div>
-      </a>
-    </template>
 
     <!-- <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div> -->
+    <a
+      v-if="ui.siteType === 'CURACAO'"
+      class="license"
+      href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <img class="license-img" src="../assets/images/license/curacao-license.png" />
+      <div class="license-text-wrapper">
+        <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
+        <span class="license-text__description">{{ $t("sideNav.license.curacao.description") }}</span>
+      </div>
+    </a>
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -484,7 +479,8 @@ export default defineComponent({
 
               if (res.code === 0) {
                 $q.notify({
-                  color: "positive",
+                  color: "dark",
+                  textColor: "white",
                   position: "top",
                   message: "Google login successfully",
                   icon: "check_circle_outline"
@@ -550,7 +546,8 @@ export default defineComponent({
                   store.isFirstLandOnHomePage = true;
 
                   $q.notify({
-                    color: "positive",
+                    color: "dark",
+                    textColor: "white",
                     position: "top",
                     message: "Google login successfully",
                     icon: "check_circle_outline"
@@ -741,7 +738,8 @@ export default defineComponent({
 
             if (res.code === 0) {
               $q.notify({
-                color: "positive",
+                color: "dark",
+                textColor: "white",
                 position: "top",
                 message: "Quick registered successfully",
                 icon: "check_circle_outline"
@@ -1020,7 +1018,7 @@ export default defineComponent({
     }
   }
   .forget-pwd {
-    color: #9f9f9f;
+    color: #b99c73;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -1111,12 +1109,17 @@ export default defineComponent({
 
   .license {
     display: flex;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    width: 100%;
     .license-img {
       max-width: 47px;
-      margin-right: 4px;
+      margin-right: 6px;
       margin-bottom: 0;
     }
     .license-text-wrapper {
@@ -1125,7 +1128,7 @@ export default defineComponent({
       span {
         margin-bottom: 0;
         font-weight: 600;
-        color: #ffffff99;
+        color: #3a3a3a;
       }
       .license-text__title {
         font-size: 12px;
@@ -1177,7 +1180,7 @@ export default defineComponent({
   line-height: 100%;
   letter-spacing: 0px;
   vertical-align: middle;
-  color: #ffffff;
+  color: #3a3a3a;
   padding: 0 20px;
 }
 
@@ -1222,7 +1225,7 @@ export default defineComponent({
 
 .prepend-number {
   font-size: 14px;
-  color: #ffffff;
+  color: #d9cfb8;
   margin-left: 8px;
 }
 
@@ -1250,7 +1253,7 @@ export default defineComponent({
       background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
       -webkit-background-clip: text;
       color: transparent;
-      font-weight: bolder;
+      // font-weight: bolder;
       font-size: 16px;
     }
   }
@@ -1259,15 +1262,15 @@ export default defineComponent({
   border: none;
   padding: 3px 20px 8px;
   .btn-primary {
-    background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
-    color: #000a01;
+    // background: linear-gradient(90deg, #29ed89 0%, #97e872 100%);
+    // color: #000a01;
     @media screen and (max-width: 400px) {
       min-height: 35px;
       height: 35px;
     }
   }
   :deep(.q-btn__content) {
-    font-weight: bolder;
+    // font-weight: bolder;
     font-size: 16px;
 
     @media screen and (max-width: 400px) {
@@ -1333,14 +1336,15 @@ export default defineComponent({
 }
 .areyounew {
   margin: 15px 0;
+  color: #3a3a3a;
 
   @media screen and (max-width: 400px) {
     margin: 10px 0;
     font-size: 12px;
   }
 
-  .green {
-    color: #21ef89;
+  .brown {
+    color: #b99c73;
     font-weight: 700;
     cursor: pointer;
   }

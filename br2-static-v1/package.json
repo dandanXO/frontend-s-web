@@ -29,6 +29,7 @@
     "@capacitor/splash-screen": "^5.0.6",
     "@capacitor/status-bar": "^5.0.6",
     "@fingerprintjs/fingerprintjs": "^3.4.0",
+    "@fingerprintjs/fingerprintjs-pro-vue-v3": "^1.5.0",
     "@quasar/extras": "^1.0.0",
     "@vueuse/core": "^9.2.0",
     "aos": "^2.3.4",

@@ -825,6 +825,11 @@ export default defineComponent({
             selectedCode = bank.code
           }
         });
+
+        if (!/^[a-zA-Z0-9]+$/.test(val)) {
+          return '请输入有效的电子钱包号码';
+        }
+
         if (selectedCode === 'KDPAY') {
           return (val.length > 33 && val.length < 35) || '长度应为34个字符'
         } else if(selectedCode === 'EBPAY') {
@@ -835,6 +840,8 @@ export default defineComponent({
           return (val.length >= 32 && val.length <= 36) || '长度应为33个字符'
         } else if(selectedCode === 'JDPAY') {
           return (val.length > 33 && val.length < 35) || '长度应为34个字符'
+        } else if(selectedCode === 'NINEPAY') {
+          return (val.length > 31 && val.length < 33) || '长度应为32个字符'
         } else if(selectedCode === 'SZPAY') {
           if (isNaN(val) || (/\s/.test(val))) {
             return '请输入数字人民币使用的手机号';

@@ -1,30 +1,38 @@
 <template>
   <div class="q-pa-md">
     <div class="lang-select-container">
+      <q-radio class="select-item" v-model="group" val="th">
+        <template v-slot>
+          <div class="radio-label">
+            <img :src="require(`../assets/images/auth/country-flag-th.png`)" class="flag" />
+            <span class="text">ภาษาไทย</span>
+          </div>
+        </template>
+      </q-radio>
       <q-radio class="select-item" v-model="group" val="en">
         <template v-slot>
           <div class="radio-label">
             <img :src="require(`../assets/images/auth/country-flag-en.png`)" class="flag" />
-            <span class="text">US</span>
+            <span class="text">English</span>
           </div>
         </template>
       </q-radio>
-      <q-radio class="select-item" v-model="group" val="ur">
+      <!-- <q-radio class="select-item" v-model="group" val="ur">
         <template v-slot>
           <div class="radio-label">
             <img :src="require(`../assets/images/auth/country-flag-ur.png`)" class="flag" />
             <span class="text">Pakistan</span>
           </div>
         </template>
-      </q-radio>
-      <!-- <q-radio class="select-item" v-model="group" val="cn">
+      </q-radio> -->
+      <q-radio class="select-item" v-model="group" val="zh">
         <template v-slot>
           <div class="radio-label">
-            <img :src="require(`../assets/images/auth/country-flag-cn.png`)" class="flag" />
-            <span class="text">China</span>
+            <img :src="require(`../assets/images/auth/country-flag-zh.png`)" class="flag" />
+            <span class="text">中文</span>
           </div>
         </template>
-      </q-radio> -->
+      </q-radio>
     </div>
 
     <!-- <pre>group---{{ group }}</pre>

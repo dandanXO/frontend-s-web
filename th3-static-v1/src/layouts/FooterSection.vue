@@ -8,10 +8,10 @@
         </div>
         <span class="footer-label">{{ $t("bottomNav.home") }}</span>
       </q-route-tab> -->
-      <q-route-tab @click="test">
+      <q-route-tab @click="openSideMenu" name="menu">
         <div class="footer-img">
           <img class="inactive" src="../assets/images/index/menu/icon-more.png" />
-          <img class="hover" src="../assets/images/index/menu/icon-more.png" />
+          <img class="hover" src="../assets/images/index/menu/icon-more-hover.png" />
           <!-- <img class="hover" src="../assets/images/index/menu/icon-home-hover.png" /> -->
         </div>
         <span class="footer-label">{{ $t("bottomNav.more") }}</span>
@@ -63,9 +63,9 @@ const ui = useUI();
 const route = useRoute();
 const tab = ref("home");
 
-const test = () => {
-  console.log("hit 1", ui.isMenuOpen);
+const openSideMenu = () => {
   ui.isMenuOpen = !ui.isMenuOpen;
+  tab.value = "menu";
 };
 </script>
 

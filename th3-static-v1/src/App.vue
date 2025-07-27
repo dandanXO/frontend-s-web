@@ -201,7 +201,7 @@ export default defineComponent({
       const fbclid2 = window.localStorage.getItem("fbclid");
 
       const fbc = fbclid;
-      const siteCode = "PAK";
+      const siteCode = "TH3";
 
       const getCookie = (name) => {
         const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
@@ -265,7 +265,7 @@ export default defineComponent({
               "track",
               "Purchase",
               {
-                currency: "PKR",
+                currency: "THB",
                 value: randomValue
               },
               { eventID: randUuid }

@@ -880,7 +880,8 @@ export default {
     paymentType: 'ประเภทการชำระเงิน',
     payout: 'การจ่ายเงิน',
     payoutTotal: 'ยอดจ่ายทั้งหมด',
-    resend_saba_payout: 'ส่งเงิน SABA อีกครั้ง',
+    resend_saba_payout: 'ส่งเงิน อีกครั้ง',
+    check_saba_ticket: 'ตรวจสอบตั๋ว SABA',
     return_ratio: 'Ratio Return',
     return_ratio_total: 'อัตราผลตอบแทนทั้งหมด',
     pcWay: 'พีซี',
@@ -1714,7 +1715,9 @@ export default {
     validateVipSettingRequired: 'จำเป็นต้องตั้งค่าวีไอพี',
     validatePayementTypesSettingRequired: 'จำเป็นต้องตั้งค่าการชำระเงิน',
     qrCodeGenerateFailed: 'การสร้างรหัส QR ล้มเหลว',
-    downloadUrlEmpty: 'URL ดาวน์โหลดว่างเปล่า'
+    downloadUrlEmpty: 'URL ดาวน์โหลดว่างเปล่า',
+    validateTransactionIdOrBetIdRequired: 'TransactionId หรือ BetId เป็นสิ่งจำเป็น',
+    validateTransactionIdMustBeDigitsOnly: 'TransactionId อนุญาตเฉพาะตัวเลขเท่านั้น',
   },
   menu: {
     undefined: 'ไม่ได้กำหนด',

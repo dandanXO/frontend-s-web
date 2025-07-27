@@ -547,6 +547,13 @@ body.body--dark .q-footer {
   align-content: center;
   justify-content: center;
 }
+.fullscreen {
+  &.betby {
+    z-index: 6000;
+    max-height: calc(100vh - 75px);
+  }
+    z-index: 9999;
+}
 // .fullscreen {
 //   max-width: 500px;
 //   margin: 0 auto;

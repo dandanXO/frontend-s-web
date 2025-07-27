@@ -164,6 +164,13 @@
       :params="list.param"
     />
 
+    <LhStepGamePromo
+      v-if="list.redirectUrl === 'lh1-game-steps'"
+      :pageContent="list.pageContent"
+    ></LhStepGamePromo>
+
+    <SnowMaster v-if="list.redirectUrl === 'lh1-d2-snow-ruyi-masters-2025'" :promo-code="list.promoCode" />
+
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -217,6 +224,8 @@ import SubmitClaimPromo from "@/components/hotpromo/submitclaim/SubmitClaimPromo
 import DailiPromo from "@/components/hotpromo/daili/DailiPromo.vue";
 import SlotLossBonusPromo from "@/components/hotpromo/slot-loss-bonus/SlotLossBonusPromo.vue";
 import VctBangkok from "./hotpromo/vct-bangkok/VctBangkok.vue";
+import SnowMaster from "./hotpromo/snow-master/snow-master.vue";
+
 import DragonBoat from "@/components/hotpromo/dragonboat/DragonBoat.vue";
 import Blast2025 from "../components/hotpromo/Blast2025/Blast2025.vue";
 import DarkModePromo from "../components/hotpromo/dark-mode/DarkModePromo.vue";
@@ -253,12 +262,14 @@ import FifaCwcRedPacket from "./hotpromo/fifa-cwc-red-packet/FifaCwcRedPacket.vu
 import FissureJulyFinal2025 from "./hotpromo/fissure-july-final-2025/FissureJulyFinal2025.vue";
 import PPDianZiTianTianSong from "./hotpromo/ppdianzitiantiansong/PPDianZiTianTianSong.vue";
 import RapidDrop2025 from "./hotpromo/rapid-drop-2025/RapidDrop2025.vue";
+import LhStepGamePromo from "../components/hotpromo/lhstepgame/LhStepGamePromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    SnowMaster,
     sportReferBetBonus,
     Lh1Enc2025,
     DragonBoat,
@@ -321,7 +332,8 @@ export default defineComponent({
     FifaCwcRedPacket,
     FissureJulyFinal2025,
     RapidDrop2025,
-    PPDianZiTianTianSong
+    PPDianZiTianTianSong,
+    LhStepGamePromo
   },
   props: {
     list: {

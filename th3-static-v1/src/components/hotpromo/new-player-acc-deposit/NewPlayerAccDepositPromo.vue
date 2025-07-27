@@ -12,7 +12,9 @@
               <div class="day-img">
                 <img :src="require(`./img/day-${index + 1}.png`)" />
               </div>
-              <div class="day-txt">{{ item.day }} {{ item.day === 1 ? $t("hotPromo.signIn7Days.day") : $t("hotPromo.signIn7Days.days") }}</div>
+              <div class="day-txt">
+                {{ item.day }} {{ item.day === 1 ? $t("hotPromo.signIn7Days.day") : $t("hotPromo.signIn7Days.days") }}
+              </div>
               <div class="tick-img">
                 <img
                   :src="
@@ -64,9 +66,11 @@
             @click="claimNewPlayerAccDeposit()"
           >
             <div class="q-mr-sm"><img src="./img/img-start.svg" alt="" /></div>
-            <template v-if="activeClaim && activeClaim.hasClaimed === 'YES'">{{$t("hotPromo.claimed")}}</template>
-            <template v-if="activeClaim && activeClaim.hasClaimed === 'EXPIRED'">{{$t("hotPromo.signIn7Days.expired")}}</template>
-            <template v-if="activeClaim && activeClaim.hasClaimed === 'NO'">{{$t("hotPromo.claim_now")}}</template>
+            <template v-if="activeClaim && activeClaim.hasClaimed === 'YES'">{{ $t("hotPromo.claimed") }}</template>
+            <template v-if="activeClaim && activeClaim.hasClaimed === 'EXPIRED'">
+              {{ $t("hotPromo.signIn7Days.expired") }}
+            </template>
+            <template v-if="activeClaim && activeClaim.hasClaimed === 'NO'">{{ $t("hotPromo.claim_now") }}</template>
             <!-- <template v-else>Claim now</template> -->
           </q-btn>
         </div>
@@ -83,7 +87,7 @@
         <img src="./img/prize-gold.png" width="150" />
       </div>
 
-      <div class="prize-amount">Rs {{ bonusAmount }}</div>
+      <div class="prize-amount">THB {{ bonusAmount }}</div>
 
       <q-btn no-caps unelevated class="btn-primary" @click="handlePrizeDetailShow">
         {{ $t("btn.confirm") }}
@@ -125,7 +129,8 @@ const claimNewPlayerAccDeposit = () => {
     if (res.code === 0) {
       $q.notify({
         message: "Successfully Claimed",
-        color: "positive",
+        color: "dark",
+        textColor: "white",
         position: "top",
         timeout: 2000
       });

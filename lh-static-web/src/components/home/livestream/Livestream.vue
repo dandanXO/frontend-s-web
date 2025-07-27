@@ -509,10 +509,11 @@ onUnmounted(() => {
     grid-template-columns: 957.72px 306.66px;
     grid-template-rows: auto auto auto 1fr;
     gap: var(--grid-gap);
-    padding: 18px;
+    background: #f0f7ff;
+    padding: 18px 20px;
     border: 2px solid #fff;
     border-radius: 14px;
-    box-shadow: 0px 0px 5.76px 4.72px #22446e21 inset;
+    box-shadow: 0px 0px 6.1px 0px #22446e21 inset;
 
     .livestream-list {
       grid-column: 1 / span 2;

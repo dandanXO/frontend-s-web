@@ -10,12 +10,10 @@
 
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'pak-spin-wheel' && !isCommonPromo && store.token" />
     <SignIn7DaysPromo v-if="list.redirectUrl === 'pak-signin-bonus' && !isCommonPromo && store.token" />
-    <NewPlayerSpinWheelPromo
+    <!-- <NewPlayerSpinWheelPromo
       v-if="list.redirectUrl === 'pak-newplayer-welcome-spin' && !isCommonPromo && store.token"
-    />
-    <NewPlayerWelcome
-      v-if="list.redirectUrl === 'pak-welcome-new-players' && !isCommonPromo && store.token"
-    />
+    /> -->
+    <NewPlayerWelcome v-if="list.redirectUrl === 'pak-welcome-new-players' && !isCommonPromo && store.token" />
     <RedPacketRainPromo v-if="list.redirectUrl === 'pak-redpacketrain' && !isCommonPromo && store.token" />
     <InterestProfitPromo v-if="list.redirectUrl === 'interest-profit' && !isCommonPromo && store.token" />
     <NewPlayersPromo v-if="list.redirectUrl === 'pak-new-players' && !isCommonPromo && store.token" :list="list" />
@@ -31,9 +29,12 @@
       v-if="list.redirectUrl === 'pak-deposit-spinner-rewards' && store.token"
       :params="list.param"
     />
-    <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
+    <!-- <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" /> -->
     <NewPlayerAccDepositPromo v-if="list.redirectUrl === 'new-player-acc-deposit'" :params="list.param" />
-    <Lucky9DayRewardsCarnival v-if="!isCommonPromo && list.redirectUrl === 'pak-lucky-10-day-bonus'" :params="list.param" />
+    <Lucky9DayRewardsCarnival
+      v-if="!isCommonPromo && list.redirectUrl === 'pak-lucky-10-day-bonus'"
+      :params="list.param"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -63,7 +64,7 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheelPromo.vue";
 import SignIn7DaysPromo from "../components/hotpromo/signIn7Days/SignIn7DaysPromo";
-import NewPlayerSpinWheelPromo from "../components/hotpromo/newPlayerWheel/NewPlayerWheelPromo.vue";
+// import NewPlayerSpinWheelPromo from "../components/hotpromo/newPlayerWheel/NewPlayerWheelPromo.vue";
 import RedPacketRainPromo from "../components/hotpromo/redPacketRain/RedPacketRainPromo.vue";
 import InterestProfitPromo from "../components/hotpromo/interestProfit/InterestProfitPromo.vue";
 import NewPlayersPromo from "../components/hotpromo/newPlayers/NewPlayersPromo.vue";
@@ -73,10 +74,10 @@ import GoldenEggPromo from "./hotpromo/goldenEgg/GoldenEggPromo.vue";
 import VideoAmbassador from "./hotpromo/video-ambassador/VideoAmbassador.vue";
 import DepositSpinnerRewards from "./hotpromo/deposit-spinner-rewards/DepositSpinnerRewards.vue";
 import JackpotAviator from "./hotpromo/jackpotAviator/JackpotAviator.vue";
-import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
-import NewPlayerAccDepositPromo from "./hotpromo/new-player-acc-deposit/NewPlayerAccDepositPromo.vue"
-import Lucky9DayRewardsCarnival from "./hotpromo/lucky9day/Lucky9DayRewardsCarnival.vue"
-import NewPlayerWelcome from "../components/hotpromo/newPlayerSpinWheel/NewPlayerWheelPromo.vue"
+// import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo.vue";
+import NewPlayerAccDepositPromo from "./hotpromo/new-player-acc-deposit/NewPlayerAccDepositPromo.vue";
+import Lucky9DayRewardsCarnival from "./hotpromo/lucky9day/Lucky9DayRewardsCarnival.vue";
+import NewPlayerWelcome from "../components/hotpromo/newPlayerSpinWheel/NewPlayerWheelPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -87,7 +88,7 @@ export default defineComponent({
     HongBaoYuPromo,
     BonusSpinWheelPromo,
     SignIn7DaysPromo,
-    NewPlayerSpinWheelPromo,
+    // NewPlayerSpinWheelPromo,
     RedPacketRainPromo,
     InterestProfitPromo,
     NewPlayersPromo,
@@ -96,7 +97,7 @@ export default defineComponent({
     GoldenEggPromo,
     JackpotAviator,
     DepositSpinnerRewards,
-    SpinLuckyWheelPromo,
+    // SpinLuckyWheelPromo,
     NewPlayerAccDepositPromo,
     Lucky9DayRewardsCarnival,
     NewPlayerWelcome
@@ -360,7 +361,8 @@ export default defineComponent({
             console.log(responseCode);
             if (responseCode.code === 0) {
               $q.notify({
-                color: "positive",
+                color: "dark",
+                textColor: "white",
                 position: "top",
                 message: "发送成功",
                 icon: "check_circle_outline"

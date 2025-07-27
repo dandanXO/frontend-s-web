@@ -4,33 +4,33 @@
   <div
     class="firstPage"
     :class="[
-      props.siteId !== '5' && props.siteId !== '9' && props.siteId !== '18'
+      props.siteId !== siteEnum.IND && props.siteId !== siteEnum.IW2 && props.siteId !== siteEnum.BR1
         ? ''
         : 'ind-firstPage',
-      props.siteId !== '7' ? '' : 'lh',
-      props.siteId !== '8' ? '' : 'vi',
-      props.siteId !== '10' ? '' : 'kr',
-      props.siteId !== '11' ? '' : 'pak',
-      props.siteId !== '15' ? '' : 'kaka',
-      props.siteId !== '28' ? '' : 'br2',
+      props.siteId !== siteEnum.LH1 ? '' : 'lh',
+      props.siteId !== siteEnum.VNM ? '' : 'vi',
+      props.siteId !== siteEnum.KRW ? '' : 'kr',
+      props.siteId !== siteEnum.PAK ? '' : 'pak',
+      props.siteId !== siteEnum.KAKA ? '' : 'kaka',
+      props.siteId !== siteEnum.BR2 ? '' : 'br2',
     ]"
   >
     <img
       class="float-logo"
-      v-if="props.siteId === '15'"
+      v-if="props.siteId === siteEnum.KAKA"
       :src="currentSite.logo"
     />
     <div class="inner">
       <div class="loginPage">
         <div class="left">
           <div class="logo">
-            <img v-if="props.siteId !== '15'" :src="currentSite.logo" />
+            <img v-if="props.siteId !== siteEnum.KAKA" :src="currentSite.logo" />
           </div>
           <div class="first-liner" v-html="currentSite.firstLiner" />
           <div class="second-liner" v-html="currentSite.secondLiner" />
           <div>
             <img
-              v-if="props.siteId === '28'"
+              v-if="props.siteId === siteEnum.BR2"
               src="../../assets/images/br2/br2-main-img.png"
               class="main-img"
             />
@@ -43,11 +43,11 @@
                 {{ isReg ? $t('common.signup') : $t('common.login') }}
               </div>
               <LangToggle
-                v-if="props.siteId === '8'"
+                v-if="props.siteId === siteEnum.VNM"
                 :langList="['vi', 'en']"
               />
               <LangToggle
-                v-if="props.siteId === '30'"
+                v-if="props.siteId === siteEnum.LK6"
                 :langList="['zh', 'en']"
               />
               <!--              <div class="topright" v-if="props.siteId !== '5'">-->
@@ -63,14 +63,14 @@
             <div class="mid">
               <img
                 class="top-img"
-                v-if="props.siteId === '7'"
+                v-if="props.siteId === siteEnum.LH1"
                 src="../../assets//images/login/lh-login-1.png"
               />
               <el-form
                 v-if="!isReg"
                 ref="loginFormRef"
                 :model="loginForm"
-                :rules="props.siteId === '8' ? loginRulesVi : loginRules"
+                :rules="props.siteId === siteEnum.VNM ? loginRulesVi : loginRules"
                 class="login-form"
                 autocomplete="no-fill"
                 validate-on-rule-change="false"
@@ -105,11 +105,11 @@
                       autocomplete="no-fill"
                       @keyup="checkCapslock"
                       @blur="capsTooltip = false"
-                      @keyup.enter="props.siteId !== '8' ? handleLogin() : null"
+                      @keyup.enter="props.siteId !== siteEnum.VNM ? handleLogin() : null"
                     />
                   </el-form-item>
                 </el-tooltip>
-                <el-form-item prop="captchaCode" v-if="props.siteId === '8'">
+                <el-form-item prop="captchaCode" v-if="props.siteId === siteEnum.VNM">
                   <el-input
                     v-model="loginForm.captchaCode"
                     :placeholder="$t('common.verificationcode')"
@@ -125,7 +125,7 @@
                     </template>
                   </el-input>
                 </el-form-item>
-                <div class="forget-pw" v-if="props.siteId !== '8'">
+                <div class="forget-pw" v-if="props.siteId !== siteEnum.VNM">
                   <el-link type="primary" @click="forgetPasswordDialog">
                     {{ $t('common.forgetpass') }}
                   </el-link>
@@ -144,25 +144,25 @@
                     type="primary"
                     style="width:50%;"
                     @click="isReg = !isReg"
-                    v-if="props.siteId !== '28'"
+                    v-if="props.siteId !== siteEnum.BR2"
                   >
                     {{ $t('common.register_affi') }}
                   </el-button>
                 </div>
 
                 <div
-                  v-if="props.siteId !== '5' || props.siteId !== '8'"
+                  v-if="props.siteId !== siteEnum.IND || props.siteId !== siteEnum.VNM"
                   class="flex-c-center-div"
                 >
                   <div
                     class="contact-div"
                     @click="swipeToContactUs"
-                    v-if="props.siteId !== '28'"
+                    v-if="props.siteId !== siteEnum.BR2"
                   >
                     {{ $t('common.contact_us') }}
                   </div>
                 </div>
-                <LhFeedback v-if="props.siteId === '7'" />
+                <LhFeedback v-if="props.siteId === siteEnum.LH1" />
               </el-form>
               <el-form
                 v-if="isReg"
@@ -229,7 +229,7 @@
                   </el-tooltip>
                   <el-form-item
                     prop="codeAffiliate"
-                    v-if="props.siteId === '10'"
+                    v-if="props.siteId === siteEnum.KRW"
                   >
                     <el-input
                       ref="codeAffiliateRef"
@@ -266,7 +266,7 @@
                       @click.prevent="handleRegister"
                     >
                       {{
-                        props.siteId === '8' || props.siteId === 8
+                        props.siteId === siteEnum.VNM || props.siteId === 8
                           ? $t('google.next_step')
                           : $t('common.apply')
                       }}
@@ -281,9 +281,9 @@
                   </div>
                   <div
                     v-if="
-                      props.siteId !== '5' ||
-                        props.siteId !== '8' ||
-                        props.siteId !== '28'
+                      props.siteId !== siteEnum.IND ||
+                        props.siteId !== siteEnum.VNM ||
+                        props.siteId !== siteEnum.BR2
                     "
                     class="flex-c-center-div"
                   >
@@ -295,7 +295,7 @@
                 <div
                   v-if="
                     step === 2 &&
-                      (props.siteId === '8' || props.siteId === '15')
+                      (props.siteId === siteEnum.VNM || props.siteId === siteEnum.KAKA)
                   "
                 >
                   <el-form-item prop="realName">
@@ -668,6 +668,7 @@ import { useI18n } from 'vue-i18n'
 import { i18nStore } from '@/store/language'
 import LhFeedback from '../customer-service/lh-feedback.vue'
 import LangToggle from '../lang/LangToggle.vue'
+import { siteEnum } from "@/consts/SiteEnum"
 
 export default defineComponent({
   props: {
@@ -708,8 +709,8 @@ export default defineComponent({
         return Promise.reject(new Error(t('message.requiredRealName')))
       } else if (
         !checkRealName(v) &&
-        props.siteId !== '8' &&
-        props.siteId !== '15'
+        props.siteId !== siteEnum.VNM &&
+        props.siteId !== siteEnum.KAKA
       ) {
         return Promise.reject(new Error('请输入中文字符'))
       } else {
@@ -1072,9 +1073,9 @@ export default defineComponent({
         regFormRef.value.validate(async valid => {
           if (valid) {
             if (
-              props.siteId === '15' ||
+              props.siteId === siteEnum.KAKA ||
               props.siteId === 15 ||
-              props.siteId === '8' ||
+              props.siteId === siteEnum.VNM ||
               props.siteId === 8
             ) {
               if (step.value === 1) {
@@ -1135,13 +1136,21 @@ export default defineComponent({
           state.loginForm.site === 'IW2' ||
           state.loginForm.site === 'VNM' ||
           state.loginForm.site === 'KA2' ||
-          state.loginForm.site === 'BR2' ||
-          state.loginForm.site === 'BR1' ||
           state.loginForm.site === 'KRW'
         ) {
           router
             .push({
               path: state.redirect || '/',
+              query: state.otherQuery,
+            })
+            .catch(err => {
+              console.warn(err)
+            })
+        } else if (state.loginForm.site === 'BR2' ||
+          state.loginForm.site === 'BR1') {
+          router
+            .push({
+              path: state.redirect || '/report/daily-detail',
               query: state.otherQuery,
             })
             .catch(err => {
@@ -1391,7 +1400,7 @@ export default defineComponent({
     const swipeToContactUs = () => {
       const windowWidth = window.innerWidth
       const isMobile = windowWidth < 768
-      const isCitySite = props.siteId === '10'
+      const isCitySite = props.siteId === siteEnum.KRW
       const contactUrl = 'https://t.me/city88888'
 
       if (isMobile) {
@@ -1436,21 +1445,21 @@ export default defineComponent({
     const i18nStoreLanguage = i18nStore()
     const { setLanguage, languageVal } = i18nStoreLanguage
     const populateCurrentSiteData = () => {
-      if (props.siteId === '6') {
+      if (props.siteId === siteEnum.DY2) {
         currentSite.value.firstLiner = '从东赢开始'
         currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
         currentSite.value.logo = dyLogo
         state.loginForm.site = 'DY2'
         setLanguage('zh')
       }
-      if (props.siteId === '1') {
+      if (props.siteId === siteEnum.XF1) {
         currentSite.value.firstLiner = '从兴发开始'
         currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
         currentSite.value.logo = xfLogo
         state.loginForm.site = 'XF1'
         setLanguage('zh')
       }
-      if (props.siteId === '5') {
+      if (props.siteId === siteEnum.IND) {
         currentSite.value.firstLiner = 'Starts from 55ACE'
         currentSite.value.secondLiner =
           'Become a legend<br>Or become the eulogist of legend?'
@@ -1459,7 +1468,7 @@ export default defineComponent({
         currentSite.value.lang = 'EN'
         setLanguage('en')
       }
-      if (props.siteId === '9') {
+      if (props.siteId === siteEnum.IW2) {
         currentSite.value.firstLiner = 'Starts from 789F'
         currentSite.value.secondLiner =
           'Become a legend<br>Or become the eulogist of legend?'
@@ -1468,7 +1477,7 @@ export default defineComponent({
         currentSite.value.lang = 'EN'
         setLanguage('en')
       }
-      if (props.siteId === '7') {
+      if (props.siteId === siteEnum.LH1) {
         // currentSite.value.firstLiner = '从雷火开始'
         // currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
         const firstLinerImg = require('@/assets/images/login/lh-login-2.png')
@@ -1481,7 +1490,7 @@ export default defineComponent({
         state.loginForm.site = 'LH1'
         setLanguage('zh')
       }
-      if (props.siteId === '8') {
+      if (props.siteId === siteEnum.VNM) {
         currentSite.value.firstLiner = 'Start From TFGaming'
         currentSite.value.secondLiner =
           'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
@@ -1495,7 +1504,7 @@ export default defineComponent({
           setLanguage('vi')
         }
       }
-      if (props.siteId === '15') {
+      if (props.siteId === siteEnum.KAKA) {
         currentSite.value.firstLiner = 'Bắt đầu với KAKA'
         currentSite.value.secondLiner =
           'trở thành một huyền thoại<br/>Hoặc trở thành nhà điếu văn của huyền thoại?'
@@ -1503,7 +1512,7 @@ export default defineComponent({
         state.loginForm.site = 'KA2'
         setLanguage('vi')
       }
-      if (props.siteId === '10') {
+      if (props.siteId === siteEnum.KRW) {
         currentSite.value.firstLiner = 'Start From CITY8'
         currentSite.value.secondLiner =
           'Become a legend<br>Or become the eulogist of legend?'
@@ -1511,7 +1520,7 @@ export default defineComponent({
         state.loginForm.site = 'KRW'
         setLanguage('kr')
       }
-      if (props.siteId === '11') {
+      if (props.siteId === siteEnum.PAK) {
         currentSite.value.firstLiner = 'Start From B9'
         currentSite.value.secondLiner =
           'Become a legend<br>Or become the eulogist of legend?'
@@ -1519,7 +1528,7 @@ export default defineComponent({
         state.loginForm.site = 'PAK'
         setLanguage('zh')
       }
-      if (props.siteId === '18') {
+      if (props.siteId === siteEnum.BR1) {
         currentSite.value.firstLiner = 'Começa a partir de 55ACE'
         currentSite.value.secondLiner =
           'Torne-se uma lenda<br>Ou torne-se o elogista da lenda?'
@@ -1528,7 +1537,7 @@ export default defineComponent({
         currentSite.value.lang = 'PT'
         setLanguage('pt')
       }
-      if (props.siteId === '28') {
+      if (props.siteId === siteEnum.BR2) {
         currentSite.value.firstLiner = 'Começa a partir de AKB188'
         currentSite.value.secondLiner =
           'Torne-se uma lenda<br>Ou torne-se o elogista da lenda?'
@@ -1537,7 +1546,7 @@ export default defineComponent({
         currentSite.value.lang = 'PT'
         setLanguage('pt')
       }
-      if (props.siteId === '30') {
+      if (props.siteId === siteEnum.LK6) {
         currentSite.value.firstLiner = '从幸运6开始'
         currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
         currentSite.value.logo = lk6Logo
@@ -1570,7 +1579,7 @@ export default defineComponent({
       dialog.addEventListener('scroll', methods.onScrollEvent)
       window.addEventListener('resize', methods.onScrollEvent)
       populateCurrentSiteData()
-      if (props.siteId === '8') {
+      if (props.siteId === siteEnum.VNM) {
         getCaptcha()
       }
     })
@@ -1610,6 +1619,7 @@ export default defineComponent({
       isClick,
       loginRules,
       loginRulesVi,
+      siteEnum
     }
   },
 })

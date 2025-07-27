@@ -24,11 +24,11 @@
             clearable
             :placeholder="$t('form.phone_placeholder')"
             v-model="formDetail.phone"
-            :rules="[(val) => val.startsWith('03') || $t('form.phone_rules_03'), (_) => isValidPhone()]"
+            :rules="[(val) => val.startsWith('0') || $t('form.phone_rules_03'), (_) => isValidPhone()]"
           >
             <template v-slot:prepend>
               <q-icon name="smartphone" />
-              <div class="prepend-number">+92</div>
+              <div class="prepend-number">+66</div>
             </template>
           </q-input>
         </div>
@@ -143,7 +143,8 @@ const updateNewUserState = () => {
   if (ui.siteType === "CURACAO") {
     localStorage.setItem("PAK_ADDRESS", formDetail.address);
     $q.notify({
-      color: "positive",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: "Updated successfully",
       icon: "check_circle_outline"
@@ -157,7 +158,8 @@ const updateNewUserState = () => {
     .then((r) => {
       if (r.code === 0) {
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "Updated successfully",
           icon: "check_circle_outline"

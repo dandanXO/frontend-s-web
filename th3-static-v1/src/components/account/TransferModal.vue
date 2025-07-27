@@ -3,6 +3,9 @@
     width="100%"
     :modelValue="modelValue"
     persistent
+    position="bottom"
+    transition-show="slide-up"
+    transition-hide="slide-down"
     @update:modelValue="(value) => emit('update:modelValue', value)"
   >
     <div class="popout-dialog">
@@ -67,7 +70,7 @@
                     v-model="formDetail.transferAmount"
                   >
                     <template v-slot:append>
-                      <a style="color: #00b900" @click="updateTransferAmount">{{ $t("form.all") }}</a>
+                      <a style="color: #d9cfb8" @click="updateTransferAmount">{{ $t("form.all") }}</a>
                     </template>
                   </q-input>
                 </div>
@@ -228,6 +231,31 @@ watch([downlineId, uplineId], ([newDownlineId, newUplineId]) => {
   text-align: right;
   margin-top: -20px;
   margin-bottom: 10px;
-  color: #5f6061;
+  color: #fff;
+}
+
+.txt-title {
+  color: #fff;
+}
+
+.form-field-label {
+  color: #d9cfb8;
+}
+.popout-dialog-container {
+  :deep(.form-field-label) {
+    color: #d9cfb8;
+  }
+  :deep(.landing-input .q-field__control) {
+    background: #3a3a3a;
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+    }
+  }
+  :deep(.landing-input .q-field__control) {
+    color: #d9cfb8;
+  }
+  :deep(.landing-input .q-field__native) {
+    color: #d9cfb8;
+  }
 }
 </style>

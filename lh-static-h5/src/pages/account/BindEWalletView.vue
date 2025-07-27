@@ -255,6 +255,8 @@ const validateBankLength = (val) => {
       return (val.length > 33 && val.length < 35) || "长度应为34个字符";
     case "SZPAY":
       return (val.length > 10 && val.length < 13) || "长度应为11个字符";
+    case "NINEPAY":
+      return (val.length > 31 && val.length < 33) || "长度应为32个字符";
     default:
       break;
   }
@@ -540,6 +542,10 @@ onMounted(() => {
     .bind-wrapper {
       .bind-item {
         @include content-block-dark-with-border;
+        q-label {
+          color: white !important;
+        }
+
         .q-field__control {
           background: $background-dark;
           box-shadow: none;

@@ -47,8 +47,10 @@
     </div>
 
     <div class="bets-wrapper">
-      {{$t("hotPromo.current_valid_bets")}}: {{ convertToCommaAmount(validBet) }}/{{ convertToCommaAmount(minValidBet) }}
-      PKR
+      {{ $t("hotPromo.current_valid_bets") }}: {{ convertToCommaAmount(validBet) }}/{{
+        convertToCommaAmount(minValidBet)
+      }}
+      THB
     </div>
 
     <div class="activities-wrapper">
@@ -105,7 +107,7 @@
                       </div>
                     </td>
                     <td width="40%" align="center">{{ item.loginName }}</td>
-                    <td width="40%" align="center">{{ convertToCommaAmount(item.amount) }} PKR</td>
+                    <td width="40%" align="center">{{ convertToCommaAmount(item.amount) }} THB</td>
                   </tr>
                 </template>
                 <div v-else class="no-record">{{ $t("hotPromo.noRecords") }}</div>
@@ -271,9 +273,7 @@ onMounted(() => {
         border: none;
         min-height: 105px;
         @media screen and (max-width: 400px) {
-          
-        min-height: 80px;
-          
+          min-height: 80px;
         }
         &.disabled {
           .golden-egg {
@@ -496,7 +496,7 @@ onMounted(() => {
             th {
               padding: 5px;
               text-align: right;
-              color: #E0B690;
+              color: #e0b690;
               font-weight: 600;
               font-family: "Poppins";
               background: linear-gradient(180deg, #794d2a 0%, #5a3a1e 51%, #341400 100%);
@@ -542,7 +542,7 @@ onMounted(() => {
               width: 100%;
               text-align: center;
               // color: #6db85f;
-              color: #E0B690;
+              color: #e0b690;
               padding: 35px 0;
             }
           }

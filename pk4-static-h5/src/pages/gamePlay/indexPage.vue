@@ -1,26 +1,12 @@
 <template>
   <q-scroll-area>
-    <q-dialog v-model="visible" class="gameDialog" full-height full-width persistent no-esc-dismiss no-backdrop-dismiss>
+    <q-dialog v-model="visible" class="gameDialog" :class="{ betby: isBetBy }" full-height full-width persistent no-esc-dismiss no-backdrop-dismiss>
       <q-toolbar>
+
         <div class="topActions" :class="{ betby: isBetBy }">
           <q-icon name="chevron_left" size="30px" @click="onExitClick" />
           <div class="game-logo-img">
             <img src="../../assets/images/auth/auth-logo-text-only.png" />
-            <!-- <img src="../../assets/logo.png" /> -->
-            <!-- <div
-              class="game-logo"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../../assets/images/index/logo/logo-${platformCodeImg.toLowerCase()}.png`)})`;
-                  } catch (e) {
-                    return '';
-                  }
-                })()
-              }"
-            >
-              &nbsp;
-            </div> -->
           </div>
 
           <div v-if="!drawerVisible && !isBetBy" class="wallet-container" @click="goToDeposit()">
@@ -155,7 +141,7 @@ import {
   shallowRef,
   computed,
   nextTick,
-  onMounted,
+  onMounted, onUnmounted, onDeactivated
 } from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
@@ -311,6 +297,7 @@ const closeDialog =  async () => {
 
   if (betbyInstance.value) {
     betbyInstance.value.kill();
+    betbyInstance.value= null
   }
   await nextTick();
 
@@ -540,6 +527,7 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
                 target: betbyRef.value,
                 stickyTop: headerHeight,
                 betSlipOffsetTop: headerHeight,
+                betSlipOffsetBottom: 74,
                 betslipZIndex: 999,
                 onRecharge: function () {
                   router.push("/deposit?from=/home");
@@ -556,6 +544,10 @@ const startGame = (gameName, platformCode, gameCode, gameType, demo) => {
                       .then((res) => resolve(res.data))
                       .catch((err) => reject(err));
                   });
+                },
+                onStateChange: () => {
+                  console.log("onStateChange");
+                  store.getBalance();
                 }
               });
 
@@ -670,7 +662,14 @@ onMounted(()=>{
   }else{
     console.error('wrong game')
   }
+})
 
+onUnmounted(()=>{
+  if (betbyInstance.value) {
+    // console.log("KILL BetBy")
+    betbyInstance.value.kill();
+    betbyInstance.value= null;
+  }
 })
 
 defineExpose({
@@ -921,6 +920,7 @@ defineExpose({
 
 .game-iframe--betby {
   width: 100%;
+  height: calc(100vh - 140px);
 }
 
 .q-toolbar .topActions {
@@ -1294,6 +1294,22 @@ defineExpose({
     padding-right: 5px;
     white-space: nowrap;
     width: 100%;
+  }
+}
+</style>
+
+<style lang="scss">
+.game-iframe--betby {
+  #bt-inner-page {
+    padding-bottom: 320px;
+  }
+
+  #bt-root {
+    padding-bottom: 32px;
+  }
+
+  > div {
+    padding-bottom: 120px;
   }
 }
 </style>

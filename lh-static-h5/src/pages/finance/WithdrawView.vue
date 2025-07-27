@@ -251,7 +251,7 @@
             <div class="q-mt-sm text-neontb">*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</div>
             <div
               class="q-mt-sm q-mb-sm text-center"
-              v-if="selectedWithdrawalMethod.code !== 'SZPAY' && !$q.dark.isActive"
+              v-if="selectedWithdrawalMethod.code !== 'SZPAY'  && !$q.dark.isActive"
             >
               <q-btn
                 style="border: 1px solid #33bcd4; color: #33bcd4"
@@ -504,6 +504,7 @@ const selectMethod = (method, index) => {
     withdrawInfo.withdrawCode.includes("EBPAY") ||
     withdrawInfo.withdrawCode.includes("OKPAY") ||
     withdrawInfo.withdrawCode.includes("SZPAY") ||
+    withdrawInfo.withdrawCode.includes("NINEPAY") ||
     withdrawInfo.withdrawCode.includes("JDPAY") ||
     withdrawInfo.withdrawCode.includes("BLBPAY");
   isALIPAY.value = withdrawInfo.withdrawCode.includes("ALIPAY");
@@ -624,6 +625,8 @@ const tutorialLabel = () => {
     return "808钱包教程视频";
   } else if (selectedWithdrawalMethod.value.code === "JDPAY") {
     return "JDPAY教程视频";
+  }else if (selectedWithdrawalMethod.value.code === "NINEPAY") {
+    return "98PAY教程视频";
   }
 };
 const openEWalletTutorial = () => {

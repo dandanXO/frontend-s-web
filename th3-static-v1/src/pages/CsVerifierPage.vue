@@ -3,7 +3,7 @@
     <div class="flex justify-center">
       <img src="../assets/images/cs-verifier/csv-icon.png" alt="" />
     </div>
-    <div class="main-title">B9.GAME</div>
+    <div class="main-title">SuperSiam</div>
     <div class="sub-title">{{ $t("customerServiceVerifier.subTitle") }}</div>
     <div class="content-para q-mt-sm" v-html="$t('customerServiceVerifier.contentPara01')"></div>
 
@@ -22,7 +22,7 @@
               :rules="[(val) => (val && val.length > 0) || $t('form.telegramDiscordId_rules_01')]"
             >
               <template v-slot:append>
-                <div @click="checkAgentId()"><img src="../assets/images/cs-verifier/search-btn.png" alt="" /></div>
+                <div class="search-icon" @click="checkAgentId()"><img src="../assets/images/cs-verifier/search-btn.png" alt="" /></div>
               </template>
             </q-input>
           </template>
@@ -43,10 +43,10 @@
         </div>
         <div class="text-center q-py-md">
           <span class="txt-green" v-if="accountValid">
-            {{ agentAccountId }} is an official representative of B9.GAME and can be trusted
+            {{ agentAccountId }} is an official representative of SuperSiam and can be trusted
           </span>
           <span class="txt-red" v-else>
-            {{ agentAccountId }} is not an official representative of B9.GAME, please do not trust this account
+            {{ agentAccountId }} is not an official representative of SuperSiam, please do not trust this account
           </span>
         </div>
 
@@ -105,7 +105,7 @@ onMounted(() => {});
   .main-title {
     display: flex;
     justify-content: center;
-    color: #21ef89;
+    color: #907C5F;
     font-weight: 700;
     font-size: 18.46px;
     margin-top: 16px;
@@ -114,14 +114,14 @@ onMounted(() => {});
   .sub-title {
     display: flex;
     justify-content: center;
-    color: #ffffff;
+    color: #907C5F;
     font-size: 18px;
     font-weight: 700;
     margin-top: 8px;
   }
 
   .content-para {
-    color: #b2bdbf;
+    color: #3A3A3A;
     font-size: 14px;
     text-align: center;
   }
@@ -132,5 +132,11 @@ onMounted(() => {});
 }
 .txt-green {
   color: #21ef89;
+}
+.search-icon{
+  img{
+    width: 24px;
+    height: 24px;
+  }
 }
 </style>

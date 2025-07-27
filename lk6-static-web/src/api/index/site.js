@@ -23,3 +23,7 @@ export function getLoggedInFloatingItems() {
 export function submitMemberStats(stats) {
   return server.REST.post("/memberStatistics/submit", stats);
 }
+
+export function getSocialMediaLinks() {
+  return cached.get("socialMediaLinks", () => server.REST.get("/config/uiconfigs"));
+}

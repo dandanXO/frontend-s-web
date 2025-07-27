@@ -1169,6 +1169,45 @@
           </div>
         </div>
       </template>
+      <template
+        v-if="(category.title === 'Lottery' && category.active) || (category.title === 'Lobby' && category.active)"
+      >
+        <div class="games-selection-wrapper" id="Lottery">
+          <div class="title-game">
+            <!-- <img src="../assets/images/index/menu-label-sport.png" class="label-img" /> -->
+            <!-- <img src="../assets/images/index/sport-icon-label.png" /> -->
+            <!-- <span class="txt-style">Sports</span> -->
+            <img src="../assets/images/index/menu-label-icon-sport.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_lottery") }}</div>
+          </div>
+          <div class="platform-game-container sport-platform">
+            <template v-for="(item, index) in lottery" :key="index">
+              <div
+                class="platform-game-item btn-effect"
+                @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id, item.demo)"
+              >
+                <img src="../assets/images/index/lottery/item-game-maintenance.png" />
+                <div
+                  class="platform-game-item--img"
+                  :style="{
+                    backgroundImage: (() => {
+                      try {
+                        return `url(${require(`../assets/images/index/lottery/item-game-${item.name.toLowerCase()}.png`)})`;
+                      } catch (e) {
+                        return `url(https://m.b9mega1.com/static/images/index/lottery/item-game-${item.code.toLowerCase()}.png)`;
+                      }
+                    })()
+                  }"
+                >
+                  <!-- <div v-if="item.name === 'LuckySport' || item.name === 'BTI'" class="burning-hot">
+                    <img src="../assets/images/index/hot.png" />
+                  </div> -->
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </template>
     </template>
   </div>
 
@@ -1255,7 +1294,9 @@
   <q-dialog width="100%" class="flex-end announcement-modal" v-model="isStationNotice">
     <!-- <div class="announcement-top-img"><img src="../assets/images/index/notice-icon.png" /></div> -->
     <div class="popout-dialog announcement-popout">
-      <q-btn flat dense icon="close" class="text-black announcement-close" v-close-popup />
+      <q-btn flat dense class="text-black announcement-close" v-close-popup>
+        <img width="25px" height="25px" src="../assets/images/index/close-btn-brown.png" />
+      </q-btn>
       <div class="notice-title">Notice!</div>
       <q-card style="width: calc(100% - 0px); margin: auto" class="announcement-card">
         <q-card-section class="q-mb-md" style="max-height: 98%; overflow: auto">
@@ -1612,7 +1653,7 @@
     </q-dialog>
   </template>
   <div class="tac-footer" v-if="ui.siteType === 'CURACAO'">
-    <img class="b9game-logo" alt="b9game-logo" src="../assets/images/common/b9game-logo.png" />
+    <img class="supersiamgame-logo" alt="supersiamgame-logo" src="../assets/images/common/supersiamgame-logo.png" />
     <div class="footer-content">
       b9.game aims to become the global leader in online gaming and betting using the latest blockchain technologies,
       always putting our customers first. Trust, integrity and fairness are just three of our key values.
@@ -1708,11 +1749,11 @@
     persistent
   >
     <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
-    <NewPlayerPromoHomePopup @close-dialog="closeDialog" ref="newPlayerPromoHomePopupRef">
+    <!-- <NewPlayerPromoHomePopup @close-dialog="closeDialog" ref="newPlayerPromoHomePopupRef">
       <template #controller>
         <PopupController v-model="popupPromo" :hasSpin="true" :hasNewPlayer="true" />
       </template>
-    </NewPlayerPromoHomePopup>
+    </NewPlayerPromoHomePopup> -->
   </q-dialog>
   <q-dialog v-model="isMediaSettingsModal">
     <MediaSettingsComponent :media="mediaCode" />
@@ -1730,7 +1771,7 @@
   <SpinLuckyWheelPromoSticky v-show="false" />
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
 
-  <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" />
+  <!-- <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" /> -->
 </template>
 
 <script setup>
@@ -2003,7 +2044,8 @@ const categoriesList = ref([
   { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
   { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false },
   { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false },
-  { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false }
+  { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false },
+  { title: "Lottery", label: t("home.menu_lottery"), icon: "lottery", active: false }
 ]);
 
 const isCsTabVisible = ref(false);
@@ -2053,6 +2095,7 @@ const closeDialog = () => {
 const activateSlide = (item) => {
   categoriesList.value.forEach((category) => (category.active = false));
   const category = categoriesList.value.find((cat) => cat.title === item.title);
+  console.log("dan", category, categoriesList.value);
   if (category) {
     category.active = true;
     router.replace({ hash: `#${category.label}` });
@@ -4370,11 +4413,11 @@ const checkSpinLuckyWheelPromoHomePopupCanShow = () => {
   }
 };
 
-const checkNewPlayerWheelPromoHomePopupCanShow = () => {
-  if (!sessionStorage.getItem("NEW_PLAYER_WHEEL_POPUP") && newPlayerPromoHomePopupRef.value) {
-    newPlayerPromoHomePopupRef.value.checkIsCanShowPopup();
-  }
-};
+// const checkNewPlayerWheelPromoHomePopupCanShow = () => {
+//   if (!sessionStorage.getItem("NEW_PLAYER_WHEEL_POPUP") && newPlayerPromoHomePopupRef.value) {
+//     newPlayerPromoHomePopupRef.value.checkIsCanShowPopup();
+//   }
+// };
 
 const claimClaimPopupPrize = () => {
   if (showClaimPopup.value.prize > 0) {
@@ -4388,15 +4431,15 @@ const claimClaimPopupPrize = () => {
   });
 };
 
-const loadClaimPopup = () => {
-  if (store.token) {
-    eventapi.get("/session/privilege-voucher/init").then((res) => {
-      if (res.code === 0 && res.data.bonus > 0) {
-        showClaimPopup.value.visible = true;
-      }
-    });
-  }
-};
+// const loadClaimPopup = () => {
+//   if (store.token) {
+//     eventapi.get("/session/privilege-voucher/init").then((res) => {
+//       if (res.code === 0 && res.data.bonus > 0) {
+//         showClaimPopup.value.visible = true;
+//       }
+//     });
+//   }
+// };
 
 onActivated(async () => {
   nextTick(() => {
@@ -4441,9 +4484,9 @@ onActivated(async () => {
   if (store.hasToken()) {
     await store.getMemberInfo();
   }
-  if (store.hasToken()) {
-    await showSpinWheel();
-  }
+  // if (store.hasToken()) {
+  //   await showSpinWheel();
+  // }
   checkGoogleLoginSetPwd();
 
   if ((route.query.login === "true" || route.query.register === "true") && ui.annoyingType !== "NONE") {
@@ -4490,7 +4533,7 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
-  loadClaimPopup();
+  // loadClaimPopup();
   ui.shouldFetchDownloadAppUrl = true;
 
   if (store.hasToken() && ui.annoyingType !== "NONE") {
@@ -4524,13 +4567,13 @@ watch(
     if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
   }
 );
-watch(
-  () => promoStore.isShownNewPlayerWheel,
-  async (val) => {
-    await nextTick();
-    if (val) checkNewPlayerWheelPromoHomePopupCanShow();
-  }
-);
+// watch(
+//   () => promoStore.isShownNewPlayerWheel,
+//   async (val) => {
+//     await nextTick();
+//     if (val) checkNewPlayerWheelPromoHomePopupCanShow();
+//   }
+// );
 
 watch(languageVal, loadData);
 // watch(
@@ -5253,7 +5296,7 @@ const checkGoogleLoginSetPwd = () => {
   right: 30px;
   top: 30px;
   z-index: 3;
-  background: #464f50;
+  // background: #464f50;
 
   padding: 5px;
   font-size: 10px;
@@ -5596,7 +5639,7 @@ const checkGoogleLoginSetPwd = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  .b9game-logo {
+  .supersiamgame-logo {
     width: 50%;
     min-width: 150px;
   }

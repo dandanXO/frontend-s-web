@@ -190,7 +190,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="personalCenterDialog" persistent>
+  <q-dialog width="100%" class="flex-end" v-model="personalCenterDialog" persistent>
     <div class="popout-dialog">
       <q-btn
         dense
@@ -296,7 +296,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="bindEmailDialog" persistent>
+  <q-dialog width="100%" class="flex-end" v-model="bindEmailDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" @click="openBindEmailDialog()" v-close-popup />
       <div class="popout-dialog-container">
@@ -322,7 +322,7 @@
                           no-caps
                           dense
                           flat
-                          class="text-green q-pr-md"
+                          class="text-main-color q-pr-md"
                           :label="!startCountdownResendOTP && $t('form.send')"
                           :disable="!formDetail.phone || startCountdownResendOTP"
                           @click="openVerificationCodeDialog"
@@ -367,7 +367,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="verifyPhoneDialog" persistent>
+  <q-dialog width="100%" class="flex-end" v-model="verifyPhoneDialog" persistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
@@ -388,16 +388,17 @@
                     type="text"
                     :rules="[
                       (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
-                      (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
-                      (val) => val.startsWith('03') || $t('form.phone_rules_03')
+                      (val) => (val && val.length === 10) || $t('form.phone_rules_02'),
+                      (val) => val.startsWith('0') || $t('form.phone_rules_03')
                     ]"
                   >
                     <template v-slot:append>
-                      <div class="pc-form-side-btn">
+                      <div class="pc-form-side-btn q-pr-md">
                         <q-btn
                           no-caps
                           dense
-                          class="text-green"
+                          flat
+                          class="text-main-color"
                           :label="!startCountdownPhoneResendOTP && $t('form.send')"
                           :disable="startCountdownPhoneResendOTP"
                           @click="openPhoneVerificationCodeDialog"
@@ -442,7 +443,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="changePasswordDialog" presistent>
+  <q-dialog width="100%" class="flex-end" v-model="changePasswordDialog" presistent>
     <div class="popout-dialog">
       <q-btn
         dense
@@ -1091,7 +1092,8 @@ const verifyVerificationCode = () => {
     .then((ret) => {
       if (ret.code === 0) {
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "OTP验证码已发送至您的邮箱",
           icon: "check_circle_outline"
@@ -1128,7 +1130,8 @@ const submitUpdateSecurity = () => {
       .then((res) => {
         if (res.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: "验证成功",
             icon: "check_circle_outline"
@@ -1178,7 +1181,8 @@ const updateState = () => {
         profileFormRef.value.reset();
 
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: t("notify.updatedSuccessfully"),
           icon: "check_circle_outline"
@@ -1214,7 +1218,8 @@ const updateNewUserState = () => {
         profileFormRef.value.reset();
 
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "Updated successfully",
           icon: "check_circle_outline"
@@ -1252,7 +1257,8 @@ const updateNewUserState = () => {
 //         profileFormRef.value.reset();
 
 //         $q.notify({
-//           color: "positive",
+//           color: "dark",
+//           textColor: "white",
 //           position: "top",
 //           message: "Updated successfully",
 //           icon: "check_circle_outline"
@@ -1311,7 +1317,7 @@ const isValidPhone = () => {
     return "Please Enter Phone Number";
   }
 
-  if (!phone.startsWith("03")) {
+  if (!phone.startsWith("0")) {
     return t("form.phone_rules_03");
   }
 
@@ -1390,7 +1396,8 @@ const onCaptchaSubmit = () => {
         }, 1000);
 
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: t("notify.emailVerificationSent"),
           icon: "check_circle_outline"
@@ -1436,7 +1443,8 @@ const onPhoneCaptchaSubmit = () => {
         }, 1000);
 
         $q.notify({
-          color: "positive",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: t("notify.smsSent"),
           icon: "check_circle_outline"
@@ -1498,7 +1506,8 @@ const submitUpdatePwd = () => {
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: t("notify.newpasswordupdated"),
             icon: "check_circle_outline"
@@ -1539,7 +1548,8 @@ const submitUpdateEmail = () => {
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: "Email binded successfully",
             icon: "check_circle_outline"
@@ -1586,14 +1596,16 @@ const sendPhoneDetails = () => {
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: t("notify.phoneVerifySuccessful"),
             icon: "check_circle_outline"
           });
           if (response.data) {
             $q.notify({
-              color: "positive",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: t("modal.appLoginBonus.claimBonus", { amount: response.data }),
               icon: "check_circle_outline"
@@ -1636,7 +1648,8 @@ const submitUpdateNewPwd = () => {
       .then((response) => {
         if (response.code === 0) {
           $q.notify({
-            color: "positive",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: t("notify.newpasswordupdated"),
             icon: "check_circle_outline"
@@ -1818,7 +1831,7 @@ const openConfirmSignOutDialog = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #1cca6a;
+  color: #3a3a3a;
 }
 
 .pc-tip {
@@ -1838,19 +1851,16 @@ const openConfirmSignOutDialog = () => {
 }
 
 .btn-refresh {
-  background: #00ae001a;
   border-radius: 8px;
-  font-weight: 400;
   margin-top: auto;
-  // color: #00ae00;
   padding: 10px 20px;
-  background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-  color: #333333;
+  background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+  color: #fff;
   font-weight: 700;
-  box-shadow: 0px 2px 0px 0px #1cca6a;
+  box-shadow: 0px 2px 0px 0px #907c5f;
 
   :deep(.q-icon) {
-    color: #333333;
+    color: #fff;
   }
 }
 
@@ -1896,5 +1906,40 @@ const openConfirmSignOutDialog = () => {
   display: flex;
   width: 100%;
   margin-top: 20px;
+}
+.txt-title {
+  color: #fff;
+}
+
+.text-main-color {
+  color: #d9cfb8;
+}
+.form-field-label {
+  color: #d9cfb8;
+}
+
+:deep(.landing-input .q-field__control) {
+  color: #907c5f;
+}
+:deep(.landing-input .q-field__native) {
+  color: #907c5f;
+  font-weight: bold;
+}
+.popout-dialog-container {
+  :deep(.form-field-label) {
+    color: #d9cfb8;
+  }
+  :deep(.landing-input .q-field__control) {
+    background: #3a3a3a;
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+    }
+  }
+  :deep(.landing-input .q-field__control) {
+    color: #d9cfb8;
+  }
+  :deep(.landing-input .q-field__native) {
+    color: #d9cfb8;
+  }
 }
 </style>

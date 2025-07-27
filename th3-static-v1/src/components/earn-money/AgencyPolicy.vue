@@ -256,7 +256,7 @@
         <!--        You level-->
         <!--        <em>V8</em>-->
         <!--        . Betting amount-->
-        <!--        <em>{{ convertToCommaAmount(972000) }}rs</em>-->
+        <!--        <em>{{ convertToCommaAmount(972000) }}thb</em>-->
         <!--        . Team members-->
         <!--        <em>49</em>-->
         <!--        people.-->
@@ -265,7 +265,7 @@
         <!--        A Level-->
         <!--        <em>V8</em>-->
         <!--        . Betting amount-->
-        <!--        <em>{{ convertToCommaAmount(760000) }}rs</em>-->
+        <!--        <em>{{ convertToCommaAmount(760000) }}thb</em>-->
         <!--        . Team members-->
         <!--        <em>35</em>-->
         <!--        people.-->
@@ -274,7 +274,7 @@
         <!--        B Level-->
         <!--        <em>V6</em>-->
         <!--        . Betting amount-->
-        <!--        <em>{{ convertToCommaAmount(210000) }}rs</em>-->
+        <!--        <em>{{ convertToCommaAmount(210000) }}thb</em>-->
         <!--        . Team members-->
         <!--        <em>13</em>-->
         <!--        people.-->
@@ -283,7 +283,7 @@
         <!--        C Level-->
         <!--        <em>V1</em>-->
         <!--        . Betting amount-->
-        <!--        <em>{{ convertToCommaAmount(2000) }}rs</em>-->
+        <!--        <em>{{ convertToCommaAmount(2000) }}thb</em>-->
         <!--        . Team members-->
         <!--        <em>1</em>-->
         <!--        person.-->

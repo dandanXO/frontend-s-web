@@ -29,7 +29,7 @@
         :class="{ active: i === activeItem }"
       >
         <span class="promo" v-if="method.recommended">Recommended</span>
-        <div class="withdraw-img">
+        <div class="withdraw-img" v-if="method.icon">
           <img :src="imgURL + '/withdraw/' + method.icon" />
         </div>
         <div class="type-name">{{ method.name }}</div>

@@ -8,7 +8,7 @@
   >
     <div style="position: relative">
       <SitePopout @popup-click="clickHomePopupImg" :onShow="() => setWithExpiry('isImpt', true, 43200000)" />
-      <img class="close-btn" src="../../assets/images/home/site-popout/close-btn.png" alt="" @click="handleClose" />
+      <img class="close-btn-pop" src="../../assets/images/home/site-popout/close-btn.png" alt="" @click="handleClose" />
     </div>
   </el-dialog>
 
@@ -325,9 +325,10 @@ watch(
   }
 }
 
-.close-btn {
+.close-btn-pop {
   position: absolute;
-  bottom: -55px;
+  top: 0px;
+  right: -60px;
   cursor: pointer;
 }
 </style>

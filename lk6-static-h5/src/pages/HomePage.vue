@@ -1,10 +1,10 @@
 <template>
   <q-page>
     <div id="id-sticky-header" :class="!isH5 || isShowDownload == false ? 'sticky-header' : ''">
-      <!-- <div v-if="isH5 && isShowDownload" class="download-top-container">
+      <div v-if="isH5 && isShowDownload" class="download-top-container">
         <div class="download-top-box">
           <q-icon name="close" @click="closeTopBox" />
-          <img class="headicon" src="../assets/index/logo-char.png" />
+          <img class="headicon" src="../assets/index/logo.png" />
           <div class="download-txt-container">
             <span class="download-title text-bold">{{ $t("home.downloadApp.appName") }}</span>
             <span class="download-content">{{ $t("home.downloadApp.desc") }}</span>
@@ -12,19 +12,31 @@
           <div class="buttons">
             <q-btn
               rounded
+              flat
               size="12px"
               @click="openDownloadAppLink"
               :label="$t('btn.downloadNow')"
-              color="primary"
-              class="top-btn no-shadow"
+              class="common-md-btn top-btn"
+              :class="{ en: languageVal === 'en' }"
             />
           </div>
         </div>
-      </div> -->
+      </div>
 
-      <div class="home-header-section" style="height: 50px">
+      <div class="home-header-section" style="height: 50px" :class="{ isNotLoggedIn: !store.token }">
         <div class="header-left">
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
+
+          <div class="telegram-contact" @click="openTelegram">
+            <img class="telegram-logo" id="telegram-logo" src="../assets/index/telegram-logo.png" />
+            <div class="right">
+              <div class="top">{{ $t("affiliate.telegramGroup") }}</div>
+              <div class="bottom">
+                <span style="font-family: system-ui">@</span>
+                6.vip
+              </div>
+            </div>
+          </div>
         </div>
         <div class="header-right">
           <template v-if="store.token">
@@ -884,21 +896,30 @@ export default defineComponent({
         gap: 8
       },
       {
-        name: "live",
-        icon: "slide-live-icon.png",
-        iconActive: "slide-live-icon-active.png",
-        label: t("common.gameType.live"),
-        mb: 0,
-        gap: 8
-      },
-      // TODO: check name
-      {
         name: "baccarat",
         icon: "slide-baccarat-icon.png",
         iconActive: "slide-baccarat-icon-active.png",
         label: t("common.gameType.baccarat"),
         mb: 0,
         gap: 8
+      },
+      // {
+      //   name: "live",
+      //   icon: "slide-eeai-live-icon.png",
+      //   iconActive: "slide-eeai-live-icon-active.png",
+      //   label: t("common.gameType.eeaiLive"),
+      //   mb: 0,
+      //   gap: 8
+      // },
+      // TODO: check name
+      {
+        name: "affiliation",
+        icon: "slide-affiliation-icon.png",
+        iconActive: "slide-affiliation-icon-active.png",
+        label: t("affiliate.affiliation"),
+        mb: 0,
+        gap: 8,
+        route: "/affiliate"
       }
     ]);
     const esport = ref([]);
@@ -1519,6 +1540,8 @@ export default defineComponent({
     const homePopupFrequency = ref(0);
     const homePopupFrequencyNum = ref(0);
 
+    const openTelegram = () => window.open(ui.telegramUrl, "_blank");
+
     const checkShowImgTop = () => {
       const lastTime = sessionStorage.getItem("indexImgTop");
       if (lastTime) {
@@ -2021,7 +2044,8 @@ export default defineComponent({
       handleSlidePrevClick,
       baccaratCategoryList,
       imgURLGame,
-      languageVal
+      languageVal,
+      openTelegram
     };
   }
 });
@@ -2035,7 +2059,7 @@ export default defineComponent({
     align-items: center;
     gap: 4px;
     height: 55px;
-    background: #50aef330;
+    background: #fff;
 
     .q-icon {
       font-size: 24px;
@@ -2043,7 +2067,7 @@ export default defineComponent({
     }
 
     .headicon {
-      width: 36px;
+      width: 72px;
     }
 
     .download-txt-container {
@@ -2061,7 +2085,7 @@ export default defineComponent({
       }
 
       .download-content {
-        max-width: 11rem;
+        max-width: 12rem;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -2074,13 +2098,11 @@ export default defineComponent({
     }
 
     .top-btn {
-      background-image: linear-gradient(180deg, #52acff 0, #3559da 100%), linear-gradient(#52acff, #3559da);
-      text-align: center;
-      height: 32px;
-      color: #fff;
       white-space: nowrap;
-      letter-spacing: 0px;
-      border-radius: 16px;
+      &.en {
+        aspect-ratio: 120/30;
+        width: 120px;
+      }
     }
   }
 }
@@ -2104,7 +2126,52 @@ export default defineComponent({
   align-items: center;
 
   .header-left {
+    display: flex;
     height: 48px;
+    align-items: center;
+    gap: 10px;
+
+    .telegram-contact {
+      height: 48px;
+      display: flex;
+      font-family: "PingFang";
+      gap: 3px;
+      align-items: center;
+      cursor: pointer;
+
+      .telegram-logo {
+        width: auto;
+        height: 100%;
+        max-height: 30px;
+      }
+
+      .right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 1px;
+
+        .top {
+          font-family: "PingFang";
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 102%;
+          letter-spacing: 0px;
+          color: #7a80a1;
+        }
+
+        .bottom {
+          font-family: "PingFang";
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 102%;
+          letter-spacing: 0px;
+          text-align: left;
+          color: #3c96ff;
+        }
+      }
+    }
   }
 
   .top-logo {
@@ -2163,6 +2230,10 @@ export default defineComponent({
       box-shadow: 0px -0.87px 3.47px 0px #ffffff;
       border-radius: 45.9px;
       margin-right: 5px;
+
+      &.isNotLoggedIn {
+        width: 67px;
+      }
     }
 
     .login-btn {
@@ -2214,6 +2285,19 @@ export default defineComponent({
     background: #fff;
     justify-content: flex-start;
     align-items: stretch;
+  }
+
+  &.isNotLoggedIn {
+    .top-logo {
+      max-height: 40px;
+    }
+
+    .header-right {
+      .login-btn,
+      .register-btn {
+        width: 60px;
+      }
+    }
   }
 }
 

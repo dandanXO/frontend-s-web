@@ -95,7 +95,8 @@
           showTime
           hourFormat="24"
           dateFormat="yy-mm-dd"
-          :timeOnly="false"
+          timeFormat="HH:mm:ss"
+          :showSeconds="true"
           style="width: 350px"
         />
         <small v-if="formErrors.eventStartTime" class="p-error">{{ formErrors.eventStartTime }}</small>
@@ -109,7 +110,8 @@
           showTime
           hourFormat="24"
           dateFormat="yy-mm-dd"
-          :timeOnly="false"
+          timeFormat="HH:mm:ss"
+          :showSeconds="true"
           style="width: 350px"
         />
       </div>
@@ -424,12 +426,14 @@ async function loadEventDetail() {
   const { data } = await getEvents(request);
   const record = data.records?.[0];
   if (record) {
-    record.eventStartTime = dayjs(record.eventStartTime).format('YYYY-MM-DD HH:mm:ss');
-    if (record.eventEndTime) {
-      record.eventEndTime = dayjs(record.eventEndTime).format('YYYY-MM-DD HH:mm:ss');
-    } else {
-      record.eventEndTime = '';
-    }
+    // record.eventStartTime = dayjs(record.eventStartTime).format('YYYY-MM-DD HH:mm:ss');
+    // if (record.eventEndTime) {
+    //   record.eventEndTime = dayjs(record.eventEndTime).format('YYYY-MM-DD HH:mm:ss');
+    // } else {
+    //   record.eventEndTime = '';
+    // }
+    record.eventStartTime = new Date(record.eventStartTime);
+    record.eventEndTime = record.eventEndTime ? new Date(record.eventEndTime) : null;
     record.isTest = !!record.isTest;
     record.isPopular = !!record.isPopular;
     Object.assign(form, record);

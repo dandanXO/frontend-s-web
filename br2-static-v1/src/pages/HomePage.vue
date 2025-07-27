@@ -1243,6 +1243,13 @@ const isShowBonusCollectModal = computed(() => {
   return !!store.token && ui.isShowBonusCollectModal;
 });
 
+const getShowBonusCollectModalStatus = () => {
+  if (sessionStorage.getItem("SHOW_BONUS_AFTER_RELOAD") === "1") {
+    ui.isShowBonusCollectModal = true
+    sessionStorage.removeItem("SHOW_BONUS_AFTER_RELOAD")
+  }
+}
+
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Grid, Scrollbar, Navigation, Pagination]);
@@ -1847,9 +1854,6 @@ const checkPlatform = () => {
 const qs = require("qs");
 const $q = useQuasar();
 const banners = ref([
-  {
-    mobileImageUrl: "empty-banner.png"
-  }
 ]);
 const route = useRoute();
 const router = useRouter();
@@ -3301,6 +3305,7 @@ onMounted(() => {
   checkHbPromo();
   // checkSpinLuckyWheelPromo();
   getJackpotAmt();
+  getShowBonusCollectModalStatus();
 
   jackpotApiTimer = setInterval(getJackpotAmt, 5000);
 

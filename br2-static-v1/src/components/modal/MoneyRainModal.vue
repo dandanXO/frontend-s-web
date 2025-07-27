@@ -57,7 +57,10 @@
             </q-btn>
           </div>
         </div>
-        <div class="content-timing">
+        <div class="content-timing" v-html="moneyRainContent">
+          
+        </div>
+        <!-- <div class="content-timing">
           <div class="timing-head">{{ $t("hotPromo.every_friday_saturday_and_sunday") }}</div>
           <div class="timing-body">
             <span>12:00-12:59</span>
@@ -79,10 +82,10 @@
         </div>
 
         <div class="content-footer">
-          <!-- <div class="footer-title">
+          <!- <div class="footer-title">
             Limited to
             <span>3000 Participants</span>
-          </div> -->
+          </div> ->
           <div class="footer-title q-mt-sm">{{ $t("hotPromo.terms_and_Conditions") }}:</div>
           <div class="footer-content">
             {{ $t("content.cashRainIntro") }}
@@ -102,7 +105,7 @@
             <br />
             {{ $t("content.cashRainVIP") }}
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="rain-money-tab-content" v-show="moneyRainTab === 'records'">
@@ -253,7 +256,6 @@ import { onMounted, ref, reactive, defineEmits } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-
 const router = useRouter();
 const store = userStore();
 const moneyRainTab = ref("events");
@@ -265,6 +267,7 @@ const convertToTwoDecimalAmount = (amount) => {
   let formattedAmount = parseFloat(amount).toFixed(2);
   return formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+const moneyRainContent = sessionStorage.getItem('moneyRainContent')
 
 const closeModalHandler = () => {
   emit("closeModal");
@@ -428,6 +431,13 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+
+ul, ol {
+  padding: 0
+}
+ul {
+  list-style-type: none;
+}
 .congrats-wrapper {
   min-height: 100vh;
   display: flex;

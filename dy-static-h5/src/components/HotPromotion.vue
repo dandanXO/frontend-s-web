@@ -76,6 +76,7 @@
     <FifaCwcRedPacket v-else-if="list.redirectUrl === 'dy2-fifa-cwc-red-packet'" :promo-code="list.promoCode" />
     <FissureJulyFinal2025 v-else-if="list.redirectUrl === 'dy2-fissure-july-final-2025'" :promo-code="list.promoCode" />
     <WorldCup2025 v-else-if="list.redirectUrl === 'dy2-fifa-quiz-2025'" :promo-code="list.promoCode" />
+    <SnowMaster v-else-if="list.redirectUrl === 'dy2-d2-snow-ruyi-masters-2025'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -183,12 +184,14 @@ const FifaCwcRedPacket = defineAsyncComponent(() => import("./hotpromo/fifa-cwc-
 const FissureJulyFinal2025 = defineAsyncComponent(() =>
   import("./hotpromo/fissure-july-final-2025/FissureJulyFinal2025.vue")
 );
+const SnowMaster = defineAsyncComponent(() => import("../components/hotpromo/snowMaster/snowMaster.vue"));
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    SnowMaster,
     DuanWuRewards,
     sportReferBetBonus,
     Lh1Enc2025,
