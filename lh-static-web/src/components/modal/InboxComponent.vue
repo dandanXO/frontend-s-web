@@ -1,6 +1,6 @@
 <template>
   <div class="announcement-component">
-    <el-carousel class="banner-slider" :autoplay="false" :interval="5000" :navigation="false">
+    <el-carousel class="banner-slider" :autoplay="false" :interval="5000" arrow="never">
       <el-carousel-item class="banner-container" v-for="item in mailData" :key="item.id">
         <div class="announcement-container">
           <div class="announcement-title" v-html="item.title"></div>
@@ -17,9 +17,7 @@
           <!--          v-show="item.redirectType !== 'NONE'"-->
           <div class="footer-button detail" @click="goToMailDetail(item)">
             查看详情
-            <el-icon :size="20">
-              <img src="../../assets/home/arrow-drop-right-line.svg" />
-            </el-icon>
+            <img src="../../assets/home/announcement/arrow-right.svg" />
           </div>
         </div>
       </el-carousel-item>
@@ -144,6 +142,11 @@ const goToMailDetail = (mail) => {
     &:active {
       transform: translate(0px, 1px);
       opacity: 0.9;
+    }
+
+    img {
+      height: 15px;
+      margin-left: 4px;
     }
   }
 }
