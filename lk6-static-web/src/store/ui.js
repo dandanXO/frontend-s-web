@@ -22,6 +22,7 @@ export const uiStore = defineStore("ui-store", {
       maintenanceStartTime: "",
       maintenanceEndTime: "",
       isGameModalOpened: false,
+      telegramUrl: ""
     };
   },
   actions: {

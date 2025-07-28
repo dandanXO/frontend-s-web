@@ -924,6 +924,18 @@ export default {
         yesterdayValidBets: "Valid Bets:",
         todayBonus: "Saturday's Bonus:"
       }
+    },
+    baccaratBonus: {
+      claimSection: {
+        title: "Application method",
+        desc: "For Baccarat, the minimum bet per round is 100U. If the winning hand of the banker includes 1 6, the bonus won in this round will be increased by 30%. If the winning hand of the banker includes 2 6s, the bonus won in this round will be increased by 100%. Please apply to the online customer service or Telegram: {telegram} customer service."
+      }
+    },
+    baccaratPoint6: {
+      claimSection: {
+        title: "Application method",
+        desc: "Super tie game, players bet on tie, minimum bet 100U, both banker and player get 6 points, the winnings of this game will be increased by 20%, you need to apply to online customer service or Telegram customer service: {telegram}."
+      }
     }
   },
   affiliate: {
