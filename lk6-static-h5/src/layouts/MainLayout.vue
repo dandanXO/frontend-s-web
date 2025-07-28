@@ -25,9 +25,15 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
-        <router-link :to="prevPage ? '/' + prevPage : '/'">
+        <a
+          @click="
+            route.path === '/deposit' || route.path === '/withdraw' || route.path === '/account'
+              ? goToPrevPage('/')
+              : goToPrevPage(prevPage)
+          "
+        >
           <img class="svg" src="~assets/images/index/arrow-left-line.svg" />
-        </router-link>
+        </a>
         {{ pageName }}
         <q-btn
           v-if="hasDrawer"
@@ -113,6 +119,16 @@ export default defineComponent({
         isH5.value = false;
       } else {
         isH5.value = true;
+      }
+    };
+
+    const goToPrevPage = (prePage) => {
+      if (prePage === "/") {
+        router.push("/");
+      } else if (window.location.pathname === "/promotion") {
+        window.location.href = "xfapp:/promo";
+      } else {
+        router.push(prePage);
       }
     };
 
@@ -218,7 +234,7 @@ export default defineComponent({
           pageName.value = t("layout.header.deposit");
           prevPage.value = "";
         } else if (route.path === "/promotion") {
-          hasPage.value = false;
+          hasPage.value = true;
           pageName.value = t("layout.header.promo");
           prevPage.value = "";
         } else if (route.path === "/promo") {
@@ -515,7 +531,9 @@ export default defineComponent({
       ],
       withBgPage,
       handleLiveChatClick,
-      isScrolled
+      isScrolled,
+      goToPrevPage,
+      route
     };
   }
 });

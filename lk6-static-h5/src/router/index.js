@@ -6,6 +6,9 @@ import { SessionStorage } from "quasar";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 import routes from "./routes";
+import { i18nStore } from "./language";
+import i18n from "src/i18n";
+import { DEFAULT_LANG } from "src/constant/lang";
 
 /*
  * If not building with SSR mode, you can
@@ -35,6 +38,14 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
+    const i18nStoreLanguage = i18nStore();
+    const { availableLocales } = i18n.global;
+    const { lang } = to.query;
+
+    if (!i18nStoreLanguage.isLangInitialized && lang) {
+      const locale = availableLocales.includes(lang) ? lang : DEFAULT_LANG;
+      i18nStoreLanguage.initializeLang(locale);
+    }
 
     if (to.query.adjust_referrer) {
       sessionStorage.setItem("ADJUST_REFERRER", to.query.adjust_referrer);
