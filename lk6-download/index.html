@@ -67,7 +67,7 @@
                 全面支持苹果安卓各类手机在线下载
             </div>
             <div class="load">
-                <a class="install" id="download"
+                <a class="install disabled" id="download"
                    href="#">下载安装 (线路一)</a>
             </div>
 
@@ -115,6 +115,9 @@
     ];
 
     function getApkUrl() {
+        const $downloadBtn = $('#download');
+        $downloadBtn.addClass('disabled');
+
         const urlParams = new URLSearchParams(window.location.search);
         const queryParamAgentCode = urlParams.get('agentCode');
         if(!!queryParamAgentCode) {
@@ -128,12 +131,15 @@
             type: 'GET',
             data: {},
             success: function(response) {
-                if(typeof response.data.url === 'string') {
-                    $('#download').attr('href', response.data.url);
+                if (typeof response.data.url === 'string') {
+                    $downloadBtn.attr('href', response.data.url);
                 }
             },
             error: function(xhr, status, error) {
-
+                console.error('Failed to fetch download URL:', error);
+            },
+            complete: function() {
+                $downloadBtn.removeClass('disabled');
             }
         });
         }

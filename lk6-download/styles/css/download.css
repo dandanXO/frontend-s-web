@@ -90,3 +90,10 @@ a.logo {
     height: auto;
     margin: 0 auto;
 }
+#download.disabled {
+  background-color: #ccc;
+  color: #888;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
