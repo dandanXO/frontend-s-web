@@ -39,7 +39,7 @@
 
               <!-- <img :src="imgURL + currentLiveData.avatar" /> -->
             </div>
-            <span class="profile-name">{{currentLiveData.name}}</span>
+            <span class="profile-name">{{currentLiveData.name === 'SYSTEM' ? "官方直播间" : currentLiveData.name}}</span>
 
             <template v-if="currentLiveData.name === 'SYSTEM'">
               <div class="tag tag--live">官方直播间</div>
