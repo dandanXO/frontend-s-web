@@ -694,7 +694,6 @@ export default defineComponent({
 
   .item {
     color: #333;
-    padding-left: 24px;
     display: flex;
     gap: 10px;
     font-size: 1rem;
