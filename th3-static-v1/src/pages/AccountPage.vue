@@ -911,6 +911,12 @@ const copyLoginName = () => {
 
 const verificationCodeDialog = ref(false);
 const openVerificationCodeDialog = () => {
+  updateEmailRef.value.validate();
+
+  if(updateEmailRef.value.hasError){
+    return;
+  }
+
   api
     .get(`/member/checkEmailRegisterStatus?email=${updateEmailInfo.email}`)
     .then((response) => {

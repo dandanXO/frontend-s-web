@@ -745,6 +745,7 @@ onActivated(() => {
   bankCardInfo.cardNumber = "";
   bankCardInfo.smsCode = "";
   bankFormRef.value.reset();
+  confirmedBankSelection.value= null;
   // isPhoneVerified.value = false;
   isOtpSent.value = false;
 });
