@@ -1,7 +1,7 @@
 <template>
   <div class="affiliate-page">
     <div class="affiliate-container">
-      <img v-if="lang === 'en'" class="banner" :src="require(`@/assets/images/affiliate/banner_${lang}.png`)" />
+      <img class="banner" :src="require(`@/assets/images/affiliate/banner_${lang}.png`)" />
       <div class="contact-container">
         <div class="contact-cards">
           <div class="contact-card">
