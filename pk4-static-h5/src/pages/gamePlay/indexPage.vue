@@ -227,7 +227,12 @@ function selectPayType(value) {
 const drawerVisible = ref(false);
 const isExitDialogOpen = ref(false);
 const onExitClick = () => {
-  isExitDialogOpen.value = true;
+  if (isBetBy.value) {
+    closeDialog();
+    props.closeFullGameDialog();
+  } else {
+    isExitDialogOpen.value = true;
+  }
 };
 
 const handleDrawerVisible = () => {
