@@ -280,6 +280,15 @@ onMounted(() => {});
       float: none;
       justify-content: center;
       gap: 100px;
+      height: 95px;
+    }
+
+    :deep(.el-tabs__nav-scroll) {
+      overflow: auto;
+    }
+
+    :deep(.el-tabs__nav-wrap) {
+      overflow: auto;
     }
 
     :deep(.el-tabs__nav-wrap:after) {
