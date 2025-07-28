@@ -1593,6 +1593,8 @@ export default defineComponent({
         return "抖音"; // 抖音
       } else if (depositType === "AUTOPAY") {
         return "自动支付"; // 自动支付
+      } else if (depositType === "NINEPAY") {
+        return "98钱包"; // NINEPAY
       } else {
         return depositType;
       }

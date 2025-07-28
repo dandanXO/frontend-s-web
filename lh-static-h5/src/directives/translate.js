@@ -178,6 +178,8 @@ export const translateRecord = (rec, type = "") => {
     return "PG 电子"; // PGDY
   } else if (rec === "RG") {
     return "RG 电竞"; // RG
+  } else if (rec === "NINEPAY") {
+    return "98钱包"; // NINEPAY
   } else {
     return rec;
   }
