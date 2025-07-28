@@ -998,9 +998,9 @@ defineExpose({
     width: 100%;
     padding: 10px 10px;
     font-size: 16px;
-    background: linear-gradient(90deg, #2ced88 0%, #9ee871 100%);
-    color: #000000;
-    box-shadow: 0px 2px 0px 0px #1cca6a;
+    background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
+    color: #fff;
+    box-shadow: 0px 2px 0px 0px #907C5F;
     border-radius: 4px;
     height: unset;
     text-align: center !important;

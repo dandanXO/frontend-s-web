@@ -50,19 +50,19 @@
         </q-btn>
       </div>
 
-      <div v-if="!store.hasDeposit" class="mission-item">
-        <img class="mission-icon" src="../../assets/images/earn-money/newplayericon.png" />
-        <div class="mission-title-wrapper">
-          <div class="mission-title">
-            <span>{{ $t("hotPromo.newplayerGuide") }}</span>
-          </div>
-        </div>
-        <a @click="openNewPlayerGuide">
-          <q-btn flat class="details">
-            {{ $t("btn.details") }}
-          </q-btn>
-        </a>
-      </div>
+<!--      <div v-if="!store.hasDeposit" class="mission-item">-->
+<!--        <img class="mission-icon" src="../../assets/images/earn-money/newplayericon.png" />-->
+<!--        <div class="mission-title-wrapper">-->
+<!--          <div class="mission-title">-->
+<!--            <span>{{ $t("hotPromo.newplayerGuide") }}</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <a @click="openNewPlayerGuide">-->
+<!--          <q-btn flat class="details">-->
+<!--            {{ $t("btn.details") }}-->
+<!--          </q-btn>-->
+<!--        </a>-->
+<!--      </div>-->
     </div>
     <!-- <div class="bonus-header">
       <img :src="require(`../../assets/images/index/modal/bonus-header-${$t('lang.langVal')}.png`)" />

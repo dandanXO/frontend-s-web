@@ -1712,20 +1712,20 @@
     </MegaSharingWheelModal>
   </q-dialog>
 
-  <q-dialog
-    v-if="popupPromo === 'spin-lucky-wheel' && isShownSpinLuckyWheel"
-    full-width
-    :model-value="isShownSpinLuckyWheel"
-    class="isCentreDialog spin-lucky-wheel-dialog"
-    persistent
-  >
-    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />
-    <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">
-      <template #controller v-if="isShownNewPlayerWheel">
-        <PopupController v-model="popupPromo" :hasSpin="true" :hasNewPlayer="true" />
-      </template>
-    </SpinLuckyWheelPromoHomePopup>
-  </q-dialog>
+<!--  <q-dialog-->
+<!--    v-if="popupPromo === 'spin-lucky-wheel' && isShownSpinLuckyWheel"-->
+<!--    full-width-->
+<!--    :model-value="isShownSpinLuckyWheel"-->
+<!--    class="isCentreDialog spin-lucky-wheel-dialog"-->
+<!--    persistent-->
+<!--  >-->
+<!--    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />-->
+<!--    <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">-->
+<!--      <template #controller v-if="isShownNewPlayerWheel">-->
+<!--        <PopupController v-model="popupPromo" :hasSpin="true" :hasNewPlayer="true" />-->
+<!--      </template>-->
+<!--    </SpinLuckyWheelPromoHomePopup>-->
+<!--  </q-dialog>-->
   <q-dialog class="isCentreDialog" v-model="isHasUnusedCoupon" @hide="isHasUnusedCoupon = false">
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
@@ -1769,7 +1769,7 @@
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
   <!-- DONT REMOVE THIS GOT USE DE-->
-  <SpinLuckyWheelPromoSticky v-show="false" />
+<!--  <SpinLuckyWheelPromoSticky v-show="false" />-->
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
 
   <!-- <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" /> -->
@@ -1889,7 +1889,7 @@ const megaSharingWheelDialogModel = ref(true);
 const isAddToHomeScreen = ref(false);
 const isShowSetFirstPw = ref(false);
 const isShowCodeBonusModal = ref(false);
-const currentStep = ref(localStorage.getItem("newPlayerGuide") || "1");
+const currentStep = ref(localStorage.getItem("newPlayerGuide") || "END");
 // Only show the guide if on `/home` or `/`
 // const isNewPlayerModal = computed(() => {
 //   return (
@@ -4491,9 +4491,7 @@ onActivated(async () => {
   checkGoogleLoginSetPwd();
 
   if ((route.query.login === "true" || route.query.register === "true") && ui.annoyingType !== "NONE") {
-    //TODO: change back.
-    // popupPromo.value = "money-rain";
-    popupPromo.value = "spin-lucky-wheel";
+    // popupPromo.value = "spin-lucky-wheel";
   }
 
   if (route.query.newPlayerGuide === "earn-money") {
@@ -4501,17 +4499,17 @@ onActivated(async () => {
     closePlayerGuide();
   }
 
-  if (store.hasToken() && ui.promo_megaspin === "1" && ui.annoyingType !== "NONE") {
-    hasInviteWheelPromo.value = true;
-  }
+  // if (store.hasToken() && ui.promo_megaspin === "1" && ui.annoyingType !== "NONE") {
+  //   hasInviteWheelPromo.value = true;
+  // }
 
   if (route.query.token) {
     store.autoLogin(route.query.token);
     // checkSpinWheel();
 
-    if (store.hasToken() && ui.promo_megaspin === "1" && ui.annoyingType !== "NONE") {
-      hasInviteWheelPromo.value = true;
-    }
+    // if (store.hasToken() && ui.promo_megaspin === "1" && ui.annoyingType !== "NONE") {
+    //   hasInviteWheelPromo.value = true;
+    // }
   }
   afterActivated();
 
@@ -4565,7 +4563,7 @@ watch(
   () => promoStore.isShownSpinLuckyWheel,
   async (val) => {
     await nextTick();
-    if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
+    // if (val) checkSpinLuckyWheelPromoHomePopupCanShow();
   }
 );
 // watch(

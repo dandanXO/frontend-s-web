@@ -158,26 +158,26 @@
         <a @click="goRegister" class="brown">{{ $t("btn.register") }}</a>
       </div>
 
-      <div class="google-login-wrapper">
-        <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.svg" />
-        <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />
-        <template v-if="isAndroid()">
-          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
-            <div class="google-btn">
-              <img width="24px" src="../assets/images/index/google-icon.svg" />
-              <div>{{ $t("btn.signinWithGoogle") }}</div>
-            </div>
-          </q-btn>
-        </template>
-        <template v-else>
-          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
-            <div class="google-btn">
-              <img width="24px" src="../assets/images/index/google-icon.svg" />
-              <div>{{ $t("btn.signinWithGoogle") }}</div>
-            </div>
-          </q-btn>
-        </template>
-      </div>
+<!--      <div class="google-login-wrapper">-->
+<!--        <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.svg" />-->
+<!--        <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />-->
+<!--        <template v-if="isAndroid()">-->
+<!--          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">-->
+<!--            <div class="google-btn">-->
+<!--              <img width="24px" src="../assets/images/index/google-icon.svg" />-->
+<!--              <div>{{ $t("btn.signinWithGoogle") }}</div>-->
+<!--            </div>-->
+<!--          </q-btn>-->
+<!--        </template>-->
+<!--        <template v-else>-->
+<!--          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">-->
+<!--            <div class="google-btn">-->
+<!--              <img width="24px" src="../assets/images/index/google-icon.svg" />-->
+<!--              <div>{{ $t("btn.signinWithGoogle") }}</div>-->
+<!--            </div>-->
+<!--          </q-btn>-->
+<!--        </template>-->
+<!--      </div>-->
     </div>
 
     <div class="is-domain bottom-btn-primary">
