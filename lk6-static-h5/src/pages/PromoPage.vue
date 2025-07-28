@@ -1268,6 +1268,7 @@ export default defineComponent({
     text-align: center;
     position: relative;
     top: 48%;
+    color: #fff;
   }
 }
 
