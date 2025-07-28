@@ -9,8 +9,12 @@
   >
     <div>
       <div class="dialog-wrapper">
-        <div class="dialog-header only-inbox">
-          <div
+        <div class="dialog-title">
+          <img :src="require(`../../assets/home/announcement/announcement-title${isDark ? '-dark' : ''}.png`)" alt="" />
+        </div>
+
+        <!-- <div class="dialog-header only-inbox"> -->
+        <!-- <div
             class="dialog-tab-item"
             :class="currentTab === 'announcement' ? 'active' : ''"
             @click="currentTab = 'announcement'"
@@ -22,8 +26,9 @@
               alt=""
             />
             <p v-else>重要公告</p>
-          </div>
+          </div> -->
 
+        <!-- 
           <div class="dialog-tab-item" :class="currentTab === 'inbox' ? 'active' : ''" @click="currentTab = 'inbox'">
             <img
               v-if="currentTab === 'inbox'"
@@ -31,8 +36,8 @@
               alt=""
             />
             <p v-else>站內信</p>
-          </div>
-        </div>
+          </div> -->
+        <!-- </div> -->
         <div class="dialog-content">
           <InboxComponent v-if="currentTab === 'inbox' && mailData.length > 0" :mailData="mailData" />
           <AnnouncementComponent
@@ -48,14 +53,16 @@
           </div>
         </div>
 
-        <div class="dialog-action-row">
-          <div class="dialog-action-item close-icon" @click="visible = false">
-            <el-icon size="32px">
-              <img src="../../assets/home/close-circle-fill.svg" />
-            </el-icon>
-          </div>
-        </div>
+        <!-- <div class="dialog-action-row"> -->
+
+        <!-- </div> -->
       </div>
+    </div>
+
+    <div class="dialog-action-item close-icon close-icon-item" @click="visible = false">
+      <el-icon size="32px">
+        <img src="../../assets/home/announcement/close-icon.svg" />
+      </el-icon>
     </div>
   </el-dialog>
 </template>
@@ -144,6 +151,25 @@ watch(checked, (val) => {
 </script>
 
 <style lang="scss" scoped>
+.dialog-wrapper {
+  background-image: url(../../assets/home/announcement/wrapper-box.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 12px;
+  height: 515px;
+
+  .dialog-title {
+    display: flex;
+    justify-content: center;
+    margin-top: -20px;
+
+    img {
+      display: block;
+      width: 100px;
+    }
+  }
+}
+
 .dialog-header {
   background: linear-gradient(0deg, #3480f9 0%, #6cadff 100%);
   height: 42px;
@@ -206,6 +232,28 @@ watch(checked, (val) => {
   }
 }
 
+.close-icon-item {
+  position: absolute;
+  top: -10px;
+  right: -40px;
+
+  &.close-icon {
+    justify-content: center;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ffffff99;
+    // border: 1px solid #ffffffb2;
+    fill: black;
+
+    .el-icon {
+      margin-left: -4px;
+      margin-top: -4px;
+    }
+  }
+}
+
 .dialog-action {
   position: absolute;
   right: 0;
@@ -250,14 +298,17 @@ watch(checked, (val) => {
 }
 
 .dark {
-  .dialog-header {
-    &.only-inbox {
-      background: #2d4065;
-    }
+  .dialog-wrapper {
+    background-image: url(../../assets/home/announcement/wrapper-box-dark.png);
   }
+  // .dialog-header {
+  //   &.only-inbox {
+  //     background: #2d4065;
+  //   }
+  // }
 
-  .dialog-content {
-    background: #2d4065;
-  }
+  // .dialog-content {
+  //   background: #2d4065;
+  // }
 }
 </style>
