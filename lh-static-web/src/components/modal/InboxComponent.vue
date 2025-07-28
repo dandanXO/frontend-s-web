@@ -123,15 +123,17 @@ const goToMailDetail = (mail) => {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    border-radius: 6px;
+    border-radius: 60px;
     height: 48px;
     font-size: 16px;
-    border: 1px solid #2f3244;
+    background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
     flex: 1;
     gap: 2px;
+    box-shadow: 0px -1px 3.66px 0px #a2bff4 inset;
 
     &.detail {
-      background: #2792fd;
+      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+      box-shadow: none;
       color: white;
       border: none;
     }
@@ -166,9 +168,10 @@ const goToMailDetail = (mail) => {
   .announcement-content {
     color: #ffffff;
   }
-  .announcement-footer .footer-button:first-child {
+  .announcement-footer .footer-button {
     color: #ffffff;
     border: 1px solid #369eff;
+    border-radius: 12px;
 
     img {
       filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
@@ -189,6 +192,11 @@ const goToMailDetail = (mail) => {
 
       .el-icon {
         filter: brightness(0) invert(1);
+      }
+
+      &:first-child {
+        background: #060f2661;
+        box-shadow: none;
       }
     }
   }
