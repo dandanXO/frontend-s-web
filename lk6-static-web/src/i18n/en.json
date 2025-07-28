@@ -61,7 +61,7 @@
     "commissionTermsAndConditions01": "Commission Distribution Period: Between the 1st and 10th of each month, all commissions will be directly credited to the agent’s account by the system. No transaction record is required, and funds can be withdrawn immediately.",
     "commissionTermsAndConditions02": "To settle commission payments, agents must have at least five valid active members each month. A player is considered active if their monthly deposit is ≥500 and their transaction volume is ≥1000.",
     "commissionTermsAndConditions03": "Agents must recruit at least three new active members each month through promotion. If this requirement is not met, the activity will be regarded as zero promotion. The commission department reserves the right to reduce or deduct commissions. If fewer than ten new active members are recruited over three consecutive months, the agent account will be suspended and must contact platform support to reopen."
-    },
+  },
   "form": {
     "remark": "Remark",
     "selectImage": "Select image",
@@ -424,6 +424,18 @@
         "title": "Weekly Betting Rewards",
         "yesterdayValidBets": "Valid Bets:",
         "todayBonus": "Saturday's Bonus:"
+      }
+    },
+    "baccaratBonus": {
+      "rewardSection": {
+        "title": "Application method",
+        "desc": "For Baccarat, the minimum bet per round is 100U. If the winning hand of the banker includes 1 6, the bonus won in this round will be increased by 30%. If the winning hand of the banker includes 2 6s, the bonus won in this round will be increased by 100%. Please apply to the online customer service or Telegram: {telegram} customer service."
+      }
+    },
+    "baccaratPoint6": {
+      "rewardSection": {
+        "title": "Application method",
+        "desc": "Super tie game, players bet on tie, minimum bet 100U, both banker and player get 6 points, the winnings of this game will be increased by 20%, you need to apply to online customer service or Telegram customer service: {telegram}."
       }
     }
   },

@@ -7,6 +7,8 @@
       @daily-slot="handleSlot()"
     />
     <WeeklyReward v-else-if="list.redirectUrl === 'lk6-weekly-reward'" />
+    <BaccaratBonus v-else-if="list.redirectUrl === 'lk6-baccarat-bonus'" />
+    <BaccaratPoint6 v-else-if="list.redirectUrl === 'lk6-baccarat-point-6'" />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -34,6 +36,8 @@ import { ElMessageBox } from "element-plus";
 import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "@/api/index/promo";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import WeeklyReward from "./hotpromo/weekly-reward/WeeklyReward.vue";
+import BaccaratBonus from "./hotpromo/baccarat-bonus/BaccaratBonus.vue";
+import BaccaratPoint6 from "./hotpromo/baccarat-point-6/BaccaratPoint6.vue";
 // import liveGift from "../components/hotpromo/liveGift.vue";
 
 export default defineComponent({
@@ -42,7 +46,9 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
-    WeeklyReward
+    WeeklyReward,
+    BaccaratBonus,
+    BaccaratPoint6
     // liveGift
   },
   props: {
@@ -683,9 +689,29 @@ export default defineComponent({
     border: none;
   }
 
+  &.v2 {
+    .item {
+      .item-num {
+        height: 18px !important;
+        width: 18px !important;
+        min-width: 18px;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        border-radius: unset;
+
+        @for $i from 1 through 9 {
+          &[data-index="#{$i}"] {
+            background-image: url("../assets/images/promotion/hotpromo/common/marker/marker-#{$i}.png");
+          }
+        }
+      }
+    }
+  }
+
   .claim-title-icon,
   .claim-coin-icon,
   .claim-gift-icon,
+  .claim-title-icon-v2,
   .claim-stacked-coins-icon {
     width: 32px;
     height: 32px;
@@ -696,6 +722,11 @@ export default defineComponent({
 
   .claim-title-icon {
     background: url("../assets/promo/lh-livepoker-rebate/section-title-img.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-title-icon-v2 {
+    background: url("../assets/promo/lh-livepoker-rebate/section-title-img-2.png") no-repeat center center;
     background-size: 100% 100%;
   }
 
