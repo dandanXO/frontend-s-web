@@ -279,10 +279,10 @@
           <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
           <div>WhatsApp</div>
         </div>
-        <div class="list-item" @click="openCharity()">
+        <!-- <div class="list-item" @click="openCharity()">
           <img class="btn-icon" id="charity-icon" src="../assets/images/auth/charity-icon.png" />
           <div>Charity</div>
-        </div>
+        </div> -->
         <div class="list-item" @click="openYoutube()">
           <img class="btn-icon" id="youtube-icon" src="../assets/images/auth/youtube-icon.png" />
           <div>Youtube</div>
