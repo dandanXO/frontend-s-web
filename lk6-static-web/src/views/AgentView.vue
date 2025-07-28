@@ -130,7 +130,11 @@
       </div>
       <div class="footer">
         <img src="@/assets/images/affiliate/footer-icon.png" />
-        <div class="footer-txt">{{ $t("agent.footer") }} @xy66vip {{ $t("agent.footer2") }}</div>
+        <div class="footer-txt">
+          {{ $t("agent.footer") }}
+          <span style="text-decoration: underline">@xy66vip</span>
+          {{ $t("agent.footer2") }}
+        </div>
       </div>
     </div>
   </div>
@@ -139,7 +143,7 @@
 import { ref } from "vue";
 const affiliateUrl = ref("https://6666vip.cc/lk6/");
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
-const lang = localStorage.getItem("languageLocale");
+const lang = localStorage.getItem("languageLocale") || "zh";
 
 const onClickLogin = () => {
   window.location.href = affiliateUrl.value + "login?agent=" + (affCode ? affCode : "");
@@ -168,8 +172,10 @@ const onClickLogin = () => {
     display: flex;
   }
   .contact-card {
-    background: linear-gradient(180deg, #aed9ff 0%, #6dbaff 100%);
-    border: 2.65px solid #acd4f6;
+    background: linear-gradient(180deg, #ecf6ff 0%, #feffff 100%);
+    // border: 1px solid;
+    // border-image-source: linear-gradient(180deg, #a5d2fe 0%, #d6ecff 46.15%, #a3d2ff 100%);
+    border: 1px solid #acd4f6;
     border-radius: 10px;
     display: flex;
     width: fit-content;
@@ -224,7 +230,7 @@ const onClickLogin = () => {
   background-color: #f2f8fe;
   border: 1px solid #acd4f6;
   border-radius: 12px;
-  padding: 25px;
+  padding: 10px 25px 20px;
   margin-bottom: 20px;
   .section-title {
     display: flex;
