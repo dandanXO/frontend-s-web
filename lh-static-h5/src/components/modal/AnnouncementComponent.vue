@@ -69,7 +69,7 @@ const handleDetail = () => {
 <style lang="scss" scoped>
 .announcement-component {
   padding: 10px 12px 16px;
-  background: white;
+  // background: white;
   height: 100%;
   overflow: auto;
 }

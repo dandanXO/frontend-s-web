@@ -3,8 +3,8 @@
     <q-dialog v-model="visible">
       <div style="overflow: unset; width: 90%">
         <div class="dialog-wrapper">
-          <div class="dialog-header only-inbox">
-            <div
+          <!-- <div class="dialog-header only-inbox"> -->
+          <!-- <div
               class="dialog-tab-item announcement"
               :class="currentTab === 'announcement' ? 'active' : ''"
               @click="changeTab('announcement')"
@@ -15,8 +15,9 @@
                 <p class="text">重要公告</p>
               </div>
               <p v-else>重要公告</p>
-            </div>
-            <div
+            </div> -->
+
+          <!-- <div
               class="dialog-tab-item inbox"
               :class="currentTab === 'inbox' ? 'active' : ''"
               @click="changeTab('inbox')"
@@ -33,8 +34,8 @@
                 </p>
               </div>
               <p v-else>站內信</p>
-            </div>
-          </div>
+            </div> -->
+          <!-- </div> -->
           <div class="dialog-content">
             <InboxComponent
               @chageSlide="hChageSlide"
@@ -61,9 +62,11 @@
                 @click="handleDotClick(index)"
               ></div>
             </div>
-            <q-checkbox v-model="checked" label="今天不再提醒" color="blue" />
           </div>
         </div>
+
+        <q-checkbox v-model="checked" label="今天不再提醒" color="blue" class="checkbox-content" />
+
         <div class="dialog-action">
           <div class="dialog-action-row">
             <q-btn
@@ -173,6 +176,9 @@ watch(checked, (val) => {
 .dialog-wrapper {
   max-width: 90%;
   margin: 0 auto;
+  background-image: url(../../assets/images/home/announcement/wrapper-box.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 .dialog-header {
@@ -257,8 +263,14 @@ watch(checked, (val) => {
   }
 }
 
+.dialog-content {
+  :deep(.q-carousel) {
+    background: transparent;
+  }
+}
+
 .dialog-footer {
-  background: #e8f0fd;
+  // background: #e8f0fd;
   height: 48px;
   border-radius: 0 0 12px 12px;
   display: flex;
@@ -271,6 +283,7 @@ watch(checked, (val) => {
     justify-content: center;
     align-items: center;
     gap: 4px;
+    width: 100%;
   }
 
   .dot {
@@ -281,8 +294,8 @@ watch(checked, (val) => {
 
     &.active {
       background: #2792fd;
-      width: 20px;
-      border-radius: 56px;
+      // width: 20px;
+      // border-radius: 56px;
     }
   }
 }
@@ -337,7 +350,28 @@ watch(checked, (val) => {
   }
 
   .dialog-footer {
-    background: #444;
+    .dot {
+      background: #364464;
+
+      &.active {
+        background: #3587b9;
+      }
+    }
+  }
+
+  .dialog-wrapper {
+    background-image: url(../../assets/images/home/announcement/wrapper-box-dark.png);
+  }
+}
+
+.checkbox-content {
+  display: flex;
+  justify-content: flex-end;
+  color: #ffffff;
+  margin-right: 16px;
+
+  :deep(.q-checkbox__bg) {
+    // color: blue;
   }
 }
 </style>

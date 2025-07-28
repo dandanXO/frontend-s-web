@@ -47,7 +47,8 @@ const handleDetail = () => {
   height: 100%;
 }
 .announcement-component {
-  padding: 10px 12px 16px;
+  // padding: 10px 12px 16px;
+  padding: 0;
 }
 
 .announcement-title {
