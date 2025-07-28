@@ -20,8 +20,8 @@
       </div>
 
       <div>
-        <el-button class="login-btn contact-btn">{{ $t("agent.login") }}</el-button>
-        <el-button class="join-us-btn contact-btn">{{ $t("agent.joinUs") }}</el-button>
+        <el-button class="login-btn contact-btn" @click="onClickLogin">{{ $t("agent.login") }}</el-button>
+        <el-button class="join-us-btn contact-btn" @click="onClickLogin">{{ $t("agent.joinUs") }}</el-button>
       </div>
     </div>
 
@@ -133,7 +133,15 @@
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+const affiliateUrl = ref("https://6666vip.cc/lk6/");
+const affCode = sessionStorage.getItem("AFFILIATE_CODE");
+
+const onClickLogin = () => {
+  window.location.href = affiliateUrl.value + "login?agent=" + (affCode ? affCode : "");
+};
+</script>
 
 <style scoped lang="scss">
 .banner {
