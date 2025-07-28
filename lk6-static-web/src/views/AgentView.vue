@@ -1,135 +1,137 @@
 <template>
-  <div class="affiliate-container">
-    <img class="banner" src="@/assets/images/affiliate/banner.jpg" />
-    <div class="contact-container">
-      <div class="contact-cards">
-        <div class="contact-card">
-          <img src="@/assets/images/affiliate/contact-1.png" />
-          <div class="contact-card-right">
-            <div>{{ $t("agent.telegramAgent") }}</div>
-            <div class="contact-tag">@xy66vip</div>
+  <div class="affiliate-page">
+    <div class="affiliate-container">
+      <img v-if="lang === 'en'" class="banner" :src="require(`@/assets/images/affiliate/banner_${lang}.png`)" />
+      <div class="contact-container">
+        <div class="contact-cards">
+          <div class="contact-card">
+            <img src="@/assets/images/affiliate/contact-1.png" />
+            <div class="contact-card-right">
+              <div>{{ $t("agent.telegramAgent") }}</div>
+              <div class="contact-tag">@xy66vip</div>
+            </div>
+          </div>
+          <div class="contact-card">
+            <img src="@/assets/images/affiliate/contact-2.png" />
+            <div class="contact-card-right">
+              <div>{{ $t("agent.telegramCs") }}</div>
+              <div class="contact-tag">@xy6vip</div>
+            </div>
           </div>
         </div>
-        <div class="contact-card">
-          <img src="@/assets/images/affiliate/contact-2.png" />
-          <div class="contact-card-right">
-            <div>{{ $t("agent.telegramCs") }}</div>
-            <div class="contact-tag">@xy6vip</div>
+
+        <div>
+          <el-button class="login-btn contact-btn" @click="onClickLogin">{{ $t("agent.login") }}</el-button>
+          <el-button class="join-us-btn contact-btn" @click="onClickLogin">{{ $t("agent.joinUs") }}</el-button>
+        </div>
+      </div>
+
+      <div class="section-container">
+        <div class="section-title">
+          <div class="title">
+            {{ $t("agent.sectionTitle1") }}
           </div>
         </div>
-      </div>
 
-      <div>
-        <el-button class="login-btn contact-btn" @click="onClickLogin">{{ $t("agent.login") }}</el-button>
-        <el-button class="join-us-btn contact-btn" @click="onClickLogin">{{ $t("agent.joinUs") }}</el-button>
-      </div>
-    </div>
-
-    <div class="section-container">
-      <div class="section-title">
-        <div class="title">
-          {{ $t("agent.sectionTitle1") }}
+        <div class="section-subtitle">
+          <img src="@/assets/images/affiliate/section-icon.png" />
+          {{ $t("agent.sectionSubtitle1") }}
+        </div>
+        <table class="section-table">
+          <thead>
+            <tr>
+              <th>{{ $t("agent.tableHeader1") }}</th>
+              <th>{{ $t("agent.tableHeader2") }}</th>
+              <th>{{ $t("agent.tableHeader3") }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>5+</td>
+              <td>10000+</td>
+              <td>0.3%</td>
+            </tr>
+            <tr>
+              <td>5+</td>
+              <td>{{ $t("agent.oneMillionPlus") }}</td>
+              <td>0.4%</td>
+            </tr>
+            <tr>
+              <td>5+</td>
+              <td>{{ $t("agent.twentyMillionPlus") }}</td>
+              <td>0.5%</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="hint-txt">{{ $t("agent.section1_info1") }}</div>
+        <div>
+          <span>{{ $t("agent.section1_info2") }}</span>
+          <br />
+          <span>{{ $t("agent.section1_info3") }}</span>
+          <br />
+          <span>{{ $t("agent.section1_info4") }}</span>
+          <br />
+          <span>
+            {{ $t("agent.section1_info5") }}
+            <span class="hint-txt">@xy66vip</span>
+            {{ $t("agent.section1_info6") }}
+          </span>
         </div>
       </div>
-
-      <div class="section-subtitle">
-        <img src="@/assets/images/affiliate/section-icon.png" />
-        {{ $t("agent.sectionSubtitle1") }}
-      </div>
-      <table class="section-table">
-        <thead>
-          <tr>
-            <th>{{ $t("agent.tableHeader1") }}</th>
-            <th>{{ $t("agent.tableHeader2") }}</th>
-            <th>{{ $t("agent.tableHeader3") }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>5+</td>
-            <td>10000+</td>
-            <td>0.3%</td>
-          </tr>
-          <tr>
-            <td>5+</td>
-            <td>{{ $t("agent.oneMillionPlus") }}</td>
-            <td>0.4%</td>
-          </tr>
-          <tr>
-            <td>5+</td>
-            <td>{{ $t("agent.twentyMillionPlus") }}</td>
-            <td>0.5%</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="hint-txt">{{ $t("agent.section1_info1") }}</div>
-      <div>
-        <span>{{ $t("agent.section1_info2") }}</span>
-        <br />
-        <span>{{ $t("agent.section1_info3") }}</span>
-        <br />
-        <span>{{ $t("agent.section1_info4") }}</span>
-        <br />
-        <span>
-          {{ $t("agent.section1_info5") }}
-          <span class="hint-txt">@xy66vip</span>
-          {{ $t("agent.section1_info6") }}
-        </span>
-      </div>
-    </div>
-    <div class="section-container">
-      <div class="section-title">
-        <div class="title">
-          {{ $t("agent.sectionTitle2") }}
+      <div class="section-container">
+        <div class="section-title">
+          <div class="title">
+            {{ $t("agent.sectionTitle2") }}
+          </div>
+        </div>
+        <div class="section-subtitle">
+          <img src="@/assets/images/affiliate/section-icon.png" />
+          {{ $t("agent.sectionSubtitle2") }}
+        </div>
+        <div>
+          <span>
+            {{ $t("agent.section2_info1") }}
+          </span>
+          <br />
+          <span>
+            {{ $t("agent.section2_info2") }}
+            <span class="hint-txt">@xy66vip</span>
+            {{ $t("agent.section2_info3") }}
+          </span>
         </div>
       </div>
-      <div class="section-subtitle">
-        <img src="@/assets/images/affiliate/section-icon.png" />
-        {{ $t("agent.sectionSubtitle2") }}
-      </div>
-      <div>
-        <span>
-          {{ $t("agent.section2_info1") }}
-        </span>
-        <br />
-        <span>
-          {{ $t("agent.section2_info2") }}
-          <span class="hint-txt">@xy66vip</span>
-          {{ $t("agent.section2_info3") }}
-        </span>
-      </div>
-    </div>
-    <div class="section-container">
-      <div class="section-title">
-        <div class="title">
-          {{ $t("agent.sectionTitle3") }}
+      <div class="section-container">
+        <div class="section-title">
+          <div class="title">
+            {{ $t("agent.sectionTitle3") }}
+          </div>
+        </div>
+        <div class="section-subtitle">
+          <img src="@/assets/images/affiliate/section-icon.png" />
+          {{ $t("agent.sectionSubtitle3") }}
+        </div>
+        <div>
+          <span>
+            {{ $t("agent.section3_info1") }}
+          </span>
+          <br />
+          <br />
+          <span>
+            {{ $t("agent.section3_info2") }}
+          </span>
+          <br />
+          <br />
+          <span>
+            {{ $t("agent.section3_info3") }}
+            <span class="hint-txt">@xy66vip</span>
+            {{ $t("agent.section3_info4") }}
+          </span>
         </div>
       </div>
-      <div class="section-subtitle">
-        <img src="@/assets/images/affiliate/section-icon.png" />
-        {{ $t("agent.sectionSubtitle3") }}
+      <div class="footer">
+        <img src="@/assets/images/affiliate/footer-icon.png" />
+        <div class="footer-txt">{{ $t("agent.footer") }}</div>
       </div>
-      <div>
-        <span>
-          {{ $t("agent.section3_info1") }}
-        </span>
-        <br />
-        <br />
-        <span>
-          {{ $t("agent.section3_info2") }}
-        </span>
-        <br />
-        <br />
-        <span>
-          {{ $t("agent.section3_info3") }}
-          <span class="hint-txt">@xy66vip</span>
-          {{ $t("agent.section3_info4") }}
-        </span>
-      </div>
-    </div>
-    <div class="footer">
-      <img src="@/assets/images/affiliate/footer-icon.png" />
-      <div class="footer-txt">{{ $t("agent.footer") }}</div>
     </div>
   </div>
 </template>
@@ -137,6 +139,7 @@
 import { ref } from "vue";
 const affiliateUrl = ref("https://6666vip.cc/lk6/");
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
+const lang = localStorage.getItem("languageLocale");
 
 const onClickLogin = () => {
   window.location.href = affiliateUrl.value + "login?agent=" + (affCode ? affCode : "");
@@ -144,12 +147,20 @@ const onClickLogin = () => {
 </script>
 
 <style scoped lang="scss">
+.affiliate-page {
+  background-image: url(../assets/images/affiliate/bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.affiliate-container {
+  margin: 0 auto;
+  max-width: 1200px;
+}
 .banner {
   width: 100%;
 }
 .contact-container {
   margin: 10px auto 20px;
-  max-width: 1200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -213,8 +224,6 @@ const onClickLogin = () => {
   border: 1px solid #acd4f6;
   border-radius: 12px;
   padding: 25px;
-  margin: 0 auto;
-  max-width: 1200px;
   margin-bottom: 20px;
   .section-title {
     display: flex;
@@ -285,7 +294,7 @@ const onClickLogin = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 16px;
+  padding-bottom: 16px;
   > img {
     width: 40px;
     margin-right: 10px;
