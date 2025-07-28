@@ -12,7 +12,8 @@ export const useUI = defineStore("ui-store", {
       siteId: 6,
       matchInsuranceLists: [],
       maintenanceStartTime: "",
-      maintenanceEndTime: ""
+      maintenanceEndTime: "",
+      telegramUrl: ""
     };
   },
   actions: {
@@ -40,6 +41,6 @@ export const useUI = defineStore("ui-store", {
         zIndex: this.notificationZIndex++,
         timeout: options.timeout ?? 3000
       });
-    },
+    }
   }
 });

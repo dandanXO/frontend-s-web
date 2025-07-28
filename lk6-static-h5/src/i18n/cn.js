@@ -924,6 +924,18 @@ export default {
         yesterdayValidBets: "累计有效投注：",
         todayBonus: "周六领取彩金："
       }
+    },
+    baccaratBonus: {
+      claimSection: {
+        title: "申请方式",
+        desc: "下注百家乐，每局最低下注100U，庄以6点胜出的牌中包含1张6，本局中得的彩金加奖30%。庄以6点胜出的牌中包含2张6，本局中得的彩金加奖100%，需向在线客服或Telegram：{telegram}客服申请。"
+      }
+    },
+    baccaratPoint6: {
+      claimSection: {
+        title: "申请方式",
+        desc: "超级和局，玩家下注和，最低下注100U庄闲都开出6点，本局中得的彩金加奖20%，需向在线客服或Telegram客服：{telegram}申请。"
+      }
     }
   },
   affiliate: {

@@ -8,6 +8,8 @@
       @daily-slot="handleSlot(list.promoCode)"
     />
     <WeeklyReward v-if="list.redirectUrl === 'lk6-weekly-reward'" :promo-code="list.promoCode" />
+    <BaccaratBonus v-if="list.redirectUrl === 'lk6-baccarat-bonus'" :promo-code="list.promoCode" />
+    <BaccaratPoint6 v-if="list.redirectUrl === 'lk6-baccarat-point-6'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -34,7 +36,9 @@ import { useQuasar } from "quasar";
 import moment from "moment";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import WeeklyReward from "./hotpromo/weekly-reward/WeeklyReward.vue";
+const WeeklyReward = defineAsyncComponent(() => import("./hotpromo/weekly-reward/WeeklyReward.vue"));
+const BaccaratBonus = defineAsyncComponent(() => import("./hotpromo/baccarat-bonus/BaccaratBonus.vue"));
+const BaccaratPoint6 = defineAsyncComponent(() => import("./hotpromo/baccarat-point-6/BaccaratPoint6.vue"));
 
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
 
@@ -44,7 +48,9 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
-    WeeklyReward
+    WeeklyReward,
+    BaccaratBonus,
+    BaccaratPoint6
   },
   props: {
     list: {
@@ -475,9 +481,28 @@ export default defineComponent({
     }
   }
 
+  &.v2 {
+    .item {
+      .item-num {
+        height: 18px !important;
+        width: 18px !important;
+        min-width: 18px;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        border-radius: unset;
+        @for $i from 1 through 9 {
+          &[data-index="#{$i}"] {
+            background-image: url("../assets/images/promotion/hotpromo/common/marker/marker-#{$i}.png");
+          }
+        }
+      }
+    }
+  }
+
   .claim-title-icon,
   .claim-coin-icon,
   .claim-gift-icon,
+  .claim-title-icon-v2,
   .claim-stacked-coins-icon {
     width: 28px;
     height: 28px;
@@ -488,6 +513,11 @@ export default defineComponent({
 
   .claim-title-icon {
     background: url("../assets/images/promotion/hotpromo/common/section-title-img.png") no-repeat center center;
+    background-size: 100% 100%;
+  }
+
+  .claim-title-icon-v2 {
+    background: url("../assets/images/promotion/hotpromo/common/section-title-img-2.png") no-repeat center center;
     background-size: 100% 100%;
   }
 
