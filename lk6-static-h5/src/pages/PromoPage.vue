@@ -256,6 +256,10 @@
       </router-link>
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
+    <div class="dialog-mid-text">{{ $t("btn.loading") }}</div>
+  </q-dialog>
 </template>
 
 <script lang="js">
@@ -278,6 +282,7 @@ import { i18nStore } from "src/router/language";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { useNotify } from "src/hooks/notify";
+import { Directory, Filesystem } from "@capacitor/filesystem";
 
 export default defineComponent({
   name: "PromoView",
@@ -330,9 +335,15 @@ export default defineComponent({
     const ui = useUI();
     const notify = useNotify();
     const isDisplayLogin = ref(false);
-    const isPromoFound = ref(false)
+    const isPromoFound = ref(false);
+    const isOpenExtension = ref(false);
 
+    const currentPromoDetail = computed(() => {
+      if (!route.query.name || !promoState.promoList.length) return null;
 
+      const targetPromo = promoState.promoList.find((promo) => promo.redirectUrl === route.query.name);
+      return targetPromo || null;
+    });
 
     watch(
       () => route.query,
@@ -342,6 +353,7 @@ export default defineComponent({
         } else {
           isPromoDetail.value = route.query.name;
         }
+        if (currentPromoDetail.value) showPromoDetails(currentPromoDetail.value);
       }
     );
     const loadBanner = () => {
@@ -356,44 +368,107 @@ export default defineComponent({
     };
     const isSpecialPromo = ref(false);
     const showPromoDetails = (promo) => {
-      isPromoFound.value = true;
-      if (promo.redirectUrl === 'dy2-christmas-gachapon') {
-        isSpecialPromo.value = true;
+      if(!store.token) {
+        notify({
+          type:'error',
+          message: t('common.notification.loginRequired.message')
+        })
+        router.push(`/login`);
       } else {
-        isSpecialPromo.value = false;
-      }
+        isPromoFound.value = true;
+        if (promo.redirectUrl === 'dy2-christmas-gachapon') {
+          isSpecialPromo.value = true;
+        } else {
+          isSpecialPromo.value = false;
+        }
 
-      // extension
-      if (extensionState.value) {
-        if (promo.redirectUrl.includes("page-vip")) {
-          router.push({ path: "/vip", query: { token: extensionToken.value } });
-        } else {
-          router.push({ path: currentPath.value, query: { name: promo.redirectUrl, token: extensionToken.value } });
-        }
-        isPromoDetail.value = true;
-        selectedPromo.value = promo;
-        if (isAndroid()) {
-          LocalStorage.set("TOKEN", extensionToken.value, 86400);
-        } else {
-          SessionStorage.set("TOKEN", extensionToken.value);
-        }
-        store.token = extensionToken.value;
-      } else {
-        // non extension
-        // if (!store.token) {
-        //   isDisplayLogin.value = true;
-        // } else {
+        // extension
+        if (extensionState.value) {
           if (promo.redirectUrl.includes("page-vip")) {
-            router.push({ path: "/account/vip" });
+            router.push({ path: "/vip", query: { token: extensionToken.value } });
           } else {
-            if (route.query.fromAccount) {
-              router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
-            } else {
-              router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+            router.push({ path: currentPath.value, query: { name: promo.redirectUrl, token: extensionToken.value } });
+          }
+          isPromoDetail.value = true;
+          selectedPromo.value = promo;
+          if (isAndroid()) {
+            LocalStorage.set("TOKEN", extensionToken.value, 86400);
+          } else {
+            SessionStorage.set("TOKEN", extensionToken.value);
+          }
+          store.token = extensionToken.value;
+        } else if (isAndroid()) {
+          // store.evip = "192.168.68.93:9090";
+          const tgDomain = "https://" + store.evip;
+          var preUrl = tgDomain + `/promotion?name=${promo.redirectUrl}&token=${store.token}&lang=${languageVal.value}`;
+          // alert(preUrl);
+          console.log(preUrl);
+          // promoSrc.value= preUrl;
+          var ref = cordova.InAppBrowser.open(
+            preUrl,
+            "_blank",
+            "location=no,zoom=no,footer=no,toolbar=no,fullscreen=yes,hidden=yes"
+          );
+          isOpenExtension.value = true;
+
+          ref.addEventListener("loadstop", function () {
+            setTimeout(() => {
+              ref.show();
+            }, 500);
+          });
+
+          ref.addEventListener("message", async function (event) {
+            if(event.data.action === "qrcode") {
+              const dataUrl = event.data.item;
+              await Filesystem.writeFile({
+                path: `Picture/${event.data.filename}`,
+                data: dataUrl,
+                directory: Directory.Documents,
+                recursive: true
+              })
             }
-            isPromoDetail.value = true;
-            selectedPromo.value = promo;
-          // }
+            var message = event.data;
+            console.log("Message received from InAppBrowser: ", message);
+            if (message === "close") {
+              ref.close();
+              isOpenExtension.value = false;
+            }
+          });
+
+          ref.addEventListener("loadstart", function (event) {
+            var url = event.url;
+            // alert("This" + url);
+            if (url.indexOf("xfapp:") > -1) {
+              var message = url.split("xfapp:")[1];
+              console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
+              // alert(message);
+              ref.close();
+              router.push(message);
+            }
+          });
+
+          ref.addEventListener("exit", function () {
+            isOpenExtension.value = false;
+          });
+        } else {
+          // non extension
+          // if (!store.token) {
+          //   isDisplayLogin.value = true;
+          // } else {
+            if (promo.redirectUrl.includes("page-vip")) {
+              router.push({ path: "/account/vip" });
+            } else {
+              if (route.query.fromAccount) {
+                router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+              } else {
+                router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+              }
+              if (!isAndroid()) {
+                isPromoDetail.value = true;
+                selectedPromo.value = promo;
+              }
+            // }
+          }
         }
       }
     };
@@ -453,13 +528,14 @@ export default defineComponent({
           if (res.code === 0) {
             promoState.promoList = [];
             var promoItems = res.data;
-
-            promoItems.forEach((element) => {
-              promoState.promoList.push(element);
-              if (route.query.name && String(element.redirectUrl) === route.query.name) {
-                showPromoDetails(element);
-              }
-            });
+            promoState.promoList.push(...promoItems);
+            if (currentPromoDetail.value) showPromoDetails(currentPromoDetail.value);
+            // promoItems.forEach((element) => {
+            //   promoState.promoList.push(element);
+            //   if (route.query.name && String(element.redirectUrl) === route.query.name) {
+            //     showPromoDetails(element);
+            //   }
+            // });
             if(route.query.name && !isPromoFound.value) {
               notify({
                 type:'error',
@@ -508,6 +584,8 @@ export default defineComponent({
       loadBanner();
       loadAll();
     });
+
+
 
     return {
       promoState,
@@ -1164,6 +1242,22 @@ export default defineComponent({
     svg {
       fill: #0089ed;
     }
+  }
+}
+
+.dark-grey-dialog {
+  background: linear-gradient(#000000b3, #000000b3);
+  background-size: contain;
+
+  .dialog-mid-text {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    position: relative;
+    top: 48%;
   }
 }
 </style>
