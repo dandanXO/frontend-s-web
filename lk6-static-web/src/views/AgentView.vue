@@ -130,7 +130,7 @@
       </div>
       <div class="footer">
         <img src="@/assets/images/affiliate/footer-icon.png" />
-        <div class="footer-txt">{{ $t("agent.footer") }}</div>
+        <div class="footer-txt">{{ $t("agent.footer") }} @xy66vip {{ $t("agent.footer2") }}</div>
       </div>
     </div>
   </div>
@@ -216,6 +216,7 @@ const onClickLogin = () => {
     width: 150px;
     padding-bottom: 10px;
     font-weight: 600;
+    background-color: transparent;
   }
 }
 
