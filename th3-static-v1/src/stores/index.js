@@ -143,10 +143,12 @@ export const userStore = defineStore("userStore", {
           this.getMemberInfo("fromlogin");
         } else {
           Notify.create({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: ret.message,
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
         }
       });
@@ -173,10 +175,12 @@ export const userStore = defineStore("userStore", {
           this.getMemberInfo("fromlogin");
         } else {
           Notify.create({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: ret.message,
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
         }
       });

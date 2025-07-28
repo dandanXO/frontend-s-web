@@ -1012,10 +1012,12 @@ async function confirmDeposit() {
             form.localAmount = d.data.suggestion;
           }
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: d.message,
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
 
           btnLoading.value = false;
@@ -1029,10 +1031,12 @@ async function confirmDeposit() {
 
           if (hasIncorrectPrivilege) {
             $q.notify({
-              color: "negative",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: t("deposit.incorrectPrivilege"),
-              icon: "report_problem"
+              icon: "report_problem",
+              iconColor: "red"
             });
             throw Error();
           }
@@ -1181,11 +1185,13 @@ async function pDepo(deposit) {
               const newWin = window.open(`/`);
               if (!newWin) {
                 $q.notify({
-                  color: "negative",
+                  color: "dark",
+                  textColor: "white",
                   position: "top",
                   message:
                     "Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to 'Allow pop-ups' before attempting to recharge again.",
-                  icon: "report_problem"
+                  icon: "report_problem",
+                  iconColor: "red"
                 });
                 btnLoading.value = false;
                 return;
@@ -1256,10 +1262,12 @@ async function pDepo(deposit) {
         }
       } else {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: res.message,
-          icon: "report_problem"
+          icon: "report_problem",
+          iconColor: "red"
         });
       }
     })
@@ -1268,7 +1276,7 @@ async function pDepo(deposit) {
       //   color: "negative",
       //   position: "top",
       //   message: error.message,
-      //   icon: "report_problem"
+      //   icon: "report_problem", iconColor: "red"
       // });
     })
     .then(() => {

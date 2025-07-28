@@ -9,8 +9,7 @@
       </div>
       <div class="spin-wheel-board">
         <div class="spin-wheel-frame">
-          <div class="spin-wheel-shine">
-          </div>
+          <div class="spin-wheel-shine"></div>
           <div id="spin-wheel-id" class="spin-wheel">
             <img
               id="spin-wheel-bg"
@@ -31,7 +30,6 @@
     </div>
   </div>
 
-  
   <CongratsReuseableModal
     :isShowDialog="showPrizePopup"
     :btnTxt="$t('btn.goNow')"
@@ -57,16 +55,15 @@
       <div class="congrats-coupons">
         <img :src="require('../../../assets/images/index/modal/congrats-coupons.png')" />
       </div>
-      <div class="congrats-title">{{ $t('hotPromo.unusedCoupons') }}</div>
+      <div class="congrats-title">{{ $t("hotPromo.unusedCoupons") }}</div>
 
       <div class="congrats-button-container">
         <q-btn no-caps unelevated class="congrats-btn" @click="handleReceiveCodeBonus">
-          {{ $t('btn.goNow') }}
+          {{ $t("btn.goNow") }}
         </q-btn>
       </div>
     </div>
   </q-dialog>
-  
 </template>
 
 <script setup>
@@ -91,10 +88,7 @@ const { t } = useI18n();
 const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
-const props = defineProps([
-  "isHomePopup",
-  "hasUnusedCoupon"
-])
+const props = defineProps(["isHomePopup", "hasUnusedCoupon"]);
 // spin wheel constants
 const TOTAL_ITEMS = 7;
 const DEFAUL_SPEED = 1;
@@ -207,7 +201,7 @@ const reset = () => {
   spinNumRef.value.style.transition = "";
 };
 const handleReceiveCodeBonus = () => {
-  router.push('/deposit?from=/home')
+  router.push("/deposit?from=/home");
 };
 const spinWheel = () => {
   //FOr TesTING START
@@ -223,7 +217,7 @@ const spinWheel = () => {
   //   bonusIndex = -1;
   // }
   // const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
-  
+
   // spin(0, () => {
   //   showPrizePopup.value = true;
   //   prizePopupBonusAmt.value = 38;
@@ -237,10 +231,12 @@ const spinWheel = () => {
   }
   if (remainingDraws.value <= 0) {
     $q.notify({
-      color: "negative",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: t("hotPromo.aviatorWheel.remainingDrawTimes") + `: 0`,
-      icon: "report_problem"
+      icon: "report_problem",
+      iconColor: "red"
     });
     return;
   }
@@ -266,7 +262,7 @@ const spinWheel = () => {
     });
 };
 
-const alreadyDeposited = JSON.parse(localStorage.getItem('onAppFirstDeposit'));
+const alreadyDeposited = JSON.parse(localStorage.getItem("onAppFirstDeposit"));
 
 const isNotInApp = window.location.pathname === "/promo";
 const initSpinWheel = () => {
@@ -275,13 +271,10 @@ const initSpinWheel = () => {
       remainingDraws.value = res.data.spinChance;
       store.hasUnusedCoupon = res.data.hasUnusedCoupon;
       if (props.isHomePopup) {
-        showHasUnusedPopup.value = store.canClaimFtdPrivilege ? true : false
+        showHasUnusedPopup.value = store.canClaimFtdPrivilege ? true : false;
+      } else {
+        showHasUnusedPopup.value = (isAndroid() || !isNotInApp) && res.data.hasUnusedCoupon === "YES" ? true : false;
       }
-      else {
-        showHasUnusedPopup.value = (isAndroid() || !isNotInApp) && res.data.hasUnusedCoupon === 'YES' ? true : false
-      }
-
-      
     }
   });
 
@@ -307,7 +300,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 #remaining-draw-amt {
   font-size: 13px;
-  color: #61FF00;
+  color: #61ff00;
   font-weight: bold;
 }
 .spin-wheel-container {
@@ -328,24 +321,23 @@ onMounted(() => {
   // background-size: 100%;
 }
 .spin-wheel-shine {
-    height: 302px;
-    left: -33px;
-    pointer-events: none;
-    position: absolute;
-    top: -22px;
-    width: 315px;
-    z-index: 999;
-    animation: blink-rotate .8s ease-in-out infinite;
-    background: url(./img/shinee.png)no-repeat center center;
-    background-position: center center;
-    background-size: contain;
+  height: 302px;
+  left: -33px;
+  pointer-events: none;
+  position: absolute;
+  top: -22px;
+  width: 315px;
+  z-index: 999;
+  animation: blink-rotate 0.8s ease-in-out infinite;
+  background: url(./img/shinee.png) no-repeat center center;
+  background-position: center center;
+  background-size: contain;
 }
 @keyframes blink-rotate {
   0% {
     background-image: url(./img/shinee.png);
   }
   50% {
-   
   }
   100% {
     background-image: url(./img/shine-alt.png);
@@ -638,7 +630,7 @@ onMounted(() => {
   background: linear-gradient(90deg, rgba(75, 125, 65, 0) 0%, rgba(75, 125, 65, 0.4) 52.5%, rgba(75, 125, 65, 0) 93.5%);
   padding: 5px 0;
   width: 80%;
-    max-width: 240px;
+  max-width: 240px;
 
   .remaining-draw-text {
     color: #ffffff;
@@ -746,17 +738,18 @@ onMounted(() => {
     padding: 8px;
   }
   border-collapse: collapse !important;
-  tr:nth-child(2),tr:nth-child(4) {
+  tr:nth-child(2),
+  tr:nth-child(4) {
     td:nth-child(2) {
       p {
-        color: #FFC554;
+        color: #ffc554;
       }
     }
   }
   tr:nth-child(3) {
     td:nth-child(2) {
       p {
-        color: #6D8FF5;
+        color: #6d8ff5;
       }
     }
   }

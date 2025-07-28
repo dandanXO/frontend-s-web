@@ -114,16 +114,19 @@ const submit = () => {
             textColor: "white",
             position: "top",
             message: t("notify.newpasswordupdated"),
-            icon: "check_circle_outline"
+            icon: "check_circle_outline",
+            iconColor: "green"
           });
           // store.getMemberInfo();
           closeDialog();
         } else {
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: res.message,
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
         }
       })

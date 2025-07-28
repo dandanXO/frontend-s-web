@@ -911,16 +911,24 @@ const copyLoginName = () => {
 
 const verificationCodeDialog = ref(false);
 const openVerificationCodeDialog = () => {
+  updateEmailRef.value.validate();
+
+  if(updateEmailRef.value.hasError){
+    return;
+  }
+
   api
     .get(`/member/checkEmailRegisterStatus?email=${updateEmailInfo.email}`)
     .then((response) => {
       if (response.code === 0) {
         if (response.data) {
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: t("notify.emailAlreadyUsed"),
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
         } else {
           verificationCodeDialog.value = !verificationCodeDialog.value;
@@ -929,10 +937,12 @@ const openVerificationCodeDialog = () => {
     })
     .catch((e) => {
       $q.notify({
-        color: "negative",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: e.message,
-        icon: "report_problem"
+        icon: "report_problem",
+        iconColor: "red"
       });
     });
 
@@ -1053,10 +1063,12 @@ const getCode = () => {
     })
     .catch((e) => {
       $q.notify({
-        color: "negative",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: e.message,
-        icon: "report_problem"
+        icon: "report_problem",
+        iconColor: "red"
       });
     });
 };
@@ -1096,7 +1108,8 @@ const verifyVerificationCode = () => {
           textColor: "white",
           position: "top",
           message: "OTP验证码已发送至您的邮箱",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
         verificationDetails.memberInfo.codeId = ret.data.codeId;
         verificationModalVisible.value = false;
@@ -1106,7 +1119,7 @@ const verifyVerificationCode = () => {
         //   color: "negative",
         //   position: "top",
         //   message: ret.message,
-        //   icon: "report_problem"
+        //   icon: "report_problem", iconColor: "red"
         // });
         isEmailSending.value = false;
         getCode();
@@ -1134,7 +1147,8 @@ const submitUpdateSecurity = () => {
             textColor: "white",
             position: "top",
             message: "验证成功",
-            icon: "check_circle_outline"
+            icon: "check_circle_outline",
+            iconColor: "green"
           });
           updateSecurityModalVisible.value = false;
           loadInfo();
@@ -1145,7 +1159,7 @@ const submitUpdateSecurity = () => {
         //   color: "negative",
         //   position: "top",
         //   message: e.message,
-        //   icon: "report_problem"
+        //   icon: "report_problem", iconColor: "red"
         // });
       });
   }
@@ -1185,7 +1199,8 @@ const updateState = () => {
           textColor: "white",
           position: "top",
           message: t("notify.updatedSuccessfully"),
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
 
         store.getMemberInfo().then(() => {
@@ -1194,10 +1209,12 @@ const updateState = () => {
         });
       } else {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: r.message,
-          icon: "report_problem"
+          icon: "report_problem",
+          iconColor: "red"
         });
       }
     })
@@ -1222,7 +1239,8 @@ const updateNewUserState = () => {
           textColor: "white",
           position: "top",
           message: "Updated successfully",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
 
         store.getMemberInfo().then(() => {
@@ -1231,10 +1249,12 @@ const updateNewUserState = () => {
         });
       } else {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: r.message,
-          icon: "report_problem"
+          icon: "report_problem",
+          iconColor: "red"
         });
       }
     })
@@ -1261,7 +1281,7 @@ const updateNewUserState = () => {
 //           textColor: "white",
 //           position: "top",
 //           message: "Updated successfully",
-//           icon: "check_circle_outline"
+//           icon: "check_circle_outline", iconColor: "green"
 //         });
 
 //         store.getMemberInfo().then(() => {
@@ -1273,7 +1293,7 @@ const updateNewUserState = () => {
 //           color: "negative",
 //           position: "top",
 //           message: r.message,
-//           icon: "report_problem"
+//           icon: "report_problem", iconColor: "red"
 //         });
 //       }
 //     })
@@ -1400,15 +1420,18 @@ const onCaptchaSubmit = () => {
           textColor: "white",
           position: "top",
           message: t("notify.emailVerificationSent"),
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
       } else {
         if (message) {
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: message,
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
         }
       }
@@ -1447,7 +1470,8 @@ const onPhoneCaptchaSubmit = () => {
           textColor: "white",
           position: "top",
           message: t("notify.smsSent"),
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
 
         updatePhoneInfo.codeId = res.data.codeId;
@@ -1510,17 +1534,20 @@ const submitUpdatePwd = () => {
             textColor: "white",
             position: "top",
             message: t("notify.newpasswordupdated"),
-            icon: "check_circle_outline"
+            icon: "check_circle_outline",
+            iconColor: "green"
           });
           // router.go("/account");
           resetChangePasswordInfo();
           changePasswordDialog.value = false;
         } else {
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: response.message,
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
         }
       })
@@ -1552,7 +1579,8 @@ const submitUpdateEmail = () => {
             textColor: "white",
             position: "top",
             message: "Email binded successfully",
-            icon: "check_circle_outline"
+            icon: "check_circle_outline",
+            iconColor: "green"
           });
           bindEmailDialog.value = false;
           formDetail.email = updateEmailInfo.email;
@@ -1563,10 +1591,12 @@ const submitUpdateEmail = () => {
           // }, 2000);
         } else {
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: response.message,
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
         }
       })
@@ -1600,7 +1630,8 @@ const sendPhoneDetails = () => {
             textColor: "white",
             position: "top",
             message: t("notify.phoneVerifySuccessful"),
-            icon: "check_circle_outline"
+            icon: "check_circle_outline",
+            iconColor: "green"
           });
           if (response.data) {
             $q.notify({
@@ -1608,7 +1639,8 @@ const sendPhoneDetails = () => {
               textColor: "white",
               position: "top",
               message: t("modal.appLoginBonus.claimBonus", { amount: response.data }),
-              icon: "check_circle_outline"
+              icon: "check_circle_outline",
+              iconColor: "green"
             });
           }
           verifyPhoneDialog.value = false;
@@ -1619,10 +1651,12 @@ const sendPhoneDetails = () => {
           // }, 2000);
         } else {
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: response.message,
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
         }
       })
@@ -1652,17 +1686,20 @@ const submitUpdateNewPwd = () => {
             textColor: "white",
             position: "top",
             message: t("notify.newpasswordupdated"),
-            icon: "check_circle_outline"
+            icon: "check_circle_outline",
+            iconColor: "green"
           });
           // router.go("/account");
           changeNewPasswordDialog.value = false;
           store.getMemberInfo();
         } else {
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: response.message,
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
         }
       })

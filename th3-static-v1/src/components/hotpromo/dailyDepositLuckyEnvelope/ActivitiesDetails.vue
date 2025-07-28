@@ -194,7 +194,8 @@ const claimBonus = () => {
         type: "positive",
         position: "top",
         message: `Claimed bonus amount: ${data}`,
-        icon: "check_circle_outline"
+        icon: "check_circle_outline",
+        iconColor: "green"
       });
 
       // initDailyDeposit();

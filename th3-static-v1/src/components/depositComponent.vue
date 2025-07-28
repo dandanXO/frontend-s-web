@@ -193,10 +193,12 @@ const router = useRouter();
 const checkNewUser = () => {
   if (store.realName == "" || store.realName == null) {
     $q.notify({
-      color: "negative",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: "Please fill in your personal details",
-      icon: "report_problem"
+      icon: "report_problem",
+      iconColor: "red"
     });
     router.push(`/account/profile`);
   }
@@ -455,10 +457,12 @@ async function confirmDeposit() {
             form.localAmount = d.data.suggestion;
           }
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: d.message,
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
 
           btnLoading.value = false;
@@ -592,19 +596,23 @@ async function pDepo(deposit) {
         }
       } else {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: res.message,
-          icon: "report_problem"
+          icon: "report_problem",
+          iconColor: "red"
         });
       }
     })
     .catch((error) => {
       $q.notify({
-        color: "negative",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: error.message,
-        icon: "report_problem"
+        icon: "report_problem",
+        iconColor: "red"
       });
     })
     .then(() => {

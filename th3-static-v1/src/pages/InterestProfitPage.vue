@@ -354,7 +354,8 @@ const showValidationErrors = () => {
       type: "negative",
       position: "top",
       message: t("interestProfit.storageTime_required"),
-      icon: "report_problem"
+      icon: "report_problem",
+      iconColor: "red"
     });
   }
   if (!interestProfitField.deposits) {
@@ -362,7 +363,8 @@ const showValidationErrors = () => {
       type: "negative",
       position: "top",
       message: t("interestProfit.deposit_required"),
-      icon: "report_problem"
+      icon: "report_problem",
+      iconColor: "red"
     });
   }
   if (!interestProfitField.odds) {
@@ -370,7 +372,8 @@ const showValidationErrors = () => {
       type: "negative",
       position: "top",
       message: t("interestProfit.rates_required"),
-      icon: "report_problem"
+      icon: "report_problem",
+      iconColor: "red"
     });
   }
 };
@@ -433,7 +436,8 @@ const submitDeposit = () => {
           type: "positive",
           position: "top",
           message: `${putData.placeAmount} deposited successfully`,
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
         isLoading.value = false;
         searchDepositRecord();
@@ -447,7 +451,7 @@ const submitDeposit = () => {
         //   type: "negative",
         //   position: "center",
         //   message: t(`error.${res.code}`),
-        //   icon: "report_problem"
+        //   icon: "report_problem", iconColor: "red"
         // });
 
         errorDialog.value = true;
@@ -531,7 +535,8 @@ const collectDeposit = (planOrderId) => {
           type: "positive",
           position: "top",
           message: `Collect successfully`,
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
         searchDepositRecord();
         isLoading.value = false;
@@ -760,10 +765,10 @@ onMounted(() => {
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
 
     &.active {
-      color: #21EF89;
+      color: #21ef89;
       &:before {
         content: "";
-        background-color: #21EF89;
+        background-color: #21ef89;
         position: absolute;
         bottom: -2px;
         width: 40%;

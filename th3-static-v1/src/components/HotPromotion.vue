@@ -311,7 +311,7 @@ export default defineComponent({
           //   color: "negative",
           //   position: "top",
           //   message: error.message,
-          //   icon: "report_problem"
+          //   icon: "report_problem", iconColor: "red"
           // });
         });
     };
@@ -342,7 +342,7 @@ export default defineComponent({
         //   color: "negative",
         //   position: "top",
         //   message: "ขีดสุด 3 ตัวเลข",
-        //   icon: "report_problem"
+        //   icon: "report_problem", iconColor: "red"
         // });
       } else {
         var user_id = store.id;
@@ -365,14 +365,15 @@ export default defineComponent({
                 textColor: "white",
                 position: "top",
                 message: "发送成功",
-                icon: "check_circle_outline"
+                icon: "check_circle_outline",
+                iconColor: "green"
               });
             } else {
               // $q.notify({
               //   color: "negative",
               //   position: "top",
               //   message: responseCode.message,
-              //   icon: "report_problem"
+              //   icon: "report_problem", iconColor: "red"
               // });
             }
           })
@@ -382,7 +383,7 @@ export default defineComponent({
             //   color: "negative",
             //   position: "top",
             //   message: error.message,
-            //   icon: "report_problem"
+            //   icon: "report_problem", iconColor: "red"
             // });
           });
       }

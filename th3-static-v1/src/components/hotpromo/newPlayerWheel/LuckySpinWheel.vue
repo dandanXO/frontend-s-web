@@ -198,10 +198,12 @@ const spinWheel = () => {
 
   if (remainingDraws.value <= 0) {
     $q.notify({
-      color: "negative",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: t("hotPromo.aviatorWheel.remainingDrawTimes") + `: 0`,
-      icon: "report_problem"
+      icon: "report_problem",
+      iconColor: "red"
     });
     return;
   }
@@ -258,7 +260,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 #remaning-draw-amt {
   font-size: 13px;
-  color: #FEC778;
+  color: #fec778;
   font-weight: bold;
 }
 .spin-wheel-container {
@@ -667,7 +669,7 @@ onMounted(() => {
   bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
-  background: url(img/purpleglow-btn.png)no-repeat center center;
+  background: url(img/purpleglow-btn.png) no-repeat center center;
   background-size: contain;
   padding: 8px 20px;
 }
@@ -686,7 +688,7 @@ onMounted(() => {
   position: relative;
   overflow: visible;
   border-radius: 12px;
-  background: url('img/modal-bg.png')no-repeat center center;
+  background: url("img/modal-bg.png") no-repeat center center;
   background-size: contain;
   min-height: 500px;
 
@@ -735,7 +737,7 @@ onMounted(() => {
     // font-size: 16px;
     // font-weight: bold;
     // text-align: center;
-    color: #B573FF;
+    color: #b573ff;
     text-shadow: 0.57px 0.57px #00000040;
     font-family: "Manrope";
     font-weight: 700;
@@ -766,7 +768,7 @@ onMounted(() => {
     left: 0;
     right: 0;
     margin: auto;
-    color: #CF3AFF;
+    color: #cf3aff;
     display: flex;
     justify-content: center;
   }
@@ -780,22 +782,23 @@ onMounted(() => {
     padding: 8px;
   }
   border-collapse: collapse !important;
-  tr:nth-child(2),tr:nth-child(4) {
+  tr:nth-child(2),
+  tr:nth-child(4) {
     td:nth-child(2) {
       p {
-        color: #FFC554;
+        color: #ffc554;
       }
     }
   }
   tr:nth-child(3) {
     td:nth-child(2) {
       p {
-        color: #6D8FF5;
+        color: #6d8ff5;
       }
     }
   }
   th {
-    background: linear-gradient(rgba(122,1,288, 100%), rgba(122,1,288, 85%)) !important;
+    background: linear-gradient(rgba(122, 1, 288, 100%), rgba(122, 1, 288, 85%)) !important;
   }
 
   td {

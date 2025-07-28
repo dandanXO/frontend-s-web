@@ -187,7 +187,7 @@
         </q-btn-dropdown>
       </div>
       <div class="profile-wrapper" v-else>
-        <q-btn no-caps unelevated class="btn-primary login-btn" @click="goLogin">{{ $t("header.login") }}</q-btn>
+        <q-btn no-caps unelevated class="btn-primary btn-login" @click="goLogin">{{ $t("header.login") }}</q-btn>
         <q-btn no-caps unelevated class="btn-register" @click="router.push('/register')">
           {{ $t("header.register") }}
         </q-btn>
@@ -1310,7 +1310,7 @@ onUnmounted(() => {
   }
 }
 
-.login-btn {
+.btn-login {
   background: url('../assets/images/auth/login-btn-bg.png') center center no-repeat;
   background-size: 100% 100%;
 }

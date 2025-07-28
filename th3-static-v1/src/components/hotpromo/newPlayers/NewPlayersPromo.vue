@@ -40,7 +40,8 @@ const collectclaim = (promoCode) => {
           textColor: "white",
           position: "top",
           message: "Collect successfully",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
 
         showPrizePopup.value = true;

@@ -856,7 +856,8 @@ const submitWithdraw = async () => {
             textColor: "white",
             position: "top",
             message: t("notify.withdrewSuccessfully"),
-            icon: "check_circle_outline"
+            icon: "check_circle_outline",
+            iconColor: "green"
           });
           getWithdrawalMethods();
           store.getBalance();
@@ -881,10 +882,12 @@ const submitWithdraw = async () => {
           errorDialog.value = true;
         } else {
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: response.message,
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
         }
       })
@@ -916,7 +919,7 @@ const submitWithdraw = async () => {
 //             textColor: "white",
 //             position: "top",
 //             message: t("lang.msg_submit_successful"),
-//             icon: "check_circle_outline"
+//             icon: "check_circle_outline", iconColor: "green"
 //           });
 //           getWithdrawalMethods();
 
@@ -937,7 +940,7 @@ const submitWithdraw = async () => {
 //             color: "negative",
 //             position: "top",
 //             message: response.message,
-//             icon: "report_problem"
+//             icon: "report_problem", iconColor: "red"
 //           });
 //         }
 //       })
@@ -947,7 +950,7 @@ const submitWithdraw = async () => {
 //         //   color: "negative",
 //         //   position: "top",
 //         //   message: response.message,
-//         //   icon: "report_problem"
+//         //   icon: "report_problem", iconColor: "red"
 //         // });
 //       });
 //     $q.loading.hide();
@@ -1045,7 +1048,7 @@ const getWithdrawalMethods = () => {
         //   color: "negative",
         //   position: "top",
         //   message: response.message,
-        //   icon: "report_problem"
+        //   icon: "report_problem", iconColor: "red"
         // });
       }
     })

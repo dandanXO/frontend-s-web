@@ -31,11 +31,10 @@
   <div v-if="isInvite" class="list-item" @click="openMail()">
     <img class="btn-icon" id="mail-icon" :src="require(`../assets/images/auth/mail-new.png`)" />
   </div>
-  <div v-if="!isInvite" class="list-item" @click="openCharity()">
+  <!-- <div v-if="!isInvite" class="list-item" @click="openCharity()">
     <img v-if="isLogin" class="btn-icon" id="charity-icon" :src="require(`../assets/images/auth/charity-new.png`)" />
     <img v-else class="btn-icon" id="charity-icon" :src="require(`../assets/images/auth/charity-new-color.png`)" />
-    <!-- <div>Charity</div> -->
-  </div>
+  </div> -->
   <!-- <div class="list-item" v-if="!isAndroid() && !ui.hideDownload && !isInvite" @click="downloadApp()">
     <img class="btn-icon" id="download-icon"
       :src="require(`../assets/images/auth/app-new.png`)" />

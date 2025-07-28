@@ -151,7 +151,8 @@ const updateNewGuestState = () => {
           textColor: "white",
           position: "top",
           message: "Updated successfully",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
 
         if (isAndroid() || isInPwa() || store.isFromGooglePackage) {
@@ -171,10 +172,12 @@ const updateNewGuestState = () => {
         emits("closeGuestKYCDialog");
       } else {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: r.message,
-          icon: "report_problem"
+          icon: "report_problem",
+          iconColor: "red"
         });
       }
     })

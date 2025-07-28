@@ -428,7 +428,7 @@ export default defineComponent({
           //   color: "negative",
           //   position: "top",
           //   message: ret.message,
-          //   icon: "report_problem"
+          //   icon: "report_problem", iconColor: "red"
           // });
         }
         // banners.value = response.data;
@@ -442,10 +442,11 @@ export default defineComponent({
       // debugger;
       if (!store.token) {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: t("notify.plsLoginToContinue"),
-          icon: "report_problem"
+          icon: "report_problem", iconColor: "red"
         });
         router.push(`/login`);
       } else {
@@ -632,16 +633,17 @@ export default defineComponent({
 textColor: "white",
                     position: "top",
                     message: "Success.",
-                    icon: "check_circle_outline"
+                    icon: "check_circle_outline", iconColor: "green"
                   });
                 }
               })
               .catch((e) => {
                 $q.notify({
-                  color: "negative",
+                  color: "dark",
+                  textColor: "white",
                   position: "top",
                   message: e.message,
-                  icon: "report_problem"
+                  icon: "report_problem", iconColor: "red"
                 });
               });
           }

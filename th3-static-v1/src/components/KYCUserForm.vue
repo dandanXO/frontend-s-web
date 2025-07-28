@@ -147,7 +147,8 @@ const updateNewUserState = () => {
       textColor: "white",
       position: "top",
       message: "Updated successfully",
-      icon: "check_circle_outline"
+      icon: "check_circle_outline",
+      iconColor: "green"
     });
     emits("closeUserKYCDialog", updateInfo);
     return;
@@ -162,15 +163,18 @@ const updateNewUserState = () => {
           textColor: "white",
           position: "top",
           message: "Updated successfully",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
         emits("closeUserKYCDialog", updateInfo);
       } else {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: r.message,
-          icon: "report_problem"
+          icon: "report_problem",
+          iconColor: "red"
         });
       }
     })

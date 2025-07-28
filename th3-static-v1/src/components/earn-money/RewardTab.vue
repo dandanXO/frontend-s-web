@@ -599,6 +599,8 @@ const fallbackCopyTextToClipboard = (text) => {
     color: "dark",
     textColor: "white",
     position: "top",
+    icon: "check_circle_outline",
+    iconColor: "green",
     timeout: 2000
   });
 };
@@ -625,6 +627,8 @@ const copyHrefLink = async () => {
           color: "dark",
           textColor: "white",
           position: "top",
+          icon: "check_circle_outline",
+          iconColor: "green",
           timeout: 2000
         });
       })

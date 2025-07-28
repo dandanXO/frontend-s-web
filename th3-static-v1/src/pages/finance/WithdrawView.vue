@@ -297,16 +297,17 @@ export default defineComponent({
 textColor: "white",
               position: "top",
               message: "提交成功",
-              icon: "check_circle_outline"
+              icon: "check_circle_outline", iconColor: "green"
             });
             getWithdrawalMethods();
 
           } else {
             $q.notify({
-              color: "negative",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: response.message,
-              icon: "report_problem"
+              icon: "report_problem", iconColor: "red"
             });
           }
         }).catch((error) => {
@@ -315,7 +316,7 @@ textColor: "white",
           //   color: "negative",
           //   position: "top",
           //   message: response.message,
-          //   icon: "report_problem"
+          //   icon: "report_problem", iconColor: "red"
           // });
         });
         $q.loading.hide();
@@ -389,10 +390,11 @@ textColor: "white",
           }
         } else {
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: response.message,
-            icon: "report_problem"
+            icon: "report_problem", iconColor: "red"
           });
         }
       });

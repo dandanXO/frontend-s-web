@@ -214,7 +214,8 @@ const takeScreenshot = async () => {
           textColor: "white",
           position: "top",
           message: "QR Code image saved to photo gallery.",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
       })
       .catch((err) => console.error("Screenshot error:", err));
@@ -314,6 +315,8 @@ const fallbackCopyTextToClipboard = (text) => {
     color: "dark",
     textColor: "white",
     position: "top",
+    icon: "check_circle_outline",
+    iconColor: "green",
     timeout: 2000
   });
 };
@@ -340,6 +343,8 @@ const copyHrefLink = async () => {
           color: "dark",
           textColor: "white",
           position: "top",
+          icon: "check_circle_outline",
+          iconColor: "green",
           timeout: 2000
         });
       })

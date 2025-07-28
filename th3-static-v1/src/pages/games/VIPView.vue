@@ -773,10 +773,12 @@ const checkMonthlyVipReceive = () => {
     .catch((err) => {
       console.log(err.message);
       $q.notify({
-        color: "negative",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: err.message,
-        icon: "report_problem"
+        icon: "report_problem",
+        iconColor: "red"
       });
     });
 };
@@ -791,7 +793,8 @@ const getMonthlyVip = () => {
           textColor: "white",
           position: "top",
           message: "Vip monthly claimed successfully",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
       }
     })
@@ -801,7 +804,7 @@ const getMonthlyVip = () => {
       //   color: "negative",
       //   position: "top",
       //   message: err.message,
-      //   icon: "report_problem"
+      //   icon: "report_problem", iconColor: "red"
       // });
     });
 };

@@ -241,7 +241,8 @@ export default defineComponent({
               textColor: "white",
               position: "top",
               message: "已经确认到账",
-              icon: "check_circle_outline"
+              icon: "check_circle_outline",
+              iconColor: "green"
             });
             removeSessionKeys("/session/member/withdraw");
           }
@@ -278,7 +279,8 @@ export default defineComponent({
           textColor: "white",
           position: "top",
           message: "存款编码复制成功！",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
       }, 100);
     };
@@ -308,10 +310,12 @@ export default defineComponent({
             }
           } else {
             $q.notify({
-              color: "negative",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: "已有3个正在催收催单。",
-              icon: "report_problem"
+              icon: "report_problem",
+              iconColor: "red"
             });
           }
         }
@@ -327,10 +331,12 @@ export default defineComponent({
       if (!reminderForm.photos) {
         // Display an error message here
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "bottom",
           message: "请上传图片",
-          icon: "report_problem"
+          icon: "report_problem",
+          iconColor: "red"
         });
         return;
       }
@@ -344,7 +350,8 @@ export default defineComponent({
             textColor: "white",
             position: "top",
             message: "催单提交成功！",
-            icon: "check_circle_outline"
+            icon: "check_circle_outline",
+            iconColor: "green"
           });
           reminderDialog.value = false;
           reminderForm.value = {};

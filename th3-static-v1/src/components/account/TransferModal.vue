@@ -155,7 +155,8 @@ const submitTransfer = async () => {
         type: "positive",
         position: "top",
         message: `Successfully transferred`,
-        icon: "check_circle_outline"
+        icon: "check_circle_outline",
+        iconColor: "green"
       });
 
       // formDetail.value.uplineId = undefined;

@@ -294,7 +294,7 @@ export default defineComponent({
 textColor: "white",
                 position: "top",
                 message: "发送成功",
-                icon: "check_circle_outline"
+                icon: "check_circle_outline", iconColor: "green"
               });
               mailboxState.mailboxList.write.title = "";
               mailboxState.mailboxList.write.content = "";
@@ -305,7 +305,7 @@ textColor: "white",
               //   color: "negative",
               //   position: "top",
               //   message: response.message,
-              //   icon: "report_problem"
+              //   icon: "report_problem", iconColor: "red"
               // });
             }
           })

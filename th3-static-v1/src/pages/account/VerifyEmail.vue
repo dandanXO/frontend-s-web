@@ -150,10 +150,11 @@ export default defineComponent({
           })
           .catch((e) => {
             $q.notify({
-              color: "negative",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: e.message,
-              icon: "report_problem"
+              icon: "report_problem", iconColor: "red"
             });
           });
     };
@@ -191,7 +192,7 @@ export default defineComponent({
 textColor: "white",
             position: "top",
             message: "OTP验证码已发送至您的邮箱",
-            icon: "check_circle_outline"
+            icon: "check_circle_outline", iconColor: "green"
           });
           canEdit.value = true;
           verificationDetails.memberInfo.codeId = ret.data.codeId;
@@ -202,7 +203,7 @@ textColor: "white",
           //   color: "negative",
           //   position: "top",
           //   message: ret.message,
-          //   icon: "report_problem"
+          //   icon: "report_problem", iconColor: "red"
           // });
           isEmailSending.value = false;
           getCode();
@@ -230,7 +231,7 @@ textColor: "white",
 textColor: "white",
               position: "top",
               message: "验证成功",
-              icon: "check_circle_outline"
+              icon: "check_circle_outline", iconColor: "green"
             });
             store.emailVerified = true;
             store.email= formDetail.email;
@@ -238,10 +239,11 @@ textColor: "white",
           }
         }).catch((e) => {
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: e.message,
-            icon: "report_problem"
+            icon: "report_problem", iconColor: "red"
           });
         });
       }
@@ -290,10 +292,11 @@ textColor: "white",
     const onCaptchaSubmit = () => {
       if (!formDetail.email) {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "邮箱不能为空",
-          icon: "report_problem"
+          icon: "report_problem", iconColor: "red"
         });
         getCode();
         return;

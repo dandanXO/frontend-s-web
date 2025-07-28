@@ -1,10 +1,7 @@
 <template>
   <q-page>
     <div class="loading-div" v-if="isLoading">
-      <q-spinner-hourglass
-          color="deep-orange"
-          size="8em"
-      />
+      <q-spinner-hourglass color="deep-orange" size="8em" />
     </div>
     <div class="pageitem">
       <div class="topbar">
@@ -22,47 +19,56 @@
         </div>
         <div class="search">
           <q-form @submit="searchList">
-            <q-input color="white" bg-color="brand" filled class="q-ma-md" standout v-model="gamePage.searchKey"
-                     label="请输入关键字">
+            <q-input
+              color="white"
+              bg-color="brand"
+              filled
+              class="q-ma-md"
+              standout
+              v-model="gamePage.searchKey"
+              label="请输入关键字"
+            >
               <template v-slot:prepend>
-                <q-icon color="white" name="search" @click="gamePage.searchKey = ''" class="cursor-pointer"/>
+                <q-icon color="white" name="search" @click="gamePage.searchKey = ''" class="cursor-pointer" />
               </template>
               <template v-slot:append>
-                <q-btn type="submit" @click="searchList" label="搜索" color="brightbtn"/>
+                <q-btn type="submit" @click="searchList" label="搜索" color="brightbtn" />
               </template>
             </q-input>
           </q-form>
         </div>
       </div>
-      <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 110px);" v-if="!isLoading">
-        <div class="grid" style="padding-bottom: 20px;">
+      <q-scroll-area ref="scrollSlotRef" style="height: calc(100% - 110px)" v-if="!isLoading">
+        <div class="grid" style="padding-bottom: 20px">
           <div
-              v-for="(game, index) in gamePage.gameList"
-              :key="index"
-              :data-id="index"
-              v-intersection="onIntersection"
-              @click="openGame(game.name, game.code, selectedCat.status)"
-              style="height: 140px;"
+            v-for="(game, index) in gamePage.gameList"
+            :key="index"
+            :data-id="index"
+            v-intersection="onIntersection"
+            @click="openGame(game.name, game.code, selectedCat.status)"
+            style="height: 140px"
           >
-
             <transition name="in-view">
               <q-list class="q-col-gutter-none">
                 <q-img
-                    loading="lazy"
-                    :src="game.icon"
-                    :placeholder-src="game.default"
-                    fit="cover"
-                    height="100px"
-                    spinner-color="white"
-                    position="50% 20%"
-                    style=" border-radius: 10px; overflow: hidden"
-                    :imgClass="selectedCat.code === 'PG' ? 'zoomin' : ''"
+                  loading="lazy"
+                  :src="game.icon"
+                  :placeholder-src="game.default"
+                  fit="cover"
+                  height="100px"
+                  spinner-color="white"
+                  position="50% 20%"
+                  style="border-radius: 10px; overflow: hidden"
+                  :imgClass="selectedCat.code === 'PG' ? 'zoomin' : ''"
                 >
                   <template v-slot:loading>
-                    <img :src="game.default" style="width: 100%; height: 100px; border-radius: 15px; overflow:hidden;">
+                    <img
+                      :src="game.default"
+                      style="width: 100%; height: 100px; border-radius: 15px; overflow: hidden"
+                    />
                   </template>
                 </q-img>
-                <div class="slot-name"> {{ game.name }}</div>
+                <div class="slot-name">{{ game.name }}</div>
               </q-list>
             </transition>
             <!-- <q-img
@@ -78,11 +84,10 @@
               </template>
             </q-img> -->
             <!-- <img :loading="'lazy'" :class="selectedPlat.code === 'PG' ? 'zoomin' : ''" :src="game.icon" v-bind:alt="game.default" > -->
-
           </div>
         </div>
-        <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop"/>
-        <q-scroll-observer @scroll="scrolling"/>
+        <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
+        <q-scroll-observer @scroll="scrolling" />
       </q-scroll-area>
     </div>
     <GameModal ref="slotsGame"></GameModal>
@@ -179,7 +184,7 @@ export default defineComponent({
         //   color: "negative",
         //   position: "top",
         //   message: "Loading failed",
-        //   icon: "report_problem"
+        //   icon: "report_problem", iconColor: "red"
         // });
       })
 
@@ -376,7 +381,7 @@ export default defineComponent({
       grid-template-columns: repeat(3, 1fr);
 
       .q-btn {
-        font-size: .7rem;
+        font-size: 0.7rem;
       }
 
       .plat-item {
@@ -452,7 +457,6 @@ export default defineComponent({
       word-break: break-all;
     }
   }
-
 }
 
 .loading-div {

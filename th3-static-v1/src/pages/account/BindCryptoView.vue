@@ -438,10 +438,12 @@ const loadBankCards = () => {
   store.getMemberInfo().then(() => {
     if (!store.realName) {
       $q.notify({
-        color: "negative",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: "Please Complete your KYC.",
-        icon: "report_problem"
+        icon: "report_problem",
+        iconColor: "red"
       });
       router.push("/account/profile");
     } else {
@@ -487,10 +489,12 @@ const submitBankCard = () => {
   ) {
     if (store.isEnableBankCardOTP && (!isOtpSent.value || !bankCardInfo.telephone)) {
       $q.notify({
-        color: "negative",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: t("bankCard.clickAndEnterPhoneCode"),
-        icon: "report_problem"
+        icon: "report_problem",
+        iconColor: "red"
       });
       return;
     } else {
@@ -510,7 +514,8 @@ const submitBankCard = () => {
               textColor: "white",
               position: "top",
               message: t("notify.cryptoAccountAddedSuccessfully"),
-              icon: "check_circle_outline"
+              icon: "check_circle_outline",
+              iconColor: "green"
             });
             bankCardInfo.cardNumber = "";
             bankFormRef.value.reset();
@@ -585,7 +590,7 @@ onActivated(() => {
         display: inline-block;
         font-size: 0.95rem;
         // color: #98a6b4;
-        
+
         color: #3a3a3a;
         font-weight: bold;
 

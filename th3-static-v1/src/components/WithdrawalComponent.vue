@@ -254,10 +254,12 @@ const getWithdrawalMethods = () => {
       }
     } else {
       $q.notify({
-        color: "negative",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: response.message,
-        icon: "report_problem"
+        icon: "report_problem",
+        iconColor: "red"
       });
     }
   });
@@ -393,7 +395,8 @@ const submitWithdraw = async () => {
             textColor: "white",
             position: "top",
             message: "Withdrawal Submit Succeed",
-            icon: "check_circle_outline"
+            icon: "check_circle_outline",
+            iconColor: "green"
           });
           // props.loadCards();
           refreshBalance();
@@ -433,7 +436,8 @@ const withdrawGo = async () => {
           textColor: "white",
           position: "top",
           message: "Withdrawal Submit Succeed",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
 
         refreshBalance();
@@ -442,10 +446,12 @@ const withdrawGo = async () => {
         emits("closeWithdraw");
       } else {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: response.message,
-          icon: "report_problem"
+          icon: "report_problem",
+          iconColor: "red"
         });
       }
     })

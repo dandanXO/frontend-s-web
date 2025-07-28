@@ -427,10 +427,12 @@ const handleSubmit = () => {
   console.log(form.value);
   if (form.value.startDate < "2024-07-10" || form.value.endDate < "2024-07-10") {
     $q.notify({
-      color: "negative",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: t("error.15011"),
-      icon: "report_problem"
+      icon: "report_problem",
+      iconColor: "red"
     });
     return;
   }

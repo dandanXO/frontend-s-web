@@ -158,26 +158,26 @@
         <a @click="goRegister" class="brown">{{ $t("btn.register") }}</a>
       </div>
 
-      <div class="google-login-wrapper">
-        <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.svg" />
-        <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />
-        <template v-if="isAndroid()">
-          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">
-            <div class="google-btn">
-              <img width="24px" src="../assets/images/index/google-icon.svg" />
-              <div>{{ $t("btn.signinWithGoogle") }}</div>
-            </div>
-          </q-btn>
-        </template>
-        <template v-else>
-          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">
-            <div class="google-btn">
-              <img width="24px" src="../assets/images/index/google-icon.svg" />
-              <div>{{ $t("btn.signinWithGoogle") }}</div>
-            </div>
-          </q-btn>
-        </template>
-      </div>
+<!--      <div class="google-login-wrapper">-->
+<!--        <img v-if="languageVal === 'en'" style="width: 100%" src="../assets/images/index/logindirectly-en.svg" />-->
+<!--        <img v-else style="width: 100%" src="../assets/images/index/logindirectly-ur.svg" />-->
+<!--        <template v-if="isAndroid()">-->
+<!--          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onCapacitorGoogleSignin">-->
+<!--            <div class="google-btn">-->
+<!--              <img width="24px" src="../assets/images/index/google-icon.svg" />-->
+<!--              <div>{{ $t("btn.signinWithGoogle") }}</div>-->
+<!--            </div>-->
+<!--          </q-btn>-->
+<!--        </template>-->
+<!--        <template v-else>-->
+<!--          <q-btn no-caps unelevated class="btn-secondary btn-secondary__full" @click="onClickGoogleSignin">-->
+<!--            <div class="google-btn">-->
+<!--              <img width="24px" src="../assets/images/index/google-icon.svg" />-->
+<!--              <div>{{ $t("btn.signinWithGoogle") }}</div>-->
+<!--            </div>-->
+<!--          </q-btn>-->
+<!--        </template>-->
+<!--      </div>-->
     </div>
 
     <div class="is-domain bottom-btn-primary">
@@ -348,7 +348,7 @@ export default defineComponent({
       //       color: "negative",
       //       position: "top",
       //       message: e.message,
-      //       icon: "report_problem"
+      //       icon: "report_problem", iconColor: "red"
       //     });
       //   });
     };
@@ -393,10 +393,12 @@ export default defineComponent({
     const sendOtpSms = () => {
       if (!phoneLoginForm.phoneNumber) {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "手机号码不能为空",
-          icon: "report_problem"
+          icon: "report_problem",
+          iconColor: "red"
         });
         return;
       }
@@ -483,7 +485,8 @@ export default defineComponent({
                   textColor: "white",
                   position: "top",
                   message: "Google login successfully",
-                  icon: "check_circle_outline"
+                  icon: "check_circle_outline",
+                  iconColor: "green"
                 });
 
                 if (res.data?.isFirstTime) {
@@ -497,10 +500,12 @@ export default defineComponent({
                 }
               } else {
                 $q.notify({
-                  color: "negative",
+                  color: "dark",
+                  textColor: "white",
                   position: "top",
                   message: res.message,
-                  icon: "report_problem"
+                  icon: "report_problem",
+                  iconColor: "red"
                 });
               }
               $q.loading.hide();
@@ -550,7 +555,8 @@ export default defineComponent({
                     textColor: "white",
                     position: "top",
                     message: "Google login successfully",
-                    icon: "check_circle_outline"
+                    icon: "check_circle_outline",
+                    iconColor: "green"
                   });
 
                   if (res.data?.isFirstTime) {
@@ -564,10 +570,12 @@ export default defineComponent({
                   }
                 } else {
                   $q.notify({
-                    color: "negative",
+                    color: "dark",
+                    textColor: "white",
                     position: "top",
                     message: res.message,
-                    icon: "report_problem"
+                    icon: "report_problem",
+                    iconColor: "red"
                   });
                 }
                 $q.loading.hide();
@@ -742,7 +750,8 @@ export default defineComponent({
                 textColor: "white",
                 position: "top",
                 message: "Quick registered successfully",
-                icon: "check_circle_outline"
+                icon: "check_circle_outline",
+                iconColor: "green"
               });
 
               //ADJUST TRACKEVENT.
@@ -768,15 +777,18 @@ export default defineComponent({
                 color: "warning",
                 position: "top",
                 message: "Please login with password to continue",
-                icon: "report_problem"
+                icon: "report_problem",
+                iconColor: "red"
               });
               router.push("/login");
             } else {
               $q.notify({
-                color: "negative",
+                color: "dark",
+                textColor: "white",
                 position: "top",
                 message: res.message,
-                icon: "report_problem"
+                icon: "report_problem",
+                iconColor: "red"
               });
             }
             $q.loading.hide();
