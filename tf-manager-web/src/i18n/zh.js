@@ -47,6 +47,11 @@ export default {
       OFFICIAL: '官网',
       PACKAGE: '包网',
     },
+    mode: {
+      mode1: '模式一',
+      mode2: '模式二',
+      mode3: '模式三',
+    },
   },
   types: {
     NORMAL: '正常',

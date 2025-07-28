@@ -422,14 +422,14 @@
                 icon-class="monitor"
                 style="height: 16px;width: 16px;"
               />
-              {{ t('fields.timeType') }}
+              {{ parseInt(site.id) === 30 ? t('fields.mode') : t('fields.timeType') }}
             </div>
           </template>
           <el-tag
             size="mini"
             type="success"
           >
-            {{ t('affiliate.timeType.' + memberDetail.timeType) }}
+            {{ parseInt(site.id) === 30 ? uiControl.timeType.filter(t => t.value === memberDetail.timeType)[0].displayName : t('affiliate.timeType.' + memberDetail.timeType) }}
           </el-tag>
           <el-tag v-if="memberDetail.timeType === null" size="mini" type="info">
             -
@@ -2637,6 +2637,14 @@ onMounted(async () => {
   loading.loginInfo = false
   loading.affiliateInfo = false
   loading.superiorAffiliateInfo = false
+
+  if (parseInt(site.id) === 30) {
+    uiControl.timeType = [
+      { key: 1, displayName: t('affiliate.mode.mode1'), value: 'MONTHLY' },
+      { key: 2, displayName: t('affiliate.mode.mode2'), value: 'NONE' },
+      { key: 3, displayName: t('affiliate.mode.mode3'), value: 'WEEKLY' },
+    ]
+  }
 })
 </script>
 

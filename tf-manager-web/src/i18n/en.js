@@ -48,6 +48,11 @@ export default {
       OFFICIAL: 'Official',
       PACKAGE: 'Package',
     },
+    mode: {
+      mode1: 'MODE 1',
+      mode2: 'MODE 2',
+      mode3: 'MODE 3',
+    },
   },
   types: {
     NORMAL: 'NORMAL',
