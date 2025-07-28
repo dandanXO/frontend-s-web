@@ -41,7 +41,7 @@
       <el-table-column prop="platformName" label="平台" />
       <el-table-column prop="sportName" label="球种" />
       <el-table-column prop="marketName" label="盘口" />
-      <el-table-column prop="timestamp" label="上次同步" />
+      <el-table-column label="上次同步" :formatter="formatTimestampColumn" />
     </el-table>
   </div>
 </template>
@@ -52,6 +52,10 @@ import { ElMessage } from "element-plus";
 import { getAllSportPlatform, getAllSportDataSyncSuccessTimes, getAllTFMarketType, getAllTFSportType } from "@/api/sport-sync-time";
 
 const pageRefreshTime = ref(null);
+
+const formatTimestampColumn = (row) => {
+  return formatDate(row.timestamp);
+};
 
 function formatDate(date) {
   const d = new Date(date);
