@@ -153,15 +153,18 @@ const copy = (val) => {
         color: "position",
         position: "top",
         message: `${val} copied to clipboard`,
-        icon: "check_circle_outline"
+        icon: "check_circle_outline",
+        iconColor: "green"
       });
     })
     .catch(() => {
       $q.notify({
-        color: "negative",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: "Failed",
-        icon: "report_problem"
+        icon: "report_problem",
+        iconColor: "red"
       });
     });
 };
@@ -187,7 +190,8 @@ const unbind = () => {
         textColor: "white",
         position: "top",
         message: "Unbind succeed",
-        icon: "check_circle_outline"
+        icon: "check_circle_outline",
+        iconColor: "green"
       });
       loadCards();
     }

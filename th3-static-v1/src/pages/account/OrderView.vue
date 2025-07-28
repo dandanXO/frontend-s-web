@@ -254,7 +254,8 @@ const copyText = (text) => {
       textColor: "white",
       position: "top",
       message: "Serial Number Copied to clipboard.",
-      icon: "check_circle_outline"
+      icon: "check_circle_outline",
+      iconColor: "green"
     });
   }, 100);
 };

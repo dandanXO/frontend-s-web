@@ -348,7 +348,7 @@ export default defineComponent({
       //       color: "negative",
       //       position: "top",
       //       message: e.message,
-      //       icon: "report_problem"
+      //       icon: "report_problem", iconColor: "red"
       //     });
       //   });
     };
@@ -393,10 +393,12 @@ export default defineComponent({
     const sendOtpSms = () => {
       if (!phoneLoginForm.phoneNumber) {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "手机号码不能为空",
-          icon: "report_problem"
+          icon: "report_problem",
+          iconColor: "red"
         });
         return;
       }
@@ -483,7 +485,8 @@ export default defineComponent({
                   textColor: "white",
                   position: "top",
                   message: "Google login successfully",
-                  icon: "check_circle_outline"
+                  icon: "check_circle_outline",
+                  iconColor: "green"
                 });
 
                 if (res.data?.isFirstTime) {
@@ -497,10 +500,12 @@ export default defineComponent({
                 }
               } else {
                 $q.notify({
-                  color: "negative",
+                  color: "dark",
+                  textColor: "white",
                   position: "top",
                   message: res.message,
-                  icon: "report_problem"
+                  icon: "report_problem",
+                  iconColor: "red"
                 });
               }
               $q.loading.hide();
@@ -550,7 +555,8 @@ export default defineComponent({
                     textColor: "white",
                     position: "top",
                     message: "Google login successfully",
-                    icon: "check_circle_outline"
+                    icon: "check_circle_outline",
+                    iconColor: "green"
                   });
 
                   if (res.data?.isFirstTime) {
@@ -564,10 +570,12 @@ export default defineComponent({
                   }
                 } else {
                   $q.notify({
-                    color: "negative",
+                    color: "dark",
+                    textColor: "white",
                     position: "top",
                     message: res.message,
-                    icon: "report_problem"
+                    icon: "report_problem",
+                    iconColor: "red"
                   });
                 }
                 $q.loading.hide();
@@ -742,7 +750,8 @@ export default defineComponent({
                 textColor: "white",
                 position: "top",
                 message: "Quick registered successfully",
-                icon: "check_circle_outline"
+                icon: "check_circle_outline",
+                iconColor: "green"
               });
 
               //ADJUST TRACKEVENT.
@@ -768,15 +777,18 @@ export default defineComponent({
                 color: "warning",
                 position: "top",
                 message: "Please login with password to continue",
-                icon: "report_problem"
+                icon: "report_problem",
+                iconColor: "red"
               });
               router.push("/login");
             } else {
               $q.notify({
-                color: "negative",
+                color: "dark",
+                textColor: "white",
                 position: "top",
                 message: res.message,
-                icon: "report_problem"
+                icon: "report_problem",
+                iconColor: "red"
               });
             }
             $q.loading.hide();

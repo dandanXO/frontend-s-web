@@ -158,15 +158,18 @@ const copy = (val) => {
         color: "position",
         position: "top",
         message: `${val} 已复制`,
-        icon: "check_circle_outline"
+        icon: "check_circle_outline",
+        iconColor: "green"
       });
     })
     .catch(() => {
       $q.notify({
-        color: "negative",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: "复制失败",
-        icon: "report_problem"
+        icon: "report_problem",
+        iconColor: "red"
       });
     });
 };
@@ -203,7 +206,8 @@ const unbindBankCard = () => {
         textColor: "white",
         position: "top",
         message: "Untie successfully",
-        icon: "check_circle_outline"
+        icon: "check_circle_outline",
+        iconColor: "green"
       });
 
       isUnbindModalOpen.value = false;

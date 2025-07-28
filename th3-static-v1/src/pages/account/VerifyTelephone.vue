@@ -148,10 +148,11 @@ export default defineComponent({
           })
           .catch((e) => {
             $q.notify({
-              color: "negative",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: e.message,
-              icon: "report_problem"
+              icon: "report_problem", iconColor: "red"
             });
           });
     };
@@ -195,7 +196,7 @@ export default defineComponent({
 textColor: "white",
               position: "top",
               message: "验证成功",
-              icon: "check_circle_outline"
+              icon: "check_circle_outline", iconColor: "green"
             });
             store.phoneVerified = true;
             store.phone = formDetails.phone;
@@ -203,10 +204,11 @@ textColor: "white",
           }
         }).catch((e) => {
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: e.message,
-            icon: "report_problem"
+            icon: "report_problem", iconColor: "red"
           });
         });
       }
@@ -254,10 +256,11 @@ textColor: "white",
     const onCaptchaSubmit = () => {
       if (!formDetails.phone) {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: "手机号码不能为空",
-          icon: "report_problem"
+          icon: "report_problem", iconColor: "red"
         });
         getCode();
         return;

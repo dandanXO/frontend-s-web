@@ -146,11 +146,11 @@
         </q-label>
         <div class="selected-bank" @click="onOpenBankModal">
           <div class="bank-icon-text" v-if="confirmedBankSelection">
-           <img :src="imgURL + confirmedBankSelection.bankIcon" alt="" />
+            <img :src="imgURL + confirmedBankSelection.bankIcon" alt="" />
             <div>{{ confirmedBankSelection.name }}</div>
           </div>
           <div v-else>
-            {{ $t('bankCard.selectBank') }}
+            {{ $t("bankCard.selectBank") }}
           </div>
           <div class="custom-drop"><img src="../../assets/images/account/downarrow.svg" /></div>
         </div>
@@ -347,16 +347,32 @@
       <!-- <q-btn class="common-large-btn" label="提交" width="100%" style="width: 100%" @click="submitBankCard()" /> -->
     </div>
   </q-page>
-  
+
   <q-dialog class="flex-end" v-model="isBankSelectionModal" persistent>
     <q-card class="bank-selection-card">
       <div class="top-bar">
         <div class="pagination">
-          <q-btn class="page-btn" dense flat round icon="chevron_left" @click="goToPrevPage" :disable="currentPage === 1" />
+          <q-btn
+            class="page-btn"
+            dense
+            flat
+            round
+            icon="chevron_left"
+            @click="goToPrevPage"
+            :disable="currentPage === 1"
+          />
           <span class="q-mx-sm">{{ currentPage }}/{{ totalPages }}</span>
-          <q-btn class="page-btn" dense flat round icon="chevron_right" @click="goToNextPage" :disable="currentPage === totalPages" />
+          <q-btn
+            class="page-btn"
+            dense
+            flat
+            round
+            icon="chevron_right"
+            @click="goToNextPage"
+            :disable="currentPage === totalPages"
+          />
         </div>
-        
+
         <q-icon class="close-btn" name="close" v-close-popup></q-icon>
       </div>
       <div class="type-toggle">
@@ -375,7 +391,6 @@
         <q-btn class="btn-primary__full" :label="$t('btn.confirm')" @click="onConfirmBankSelection()"></q-btn>
       </div>
     </q-card>
-
   </q-dialog>
 </template>
 
@@ -398,7 +413,7 @@ const selectedTypeToggleName = ref("EASYPAISA");
 const selectedBank = ref();
 const confirmedBankSelection = ref();
 const onTypeToggleBtnClick = (bank) => {
-  selectedBank.value = bank
+  selectedBank.value = bank;
   // selectedTypeToggleIndex.value = index;
   // selectedTypeToggleName.value = name;
   // bankCardInfo.bankId = bankList.value[index].id;
@@ -409,35 +424,35 @@ const onTypeToggleBtnClick = (bank) => {
 const onOpenBankModal = () => {
   isBankSelectionModal.value = true;
   if (confirmedBankSelection.value) {
-    selectedBank.value = confirmedBankSelection.value
+    selectedBank.value = confirmedBankSelection.value;
   }
-  const index = bankList.value.findIndex(
-    bank => bank.code === confirmedBankSelection.value.code
-  );
+  const index = bankList.value.findIndex((bank) => bank.code === confirmedBankSelection.value.code);
 
   if (index !== -1) {
     currentPage.value = Math.floor(index / itemsPerPage) + 1;
   }
-}
+};
 const onConfirmBankSelection = () => {
   if (!selectedBank.value) {
     $q.notify({
-      color: "negative",
+      color: "dark",
+      textColor: "white",
       position: "top",
-      message: t('bankCard.selectBank'),
-      icon: "report_problem"
+      message: t("bankCard.selectBank"),
+      icon: "report_problem",
+      iconColor: "red"
     });
     return;
   }
-  confirmedBankSelection.value = selectedBank.value
+  confirmedBankSelection.value = selectedBank.value;
   bankList.value.forEach((e) => {
     if (e.code === confirmedBankSelection.value.code) {
-      bankCardInfo.bankId = confirmedBankSelection.value.id
-      bankCardInfo.currencyId = confirmedBankSelection.value.currencyIds
+      bankCardInfo.bankId = confirmedBankSelection.value.id;
+      bankCardInfo.currencyId = confirmedBankSelection.value.currencyIds;
     }
-  })
-  isBankSelectionModal.value = false
-}
+  });
+  isBankSelectionModal.value = false;
+};
 
 const categoryToggleList = ref(["EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20"]);
 const selectedCategoryToggleIndex = ref(0);
@@ -604,10 +619,12 @@ const loadBankCards = () => {
   store.getMemberInfo().then(() => {
     if (!store.realName) {
       $q.notify({
-        color: "negative",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: "Please Complete your KYC.",
-        icon: "report_problem"
+        icon: "report_problem",
+        iconColor: "red"
       });
       router.push("/account/profile");
     } else {
@@ -659,10 +676,12 @@ const submitBankCard = () => {
   ) {
     if (store.isEnableBankCardOTP && (!isOtpSent.value || !bankCardInfo.telephone)) {
       $q.notify({
-        color: "negative",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: t("bankCard.clickAndEnterPhoneCode"),
-        icon: "report_problem"
+        icon: "report_problem",
+        iconColor: "red"
       });
       return;
     } else {
@@ -682,7 +701,8 @@ const submitBankCard = () => {
               textColor: "white",
               position: "top",
               message: t("notify.bankAddedSuccessfully"),
-              icon: "check_circle_outline"
+              icon: "check_circle_outline",
+              iconColor: "green"
             });
             bankCardInfo.cardNumber = "";
             selectedBank.value = null;
@@ -763,13 +783,13 @@ onActivated(() => {
       margin: 0 auto 14px;
       // padding: 1.25rem;
       .selected-bank {
-        background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
+        background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
         display: flex;
         justify-content: space-between;
         border-radius: 6px;
         align-items: center;
         padding: 15px;
-        .bank-icon-text{
+        .bank-icon-text {
           display: flex;
           gap: 10px;
           justify-content: center;
@@ -779,7 +799,7 @@ onActivated(() => {
           }
         }
         .custom-drop {
-          background: #907C5F;
+          background: #907c5f;
           padding: 0 5px;
           border-radius: 6px;
         }
@@ -863,7 +883,7 @@ onActivated(() => {
 
     .note {
       // color: #ffa031;
-      
+
       color: #723d00;
       font-size: 0.8rem;
       font-weight: 400;
@@ -878,7 +898,7 @@ onActivated(() => {
   margin-top: 20px;
 }
 .bank-selection-card {
-  margin:0; 
+  margin: 0;
   background: #232626;
   border-radius: 10px 10px 0 0 !important;
   .top-bar {
@@ -893,11 +913,11 @@ onActivated(() => {
     }
     .page-btn {
       border-radius: 6px;
-      background:#A18D71;
+      background: #a18d71;
     }
     .close-btn {
       border-radius: 6px;
-      background:#A18D71;
+      background: #a18d71;
       padding: 10px;
     }
   }

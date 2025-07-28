@@ -313,7 +313,8 @@ const onClickRotate = () => {
       color: "warning",
       position: "top",
       message: t("content.nospinleft"),
-      icon: "report_problem"
+      icon: "report_problem",
+      iconColor: "red"
     });
     return;
   }
@@ -334,7 +335,8 @@ const onClickRotate = () => {
       color: "warning",
       position: "top",
       message: t("content.nospinleft"),
-      icon: "report_problem"
+      icon: "report_problem",
+      iconColor: "red"
     });
     return;
   }

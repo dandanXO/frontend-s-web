@@ -112,7 +112,7 @@ export default defineComponent({
 textColor: "white",
           position: "top",
           message: "复制成功！",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline", iconColor: "green"
         });
       }, 100)
 

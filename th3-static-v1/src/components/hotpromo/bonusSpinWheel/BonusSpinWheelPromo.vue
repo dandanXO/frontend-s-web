@@ -195,10 +195,12 @@ const spinWheel = () => {
 
   if (remainingDraws.value <= 0) {
     $q.notify({
-      color: "negative",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: t("hotPromo.aviatorWheel.remainingDrawTimes") + `: 0`,
-      icon: "report_problem"
+      icon: "report_problem",
+      iconColor: "red"
     });
     return;
   }

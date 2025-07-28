@@ -271,10 +271,11 @@ export default defineComponent({
           })
           .catch((e) => {
             $q.notify({
-              color: "negative",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: e.message,
-              icon: "report_problem"
+              icon: "report_problem", iconColor: "red"
             });
           });
     };
@@ -312,7 +313,7 @@ export default defineComponent({
             textColor: "white",
             position: "top",
             message: "OTP验证码已发送至您的邮箱",
-            icon: "check_circle_outline"
+            icon: "check_circle_outline", iconColor: "green"
           });
           verificationDetails.memberInfo.codeId = ret.data.codeId;
           verificationModalVisible.value = false;
@@ -322,7 +323,7 @@ export default defineComponent({
           //   color: "negative",
           //   position: "top",
           //   message: ret.message,
-          //   icon: "report_problem"
+          //   icon: "report_problem", iconColor: "red"
           // });
           isEmailSending.value = false;
           getCode();
@@ -348,7 +349,7 @@ export default defineComponent({
               textColor: "white",
               position: "top",
               message: "验证成功",
-              icon: "check_circle_outline"
+              icon: "check_circle_outline", iconColor: "green"
             });
             updateSecurityModalVisible.value = false;
             loadInfo();
@@ -358,7 +359,7 @@ export default defineComponent({
           //   color: "negative",
           //   position: "top",
           //   message: e.message,
-          //   icon: "report_problem"
+          //   icon: "report_problem", iconColor: "red"
           // });
         });
       }
@@ -404,7 +405,7 @@ export default defineComponent({
             textColor: "white",
             position: "top",
             message: "更新成功",
-            icon: "check_circle_outline"
+            icon: "check_circle_outline", iconColor: "green"
           });
 
           store.getMemberInfo().then(() => {
@@ -412,10 +413,11 @@ export default defineComponent({
           });
         } else {
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: r.message,
-            icon: "report_problem"
+            icon: "report_problem", iconColor: "red"
           });
         }
       });

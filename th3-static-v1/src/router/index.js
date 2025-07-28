@@ -224,10 +224,12 @@ export default route(function (/* { store, ssrContext } */) {
         next(`/login`);
 
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: t("notify.plsLoginToContinue"),
-          icon: "report_problem"
+          icon: "report_problem",
+          iconColor: "red"
         });
       } else {
         next();

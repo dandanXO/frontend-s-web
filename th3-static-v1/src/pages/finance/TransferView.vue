@@ -174,7 +174,8 @@ const submitTransfer = () => {
                       textColor: "white",
                       position: "top",
                       message: "成功",
-                      icon: "check_circle_outline"
+                      icon: "check_circle_outline",
+                      iconColor: "green"
                     });
                     getPlatBalances(platform.code);
                     store.getBalance();
@@ -208,7 +209,8 @@ const submitTransfer = () => {
                       textColor: "white",
                       position: "top",
                       message: "转账成功",
-                      icon: "check_circle_outline"
+                      icon: "check_circle_outline",
+                      iconColor: "green"
                     });
                     getPlatBalances(platform.code);
                     store.getBalance();
@@ -287,7 +289,7 @@ const getPlatBalances = (plat) => {
       // color: "negative",
       // position: "top",
       // message: e.message,
-      // icon: "report_problem"
+      // icon: "report_problem", iconColor: "red"
       // })
       platform.isLoading = false;
     });

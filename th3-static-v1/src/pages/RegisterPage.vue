@@ -608,7 +608,8 @@ export default defineComponent({
                   textColor: "white",
                   position: "top",
                   message: t("form.google_login_success"),
-                  icon: "check_circle_outline"
+                  icon: "check_circle_outline",
+                  iconColor: "green"
                 });
 
                 if (res.data?.isFirstTime) {
@@ -622,10 +623,12 @@ export default defineComponent({
                 }
               } else {
                 $q.notify({
-                  color: "negative",
+                  color: "dark",
+                  textColor: "white",
                   position: "top",
                   message: res.message,
-                  icon: "report_problem"
+                  icon: "report_problem",
+                  iconColor: "red"
                 });
               }
               $q.loading.hide();
@@ -674,7 +677,8 @@ export default defineComponent({
                     textColor: "white",
                     position: "top",
                     message: t("form.google_login_success"),
-                    icon: "check_circle_outline"
+                    icon: "check_circle_outline",
+                    iconColor: "green"
                   });
 
                   if (res.data?.isFirstTime) {
@@ -688,10 +692,12 @@ export default defineComponent({
                   }
                 } else {
                   $q.notify({
-                    color: "negative",
+                    color: "dark",
+                    textColor: "white",
                     position: "top",
                     message: res.message,
-                    icon: "report_problem"
+                    icon: "report_problem",
+                    iconColor: "red"
                   });
                 }
                 $q.loading.hide();
@@ -765,10 +771,12 @@ export default defineComponent({
         isLoading.value = false;
       } else if (regForm.referrer && isSpinReferrer.value === true && regForm.smsCodeId && isOtpEnable.value) {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: t("form.fill_in_otp"),
-          icon: "report_problem"
+          icon: "report_problem",
+          iconColor: "red"
         });
         $q.loading.hide();
         isLoading.value = false;
@@ -811,7 +819,8 @@ export default defineComponent({
                   textColor: "white",
                   position: "top",
                   message: t("form.register_success"),
-                  icon: "check_circle_outline"
+                  icon: "check_circle_outline",
+                  iconColor: "green"
                 });
                 localStorage.setItem("newPlayerGuide", 1);
                 //FB Tracking.
@@ -839,10 +848,12 @@ export default defineComponent({
                 }
               } else {
                 $q.notify({
-                  color: "negative",
+                  color: "dark",
+                  textColor: "white",
                   position: "top",
                   message: res.message,
-                  icon: "report_problem"
+                  icon: "report_problem",
+                  iconColor: "red"
                 });
               }
               $q.loading.hide();
@@ -865,7 +876,7 @@ export default defineComponent({
           textColor: "white",
             //         position: "top",
             //         message: "Please proceed to OTP",
-            //         icon: "check_circle_outline"
+            //         icon: "check_circle_outline", iconColor: "green"
             //       });
             //       console.log(res, "-ressss");
             //       sessionStorage.setItem("REG_FORM", qs.stringify(regForm));
@@ -905,7 +916,7 @@ export default defineComponent({
             //         color: "negative",
             //         position: "top",
             //         message: res.message,
-            //         icon: "report_problem"
+            //         icon: "report_problem", iconColor: "red"
             //       });
             //     }
             //     $q.loading.hide();
@@ -977,10 +988,12 @@ export default defineComponent({
     const onCaptchaSubmit = () => {
       if (!regForm.loginName) {
         $q.notify({
-          color: "negative",
+          color: "dark",
+          textColor: "white",
           position: "top",
           message: t("form.phone_cannot_empty"),
-          icon: "report_problem"
+          icon: "report_problem",
+          iconColor: "red"
         });
         getInnerCode();
         return;

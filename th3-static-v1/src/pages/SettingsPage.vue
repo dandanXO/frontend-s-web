@@ -267,6 +267,8 @@ const fallbackCopyTextToClipboard = (text) => {
     color: "dark",
     textColor: "white",
     position: "top",
+    icon: "check_circle_outline",
+    iconColor: "green",
     timeout: 2000
   });
 };
@@ -283,6 +285,8 @@ const copyHrefLink = () => {
           color: "dark",
           textColor: "white",
           position: "top",
+          icon: "check_circle_outline",
+          iconColor: "green",
           timeout: 2000
         });
       })
@@ -430,7 +434,8 @@ const handleCopyClick = async () => {
         textColor: "white",
         position: "top",
         message: t("notify.copiedSuccessfully"),
-        icon: "check_circle_outline"
+        icon: "check_circle_outline",
+        iconColor: "green"
       });
     }, 100);
   } else {
@@ -455,12 +460,20 @@ const handleCopyClick = async () => {
     }
 
     setTimeout(() => {
+      // $q.notify({
+      //   color: "dark",
+      //   textColor: "white",
+      //   position: "top",
+      //   message: t("notify.copiedSuccessfully"),
+      //   icon: "check_circle_outline", iconColor: "green"
+      // });
       $q.notify({
         color: "dark",
         textColor: "white",
         position: "top",
-        message: t("notify.copiedSuccessfully"),
-        icon: "check_circle_outline"
+        message: e.message,
+        icon: "report_problem",
+        iconColor: "red"
       });
     }, 100);
   }

@@ -10,7 +10,7 @@
           </div>
         </div>
         <RouterLink to="/account?openCodeModal=true">
-          <q-btn flat class="details redemption ">{{ $t("btn.details") }}</q-btn>
+          <q-btn flat class="details redemption">{{ $t("btn.details") }}</q-btn>
         </RouterLink>
       </div>
 
@@ -113,7 +113,8 @@ async function claimApi(apiUrl, promoCode) {
         type: "positive",
         position: "top",
         message: t("notify.claimedSuccessfully"),
-        icon: "check_circle_outline"
+        icon: "check_circle_outline",
+        iconColor: "green"
       });
     } else {
     }
@@ -241,8 +242,8 @@ onMounted(() => {
 .bonus-container {
   // background-color: #1e371f;
   // background: linear-gradient(325.86deg, #0e1e08 5.38%, #1b6026 98.11%);
-  background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
-  box-shadow: 0px 2px 0px 0px #907C5F;
+  background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+  box-shadow: 0px 2px 0px 0px #907c5f;
 
   //  border: 1px solid #9fe871;
   border-radius: 16px !important;
@@ -306,7 +307,7 @@ onMounted(() => {
       padding: 0 6px 0 6px;
       border-radius: 8px;
       min-height: 74px;
-      background: #E9E8E4;
+      background: #e9e8e4;
       border: 1px solid #55c2530d;
       box-shadow: 0px 4px 4px 0px #0000000d;
       a {
@@ -321,7 +322,7 @@ onMounted(() => {
         display: flex;
         align-items: center;
         flex-grow: 1;
-        
+
         > :first-child {
           margin-right: 7px;
         }
@@ -330,11 +331,11 @@ onMounted(() => {
           display: flex;
           flex-direction: column;
           font-weight: 700;
-          color: #3A3A3A;
+          color: #3a3a3a;
         }
 
         .mission-title-extra {
-          color: #3A3A3A;
+          color: #3a3a3a;
         }
       }
 
@@ -376,7 +377,7 @@ onMounted(() => {
         }
 
         &.claimable {
-          background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
+          background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
 
           &::before {
             content: "";
@@ -398,7 +399,7 @@ onMounted(() => {
 }
 
 .bonus-close {
-  background-color: #907C5F;
+  background-color: #907c5f;
   border-radius: 8px;
   position: absolute;
   top: 10px;

@@ -58,6 +58,7 @@ export default defineComponent({
               position: "top",
               message: `${file.value.name} uploaded successfully`,
               icon: "check_circle_outline",
+              iconColor: "green",
               color: "dark",
               textColor: "white",
               timeout: 2000
@@ -68,6 +69,7 @@ export default defineComponent({
               position: "top",
               message: `${file.value.name} upload failed. Please try again`,
               icon: "report_problem",
+              iconColor: "red",
               color: "dark",
               textColor: "white"
             });

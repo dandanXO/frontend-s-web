@@ -164,10 +164,12 @@ const onAddCardClick = () => {
   store.getMemberInfo().then(() => {
     if (!store.realName || !store.phone) {
       $q.notify({
-        color: "negative",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: "Please fill in your personal details",
-        icon: "report_problem"
+        icon: "report_problem",
+        iconColor: "red"
       });
       router.push("/account/profile");
     } else {
@@ -290,7 +292,8 @@ const addCard = () => {
           textColor: "white",
           position: "top",
           message: "Add Succeed",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
         props.loadCards();
         isDisableBtn.value = false;

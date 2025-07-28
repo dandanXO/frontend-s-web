@@ -75,7 +75,8 @@ const onSubmit = () => {
         textColor: "white",
         position: "top",
         message: "Registered successfully",
-        icon: "check_circle_outline"
+        icon: "check_circle_outline",
+        iconColor: "green"
       });
       window.location.reload();
     });
@@ -83,10 +84,12 @@ const onSubmit = () => {
     // Show an error
     console.log("Please complete the verification code.");
     $q.notify({
-      color: "negative",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: "Please complete the verification code",
-      icon: "report_problem"
+      icon: "report_problem",
+      iconColor: "red"
     });
   }
 };

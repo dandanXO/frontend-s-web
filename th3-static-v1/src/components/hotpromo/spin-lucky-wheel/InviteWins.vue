@@ -43,15 +43,18 @@ const copyShareLink = (selfTgurl) => {
         color: "position",
         position: "top",
         message: `${selfTgurl} copied to clipboard`,
-        icon: "check_circle_outline"
+        icon: "check_circle_outline",
+        iconColor: "green"
       });
     })
     .catch(() => {
       $q.notify({
-        color: "negative",
+        color: "dark",
+        textColor: "white",
         position: "top",
         message: "Failed",
-        icon: "report_problem"
+        icon: "report_problem",
+        iconColor: "red"
       });
     });
 };
@@ -79,7 +82,8 @@ const downloadQRImg = async () => {
           textColor: "white",
           position: "top",
           message: "QR Code image saved to photo gallery.",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
 
         canvas.style.display = "none";
@@ -109,7 +113,8 @@ const downloadQRImg = async () => {
           textColor: "white",
           position: "top",
           message: "QR Code image saved to photo gallery.",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
 
         canvas.style.display = "none";

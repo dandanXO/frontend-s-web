@@ -73,7 +73,7 @@ async function submitDeposit(deposit) {
       //   color: "negative",
       //   position: "top",
       //   message: res.message,
-      //   icon: "report_problem"
+      //   icon: "report_problem", iconColor: "red"
       // });
     }
   });

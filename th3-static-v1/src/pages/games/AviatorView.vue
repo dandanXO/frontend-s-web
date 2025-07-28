@@ -17,11 +17,11 @@
         <div class="plat-type-container">
           <div class="plat-list">
             <div
-                class="plat-item"
-                v-for="p in platforms"
-                :class="{ active: p.id === selectedPlatId }"
-                :key="p"
-                @click="switchPlat(p)"
+              class="plat-item"
+              v-for="p in platforms"
+              :class="{ active: p.id === selectedPlatId }"
+              :key="p"
+              @click="switchPlat(p)"
             >
               <!-- <img :src="require('../../assets/logo/' + p.code + '.png')"> -->
               <!-- <img
@@ -55,9 +55,7 @@
             </div>
           </div>
         </div>
-        <div
-            class="grid-items flex-box flex-align-center search-container web-only-box"
-        ></div>
+        <div class="grid-items flex-box flex-align-center search-container web-only-box"></div>
         <!-- <div class="game-list-wrapper">
           <div
             class="game-slot animate__animated animate__fadeInRight"
@@ -75,24 +73,17 @@
             </a>
           </div>
         </div> -->
-        <q-scroll-area
-            ref="scrollPageRef"
-            style="height: calc(100% - 265px)"
-            :thumb-style="{ width: 0 }"
-        >
+        <q-scroll-area ref="scrollPageRef" style="height: calc(100% - 265px)" :thumb-style="{ width: 0 }">
           <div class="loading-div" v-if="isLoading">
-            <q-spinner-hourglass
-                color="deep-orange"
-                size="8em"
-            />
+            <q-spinner-hourglass color="deep-orange" size="8em" />
           </div>
           <q-intersection transition="scale">
             <div class="grid fishing">
               <div
-                  class="game-slot"
-                  v-for="game in gameListData"
-                  :key="game.id"
-                  @click="fishGame.open(game.name, selectedPlat.code, game.code, selectedPlat.status)"
+                class="game-slot"
+                v-for="game in gameListData"
+                :key="game.id"
+                @click="fishGame.open(game.name, selectedPlat.code, game.code, selectedPlat.status)"
               >
                 <div class="slot-img">
                   <!-- <q-img loading="lazy" :src="game.icon" style="height: 150px">
@@ -104,12 +95,16 @@
                     </template>
                   </q-img> -->
 
-                  <div class="box" style="display: flex; justify-content:center;" :style="`background: url(${game.default})no-repeat center center; background-size: cover`">
-                    <img :src="game.icon" v-bind:alt="game.default" style="height: 150px; left: -50px;" >
+                  <div
+                    class="box"
+                    style="display: flex; justify-content: center"
+                    :style="`background: url(${game.default})no-repeat center center; background-size: cover`"
+                  >
+                    <img :src="game.icon" v-bind:alt="game.default" style="height: 150px; left: -50px" />
                   </div>
                 </div>
                 <div class="slot-name">
-                  <span class="slide"> {{ game.name }}</span>
+                  <span class="slide">{{ game.name }}</span>
                 </div>
 
                 <!-- <a @click="openGame(game.name, game.code)">
@@ -124,47 +119,29 @@
               </div>
             </div>
           </q-intersection>
-          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop"/>
-          <q-scroll-observer @scroll="scrolling"/>
+          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
+          <q-scroll-observer @scroll="scrolling" />
         </q-scroll-area>
       </div>
     </div>
     <!--Waves Container-->
     <div>
       <svg
-          class="waves"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-          viewBox="0 24 150 28"
-          preserveAspectRatio="none"
-          shape-rendering="auto"
+        class="waves"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 24 150 28"
+        preserveAspectRatio="none"
+        shape-rendering="auto"
       >
         <defs>
-          <path
-              id="gentle-wave"
-              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-          />
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
         </defs>
         <g class="parallax">
-          <use
-              xlink:href="#gentle-wave"
-              x="48"
-              y="0"
-              fill="rgba(36,71,100,0.7"
-          />
-          <use
-              xlink:href="#gentle-wave"
-              x="48"
-              y="3"
-              fill="rgba(36,71,100,0.5)"
-          />
-          <use
-              xlink:href="#gentle-wave"
-              x="48"
-              y="5"
-              fill="rgba(36,71,100,0.3)"
-          />
-          <use xlink:href="#gentle-wave" x="48" y="7" fill="#244764"/>
+          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(36,71,100,0.7" />
+          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(36,71,100,0.5)" />
+          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(36,71,100,0.3)" />
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="#244764" />
         </g>
       </svg>
     </div>
@@ -234,7 +211,7 @@ export default defineComponent({
         //   color: "negative",
         //   position: "top",
         //   message: "Loading failed",
-        //   icon: "report_problem"
+        //   icon: "report_problem", iconColor: "red"
         // });
       })
 
@@ -285,7 +262,7 @@ export default defineComponent({
         //   color: "negative",
         //   position: "top",
         //   message: "Loading failed",
-        //   icon: "report_problem"
+        //   icon: "report_problem", iconColor: "red"
         // });
       })).then((res) => {
         isLoading.value = false;

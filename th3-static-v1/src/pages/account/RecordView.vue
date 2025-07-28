@@ -201,10 +201,12 @@ const onNextPageClick = () => {
     searchRecord();
   } else {
     $q.notify({
-      color: "negative",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: "You have reached end of the page",
-      icon: "report_problem"
+      icon: "report_problem",
+      iconColor: "red"
     });
   }
 };
@@ -327,7 +329,7 @@ onActivated(() => {
     align-items: center;
 
     span {
-      color: #3A3A3A;
+      color: #3a3a3a;
       padding: 0px 12px;
     }
 

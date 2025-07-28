@@ -56,7 +56,8 @@ const guestLogin = () => {
             textColor: "white",
             position: "top",
             message: "Quick registered successfully",
-            icon: "check_circle_outline"
+            icon: "check_circle_outline",
+            iconColor: "green"
           });
           store.autoLogin(res.data);
           sessionStorage.removeItem("REFERRAL_CODE");
@@ -68,15 +69,18 @@ const guestLogin = () => {
             color: "warning",
             position: "top",
             message: "Please login with password to continue",
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
           router.push("/login");
         } else {
           $q.notify({
-            color: "negative",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: res.message,
-            icon: "report_problem"
+            icon: "report_problem",
+            iconColor: "red"
           });
         }
         $q.loading.hide();

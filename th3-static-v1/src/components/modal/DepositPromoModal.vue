@@ -140,7 +140,8 @@ const handleAppLoginPromoClaim = async () => {
             type: "positive",
             position: "top",
             message: t("modal.appLoginBonus.claimBonus", { amount: res.data }),
-            icon: "check_circle_outline"
+            icon: "check_circle_outline",
+            iconColor: "green"
           });
           store.getBalance();
           showModal.value = false;

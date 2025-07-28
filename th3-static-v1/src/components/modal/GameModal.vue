@@ -256,7 +256,8 @@ const submitTransfer = (amount) => {
           textColor: "white",
           position: "top",
           message: "สำเร็จ",
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
         isClicked.value = amount;
         if (token) {
@@ -272,7 +273,7 @@ const submitTransfer = (amount) => {
       //   color: "negative",
       //   position: "top",
       //   message: error.message,
-      //   icon: "report_problem"
+      //   icon: "report_problem", iconColor: "red"
       // });
     });
 };
@@ -496,9 +497,11 @@ const denyGameLaunch = () => {
   props.closeFullGameDialog();
   $q.notify({
     message: t("notify.plsLoginToContinue"),
-    color: "negative",
+    color: "dark",
+    textColor: "white",
     position: "top",
     icon: "report_problem",
+    iconColor: "red",
     timeout: 2000
   });
   router.push({ path: "/login", query: { redirect: route.path } });

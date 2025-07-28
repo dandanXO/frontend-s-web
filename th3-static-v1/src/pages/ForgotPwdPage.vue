@@ -663,10 +663,12 @@ const getInnerCode = () => {
 const onCaptchaSubmit = () => {
   if (!passwordForm.loginName) {
     $q.notify({
-      color: "negative",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: t("form.phone_cannot_empty"),
-      icon: "report_problem"
+      icon: "report_problem",
+      iconColor: "red"
     });
     getInnerCode();
     return;
@@ -896,7 +898,8 @@ const onVerifyForgotPassword = (type) => {
               textColor: "white",
               position: "top",
               message: t("notify.passwordResetCompleted"),
-              icon: "check_circle_outline"
+              icon: "check_circle_outline",
+              iconColor: "green"
             });
             isRequestSent.value = false;
             router.push("/login");
@@ -921,7 +924,8 @@ const onVerifyForgotPassword = (type) => {
               textColor: "white",
               position: "top",
               message: t("notify.passwordResetCompleted"),
-              icon: "check_circle_outline"
+              icon: "check_circle_outline",
+              iconColor: "green"
             });
             isRequestSent.value = false;
             router.push("/login");
@@ -974,7 +978,7 @@ const verificationForm = reactive({
 //             textColor: "white",
 //             position: "top",
 //             message: "Password Reset Completed",
-//             icon: "report_problem"
+//             icon: "report_problem", iconColor: "red"
 //           });
 
 //           router.push("/login");

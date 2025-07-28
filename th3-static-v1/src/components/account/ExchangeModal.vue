@@ -153,7 +153,8 @@ const submitRedemption = async () => {
           type: "positive",
           position: "top",
           message: `Successfully claimed`,
-          icon: "check_circle_outline"
+          icon: "check_circle_outline",
+          iconColor: "green"
         });
         formDetail.value.redemptionCode = undefined;
         emit("update:modelValue", false);

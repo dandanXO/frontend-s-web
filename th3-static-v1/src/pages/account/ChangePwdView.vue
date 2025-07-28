@@ -137,15 +137,16 @@ export default defineComponent({
 textColor: "white",
               position: "top",
               message: "密码修改成功",
-              icon: "check_circle_outline"
+              icon: "check_circle_outline", iconColor: "green"
             });
             router.go(-1);
           } else {
             $q.notify({
-              color: "negative",
+              color: "dark",
+              textColor: "white",
               position: "top",
               message: response.message,
-              icon: "report_problem"
+              icon: "report_problem", iconColor: "red"
             });
           }
         }).catch((error) => {
