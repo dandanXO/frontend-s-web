@@ -222,6 +222,7 @@ const onClickLogin = () => {
     justify-content: center;
   }
   .title {
+    font-family: Microsoft YaHei;
     background-image: url(../assets/images/affiliate/title-bg.png);
     background-size: contain;
     background-repeat: no-repeat;
@@ -232,6 +233,9 @@ const onClickLogin = () => {
     align-items: center;
     justify-content: center;
     padding-bottom: 10px;
+    -webkit-text-stroke: 1px #4b91f5;
+    font-weight: bolder;
+    font-size: 1.4rem;
   }
   .section-subtitle {
     display: flex;
