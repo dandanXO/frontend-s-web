@@ -258,7 +258,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-if="isOpenExtension" v-model="isOpenExtension" class="dark-grey-dialog">
-    <div class="dialog-mid-text">{{ $t("btn.loading") }}</div>
+    <div class="dialog-mid-text">{{ $t("common.loading") }}</div>
   </q-dialog>
 </template>
 
@@ -473,6 +473,14 @@ export default defineComponent({
       }
     };
 
+    const backToPromoList = () => {
+      if (window.location.pathname === "/promotion") {
+        window.location.href = "xfapp:/promo";
+      } else {
+        router.push("/promo");
+      }
+    };
+
     const switchPromoType = (type) => {
       promoTabActive.value = type.value;
       if (type.value !== "ALL") {
@@ -610,7 +618,9 @@ export default defineComponent({
       isFetchingPromo,
       isSpecialPromo,
       parsedParam,
-      languageVal
+      languageVal,
+      backToPromoList,
+      isOpenExtension
     };
   }
 });
@@ -1259,6 +1269,15 @@ export default defineComponent({
     position: relative;
     top: 48%;
   }
+}
+
+.back-btn {
+  background: rgb(255, 255, 255, 0.4);
+  margin: 12px !important;
+  position: absolute !important;
+  right: 0 !important;
+  top: 0 !important;
+  z-index: 9;
 }
 </style>
 <style scoped lang="scss">
