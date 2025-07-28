@@ -199,7 +199,7 @@
       <router-link to="/register" class="login">Register</router-link>
     </div> -->
     <div class="no-domain btn-lists">
-      <ShareIcons />
+      <ShareIcons :isLogin="true" />
     </div>
 
     <div class="is-domain social-container">
@@ -231,7 +231,7 @@
     <!-- <div class="no-domain bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div> -->
-    <a
+    <!-- <a
       v-if="ui.siteType === 'CURACAO'"
       class="license"
       href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
@@ -243,7 +243,7 @@
         <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
         <span class="license-text__description">{{ $t("sideNav.license.curacao.description") }}</span>
       </div>
-    </a>
+    </a> -->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>

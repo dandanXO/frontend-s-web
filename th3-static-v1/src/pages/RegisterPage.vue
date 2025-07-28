@@ -297,7 +297,7 @@
         </div>
       </div>
     </div>
-    <a
+    <!-- <a
       v-if="ui.siteType === 'CURACAO'"
       class="license"
       href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
@@ -309,7 +309,7 @@
         <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
         <span class="license-text__description">{{ $t("sideNav.license.curacao.description") }}</span>
       </div>
-    </a>
+    </a> -->
 
     <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
       <q-card class="captcha-form-wrapper" width="100%">
