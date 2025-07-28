@@ -332,7 +332,9 @@ const handleWheelClick = () => {
 
   if (spinButtonDisable.value || !info.value.availableSpin) return;
 
-  eventapi.post("/session/aviator-wheel-bet-count/spin?promoCode=br2-aviator-wheel-bet-count").then((res) => {
+  const sid = localStorage.getItem("VISITOR_ID") || '';
+
+  eventapi.post(`/session/aviator-wheel-bet-count/spin?promoCode=br2-aviator-wheel-bet-count&sid=${sid}`).then((res) => {
     if (res.code == 0) {
       prize.value = res.data;
       const prizeIndex = prize.value.bonusAmount > 4 ? 5 : 7 // 5鈔票 7金幣

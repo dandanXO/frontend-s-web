@@ -397,8 +397,11 @@ const prizeAmount = ref();
 const loadingClaim = ref(false);
 const onClaimBonus = () => {
   loadingClaim.value = true;
+
+  const sid = localStorage.getItem("VISITOR_ID") || '';
+
   eventapi
-    .get(`/redPacketVip/claim?promoCode=br2-red-packet-rain`)
+    .get(`/redPacketVip/claim?promoCode=br2-red-packet-rain&sid=${sid}`)
     .then((res) => {
       if (res.code === 0) {
         loadingClaim.value = false;

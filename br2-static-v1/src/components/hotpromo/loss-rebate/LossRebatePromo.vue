@@ -90,8 +90,10 @@ const loadPromoInit = () => {
 };
 
 const claimPromo = () => {
+  const sid = localStorage.getItem("VISITOR_ID") || '';
+
   eventapi
-    .post("/session/loss-rebate/claim?promoCode=br2-loss-rebate")
+    .post(`/session/loss-rebate/claim?promoCode=br2-loss-rebate&sid=${sid}`)
     .then((res) => {
       if (res.code === 0) {
         $q.notify({

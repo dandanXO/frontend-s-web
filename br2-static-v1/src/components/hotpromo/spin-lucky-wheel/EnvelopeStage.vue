@@ -76,8 +76,11 @@ const handleEnvelopeClick = (index) => {
 
   isClaiming.value = true;
   selectedIndex.value = index;
+
+  const sid = localStorage.getItem("VISITOR_ID") || '';
+
   eventapi
-    .post("/session/refer-wheel-spin/red-packet?promoCode=br2-refer-wheel")
+    .post(`/session/refer-wheel-spin/red-packet?promoCode=br2-refer-wheel&sid=${sid}`)
     // .post("/session/refer-wheel/spin?promoCode=br2-refer-wheel")
     .then(async (res) => {
       let otherPrizeCounter = 0;
