@@ -206,7 +206,7 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item :label="t('fields.timeType')" prop="timeType" v-if="!isPK4(form.siteId)">
+          <el-form-item :label="form.siteId === 30 ? t('fields.mode') : t('fields.timeType')" prop="timeType" v-if="!isPK4(form.siteId)">
             <el-select
               v-model="form.timeType"
               size="small"
@@ -1225,6 +1225,14 @@ onMounted(async () => {
   }
 
   await loadRiskLevels()
+
+  if (request.siteId === 30) {
+    uiControl.timeType = [
+      { key: 1, displayName: t('affiliate.mode.mode1'), value: 'MONTHLY' },
+      { key: 2, displayName: t('affiliate.mode.mode2'), value: 'NONE' },
+      { key: 3, displayName: t('affiliate.mode.mode3'), value: 'WEEKLY' },
+    ]
+  }
 })
 </script>
 
