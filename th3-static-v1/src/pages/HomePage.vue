@@ -215,8 +215,9 @@
         </div>
       </div>
       <a class="notice-download" :href="ui.whatsappUrl" target="_blank">
-        <img src="../assets/images/auth/whatsapp-icon-side.png" />
-        <img class="absolute-hot" src="../assets/images/index/hot.gif" />
+        <img src="../assets/images/auth/download-icon.svg" />
+        <!-- <img src="../assets/images/auth/whatsapp-icon-side.png" />
+        <img class="absolute-hot" src="../assets/images/index/hot.gif" /> -->
       </a>
     </div>
     <!-- <div class="top-action" v-if="store.hasToken()">
@@ -5749,6 +5750,7 @@ const checkGoogleLoginSetPwd = () => {
   background-size: contain;
   position: relative;
   aspect-ratio: 500/500;
+  display: none;
 
   &:active {
     filter: brightness(0.85);
