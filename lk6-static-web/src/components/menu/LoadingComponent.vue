@@ -1,7 +1,7 @@
 <template>
     <div class="loading">
         <div class="orbit">
-            <img src="@/assets/clover.png" class="shuriken">
+            <img src="@/assets/lucky-6.png" class="shuriken">
         </div>
     </div>
 </template>
@@ -31,8 +31,8 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 76px;
   animation: spin 1s linear infinite;
 }
 

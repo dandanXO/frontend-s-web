@@ -1,8 +1,6 @@
 <template>
     <div class="acc-dialog-homelogo">
-        <img src="../assets/home/auth/login-logo-left.png" height="45px" class="clover-logo" />
-        <img v-if="languageVal === 'en'" src="../assets/home/auth/login-logo-right-en.svg" height="45px" />
-        <img v-else src="../assets/home/auth/login-logo-right.svg" height="45px" />
+        <img src="../assets/lucky-6-logo.svg" height="45px" class="clover-logo" />
     </div>
 </template>
 <script setup>
@@ -36,8 +34,8 @@ const { languageVal } = storeToRefs(i18nStoreLanguage)
 }
 
 .clover-logo {
-    display: inline-block;
-    animation: cloverPulse 3s ease-in-out infinite;
-    transform-origin: center;
+    // display: inline-block;
+    // animation: cloverPulse 3s ease-in-out infinite;
+    // transform-origin: center;
 }
 </style>
