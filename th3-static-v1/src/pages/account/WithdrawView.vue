@@ -137,7 +137,8 @@
           <q-select
             v-show="isLoaded"
             hide-bottom-space
-            filled
+            outlined
+            dense
             ref="cardRef"
             v-model="withdrawInfo.cardId"
             option-value="id"
@@ -1307,13 +1308,14 @@ watch(
 }
 
 .tutorial-link {
+  font-weight: 600;
   color: #3a3a3a;
   text-decoration: underline;
 }
 .step-desc-div {
   margin-bottom: 105px;
-  color: #907c5f;
-
+  color: #433e38d7;
+  font-weight: 600;
   p {
     margin: 5px 0px;
   }
@@ -1371,6 +1373,7 @@ watch(
       }
 
       .type-name {
+        color: #76674c;
         font-weight: bold;
       }
 
@@ -1380,6 +1383,7 @@ watch(
     }
 
     .type-name {
+      color: #3a3a3a;
       line-height: 15px;
       // overflow-wrap: break-word;
       white-space: nowrap;
@@ -1631,8 +1635,31 @@ watch(
 :deep(.q-field__native) {
   color: #907c5f !important;
 }
+
+// :deep(.q-select .q-field__control) {
+//   min-height: 75px;
+// }
+// :deep(.q-select__dialog .q-field__control::before) {
+//   min-height: 75px !important;
+// }
+:deep(.q-select .q-field__label) {
+  color: #907c5f;
+}
+:deep(.q-select__dropdown-icon) {
+  color: #907c5f;
+}
+:deep(.q-select .q-field__control) {
+  border-radius: 10px;
+  border: 1px solid #907c5f;
+}
 </style>
 
+<style lang="scss">
+.q-field__control,
+.q-field__marginal {
+  height: auto !important;
+}
+</style>
 <!-- <style lang="scss">
 .popout-dialog-container {
   .form-fields {
