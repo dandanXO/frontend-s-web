@@ -9,7 +9,7 @@
               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                 <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                   <div class="row items-center justify-end">
-                    <q-btn v-close-popup label="Close" color="white" flat />
+                    <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                   </div>
                 </q-date>
               </q-popup-proxy>
@@ -22,7 +22,7 @@
               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                 <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)" mask="YYYY-MM-DD">
                   <div class="row items-center justify-end">
-                    <q-btn v-close-popup label="Close" color="white" flat />
+                    <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                   </div>
                 </q-date>
               </q-popup-proxy>
@@ -200,7 +200,7 @@ const getLogoIcon = (e) => {
   } catch (e) {
     return require(`../../assets/images/index/logo/logo-tfgaming.png`);
   }
-}
+};
 
 const onNextPageClick = () => {
   if (!isNextBtnDisable.value) {
@@ -606,7 +606,7 @@ onActivated(() => {
   border-bottom: 0;
 
   .pagination-btn {
-    background: #907C5F;
+    background: #907c5f;
     font-size: 20px;
     width: 40px;
     height: 40px;

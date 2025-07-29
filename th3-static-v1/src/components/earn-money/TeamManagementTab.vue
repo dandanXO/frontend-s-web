@@ -8,7 +8,7 @@
       <!--            <q-popup-proxy cover transition-show="scale" transition-hide="scale">-->
       <!--              <q-date v-model="form.startDate" mask="YYYY-MM-DD">-->
       <!--                <div class="row items-center justify-end">-->
-      <!--                  <q-btn v-close-popup label="Close" color="white" flat @click="handleSubmit()" />-->
+      <!--                  <q-btn v-close-popup :label="$t('btn.close')" color="white" flat @click="handleSubmit()" />-->
       <!--                </div>-->
       <!--              </q-date>-->
       <!--            </q-popup-proxy>-->
@@ -21,7 +21,7 @@
       <!--            <q-popup-proxy cover transition-show="scale" transition-hide="scale">-->
       <!--              <q-date v-model="form.endDate" mask="YYYY-MM-DD">-->
       <!--                <div class="row items-center justify-end">-->
-      <!--                  <q-btn v-close-popup label="Close" color="white" flat @click="handleSubmit()" />-->
+      <!--                  <q-btn v-close-popup :label="$t('btn.close')" color="white" flat @click="handleSubmit()" />-->
       <!--                </div>-->
       <!--              </q-date>-->
       <!--            </q-popup-proxy>-->
@@ -56,7 +56,7 @@
         :loading="loading"
         class="monthly-deposit-table q-mt-md"
         row-key="name"
-        style="overflow-x: auto; border-radius: 10px;"
+        style="overflow-x: auto; border-radius: 10px"
         flat
         :loading-label="$t('btn.loading')"
         :no-data-label="$t('earnMoney.noDataAvailable')"
@@ -76,7 +76,13 @@
                 <span class="span-username" @click="searchByReferral(props)">{{ col.value }}</span>
               </span>
               <span v-else-if="col.field === 'isOpenTransfer'">
-                <span v-if="col.value === true"><img @click="handleTransferClick(props)" style="width:25px; display: block;" src="../../assets/images/account/transfer-svg.svg"></span>
+                <span v-if="col.value === true">
+                  <img
+                    @click="handleTransferClick(props)"
+                    style="width: 25px; display: block"
+                    src="../../assets/images/account/transfer-svg.svg"
+                  />
+                </span>
               </span>
               <span v-else-if="col.field === 'balance'">
                 {{ convertToCommaAmount(col.value, true) }}
@@ -99,9 +105,13 @@
       </q-table>
 
       <div class="pagination">
-        <q-btn @click="prevPage" :disabled="currentPage === 1" icon="chevron_left" 
+        <q-btn
+          @click="prevPage"
+          :disabled="currentPage === 1"
+          icon="chevron_left"
           class="rounded-borders"
-          color="neontb"></q-btn>
+          color="neontb"
+        ></q-btn>
         <span>{{ currentPage }} / {{ totalPages }}</span>
         <q-btn
           @click="nextPage"
@@ -111,7 +121,7 @@
           color="neontb"
         ></q-btn>
       </div>
-      
+
       <TransferModal v-model="showTransferModal" :downlineId="downlineId" :upline="false" />
       <!-- <q-dialog
         width="100%"
@@ -146,7 +156,7 @@
               <span class="full-balance">{{ store.balance.toFixed(2) }}</span>
               </div>
             </div>
-            
+
             <q-btn
               :loading="btnLoading"
               rounded
@@ -198,7 +208,7 @@ const downLineOptions = computed(() => [
 const tableHeaders = computed(() => [
   // { label: t("earnMoney.teamManagement.table.id"), name: "id", field: "id", align: "center" },
   { label: t("earnMoney.teamManagement.table.username"), name: "loginName", field: "loginName", align: "center" },
-  { label: "", name: "isOpenTransfer", field: "isOpenTransfer", align: "center"},
+  { label: "", name: "isOpenTransfer", field: "isOpenTransfer", align: "center" },
   { label: t("earnMoney.teamManagement.table.registrationDate"), name: "regTime", field: "regTime", align: "center" },
   {
     label: t("earnMoney.teamManagement.table.downlineMember"),
@@ -237,9 +247,9 @@ const showTransferModal = ref(false);
 const amountRef = ref();
 const downlineId = ref();
 const handleTransferClick = (props) => {
-  downlineId.value = props.row.id
-  showTransferModal.value = true
-}
+  downlineId.value = props.row.id;
+  showTransferModal.value = true;
+};
 // const openTransferDialog = (props) => {
 //   selectedRow.value.memberId = props.row.id
 //   transferDialog.value = true
@@ -275,7 +285,7 @@ const fetchDownlines = () => {
   queryParams.push(`size=${itemsPerPage}`);
   queryParams.push(`current=${currentPage.value}`);
 
-  url += queryParams.join('&');
+  url += queryParams.join("&");
 
   tableData.value = [];
   api
@@ -336,25 +346,25 @@ onMounted(() => {
   text-align: right;
   margin-top: -20px;
   margin-bottom: 30px;
-  color: #5F6061;
+  color: #5f6061;
   width: 100%;
   display: block;
 }
-.table-header{
+.table-header {
   background-color: #323738;
-  color: #B2BDBF;
+  color: #b2bdbf;
 }
 .q-tr {
   td {
     border-bottom: 0 !important;
   }
 }
-.table-tr-odd{
-  background-color: #373C3D;
+.table-tr-odd {
+  background-color: #373c3d;
   color: #ffffff;
 }
-.table-tr-even{
-  background-color: #FFFFFF0F;
+.table-tr-even {
+  background-color: #ffffff0f;
   color: #ffffff;
 }
 </style>
