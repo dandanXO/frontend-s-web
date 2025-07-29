@@ -123,12 +123,12 @@
           </div>
         </div>
 
-        <div class="item">
+        <!-- <div class="item">
           <div class="item-num">3</div>
           <div class="item-desc">
             <div class="hint">{{ $t("lang.weeklyDepositBonus.rule3") }}</div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <h3>{{ $t("lang.weeklyDepositBonus.titlecondition") }}</h3>
