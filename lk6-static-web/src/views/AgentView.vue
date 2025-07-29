@@ -8,14 +8,14 @@
             <img src="@/assets/images/affiliate/contact-1.png" />
             <div class="contact-card-right">
               <div>{{ $t("agent.telegramAgent") }}</div>
-              <div class="contact-tag">@xy66vip</div>
+              <div class="contact-tag" @click="copy('@xy66vip')">@xy66vip</div>
             </div>
           </div>
           <div class="contact-card">
             <img src="@/assets/images/affiliate/contact-2.png" />
             <div class="contact-card-right">
               <div>{{ $t("agent.telegramCs") }}</div>
-              <div class="contact-tag">@xy6vip</div>
+              <div class="contact-tag" @click="copy('@xy6vip')">@xy6vip</div>
             </div>
           </div>
         </div>
@@ -140,13 +140,27 @@
   </div>
 </template>
 <script setup>
+import { useNotify } from "@/hooks/notify";
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 const affiliateUrl = ref("https://6666vip.cc/lk6/");
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 const lang = localStorage.getItem("languageLocale") || "zh";
+const notify = useNotify();
+const { t } = useI18n();
 
 const onClickLogin = () => {
   window.location.href = affiliateUrl.value + "login?agent=" + (affCode ? affCode : "");
+};
+
+const copy = (text) => {
+  const el = document.createElement("textarea");
+  el.value = text;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
+  notify.success(t("message.copied"));
 };
 </script>
 
