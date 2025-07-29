@@ -137,7 +137,7 @@
               @click="startRefresh"
             >
               <template v-slot:loading>
-                <q-spinner class="on-left" style="color: #00ae00" />
+                <q-spinner class="on-left" style="color: #433e38" />
                 {{ $t("btn.updating") }}
               </template>
             </q-btn>
@@ -913,7 +913,7 @@ const verificationCodeDialog = ref(false);
 const openVerificationCodeDialog = () => {
   updateEmailRef.value.validate();
 
-  if(updateEmailRef.value.hasError){
+  if (updateEmailRef.value.hasError) {
     return;
   }
 
