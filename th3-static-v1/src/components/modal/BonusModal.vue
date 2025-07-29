@@ -255,19 +255,19 @@ onMounted(() => {
   margin-bottom: -100px;
   margin-top: 80px;
 
-  &:before {
-    content: "";
-    background-image: url(../../assets/images/index/modal/bonus-container-light.png);
-    background-size: 100% 100%;
-    background-position: center center;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 370px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: -1;
-  }
+  // &:before {
+  //   content: "";
+  //   background-image: url(../../assets/images/index/modal/bonus-container-light.png);
+  //   background-size: 100% 100%;
+  //   background-position: center center;
+  //   background-repeat: no-repeat;
+  //   width: 100%;
+  //   height: 370px;
+  //   position: absolute;
+  //   left: 0;
+  //   top: 0;
+  //   z-index: -1;
+  // }
 
   &.has-top-download {
     margin-top: 130px;
