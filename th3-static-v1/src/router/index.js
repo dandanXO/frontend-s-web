@@ -12,6 +12,7 @@ import { useGtag } from "vue-gtag-next";
 import { i18n, t } from "src/boot/lang";
 import { i18nStore } from "./language";
 import { DEFAULT_LANG } from "src/constant/lang";
+
 let isRedirected = false;
 
 /*
@@ -85,20 +86,31 @@ export default route(function (/* { store, ssrContext } */) {
       user.getBalance();
     }
 
+    // if (
+    //   to.path === "/login" ||
+    //   to.path === "/register" ||
+    //   to.path === "/forgot-password" ||
+    //   to.path === "/verification" ||
+    //   to.path === "/deposit" ||
+    //   to.path === "/withdraw" ||
+    //   to.path === "/promotion" ||
+    //   to.path === "/language" ||
+    //   to.path === "/maintenance"
+    // ) {
+    //   ui.hiddenFooter();
+    // } else {
+    //   ui.showFooter();
+    // }
+
     if (
-      to.path === "/login" ||
-      to.path === "/register" ||
-      to.path === "/forgot-password" ||
-      to.path === "/verification" ||
-      to.path === "/deposit" ||
-      to.path === "/withdraw" ||
-      to.path === "/promotion" ||
-      to.path === "/language" ||
-      to.path === "/maintenance"
+      to.path === "/home" ||
+      (to.path === "/promo" && !to.query.name) ||
+      to.path === "/account" ||
+      to.path === "/earn-money"
     ) {
-      ui.hiddenFooter();
-    } else {
       ui.showFooter();
+    } else {
+      ui.hiddenFooter();
     }
 
     if (from.path === "/promotion") {

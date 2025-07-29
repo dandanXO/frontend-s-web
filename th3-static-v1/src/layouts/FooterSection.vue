@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useUI } from "stores/ui";
 import { useRoute } from "vue-router";
 
@@ -67,6 +67,14 @@ const openSideMenu = () => {
   ui.isMenuOpen = !ui.isMenuOpen;
   tab.value = "menu";
 };
+
+watch(tab, (newVal, oldVal) => {
+  if (newVal === "menu") {
+    ui.isMenuOpen = true;
+  } else if (ui.isMenuOpen) {
+    ui.isMenuOpen = false;
+  }
+});
 </script>
 
 <style lang="scss" scoped>
