@@ -9,6 +9,7 @@
     <WeeklyReward v-else-if="list.redirectUrl === 'lk6-weekly-reward'" />
     <BaccaratBonus v-else-if="list.redirectUrl === 'lk6-baccarat-bonus'" />
     <BaccaratPoint6 v-else-if="list.redirectUrl === 'lk6-baccarat-point-6'" />
+    <HappySaturday v-else-if="list.redirectUrl === 'lk6-happy-saturday'" :promo-code="list.promoCode" />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -38,6 +39,7 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import WeeklyReward from "./hotpromo/weekly-reward/WeeklyReward.vue";
 import BaccaratBonus from "./hotpromo/baccarat-bonus/BaccaratBonus.vue";
 import BaccaratPoint6 from "./hotpromo/baccarat-point-6/BaccaratPoint6.vue";
+import HappySaturday from "./hotpromo/happy-saturday/HappySaturday.vue";
 // import liveGift from "../components/hotpromo/liveGift.vue";
 
 export default defineComponent({
@@ -48,7 +50,8 @@ export default defineComponent({
     ClaimPromo,
     WeeklyReward,
     BaccaratBonus,
-    BaccaratPoint6
+    BaccaratPoint6,
+    HappySaturday
     // liveGift
   },
   props: {

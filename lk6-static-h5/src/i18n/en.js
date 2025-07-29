@@ -936,6 +936,13 @@ export default {
         title: "Application method",
         desc: "Super tie game, players bet on tie, minimum bet 100U, both banker and player get 6 points, the winnings of this game will be increased by 20%, you need to apply to online customer service or Telegram customer service: {telegram}."
       }
+    },
+    happySaturday: {
+      claimSection: {
+        title: "Betting Rewards",
+        validBets: "Valid Bets:",
+        todayBonus: "Claimable bonus:"
+      }
     }
   },
   affiliate: {

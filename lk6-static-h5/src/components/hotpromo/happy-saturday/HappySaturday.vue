@@ -5,43 +5,32 @@
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
             <div class="claim-title-icon"></div>
-            {{ $t("hotpromo.weeklyReward.rewardSection.title") }}
+            {{ $t("hotpromo.happySaturday.claimSection.title") }}
           </div>
           <div class="reward-info">
             <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
-              {{ $t("hotpromo.weeklyReward.rewardSection.yesterdayValidBets") }}
+              {{ $t("hotpromo.happySaturday.claimSection.validBets") }}
               <span class="amount">{{ totalValidBet }}{{ store.currency.value }}</span>
             </div>
           </div>
           <div class="reward-info">
             <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
-              {{ $t("hotpromo.weeklyReward.rewardSection.todayBonus") }}
+              {{ $t("hotpromo.happySaturday.claimSection.todayBonus") }}
               <span class="amount">{{ bonus }}{{ store.currency.value }}</span>
             </div>
           </div>
         </div>
         <div class="livepoker-rebate-section-right">
-          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0 || loadingClaim }">
-            <template v-if="languageVal !== 'en'">
-              <img
-                v-if="bonus <= 0 || loadingClaim"
-                src="@/assets/promo/lh-livepoker-rebate/reward-btn-3-disabled.png"
-                alt=""
-                width="100%"
-              />
-              <img v-else src="@/assets/promo/lh-livepoker-rebate/reward-btn-3.png" alt="" width="100%" />
-            </template>
-            <template v-else>
-              <img
-                v-if="bonus <= 0 || loadingClaim"
-                src="@/assets/promo/lh-livepoker-rebate/reward-btn-3-disabled-en.png"
-                alt=""
-                width="100%"
-              />
-              <img v-else src="@/assets/promo/lh-livepoker-rebate/reward-btn-3-en.png" alt="" width="100%" />
-            </template>
+          <div class="bonus-image" @click="handleClaimBonus" :class="{ disabled: bonus <= 0, loading: loadingClaim }">
+            <img
+              v-if="languageVal !== 'en'"
+              src="../../../assets/images/promotion/hotpromo/common/claim-btn3.png"
+              alt=""
+              width="100%"
+            />
+            <img v-else src="../../../assets/images/promotion/hotpromo/common/claim-btn3-en.png" alt="" width="100%" />
           </div>
         </div>
       </div>
@@ -50,32 +39,42 @@
 </template>
 
 <script setup>
-import { useNotify } from "@/hooks/notify";
-import { onMounted, ref, defineProps } from "vue";
-import { userStore } from "@/store";
-import { initSportWeeklyBonus, claimSportWeeklyBonus } from "@/api/index/promo";
-import { storeToRefs } from "pinia";
-import { i18nStore } from "@/store/language";
+import { onMounted, ref, toRefs } from "vue";
+import { initHappySaturdayBonus, claimHappySaturdayBonus } from "../../../api/index/promo";
+import { useNotify } from "src/hooks/notify";
+import { userStore } from "src/stores";
 import { useI18n } from "vue-i18n";
+import { storeToRefs } from "pinia";
+import { i18nStore } from "src/router/language";
 
-const props = defineProps(["promoCode", "params"]);
-const promoCode = ref(props.promoCode);
-const store = userStore();
+const props = defineProps(["promoCode"]);
+const { promoCode } = toRefs(props);
+
 const notify = useNotify();
-const { languageVal } = storeToRefs(i18nStore());
+const store = userStore();
 const { t } = useI18n();
-
-const loadingClaim = ref(false);
+const { languageVal } = storeToRefs(i18nStore());
 
 const totalValidBet = ref(0);
 const bonus = ref(0);
+const loadingClaim = ref(false);
 
-const fetchData = async () => {
+const handleClaimBonus = () => {
   loadingClaim.value = true;
-  initSportWeeklyBonus(promoCode.value)
+  claimHappySaturdayBonus(promoCode.value)
     .then((res) => {
-      totalValidBet.value = res.data.totalValidBet;
-      bonus.value = res.data.bonus;
+      if (res.code === 0) {
+        notify({
+          type: "success",
+          message: t("common.notification.claimSuccessfully.message")
+        });
+        store.getBalance();
+      } else {
+        notify({
+          type: "error",
+          message: res.message
+        });
+      }
     })
     .catch(() => {})
     .finally(() => {
@@ -83,23 +82,14 @@ const fetchData = async () => {
     });
 };
 
-const handleClaimBonus = () => {
+const fetchData = async () => {
   loadingClaim.value = true;
-  claimSportWeeklyBonus(promoCode.value)
+  initHappySaturdayBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
-        notify({
-          type: "success",
-          message: t("message.claimSuccessfully")
-        });
-        store.getBalance();
+        totalValidBet.value = res.data.totalValidBet;
+        bonus.value = res.data.bonus;
       }
-      // else {
-      //   notify({
-      //     type: "error",
-      //     message: res.message
-      //   });
-      // }
     })
     .catch(() => {})
     .finally(() => {
@@ -120,57 +110,65 @@ onMounted(() => {
   display: flex;
   justify-content: center;
 }
+
 .livepoker-rebate-container {
-  width: 1200px;
+  width: 100%;
   height: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .livepoker-rebate-section {
   box-shadow: 0px 0px 4px 0px #01497b0f;
-  padding: 30px 40px;
+  padding: 20px 12px 40px;
   border-radius: 12px;
   border: 1px solid #acd4f6;
-  margin-top: 40px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  background: url("@/assets/promo/lh-livepoker-rebate/section-bg.png");
+  background: url("../../../assets/images/promotion/hotpromo/common/section-bg.png");
   background-size: 100% 100%;
+  align-items: center;
+  width: 100%;
 
   .livepoker-rebate-section-left {
     display: flex;
     flex-direction: column;
-    // justify-content: space-between;
-    justify-content: flex-start;
-    gap: 25px;
+    justify-content: space-between;
+    width: 100%;
   }
 
   .livepoker-rebate-section-right {
-    margin-top: auto;
-    margin-bottom: auto;
-    width: 220px;
+    width: 180px;
+    margin-top: 20px;
 
     .bonus-image {
-      cursor: pointer;
       width: 100%;
+      cursor: pointer;
 
-      &:hover {
-        filter: brightness(0.9);
-      }
       &:active {
+        filter: brightness(0.85);
         transform: translate(0px, 1px);
-        opacity: 0.9;
       }
 
       &.disabled {
+        filter: grayscale(100%);
         cursor: not-allowed;
         pointer-events: none;
+      }
+
+      &.loading {
+        cursor: not-allowed;
+        opacity: 0.8;
       }
     }
   }
 
   .livepoker-rebate-section-title {
     color: #000000;
-    font-size: 24px;
+    font-size: 16px;
     line-height: 1;
     font-weight: 600;
     display: flex;
@@ -195,16 +193,16 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   .livepoker-rebate-game-bottom-left-title {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 22.4px;
-    color: #ff3333;
-  }
-  .livepoker-rebate-game-bottom-left-btn {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 600;
     line-height: 22.4px;
-    color: #ff3333;
+    color: #ff5d5d !important;
+  }
+  .livepoker-rebate-game-bottom-left-btn {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 22.4px;
+    color: #ff5d5d !important;
     cursor: pointer;
     display: flex;
     justify-content: flex-start;
@@ -219,12 +217,12 @@ onMounted(() => {
   border-radius: 12px;
   display: flex;
   align-items: center;
-  // margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 .reward-info-icon {
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   margin-right: 10px;
 }
 
@@ -233,9 +231,8 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 20px;
+  font-size: 12px;
   color: black;
-  gap: 24px;
 
   .amount {
     color: #00a1ff;

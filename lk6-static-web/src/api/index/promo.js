@@ -959,3 +959,11 @@ export function initSportWeeklyBonus() {
 export function claimSportWeeklyBonus() {
   return server.EVENT.post(`/session/game-type-bonus/claim?promoCode=lk6-sport-weekly-bonus`);
 }
+
+export const initHappySaturdayBonus = () => {
+  return server.EVENT.get(`/session/weekly-bet/init?promoCode=lk6-happy-saturday`);
+};
+
+export const claimHappySaturdayBonus = () => {
+  return server.EVENT.post(`/session/weekly-bet/claimBonus?promoCode=lk6-happy-saturday`);
+};

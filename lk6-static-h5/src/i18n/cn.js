@@ -936,6 +936,13 @@ export default {
         title: "申请方式",
         desc: "超级和局，玩家下注和，最低下注100U庄闲都开出6点，本局中得的彩金加奖20%，需向在线客服或Telegram客服：{telegram}申请。"
       }
+    },
+    happySaturday: {
+      claimSection: {
+        title: "投注嘉奖",
+        validBets: "有效投注：",
+        todayBonus: "可领取彩金："
+      }
     }
   },
   affiliate: {

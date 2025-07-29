@@ -10,6 +10,7 @@
     <WeeklyReward v-if="list.redirectUrl === 'lk6-weekly-reward'" :promo-code="list.promoCode" />
     <BaccaratBonus v-if="list.redirectUrl === 'lk6-baccarat-bonus'" :promo-code="list.promoCode" />
     <BaccaratPoint6 v-if="list.redirectUrl === 'lk6-baccarat-point-6'" :promo-code="list.promoCode" />
+    <HappySaturday v-if="list.redirectUrl === 'lk6-happy-saturday'" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -36,11 +37,12 @@ import { useQuasar } from "quasar";
 import moment from "moment";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+
 const WeeklyReward = defineAsyncComponent(() => import("./hotpromo/weekly-reward/WeeklyReward.vue"));
 const BaccaratBonus = defineAsyncComponent(() => import("./hotpromo/baccarat-bonus/BaccaratBonus.vue"));
 const BaccaratPoint6 = defineAsyncComponent(() => import("./hotpromo/baccarat-point-6/BaccaratPoint6.vue"));
-
 const ClaimPromo = defineAsyncComponent(() => import("../components/hotpromo/claimPromo.vue"));
+const HappySaturday = defineAsyncComponent(() => import("./hotpromo/happy-saturday/HappySaturday.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -50,7 +52,8 @@ export default defineComponent({
     ClaimPromo,
     WeeklyReward,
     BaccaratBonus,
-    BaccaratPoint6
+    BaccaratPoint6,
+    HappySaturday
   },
   props: {
     list: {
