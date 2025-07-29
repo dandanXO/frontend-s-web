@@ -1,9 +1,8 @@
 <template>
-  <!-- <ProfileSummary :homeProfile="true" /> -->
-  <div class="menu-open" :class="{ open: ui.isMenuOpen }">
-    <!-- <div style="height: 56px" v-if="topDownload && !ui.hideDownload"></div> -->
+  <ProfileSummary v-if="ui.isMenuOpen" :homeProfile="true" />
+  <!-- <div class="menu-open" :class="{ open: ui.isMenuOpen }">
     <SideMenu @closeMenu="toggleMenuOpen()" />
-  </div>
+  </div> -->
 
   <q-page>
     <div class="top-setting-section">
@@ -531,7 +530,8 @@ const handleCopyClick = async () => {
           width: 16px;
           height: 16px;
           margin-left: 8px;
-          filter: brightness(0) saturate(100%) invert(19%) sepia(11%) saturate(586%) hue-rotate(353deg) brightness(97%) contrast(82%);
+          filter: brightness(0) saturate(100%) invert(19%) sepia(11%) saturate(586%) hue-rotate(353deg) brightness(97%)
+            contrast(82%);
         }
       }
       .profile-pic-frame {
