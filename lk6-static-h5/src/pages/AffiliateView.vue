@@ -1,7 +1,7 @@
 <template>
   <div class="affiliate-page">
     <div class="affiliate-container">
-      <img class="banner" :src="require(`../assets/images/affiliate/banner_${lang}.png`)" />
+      <img class="banner" :src="require(`../assets/images/affiliate/banner_${languageVal}.png`)" />
       <div class="contact-container">
         <div class="contact-cards">
           <div class="contact-card">
@@ -140,11 +140,15 @@
   </div>
 </template>
 <script setup>
+import { storeToRefs } from "pinia";
 import { writeClipboard } from "src/boot/utils";
+import { i18nStore } from "src/router/language";
 import { ref } from "vue";
 const affiliateUrl = ref("https://6666vip.cc/lk6/");
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 const lang = localStorage.getItem("languageLocale") || "zh";
+
+const { languageVal } = storeToRefs(i18nStore());
 
 const onClickLogin = () => {
   window.location.href = affiliateUrl.value + "login?agent=" + (affCode ? affCode : "");
