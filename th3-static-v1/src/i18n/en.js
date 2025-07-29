@@ -354,6 +354,7 @@ export default {
     poker: "Poker",
     sport: "Sport",
     esport: "E-sports",
+    lottery: "Lottery",
     livesupport: "Live Support",
     feedback: "Feedback",
     telegram: "Telegram",

@@ -349,6 +349,7 @@ export default {
     poker: "پوکر",
     sport: "کھیل",
     esport: "ای اسپورٹس",
+    lottery: "لاٹری",
     livesupport: "لائیو سپورٹ",
     feedback: "رائے",
     telegram: "ٹیلیگرام",

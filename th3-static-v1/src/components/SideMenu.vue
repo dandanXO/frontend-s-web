@@ -56,6 +56,10 @@
       <div class="item-icon"><img src="../assets/images/auth/menu-sport.png" /></div>
       {{ $t("sideNav.sport") }}
     </div>
+    <div class="side-menu-item" @click="activateSlide('Lottery')">
+      <div class="item-icon"><img src="../assets/images/auth/menu-lottery.png" /></div>
+      {{ $t("sideNav.lottery") }}
+    </div>
     <div class="side-menu-transparent-grp">
       <div class="side-menu-item side-menu-item__transparent" @click="openCSInNewTab(ui.CSAUrl)">
         <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.svg" /></div>

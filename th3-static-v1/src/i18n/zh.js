@@ -345,6 +345,7 @@ export default {
     poker: "扑克",
     sport: "体育",
     esport: "电竞",
+    lottery: "彩票",
     livesupport: "在线客服",
     feedback: "反馈",
     telegram: "Telegram",
