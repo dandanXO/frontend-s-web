@@ -584,7 +584,7 @@
                   >
                     <q-card>
                       <q-card-section style="background: transparent">
-                        {{ ann.content }}
+                        <div v-html="ann.content"></div>
                       </q-card-section>
                     </q-card>
                   </q-expansion-item>
@@ -2462,6 +2462,10 @@ export default defineComponent({
       visibility: hidden;
       z-index: -1;
       width: max-content;
+
+      p {
+        margin: 0px;
+      }
     }
   }
 }
