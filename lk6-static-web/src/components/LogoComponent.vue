@@ -1,6 +1,6 @@
 <template>
     <div class="acc-dialog-homelogo">
-        <img src="../assets/lucky-6-logo.svg" height="45px" class="clover-logo" />
+        <img src="../assets/lucky-6-logo.png" height="45px" class="clover-logo" />
     </div>
 </template>
 <script setup>
