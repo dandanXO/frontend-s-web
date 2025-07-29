@@ -897,9 +897,9 @@ export default defineComponent({
       },
       {
         name: "baccarat",
-        icon: "slide-baccarat-icon.png",
-        iconActive: "slide-baccarat-icon-active.png",
-        label: t("common.gameType.baccarat"),
+        icon: "slide-eeai-live-icon.png",
+        iconActive: "slide-eeai-live-icon-active.png",
+        label: t("common.gameType.eeaiLive"),
         mb: 0,
         gap: 8
       },
