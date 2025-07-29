@@ -3,13 +3,12 @@
     <div class="chat-floating-header">
       <div class="chat-floating-panel__avatar-wrapper">
         <img class="chat-floating-panel__avatar" :src="avatarUrl" loading="lazy" />
-        <span class="profile-name">{{ profileName }}</span>
+        <span class="profile-name">{{ profileName === "SYSTEM" ? "雷火" : profileName }}</span>
       </div>
 
       <div v-if="livestreamData.id" class="chat-floating-panel__tag-wrapper">
-        <div v-if="!isSystemLivestream" class="chat-floating-panel__tag streamer">
-          <!--          {{ isSystemLivestream ? "官方直播间" : "主播" }}-->
-          主播
+        <div class="chat-floating-panel__tag streamer">
+          {{ isSystemLivestream ? "官方直播间" : "主播" }}
         </div>
         <div v-if="currentSportType" class="chat-floating-panel__tag sport-type">
           {{ currentSportType }}

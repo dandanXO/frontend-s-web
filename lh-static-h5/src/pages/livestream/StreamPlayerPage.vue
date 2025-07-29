@@ -39,14 +39,11 @@
 
               <!-- <img :src="imgURL + currentLiveData.avatar" /> -->
             </div>
-            <span class="profile-name">{{currentLiveData.name === 'SYSTEM' ? "官方直播间" : currentLiveData.name}}</span>
+            <span class="profile-name">{{ currentLiveData.name === "SYSTEM" ? "雷火" : currentLiveData.name }}</span>
 
-<!--            <template >-->
-<!--              <div class="tag tag&#45;&#45;live">官方直播间</div>-->
-<!--            </template>-->
-            <template v-if="currentLiveData.name !== 'SYSTEM'">
-              <div class="tag tag--live">主播</div>
-            </template>
+            <div class="tag tag--live">
+              {{ currentLiveData.name === "SYSTEM" ? "官方直播间" : "主播" }}
+            </div>
 
             <div class="tag tag--sport">{{ sportType.label }}</div>
           </div>
@@ -719,7 +716,6 @@ onDeactivated(() => {
           justify-content: center;
           overflow: hidden;
 
-
           img {
             display: block;
             width: 24px;
@@ -727,7 +723,7 @@ onDeactivated(() => {
           }
         }
 
-        .profile-name{
+        .profile-name {
           font-weight: 600;
           font-size: 12px;
         }
