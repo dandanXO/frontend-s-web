@@ -5,19 +5,19 @@
         <div class="livepoker-rebate-section-left">
           <div class="livepoker-rebate-section-title">
             <div class="claim-title-icon"></div>
-            {{ $t("hotpromo.weeklyReward.rewardSection.title") }}
+            {{ $t("hotpromo.happySaturday.rewardSection.title") }}
           </div>
           <div class="reward-info">
             <div class="reward-info-icon claim-coin-icon"></div>
             <div class="reward-info-content">
-              {{ $t("hotpromo.weeklyReward.rewardSection.yesterdayValidBets") }}
+              {{ $t("hotpromo.happySaturday.rewardSection.validBets") }}
               <span class="amount">{{ totalValidBet }}{{ store.currency.value }}</span>
             </div>
           </div>
           <div class="reward-info">
             <div class="reward-info-icon claim-gift-icon"></div>
             <div class="reward-info-content">
-              {{ $t("hotpromo.weeklyReward.rewardSection.todayBonus") }}
+              {{ $t("hotpromo.happySaturday.rewardSection.todayBonus") }}
               <span class="amount">{{ bonus }}{{ store.currency.value }}</span>
             </div>
           </div>
@@ -53,7 +53,7 @@
 import { useNotify } from "@/hooks/notify";
 import { onMounted, ref, defineProps } from "vue";
 import { userStore } from "@/store";
-import { initSportWeeklyBonus, claimSportWeeklyBonus } from "@/api/index/promo";
+import { initHappySaturdayBonus, claimHappySaturdayBonus } from "@/api/index/promo";
 import { storeToRefs } from "pinia";
 import { i18nStore } from "@/store/language";
 import { useI18n } from "vue-i18n";
@@ -72,7 +72,7 @@ const bonus = ref(0);
 
 const fetchData = async () => {
   loadingClaim.value = true;
-  initSportWeeklyBonus(promoCode.value)
+  initHappySaturdayBonus(promoCode.value)
     .then((res) => {
       totalValidBet.value = res.data.totalValidBet;
       bonus.value = res.data.bonus;
@@ -85,7 +85,7 @@ const fetchData = async () => {
 
 const handleClaimBonus = () => {
   loadingClaim.value = true;
-  claimSportWeeklyBonus(promoCode.value)
+  claimHappySaturdayBonus(promoCode.value)
     .then((res) => {
       if (res.code === 0) {
         notify({

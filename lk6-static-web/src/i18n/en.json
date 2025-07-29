@@ -38,7 +38,8 @@
     "submitSuccessfully": "Submit Successfully",
     "deleteCancelled": "Delete cancelled",
     "unbindSuccessfully": "Unbind Successfully",
-    "registerSuccessfully": "Register Successfully"
+    "registerSuccessfully": "Register Successfully",
+    "claimSuccessfully": "Claim Successfully"
   },
   "agent": {
     "telegramAgent": "Acting Commissioner",
@@ -446,6 +447,13 @@
       "rewardSection": {
         "title": "Application method",
         "desc": "Super tie game, players bet on tie, minimum bet 100U, both banker and player get 6 points, the winnings of this game will be increased by 20%, you need to apply to online customer service or Telegram customer service: {telegram}."
+      }
+    },
+    "happySaturday": {
+      "rewardSection": {
+        "title": "Betting Rewards",
+        "validBets": "Valid Bets:",
+        "todayBonus": "Claimable bonus:"
       }
     }
   },
