@@ -585,7 +585,7 @@ export default defineComponent({
     ]);
 
     const hasProfileSummary = computed(() => {
-      return (route.path === "/promo" && route.query.name) || ui.isMenuOpen;
+      return route.path === "/promo" && (route.query.name || !ui.isMenuOpen);
     });
     const platformsList = computed(() => {
       if (ui.slotLists.length === 0) {
