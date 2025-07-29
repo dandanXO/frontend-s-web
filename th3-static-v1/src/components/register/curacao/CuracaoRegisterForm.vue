@@ -64,7 +64,7 @@
       <q-popup-proxy transition-show="scale" transition-hide="scale">
         <q-date v-model="_birthday" mask="YYYY-MM-DD">
           <div class="row items-center justify-end">
-            <q-btn v-close-popup label="Close" color="white" flat />
+            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
           </div>
         </q-date>
       </q-popup-proxy>

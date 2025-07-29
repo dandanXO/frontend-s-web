@@ -313,14 +313,16 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = t("sideNav.fishing");
         } else if (route.path === "/promo") {
-          hasPage.value = true;
+          hasPage.value = false;
+          pageName.value = t("header.promotion");
           prevPage.value = "/";
           if (route.query.name) {
-            pageName.value = t("header.promotion");
             if (route.query.fromAccount) {
               prevPage.value = "/account/promotion";
             } else {
               hasPage.value = true;
+              pageName.value = t("header.deposit");
+              // hasPage.value = false;
               prevPage.value = "/promo";
             }
           }
@@ -784,7 +786,7 @@ svg path {
 
 .q-page-container {
   background: repeating-linear-gradient(45deg, #f1f1ee 0, #b9a78d 50%, #e9e8e4 100%);
-  background: url('../assets/images/index/bg.jpg') center center no-repeat;
+  background: url("../assets/images/index/bg.jpg") center center no-repeat;
   background-size: 100% 100%;
   min-height: calc(100vh - 50px);
   // background-image: url("../assets/images/index/app-bg.png");

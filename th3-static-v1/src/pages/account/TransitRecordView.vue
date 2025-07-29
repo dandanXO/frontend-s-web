@@ -24,7 +24,7 @@
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                         <q-date v-model="searchForm.deposit.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="white" flat />
+                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -37,7 +37,7 @@
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                         <q-date v-model="searchForm.deposit.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="white" flat />
+                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -75,7 +75,7 @@
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                         <q-date v-model="searchForm.turnover.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="white" flat />
+                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -88,7 +88,7 @@
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                         <q-date v-model="searchForm.turnover.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="white" flat />
+                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -126,7 +126,7 @@
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                         <q-date v-model="searchForm.withdraw.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="white" flat />
+                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -139,7 +139,7 @@
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                         <q-date v-model="searchForm.withdraw.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="white" flat />
+                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -177,7 +177,7 @@
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                         <q-date v-model="searchForm.transfer.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="white" flat />
+                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -190,7 +190,7 @@
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                         <q-date v-model="searchForm.transfer.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="white" flat />
+                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -231,7 +231,7 @@
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                         <q-date v-model="searchForm.rebates.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="white" flat />
+                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -244,7 +244,7 @@
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                         <q-date v-model="searchForm.rebates.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="white" flat />
+                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -278,7 +278,7 @@
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                         <q-date v-model="searchForm.gameBetRecord.startDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="white" flat />
+                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -291,7 +291,7 @@
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                         <q-date v-model="searchForm.gameBetRecord.endDate" mask="YYYY-MM-DD">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup label="Close" color="white" flat />
+                            <q-btn v-close-popup :label="$t('btn.close')" color="white" flat />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -328,7 +328,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              :label="$t('btn.close')"
                               color="white"
                               flat
                             />
@@ -353,7 +353,7 @@
                           <div class="row items-center justify-end">
                             <q-btn
                               v-close-popup
-                              label="Close"
+                              :label="$t('btn.close')"
                               color="white"
                               flat
                             />

@@ -8,7 +8,7 @@
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="form.startDate" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="white" flat @click="handleSubmit()" />
+                  <q-btn v-close-popup :label="$t('btn.close')" color="white" flat @click="handleSubmit()" />
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -21,7 +21,7 @@
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="form.endDate" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="white" flat @click="handleSubmit()" />
+                  <q-btn v-close-popup :label="$t('btn.close')" color="white" flat @click="handleSubmit()" />
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -60,7 +60,7 @@
         :rows="tableData"
         row-key="name"
         :rows-per-page-options="[0]"
-        style="overflow-x: auto;"
+        style="overflow-x: auto"
         class="monthly-deposit-table"
         :loading-label="$t('btn.loading')"
         :no-data-label="$t('earnmoney.noDataAvailable')"
@@ -126,7 +126,7 @@ const tableHeaders = computed(() => [
   { label: t("earnMoney.teamBetting.table.players"), name: "players", field: "playerCount", align: "center" },
   { label: t("earnMoney.teamBetting.table.bet"), name: "bet", field: "bet", align: "center" },
   { label: t("earnMoney.teamBetting.table.validBet"), name: "validBet", field: "validBet", align: "center" },
-  { label: t("earnMoney.teamBetting.table.payout"), name: "payout", field: "payout", align: "center" },
+  { label: t("earnMoney.teamBetting.table.payout"), name: "payout", field: "payout", align: "center" }
 ]);
 
 const gameTypeOptions = computed(() => [
@@ -163,9 +163,11 @@ const getDownlinePlatformSummary = () => {
     .catch((e) => {
       console.log(e);
     });
-}
+};
 
-const handleSubmit = () => { getDownlinePlatformSummary() };
+const handleSubmit = () => {
+  getDownlinePlatformSummary();
+};
 
 onMounted(() => {
   getDownlinePlatformSummary();
