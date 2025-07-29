@@ -34,8 +34,8 @@
             <th>{{ $t("lang.weeklyDepositBonus.vipLevel") }}</th>
             <th>{{ $t("lang.weeklyDepositBonus.weeklyDepositTier1") }}</th>
             <th>{{ $t("lang.weeklyDepositBonus.bonusRateTier1") }}</th>
-            <th>{{ $t("lang.weeklyDepositBonus.weeklyDepositTier2") }}</th>
-            <th>{{ $t("lang.weeklyDepositBonus.bonusRateTier2") }}</th>
+<!--            <th>{{ $t("lang.weeklyDepositBonus.weeklyDepositTier2") }}</th>-->
+<!--            <th>{{ $t("lang.weeklyDepositBonus.bonusRateTier2") }}</th>-->
             <th>{{ $t("lang.weeklyDepositBonus.maximumBonus") }}</th>
           </tr>
         </thead>
@@ -44,56 +44,56 @@
             <td>VIP 1</td>
             <td>5,000 VNDP</td>
             <td>0.3%</td>
-            <td>8,888 VNDP</td>
-            <td>0.4%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>0.4%</td>-->
             <td>1,088 VNDP</td>
           </tr>
           <tr>
             <td>VIP 2</td>
             <td>5,000 VNDP</td>
-            <td>0.4%</td>
-            <td>8,888 VNDP</td>
-            <td>0.5%</td>
+            <td>0.3%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>0.5%</td>-->
             <td>1,088 VNDP</td>
           </tr>
           <tr>
             <td>VIP 3</td>
             <td>5,000 VNDP</td>
-            <td>0.5%</td>
-            <td>8,888 VNDP</td>
-            <td>0.6%</td>
+            <td>0.4%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>0.6%</td>-->
             <td>1,088 VNDP</td>
           </tr>
           <tr>
             <td>VIP 4</td>
             <td>5,000 VNDP</td>
-            <td>0.6%</td>
-            <td>8,888 VNDP</td>
-            <td>0.7%</td>
+            <td>0.4%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>0.7%</td>-->
             <td>1,088 VNDP</td>
           </tr>
           <tr>
             <td>VIP 5</td>
             <td>5,000 VNDP</td>
-            <td>0.7%</td>
-            <td>8,888 VNDP</td>
-            <td>0.8%</td>
+            <td>0.5%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>0.8%</td>-->
             <td>1,088 VNDP</td>
           </tr>
           <tr>
             <td>VIP 6</td>
             <td>5,000 VNDP</td>
-            <td>0.8%</td>
-            <td>8,888 VNDP</td>
-            <td>0.9%</td>
+            <td>0.5%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>0.9%</td>-->
             <td>1,088 VNDP</td>
           </tr>
           <tr>
             <td>VIP 7</td>
             <td>5,000 VNDP</td>
-            <td>0.9%</td>
-            <td>8,888 VNDP</td>
-            <td>1.0%</td>
+            <td>0.6%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>1.0%</td>-->
             <td>1,088 VNDP</td>
           </tr>
         </tbody>
@@ -167,29 +167,31 @@
             <div class="hint">{{ $t("lang.weeklyDepositBonus.condition5") }}</div>
           </div>
         </div>
+        <!--
+               <div class="item">
+                 <div class="item-num">6</div>
+                 <div class="item-desc">
+                   <div class="hint">{{ $t("lang.weeklyDepositBonus.condition6") }}</div>
+                 </div>
+               </div>
 
-        <div class="item">
-          <div class="item-num">6</div>
-          <div class="item-desc">
-            <div class="hint">{{ $t("lang.weeklyDepositBonus.condition6") }}</div>
-          </div>
-        </div>
+               <div class="item">
+                 <div class="item-num">7</div>
+                 <div class="item-desc">
+                   <div class="hint">{{ $t("lang.weeklyDepositBonus.condition7") }}</div>
+                 </div>
+               </div>
 
-        <div class="item">
-          <div class="item-num">7</div>
-          <div class="item-desc">
-            <div class="hint">{{ $t("lang.weeklyDepositBonus.condition7") }}</div>
-          </div>
-        </div>
-
-        <div class="item">
-          <div class="item-num">8</div>
-          <div class="item-desc">
-            <div class="hint">{{ $t("lang.weeklyDepositBonus.condition8") }}</div>
-          </div>
-        </div>
+               <div class="item">
+                 <div class="item-num">8</div>
+                 <div class="item-desc">
+                   <div class="hint">{{ $t("lang.weeklyDepositBonus.condition8") }}</div>
+                 </div>
+               </div>
+               -->
       </div>
     </div>
+
     <!-- <div class="remaining-draw-wrapper">
             <p class="remaining-draw-text">剩余抽奖次数：<span id="remaning-draw-amt">{{ remainingDraws }}</span></p>
         </div> -->
