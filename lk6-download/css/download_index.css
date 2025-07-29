@@ -122,8 +122,7 @@ html,body {
 	animation-duration: 0.3s;
 	animation-fill-mode: forwards;
 	&.sheet-teach {
-
-		height: 73vh;
+		height: 60vh;
 		/*padding: 20px;*/
 	}
 	&.sheet-download {
