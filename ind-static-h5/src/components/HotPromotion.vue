@@ -25,7 +25,7 @@
     />
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'indwin-slot-ftd' && store.token" :params="list.param" />
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
-    <DailyBonusPromo v-if="isCommonPromo && list.redirectUrl === 'daily-bonus'" :params="list.param" />
+    <DailyBonusPromo v-if="isCommonPromo && list.redirectUrl === 'daily-bonus'" :promoCode="list.promoCode" :params="list.param" />
 
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">

@@ -3,6 +3,9 @@
     <div class="daily-bonus-main-img">
       <img src="./img/dailybonus-main-img.png" alt="" />
     </div>
+    <div class="history-btn" v-if="showHistoryBtn" @click="showHistory()">
+      History
+    </div>
     <div class="daily-bonus-wrap">
       <div v-if="loading" class="bonus-amount" style="padding-top: 50px;">
         <q-spinner></q-spinner>
@@ -28,12 +31,14 @@
           <div class="bonus-info-day">
             <img :src="require(`./img/day${task.day}.png`)" alt="" />
           </div>
-          <div class="bonus-info-img">
-            <img src="./img/bonus-claim-01.png" v-if="task.status === 'COMPLETED'" alt="" />
-            <img src="./img/bonus-claim-02.png" v-else alt="" />
+          <div class="bonus-info-img" :class="{complete: task.status === 'COMPLETED', small: task.bonus <= 50, big: task.bonus > 50}">
+            <img src="./img/big-bonus.png" v-if="task.bonus > 50">
+            <img src="./img/small-bonus.png" v-else>
+            <!-- <img src="./img/bonus-small.png" v-if="task.status === 'COMPLETED'" alt="" />
+            <img src="./img/bonus-claim-02.png" v-else alt="" /> -->
           </div>
           <div class="bonus-info-details">
-            <div class="bonus-info-amount">{{ store.currency.value }}{{ task.bonus }}</div>
+            <!-- <div class="bonus-info-amount">{{ store.currency.value }}{{ task.bonus }}</div> -->
             <div class="bonus-info-task">{{ task.name }}</div>
             <div class="bonus-info-bar">
               <div class="bar-filled" :style="{ width: getBarPercentage(task.completedAmount, task.requiredAmount) + '%' }"></div>
@@ -42,7 +47,8 @@
           </div>
 
           <div class="bonus-info-action">
-            <img @click="gotoTask(task.type)" v-if="task.status === 'ONGOING'" src="./img/go-btn.png" alt="" />
+            <img @click="gotoTask(task)" v-if="task.status === 'ONGOING' && task.metRequirement === false" src="./img/go-btn.png" alt="" />
+            <img @click="gotoTask(task)" v-if="task.status === 'ONGOING' && task.metRequirement === true" src="./img/receive-btn.png" alt="" />
             <div class="completed" v-if="task.status === 'COMPLETED'">
               <img src="./img/completedicon.png" alt="" />
               Completed
@@ -138,17 +144,43 @@
     
 
   <q-dialog v-model="bonusOpened" persistent>
-    <q-card class="win-rebate-model">
-      <q-card-section class="row items-center">
+    <q-card class="win-modal popout-dialog">
+      <!-- <q-card-section class="row items-center">
         <div class="bonus-svg-div">
           <span class="bonus-text">Congratulations! <br>You collected</span>
           <span class="claim-amt">{{ winAmount }}</span>
         </div>
-      </q-card-section>
+      </q-card-section> -->
 
+      <q-card-section class="item-img">
+        <div class="item-bg"><img class="bonus-img" src="./img/bonus-bg.png">
+        <div class="item-treasure"><img src="./img/bonus-treasure.png"></div>
+        </div>
+        <div class="item-amt">GET <span class="yellow">{{ store.currency.value }}{{ winAmount }}</span> BONUS</div>
+      </q-card-section>
       <q-card-actions align="center">
-        <q-btn flat label="Confirm" color="primary" v-close-popup no-caps />
+        <q-btn @click="initData()" flat label="Confirm" class="text-white confirm-btn" v-close-popup no-caps />
       </q-card-actions>
+    </q-card>
+  </q-dialog>
+  
+  <q-dialog v-model="isShowBonusHistory" persistent>
+    <q-card class="popout-dialog history-modal">
+      <div class="header-title">
+        <q-btn dense flat icon="chevron_left" class="back-btn text-white" size="16px" v-close-popup />
+        History
+      </div>
+      <q-card-section v-for="(item, i) in historyList" :key="i" class="row items-center">
+        <div class="history-top-row">
+          <div class="item-day">Day {{ item.day }}</div>
+          <div class="item-task">{{ item.name }}</div>
+        </div>
+        <div class="history-bottom-row">
+          <div class="item-completion">{{ item.completionTime }}</div>
+          <div class="item-bonus"><span class="white">Bonus :</span> <span class="yellow">{{ item.bonus }}</span></div>
+        </div>
+        
+      </q-card-section>
     </q-card>
   </q-dialog>
   </div>
@@ -163,16 +195,61 @@ import { useRouter } from "vue-router";
 const loading = ref(false);
 const router = useRouter();
 const store = userStore();
-
 const accumulatedBonus = ref();
 const minBonus = ref();
 const hasWithdrawn = ref(false);
 const tasksStartTime = ref();
 const tasksEndTime = ref();
 const taskList = ref([]);
-const bonusOpened = ref(false);
+const bonusOpened = ref(true);
 const winAmount = ref(0);
 const countdownText = ref('');
+const props = defineProps(['promoCode'])
+
+const isShowBonusHistory = ref(false);
+const historyList = ref([]);
+const loadHistory = () => {
+  eventapi.get(`/session/member-tasks/history?promoCode=${props.promoCode}`).then((res) => {
+    // const res = {
+    //     "code": 0,
+    //     "data": [
+    //         {
+    //             "id": 375,
+    //             "day": 1,
+    //             "sequence": 1,
+    //             "name": "Login",
+    //             "bonus": 50.0000,
+    //             "completionTime": "2025-07-28 13:11:33"
+    //         },
+    //         {
+    //             "id": 376,
+    //             "day": 1,
+    //             "sequence": 2,
+    //             "name": "Successfully deposit 100 or above",
+    //             "bonus": 100.0000,
+    //             "completionTime": "2025-07-28 13:11:50"
+    //         },
+    //         {
+    //             "id": 378,
+    //             "day": 1,
+    //             "sequence": 4,
+    //             "name": "Successfully withdraw 1 times",
+    //             "bonus": 100.0000,
+    //             "completionTime": "2025-07-28 13:17:19"
+    //         }
+    //     ]
+    // }
+    historyList.value = res.data
+    if (historyList.value.length > 0) {
+      showHistoryBtn.value = true;
+    }
+  })
+}
+const showHistoryBtn = ref(false);
+const showHistory = () => {
+  loadHistory();
+  isShowBonusHistory.value = true;
+}
 const initData = () => {
 //   loading.value = true;
 //   loading.value = false;
@@ -240,8 +317,9 @@ const initData = () => {
 //       ]
 //   }
 // }
+  loadHistory();
   loading.value = true;
-   eventapi.get('/session/member-tasks/init', {params: { promoCode: "ind-seven-days-bonus" }}).then((res) => {
+   eventapi.get('/session/member-tasks/init', {params: { promoCode: props.promoCode }}).then((res) => {
     
     loading.value = false;
     
@@ -295,7 +373,13 @@ function getBarPercentage(part, total) {
   if (part >= total) return 100;
   return (part / total) * 100;
 }
-const gotoTask = (taskType) => {
+const gotoTask = (task) => {
+  const taskType = task.type
+  const metRequirement = task.metRequirement
+  if (metRequirement) {
+    collectBonus(task.id)
+    return
+  }
   if (taskType === 'LOGIN') {
     router.push('/login');
   }
@@ -319,9 +403,9 @@ const gotoTask = (taskType) => {
   }
 }
 
-const collectBonus = () => {
+const collectBonus = (taskId) => {
   eventapi
-    .post(`/session/member-tasks/claimBonus?promoCode=ind-seven-days-bonus`)
+    .post(`/session/member-tasks/completeTask?promoCode=${props.promoCode}&taskId=${taskId}`)
     .then((res) => {
       if (res.code === 0) {
         winAmount.value = res.data;
@@ -346,6 +430,15 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.history-btn {
+  position: fixed;
+  background: #3F308f;
+  padding: 5px 10px;
+  right: 0;
+  top: 180px;
+  border-radius: 6px 0 0 6px;
+  z-index: 999;
+}
 .daily-bonus-main-img {
   img {
     display: block;
@@ -446,18 +539,80 @@ onMounted(() => {
         top: -15px;
         left: -15px;
         width: 50px;
+        z-index: 2;
         img {
           width: 100%;
         }
       }
       .bonus-info-img {
         // margin-bottom: -6px;
+        background: linear-gradient(180deg, #9D75D4 0%, #4E15AA 100%);
+        position: relative;
+        padding-right: 5px;
+        border-radius: 15px 0 15px 15px;
+        &.complete {
+          background: linear-gradient(180deg, #FFBE3D 0%, #FF8400 100%);
+          
+        }
+        &.small {
+          &::after {
+            content: "";
+            background-size: contain;
+            background-repeat: no-repeat;
+
+            animation: sparkleAnim 0.8s steps(1) infinite;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+          }
+        }
+        &.big {
+          &::after {
+            content: "";
+            background-size: contain;
+            background-repeat: no-repeat;
+
+            animation: sparkleAnimBig 0.8s steps(1) infinite;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+          }
+        }
         img {
-          width: 80px !important;
+          z-index: 2;
+          width: 70px !important;
           margin-bottom: 0;
         }
       }
+      @keyframes sparkleAnim {
+        0% {
+          background-image: url('img/small-sparkle-1.png');
+        }
+        50% {
+          background-image: url('img/small-sparkle-2.png');
+        }
+        100% {
+          background-image: url('img/small-sparkle-1.png');
+        }
+      }
 
+      @keyframes sparkleAnimBig {
+        0% {
+          background-image: url('img/big-sparkle-1.png');
+        }
+        50% {
+          background-image: url('img/big-sparkle-2.png');
+        }
+        100% {
+          background-image: url('img/big-sparkle-1.png');
+        }
+      }
       .bonus-info-details {
         padding-left: 10px;
         // display: flex;
@@ -534,5 +689,152 @@ onMounted(() => {
 
 .rules-title {
   margin-top: 20px;
+}
+.win-modal {
+  background: unset;
+  box-shadow: unset;
+    overflow: hidden;
+  .q-btn {
+    
+    padding: 8px 20px;
+  }
+  .q-btn__content {
+    color: #fff;
+    // background-image: linear-gradient(to right, #de4545, #db7e42) !important;
+    background: #5C46E7;
+    width: 80px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+  }
+  
+  .item-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    img.bonus-img{ 
+      width: 100%;
+      animation: spin 6s linear infinite;
+    }
+  }
+  .item-treasure {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    height: 50%;
+    img {
+      width: 80%;
+    }
+  }
+  .item-amt {
+    
+    text-align: center;
+    margin-top: -70px;
+    font-size: 37px;
+    font-weight: bold;
+    background: url(img/strip.png)no-repeat center center;
+    
+    background-size: contain;
+    line-height: 45px;
+    .yellow { 
+      color: #FBCA3D;
+    }
+    color: #945AFF;
+    text-shadow: 1px 1px 2px #ffffff;
+  }
+  .confirm-btn {
+    background: #5C46E7;
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.history-modal {
+  height: 100%;
+  margin: 0;
+  max-height: unset !important;
+  width: 100%;
+  padding: 0;
+  background: #101114;
+  .header-title {
+    background: linear-gradient(180deg, #3E1474 0%, #101114 96.35%);
+    color: #ffffff;
+    padding: 20px 0 50px 0;
+    text-align: center;
+    font-weight: bold;
+    // position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    .back-btn {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      background: unset;
+    }
+  }
+  .q-card__section {
+    margin: 10px auto;
+    width: 90%;
+    background: #161F2E;
+    border-radius: 5px;
+    position: relative;
+
+    .bonus-info-day {
+      position: absolute;
+      top: -15px;
+      left: -15px;
+      width: 50px;
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .history-top-row {
+    padding: 15px 15px 15px 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    .item-day {
+      background: linear-gradient(90deg, #5C46E7 7.79%, rgba(92, 70, 231, 0) 100%);
+      padding: 0 20px 0 15px;
+    }
+    .item-task {
+      font-weight: 700;
+      color: #ffffff;
+    }
+  }
+  .history-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    padding: 0 15px 15px 15px;
+    .item-completion {
+      
+      color: #B2BDBF;
+    }
+    .item-bonus {
+      span.white {
+        font-weight: 700;
+        color: #ffffff;
+      }
+      span.yellow {
+        color: #FFCF3E;
+        font-weight: 700;
+      }
+    }
+  }
 }
 </style>
