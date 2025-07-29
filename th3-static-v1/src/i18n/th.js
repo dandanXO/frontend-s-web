@@ -352,6 +352,7 @@ export default {
     poker: "โป๊กเกอร์",
     sport: "กีฬา",
     esport: "อีสปอร์ต",
+    lottery: "ลอตเตอรี่",
     livesupport: "ช่วยเหลือสด",
     feedback: "ข้อเสนอแนะ",
     telegram: "Telegram",
