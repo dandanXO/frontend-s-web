@@ -61,7 +61,7 @@
                   </template>
                   <!-- <img :src="imgURL + item.homeIcon" /> -->
                 </div>
-                <div class="left-title">{{ item.homeNameZh ?? item.homeNameEn ?? item.homeName }}</div>
+                <div class="left-title">{{ item.homeNameZh || item.homeNameEn || item.homeName }}</div>
               </div>
               <div class="placeholder-right">
                 <div class="right-logo">
@@ -73,7 +73,7 @@
                   </template>
                   <!-- <img :src="imgURL + item.awayIcon" /> -->
                 </div>
-                <div class="right-title">{{ item.awayNameZh ?? item.awayNameEn ?? item.awayName }}</div>
+                <div class="right-title">{{ item.awayNameZh || item.awayNameEn || item.awayName }}</div>
               </div>
 
               <!-- <img
@@ -90,9 +90,9 @@
               {{ item.title }}
             </div>
             <div class="content-desc ellipsis">
-              {{ item.homeNameZh ?? item.homeNameEn ?? item.homeName }}
+              {{ item.homeNameZh || item.homeNameEn || item.homeName }}
               VS
-              {{ item.awayNameZh ?? item.awayNameEn ?? item.awayName }}
+              {{ item.awayNameZh || item.awayNameEn || item.awayName }}
             </div>
           </div>
           <div class="item-float-content">
