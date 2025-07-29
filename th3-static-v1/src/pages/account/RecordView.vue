@@ -128,7 +128,7 @@ import { onActivated, onMounted, reactive, ref, computed } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { updateDate, normalDateTime, convertToGMT55 } from "src/boot/utils";
+import { updateDate, normalDateTime, convertToGMT7 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { convertToCommaAmount } from "src/boot/utils";
@@ -598,7 +598,7 @@ onActivated(() => {
   border-bottom: 0;
 
   .pagination-btn {
-    background: #58b475;
+    background: #907C5F;
     font-size: 20px;
     width: 40px;
     height: 40px;

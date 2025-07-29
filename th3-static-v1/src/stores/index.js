@@ -297,7 +297,7 @@ export const userStore = defineStore("userStore", {
             var exclusive = JSON.parse(evip);
             this.evip = exclusive.wap;
           }
-          this.unreadInboxMail = 0;
+          
           if (from === "fromlogin") {
             if (!this.hasDeposit) {
               localStorage.setItem("newPlayerGuide", "1");

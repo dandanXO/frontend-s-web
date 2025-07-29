@@ -17,7 +17,7 @@
         <q-card-section class="content">{{ e.content }}</q-card-section>
 
         <q-card-section class="bottom-wrapper">
-          <div class="time">{{ convertToGMT55(e.sendTime) }}</div>
+          <div class="time">{{ convertToGMT7(e.sendTime) }}</div>
           <q-btn class="detail-btn" @click="onDetailsClick(e)" flat unelevated>
             More&nbsp;
             <q-icon class="forward-icon" name="arrow_forward_ios" size="small" />
@@ -33,7 +33,7 @@ import { ref, onMounted, onActivated } from "vue";
 import { useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
-import { convertToGMT55 } from "src/boot/utils";
+import { convertToGMT7 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 
@@ -183,7 +183,7 @@ onActivated(() => {
     .detail-btn {
       border-radius: 30px;
       // background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
-      background: linear-gradient(180deg, #21EF89 0%, #33562d 100%);
+      background: linear-gradient(180deg, #21ef89 0%, #33562d 100%);
       border: 1px solid #5d8956;
       font-size: 1rem;
       // font-weight: 700;

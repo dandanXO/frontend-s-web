@@ -8,7 +8,7 @@
   <div class="msg-detail-container">
     <div class="header">
       <div class="title">{{ mailDataRef.title }}</div>
-      <div class="send-time">{{ mailDataRef.sendTime && convertToGMT55(mailDataRef.sendTime) }}</div>
+      <div class="send-time">{{ mailDataRef.sendTime && convertToGMT7(mailDataRef.sendTime) }}</div>
     </div>
     <div class="content">{{ mailDataRef.content }}</div>
   </div>
@@ -20,7 +20,7 @@ import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import moment from "moment";
-import { convertToGMT55 } from "src/boot/utils";
+import { convertToGMT7 } from "src/boot/utils";
 
 const router = useRouter();
 const store = userStore();

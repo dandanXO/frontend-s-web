@@ -1,7 +1,7 @@
 <template>
   <q-card class="msg-container">
     <div class="time-wrapper">
-      <div class="time">{{ convertToGMT55(message.sendTime) }}</div>
+      <div class="time">{{ convertToGMT7(message.sendTime) }}</div>
       <div class="new-message-ribbon" v-if="!message.readTime"></div>
     </div>
 
@@ -39,6 +39,7 @@
 
 <script setup>
 import { computed, ref } from "vue";
+import { convertToGMT7 } from "src/boot/utils";
 
 const props = defineProps({ message: Object });
 const expand = ref(true);
@@ -48,8 +49,6 @@ const shortenedContent = computed(() =>
   expand.value ? props.message.content : props.message.content.slice(0, 50) + "..."
 );
 const redirectType = props.message.redirectType;
-
-const convertToGMT55 = (date) => date; // Replace with actual conversion logic
 
 const goToOuterLink = (link) => {
   window.open(link, "_blank");

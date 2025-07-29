@@ -57,10 +57,10 @@
               <InputField :label="$t('form.phone')">
                 <template #input>
                   <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly>
-                    <template v-if="!formDetail.phoneVerified" v-slot:append>
+                    <!-- <template v-if="!formDetail.phoneVerified" v-slot:append>
                       <span class="small-txt">{{ $t("form.otpVerification") }}</span>
                       <q-icon name="chevron_right" />
-                    </template>
+                    </template> -->
                   </q-input>
                 </template>
               </InputField>
