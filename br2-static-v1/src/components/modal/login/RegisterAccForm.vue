@@ -179,7 +179,7 @@
 
       <q-btn
         unelevated
-        class="bg-greenbtn reg-bonus-flag-btn"
+        class="bg-greenbtn"
         :label="$t('header.register')"
         no-caps
         padding="12px"
