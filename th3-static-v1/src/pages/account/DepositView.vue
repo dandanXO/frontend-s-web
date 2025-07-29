@@ -1794,12 +1794,14 @@ onBeforeRouteLeave((to, from, next) => {
 }
 
 .tutorial-link {
+  font-weight: 600;
   color: #3a3a3a;
   text-decoration: underline;
 }
 
 .step-desc-div {
-  color: #907c5f;
+  color: #433e38d7;
+  font-weight: 600;
 
   p {
     margin: 5px 0px;
