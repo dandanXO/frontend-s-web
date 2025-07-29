@@ -1,7 +1,7 @@
 <template>
   <div class="maintenance-container">
     <div class="maintenance-logo">
-      <img src="../assets/logo.png" />
+      <img src="../assets/index/logo.png" />
     </div>
     <div class="maintenance-img">
       <img :src="require('../assets/images/maintenance/maintenance-img.png')" />
