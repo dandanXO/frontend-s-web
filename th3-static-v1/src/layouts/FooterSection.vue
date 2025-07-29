@@ -62,6 +62,7 @@ import { useRoute } from "vue-router";
 const ui = useUI();
 const route = useRoute();
 const tab = ref("home");
+let prevTab = "home";
 
 const openSideMenu = () => {
   ui.isMenuOpen = !ui.isMenuOpen;
@@ -69,12 +70,20 @@ const openSideMenu = () => {
 };
 
 watch(tab, (newVal, oldVal) => {
-  if (newVal === "menu") {
-    ui.isMenuOpen = true;
-  } else if (ui.isMenuOpen) {
+  prevTab = oldVal;
+  if (newVal !== "menu" && ui.isMenuOpen) {
     ui.isMenuOpen = false;
   }
 });
+
+watch(
+  () => ui.isMenuOpen,
+  (newVal) => {
+    if (!newVal && tab.value === "menu") {
+      tab.value = prevTab;
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>
