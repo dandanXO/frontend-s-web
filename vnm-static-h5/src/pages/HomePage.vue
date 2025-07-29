@@ -116,13 +116,13 @@
         </div>
         <div ref="marqueePseudoRef" class="marquee-pseudo">
           <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-            {{ a.content }}
+            <p v-html="a.content"></p>
           </span>
         </div>
         <marquee-text :repeat="5" :duration="marqueeDuration">
-          <div v-if="announcementList">
+          <div style="display: flex; height: 20px;" v-if="announcementList">
             <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-              {{ a.content }}
+              <p v-html="a.content"></p>
             </span>
           </div>
         </marquee-text>
