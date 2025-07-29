@@ -168,26 +168,26 @@
           </div>
         </div>
 
-<!--        <div class="item">-->
-<!--          <div class="item-num">6</div>-->
-<!--          <div class="item-desc">-->
-<!--            <div class="hint">{{ $t("hotPromo.weeklyDepositBonus.condition6") }}</div>-->
-<!--          </div>-->
-<!--        </div>-->
+        <div class="item">
+          <div class="item-num">6</div>
+          <div class="item-desc">
+            <div class="hint">{{ $t("hotPromo.weeklyDepositBonus.condition6") }}</div>
+          </div>
+        </div>
 
-<!--        <div class="item">-->
-<!--          <div class="item-num">7</div>-->
-<!--          <div class="item-desc">-->
-<!--            <div class="hint">{{ $t("hotPromo.weeklyDepositBonus.condition7") }}</div>-->
-<!--          </div>-->
-<!--        </div>-->
+        <div class="item">
+          <div class="item-num">7</div>
+          <div class="item-desc">
+            <div class="hint">{{ $t("hotPromo.weeklyDepositBonus.condition7") }}</div>
+          </div>
+        </div>
 
-<!--        <div class="item">-->
-<!--          <div class="item-num">8</div>-->
-<!--          <div class="item-desc">-->
-<!--            <div class="hint">{{ $t("hotPromo.weeklyDepositBonus.condition8") }}</div>-->
-<!--          </div>-->
-<!--        </div>-->
+        <div class="item">
+          <div class="item-num">8</div>
+          <div class="item-desc">
+            <div class="hint">{{ $t("hotPromo.weeklyDepositBonus.condition8") }}</div>
+          </div>
+        </div>
       </div>
     </div>
     <!-- <div class="remaining-draw-wrapper">
