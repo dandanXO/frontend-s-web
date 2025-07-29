@@ -5,5 +5,5 @@ export const weeklyBonusInit = (promoCode) => {
 };
 
 export const claimWeeklyBonus = (promoCode) => {
-  return server.EVENT.post("/session/weekly-deposit/claimBonus", { promoCode });
+  return server.EVENT.post(`/session/weekly-deposit/claimBonus?promoCode=${promoCode}`);
 };

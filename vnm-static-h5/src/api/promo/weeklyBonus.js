@@ -6,5 +6,5 @@ export const weeklyBonusInit = (promoCode) => {
 };
 
 export const claimWeeklyBonus = (promoCode) => {
-  return eventapi.post("session/weekly-deposit/claimBonus", qs.stringify({ promoCode }));
+  return eventapi.post(`session/weekly-deposit/claimBonus?promoCode=${promoCode}`);
 };
