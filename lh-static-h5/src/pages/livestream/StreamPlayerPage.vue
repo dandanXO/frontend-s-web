@@ -41,10 +41,10 @@
             </div>
             <span class="profile-name">{{currentLiveData.name === 'SYSTEM' ? "官方直播间" : currentLiveData.name}}</span>
 
-            <template v-if="currentLiveData.name === 'SYSTEM'">
-              <div class="tag tag--live">官方直播间</div>
-            </template>
-            <template v-else>
+<!--            <template >-->
+<!--              <div class="tag tag&#45;&#45;live">官方直播间</div>-->
+<!--            </template>-->
+            <template v-if="currentLiveData.name !== 'SYSTEM'">
               <div class="tag tag--live">主播</div>
             </template>
 
