@@ -98,8 +98,7 @@ export const updateDate = (val) => {
 };
 
 export const convertToGMT7 = (dateTime) => {
-  console.log("hit 1", dateTime);
-  return moment(dateTime).add(-1, "hours").format("YYYY-MM-DD HH:mm:ss");
+  return moment(dateTime).format("YYYY-MM-DD HH:mm:ss");
 };
 export const convertToGMT8 = (dateTime) => {
   return moment(dateTime).utcOffset("+05:00").format("YYYY-MM-DD");

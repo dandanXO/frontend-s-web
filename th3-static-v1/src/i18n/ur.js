@@ -83,6 +83,11 @@ export default {
       validatePhoneAndEmail: "براہ کرم پہلے اپنا فون منسلک کریں",
       loginTomorrow: "براہ کرم کل لاگ اِن کریں تاکہ آپ اپنا پراسرار انعام حاصل کر سکیں۔",
       claimBonus: "آپ کو 100 روپے کا بونس موصول ہوا ہے!"
+    },
+    notice: {
+      notice: "اطلاع!",
+      close: "بند کریں",
+      more: "مزید"
     }
   },
   form: {

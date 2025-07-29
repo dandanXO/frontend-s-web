@@ -1298,7 +1298,7 @@
       <q-btn flat dense class="text-black announcement-close" v-close-popup>
         <img width="25px" height="25px" src="../assets/images/index/close-btn-brown.png" />
       </q-btn>
-      <div class="notice-title">Notice!</div>
+      <div class="notice-title">{{ $t("modal.notice.notice") }}</div>
       <q-card style="width: calc(100% - 0px); margin: auto" class="announcement-card">
         <q-card-section class="q-mb-md" style="max-height: 98%; overflow: auto">
           <!--     -->
@@ -1334,7 +1334,7 @@
                 size="sm"
                 flat
                 style="color: #ffffff; padding-right: 2px; border-radius: 6px"
-                :label="item.expanded ? 'close' : 'more'"
+                :label="item.expanded ? $t('modal.notice.close') : $t('modal.notice.more')"
                 :icon-right="item.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
                 @click="toggleExpanded(index)"
               />
@@ -1712,20 +1712,20 @@
     </MegaSharingWheelModal>
   </q-dialog>
 
-<!--  <q-dialog-->
-<!--    v-if="popupPromo === 'spin-lucky-wheel' && isShownSpinLuckyWheel"-->
-<!--    full-width-->
-<!--    :model-value="isShownSpinLuckyWheel"-->
-<!--    class="isCentreDialog spin-lucky-wheel-dialog"-->
-<!--    persistent-->
-<!--  >-->
-<!--    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />-->
-<!--    <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">-->
-<!--      <template #controller v-if="isShownNewPlayerWheel">-->
-<!--        <PopupController v-model="popupPromo" :hasSpin="true" :hasNewPlayer="true" />-->
-<!--      </template>-->
-<!--    </SpinLuckyWheelPromoHomePopup>-->
-<!--  </q-dialog>-->
+  <!--  <q-dialog-->
+  <!--    v-if="popupPromo === 'spin-lucky-wheel' && isShownSpinLuckyWheel"-->
+  <!--    full-width-->
+  <!--    :model-value="isShownSpinLuckyWheel"-->
+  <!--    class="isCentreDialog spin-lucky-wheel-dialog"-->
+  <!--    persistent-->
+  <!--  >-->
+  <!--    <q-btn class="money-rain-close" icon="close" round dense @click="closeDialog" />-->
+  <!--    <SpinLuckyWheelPromoHomePopup @close-dialog="closeDialog" ref="spinLuckyWheelPromoHomePopupRef">-->
+  <!--      <template #controller v-if="isShownNewPlayerWheel">-->
+  <!--        <PopupController v-model="popupPromo" :hasSpin="true" :hasNewPlayer="true" />-->
+  <!--      </template>-->
+  <!--    </SpinLuckyWheelPromoHomePopup>-->
+  <!--  </q-dialog>-->
   <q-dialog class="isCentreDialog" v-model="isHasUnusedCoupon" @hide="isHasUnusedCoupon = false">
     <div class="congrats-container">
       <q-btn icon="close" round dense v-close-popup class="congrats-close" />
@@ -1769,7 +1769,7 @@
   <AddToHomeScreenModal :isAddToHomeScreen="isAddToHomeScreen" @update:isAddToHomeScreen="isAddToHomeScreen = $event" />
 
   <!-- DONT REMOVE THIS GOT USE DE-->
-<!--  <SpinLuckyWheelPromoSticky v-show="false" />-->
+  <!--  <SpinLuckyWheelPromoSticky v-show="false" />-->
   <!-- <SpinLuckyWheelPromoHomePopup v-if="isShownSpinLuckyWheel || popupPromo === 'spin-lucky-wheel'" ref="spinLuckyWheelPromoHomePopupRef" /> -->
 
   <!-- <DepositPromoModal v-if="ui.annoyingType !== 'NONE'" /> -->
@@ -6531,9 +6531,9 @@ const checkGoogleLoginSetPwd = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
+  background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
   color: #fff;
-  box-shadow: 0px 2px 0px 0px #907C5F;
+  box-shadow: 0px 2px 0px 0px #907c5f;
   text-transform: uppercase;
   font-weight: 700;
 }

@@ -86,6 +86,11 @@ export default {
       validatePhoneAndEmail: "กรุณาผูกหมายเลขโทรศัพท์ของคุณก่อน",
       loginTomorrow: "กรุณาเข้าสู่ระบบในวันพรุ่งนี้เพื่อรับรางวัลลึกลับของคุณ",
       claimBonus: "คุณได้รับโบนัส {amount} บาท!"
+    },
+    notice: {
+      notice: "ประกาศ!",
+      close: "ปิด",
+      more: "เพิ่มเติม"
     }
   },
   form: {

@@ -85,6 +85,11 @@ export default {
       validatePhoneAndEmail: "请先绑定您的手机",
       loginTomorrow: "请明天登录以领取您的神秘奖励。",
       claimBonus: "您已收到 {amount} 卢比的奖金！"
+    },
+    notice: {
+      notice: "通知！",
+      close: "关闭",
+      more: "更多"
     }
   },
   form: {
