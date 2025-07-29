@@ -19,7 +19,7 @@ export const DashboardService = {
             sessionStorage.setItem('token', token)
             sessionStorage.setItem('userId', userId)
             sessionStorage.setItem('memberType', memberType)
-            resolve(response.data)
+            resolve(response)
           } else {
             resolve(response)
           }
@@ -46,7 +46,7 @@ export const DashboardService = {
             sessionStorage.setItem('token', token)
             sessionStorage.setItem('userId', userId)
             sessionStorage.setItem('memberType', memberType)
-            resolve(response.data)
+            resolve(response)
           } else {
             resolve(response)
           }
@@ -151,18 +151,18 @@ export const DashboardService = {
   uploadImage(formData) {
     const requestOptions = {
       method: 'POST',
-      body: formData
-    };
-    const baseApi = globals;
+      body: formData,
+    }
+    const baseApi = globals
     return fetch(baseApi + '/image/uploadBanner', requestOptions)
-      .then(response => {
+      .then((response) => {
         return response.json()
       })
-      .catch(error => {
-        return Promise.reject(error);
-      });
+      .catch((error) => {
+        return Promise.reject(error)
+      })
   },
-  updateSportLiveEvent(streamer){
+  updateSportLiveEvent(streamer) {
     const token = sessionStorage.getItem('token')
 
     return api.put(`/session/live-sport/event`, streamer, {
@@ -606,7 +606,7 @@ export const DashboardService = {
   },
   getStreamers(request) {
     const token = sessionStorage.getItem('token')
-    return api.get( '/session/live-sport/streamer', {
+    return api.get('/session/live-sport/streamer', {
       params: request, // For GET requests, parameters are typically sent as `params`
       headers: {
         token: `${token}`,
@@ -816,15 +816,15 @@ export const DashboardService = {
       },
     })
   },
-  getChatHistoryExport (query) {
-    const token = sessionStorage.getItem('token');
+  getChatHistoryExport(query) {
+    const token = sessionStorage.getItem('token')
     return api.get('/session/live-sport/chat/export', {
       params: query,
       headers: {
         token: token,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-    });
+    })
   },
   createSportLiveSupplierStream(stream) {
     const token = sessionStorage.getItem('token')
@@ -845,25 +845,25 @@ export const DashboardService = {
       },
     })
   },
-  deleteSportLiveStream(id){
-    const token = sessionStorage.getItem('token');
+  deleteSportLiveStream(id) {
+    const token = sessionStorage.getItem('token')
     return api.delete(`/session/live-sport/stream/${id}`, {
       headers: {
         token: token,
         'Content-Type': 'application/json',
       },
-    });
+    })
   },
-  deleteSportLiveSupplierStream(id){
-    const token = sessionStorage.getItem('token');
+  deleteSportLiveSupplierStream(id) {
+    const token = sessionStorage.getItem('token')
     return api.delete(`/session/live-sport/supplier-stream/${id}`, {
       headers: {
         token: token,
         'Content-Type': 'application/json',
       },
-    });
+    })
   },
-  
+
   // live-match-mars
   getSportLiveMatchMars(request) {
     const token = sessionStorage.getItem('token')
@@ -911,25 +911,28 @@ export const DashboardService = {
   // delete sport live match mars
   deleteSportLiveMatchMars(data) {
     const token = sessionStorage.getItem('token')
-    return api.post('/session/live-match-mars?_method=DELETE', { ids: data.join(",") }, {
+    return api.post(
+      '/session/live-match-mars?_method=DELETE',
+      { ids: data.join(',') },
+      {
+        headers: {
+          token: `${token}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      },
+    )
+  },
+
+  // get stream history list
+  getStreamHistoryList(query) {
+    const token = sessionStorage.getItem('token')
+    return api.get(`/session/live-sport/stream/stream-list`, {
+      params: query,
       headers: {
         token: `${token}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     })
-  },
-
-  // get stream history list 
-  getStreamHistoryList(query) {
-    const token = sessionStorage.getItem('token');
-    return api
-      .get(`/session/live-sport/stream/stream-list`, {
-        params: query,
-        headers: {
-          token: `${token}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      })
   },
 
   createSportLiveStream(stream) {
