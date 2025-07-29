@@ -59,7 +59,7 @@
         <q-card-section class="mid-wrapper">
           <div class="game-platform-val">
             <img
-              :src="require(`../../assets/images/index/logo/logo-${e.platform.toLowerCase()}.png`)"
+              :src="getLogoIcon(e)"
               :class="{
                 'nine-w': e.platform === 'NineW'
               }"
@@ -193,6 +193,14 @@ const onPrevPageClick = () => {
   pagination.current--;
   searchRecord();
 };
+
+const getLogoIcon = (e) => {
+  try {
+    return require(`../../assets/images/index/logo/logo-${e.platform.toLowerCase()}.png`);
+  } catch (e) {
+    return require(`../../assets/images/index/logo/logo-tfgaming.png`);
+  }
+}
 
 const onNextPageClick = () => {
   if (!isNextBtnDisable.value) {
