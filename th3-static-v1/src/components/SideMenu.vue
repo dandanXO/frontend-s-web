@@ -11,10 +11,10 @@
         </div> -->
     </RouterLink>
 
-    <router-link class="side-menu-item" to="/terms-and-conditions">
+    <!-- <router-link class="side-menu-item" to="/terms-and-conditions">
       <div class="item-icon"><img class="flag" src="../assets/images/license/curacao-license.png" /></div>
       {{ $t("sideNav.legalLicense") }}
-    </router-link>
+    </router-link> -->
 
     <div class="side-menu-item side-menu-item__checkin">
       <div>
@@ -120,7 +120,7 @@
       </div>
       {{ $t("sideNav.language") }}
     </a>
-    <a
+    <!-- <a
       class="side-menu-item license"
       href="https://cert.gcb.cw/certificate?id=ZXlKcGRpSTZJa2cxV1RWYVVVTm1USEZ5VDJRdlVVYzNLM2N4U25jOVBTSXNJblpoYkhWbElqb2llRFp4ZFhBcmMwYzBUSGh5TDFkRE5sRXJRbFJUUVQwOUlpd2liV0ZqSWpvaVlXUm1PREUxWkROaU1UWTJOV1F5WWpkak5XUTRNRGN4TVdZNU16Y3pZV0pqT1RrNU1ETmtNRGxpWVRjNE1UTmtZakl5WmpsaE4yVmxOamxpTkRSaVlTSXNJblJoWnlJNklpSjk="
       target="_blank"
@@ -131,7 +131,7 @@
         <span class="license-text__title">{{ $t("sideNav.license.curacao.title") }}</span>
         <span class="license-text__description">{{ $t("sideNav.license.curacao.description") }}</span>
       </div>
-    </a>
+    </a> -->
 
     <!--    <a class="side-menu-item side-menu-item__download" :href="ui.downloadAppUrl" v-if="!ui.hideDownload">-->
     <!--      <div class="item-icon">-->
