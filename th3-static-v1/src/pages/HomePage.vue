@@ -1440,7 +1440,7 @@
           <template v-if="isGameLoading">
             <div class="loader-container">
               <div>
-                <q-spinner color="green" size="10em" :thickness="10" />
+                <q-spinner color="brown-13" size="10em" :thickness="10" />
               </div>
               <div>{{ $t("btn.loading_plsWait") }}</div>
             </div>
