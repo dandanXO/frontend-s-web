@@ -85,6 +85,11 @@ export default {
       validatePhoneAndEmail: "Please bind your phone first",
       loginTomorrow: "Please log in tomorrow to claim your mystery reward.",
       claimBonus: "You’ve received {amount}thb bonus!"
+    },
+    notice: {
+      notice: "Notice!",
+      close: "Close",
+      more: "More"
     }
   },
   form: {
