@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr fFf">
-    <div v-if="hasPage">
+    <div v-if="hasPage" class="page-header-top" :class="hasProfileSummary ? 'has-profile-summary' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
           <router-link to="/"><img src="../assets/logo.png" /></router-link>
@@ -585,7 +585,7 @@ export default defineComponent({
     ]);
 
     const hasProfileSummary = computed(() => {
-      return route.path === "/promo" && route.query.name;
+      return (route.path === "/promo" && route.query.name) || ui.isMenuOpen;
     });
     const platformsList = computed(() => {
       if (ui.slotLists.length === 0) {
@@ -706,6 +706,11 @@ svg path {
   margin: 0.5rem 0 0 0;
 }
 
+.page-header-top {
+  &.has-profile-summary {
+    height: 60px;
+  }
+}
 .page-title {
   &.has-profile-summary {
     top: 60px;

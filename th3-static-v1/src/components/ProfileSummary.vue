@@ -30,11 +30,11 @@
     :class="{
       'q-pa-md': !homeProfile,
       'with-top-download': topDownload && !ui.hideDownload,
-      'with-background': isScrolled || ui.isMenuOpen
+      'with-background': isScrolled
     }"
   >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
-    <div class="infoboard-wrapper" :class="homeProfile && 'home-profile'">
+    <div class="infoboard-wrapper" :class="[homeProfile && 'home-profile', { 'menu-opem': ui.isMenuOpen }]">
       <!-- <div class="profile-menu">
         <img src="../assets/images/auth/icon-more.png" @click="toggleMenuOpen()" />
       </div> -->
@@ -825,6 +825,9 @@ onUnmounted(() => {
     width: 100%;
     margin: 0;
 
+    &.menu-opem {
+      background: #d9cfb8;
+    }
     &.home-profile {
       // background: #e0d6c7;
       position: relative;

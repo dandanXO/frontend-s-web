@@ -16,7 +16,7 @@ body {
 }
 #q-app {
   // background-color: #131313;
-  background-color: #24262b;
+  background-color: #e0d6c7;
   // background: url("../assets/images/index/auth-bg.png");
   // background-image: url("../assets/images/auth/main-auth-bg.png");
   background-size: 100% 100%;
@@ -281,12 +281,11 @@ body.body--dark .q-footer {
 }
 
 .q-footer {
-
   // margin-top: 30px;
   background: transparent !important;
   bottom: 0;
 
-  .q-tabs{
+  .q-tabs {
     border-radius: 13px 13px 0 0;
     background: #323738;
     padding-bottom: env(safe-area-inset-bottom, 0);
@@ -453,7 +452,7 @@ body.body--dark .q-footer {
   display: none;
 }
 .text-brand {
-  color: #B2BDBF;
+  color: #b2bdbf;
 }
 .bg-brand {
   background: #063c50;
@@ -508,7 +507,7 @@ body.body--dark .q-footer {
 }
 .bg-darkbtn {
   background: #212534;
-  color: #B2BDBF;
+  color: #b2bdbf;
 }
 .menu-title {
   color: #db7e42;
@@ -877,10 +876,10 @@ body.body--dark .q-footer {
   }
 }
 
-.login-register-notify-div{
+.login-register-notify-div {
   margin-top: 20vh;
 
-  .q-notification__message{
+  .q-notification__message {
     font-size: 16px;
   }
 }
@@ -889,7 +888,8 @@ body.body--dark .q-footer {
   border-width: 1px;
 }
 
-.q-field__control, .q-field__marginal {
+.q-field__control,
+.q-field__marginal {
   height: 40px !important;
 }
 
