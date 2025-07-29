@@ -28,7 +28,7 @@
             <div class="order-row order-row--content">
               <div class="order-subrow">
                 <div class="order-col">
-                  <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
+                  <span class="txt-gray">{{ convertToGMT7(e.withdrawDate) }}</span>
                 </div>
                 <!-- <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
                   {{ getWithdrawStatus(e.status) }}
@@ -95,7 +95,7 @@
             <div class="order-row order-row--content">
               <div class="order-subrow">
                 <div class="order-col">
-                  <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
+                  <span class="txt-gray">{{ convertToGMT7(e.depositDate) }}</span>
                 </div>
                 <div class="order-col">+{{ convertToCommaAmount(e.depositAmount, true) }}</div>
               </div>
@@ -152,7 +152,7 @@
 import { onActivated, reactive, ref } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
-import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
+import { updateDate, convertToGMT8, convertToGMT7 } from "src/boot/utils";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { useQuasar } from "quasar";

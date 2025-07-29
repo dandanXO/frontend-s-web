@@ -263,7 +263,7 @@
 import { ref, reactive, onMounted } from "vue";
 // import RecordComponent from "../../components/RecordComponent.vue";
 // import RecordComponent from "../components/RecordComponent.vue";
-import { updateDate, convertToGMT8, convertToGMT55, convertToCommaAmount } from "src/boot/utils";
+import { updateDate, convertToGMT8, convertToGMT7, convertToCommaAmount } from "src/boot/utils";
 import { eventapi } from "src/boot/axios";
 import { api } from "boot/axios";
 import moment from "moment/moment";
