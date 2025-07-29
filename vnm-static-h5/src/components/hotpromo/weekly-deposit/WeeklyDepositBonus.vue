@@ -167,7 +167,7 @@
             <div class="hint">{{ $t("lang.weeklyDepositBonus.condition5") }}</div>
           </div>
         </div>
-        <!--
+        
                <div class="item">
                  <div class="item-num">6</div>
                  <div class="item-desc">
@@ -188,7 +188,7 @@
                    <div class="hint">{{ $t("lang.weeklyDepositBonus.condition8") }}</div>
                  </div>
                </div>
-               -->
+              
       </div>
     </div>
 
