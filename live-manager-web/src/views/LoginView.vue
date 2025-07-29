@@ -8,13 +8,18 @@
         <template v-else>
           <img src="../assets/logo.png" height="80px;" style="display: flex; margin: 0 auto 20px" />
           <!-- 新增登入API選擇 -->
-          <RadioButtonGroup v-model="loginMode" name="loginMode" class="login-radio-button" style="margin-bottom: 16px;">
+          <RadioButtonGroup
+            v-model="loginMode"
+            name="loginMode"
+            class="login-radio-button"
+            style="margin-bottom: 16px"
+          >
             <div class="flex items-center gap-2">
-              <RadioButton inputId="login-v1" value="v1" style="margin-right: 10px;" />
+              <RadioButton inputId="login-v1" value="v1" style="margin-right: 10px" />
               <label for="login-v1"> {{ t('fields.streamerLogin') }}</label>
             </div>
             <div class="flex items-center gap-2">
-              <RadioButton inputId="login-v2" value="v2" style="margin-right: 10px;" />
+              <RadioButton inputId="login-v2" value="v2" style="margin-right: 10px" />
               <label for="login-v2"> {{ t('fields.adminLogin') }}</label>
             </div>
           </RadioButtonGroup>
@@ -99,26 +104,28 @@ const loginMode = ref('v1') // 預設選 v1
 const onFormSubmit = () => {
   store.isAuthLoading = true
   sessionStorage.setItem('loginName', loginForm.loginName)
-  const loginFn =
-    loginMode.value === 'v2'
-      ? DashboardService.logInV2
-      : DashboardService.logIn
+  const loginFn = loginMode.value === 'v2' ? DashboardService.logInV2 : DashboardService.logIn
   loginFn(loginForm.loginName, loginForm.password)
     .then((result) => {
-      if (result) {
+      if (result.code === 0) {
         // router.push({ path: '/' })
         store.isAuthLoading = false
-        console.log('Login successful:', result.memberType)
-        store.memberType = result.memberType
-        if(result.memberType === 'streamer'){
-          router.push({ path: '/stream/list' })
-        }else{
+        console.log('Login successful:', result.data.memberType)
+        store.memberType = result.data.memberType
+        console.log('result.data.memberType', result.data.memberType)
+        if (result.data.memberType === 'streamer') {
+          router.push({ path: '/stream/my-streams' })
+        } else {
           router.push({ path: '/live-sport/live-event' })
         }
         toast.add({ severity: 'success', summary: t('LOGIN_SUCCESS'), life: 3000 })
       } else {
         store.isAuthLoading = false
-        throw new Error(t('ERROR_LOGIN_NAME_OR_PASSWORD_ERROR'))
+        toast.add({
+          severity: 'error',
+          summary: t('ERROR_LOGIN_NAME_OR_PASSWORD_ERROR'),
+          life: 3000,
+        })
       }
     })
     .catch((error) => {
@@ -154,7 +161,7 @@ onUnmounted(() => {})
   justify-content: center;
   align-items: center;
 }
-.login-radio-button{
+.login-radio-button {
   display: flex;
   width: 100%;
   justify-content: space-between;
