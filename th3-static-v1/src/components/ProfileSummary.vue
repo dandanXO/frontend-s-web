@@ -30,7 +30,7 @@
     :class="{
       'q-pa-md': !homeProfile,
       'with-top-download': topDownload && !ui.hideDownload,
-      'with-background': isScrolled
+      'with-background': isScrolled || ui.isMenuOpen
     }"
   >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
@@ -1310,8 +1310,8 @@ onUnmounted(() => {
   }
 }
 
-.btn-login {
-  background: url('../assets/images/auth/login-btn-bg.png') center center no-repeat;
+.login-btn {
+  background: url("../assets/images/auth/login-btn-bg.png") center center no-repeat;
   background-size: 100% 100%;
 }
 </style>
