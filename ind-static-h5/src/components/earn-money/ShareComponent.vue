@@ -1,5 +1,5 @@
 <template>
-  <div class="share-banner-img"><img src="../../assets/images/earn-money/share-banner.png" /></div>
+  <!-- <div class="share-banner-img"><img src="../../assets/images/earn-money/share-banner.png" /></div>
   <div class="qr-code-container">
     <div class="qr-code-bg"><VueQRCodeComponent id="the-qrcode" :size="150" :text="selfTgurl" class="qr-code" /></div>
 
@@ -15,7 +15,7 @@
         <img src="../../assets/images/earn-money/share-copy-link.png" />
       </div>
     </div>
-  </div>
+  </div> -->
   <div class="info-wrapper q-mt-md">
     <div class="info-container">
       <div class="info-row">

@@ -1,6 +1,6 @@
 <template>
   <div class="agency-policy">
-    <div class="agency-policy-main-img"><img src="../../assets/images/earn-money/about-bg.png" /></div>
+    <!-- <div class="agency-policy-main-img"><img src="../../assets/images/earn-money/about-bg.png" /></div> -->
 
     <div class="title">Invite to Earn</div>
     <div class="subtitle">Simply share your exclusive QR code</div>
