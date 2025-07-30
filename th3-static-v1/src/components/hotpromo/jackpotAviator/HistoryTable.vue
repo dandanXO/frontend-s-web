@@ -62,7 +62,7 @@ const props = defineProps(['historyList']);
         }
 
         &.isOwn {
-            background: linear-gradient(180deg, #1BAA99 0%, #8AC542 100%);
+            background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%) !important;
             color: #fff;
         }
 
