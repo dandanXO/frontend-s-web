@@ -2,17 +2,17 @@
   <div class="bonus-container" :class="{ 'has-top-download': hasTopDownload }">
     <q-btn icon="close" round dense flat v-close-popup class="bonus-close" />
     <div class="bonus-content-wrapper">
-      <div class="mission-item">
-        <img class="mission-icon" src="../../assets/images/earn-money/redemptionicon.png" />
-        <div class="mission-title-wrapper">
-          <div class="mission-title">
-            <span>{{ $t("hotPromo.redemptionCode") }}</span>
-          </div>
-        </div>
-        <RouterLink to="/account?openCodeModal=true">
-          <q-btn flat class="details redemption">{{ $t("btn.details") }}</q-btn>
-        </RouterLink>
-      </div>
+<!--      <div class="mission-item">-->
+<!--        <img class="mission-icon" src="../../assets/images/earn-money/redemptionicon.png" />-->
+<!--        <div class="mission-title-wrapper">-->
+<!--          <div class="mission-title">-->
+<!--            <span>{{ $t("hotPromo.redemptionCode") }}</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <RouterLink to="/account?openCodeModal=true">-->
+<!--          <q-btn flat class="details redemption">{{ $t("btn.details") }}</q-btn>-->
+<!--        </RouterLink>-->
+<!--      </div>-->
 
       <div class="mission-item" v-if="store.claimedFtdPrivilege === false">
         <img class="mission-icon" src="../../assets/images/common/ftd-bonus.png" />
@@ -49,6 +49,7 @@
           </span>
         </q-btn>
       </div>
+
 
 <!--      <div v-if="!store.hasDeposit" class="mission-item">-->
 <!--        <img class="mission-icon" src="../../assets/images/earn-money/newplayericon.png" />-->

@@ -34,6 +34,7 @@ const props = defineProps(["noInfoTitle", "shortenContainer"]);
   }
 
   .no-info-text {
+    color: #3a3a3a;
     font-size: 20px;
     font-weight: 700;
     text-align: center;

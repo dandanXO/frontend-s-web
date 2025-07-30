@@ -40,7 +40,7 @@
               <q-spinner-dots color="primary" size="40px" />
             </div>
           </div>
-          <div v-else class="q-pa-md" style="text-align: center">
+          <div v-else class="q-pa-md" style="text-align: center;color:#3a3a3a;">
             {{ truncatedList.length === 0 ? $t("records.noRecord") : $t("records.noMoreRecord") }}
           </div>
         </template>
