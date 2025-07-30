@@ -10,6 +10,11 @@
         <span class="orange">7777PKR</span>
       </div>
     </div>
+    <!-- <div class="top">
+      <div class="side-buttons">
+        <RouterLink to="/spinnerHistory" class="individual-btn">History</RouterLink>
+      </div>
+    </div> -->
     <RouterLink to="/deposit" class="deposit-now">
       {{ $t("hotPromo.depositSpinWheel.depositNow") }}
     </RouterLink>
@@ -23,6 +28,7 @@
       >
         <img class="spinwheel" :src="require(`./img/spin-${index + 1}.png`)" />
         <span class="upto">{{ $t("hotPromo.depositSpinWheel.upto") }}</span>
+        <span>&nbsp;</span>
         <span class="uptonum">{{ tab.upto }}</span>
       </button>
     </div>
@@ -340,7 +346,7 @@ const onClickRotate = () => {
     });
     return;
   }
-  eventapi.post(`/session/deposit-wheel/spin?promoCode=pak-deposit-wheel&wheelType=${wheelType}`).then((res) => {
+  eventapi.post(`/session/deposit-wheel/spin?promoCode=th3-deposit-wheel&wheelType=${wheelType}`).then((res) => {
     if (res.code === 0) {
       let result = getIndexByName(res.data.bonus.toString());
 
@@ -386,7 +392,7 @@ const roll = (result) => {
 const init = () => {
   return new Promise((resolve, reject) => {
     return eventapi
-      .get("/session/deposit-wheel/init?promoCode=pak-deposit-wheel")
+      .get("/session/deposit-wheel/init?promoCode=th3-deposit-wheel")
       .then((res) => {
         if (res.code === 0) {
           spinWheelDetails.value = res.data;
@@ -459,11 +465,11 @@ onUnmounted(() => {
   window.removeEventListener("resize", updateScreenWidth);
 });
 const transformStyle = computed(() => {
-  if (screenWidth.value > 500) {
-    const tabWidth = 500 * 0.8; // 80% of screen width in pixels
+  if (screenWidth.value > 520) {
+    const tabWidth = 450 * 0.8; // 80% of screen width in pixels
     return `translateX(calc(-${activeTab.value * tabWidth}px + 50px))`;
   } else {
-    return `translateX(calc(-${activeTab.value * 80}vw + 10vw))`;
+    return `translateX(calc(-${activeTab.value * 70}vw + 10vw))`;
   }
 });
 </script>
@@ -484,7 +490,7 @@ const transformStyle = computed(() => {
       margin-right: 10px;
 
       .individual-btn {
-        background: #3f30af;
+        background: #907c5f;
         padding: 5px;
         color: #ffffff;
         text-align: center;
@@ -493,6 +499,7 @@ const transformStyle = computed(() => {
         font-weight: 500;
         line-height: 18px;
         border-radius: 0 10px 10px 0;
+        min-width: 56px;
       }
     }
     .instructions {
@@ -500,9 +507,10 @@ const transformStyle = computed(() => {
       font-size: 16px;
       font-weight: 700;
       line-height: 24px;
-      color: #f9f9f9;
+      color: #3a3a3a;
+      margin-top: -2px;
       span.orange {
-        color: #f9d649;
+        color: #b99c73;
       }
     }
   }
@@ -532,7 +540,7 @@ const transformStyle = computed(() => {
     touch-action: pan-y; /* Allow vertical scrolling */
 
     border-top: 1px solid #ffe667;
-    background: #032519;
+    // background: #032519;
     background-position: center center;
     background-size: cover;
     @media screen and (min-width: 500px) {
@@ -557,8 +565,8 @@ const transformStyle = computed(() => {
     max-width: 500px;
   }
   .tab-content {
-    width: calc(100vw - 20vw); /* Each tab width minus the amount to peek out */
-    max-width: calc(500px - 100px);
+    width: calc(90vw - 20vw); /* Each tab width minus the amount to peek out */
+    max-width: calc(500px - 140px);
     // height: 300px;
     display: flex;
     align-items: center;
@@ -742,13 +750,13 @@ const transformStyle = computed(() => {
     height: 84px;
     color: white;
     border-radius: 10px 10px 0 0;
-    background: radial-gradient(50% 40.87% at 50% 59.13%, #2b2b2b 0%, #090024 100%);
+    background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
     border: 1.5px solid #8c7b32;
     min-height: 22.5vw;
 
     @media screen and (min-width: 500px) {
-      min-height: 110px;
-      margin-bottom: 4px;
+      min-height: 100px;
+      margin-bottom: 16px;
     }
     img.spinwheel {
       width: 30px;
@@ -762,7 +770,7 @@ const transformStyle = computed(() => {
     }
     .uptonum {
       font-family: Poppins;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
       line-height: 24px;
       color: #ffee56;
@@ -772,6 +780,7 @@ const transformStyle = computed(() => {
   .tab-buttons button.lock {
     position: relative;
     pointer-events: none;
+    background: #0a0325;
     &:before {
       content: "";
       background: url(img/lock.png) no-repeat center center;
@@ -810,7 +819,7 @@ const transformStyle = computed(() => {
     // background: #032519;
     // border: 1.5px solid #FFE667;
     // border-bottom: 0;
-    background: transparent;
+    background: #232626;
     border: 0;
 
     &:before {

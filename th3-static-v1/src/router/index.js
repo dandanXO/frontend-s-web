@@ -106,7 +106,8 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/home" ||
       (to.path === "/promo" && !to.query.name) ||
       to.path === "/account" ||
-      to.path === "/earn-money"
+      to.path === "/earn-money" ||
+      to.path === "/vip"
     ) {
       ui.showFooter();
     } else {
