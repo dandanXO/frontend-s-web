@@ -1136,6 +1136,9 @@ textColor: "white",
     width: 100%;
 
     .selected-promo-wrapper {
+      background: #3a3a3a;
+      margin: 0 16px;
+      border-radius: 10px;
       .banner-container {
         width: 100%;
         .promo-content {
