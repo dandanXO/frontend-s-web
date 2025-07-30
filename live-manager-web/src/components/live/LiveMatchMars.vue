@@ -507,6 +507,7 @@ async function handleCopy() {
       summary: t('fields.copyFailed'),
       life: 3000,
     })
+    dialogVisible.value = false
   }
 }
 
