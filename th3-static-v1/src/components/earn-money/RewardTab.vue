@@ -612,7 +612,7 @@ const copyHrefLink = async () => {
     try {
       await navigator.share({
         title: "SuperSiam",
-        text: "Pakistan real money games",
+        text: "Thailand real money games",
         url: textToCopy
       });
     } catch (err) {
