@@ -104,7 +104,7 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (
       to.path === "/home" ||
-      (to.path === "/promo" && !to.query.name) ||
+      to.path === "/promo" ||
       to.path === "/account" ||
       to.path === "/earn-money" ||
       to.path === "/vip"
