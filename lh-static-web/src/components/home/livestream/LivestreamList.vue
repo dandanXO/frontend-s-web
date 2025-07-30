@@ -57,20 +57,23 @@
         class="livestream-list__pseudo"
       />
     </swiper>
-    <button
-      class="livestream-list__navigation-btn prev"
-      :class="{ disabled: navigationStatus.prev }"
-      @click="handlePrevClick"
-    >
-      <img src="@/assets/home/livestream/icon-arrow-left.svg" alt="Previous" />
-    </button>
-    <button
-      class="livestream-list__navigation-btn next"
-      :class="{ disabled: navigationStatus.next }"
-      @click="handleNextClick"
-    >
-      <img src="@/assets/home/livestream/icon-arrow-left.svg" alt="Next" />
-    </button>
+
+    <template v-if="list.length > 4">
+      <button
+        class="livestream-list__navigation-btn prev"
+        :class="{ disabled: navigationStatus.prev }"
+        @click="handlePrevClick"
+      >
+        <img src="@/assets/home/livestream/icon-arrow-left.svg" alt="Previous" />
+      </button>
+      <button
+        class="livestream-list__navigation-btn next"
+        :class="{ disabled: navigationStatus.next }"
+        @click="handleNextClick"
+      >
+        <img src="@/assets/home/livestream/icon-arrow-left.svg" alt="Next" />
+      </button>
+    </template>
   </div>
 </template>
 <script setup>
