@@ -354,6 +354,7 @@ const uiControl = reactive({
     { key: 4, display: 'CSGO', name: 'CSGO' },
     { key: 5, display: 'DOTA2', name: 'DOTA2' },
     { key: 6, display: 'KOG', name: 'KOG' },
+    { key: 7, display: 'VALORANT', name: 'VALORANT' },
   ],
   status: [
     { key: 'upcoming', display: t('status.marsMatch.NOT_STARTED'), name: 'upcoming' },

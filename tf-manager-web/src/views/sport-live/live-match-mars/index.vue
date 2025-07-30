@@ -373,6 +373,7 @@ const uiControl = reactive({
     { key: 4, displayName: 'CSGO', value: 4 },
     { key: 5, displayName: 'DOTA2', value: 5 },
     { key: 6, displayName: 'KOG', value: 6 },
+    { key: 7, displayName: 'VALORANT', value: 7 },
   ],
   status: [
     {
