@@ -2,23 +2,23 @@
 <template>
   <div class="card">
     <ConfirmDialog></ConfirmDialog>
-    <DataTable 
-      :value="page.records" 
-      :loading="page.loading" 
+    <DataTable
+      :value="page.records"
+      :loading="page.loading"
       v-model:selection="selectedRows"
       responsiveLayout="scroll"
-      scrollable 
+      scrollable
       scrollWidth="100%"
     >
       <template #header>
         <div class="flex justify-between" style="display: flex; gap: 8px">
           <Calendar
-              id="matchTime"
-              v-model="request.matchTime"
-              selectionMode="range"
-              hourFormat="24"
-              dateFormat="yy-mm-dd"
-              fluid
+            id="matchTime"
+            v-model="request.matchTime"
+            selectionMode="range"
+            hourFormat="24"
+            dateFormat="yy-mm-dd"
+            fluid
           />
           <Select
             v-model="request.sportId"
@@ -81,7 +81,7 @@
       </template>
 
       <Column selectionMode="multiple" headerStyle="min-width: 10px;"></Column>
-      <Column field="ID" :header="t('fields.id')" sortable style="min-width: 100px;">
+      <Column field="ID" :header="t('fields.id')" sortable style="min-width: 100px">
         <template #body="slotProps">
           {{ slotProps.data.matchId }}
         </template>
@@ -149,7 +149,11 @@
         style="min-width: 100px"
       >
         <template #body="slotProps">
-          <Tag v-if="slotProps.data.supplierStreamUrl !== null" severity="success" :value="t('fields.yes')"></Tag>
+          <Tag
+            v-if="slotProps.data.supplierStreamUrl !== null"
+            severity="success"
+            :value="t('fields.yes')"
+          ></Tag>
           <Tag v-else severity="danger" :value="t('fields.no')"></Tag>
         </template>
       </Column>
@@ -198,7 +202,12 @@
           <Tag v-else severity="default" :value="t('status.marsMatch.OTHER')" />
         </template>
       </Column>
-      <Column field="status" :header="t('fields.operate')" sortable style="min-width: 300px; display: flex; justify-content: center;">
+      <Column
+        field="status"
+        :header="t('fields.operate')"
+        sortable
+        style="min-width: 300px; display: flex; justify-content: center"
+      >
         <template #body="slotProps">
           <Button
             icon="pi pi-refresh"
@@ -225,7 +234,7 @@
       template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink"
       @page="changePage"
       class="p-mt-2"
-      />
+    />
   </div>
 
   <Dialog
@@ -269,13 +278,27 @@
       </div>
       <div class="match-info-row">
         <span class="label">{{ t('fields.status') }}：</span>
-        <el-tag v-if="currentRow.status === 'upcoming'" type="warning">{{ t('status.namiMatch.NOT_STARTED') }}</el-tag>
-        <el-tag v-else-if="currentRow.status === 'live'" type="success">{{ t('status.namiMatch.ONGOING') }}</el-tag>
-        <el-tag v-else-if="currentRow.status === 'past'" type="danger">{{ t('status.namiMatch.ENDED') }}</el-tag>
-        <el-tag v-else-if="currentRow.status === 'cancel'	" type="warning">{{ t('status.namiMatch.CANCEL') }}</el-tag>
-        <el-tag v-else-if="currentRow.status === 'delayed'" type="danger">{{ t('status.namiMatch.DELAYED') }}</el-tag>
-        <el-tag v-else-if="currentRow.status === 'abandoned'" type="danger">{{ t('status.namiMatch.ABANDONED') }}</el-tag>
-        <el-tag v-else-if="currentRow.status === 'pending'" type="danger">{{ t('status.namiMatch.PENDING') }}</el-tag>
+        <el-tag v-if="currentRow.status === 'upcoming'" type="warning">{{
+          t('status.namiMatch.NOT_STARTED')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.status === 'live'" type="success">{{
+          t('status.namiMatch.ONGOING')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.status === 'past'" type="danger">{{
+          t('status.namiMatch.ENDED')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.status === 'cancel'" type="warning">{{
+          t('status.namiMatch.CANCEL')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.status === 'delayed'" type="danger">{{
+          t('status.namiMatch.DELAYED')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.status === 'abandoned'" type="danger">{{
+          t('status.namiMatch.ABANDONED')
+        }}</el-tag>
+        <el-tag v-else-if="currentRow.status === 'pending'" type="danger">{{
+          t('status.namiMatch.PENDING')
+        }}</el-tag>
         <el-tag v-else type="default">{{ t('status.namiMatch.OTHER') }}</el-tag>
       </div>
     </div>
@@ -303,7 +326,6 @@
       />
     </div>
   </Dialog>
-    
 </template>
 
 <script setup>
@@ -312,28 +334,40 @@ import { useI18n } from 'vue-i18n'
 import { useToast } from 'primevue/usetoast'
 import { DashboardService } from '@/service/DashboardService'
 import { useConfirm } from 'primevue/useconfirm'
-import DataTable from 'primevue/datatable';
+import DataTable from 'primevue/datatable'
 import dayjs from 'dayjs'
-const { getSportLiveMatchMars, copySportLiveMatchMars, deleteSportLiveMatchMars, refreshToGetLiveUrl } = DashboardService
+const {
+  getSportLiveMatchMars,
+  copySportLiveMatchMars,
+  deleteSportLiveMatchMars,
+  refreshToGetLiveUrl,
+} = DashboardService
 const { t } = useI18n()
 const toast = useToast()
 const confirm = useConfirm()
 
 const uiControl = reactive({
-  sport: [{ key: 1, display: "FOOTBALL", name: 'FOOTBALL' }, { key: 2, display: 'BASKETBALL', name: 'BASKETBALL' }],
+  sport: [
+    { key: 1, display: 'FOOTBALL', name: 'FOOTBALL' },
+    { key: 2, display: 'BASKETBALL', name: 'BASKETBALL' },
+    { key: 3, display: 'LOL', name: 'LOL' },
+    { key: 4, display: 'CSGO', name: 'CSGO' },
+    { key: 5, display: 'DOTA2', name: 'DOTA2' },
+    { key: 6, display: 'KOG', name: 'KOG' },
+  ],
   status: [
-      { key: 'upcoming', display: t('status.marsMatch.NOT_STARTED'), name: 'upcoming' },
-      { key: 'live', display: t('status.marsMatch.ONGOING'), name: 'live' },
-      { key: 'past', display: t('status.marsMatch.ENDED'), name: 'past' },
-      { key: 'pending', display: t('status.marsMatch.PENDING'), name: 'pending' },
-      { key: 'cancel', display: t('status.marsMatch.CANCEL'), name: 'cancel' },
-      { key: 'delayed', display: t('status.marsMatch.DELAYED'), name: 'delayed' },
-      { key: 'delete', display: t('status.marsMatch.DELETE'), name: 'delete' },
-      { key: 'abandoned', display: t('status.marsMatch.ABANDONED'), name: 'abandoned' }
+    { key: 'upcoming', display: t('status.marsMatch.NOT_STARTED'), name: 'upcoming' },
+    { key: 'live', display: t('status.marsMatch.ONGOING'), name: 'live' },
+    { key: 'past', display: t('status.marsMatch.ENDED'), name: 'past' },
+    { key: 'pending', display: t('status.marsMatch.PENDING'), name: 'pending' },
+    { key: 'cancel', display: t('status.marsMatch.CANCEL'), name: 'cancel' },
+    { key: 'delayed', display: t('status.marsMatch.DELAYED'), name: 'delayed' },
+    { key: 'delete', display: t('status.marsMatch.DELETE'), name: 'delete' },
+    { key: 'abandoned', display: t('status.marsMatch.ABANDONED'), name: 'abandoned' },
   ],
   isSupplierStreamUrlExist: [
-      { key: "yes", display: t('fields.yes'), name: "yes" },
-      { key: "no", display: t('fields.no'), name: "no" }
+    { key: 'yes', display: t('fields.yes'), name: 'yes' },
+    { key: 'no', display: t('fields.no'), name: 'no' },
   ],
 })
 const request = reactive({
@@ -346,7 +380,7 @@ const request = reactive({
   supplierStreamUrl: null,
   matchId: null,
   supplierStreamUrl: null,
-  matchTime: [new Date(), new Date()]
+  matchTime: [new Date(), new Date()],
 })
 
 function resetQuery() {
@@ -377,31 +411,31 @@ const formLive = reactive({
 const selectedRows = ref()
 
 async function loadMatchMars() {
-  const requestCopy = { ...request };
-  const query = {};
+  const requestCopy = { ...request }
+  const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
-      if (value) {
-      query[key] = value;
-      }
-  });
+    if (value) {
+      query[key] = value
+    }
+  })
   if (request.supplierStreamUrl !== null) {
-      if (request.supplierStreamUrl === "yes") {
-          query.supplierStreamUrl = true
-      } else {
-          query.supplierStreamUrl = false
-      }
+    if (request.supplierStreamUrl === 'yes') {
+      query.supplierStreamUrl = true
+    } else {
+      query.supplierStreamUrl = false
+    }
   }
 
   if (request.matchTime && request.matchTime.length === 2) {
-      const [startTime, endTime] = request.matchTime;
-      const formattedRange = [
+    const [startTime, endTime] = request.matchTime
+    const formattedRange = [
       dayjs(startTime).format('YYYY-MM-DD 00:00:00'),
       dayjs(endTime).format('YYYY-MM-DD 23:59:59'),
-      ].join(',');
-      query.matchTime = formattedRange
+    ].join(',')
+    query.matchTime = formattedRange
   }
   const params = new URLSearchParams(query).toString()
-  
+
   const res = await getSportLiveMatchMars(params)
 
   page.records = res.records || []
@@ -417,9 +451,9 @@ function getSportDisplayName(sportId) {
 }
 
 function changePage(event) {
-  request.current = event.page + 1;
-  request.size = event.rows;
-  loadMatchMars();
+  request.current = event.page + 1
+  request.size = event.rows
+  loadMatchMars()
 }
 
 function showDialog(row) {
@@ -438,23 +472,23 @@ async function handleCopy() {
   formLive.sportId = currentRow.value.sportId
   switch (currentRow.value.status) {
     case 'upcoming':
-      formLive.status = 1;
-      break;
+      formLive.status = 1
+      break
     case 'live':
-      formLive.status = 2;
-      break;
+      formLive.status = 2
+      break
     case 'past':
-      formLive.status = 3;
-      break;
+      formLive.status = 3
+      break
     case 'pending':
-      formLive.status = 15;
-      break;
+      formLive.status = 15
+      break
     case 'cancel':
-      formLive.status = 12;
-      break;
+      formLive.status = 12
+      break
     default:
-      formLive.status = 1;
-      break;
+      formLive.status = 1
+      break
   }
   formLive.title = currentRow.value.nameZh || currentRow.value.nameEn
   const res = await copySportLiveMatchMars(formLive)
@@ -475,9 +509,9 @@ async function handleCopy() {
   }
 }
 
-async function refreshLiveUrl(id){
-  console.log("id : ", id)
-  const ret = await refreshToGetLiveUrl(id);
+async function refreshLiveUrl(id) {
+  console.log('id : ', id)
+  const ret = await refreshToGetLiveUrl(id)
 
   if (ret.code === 0) {
     toast.add({
@@ -523,11 +557,11 @@ async function handleDelete() {
       },
       accept: async () => {
         try {
-          console.log("selectedRows", selectedRows.value)
+          console.log('selectedRows', selectedRows.value)
           const ids = selectedRows.value.map((row) => row.id)
-          console.log("ids : ", ids)
+          console.log('ids : ', ids)
           const res = await deleteSportLiveMatchMars(ids)
-          console.log("res", res)
+          console.log('res', res)
           if (res.code === 0) {
             toast.add({
               severity: 'success',
