@@ -10,6 +10,11 @@
         <span class="orange">7777PKR</span>
       </div>
     </div>
+    <!-- <div class="top">
+      <div class="side-buttons">
+        <RouterLink to="/spinnerHistory" class="individual-btn">History</RouterLink>
+      </div>
+    </div> -->
     <RouterLink to="/deposit" class="deposit-now">
       {{ $t("hotPromo.depositSpinWheel.depositNow") }}
     </RouterLink>
@@ -23,6 +28,7 @@
       >
         <img class="spinwheel" :src="require(`./img/spin-${index + 1}.png`)" />
         <span class="upto">{{ $t("hotPromo.depositSpinWheel.upto") }}</span>
+        <span>&nbsp;</span>
         <span class="uptonum">{{ tab.upto }}</span>
       </button>
     </div>
@@ -340,7 +346,7 @@ const onClickRotate = () => {
     });
     return;
   }
-  eventapi.post(`/session/deposit-wheel/spin?promoCode=pak-deposit-wheel&wheelType=${wheelType}`).then((res) => {
+  eventapi.post(`/session/deposit-wheel/spin?promoCode=th3-deposit-wheel&wheelType=${wheelType}`).then((res) => {
     if (res.code === 0) {
       let result = getIndexByName(res.data.bonus.toString());
 
@@ -386,7 +392,7 @@ const roll = (result) => {
 const init = () => {
   return new Promise((resolve, reject) => {
     return eventapi
-      .get("/session/deposit-wheel/init?promoCode=pak-deposit-wheel")
+      .get("/session/deposit-wheel/init?promoCode=th3-deposit-wheel")
       .then((res) => {
         if (res.code === 0) {
           spinWheelDetails.value = res.data;
@@ -493,6 +499,7 @@ const transformStyle = computed(() => {
         font-weight: 500;
         line-height: 18px;
         border-radius: 0 10px 10px 0;
+        min-width: 56px;
       }
     }
     .instructions {
@@ -501,6 +508,7 @@ const transformStyle = computed(() => {
       font-weight: 700;
       line-height: 24px;
       color: #3a3a3a;
+      margin-top: -2px;
       span.orange {
         color: #b99c73;
       }
@@ -762,7 +770,7 @@ const transformStyle = computed(() => {
     }
     .uptonum {
       font-family: Poppins;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
       line-height: 24px;
       color: #ffee56;
