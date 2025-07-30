@@ -1,139 +1,78 @@
 <template>
-  <!-- <div class="share-banner-img"><img src="../../assets/images/earn-money/share-banner.png" /></div>
-  <div class="qr-code-container">
-    <div class="qr-code-bg"><VueQRCodeComponent id="the-qrcode" :size="150" :text="selfTgurl" class="qr-code" /></div>
-
-    <div class="save-qr-btn" @click="downloadQRImg()">Save</div>
-    <div>
-      Invite new users to register using your exclusive referral link or QR code and receive three generous rewards:
-    </div>
-    <div class="copy-link-container">
-      <img src="../../assets/images/earn-money/share-referral.png" />
-      <div class="link-wrapper" @click="copyShareLink(selfTgurl)">
-        <div class="link">{{ selfTgurl }}</div>
-        <div class="vertical-separator"></div>
-        <img src="../../assets/images/earn-money/share-copy-link.png" />
-      </div>
-    </div>
-  </div> -->
   <div class="info-wrapper q-mt-md">
     <div class="info-container">
-      <div class="info-row">
-        <div class="info-content-item longer-item">
-          <div class="longer-group">
-            <div class="info-title f-wrap">
-              <div class="info-icon"><img src="../../assets/images/earn-money/share-invited.png" /></div>
-              <div class="info-txt">Total invited:</div>
-              <div class="info-amount">{{ shareData.total }}</div>
-            </div>
-          </div>
-          <div class="longer-group">
-            <div class="info-title f-wrap">
-              <div class="info-icon"><img src="../../assets/images/earn-money/share-valid-invites.png" /></div>
-              <div class="info-txt">Valid invites:</div>
-              <div class="info-amount">{{ shareData.valid }}</div>
-            </div>
-          </div>
+
+      <div class="card">
+        <div class="link-info">
+          <section>
+            <p class="item">Create referral link</p>
+            <p class="count">2/20</p>
+          </section>
+          <section>
+            <p class="item">friends</p>
+            <p class="count">20</p>
+          </section>
         </div>
+        <q-btn flat class="btn-purple" @click="clickBuildLink()">
+          BUILD LINK
+        </q-btn>
       </div>
 
-      <div class="info-row">
-        <div class="info-content-item longer-item">
-          <div class="longer-group">
-            <div class="info-title f-wrap">
-              <div class="info-icon"><img src="../../assets/images/earn-money/share-valid-invite-today.png" /></div>
-              <div class="info-txt">
-                Valid invitations
-                <br />
-                today:
-              </div>
-              <div class="info-amount">{{ shareData.todayValid }}</div>
-            </div>
-          </div>
-          <div class="longer-group">
-            <div class="info-title f-wrap">
-              <div class="info-icon"><img src="../../assets/images/earn-money/share-today-bonus.png" /></div>
-              <div class="info-txt">Today's bonus:</div>
-              <div class="info-amount">{{ store.currency.value }} {{ shareData.todayRebate }}</div>
-            </div>
-          </div>
+      <div class="card">
+        <div class="table-header">
+          <div class="name">Name</div>
+          <div class="link">Link</div>
+          <div class="friends">Friends</div>
         </div>
-      </div>
-
-      <div class="info-row">
-        <div class="info-content-item longer-item">
-          <div class="longer-group">
-            <div class="info-title f-wrap">
-              <div class="info-icon"><img src="../../assets/images/earn-money/share-current-lvl.png" /></div>
-              <div class="info-txt">Current level:</div>
-              <div class="info-amount">{{ shareData.rebateLevel }}</div>
-            </div>
+        <div class="table-items" v-for="(item, i) in shareDataList" :key="i">
+          <div class="name">{{ item.name }}</div>
+          <div class="link">
+            <span>{{ item.link }}</span>
+            <span @click="clickLinkCopy(item.link)">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3.02734 1.68215V3.02898H8.37567C9.255 3.02898 9.97018 3.74416 9.97018 4.62625V9.97168H11.3198C11.9709 9.97168 12.4996 9.44574 12.4996 8.79465V1.68215C12.4996 1.03106 11.9709 0.502223 11.3198 0.502223H4.20438C3.55329 0.502223 3.02734 1.03092 3.02734 1.68215Z" fill="white" fill-opacity="0.7"/>
+              <path d="M0.500977 4.62585V11.7384C0.500977 12.1586 0.840441 12.498 1.26067 12.498H8.37593C8.79326 12.498 9.13562 12.1586 9.13562 11.7384V4.62585C9.13562 4.20562 8.7934 3.8634 8.37593 3.8634H1.26067C0.840441 3.8634 0.500977 4.20576 0.500977 4.62585Z" fill="white" fill-opacity="0.7"/>
+            </svg>
+        </span>
           </div>
-          <div class="longer-group">
-            <div class="info-title f-wrap">
-              <div class="info-icon"><img src="../../assets/images/earn-money/share-current-bonus-lvl.png" /></div>
-              <div class="info-txt">
-                Current bonus
-                <br />
-                level:
-              </div>
-              <div class="info-amount">{{ store.currency.value }} {{ shareData.rebateAmount }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="info-row">
-        <div class="info-content-item longer-item">
-          <div class="longer-group-no-divide">
-            <div class="info-title f-wrap">
-              <div class="info-icon"><img src="../../assets/images/earn-money/share-bonus-claimed.png" /></div>
-              <div class="info-txt">Bonus claimed:</div>
-              <div class="info-amount">{{ shareData.totalRebate }}</div>
-            </div>
+          <div class="friends">
+            <span>{{ item.friends }}</span>
+            <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 13.5L7 7.5L0.999999 1.5" stroke="#949498" stroke-width="2" stroke-linecap="round"/>
+            </svg>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="share-title-separator"></div>
-  <div class="share-title">Fixed Invitation Bonus</div>
-  <div class="share-title-separator"></div>
-
-  <q-table
-    flat
-    :hide-pagination="true"
-    :rows-per-page-options="[0]"
-    class="table-container q-my-md"
-    :columns="columns2"
-    :rows="rows2"
-    row-key="name"
-    dense
-  ></q-table>
-  <ul>
-    <li class="dot-style">Note: Fixed rewards are issued only after the invited users meet the rating criteria.</li>
-  </ul>
-
-  <div class="share-title-separator"></div>
-  <div class="share-title">Remark</div>
-  <div class="share-title-separator"></div>
-
-  <ul>
-    <li class="dot-style">
-      System evaluates each invited user based on their betting activity. Encourage your friends to place real bets and
-      stay active — usually, total bets over ₹2000 have a higher chance of qualifying. Rewards will be issued
-      automatically upon meeting the criteria.
-    </li>
-    <li class="dot-style">
-      In cases of malicious behavior such as fake accounts or reward farming, related rewards will be canceled and not
-      issued.
-    </li>
-    <li class="dot-style">55ACE reserves all rights of final interpretation.</li>
-  </ul>
+  <q-dialog width="100%" v-model="shareDialog">
+    <div class="popout-dialog">
+      <div class="qr-code-container" style="position:relative;">
+        <q-btn icon="close" flat round dense @click="shareDialog = false" class="dialog-close-btn" />
+        <p class="qr">QR</p>
+        <div class="qr-code-bg">
+          <VueQRCodeComponent id="the-qrcode" :size="110" :text="selfTgurl" class="qr-code" />
+        </div>
+        <div>
+          Invite new users to register using your exclusive referral link or QR code and receive three generous rewards:
+        </div>
+        <div class="copy-link-container">
+          <img src="../../assets/images/earn-money/share-referral.png" />
+          <div class="link-wrapper" @click="copyShareLink(selfTgurl)">
+            <div class="link">{{ selfTgurl }}</div>
+            <div class="vertical-separator"></div>
+            <img src="../../assets/images/earn-money/share-copy-link.png" />
+          </div>
+        </div>
+        <div class="save-qr-btn" @click="shareDialog = false">Confirm</div>
+      </div>
+    </div>
+  </q-dialog>
 
   <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
 </template>
+
 <script setup>
 import { onMounted, ref } from "vue";
 import { api, eventapi } from "boot/axios";
@@ -148,64 +87,57 @@ const store = userStore();
 const route = useRoute();
 const $q = useQuasar();
 
-const columns2 = [
-  {
-    name: "level",
-    label: "Valid Invite Range",
-    field: "level",
-    align: "center"
-  },
-  {
-    name: "betAmount",
-    label: "Reward per User (₹)",
-    field: "betAmount",
-    align: "center"
-  }
-];
-const rows2 = [
-  {
-    level: "1",
-    betAmount: 200
-  },
-  {
-    level: "2 ~ 50",
-    betAmount: 250
-  },
-  {
-    level: "51 ~ 150",
-    betAmount: 300
-  },
-  {
-    level: "151 ~ 1000",
-    betAmount: 350
-  },
-  {
-    level: "1001 ~ 5000",
-    betAmount: 400
-  },
-  {
-    level: "5001 ~ 15000",
-    betAmount: 450
-  },
-  {
-    level: "15001 ~ 50000",
-    betAmount: 550
-  },
-  {
-    level: "50001 ~ 100000",
-    betAmount: 700
-  },
-  {
-    level: "100001 ~ 150000",
-    betAmount: 850
-  },
-  {
-    level: "150001+",
-    betAmount: 1000
-  }
-];
+
 
 const selfTgurl = ref("");
+const shareDialog = ref(false);
+const shareDataList = ref([ // fakeData
+  {
+    name: '888888',
+    link: '51522wlwl',
+    friends: 3
+  },
+  {
+    name: '888888',
+    link: '51522wlwl',
+    friends: 3
+  },
+  {
+    name: '888888',
+    link: '51522wlwl',
+    friends: 3
+  },
+  {
+    name: '888888',
+    link: '51522wlwl',
+    friends: 3
+  },
+  {
+    name: '888888',
+    link: '51522wlwl',
+    friends: 3
+  },
+  {
+    name: '888888',
+    link: '51522wlwl',
+    friends: 3
+  },
+  {
+    name: '888888',
+    link: '51522wlwl',
+    friends: 3
+  },
+  {
+    name: '888888',
+    link: '51522wlwl',
+    friends: 3
+  },
+  {
+    name: '888888',
+    link: '51522wlwl',
+    friends: 3
+  },
+]);
 const shareData = ref({
   total: 0,
   valid: 0,
@@ -296,6 +228,7 @@ const downloadQRImg = async () => {
 };
 
 const getShareInitData = () => {
+  //TODO: update shareDataList.value
   eventapi
     .get("/privi/ind-refer-rebate")
     .then((res) => {
@@ -316,6 +249,16 @@ const getReferralCode = () => {
     if (res.code === 0) selfTgurl.value = tgDomain + "refer/" + res.data;
   });
 };
+
+const clickBuildLink = () => {
+  //TODO
+}
+
+const clickLinkCopy = (link) => {
+  //TODO 更換彈窗資料
+  shareDialog.value = true;
+}
+
 onMounted(() => {
   getShareInitData();
   getReferralCode();
@@ -332,149 +275,65 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     margin-top: 12px;
-    .info-row {
-      display: flex;
-      background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
-      border-radius: 12px;
-      margin-bottom: 15px;
+  }
+}
 
-      > * {
-        &:first-child {
-          margin-right: 7.5px;
-        }
-
-        &:nth-child(2) {
-          margin-left: 7.5px;
-        }
+.card {
+  background: linear-gradient(180deg, #8b36f859 0%, #334ad657 100%);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  .link-info {
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+    section {
+      flex: 1;
+      .item {
+        color: #ffffffcc;
+        font-size: 14px;
+        margin-bottom: 5px;
+        font-weight: 500;
+      }
+      .count {
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 700;
       }
     }
+  }
+  .btn-purple {
+    background: #5c46e7;
+    color: #ffffff;
+    width: 100%;
+    font-weight: bold;
+  }
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+  }
 
-    .info-content-item {
-      width: 100%;
-
-      padding: 20px 12px;
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-
-      &.line-side:before {
-        content: "";
-        position: absolute;
-        width: 1px;
-        height: calc(100% - 20px);
-        background: rgba(255, 255, 255, 0.25);
-        right: -10px;
-        top: 10px;
-      }
-      &.longer-item {
-        flex-direction: row;
-
-        > * {
-          &:first-child {
-            margin-right: 18px;
-          }
-
-          &:nth-child(2) {
-            margin-left: 18px;
-          }
-        }
-
-        .longer-group {
-          flex: 1;
-          position: relative;
-
-          &:first-child:before {
-            content: "";
-            position: absolute;
-            width: 1px;
-            height: calc(100% + 20px);
-            background: rgba(255, 255, 255, 0.25);
-            right: -20px;
-            top: -10px;
-          }
-        }
-
-        .longer-group-no-divide {
-          flex: 1;
-          position: relative;
-        }
-
-        .info-amount {
-          padding-top: 0;
-        }
-      }
-
-      &.last-item {
-        padding-top: 16px;
-        padding-bottom: 16px;
-
-        .info-amount {
-          padding-top: 0;
-        }
-      }
-
-      .info-amount {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        font-size: 1.35rem;
-        font-weight: 700;
-        margin-left: auto;
-        margin-top: auto;
-        padding-top: 12px;
-
-        @media screen and (max-width: 470px) {
-          font-size: 1.15rem;
-          margin: 0;
-          margin-left: auto;
-        }
-
-        &.font-smaller {
-          font-size: 12px;
-          margin-bottom: 2px;
-          font-weight: 400;
-
-          span {
-            display: none;
-          }
-        }
-      }
-
-      .info-title {
-        display: flex;
-        gap: 8px;
-
-        &.f-wrap {
-          flex-wrap: wrap;
-        }
-      }
-
-      .info-icon {
-        img {
-          display: block;
-          width: 27px;
-        }
-      }
-
-      .info-txt {
-        align-content: center;
-        font-weight: 700;
-        font-size: 0.9rem;
-
-        @media screen and (max-width: 390px) {
-          font-size: 0.85rem;
-        }
-        @media screen and (max-width: 370px) {
-          font-size: 0.75rem;
-        }
+  .table-items {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #ffffff1a;
+    padding: 10px 0;
+    svg {
+      margin-left: 8px;
+      cursor: pointer;
+    }
+    .friends {
+      span {
+        color: #30E3FFCC;
+        font-weight: 500;
       }
     }
   }
 }
 
 .qr-code-container {
-  background: linear-gradient(180deg, rgba(139, 54, 248, 0.4) 0%, rgba(51, 74, 214, 0.4) 100%);
+  background: #1A1A1A;
   border-radius: 12px;
   padding: 12px;
   font-weight: 500;
@@ -485,11 +344,22 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   margin-top: 10px;
+  .dialog-close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+  }
+  .qr {
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+  }
   .qr-code-bg {
-    border-radius: 0.625rem;
+    border-radius: 0.5rem;
     background-color: #fff;
-    padding: 10px;
-    margin-top: 4px;
+    padding: 5px;
+    margin: 0 auto 30px;
     > img {
       width: 40%;
       min-width: 120px;
@@ -497,7 +367,7 @@ onMounted(() => {
   }
 
   .save-qr-btn {
-    background-color: #5c46e7;
+    background-color: #8B00FF;
     border-radius: 6px;
     width: 40%;
     min-width: 160px;
@@ -505,41 +375,9 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 12px 0;
-  }
-}
-
-.share-title {
-  background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-align: center;
-  height: 50px;
-  line-height: 50px;
-  margin: 1px 0;
-}
-
-.share-title-separator {
-  background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
-  height: 2px;
-}
-
-ul {
-  padding-inline-start: 1rem;
-
-  li {
-    list-style-type: decimal;
-    font-size: 0.95rem;
-    line-height: 1.25rem;
-    text-align: left;
-    color: rgba(255, 255, 255, 0.8);
-    margin: 0 0 0.75rem 0;
-  }
-
-  .dot-style {
-    list-style-type: disc;
-    letter-spacing: 0.5px;
-    line-height: 1.7;
+    margin: 14px 0;
+    font-size: 14px;
+    font-weight: bold;
   }
 }
 
@@ -570,15 +408,6 @@ ul {
     }
   }
 
-  .text-center {
-    font-size: 0.95rem;
-    font-weight: 700;
-    width: 2rem;
-    border-bottom-width: 0;
-    border-right-width: 1px;
-    border-color: black;
-    padding: 0 0.25rem;
-  }
 }
 
 .copy-link-container {
