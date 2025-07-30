@@ -1336,8 +1336,11 @@ textColor: "white",
           td {
             padding: 5px;
             text-align: center;
-            background-color: #1c241b;
-            border: 1px solid #2e3039;
+            // background-color: #1c241b;
+            // border: 1px solid #2e3039;
+          }
+          tr:nth-child(even) {
+            background-color: #5a5757; /* 淺灰色 */
           }
         }
 
@@ -1475,7 +1478,7 @@ textColor: "white",
   }
   .content-title {
     color: #ffffff;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bold;
   }
   .content-para {
@@ -1502,7 +1505,8 @@ textColor: "white",
     justify-content: center;
     margin: 4px 0;
     border-radius: 5px;
-    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
+
     text-decoration: none;
 
     &.is-disabled {
@@ -1519,7 +1523,7 @@ textColor: "white",
     }
 
     span {
-      color: #000;
+      color: #fff;
       font-size: 20px;
       font-weight: 700;
     }
