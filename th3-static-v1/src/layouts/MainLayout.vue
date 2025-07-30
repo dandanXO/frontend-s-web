@@ -321,7 +321,7 @@ export default defineComponent({
               prevPage.value = "/account/promotion";
             } else {
               hasPage.value = true;
-              pageName.value = t("header.deposit");
+              // pageName.value = t("header.deposit");
               // hasPage.value = false;
               prevPage.value = "/promo";
             }
