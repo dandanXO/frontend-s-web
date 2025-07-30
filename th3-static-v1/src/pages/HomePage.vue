@@ -6261,6 +6261,9 @@ const checkGoogleLoginSetPwd = () => {
     border-radius: 4px;
     background: #292d2e;
     border: 1px solid #ffffff14;
+    .q-field__label {
+      top: 11.75px;
+    }
   }
 }
 

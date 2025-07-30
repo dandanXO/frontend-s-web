@@ -671,9 +671,21 @@ const submitBankCard = () => {
     !(
       (bankCardRef.value && bankCardRef.value.hasError) ||
       (cardNumberRef.value && cardNumberRef.value.hasError) ||
-      (store.isEnableBankCardOTP && phoneVerificationRef.value && phoneVerificationRef.value.hasError)
+      (store.isEnableBankCardOTP && phoneVerificationRef.value && phoneVerificationRef.value.hasError) ||
+      !!selectedBank.value
     )
   ) {
+    if (!selectedBank.value) {
+      $q.notify({
+        color: "dark",
+        textColor: "white",
+        position: "top",
+        message: t("bankCard.selectBankRequired"),
+        icon: "report_problem",
+        iconColor: "red"
+      });
+      return;
+    }
     if (store.isEnableBankCardOTP && (!isOtpSent.value || !bankCardInfo.telephone)) {
       $q.notify({
         color: "dark",
@@ -745,7 +757,7 @@ onActivated(() => {
   bankCardInfo.cardNumber = "";
   bankCardInfo.smsCode = "";
   bankFormRef.value.reset();
-  confirmedBankSelection.value= null;
+  confirmedBankSelection.value = null;
   // isPhoneVerified.value = false;
   isOtpSent.value = false;
 });

@@ -774,6 +774,7 @@ export default {
   bankCard: {
     bankAccountNum: "หมายเลขบัญชีธนาคาร",
     selectBank: "กรุณาเลือกธนาคาร",
+    selectBankRequired: "กรุณาเลือกธนาคาร",
     pleaseEnterCardAccount: "กรุณากรอกหมายเลขบัญชีธนาคาร",
     bankCardMust16NumberandAbove: "หมายเลขบัญชีธนาคารต้องมีระหว่าง 13 ถึง 20 หลัก",
     bankCardDisallowDecimal: "หมายเลขบัญชีธนาคารต้องไม่มีจุดทศนิยม",
