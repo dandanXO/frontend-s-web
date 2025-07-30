@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-promo" :style="list.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border-radius: 0;' : ''">
+  <div class="hot-promo">
     <ClaimPromo
       v-if="isCommonPromo && store.hasToken()"
       :promo-id="list.id"
@@ -25,10 +25,7 @@
       :promocode="list.promoCode"
       :promoContent="list.pageContent"
     />
-    <DepositSpinnerRewards
-      v-if="list.redirectUrl === 'pak-deposit-spinner-rewards' && store.token"
-      :params="list.param"
-    />
+    <DepositSpinnerRewards v-if="list.redirectUrl === 'th3-deposit-wheel' && store.token" :params="list.param" />
     <!-- <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" /> -->
     <NewPlayerAccDepositPromo v-if="list.redirectUrl === 'new-player-acc-deposit'" :params="list.param" />
     <Lucky9DayRewardsCarnival
@@ -162,7 +159,7 @@ export default defineComponent({
       this.list.redirectUrl === "pak-aviator-golden-egg" ||
       this.list.redirectUrl === "pak-video-ambassador" ||
       this.list.redirectUrl === "pak-jackpot-aviator" ||
-      this.list.redirectUrl === "pak-deposit-spinner-rewards" ||
+      this.list.redirectUrl === "th3-deposit-wheel" ||
       this.list.redirectUrl === "spin-lucky-wheel" ||
       this.list.redirectUrl === "new-player-acc-deposit" ||
       this.list.redirectUrl === "pak-lucky-10-day-bonus" ||
