@@ -339,7 +339,8 @@ export default {
     submitting: "提交中...",
     sendingVerificationCode: "发送验证码中...",
     passwordResetCompleted: "密码重置完成",
-    linkCopied: "链接已复制到剪贴板"
+    linkCopied: "链接已复制到剪贴板",
+    serialNumberCopied: "序列号已复制到剪贴板"
   },
   sideNav: {
     inviteToEarn: "邀请赚钱",
@@ -456,8 +457,8 @@ export default {
     video: "视频",
     checkReceivingLimit: "在进行提款前，请确保您的钱包有足够的接收限额，以避免交易失败。",
     bindCardCorrectFormat: "请使用正确的格式绑定您的钱包/银行卡。",
-    dailyWalletLimit: "每日钱包限额：50,000巴基斯坦卢比。请勿超过此限额。您可以添加多个钱包进行提款。",
-    donotexceeddaily: "每日银行卡限额：500,000巴基斯坦卢比。请勿超过此限额。您可以添加多张银行卡进行提款。",
+    dailyWalletLimit: "每日钱包限额：50,000泰国卢比。请勿超过此限额。您可以添加多个钱包进行提款。",
+    donotexceeddaily: "每日银行卡限额：500,000泰国卢比。请勿超过此限额。您可以添加多张银行卡进行提款。",
     blockchainwithdrawfast: "对于区块链钱包（USDT）提款，没有限制，转账非常快。"
   },
   bank: {
@@ -560,7 +561,7 @@ export default {
       betting_tips: "投注佣金：<br />推荐并邀请新用户投注，可获得长期0.6%的投注返点佣金。",
       deposit_tips: "存款佣金：<br />您推荐的每位新会员首次存款，您可获得5%的返利。",
       multiple_acc_hint:
-        "2. 禁止同一個人使用多個帳戶惡意套取佣金。違者將被凍結帳戶。\n獎勵發放時間：第二天巴基斯坦時間下午3:00至下午6:00之間。獎勵將在此時間段內存入帳戶。",
+        "2. 禁止同一個人使用多個帳戶惡意套取佣金。違者將被凍結帳戶。\n獎勵發放時間：第二天泰国時間下午3:00至下午6:00之間。獎勵將在此時間段內存入帳戶。",
       shareTitle: "SuperSiam 分享赚钱",
       shareText:
         "SuperSiam 分享赚钱：\n\t每位朋友最高可赚1000卢比。\n\t首次存款可获5%返利。\n\t享受长期0.6%的全投注返利。\n立即下载App，领取神秘现金奖励！\n{url}",
@@ -1185,20 +1186,20 @@ export default {
   content: {
     nospinleft: "没有剩余的旋转次数",
     title1: "注册时间从注册完成时开始计算。",
-    message1: "一旦您的累积金额达到1000巴基斯坦卢比，您就可以提款。",
+    message1: "一旦您的累积金额达到1000泰国卢比，您就可以提款。",
     message2: "当您没有剩余旋转次数时，邀请新玩家注册并存款以赚取额外的免费旋转。",
     message3: "活动持续3天。活动结束后，累积的奖励将被重置，活动将重新开始。",
     message4: "每个用户每天可以享受一次免费旋转，将在每日00:00添加。",
     message5: "被邀请者必须验证其电话号码，且不得有重复的IP地址，才有资格获得推荐奖励。",
     aviatorPromoIntro:
-      "享受Aviator投注的快感！您的Aviator只需一次点击即可赢得惊人的3,216倍！前50名的奖池为1,250,000巴基斯坦卢比！",
+      "享受Aviator投注的快感！您的Aviator只需一次点击即可赢得惊人的3,216倍！前50名的奖池为1,250,000泰国卢比！",
     aviatorGoldenEgg:
-      "每天在Aviator中投注时，当有效投注额达到888巴基斯坦卢比时，您就有机会砸金蛋（SUNEHRI ANDY）。最高奖励：88,888巴基斯坦卢比，中奖概率为3.6%",
+      "每天在Aviator中投注时，当有效投注额达到888泰国卢比时，您就有机会砸金蛋（SUNEHRI ANDY）。最高奖励：88,888泰国卢比，中奖概率为3.6%",
     aviatorTopTurnover: "在Aviator上投注时，累计流水最高的玩家将获得第一名。",
-    cashRainIntro: "每轮红包雨免费派发666,666巴基斯坦卢比。",
-    cashRainMaxPerRound: "每轮最高返现金额：66,666巴基斯坦卢比。",
+    cashRainIntro: "每轮红包雨免费派发666,666泰国卢比。",
+    cashRainMaxPerRound: "每轮最高返现金额：66,666泰国卢比。",
     cashRainFreeDistribution: "每轮免费派发现金返还。",
-    cashRainClaimCondition: "当日存款≥300巴基斯坦卢比，并完成每日总投注额≥350巴基斯坦卢比，即可领取免费奖金。",
+    cashRainClaimCondition: "当日存款≥300泰国卢比，并完成每日总投注额≥350泰国卢比，即可领取免费奖金。",
     cashRainUsage: "收到的钱可以直接用于玩游戏或提款。",
     cashRainVIP: "VIP会员等级越高，收到的金额越大。"
   }

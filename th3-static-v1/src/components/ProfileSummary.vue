@@ -652,7 +652,8 @@ onUnmounted(() => {
 .menu-open {
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   background: repeating-linear-gradient(45deg, #f1f1ee 0, #b9a78d 50%, #e9e8e4 100%);
   backdrop-filter: blur(4px);
   width: 100%;
@@ -661,6 +662,8 @@ onUnmounted(() => {
   z-index: 2002;
   transition: 0.3s all;
   margin-left: -100%;
+  max-width: 500px;
+  // position-area: center;
   &.open {
     margin-left: 0;
   }
@@ -795,7 +798,7 @@ onUnmounted(() => {
   position: relative;
   // background-image: url("../assets/images/auth/auth-bg.png");
   background-size: 100% 100%;
-  box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   position: fixed;
   top: 0;
@@ -806,7 +809,8 @@ onUnmounted(() => {
   height: 60px;
 
   &.with-background {
-    background: #150a08;
+    background: #d9cfb8;
+    box-shadow: inset 0 -6px 12px rgba(0, 0, 0, 0.4);
   }
 
   &.with-top-download {
@@ -1070,7 +1074,7 @@ onUnmounted(() => {
 
       .currency-amount {
         color: #000000;
-        background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+        // background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
         font-size: 12px;
         font-weight: 700;
         margin-right: 3px;
