@@ -133,33 +133,36 @@
   </div> -->
   <div class="date-picker">
      <q-form>
-        <q-input filled v-model="date" mask="date" :rules="['date']">
-      <template v-slot:append>
-        <q-icon name="event" class="cursor-pointer">
-          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-            <q-date v-model="date">
-              <div class="row items-center justify-end">
-                <q-btn v-close-popup label="Close" color="primary" flat />
-              </div>
-            </q-date>
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-    </q-input>
-    <q-input filled v-model="date" mask="date" :rules="['date']">
-      <template v-slot:append>
-        <q-icon name="event" class="cursor-pointer">
-          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-            <q-date v-model="date">
-              <div class="row items-center justify-end">
-                <q-btn v-close-popup label="Close" color="primary" flat />
-              </div>
-            </q-date>
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-    </q-input>
-      </q-form>
+  <!-- Start Date Input -->
+  <q-input size="xs" filled v-model="startDate" mask="####-##-##">
+    <template v-slot:append>
+      <q-icon name="event" class="cursor-pointer">
+        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+          <q-date v-model="startDate" mask="YYYY-MM-DD">
+            <div class="row items-center justify-end">
+              <q-btn v-close-popup label="Close" flat />
+            </div>
+          </q-date>
+        </q-popup-proxy>
+      </q-icon>
+    </template>
+  </q-input>
+ to
+  <!-- End Date Input -->
+  <q-input filled v-model="endDate" mask="####-##-##" >
+    <template v-slot:append>
+      <q-icon name="event" class="cursor-pointer">
+        <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+          <q-date v-model="endDate" mask="YYYY-MM-DD">
+            <div class="row items-center justify-end">
+              <q-btn v-close-popup label="Close" flat />
+            </div>
+          </q-date>
+        </q-popup-proxy>
+      </q-icon>
+    </template>
+  </q-input>
+</q-form>
   </div>
   <div class="info-wrapper q-pt-lg">
     <div class="title-txt">Yesterday Report (Total)</div>
@@ -355,6 +358,8 @@ import Swiper from "swiper";
 import "swiper/swiper-bundle.css";
 import { convertToCommaAmount } from "src/boot/utils";
 
+const startDate = ref('');
+const endDate = ref('');
 const store = userStore();
 
 const isLoading = reactive({ referredBetRebateRecord: true });
@@ -1143,5 +1148,25 @@ onMounted(() => {
   color: #fff;
   font-size: 18px;
   font-weight: 700;
+}
+.date-picker .q-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto 0;
+  gap: 10px;
+}
+
+    :deep(.q-field--with-bottom) {
+        padding: 0;
+    }
+    :deep(.q-field__control), :deep(.q-field__marginal) {
+      height: 40px;
+    }
+:deep(.q-field__inner) {
+  border: 1px solid #B478FF4D;
+  background: #FFFFFF1A;
+  border-radius: 6px;
+
 }
 </style>
