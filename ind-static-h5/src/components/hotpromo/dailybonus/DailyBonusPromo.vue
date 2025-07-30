@@ -20,7 +20,7 @@
         <div class="status-amount">{{ accumulatedBonus < minBonus ? `${accumulatedBonus} / ${minBonus}` : `${minBonus} / ${minBonus}` }}</div>
       </div>
 
-      <div v-if="!loading" class="collect-btn" @click="collectBonus" :class="{disabled: hasWithdrawn || (accumulatedBonus < minBonus)}">
+      <div v-if="!loading" class="collect-btn" @click="claimBonus" :class="{disabled: hasWithdrawn || (accumulatedBonus < minBonus)}">
         <img src="./img/collect-btn.png" alt="" />
       </div>
 
@@ -420,6 +420,16 @@ const collectBonus = (taskId) => {
       bonusOpened.value = false;
     });
 };
+const claimBonus = () => {
+  eventapi.post(`/session/member-tasks/claimBonus?promoCode=${props.promoCode}`).then((res) => {
+    if (res.code === 0) {
+      winAmount.value = res.data;
+      bonusOpened.value = true;
+    } else {
+      bonusOpened.value = false;
+    }
+  })
+}
 const sortedTasks = computed(() => {
   // return [...taskList.value].sort((a, b) => a.sequence - b.sequence);
   return taskList.value
