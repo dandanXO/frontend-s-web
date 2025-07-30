@@ -141,10 +141,11 @@
               <el-form-item :label="t('fields.describe')" prop="remark">
                 <el-input
                   type="textarea"
-                  :rows="5"
+                  :rows="8"
                   v-model="form.remark"
-                  style="width: 450px"
+                  style="width: 450px; resize: vertical;"
                   :placeholder="t('fields.describe')"
+                  :autosize="{minRows: 4, maxRows: 15}"
                 />
               </el-form-item>
               <div class="dialog-footer">
@@ -245,9 +246,9 @@
               >
                 <template #default="{node, data}">
                   <div>
-                    <span 
-                      class="json-menu" 
-                      :data-menu-id="data.id" 
+                    <span
+                      class="json-menu"
+                      :data-menu-id="data.id"
                       :data-parent-id="data.parentId"
                       :class="getNodeClass(data)"
                     >
@@ -341,7 +342,7 @@
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
-      width="600px"
+      width="800px"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
@@ -410,6 +411,7 @@
       <div
         v-else-if="uiControl.dialogType === 'PERMISSION'"
         v-loading="uiControl.treeLoading"
+        style="max-height: 500px; overflow-y: auto; overflow-x: auto;"
       >
         <el-tree
           ref="tree"
@@ -419,14 +421,16 @@
           :data="menus.list"
           highlight-current
           :filter-node-method="filterNode"
+          style="min-width: 100%;"
         >
           <!-- eslint-disable -->
           <template #default="{node, data}">
-            <div>
+            <div style="word-wrap: break-word; word-break: break-all; white-space: normal;">
               <span>{{ data.name }}</span>
               <span
                 v-if="data.remark"
                 class="tree-node"
+                style="margin-left: 8px; color: #666;"
                 >{{ data.remark }}</span
               >
             </div>
