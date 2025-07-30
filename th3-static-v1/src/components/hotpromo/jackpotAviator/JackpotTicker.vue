@@ -4,9 +4,9 @@
   v-if="jackpotAmt > 0" 
   class="jackpot-number" 
   xmlns="http://www.w3.org/2000/svg" 
-  width="200" 
+  width="150" 
   height="35" 
-  viewBox="0 0 200 35"
+  viewBox="0 0 150 35"
 >
   <!-- Define Gradient -->
   <defs>
@@ -22,9 +22,11 @@
     y="60%" 
     dominant-baseline="middle" 
     text-anchor="middle" 
-    font-size="24" 
+    font-size="16" 
     font-weight="bold" 
     fill="url(#textGradient)" 
+    stroke="black" 
+    stroke-width="1"
   >
     {{ convertToCommaAmount(jackpotAmt) }}
   </text>
@@ -44,7 +46,7 @@ const jackpotFetchInterval = ref();
 const props = defineProps(['timeframe']);
 
 const updateJackpot = () => {
-    const endpoint = props?.timeframe === 'DAILY' ? '/session/game-jackpot-bonus/jackpot?promoCode=pak-aviator-jackpot-daily-challenge' : '/session/game-jackpot-bonus/jackpot?promoCode=pak-aviator-jackpot-weekly-challenge';
+    const endpoint = props?.timeframe === 'DAILY' ? '/session/game-jackpot-bonus/jackpot?promoCode=th3-aviator-jackpot-daily-challenge' : '/session/game-jackpot-bonus/jackpot?promoCode=th3-aviator-jackpot-weekly-challenge';
 
     clearInterval(jackpotAmtInterval.value);
 
@@ -87,10 +89,12 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .jackpot-plate {
+    background: url('../../../assets/images/promotion/hotpromo/jackpot-aviator/jackpot-plate.png') no-repeat center center;
+    background-size: contain;
     width: 100%;
     height: 80px;
     position: absolute;
-    top: 37%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
@@ -99,26 +103,18 @@ onMounted(() => {
     font-family: "Poppins";
 
     .jackpot-number {
+        transform: rotateX(45deg);
+        margin-top: -5px;
+
         text {
-            font-family: 'Poppins';
+            font-family: Poppins;
             font-weight: 900;
-            // font-size: 18px;
-            
-            font-size: 21px;
-            line-height: 24px;
+            font-size: 23.52px;
+            line-height: 19.86px;
             letter-spacing: 0px;
             text-align: center;
-        }
-    }
-}
-@media (min-width: 500px) {
-    .jackpot-plate {
-        top: 41%;
-        .jackpot-number {
-            text {
-                font-size: 28px;
-                line-height: 32px;
-            }
+            text-transform: uppercase;
+
         }
     }
 }

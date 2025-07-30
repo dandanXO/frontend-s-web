@@ -21,7 +21,7 @@
     <SlotFtdPromo v-if="!isCommonPromo && list.redirectUrl === 'pak-slot-ftd' && store.token" :params="list.param" />
     <VideoAmbassador v-if="list.redirectUrl === 'pak-video-ambassador' && store.token" :params="list.param" />
     <JackpotAviator
-      v-if="list.redirectUrl === 'pak-jackpot-aviator' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'th3-aviator-jackpot-daily-challenge' && !isCommonPromo && store.token"
       :promocode="list.promoCode"
       :promoContent="list.pageContent"
     />
@@ -161,7 +161,7 @@ export default defineComponent({
       this.list.redirectUrl === "pak-slot-ftd" ||
       this.list.redirectUrl === "pak-aviator-golden-egg" ||
       this.list.redirectUrl === "pak-video-ambassador" ||
-      this.list.redirectUrl === "pak-jackpot-aviator" ||
+      this.list.redirectUrl === "th3-aviator-jackpot-daily-challenge" ||
       this.list.redirectUrl === "pak-deposit-spinner-rewards" ||
       this.list.redirectUrl === "spin-lucky-wheel" ||
       this.list.redirectUrl === "new-player-acc-deposit" ||

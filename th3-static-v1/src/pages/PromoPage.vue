@@ -67,7 +67,7 @@
               <div
                 class="banner-container"
                 v-if="
-                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
+                  selectedPromo.redirectUrl !== 'th3-aviator-jackpot-daily-challenge' &&
                   selectedPromo.redirectUrl !== 'new-player-acc-deposit' &&
                   selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
                   selectedPromo.redirectUrl !== 'pak-lucky-10-day-bonus'
@@ -100,7 +100,7 @@
               <div
                 class="promo-content-inner"
                 v-if="
-                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
+                  selectedPromo.redirectUrl !== 'th3-aviator-jackpot-daily-challenge' &&
                   selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
                   selectedPromo.redirectUrl !== 'pak-lucky-10-day-bonus' &&
                   selectedPromo.redirectUrl !== 'pak-welcome-new-players'
@@ -129,7 +129,7 @@
               <div
                 class="inner"
                 :class="{
-                  isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
+                  isJackpotAviator: selectedPromo.redirectUrl === 'th3-aviator-jackpot-daily-challenge',
                   isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
                   isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards',
                   isNewPlayerSpinWheel: selectedPromo.redirectUrl === 'pak-welcome-new-players',
@@ -150,7 +150,7 @@
                   <!-- promo.redirectUrl -->
                 </div>
                 <div
-                  v-if="selectedPromo.promoType && selectedPromo.redirectUrl !== 'pak-jackpot-aviator'"
+                  v-if="selectedPromo.promoType && selectedPromo.redirectUrl !== 'th3-aviator-jackpot-daily-challenge'"
                   class="select-promo-html"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
@@ -1215,8 +1215,8 @@ textColor: "white",
         }
         &.isJackpotAviator {
           width: 100%;
-          background: url("../assets/images/promotion/hotpromo/jackpot-aviator/main-bg.jpg") no-repeat top center;
-          background-size: contain;
+          // background: url("../assets/images/promotion/hotpromo/jackpot-aviator/main-bg.jpg") no-repeat top center;
+          // background-size: contain;
           margin-top: -20px;
           padding-top: 20px;
         }
