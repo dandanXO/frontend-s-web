@@ -762,6 +762,7 @@ export default {
   bankCard: {
     bankAccountNum: "银行账号",
     selectBank: "请选择银行",
+    selectBankRequired: "请选择银行",
     pleaseEnterCardAccount: "请输入银行账号",
     bankCardMust16NumberandAbove: "银行账号必须在13到20位之间",
     bankCardDisallowDecimal: "银行账号不能有小数点",
