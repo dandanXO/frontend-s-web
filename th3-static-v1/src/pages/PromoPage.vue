@@ -105,6 +105,7 @@
                   selectedPromo.redirectUrl !== 'pak-lucky-10-day-bonus' &&
                   selectedPromo.redirectUrl !== 'pak-welcome-new-players'
                 "
+                :class="selectedPromo.redirectUrl === 'th3-deposit-wheel' ? 'npad' : ''"
               >
                 <RouterLink
                   v-if="parsedParam.showEarnMoney"
@@ -1469,6 +1470,9 @@ textColor: "white",
   border-bottom: 1px solid #ffffff1a;
   width: 90%;
   place-self: center;
+  &.npad {
+    padding: 0;
+  }
   .content-title {
     color: #ffffff;
     font-size: 24px;

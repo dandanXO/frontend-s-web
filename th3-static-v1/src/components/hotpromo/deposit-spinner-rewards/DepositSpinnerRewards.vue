@@ -745,16 +745,17 @@ const transformStyle = computed(() => {
   .tab-buttons button {
     position: relative;
     padding: 10px 0px;
-    margin-bottom: -1.5px;
+    // margin-bottom: -1.5px;
     border: none;
     cursor: pointer;
     width: 100%;
-    height: 84px;
+    // height: 84px;
     color: white;
     border-radius: 10px 10px 0 0;
     background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
     border: 1.5px solid #8c7b32;
-    min-height: 22.5vw;
+    min-height: 100px;
+    margin-bottom: 2.5%;
 
     @media screen and (min-width: 500px) {
       min-height: 100px;
