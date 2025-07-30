@@ -1010,6 +1010,7 @@ export default {
       noRank: "No Rank",
       activityRules: "Activity rules",
       termsConditions: "Terms & Conditions",
+      dailyOrWeekly: "Daily / Weekly",
       rules1:
         "Daily Ranking Rewards: 1.5% of the platform's total daily pilot revenue will be included in the daily prize pool. This pool will be automatically distributed to players daily based on their positions in the daily rankings.",
       rules2:

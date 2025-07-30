@@ -48,7 +48,7 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
   max-width: 500px;
   font-size: 12px;
   font-family: "Microsoft YaHei UI", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  // font-weight: 700;
+  font-weight: 700;
   line-height: 100%;
   letter-spacing: 0;
   text-align: center;
@@ -82,7 +82,7 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
 
   &.isNotInApp {
     // bottom: 95px;
-    bottom: 70px;
+    bottom: 0px;
   }
 
   .column {
@@ -100,11 +100,11 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
   }
 
   .label {
-    color: #ffffff;
+    color: #D9CFB8;
   }
 
   .value {
-    color: #DAC385;
+    color: #f1ff55;
   }
 }
 
