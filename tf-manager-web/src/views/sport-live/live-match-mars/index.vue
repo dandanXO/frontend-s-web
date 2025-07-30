@@ -77,16 +77,26 @@
           size="mini"
           type="success"
           @click="loadLiveMatchMars()"
-        >{{ t('fields.search') }}
+        >
+          {{ t('fields.search') }}
         </el-button>
-        <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
+        <el-button
+          icon="el-icon-refresh"
+          size="mini"
+          type="warning"
+          @click="resetQuery()"
+        >
+          {{ t('fields.reset') }}
+        </el-button>
         <el-button
           icon="el-icon-remove"
           size="mini"
           type="danger"
           @click="removeMatchMars()"
           :disabled="uiControl.removeBtn"
-        >{{ t('fields.delete') }}</el-button>
+        >
+          {{ t('fields.delete') }}
+        </el-button>
       </div>
     </div>
 
@@ -129,15 +139,33 @@
         </el-form-item>
         <el-form-item :label="t('fields.status')" prop="status">
           <!-- {{ currentRow.status }} -->
-          <el-tag v-if="currentRow.status === 'live'" type="success">{{ t('status.marsMatch.ONGOING') }}</el-tag>
-          <el-tag v-else-if="currentRow.status === 'past'" type="danger">{{ t('status.marsMatch.ENDED') }}</el-tag>
-          <el-tag v-else-if="currentRow.status === 'cancel'" type="warning">{{ t('status.marsMatch.CANCEL') }}</el-tag>
-          <el-tag v-else-if="currentRow.status === 'pending'" type="danger">{{ t('status.marsMatch.PENDING') }}</el-tag>
-          <el-tag v-else-if="currentRow.status === 'upcoming'" type="warning">{{ t('status.marsMatch.NOT_STARTED') }}</el-tag>
-          <el-tag v-else-if="currentRow.status === 'delayed'" type="danger">{{ t('status.marsMatch.DELAYED') }}</el-tag>
-          <el-tag v-else-if="currentRow.status === 'delete'" type="danger">{{ t('status.marsMatch.DELETE') }}</el-tag>
-          <el-tag v-else-if="currentRow.status === 'abandoned'" type="danger">{{ t('status.marsMatch.ABANDONED') }}</el-tag>
-          <el-tag v-else type="default">{{ t('status.marsMatch.OTHER') }}</el-tag>
+          <el-tag v-if="currentRow.status === 'live'" type="success">
+            {{ t('status.marsMatch.ONGOING') }}
+          </el-tag>
+          <el-tag v-else-if="currentRow.status === 'past'" type="danger">
+            {{ t('status.marsMatch.ENDED') }}
+          </el-tag>
+          <el-tag v-else-if="currentRow.status === 'cancel'" type="warning">
+            {{ t('status.marsMatch.CANCEL') }}
+          </el-tag>
+          <el-tag v-else-if="currentRow.status === 'pending'" type="danger">
+            {{ t('status.marsMatch.PENDING') }}
+          </el-tag>
+          <el-tag v-else-if="currentRow.status === 'upcoming'" type="warning">
+            {{ t('status.marsMatch.NOT_STARTED') }}
+          </el-tag>
+          <el-tag v-else-if="currentRow.status === 'delayed'" type="danger">
+            {{ t('status.marsMatch.DELAYED') }}
+          </el-tag>
+          <el-tag v-else-if="currentRow.status === 'delete'" type="danger">
+            {{ t('status.marsMatch.DELETE') }}
+          </el-tag>
+          <el-tag v-else-if="currentRow.status === 'abandoned'" type="danger">
+            {{ t('status.marsMatch.ABANDONED') }}
+          </el-tag>
+          <el-tag v-else type="default">
+            {{ t('status.marsMatch.OTHER') }}
+          </el-tag>
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
@@ -163,26 +191,64 @@
     >
       <el-table-column type="selection" width="55" />
       <el-table-column prop="matchId" :label="t('fields.id')" width="100" />
-      <el-table-column prop="sportId" :label="t('fields.sportType')" width="100">
+      <el-table-column
+        prop="sportId"
+        :label="t('fields.sportType')"
+        width="100"
+      >
         <template #default="scope">
           <span>{{ getSportDisplayName(scope.row.sportId) }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="nameZh" :label="t('fields.competitionNameZh')" width="250" />
-      <el-table-column prop="nameEn" :label="t('fields.competitionNameEn')" width="250" />
-      <el-table-column prop="homeTeamId" :label="t('fields.homeTeam')" width="200">
+      <el-table-column
+        prop="nameZh"
+        :label="t('fields.competitionNameZh')"
+        width="250"
+      />
+      <el-table-column
+        prop="nameEn"
+        :label="t('fields.competitionNameEn')"
+        width="250"
+      />
+      <el-table-column
+        prop="homeTeamId"
+        :label="t('fields.homeTeam')"
+        width="200"
+      >
+        <!-- eslint-disable -->
         <template #default="scope">
-          <img v-if="scope.row.homeTeamLogo" :src="scope.row.homeTeamLogo" style="width: 24px; height: 24px; margin-right: 8px;">
-          <span>{{ scope.row.homeTeamNameZh || scope.row.homeTeamNameEn }}</span>
+          <img
+            v-if="scope.row.homeTeamLogo"
+            :src="scope.row.homeTeamLogo"
+            style="width: 24px; height: 24px; margin-right: 8px;"
+          />
+          <span>
+            {{ scope.row.homeTeamNameZh || scope.row.homeTeamNameEn }}
+          </span>
         </template>
       </el-table-column>
-      <el-table-column prop="awayTeamId" :label="t('fields.awayTeam')" width="200">
+      <el-table-column
+        prop="awayTeamId"
+        :label="t('fields.awayTeam')"
+        width="200"
+      >
+        <!-- eslint-disable -->
         <template #default="scope">
-          <img v-if="scope.row.awayTeamLogo" :src="scope.row.awayTeamLogo" style="width: 24px; height: 24px; margin-right: 8px;">
-          <span>{{ scope.row.awayTeamNameZh || scope.row.awayTeamNameEn }}</span>
+          <img
+            v-if="scope.row.awayTeamLogo"
+            :src="scope.row.awayTeamLogo"
+            style="width: 24px; height: 24px; margin-right: 8px;"
+          />
+          <span>
+            {{ scope.row.awayTeamNameZh || scope.row.awayTeamNameEn }}
+          </span>
         </template>
       </el-table-column>
-      <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="180">
+      <el-table-column
+        prop="matchTime"
+        :label="t('fields.matchTime')"
+        width="180"
+      >
         <template #default="scope">
           <span
             v-if="scope.row.matchTime !== null"
@@ -194,9 +260,15 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="supplierStreamUrl" :label="t('fields.isCreateLiveUrl')" width="100">
+      <el-table-column
+        prop="supplierStreamUrl"
+        :label="t('fields.isCreateLiveUrl')"
+        width="100"
+      >
         <template #default="scope">
-          <el-tag v-if="scope.row.supplierStreamUrl !== null" type="success">{{ t('fields.yes') }}</el-tag>
+          <el-tag v-if="scope.row.supplierStreamUrl !== null" type="success">
+            {{ t('fields.yes') }}
+          </el-tag>
           <el-tag v-else type="danger">{{ t('fields.no') }}</el-tag>
         </template>
       </el-table-column>
@@ -206,18 +278,41 @@
         </template> -->
 
         <template #default="scope">
-          <el-tag v-if="scope.row.status === 'live'" type="success">{{ t('status.marsMatch.ONGOING') }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'past'" type="danger">{{ t('status.marsMatch.ENDED') }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'cancel'" type="warning">{{ t('status.marsMatch.CANCEL') }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'pending'" type="danger">{{ t('status.marsMatch.PENDING') }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'upcoming'" type="warning">{{ t('status.marsMatch.NOT_STARTED') }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'delayed'" type="danger">{{ t('status.marsMatch.DELAYED') }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'delete'" type="danger">{{ t('status.marsMatch.DELETE') }}</el-tag>
-          <el-tag v-else-if="scope.row.status === 'abandoned'" type="danger">{{ t('status.marsMatch.ABANDONED') }}</el-tag>
-          <el-tag v-else type="default">{{ t('status.marsMatch.OTHER') }}</el-tag>
+          <el-tag v-if="scope.row.status === 'live'" type="success">
+            {{ t('status.marsMatch.ONGOING') }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.status === 'past'" type="danger">
+            {{ t('status.marsMatch.ENDED') }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.status === 'cancel'" type="warning">
+            {{ t('status.marsMatch.CANCEL') }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.status === 'pending'" type="danger">
+            {{ t('status.marsMatch.PENDING') }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.status === 'upcoming'" type="warning">
+            {{ t('status.marsMatch.NOT_STARTED') }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.status === 'delayed'" type="danger">
+            {{ t('status.marsMatch.DELAYED') }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.status === 'delete'" type="danger">
+            {{ t('status.marsMatch.DELETE') }}
+          </el-tag>
+          <el-tag v-else-if="scope.row.status === 'abandoned'" type="danger">
+            {{ t('status.marsMatch.ABANDONED') }}
+          </el-tag>
+          <el-tag v-else type="default">
+            {{ t('status.marsMatch.OTHER') }}
+          </el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="right" fixed="right" width="350">
+      <el-table-column
+        :label="t('fields.operate')"
+        align="right"
+        fixed="right"
+        width="350"
+      >
         <template #default="scope">
           <div style="display: flex; gap: 4px; float: right;">
             <el-button
@@ -235,7 +330,6 @@
               {{ t('fields.addToLive') }}
             </el-button>
           </div>
-
         </template>
       </el-table-column>
     </el-table>
@@ -251,40 +345,75 @@
 </template>
 
 <script setup>
-
-import { onMounted, reactive, watch } from "vue";
-import { getLiveMatchMars, addToLive, refreshToGetLiveUrl, deleteLiveMatchMars } from "../../../api/live-match-mars";
-import { useI18n } from "vue-i18n";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { onMounted, reactive, watch } from 'vue'
+import {
+  getLiveMatchMars,
+  addToLive,
+  refreshToGetLiveUrl,
+  deleteLiveMatchMars,
+} from '../../../api/live-match-mars'
+import { useI18n } from 'vue-i18n'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   convertDateToEnd,
   convertDateToStart,
-  getShortcuts
+  getShortcuts,
 } from '@/utils/datetime'
 
-const { t } = useI18n();
+const { t } = useI18n()
 
-const currentRow = reactive({});
+const currentRow = reactive({})
 
 const uiControl = reactive({
   dialogVisible: false,
-  sport: [{ key: 1, displayName: "FOOTBALL", value: 1 }, { key: 2, displayName: 'BASKETBALL', value: 2 }],
+  sport: [
+    { key: 1, displayName: 'FOOTBALL', value: 1 },
+    { key: 2, displayName: 'BASKETBALL', value: 2 },
+    { key: 3, displayName: 'LOL', value: 3 },
+    { key: 4, displayName: 'CSGO', value: 4 },
+    { key: 5, displayName: 'DOTA2', value: 5 },
+    { key: 6, displayName: 'KOG', value: 6 },
+  ],
   status: [
-    { key: 'upcoming', displayName: t('status.marsMatch.NOT_STARTED'), value: 'upcoming' },
+    {
+      key: 'upcoming',
+      displayName: t('status.marsMatch.NOT_STARTED'),
+      value: 'upcoming',
+    },
     { key: 'live', displayName: t('status.marsMatch.ONGOING'), value: 'live' },
     { key: 'past', displayName: t('status.marsMatch.ENDED'), value: 'past' },
-    { key: 'pending', displayName: t('status.marsMatch.PENDING'), value: 'pending' },
-    { key: 'cancel', displayName: t('status.marsMatch.CANCEL'), value: 'cancel' },
-    { key: 'delayed', displayName: t('status.marsMatch.DELAYED'), value: 'delayed' },
-    { key: 'delete', displayName: t('status.marsMatch.DELETE'), value: 'delete' },
-    { key: 'abandoned', displayName: t('status.marsMatch.ABANDONED'), value: 'abandoned' }
+    {
+      key: 'pending',
+      displayName: t('status.marsMatch.PENDING'),
+      value: 'pending',
+    },
+    {
+      key: 'cancel',
+      displayName: t('status.marsMatch.CANCEL'),
+      value: 'cancel',
+    },
+    {
+      key: 'delayed',
+      displayName: t('status.marsMatch.DELAYED'),
+      value: 'delayed',
+    },
+    {
+      key: 'delete',
+      displayName: t('status.marsMatch.DELETE'),
+      value: 'delete',
+    },
+    {
+      key: 'abandoned',
+      displayName: t('status.marsMatch.ABANDONED'),
+      value: 'abandoned',
+    },
   ],
   isSupplierStreamUrlExist: [
-    { key: true, displayName: t('fields.yes'), value: "yes" },
-    { key: false, displayName: t('fields.no'), value: "no" }
+    { key: true, displayName: t('fields.yes'), value: 'yes' },
+    { key: false, displayName: t('fields.no'), value: 'no' },
   ],
   removeBtn: true,
-});
+})
 
 const formLive = reactive({
   match_id: null,
@@ -296,19 +425,19 @@ const formLive = reactive({
   away_team_id: null,
   match_time: null,
   status: null,
-});
+})
 
 const formLivePost = reactive({
   matchId: null,
   sportId: null,
   status: null,
   title: null,
-});
+})
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
   new Date(2000, 1, 1, 23, 59, 59),
-];
+]
 
 const now = new Date()
 const defaultStartDate = convertDateToStart(now)
@@ -323,73 +452,75 @@ const request = reactive({
   matchId: null,
   supplierStreamUrl: null,
   matchTime: [defaultStartDate, defaultEndDate],
-});
+})
 
 const page = reactive({
   records: [],
   pages: 0,
-  loading: false
-});
+  loading: false,
+})
 
 const shortcuts = getShortcuts(t)
 
 async function handleCopy() {
-  const ret = await addToLive(formLivePost);
+  const ret = await addToLive(formLivePost)
   if (ret.code === 0) {
-    ElMessage.success(t('fields.copySuccess'));
-    uiControl.dialogVisible = false;
+    ElMessage.success(t('fields.copySuccess'))
+    uiControl.dialogVisible = false
   } else {
-    ElMessage.error(t('fields.copyFailed'));
+    ElMessage.error(t('fields.copyFailed'))
   }
 }
 
 async function refreshLiveUrl(row) {
-  const ret = await refreshToGetLiveUrl(row.id);
+  const ret = await refreshToGetLiveUrl(row.id)
 
   if (ret.code === 0) {
-    ElMessage.success(t('fields.successGetUrl'));
+    ElMessage.success(t('fields.successGetUrl'))
   } else {
-    ElMessage.error(t('fields.failed'));
+    ElMessage.error(t('fields.failed'))
   }
   loadLiveMatchMars()
 }
 
 function showDialog(type, row) {
   uiControl.dialogTitle = t('fields.addToLive')
-  Object.assign(currentRow, row); // Store the row data
-  currentRow.match_id = formLive.match_id = row.matchId; // Note: matchId (from row) → match_id (in currentRow)
-  currentRow.sport_id = formLive.sport_id = row.sportId;
-  currentRow.match_title = formLive.match_title = row.nameZh || row.nameEn;
-  currentRow.home_team = formLive.home_team = row.homeTeamNameZh || row.homeTeamNameEn;
-  currentRow.home_team_id = formLive.home_team_id = row.homeTeamId;
-  currentRow.away_team = formLive.away_team = row.awayTeamNameZh || row.awayTeamNameEn;
-  currentRow.away_team_id = formLive.away_team_id = row.awayTeamId;
-  currentRow.match_time = formLive.match_time = formatTime(row.matchTime);
-  currentRow.status = formLive.status = row.status; // This works because names match
+  Object.assign(currentRow, row) // Store the row data
+  currentRow.match_id = formLive.match_id = row.matchId // Note: matchId (from row) → match_id (in currentRow)
+  currentRow.sport_id = formLive.sport_id = row.sportId
+  currentRow.match_title = formLive.match_title = row.nameZh || row.nameEn
+  currentRow.home_team = formLive.home_team =
+    row.homeTeamNameZh || row.homeTeamNameEn
+  currentRow.home_team_id = formLive.home_team_id = row.homeTeamId
+  currentRow.away_team = formLive.away_team =
+    row.awayTeamNameZh || row.awayTeamNameEn
+  currentRow.away_team_id = formLive.away_team_id = row.awayTeamId
+  currentRow.match_time = formLive.match_time = formatTime(row.matchTime)
+  currentRow.status = formLive.status = row.status // This works because names match
   switch (currentRow.status) {
     case 'upcoming':
-      formLivePost.status = 1;
-      break;
+      formLivePost.status = 1
+      break
     case 'live':
-      formLivePost.status = 2;
-      break;
+      formLivePost.status = 2
+      break
     case 'past':
-      formLivePost.status = 3;
-      break;
+      formLivePost.status = 3
+      break
     case 'pending':
-      formLivePost.status = 15;
-      break;
+      formLivePost.status = 15
+      break
     case 'cancel':
-      formLivePost.status = 12;
-      break;
+      formLivePost.status = 12
+      break
     default:
-      formLivePost.status = 1;
-      break;
+      formLivePost.status = 1
+      break
   }
 
-  formLivePost.matchId = currentRow.match_id;
-  formLivePost.sportId = currentRow.sport_id;
-  formLivePost.title = currentRow.match_title;
+  formLivePost.matchId = currentRow.match_id
+  formLivePost.sportId = currentRow.sport_id
+  formLivePost.title = currentRow.match_title
 
   uiControl.dialogType = type
   uiControl.dialogVisible = true
@@ -398,31 +529,28 @@ function showDialog(type, row) {
 let choseMatchMars = []
 
 function handleSelectionChange(val) {
-  choseMatchMars = val;
+  choseMatchMars = val
   if (choseMatchMars.length === 0) {
-    uiControl.removeBtn = true;
+    uiControl.removeBtn = true
   } else if (choseMatchMars.length === 1) {
-    uiControl.removeBtn = false;
+    uiControl.removeBtn = false
   } else {
-    uiControl.removeBtn = false;
+    uiControl.removeBtn = false
   }
-  console.log("choseMatchMars", choseMatchMars)
+  console.log('choseMatchMars', choseMatchMars)
 }
 
 function removeMatchMars(matchMars) {
-  console.log("matchMars", matchMars)
-  ElMessageBox.confirm(
-    t('message.confirmDelete'),
-    {
-      confirmButtonText: t('fields.confirm'),
-      cancelButtonText: t('fields.cancel'),
-      type: "warning"
-    }
-  ).then(async () => {
-    await deleteLiveMatchMars(choseMatchMars.map(a => a.id));
+  console.log('matchMars', matchMars)
+  ElMessageBox.confirm(t('message.confirmDelete'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    await deleteLiveMatchMars(choseMatchMars.map(a => a.id))
     await loadLiveMatchMars()
-    ElMessage({ message: t('message.deleteSuccess'), type: "success" });
-  });
+    ElMessage({ message: t('message.deleteSuccess'), type: 'success' })
+  })
 }
 
 function resetQuery() {
@@ -442,52 +570,65 @@ function changePage(page) {
 }
 
 function getSportDisplayName(sportId) {
-  const found = uiControl.sport.find(item => item.key === sportId);
-  return found ? found.displayName : sportId;
+  const found = uiControl.sport.find(item => item.key === sportId)
+  return found ? found.displayName : sportId
 }
 
 function formatTime(ts) {
   if (!ts) return '-'
   const d = new Date(ts)
-  return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`
+  return `${d.getFullYear()}-${(d.getMonth() + 1)
+    .toString()
+    .padStart(2, '0')}-${d
+    .getDate()
+    .toString()
+    .padStart(2, '0')} ${d
+    .getHours()
+    .toString()
+    .padStart(2, '0')}:${d
+    .getMinutes()
+    .toString()
+    .padStart(2, '0')}`
 }
 
 async function loadLiveMatchMars() {
-  page.loading = true;
-  const requestCopy = { ...request };
-  const query = {};
+  page.loading = true
+  const requestCopy = { ...request }
+  const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
-      query[key] = value;
+      query[key] = value
     }
-  });
+  })
   if (request.matchTime !== null) {
     if (request.matchTime.length === 2) {
-      query.matchTime = request.matchTime.join(",");
+      query.matchTime = request.matchTime.join(',')
     }
   }
   if (request.supplierStreamUrl !== null) {
-    if (request.supplierStreamUrl === "yes") {
+    if (request.supplierStreamUrl === 'yes') {
       query.supplierStreamUrl = true
     } else {
       query.supplierStreamUrl = false
     }
   }
-  const { data: ret } = await getLiveMatchMars(query);
-  page.pages = ret.pages;
-  page.records = ret.records;
-  page.loading = false;
+  const { data: ret } = await getLiveMatchMars(query)
+  page.pages = ret.pages
+  page.records = ret.records
+  page.loading = false
 }
 
 // Reset currentRow when dialog closes
-watch(() => uiControl.dialogVisible, (visible) => {
-  if (!visible) Object.assign(currentRow, {});
-});
+watch(
+  () => uiControl.dialogVisible,
+  visible => {
+    if (!visible) Object.assign(currentRow, {})
+  }
+)
 
 onMounted(async () => {
-  loadLiveMatchMars();
-});
-
+  loadLiveMatchMars()
+})
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
