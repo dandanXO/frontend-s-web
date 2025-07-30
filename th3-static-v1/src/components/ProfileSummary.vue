@@ -1239,8 +1239,8 @@ onUnmounted(() => {
 }
 
 .message-amt {
-  color: #323738;
-  background-color: #24ee89;
+  color: #fff;
+  background-color: #e30000;
   border-radius: 30px;
   width: 20px;
   height: 20px;
