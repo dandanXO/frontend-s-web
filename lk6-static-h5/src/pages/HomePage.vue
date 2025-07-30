@@ -32,8 +32,7 @@
             <div class="right">
               <div class="top">{{ $t("affiliate.telegramGroup") }}</div>
               <div class="bottom">
-                <span style="font-family: system-ui">@</span>
-                6.vip
+                <span style="font-family: system-ui">{{ telegramHandle }}</span>
               </div>
             </div>
           </div>
@@ -1542,6 +1541,22 @@ export default defineComponent({
 
     const openTelegram = () => window.open(ui.telegramUrl, "_blank");
 
+    const telegramHandle = computed(() => {
+      const url = ui.telegramUrl;
+
+      try {
+        const parsed = new URL(url);
+        // Check if the hostname is correct
+        if (parsed.hostname === 't.me') {
+          return `@${parsed.pathname.slice(1)}`;
+        } else {
+          return 'Invalid Telegram URL';
+        }
+      } catch (e) {
+        return 'Invalid URL format';
+      }
+    });
+
     const checkShowImgTop = () => {
       const lastTime = sessionStorage.getItem("indexImgTop");
       if (lastTime) {
@@ -2045,7 +2060,8 @@ export default defineComponent({
       baccaratCategoryList,
       imgURLGame,
       languageVal,
-      openTelegram
+      openTelegram,
+      telegramHandle
     };
   }
 });

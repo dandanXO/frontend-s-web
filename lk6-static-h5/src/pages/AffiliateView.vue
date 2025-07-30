@@ -278,7 +278,7 @@ const onClickLogin = () => {
     display: flex;
     align-items: center;
     justify-content: center;
-    -webkit-text-stroke: 1px #4b91f5;
+    // -webkit-text-stroke: 1px #4b91f5;
     font-weight: bolder;
     font-size: 1.2rem;
     background-position: center;
