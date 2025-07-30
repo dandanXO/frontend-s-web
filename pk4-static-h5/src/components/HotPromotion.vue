@@ -25,7 +25,7 @@
     <JackpotAviator
       v-if="list.redirectUrl === 'pk4-jackpot-aviator' && !isCommonPromo && store.token"
       :promocode="list.promoCode"
-      :list="list" 
+      :list="list"
     />
     <DepositSpinnerRewards
       v-if="list.redirectUrl === 'pak-deposit-spinner-rewards' && store.token"
@@ -34,6 +34,7 @@
     <SpinLuckyWheelPromo v-if="list.redirectUrl === 'spin-lucky-wheel'" :params="list.param" />
     <NewPlayerAccDepositPromo v-if="list.redirectUrl === 'new-player-acc-deposit'" :params="list.param" />
     <PiggyBankPromo v-if="list.redirectUrl === 'pk4-piggy-bank' && store.token" :promocode="list.promoCode" />
+    <BecomeAnAgentPromo v-if="list.redirectUrl === 'pk4-become-an-agent' && store.token" :promocode="list.promoCode" />
     <MonthBeginningDepositRebate
       v-if="list.redirectUrl === 'pk4-month-beginning-deposit-rebate'"
       :params="list.param"
@@ -85,6 +86,7 @@ import SpinLuckyWheelPromo from "./hotpromo/spin-lucky-wheel/SpinLuckyWheelPromo
 import NewPlayerAccDepositPromo from "./hotpromo/new-player-acc-deposit/NewPlayerAccDepositPromo.vue"
 import NewPlayerWelcome from "../components/hotpromo/newPlayerSpinWheel/NewPlayerWheelPromo.vue"
 import PiggyBankPromo from "../components/hotpromo/piggyBank/PiggyBankPromo.vue";
+import BecomeAnAgentPromo from "../components/hotpromo/becomeAnAgent/BecomeAnAgentPromo.vue";
 import MonthBeginningDepositRebate from "../components/hotpromo/monthBeginningDepositRebate/MonthBeginningDepositRebate.vue"
 import AppLoginBonus from "../components/hotpromo/appLoginBonus/AppLoginBonus.vue"
 
@@ -110,6 +112,7 @@ export default defineComponent({
     NewPlayerAccDepositPromo,
     NewPlayerWelcome,
     PiggyBankPromo,
+    BecomeAnAgentPromo,
     MonthBeginningDepositRebate,
     AppLoginBonus
   },
