@@ -118,7 +118,7 @@
           <span class="sp2">SuperSiam</span>
           now, use your creativity, and shine like a star!
         </li>
-        <li>“This is your chance to make Pakistan proud!”</li>
+        <li>“This is your chance to make Thailand proud!”</li>
         <li>
           “The next
           <span class="sp2">SuperSiam</span>

@@ -578,7 +578,7 @@ export default {
         "Betting Commission: <br />Refer and invite new users to bet and earn a long-term 0.6% betting rebate commission.",
       deposit_tips: "Deposit Commission: <br />Earn a 5% rebate on the first deposit of each new member you refer.",
       multiple_acc_hint: `2. It is prohibited for the same individual to use multiple accounts to maliciously exploit commissions. Violators will have their accounts frozen.
-    Reward distribution time: Between 3:00 PM and 6:00 PM Pakistan time on the next day. The rewards will be credited to the account during this time frame.
+    Reward distribution time: Between 3:00 PM and 6:00 PM Thailand time on the next day. The rewards will be credited to the account during this time frame.
     `,
       shareTitle: "SuperSiam Share and Earn",
       shareText:

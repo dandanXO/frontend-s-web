@@ -1,7 +1,7 @@
 {
   "name": "B9Game",
   "short_name": "B9GAME",
-  "description": "Pakistan real money games",
+  "description": "Thailand real money games",
   "display": "standalone",
   "start_url": "/static/pwa/pwa-index.html",
   "icons": [

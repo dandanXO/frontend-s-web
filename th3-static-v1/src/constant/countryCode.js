@@ -795,7 +795,7 @@ export const COUNTRY_CODE_LIST = [
     emoji: "🇴🇲"
   },
   {
-    name: "Pakistan",
+    name: "Thailand",
     code: "92",
     emoji: "🇵🇰"
   },
