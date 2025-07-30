@@ -343,7 +343,8 @@ export default {
     submitting: "جمع کر رہا ہے...",
     sendingVerificationCode: "ویری فیکیشن کوڈ بھیجا جا رہا ہے...",
     passwordResetCompleted: "پاسورڈ ری سیٹ مکمل ہو چکا ہے",
-    linkCopied: "لنک کلپ بورڈ پر کاپی کر دیا گیا ہے"
+    linkCopied: "لنک کلپ بورڈ پر کاپی کر دیا گیا ہے",
+    serialNumberCopied: "سیریل نمبر کلپ بورڈ پر کاپی کر دیا گیا ہے"
   },
   sideNav: {
     inviteToEarn: "دعوت دیں اور کمائیں",

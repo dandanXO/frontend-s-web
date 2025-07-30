@@ -339,7 +339,8 @@ export default {
     submitting: "提交中...",
     sendingVerificationCode: "发送验证码中...",
     passwordResetCompleted: "密码重置完成",
-    linkCopied: "链接已复制到剪贴板"
+    linkCopied: "链接已复制到剪贴板",
+    serialNumberCopied: "序列号已复制到剪贴板"
   },
   sideNav: {
     inviteToEarn: "邀请赚钱",

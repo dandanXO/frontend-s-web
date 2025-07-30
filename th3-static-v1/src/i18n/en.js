@@ -348,7 +348,8 @@ export default {
     submitting: "Submitting...",
     sendingVerificationCode: "Sending verification code...",
     passwordResetCompleted: "Password reset completed",
-    linkCopied: "Link copied to clipboard"
+    linkCopied: "Link copied to clipboard",
+    serialNumberCopied: "Serial Number Copied to clipboard"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",

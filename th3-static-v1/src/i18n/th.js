@@ -346,7 +346,8 @@ export default {
     submitting: "กำลังส่ง...",
     sendingVerificationCode: "กำลังส่งรหัสยืนยัน...",
     passwordResetCompleted: "รีเซ็ตรหัสผ่านเสร็จสมบูรณ์",
-    linkCopied: "ลิงก์ถูกคัดลอกไปยังคลิปบอร์ดแล้ว"
+    linkCopied: "ลิงก์ถูกคัดลอกไปยังคลิปบอร์ดแล้ว",
+    serialNumberCopied: "คัดลอกหมายเลขซีเรียลไปยังคลิปบอร์ดแล้ว"
   },
   sideNav: {
     inviteToEarn: "เชิญเพื่อนเพื่อรับรายได้",
