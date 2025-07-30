@@ -86,7 +86,7 @@
                 <img
                   class="promo-content"
                   :class="
-                    (selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'dpsr' : 'usual',
+                    (selectedPromo.redirectUrl === 'th3-deposit-wheel' ? 'dpsr' : 'usual',
                     selectedPromo.redirectUrl === 'new-player-acc-deposit' ? 'npad' : 'usual')
                   "
                   :src="imgURL + selectedPromo.mobileBannerUrl"
@@ -105,7 +105,6 @@
                   selectedPromo.redirectUrl !== 'pak-lucky-10-day-bonus' &&
                   selectedPromo.redirectUrl !== 'pak-welcome-new-players'
                 "
-                :style="selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards' ? 'border:0; padding: 0;' : ''"
               >
                 <RouterLink
                   v-if="parsedParam.showEarnMoney"
@@ -116,11 +115,13 @@
                   <img src="../assets/images/bonus/share-icon.png" />
                   <span>{{ $t("hotPromo.earnMoney.earnMoney") }}</span>
                 </RouterLink>
-                <div class="content-title" v-if="selectedPromo.redirectUrl !== 'pak-deposit-spinner-rewards'">
+                <div class="content-title" v-if="selectedPromo.redirectUrl !== 'th3-deposit-wheel'">
                   {{ selectedPromo.title }}
                 </div>
-                <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
-                <div class="content-date" v-if="parsedParamDate">
+                <div class="content-para" v-if="parsedParamSub && selectedPromo.redirectUrl !== 'th3-deposit-wheel'">
+                  {{ parsedParamSub }}
+                </div>
+                <div class="content-date" v-if="parsedParamDate && selectedPromo.redirectUrl !== 'th3-deposit-wheel'">
                   <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
                   {{ parsedParamDate }}
                 </div>
@@ -131,7 +132,7 @@
                 :class="{
                   isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
                   isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
-                  isDepositSpinnerRewards: selectedPromo.redirectUrl === 'pak-deposit-spinner-rewards',
+                  isDepositSpinnerRewards: selectedPromo.redirectUrl === 'th3-deposit-wheel',
                   isNewPlayerSpinWheel: selectedPromo.redirectUrl === 'pak-welcome-new-players',
                   isSpinLuckyWheel: selectedPromo.redirectUrl === 'spin-lucky-wheel',
                   envelope:
@@ -1225,9 +1226,9 @@ textColor: "white",
         }
         &.isDepositSpinnerRewards {
           border-radius: 0;
-          width: 100%;
+          // width: 100%;
           padding: 0;
-          margin: 0;
+          // margin: 0;
           > div:nth-child(2) {
             display: none;
           }

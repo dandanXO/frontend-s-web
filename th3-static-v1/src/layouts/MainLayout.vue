@@ -512,11 +512,11 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = t("header.interestProfit");
         } else if (route.path === "/spinnerRules") {
-          prevPage.value = "/promo?name=pak-deposit-spinner-rewards";
+          prevPage.value = "/promo?name=th3-deposit-wheel";
           hasPage.value = true;
           pageName.value = t("header.spinnerRules");
         } else if (route.path === "/spinnerHistory") {
-          prevPage.value = "/promo?name=pak-deposit-spinner-rewards";
+          prevPage.value = "/promo?name=th3-deposit-wheel";
           hasPage.value = true;
           pageName.value = t("header.spinnerHistory");
         }
