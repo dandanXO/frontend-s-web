@@ -32,7 +32,7 @@ const props = defineProps(['historyList']);
     margin: 0 10px;
     border-radius: 5px;
     overflow: hidden;
-    padding-bottom: 20px;
+    padding-bottom: 50px;
 
     > .item {
         background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
