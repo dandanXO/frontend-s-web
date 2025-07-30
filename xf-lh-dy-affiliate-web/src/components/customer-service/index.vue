@@ -144,7 +144,7 @@ const telegramLink = () => {
   } else if (props.siteId === siteEnum.DY2) {
     return '@dyghs_01'
   } else if (props.siteId === siteEnum.LK6) {
-    return 'Lucky666'
+    return 'xy66vip'
   } else {
     return '@leihuo123'
   }
