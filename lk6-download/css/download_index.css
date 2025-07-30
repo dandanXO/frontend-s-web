@@ -407,6 +407,8 @@ html,body {
 }
 .teach1-step-gallery{
 	overflow: auto;
+	width: calc(100% - 30px);
+	margin: 8px auto;
 }
 
 .common-large-btn {
