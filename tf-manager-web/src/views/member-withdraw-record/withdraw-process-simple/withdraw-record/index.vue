@@ -107,7 +107,7 @@
           icon="el-icon-search"
           size="mini"
           type="primary"
-          v-permission="['sys:withdraw:list:advanced']"
+          v-permission="['sys:withdraw:simple:list:advanced']"
           @click="showDialog('SEARCH')"
         >
           {{ t('fields.advancedSearch') }}
@@ -126,7 +126,7 @@
         <el-button
           size="mini"
           type="primary"
-          v-permission="['sys:withdraw:export']"
+          v-permission="['sys:withdraw:simple:export']"
           @click="requestExportExcel"
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
