@@ -316,7 +316,8 @@ const onClickRotate = () => {
   if (!checkRemainingSpins(selectedTab)) {
     console.log(selectedTab);
     $q.notify({
-      color: "warning",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: t("content.nospinleft"),
       icon: "report_problem",
@@ -338,7 +339,8 @@ const onClickRotate = () => {
   const wheelType = getSpinWheelType(selectedTab);
   if (!wheelType) {
     $q.notify({
-      color: "warning",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: t("content.nospinleft"),
       icon: "report_problem",
