@@ -62,7 +62,7 @@
               <q-spinner color="yellow" size="70px" :thickness="5" />
             </div>
 
-            <div class="selected-promo-wrapper">
+            <div class="selected-promo-wrapper" :class="{isJackporAviator: selectedPromo.redirectUrl === 'th3-aviator-jackpot-daily-challenge'}">
               <!-- <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" /> -->
               <div
                 class="banner-container"
@@ -1141,6 +1141,12 @@ textColor: "white",
       background: #3a3a3a;
       margin: 0 16px;
       border-radius: 10px;
+
+      &.isJackporAviator {
+        margin: 0;
+        background: transparent;
+      }
+
       .banner-container {
         width: 100%;
         .promo-content {
