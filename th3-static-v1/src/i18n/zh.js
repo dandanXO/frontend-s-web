@@ -987,7 +987,6 @@ export default {
       noRank: "无排名",
       activityRules: "活动规则",
       termsConditions: "条款与条件",
-      dailyOrWeekly: "每日 / 每周",
       rules1:
         "每日排名奖励：平台每日总飞行员收入的1.5%将计入每日奖池。该奖池将根据玩家在每日排名中的位置每日自动分配给玩家。",
       rules2:

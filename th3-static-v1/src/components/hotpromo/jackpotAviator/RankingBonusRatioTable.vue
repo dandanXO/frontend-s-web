@@ -2,7 +2,7 @@
     <div class="ranking">
         <div class="item">
             <div>{{ $t('hotPromo.jackpotAviator.rank') }}</div>
-            <div>{{ $t('hotPromo.jackpotAviator.dailyOrWeekly') }}</div>
+            <div>{{ $t('hotPromo.jackpotAviator.daily') }}</div>
         </div>
 
         <template v-if="Array.isArray(props.rankingBonusRatioList)">
