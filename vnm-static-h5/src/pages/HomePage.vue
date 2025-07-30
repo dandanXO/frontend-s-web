@@ -116,13 +116,13 @@
         </div>
         <div ref="marqueePseudoRef" class="marquee-pseudo">
           <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-            {{ a.content }}
+            <p v-html="a.content"></p>
           </span>
         </div>
         <marquee-text :repeat="5" :duration="marqueeDuration">
-          <div v-if="announcementList">
+          <div style="display: flex; height: 20px;" v-if="announcementList">
             <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-              {{ a.content }}
+              <p v-html="a.content"></p>
             </span>
           </div>
         </marquee-text>
@@ -584,7 +584,7 @@
                   >
                     <q-card>
                       <q-card-section style="background: transparent">
-                        {{ ann.content }}
+                        <div v-html="ann.content"></div>
                       </q-card-section>
                     </q-card>
                   </q-expansion-item>
@@ -2462,6 +2462,10 @@ export default defineComponent({
       visibility: hidden;
       z-index: -1;
       width: max-content;
+
+      p {
+        margin: 0px;
+      }
     }
   }
 }

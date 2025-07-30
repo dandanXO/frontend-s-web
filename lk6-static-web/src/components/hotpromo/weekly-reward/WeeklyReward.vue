@@ -56,12 +56,14 @@ import { userStore } from "@/store";
 import { initSportWeeklyBonus, claimSportWeeklyBonus } from "@/api/index/promo";
 import { storeToRefs } from "pinia";
 import { i18nStore } from "@/store/language";
+import { useI18n } from "vue-i18n";
 
 const props = defineProps(["promoCode", "params"]);
 const promoCode = ref(props.promoCode);
 const store = userStore();
 const notify = useNotify();
 const { languageVal } = storeToRefs(i18nStore());
+const { t } = useI18n();
 
 const loadingClaim = ref(false);
 
@@ -88,7 +90,7 @@ const handleClaimBonus = () => {
       if (res.code === 0) {
         notify({
           type: "success",
-          message: `成功领取`
+          message: t("message.claimSuccessfully")
         });
         store.getBalance();
       }

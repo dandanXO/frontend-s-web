@@ -66,7 +66,8 @@ const guestLogin = () => {
           }
         } else if (res.code === 1010) {
           $q.notify({
-            color: "warning",
+            color: "dark",
+            textColor: "white",
             position: "top",
             message: "Please login with password to continue",
             icon: "report_problem",

@@ -14,7 +14,7 @@
                     <template v-for="(ann, idx) in props.announcementList" :key="idx">
                         <template v-if="ann.typeId === tab.id">
                             <el-collapse-item :name="idx" :title="ann.title" class="announcement-content">
-                                <p class="announcement-p">{{ ann.content }}</p>
+                                <p class="announcement-p" v-html="ann.content" />
                             </el-collapse-item>
                         </template>
                     </template>
@@ -61,6 +61,9 @@ const props = defineProps(['closeAnnouncementDialog', 'announcementList', 'annou
     margin-top: 20px;
     padding: 0px 10px;
 
+    :deep(.el-collapse-item__title) {
+        font-weight: bold;
+    }
     .announcement-p {
         color: #7a80a1;
     }

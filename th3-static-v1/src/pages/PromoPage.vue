@@ -67,7 +67,7 @@
               <div
                 class="banner-container"
                 v-if="
-                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
+                  selectedPromo.redirectUrl !== 'th3-aviator-jackpot-daily-challenge' &&
                   selectedPromo.redirectUrl !== 'new-player-acc-deposit' &&
                   selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
                   selectedPromo.redirectUrl !== 'pak-lucky-10-day-bonus'
@@ -100,11 +100,12 @@
               <div
                 class="promo-content-inner"
                 v-if="
-                  selectedPromo.redirectUrl !== 'pak-jackpot-aviator' &&
+                  selectedPromo.redirectUrl !== 'th3-aviator-jackpot-daily-challenge' &&
                   selectedPromo.redirectUrl !== 'spin-lucky-wheel' &&
                   selectedPromo.redirectUrl !== 'pak-lucky-10-day-bonus' &&
                   selectedPromo.redirectUrl !== 'pak-welcome-new-players'
                 "
+                :class="selectedPromo.redirectUrl === 'th3-deposit-wheel' ? 'npad' : ''"
               >
                 <RouterLink
                   v-if="parsedParam.showEarnMoney"
@@ -130,7 +131,7 @@
               <div
                 class="inner"
                 :class="{
-                  isJackpotAviator: selectedPromo.redirectUrl === 'pak-jackpot-aviator',
+                  isJackpotAviator: selectedPromo.redirectUrl === 'th3-aviator-jackpot-daily-challenge',
                   isNewPlayerAccDeposit: selectedPromo.redirectUrl === 'new-player-acc-deposit',
                   isDepositSpinnerRewards: selectedPromo.redirectUrl === 'th3-deposit-wheel',
                   isNewPlayerSpinWheel: selectedPromo.redirectUrl === 'pak-welcome-new-players',
@@ -151,7 +152,7 @@
                   <!-- promo.redirectUrl -->
                 </div>
                 <div
-                  v-if="selectedPromo.promoType && selectedPromo.redirectUrl !== 'pak-jackpot-aviator'"
+                  v-if="selectedPromo.promoType && selectedPromo.redirectUrl !== 'th3-aviator-jackpot-daily-challenge'"
                   class="select-promo-html"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
@@ -1219,8 +1220,8 @@ textColor: "white",
         }
         &.isJackpotAviator {
           width: 100%;
-          background: url("../assets/images/promotion/hotpromo/jackpot-aviator/main-bg.jpg") no-repeat top center;
-          background-size: contain;
+          // background: url("../assets/images/promotion/hotpromo/jackpot-aviator/main-bg.jpg") no-repeat top center;
+          // background-size: contain;
           margin-top: -20px;
           padding-top: 20px;
         }
@@ -1472,6 +1473,9 @@ textColor: "white",
   border-bottom: 1px solid #ffffff1a;
   width: 90%;
   place-self: center;
+  &.npad {
+    padding: 0;
+  }
   .content-title {
     color: #ffffff;
     font-size: 16px;

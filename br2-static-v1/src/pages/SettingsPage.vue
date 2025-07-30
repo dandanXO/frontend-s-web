@@ -177,7 +177,7 @@
         </q-card-section>
       </q-card>
 
-      <div class="super-promo" @click="goToPromo('/promo?name=redeposit-bonus')">
+      <div class="super-promo" @click="goToPromo('/promo?name=br2-checkin-bonus')">
         <img class="super-promo-img" src="../assets/images/account/super-promo.png" />
         <router-link class="super-promo-chevron" to="">
           <q-icon name="chevron_right" color="white" />

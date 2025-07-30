@@ -10,6 +10,11 @@
         <span class="orange">7777PKR</span>
       </div>
     </div>
+    <!-- <div class="top">
+      <div class="side-buttons">
+        <RouterLink to="/spinnerHistory" class="individual-btn">History</RouterLink>
+      </div>
+    </div> -->
     <RouterLink to="/deposit" class="deposit-now">
       {{ $t("hotPromo.depositSpinWheel.depositNow") }}
     </RouterLink>
@@ -23,6 +28,7 @@
       >
         <img class="spinwheel" :src="require(`./img/spin-${index + 1}.png`)" />
         <span class="upto">{{ $t("hotPromo.depositSpinWheel.upto") }}</span>
+        <span>&nbsp;</span>
         <span class="uptonum">{{ tab.upto }}</span>
       </button>
     </div>
@@ -310,7 +316,8 @@ const onClickRotate = () => {
   if (!checkRemainingSpins(selectedTab)) {
     console.log(selectedTab);
     $q.notify({
-      color: "warning",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: t("content.nospinleft"),
       icon: "report_problem",
@@ -332,7 +339,8 @@ const onClickRotate = () => {
   const wheelType = getSpinWheelType(selectedTab);
   if (!wheelType) {
     $q.notify({
-      color: "warning",
+      color: "dark",
+      textColor: "white",
       position: "top",
       message: t("content.nospinleft"),
       icon: "report_problem",
@@ -340,7 +348,7 @@ const onClickRotate = () => {
     });
     return;
   }
-  eventapi.post(`/session/deposit-wheel/spin?promoCode=pak-deposit-wheel&wheelType=${wheelType}`).then((res) => {
+  eventapi.post(`/session/deposit-wheel/spin?promoCode=th3-deposit-wheel&wheelType=${wheelType}`).then((res) => {
     if (res.code === 0) {
       let result = getIndexByName(res.data.bonus.toString());
 
@@ -386,7 +394,7 @@ const roll = (result) => {
 const init = () => {
   return new Promise((resolve, reject) => {
     return eventapi
-      .get("/session/deposit-wheel/init?promoCode=pak-deposit-wheel")
+      .get("/session/deposit-wheel/init?promoCode=th3-deposit-wheel")
       .then((res) => {
         if (res.code === 0) {
           spinWheelDetails.value = res.data;
@@ -493,6 +501,7 @@ const transformStyle = computed(() => {
         font-weight: 500;
         line-height: 18px;
         border-radius: 0 10px 10px 0;
+        min-width: 56px;
       }
     }
     .instructions {
@@ -501,6 +510,7 @@ const transformStyle = computed(() => {
       font-weight: 700;
       line-height: 24px;
       color: #3a3a3a;
+      margin-top: -2px;
       span.orange {
         color: #b99c73;
       }
@@ -735,16 +745,17 @@ const transformStyle = computed(() => {
   .tab-buttons button {
     position: relative;
     padding: 10px 0px;
-    margin-bottom: -1.5px;
+    // margin-bottom: -1.5px;
     border: none;
     cursor: pointer;
     width: 100%;
-    height: 84px;
+    // height: 84px;
     color: white;
     border-radius: 10px 10px 0 0;
     background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
     border: 1.5px solid #8c7b32;
-    min-height: 22.5vw;
+    min-height: 100px;
+    margin-bottom: 2.5%;
 
     @media screen and (min-width: 500px) {
       min-height: 100px;
@@ -762,7 +773,7 @@ const transformStyle = computed(() => {
     }
     .uptonum {
       font-family: Poppins;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 700;
       line-height: 24px;
       color: #ffee56;

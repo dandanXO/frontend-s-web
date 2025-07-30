@@ -151,6 +151,8 @@ export const translateRecord = (rec, type = "") => {
     return "PT 电子"; // PTDY
   } else if (rec === "PGDY") {
     return "PG 电子"; // PGDY
+  } else if (rec === "NINEPAY") {
+    return "98钱包"; // NINEPAY
   } else {
     return rec;
   }

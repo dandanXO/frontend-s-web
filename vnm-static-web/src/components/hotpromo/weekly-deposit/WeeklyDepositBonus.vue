@@ -34,8 +34,8 @@
             <th>{{ $t("hotPromo.weeklyDepositBonus.vipLevel") }}</th>
             <th>{{ $t("hotPromo.weeklyDepositBonus.weeklyDepositTier1") }}</th>
             <th>{{ $t("hotPromo.weeklyDepositBonus.bonusRateTier1") }}</th>
-            <th>{{ $t("hotPromo.weeklyDepositBonus.weeklyDepositTier2") }}</th>
-            <th>{{ $t("hotPromo.weeklyDepositBonus.bonusRateTier2") }}</th>
+<!--            <th>{{ $t("hotPromo.weeklyDepositBonus.weeklyDepositTier2") }}</th>-->
+<!--            <th>{{ $t("hotPromo.weeklyDepositBonus.bonusRateTier2") }}</th>-->
             <th>{{ $t("hotPromo.weeklyDepositBonus.maximumBonus") }}</th>
           </tr>
         </thead>
@@ -44,56 +44,56 @@
             <td>VIP 1</td>
             <td>5,000 VNDP</td>
             <td>0.3%</td>
-            <td>8,888 VNDP</td>
-            <td>0.4%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>0.4%</td>-->
             <td>1,088 VNDP</td>
           </tr>
           <tr>
             <td>VIP 2</td>
             <td>5,000 VNDP</td>
-            <td>0.4%</td>
-            <td>8,888 VNDP</td>
-            <td>0.5%</td>
+            <td>0.3%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>0.5%</td>-->
             <td>1,088 VNDP</td>
           </tr>
           <tr>
             <td>VIP 3</td>
             <td>5,000 VNDP</td>
-            <td>0.5%</td>
-            <td>8,888 VNDP</td>
-            <td>0.6%</td>
+            <td>0.4%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>0.6%</td>-->
             <td>1,088 VNDP</td>
           </tr>
           <tr>
             <td>VIP 4</td>
             <td>5,000 VNDP</td>
-            <td>0.6%</td>
-            <td>8,888 VNDP</td>
-            <td>0.7%</td>
+            <td>0.4%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>0.7%</td>-->
             <td>1,088 VNDP</td>
           </tr>
           <tr>
             <td>VIP 5</td>
             <td>5,000 VNDP</td>
-            <td>0.7%</td>
-            <td>8,888 VNDP</td>
-            <td>0.8%</td>
+            <td>0.5%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>0.8%</td>-->
             <td>1,088 VNDP</td>
           </tr>
           <tr>
             <td>VIP 6</td>
             <td>5,000 VNDP</td>
-            <td>0.8%</td>
-            <td>8,888 VNDP</td>
-            <td>0.9%</td>
+            <td>0.5%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>0.9%</td>-->
             <td>1,088 VNDP</td>
           </tr>
           <tr>
             <td>VIP 7</td>
             <td>5,000 VNDP</td>
-            <td>0.9%</td>
-            <td>8,888 VNDP</td>
-            <td>1.0%</td>
+            <td>0.6%</td>
+<!--            <td>8,888 VNDP</td>-->
+<!--            <td>1.0%</td>-->
             <td>1,088 VNDP</td>
           </tr>
         </tbody>
@@ -123,12 +123,12 @@
           </div>
         </div>
 
-        <div class="item">
+        <!-- <div class="item">
           <div class="item-num">3</div>
           <div class="item-desc">
             <div class="hint">{{ $t("hotPromo.weeklyDepositBonus.rule3") }}</div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <h3>{{ $t("hotPromo.weeklyDepositBonus.titlecondition") }}</h3>

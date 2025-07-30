@@ -34,7 +34,7 @@
           {{ $t("header.login") }}
         </q-btn>
         <!-- <q-btn class="btn-style-pear" no-caps @click="router.push('/register')">{{ $t("header.register") }}</q-btn> -->
-        <q-btn class="btn-style-pear col-grow reg-bonus-flag-btn" no-caps @click="ui.loginView = 'register'">
+        <q-btn class="btn-style-pear col-grow" no-caps @click="ui.loginView = 'register'">
           {{ $t("header.register") }}
         </q-btn>
       </template>

@@ -936,6 +936,13 @@ export default {
         title: "申请方式",
         desc: "超级和局，玩家下注和，最低下注100U庄闲都开出6点，本局中得的彩金加奖20%，需向在线客服或Telegram客服：{telegram}申请。"
       }
+    },
+    happySaturday: {
+      claimSection: {
+        title: "投注嘉奖",
+        validBets: "有效投注：",
+        todayBonus: "可领取彩金："
+      }
     }
   },
   affiliate: {
@@ -992,6 +999,41 @@ export default {
           "代理推广每月至少需要新注册活跃会员达到3名或以上，如无法达到将视为零推广兴發平台，代理部有权减少或扣除部分佣金，如果三个月累积新增活跃会员未达到十位，将会停用代理账户，需代理联系平台客服重新开启。"
       }
     }
+  },
+  agent: {
+    telegramAgent: "Telegram代理",
+    telegramCs: "Telegram客服",
+    login: "登陆",
+    joinUs: "加入我们",
+    sectionTitle1: "模式1",
+    sectionSubtitle1: "不占成代理模式 幸运6提供丰厚的流水返佣 无需担心客户输赢，固定盈利，百分比赚钱！",
+    tableHeader1: "活跃用户",
+    tableHeader2: "周打码量",
+    tableHeader3: "返佣比例",
+    oneMillionPlus: "100万+",
+    twentyMillionPlus: "2000万+",
+    section1_info1: "例：线下会员本周共有有效打码量1600000x0.4%=6400U即可获得6400U的佣金。",
+    section1_info2: "返佣比例可能根据月度调动",
+    section1_info3: "返佣要求每月需达到5个活跃用户要求，未达标不能领取返佣",
+    section1_info4: "活跃用户标准：每周充值1000或者有效投注达到1000。",
+    section1_info5: "其他具体规则和条款需要通过合营专线Telegram代理专员： ",
+    section1_info6: "确认。",
+    sectionTitle2: "模式2",
+    sectionSubtitle2: "占成代理模式，最高可占9成",
+    section2_info1:
+      "授信额度，按占成比例交付公司，由代理自己给会员上下分。可以自己提供域名或者由公司提供独立的代理域名。占成代理反水输赢统一由代理商自己结算，本公司按码量0.8%占成比去结算。",
+    section2_info2: "其他具体规则和条款需要通过合营专线Telegram代理专员：",
+    section2_info3: "确认。",
+    sectionTitle3: "模式3",
+    sectionSubtitle3: "三级代理模式",
+    section3_info1:
+      "代理佣金结算，周结。会员打码的0.3%，直属代理（包含会员和代理）总打码的0.15%，直属代理的下线（包含会员和代理）总打码0.05%",
+    section3_info2:
+      "举例：直属会员打码本周打码100万，直属代理300万，直属代理的代理200万。您的佣金计算：会员，100wX0.3%=3000，直属代理，300WX0.15%=4500，直属代理的下线，200wX0.05%=1000，总记8500U。",
+    section3_info3: "其他具体规则和条款需要通过合营专线Telegram代理专员：",
+    section3_info4: "确认。",
+    footer: "以上3种模式只可三选一，添加Telegram代理专员：",
+    footer2: "了解更多详情！"
   },
   error: {
     101: "未找到平台",

@@ -1470,8 +1470,10 @@ export default defineComponent({
         return '云闪付' // 云闪付
       }  else if (depositType === 'DYPAY') {
         return '抖音' // 抖音
-      }   else if (depositType === 'AUTOPAY') {
+      } else if (depositType === 'AUTOPAY') {
         return '自动支付' // 自动支付
+      } else if (depositType === "NINEPAY") {
+        return "98钱包"; // NINEPAY
       } else {
         return depositType
       }

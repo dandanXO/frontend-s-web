@@ -31,7 +31,7 @@
             </div>
           </div>
 
-          <div class="inner-row">
+          <!-- <div class="inner-row">
             <div class="col-icon">
               <img src="../../assets/images/index/bonus-collect/icon-firstdeposit.svg" alt="" />
             </div>
@@ -47,7 +47,7 @@
                 <q-btn class="collect-btn" no-caps @click="gotoDepositPage()">Depósito</q-btn>
               </template>
             </div>
-          </div>
+          </div> -->
 
           <div class="inner-row">
             <div class="col-icon">
@@ -313,7 +313,7 @@ onMounted(() => {
   width: 90%;
   height: 100%;
   // max-height: calc(100% - 25%);
-  max-height: 400px;
+  max-height: 320px;
   position: relative;
   margin-top: -25%;
 

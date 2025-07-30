@@ -936,6 +936,13 @@ export default {
         title: "Application method",
         desc: "Super tie game, players bet on tie, minimum bet 100U, both banker and player get 6 points, the winnings of this game will be increased by 20%, you need to apply to online customer service or Telegram customer service: {telegram}."
       }
+    },
+    happySaturday: {
+      claimSection: {
+        title: "Betting Rewards",
+        validBets: "Valid Bets:",
+        todayBonus: "Claimable bonus:"
+      }
     }
   },
   affiliate: {
@@ -1002,6 +1009,47 @@ export default {
         reactivationCondition: "Reactivation requires contacting customer support."
       }
     }
+  },
+  agent: {
+    telegramAgent: "Acting Commissioner",
+    telegramCs: "Customer service",
+    login: "Login",
+    joinUs: "Join us",
+    sectionTitle1: "Mode 1",
+    sectionSubtitle1:
+      "Lucky 6 provides generous turnover rebates without having to worry about clients winning or losing, fixed profits, and percentage earning!",
+    tableHeader1: "Active users",
+    tableHeader2: "Weekly coding volume",
+    tableHeader3: "Rebate ratio",
+    oneMillionPlus: "1 million+",
+    twentyMillionPlus: "20 million+",
+    section1_info1:
+      "For example: If the offline members have a total of 1600000x0.4%=6400U of valid coding volume this week, they can get a commission of 6400U.",
+    section1_info2: "The rebate ratio may be adjusted monthly.",
+    section1_info3:
+      "The rebate requirement is to meet the requirement of 5 active users per month. If you fail to meet the requirement, you cannot receive the rebate.",
+    section1_info4: "Active user standard: recharge 1,000 per week or valid bets reach 1,000.",
+    section1_info5:
+      "Other specific rules and terms need to be confirmed through the joint venture dedicated line Telegram agent:",
+    section1_info6: ".",
+    sectionTitle2: "Mode 2",
+    sectionSubtitle2: "The agent model can take up to 90%",
+    section2_info1:
+      "The credit line is delivered to the company in proportion, and the agent will give points to members by himself. You can provide your own domain name or the company will provide an independent agent domain name. The agent's win and loss of the agent's rebate will be settled by the agent himself, and the company will settle it according to the proportion of 0.8% of the code volume.",
+    section2_info2:
+      "Other specific rules and terms need to be confirmed through the joint venture dedicated line Telegram agent specialist:",
+    section2_info3: ".",
+    sectionTitle3: "Mode 3",
+    sectionSubtitle3: "Three-level agency model",
+    section3_info1:
+      "Agent commission settlement, weekly settlement. 0.3% of member's code, 0.15% of the total code of direct agents (including members and agents), 0.05% of the total code of direct agents' downline (including members and agents)",
+    section3_info2:
+      "For example: the direct member codes 1 million this week, the direct agent codes 3 million, and the direct agent's agent codes 2 million. Your commission calculation: member, 1 million x 0.3% = 3000, direct agent, 3 million x 0.15% = 4500, direct agent's downline, 2 million x 0.05% = 1000, total 8500U.",
+    section3_info3:
+      "Other specific rules and terms need to be confirmed through the joint venture dedicated line Telegram agent: ",
+    section3_info4: ".",
+    footer: "You can only choose one of the above 3 modes. Add Telegram agent:",
+    footer2: "for more details!"
   },
   error: {
     101: "Platform not found",

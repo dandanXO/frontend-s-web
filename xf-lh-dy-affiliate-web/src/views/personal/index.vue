@@ -220,7 +220,7 @@
                 {{ (affInfo.revenueShare * 100).toFixed() }} %
               </el-form-item>
             </el-row>
-            <el-row class="info">
+            <el-row class="info" v-if="parseInt(store.state.user.siteId) !== 30">
               <el-icon color="#7D8792">
                 <Icon :icon="documentPercent20Filled" class="stats-icon" />
               </el-icon>

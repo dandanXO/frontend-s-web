@@ -91,13 +91,13 @@
               <th>{{ t('fields.loginName') }}</th>
               <th>{{ t('fields.affiliateCode') }}</th>
               <th>{{ t('fields.affiliateLevel') }}</th>
-              <th>{{ t('fields.commission') }}</th>
+              <th v-if="parseInt(store.state.user.siteId) !== 30">{{ t('fields.commission') }}</th>
               <th>{{ t('fields.totalDownlineMember') }}</th>
               <th>{{ t('fields.totalDownlineAffiliate') }}</th>
               <th>{{ t('fields.affiliateStatus') }}</th>
               <th>{{ t('fields.site') }}</th>
               <th>{{ t('fields.balance') }}</th>
-              <th>{{ t('fields.registerTime') }}</th>
+              <th v-if="parseInt(store.state.user.siteId) !== 30">{{ t('fields.registerTime') }}</th>
               <!--            <th>{{ t('fields.totalDeposit') }}</th>-->
               <!--            <th>{{ t('fields.totalWithdraw') }}</th>-->
               <th v-if="store.state.user.siteCode !== 'VNM'">{{ t('fields.operate') }}</th>
@@ -125,7 +125,7 @@
                   {{ t('affiliate.level.' + record.affiliateLevel) }}
                 </span>
               </td>
-              <td :data-label="t('fields.commission')">
+              <td :data-label="t('fields.commission')" v-if="parseInt(store.state.user.siteId) !== 30">
                 <span v-if="record.commission === null">0 %</span>
                 <span v-if="record.commission !== null">
                   {{ record.commission * 100 }} %
@@ -197,7 +197,7 @@
               <!--                v-formatter="{data: record.totalWithdraw, type: 'money'}"-->
               <!--              />-->
               <!--            </td>-->
-              <td>
+              <td v-if="parseInt(store.state.user.siteId) !== 30">
                 <el-button
                   icon="el-icon-edit"
                   size="normal"
@@ -312,7 +312,7 @@
         <el-form-item
           :label="t('fields.commission')"
           prop="commission"
-          v-if="store.state.user.siteCode !== 'VNM'"
+          v-if="store.state.user.siteCode !== 'VNM' && parseInt(store.state.user.siteId) !== 30"
         >
           <el-input
             v-model="cForm.commission"
@@ -382,7 +382,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.commissionRate')" prop="commission">
+        <el-form-item :label="t('fields.commissionRate')" prop="commission" v-if="parseInt(store.state.user.siteId) !== 30">
           <el-input
             v-model="eForm.commission"
             style="width: 350px"

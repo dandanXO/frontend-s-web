@@ -8,14 +8,14 @@
             <img src="@/assets/images/affiliate/contact-1.png" />
             <div class="contact-card-right">
               <div>{{ $t("agent.telegramAgent") }}</div>
-              <div class="contact-tag">@xy66vip</div>
+              <div class="contact-tag" @click="copy('@xy66vip')">@xy66vip</div>
             </div>
           </div>
           <div class="contact-card">
             <img src="@/assets/images/affiliate/contact-2.png" />
             <div class="contact-card-right">
               <div>{{ $t("agent.telegramCs") }}</div>
-              <div class="contact-tag">@xy6vip</div>
+              <div class="contact-tag" @click="copy('@xy6vip')">@xy6vip</div>
             </div>
           </div>
         </div>
@@ -130,19 +130,37 @@
       </div>
       <div class="footer">
         <img src="@/assets/images/affiliate/footer-icon.png" />
-        <div class="footer-txt">{{ $t("agent.footer") }} @xy66vip {{ $t("agent.footer2") }}</div>
+        <div class="footer-txt">
+          {{ $t("agent.footer") }}
+          <span style="text-decoration: underline">@xy66vip</span>
+          {{ $t("agent.footer2") }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
+import { useNotify } from "@/hooks/notify";
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 const affiliateUrl = ref("https://6666vip.cc/lk6/");
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
-const lang = localStorage.getItem("languageLocale");
+const lang = localStorage.getItem("languageLocale") || "zh";
+const notify = useNotify();
+const { t } = useI18n();
 
 const onClickLogin = () => {
   window.location.href = affiliateUrl.value + "login?agent=" + (affCode ? affCode : "");
+};
+
+const copy = (text) => {
+  const el = document.createElement("textarea");
+  el.value = text;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
+  notify.success(t("message.copied"));
 };
 </script>
 
@@ -168,8 +186,10 @@ const onClickLogin = () => {
     display: flex;
   }
   .contact-card {
-    background: linear-gradient(180deg, #aed9ff 0%, #6dbaff 100%);
-    border: 2.65px solid #acd4f6;
+    background: linear-gradient(180deg, #ecf6ff 0%, #feffff 100%);
+    // border: 1px solid;
+    // border-image-source: linear-gradient(180deg, #a5d2fe 0%, #d6ecff 46.15%, #a3d2ff 100%);
+    border: 1px solid #acd4f6;
     border-radius: 10px;
     display: flex;
     width: fit-content;
@@ -224,7 +244,7 @@ const onClickLogin = () => {
   background-color: #f2f8fe;
   border: 1px solid #acd4f6;
   border-radius: 12px;
-  padding: 25px;
+  padding: 10px 25px 20px;
   margin-bottom: 20px;
   .section-title {
     display: flex;

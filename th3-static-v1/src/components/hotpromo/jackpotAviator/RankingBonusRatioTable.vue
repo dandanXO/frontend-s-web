@@ -1,8 +1,8 @@
 <template>
     <div class="ranking">
-        <div class="item" style="background: #730319;">
+        <div class="item">
             <div>{{ $t('hotPromo.jackpotAviator.rank') }}</div>
-            <div>{{ $t('hotPromo.jackpotAviator.daily') }}</div>
+            <div>{{ $t('hotPromo.jackpotAviator.dailyOrWeekly') }}</div>
         </div>
 
         <template v-if="Array.isArray(props.rankingBonusRatioList)">
@@ -40,6 +40,7 @@ const props = defineProps(['rankingBonusRatioList']);
             display: flex;
             justify-content: center;
             align-items: center;
+            color: #3A3A3A;
         }
 
         &:first-child {
@@ -48,7 +49,7 @@ const props = defineProps(['rankingBonusRatioList']);
             font-weight: 700;
             line-height: 18px;
             text-align: center;
-            background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);
+            background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%) !important;
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
         }
@@ -67,17 +68,17 @@ const props = defineProps(['rankingBonusRatioList']);
         }
 
         &:nth-child(odd) {
-            background-color: #323738;
+            background: #E0D6C7;
         }
 
         &:nth-child(even) {
-            background-color: #394142;
+            background-color: #EAE6DE;
         }
         .bonus {
-            color: #DAC385;
+            color: #907C5F;
         }
         &:hover {
-            background: linear-gradient(180deg, #FB4F77 0%, #DA093A 100%);
+            background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
             color: #ffffff;
         }
     }

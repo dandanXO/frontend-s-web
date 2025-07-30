@@ -3,7 +3,7 @@
     <div class="chat-floating-header">
       <div class="chat-floating-panel__avatar-wrapper">
         <img class="chat-floating-panel__avatar" :src="avatarUrl" loading="lazy" />
-        <span class="profile-name">{{ profileName }}</span>
+        <span class="profile-name">{{ profileName === "SYSTEM" ? "雷火" : profileName }}</span>
       </div>
 
       <div v-if="livestreamData.id" class="chat-floating-panel__tag-wrapper">
