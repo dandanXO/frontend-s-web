@@ -63,7 +63,7 @@ const telegramLink = () => {
   } else if (siteId === siteEnum.KRW || siteId === Number(siteEnum.KRW)) {
     return '@city88888'
   } else if (siteId === siteEnum.LK6 || siteId === Number(siteEnum.LK6)) {
-    return 'Lucky666'
+    return 'xy66vip'
   } else {
     return 'leihuo123'
   }
