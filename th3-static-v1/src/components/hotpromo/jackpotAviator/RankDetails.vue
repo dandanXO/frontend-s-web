@@ -81,8 +81,7 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
   }
 
   &.isNotInApp {
-    // bottom: 95px;
-    bottom: 0px;
+    bottom: 70px;
   }
 
   .column {
@@ -105,24 +104,6 @@ const props = defineProps(["rankDetails", "isLoadingRanking"]);
 
   .value {
     color: #f1ff55;
-  }
-}
-
-@media (max-width: 400px) {
-  .bottom {
-    padding: 5px;
-    min-height: 50px;
-    font-size: 12px;
-    letter-spacing: -1px;
-  }
-}
-
-@media (max-width: 350px) {
-  .bottom {
-    padding: 5px;
-    min-height: 50px;
-    font-size: 12px;
-    letter-spacing: -1px;
   }
 }
 </style>
