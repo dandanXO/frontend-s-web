@@ -316,7 +316,8 @@ export default {
     freeTrial: "Free trial",
     sendOtp: "Send OTP",
     check: "Check",
-    payAgain: "Pay again"
+    payAgain: "Pay again",
+    copy: "Copy"
   },
   notify: {
     cancelPayment: "Cancel Payment",
@@ -971,7 +972,8 @@ export default {
       gold: "Gold",
       diamond: "Diamond",
       supreme: "Supreme",
-      congratulations: "Congratulations!"
+      congratulations: "Congratulations!",
+      youGet: "You get"
     },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",

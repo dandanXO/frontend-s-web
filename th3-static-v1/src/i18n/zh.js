@@ -307,7 +307,8 @@ export default {
     freeTrial: "免费试玩",
     sendOtp: "发送OTP",
     check: "检查",
-    payAgain: "再次支付"
+    payAgain: "再次支付",
+    copy: "复制"
   },
   notify: {
     cancelPayment: "取消支付",
@@ -947,7 +948,8 @@ export default {
       gold: "黄金",
       diamond: "钻石",
       supreme: "至尊",
-      congratulations: "恭喜！"
+      congratulations: "恭喜！",
+      youGet: "你获得了"
     },
     signIn7Days: {
       continuousSignIn: "连续签到：",

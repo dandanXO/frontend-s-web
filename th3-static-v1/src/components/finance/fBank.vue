@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-select
+      ref="bankSelect"
       filled
       label="Bank"
       color="white"
@@ -78,8 +79,13 @@ async function submitDeposit(deposit) {
     }
   });
 }
+const bankSelect = ref(null);
 
-defineExpose({ submitDeposit, validateBank });
+function validate() {
+  return bankSelect.value?.validate?.();
+}
+
+defineExpose({ submitDeposit, validateBank, validate });
 </script>
 
 <style scoped lang="scss">
