@@ -83,13 +83,13 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
 <style lang="scss" scoped>
 .rules-container {
   position: fixed;
-  padding: 35px 20px 50px 20px;
+  padding: 35px 20px 80px 20px;
   top: 110px;
   overflow: auto;
   left: 0;
   right: 0;
   height: calc(100vh - 110px);
-  background-color: #EAE6DE;
+  background-color: #eae6de;
 
   .title-img {
     display: flex;
@@ -111,7 +111,7 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
     }
   }
   .rule-common-title {
-    color: #907C5F;
+    color: #907c5f;
     font-family: Poppins;
     font-weight: 700;
     font-size: 20.52px;
@@ -188,6 +188,6 @@ const langVal = computed(() => i18nStoreLanguage.languageVal);
 }
 
 ol li {
-  color: #3A3A3A !important;
+  color: #3a3a3a !important;
 }
 </style>
