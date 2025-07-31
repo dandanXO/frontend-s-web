@@ -87,6 +87,7 @@ import { useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
 import LocalStorage from "boot/local-storage";
 import { isAndroid, isInPwa } from "boot/utils";
+import { useI18n } from "vue-i18n";
 
 const emits = defineEmits(["test"]);
 
@@ -94,6 +95,7 @@ const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
+const { t } = useI18n();
 
 const isPwd = ref(true);
 
@@ -150,7 +152,7 @@ const updateNewGuestState = () => {
           color: "dark",
           textColor: "white",
           position: "top",
-          message: "Updated successfully",
+          message: t("notify.updatedSuccessfully"),
           icon: "check_circle_outline",
           iconColor: "green"
         });
