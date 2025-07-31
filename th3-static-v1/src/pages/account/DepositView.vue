@@ -590,21 +590,32 @@ const isUsdtPrivilege = computed(
 );
 
 const copyMessage = (position) => {
-  let copyText = null;
-  copyText = eval(`subMsg${position}.value.innerText`);
-  // Create a temporary textarea element
-  const tempTextarea = document.createElement("textarea");
-  tempTextarea.value = copyText;
-  document.body.appendChild(tempTextarea);
+  try {
+    let copyText = null;
+    copyText = eval(`subMsg${position}.value.innerText`);
+    // Create a temporary textarea element
+    const tempTextarea = document.createElement("textarea");
+    tempTextarea.value = copyText;
+    document.body.appendChild(tempTextarea);
 
-  // Select the text and copy it
-  tempTextarea.select();
-  document.execCommand("copy");
+    // Select the text and copy it
+    tempTextarea.select();
+    document.execCommand("copy");
 
-  // Remove the temporary textarea element
-  document.body.removeChild(tempTextarea);
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
-  copybtntxt[position].value = "Copied";
+    // Remove the temporary textarea element
+    document.body.removeChild(tempTextarea);
+    const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+    copybtntxt[position].value = "Copied";
+
+    $q.notify({
+      color: "dark",
+      textColor: "white",
+      position: "top",
+      message: t("notify.copiedSuccessfully"),
+      icon: "check_circle_outline",
+      iconColor: "green"
+    });
+  } catch (e) {}
 };
 
 const blurCode = () => {
