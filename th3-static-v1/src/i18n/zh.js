@@ -561,7 +561,7 @@ export default {
       betting_tips: "投注佣金：<br />推荐并邀请新用户投注，可获得长期0.6%的投注返点佣金。",
       deposit_tips: "存款佣金：<br />您推荐的每位新会员首次存款，您可获得5%的返利。",
       multiple_acc_hint:
-        "2. 禁止同一個人使用多個帳戶惡意套取佣金。違者將被凍結帳戶。\n獎勵發放時間：第二天泰国時間下午3:00至下午6:00之間。獎勵將在此時間段內存入帳戶。",
+        "2. 禁止同一个人使用多个账户恶意套取佣金。违者将被冻结账户。\n奖励发放时间：第二天泰国时间下午3:00至下午6:00之间。奖励将在此时间段内存入账户。",
       shareTitle: "SuperSiam 分享赚钱",
       shareText:
         "SuperSiam 分享赚钱：\n\t每位朋友最高可赚1000泰铢。\n\t首次存款可获5%返利。\n\t享受长期0.6%的全投注返利。\n立即下载App，领取神秘现金奖励！\n{url}",
@@ -946,7 +946,8 @@ export default {
       silver: "白银",
       gold: "黄金",
       diamond: "钻石",
-      supreme: "至尊"
+      supreme: "至尊",
+      congratulations: "恭喜！"
     },
     signIn7Days: {
       continuousSignIn: "连续签到：",

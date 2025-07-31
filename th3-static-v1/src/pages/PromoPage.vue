@@ -62,7 +62,14 @@
               <q-spinner color="yellow" size="70px" :thickness="5" />
             </div>
 
-            <div class="selected-promo-wrapper" :class="{isJackporAviator: selectedPromo.redirectUrl === 'th3-aviator-jackpot-daily-challenge'}">
+            <div
+              class="selected-promo-wrapper"
+              :class="{
+                nbgm:
+                  selectedPromo.redirectUrl === 'th3-aviator-jackpot-daily-challenge' ||
+                  selectedPromo.redirectUrl === 'th3-deposit-wheel'
+              }"
+            >
               <!-- <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" /> -->
               <div
                 class="banner-container"
@@ -1142,7 +1149,7 @@ textColor: "white",
       margin: 0 16px;
       border-radius: 10px;
 
-      &.isJackporAviator {
+      &.nbgm {
         margin: 0;
         background: transparent;
       }
@@ -1511,7 +1518,7 @@ textColor: "white",
     justify-content: center;
     margin: 4px 0;
     border-radius: 5px;
-    background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
+    background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
 
     text-decoration: none;
 
