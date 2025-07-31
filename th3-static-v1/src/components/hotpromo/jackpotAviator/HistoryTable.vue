@@ -91,6 +91,9 @@ const props = defineProps(['historyList']);
     &:hover {
       background: linear-gradient(270deg, #CEC6AE 0%, #76674C 99.76%);
       color: #ffffff;
+      .betVolume {
+        color: #ffffff;
+      }
     }
     .betVolume {
       color: #B99C73;
