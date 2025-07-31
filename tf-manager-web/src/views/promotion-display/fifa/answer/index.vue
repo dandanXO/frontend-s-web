@@ -389,8 +389,7 @@ function checkQuery() {
       query.startTime = request.startTime.join(",");
     }
   }
-  const siteCode = sites.list.find(e => e.id === request.siteId).siteCode
-  query.promoCode = siteCode.toLowerCase() + '-fifa-quiz-2025-occasion'
+  query.gameType = 'FIFA'
   return query;
 }
 
