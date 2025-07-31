@@ -312,7 +312,7 @@
     <!-- <MediaSettingsComponent /> -->
     <div class="bottom-content" style="height: 60px"></div>
 
-    <div class="bottom-btn">
+    <div v-if="!isDisplay" class="bottom-btn">
       <q-btn
         no-caps
         unelevated
@@ -1110,7 +1110,7 @@ async function confirmDeposit() {
           pDepo(data);
         }
       })
-      .catch((e) => {
+      .finally(() => {
         btnLoading.value = false;
       });
   }

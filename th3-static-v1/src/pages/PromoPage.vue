@@ -1238,7 +1238,7 @@ textColor: "white",
           border-radius: 0;
           // width: 100%;
           padding: 0;
-          // margin: 0;
+          margin: 0 auto;
           > div:nth-child(2) {
             display: none;
           }
