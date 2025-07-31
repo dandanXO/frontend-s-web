@@ -253,7 +253,7 @@ const copyText = (text) => {
       color: "dark",
       textColor: "white",
       position: "top",
-      message: "Serial Number Copied to clipboard.",
+      message: t("notify.serialNumberCopied"),
       icon: "check_circle_outline",
       iconColor: "green"
     });
