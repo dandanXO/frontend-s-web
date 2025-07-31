@@ -1,31 +1,29 @@
 <template>
   <div class="cs2">
-    <div class="section first">
-      <div class="title">
-        <img class="logo" src="@/assets/images/promotion/hotpromo/blastpremier/bounty-logo.png">
-        <!-- <img class="logo" src="@/assets/images/promotion/hotpromo/blastpremier/spring-logo.png" /> -->
-        <img class="top" src="@/assets/images/promotion/hotpromo/blastpremier/section-1-spring.png" />
-      </div>
-      <div class="tips">
+    <div class="livepoker-rebate-game-info section-bg section first">
+     <div class="title-img">箱开福来</div>
+      <!-- <div class="tips">
         <div class="tips-inner">
           活动时间：2025年1月14日至2025年1月26日
           <br />
           参与BLAST Premier 赏金赛当日投注金额500元且注单结算后，次日可获得一个开箱钥匙，每投注500元即可获得一个钥匙。
         </div>
-      </div>
-      <div class="title">
+      </div> -->
+      <!-- <div class="title">
         <img class="bottom" src="@/assets/images/promotion/hotpromo/blastpremier/section-bottom.png" />
-      </div>
+      </div> -->
       <div class="content">
         <div class="top-row">
-          <div class="lft">
-            <img src="@/assets/images/promotion/hotpromo/blastpremier/key.png" />
-            钥匙数量：
-            <span class="number">{{ keyNumber }}</span>
-          </div>
-          <div class="buttons">
-            <div class="btn" @click="openModal('getkey')">获取记录</div>
-            <div class="btn" @click="openModal('openchest')">开箱记录</div>
+          <div class="top-row-inner">
+            <div class="lft">
+              <img src="@/assets/images/promotion/hotpromo/blastpremier/key.png" />
+              钥匙数量：
+              <span class="number">{{ keyNumber }}</span>
+            </div>
+            <div class="buttons">
+              <div class="btn" @click="openModal('getkey')">获取记录</div>
+              <div class="btn" @click="openModal('openchest')">开箱记录</div>
+            </div>
           </div>
         </div>
         <div class="middle-row">
@@ -52,8 +50,9 @@
               />
               <div v-else class="img-placeholder" />
               <div class="required-key">
+                <div class="top">{{ getTreasureDescription(item.treasureLevel) }}</div>
                 <div class="container-description">
-                  <span>{{ getTreasureDescription(item.treasureLevel) }}</span>
+                  <span>开启一次所需钥匙：</span>
                 </div>
                 <div class="key-container">
                   <img src="@/assets/images/promotion/hotpromo/blastpremier/key.png" />
@@ -117,29 +116,51 @@
         </div>
       </div>
     </div>
-    <div class="section third">
-      <div class="title"><img src="@/assets/images/promotion/hotpromo/blastpremier/section-3-spring.png" /></div>
+    
+    <div class="livepoker-rebate-game-info section-bg section third">
+      <div class="title-img">活动详情</div>
       <div class="content">
-        <p>
-          1. 活动期间,每日投注BLAST Premier 赏金赛达到500元有效投注即可在次日12：00点左右自动获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限；
-        </p>
-        <p>
-          2.
-          活动期间,开箱钥匙可积攒使用,获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱,超出活动时间未开启宝箱则不予补偿；
-        </p>
-        <p>3. 开启宝箱后获得彩金由系统自动实时派发至会员主钱包内.彩金5倍流水即可出款；</p>
-        <p>
-          4. 活动期间,当日存款≥200元且 BLAST Premier 赏金赛有效投注≥1,000元在次日24 小时内在活动页面点击【点击领取】按钮领取签到奖金。逾期未领取则视为放弃，彩金8 倍流水即可出款；
-        </p>
-        <p>
-          5.
-          同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号,仅可参与一次,若有违规者,将不享受此红利；
-        </p>
-        <p>6. 任何会员或团体以不正常的方式进行套取活动优惠,平台方保在不通知的情况下冻结或关闭相关账户的权利,并不退还款项,且会员会被列入黑名单；</p>
-        <p>
-          7.
-          为避免文字理解差异,本站保留本活动最终解释权；
-        </p>
+        <div class="little-title">
+          <div class="left">活动时间</div>
+          <div class="right">2025年8月05日至2025年8月17日</div>
+        </div>
+        <div class="little-title">
+          <div class="left">活动内容</div>
+          <div class="right">参与BLAST赏金赛第二赛季当日投注金额500元且注单结算后，次日可获得一个开箱钥匙，每投注500元即可获得一个钥匙。</div>
+        </div>
+      </div>
+    </div>
+    <div class="livepoker-rebate-game-bottom-rule section-bg section third">
+       <div class="title-img">活动规则</div>
+      
+      <div class="content">
+        <div class="item">
+          <div class="item-num">1</div>
+          <div style="display: flex; flex-direction: column">
+            活动期间，每日投注 BLAST 赏金赛第二赛季达到 500 元有效投注，即可在次日 12:00 点自动获得 1 个开箱钥匙，开箱钥匙与开箱次数每日不设上限；
+            <div class="hint">注：开箱钥匙可累积使用，仅限活动期间开启，逾期未开启不予补偿。</div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-num">2</div>
+          开启宝箱后获得彩金由系统自动实时派发至会员主钱包内，彩金 5 倍流水即可出款；
+        </div>
+        <div class="item">
+          <div class="item-num">3</div>
+          活动期间，仅计算当日投注 BLAST 赏金赛第二赛季已结算的注单；当日存款 ≥500 元且有效投注 ≥1,000 元的会员，可在次日 24 小时内于活动页面点击【立即领取】按钮领取签到奖金，逾期未领取视为放弃，彩金 8 倍流水即可出款；
+        </div>
+        <div class="item">
+          <div class="item-num">4</div>
+          同一手机号、姓名、邮箱地址、银行卡号等信息视为同一账户，每位会员仅可参与一次；若发现违规行为，将不享受此红利；
+        </div>
+        <div class="item">
+          <div class="item-num">5</div>
+          任何会员或团体以不正常的方式进行套取活动优惠，平台方保留在不通知的情况下冻结或关闭相关账户的权利，且不退还款项，并将会员列入黑名单；
+        </div>
+        <div class="item">
+          <div class="item-num">6</div>
+          为避免文字理解差异，本站保留本活动最终解释权；
+        </div>
       </div>
     </div>
 
@@ -486,6 +507,261 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+.livepoker-rebate-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.livepoker-rebate-container {
+  width: 1200px;
+  height: 100%;
+}
+
+.livepoker-rebate-section {
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  padding: 30px 40px;
+  border-radius: 12px;
+  border: 1px solid #acd4f6;
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  background: url("@/assets/promo/lh-livepoker-rebate/section-bg.png");
+  background-size: 100% 100%;
+
+  .livepoker-rebate-section-left {
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-between;
+    justify-content: flex-start;
+    gap: 25px;
+  }
+
+  .livepoker-rebate-section-right {
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 220px;
+
+    .bonus-image {
+      cursor: pointer;
+      width: 100%;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+      &:active {
+        transform: translate(0px, 1px);
+        opacity: 0.9;
+      }
+
+      &.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .livepoker-rebate-section-title {
+    color: #000000;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+}
+
+.livepoker-rebate-game {
+  width: 100%;
+  height: 302px;
+  border-radius: 12px;
+  // border: 1px solid #51acff;
+  background-color: #fff;
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.livepoker-rebate-game-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .livepoker-rebate-game-bottom-left-title {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22.4px;
+    color: #ff3333;
+  }
+  .livepoker-rebate-game-bottom-left-btn {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 22.4px;
+    color: #ff3333;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.livepoker-rebate-game-info {
+  width: 100%;
+  height: 100%;
+  margin-top: 40px;
+  background: #f2f8fe;
+  border-radius: 12px;
+  padding: 40px;
+  border: 1px solid #acd4f6;
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  gap: 20px;
+
+  .title {
+    background-image: url("@/assets/promo/lh-livepoker-rebate/info-title.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 738px;
+    height: 44px;
+    margin: 0 auto 8px;
+  }
+  .little-title {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 10px;
+    .left {
+      background-image: url("@/assets/promo/lh-livepoker-rebate/info-little-title-bg.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 120px;
+      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 23.33px;
+      color: #ffffff;
+      margin-right: 16px;
+    }
+    .right {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 28px;
+      color: #000000;
+    }
+  }
+}
+
+.livepoker-rebate-game-info-table {
+  width: 100%;
+  height: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  text-align: center;
+  vertical-align: middle;
+  th {
+    height: 56px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #fff;
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    &:first-child {
+      border-top-left-radius: 12px;
+    }
+    &:last-child {
+      border-top-right-radius: 12px;
+    }
+  }
+  tr {
+    &:last-child {
+      td {
+        &:first-child {
+          // border-bottom-left-radius: 12px;
+        }
+      }
+    }
+    &:nth-child(2) {
+      td {
+        &:last-child {
+          // border-bottom-right-radius: 12px;
+        }
+      }
+    }
+  }
+  td {
+    border: 1px solid #acd4f6;
+    height: 56px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    color: #000000;
+  }
+}
+
+.livepoker-rebate-game-bottom-rule {
+  width: 100%;
+  height: 100%;
+  margin-top: 40px;
+  background: #f2f8fe;
+  border-radius: 12px;
+  padding: 40px;
+  border: 1px solid #acd4f6;
+  box-shadow: 0px 0px 4px 0px #01497b0f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .title {
+    background-image: url("@/assets/promo/lh-livepoker-rebate/rule-title.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 738px;
+    height: 44px;
+    margin-bottom: 20px;
+  }
+  .content {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 36px;
+    color: #000000;
+    .item {
+      padding-left: 24px;
+      display: flex;
+      gap: 10px;
+
+      .item-num {
+        color: #ffffff;
+        font-size: 20px;
+        line-height: 1;
+        border-radius: 50%;
+        height: 28px !important;
+        width: 28px !important;
+        min-width: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2px;
+        background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      }
+
+      .hint {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 22.4px;
+        color: #ff3333;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 4px;
+      }
+    }
+  }
+}
 @mixin animation-btn {
   transition: transform 0.3s ease;
 
@@ -519,16 +795,18 @@ onMounted(() => {
 
   .useKeys {
     @include animation-btn;
-    background: url(@/assets/images/promotion/hotpromo/blastpremier/open-btn-bg.png) no-repeat center center;
-    color: #003434;
-    padding: 8px 25px;
+    // background: url(@/assets/images/promotion/hotpromo/blastpremier/open-btn-bg.png) no-repeat center center;
+    background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+    color: #ffffff;
+    padding: 4px 25px;
     width: 200px;
     background-size: cover;
     margin: 0 auto;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
     margin-bottom: 80px;
+    border-radius: 20px;
   }
 
   .tips {
@@ -593,20 +871,31 @@ onMounted(() => {
     }
   }
   .first .content .top-row {
-    background: url(../../../assets/images/promotion/hotpromo/blastpremier/container.png) no-repeat center center;
-    background-size: contain;
+    // background: url(../../../assets/images/promotion/hotpromo/blastpremier/container.png) no-repeat center center;
+    // background-size: contain;
+    background: linear-gradient(180deg, #93F2FF 3.39%, #3A69F7 100%);
+    border-radius: 15px;
+    border: 3px solid #94BAF8;
+    padding: 5px;
+      margin-bottom: 40px;
+    &-inner {
+        background: linear-gradient(180deg, #FAFCFF 31.57%, #E3EAF8 54.21%, rgba(202, 211, 239, 0.6) 100%);
+        border: 3px solid #9FA9D0;
+        width: 100%;
+        border-radius: 15px;
+    }
   }
   .content {
     max-width: 1300px;
     margin: 0 auto;
     padding: 20px 20px 40px 20px;
+    width: 100%;
 
-    .top-row {
+    .top-row-inner {
       padding: 9px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 40px;
 
       .lft {
         display: flex;
@@ -614,7 +903,8 @@ onMounted(() => {
         align-items: center;
         gap: 5px;
         font-size: 20px;
-        color: $color-white;
+        color:#333333;
+        font-weight: 600;
         padding: 0 18px;
         > img {
           height: 40px;
@@ -624,7 +914,7 @@ onMounted(() => {
           align-self: normal;
           font-size: 18px;
           padding: 5px 24px;
-          font-weight: 500;
+          font-weight: 600;
           font-family: "PingFang SC";
           color: $color-white;
           background: url(@/assets/images/promotion/hotpromo/blastpremier/btn.png) no-repeat center center;
@@ -662,14 +952,14 @@ onMounted(() => {
               background: unset;
               padding: 0 20px;
               border-radius: 0;
-              color: #ffffff;
-              font-weight: bold;
+              color: #000000;
+              font-weight: 600;
               font-family: "PingFang SC";
               font-size: 20px;
               line-height: 24px;
               margin-bottom: 8px;
               &:nth-child(2) {
-                color: #fffd66;
+                color: #00A1FF;
               }
             }
           }
@@ -699,7 +989,7 @@ onMounted(() => {
         }
 
         .number {
-          color: #fffd66;
+          color: #00A1FF;
           font-weight: 700;
           font-size: 25px;
         }
@@ -715,13 +1005,13 @@ onMounted(() => {
           align-self: normal;
           font-size: 20px;
           padding: 12px 30px;
-          font-weight: 500;
+          font-weight: 600;
           line-height: 28px;
           font-family: "PingFang SC";
-          color: #fffd66;
+          color: #00A1FF;
           // color: $color-white;
           &:first-of-type {
-            color: $color-white;
+            color: #000000;
           }
 
           // background: url(@/assets/images/promotion/hotpromo/blastpremier/btn-active.png) no-repeat center center;
@@ -732,39 +1022,47 @@ onMounted(() => {
       .item-container {
         display: flex;
         justify-content: space-around;
+        max-width: 1280px;
+        margin: 0 auto;
         // margin-bottom: 50px;
 
         .item {
-          width: 330px;
-          height: 220px;
+          width: 300px;
+          height: 250px;
           display: flex;
           flex-direction: column;
           justify-items: center;
           align-items: center;
           gap: 16px;
-          padding: 10px 0;
+          position: relative;
+          // padding: 10px 0;
           background: url(@/assets/images/promotion/hotpromo/blastpremier/global-treasure-bg.png) no-repeat center
             center;
+          background-size: contain;
           cursor: pointer;
           transition: background-image 0.3s ease, transform 0.3s ease;
-
+          filter: brightness(0.5);
           .img-placeholder {
             width: 360px;
             height: 300px;
           }
 
           > img {
-            width: 190px;
-            height: 160px;
+            width: 155px;
+            height: 140px;
+            margin-top: 45px;
           }
 
           &.active,
           &:hover {
             background: url(@/assets/images/promotion/hotpromo/blastpremier/global-treasure-bg-active.png) no-repeat
               center center;
+              
+          background-size: contain;
             transform: scale(1.2);
+            filter: brightness(1);
             .required-key {
-              color: #fffd66;
+              // color: #fffd66;
             }
           }
         }
@@ -773,15 +1071,24 @@ onMounted(() => {
       .required-key {
         display: flex;
         align-items: center;
-        color: #bcbcbc;
+        color: #ffffff;
         font-family: PingFang SC;
-        font-size: 36px;
+        font-size: 25px;
         font-weight: 600;
         line-height: 38.4px;
         height: 50px;
         width: 100%;
         justify-content: space-between;
         padding: 0 10px;
+        .top {
+          position: absolute;
+          top: 10px;
+          left: 0;
+          right: 0;
+          font-size: 15px;
+          color: #ffffff;
+          text-shadow: 1.36px 1.36px 0px #00000040;
+        }
         .container-description {
           display: flex;
           align-items: center;
@@ -893,6 +1200,11 @@ onMounted(() => {
 
   .section {
     margin-bottom: 30px;
+    &.section-bg {
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
     &.first {
       .title .logo {
@@ -910,13 +1222,13 @@ onMounted(() => {
     }
 
     &.third {
-      background: url(@/assets/images/promotion/hotpromo/blastpremier/rules-bg.png) no-repeat center center;
-      background-size: 100% 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
+      // background: url(@/assets/images/promotion/hotpromo/blastpremier/rules-bg.png) no-repeat center center;
+      // background-size: 100% 100%;
+      // max-width: 1200px;
+      // margin: 30px auto;
+      // padding: 20px;
 
-      color: #b5a73b;
+      // color: #b5a73b;
 
       .content {
         text-align: left;
@@ -1084,5 +1396,67 @@ onMounted(() => {
   color: #17c7ff;
   font-size: 24px;
   font-weight: 700;
+}
+.dark {
+  .livepoker-rebate-section,
+  .livepoker-rebate-game-info,
+  .livepoker-rebate-game-bottom-rule {
+    position: relative;
+    background: linear-gradient(180deg, #2d3f64 0%, #232a36 100%);
+    border: none;
+  }
+
+  .livepoker-rebate-section::before,
+  .livepoker-rebate-game-info::before,
+  .livepoker-rebate-game-bottom-rule::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    padding: 1px;
+    background: linear-gradient(170deg, #be9457 1.91%, rgba(190, 148, 87, 0) 33.82%);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .livepoker-rebate-section {
+    .livepoker-rebate-section-title {
+      color: #fff;
+    }
+    .reward-info-content {
+      color: #fff;
+    }
+  }
+
+  .livepoker-rebate-game-info {
+    .left {
+      background-image: url("../../../assets/promo/lh-livepoker-rebate/dark-info-little-title-bg.png");
+    }
+    .right {
+      color: #fff;
+    }
+    .title {
+      background-image: url("../../../assets/promo/lh-livepoker-rebate/dark-info-title.png");
+    }
+  }
+
+  .livepoker-rebate-game-bottom-rule {
+    .item {
+      color: #fff;
+    }
+    .title {
+      background-image: url("../../../assets/promo/lh-livepoker-rebate/dark-info-title.png");
+    }
+  }
+
+  .livepoker-rebate-game-info-table {
+    th {
+      background: linear-gradient(180deg, #597adf 0%, #3c5ec3 100%);
+    }
+    td {
+      color: white;
+    }
+  }
 }
 </style>

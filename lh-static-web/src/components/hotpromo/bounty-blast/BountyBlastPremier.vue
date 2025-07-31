@@ -1,10 +1,10 @@
 <template>
     <el-tabs v-model="activeTab" @tab-click="handleTabClick">
-      <el-tab-pane label="签到好礼" name="bountysign">
-        <BountySignIn :promo-code="promoCode" />
-      </el-tab-pane>
       <el-tab-pane label="箱开福来" name="bountychest">
         <BountyChest :promo-code="promoCode" />
+      </el-tab-pane>
+      <el-tab-pane label="签到好礼" name="bountysign">
+        <BountySignIn :promo-code="promoCode" />
       </el-tab-pane>
     </el-tabs>
   </template>
@@ -16,7 +16,7 @@
   
   const props = defineProps(["promoCode"]);
   const promoCode = props.promoCode
-  const activeTab = ref('bountysign');
+  const activeTab = ref('bountychest');
   
   const handleTabClick = (tab) => {
     console.log('Tab clicked:', tab.name);
@@ -34,23 +34,25 @@
   :deep(.el-tabs__nav) {
     
     gap: 80px;
-    margin: 50px auto 0;
+    margin: 0px auto 50px;
   }
   :deep(.el-tabs__item) {
     background: linear-gradient(180deg, #E7E7E7 0%, #C9C9C9 100%);
     text-align: center;
-    padding: 30px 50px !important;
+    padding: 20px 50px !important;
     border-radius: 30px;
     color: #95979A;
     font-family: HYYakuHei800;
-    font-size: 36px;
-    font-weight: 700;
+    font-size: 30px;
+    font-weight: 500;
     text-align: center;
 
 
     &.is-active { 
-      background: linear-gradient(90deg, #FFFD66 0%, #FF9400 100%);
-      color: #000000;
+      // background: linear-gradient(90deg, #FFFD66 0%, #FF9400 100%);
+      // color: #000000;
+      background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+      color: #ffffff;
 
     }
   }

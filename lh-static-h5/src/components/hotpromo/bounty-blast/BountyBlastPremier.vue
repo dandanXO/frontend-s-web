@@ -3,21 +3,21 @@
     v-model="activeTab"
     class="custom-tabs"
     align="center"
-    active-color="black"
+    active-color="white"
     inactive-color="#95979A"
     indicator-color="transparent"
   >
-    <q-tab
-      name="bountysign"
-      label="签到好礼"
-      class="custom-tab"
-      @click="handleTabClick('bountysign')"
-    />
     <q-tab
       name="bountychest"
       label="箱开福来"
       class="custom-tab"
       @click="handleTabClick('bountychest')"
+    />
+    <q-tab
+      name="bountysign"
+      label="签到好礼"
+      class="custom-tab"
+      @click="handleTabClick('bountysign')"
     />
   </q-tabs>
   
@@ -36,7 +36,7 @@ import BountySignIn from './BountySignIn.vue';
 
 const props = defineProps(["promoCode"]);
 const promoCode = props.promoCode;
-const activeTab = ref('bountysign');
+const activeTab = ref('bountychest');
 
 const handleTabClick = (tabName) => {
   console.log('Tab clicked:', tabName);
@@ -67,8 +67,10 @@ const handleTabClick = (tabName) => {
     font-size: 20px;
   }
   &.q-tab--active {
-    background: linear-gradient(90deg, #FFFD66 0%, #FF9400 100%);
-    color: #000000;
+    // background: linear-gradient(90deg, #FFFD66 0%, #FF9400 100%);
+    // color: #000000;
+    background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+    color: #ffffff;
   }
 }
 </style>

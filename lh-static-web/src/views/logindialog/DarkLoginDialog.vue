@@ -450,7 +450,7 @@ import LoginFormDialog from "@/components/auth/login/LoginFormDialog.vue";
 
     .el-tabs__item.is-active {
       color: #fff;
-      font-weight: bold;
+      font-weight: 500;
     }
 
     .el-tabs__active-bar {

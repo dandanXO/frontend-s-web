@@ -131,10 +131,10 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee
+              <!-- <BlastPremierMarquee
                 :type="selectedPromo?.redirectUrl === 'bounty-blast-premier' ? 'bounty' : null"
                 v-if="selectedPromo?.redirectUrl === 'bounty-blast-premier'"
-              />
+              /> -->
               <div
                 class="inner"
                 :class="{
@@ -157,9 +157,11 @@
                     selectedPromo.promoCode === 'lh1meizhoubei' || selectedPromo.promoCode === 'lh1-olympic-fund',
                   aijiasu: selectedPromo.promoCode === 'lh1-aijiasu',
                   euroRegen: selectedPromo.promoCode === 'lh1-eurocup-regen',
-                  'lh1-2025-pgl-s3': selectedPromo.promoCode === 'lh1-2025-pgl-s3'
+                  'lh1-2025-pgl-s3': selectedPromo.promoCode === 'lh1-2025-pgl-s3',
+                  'blastpremier': selectedPromo.redirectUrl === 'bounty-blast-premier'
                 }"
                 :style="[
+                  selectedPromo.redirectUrl === 'bounty-blast-premier' ||
                   selectedPromo.promoCode === 'lh-eurocup-manual' ||
                   selectedPromo.promoCode === 'lh1-deposit-rebates' ||
                   selectedPromo.redirectUrl === 'lh-blackmyth-wukong' ||
@@ -321,7 +323,7 @@ import LocalStorage from "boot/local-storage";
 import { useLocalStorage } from "@vueuse/core";
 
 import HotPromotion from "components/HotPromotion";
-import BlastPremierMarquee from "src/components/hotpromo/bounty-blast/BlastPremierMarquee.vue";
+// import BlastPremierMarquee from "src/components/hotpromo/bounty-blast/BlastPremierMarquee.vue";
 import AijiasuPromo from "src/components/hotpromo/aijiasu/AijiasuPromo.vue";
 import { useNotify } from "src/hooks/notify";
 import { cached } from "src/boot/cache";
@@ -338,7 +340,7 @@ export default defineComponent({
   components: {
     HotPromotion,
     NBAWaterBattle,
-    BlastPremierMarquee,
+    // BlastPremierMarquee,
     MesaPromo,
     BlastAustin,
     TorontoMasters,
@@ -1106,6 +1108,11 @@ export default defineComponent({
           gap: 0px;
           padding: 0px 16px 20px;
           background-color: #1c0d18;
+        }
+        &.blastpremier {
+          margin: 0;
+          padding: 10px 16px 20px;
+          width: 100%;
         }
         &.lheuromanual {
           margin: 0px;

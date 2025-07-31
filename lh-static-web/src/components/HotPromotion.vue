@@ -98,6 +98,8 @@
     <FpSlotPromo v-if="list.redirectUrl === 'lh1-fp-slot'" :promo-code="list.promoCode" />
     <elsOne2025 v-if="list.redirectUrl === 'lh1-esl-one-raleigh-2025'" :promo-code="list.promoCode" />
     <YuEBaoPromo v-if="list.redirectUrl === 'lh1-yu-e-bao'" :promo-code="list.promoCode" :params="list.param" />
+    <BountyBlastPremier v-else-if="list.redirectUrl === 'bounty-blast-premier'" :promo-code="list.promoCode" />
+    
     <BlastRival2025
       v-if="list.redirectUrl === 'lh1-blast-rivals-2025-s1'"
       :promo-code="list.promoCode"
@@ -263,7 +265,7 @@ import FissureJulyFinal2025 from "./hotpromo/fissure-july-final-2025/FissureJuly
 import PPDianZiTianTianSong from "./hotpromo/ppdianzitiantiansong/PPDianZiTianTianSong.vue";
 import RapidDrop2025 from "./hotpromo/rapid-drop-2025/RapidDrop2025.vue";
 import LhStepGamePromo from "../components/hotpromo/lhstepgame/LhStepGamePromo.vue";
-
+import BountyBlastPremier from "../components/hotpromo/bounty-blast/BountyBlastPremier.vue";
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -333,7 +335,8 @@ export default defineComponent({
     FissureJulyFinal2025,
     RapidDrop2025,
     PPDianZiTianTianSong,
-    LhStepGamePromo
+    LhStepGamePromo,
+    BountyBlastPremier
   },
   props: {
     list: {
