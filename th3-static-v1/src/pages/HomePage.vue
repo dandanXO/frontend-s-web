@@ -1421,14 +1421,7 @@
 
             <div class="fullgame-search q-ma-md">
               <div class="pc-form-input">
-                <q-input
-                  outlined
-                  color="green"
-                  v-model="searchText"
-                  :label="$t('btn.search')"
-                  clearable
-                  clear-icon="close"
-                >
+                <q-input outlined v-model="searchText" :label="$t('btn.search')" clearable clear-icon="close">
                   <template v-slot:prepend>
                     <q-icon name="search" size="20px" />
                   </template>
