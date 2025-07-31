@@ -65,7 +65,7 @@
           <td>数字人民币</td>
           <td>1.0%</td>
           <td>≥20</td>
-          <td>88</td>
+          <td>138</td>
         </tr>
         <!-- <tr>
           <td>支付宝转卡</td>
@@ -150,7 +150,7 @@ const depositCards = ref([
   {
     code: "szrmb",
     title: "数字人民币",
-    content: `充值即送<em class="light-bg">1.0%</em>彩金 数字人民币充值火热上线，速度快，够安全。用户每日任何时间在雷火使用“数字人民币”方式成功存款≥20元，即可享受存款金额的<em class="light-bg">1.0%</em>加码彩金，单日优惠最高上限88元。`
+    content: `充值即送<em class="light-bg">1.0%</em>彩金 数字人民币充值火热上线，速度快，够安全。用户每日任何时间在雷火使用“数字人民币”方式成功存款≥20元，即可享受存款金额的<em class="light-bg">1.0%</em>加码彩金，每日赠送<em class="light-bg">1%</em>最高138元!`
   },
   {
     code: "zfb",
