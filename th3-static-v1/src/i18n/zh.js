@@ -946,7 +946,8 @@ export default {
       silver: "白银",
       gold: "黄金",
       diamond: "钻石",
-      supreme: "至尊"
+      supreme: "至尊",
+      congratulations: "恭喜！"
     },
     signIn7Days: {
       continuousSignIn: "连续签到：",

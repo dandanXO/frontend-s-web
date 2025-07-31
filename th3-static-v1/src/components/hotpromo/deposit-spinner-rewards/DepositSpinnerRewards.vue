@@ -60,7 +60,7 @@
                   <span class="indicator-num">
                     {{ tab.min }}
                   </span>
-                  <span class="indicator-spin">+1spin</span>
+                  <span class="indicator-spin">+1 {{ $t("hotPromo.depositSpinWheel.spin") }}</span>
                 </div>
                 <div class="indicator wbar last">
                   <img src="./img/indicator-bar.png" />
@@ -102,6 +102,7 @@
     </div>
     <q-dialog v-model="showDialog" persistent>
       <div class="prize-popup">
+        <div class="prize-popup-header">{{ $t("hotPromo.depositSpinWheel.congratulations") }}</div>
         <!-- <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" /> -->
         <div class="prize-gold">
           <div class="prize-get">You get {{ prizePopupBonusAmt }} PRK</div>
@@ -260,7 +261,7 @@ const setTab = (index) => {
 };
 const prizePopupBonusAmt = ref(0);
 const sliderRef = ref(null);
-const showDialog = ref(true);
+const showDialog = ref(false);
 const prizeResult = ref("");
 const { lengthX, lengthY } = useSwipe(sliderRef, {
   passive: true,
@@ -842,8 +843,26 @@ const transformStyle = computed(() => {
 .prize-popup {
   width: 100%;
   margin-bottom: 120px;
+  position: relative;
+  font-family: Roboto;
+  font-weight: 700;
   .purple-bg {
-    background: linear-gradient(90deg, #5856ff 0%, #262e99 100%);
+    background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+  }
+  .prize-popup-header {
+    position: absolute;
+    top: 40px;
+    left: calc(50% - 32px);
+    transform: translateX(-50%);
+    z-index: 1;
+    font-style: Bold;
+    font-size: 16px;
+    leading-trim: NONE;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fddbb6;
   }
 }
 .prize-gold {
@@ -862,7 +881,7 @@ const transformStyle = computed(() => {
     font-weight: 700;
     line-height: 22.1px;
     text-align: center;
-    color: #5254ad;
+    color: #3a3a3a;
   }
   .prize-amount {
     position: absolute;
@@ -876,12 +895,12 @@ const transformStyle = computed(() => {
     letter-spacing: -2px;
     // color: #fff96f;
     // text-shadow: 1px 1px #0000008a;
-    background: linear-gradient(270deg, #394ae2 0%, #6b89ff 52.5%, #394ae2 100%);
+    background: linear-gradient(90deg, #fcb924 0%, #fced41 100%);
 
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 0.7px white; /* Creates the border */
+    -webkit-text-stroke: 1px rgba(141, 130, 111, 0.486);
 
     @media (max-width: 380px) {
       bottom: 3.5%;

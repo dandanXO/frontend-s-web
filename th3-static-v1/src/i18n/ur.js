@@ -960,7 +960,8 @@ export default {
       silver: "سلور",
       gold: "گولڈ",
       diamond: "ڈائمنڈ",
-      supreme: "سپریم"
+      supreme: "سپریم",
+      congratulations: "مبارک ہو!"
     },
     signIn7Days: {
       continuousSignIn: "مسلسل سائن ان:",
