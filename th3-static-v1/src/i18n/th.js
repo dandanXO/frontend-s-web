@@ -961,7 +961,8 @@ export default {
       gold: "ทอง",
       diamond: "เพชร",
       supreme: "สุพรีม",
-      congratulations: "ขอแสดงความยินดี!"
+      congratulations: "ขอแสดงความยินดี!",
+      youGet: "คุณได้รับ"
     },
     signIn7Days: {
       continuousSignIn: "การลงชื่อเข้าใช้ต่อเนื่อง:",

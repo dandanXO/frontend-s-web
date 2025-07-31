@@ -948,7 +948,8 @@ export default {
       gold: "黄金",
       diamond: "钻石",
       supreme: "至尊",
-      congratulations: "恭喜！"
+      congratulations: "恭喜！",
+      youGet: "你获得了"
     },
     signIn7Days: {
       continuousSignIn: "连续签到：",

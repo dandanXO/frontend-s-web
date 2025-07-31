@@ -105,9 +105,9 @@
         <div class="prize-popup-header">{{ $t("hotPromo.depositSpinWheel.congratulations") }}</div>
         <!-- <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" /> -->
         <div class="prize-gold">
-          <div class="prize-get">You get {{ prizePopupBonusAmt }} PRK</div>
+          <div class="prize-get">{{ $t("hotPromo.depositSpinWheel.youGet") }} {{ prizePopupBonusAmt }} THB</div>
 
-          <div class="prize-amount">{{ prizePopupBonusAmt }} PRK</div>
+          <div class="prize-amount">{{ prizePopupBonusAmt }} THB</div>
 
           <q-btn no-caps rounded unelevated class="purple-bg" @click="closeDialog">{{ $t("btn.recharge") }}</q-btn>
         </div>

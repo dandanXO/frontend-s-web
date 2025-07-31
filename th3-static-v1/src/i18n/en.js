@@ -972,7 +972,8 @@ export default {
       gold: "Gold",
       diamond: "Diamond",
       supreme: "Supreme",
-      congratulations: "Congratulations!"
+      congratulations: "Congratulations!",
+      youGet: "You get"
     },
     signIn7Days: {
       continuousSignIn: "Continuous sign-in:",
