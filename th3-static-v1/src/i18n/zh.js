@@ -8,7 +8,7 @@ export default {
     register: "注册",
     download: "下载",
     getFreeSpins: "在APP上获取免费旋转",
-    getFreeCash: "免费100卢比，更好的体验！",
+    getFreeCash: "免费100泰铢，更好的体验！",
     withdraw: "提款",
     personalCenter: "个人中心",
     deposit: "存款",
@@ -84,7 +84,7 @@ export default {
     appLoginBonus: {
       validatePhoneAndEmail: "请先绑定您的手机",
       loginTomorrow: "请明天登录以领取您的神秘奖励。",
-      claimBonus: "您已收到 {amount} 卢比的奖金！"
+      claimBonus: "您已收到 {amount} 泰铢的奖金！"
     },
     notice: {
       notice: "通知！",
@@ -428,7 +428,7 @@ export default {
     appDepositBonus: "App存款奖金",
     unlimited: "无限制",
     wagerRequirement: "投注要求（用于提款）：存款金额的10倍",
-    wagerRequirementEg: "例如：存款100卢比，需要1,000卢比的投注额",
+    wagerRequirementEg: "例如：存款100泰铢，需要1,000泰铢的投注额",
     rechargeTutorial: "充值教程",
     picture: "图片",
     video: "视频",
@@ -457,8 +457,8 @@ export default {
     video: "视频",
     checkReceivingLimit: "在进行提款前，请确保您的钱包有足够的接收限额，以避免交易失败。",
     bindCardCorrectFormat: "请使用正确的格式绑定您的钱包/银行卡。",
-    dailyWalletLimit: "每日钱包限额：50,000泰国卢比。请勿超过此限额。您可以添加多个钱包进行提款。",
-    donotexceeddaily: "每日银行卡限额：500,000泰国卢比。请勿超过此限额。您可以添加多张银行卡进行提款。",
+    dailyWalletLimit: "每日钱包限额：50,000泰国泰铢。请勿超过此限额。您可以添加多个钱包进行提款。",
+    donotexceeddaily: "每日银行卡限额：500,000泰国泰铢。请勿超过此限额。您可以添加多张银行卡进行提款。",
     blockchainwithdrawfast: "对于区块链钱包（USDT）提款，没有限制，转账非常快。"
   },
   bank: {
@@ -564,7 +564,7 @@ export default {
         "2. 禁止同一個人使用多個帳戶惡意套取佣金。違者將被凍結帳戶。\n獎勵發放時間：第二天泰国時間下午3:00至下午6:00之間。獎勵將在此時間段內存入帳戶。",
       shareTitle: "SuperSiam 分享赚钱",
       shareText:
-        "SuperSiam 分享赚钱：\n\t每位朋友最高可赚1000卢比。\n\t首次存款可获5%返利。\n\t享受长期0.6%的全投注返利。\n立即下载App，领取神秘现金奖励！\n{url}",
+        "SuperSiam 分享赚钱：\n\t每位朋友最高可赚1000泰铢。\n\t首次存款可获5%返利。\n\t享受长期0.6%的全投注返利。\n立即下载App，领取神秘现金奖励！\n{url}",
       betting_table: {
         header: {
           description: "描述",
@@ -833,7 +833,7 @@ export default {
     startGame: "开始游戏",
     expertGameplayGuide: "观看专家玩法指南",
     maxReward: "每邀请一人，最高奖励为",
-    thb: "卢比",
+    thb: "泰铢",
     extraBonus: "受邀用户首次存款的额外奖金",
     lifetimeCommission: "受邀用户的终身佣金",
     commissionDetails: "（无论输赢）",
@@ -907,8 +907,8 @@ export default {
     received: "已领取",
     time_left: "剩余次数",
     go_withdraw_now: "立即去提款",
-    thb: "卢比",
-    withdraw_money_over_rs: "提款金额超过 卢比",
+    thb: "泰铢",
+    withdraw_money_over_rs: "提款金额超过 泰铢",
     claim_now: "立即领取",
     claimed: "已领取",
     bonus_claim_time: "奖金领取时间",
@@ -933,7 +933,7 @@ export default {
       depositNow: "立即存款",
       upto: "最高达",
       remainingTimes: "剩余次数",
-      depositSpin: "存款 {min} 卢比可获得1次旋转。",
+      depositSpin: "存款 {min} 泰铢可获得1次旋转。",
       spin: "旋转",
       rules: "规则",
       activityRules: "活动规则",
@@ -1011,7 +1011,7 @@ export default {
     spinReferWheel: {
       paymentRequestSubmitted: "支付请求已提交",
       stillNeedToMakeWithdrawal: "仍需进行提款",
-      willBePaidToYourRsAccount: "将支付到您的卢比账户",
+      willBePaidToYourRsAccount: "将支付到您的泰铢账户",
       inviteFriendsToHelp: "邀请朋友帮忙",
       referFriendToRegister: "推荐朋友注册、存款并验证您的手机以赢取免费旋转",
       only: "只差",
@@ -1186,20 +1186,20 @@ export default {
   content: {
     nospinleft: "没有剩余的旋转次数",
     title1: "注册时间从注册完成时开始计算。",
-    message1: "一旦您的累积金额达到1000泰国卢比，您就可以提款。",
+    message1: "一旦您的累积金额达到1000泰国泰铢，您就可以提款。",
     message2: "当您没有剩余旋转次数时，邀请新玩家注册并存款以赚取额外的免费旋转。",
     message3: "活动持续3天。活动结束后，累积的奖励将被重置，活动将重新开始。",
     message4: "每个用户每天可以享受一次免费旋转，将在每日00:00添加。",
     message5: "被邀请者必须验证其电话号码，且不得有重复的IP地址，才有资格获得推荐奖励。",
     aviatorPromoIntro:
-      "享受Aviator投注的快感！您的Aviator只需一次点击即可赢得惊人的3,216倍！前50名的奖池为1,250,000泰国卢比！",
+      "享受Aviator投注的快感！您的Aviator只需一次点击即可赢得惊人的3,216倍！前50名的奖池为1,250,000泰国泰铢！",
     aviatorGoldenEgg:
-      "每天在Aviator中投注时，当有效投注额达到888泰国卢比时，您就有机会砸金蛋（SUNEHRI ANDY）。最高奖励：88,888泰国卢比，中奖概率为3.6%",
+      "每天在Aviator中投注时，当有效投注额达到888泰国泰铢时，您就有机会砸金蛋（SUNEHRI ANDY）。最高奖励：88,888泰国泰铢，中奖概率为3.6%",
     aviatorTopTurnover: "在Aviator上投注时，累计流水最高的玩家将获得第一名。",
-    cashRainIntro: "每轮红包雨免费派发666,666泰国卢比。",
-    cashRainMaxPerRound: "每轮最高返现金额：66,666泰国卢比。",
+    cashRainIntro: "每轮红包雨免费派发666,666泰国泰铢。",
+    cashRainMaxPerRound: "每轮最高返现金额：66,666泰国泰铢。",
     cashRainFreeDistribution: "每轮免费派发现金返还。",
-    cashRainClaimCondition: "当日存款≥300泰国卢比，并完成每日总投注额≥350泰国卢比，即可领取免费奖金。",
+    cashRainClaimCondition: "当日存款≥300泰国泰铢，并完成每日总投注额≥350泰国泰铢，即可领取免费奖金。",
     cashRainUsage: "收到的钱可以直接用于玩游戏或提款。",
     cashRainVIP: "VIP会员等级越高，收到的金额越大。"
   }

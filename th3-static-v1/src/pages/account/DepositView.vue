@@ -666,7 +666,7 @@ const getFtdCommaAmount = (amount) => {
   if (bonusAmount < 999) {
     return bonusAmount.toFixed(0) + "THB";
   } else {
-    return "999Pkr";
+    return "999THB";
   }
 };
 
