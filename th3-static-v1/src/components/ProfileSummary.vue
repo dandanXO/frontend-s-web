@@ -341,12 +341,12 @@ const activateSlide = (item) => {
         emits("closeslot");
       }
       emits("activateSlide", item);
-      ui.isMenuOpen = false;
+      ui.toggleMenu(false);
     })
     .catch((error) => {
       console.error("Navigation error:", error);
     });
-  ui.isMenuOpen = false;
+  ui.toggleMenu(false);
 };
 
 const goLogin = () => {
@@ -475,18 +475,18 @@ const checkTopDownloadAppear = () => {
 // const menuOpen = ref(false);
 
 const toggleMenuOpen = () => {
-  ui.isMenuOpen = !ui.isMenuOpen;
+  ui.toggleMenu(!ui.isMenuOpen);
 };
 
 const handleMenuBackgroundClick = (event) => {
   // if (event.target === event.currentTarget) {
-  ui.isMenuOpen = false;
+  ui.toggleMenu(false);
   // }
 };
 
 const handleMenuRouteClick = (route) => {
   router.push(route);
-  ui.isMenuOpen = false;
+  ui.toggleMenu(false);
 };
 
 const sideLang = ref(false);
