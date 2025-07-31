@@ -984,7 +984,8 @@ async function loadPrivilege(val) {
 }
 
 function selectedBank(value) {
-  form.bankId = value.value.id;
+  // debugger;
+  form.bankId = value.id;
 }
 
 function clearInfo() {
