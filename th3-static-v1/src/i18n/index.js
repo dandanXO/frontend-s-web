@@ -1,5 +1,4 @@
 import { createI18n } from "vue-i18n";
-import ur from "./ur";
 import en from "./en";
 import th from "./th";
 import zh from "./zh";
@@ -10,7 +9,6 @@ const i18n = createI18n({
   locale: localStorage.getItem("languageLocale") || DEFAULT_LANG,
   allowComposition: true,
   messages: {
-    ur,
     en,
     th,
     zh

@@ -32,7 +32,7 @@
         <span class="uptonum">{{ tab.upto }}</span>
       </button>
     </div>
-    <div class="slider-container" ref="sliderRef" v-touch="onSwipe">
+    <div class="slider-container" ref="sliderRef">
       <div class="bg"><img :src="require(`./img/tab${activeTab + 1}.png`)" /></div>
       <div
         class="slider"
