@@ -307,7 +307,8 @@ export default {
     freeTrial: "免费试玩",
     sendOtp: "发送OTP",
     check: "检查",
-    payAgain: "再次支付"
+    payAgain: "再次支付",
+    copy: "复制"
   },
   notify: {
     cancelPayment: "取消支付",

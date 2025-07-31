@@ -316,7 +316,8 @@ export default {
     freeTrial: "Free trial",
     sendOtp: "Send OTP",
     check: "Check",
-    payAgain: "Pay again"
+    payAgain: "Pay again",
+    copy: "Copy"
   },
   notify: {
     cancelPayment: "Cancel Payment",

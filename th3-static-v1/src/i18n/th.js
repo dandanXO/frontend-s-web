@@ -314,7 +314,8 @@ export default {
     freeTrial: "ทดลองเล่นฟรี",
     sendOtp: "ส่ง OTP",
     check: "ตรวจสอบ",
-    payAgain: "จ่ายอีกครั้ง"
+    payAgain: "จ่ายอีกครั้ง",
+    copy: "คัดลอก"
   },
   notify: {
     cancelPayment: "ยกเลิกการชำระเงิน",

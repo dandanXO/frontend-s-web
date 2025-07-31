@@ -19,7 +19,7 @@
       <div class="q-ml-md q-mt-sm font-small" v-if="isBank2">{{ $t("deposit.minimum_amt_requirement") }}</div>
     </div>
 
-    <div class="deposit-item-container q-mt-sm">
+    <div v-if="!isDisplay" class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
           <q-badge v-if="activeMethod.privilegeId" floating rounded>+{{ item.hotLabel }}</q-badge>
@@ -57,29 +57,29 @@
         <div class="line">
           <span>Bank Name:</span>
           <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
-          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
-            {{ copybtntxt0 }}
+          <q-btn class="text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
+            {{ $t("btn.copy") }}
           </q-btn>
         </div>
         <div class="line">
           <span>Bank Account:</span>
           <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
-          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
-            {{ copybtntxt1 }}
+          <q-btn class="text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
+            {{ $t("btn.copy") }}
           </q-btn>
         </div>
         <div class="line">
           <span>Bank Card Number:</span>
           <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
-          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
-            {{ copybtntxt2 }}
+          <q-btn class="text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
+            {{ $t("btn.copy") }}
           </q-btn>
         </div>
         <div class="line">
           <span>Deposit Amount:</span>
           <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
-          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
-            {{ copybtntxt3 }}
+          <q-btn class="text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
+            {{ $t("btn.copy") }}
           </q-btn>
         </div>
       </div>
@@ -253,7 +253,7 @@
       <div class="q-mt-sm">{{ $t("deposit.wagerRequirementEg") }}</div>
     </div>
 
-    <div class="q-mt-lg step-desc-div q-mb-lg">
+    <div v-if="!isDisplay" class="q-mt-lg step-desc-div q-mb-lg">
       <template v-if="activeMethod.msg">
         <div class="description-text" v-html="activeMethod.msg"></div>
       </template>
@@ -1002,7 +1002,8 @@ const depositAmtRef = ref("");
 async function confirmDeposit() {
   btnLoading.value = true;
   depositAmtRef.value.validate();
-  if (depositAmtRef.value.hasError) {
+  const isBankIdValid = payTypeClass.value?.validate();
+  if (depositAmtRef.value.hasError || !isBankIdValid) {
     btnLoading.value = false;
   } else {
     await cashier
@@ -1480,7 +1481,7 @@ onBeforeRouteLeave((to, from, next) => {
   max-width: 500px;
   margin: 0 auto;
   height: auto;
-  gap: 1px;
+  gap: 6px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -1496,22 +1497,29 @@ onBeforeRouteLeave((to, from, next) => {
     align-items: center;
     font-size: 14px;
     align-items: center;
-    background: #55009a;
+    background: #e9e8e4;
     padding: 15px 10px;
+    border-radius: 10px;
+    border: 3px solid #e0d6c7;
 
     span:first-child {
       // flex: 1;
-      color: #ffdf38;
+      color: #433e38;
       width: 80px;
+      font-weight: 700;
+      font-family: Roboto;
     }
 
     span.info {
       flex: 3;
-      color: #fff;
+      color: #3a3a3a;
     }
 
     button {
+      background: linear-gradient(270deg, #cec6ae 0%, #76674c 99.76%);
+      color: #fff !important;
       width: 80px;
+      font-weight: 400;
     }
   }
 }
