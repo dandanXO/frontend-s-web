@@ -166,7 +166,7 @@
             </template>
           </div>
           <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
-            <div class="q-mt-md" style="display: flex; justify-content: center; align-items: center">
+            <!-- <div class="q-mt-md" style="display: flex; justify-content: center; align-items: center">
               <span class="label">{{ $t("withdraw.exchangeRate") }}</span>
               <span style="flex: 3" class="label-green">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
@@ -186,7 +186,7 @@
                 }}
                 USDT
               </span>
-            </div>
+            </div> -->
           </div>
           <div v-else-if="isEWALLET && !!selectedWithdrawalMethod.url">
             <span class="tip-text">*特别说明：请在App钱包完成实名验证，确保钱包绑定和游戏注册姓名一致！</span>
