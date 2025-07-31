@@ -987,14 +987,15 @@ async function loadGameQuiz() {
       query.startTime = request.startTime.join(",");
     }
   }
-  const siteCode = sites.list.find(e => e.id === request.siteId).siteCode
-  query.promoCode = siteCode.toLowerCase() + '-fifa-quiz-2025-occasion'
+  query.gameType = 'FIFA'
   const { data: ret } = await getGameQuiz(query);
   page.pages = ret.pages;
   page.records = ret.records;
   timeZone = sites.list.find(e => e.id === request.siteId).timeZone
 
-  const { data: occasions } = await getGameQuizOccasionsList(query.promoCode);
+  const siteCode = sites.list.find(e => e.id === request.siteId).siteCode
+  const promoCode = siteCode.toLowerCase() + '-fifa-quiz-2025-occasion'
+  const { data: occasions } = await getGameQuizOccasionsList(promoCode);
   uiControl.occasions = occasions;
   page.total = ret.total;
   page.loading = false;
