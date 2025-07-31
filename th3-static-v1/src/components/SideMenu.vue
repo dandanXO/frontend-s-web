@@ -193,10 +193,10 @@ const openCSInNewTab = (url) => {
   .left-side-menu {
     width: 100%;
     padding-top: 72px;
-    height: calc(100vh - 140px);
+    height: calc(100dvh - env(safe-area-inset-bottom) - 140px);
 
     &.fullHeight {
-      height: calc(100vh - 90px);
+      height: calc(100dvh - env(safe-area-inset-bottom) - 90px);
     }
 
     display: flex;

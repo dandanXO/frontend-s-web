@@ -152,7 +152,7 @@ export default defineComponent({
       () => route.path,
       async () => {
         checkRoute();
-        ui.isMenuOpen = false;
+        ui.toggleMenu(false);
       }
     );
 

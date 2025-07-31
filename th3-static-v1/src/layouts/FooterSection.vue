@@ -65,14 +65,14 @@ const tab = ref("home");
 let prevTab = "home";
 
 const openSideMenu = () => {
-  ui.isMenuOpen = !ui.isMenuOpen;
+  ui.toggleMenu(!ui.isMenuOpen);
   tab.value = "menu";
 };
 
 watch(tab, (newVal, oldVal) => {
   prevTab = oldVal;
   if (newVal !== "menu" && ui.isMenuOpen) {
-    ui.isMenuOpen = false;
+    ui.toggleMenu(false);
   }
 });
 

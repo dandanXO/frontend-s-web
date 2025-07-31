@@ -61,6 +61,10 @@ export const useUI = defineStore("ui-store", {
           this.downloadAppUrl = res.data.url;
         }
       });
+    },
+    toggleMenu(open) {
+      this.isMenuOpen = open;
+      document.body.style.overflowY = open ? "hidden" : "";
     }
   },
   getters: {
