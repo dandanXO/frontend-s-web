@@ -19,7 +19,7 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -37,17 +37,28 @@ const badgesList = ref([
     title: t("hotPromo.depositSpinWheel.supreme")
   }
 ]);
+
+onMounted(() => {
+  document.body.style.overflowY = "hidden";
+});
+onUnmounted(() => {
+  document.body.style.overflowY = "auto";
+});
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .rules-container {
   width: 100%;
-  padding: 10px;
+  padding: 0 10px;
   margin: 0 auto;
   // background: url(./img/rules-bg-img.png)no-repeat center top;
   background-size: cover;
   color: #3a3a3a;
-  // background-color: #eae6de;
-  height: calc(100dvh - 50px);
+  background-color: #eae6de;
+  position: fixed;
+  top: 110px;
+  left: 0;
+  height: calc(100vh - 180px);
+  overflow-y: scroll;
   .rule-title {
     display: flex;
     justify-content: center;
@@ -77,6 +88,9 @@ const badgesList = ref([
     margin: 25px auto;
     line-height: 32px;
     font-family: Poppins;
+    li {
+      color: #3a3a3a !important;
+    }
   }
   .badges {
     display: flex;

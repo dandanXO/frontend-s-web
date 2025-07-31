@@ -1,119 +1,124 @@
 <template>
-  <div class="deposit-spinner-rewards">
-    <div class="top">
-      <div class="side-buttons">
-        <RouterLink to="/spinnerRules" class="individual-btn">{{ $t("hotPromo.depositSpinWheel.rules") }}</RouterLink>
-        <!-- <RouterLink to="/spinnerHistory" class="individual-btn">History</RouterLink> -->
+  <template v-if="mode === 'MAIN'">
+    <div class="deposit-spinner-rewards">
+      <div class="top">
+        <div class="side-buttons">
+          <div class="individual-btn" @click="onClickRules">{{ $t("hotPromo.depositSpinWheel.rules") }}</div>
+          <!-- <RouterLink to="/spinnerHistory" class="individual-btn">History</RouterLink> -->
+        </div>
+        <div class="instructions">
+          {{ $t("hotPromo.depositSpinWheel.instruction") }}
+          <span class="orange">7777THB</span>
+        </div>
       </div>
-      <div class="instructions">
-        {{ $t("hotPromo.depositSpinWheel.instruction") }}
-        <span class="orange">7777THB</span>
-      </div>
-    </div>
-    <!-- <div class="top">
+      <!-- <div class="top">
       <div class="side-buttons">
         <RouterLink to="/spinnerHistory" class="individual-btn">History</RouterLink>
       </div>
     </div> -->
-    <RouterLink to="/deposit" class="deposit-now">
-      {{ $t("hotPromo.depositSpinWheel.depositNow") }}
-    </RouterLink>
+      <RouterLink to="/deposit" class="deposit-now">
+        {{ $t("hotPromo.depositSpinWheel.depositNow") }}
+      </RouterLink>
 
-    <div class="tab-buttons">
-      <button
-        v-for="(tab, index) in tabs"
-        :key="index"
-        @click="setTab(index)"
-        :class="{ active: activeTab === index, lock: index === 3 }"
-      >
-        <img class="spinwheel" :src="require(`./img/spin-${index + 1}.png`)" />
-        <span class="upto">{{ $t("hotPromo.depositSpinWheel.upto") }}</span>
-        <span>&nbsp;</span>
-        <span class="uptonum">{{ tab.upto }}</span>
-      </button>
-    </div>
-    <div class="slider-container" ref="sliderRef">
-      <div class="bg"><img :src="require(`./img/tab${activeTab + 1}.png`)" /></div>
-      <div
-        class="slider"
-        :style="{
-          transform: transformStyle
-        }"
-      >
-        <div
+      <div class="tab-buttons">
+        <button
           v-for="(tab, index) in tabs"
           :key="index"
-          class="tab-content"
-          :class="['tab' + index, { active: index === activeTab, inactive: index !== activeTab }]"
-          :style="{ transformOrigin: index === activeTab - 1 ? 'right' : 'left' }"
+          @click="setTab(index)"
+          :class="{ active: activeTab === index, lock: index === 3 }"
         >
-          <div class="onlyactiveshow">
-            <div class="ins">{{ $t("hotPromo.depositSpinWheel.depositSpin", { min: tab.min }) }}</div>
-            <div class="bar">
-              <div class="outerbar">
-                <div class="innerbar" :style="{ width: progressBarWidth }"></div>
-              </div>
-              <div class="barnumbers">
-                <div class="indicator first"><span class="indicator-num">0</span></div>
-                <div class="indicator wbar mid" :class="{ center: index !== 0 }">
-                  <img src="./img/indicator-bar.png" />
-                  <span class="indicator-num">
-                    {{ tab.min }}
-                  </span>
-                  <span class="indicator-spin">+1 {{ $t("hotPromo.depositSpinWheel.spin") }}</span>
+          <img class="spinwheel" :src="require(`./img/spin-${index + 1}.png`)" />
+          <span class="upto">{{ $t("hotPromo.depositSpinWheel.upto") }}</span>
+          <span>&nbsp;</span>
+          <span class="uptonum">{{ tab.upto }}</span>
+        </button>
+      </div>
+      <div class="slider-container" ref="sliderRef">
+        <div class="bg"><img :src="require(`./img/tab${activeTab + 1}.png`)" /></div>
+        <div
+          class="slider"
+          :style="{
+            transform: transformStyle
+          }"
+        >
+          <div
+            v-for="(tab, index) in tabs"
+            :key="index"
+            class="tab-content"
+            :class="['tab' + index, { active: index === activeTab, inactive: index !== activeTab }]"
+            :style="{ transformOrigin: index === activeTab - 1 ? 'right' : 'left' }"
+          >
+            <div class="onlyactiveshow">
+              <div class="ins">{{ $t("hotPromo.depositSpinWheel.depositSpin", { min: tab.min }) }}</div>
+              <div class="bar">
+                <div class="outerbar">
+                  <div class="innerbar" :style="{ width: progressBarWidth }"></div>
                 </div>
-                <div class="indicator wbar last">
-                  <img src="./img/indicator-bar.png" />
-                  <span class="indicator-num">
-                    {{ tab.max }}
-                  </span>
+                <div class="barnumbers">
+                  <div class="indicator first"><span class="indicator-num">0</span></div>
+                  <div class="indicator wbar mid" :class="{ center: index !== 0 }">
+                    <img src="./img/indicator-bar.png" />
+                    <span class="indicator-num">
+                      {{ tab.min }}
+                    </span>
+                    <span class="indicator-spin">+1 {{ $t("hotPromo.depositSpinWheel.spin") }}</span>
+                  </div>
+                  <div class="indicator wbar last">
+                    <img src="./img/indicator-bar.png" />
+                    <span class="indicator-num">
+                      {{ tab.max }}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- <img :src="`img/spin-${index+1}`"> -->
-          <div class="spinwheel">
-            <img
-              :class="{ wheel: rolling }"
-              :style="`transform: rotate(${tab.wheelDeg}deg)`"
-              :src="require(`./img/bigspin-${index + 1}.png`)"
-            />
-            <img class="spintop" :src="require(`./img/spin-top-${index + 1}.png`)" />
-            <template v-if="index === 3">
-              <img class="spingo" :src="require(`./img/spingo-${index + 1}.png`)" />
-              <span class="spinnum">
-                {{ $t("hotPromo.depositSpinWheel.spin") }} {{ "* " + (tab.times1 + tab.times2) }}
-              </span>
-            </template>
-            <template v-else>
-              <img class="spingo" @click="onClickRotate" :src="require(`./img/spingo-${index + 1}.png`)" />
-              <span class="spinnum" @click="onClickRotate">
-                {{ $t("hotPromo.depositSpinWheel.spin") }} {{ "* " + (tab.times1 + tab.times2) }}
-              </span>
-            </template>
-          </div>
-          <div class="onlyactiveshow">
-            <span class="remaining">{{ $t("hotPromo.depositSpinWheel.remainingTimes") }} :</span>
-            <span class="remainingamt">{{ tab.times1 + tab.times2 }}</span>
+            <!-- <img :src="`img/spin-${index+1}`"> -->
+            <div class="spinwheel">
+              <img
+                :class="{ wheel: rolling }"
+                :style="`transform: rotate(${tab.wheelDeg}deg)`"
+                :src="require(`./img/bigspin-${index + 1}.png`)"
+              />
+              <img class="spintop" :src="require(`./img/spin-top-${index + 1}.png`)" />
+              <template v-if="index === 3">
+                <img class="spingo" :src="require(`./img/spingo-${index + 1}.png`)" />
+                <span class="spinnum">
+                  {{ $t("hotPromo.depositSpinWheel.spin") }} {{ "* " + (tab.times1 + tab.times2) }}
+                </span>
+              </template>
+              <template v-else>
+                <img class="spingo" @click="onClickRotate" :src="require(`./img/spingo-${index + 1}.png`)" />
+                <span class="spinnum" @click="onClickRotate">
+                  {{ $t("hotPromo.depositSpinWheel.spin") }} {{ "* " + (tab.times1 + tab.times2) }}
+                </span>
+              </template>
+            </div>
+            <div class="onlyactiveshow">
+              <span class="remaining">{{ $t("hotPromo.depositSpinWheel.remainingTimes") }} :</span>
+              <span class="remainingamt">{{ tab.times1 + tab.times2 }}</span>
+            </div>
           </div>
         </div>
       </div>
+      <q-dialog v-model="showDialog" persistent>
+        <div class="prize-popup">
+          <div class="prize-popup-header">{{ $t("hotPromo.depositSpinWheel.congratulations") }}</div>
+          <!-- <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" /> -->
+          <div class="prize-gold">
+            <div class="prize-get">{{ $t("hotPromo.depositSpinWheel.youGet") }} {{ prizePopupBonusAmt }} THB</div>
+
+            <div class="prize-amount">{{ prizePopupBonusAmt }} THB</div>
+
+            <q-btn no-caps rounded unelevated class="purple-bg" @click="closeDialog">{{ $t("btn.recharge") }}</q-btn>
+          </div>
+        </div>
+      </q-dialog>
     </div>
-    <q-dialog v-model="showDialog" persistent>
-      <div class="prize-popup">
-        <div class="prize-popup-header">{{ $t("hotPromo.depositSpinWheel.congratulations") }}</div>
-        <!-- <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" /> -->
-        <div class="prize-gold">
-          <div class="prize-get">{{ $t("hotPromo.depositSpinWheel.youGet") }} {{ prizePopupBonusAmt }} THB</div>
-
-          <div class="prize-amount">{{ prizePopupBonusAmt }} THB</div>
-
-          <q-btn no-caps rounded unelevated class="purple-bg" @click="closeDialog">{{ $t("btn.recharge") }}</q-btn>
-        </div>
-      </div>
-    </q-dialog>
-  </div>
+  </template>
+  <template v-else-if="mode === 'RULES'">
+    <DepositSpinnerRules />
+  </template>
 </template>
 <script setup>
 import { onMounted, onUnmounted, ref, reactive, nextTick, computed } from "vue";
@@ -121,11 +126,17 @@ import { useSwipe } from "@vueuse/core";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
+import DepositSpinnerRules from "./DepositSpinnerRules.vue";
+import { useUI } from "stores/ui";
+
+const mode = ref("MAIN");
 
 const rolling = ref(false);
 const activeTab = ref(0);
 const { t } = useI18n();
 const $q = useQuasar();
+const ui = useUI();
+
 const tabs = reactive([
   {
     upto: "377",
@@ -457,6 +468,11 @@ const screenWidth = ref(window.innerWidth);
 
 const updateScreenWidth = () => {
   screenWidth.value = window.innerWidth;
+};
+
+const onClickRules = () => {
+  mode.value = "RULES";
+  ui.isShowPromoBanner = false;
 };
 
 onMounted(() => {
