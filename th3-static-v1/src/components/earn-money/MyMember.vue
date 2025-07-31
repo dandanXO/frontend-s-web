@@ -8,7 +8,7 @@
             <img src="../../assets/images/earn-money/total-rebate-cash.png" />
           </div>
           <div class="right">
-            <div class="amount">₹ {{ convertToCommaAmount(totalBetRebateData.totalRebate, false) }}</div>
+            <div class="amount">฿ {{ convertToCommaAmount(totalBetRebateData.totalRebate, false) }}</div>
             <div class="title">Total Rebates</div>
           </div>
         </div>
@@ -40,7 +40,7 @@
           <div class="amount-container">
             <div class="amount-text text-right">Rebate Amount</div>
             <div class="amount text-right">
-              <span>₹ {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
+              <span>฿ {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@
           <div class="amount-container">
             <div class="amount-text text-right">Rebate Amount</div>
             <div class="amount text-right">
-              <span>₹ {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
+              <span>฿ {{ convertToCommaAmount(e.rebateAmount, false) }}</span>
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@ import { ref, reactive, onMounted } from "vue";
 import { api } from "boot/axios";
 import { convertToCommaAmount } from "src/boot/utils";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
-import moment from 'moment';
+import moment from "moment";
 
 const activeKey = ref("month");
 
@@ -134,7 +134,7 @@ onMounted(() => {
       .content-wrapper {
         border-radius: 0.625rem;
         background: #ffffff0d;
-        border: 1px solid #FFFFFF0D;
+        border: 1px solid #ffffff0d;
         margin: 0 auto;
         text-align: center;
         padding: 20px;
@@ -161,7 +161,7 @@ onMounted(() => {
         }
 
         .title {
-          color: #FFFFFF66;
+          color: #ffffff66;
           font-size: 14px;
           font-weight: 400;
           line-height: 21px;
@@ -224,7 +224,6 @@ onMounted(() => {
           font-size: 16px;
           font-weight: 400;
           line-height: 22.4px;
-
         }
       }
     }

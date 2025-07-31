@@ -19,9 +19,9 @@
         <div class="logo-img"><img src="../../assets/images/auth/auth-logo-text-only.png" /></div>
       </slot>
       <!-- <div class="rain-money-header">
-        <span class="orange">666,666PKR&nbsp;</span>
+        <span class="orange">666,666THB&nbsp;</span>
         <span class="green">every time maximum surplus</span>
-        <span class="orange">&nbsp;66,666PKR</span>
+        <span class="orange">&nbsp;66,666THB</span>
       </div> -->
 
       <div class="rain-money-tabs">

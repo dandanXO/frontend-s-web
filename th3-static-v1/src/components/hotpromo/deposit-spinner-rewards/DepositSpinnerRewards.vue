@@ -7,7 +7,7 @@
       </div>
       <div class="instructions">
         {{ $t("hotPromo.depositSpinWheel.instruction") }}
-        <span class="orange">7777PKR</span>
+        <span class="orange">7777THB</span>
       </div>
     </div>
     <!-- <div class="top">
@@ -260,7 +260,7 @@ const setTab = (index) => {
 };
 const prizePopupBonusAmt = ref(0);
 const sliderRef = ref(null);
-const showDialog = ref(false);
+const showDialog = ref(true);
 const prizeResult = ref("");
 const { lengthX, lengthY } = useSwipe(sliderRef, {
   passive: true,

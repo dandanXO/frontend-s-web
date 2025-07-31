@@ -465,7 +465,6 @@
         <p>2. {{ $t("withdraw.bindCardCorrectFormat") }}</p>
         <p>3. {{ $t("withdraw.dailyWalletLimit") }}</p>
         <p>4. {{ $t("withdraw.donotexceeddaily") }}</p>
-        <p>5. {{ $t("withdraw.blockchainwithdrawfast") }}</p>
       </div>
     </template>
 

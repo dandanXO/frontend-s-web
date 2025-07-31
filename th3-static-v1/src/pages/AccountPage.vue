@@ -1238,7 +1238,7 @@ const updateNewUserState = () => {
           color: "dark",
           textColor: "white",
           position: "top",
-          message: "Updated successfully",
+          message: t("notify.updatedSuccessfully"),
           icon: "check_circle_outline",
           iconColor: "green"
         });
