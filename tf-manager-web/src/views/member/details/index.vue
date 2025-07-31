@@ -3,43 +3,44 @@
     <el-tab-pane :label="t('fields.member')" name="member-info" lazy>
       <MemberInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.login')" name="login-info" lazy>
+    <el-tab-pane :label="t('fields.login')" name="login-info" lazy v-if="hasPermission(['sys:member:detail:loginTab'])">
       <LoginInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.bankCard')" name="member-bank" lazy>
+    <el-tab-pane :label="t('fields.bankCard')" name="member-bank" lazy v-if="hasPermission(['sys:member:detail:bankCardTab'])">
       <MemberBankTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.betMoneyChange')" name="bet-money-change" lazy>
+    <el-tab-pane :label="t('fields.betMoneyChange')" name="bet-money-change" lazy v-if="hasPermission(['sys:member:detail:betMoneyChangeTab'])">
       <BetMoneyChange :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
     <el-tab-pane v-if="hasRole(['ADMIN']) && useStore().state.user.name === 'xf-martin'" :label="t('fields.betMoneyChangeTidb')" name="member-money-change-tidb" lazy>
       <MemberMoneyChangeTidb :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.moneyChange')" name="member-money-change" lazy>
+    <el-tab-pane :label="t('fields.moneyChange')" name="member-money-change" lazy v-if="hasPermission(['sys:member:detail:moneyChangeTab'])">
       <MemberMoneyChange :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.betRecords')" name="member-bet-record" lazy>
+    <el-tab-pane :label="t('fields.betRecords')" name="member-bet-record" lazy v-if="hasPermission(['sys:member:detail:betRecordsTab'])">
       <MemberBetRecordTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
     <el-tab-pane v-if="hasRole(['ADMIN']) && useStore().state.user.name === 'xf-martin'" :label="t('fields.betRecordsTidb')" name="member-bet-record-tidb" lazy>
       <MemberBetRecordTidbTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.deposit')" name="deposit-info" lazy>
+    <el-tab-pane :label="t('fields.deposit')" name="deposit-info" lazy v-if="hasPermission(['sys:member:detail:depositTab'])">
       <DepositInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.withdraw')" name="withdraw-info" lazy>
+    <el-tab-pane :label="t('fields.withdraw')" name="withdraw-info" lazy v-if="hasPermission(['sys:member:detail:withdrawTab'])">
       <WithdrawInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.transaction')" name="transaction-info" lazy>
+    <el-tab-pane :label="t('fields.transaction')" name="transaction-info" lazy v-if="hasPermission(['sys:member:detail:transactionTab'])">
       <TransactionInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.privilege')" name="member-privilege-record" lazy>
+    <el-tab-pane :label="t('fields.privilege')" name="member-privilege-record" lazy v-if="hasPermission(['sys:member:detail:privilegeTab'])">
       <MemberPrivilegeRecord :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
     <el-tab-pane
       :label="t('fields.rolloverRecord')"
       name="member-rollover-record"
       lazy
+      v-if="hasPermission(['sys:member:detail:rolloverRecordTab'])"
     >
       <MemberRolloverRecord :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
@@ -47,16 +48,18 @@
       :label="t('fields.memberRolloverEvent')"
       name="member-rollover-event"
       lazy
+      v-if="hasPermission(['sys:member:detail:rolloverEventTab'])"
     >
       <MemberRolloverEventTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.riskControl')" name="risk-info" lazy>
+    <el-tab-pane :label="t('fields.riskControl')" name="risk-info" lazy v-if="hasPermission(['sys:member:detail:riskControlTab'])">
       <RiskInfoTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
     <el-tab-pane
       :label="t('fields.referredFriends')"
       name="member-refer-friend"
       lazy
+      v-if="hasPermission(['sys:member:detail:referredFriendsTab'])"
     >
       <MemberReferFriendTab
         :mbr-id="id"
@@ -68,13 +71,14 @@
       :label="t('fields.memberConsolidateReport')"
       name="daily-report"
       lazy
+      v-if="hasPermission(['sys:member:detail:dailyReportTab'])"
     >
       <DailyReportTab :mbr-id="id" :site-id="siteId" />
     </el-tab-pane>
-    <el-tab-pane :label="t('menu.Member Platform')" name="member-platform" lazy>
+    <el-tab-pane :label="t('menu.Member Platform')" name="member-platform" lazy v-if="hasPermission(['sys:member:detail:memberPlatformTab'])">
       <MemberPlatformTab :mbr-id="id" :site-id="siteId" />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.memberBetRecordByPlatform')" name="member-bet-record-by-platform" lazy>
+    <el-tab-pane :label="t('fields.memberBetRecordByPlatform')" name="member-bet-record-by-platform" lazy v-if="hasPermission(['sys:member:detail:betRecordByPlatformTab'])">
       <MemberBetRecordByPlatformTab :mbr-id="id" :time-zone="timeZone" />
     </el-tab-pane>
     <el-tab-pane v-if="hasRole(['ADMIN']) && useStore().state.user.name === 'xf-martin'" :label="t('fields.memberBetRecordByPlatformTidb')" name="member-bet-record-by-platform-tidb" lazy>
@@ -85,7 +89,7 @@
 
 <script>
 import { defineComponent, computed } from 'vue'
-import { hasRole } from "../../../utils/util";
+import { hasRole, hasPermission } from "../../../utils/util";
 import LoginInfoTab from './tabs/login-info/index.vue'
 import MemberInfoTab from './tabs/member-info/index.vue'
 import TransactionInfoTab from './tabs/transaction-info/index.vue'
@@ -153,7 +157,8 @@ export default defineComponent({
       t,
       timeZone,
       hasRole,
-      useStore
+      useStore,
+      hasPermission
     }
   },
 })
