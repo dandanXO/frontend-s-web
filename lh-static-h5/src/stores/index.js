@@ -222,7 +222,7 @@ export const userStore = defineStore("userStore", {
           }
 
           this.profilePhoto = response.data.profilePhoto;
-          this.unreadInboxMail = 0;
+          // this.unreadInboxMail = 0;
 
           this.withdrawType = response.data.withdrawType;
           // this.unreadInboxMail = 16;

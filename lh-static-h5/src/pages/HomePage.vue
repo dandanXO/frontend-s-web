@@ -1673,6 +1673,7 @@ export default defineComponent({
         return api.get("/session/pm/inbox/getUnreadTotal").then((res) => {
           // console.log(res);
           if (res.code === 0) {
+            store.unreadInboxMail = res.data;
             unreadInboxMail.value = res.data;
           }
         });
