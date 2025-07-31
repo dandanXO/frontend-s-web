@@ -30,7 +30,8 @@
     :class="{
       'q-pa-md': !homeProfile,
       'with-top-download': topDownload && !ui.hideDownload,
-      'with-background': isScrolled
+      'with-background': isScrolled || (route.path === '/promo' && (route.query.name || !ui.isMenuOpen)),
+      'no-shadow': route.path === '/promo' && (route.query.name || !ui.isMenuOpen)
     }"
   >
     <!-- <img src="../assets/images/earn-money/infoboard.png" v-if="!homeProfile" /> -->
@@ -811,6 +812,9 @@ onUnmounted(() => {
   &.with-background {
     background: #d9cfb8;
     box-shadow: inset 0 -6px 12px rgba(0, 0, 0, 0.4);
+  }
+  &.no-shadow {
+    box-shadow: none;
   }
 
   &.with-top-download {

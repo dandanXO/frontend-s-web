@@ -90,7 +90,12 @@
       </q-scroll-area>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container
+      :style="{
+        paddingTop: hasPage && pageName && !hasProfileSummary ? '50px !important' : '',
+        minHeight: hasPage && pageName ? 'calc(100dvh)' : 'calc(100dvh - 50px)'
+      }"
+    >
       <router-view v-slot="{ Component }">
         <component v-if="isGuessRoute" :is="Component" />
         <KeepAlive v-else :max="8">
@@ -712,6 +717,10 @@ svg path {
   }
 }
 .page-title {
+  position: fixed;
+  width: 100%;
+  max-width: 500px;
+  z-index: 2002;
   &.has-profile-summary {
     top: 60px;
   }
@@ -793,7 +802,7 @@ svg path {
   background: repeating-linear-gradient(45deg, #f1f1ee 0, #b9a78d 50%, #e9e8e4 100%);
   background: url("../assets/images/index/bg.jpg") center center no-repeat;
   background-size: 100% 100%;
-  min-height: calc(100vh - 50px);
+  // min-height: calc(100vh - 50px);
   // background-image: url("../assets/images/index/app-bg.png");
   // background-repeat: repeat-y;
   // background-size: 100vw 100vh;

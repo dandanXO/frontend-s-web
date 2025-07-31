@@ -46,6 +46,8 @@ const badgesList = ref([
   // background: url(./img/rules-bg-img.png)no-repeat center top;
   background-size: cover;
   color: #3a3a3a;
+  // background-color: #eae6de;
+  height: calc(100dvh - 50px);
   .rule-title {
     display: flex;
     justify-content: center;

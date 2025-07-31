@@ -984,7 +984,8 @@ async function loadPrivilege(val) {
 }
 
 function selectedBank(value) {
-  form.bankId = value.value.id;
+  // debugger;
+  form.bankId = value.id;
 }
 
 function clearInfo() {
@@ -1786,7 +1787,7 @@ onBeforeRouteLeave((to, from, next) => {
   position: fixed;
   bottom: 0;
   width: 100%;
-  max-width: 468px;
+  max-width: 500px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #24262b;
