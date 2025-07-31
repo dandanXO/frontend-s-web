@@ -18,12 +18,7 @@
   <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab
-          v-for="(tab, i) in tabItems"
-          :key="i"
-          :name="tab.name"
-          :label="langVal === 'ur' ? tab.label_ur : tab.label"
-        />
+        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab['label_' + langVal]" />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -568,8 +563,9 @@ export default defineComponent({
           res.forEach(element => {
             const obj = {
               name: element.value.toLowerCase(),
-              label: JSON.parse(element.name).en,
-              label_ur: JSON.parse(element.name).H5_ur
+              label_en: JSON.parse(element.name).en,
+              label_zh: JSON.parse(element.name).zh,
+              label_th: JSON.parse(element.name).th
             };
             tabItems.value.push(obj);
           });
