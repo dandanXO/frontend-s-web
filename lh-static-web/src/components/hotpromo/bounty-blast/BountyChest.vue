@@ -198,25 +198,25 @@
 
     <el-dialog class="cs2Dialog" v-model="isChestRecordModal" lock-scroll>
       <div class="modal-title">
-        <img src="../../../assets/images/promotion/hotpromo/cs2/openchest.png" />
+        <img src="./images/title-img.png" />
       </div>
       <div class="modal-body openRec">
         <div class="rec">
           <div class="table-title" style="width: 100%">
-            <table style="width: 100%">
+            <table style="width: 100%" class="livepoker-rebate-game-info-table section-table">
               <tr>
-                <th width="50%">日期</th>
-                <th width="25%">消耗</th>
-                <th width="25%">获取金额</th>
+                <th width="33.3%">日期</th>
+                <th width="33.3%">消耗</th>
+                <th width="33.3%">获取金额</th>
               </tr>
             </table>
           </div>
-          <table style="width: 100%" v-if="openRecords">
+          <table style="width: 100%" v-if="openRecords" class="livepoker-rebate-game-info-table section-table">
             <tbody>
-              <tr v-for="(open, i) in openRecords" :key="i">
-                <td width="50%">{{ open.createTime }}</td>
-                <td width="25%">{{ open.quantity }}</td>
-                <td width="25%">{{ open.amount }}</td>
+              <tr v-for="(open, i) in 10" :key="i">
+                <td width="33.3%">{{ open.createTime }}</td>
+                <td width="33.3%">{{ open.quantity }}</td>
+                <td width="33.3%">{{ open.amount }}</td>
               </tr>
             </tbody>
           </table>
@@ -244,6 +244,7 @@ import { ref, onMounted, defineProps } from "vue";
 import { ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import { ResponseCode } from "@/api/response";
+import { useDark } from "@vueuse/core";
 import {
   getTreasureDetail,
   getKeyCount,
@@ -259,7 +260,7 @@ import { useNotify } from "@/hooks/notify";
 const props = defineProps(["promoCode"]);
 const store = userStore();
 const notify = useNotify();
-
+const isDark = useDark();
 const keyNumber = ref(0);
 const signNumber = ref(0);
 const items = ref([
@@ -1246,21 +1247,27 @@ onMounted(() => {
   .el-dialog__header .el-dialog__headerbtn {
     background: url(../../../assets/images/promotion/hotpromo/cs2/close.png);
     content-visibility: hidden;
-    top: 130px;
+    top: 50px;
     right: 50px;
     background-size: contain;
   }
 
   .modal-title {
-    background: url(../../../assets/images/promotion/hotpromo/cs2/star.png) no-repeat center center;
-
+    // background: url(../../../assets/images/promotion/hotpromo/cs2/star.png) no-repeat center center;
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
     img {
-      filter: brightness(100);
+      // filter: brightness(100);
+      height: 60px;
+      width: 439px;
     }
   }
 
   .modal-body {
-    background: url(../../../assets/images/promotion/hotpromo/cs2/dialogbg.png) no-repeat center center;
+    // background: url(../../../assets/images/promotion/hotpromo/cs2/dialogbg.png) no-repeat center center;
+    background: linear-gradient(0deg, #D9D9D9, #D9D9D9),linear-gradient(0deg, #F2F8FE, #F2F8FE);
     width: 100%;
     height: 470px;
     background-size: contain;
@@ -1319,7 +1326,7 @@ onMounted(() => {
     }
 
     &.openRec {
-      color: #7f4c00;
+      color: #fff;
       font-size: 24px;
       gap: 15px;
 
