@@ -201,26 +201,28 @@
         <img src="./images/title-img.png" />
       </div>
       <div class="modal-body openRec">
-        <div class="rec">
-          <div class="table-title" style="width: 100%">
-            <table style="width: 100%" class="livepoker-rebate-game-info-table section-table">
-              <tr>
-                <th width="33.3%">日期</th>
-                <th width="33.3%">消耗</th>
-                <th width="33.3%">获取金额</th>
-              </tr>
-            </table>
-          </div>
-          <table style="width: 100%" v-if="openRecords" class="livepoker-rebate-game-info-table section-table">
-            <tbody>
-              <tr v-for="(open, i) in 10" :key="i">
-                <td width="33.3%">{{ open.createTime }}</td>
-                <td width="33.3%">{{ open.quantity }}</td>
-                <td width="33.3%">{{ open.amount }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div v-else style="display: flex; justify-content: center; align-items: center; height: 400px">暂无数据</div>
+          <div class="rec">
+            <div class="rec-bg">
+              <div class="table-title" style="width: 100%">
+                <table style="width: 100%" class="livepoker-rebate-game-info-table section-table">
+                  <tr>
+                    <th width="33.3%">日期</th>
+                    <th width="33.3%">消耗</th>
+                    <th width="33.3%">获取金额</th>
+                  </tr>
+                </table>
+              </div>
+              <table style="width: 100%" v-if="openRecords && openRecords.length > 0" class="livepoker-rebate-game-info-table section-table">
+                <tbody>
+                  <tr v-for="(open, i) in openRecords" :key="i">
+                    <td width="33.3%">{{ open.createTime }}</td>
+                    <td width="33.3%">{{ open.quantity }}</td>
+                    <td width="33.3%">{{ open.amount }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div v-else style="display: flex; justify-content: center; align-items: center; height: 400px">暂无数据</div>
+            </div>
         </div>
       </div>
     </el-dialog>
@@ -697,10 +699,9 @@ onMounted(() => {
   }
   td {
     border: 1px solid #acd4f6;
-    height: 56px;
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 28px;
+    line-height: 30px;
     color: #000000;
   }
 }
@@ -1245,11 +1246,13 @@ onMounted(() => {
   background: transparent;
   box-shadow: none;
   .el-dialog__header .el-dialog__headerbtn {
-    background: url(../../../assets/images/promotion/hotpromo/cs2/close.png);
+    background: url(../../../assets/images/promotion/hotpromo/cs2/close2.png);
     content-visibility: hidden;
     top: 50px;
     right: 50px;
     background-size: contain;
+    width: 20px;
+    height: 20px;
   }
 
   .modal-title {
@@ -1298,7 +1301,7 @@ onMounted(() => {
         }
 
         &::-webkit-scrollbar-thumb {
-          background: #ffd4b3;
+          //background: #ffd4b3;
         }
       }
 
@@ -1326,33 +1329,35 @@ onMounted(() => {
     }
 
     &.openRec {
-      color: #fff;
+      background: linear-gradient(180deg, #93F2FF 3.39%, #3A69F7 100%);
+      border-radius: 10px;
       font-size: 24px;
       gap: 15px;
-
       .table-title {
         font-weight: 700;
       }
-
       .rec {
-        width: 90%;
-        margin: 0 auto;
-        height: 300px;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        overflow: auto;
-        justify-content: flex-start;
-        align-items: center;
-
+        width: 96%;
+        height: 96%;
+        background: #fff;
+        border-radius: 10px;
         &::-webkit-scrollbar {
           width: 5px;
           height: 8px;
-          background-color: #ffffff;
+          //background-color: #ffffff;
         }
-
         &::-webkit-scrollbar-thumb {
-          background: #ffd4b3;
+          //background: #ffd4b3;
+        }
+        .rec-bg {
+          width: 94%;
+          max-height: 364px;
+          display: flex;
+          flex-direction: column;
+          overflow: auto;
+          justify-content: flex-start;
+          align-items: center;
+          margin: 62px auto 0;
         }
       }
 
