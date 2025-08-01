@@ -92,7 +92,7 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024' || selectedPromo?.redirectUrl === 'bounty-blast-premier'" />
+              <!-- <BlastPremierMarquee v-if="selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024' || selectedPromo?.redirectUrl === 'bounty-blast-premier'" /> -->
               <div
                 class="inner"
                 :class="{
@@ -107,7 +107,9 @@
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
                   lpllck: selectedPromo.promoCode === 'dy2-lpl-lck-bonus',
                   'bbdacha-cs2': selectedPromo.promoCode === 'dy2-bb-dacha-cs-bonus',
-                  'bbdacha-cs2': selectedPromo.promoCode ==='dy2-duan-wu-rewards'
+                  'bbdacha-cs2': selectedPromo.promoCode ==='dy2-duan-wu-rewards',
+                  'lh1-2025-pgl-s3': selectedPromo.promoCode === 'lh1-2025-pgl-s3',
+                  'blastpremier': selectedPromo.redirectUrl === 'bounty-blast-premier'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
@@ -289,7 +291,7 @@ import { SessionStorage } from "quasar";
 import LocalStorage from "boot/local-storage";
 import HotPromotion from "components/HotPromotion";
 // import HotPromotion from 'components/HotPromotion'
-import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
+// import BlastPremierMarquee from "src/components/hotpromo/BlastPremierPromo/BlastPremierMarquee.vue";
 import { useLocalStorage } from "@vueuse/core";
 import NBAWaterBattle from "src/components/hotpromo/nba-water-battle/NBAWaterBattle.vue";
 import MesaPromo from "src/components/hotpromo/mesa/MesaPromo.vue";
@@ -302,7 +304,6 @@ export default defineComponent({
   name: "PromoView",
   components: {
     HotPromotion,
-    BlastPremierMarquee,
     NBAWaterBattle,
     MesaPromo,
     BlastAustin,
@@ -965,6 +966,11 @@ export default defineComponent({
           .hot-promo {
             border-radius: 0px;
           }
+        }
+        &.blastpremier {
+          margin: 0;
+          padding: 10px 16px 20px;
+          width: 100%;
         }
 
         &.hongbaoyu {

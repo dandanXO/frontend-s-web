@@ -114,7 +114,7 @@
 
         <BlastPremierMarquee
           v-if="
-            selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024' || selectedPromo?.redirectUrl === 'bounty-blast-premier'
+            selectedPromo?.redirectUrl === 'dy2-cs2-blast-2024'
           "
         />
         <div
@@ -175,7 +175,7 @@
               : '95%'
           }"
         >
-          <div class="hot-promo" v-if="selectedPromo.hasPromo">
+          <div class="hot-promo ss" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
           <div
