@@ -69,7 +69,7 @@
         <div class="tips-inner">系统会在注单已结算后次日中午12点后统计所有记录，并自动派发钥匙。</div>
       </div> -->
     </div>
-    
+
     <div class="livepoker-rebate-game-info section-bg section third">
       <div class="title-img">活动详情</div>
       <div class="content">
@@ -85,7 +85,7 @@
     </div>
     <div class="livepoker-rebate-game-bottom-rule section-bg section third">
        <div class="title-img">活动规则</div>
-      
+
       <div class="content">
         <div class="item">
           <div class="item-num">1</div>
@@ -160,31 +160,19 @@
     </q-dialog>
 
     <q-dialog width="100%" class="cs2Dialog" v-model="isChestRecordModal" persistent>
-      <div>
-        <div class="modal-title">
-          <img src="../../../assets/images/promo/hotpromo/blastbounty/openchest.png" />
-        </div>
+      <div class="flex-column">
+        <div class="dialog-wrap">
         <div class="modal-body openRec">
-          <div class="dialog-close">
-            <q-btn
-              @click="isChestRecordModal = false"
-              v-close-popup
-              class="close-btn"
-              icon="close"
-              height="30"
-              width="30"
-            ></q-btn>
-          </div>
-
-          <table style="min-width: 300px; width: 85%">
+            <div class="rec">
+              <div class="rec-bg">
+              <table>
             <tr>
               <th width="34%">日期</th>
               <th width="33%">消耗</th>
               <th width="33%">获取金额</th>
             </tr>
           </table>
-          <div class="rec">
-            <table style="text-align: center" v-if="openRecords && openRecords.length > 0" class="table-rows">
+              <table v-if="openRecords && openRecords.length > 0" class="table-rows">
               <tr v-for="(open, i) in openRecords" :key="i">
                 <td width="34%">{{ open.createTime }}</td>
                 <td width="33%">{{ open.quantity }}</td>
@@ -195,6 +183,23 @@
               暂无数据
             </div>
           </div>
+        </div>
+      </div>
+
+          <div class="modal-title">
+            <img src="../../../assets/images/promo/hotpromo/blastbounty/openchest.png" />
+          </div>
+        </div>
+        <div class="dialog-close">
+          <q-btn
+            @click="isChestRecordModal = false"
+            v-close-popup
+            class="close-btn"
+            icon="close"
+            height="30"
+            width="30"
+          >
+          </q-btn>
         </div>
       </div>
     </q-dialog>
@@ -563,7 +568,7 @@ onMounted(() => {
       grid-template-columns: repeat(2, 1fr);
     }
   }
-  
+
   .first .content .top-row {
     // background: url(../../../assets/images/promotion/hotpromo/blastpremier/container.png) no-repeat center center;
     // background-size: contain;
@@ -671,7 +676,7 @@ onMounted(() => {
           &.active {
             background: url(../../../assets/images/promo/hotpromo/blastbounty/global-treasure-bg-active.png) no-repeat
               center center;
-              
+
           background-size: contain;
             transform: scale(1.2);
             filter: brightness(1);
@@ -837,40 +842,41 @@ onMounted(() => {
 .cs2Dialog {
   max-width: 500px;
 }
-.q-dialog__inner--minimized > div .dialog-close {
-  background: url(../../../assets/images/promo/hotpromo/blastbounty/close.png) no-repeat center center;
-  top: 10px;
-  right: 15px;
+.q-dialog__inner div.dialog-close {
+  margin-top: 2px;
   background-size: contain;
-  position: absolute;
+  background: url(../../../assets/images/promo/hotpromo/blastbounty/close2.png) no-repeat center center;
+  &.dark {
+    background: url(../../../assets/images/promo/hotpromo/blastbounty/close2-dark.png) no-repeat center center;
+  }
   .q-btn {
     content-visibility: hidden;
   }
 }
+.dialog-wrap {
+  position: relative;
+  padding-top: 10px;
+}
+.modal-wrap {
+  background: linear-gradient(180deg, #93F2FF 3.39%, #3A69F7 100%);
+}
 .modal-title {
-  background: url(../../../assets/images/promo/hotpromo/blastbounty/star.png) no-repeat center center;
   background-size: contain;
-  text-align: center;
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
   img {
-    filter: brightness(100);
-    width: 60%;
-    margin: 0 auto;
+    width: 260px;
   }
 }
 .modal-body {
-  position: relative;
-  background: url(../../../assets/images/promo/hotpromo/blastbounty/dialogbg.png) no-repeat center top;
-  // width: 90vw;
-  // max-width: 500px;
   width: 350px;
-  height: 300px;
-  background-size: contain;
+  height: 320px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-size: 16px;
-  padding-top: 30px;
   &.keyRec {
     color: #7f4c00;
 
@@ -915,36 +921,78 @@ onMounted(() => {
       }
     }
   }
-  &.openRec {
-    justify-content: flex-start;
-    padding: 25px 0;
-    color: #7f4c00;
-    gap: 5px;
 
+  &.openRec {
+    background: linear-gradient(180deg, #93F2FF 3.39%, #3A69F7 100%);
+    border-radius: 10px;
+    gap: 15px;
     .table-title {
       font-weight: 700;
     }
     .rec {
-      width: 90%;
-      margin: 0 auto;
-      height: 140px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      overflow: auto;
-      justify-content: flex-start;
-      align-items: center;
-
+      width: 96%;
+      height: 96%;
+      border-radius: 10px;
+      background: #F2F8FE;
+      &.dark {
+        background: linear-gradient(178.46deg, #2D4065 2.36%, #202D4B 98.7%);
+      }
       &::-webkit-scrollbar {
         width: 5px;
         height: 8px;
-        background-color: #ffffff;
+        //background-color: #ffffff;
       }
       &::-webkit-scrollbar-thumb {
-        background: #ffd4b3;
+        //background: #ffd4b3;
+      }
+      .rec-bg {
+        width: 94%;
+        max-height: 254px;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 38px auto 0;
       }
     }
+    table {
+      min-width: 300px;
+      width: 85%;
+      text-align: center;
+      border-collapse: collapse;
 
+      th {
+        font-weight: 400;
+        line-height: 36px;
+        color: #fff;
+        background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+        &:first-child {
+          border-top-left-radius: 4px;
+        }
+        &:last-child {
+          border-top-right-radius: 4px;
+        }
+      }
+      td {
+        border: 1px solid #acd4f6;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 30px;
+        color: #000000;
+      }
+      &.dark {
+        td {
+          color: #fff !important;
+        }
+      }
+    }
+    .flex-column {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
     .flex {
       display: flex;
       justify-content: space-between;
@@ -1295,3 +1343,6 @@ onMounted(() => {
   }
 }
 </style>
+
+
+
