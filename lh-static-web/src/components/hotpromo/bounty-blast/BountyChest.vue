@@ -201,7 +201,7 @@
         <img src="./images/title-img.png" />
       </div>
       <div class="modal-body openRec">
-          <div class="rec">
+          <div class="rec" :class="isDark && 'dark'">
             <div class="rec-bg">
               <div class="table-title" style="width: 100%">
                 <table style="width: 100%" class="livepoker-rebate-game-info-table section-table">
@@ -673,7 +673,7 @@ onMounted(() => {
     font-weight: 400;
     line-height: 28px;
     color: #fff;
-    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%) !important;
     &:first-child {
       border-top-left-radius: 12px;
     }
@@ -1330,6 +1330,7 @@ onMounted(() => {
 
     &.openRec {
       background: linear-gradient(180deg, #93F2FF 3.39%, #3A69F7 100%);
+      
       border-radius: 10px;
       font-size: 24px;
       gap: 15px;
@@ -1339,8 +1340,11 @@ onMounted(() => {
       .rec {
         width: 96%;
         height: 96%;
-        background: #fff;
         border-radius: 10px;
+        background: #F2F8FE;
+        &.dark {
+          background: linear-gradient(178.46deg, #2D4065 2.36%, #202D4B 98.7%);
+        }
         &::-webkit-scrollbar {
           width: 5px;
           height: 8px;
