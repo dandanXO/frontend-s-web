@@ -1,7 +1,7 @@
 <template>
   <div class="cs2">
     <div class="livepoker-rebate-game-info section-bg section first">
-     <div class="title-img">箱开福来</div>
+      <div class="title-img">箱开福来</div>
       <!-- <div class="tips">
         <div class="tips-inner">
           活动时间：2025年1月14日至2025年1月26日
@@ -116,7 +116,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="livepoker-rebate-game-info section-bg section third">
       <div class="title-img">活动详情</div>
       <div class="content">
@@ -131,8 +131,8 @@
       </div>
     </div>
     <div class="livepoker-rebate-game-bottom-rule section-bg section third">
-       <div class="title-img">活动规则</div>
-      
+      <div class="title-img">活动规则</div>
+
       <div class="content">
         <div class="item">
           <div class="item-num">1</div>
@@ -171,24 +171,24 @@
       <div class="modal-body keyRec">
         <table>
           <tbody>
-            <tr>
-              <th>日期</th>
-              <th>数量</th>
-            </tr>
+          <tr>
+            <th>日期</th>
+            <th>数量</th>
+          </tr>
           </tbody>
         </table>
         <div class="rec">
           <table v-if="keyRecords && keyRecords.length > 0" class="table-rows">
             <tbody>
-              <tr v-for="(key, i) in keyRecords" :key="i">
-                <td>{{ key.createTime }}</td>
-                <td>
-                  <div class="keysAmt">
-                    <img src="../../../assets/images/promotion/hotpromo/cs2/key.png" />
-                    {{ key.quantity }}
-                  </div>
-                </td>
-              </tr>
+            <tr v-for="(key, i) in keyRecords" :key="i">
+              <td>{{ key.createTime }}</td>
+              <td>
+                <div class="keysAmt">
+                  <img src="../../../assets/images/promotion/hotpromo/cs2/key.png" />
+                  {{ key.quantity }}
+                </div>
+              </td>
+            </tr>
             </tbody>
           </table>
           <div v-else style="display: flex; justify-content: center; align-items: center; height: 400px">暂无数据</div>
@@ -198,29 +198,31 @@
 
     <el-dialog class="cs2Dialog" v-model="isChestRecordModal" lock-scroll>
       <div class="modal-title">
-        <img src="../../../assets/images/promotion/hotpromo/cs2/openchest.png" />
+        <img src="./images/title-img.png" />
       </div>
       <div class="modal-body openRec">
         <div class="rec">
-          <div class="table-title" style="width: 100%">
-            <table style="width: 100%">
-              <tr>
-                <th width="50%">日期</th>
-                <th width="25%">消耗</th>
-                <th width="25%">获取金额</th>
-              </tr>
-            </table>
-          </div>
-          <table style="width: 100%" v-if="openRecords">
-            <tbody>
+          <div class="rec-bg">
+            <div class="table-title" style="width: 100%">
+              <table style="width: 100%" class="livepoker-rebate-game-info-table section-table">
+                <tr>
+                  <th width="33.3%">日期</th>
+                  <th width="33.3%">消耗</th>
+                  <th width="33.3%">获取金额</th>
+                </tr>
+              </table>
+            </div>
+            <table style="width: 100%" v-if="openRecords && openRecords.length > 0" class="livepoker-rebate-game-info-table section-table">
+              <tbody>
               <tr v-for="(open, i) in openRecords" :key="i">
-                <td width="50%">{{ open.createTime }}</td>
-                <td width="25%">{{ open.quantity }}</td>
-                <td width="25%">{{ open.amount }}</td>
+                <td width="33.3%">{{ open.createTime }}</td>
+                <td width="33.3%">{{ open.quantity }}</td>
+                <td width="33.3%">{{ open.amount }}</td>
               </tr>
-            </tbody>
-          </table>
-          <div v-else style="display: flex; justify-content: center; align-items: center; height: 400px">暂无数据</div>
+              </tbody>
+            </table>
+            <div v-else style="display: flex; justify-content: center; align-items: center; height: 400px">暂无数据</div>
+          </div>
         </div>
       </div>
     </el-dialog>
@@ -696,10 +698,9 @@ onMounted(() => {
   }
   td {
     border: 1px solid #acd4f6;
-    height: 56px;
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 28px;
+    line-height: 30px;
     color: #000000;
   }
 }
@@ -877,12 +878,12 @@ onMounted(() => {
     border-radius: 15px;
     border: 3px solid #94BAF8;
     padding: 5px;
-      margin-bottom: 40px;
+    margin-bottom: 40px;
     &-inner {
-        background: linear-gradient(180deg, #FAFCFF 31.57%, #E3EAF8 54.21%, rgba(202, 211, 239, 0.6) 100%);
-        border: 3px solid #9FA9D0;
-        width: 100%;
-        border-radius: 15px;
+      background: linear-gradient(180deg, #FAFCFF 31.57%, #E3EAF8 54.21%, rgba(202, 211, 239, 0.6) 100%);
+      border: 3px solid #9FA9D0;
+      width: 100%;
+      border-radius: 15px;
     }
   }
   .content {
@@ -1037,7 +1038,7 @@ onMounted(() => {
           position: relative;
           // padding: 10px 0;
           background: url(@/assets/images/promotion/hotpromo/blastpremier/global-treasure-bg.png) no-repeat center
-            center;
+          center;
           background-size: contain;
           cursor: pointer;
           transition: background-image 0.3s ease, transform 0.3s ease;
@@ -1056,9 +1057,9 @@ onMounted(() => {
           &.active,
           &:hover {
             background: url(@/assets/images/promotion/hotpromo/blastpremier/global-treasure-bg-active.png) no-repeat
-              center center;
-              
-          background-size: contain;
+            center center;
+
+            background-size: contain;
             transform: scale(1.2);
             filter: brightness(1);
             .required-key {
@@ -1243,24 +1244,35 @@ onMounted(() => {
   width: 760px;
   background: transparent;
   box-shadow: none;
+  .el-dialog__body {
+    padding: 16px;
+  }
   .el-dialog__header .el-dialog__headerbtn {
-    background: url(../../../assets/images/promotion/hotpromo/cs2/close.png);
+    background: url(../../../assets/images/promotion/hotpromo/cs2/close2.png);
     content-visibility: hidden;
-    top: 130px;
+    top: 50px;
     right: 50px;
     background-size: contain;
+    width: 20px;
+    height: 20px;
   }
 
   .modal-title {
-    background: url(../../../assets/images/promotion/hotpromo/cs2/star.png) no-repeat center center;
-
+    // background: url(../../../assets/images/promotion/hotpromo/cs2/star.png) no-repeat center center;
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
     img {
-      filter: brightness(100);
+      // filter: brightness(100);
+      height: 60px;
+      width: 439px;
     }
   }
 
   .modal-body {
-    background: url(../../../assets/images/promotion/hotpromo/cs2/dialogbg.png) no-repeat center center;
+    // background: url(../../../assets/images/promotion/hotpromo/cs2/dialogbg.png) no-repeat center center;
+    background: linear-gradient(0deg, #D9D9D9, #D9D9D9),linear-gradient(0deg, #F2F8FE, #F2F8FE);
     width: 100%;
     height: 470px;
     background-size: contain;
@@ -1291,7 +1303,7 @@ onMounted(() => {
         }
 
         &::-webkit-scrollbar-thumb {
-          background: #ffd4b3;
+          //background: #ffd4b3;
         }
       }
 
@@ -1319,33 +1331,35 @@ onMounted(() => {
     }
 
     &.openRec {
-      color: #7f4c00;
+      background: linear-gradient(180deg, #93F2FF 3.39%, #3A69F7 100%);
+      border-radius: 10px;
       font-size: 24px;
       gap: 15px;
-
       .table-title {
         font-weight: 700;
       }
-
       .rec {
-        width: 90%;
-        margin: 0 auto;
-        height: 300px;
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        overflow: auto;
-        justify-content: flex-start;
-        align-items: center;
-
+        width: 96%;
+        height: 96%;
+        border-radius: 10px;
+        background: #F2F8FE;
         &::-webkit-scrollbar {
           width: 5px;
           height: 8px;
-          background-color: #ffffff;
+          //background-color: #ffffff;
         }
-
         &::-webkit-scrollbar-thumb {
-          background: #ffd4b3;
+          //background: #ffd4b3;
+        }
+        .rec-bg {
+          width: 94%;
+          max-height: 364px;
+          display: flex;
+          flex-direction: column;
+          overflow: auto;
+          justify-content: flex-start;
+          align-items: center;
+          margin: 62px auto 0;
         }
       }
 
